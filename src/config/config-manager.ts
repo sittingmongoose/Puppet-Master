@@ -6,6 +6,7 @@
  */
 
 import { readFile, access } from 'fs/promises';
+import { existsSync } from 'fs';
 import { join } from 'path';
 import yaml from 'js-yaml';
 import type { PuppetMasterConfig } from '../types/config.js';
@@ -110,8 +111,15 @@ export function resolveConfigPath(providedPath?: string): string {
   // Check puppet-master.yaml in cwd
   const cwdConfig = join(cwd, 'puppet-master.yaml');
   
+  // Resolution order: .puppet-master/config.yaml -> puppet-master.yaml -> default to .puppet-master/config.yaml
+  if (existsSync(puppetMasterConfig)) {
+    return puppetMasterConfig;
+  }
+  if (existsSync(cwdConfig)) {
+    return cwdConfig;
+  }
+
   // Default to .puppet-master/config.yaml
-  // Note: We don't check file existence here - load() will handle that
   return puppetMasterConfig;
 }
 
@@ -161,6 +169,9 @@ function convertSnakeCaseToCamelCase(obj: unknown): unknown {
  * Convert snake_case string to camelCase
  */
 function snakeToCamel(str: string): string {
+  if (str === 'max_attempts') {
+    return 'maxIterations';
+  }
   return str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
 }
 

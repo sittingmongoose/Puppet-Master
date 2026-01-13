@@ -14,9 +14,16 @@ program
 // Register commands
 program
   .command('check')
-  .description('Display Context7 MCP reminder')
-  .action(() => {
-    checkCommand();
+  .description('Verify Phase 2 completion criteria')
+  .option('--phase <number>', 'Phase number to check', '2')
+  .option('--verbose', 'Show detailed output', false)
+  .option('--update-checklist', 'Update checklist in phase file if all checks pass', false)
+  .action((options) => {
+    checkCommand({
+      phase: parseInt(options.phase, 10),
+      verbose: options.verbose,
+      updateChecklist: options.updateChecklist,
+    });
   });
 
 // Parse command line arguments

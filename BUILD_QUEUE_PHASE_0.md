@@ -162,6 +162,9 @@ Commands run + results:
 - npm run build: SUCCESS - TypeScript compilation completed without errors
 - Verified dist/ directory contains: index.js, index.d.ts, index.js.map
 
+Follow-up verification:
+- 2026-01-13: Expanded `.gitignore` to exclude local CLI agent state directories (`.codex/`, `.claude/`, `.cursor/`, `.npm/`, `.cache/`) to prevent committing credentials.
+
 If FAIL - where stuck + exact error snippets + what remains:
 N/A - Task completed successfully
 ```
@@ -815,12 +818,12 @@ Files changed:
 - src/config/config-schema.ts (NEW) - Comprehensive validation logic with ConfigValidationError class and detailed error messages
 - src/config/config-manager.ts (NEW) - ConfigManager class with load(), validate(), merge() methods, path resolution helpers, and YAML field mapping (snake_case to camelCase)
 - src/config/index.ts (NEW) - Barrel exports for config module (ConfigManager, getDefaultConfig, validateConfig, and all config types)
-- src/config/config-manager.test.ts (NEW) - Comprehensive test suite with 24 tests covering all functionality
+- src/config/config-manager.test.ts (NEW) - Comprehensive test suite with 26 tests covering all functionality
 
 Commands run + results: 
 - npm install: PASSED (js-yaml dependencies installed successfully)
 - npm run typecheck: PASSED (no type errors)
-- npm test: PASSED (25 tests passed, including 24 ConfigManager tests and 1 index test)
+- npm test: PASSED (27 tests passed, including 26 ConfigManager tests and 1 index test)
 
 All acceptance criteria met:
 - ✅ ConfigManager can load YAML config files
@@ -836,6 +839,11 @@ Key implementation details:
 - Descriptive validation errors with path information
 - Default config returned when config file doesn't exist
 - All ESM import patterns followed (.js extensions, type-only exports)
+
+Follow-up verification (2026-01-13):
+- Implemented file-existence based resolution for `.puppet-master/config.yaml` vs `puppet-master.yaml`
+- Added YAML `max_attempts` → TypeScript `maxIterations` mapping + tests
+- Verified `npm run lint`, `npm run typecheck`, `npm test`, `npm run build` all pass
 ```
 
 ---
@@ -1263,13 +1271,34 @@ All acceptance criteria met:
 
 After completing all Phase 0 tasks:
 
-- [ ] `npm run build` passes
-- [ ] `npm run typecheck` passes
-- [ ] `npm run lint` passes
-- [ ] `npm test` passes
-- [ ] All directories exist under src/
-- [ ] All type files export correctly
-- [ ] ConfigManager can load and validate config
+- [x] `npm run build` passes
+- [x] `npm run typecheck` passes
+- [x] `npm run lint` passes
+- [x] `npm test` passes
+- [x] All directories exist under src/
+- [x] All type files export correctly
+- [x] ConfigManager can load and validate config
+
+### Phase 0 Verification Log
+```
+Status: PASS
+Date: 2026-01-13
+Summary of changes:
+- Fixed config path resolution + YAML `max_attempts` mapping; updated tests
+- Hardened `.gitignore` to prevent committing local CLI agent state/credentials
+
+Files changed:
+- .gitignore
+- src/config/config-manager.ts
+- src/config/config-manager.test.ts
+- BUILD_QUEUE_PHASE_0.md
+
+Commands run + results:
+- npm run lint: PASS
+- npm run typecheck: PASS
+- npm test: PASS (27 tests)
+- npm run build: PASS
+```
 
 ### Phase 0 Stop Point Commit
 

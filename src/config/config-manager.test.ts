@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { writeFile, mkdir, rm, access } from 'fs/promises';
+import { writeFile, mkdir, rm } from 'fs/promises';
 import { join } from 'path';
 import { ConfigManager, resolveConfigPath, loadYamlFile } from './config-manager.js';
 import { getDefaultConfig } from './default-config.js';
@@ -67,13 +67,13 @@ describe('ConfigManager', () => {
 
     it('should reject config with invalid platform', () => {
       const config = getDefaultConfig();
-      (config.tiers.phase as { platform: string }).platform = 'invalid' as any;
+      (config.tiers.phase as { platform: unknown }).platform = 'invalid';
       expect(() => validateConfig(config)).toThrow(ConfigValidationError);
     });
 
     it('should reject config with invalid enum values', () => {
       const config = getDefaultConfig();
-      (config.branching as { granularity: string }).granularity = 'invalid' as any;
+      (config.branching as { granularity: unknown }).granularity = 'invalid';
       expect(() => validateConfig(config)).toThrow(ConfigValidationError);
     });
 
@@ -119,7 +119,7 @@ tiers:
     platform: "cursor"
     model: "auto"
     self_fix: false
-    max_iterations: 3
+    max_attempts: 3
     escalation: "subtask"
 branching:
   base_branch: "main"
@@ -179,6 +179,7 @@ cli_paths:
       expect(config.project.name).toBe('TestProject');
       expect(config.project.workingDirectory).toBe('./test');
       expect(config.tiers.phase.platform).toBe('claude');
+      expect(config.tiers.iteration.maxIterations).toBe(3);
     });
 
     it('should convert snake_case to camelCase', async () => {
@@ -209,7 +210,7 @@ tiers:
     platform: "cursor"
     model: "auto"
     self_fix: true
-    max_iterations: 1
+    max_attempts: 1
     escalation: "subtask"
 branching:
   base_branch: "main"
@@ -276,6 +277,7 @@ cli_paths:
       expect(config.memory.progressFile).toBe('test');
       expect(config.memory.multiLevelAgents).toBe(false);
       expect(config.memory.agentsEnforcement.requireUpdateOnFailure).toBe(false);
+      expect(config.tiers.iteration.maxIterations).toBe(1);
       expect(config.budgets.claude.maxCallsPerRun).toBe(1);
       expect(config.budgets.claude.maxCallsPerHour).toBe(1);
       expect(config.budgets.claude.maxCallsPerDay).toBe(1);
@@ -403,6 +405,39 @@ project:
       const path = resolveConfigPath();
       expect(path).toContain('.puppet-master');
       expect(path).toContain('config.yaml');
+    });
+
+    it('should prefer .puppet-master/config.yaml when present', async () => {
+      const mockCwd = join(testDir, 'resolve-prefer');
+      await mkdir(join(mockCwd, '.puppet-master'), { recursive: true });
+
+      const puppetMasterConfig = join(mockCwd, '.puppet-master', 'config.yaml');
+      const cwdConfig = join(mockCwd, 'puppet-master.yaml');
+
+      await writeFile(puppetMasterConfig, 'test: true', 'utf-8');
+      await writeFile(cwdConfig, 'test: true', 'utf-8');
+
+      const cwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(mockCwd);
+      try {
+        expect(resolveConfigPath()).toBe(puppetMasterConfig);
+      } finally {
+        cwdSpy.mockRestore();
+      }
+    });
+
+    it('should fall back to puppet-master.yaml when .puppet-master/config.yaml is missing', async () => {
+      const mockCwd = join(testDir, 'resolve-fallback');
+      await mkdir(mockCwd, { recursive: true });
+
+      const cwdConfig = join(mockCwd, 'puppet-master.yaml');
+      await writeFile(cwdConfig, 'test: true', 'utf-8');
+
+      const cwdSpy = vi.spyOn(process, 'cwd').mockReturnValue(mockCwd);
+      try {
+        expect(resolveConfigPath()).toBe(cwdConfig);
+      } finally {
+        cwdSpy.mockRestore();
+      }
     });
   });
 

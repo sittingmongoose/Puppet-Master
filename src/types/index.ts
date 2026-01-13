@@ -49,6 +49,12 @@ export type {
 } from './events.js';
 
 export type {
+  StateTransitionAction,
+  OrchestratorTransition,
+  TierTransition,
+} from './transitions.js';
+
+export type {
   Criterion,
   TestCommand,
   TestPlan,
@@ -60,3 +66,33 @@ export type {
   GateResult,
   AdvancementResult,
 } from './tiers.js';
+
+export type {
+  ItemStatus,
+  TestResult,
+  CriterionResult,
+  EvidenceItem,
+  Evidence as PRDEvidence,
+  VerifierResult as PRDVerifierResult,
+  GateReport as PRDGateReport,
+  Iteration,
+  Subtask,
+  Task,
+  Phase,
+  PRDMetadata,
+  PRD,
+} from './prd.js';
+
+export type {
+  EvidenceType,
+  StoredEvidence,
+  Evidence as EvidenceArtifact,
+  GateReportEvidence,
+  VerifierResultSummary,
+} from './evidence.js';
+
+export type {
+  UsageEvent,
+  UsageQuery,
+  UsageSummary,
+} from './usage.js';
