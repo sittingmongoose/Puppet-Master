@@ -1,5 +1,5 @@
 # AGENTS.md - RWM Puppet Master
-
+Always use the Context7 MCP.  You need to take your time and be careful as this is something you can mess up easily and cause a lot of issues if you arent careful.
 > Long-term memory for AI agents working on this project.
 > Updated as patterns emerge and gotchas are discovered.
 
@@ -167,6 +167,69 @@ yarn-error.log*
 # WRONG - too broad, would ignore evidence logs
 *.log
 ```
+
+## Pre-Completion Verification Checklist
+
+**BEFORE updating the Task Status Log, you MUST verify compliance with ALL rules by checking this checklist:**
+
+1. **ESM Import Patterns** (AGENTS.md: Codebase Patterns, .cursorrules: ESM Import Rules)
+   - [ ] All local imports use `.js` extension
+   - [ ] Type-only exports use `export type` and `import type`
+   - [ ] No runtime imports for type aliases (like Platform)
+
+2. **Module Organization** (AGENTS.md: Architecture Notes, .cursorrules: File Organization)
+   - [ ] Files created in correct directories per module responsibilities
+   - [ ] Barrel exports follow pattern (type-only for types, regular for runtime values)
+   - [ ] Module responsibilities respected
+
+3. **Tooling Rules** (AGENTS.md: Tooling Rules, .cursorrules: Technology Stack)
+   - [ ] Using Vitest (NOT Jest patterns)
+   - [ ] TypeScript strict mode enabled
+   - [ ] ESLint configuration correct
+   - [ ] Git commit format followed (if committing)
+
+4. **Testing Requirements** (AGENTS.md: Testing, .cursorrules: Testing Requirements)
+   - [ ] Tests written for new code (if applicable)
+   - [ ] Test files in correct locations (next to source files)
+   - [ ] All required tests pass
+   - [ ] `npm run typecheck` passes
+
+5. **Code Patterns** (AGENTS.md: Codebase Patterns, Common Failure Modes)
+   - [ ] State machine pattern followed (if applicable)
+   - [ ] Manager pattern followed (if applicable)
+   - [ ] Verifier pattern followed (if applicable)
+   - [ ] No session reuse (fresh processes only, if applicable)
+   - [ ] No API calls (CLI only, if applicable)
+   - [ ] File locking used for shared files (if applicable)
+
+6. **DO/DON'T Checklist** (AGENTS.md: DO, DON'T)
+   - [ ] All DO items followed (check DO section)
+   - [ ] All DON'T items avoided (check DON'T section)
+   - [ ] No modifications outside task scope
+   - [ ] Canonical documents not deleted/simplified
+   - [ ] Specific `.log` patterns in gitignore (not blanket `*.log`)
+
+7. **Task-Specific Requirements** (.cursorrules: When Working on Tasks)
+   - [ ] Referenced documentation sections read FIRST
+   - [ ] Only specified task implemented
+   - [ ] Tests run after implementation
+   - [ ] Task scope strictly followed
+
+8. **File-Specific Rules** (.cursorrules: Critical Patterns)
+   - [ ] Gitignore patterns correct (no blanket `*.log`, evidence logs tracked)
+   - [ ] Session ID format correct (if applicable): `PM-YYYY-MM-DD-HH-MM-SS-NNN`
+   - [ ] No Thread terminology (use Session if applicable)
+
+9. **Final Verification**
+   - [ ] All acceptance criteria met (checkboxes updated in phase file)
+   - [ ] All required tests pass
+   - [ ] `npm run typecheck` passes (if applicable)
+   - [ ] `npm run build` passes (if applicable)
+   - [ ] No linter errors (if applicable)
+
+**After completing this checklist, proceed to update the Task Status Log.**
+
+---
 
 ### Task Status Log Update Rule
 After completing ANY build queue task, you MUST update the Task Status Log in the phase file with:
