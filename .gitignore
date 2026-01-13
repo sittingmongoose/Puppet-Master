@@ -7,7 +7,16 @@ yarn-error.log*
 
 # Local CLI agent state (may contain credentials)
 .cache/
-.claude/
-.codex/
-.cursor/
 .npm/
+
+# Claude-specific: ignore credentials, state, and debug files
+.claude/.credentials.json
+.claude/_state/
+.claude/debug/
+
+# Codex-specific: ignore auth, sessions, and runtime data
+.codex/auth.json
+.codex/sessions/
+.codex/archived_sessions/
+
+# Cursor-specific: no sensitive files to ignore (commands/ can be tracked)
