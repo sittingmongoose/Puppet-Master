@@ -4,3 +4,18 @@ coverage/
 npm-debug.log*
 yarn-error.log*
 .DS_Store
+
+# Local CLI agent state (may contain credentials)
+.cache/
+.claude/
+.codex/
+.cursor/
+.npm/
+
+# IDE and editor configuration (user-specific)
+.cursorrules
+.vscode/
+.cursor/
+
+# User-specific scripts and binaries
+bin/
