@@ -397,12 +397,12 @@ Medium OK — text processing
 - Docx parser: use mammoth library
 
 ### Acceptance criteria
-- [ ] TextParser class implemented
-- [ ] DocxParser class implemented
-- [ ] mammoth dependency installed
-- [ ] Both parsers return ParsedRequirements
-- [ ] Tests pass for both
-- [ ] `npm test` passes
+- [x] TextParser class implemented
+- [x] DocxParser class implemented
+- [x] mammoth dependency installed
+- [x] Both parsers return ParsedRequirements
+- [x] Tests pass for both
+- [x] `npm test` passes
 
 ### Tests to run
 ```bash
@@ -635,12 +635,12 @@ HQ required — document generation
 - Scaffold from requirements sections
 
 ### Acceptance criteria
-- [ ] ArchGenerator class implemented
-- [ ] `generate(parsed, prd)` returns markdown string
-- [ ] Includes module breakdown
-- [ ] Includes dependency graph
-- [ ] Tests pass
-- [ ] `npm test` passes
+- [x] ArchGenerator class implemented
+- [x] `generate(parsed, prd)` returns markdown string
+- [x] Includes module breakdown
+- [x] Includes dependency graph
+- [x] Tests pass
+- [x] `npm test` passes
 
 ### Tests to run
 ```bash
@@ -750,12 +750,12 @@ HQ required — planning logic
 - Define escalation paths
 
 ### Acceptance criteria
-- [ ] TierPlanGenerator class implemented
-- [ ] Assigns platforms per config
-- [ ] Sets maxIterations per tier
-- [ ] Defines escalation targets
-- [ ] Tests pass
-- [ ] `npm test` passes
+- [x] TierPlanGenerator class implemented
+- [x] Assigns platforms per config
+- [x] Sets maxIterations per tier
+- [x] Defines escalation targets
+- [x] Tests pass
+- [x] `npm test` passes
 
 ### Tests to run
 ```bash

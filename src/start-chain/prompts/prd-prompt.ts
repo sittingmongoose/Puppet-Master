@@ -2,7 +2,7 @@
  * PRD Generation Prompt Template
  * 
  * Template for generating PRD (Product Requirements Document) from requirements.
- * Based on REQUIREMENTS.md Section 5.2 (Start Chain PRD Generation Prompt Template).
+ * Based on REQUIREMENTS.md Appendix G: Start Chain PRD Generation Prompt Template.
  */
 
 import type { ParsedRequirements, ParsedSection } from '../../types/requirements.js';

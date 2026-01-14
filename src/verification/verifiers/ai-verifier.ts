@@ -14,6 +14,7 @@ import type { Platform } from '../../types/config.js';
 import type { ExecutionRequest, RunningProcess } from '../../types/platforms.js';
 import type { PlatformRegistry } from '../../platforms/registry.js';
 import type { EvidenceStore } from '../../memory/evidence-store.js';
+import type { Verifier } from './verifier.js';
 
 /**
  * AI-specific criterion options.
@@ -53,10 +54,10 @@ export interface AIVerificationResult {
 
 /**
  * AI Verifier implementation.
- * 
+ *
  * Uses platform runners to invoke AI for semantic verification.
  */
-export class AIVerifier {
+export class AIVerifier implements Verifier {
   readonly type = 'ai';
 
   constructor(

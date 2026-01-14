@@ -2,7 +2,7 @@
  * Architecture Generation Prompt Template
  * 
  * Template for generating architecture documents from requirements and PRD.
- * Based on REQUIREMENTS.md Section 5.3 (Architecture generation).
+ * Implementation of architecture generation prompt (template not yet in REQUIREMENTS.md).
  */
 
 import type { ParsedRequirements } from '../../types/requirements.js';
