@@ -8,8 +8,14 @@
 import type { IncomingMessage } from 'http';
 import type { Server as HTTPServer } from 'http';
 import http from 'http';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import express, { type Express } from 'express';
 import cors from 'cors';
+
+// Get __dirname equivalent for ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 import { WebSocketServer, WebSocket } from 'ws';
 import type { EventBus, PuppetMasterEvent } from '../logging/index.js';
 import type { OrchestratorState } from '../types/state.js';
@@ -126,6 +132,17 @@ export class GuiServer {
         state: 'idle' as OrchestratorState,
         version: '0.1.0',
       });
+    });
+
+    // Serve static files from public directory
+    // In development, files are in src/gui/public
+    // In production (compiled), they should be copied to dist/gui/public
+    const publicPath = path.join(__dirname, 'public');
+    this.app.use(express.static(publicPath));
+
+    // Fallback to index.html for SPA-style routing
+    this.app.get('/', (_req, res) => {
+      res.sendFile(path.join(publicPath, 'index.html'));
     });
   }
 
