@@ -18,6 +18,7 @@
   "devDependencies": {
     "@types/js-yaml": "^4.0.0",
     "@types/node": "^20.0.0",
+    "@types/pdf-parse": "^1.1.5",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
     "@upstash/context7-mcp": "^2.1.0",
@@ -29,6 +30,8 @@
   "dependencies": {
     "commander": "^14.0.2",
     "js-yaml": "^4.1.0",
+    "mammoth": "^1.11.0",
+    "pdf-parse": "^1.1.4",
     "playwright": "^1.40.0"
   }
 }

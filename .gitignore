@@ -23,6 +23,7 @@ yarn-error.log*
 
 # Test artifacts
 .test-quota-*
+.test-cache/
 
 # Local configuration files (may contain sensitive local settings)
 **/local.json

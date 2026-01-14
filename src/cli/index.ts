@@ -6,6 +6,8 @@ import { checkCommand } from './commands/check.js';
 import { startCommand } from './commands/start.js';
 import { doctorCommand } from './commands/doctor.js';
 import { statusCommand } from './commands/status.js';
+import { planCommand } from './commands/plan.js';
+import { initCommand } from './commands/init.js';
 
 const program = new Command();
 
@@ -37,6 +39,12 @@ doctorCommand.register(program);
 
 // Register status command
 statusCommand.register(program);
+
+// Register plan command
+planCommand.register(program);
+
+// Register init command
+initCommand.register(program);
 
 /**
  * Run the CLI with the given arguments

@@ -104,3 +104,11 @@ export type {
   CooldownInfo,
   CapabilityProbeResult,
 } from './capabilities.js';
+
+export type {
+  SupportedFormat,
+  RequirementsSource,
+  ParsedSection,
+  ParsedRequirements,
+  RequirementsValidation,
+} from './requirements.js';
