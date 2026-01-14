@@ -59,13 +59,13 @@ Medium OK — logging infrastructure
 - Include timestamps and context
 
 ### Acceptance criteria
-- [ ] LoggerService class implemented
-- [ ] Supports debug, info, warn, error levels
-- [ ] Writes to file and console
-- [ ] Includes timestamps
-- [ ] Context can be added per log
-- [ ] Tests pass
-- [ ] `npm test` passes
+- [x] LoggerService class implemented
+- [x] Supports debug, info, warn, error levels
+- [x] Writes to file and console
+- [x] Includes timestamps
+- [x] Context can be added per log
+- [x] Tests pass
+- [x] `npm test` passes
 
 ### Tests to run
 ```bash
@@ -139,12 +139,22 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
+Status: PASS
+Date: 2026-01-13
 Summary of changes: 
+Implemented LoggerService class for RWM Puppet Master (PH7-T01). Created foundational logging infrastructure with support for multiple log levels (debug, info, warn, error), multiple transports (ConsoleTransport and FileTransport), context support, and child logger functionality. ConsoleTransport formats logs with ANSI colors and timestamps. FileTransport writes JSONL format and creates directories as needed. LoggerService supports level filtering, dynamic transport addition, and child loggers with context inheritance. All functionality tested with comprehensive test suite covering all log levels, level filtering, file operations, console formatting, child logger context inheritance, multiple transports, session ID handling, and error handling. All 27 tests passing.
+
 Files changed: 
+- src/logging/logger-service.ts (created - LogLevel type, LogEntry interface, LogTransport interface, ConsoleTransport class, FileTransport class, LoggerService class)
+- src/logging/logger-service.test.ts (created - comprehensive test suite with 27 tests)
+- src/logging/index.ts (created - barrel export file with all exports)
+
 Commands run + results: 
+- npm test -- -t "LoggerService": PASSED (27 tests, all passing)
+- npm run typecheck: PASSED (no TypeScript errors)
+
 If FAIL - where stuck + exact error snippets + what remains:
+N/A - All tests passing, implementation complete.
 ```
 
 ---
@@ -180,13 +190,13 @@ Fast OK — wrapper implementation
 - Include session context
 
 ### Acceptance criteria
-- [ ] ActivityLogger class implemented
-- [ ] `logStateChange(from, to, event)` works
-- [ ] `logTierTransition(tier, from, to)` works
-- [ ] `logPhaseStart/Complete(phase)` works
-- [ ] Writes to .puppet-master/logs/activity.log
-- [ ] Tests pass
-- [ ] `npm test` passes
+- [x] ActivityLogger class implemented
+- [x] `logStateChange(from, to, event)` works
+- [x] `logTierTransition(tier, from, to)` works
+- [x] `logPhaseStart/Complete(phase)` works
+- [x] Writes to .puppet-master/logs/activity.log
+- [x] Tests pass
+- [x] `npm test` passes
 
 ### Tests to run
 ```bash
@@ -245,12 +255,22 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
+Status: PASS
+Date: 2026-01-13
 Summary of changes: 
+Implemented ActivityLogger class for RWM Puppet Master (PH7-T02). Created specialized logger for orchestrator activity events that writes ActivityEvent format directly to JSONL log file. ActivityLogger wraps LoggerService internally and provides methods for logging state changes, tier transitions, phase/task lifecycle events, and errors. All methods write ActivityEvent objects with timestamp, eventType, sessionId, and details to .puppet-master/logs/activity.log in JSONL format. Implemented getRecentActivity method to read and parse recent entries from log file with graceful error handling for missing/empty files. All functionality tested with comprehensive test suite covering all event types, sequential writes, session ID inclusion, and edge cases (empty file, file not found, limited entries). All 16 tests passing.
+
 Files changed: 
+- src/logging/activity-logger.ts (created - ActivityEventType type, ActivityEvent interface, ActivityLogger class with all required methods)
+- src/logging/activity-logger.test.ts (created - comprehensive test suite with 16 tests)
+- src/logging/index.ts (updated - added exports for ActivityLogger, ActivityEvent, and ActivityEventType)
+
 Commands run + results: 
+- npm test -- -t "ActivityLogger": PASSED (16 tests, all passing)
+- npm run typecheck: PASSED (no TypeScript errors)
+
 If FAIL - where stuck + exact error snippets + what remains:
+N/A - All tests passing, implementation complete.
 ```
 
 ---
@@ -286,13 +306,13 @@ Fast OK — error handling
 - Support error categorization
 
 ### Acceptance criteria
-- [ ] ErrorLogger class implemented
-- [ ] `logError(error, context)` works
-- [ ] Stack traces captured
-- [ ] Error categories supported
-- [ ] Writes to .puppet-master/logs/error.log
-- [ ] Tests pass
-- [ ] `npm test` passes
+- [x] ErrorLogger class implemented
+- [x] `logError(error, context)` works
+- [x] Stack traces captured
+- [x] Error categories supported
+- [x] Writes to .puppet-master/logs/error.log
+- [x] Tests pass
+- [x] `npm test` passes
 
 ### Tests to run
 ```bash
@@ -364,12 +384,22 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
+Status: PASS
+Date: 2026-01-11
 Summary of changes: 
+Implemented ErrorLogger class with error categorization, stack trace capture, and query capabilities. Created comprehensive test suite with 34 tests covering all functionality.
+
 Files changed: 
+- src/logging/error-logger.ts (NEW) - ErrorLogger class implementation
+- src/logging/error-logger.test.ts (NEW) - Comprehensive test suite
+- src/logging/index.ts (MODIFIED) - Added ErrorLogger exports
+
 Commands run + results: 
+- npm test -- -t "ErrorLogger" - PASSED (34 tests passed)
+- npm run typecheck - PASSED (no type errors)
+
 If FAIL - where stuck + exact error snippets + what remains:
+N/A - Task completed successfully
 ```
 
 ---
@@ -406,13 +436,13 @@ Medium OK — structured logging
 - Include timing information
 
 ### Acceptance criteria
-- [ ] IterationLogger class implemented
-- [ ] Creates file per iteration
-- [ ] Logs prompt sent
-- [ ] Logs output received
-- [ ] Logs timing
-- [ ] Tests pass
-- [ ] `npm test` passes
+- [x] IterationLogger class implemented
+- [x] Creates file per iteration
+- [x] Logs prompt sent
+- [x] Logs output received
+- [x] Logs timing
+- [x] Tests pass
+- [x] `npm test` passes
 
 ### Tests to run
 ```bash
@@ -476,11 +506,27 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
+Status: PASS
+Date: 2026-01-14
 Summary of changes: 
+Implemented IterationLogger class for tracking iteration execution details. Created comprehensive test suite with 21 passing tests. All type checks pass.
+
 Files changed: 
+- src/logging/iteration-logger.ts (NEW)
+- src/logging/iteration-logger.test.ts (NEW)
+- src/logging/index.ts (MODIFIED - added exports)
+
 Commands run + results: 
+- npm test -- -t "IterationLogger": PASS (21 tests passed)
+- npm run typecheck: PASS (no type errors)
+
+Implementation details:
+- IterationLogger class with methods: startIteration, logOutput, completeIteration, getIterationLog, getIterationsForSubtask
+- File structure: {logsDir}/iterations/{subtask-id}/{iteration-number}.json
+- Iteration ID format: {subtaskId}-iter-{number} (zero-padded)
+- Tracks prompts, outputs, timing, completion signals, files changed, and test results
+- Handles concurrent iterations and loads from disk when needed
+- All ESM patterns followed (.js extensions, import type for types)
 If FAIL - where stuck + exact error snippets + what remains:
 ```
 
@@ -517,13 +563,13 @@ Medium OK — pub/sub pattern
 - Support multiple subscribers
 
 ### Acceptance criteria
-- [ ] EventBus class implemented
-- [ ] `emit(event)` broadcasts to subscribers
-- [ ] `subscribe(type, callback)` registers handlers
-- [ ] `unsubscribe(id)` removes handlers
-- [ ] Type-safe event handling
-- [ ] Tests pass
-- [ ] `npm test` passes
+- [x] EventBus class implemented
+- [x] `emit(event)` broadcasts to subscribers
+- [x] `subscribe(type, callback)` registers handlers
+- [x] `unsubscribe(id)` removes handlers
+- [x] Type-safe event handling
+- [x] Tests pass
+- [x] `npm test` passes
 
 ### Tests to run
 ```bash
@@ -588,11 +634,29 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
+Status: PASS
+Date: 2026-01-14
 Summary of changes: 
+Implemented EventBus class for pub/sub pattern broadcasting orchestrator events. Created comprehensive test suite with 26 passing tests. All type checks pass.
+
 Files changed: 
+- src/logging/event-bus.ts (NEW)
+- src/logging/event-bus.test.ts (NEW)
+- src/logging/index.ts (MODIFIED - added exports)
+
 Commands run + results: 
+- npm test -- -t "EventBus": PASS (26 tests passed)
+- npm run typecheck: PASS (no type errors)
+
+Implementation details:
+- EventBus class with methods: emit, subscribe, unsubscribe, once, clear, getSubscriptionCount
+- PuppetMasterEvent discriminated union with 7 event types: state_changed, tier_changed, iteration_started, iteration_completed, output_chunk, error, log
+- Support for wildcard '*' subscriptions to receive all events
+- Type-safe event handling with discriminated unions
+- Error handling: continues emitting to other subscribers if one throws
+- All ESM patterns followed (.js extensions, import type for types)
+- Comprehensive test coverage including type safety verification
+
 If FAIL - where stuck + exact error snippets + what remains:
 ```
 
@@ -629,13 +693,13 @@ Medium OK — streaming implementation
 - Support filtering by level
 
 ### Acceptance criteria
-- [ ] LogStreamer class implemented
-- [ ] `start()` begins watching files
-- [ ] `stop()` ends watching
-- [ ] Emits new log entries
-- [ ] Supports level filtering
-- [ ] Tests pass
-- [ ] `npm test` passes
+- [x] LogStreamer class implemented
+- [x] `start()` begins watching files
+- [x] `stop()` ends watching
+- [x] Emits new log entries
+- [x] Supports level filtering
+- [x] Tests pass
+- [x] `npm test` passes
 
 ### Tests to run
 ```bash
@@ -699,11 +763,33 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
+Status: PASS
+Date: 2026-01-14
 Summary of changes: 
+Implemented LogStreamer class for real-time log file streaming with file watching, position tracking, JSONL parsing, level filtering, and formatted output support. The implementation handles rapid writes by continuously reading until all content is caught up, handles file rotation/truncation, and gracefully handles malformed JSON lines.
+
 Files changed: 
+- src/logging/log-streamer.ts (NEW)
+- src/logging/log-streamer.test.ts (NEW)
+- src/logging/index.ts (MODIFIED - added exports)
+
 Commands run + results: 
+- npm test -- -t "LogStreamer": PASS (21 tests passed)
+- npm run typecheck: PASS (no type errors)
+
+Implementation details:
+- LogStreamer class with StreamOptions interface supporting logPath, minLevel, and format options
+- File watching using fs.watch() with fallback to directory watching for non-existent files
+- Position tracking to read only new content incrementally
+- JSONL parsing with handling for incomplete lines
+- Level filtering using LEVEL_ORDER hierarchy
+- Format support: 'json' (raw JSON) and 'pretty' (formatted terminal output)
+- Handles rapid writes by looping until all content is read
+- Handles file rotation/truncation by resetting position
+- Gracefully skips malformed JSON lines
+- Comprehensive test coverage including edge cases
+- All ESM patterns followed (.js extensions, import type for types)
+
 If FAIL - where stuck + exact error snippets + what remains:
 ```
 
@@ -740,13 +826,13 @@ Fast OK — file management
 - Optionally archive old logs
 
 ### Acceptance criteria
-- [ ] LogRetention class implemented
-- [ ] `cleanup()` removes old logs
-- [ ] `rotate(logPath)` rotates large files
-- [ ] `archive(logPath)` compresses old logs
-- [ ] Respects retention configuration
-- [ ] Tests pass
-- [ ] `npm test` passes
+- [x] LogRetention class implemented
+- [x] `cleanup()` removes old logs
+- [x] `rotate(logPath)` rotates large files
+- [x] `archive(logPath)` compresses old logs
+- [x] Respects retention configuration
+- [x] Tests pass
+- [x] `npm test` passes
 
 ### Tests to run
 ```bash
@@ -811,11 +897,31 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
+Status: PASS
+Date: 2026-01-14
 Summary of changes: 
+Implemented LogRetention class for log file lifecycle management including rotation when size limits are exceeded, deletion of expired logs based on retention period, and optional gzip archiving of old logs. The implementation handles both flat log files and nested directories (e.g., iterations/), uses Node.js built-in zlib for compression, and provides comprehensive statistics about log files.
+
 Files changed: 
+- src/logging/log-retention.ts (NEW)
+- src/logging/log-retention.test.ts (NEW)
+- src/logging/index.ts (MODIFIED - added exports)
+
 Commands run + results: 
+- npm test -- -t "LogRetention": PASS (28 tests passed)
+- npm run typecheck: PASS (no type errors)
+
+Implementation details:
+- LogRetention class with RetentionConfig interface supporting maxAgeDays, maxSizeBytes, archiveOld, and optional archiveDir
+- Rotation naming convention: activity.log → activity.log.1, activity.log.2, etc.
+- Archive format: gzip compression with .gz extension in archive directory
+- Helper methods: shouldRotate() checks file size against maxSizeBytes, isExpired() checks file age against maxAgeDays
+- Core methods: cleanup() orchestrates deletion/rotation/archiving, rotate() handles file rotation, archive() compresses files, getLogStats() provides detailed statistics
+- Recursive file collection handles nested directories while excluding archive directory
+- Graceful error handling continues processing other files if one fails
+- Comprehensive test coverage including edge cases (empty directory, non-log files, subdirectories, etc.)
+- All ESM patterns followed (.js extensions, export type for types)
+
 If FAIL - where stuck + exact error snippets + what remains:
 ```
 
@@ -825,15 +931,15 @@ If FAIL - where stuck + exact error snippets + what remains:
 
 Before marking Phase 7 complete:
 
-- [ ] All 7 tasks have PASS status
-- [ ] Logger service supports all levels
-- [ ] Activity logger captures state changes
-- [ ] Error logger captures stack traces
-- [ ] Iteration logger creates per-iteration files
-- [ ] Event bus broadcasts to subscribers
-- [ ] Log streaming supports --follow
-- [ ] Log retention cleans up old files
-- [ ] `npm test` passes all Phase 7 tests
+- [x] All 7 tasks have PASS status
+- [x] Logger service supports all levels
+- [x] Activity logger captures state changes
+- [x] Error logger captures stack traces
+- [x] Iteration logger creates per-iteration files
+- [x] Event bus broadcasts to subscribers
+- [x] Log streaming supports --follow
+- [x] Log retention cleans up old files
+- [x] `npm test` passes all Phase 7 tests
 
 ### Phase 7 Stop Point
 
