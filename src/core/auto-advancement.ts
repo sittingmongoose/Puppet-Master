@@ -9,9 +9,10 @@
  */
 
 import type { TierEvent } from '../types/events.js';
-import type { GateReport, GateResult } from '../types/tiers.js';
+import type { GateResult } from '../types/tiers.js';
 import { TierNode } from './tier-node.js';
 import { TierStateManager } from './tier-state-manager.js';
+import type { VerificationIntegration } from '../verification/verification-integration.js';
 
 export type AdvancementAction =
   | 'continue'
@@ -33,9 +34,14 @@ export interface AdvancementResult {
 
 export class AutoAdvancement {
   private readonly tierStateManager: TierStateManager;
+  private readonly verificationIntegration: VerificationIntegration;
 
-  constructor(tierStateManager: TierStateManager) {
+  constructor(
+    tierStateManager: TierStateManager,
+    verificationIntegration: VerificationIntegration
+  ) {
     this.tierStateManager = tierStateManager;
+    this.verificationIntegration = verificationIntegration;
   }
 
   async checkAndAdvance(): Promise<AdvancementResult> {
@@ -257,25 +263,11 @@ export class AutoAdvancement {
   }
 
   async runTaskGate(task: TierNode): Promise<GateResult> {
-    const report: GateReport = {
-      gateId: `task-gate-${task.id}`,
-      timestamp: new Date().toISOString(),
-      verifiersRun: [],
-      overallPassed: false,
-    };
-
-    return { passed: false, report, failureReason: 'Task gate runner not implemented.' };
+    return this.verificationIntegration.runTaskGate(task);
   }
 
   async runPhaseGate(phase: TierNode): Promise<GateResult> {
-    const report: GateReport = {
-      gateId: `phase-gate-${phase.id}`,
-      timestamp: new Date().toISOString(),
-      verifiersRun: [],
-      overallPassed: false,
-    };
-
-    return { passed: false, report, failureReason: 'Phase gate runner not implemented.' };
+    return this.verificationIntegration.runPhaseGate(phase);
   }
 
   private getNextSubtask(task: TierNode): TierNode | null {

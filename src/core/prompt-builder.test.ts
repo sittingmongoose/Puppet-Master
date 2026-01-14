@@ -12,7 +12,6 @@ import { TierNode, createTierNode } from './tier-node.js';
 import type { TierNodeData } from './tier-node.js';
 import type { ProgressEntry } from '../memory/progress-manager.js';
 import type { AgentsContent } from '../memory/agents-manager.js';
-import type { Platform } from '../types/config.js';
 
 describe('PromptBuilder', () => {
   let builder: PromptBuilder;

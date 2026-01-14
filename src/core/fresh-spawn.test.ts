@@ -25,7 +25,12 @@ vi.mock('node:child_process', async () => {
   };
 });
 
-function createMockChildProcess(pid: number): ChildProcess {
+type MockChildProcess = ChildProcess & {
+  _setExitCode: (code: number | null) => void;
+  _setSignalCode: (signal: NodeJS.Signals | null) => void;
+};
+
+function createMockChildProcess(pid: number): MockChildProcess {
   const stdin = new PassThrough();
   const stdout = new PassThrough();
   const stderr = new PassThrough();
@@ -62,27 +67,22 @@ function createMockChildProcess(pid: number): ChildProcess {
       }
       return proc;
     }),
-    on: vi.fn((event: string, listener: (...args: unknown[]) => void) => {
+    on: vi.fn((event: string, _listener: (...args: unknown[]) => void) => {
       if (event === 'data') {
         // Don't emit data by default
       }
       return proc;
     }),
-    emit: vi.fn((event: string, ...args: unknown[]) => {
+    emit: vi.fn((_event: string, ..._args: unknown[]) => {
       return true;
     }),
-  } as unknown as ChildProcess & {
-    _setExitCode: (code: number | null) => void;
-    _setSignalCode: (signal: NodeJS.Signals | null) => void;
-  };
-
-  // Add helper methods to set exit code for testing
-  (proc as any)._setExitCode = (code: number | null) => {
-    exitCode = code;
-  };
-  (proc as any)._setSignalCode = (signal: NodeJS.Signals | null) => {
-    signalCode = signal;
-  };
+    _setExitCode: (code: number | null) => {
+      exitCode = code;
+    },
+    _setSignalCode: (signal: NodeJS.Signals | null) => {
+      signalCode = signal;
+    },
+  } as unknown as MockChildProcess;
 
   return proc;
 }
@@ -526,7 +526,7 @@ describe('FreshSpawner', () => {
       spawner = new FreshSpawner(config);
       const request = createSpawnRequest();
 
-      let mockProc: ChildProcess | undefined;
+      let mockProc: MockChildProcess | undefined;
 
       mockSpawn.mockImplementation((command: string, args: string[]) => {
         if (command === 'git' && args[0] === 'status') {
@@ -549,9 +549,10 @@ describe('FreshSpawner', () => {
 
       // Manually trigger close to simulate process exit
       if (mockProc) {
+        const proc = mockProc;
         setTimeout(() => {
-          (mockProc as any)._setExitCode(0);
-          (mockProc as any).emit('close', 0);
+          proc._setExitCode(0);
+          proc.emit('close', 0);
         }, 50);
       }
 
@@ -567,7 +568,7 @@ describe('FreshSpawner', () => {
       spawner = new FreshSpawner(config);
       const request = createSpawnRequest();
 
-      let mockProc: ChildProcess | undefined;
+      let mockProc: MockChildProcess | undefined;
       const closeListeners: Array<(code: number, signal?: NodeJS.Signals) => void> = [];
 
       mockSpawn.mockImplementation((command: string, args: string[]) => {
@@ -582,12 +583,12 @@ describe('FreshSpawner', () => {
         if (command === 'codex') {
           mockProc = createMockChildProcess(12345);
           // Capture close listener
-          (mockProc as any).once = vi.fn((event: string, listener: (...args: unknown[]) => void) => {
+          mockProc.once = vi.fn((event: string, listener: (...args: unknown[]) => void) => {
             if (event === 'close') {
               closeListeners.push(listener as (code: number, signal?: NodeJS.Signals) => void);
             }
             return mockProc;
-          });
+          }) as unknown as MockChildProcess['once'];
           return mockProc;
         }
         return createMockChildProcess(9999);
@@ -619,7 +620,7 @@ describe('FreshSpawner', () => {
       spawner = new FreshSpawner(config);
       const request = createSpawnRequest();
 
-      let mockProc: ChildProcess | undefined;
+      let mockProc: MockChildProcess | undefined;
 
       mockSpawn.mockImplementation((command: string, args: string[]) => {
         if (command === 'git' && args[0] === 'status') {
@@ -657,7 +658,7 @@ describe('FreshSpawner', () => {
       spawner = new FreshSpawner(config);
       const request = createSpawnRequest();
 
-      let mockProc: ChildProcess | undefined;
+      let mockProc: MockChildProcess | undefined;
 
       mockSpawn.mockImplementation((command: string, args: string[]) => {
         if (command === 'git' && args[0] === 'status') {
@@ -696,14 +697,16 @@ describe('FreshSpawner', () => {
       spawner = new FreshSpawner(config);
 
       // Access private config through spawn to verify
-      expect((spawner as any).config.allowSessionResume).toBe(false);
+      const internal = spawner as unknown as { config: Required<SpawnConfig> };
+      expect(internal.config.allowSessionResume).toBe(false);
     });
 
     it('respects explicit allowSessionResume setting', () => {
       const config = createSpawnConfig({ workingDirectory: tempDir, allowSessionResume: true });
       spawner = new FreshSpawner(config);
 
-      expect((spawner as any).config.allowSessionResume).toBe(true);
+      const internal = spawner as unknown as { config: Required<SpawnConfig> };
+      expect(internal.config.allowSessionResume).toBe(true);
     });
   });
 });

@@ -6,7 +6,6 @@
 
 import { describe, it, expect, beforeEach } from 'vitest';
 import { OutputParser } from './output-parser.js';
-import type { ParsedOutput, CompletionSignal } from './output-parser.js';
 
 describe('OutputParser', () => {
   let parser: OutputParser;
@@ -348,7 +347,7 @@ describe('OutputParser', () => {
 
       parser.parse(output1);
       parser.parse(output2);
-      const result = parser.parse(output3);
+      parser.parse(output3);
 
       // The third failure should trigger gutter detection
       expect(parser.detectGutterIndicators(output3)).toBe(true);

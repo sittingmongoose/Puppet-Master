@@ -92,6 +92,7 @@ describe('escalation', () => {
         gateId: 'gate-1',
         timestamp: now,
         verifiersRun: [],
+        summary: failureReason,
         overallPassed: false,
       },
       failureReason,

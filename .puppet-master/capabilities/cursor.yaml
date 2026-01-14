@@ -1,0 +1,25 @@
+platform: cursor
+version: 1.0.0
+capabilities:
+  streaming: false
+  codeExecution: false
+  imageGeneration: false
+  fileAccess: false
+  webSearch: false
+  computerUse: false
+  maxContextTokens: 100000
+  maxOutputTokens: 4000
+  supportedLanguages:
+    - typescript
+    - javascript
+    - python
+quotaInfo:
+  remaining: 9007199254740991
+  limit: 9007199254740991
+  resetsAt: '2026-01-14T21:36:01.630Z'
+  period: day
+cooldownInfo:
+  active: false
+  endsAt: null
+  reason: null
+probeTimestamp: '2026-01-13T21:36:01.609Z'

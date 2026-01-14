@@ -10,6 +10,7 @@ import { TierStateManager } from './tier-state-manager.js';
 import { PrdManager } from '../memory/index.js';
 import type { GateResult } from '../types/tiers.js';
 import type { ItemStatus, Phase, PRD, Subtask, Task } from '../types/prd.js';
+import type { VerificationIntegration } from '../verification/verification-integration.js';
 
 describe('auto-advancement', () => {
   afterEach(() => {
@@ -24,6 +25,7 @@ describe('auto-advancement', () => {
         timestamp: new Date().toISOString(),
         verifiersRun: [],
         overallPassed: passed,
+        summary: passed ? 'Gate passed' : 'Gate failed',
       },
       ...(passed ? {} : { failureReason: 'Gate failed' }),
     };
@@ -100,9 +102,18 @@ describe('auto-advancement', () => {
     };
   }
 
+  function createMockVerificationIntegration(): VerificationIntegration {
+    return {
+      runTaskGate: vi.fn(),
+      runPhaseGate: vi.fn(),
+      handleGateResult: vi.fn(),
+      runSubtaskVerification: vi.fn(),
+    } as unknown as VerificationIntegration;
+  }
+
   async function withTierStateManager(
     prd: PRD,
-    fn: (manager: TierStateManager) => Promise<void>
+    fn: (manager: TierStateManager, verificationIntegration: VerificationIntegration) => Promise<void>
   ): Promise<void> {
     const testDir = `.puppet-master-test-auto-advancement-${Math.random().toString(16).slice(2)}`;
     const prdPath = join(testDir, 'prd.json');
@@ -117,7 +128,9 @@ describe('auto-advancement', () => {
       const manager = new TierStateManager(prdManager);
       await manager.initialize();
 
-      await fn(manager);
+      const verificationIntegration = createMockVerificationIntegration();
+
+      await fn(manager, verificationIntegration);
     } finally {
       try {
         await fs.rm(testDir, { recursive: true, force: true });
@@ -137,10 +150,10 @@ describe('auto-advancement', () => {
     const task = createTask(now, taskId, phaseId, 'running', [subtaskDone, subtaskNext]);
     const phase = createPhase(now, phaseId, 'running', [task]);
 
-    await withTierStateManager(createPrd(now, [phase]), async (manager) => {
+    await withTierStateManager(createPrd(now, [phase]), async (manager, verificationIntegration) => {
       manager.setCurrentSubtask(subtaskDone.id);
 
-      const advancement = new AutoAdvancement(manager);
+      const advancement = new AutoAdvancement(manager, verificationIntegration);
       const taskGateSpy = vi.spyOn(advancement, 'runTaskGate');
       const phaseGateSpy = vi.spyOn(advancement, 'runPhaseGate');
 
@@ -168,10 +181,10 @@ describe('auto-advancement', () => {
 
     const phase = createPhase(now, phaseId, 'running', [task1, task2]);
 
-    await withTierStateManager(createPrd(now, [phase]), async (manager) => {
+    await withTierStateManager(createPrd(now, [phase]), async (manager, verificationIntegration) => {
       manager.setCurrentSubtask(task1SubB.id);
 
-      const advancement = new AutoAdvancement(manager);
+      const advancement = new AutoAdvancement(manager, verificationIntegration);
       const taskGateSpy = vi.spyOn(advancement, 'runTaskGate').mockResolvedValue(createGateResult(true));
       const phaseGateSpy = vi.spyOn(advancement, 'runPhaseGate');
 
@@ -198,10 +211,10 @@ describe('auto-advancement', () => {
 
     const phase = createPhase(now, phaseId, 'running', [task1, task2]);
 
-    await withTierStateManager(createPrd(now, [phase]), async (manager) => {
+    await withTierStateManager(createPrd(now, [phase]), async (manager, verificationIntegration) => {
       manager.setCurrentSubtask(task1Sub.id);
 
-      const advancement = new AutoAdvancement(manager);
+      const advancement = new AutoAdvancement(manager, verificationIntegration);
       vi.spyOn(advancement, 'runTaskGate').mockResolvedValue(createGateResult(true));
 
       const result = await advancement.checkAndAdvance();
@@ -230,10 +243,10 @@ describe('auto-advancement', () => {
       ]),
     ]);
 
-    await withTierStateManager(createPrd(now, [phase1, phase2]), async (manager) => {
+    await withTierStateManager(createPrd(now, [phase1, phase2]), async (manager, verificationIntegration) => {
       manager.setCurrentSubtask(subtask1Id);
 
-      const advancement = new AutoAdvancement(manager);
+      const advancement = new AutoAdvancement(manager, verificationIntegration);
       vi.spyOn(advancement, 'runTaskGate').mockResolvedValue(createGateResult(true));
       const phaseGateSpy = vi.spyOn(advancement, 'runPhaseGate').mockResolvedValue(createGateResult(true));
 
@@ -255,10 +268,10 @@ describe('auto-advancement', () => {
       createTask(now, taskId, phaseId, 'running', [createSubtask(now, subtaskId, taskId, 'passed')]),
     ]);
 
-    await withTierStateManager(createPrd(now, [phase]), async (manager) => {
+    await withTierStateManager(createPrd(now, [phase]), async (manager, verificationIntegration) => {
       manager.setCurrentSubtask(subtaskId);
 
-      const advancement = new AutoAdvancement(manager);
+      const advancement = new AutoAdvancement(manager, verificationIntegration);
       vi.spyOn(advancement, 'runTaskGate').mockResolvedValue(createGateResult(true));
       vi.spyOn(advancement, 'runPhaseGate').mockResolvedValue(createGateResult(true));
 
@@ -277,10 +290,10 @@ describe('auto-advancement', () => {
       createTask(now, taskId, phaseId, 'running', [createSubtask(now, subtaskId, taskId, 'passed')]),
     ]);
 
-    await withTierStateManager(createPrd(now, [phase]), async (manager) => {
+    await withTierStateManager(createPrd(now, [phase]), async (manager, verificationIntegration) => {
       manager.setCurrentSubtask(subtaskId);
 
-      const advancement = new AutoAdvancement(manager);
+      const advancement = new AutoAdvancement(manager, verificationIntegration);
       vi.spyOn(advancement, 'runTaskGate').mockResolvedValue(createGateResult(true));
       vi.spyOn(advancement, 'runPhaseGate').mockResolvedValue(createGateResult(false));
 
@@ -300,10 +313,10 @@ describe('auto-advancement', () => {
       createTask(now, taskId, phaseId, 'running', [createSubtask(now, subtaskId, taskId, 'passed')]),
     ]);
 
-    await withTierStateManager(createPrd(now, [phase]), async (manager) => {
+    await withTierStateManager(createPrd(now, [phase]), async (manager, verificationIntegration) => {
       manager.setCurrentSubtask(subtaskId);
 
-      const advancement = new AutoAdvancement(manager);
+      const advancement = new AutoAdvancement(manager, verificationIntegration);
       vi.spyOn(advancement, 'runTaskGate').mockResolvedValue(createGateResult(false));
       const phaseGateSpy = vi.spyOn(advancement, 'runPhaseGate');
 
@@ -324,12 +337,12 @@ describe('auto-advancement', () => {
       createTask(now, taskId, phaseId, 'running', [createSubtask(now, subtaskId, taskId, 'failed')]),
     ]);
 
-    await withTierStateManager(createPrd(now, [phase]), async (manager) => {
+    await withTierStateManager(createPrd(now, [phase]), async (manager, verificationIntegration) => {
       expect(manager.getCurrentSubtask()).toBeNull();
       expect(manager.getCurrentTask()).toBeNull();
       expect(manager.getCurrentPhase()).toBeNull();
 
-      const advancement = new AutoAdvancement(manager);
+      const advancement = new AutoAdvancement(manager, verificationIntegration);
       const result = await advancement.checkAndAdvance();
       expect(result.action).toBe('continue');
       expect(result.next?.id).toBe(subtaskId);

@@ -1,0 +1,87 @@
+project:
+  name: "integration-test"
+  working_directory: "."
+
+tiers:
+  phase:
+    platform: "cursor"
+    model: "claude-3-5-sonnet-20241022"
+    self_fix: true
+    max_iterations: 3
+    escalation: null
+  task:
+    platform: "cursor"
+    model: "claude-3-5-sonnet-20241022"
+    self_fix: true
+    max_iterations: 5
+    escalation: "phase"
+  subtask:
+    platform: "cursor"
+    model: "claude-3-5-sonnet-20241022"
+    self_fix: true
+    max_iterations: 10
+    escalation: "task"
+  iteration:
+    platform: "cursor"
+    model: "claude-3-5-sonnet-20241022"
+    self_fix: false
+    max_attempts: 1
+    escalation: "subtask"
+
+branching:
+  base_branch: "main"
+  naming_pattern: "ralph/{tier}-{id}"
+  granularity: "per-task"
+  push_policy: "per-subtask"
+  merge_policy: "merge"
+  auto_pr: false
+
+verification:
+  browser_adapter: "playwright"
+  screenshot_on_failure: true
+  evidence_directory: ".puppet-master/evidence"
+
+memory:
+  progress_file: "progress.txt"
+  agents_file: "AGENTS.md"
+  prd_file: ".puppet-master/prd.json"
+  multi_level_agents: false
+  agents_enforcement:
+    require_update_on_failure: true
+    require_update_on_gotcha: true
+    gate_fails_on_missing_update: false
+    reviewer_must_acknowledge: false
+
+budgets:
+  cursor:
+    max_calls_per_run: 100
+    max_calls_per_hour: 50
+    max_calls_per_day: 200
+    cooldown_hours: 1
+    fallback_platform: "codex"
+  codex:
+    max_calls_per_run: 100
+    max_calls_per_hour: 50
+    max_calls_per_day: 200
+    cooldown_hours: 1
+    fallback_platform: "claude"
+  claude:
+    max_calls_per_run: 100
+    max_calls_per_hour: 50
+    max_calls_per_day: 200
+    cooldown_hours: 1
+    fallback_platform: null
+
+budget_enforcement:
+  on_limit_reached: "fallback"
+  warn_at_percentage: 80
+  notify_on_fallback: false
+
+logging:
+  level: "info"
+  retention_days: 30
+
+cli_paths:
+  cursor: "cursor"
+  codex: "codex"
+  claude: "claude"

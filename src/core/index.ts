@@ -30,3 +30,13 @@ export type { PromptContext, FailureInfo, GateReviewContext } from './prompt-bui
 
 export { FreshSpawner } from './fresh-spawn.js';
 export type { SpawnConfig, SpawnRequest, SpawnResult, ProcessAudit } from './fresh-spawn.js';
+
+export { Orchestrator } from './orchestrator.js';
+export type {
+  OrchestratorConfig,
+  OrchestratorDependencies,
+  OrchestratorProgress,
+} from './orchestrator.js';
+
+export { Container, createContainer, createOrchestrator } from './container.js';
+export type { RegistrationType } from './container.js';

@@ -46,12 +46,24 @@ async function* fromArray(chunks: string[]): AsyncIterable<string> {
   }
 }
 
-async function* emptyIterable(): AsyncIterable<string> {
-  // intentionally empty
+function emptyIterable(): AsyncIterable<string> {
+  return {
+    [Symbol.asyncIterator](): AsyncIterator<string> {
+      return {
+        next: async () => ({ value: undefined, done: true }),
+      };
+    },
+  };
 }
 
-async function* neverEndingIterable(): AsyncIterable<string> {
-  await new Promise<void>(() => undefined);
+function neverEndingIterable(): AsyncIterable<string> {
+  return {
+    [Symbol.asyncIterator](): AsyncIterator<string> {
+      return {
+        next: async () => new Promise<IteratorResult<string>>(() => undefined),
+      };
+    },
+  };
 }
 
 function createRunningProcess(pid: number): RunningProcess {
@@ -209,4 +221,3 @@ describe('execution-engine', () => {
     expect(completeCallback).toHaveBeenCalledWith(result);
   });
 });
-

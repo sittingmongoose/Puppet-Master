@@ -1,0 +1,607 @@
+/**
+ * Orchestrator
+ *
+ * Main orchestrator class that coordinates all components and implements
+ * the main orchestration loop for the RWM Puppet Master system.
+ *
+ * See ARCHITECTURE.md Section 2.1 (Core Modules) and BUILD_QUEUE_PHASE_4.md PH4-T08.
+ */
+
+import type { OrchestratorState } from '../types/state.js';
+import type { PuppetMasterConfig } from '../types/config.js';
+import type { TierPlan } from '../types/tiers.js';
+import type { PlatformRunnerContract } from '../types/platforms.js';
+import type { IterationContext, IterationResult } from './execution-engine.js';
+import type { AdvancementResult } from './auto-advancement.js';
+import type { GateResult } from '../types/tiers.js';
+import type { ProgressEntry } from '../memory/progress-manager.js';
+import type { EscalationDecision } from './escalation.js';
+import { OrchestratorStateMachine } from './orchestrator-state-machine.js';
+import { TierStateManager } from './tier-state-manager.js';
+import { AutoAdvancement } from './auto-advancement.js';
+import { Escalation } from './escalation.js';
+import { ExecutionEngine } from './execution-engine.js';
+import { PromptBuilder } from './prompt-builder.js';
+import { OutputParser } from './output-parser.js';
+import { TierNode } from './tier-node.js';
+import type { ConfigManager } from '../config/config-manager.js';
+import type { PrdManager } from '../memory/index.js';
+import type { ProgressManager } from '../memory/index.js';
+import type { AgentsManager } from '../memory/index.js';
+import type { EvidenceStore } from '../memory/index.js';
+import type { UsageTracker } from '../memory/index.js';
+import type { GitManager } from '../git/index.js';
+import type { VerificationIntegration } from '../verification/verification-integration.js';
+
+/**
+ * Configuration for orchestrator initialization
+ */
+export interface OrchestratorConfig {
+  config: PuppetMasterConfig;
+  projectPath: string;
+  prdPath?: string;
+}
+
+/**
+ * All dependencies required by the orchestrator
+ */
+export interface OrchestratorDependencies {
+  configManager: ConfigManager;
+  prdManager: PrdManager;
+  progressManager: ProgressManager;
+  agentsManager: AgentsManager;
+  evidenceStore: EvidenceStore;
+  usageTracker: UsageTracker;
+  gitManager: GitManager;
+  platformRunner: PlatformRunnerContract;
+  verificationIntegration: VerificationIntegration;
+}
+
+/**
+ * Progress information interface
+ */
+export interface OrchestratorProgress {
+  state: OrchestratorState;
+  currentPhase: { id: string; title: string } | null;
+  currentTask: { id: string; title: string } | null;
+  currentSubtask: { id: string; title: string } | null;
+  completedSubtasks: number;
+  totalSubtasks: number;
+  iterationsRun: number;
+  startedAt: string;
+  elapsedTime: number;
+}
+
+/**
+ * Main Orchestrator class
+ */
+export class Orchestrator {
+  private readonly stateMachine: OrchestratorStateMachine;
+  private readonly tierStateManager: TierStateManager;
+  private readonly autoAdvancement: AutoAdvancement;
+  private readonly escalation: Escalation;
+  private readonly executionEngine: ExecutionEngine;
+  private readonly promptBuilder: PromptBuilder;
+  private readonly outputParser: OutputParser;
+  private readonly deps: OrchestratorDependencies;
+  private readonly config: PuppetMasterConfig;
+
+  private startedAt: Date | null = null;
+  private iterationsRun: number = 0;
+  private loopRunning: boolean = false;
+  private loopAborted: boolean = false;
+
+  constructor(orchestratorConfig: OrchestratorConfig) {
+    this.config = orchestratorConfig.config;
+    this.stateMachine = new OrchestratorStateMachine();
+    
+    // These will be initialized in initialize() when deps are provided
+    this.tierStateManager = null as unknown as TierStateManager;
+    this.autoAdvancement = null as unknown as AutoAdvancement;
+    this.escalation = null as unknown as Escalation;
+    this.executionEngine = new ExecutionEngine({
+      defaultTimeout: 300000, // 5 minutes
+      hardTimeout: 600000, // 10 minutes
+      stallDetection: {
+        enabled: true,
+        noOutputTimeout: 120000, // 2 minutes
+        identicalOutputThreshold: 10,
+      },
+    });
+    this.promptBuilder = new PromptBuilder();
+    this.outputParser = new OutputParser();
+
+    // Dependencies will be set in initialize()
+    this.deps = null as unknown as OrchestratorDependencies;
+  }
+
+  /**
+   * Initialize all components
+   */
+  async initialize(deps: OrchestratorDependencies): Promise<void> {
+    // Store dependencies
+    (this as unknown as { deps: OrchestratorDependencies }).deps = deps;
+
+    // Initialize tier state manager
+    (this as unknown as { tierStateManager: TierStateManager }).tierStateManager = new TierStateManager(deps.prdManager);
+    await this.tierStateManager.initialize();
+
+    // Initialize auto-advancement
+    (this as unknown as { autoAdvancement: AutoAdvancement }).autoAdvancement = new AutoAdvancement(
+      this.tierStateManager,
+      deps.verificationIntegration
+    );
+
+    // Initialize escalation
+    (this as unknown as { escalation: Escalation }).escalation = new Escalation(this.tierStateManager, this.config);
+
+    // Set up execution engine with platform runner
+    this.executionEngine.setRunner(deps.platformRunner);
+
+    // Initialize state machine to planning state
+    this.stateMachine.send({ type: 'INIT' });
+  }
+
+  /**
+   * Begin orchestration loop
+   */
+  async start(): Promise<void> {
+    if (this.stateMachine.getCurrentState() !== 'planning') {
+      throw new Error(`Cannot start from state: ${this.stateMachine.getCurrentState()}`);
+    }
+
+    this.stateMachine.send({ type: 'START' });
+    this.startedAt = new Date();
+    this.iterationsRun = 0;
+    this.loopRunning = true;
+    this.loopAborted = false;
+
+    await this.runLoop();
+  }
+
+  /**
+   * Pause execution
+   */
+  async pause(reason?: string): Promise<void> {
+    if (this.stateMachine.getCurrentState() !== 'executing') {
+      throw new Error(`Cannot pause from state: ${this.stateMachine.getCurrentState()}`);
+    }
+
+    this.stateMachine.send({ type: 'PAUSE', reason });
+    this.loopAborted = true;
+  }
+
+  /**
+   * Resume execution
+   */
+  async resume(): Promise<void> {
+    if (this.stateMachine.getCurrentState() !== 'paused') {
+      throw new Error(`Cannot resume from state: ${this.stateMachine.getCurrentState()}`);
+    }
+
+    this.stateMachine.send({ type: 'RESUME' });
+    this.loopRunning = true;
+    this.loopAborted = false;
+
+    await this.runLoop();
+  }
+
+  /**
+   * Cleanly terminate
+   */
+  async stop(): Promise<void> {
+    this.stateMachine.send({ type: 'STOP' });
+    this.loopAborted = true;
+    this.loopRunning = false;
+
+    // Sync state to PRD
+    await this.tierStateManager.syncToPrd();
+  }
+
+  /**
+   * Get current orchestrator state
+   */
+  getState(): OrchestratorState {
+    return this.stateMachine.getCurrentState();
+  }
+
+  /**
+   * Get current progress information
+   */
+  getProgress(): OrchestratorProgress {
+    const currentPhase = this.tierStateManager.getCurrentPhase();
+    const currentTask = this.tierStateManager.getCurrentTask();
+    const currentSubtask = this.tierStateManager.getCurrentSubtask();
+
+    const allSubtasks = this.tierStateManager.getAllSubtasks();
+    const completedSubtasks = allSubtasks.filter((s) => s.getState() === 'passed').length;
+
+    const elapsedTime = this.startedAt
+      ? Math.floor((Date.now() - this.startedAt.getTime()) / 1000)
+      : 0;
+
+    return {
+      state: this.getState(),
+      currentPhase: currentPhase
+        ? { id: currentPhase.id, title: currentPhase.data.title }
+        : null,
+      currentTask: currentTask ? { id: currentTask.id, title: currentTask.data.title } : null,
+      currentSubtask: currentSubtask
+        ? { id: currentSubtask.id, title: currentSubtask.data.title }
+        : null,
+      completedSubtasks,
+      totalSubtasks: allSubtasks.length,
+      iterationsRun: this.iterationsRun,
+      startedAt: this.startedAt?.toISOString() ?? new Date().toISOString(),
+      elapsedTime,
+    };
+  }
+
+  /**
+   * Main orchestration loop
+   */
+  private async runLoop(): Promise<void> {
+    while (this.stateMachine.getCurrentState() === 'executing' && !this.loopAborted) {
+      try {
+        // Get current subtask
+        const subtask = this.tierStateManager.getCurrentSubtask();
+        if (!subtask) {
+          // No more subtasks, check if we should advance or complete
+          const advancement = await this.autoAdvancement.checkAndAdvance();
+          await this.handleAdvancement(advancement);
+          continue;
+        }
+
+        // Build iteration context
+        const context = await this.buildIterationContext(subtask);
+
+        // Execute iteration
+        const result = await this.executionEngine.spawnIteration(context);
+
+        // Handle result
+        await this.handleIterationResult(result, subtask);
+
+        // Record progress
+        await this.recordProgress(result, subtask);
+
+        // Commit changes
+        await this.commitChanges(result, subtask);
+
+        // Check advancement
+        const advancement = await this.autoAdvancement.checkAndAdvance();
+        await this.handleAdvancement(advancement);
+
+        this.iterationsRun++;
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        this.stateMachine.send({ type: 'ERROR', error: errorMessage });
+        throw error;
+      }
+    }
+  }
+
+  /**
+   * Build iteration context for execution
+   */
+  private async buildIterationContext(subtask: TierNode): Promise<IterationContext> {
+    const task = subtask.parent;
+    const phase = task?.parent;
+
+    if (!task || !phase) {
+      throw new Error(`Subtask ${subtask.id} missing parent task or phase`);
+    }
+
+    // Get iteration number
+    const iterationNumber = subtask.data.iterations + 1;
+
+    // Load progress entries
+    const progressEntries = await this.deps.progressManager.getLatest(10);
+
+    // Load agents content
+    const agentsContent = await this.deps.agentsManager.loadForContext({
+      phaseId: phase.id,
+      taskId: task.id,
+      filesTargeted: [],
+    });
+
+    // Build progress content string
+    const progressContent = progressEntries
+      .map((entry: ProgressEntry) => {
+        const lines = [
+          `${entry.timestamp} - ${entry.itemId} (${entry.status})`,
+          `  Session: ${entry.sessionId}`,
+          `  Platform: ${entry.platform}`,
+          `  Duration: ${entry.duration}`,
+        ];
+
+        if (entry.accomplishments.length > 0) {
+          lines.push('  Accomplishments:');
+          entry.accomplishments.forEach((acc: string) => lines.push(`    - ${acc}`));
+        }
+
+        if (entry.filesChanged.length > 0) {
+          lines.push('  Files Changed:');
+          entry.filesChanged.forEach((file: { path: string; description: string }) =>
+            lines.push(`    - ${file.path} - ${file.description}`)
+          );
+        }
+
+        return lines.join('\n');
+      })
+      .join('\n\n');
+
+    // Build agents content array
+    const agentsContentArray = agentsContent.map((agent) => agent.content);
+
+    // Get tier plan from subtask
+    const subtaskPlan: TierPlan = {
+      id: subtask.id,
+      title: subtask.data.title,
+      description: subtask.data.description,
+      approach: subtask.data.plan.approach,
+      dependencies: subtask.data.plan.dependencies,
+    };
+
+    return {
+      subtaskId: subtask.id,
+      taskId: task.id,
+      phaseId: phase.id,
+      iterationNumber,
+      projectPath: this.config.project.workingDirectory,
+      progressContent,
+      agentsContent: agentsContentArray,
+      subtaskPlan,
+    };
+  }
+
+  /**
+   * Execute a single iteration
+   */
+  private async executeIteration(): Promise<IterationResult> {
+    const subtask = this.tierStateManager.getCurrentSubtask();
+    if (!subtask) {
+      throw new Error('No current subtask to execute');
+    }
+
+    const context = await this.buildIterationContext(subtask);
+    return await this.executionEngine.spawnIteration(context);
+  }
+
+  /**
+   * Handle iteration result
+   */
+  private async handleIterationResult(result: IterationResult, subtask: TierNode): Promise<void> {
+    // Parse output
+    const parsed = this.outputParser.parse(result.output);
+
+    // Update subtask iterations count
+    subtask.data.iterations = result.success ? subtask.data.iterations + 1 : subtask.data.iterations;
+
+    if (result.success && result.completionSignal === 'COMPLETE') {
+      // Mark iteration as complete
+      subtask.stateMachine.send({ type: 'ITERATION_COMPLETE', success: true });
+
+      // Transition to gating
+      subtask.stateMachine.send({ type: 'ITERATION_COMPLETE', success: true });
+    } else if (result.completionSignal === 'GUTTER' || !result.success) {
+      // Mark iteration as failed
+      const errorMsg = result.error ?? parsed.errors.join('; ') ?? 'Iteration failed';
+      subtask.stateMachine.send({ type: 'ITERATION_FAILED', error: errorMsg });
+
+      // Check if we should retry or escalate
+      const state = subtask.getState();
+      if (state === 'retrying') {
+        // Will retry
+      } else if (state === 'failed') {
+        // Max attempts reached, will be handled by escalation
+      }
+    }
+
+    // Sync state to PRD
+    await this.tierStateManager.syncToPrd();
+  }
+
+  /**
+   * Handle gate result
+   */
+  private async handleGateResult(result: GateResult, tier: TierNode): Promise<void> {
+    if (result.passed) {
+      tier.stateMachine.send({ type: 'GATE_PASSED' });
+    } else {
+      // Determine if minor or major failure
+      const isMinor = this.isMinorFailure(result);
+      if (isMinor) {
+        tier.stateMachine.send({ type: 'GATE_FAILED_MINOR' });
+      } else {
+        tier.stateMachine.send({ type: 'GATE_FAILED_MAJOR' });
+      }
+    }
+
+    // Sync state to PRD
+    await this.tierStateManager.syncToPrd();
+  }
+
+  /**
+   * Handle advancement decision
+   */
+  private async handleAdvancement(result: AdvancementResult): Promise<void> {
+    switch (result.action) {
+      case 'continue':
+        if (result.next) {
+          if (result.next.type === 'subtask') {
+            this.tierStateManager.setCurrentSubtask(result.next.id);
+          } else if (result.next.type === 'task') {
+            this.tierStateManager.setCurrentTask(result.next.id);
+          } else if (result.next.type === 'phase') {
+            this.tierStateManager.setCurrentPhase(result.next.id);
+          }
+        }
+        break;
+
+      case 'advance_subtask':
+        if (result.next) {
+          this.tierStateManager.setCurrentSubtask(result.next.id);
+        }
+        break;
+
+      case 'advance_task':
+        if (result.next) {
+          this.tierStateManager.setCurrentTask(result.next.id);
+        }
+        break;
+
+      case 'advance_phase':
+        if (result.next) {
+          this.tierStateManager.setCurrentPhase(result.next.id);
+        }
+        break;
+
+      case 'run_task_gate':
+      case 'run_phase_gate':
+        // Gates are run by AutoAdvancement, result contains gate result
+        if (result.gate && result.next) {
+          await this.handleGateResult(result.gate, result.next);
+        }
+        break;
+
+      case 'task_gate_failed':
+      case 'phase_gate_failed':
+        if (result.gate && result.next) {
+          await this.handleGateResult(result.gate, result.next);
+          // Handle escalation if needed
+          const failureContext = {
+            tier: result.next,
+            gateResult: result.gate,
+            failureType: this.determineFailureType(result.gate),
+            failureCount: result.next.data.iterations,
+            maxAttempts: result.next.data.maxIterations,
+          };
+          const escalationDecision = this.escalation.determineAction(failureContext);
+          await this.executeEscalation(escalationDecision, result.next);
+        }
+        break;
+
+      case 'complete':
+        this.stateMachine.send({ type: 'COMPLETE' });
+        this.loopAborted = true;
+        break;
+    }
+
+    // Sync state to PRD
+    await this.tierStateManager.syncToPrd();
+  }
+
+  /**
+   * Record progress
+   */
+  private async recordProgress(result: IterationResult, subtask: TierNode): Promise<void> {
+    const sessionId = this.deps.progressManager.generateSessionId();
+    const platform = this.config.tiers.subtask.platform;
+    const duration = `${Math.floor(result.duration / 60000)}m ${Math.floor((result.duration % 60000) / 1000)}s`;
+
+    const entry: ProgressEntry = {
+      timestamp: new Date().toISOString(),
+      itemId: subtask.id,
+      sessionId,
+      platform,
+      duration,
+      status: result.success ? 'SUCCESS' : 'FAILED',
+      accomplishments: result.learnings,
+      filesChanged: result.filesChanged.map((path) => ({ path, description: 'Modified' })),
+      testsRun: [],
+      learnings: result.learnings,
+      nextSteps: [],
+    };
+
+    await this.deps.progressManager.append(entry);
+  }
+
+  /**
+   * Commit changes to git
+   */
+  private async commitChanges(result: IterationResult, subtask: TierNode): Promise<void> {
+    if (result.filesChanged.length === 0) {
+      return;
+    }
+
+    // Check git status
+    const status = await this.deps.gitManager.getStatus();
+    if (status.modified.length === 0 && status.untracked.length === 0) {
+      return;
+    }
+
+    // Stage all changes
+    await this.deps.gitManager.add(['.']);
+
+    // Commit with formatted message
+    const message = `ralph: [subtask] ${subtask.id} ${subtask.data.title}`;
+    await this.deps.gitManager.commit({ message, files: result.filesChanged });
+  }
+
+  /**
+   * Determine if failure is minor
+   */
+  private isMinorFailure(result: GateResult): boolean {
+    // Minor failures are typically test failures or acceptance criteria issues
+    // Major failures are timeouts, errors, or critical issues
+    if (!result.failureReason) {
+      return false;
+    }
+
+    const minorIndicators = ['test', 'acceptance', 'criteria'];
+    const majorIndicators = ['timeout', 'error', 'fatal', 'exception'];
+
+    const reason = result.failureReason.toLowerCase();
+    if (majorIndicators.some((indicator) => reason.includes(indicator))) {
+      return false;
+    }
+
+    return minorIndicators.some((indicator) => reason.includes(indicator));
+  }
+
+  /**
+   * Determine failure type from gate result
+   */
+  private determineFailureType(result: GateResult): 'test' | 'acceptance' | 'timeout' | 'error' {
+    if (!result.failureReason) {
+      return 'error';
+    }
+
+    const reason = result.failureReason.toLowerCase();
+    if (reason.includes('timeout')) {
+      return 'timeout';
+    }
+    if (reason.includes('test')) {
+      return 'test';
+    }
+    if (reason.includes('acceptance') || reason.includes('criteria')) {
+      return 'acceptance';
+    }
+    return 'error';
+  }
+
+  /**
+   * Execute escalation decision
+   */
+  private async executeEscalation(decision: EscalationDecision, tier: TierNode): Promise<void> {
+    switch (decision.action) {
+      case 'self_fix':
+        await this.escalation.executeSelfFix(decision, tier);
+        break;
+
+      case 'kick_down':
+        await this.escalation.executeKickDown(decision, tier);
+        // Reinitialize tier state manager after kick-down
+        await this.tierStateManager.initialize();
+        break;
+
+      case 'escalate':
+        await this.escalation.executeEscalate(decision, tier);
+        break;
+
+      case 'pause':
+        await this.pause(decision.reason || 'Escalation pause');
+        break;
+    }
+  }
+}

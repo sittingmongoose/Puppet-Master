@@ -108,6 +108,8 @@ export interface GateReport {
   timestamp: string;
   verifiersRun: VerifierResult[];
   overallPassed: boolean;
+  failureType?: 'minor' | 'major';
+  summary: string;
 }
 
 /**

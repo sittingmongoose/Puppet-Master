@@ -1,0 +1,285 @@
+/**
+ * Start command - Begin orchestration loop
+ * 
+ * Implements the main `puppet-master start` command that:
+ * - Loads configuration
+ * - Validates PRD file existence
+ * - Creates and initializes orchestrator
+ * - Handles signals gracefully
+ * - Outputs progress to console
+ */
+
+import { access } from 'fs/promises';
+import { Command } from 'commander';
+import { ConfigManager } from '../../config/config-manager.js';
+import { createContainer } from '../../core/container.js';
+import { Orchestrator } from '../../core/orchestrator.js';
+import type { OrchestratorDependencies } from '../../core/orchestrator.js';
+import type { PuppetMasterConfig } from '../../types/config.js';
+import { PlatformRegistry } from '../../platforms/registry.js';
+import type { CommandModule } from './index.js';
+
+/**
+ * Options for the start command
+ */
+export interface StartOptions {
+  config?: string;
+  prd?: string;
+  verbose?: boolean;
+  dryRun?: boolean;
+}
+
+/**
+ * Progress update interval in milliseconds
+ */
+const PROGRESS_UPDATE_INTERVAL = 5000; // 5 seconds
+
+/**
+ * Main action function for the start command
+ */
+export async function startAction(options: StartOptions): Promise<void> {
+  try {
+    // Load configuration
+    const configManager = new ConfigManager(options.config);
+    const config = await configManager.load();
+
+    // Validate PRD exists
+    const prdPath = options.prd || config.memory.prdFile;
+    try {
+      await access(prdPath);
+    } catch {
+      console.error(`PRD file not found: ${prdPath}`);
+      process.exit(1);
+    }
+
+    // Dry run check
+    if (options.dryRun) {
+      console.log('Configuration validated successfully');
+      console.log(`PRD file found: ${prdPath}`);
+      console.log(`Project: ${config.project.name}`);
+      console.log(`Working directory: ${config.project.workingDirectory}`);
+      return;
+    }
+
+    // Create container and resolve dependencies
+    const projectPath = process.cwd();
+    const container = createContainer(config, projectPath);
+
+    // Create orchestrator instance
+    const orchestrator = new Orchestrator({
+      config,
+      projectPath,
+      prdPath,
+    });
+
+    // Resolve all dependencies from container
+    const deps: OrchestratorDependencies = {
+      configManager: container.resolve('configManager'),
+      prdManager: container.resolve('prdManager'),
+      progressManager: container.resolve('progressManager'),
+      agentsManager: container.resolve('agentsManager'),
+      evidenceStore: container.resolve('evidenceStore'),
+      usageTracker: container.resolve('usageTracker'),
+      gitManager: container.resolve('gitManager'),
+      platformRunner: getPlatformRunner(container, config),
+      verificationIntegration: container.resolve('verificationIntegration'),
+    };
+
+    // Setup signal handlers
+    setupSignalHandlers(orchestrator);
+
+    // Setup progress output
+    const progressInterval = setupProgressOutput(orchestrator, options.verbose ?? false);
+
+    // Initialize
+    console.log('Initializing orchestrator...');
+    await orchestrator.initialize(deps);
+
+    // Start
+    console.log('Starting orchestration...');
+    await orchestrator.start();
+
+    // Clear progress interval when done
+    if (progressInterval) {
+      clearInterval(progressInterval);
+    }
+
+    console.log('Orchestration complete');
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error('Error starting orchestration:', errorMessage);
+    if (options.verbose) {
+      console.error(error);
+    }
+    process.exit(1);
+  }
+}
+
+/**
+ * Get platform runner for the configured subtask platform
+ */
+function getPlatformRunner(container: ReturnType<typeof createContainer>, config: PuppetMasterConfig): OrchestratorDependencies['platformRunner'] {
+  const registry = container.resolve<PlatformRegistry>('platformRegistry');
+  const platform = config.tiers.subtask.platform;
+  
+  // Initialize registry with runners if needed
+  if (registry.getAvailable().length === 0) {
+    const defaultRegistry = PlatformRegistry.createDefault(config);
+    // Copy runners from default registry
+    for (const p of defaultRegistry.getAvailable()) {
+      const runner = defaultRegistry.get(p);
+      if (runner) {
+        registry.register(p, runner);
+      }
+    }
+  }
+  
+  // Try to get runner from registry
+  const runner = registry.get(platform);
+  if (runner) {
+    return runner as OrchestratorDependencies['platformRunner'];
+  }
+
+  // If not found, throw error
+  throw new Error(`Platform runner for '${platform}' not found. Ensure the platform is properly configured.`);
+}
+
+/**
+ * Setup signal handlers for graceful shutdown
+ */
+function setupSignalHandlers(orchestrator: Orchestrator): void {
+  let sigintReceived = false;
+
+  process.on('SIGINT', async () => {
+    if (!sigintReceived) {
+      sigintReceived = true;
+      console.log('\nReceived SIGINT, pausing...');
+      try {
+        await orchestrator.pause('User interrupt');
+        console.log('Orchestrator paused. Press Ctrl+C again to stop.');
+        
+        // Reset after 2 seconds to allow second Ctrl+C
+        setTimeout(() => {
+          sigintReceived = false;
+        }, 2000);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        console.error('Error pausing orchestrator:', errorMessage);
+      }
+    } else {
+      console.log('\nReceived second SIGINT, stopping...');
+      try {
+        await orchestrator.stop();
+        process.exit(0);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        console.error('Error stopping orchestrator:', errorMessage);
+        process.exit(1);
+      }
+    }
+  });
+
+  process.on('SIGTERM', async () => {
+    console.log('Received SIGTERM, stopping...');
+    try {
+      await orchestrator.stop();
+      process.exit(0);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      console.error('Error stopping orchestrator:', errorMessage);
+      process.exit(1);
+    }
+  });
+}
+
+/**
+ * Setup periodic progress output
+ * Returns interval ID that can be cleared when done
+ */
+function setupProgressOutput(orchestrator: Orchestrator, verbose: boolean): NodeJS.Timeout | null {
+  // Only show progress if orchestrator has getProgress method
+  if (typeof orchestrator.getProgress !== 'function') {
+    return null;
+  }
+
+  const interval = setInterval(() => {
+    try {
+      const progress = orchestrator.getProgress();
+      
+      if (progress.currentPhase || progress.currentTask || progress.currentSubtask) {
+        const parts: string[] = [];
+        
+        if (progress.currentPhase) {
+          parts.push(`Phase: ${progress.currentPhase.id} - ${progress.currentPhase.title}`);
+        }
+        if (progress.currentTask) {
+          parts.push(`Task: ${progress.currentTask.id} - ${progress.currentTask.title}`);
+        }
+        if (progress.currentSubtask) {
+          parts.push(`Subtask: ${progress.currentSubtask.id} - ${progress.currentSubtask.title}`);
+        }
+        
+        if (parts.length > 0) {
+          console.log(`\n[Progress] ${parts.join(' | ')}`);
+          
+          if (verbose) {
+            console.log(`  State: ${progress.state}`);
+            console.log(`  Completed: ${progress.completedSubtasks}/${progress.totalSubtasks} subtasks`);
+            console.log(`  Iterations: ${progress.iterationsRun}`);
+            console.log(`  Elapsed: ${formatElapsedTime(progress.elapsedTime)}`);
+          }
+        }
+      }
+    } catch (error) {
+      // Silently ignore progress errors to avoid cluttering output
+      if (verbose) {
+        console.error('Error getting progress:', error);
+      }
+    }
+  }, PROGRESS_UPDATE_INTERVAL);
+
+  return interval;
+}
+
+/**
+ * Format elapsed time in seconds to human-readable string
+ */
+function formatElapsedTime(seconds: number): string {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+
+  if (hours > 0) {
+    return `${hours}h ${minutes}m ${secs}s`;
+  } else if (minutes > 0) {
+    return `${minutes}m ${secs}s`;
+  } else {
+    return `${secs}s`;
+  }
+}
+
+/**
+ * StartCommand class implementing CommandModule interface
+ */
+export class StartCommand implements CommandModule {
+  /**
+   * Register the start command with the Commander.js program
+   */
+  register(program: Command): void {
+    program
+      .command('start')
+      .description('Start the orchestration loop')
+      .option('-c, --config <path>', 'Path to config file')
+      .option('-p, --prd <path>', 'Path to PRD file')
+      .option('-v, --verbose', 'Enable verbose output')
+      .option('--dry-run', 'Validate configuration without executing')
+      .action(async (options: StartOptions) => {
+        await startAction(options);
+      });
+  }
+}
+
+/**
+ * Export singleton instance for registration
+ */
+export const startCommand = new StartCommand();

@@ -96,3 +96,11 @@ export type {
   UsageQuery,
   UsageSummary,
 } from './usage.js';
+
+export type {
+  FeatureFlag,
+  PlatformCapabilities as DiscoveryPlatformCapabilities,
+  QuotaInfo,
+  CooldownInfo,
+  CapabilityProbeResult,
+} from './capabilities.js';

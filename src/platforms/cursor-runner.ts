@@ -1,0 +1,164 @@
+/**
+ * Cursor Platform Runner for RWM Puppet Master
+ * 
+ * Implements Cursor-specific CLI invocation using cursor-agent.
+ * 
+ * Per REQUIREMENTS.md Section 3.4.4 (Cursor Integration) and
+ * ARCHITECTURE.md Section 6.1.2 (Platform Runners).
+ */
+
+import { spawn, type ChildProcess } from 'child_process';
+import { BasePlatformRunner } from './base-runner.js';
+import { CapabilityDiscoveryService } from './capability-discovery.js';
+import type {
+  Platform,
+  ExecutionRequest,
+  ExecutionResult,
+} from '../types/platforms.js';
+
+/**
+ * Cursor-specific platform runner.
+ * 
+ * Extends BasePlatformRunner to provide Cursor CLI integration.
+ * Uses cursor-agent command with -p flag for non-interactive mode.
+ */
+export class CursorRunner extends BasePlatformRunner {
+  readonly platform: Platform = 'cursor';
+  private readonly command: string;
+
+  /**
+   * Creates a new CursorRunner instance.
+   * 
+   * @param capabilityService - Capability discovery service (required)
+   * @param command - Cursor CLI command path (default: 'cursor-agent')
+   * @param defaultTimeout - Default timeout in milliseconds (default: 300000 = 5 minutes)
+   * @param hardTimeout - Hard timeout in milliseconds (default: 1800000 = 30 minutes)
+   */
+  constructor(
+    capabilityService: CapabilityDiscoveryService,
+    command: string = 'cursor-agent',
+    defaultTimeout: number = 300_000,
+    hardTimeout: number = 1_800_000
+  ) {
+    super(capabilityService, defaultTimeout, hardTimeout);
+    this.command = command;
+  }
+
+  /**
+   * Spawns a cursor-agent process for execution.
+   * 
+   * Creates a fresh process (no session reuse) per REQUIREMENTS.md Section 26.1.
+   */
+  protected async spawn(request: ExecutionRequest): Promise<ChildProcess> {
+    const args = this.buildArgs(request);
+
+    const proc = spawn(this.command, args, {
+      cwd: request.workingDirectory,
+      stdio: ['pipe', 'pipe', 'pipe'],
+      env: {
+        ...process.env,
+        // Ensure non-interactive mode
+        CURSOR_NON_INTERACTIVE: '1',
+      },
+    });
+
+    // Write prompt to stdin if provided
+    if (request.prompt && proc.stdin) {
+      proc.stdin.write(request.prompt);
+      proc.stdin.end();
+    }
+
+    return proc;
+  }
+
+  /**
+   * Builds command-line arguments for cursor-agent.
+   * 
+   * Constructs arguments based on request:
+   * - -p flag for non-interactive/print mode
+   * - --model flag if model is specified
+   * - Prompt is written to stdin, not passed as argument
+   */
+  protected buildArgs(request: ExecutionRequest): string[] {
+    const args: string[] = [];
+
+    // Non-interactive mode (print mode)
+    if (request.nonInteractive) {
+      args.push('-p');
+    }
+
+    // Model selection
+    if (request.model) {
+      args.push('--model', request.model);
+    }
+
+    // Note: Prompt is written to stdin, not passed as argument
+    // This matches the pattern from REQUIREMENTS.md Section 3.4.4
+
+    return args;
+  }
+
+  /**
+   * Parses cursor-agent output to extract execution results.
+   * 
+   * Detects completion signals:
+   * - <ralph>COMPLETE</ralph> - Task completed successfully
+   * - <ralph>GUTTER</ralph> - Agent stuck, cannot proceed
+   * 
+   * Also extracts:
+   * - Files changed (if detectable from output)
+   * - Test results (if detectable from output)
+   * - Session ID (if present)
+   */
+  protected parseOutput(output: string): ExecutionResult {
+    // Detect completion signals
+    const hasComplete = output.includes('<ralph>COMPLETE</ralph>');
+    const hasGutter = output.includes('<ralph>GUTTER</ralph>');
+
+    // Determine success based on signals
+    // If COMPLETE is present, success = true
+    // If GUTTER is present, success = false
+    // Otherwise, assume success (exit code will determine)
+    let success = true;
+    if (hasGutter) {
+      success = false;
+    } else if (hasComplete) {
+      success = true;
+    }
+
+    // Extract session ID if present (format: PM-YYYY-MM-DD-HH-MM-SS-NNN)
+    const sessionIdMatch = output.match(/PM-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}-\d{3}/);
+    const sessionId = sessionIdMatch ? sessionIdMatch[0] : undefined;
+
+    // Try to extract token count if present
+    const tokenMatch = output.match(/tokens[:\s]+(\d+)/i);
+    const tokensUsed = tokenMatch ? parseInt(tokenMatch[1], 10) : undefined;
+
+    // Note: Files changed extraction would be done here if needed
+    // For now, file tracking is handled elsewhere in the system
+
+    // Build result
+    const result: ExecutionResult = {
+      success,
+      output,
+      exitCode: 0, // Will be set by execute() method
+      duration: 0, // Will be set by execute() method
+      processId: 0, // Will be set by execute() method
+    };
+
+    // Add optional fields if found
+    if (sessionId) {
+      result.sessionId = sessionId;
+    }
+    if (tokensUsed !== undefined) {
+      result.tokensUsed = tokensUsed;
+    }
+
+    // If GUTTER signal found, add error message
+    if (hasGutter) {
+      result.error = 'Agent signaled GUTTER - stuck and cannot proceed';
+    }
+
+    return result;
+  }
+}

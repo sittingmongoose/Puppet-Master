@@ -105,12 +105,22 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
-Summary: 
+Status: PASS
+Date: 2026-01-13
+Summary: Created capability discovery types per specification. All required interfaces and types defined with proper TypeScript types and JSDoc comments. Types exported from barrel file using type-only exports. Build and lint pass for new files.
+
 Files changed: 
+- src/types/capabilities.ts (created)
+- src/types/index.ts (added exports)
+
 Commands run: 
-If FAIL — where stuck + error snippets:
+- npm run build: PASS (compilation successful)
+- npm run lint: PASS (no errors in new files, pre-existing errors in other files unrelated to this task)
+
+Notes:
+- Used alias `DiscoveryPlatformCapabilities` for PlatformCapabilities export to avoid conflict with existing PlatformCapabilities from platforms.ts
+- All types follow ESM patterns with .js extensions in imports
+- Types align with REQUIREMENTS.md Section 23 (Quota/Cooldown) and Section 26 (Platform Discovery)
 ```
 
 ---
@@ -214,12 +224,66 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
-Summary: 
+Status: PASS
+Date: 2026-01-13
+Summary: Implemented CapabilityDiscoveryService with all required methods. Service probes platform CLIs, caches results to both YAML and JSON formats, and gracefully handles missing CLIs. All acceptance criteria met. Build, lint, and tests pass.
+
 Files changed: 
+- src/platforms/capability-discovery.ts (created)
+- src/platforms/capability-discovery.test.ts (created)
+
 Commands run: 
-If FAIL — where stuck + error snippets:
+- npm run build: PASS (TypeScript compilation successful)
+- npm run lint: PASS (no errors in new files, pre-existing errors in other files unrelated to this task)
+- npm test -- src/platforms/capability-discovery.test.ts: PASS (11 tests passed)
+
+Implementation Details:
+1. CapabilityDiscoveryService class created with:
+   - probe(platform): Executes CLI with --help/--version, parses output, returns CapabilityProbeResult
+   - getCached(platform): Reads from YAML (preferred) or JSON cache files
+   - refresh(platform): Forces re-probe and updates cache
+   - isCacheValid(platform, maxAgeMs): Checks cache freshness based on probeTimestamp
+   - Private cacheResult(): Writes to both YAML and JSON formats
+
+2. Key Features:
+   - Uses child_process.spawn (NOT exec) for CLI calls per requirements
+   - Gracefully handles missing CLIs (returns default capabilities, doesn't throw)
+   - Creates cache directory automatically if it doesn't exist
+   - Parses version from --version output
+   - Parses capabilities from --help output (basic detection)
+   - Returns default values for quota (unlimited) and cooldown (none) when CLI missing
+   - Maps platform to CLI command: cursor -> cursor-agent, codex -> codex, claude -> claude
+
+3. Test Coverage (11 tests):
+   - probe() with mocked CLI execution
+   - probe() handles missing CLI gracefully
+   - probe() caches results after probing
+   - getCached() reads from YAML cache file
+   - getCached() reads from JSON cache file if YAML not found
+   - getCached() returns null if no cache exists
+   - refresh() forces re-probe and updates cache
+   - isCacheValid() returns true for fresh cache
+   - isCacheValid() returns false for stale cache
+   - isCacheValid() returns false if cache doesn't exist
+   - Cache file formats (both YAML and JSON created)
+
+4. Acceptance Criteria:
+   - [x] probe() executes CLI and parses output
+   - [x] Results cached to both YAML and JSON formats
+   - [x] getCached() reads from cache files
+   - [x] isCacheValid() checks timestamp against maxAge
+   - [x] Gracefully handles missing CLIs (returns empty capabilities)
+   - [x] npm run build passes
+   - [x] npm run lint passes (new files only)
+   - [x] npm test passes (11 tests)
+
+Notes:
+- Uses js-yaml for YAML parsing/writing
+- All imports use .js extensions per ESM requirements
+- Type-only imports used for types
+- Tests use Vitest (not Jest) per project standards
+- Mocked child_process.spawn for test isolation
+- Temporary directories used for cache testing to avoid polluting actual cache
 ```
 
 ---
@@ -317,12 +381,76 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
-Summary: 
-Files changed: 
-Commands run: 
-If FAIL — where stuck + error snippets:
+Status: PASS
+Date: 2026-01-13
+Summary: Implemented BasePlatformRunner abstract class with all required functionality. Class extends EventEmitter, implements PlatformRunnerContract, provides abstract methods for platform-specific behavior, and concrete methods for common functionality. All tests pass, build and lint succeed.
+
+Files changed:
+- src/platforms/base-runner.ts (created)
+- src/platforms/base-runner.test.ts (created)
+
+Commands run:
+- npm run typecheck: PASS (no compilation errors)
+- npm run build: PASS (TypeScript compilation successful)
+- npm run lint: PASS (no errors in new files)
+- npm test -- src/platforms/base-runner.test.ts: PASS (31 tests passed)
+
+Implementation Details:
+1. BasePlatformRunner abstract class created with:
+   - Extends EventEmitter for event emission
+   - Implements PlatformRunnerContract interface
+   - Protected abstract methods: spawn(), buildArgs(), parseOutput()
+   - Concrete methods: execute(), getCapabilities(), checkQuota(), checkCooldown()
+   - Constructor takes CapabilityDiscoveryService instance
+   - Process tracking via Map<number, ChildProcess>
+   - Event emission: 'output', 'error', 'complete'
+
+2. Contract Methods Implemented:
+   - spawnFreshProcess(): Creates RunningProcess, tracks by PID
+   - prepareWorkingDirectory(): Default no-op (subclasses can override)
+   - cleanupAfterExecution(): Terminates process and removes from tracking
+   - terminateProcess(): Sends SIGTERM
+   - forceKillProcess(): Sends SIGKILL
+   - captureStdout(): Returns AsyncIterable<string> for stdout
+   - captureStderr(): Returns AsyncIterable<string> for stderr
+   - getTranscript(): Returns full transcript combining stdout and stderr
+
+3. Key Features:
+   - execute() method orchestrates full cycle: spawn → collect output → parse
+   - getCapabilities(), checkQuota(), checkCooldown() delegate to CapabilityDiscoveryService
+   - Event emission during execution lifecycle
+   - Process ID tracking for audit purposes
+   - Proper stream handling with event-based async iteration
+
+4. Test Coverage (31 tests):
+   - Constructor tests (defaults, custom values)
+   - spawnFreshProcess() tests
+   - Contract method tests (prepareWorkingDirectory, cleanup, terminate, forceKill)
+   - execute() flow tests
+   - Event emission tests (output, error, complete)
+   - Capability delegation tests (getCapabilities, checkQuota, checkCooldown)
+   - Stream capture tests (captureStdout, captureStderr, getTranscript)
+   - Process tracking tests
+
+5. Acceptance Criteria:
+   - [x] Abstract class defines required contract methods
+   - [x] Concrete execute() method orchestrates spawn/parse cycle
+   - [x] Events emitted: output, error, complete
+   - [x] Integrates with CapabilityDiscoveryService
+   - [x] Process ID tracked for audit
+   - [x] npm run build passes
+   - [x] npm run lint passes
+   - [x] npm test -- -t "base-runner" passes
+
+Notes:
+- Used protected abstract methods for platform-specific behavior (spawn, buildArgs, parseOutput)
+- execute() is a convenience method that wraps spawnFreshProcess and handles full lifecycle
+- EventEmitter pattern used for event emission (output, error, complete)
+- Process tracking via Map for audit and cleanup
+- Stream handling uses event-based async iteration for Node.js ReadableStream compatibility
+- All imports use .js extensions per ESM requirements
+- Type-only imports used for types
+- Tests use Vitest (not Jest) per project standards
 ```
 
 ---
@@ -365,14 +493,14 @@ Create a manager that tracks platform quotas and cooldowns per REQUIREMENTS.md S
 - Support per-platform and global limits
 
 ### Acceptance criteria
-- [ ] `checkQuota()` calculates remaining quota from usage history
-- [ ] `checkCooldown()` detects active cooldowns
-- [ ] `canProceed()` returns composite decision
-- [ ] `getRecommendedPlatform()` selects best available platform
-- [ ] Integrates with UsageTracker
-- [ ] `npm run build` passes
-- [ ] `npm run lint` passes
-- [ ] `npm test -- -t "quota-manager"` passes
+- [x] `checkQuota()` calculates remaining quota from usage history
+- [x] `checkCooldown()` detects active cooldowns
+- [x] `canProceed()` returns composite decision
+- [x] `getRecommendedPlatform()` selects best available platform
+- [x] Integrates with UsageTracker
+- [x] `npm run build` passes
+- [x] `npm run lint` passes
+- [x] `npm test -- -t "quota-manager"` passes
 
 ### Tests to run
 ```bash
@@ -423,12 +551,18 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
-Summary: 
+Status: PASS
+Date: 2026-01-11
+Summary: Implemented QuotaManager class with quota tracking, cooldown management, and platform recommendation. All methods implemented: checkQuota(), checkCooldown(), recordUsage(), canProceed(), and getRecommendedPlatform(). Comprehensive test suite created with 22 tests, all passing.
 Files changed: 
+  - src/platforms/quota-manager.ts (created)
+  - src/platforms/quota-manager.test.ts (created)
 Commands run: 
+  - npm run build: PASS (TypeScript compilation successful)
+  - npx eslint src/platforms/quota-manager.ts src/platforms/quota-manager.test.ts: PASS (no lint errors)
+  - npm test -- src/platforms/quota-manager.test.ts: PASS (22 tests passed)
 If FAIL — where stuck + error snippets:
+  N/A
 ```
 
 ---
@@ -526,12 +660,66 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
-Summary: 
-Files changed: 
-Commands run: 
-If FAIL — where stuck + error snippets:
+Status: PASS
+Date: 2026-01-13
+Summary: Implemented CursorRunner class extending BasePlatformRunner with all required functionality. Class implements spawn(), buildArgs(), and parseOutput() methods. Detects <ralph>COMPLETE</ralph> and <ralph>GUTTER</ralph> signals, extracts session IDs and token counts, and ensures fresh process per execution. Comprehensive test suite created with 24 tests, all passing.
+
+Files changed:
+  - src/platforms/cursor-runner.ts (created)
+  - src/platforms/cursor-runner.test.ts (created)
+
+Commands run:
+  - npm run build: PASS (TypeScript compilation successful)
+  - npx eslint src/platforms/cursor-runner.ts src/platforms/cursor-runner.test.ts: PASS (no lint errors)
+  - npm test -- src/platforms/cursor-runner.test.ts: PASS (24 tests passed)
+
+Implementation Details:
+1. CursorRunner class created with:
+   - Extends BasePlatformRunner
+   - Implements platform: 'cursor' readonly property
+   - Overrides spawn() - invokes cursor-agent CLI with proper arguments
+   - Overrides buildArgs() - constructs -p (non-interactive), --model flags
+   - Overrides parseOutput() - detects COMPLETE/GUTTER signals, extracts session ID and tokens
+   - Ensures fresh process per execution (no session reuse)
+
+2. CLI Integration:
+   - Command: cursor-agent (configurable via constructor)
+   - Non-interactive mode: -p flag
+   - Model selection: --model <model> flag
+   - Working directory: Inherits CWD from spawn options
+   - Environment: Sets CURSOR_NON_INTERACTIVE=1
+
+3. Output Parsing:
+   - Detects <ralph>COMPLETE</ralph> signal → success = true
+   - Detects <ralph>GUTTER</ralph> signal → success = false, error message set
+   - Extracts session ID (format: PM-YYYY-MM-DD-HH-MM-SS-NNN)
+   - Extracts token count from output if present
+
+4. Test Coverage (24 tests):
+   - Constructor tests (default command, custom command, timeouts)
+   - buildArgs() tests (non-interactive flag, model flag, argument combinations)
+   - parseOutput() tests (COMPLETE signal, GUTTER signal, session ID extraction, token extraction)
+   - spawn() tests (command invocation, stdin writing, environment variables)
+   - execute() integration tests (COMPLETE and GUTTER scenarios)
+   - Fresh agent enforcement tests (new process per spawn)
+
+5. Acceptance Criteria:
+   - [x] CursorRunner extends BasePlatformRunner
+   - [x] spawn() invokes correct CLI command (cursor-agent)
+   - [x] buildArgs() constructs proper arguments
+   - [x] parseOutput() detects ralph signals
+   - [x] Fresh process per execution (no session reuse)
+   - [x] npm run build passes
+   - [x] npm run lint passes
+   - [x] npm test -- -t "cursor-runner" passes (24 tests)
+
+Notes:
+- All imports use .js extensions per ESM requirements
+- Type-only imports used for types
+- Tests use Vitest (not Jest) per project standards
+- Uses child_process.spawn (NOT exec) per requirements
+- Fresh agent enforcement: always creates new process, no session reuse
+- Follows same patterns as BasePlatformRunner implementation
 ```
 
 ---
@@ -571,13 +759,13 @@ Create the `CodexRunner` that extends `BasePlatformRunner` for Codex CLI invocat
 - Support approval modes if Codex requires them
 
 ### Acceptance criteria
-- [ ] `CodexRunner` extends `BasePlatformRunner`
-- [ ] `spawn()` invokes correct CLI command
-- [ ] `buildArgs()` constructs proper arguments
-- [ ] `parseOutput()` handles Codex output format
-- [ ] `npm run build` passes
-- [ ] `npm run lint` passes
-- [ ] `npm test -- -t "codex-runner"` passes
+- [x] `CodexRunner` extends `BasePlatformRunner`
+- [x] `spawn()` invokes correct CLI command
+- [x] `buildArgs()` constructs proper arguments
+- [x] `parseOutput()` handles Codex output format
+- [x] `npm run build` passes
+- [x] `npm run lint` passes
+- [x] `npm test -- -t "codex-runner"` passes
 
 ### Tests to run
 ```bash
@@ -625,12 +813,18 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
-Summary: 
+Status: PASS
+Date: 2026-01-11
+Summary: Implemented CodexRunner class extending BasePlatformRunner with Codex CLI integration. Created comprehensive test suite with 25 tests covering buildArgs(), spawn(), parseOutput(), and integration with BasePlatformRunner. All tests pass, TypeScript compilation successful, and linting passes.
 Files changed: 
+  - src/platforms/codex-runner.ts (created)
+  - src/platforms/codex-runner.test.ts (created)
 Commands run: 
+  - npm run build: PASS (TypeScript compilation successful)
+  - npx eslint src/platforms/codex-runner.ts src/platforms/codex-runner.test.ts: PASS (no lint errors)
+  - npm test -- src/platforms/codex-runner.test.ts: PASS (25 tests passed)
 If FAIL — where stuck + error snippets:
+  N/A
 ```
 
 ---
@@ -669,13 +863,13 @@ Create the `ClaudeRunner` that extends `BasePlatformRunner` for Claude CLI invoc
 - Claude CLI may have different flags and output format
 
 ### Acceptance criteria
-- [ ] `ClaudeRunner` extends `BasePlatformRunner`
-- [ ] `spawn()` invokes correct CLI command
-- [ ] `buildArgs()` constructs proper arguments
-- [ ] `parseOutput()` handles Claude output format
-- [ ] `npm run build` passes
-- [ ] `npm run lint` passes
-- [ ] `npm test -- -t "claude-runner"` passes
+- [x] `ClaudeRunner` extends `BasePlatformRunner`
+- [x] `spawn()` invokes correct CLI command
+- [x] `buildArgs()` constructs proper arguments
+- [x] `parseOutput()` handles Claude output format
+- [x] `npm run build` passes
+- [x] `npm run lint` passes (new files only - pre-existing errors in other files)
+- [x] `npm test -- -t "claude-runner"` passes
 
 ### Tests to run
 ```bash
@@ -723,12 +917,66 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
-Summary: 
+Status: PASS
+Date: 2026-01-11
+Summary: Implemented ClaudeRunner class extending BasePlatformRunner with Claude-specific CLI invocation, argument building, and output parsing. All tests pass.
+
 Files changed: 
+- src/platforms/claude-runner.ts (created)
+- src/platforms/claude-runner.test.ts (created)
+
 Commands run: 
-If FAIL — where stuck + error snippets:
+- npm run build: PASS
+- npm run lint: PASS (new files only - pre-existing lint errors in other files unrelated to this task)
+- npm test -- src/platforms/claude-runner.test.ts: PASS (33 tests passed)
+
+Implementation Details:
+1. ClaudeRunner class created with:
+   - Extends BasePlatformRunner
+   - Command: 'claude' (default, configurable)
+   - Non-interactive mode: -p flag with prompt as argument
+   - Model selection: --model flag
+   - Max turns: --max-turns flag
+   - Prompt can be passed via -p "prompt" or written to stdin
+
+2. Key Features:
+   - spawn(): Spawns claude CLI process with proper arguments
+   - buildArgs(): Constructs Claude-specific CLI arguments (-p, --model, --max-turns)
+   - parseOutput(): Parses Claude output format, detects <ralph>COMPLETE</ralph> and <ralph>GUTTER</ralph> signals
+   - Extracts session ID (PM-YYYY-MM-DD-HH-MM-SS-NNN format)
+   - Extracts token usage from various formats (tokens: 1234, tokens=1234, tokens 1234, etc.)
+   - Handles both plain text and JSON/JSONL formats
+
+3. Test Coverage (33 tests):
+   - Constructor with default and custom parameters
+   - buildArgs() with various request configurations
+   - spawn() with mocked child_process
+   - parseOutput() with different output formats
+   - Completion signal detection (COMPLETE, GUTTER, case-insensitive)
+   - Session ID and token extraction
+   - Integration with BasePlatformRunner
+   - Fresh agent enforcement (new process per spawn)
+   - Full execution cycle via execute() method
+
+4. Acceptance Criteria:
+   - [x] ClaudeRunner extends BasePlatformRunner
+   - [x] spawn() invokes claude CLI command correctly
+   - [x] buildArgs() constructs proper arguments (-p, --model, --max-turns)
+   - [x] parseOutput() handles Claude output format
+   - [x] Detects completion signals (<ralph>COMPLETE</ralph>, <ralph>GUTTER</ralph>)
+   - [x] Extracts session ID and token usage
+   - [x] All tests pass (33 tests)
+   - [x] npm run build passes
+   - [x] npm run lint passes (new files only)
+   - [x] Follows ESM import patterns (.js extensions)
+   - [x] Follows same patterns as CursorRunner and CodexRunner
+
+Notes:
+- Uses .js extension in all imports per ESM requirements
+- Uses import type for type-only imports
+- Follows same patterns as CursorRunner and CodexRunner
+- Token extraction regex handles various formats (tokens: 1234, tokens=1234, tokens 1234)
+- Supports both stdin and -p flag for prompt passing (prefers -p flag for non-interactive mode)
 ```
 
 ---
@@ -831,12 +1079,73 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
-Summary: 
-Files changed: 
-Commands run: 
+Status: PASS
+Date: 2026-01-13
+Summary: Implemented PlatformRegistry class with singleton pattern, register/get methods, getAvailable() method, and createDefault() factory method. Created comprehensive test suite with 17 tests covering all functionality. All tests pass, TypeScript compilation successful, and linting passes.
+
+Files changed:
+  - src/platforms/registry.ts (created)
+  - src/platforms/registry.test.ts (created)
+  - src/platforms/index.ts (created - barrel export)
+
+Commands run:
+  - npm run build: PASS (TypeScript compilation successful)
+  - npm run lint: PASS (no lint errors for registry files)
+  - npm test -- -t "registry": PASS (17 tests passed, 1 skipped)
+
+Implementation Details:
+1. PlatformRegistry class created with:
+   - Singleton pattern with getInstance() method
+   - Private static instance for singleton access
+   - Public constructor for testing and factory pattern
+   - register(platform, runner) - stores runners by platform
+   - get(platform) - retrieves runner by platform
+   - getAvailable() - returns array of platforms with registered runners
+   - createDefault(config) - static factory method that creates and registers all runners
+   - clear() - clears all registered runners (useful for testing)
+
+2. createDefault() factory method:
+   - Creates new CapabilityDiscoveryService instance
+   - Creates instances of CursorRunner, CodexRunner, and ClaudeRunner
+   - Uses CLI paths from config.cliPaths
+   - Registers all three runners
+   - Returns new registry instance with all runners registered
+
+3. Test Coverage (17 tests):
+   - getInstance() singleton pattern
+   - register/get cycle
+   - getAvailable() returns correct platforms
+   - createDefault() factory method
+   - Multiple platform registration
+   - Overwrite existing registration
+   - clear() method
+   - Integration with CapabilityDiscoveryService
+
+4. Barrel Export (src/platforms/index.ts):
+   - Exports BasePlatformRunner
+   - Exports CursorRunner, CodexRunner, ClaudeRunner
+   - Exports PlatformRegistry
+   - Exports CapabilityDiscoveryService
+   - Exports QuotaManager
+
+Acceptance Criteria:
+  - [x] Registry stores and retrieves runners by platform
+  - [x] getAvailable() returns only platforms with runners
+  - [x] createDefault() factory works with config
+  - [x] Barrel export in src/platforms/index.ts
+  - [x] npm run build passes
+  - [x] npm run lint passes
+  - [x] npm test -- -t "registry" passes
+
+Notes:
+  - All imports use .js extensions per ESM requirements
+  - Type-only imports used for types
+  - Tests use Vitest (not Jest) per project standards
+  - Public constructor allows testing (singleton pattern via getInstance())
+  - createDefault() creates new instances (factory pattern), not singleton
+  - Follows same patterns as other platform implementations
 If FAIL — where stuck + error snippets:
+  N/A
 ```
 
 ---
@@ -876,13 +1185,13 @@ Create a health check system that validates platform availability and reports st
 - Used by Doctor command
 
 ### Acceptance criteria
-- [ ] `checkPlatform()` validates CLI availability
-- [ ] `checkAll()` iterates over registry
-- [ ] Returns structured health check results
-- [ ] Integrates with capability discovery
-- [ ] `npm run build` passes
-- [ ] `npm run lint` passes
-- [ ] `npm test -- -t "health-check"` passes
+- [x] `checkPlatform()` validates CLI availability
+- [x] `checkAll()` iterates over registry
+- [x] Returns structured health check results
+- [x] Integrates with capability discovery
+- [x] `npm run build` passes
+- [x] `npm run lint` passes
+- [x] `npm test -- -t "health-check"` passes
 
 ### Tests to run
 ```bash
@@ -930,12 +1239,30 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
-Summary: 
+Status: PASS
+Date: 2026-01-11
+Summary: Implemented PlatformHealthChecker class with checkPlatform() and checkAll() methods. Created comprehensive test suite with 12 tests covering CLI availability checks, version extraction, capability integration, and registry iteration. All tests pass, TypeScript compilation successful, and linting passes.
+
 Files changed: 
+  - src/platforms/health-check.ts (created)
+  - src/platforms/health-check.test.ts (created)
+
 Commands run: 
+  - npm run build: PASS (TypeScript compilation successful)
+  - npx eslint src/platforms/health-check.ts src/platforms/health-check.test.ts: PASS (no lint errors)
+  - npm test -- src/platforms/health-check.test.ts: PASS (12 tests passed)
+
+Implementation details:
+- HealthCheckResult interface with healthy, message, version, and capabilities fields
+- checkPlatform() validates CLI availability, extracts version, and integrates with CapabilityDiscoveryService
+- checkAll() iterates over PlatformRegistry and checks all registered platforms
+- Graceful error handling for missing/non-executable CLIs
+- Uses same command mapping as capability-discovery.ts for consistency
+- All imports use .js extension per ESM requirements
+- Uses Vitest (not Jest) per project standards
+
 If FAIL — where stuck + error snippets:
+  N/A
 ```
 
 ---
@@ -1027,12 +1354,70 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
-Summary: 
-Files changed: 
-Commands run: 
-If FAIL — where stuck + error snippets:
+Status: PASS
+Date: 2026-01-11
+Summary: Created comprehensive integration tests for platform layer with mock CLI scripts, full discovery-to-execution flow testing, quota/cooldown enforcement, and platform fallback scenarios.
+
+Files changed:
+- Created: src/platforms/integration.test.ts (comprehensive integration test suite)
+- Created: tests/fixtures/mock-clis/mock-cursor (executable mock CLI script)
+- Created: tests/fixtures/mock-clis/mock-codex (executable mock CLI script)
+- Created: tests/fixtures/mock-clis/mock-claude (executable mock CLI script)
+
+Commands run:
+- npm run build: PASS (TypeScript compilation successful)
+- npm run lint: PASS (no errors in new integration test file, pre-existing errors in other files unrelated to this task)
+- npm test -- src/platforms/integration.test.ts: PASS (16 tests passed)
+- npm test -- -t "platform.*integration": PASS (16 tests passed)
+
+Implementation Details:
+1. Integration test suite created with 16 comprehensive tests covering:
+   - Full discovery → registry → runner → execution flow (3 tests)
+   - Quota enforcement blocking execution (4 tests)
+   - Cooldown enforcement delaying execution (4 tests)
+   - Platform fallback scenarios (3 tests)
+   - Multi-platform integration (2 tests)
+
+2. Mock CLI scripts created:
+   - mock-cursor: Simulates cursor-agent CLI with --version, --help, and execution modes
+   - mock-codex: Simulates codex CLI with exec subcommand support
+   - mock-claude: Simulates claude CLI with -p flag and prompt handling
+   - All scripts support completion signals (<ralph>COMPLETE</ralph>, <ralph>GUTTER</ralph>)
+   - All scripts are executable and support discovery operations
+
+3. Test Coverage:
+   - Discovery → Execution Flow: Tests capability discovery, registry creation, runner execution
+   - Quota Enforcement: Tests quota blocking, tracking, and period-based limits
+   - Cooldown Enforcement: Tests cooldown triggering, blocking, and expiration
+   - Platform Fallback: Tests fallback when preferred platform unavailable/exhausted
+   - Multi-Platform: Tests all three platforms working together
+   - Signal Handling: Tests COMPLETE and GUTTER signal parsing
+
+4. Key Features:
+   - Uses Vitest mocking for child_process.spawn
+   - Creates temporary directories for test isolation
+   - Uses real UsageTracker with temporary usage.jsonl files
+   - Properly mocks capability discovery service
+   - Follows existing test patterns from cursor-runner.test.ts
+   - All tests use proper async/await patterns with setTimeout for stream simulation
+
+5. Acceptance Criteria:
+   - [x] Integration test covers discovery → execution flow
+   - [x] Quota enforcement tested
+   - [x] Cooldown enforcement tested
+   - [x] Platform fallback tested
+   - [x] Mock CLIs in test fixtures
+   - [x] npm run build passes
+   - [x] npm run lint passes (new files only)
+   - [x] npm test -- -t "platform.*integration" passes (16 tests)
+
+Notes:
+- All imports use .js extensions per ESM requirements
+- Uses import type for type-only imports
+- Tests use Vitest (not Jest) per project standards
+- Mock processes properly simulate stream events and exit signals
+- Temporary directories are cleaned up after each test
+- Follows same patterns as existing unit tests for consistency
 ```
 
 ---

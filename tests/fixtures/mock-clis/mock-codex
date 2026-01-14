@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# Mock codex CLI for integration testing
+
+# Handle --version flag
+if [[ "$1" == "--version" ]]; then
+  echo "codex version 1.0.0"
+  exit 0
+fi
+
+# Handle --help flag
+if [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]]; then
+  echo "codex - AI coding assistant"
+  echo ""
+  echo "Usage: codex exec [options]"
+  echo ""
+  echo "Options:"
+  echo "  --path <dir>         Working directory"
+  echo "  --model <model>       Specify model to use"
+  echo "  --max-turns <n>        Maximum agentic turns"
+  echo "  --output-format <fmt> Output format (json, text)"
+  echo "  --approval-policy <p> Command approval policy"
+  echo "  --version             Show version"
+  echo "  --help                Show this help"
+  exit 0
+fi
+
+# Handle execution (codex exec subcommand)
+if [[ "$1" != "exec" ]]; then
+  echo "Error: Unknown command. Use 'codex exec' for execution."
+  exit 1
+fi
+
+# Read prompt from stdin
+PROMPT=""
+while IFS= read -r line; do
+  PROMPT="${PROMPT}${line}\n"
+done
+
+# Generate a session ID (format: PM-YYYY-MM-DD-HH-MM-SS-NNN)
+SESSION_ID="PM-$(date +%Y-%m-%d-%H-%M-%S)-001"
+
+# Output response with completion signal
+# Default to COMPLETE unless MOCK_CODEX_SIGNAL is set
+SIGNAL="${MOCK_CODEX_SIGNAL:-COMPLETE}"
+
+echo "Processing request..."
+echo "Session ID: ${SESSION_ID}"
+echo "Tokens: 1234"
+echo "Output: Task completed successfully"
+echo "<ralph>${SIGNAL}</ralph>"
+
+exit 0

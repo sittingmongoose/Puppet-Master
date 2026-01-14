@@ -504,12 +504,12 @@ Medium OK — serialization logic
 - Support checkpoint and restore
 
 ### Acceptance criteria
-- [ ] saveState() persists current state
-- [ ] loadState() restores from persistence
-- [ ] Tier hierarchy is preserved
-- [ ] Integration with PrdManager works
-- [ ] `npm run typecheck` passes
-- [ ] `npm test -- -t "state-persistence"` passes
+- [x] saveState() persists current state
+- [x] loadState() restores from persistence
+- [x] Tier hierarchy is preserved
+- [x] Integration with PrdManager works
+- [x] `npm run typecheck` passes
+- [x] `npm test -- -t "state-persistence"` passes
 
 ### Tests to run
 ```bash
@@ -644,12 +644,12 @@ Medium OK — data structure
 - Support traversal methods
 
 ### Acceptance criteria
-- [ ] TierNode can represent all tier types
-- [ ] Parent/child relationships work
-- [ ] getPath() returns full path from root
-- [ ] findDescendant() locates nodes by ID
-- [ ] `npm run typecheck` passes
-- [ ] `npm test -- -t "tier-node"` passes
+- [x] TierNode can represent all tier types
+- [x] Parent/child relationships work
+- [x] getPath() returns full path from root
+- [x] findDescendant() locates nodes by ID
+- [x] `npm run typecheck` passes
+- [x] `npm test -- -t "tier-node"` passes
 
 ### Tests to run
 ```bash
@@ -1224,12 +1224,12 @@ HQ required — core execution logic
 - Tracks process IDs for audit
 
 ### Acceptance criteria
-- [ ] ExecutionEngine coordinates iteration execution
-- [ ] Fresh process spawned for each iteration
-- [ ] Process ID tracked for audit
-- [ ] Timeout handling works
-- [ ] `npm run typecheck` passes
-- [ ] `npm test -- -t "execution-engine"` passes
+- [x] ExecutionEngine coordinates iteration execution
+- [x] Fresh process spawned for each iteration
+- [x] Process ID tracked for audit
+- [x] Timeout handling works
+- [x] `npm run typecheck` passes
+- [x] `npm test -- -t "execution-engine"` passes
 
 ### Tests to run
 ```bash

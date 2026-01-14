@@ -7,7 +7,7 @@
 
 import type { TierState, TierType } from '../types/state.js';
 import type { TierPlan, Criterion, TestPlan, Evidence as TierEvidence } from '../types/tiers.js';
-import type { PRD, Phase, Task, Subtask, ItemStatus, Evidence as PRDEvidence } from '../types/prd.js';
+import type { PRD, Phase, Task, Subtask, Evidence as PRDEvidence } from '../types/prd.js';
 import { TierStateMachine } from './tier-state-machine.js';
 import type { TierContext } from './tier-state-machine.js';
 
@@ -75,15 +75,7 @@ export class TierNode {
    * Returns [rootId, phaseId, taskId, subtaskId] as applicable.
    */
   getPath(): string[] {
-    const path: string[] = [];
-    let current: TierNode | null = this;
-
-    while (current !== null) {
-      path.unshift(current.id);
-      current = current.parent;
-    }
-
-    return path;
+    return this.parent ? [...this.parent.getPath(), this.id] : [this.id];
   }
 
   /**
@@ -239,32 +231,6 @@ export class TierNode {
  */
 export function createTierNode(data: TierNodeData, parent?: TierNode): TierNode {
   return new TierNode(data, parent);
-}
-
-/**
- * Map ItemStatus to TierState.
- */
-function mapItemStatusToTierState(status: ItemStatus): TierState {
-  switch (status) {
-    case 'pending':
-      return 'pending';
-    case 'planning':
-      return 'planning';
-    case 'running':
-      return 'running';
-    case 'gating':
-      return 'gating';
-    case 'passed':
-      return 'passed';
-    case 'failed':
-      return 'failed';
-    case 'escalated':
-      return 'escalated';
-    case 'reopened':
-      return 'pending'; // Reopened items go back to pending
-    default:
-      return 'pending';
-  }
 }
 
 /**

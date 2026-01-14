@@ -12,7 +12,7 @@ import type { OrchestratorEvent, TierEvent } from '../types/events.js';
 import { OrchestratorStateMachine } from './orchestrator-state-machine.js';
 import { TierStateMachine, type TierContext } from './tier-state-machine.js';
 import type { PrdManager } from '../memory/index.js';
-import type { PRD, Phase, Task, Subtask } from '../types/prd.js';
+import type { PRD } from '../types/prd.js';
 import { getNextOrchestratorState } from './state-transitions.js';
 import { getNextTierState } from './state-transitions.js';
 

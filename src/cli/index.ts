@@ -3,6 +3,9 @@
 import { Command } from 'commander';
 import { VERSION } from '../index.js';
 import { checkCommand } from './commands/check.js';
+import { startCommand } from './commands/start.js';
+import { doctorCommand } from './commands/doctor.js';
+import { statusCommand } from './commands/status.js';
 
 const program = new Command();
 
@@ -26,5 +29,21 @@ program
     });
   });
 
-// Parse command line arguments
-program.parse();
+// Register start command
+startCommand.register(program);
+
+// Register doctor command
+doctorCommand.register(program);
+
+// Register status command
+statusCommand.register(program);
+
+/**
+ * Run the CLI with the given arguments
+ * @param argv - Command line arguments (defaults to process.argv)
+ */
+export function run(argv: string[] = process.argv): void {
+  program.parse(argv);
+}
+
+export { program };

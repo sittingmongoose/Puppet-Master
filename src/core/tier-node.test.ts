@@ -743,7 +743,7 @@ describe('TierNode', () => {
 
       const parent = new TierNode(parentData);
       const child1 = new TierNode(child1Data, parent);
-      const child2 = new TierNode(child2Data, parent);
+      new TierNode(child2Data, parent);
 
       // Complete child1
       child1.stateMachine.send({ type: 'TIER_SELECTED' });

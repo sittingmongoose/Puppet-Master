@@ -21,6 +21,9 @@ yarn-error.log*
 
 # Cursor-specific: no sensitive files to ignore (commands/ can be tracked)
 
+# Test artifacts
+.test-quota-*
+
 # Local configuration files (may contain sensitive local settings)
 **/local.json
 local.json
