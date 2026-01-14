@@ -1,1 +1,4 @@
-Please implement.  Always use the Context7 MCP.  You need to take your time and be careful as this is something you can mess up easily and cause a lot of issues if you arent careful.  Make sure you update the status when you are done!
+- Please implement
+- Always use the Context7 MCP.
+- Make sure you update the status when you are done!
+- Delete the .test-cache and .test-quota files when you are done.

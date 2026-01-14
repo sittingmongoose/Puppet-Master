@@ -18,3 +18,7 @@ export { CapabilityDiscoveryService } from './capability-discovery.js';
 
 // Export quota manager
 export { QuotaManager } from './quota-manager.js';
+
+// Export health check
+export { PlatformHealthChecker } from './health-check.js';
+export type { HealthCheckResult } from './health-check.js';

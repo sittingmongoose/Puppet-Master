@@ -547,13 +547,19 @@ describe('FreshSpawner', () => {
 
       const result = await spawner.spawn(request);
 
-      // Manually trigger close to simulate process exit
+      // Process is still running (exitCode is null), cleanup should try to kill it
+      // Simulate the process closing after SIGTERM is sent
       if (mockProc) {
         const proc = mockProc;
-        setTimeout(() => {
-          proc._setExitCode(0);
-          proc.emit('close', 0);
-        }, 50);
+        // When kill is called, simulate the process closing
+        proc.kill = vi.fn((signal?: NodeJS.Signals | number) => {
+          // Simulate process termination after a short delay
+          setTimeout(() => {
+            proc._setExitCode(signal === 'SIGKILL' ? 137 : 0);
+            proc.emit('close', proc.exitCode, signal as NodeJS.Signals);
+          }, 10);
+          return true;
+        });
       }
 
       await result.cleanup();
