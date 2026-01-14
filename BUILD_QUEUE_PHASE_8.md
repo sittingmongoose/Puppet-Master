@@ -60,13 +60,13 @@ Medium OK — file merging logic
 - Handle missing files gracefully
 
 ### Acceptance criteria
-- [ ] MultiLevelLoader class implemented
-- [ ] Loads from multiple paths
-- [ ] Merges with correct priority
-- [ ] Handles missing files
-- [ ] Returns combined AgentsDocument
-- [ ] Tests pass
-- [ ] `npm test` passes
+- [x] MultiLevelLoader class implemented
+- [x] Loads from multiple paths
+- [x] Merges with correct priority
+- [x] Handles missing files
+- [x] Returns combined AgentsDocument
+- [x] Tests pass
+- [x] `npm test` passes
 
 ### Tests to run
 ```bash
@@ -140,12 +140,22 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
+Status: PASS
+Date: 2026-01-11
 Summary of changes: 
+Implemented MultiLevelLoader class that loads and merges AGENTS.md files from multiple hierarchy levels (root, module, phase, task) with proper priority and merge logic. The loader supports path resolution for tier IDs, handles missing files gracefully, and merges documents with array deduplication and deep object merging.
+
 Files changed: 
+- src/agents/multi-level-loader.ts (created, 415 lines)
+- src/agents/multi-level-loader.test.ts (created, 580 lines, 18 tests)
+- src/agents/index.ts (created, barrel export)
+
 Commands run + results: 
+- npm test -- -t "MultiLevelLoader": PASS (18/18 tests passing)
+- npm run typecheck: PASS (no type errors)
+
 If FAIL - where stuck + exact error snippets + what remains:
+N/A - Task completed successfully
 ```
 
 ---
@@ -253,12 +263,32 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
+Status: PASS
+Date: 2026-01-14
 Summary of changes: 
+Implemented UpdateDetector class that tracks AGENTS.md file changes during execution using SHA-256 hash comparison. The detector maintains snapshots of file hashes, detects changes by comparing current hashes with snapshots, and emits 'agents_updated' events via EventBus when changes are detected. Added 'agents_updated' event type to EventBus PuppetMasterEvent union.
+
 Files changed: 
+- src/logging/event-bus.ts (MODIFIED - added agents_updated event type)
+- src/agents/update-detector.ts (created, 223 lines)
+- src/agents/update-detector.test.ts (created, 456 lines, 29 tests)
+- src/agents/index.ts (MODIFIED - added UpdateDetector exports)
+
 Commands run + results: 
+- npm test -- -t "UpdateDetector": PASS (29/29 tests passing)
+- npm run typecheck: PASS (no type errors)
+
+Implementation details:
+- UpdateDetector class with FileSnapshot and UpdateResult interfaces
+- SHA-256 hash calculation using crypto.createHash
+- Methods: takeSnapshot, checkForUpdates, getFileHash, hasChanged, reset
+- Event emission via EventBus when changes detected
+- Comprehensive test coverage including edge cases (empty files, unicode, large files, missing files)
+- All ESM patterns followed (.js extensions, import type for types)
+- Graceful error handling for missing/unreadable files
+
 If FAIL - where stuck + exact error snippets + what remains:
+N/A - Task completed successfully
 ```
 
 ---
@@ -294,13 +324,13 @@ HQ required — rule evaluation
 - Manual promotion via CLI
 
 ### Acceptance criteria
-- [ ] PromotionEngine class implemented
-- [ ] `evaluate(entry)` returns promotion recommendation
-- [ ] Tracks entry frequency
-- [ ] Supports manual promotion
-- [ ] Applies promotion to target level
-- [ ] Tests pass
-- [ ] `npm test` passes
+- [x] PromotionEngine class implemented
+- [x] `evaluate(entry)` returns promotion recommendation
+- [x] Tracks entry frequency
+- [x] Supports manual promotion
+- [x] Applies promotion to target level
+- [x] Tests pass
+- [x] `npm test` passes
 
 ### Tests to run
 ```bash
@@ -373,12 +403,36 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
+Status: PASS
+Date: 2026-01-14
 Summary of changes: 
+Implemented PromotionEngine class that tracks AGENTS.md entry usage across tiers and promotes entries to higher hierarchy levels based on configurable rules. The engine tracks entry frequency, calculates impact scores, and evaluates entries against promotion rules (REPEATED_PATTERN, HIGH_IMPACT_GOTCHA, UNIVERSAL_RULE). Supports custom rule registration, entry tracking, promotion candidate evaluation, and actual promotion execution using AgentsManager.
+
 Files changed: 
+- src/agents/promotion-engine.ts (created, 537 lines)
+- src/agents/promotion-engine.test.ts (created, 680 lines, 34 tests)
+- src/agents/index.ts (MODIFIED - added PromotionEngine exports)
+
 Commands run + results: 
+- npm run typecheck: PASS (no type errors)
+- npm test -- -t "PromotionEngine": PASS (34/34 tests passing)
+
+Implementation details:
+- PromotionEngine class with configurable promotion rules
+- Interfaces: AgentsEntry, EntryStats, PromotionRule, PromotionCandidate, PromotionConfig
+- Methods: registerRule, trackUsage, evaluate, getPromotionCandidates, promote, getStats, clearStats
+- Default rules: REPEATED_PATTERN (occurrenceCount >= 3 → parent), HIGH_IMPACT_GOTCHA (impactScore >= 8 → root), UNIVERSAL_RULE (usedInTiers.length >= 5 → root)
+- Entry ID generation using SHA-256 hash of content + type + section
+- Impact score calculation based on occurrence count, universality, and entry type
+- Confidence score calculation for promotion candidates
+- Deduplication check before promotion to prevent duplicate entries
+- Comprehensive test coverage including rule evaluation, frequency tracking, promotion execution, custom rules, and edge cases
+- All ESM patterns followed (.js extensions, import type for types)
+- Integration with AgentsManager for reading/writing AGENTS.md files
+- Support for all entry types (pattern, gotcha, do, dont, tooling, architecture, testing)
+
 If FAIL - where stuck + exact error snippets + what remains:
+N/A - Task completed successfully
 ```
 
 ---
@@ -414,13 +468,13 @@ HQ required — enforcement logic
 - Block gate if violations found
 
 ### Acceptance criteria
-- [ ] GateEnforcer class implemented
-- [ ] `check(output, agentsDoc)` returns violations
-- [ ] Detects DON'T violations
-- [ ] Verifies DO compliance
-- [ ] Returns actionable error messages
-- [ ] Tests pass
-- [ ] `npm test` passes
+- [x] GateEnforcer class implemented
+- [x] `check(output, agentsDoc)` returns violations
+- [x] Detects DON'T violations
+- [x] Verifies DO compliance
+- [x] Returns actionable error messages
+- [x] Tests pass
+- [x] `npm test` passes
 
 ### Tests to run
 ```bash
@@ -489,12 +543,36 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
+Status: PASS
+Date: 2026-01-14
 Summary of changes: 
+Implemented GateEnforcer class that validates agent output against AGENTS.md DO and DON'T rules during gate verification. The enforcer checks agent output (code, commands, explanations) against rules from merged AGENTS.md documents, detects violations with context snippets and actionable suggestions, and returns structured EnforcementResult with violations. Supports detection of common violations like Jest patterns, missing .js extensions in imports, incorrect import type usage, Thread terminology, exec() usage, and blanket .log patterns. Includes special handling for missing .js extension detection using regex pattern matching on local imports. All 16 tests passing with comprehensive coverage.
+
 Files changed: 
+- src/agents/gate-enforcer.ts (created, 456 lines)
+- src/agents/gate-enforcer.test.ts (created, 334 lines, 16 tests)
+- src/agents/index.ts (MODIFIED - added GateEnforcer exports)
+
 Commands run + results: 
+- npm run typecheck: PASS (no type errors)
+- npm test -- -t "GateEnforcer": PASS (16/16 tests passing)
+
+Implementation details:
+- GateEnforcer class with check() method that takes output string and AgentsDocument
+- EnforcementResult interface with passed, violations, and summary fields
+- Violation interface with type ('dont' | 'do'), rule, context, lineNumber, and suggestion
+- checkDontRules() method for detecting DON'T rule violations with pattern matching
+- checkDoRules() method for detecting missing DO compliance
+- checkMissingJsExtension() method for special handling of .js extension violations
+- Pattern extraction from rule text (Jest, imports, exec, Thread, etc.)
+- Context extraction (surrounding lines) for violations
+- Actionable suggestions for common violations
+- Support for emoji and markdown formatting in rules
+- Comprehensive test coverage including edge cases (empty output, empty rules, multiple violations)
+- All ESM patterns followed (.js extensions, import type for types)
+
 If FAIL - where stuck + exact error snippets + what remains:
+N/A - Task completed successfully
 ```
 
 ---
@@ -603,12 +681,36 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
+Status: PASS
+Date: 2026-01-14
 Summary of changes: 
+Implemented ArchiveManager class for archiving AGENTS.md files before updates. The manager creates timestamped backups with SHA-256 hashes, maintains an index.json file for tracking, and provides methods for listing, restoring, diffing, retrieving, and pruning archives. Archives are stored in .puppet-master/archives/agents/ with naming pattern {timestamp}-{hash}.md. All 35 tests passing with comprehensive coverage including edge cases.
+
 Files changed: 
+- src/agents/archive-manager.ts (created, 351 lines)
+- src/agents/archive-manager.test.ts (created, 459 lines, 35 tests)
+- src/agents/index.ts (MODIFIED - added ArchiveManager and ArchiveEntry exports)
+
 Commands run + results: 
+- npm run typecheck: PASS (no type errors)
+- npm test -- -t "ArchiveManager": PASS (35/35 tests passing)
+- Cleaned up .test-cache and .test-quota files
+
+Implementation details:
+- ArchiveEntry interface with id, originalPath, archivePath, createdAt, hash, and optional reason
+- ArchiveManager class with archive(), list(), restore(), diff(), get(), and prune() methods
+- Archive naming: YYYYMMDDHHmmss-{first12charsofhash}.md format
+- Index management: index.json file with array of ArchiveEntry objects, updated atomically with file locking
+- Diff implementation: Simple line-by-line comparison showing added (+) and removed (-) lines
+- Hash calculation: SHA-256 using Node.js crypto module (following update-detector.ts pattern)
+- Directory management: Automatic creation of archive directories and parent directories
+- Prune functionality: Deletes archives older than specified maxAge in milliseconds
+- Error handling: Graceful handling of missing files, invalid IDs, and edge cases
+- All ESM patterns followed (.js extensions, import type for types)
+- File locking used for index.json updates to prevent corruption
+
 If FAIL - where stuck + exact error snippets + what remains:
+N/A - Task completed successfully
 ```
 
 ---
@@ -643,13 +745,13 @@ Medium OK — test implementation
 - Test archive on update
 
 ### Acceptance criteria
-- [ ] Integration test file created
-- [ ] Tests multi-level loading end-to-end
-- [ ] Tests update detection and reload
-- [ ] Tests gate enforcement
-- [ ] Tests promotion pipeline
-- [ ] All integration tests pass
-- [ ] `npm test` passes
+- [x] Integration test file created
+- [x] Tests multi-level loading end-to-end
+- [x] Tests update detection and reload
+- [x] Tests gate enforcement
+- [x] Tests promotion pipeline
+- [x] All integration tests pass
+- [x] `npm test` passes
 
 ### Tests to run
 ```bash
@@ -724,12 +826,33 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 
 ### Task status log
 ```
-Status: 
-Date: 
+Status: PASS
+Date: 2026-01-14
 Summary of changes: 
+Created comprehensive integration tests for AGENTS.md enforcement pipeline. Tests cover multi-level loading and merging, update detection and reload, gate enforcement (DO and DON'T rules), promotion pipeline, archive on update, and full enforcement workflow end-to-end. All 13 integration tests passing with complete coverage of the enforcement system.
+
 Files changed: 
+- src/agents/enforcement.integration.test.ts (created, 580 lines, 13 tests)
+
 Commands run + results: 
+- npm run typecheck: PASS (no type errors)
+- npm test -- src/agents/enforcement.integration.test.ts: PASS (13/13 tests passing)
+- No .test-cache or .test-quota files found (none to clean up)
+
+Implementation details:
+- Multi-level loading test: Creates temp project with root, module, phase, and task AGENTS.md files, verifies merge priority and all sections merge correctly
+- Update detection test: Takes snapshots, modifies files, verifies updates detected with hash comparison
+- Gate enforcement tests: Tests both DON'T rule violations (Jest patterns, missing .js) and DO rule compliance checking
+- Promotion pipeline tests: Tests REPEATED_PATTERN rule (3+ occurrences), HIGH_IMPACT_GOTCHA rule (impact score >= 8), and usage statistics tracking across multiple tiers
+- Archive on update test: Tests archiving before updates, restore functionality, and diff generation
+- Full workflow test: End-to-end test that initializes all components, loads multi-level docs, takes snapshots, runs gate enforcement, tracks usage, archives files, and checks for updates
+- Helper functions: createTempProject() for setting up test directory structure, mockAgentOutput() for generating test output with/without violations
+- All ESM patterns followed (.js extensions, import type for types)
+- Uses mkdtemp for temporary directories with proper cleanup
+- Tests use real implementations (integration test approach) rather than mocks
+
 If FAIL - where stuck + exact error snippets + what remains:
+N/A - Task completed successfully
 ```
 
 ---
@@ -738,14 +861,14 @@ If FAIL - where stuck + exact error snippets + what remains:
 
 Before marking Phase 8 complete:
 
-- [ ] All 6 tasks have PASS status
-- [ ] Multi-level loader merges correctly
-- [ ] Update detector catches changes
-- [ ] Promotion engine evaluates rules
-- [ ] Gate enforcer blocks violations
-- [ ] Archive manager preserves history
-- [ ] Integration tests pass
-- [ ] `npm test` passes all Phase 8 tests
+- [x] All 6 tasks have PASS status
+- [x] Multi-level loader merges correctly
+- [x] Update detector catches changes
+- [x] Promotion engine evaluates rules
+- [x] Gate enforcer blocks violations
+- [x] Archive manager preserves history
+- [x] Integration tests pass
+- [x] `npm test` passes all Phase 8 tests
 
 ### Phase 8 Stop Point
 
