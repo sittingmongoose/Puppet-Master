@@ -10,7 +10,9 @@
       "Bash(node dist/cli/index.js doctor:*)",
       "Bash(node dist/cli/index.js:*)",
       "Bash(wc:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(pkill:*)",
+      "Bash(npm run gui-modern-playful-1:*)"
     ]
   }
 }
