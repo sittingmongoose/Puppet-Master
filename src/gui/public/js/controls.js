@@ -193,6 +193,14 @@ async function handleControlAction(endpoint, options = {}) {
       body: Object.keys(body).length > 0 ? JSON.stringify(body) : undefined,
     });
     
+    // Check content-type before parsing JSON
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await response.text();
+      console.error(`[Controls] Non-JSON response from ${endpoint}:`, text.substring(0, 200));
+      throw new Error(`Server returned ${response.status} ${response.statusText}. Expected JSON response.`);
+    }
+    
     const data = await response.json();
     
     if (response.ok && data.success) {
@@ -389,6 +397,370 @@ function updateButtonStates(state) {
 }
 
 // ============================================
+// Keyboard Shortcuts
+// ============================================
+function setupKeyboardShortcuts() {
+  document.addEventListener('keydown', (event) => {
+    // Ignore shortcuts if user is typing in input/textarea/select elements
+    const target = event.target;
+    if (
+      target.tagName === 'INPUT' ||
+      target.tagName === 'TEXTAREA' ||
+      target.tagName === 'SELECT' ||
+      target.isContentEditable
+    ) {
+      return;
+    }
+
+    // Space = Start/Pause toggle
+    if (event.code === 'Space') {
+      event.preventDefault();
+      const state = controlsState.currentState;
+      if (state === 'idle' || state === 'planning') {
+        startExecution();
+      } else if (state === 'paused') {
+        resumeExecution();
+      } else if (state === 'executing') {
+        pauseExecution();
+      }
+      return;
+    }
+
+    // Escape = Stop
+    if (event.code === 'Escape') {
+      event.preventDefault();
+      if (controlsState.currentState === 'executing' || controlsState.currentState === 'paused') {
+        if (confirm('Are you sure? This will abort current work.')) {
+          stopExecution();
+        }
+      }
+      return;
+    }
+
+    // Ctrl+Shift+R = Retry (Ctrl+R is reserved for browser refresh)
+    if (event.ctrlKey && event.shiftKey && event.code === 'KeyR') {
+      event.preventDefault();
+      retryExecution();
+      return;
+    }
+
+    // Ctrl+P = Replan
+    if (event.ctrlKey && event.code === 'KeyP') {
+      event.preventDefault();
+      replanExecution();
+      return;
+    }
+
+    // Ctrl+O = Open Project
+    if (event.ctrlKey && event.code === 'KeyO') {
+      event.preventDefault();
+      window.location.href = '/projects';
+      return;
+    }
+
+    // Ctrl+D = Doctor
+    if (event.ctrlKey && event.code === 'KeyD') {
+      event.preventDefault();
+      window.location.href = '/doctor';
+      return;
+    }
+
+    // ? = Show keyboard shortcuts modal
+    if (event.key === '?' && !event.ctrlKey && !event.altKey && !event.metaKey) {
+      event.preventDefault();
+      showKeyboardShortcuts();
+      return;
+    }
+  });
+}
+
+// ============================================
+// Help Modal
+// ============================================
+function showKeyboardShortcuts() {
+  // Remove existing modal if present
+  const existingModal = document.getElementById('keyboard-shortcuts-modal');
+  if (existingModal) {
+    existingModal.remove();
+    return;
+  }
+
+  // Create modal overlay
+  const overlay = document.createElement('div');
+  overlay.id = 'keyboard-shortcuts-modal';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-labelledby', 'shortcuts-title');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease;
+  `;
+
+  // Create modal content
+  const modal = document.createElement('div');
+  modal.style.cssText = `
+    background-color: var(--paper-cream, #F5F5DC);
+    border: 3px solid var(--ink-black, #000);
+    box-shadow: 5px 5px 0 0 var(--ink-black, #000);
+    padding: 32px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    font-family: var(--font-geometric, 'Orbitron', sans-serif);
+    position: relative;
+  `;
+
+  // Create header
+  const header = document.createElement('div');
+  header.style.cssText = `
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--ink-black, #000);
+  `;
+
+  const title = document.createElement('h2');
+  title.id = 'shortcuts-title';
+  title.textContent = 'KEYBOARD SHORTCUTS';
+  title.style.cssText = `
+    margin: 0;
+    font-size: 24px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ink-black, #000);
+  `;
+
+  const closeBtn = document.createElement('button');
+  closeBtn.textContent = '✕';
+  closeBtn.setAttribute('aria-label', 'Close keyboard shortcuts');
+  closeBtn.style.cssText = `
+    background: none;
+    border: 2px solid var(--ink-black, #000);
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--ink-black, #000);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  `;
+  closeBtn.onmouseover = () => {
+    closeBtn.style.backgroundColor = 'var(--ink-black, #000)';
+    closeBtn.style.color = 'var(--paper-cream, #F5F5DC)';
+  };
+  closeBtn.onmouseout = () => {
+    closeBtn.style.backgroundColor = 'transparent';
+    closeBtn.style.color = 'var(--ink-black, #000)';
+  };
+  closeBtn.onclick = () => {
+    overlay.remove();
+  };
+
+  header.appendChild(title);
+  header.appendChild(closeBtn);
+
+  // Create shortcuts table
+  const table = document.createElement('table');
+  table.style.cssText = `
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+  `;
+
+  const shortcuts = [
+    { key: 'Space', action: 'Start/Pause toggle' },
+    { key: 'Esc', action: 'Stop execution' },
+    { key: 'Ctrl+Shift+R', action: 'Retry current item' },
+    { key: 'Ctrl+P', action: 'Replan' },
+    { key: 'Ctrl+O', action: 'Open Project' },
+    { key: 'Ctrl+D', action: 'Doctor' },
+    { key: '?', action: 'Show this help' },
+  ];
+
+  shortcuts.forEach((shortcut) => {
+    const row = document.createElement('tr');
+    row.style.cssText = `
+      border-bottom: 1px solid var(--ink-black, #000);
+    `;
+
+    const keyCell = document.createElement('td');
+    keyCell.style.cssText = `
+      padding: 12px 16px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      width: 40%;
+      vertical-align: middle;
+    `;
+    const keySpan = document.createElement('span');
+    keySpan.textContent = shortcut.key;
+    keySpan.style.cssText = `
+      display: inline-block;
+      background-color: var(--ink-black, #000);
+      color: var(--paper-cream, #F5F5DC);
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 14px;
+    `;
+    keyCell.appendChild(keySpan);
+
+    const actionCell = document.createElement('td');
+    actionCell.textContent = shortcut.action;
+    actionCell.style.cssText = `
+      padding: 12px 16px;
+      font-weight: 600;
+      vertical-align: middle;
+    `;
+
+    row.appendChild(keyCell);
+    row.appendChild(actionCell);
+    table.appendChild(row);
+  });
+
+  // Create footer note
+  const footer = document.createElement('div');
+  footer.style.cssText = `
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--ink-black, #000);
+    font-size: 12px;
+    color: #666;
+    font-style: italic;
+  `;
+  footer.textContent = 'Note: Shortcuts are disabled when typing in input fields.';
+
+  modal.appendChild(header);
+  modal.appendChild(table);
+  modal.appendChild(footer);
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+
+  // Close on Escape key
+  const escapeHandler = (e) => {
+    if (e.code === 'Escape' && document.getElementById('keyboard-shortcuts-modal')) {
+      overlay.remove();
+      document.removeEventListener('keydown', escapeHandler);
+    }
+  };
+  document.addEventListener('keydown', escapeHandler);
+
+  // Focus close button for accessibility
+  closeBtn.focus();
+
+  // Close on overlay click (outside modal)
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      overlay.remove();
+      document.removeEventListener('keydown', escapeHandler);
+    }
+  });
+}
+
+// Add fade-in animation if not already present
+if (!document.getElementById('modal-styles')) {
+  const style = document.createElement('style');
+  style.id = 'modal-styles';
+  style.textContent = `
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+// ============================================
+// Advanced Controls Toggle
+// ============================================
+const ADVANCED_CONTROLS_STORAGE_KEY = 'puppetMaster_advancedControlsExpanded';
+
+function toggleAdvancedControls() {
+  const advancedSection = document.getElementById('controls-advanced');
+  const toggleButton = document.getElementById('controls-advanced-toggle');
+  const toggleText = toggleButton?.querySelector('.toggle-text');
+  
+  if (!advancedSection || !toggleButton) {
+    return;
+  }
+
+  const isExpanded = advancedSection.classList.contains('controls-advanced-expanded');
+  
+  if (isExpanded) {
+    // Collapse
+    advancedSection.classList.remove('controls-advanced-expanded');
+    advancedSection.classList.add('controls-advanced-collapsed');
+    toggleButton.setAttribute('aria-expanded', 'false');
+    if (toggleText) {
+      toggleText.textContent = 'SHOW ADVANCED CONTROLS';
+    }
+    localStorage.setItem(ADVANCED_CONTROLS_STORAGE_KEY, 'false');
+  } else {
+    // Expand
+    advancedSection.classList.remove('controls-advanced-collapsed');
+    advancedSection.classList.add('controls-advanced-expanded');
+    toggleButton.setAttribute('aria-expanded', 'true');
+    if (toggleText) {
+      toggleText.textContent = 'HIDE ADVANCED CONTROLS';
+    }
+    localStorage.setItem(ADVANCED_CONTROLS_STORAGE_KEY, 'true');
+  }
+}
+
+function initializeAdvancedControls() {
+  const advancedSection = document.getElementById('controls-advanced');
+  const toggleButton = document.getElementById('controls-advanced-toggle');
+  
+  if (!advancedSection || !toggleButton) {
+    return;
+  }
+
+  // Load saved state from localStorage (default: collapsed)
+  const savedState = localStorage.getItem(ADVANCED_CONTROLS_STORAGE_KEY);
+  const isExpanded = savedState === 'true';
+  const toggleText = toggleButton.querySelector('.toggle-text');
+
+  if (isExpanded) {
+    advancedSection.classList.remove('controls-advanced-collapsed');
+    advancedSection.classList.add('controls-advanced-expanded');
+    toggleButton.setAttribute('aria-expanded', 'true');
+    if (toggleText) {
+      toggleText.textContent = 'HIDE ADVANCED CONTROLS';
+    }
+  } else {
+    advancedSection.classList.remove('controls-advanced-expanded');
+    advancedSection.classList.add('controls-advanced-collapsed');
+    toggleButton.setAttribute('aria-expanded', 'false');
+    if (toggleText) {
+      toggleText.textContent = 'SHOW ADVANCED CONTROLS';
+    }
+  }
+
+  // Add click event listener to toggle button
+  toggleButton.addEventListener('click', toggleAdvancedControls);
+}
+
+// ============================================
 // Event Listeners Setup
 // ============================================
 function initializeControls() {
@@ -434,6 +806,12 @@ function initializeControls() {
 
   // Initialize button states
   updateButtonStates('idle');
+
+  // Initialize advanced controls toggle
+  initializeAdvancedControls();
+
+  // Setup keyboard shortcuts
+  setupKeyboardShortcuts();
 }
 
 // Export functions for use in dashboard.js
@@ -450,6 +828,8 @@ if (typeof window !== 'undefined') {
     killSpawnExecution,
     updateButtonStates,
     initializeControls,
+    showKeyboardShortcuts,
+    toggleAdvancedControls,
   };
 }
 
