@@ -584,46 +584,63 @@ When complete, update this task's Status Log in this phase file with PASS/FAIL, 
 ### Task status log
 ```
 Status: PASS
-Date: 2026-01-14
+Date: 2026-01-15
 Summary of changes:
-Implemented the Dashboard screen with a unique "Vibrant Pastel" design featuring:
-- Light mode: Chalk-textured background with scuff marks, frosted glass panels with soft pastel glows, connected boxes with gradient lines
-- Dark mode: Starry chalk sky background, transparent colored glass panels with vibrant neon glows, flowing connection lines
-- Glassmorphism effects with backdrop blur
-- Rainbow gradient accents throughout
-- Animated floating color orbs in background
+Implemented the Dashboard screen with "Vibrant Technical" (Ink & Paper) design featuring:
+- Light mode: Cream paper texture (#FAF6F1) with visible grain, bold black ink linework (#1A1A1A)
+- Dark mode: Dark background (#1a1a1a) with lighter texture pattern, light borders (#e0e0e0)
+- Technical drafting flourishes: Corner brackets (top-left), dashed inner borders, cross-hatched drop shadows
+- High-saturation neon colors: Electric Blue (#00F0FF), Acid Lime Green (#00FF41) for progress bars with glow effects
+- All panels use black borders (no neon alternation)
+- Paper texture applied to body, header, and all panels
+- No emojis anywhere (text labels only: START, PAUSE, STOP, [PASS], [PENDING], etc.)
+- Large prominent logo (2.5em, 900 weight, 4px letter-spacing, text-shadow)
+- Dark mode toggle button in header with localStorage persistence
 - Real-time WebSocket connection for updates
-- All control buttons with glowing effects
-- Responsive layout for all screen sizes
-- Theme toggle with smooth transitions
+- Responsive layout with proper page margins (32px desktop, 16px mobile)
+- Progress bars with neon glow effects (enhanced in dark mode)
+- Monospace fonts for data/logs, geometric fonts (Orbitron/Rajdhani) for headers
+- All elements use CSS variables for theme switching
+- Smooth transitions (0.3s ease) for theme changes
+- Created GUI_DESIGN.md in root for future screen implementations
+- Moved design from sandbox (src/gui-ink-paper) to production (src/gui/)
+- Recreated state routes (src/gui/routes/state.ts) per PH9-T02 specification
+- Updated port to standard 3847 (from 3851)
 
 Files changed:
-- src/gui/server.ts (MODIFIED - added static file serving with path module imports)
-- src/gui/public/index.html (NEW - complete dashboard structure with all panels)
-- src/gui/public/css/styles.css (NEW - comprehensive 1500+ line stylesheet with vibrant pastel theme)
-- src/gui/public/js/dashboard.js (NEW - WebSocket connection, event handling, UI updates)
-- src/gui/start-gui.ts (NEW - development server startup script)
-- package.json (MODIFIED - added "gui" script and tsx dependency)
+- src/gui/server.ts (NEW - Vibrant Technical design, port 3847, imports from ./routes/state.js)
+- src/gui/start-gui.ts (NEW - server startup script, port 3847)
+- src/gui/index.ts (NEW - barrel exports)
+- src/gui/routes/state.ts (NEW - createStateRoutes function with 5 endpoints per PH9-T02)
+- src/gui/routes/state.test.ts (NEW - test suite for state routes)
+- src/gui/routes/index.ts (NEW - barrel export)
+- src/gui/public/index.html (NEW - dashboard structure per GUI_SPEC.md Section 5.1, no emojis)
+- src/gui/public/css/styles.css (NEW - comprehensive Vibrant Technical stylesheet, 1000+ lines)
+- src/gui/public/js/dashboard.js (NEW - WebSocket connection, state management, dark mode, no emojis)
+- package.json (MODIFIED - added "gui" script: "tsx src/gui/start-gui.ts")
+- GUI_DESIGN.md (NEW - comprehensive design documentation in root)
+- BUILD_QUEUE_PHASE_9.md (MODIFIED - updated PH9-T04 task status log)
 
 Commands run + results:
 - npm run typecheck: PASS (no type errors)
-- npm test src/gui/: PASS (48 tests passed)
+- npm test -- -t "State Routes": PASS (tests pass with mocked dependencies)
 - npm run gui: PASS (server starts at http://localhost:3847)
+- Manual testing: PASS (dashboard displays correctly, dark mode works, WebSocket connects)
 
 Implementation details:
-- Google Fonts "Rubik" integration
-- CSS custom properties for easy theming
-- Light theme: soft pastels, chalk texture, frosted glass
-- Dark theme: saturated colors, starry sky, neon glows
-- Frosted glass panels with colored glow effects (pink, cyan, green, orange, purple, red)
-- Progress bars with rainbow gradient animation
-- Start/Pause/Stop buttons with distinct colors and glow effects
-- Live output terminal with syntax highlighting
-- Modal system for confirmations
-- Toast notifications for feedback
-- Keyboard shortcuts (Space, Escape, R, L, ?)
-- Connection lines between panels (SVG-based)
-- Responsive breakpoints for tablet and mobile
+- Design aesthetic: "Vibrant Technical" (Ink & Paper) - fusion of technical drafting and editorial illustration
+- Paper texture pattern applied to body, header, and all panels (light and dark mode variants)
+- Technical flourishes: Corner brackets (::before), dashed inner borders (::after), cross-hatched drop shadows
+- Button patterns: Control buttons (START/PAUSE/STOP) with vibrant fills, Icon buttons (header actions) with hover effects
+- Progress bars: Neon blue (#00F0FF) for overall, neon green (#00FF41) for tiers, with glow effects
+- Dark mode: Comprehensive [data-theme="dark"] selectors, enhanced neon glows, light texture pattern
+- Typography: Orbitron/Rajdhani for headers (geometric), Courier New/Consolas for monospace data
+- State routes: Full implementation per PH9-T02 spec (GET /api/state, /api/tiers, /api/tiers/:id, /api/progress, /api/agents)
+- All ESM patterns followed (.js extensions, proper type imports)
+- No emojis in any UI elements (buttons, status indicators, lists)
+- Logo prominence: 2.5em font-size, 4px letter-spacing, text-shadow for emphasis
+- Page margins: 32px outer padding (16px mobile) to prevent edge-touching
+- Design documentation: Comprehensive GUI_DESIGN.md created for future screen implementations
 If FAIL - where stuck + exact error snippets + what remains:
 ```
 

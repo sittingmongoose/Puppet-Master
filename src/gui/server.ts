@@ -1,9 +1,9 @@
 /**
- * GUI Server for RWM Puppet Master - Ink & Paper Design
+ * GUI Server for RWM Puppet Master - Vibrant Technical (Ink & Paper) Design
  * 
  * Provides HTTP endpoints and WebSocket server for the browser-based GUI.
  * Handles real-time event streaming via WebSocket connections.
- * Port: 3851
+ * Port: 3847 (standard)
  */
 
 import type { IncomingMessage } from 'http';
@@ -20,7 +20,7 @@ import type { TierStateManager } from '../core/tier-state-manager.js';
 import type { OrchestratorStateMachine } from '../core/orchestrator-state-machine.js';
 import type { ProgressManager } from '../memory/progress-manager.js';
 import type { AgentsManager } from '../memory/agents-manager.js';
-import { createStateRoutes } from '../gui/routes/state.js';
+import { createStateRoutes } from './routes/state.js';
 
 // Get __dirname equivalent for ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -30,7 +30,7 @@ const __dirname = path.dirname(__filename);
  * Server configuration interface.
  */
 export interface ServerConfig {
-  /** Port to listen on (default: 3851) */
+  /** Port to listen on (default: 3847) */
   port?: number;
   /** Host to bind to (default: 'localhost') */
   host?: string;
@@ -57,9 +57,9 @@ export class GuiServer {
 
   constructor(config: ServerConfig, eventBus: EventBus) {
     this.config = {
-      port: config.port ?? 3851,
+      port: config.port ?? 3847,
       host: config.host ?? 'localhost',
-      corsOrigins: config.corsOrigins ?? ['http://localhost:3851'],
+      corsOrigins: config.corsOrigins ?? ['http://localhost:3847'],
     };
     this.eventBus = eventBus;
     this.app = express();

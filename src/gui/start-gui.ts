@@ -1,17 +1,18 @@
 /**
- * Start script for Ink & Paper GUI server
+ * Start script for GUI server
  *
- * Usage: npx tsx src/gui-ink-paper/start-server.ts
+ * Usage: npx tsx src/gui/start-gui.ts
+ * Or: npm run gui
  */
 
 import { GuiServer } from './server.js';
 import { EventBus } from '../logging/index.js';
 
 async function main() {
-  const port = parseInt(process.env.GUI_PORT || '3851', 10);
+  const port = parseInt(process.env.GUI_PORT || '3847', 10);
   const host = process.env.GUI_HOST || 'localhost';
 
-  console.log('Starting RWM Puppet Master GUI Server (Ink & Paper Design)...\n');
+  console.log('Starting RWM Puppet Master GUI Server...\n');
 
   // Create event bus for real-time events
   const eventBus = new EventBus();
