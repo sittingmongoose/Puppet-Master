@@ -12,16 +12,26 @@
 <body>
   <header class="header">
     <div class="header-content">
-      <h1 class="logo">RWM Puppet Master</h1>
+      <div class="header-left">
+        <a href="/" class="logo-link">
+          <h1 class="logo">RWM Puppet Master</h1>
+        </a>
+        <nav class="main-navigation">
+          <a href="/" class="nav-link" data-page="dashboard">DASHBOARD</a>
+          <a href="/projects" class="nav-link" data-page="projects">PROJECTS</a>
+          <a href="/wizard" class="nav-link" data-page="wizard">WIZARD</a>
+          <a href="/config" class="nav-link" data-page="config">CONFIG</a>
+          <a href="/doctor" class="nav-link" data-page="doctor">DOCTOR</a>
+          <a href="/tiers" class="nav-link" data-page="tiers">TIERS</a>
+          <a href="/evidence" class="nav-link" data-page="evidence">EVIDENCE</a>
+        </nav>
+      </div>
       <div class="header-right">
-        <div class="project-selector">
+        <div class="project-selector" id="project-selector">
           <span>Project: <span id="project-name">Untangle</span> ▼</span>
         </div>
         <div class="header-actions">
           <button class="icon-btn" id="dark-mode-toggle" aria-label="Toggle dark mode">DARK MODE</button>
-          <button class="icon-btn" id="settings-btn" aria-label="Settings">SETTINGS</button>
-          <button class="icon-btn" id="notifications-btn" aria-label="Notifications">NOTIFICATIONS</button>
-          <button class="icon-btn" id="user-btn" aria-label="User">USER</button>
         </div>
       </div>
     </div>
@@ -47,8 +57,42 @@
         <span>Budget: <span id="budget-claude">Claude 0/0</span> │ <span id="budget-codex">Codex 0/0</span> │ <span id="budget-cursor">Cursor ∞</span></span>
       </div>
       <div class="connection-status" id="connection-status">
-        <span id="connection-indicator">●</span>
+        <span id="connection-indicator" class="status-dot"></span>
         <span id="connection-text">Disconnected</span>
+      </div>
+    </section>
+
+    <!-- Project Management Panel -->
+    <section class="project-management panel" id="project-management-panel">
+      <h2 class="panel-title">Project Management</h2>
+      <div class="project-management-content" id="project-management-content">
+        <!-- Content will be populated by JavaScript based on project state -->
+        <div class="no-project-state">
+          <p class="info-text">No project loaded. Start a new project or select an existing one.</p>
+          <div class="project-actions">
+            <a href="/wizard" class="control-btn start-btn">START NEW PROJECT</a>
+            <a href="/projects" class="control-btn retry-btn">SELECT EXISTING PROJECT</a>
+          </div>
+        </div>
+        <div class="project-loaded-state" style="display: none;">
+          <div class="project-info">
+            <div class="detail-row">
+              <span class="detail-label">Project Name:</span>
+              <span id="project-display-name">-</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Project Path:</span>
+              <span id="project-display-path" class="monospace">-</span>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="project-actions">
+            <a href="/projects" class="control-btn retry-btn">SWITCH PROJECT</a>
+            <a href="/tiers" class="control-btn replan-btn">VIEW TIERS</a>
+            <a href="/config" class="control-btn replan-btn">CONFIGURATION</a>
+            <a href="/doctor" class="control-btn replan-btn">RUN DOCTOR</a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -145,8 +189,14 @@
           <button class="control-btn pause-btn" id="pause-btn" disabled>
             PAUSE
           </button>
+          <button class="control-btn resume-btn" id="resume-btn" disabled>
+            RESUME
+          </button>
           <button class="control-btn stop-btn" id="stop-btn" disabled>
             STOP
+          </button>
+          <button class="control-btn reset-btn" id="reset-btn" disabled>
+            RESET
           </button>
           <button class="control-btn retry-btn" id="retry-btn" disabled>
             RETRY
@@ -168,7 +218,7 @@
     <section class="live-output panel">
       <div class="panel-header">
         <h2 class="panel-title">Live Output</h2>
-        <button class="icon-btn" id="copy-output-btn" aria-label="Copy output">📋</button>
+        <button class="icon-btn" id="copy-output-btn" aria-label="Copy output">COPY</button>
       </div>
       <div class="output-container">
         <div class="output-terminal" id="output-terminal">
@@ -201,6 +251,8 @@
     </div>
   </main>
 
+  <script src="/js/navigation.js"></script>
+  <script src="/js/controls.js"></script>
   <script src="/js/dashboard.js"></script>
 </body>
 </html>

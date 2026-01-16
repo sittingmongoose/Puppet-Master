@@ -5,9 +5,9 @@
  * validation, merging, and path resolution.
  */
 
-import { readFile, access } from 'fs/promises';
+import { readFile, access, writeFile, mkdir } from 'fs/promises';
 import { existsSync } from 'fs';
-import { join } from 'path';
+import { join, dirname } from 'path';
 import yaml from 'js-yaml';
 import type { PuppetMasterConfig } from '../types/config.js';
 import { getDefaultConfig } from './default-config.js';
@@ -87,6 +87,27 @@ export class ConfigManager {
    */
   merge(base: PuppetMasterConfig, overrides: Partial<PuppetMasterConfig>): PuppetMasterConfig {
     return deepMerge(base, overrides);
+  }
+
+  /**
+   * Save configuration to file
+   * @param config - Configuration to save
+   * @throws Error if validation fails or file write fails
+   */
+  async save(config: PuppetMasterConfig): Promise<void> {
+    // Validate before saving
+    validateConfig(config);
+
+    // Convert camelCase back to snake_case for YAML output
+    const yamlObj = convertCamelCaseToSnakeCase(config, undefined, undefined);
+
+    // Ensure directory exists
+    const dir = dirname(this.configPath);
+    await mkdir(dir, { recursive: true });
+
+    // Write YAML file
+    const yamlContent = yaml.dump(yamlObj, { indent: 2 });
+    await writeFile(this.configPath, yamlContent, 'utf-8');
   }
 }
 
@@ -173,6 +194,45 @@ function snakeToCamel(str: string): string {
     return 'maxIterations';
   }
   return str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+}
+
+/**
+ * Convert camelCase string to snake_case
+ */
+function camelToSnake(str: string): string {
+  return str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`);
+}
+
+/**
+ * Convert camelCase object keys to snake_case
+ * Handles nested objects and arrays recursively
+ * Special handling: tiers.iteration.maxIterations -> max_attempts (not max_iterations)
+ */
+function convertCamelCaseToSnakeCase(obj: unknown, parentKey?: string, grandParentKey?: string): unknown {
+  if (obj === null || obj === undefined) {
+    return obj;
+  }
+
+  if (typeof obj !== 'object') {
+    return obj;
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map(item => convertCamelCaseToSnakeCase(item, parentKey, grandParentKey));
+  }
+
+  const result: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(obj)) {
+    // Special case: tiers.iteration.maxIterations -> max_attempts
+    let snakeKey: string;
+    if (key === 'maxIterations' && parentKey === 'iteration' && grandParentKey === 'tiers') {
+      snakeKey = 'max_attempts';
+    } else {
+      snakeKey = camelToSnake(key);
+    }
+    result[snakeKey] = convertCamelCaseToSnakeCase(value, key, parentKey);
+  }
+  return result;
 }
 
 /**

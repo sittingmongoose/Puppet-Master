@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RWM Puppet Master - Configuration</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <a href="/" class="logo-link">
+          <h1 class="logo">RWM Puppet Master</h1>
+        </a>
+        <nav class="main-navigation">
+          <a href="/" class="nav-link" data-page="dashboard">DASHBOARD</a>
+          <a href="/projects" class="nav-link" data-page="projects">PROJECTS</a>
+          <a href="/wizard" class="nav-link" data-page="wizard">WIZARD</a>
+          <a href="/config" class="nav-link active" data-page="config">CONFIG</a>
+          <a href="/doctor" class="nav-link" data-page="doctor">DOCTOR</a>
+          <a href="/tiers" class="nav-link" data-page="tiers">TIERS</a>
+          <a href="/evidence" class="nav-link" data-page="evidence">EVIDENCE</a>
+        </nav>
+      </div>
+      <div class="header-right">
+        <div class="header-actions">
+          <button class="icon-btn" id="dark-mode-toggle" aria-label="Toggle dark mode">DARK MODE</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Title Panel -->
+    <section class="panel">
+      <h1 class="page-title">Configuration</h1>
+    </section>
+
+    <!-- Tab Navigation -->
+    <section class="panel">
+      <div class="config-tabs">
+        <button class="config-tab active" data-tab="tiers" aria-label="Tiers configuration">Tiers</button>
+        <button class="config-tab" data-tab="branching" aria-label="Branching configuration">Branching</button>
+        <button class="config-tab" data-tab="verification" aria-label="Verification configuration">Verification</button>
+        <button class="config-tab" data-tab="memory" aria-label="Memory configuration">Memory</button>
+        <button class="config-tab" data-tab="budgets" aria-label="Budgets configuration">Budgets</button>
+        <button class="config-tab" data-tab="advanced" aria-label="Advanced configuration">Advanced</button>
+      </div>
+    </section>
+
+    <!-- Configuration Form -->
+    <form id="config-form" class="config-form">
+      <!-- Project Settings (always visible) -->
+      <section class="panel">
+        <h2 class="panel-title">Project Settings</h2>
+        <div class="form-row">
+          <label for="project-name">Project Name:</label>
+          <input type="text" id="project-name" name="project.name" required aria-label="Project name" />
+        </div>
+        <div class="form-row">
+          <label for="project-working-directory">Working Directory:</label>
+          <input type="text" id="project-working-directory" name="project.workingDirectory" required aria-label="Working directory" />
+        </div>
+      </section>
+
+      <!-- Tiers Tab -->
+      <section class="config-tab-content active" id="tiers-tab">
+        <section class="panel">
+          <h2 class="panel-title">Phase Tier</h2>
+          <div class="form-row">
+            <label for="tier-phase-platform">Platform:</label>
+            <select id="tier-phase-platform" name="tiers.phase.platform" required aria-label="Phase platform">
+              <option value="cursor">Cursor</option>
+              <option value="codex">Codex</option>
+              <option value="claude">Claude</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="tier-phase-model">Model:</label>
+            <input type="text" id="tier-phase-model" name="tiers.phase.model" required aria-label="Phase model" />
+          </div>
+          <div class="form-row">
+            <label for="tier-phase-self-fix">
+              <input type="checkbox" id="tier-phase-self-fix" name="tiers.phase.selfFix" aria-label="Phase self-fix" />
+              Self-fix
+            </label>
+          </div>
+          <div class="form-row">
+            <label for="tier-phase-max-iterations">Max Iterations:</label>
+            <input type="number" id="tier-phase-max-iterations" name="tiers.phase.maxIterations" min="1" required aria-label="Phase max iterations" />
+          </div>
+          <div class="form-row">
+            <label for="tier-phase-escalation">Escalation:</label>
+            <select id="tier-phase-escalation" name="tiers.phase.escalation" aria-label="Phase escalation">
+              <option value="">None</option>
+              <option value="phase">Phase</option>
+              <option value="task">Task</option>
+              <option value="subtask">Subtask</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2 class="panel-title">Task Tier</h2>
+          <div class="form-row">
+            <label for="tier-task-platform">Platform:</label>
+            <select id="tier-task-platform" name="tiers.task.platform" required aria-label="Task platform">
+              <option value="cursor">Cursor</option>
+              <option value="codex">Codex</option>
+              <option value="claude">Claude</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="tier-task-model">Model:</label>
+            <input type="text" id="tier-task-model" name="tiers.task.model" required aria-label="Task model" />
+          </div>
+          <div class="form-row">
+            <label for="tier-task-self-fix">
+              <input type="checkbox" id="tier-task-self-fix" name="tiers.task.selfFix" aria-label="Task self-fix" />
+              Self-fix
+            </label>
+          </div>
+          <div class="form-row">
+            <label for="tier-task-max-iterations">Max Iterations:</label>
+            <input type="number" id="tier-task-max-iterations" name="tiers.task.maxIterations" min="1" required aria-label="Task max iterations" />
+          </div>
+          <div class="form-row">
+            <label for="tier-task-escalation">Escalation:</label>
+            <select id="tier-task-escalation" name="tiers.task.escalation" aria-label="Task escalation">
+              <option value="">None</option>
+              <option value="phase">Phase</option>
+              <option value="task">Task</option>
+              <option value="subtask">Subtask</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2 class="panel-title">Subtask Tier</h2>
+          <div class="form-row">
+            <label for="tier-subtask-platform">Platform:</label>
+            <select id="tier-subtask-platform" name="tiers.subtask.platform" required aria-label="Subtask platform">
+              <option value="cursor">Cursor</option>
+              <option value="codex">Codex</option>
+              <option value="claude">Claude</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="tier-subtask-model">Model:</label>
+            <input type="text" id="tier-subtask-model" name="tiers.subtask.model" required aria-label="Subtask model" />
+          </div>
+          <div class="form-row">
+            <label for="tier-subtask-self-fix">
+              <input type="checkbox" id="tier-subtask-self-fix" name="tiers.subtask.selfFix" aria-label="Subtask self-fix" />
+              Self-fix
+            </label>
+          </div>
+          <div class="form-row">
+            <label for="tier-subtask-max-iterations">Max Iterations:</label>
+            <input type="number" id="tier-subtask-max-iterations" name="tiers.subtask.maxIterations" min="1" required aria-label="Subtask max iterations" />
+          </div>
+          <div class="form-row">
+            <label for="tier-subtask-escalation">Escalation:</label>
+            <select id="tier-subtask-escalation" name="tiers.subtask.escalation" aria-label="Subtask escalation">
+              <option value="">None</option>
+              <option value="phase">Phase</option>
+              <option value="task">Task</option>
+              <option value="subtask">Subtask</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2 class="panel-title">Iteration Tier</h2>
+          <div class="form-row">
+            <label for="tier-iteration-platform">Platform:</label>
+            <select id="tier-iteration-platform" name="tiers.iteration.platform" required aria-label="Iteration platform">
+              <option value="cursor">Cursor</option>
+              <option value="codex">Codex</option>
+              <option value="claude">Claude</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="tier-iteration-model">Model:</label>
+            <input type="text" id="tier-iteration-model" name="tiers.iteration.model" required aria-label="Iteration model" />
+          </div>
+          <div class="form-row">
+            <label for="tier-iteration-self-fix">
+              <input type="checkbox" id="tier-iteration-self-fix" name="tiers.iteration.selfFix" aria-label="Iteration self-fix" />
+              Self-fix
+            </label>
+          </div>
+          <div class="form-row">
+            <label for="tier-iteration-max-iterations">Max Iterations:</label>
+            <input type="number" id="tier-iteration-max-iterations" name="tiers.iteration.maxIterations" min="1" required aria-label="Iteration max iterations" />
+          </div>
+          <div class="form-row">
+            <label for="tier-iteration-escalation">Escalation:</label>
+            <select id="tier-iteration-escalation" name="tiers.iteration.escalation" aria-label="Iteration escalation">
+              <option value="">None</option>
+              <option value="phase">Phase</option>
+              <option value="task">Task</option>
+              <option value="subtask">Subtask</option>
+            </select>
+          </div>
+        </section>
+      </section>
+
+      <!-- Branching Tab -->
+      <section class="config-tab-content" id="branching-tab">
+        <section class="panel">
+          <h2 class="panel-title">Git Strategy</h2>
+          <div class="form-row">
+            <label for="branching-base-branch">Base Branch:</label>
+            <input type="text" id="branching-base-branch" name="branching.baseBranch" required aria-label="Base branch" />
+          </div>
+          <div class="form-row">
+            <label for="branching-granularity">Branch Granularity:</label>
+            <select id="branching-granularity" name="branching.granularity" required aria-label="Branch granularity">
+              <option value="single">Single</option>
+              <option value="per-phase">Per Phase</option>
+              <option value="per-task">Per Task</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="branching-naming-pattern">Naming Pattern:</label>
+            <input type="text" id="branching-naming-pattern" name="branching.namingPattern" required aria-label="Naming pattern" />
+          </div>
+          <div class="form-row">
+            <label for="branching-push-policy">Push Policy:</label>
+            <select id="branching-push-policy" name="branching.pushPolicy" required aria-label="Push policy">
+              <option value="per-iteration">Per Iteration</option>
+              <option value="per-subtask">Per Subtask</option>
+              <option value="per-task">Per Task</option>
+              <option value="per-phase">Per Phase</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="branching-merge-policy">Merge Policy:</label>
+            <select id="branching-merge-policy" name="branching.mergePolicy" required aria-label="Merge policy">
+              <option value="merge">Merge</option>
+              <option value="squash">Squash</option>
+              <option value="rebase">Rebase</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="branching-auto-pr">
+              <input type="checkbox" id="branching-auto-pr" name="branching.autoPr" aria-label="Auto-create pull requests" />
+              Auto-create pull requests
+            </label>
+          </div>
+        </section>
+      </section>
+
+      <!-- Verification Tab -->
+      <section class="config-tab-content" id="verification-tab">
+        <section class="panel">
+          <h2 class="panel-title">Verification Settings</h2>
+          <div class="form-row">
+            <label for="verification-browser-adapter">Browser Adapter:</label>
+            <input type="text" id="verification-browser-adapter" name="verification.browserAdapter" required aria-label="Browser adapter" />
+          </div>
+          <div class="form-row">
+            <label for="verification-screenshot-on-failure">
+              <input type="checkbox" id="verification-screenshot-on-failure" name="verification.screenshotOnFailure" aria-label="Screenshot on failure" />
+              Screenshot on failure
+            </label>
+          </div>
+          <div class="form-row">
+            <label for="verification-evidence-directory">Evidence Directory:</label>
+            <input type="text" id="verification-evidence-directory" name="verification.evidenceDirectory" required aria-label="Evidence directory" />
+          </div>
+        </section>
+      </section>
+
+      <!-- Memory Tab -->
+      <section class="config-tab-content" id="memory-tab">
+        <section class="panel">
+          <h2 class="panel-title">State Files</h2>
+          <div class="form-row">
+            <label for="memory-progress-file">Progress File:</label>
+            <input type="text" id="memory-progress-file" name="memory.progressFile" required aria-label="Progress file" />
+          </div>
+          <div class="form-row">
+            <label for="memory-agents-file">Agents File:</label>
+            <input type="text" id="memory-agents-file" name="memory.agentsFile" required aria-label="Agents file" />
+          </div>
+          <div class="form-row">
+            <label for="memory-prd-file">PRD File:</label>
+            <input type="text" id="memory-prd-file" name="memory.prdFile" required aria-label="PRD file" />
+          </div>
+          <div class="form-row">
+            <label for="memory-multi-level-agents">
+              <input type="checkbox" id="memory-multi-level-agents" name="memory.multiLevelAgents" aria-label="Enable multi-level AGENTS.md" />
+              Enable multi-level AGENTS.md
+            </label>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2 class="panel-title">AGENTS.md Enforcement</h2>
+          <div class="form-row">
+            <label for="memory-agents-enforcement-require-update-on-failure">
+              <input type="checkbox" id="memory-agents-enforcement-require-update-on-failure" name="memory.agentsEnforcement.requireUpdateOnFailure" aria-label="Require update on failure" />
+              Require update when gotcha discovered
+            </label>
+          </div>
+          <div class="form-row">
+            <label for="memory-agents-enforcement-require-update-on-gotcha">
+              <input type="checkbox" id="memory-agents-enforcement-require-update-on-gotcha" name="memory.agentsEnforcement.requireUpdateOnGotcha" aria-label="Require update on gotcha" />
+              Require update when gotcha discovered
+            </label>
+          </div>
+          <div class="form-row">
+            <label for="memory-agents-enforcement-gate-fails-on-missing-update">
+              <input type="checkbox" id="memory-agents-enforcement-gate-fails-on-missing-update" name="memory.agentsEnforcement.gateFailsOnMissingUpdate" aria-label="Gate fails on missing update" />
+              Gate fails if expected update missing
+            </label>
+          </div>
+          <div class="form-row">
+            <label for="memory-agents-enforcement-reviewer-must-acknowledge">
+              <input type="checkbox" id="memory-agents-enforcement-reviewer-must-acknowledge" name="memory.agentsEnforcement.reviewerMustAcknowledge" aria-label="Reviewer must acknowledge" />
+              Reviewer must acknowledge updates
+            </label>
+          </div>
+        </section>
+      </section>
+
+      <!-- Budgets Tab -->
+      <section class="config-tab-content" id="budgets-tab">
+        <section class="panel">
+          <h2 class="panel-title">Claude Code Budget</h2>
+          <div class="form-row">
+            <label for="budget-claude-max-calls-per-run">Max Calls Per Run:</label>
+            <input type="text" id="budget-claude-max-calls-per-run" name="budgets.claude.maxCallsPerRun" placeholder="unlimited" aria-label="Claude max calls per run" />
+          </div>
+          <div class="form-row">
+            <label for="budget-claude-max-calls-per-hour">Max Calls Per Hour:</label>
+            <input type="text" id="budget-claude-max-calls-per-hour" name="budgets.claude.maxCallsPerHour" placeholder="unlimited" aria-label="Claude max calls per hour" />
+          </div>
+          <div class="form-row">
+            <label for="budget-claude-max-calls-per-day">Max Calls Per Day:</label>
+            <input type="text" id="budget-claude-max-calls-per-day" name="budgets.claude.maxCallsPerDay" placeholder="unlimited" aria-label="Claude max calls per day" />
+          </div>
+          <div class="form-row">
+            <label for="budget-claude-cooldown-hours">Cooldown Hours:</label>
+            <input type="number" id="budget-claude-cooldown-hours" name="budgets.claude.cooldownHours" min="0" aria-label="Claude cooldown hours" />
+          </div>
+          <div class="form-row">
+            <label for="budget-claude-fallback-platform">Fallback Platform:</label>
+            <select id="budget-claude-fallback-platform" name="budgets.claude.fallbackPlatform" aria-label="Claude fallback platform">
+              <option value="">None</option>
+              <option value="cursor">Cursor</option>
+              <option value="codex">Codex</option>
+              <option value="claude">Claude</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2 class="panel-title">Codex Budget</h2>
+          <div class="form-row">
+            <label for="budget-codex-max-calls-per-run">Max Calls Per Run:</label>
+            <input type="text" id="budget-codex-max-calls-per-run" name="budgets.codex.maxCallsPerRun" placeholder="unlimited" aria-label="Codex max calls per run" />
+          </div>
+          <div class="form-row">
+            <label for="budget-codex-max-calls-per-hour">Max Calls Per Hour:</label>
+            <input type="text" id="budget-codex-max-calls-per-hour" name="budgets.codex.maxCallsPerHour" placeholder="unlimited" aria-label="Codex max calls per hour" />
+          </div>
+          <div class="form-row">
+            <label for="budget-codex-max-calls-per-day">Max Calls Per Day:</label>
+            <input type="text" id="budget-codex-max-calls-per-day" name="budgets.codex.maxCallsPerDay" placeholder="unlimited" aria-label="Codex max calls per day" />
+          </div>
+          <div class="form-row">
+            <label for="budget-codex-fallback-platform">Fallback Platform:</label>
+            <select id="budget-codex-fallback-platform" name="budgets.codex.fallbackPlatform" aria-label="Codex fallback platform">
+              <option value="">None</option>
+              <option value="cursor">Cursor</option>
+              <option value="codex">Codex</option>
+              <option value="claude">Claude</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2 class="panel-title">Cursor Budget</h2>
+          <div class="form-row">
+            <label for="budget-cursor-max-calls-per-run">Max Calls Per Run:</label>
+            <input type="text" id="budget-cursor-max-calls-per-run" name="budgets.cursor.maxCallsPerRun" placeholder="unlimited" aria-label="Cursor max calls per run" />
+          </div>
+          <div class="form-row">
+            <label for="budget-cursor-max-calls-per-hour">Max Calls Per Hour:</label>
+            <input type="text" id="budget-cursor-max-calls-per-hour" name="budgets.cursor.maxCallsPerHour" placeholder="unlimited" aria-label="Cursor max calls per hour" />
+          </div>
+          <div class="form-row">
+            <label for="budget-cursor-max-calls-per-day">Max Calls Per Day:</label>
+            <input type="text" id="budget-cursor-max-calls-per-day" name="budgets.cursor.maxCallsPerDay" placeholder="unlimited" aria-label="Cursor max calls per day" />
+          </div>
+          <div class="form-row">
+            <label for="budget-cursor-fallback-platform">Fallback Platform:</label>
+            <select id="budget-cursor-fallback-platform" name="budgets.cursor.fallbackPlatform" aria-label="Cursor fallback platform">
+              <option value="">None</option>
+              <option value="cursor">Cursor</option>
+              <option value="codex">Codex</option>
+              <option value="claude">Claude</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2 class="panel-title">Budget Enforcement</h2>
+          <div class="form-row">
+            <label for="budget-enforcement-on-limit-reached">On Limit Reached:</label>
+            <select id="budget-enforcement-on-limit-reached" name="budgetEnforcement.onLimitReached" required aria-label="On limit reached">
+              <option value="fallback">Fallback</option>
+              <option value="pause">Pause</option>
+              <option value="queue">Queue</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="budget-enforcement-warn-at-percentage">Warn At Percentage:</label>
+            <input type="number" id="budget-enforcement-warn-at-percentage" name="budgetEnforcement.warnAtPercentage" min="0" max="100" required aria-label="Warn at percentage" />
+          </div>
+          <div class="form-row">
+            <label for="budget-enforcement-notify-on-fallback">
+              <input type="checkbox" id="budget-enforcement-notify-on-fallback" name="budgetEnforcement.notifyOnFallback" aria-label="Notify on fallback" />
+              Notify on fallback
+            </label>
+          </div>
+        </section>
+      </section>
+
+      <!-- Advanced Tab -->
+      <section class="config-tab-content" id="advanced-tab">
+        <section class="panel">
+          <h2 class="panel-title">Logging</h2>
+          <div class="form-row">
+            <label for="logging-level">Log Level:</label>
+            <select id="logging-level" name="logging.level" required aria-label="Log level">
+              <option value="debug">Debug</option>
+              <option value="info">Info</option>
+              <option value="warn">Warn</option>
+              <option value="error">Error</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="logging-retention-days">Retention Days:</label>
+            <input type="number" id="logging-retention-days" name="logging.retentionDays" min="1" required aria-label="Retention days" />
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2 class="panel-title">CLI Paths</h2>
+          <div class="form-row">
+            <label for="cli-paths-cursor">Cursor:</label>
+            <input type="text" id="cli-paths-cursor" name="cliPaths.cursor" required aria-label="Cursor CLI path" />
+          </div>
+          <div class="form-row">
+            <label for="cli-paths-codex">Codex:</label>
+            <input type="text" id="cli-paths-codex" name="cliPaths.codex" required aria-label="Codex CLI path" />
+          </div>
+          <div class="form-row">
+            <label for="cli-paths-claude">Claude:</label>
+            <input type="text" id="cli-paths-claude" name="cliPaths.claude" required aria-label="Claude CLI path" />
+          </div>
+        </section>
+      </section>
+
+      <!-- Form Actions -->
+      <section class="panel">
+        <div class="form-actions">
+          <button type="button" class="control-btn retry-btn" id="validate-btn" aria-label="Validate configuration">VALIDATE</button>
+          <button type="submit" class="control-btn start-btn" id="save-btn" aria-label="Save configuration">SAVE</button>
+        </div>
+        <div id="config-error" class="form-error" style="display: none;"></div>
+        <div id="config-success" class="form-success" style="display: none;"></div>
+      </section>
+    </form>
+  </main>
+
+  <script src="/js/navigation.js"></script>
+  <script src="/js/config.js"></script>
+</body>
+</html>

@@ -11,6 +11,7 @@ import type { Server as HTTPServer } from 'http';
 import http from 'http';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { existsSync } from 'fs';
 import express, { type Express } from 'express';
 import cors from 'cors';
 import { WebSocketServer, WebSocket } from 'ws';
@@ -18,9 +19,16 @@ import type { EventBus, PuppetMasterEvent } from '../logging/index.js';
 import type { OrchestratorState } from '../types/state.js';
 import type { TierStateManager } from '../core/tier-state-manager.js';
 import type { OrchestratorStateMachine } from '../core/orchestrator-state-machine.js';
+import type { Orchestrator } from '../core/orchestrator.js';
 import type { ProgressManager } from '../memory/progress-manager.js';
 import type { AgentsManager } from '../memory/agents-manager.js';
 import { createStateRoutes } from './routes/state.js';
+import { createProjectsRoutes } from './routes/projects.js';
+import { createWizardRoutes } from './routes/wizard.js';
+import { createConfigRoutes } from './routes/config.js';
+import { createEvidenceRoutes } from './routes/evidence.js';
+import { createControlsRoutes } from './routes/controls.js';
+import { createDoctorRoutes } from './routes/doctor.js';
 
 // Get __dirname equivalent for ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -52,6 +60,7 @@ export class GuiServer {
   private readonly eventBus: EventBus;
   private tierManager: TierStateManager | null = null;
   private orchestrator: OrchestratorStateMachine | null = null;
+  private orchestratorInstance: Orchestrator | null = null;
   private progressManager: ProgressManager | null = null;
   private agentsManager: AgentsManager | null = null;
 
@@ -65,7 +74,9 @@ export class GuiServer {
     this.app = express();
 
     this.setupMiddleware();
-    this.setupRoutes();
+    // setupRoutes is now async, but we can't await in constructor
+    // Routes will be set up synchronously, path resolution happens at request time
+    this.setupRoutesSync();
   }
 
   /**
@@ -93,6 +104,14 @@ export class GuiServer {
   }
 
   /**
+   * Register orchestrator instance for controls API routes.
+   */
+  registerOrchestratorInstance(orchestrator: Orchestrator): void {
+    this.orchestratorInstance = orchestrator;
+    this.app.use('/api', createControlsRoutes(this.orchestratorInstance));
+  }
+
+  /**
    * Setup Express middleware.
    */
   private setupMiddleware(): void {
@@ -113,9 +132,30 @@ export class GuiServer {
   }
 
   /**
+   * Get public directory path (handles both dev and production)
+   */
+  private getPublicPath(): string {
+    // Use fileURLToPath(import.meta.url) for reliable ESM path resolution
+    const currentFileDir = path.dirname(fileURLToPath(import.meta.url));
+    const distPath = path.join(currentFileDir, 'public');
+    const sourcePath = path.join(process.cwd(), 'src', 'gui', 'public');
+    
+    // Check if dist path exists (production/compiled)
+    if (existsSync(distPath)) {
+      return distPath;
+    }
+    // Check if source path exists (development with tsx)
+    if (existsSync(sourcePath)) {
+      return sourcePath;
+    }
+    // Fallback to source path for development
+    return sourcePath;
+  }
+
+  /**
    * Setup HTTP routes.
    */
-  private setupRoutes(): void {
+  private setupRoutesSync(): void {
     // Health check endpoint
     this.app.get('/health', (_req, res) => {
       res.json({
@@ -132,35 +172,59 @@ export class GuiServer {
       });
     });
 
-    // Control endpoints (mock for now)
-    this.app.post('/api/controls/start', (_req, res) => {
-      res.json({ success: true, sessionId: `PM-${Date.now()}` });
-    });
+    // Control endpoints will be registered via registerOrchestratorInstance()
+    // If no orchestrator instance is registered, controls routes will return 503
+    this.app.use('/api', createControlsRoutes(null));
 
-    this.app.post('/api/controls/pause', (_req, res) => {
-      res.json({ success: true });
-    });
+    // Projects routes
+    this.app.use('/api', createProjectsRoutes());
 
-    this.app.post('/api/controls/resume', (_req, res) => {
-      res.json({ success: true });
-    });
+    // Wizard routes
+    this.app.use('/api', createWizardRoutes());
 
-    this.app.post('/api/controls/stop', (_req, res) => {
-      res.json({ success: true });
-    });
+    // Config routes
+    this.app.use('/api', createConfigRoutes());
 
-    this.app.post('/api/controls/retry', (_req, res) => {
-      res.json({ success: true });
-    });
+    // Evidence routes
+    this.app.use('/api', createEvidenceRoutes());
 
-    // Serve static files from public directory
-    const publicPath = path.join(__dirname, 'public');
-    this.app.use(express.static(publicPath));
+    // Doctor routes
+    this.app.use('/api', createDoctorRoutes());
 
-    // Fallback to index.html
+    // Get public path
+    const publicPath = this.getPublicPath();
+
+    // Route handlers for specific pages (BEFORE static middleware to ensure they're matched)
     this.app.get('/', (_req, res) => {
       res.sendFile(path.join(publicPath, 'index.html'));
     });
+
+    this.app.get('/projects', (_req, res) => {
+      res.sendFile(path.join(publicPath, 'projects.html'));
+    });
+
+    this.app.get('/wizard', (_req, res) => {
+      res.sendFile(path.join(publicPath, 'wizard.html'));
+    });
+
+    this.app.get('/tiers', (_req, res) => {
+      res.sendFile(path.join(publicPath, 'tiers.html'));
+    });
+
+    this.app.get('/config', (_req, res) => {
+      res.sendFile(path.join(publicPath, 'config.html'));
+    });
+
+    this.app.get('/evidence', (_req, res) => {
+      res.sendFile(path.join(publicPath, 'evidence.html'));
+    });
+
+    this.app.get('/doctor', (_req, res) => {
+      res.sendFile(path.join(publicPath, 'doctor.html'));
+    });
+
+    // Serve static files from public directory (AFTER specific routes)
+    this.app.use(express.static(publicPath));
   }
 
   /**

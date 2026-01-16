@@ -106,9 +106,29 @@ async function fetchState() {
     if (response.ok) {
       const data = await response.json();
       updateState(data);
+      
+      // Update button states based on fetched state
+      if (data.orchestratorState) {
+        state.currentState = data.orchestratorState;
+        if (window.controls && window.controls.updateButtonStates) {
+          window.controls.updateButtonStates(data.orchestratorState);
+        } else {
+          updateControlButtons();
+        }
+      }
+    } else {
+      // If API returns error, assume idle state
+      console.warn('[Dashboard] State API returned error, assuming idle state');
+      if (window.controls && window.controls.updateButtonStates) {
+        window.controls.updateButtonStates('idle');
+      }
     }
   } catch (error) {
     console.error('[Dashboard] Error fetching state:', error);
+    // On error, assume idle state and enable start button
+    if (window.controls && window.controls.updateButtonStates) {
+      window.controls.updateButtonStates('idle');
+    }
   }
 }
 
@@ -122,6 +142,10 @@ function handleWebSocketMessage(message) {
       break;
     case 'progress':
       updateProgress(message.payload);
+      // Also update position if provided
+      if (message.payload.position) {
+        updatePosition(message.payload.position);
+      }
       break;
     case 'output':
       appendOutput(message.payload.line, message.payload.type || 'stdout');
@@ -130,6 +154,10 @@ function handleWebSocketMessage(message) {
       updateCurrentItem(message.payload);
       if (!state.elapsedTimeStart) {
         state.elapsedTimeStart = Date.now();
+      }
+      // Update position if provided
+      if (message.payload.position) {
+        updatePosition(message.payload.position);
       }
       break;
     case 'iteration_complete':
@@ -149,6 +177,16 @@ function handleWebSocketMessage(message) {
       break;
     case 'budget_warning':
       showBudgetWarning(message.payload);
+      // Also update budget display
+      if (message.payload.budgets) {
+        updateBudgets(message.payload.budgets);
+      }
+      break;
+    case 'budget_update':
+      // Explicit budget update event
+      if (message.payload) {
+        updateBudgets(message.payload);
+      }
       break;
     case 'pong':
       // Heartbeat response
@@ -168,12 +206,21 @@ function updateConnectionStatus(connected) {
   if (indicator && text) {
     if (connected) {
       indicator.classList.add('connected');
+      indicator.setAttribute('aria-label', 'WebSocket connected');
       text.textContent = 'Connected';
     } else {
       indicator.classList.remove('connected');
+      indicator.setAttribute('aria-label', 'WebSocket disconnected');
       text.textContent = 'Disconnected';
     }
+  } else {
+    console.warn('[Dashboard] Connection status elements not found:', { indicator, text });
   }
+}
+
+// Initialize connection status on page load
+function initConnectionStatus() {
+  updateConnectionStatus(false); // Start as disconnected
 }
 
 function updateOrchestratorState(newState, previousState) {
@@ -188,7 +235,13 @@ function updateOrchestratorState(newState, previousState) {
     statusText.textContent = newState.toUpperCase();
   }
   
-  updateControlButtons();
+  // Update control button states using controls module
+  if (window.controls && window.controls.updateButtonStates) {
+    window.controls.updateButtonStates(newState);
+  } else {
+    // Fallback to local function if controls module not loaded
+    updateControlButtons();
+  }
 }
 
 function updateState(data) {
@@ -196,7 +249,7 @@ function updateState(data) {
     updateOrchestratorState(data.orchestratorState, null);
   }
   
-  if (data.currentPhaseId || data.currentTaskId || data.currentSubtaskId) {
+  if (data.currentPhaseId !== undefined || data.currentTaskId !== undefined || data.currentSubtaskId !== undefined) {
     updatePosition(data);
   }
   
@@ -207,11 +260,70 @@ function updateState(data) {
       subtasks: { current: data.completionStats.passed || 0, total: data.completionStats.total || 0 },
     });
   }
+  
+  // Update budgets if provided
+  if (data.budgets) {
+    updateBudgets(data.budgets);
+  }
+}
+
+function updateBudgets(budgets) {
+  const claudeEl = document.getElementById('budget-claude');
+  const codexEl = document.getElementById('budget-codex');
+  const cursorEl = document.getElementById('budget-cursor');
+  
+  if (claudeEl && budgets.claude) {
+    const { current = 0, limit = 0 } = budgets.claude;
+    claudeEl.textContent = `Claude ${current}/${limit}`;
+  }
+  
+  if (codexEl && budgets.codex) {
+    const { current = 0, limit = 0 } = budgets.codex;
+    codexEl.textContent = `Codex ${current}/${limit}`;
+  }
+  
+  if (cursorEl && budgets.cursor) {
+    const { current = 0, limit = 'unlimited' } = budgets.cursor;
+    if (limit === 'unlimited') {
+      cursorEl.textContent = `Cursor ${current} (∞)`;
+    } else {
+      cursorEl.textContent = `Cursor ${current}/${limit}`;
+    }
+  }
 }
 
 function updatePosition(data) {
-  // This would be populated from the API response
-  // For now, using placeholder values
+  // Update phase position
+  const phasePos = document.getElementById('phase-position');
+  if (phasePos) {
+    const current = data.currentPhaseId || 0;
+    const total = data.totalPhases || 0;
+    phasePos.textContent = `Phase ${current}/${total}`;
+  }
+  
+  // Update task position
+  const taskPos = document.getElementById('task-position');
+  if (taskPos) {
+    const current = data.currentTaskId || 0;
+    const total = data.totalTasks || 0;
+    taskPos.textContent = `Task ${current}/${total}`;
+  }
+  
+  // Update subtask position
+  const subtaskPos = document.getElementById('subtask-position');
+  if (subtaskPos) {
+    const current = data.currentSubtaskId || 0;
+    const total = data.totalSubtasks || 0;
+    subtaskPos.textContent = `Subtask ${current}/${total}`;
+  }
+  
+  // Update iteration position
+  const iterPos = document.getElementById('iteration-position');
+  if (iterPos) {
+    const current = data.currentIteration || 0;
+    const max = data.maxIterations || 0;
+    iterPos.textContent = `Iter ${current}/${max}`;
+  }
 }
 
 function updateProgress(progress) {
@@ -475,27 +587,31 @@ function updateElapsedTime(seconds) {
 }
 
 function updateControlButtons() {
-  const startBtn = document.getElementById('start-btn');
-  const pauseBtn = document.getElementById('pause-btn');
-  const stopBtn = document.getElementById('stop-btn');
-  const retryBtn = document.getElementById('retry-btn');
-  const replanBtn = document.getElementById('replan-btn');
-  const reopenBtn = document.getElementById('reopen-btn');
-  const killBtn = document.getElementById('kill-btn');
-  
-  // Enable/disable buttons based on state
-  if (startBtn) startBtn.disabled = state.currentState !== 'idle';
-  if (pauseBtn) pauseBtn.disabled = state.currentState !== 'executing';
-  if (stopBtn) stopBtn.disabled = state.currentState === 'idle' || state.currentState === 'complete';
-  if (retryBtn) retryBtn.disabled = state.currentState === 'idle' || state.currentState === 'complete';
-  if (replanBtn) replanBtn.disabled = state.currentState === 'idle';
-  if (reopenBtn) reopenBtn.disabled = state.currentState === 'idle';
-  if (killBtn) killBtn.disabled = state.currentState !== 'executing';
+  // Fallback function - controls module should handle this
+  // This is kept for backwards compatibility
+  if (window.controls && window.controls.updateButtonStates) {
+    window.controls.updateButtonStates(state.currentState);
+  } else {
+    // Basic fallback implementation
+    const startBtn = document.getElementById('start-btn');
+    const pauseBtn = document.getElementById('pause-btn');
+    const resumeBtn = document.getElementById('resume-btn');
+    const stopBtn = document.getElementById('stop-btn');
+    const resetBtn = document.getElementById('reset-btn');
+    
+    if (startBtn) startBtn.disabled = state.currentState !== 'idle' && state.currentState !== 'planning';
+    if (pauseBtn) pauseBtn.disabled = state.currentState !== 'executing';
+    if (resumeBtn) resumeBtn.disabled = state.currentState !== 'paused';
+    if (stopBtn) stopBtn.disabled = state.currentState !== 'executing' && state.currentState !== 'paused';
+    if (resetBtn) resetBtn.disabled = state.currentState !== 'error' && state.currentState !== 'complete';
+  }
 }
 
 // ============================================
 // Control Actions
 // ============================================
+// Note: Control actions are now handled by controls.js module
+// This function is kept for backwards compatibility with retry/replan/reopen/kill buttons
 async function controlAction(action, confirmMessage = null) {
   if (confirmMessage && !confirm(confirmMessage)) {
     return;
@@ -519,27 +635,101 @@ async function controlAction(action, confirmMessage = null) {
 }
 
 // ============================================
+// Navigation
+// ============================================
+// Navigation is now handled by navigation.js module
+// This function is kept for backwards compatibility but will be overridden
+function initNavigation() {
+  // Use shared navigation module if available
+  if (window.navigation && window.navigation.init) {
+    window.navigation.init();
+  }
+}
+
+// ============================================
+// Project Management
+// ============================================
+async function checkProjectState() {
+  try {
+    // Try to fetch current project info from state API
+    const stateResponse = await fetch('/api/state');
+    if (stateResponse.ok) {
+      const state = await stateResponse.json();
+      // Check if state has project info
+      if (state.projectName || state.projectPath) {
+        updateProjectManagementPanel(true, {
+          name: state.projectName || 'Unknown',
+          path: state.projectPath || '-'
+        });
+        return;
+      }
+    }
+    
+    // Try to fetch from projects API (if endpoint exists)
+    try {
+      const response = await fetch('/api/projects/current');
+      if (response.ok) {
+        const project = await response.json();
+        if (project && project.name) {
+          updateProjectManagementPanel(true, project);
+          return;
+        }
+      }
+    } catch {
+      // Endpoint doesn't exist, that's okay
+    }
+  } catch (error) {
+    console.log('[Dashboard] No project loaded or API not available:', error);
+  }
+  
+  // No project loaded
+  updateProjectManagementPanel(false, null);
+}
+
+function updateProjectManagementPanel(hasProject, project) {
+  const noProjectState = document.querySelector('.no-project-state');
+  const projectLoadedState = document.querySelector('.project-loaded-state');
+  
+  if (hasProject && project) {
+    // Show project loaded state
+    if (noProjectState) noProjectState.style.display = 'none';
+    if (projectLoadedState) {
+      projectLoadedState.style.display = 'block';
+      
+      // Update project info
+      const nameEl = document.getElementById('project-display-name');
+      const pathEl = document.getElementById('project-display-path');
+      if (nameEl) nameEl.textContent = project.name || 'Unknown';
+      if (pathEl) pathEl.textContent = project.path || '-';
+      
+      // Update project name in header
+      const headerNameEl = document.getElementById('project-name');
+      if (headerNameEl) headerNameEl.textContent = project.name || 'Untangle';
+    }
+  } else {
+    // Show no project state
+    if (noProjectState) noProjectState.style.display = 'block';
+    if (projectLoadedState) projectLoadedState.style.display = 'none';
+    
+    // Reset header project name
+    const headerNameEl = document.getElementById('project-name');
+    if (headerNameEl) headerNameEl.textContent = 'No Project';
+  }
+}
+
+// ============================================
 // Event Listeners
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
-  // Control buttons
-  const startBtn = document.getElementById('start-btn');
-  const pauseBtn = document.getElementById('pause-btn');
-  const stopBtn = document.getElementById('stop-btn');
+  // Initialize navigation
+  initNavigation();
+  // Control buttons (start, pause, resume, stop, reset) are handled by controls.js
+  // Only handle additional buttons here (retry, replan, reopen, kill)
   const retryBtn = document.getElementById('retry-btn');
   const replanBtn = document.getElementById('replan-btn');
   const reopenBtn = document.getElementById('reopen-btn');
   const killBtn = document.getElementById('kill-btn');
   
-  if (startBtn) {
-    startBtn.addEventListener('click', () => controlAction('start'));
-  }
-  if (pauseBtn) {
-    pauseBtn.addEventListener('click', () => controlAction('pause'));
-  }
-  if (stopBtn) {
-    stopBtn.addEventListener('click', () => controlAction('stop', 'Are you sure? This will abort current work.'));
-  }
   if (retryBtn) {
     retryBtn.addEventListener('click', () => controlAction('retry'));
   }
@@ -579,14 +769,89 @@ document.addEventListener('DOMContentLoaded', () => {
           .join('\n');
         navigator.clipboard.writeText(text).then(() => {
           console.log('[Dashboard] Output copied to clipboard');
+          // Show brief feedback
+          const originalText = copyBtn.textContent;
+          copyBtn.textContent = 'COPIED';
+          setTimeout(() => {
+            copyBtn.textContent = originalText;
+          }, 2000);
+        }).catch(err => {
+          console.error('[Dashboard] Failed to copy:', err);
         });
       }
     });
   }
   
+  // View more commits button
+  const commitsMoreBtn = document.getElementById('commits-more-btn');
+  if (commitsMoreBtn) {
+    commitsMoreBtn.addEventListener('click', () => {
+      // Navigate to evidence page filtered by commits
+      window.location.href = '/evidence?type=commit';
+    });
+  }
+  
+  // View more errors button
+  const errorsMoreBtn = document.getElementById('errors-more-btn');
+  if (errorsMoreBtn) {
+    errorsMoreBtn.addEventListener('click', () => {
+      // Navigate to evidence page filtered by errors
+      window.location.href = '/evidence?type=error';
+    });
+  }
+  
   // Initialize
   initDarkMode();
-  updateControlButtons();
+  initConnectionStatus(); // Initialize connection status display
+  checkProjectState(); // Check if project is loaded
+  
+  // Initialize status bar with default values
+  const statusText = document.getElementById('status-text');
+  if (statusText && !statusText.textContent) {
+    statusText.textContent = 'IDLE';
+  }
+  
+  // Initialize position indicators if they're empty
+  const phasePos = document.getElementById('phase-position');
+  if (phasePos && !phasePos.textContent.trim()) {
+    phasePos.textContent = 'Phase 0/0';
+  }
+  const taskPos = document.getElementById('task-position');
+  if (taskPos && !taskPos.textContent.trim()) {
+    taskPos.textContent = 'Task 0/0';
+  }
+  const subtaskPos = document.getElementById('subtask-position');
+  if (subtaskPos && !subtaskPos.textContent.trim()) {
+    subtaskPos.textContent = 'Subtask 0/0';
+  }
+  const iterPos = document.getElementById('iteration-position');
+  if (iterPos && !iterPos.textContent.trim()) {
+    iterPos.textContent = 'Iter 0/0';
+  }
+  
+  // Initialize budgets with default values if needed
+  updateBudgets({
+    claude: { current: 0, limit: 3 },
+    codex: { current: 0, limit: 20 },
+    cursor: { current: 0, limit: 'unlimited' }
+  });
+  
+  // Project selector click handler
+  const projectSelector = document.getElementById('project-selector');
+  if (projectSelector) {
+    projectSelector.addEventListener('click', () => {
+      window.location.href = '/projects';
+    });
+  }
+  // Control buttons will be initialized by controls.js module
+  // Update button states after controls module loads
+  setTimeout(() => {
+    if (window.controls && window.controls.updateButtonStates) {
+      window.controls.updateButtonStates(state.currentState);
+    } else {
+      updateControlButtons();
+    }
+  }, 100);
   connectWebSocket();
   
   // Update elapsed time every second

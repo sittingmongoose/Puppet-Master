@@ -1,0 +1,436 @@
+/**
+ * Tier Views CSS - Vibrant Technical Design
+ * 
+ * Styles for tier hierarchy tree view and details panel
+ */
+
+/* ===== Tree Container ===== */
+.tree-container {
+  min-height: 400px;
+  max-height: 800px;
+  overflow-y: auto;
+  padding: var(--spacing-md);
+}
+
+.tree-root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.loading-indicator,
+.empty-message,
+.error-message {
+  padding: var(--spacing-lg);
+  text-align: center;
+  font-family: var(--font-monospace);
+  color: var(--ink-black);
+}
+
+.error-message {
+  color: var(--status-error);
+}
+
+/* ===== Tree Node ===== */
+.tree-node {
+  position: relative;
+  margin-bottom: var(--spacing-xs);
+  transition: background-color 0.2s ease;
+}
+
+.tree-node:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="dark"] .tree-node:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.tree-node.current-executing {
+  background-color: rgba(0, 240, 255, 0.1);
+  border-left: var(--border-medium) solid var(--neon-blue);
+  padding-left: calc(var(--spacing-sm) - 2px);
+}
+
+[data-theme="dark"] .tree-node.current-executing {
+  background-color: rgba(0, 240, 255, 0.2);
+  border-left-color: var(--neon-blue);
+}
+
+/* ===== Tree Node Header ===== */
+.tree-node-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background-color 0.2s ease;
+}
+
+.tree-node-header:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .tree-node-header:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Expand/Collapse Button */
+.tree-expand-btn {
+  background: transparent;
+  border: var(--border-thin) solid var(--ink-black);
+  padding: 2px 6px;
+  cursor: pointer;
+  font-family: var(--font-monospace);
+  font-size: 0.9em;
+  color: var(--ink-black);
+  min-width: 24px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.tree-expand-btn:hover {
+  background-color: var(--ink-black);
+  color: var(--paper-cream);
+}
+
+[data-theme="dark"] .tree-expand-btn {
+  border-color: var(--ink-black);
+  color: var(--ink-black);
+}
+
+[data-theme="dark"] .tree-expand-btn:hover {
+  background-color: var(--ink-black);
+  color: var(--paper-cream);
+}
+
+.tree-expand-spacer {
+  display: inline-block;
+  width: 24px;
+  text-align: center;
+}
+
+/* State Dot */
+.tree-state-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: var(--border-medium) solid var(--ink-black);
+  flex-shrink: 0;
+  display: inline-block;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tree-state-dot.pulsing {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 8px currentColor, 0 0 12px currentColor;
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 12px currentColor, 0 0 20px currentColor;
+  }
+}
+
+/* Dark mode enhanced glow */
+[data-theme="dark"] .tree-state-dot.pulsing {
+  animation: pulse-dark 2s infinite;
+}
+
+@keyframes pulse-dark {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 12px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 20px currentColor, 0 0 35px currentColor, 0 0 50px currentColor;
+  }
+}
+
+/* State Colors */
+.tree-state-dot.tree-state-pending {
+  background-color: var(--status-idle);
+}
+
+.tree-state-dot.tree-state-planning {
+  background-color: var(--electric-blue);
+}
+
+.tree-state-dot.tree-state-running {
+  background-color: var(--safety-orange);
+}
+
+.tree-state-dot.tree-state-gating {
+  background-color: var(--safety-orange);
+}
+
+.tree-state-dot.tree-state-passed {
+  background-color: var(--status-complete);
+}
+
+.tree-state-dot.tree-state-failed {
+  background-color: var(--status-error);
+}
+
+.tree-state-dot.tree-state-escalated {
+  background-color: #9B59B6;
+}
+
+.tree-state-dot.tree-state-retrying {
+  background-color: var(--electric-blue);
+}
+
+/* ===== Tree Node Info ===== */
+.tree-node-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.tree-node-title {
+  font-weight: 600;
+  color: var(--ink-black);
+}
+
+.tree-node-id {
+  font-family: var(--font-monospace);
+  font-size: 0.85em;
+  color: var(--status-idle);
+  padding: 2px 6px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+}
+
+[data-theme="dark"] .tree-node-id {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.tree-state-label {
+  font-family: var(--font-monospace);
+  font-size: 0.85em;
+  padding: 2px 6px;
+  border: var(--border-thin) solid var(--ink-black);
+  border-radius: 2px;
+  background-color: var(--paper-cream);
+}
+
+.tree-iter-count {
+  font-family: var(--font-monospace);
+  font-size: 0.85em;
+  color: var(--status-idle);
+}
+
+/* ===== Tree Children ===== */
+.tree-children {
+  margin-left: var(--spacing-md);
+  padding-left: var(--spacing-md);
+  border-left: var(--border-thin) dashed var(--ink-black);
+  margin-top: var(--spacing-xs);
+}
+
+[data-theme="dark"] .tree-children {
+  border-left-color: var(--ink-black);
+}
+
+/* ===== Tree Controls ===== */
+.tree-controls {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+/* ===== Page Title ===== */
+.page-title {
+  font-size: 1.8em;
+  margin-bottom: var(--spacing-xs);
+}
+
+.page-description {
+  color: var(--status-idle);
+  font-size: 0.9em;
+  margin: 0;
+}
+
+/* ===== Details Panel ===== */
+.details-panel {
+  position: fixed;
+  top: 0;
+  right: -500px;
+  width: 500px;
+  height: 100vh;
+  background-color: var(--paper-cream);
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.02) 2px,
+      rgba(0, 0, 0, 0.02) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 1px,
+      rgba(0, 0, 0, 0.01) 1px,
+      rgba(0, 0, 0, 0.01) 2px
+    );
+  border-left: var(--border-thick) solid var(--ink-black);
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: right 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.details-panel.open {
+  right: 0;
+}
+
+[data-theme="dark"] .details-panel {
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.015) 2px,
+      rgba(255, 255, 255, 0.015) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 1px,
+      rgba(255, 255, 255, 0.008) 1px,
+      rgba(255, 255, 255, 0.008) 2px
+    );
+  border-left-color: var(--ink-black);
+}
+
+.details-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  border-bottom: var(--border-medium) solid var(--ink-black);
+  background-color: var(--paper-cream);
+}
+
+.details-panel-header .panel-title {
+  margin: 0;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.details-panel-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-md);
+}
+
+/* Detail Section */
+.detail-section {
+  margin-bottom: var(--spacing-lg);
+}
+
+.detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.detail-section h3 {
+  margin-bottom: var(--spacing-sm);
+  font-size: 1em;
+}
+
+/* Test Plan List */
+.test-plan-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.test-plan-item {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-left: var(--border-medium) solid var(--ink-black);
+  background: var(--paper-cream);
+  font-family: var(--font-monospace);
+  font-size: 0.9em;
+}
+
+.test-plan-wd {
+  color: var(--status-idle);
+  font-size: 0.9em;
+}
+
+/* Evidence List */
+.evidence-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.evidence-item {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-left: var(--border-medium) solid var(--ink-black);
+  background: var(--paper-cream);
+  font-size: 0.9em;
+}
+
+.evidence-type {
+  font-family: var(--font-monospace);
+  font-weight: 600;
+  color: var(--electric-blue);
+}
+
+.evidence-time {
+  color: var(--status-idle);
+  font-size: 0.85em;
+  margin-left: var(--spacing-xs);
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 1024px) {
+  .details-panel {
+    width: 400px;
+    right: -400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .details-panel {
+    width: 100%;
+    right: -100%;
+  }
+  
+  .tree-node-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+  
+  .tree-container {
+    max-height: 600px;
+  }
+}
+
+/* ===== Dark Mode Adjustments ===== */
+[data-theme="dark"] .detail-section h3,
+[data-theme="dark"] .tree-node-title,
+[data-theme="dark"] .test-plan-item,
+[data-theme="dark"] .evidence-item {
+  color: var(--ink-black);
+}

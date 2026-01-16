@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RWM Puppet Master - Tier Views</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/tiers.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <a href="/" class="logo-link">
+          <h1 class="logo">RWM Puppet Master</h1>
+        </a>
+        <nav class="main-navigation">
+          <a href="/" class="nav-link" data-page="dashboard">DASHBOARD</a>
+          <a href="/projects" class="nav-link" data-page="projects">PROJECTS</a>
+          <a href="/wizard" class="nav-link" data-page="wizard">WIZARD</a>
+          <a href="/config" class="nav-link" data-page="config">CONFIG</a>
+          <a href="/doctor" class="nav-link" data-page="doctor">DOCTOR</a>
+          <a href="/tiers" class="nav-link active" data-page="tiers">TIERS</a>
+          <a href="/evidence" class="nav-link" data-page="evidence">EVIDENCE</a>
+        </nav>
+      </div>
+      <div class="header-right">
+        <div class="header-actions">
+          <button class="icon-btn" id="refresh-btn" aria-label="Refresh tier data">REFRESH</button>
+          <button class="icon-btn" id="dark-mode-toggle" aria-label="Toggle dark mode">DARK MODE</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Title Panel -->
+    <section class="panel">
+      <h1 class="page-title">Tier Hierarchy</h1>
+      <p class="page-description">Visual representation of the four-tier hierarchy (Phase → Task → Subtask → Iteration)</p>
+    </section>
+
+    <!-- Tree View Container -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2 class="panel-title">Tier Tree</h2>
+        <div class="tree-controls">
+          <button class="icon-btn" id="expand-all-btn" aria-label="Expand all nodes">EXPAND ALL</button>
+          <button class="icon-btn" id="collapse-all-btn" aria-label="Collapse all nodes">COLLAPSE ALL</button>
+        </div>
+      </div>
+      <div id="tree-container" class="tree-container">
+        <div class="loading-indicator" id="loading-indicator">Loading tier hierarchy...</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Details Panel (slides in from right) -->
+  <aside class="details-panel" id="details-panel">
+    <div class="details-panel-header">
+      <h2 class="panel-title" id="details-title">Tier Details</h2>
+      <button class="icon-btn" id="close-details-btn" aria-label="Close details panel">CLOSE</button>
+    </div>
+    <div class="details-panel-content" id="details-content">
+      <p>Click on a tier node to view details.</p>
+    </div>
+  </aside>
+
+  <script src="/js/navigation.js"></script>
+  <script src="/js/tiers.js"></script>
+</body>
+</html>
