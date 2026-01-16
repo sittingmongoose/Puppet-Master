@@ -135,10 +135,14 @@ export class GuiServer {
    * Get public directory path (handles both dev and production)
    */
   private getPublicPath(): string {
-    // Use fileURLToPath(import.meta.url) for reliable ESM path resolution
+    // Calculate the server.ts file's directory using fileURLToPath for reliable ESM path resolution
     const currentFileDir = path.dirname(fileURLToPath(import.meta.url));
-    const distPath = path.join(currentFileDir, 'public');
-    const sourcePath = path.join(process.cwd(), 'src', 'gui', 'public');
+    
+    // For dist path: resolve relative to server.ts location (absolute path)
+    const distPath = path.resolve(currentFileDir, 'public');
+    
+    // For source path: resolve from project root (absolute path)
+    const sourcePath = path.resolve(process.cwd(), 'src', 'gui', 'public');
     
     // Check if dist path exists (production/compiled)
     if (existsSync(distPath)) {
