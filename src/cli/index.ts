@@ -8,6 +8,14 @@ import { doctorCommand } from './commands/doctor.js';
 import { statusCommand } from './commands/status.js';
 import { planCommand } from './commands/plan.js';
 import { initCommand } from './commands/init.js';
+import { pauseCommand } from './commands/pause.js';
+import { resumeCommand } from './commands/resume.js';
+import { stopCommand } from './commands/stop.js';
+import { installCommand } from './commands/install.js';
+import { replanCommand } from './commands/replan.js';
+import { reopenCommand } from './commands/reopen.js';
+import { guiCommand } from './commands/gui.js';
+import { validateCommand } from './commands/validate.js';
 
 const program = new Command();
 
@@ -45,6 +53,30 @@ planCommand.register(program);
 
 // Register init command
 initCommand.register(program);
+
+// Register pause command
+pauseCommand.register(program);
+
+// Register resume command
+resumeCommand.register(program);
+
+// Register stop command
+stopCommand.register(program);
+
+// Register install command
+installCommand.register(program);
+
+// Register replan command
+replanCommand.register(program);
+
+// Register reopen command
+reopenCommand.register(program);
+
+// Register GUI command
+guiCommand.register(program);
+
+// Register validate command
+validateCommand.register(program);
 
 /**
  * Run the CLI with the given arguments

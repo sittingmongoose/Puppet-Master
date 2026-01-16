@@ -54,6 +54,64 @@ export function createControlsRoutes(orchestrator: Orchestrator | null): Router 
         return;
       }
 
+      // PRE-FLIGHT CHECKS
+
+      // Check 1: Project loaded?
+      const project = await orchestrator.getCurrentProject();
+      if (!project) {
+        res.status(400).json({
+          error: 'No project loaded. Please open or create a project first.',
+          code: 'NO_PROJECT_LOADED',
+        } as ErrorResponse);
+        return;
+      }
+
+      // Check 2: PRD valid?
+      const prdValidation = await orchestrator.validatePRD();
+      if (!prdValidation.valid) {
+        res.status(400).json({
+          error: 'PRD validation failed',
+          code: 'PRD_INVALID',
+          details: prdValidation.errors,
+        } as ErrorResponse & { details?: string[] });
+        return;
+      }
+
+      // Check 3: Config valid?
+      const configValidation = await orchestrator.validateConfig();
+      if (!configValidation.valid) {
+        res.status(400).json({
+          error: 'Configuration validation failed',
+          code: 'CONFIG_INVALID',
+          details: configValidation.errors,
+        } as ErrorResponse & { details?: string[] });
+        return;
+      }
+
+      // Check 4: Required CLIs available?
+      const cliChecks = await orchestrator.checkRequiredCLIs();
+      if (!cliChecks.allAvailable) {
+        res.status(400).json({
+          error: 'Required CLI tools not available',
+          code: 'CLI_TOOLS_MISSING',
+          details: cliChecks.missing,
+          hint: 'Run Doctor to install missing tools',
+        } as ErrorResponse & { details?: string[]; hint?: string });
+        return;
+      }
+
+      // Check 5: Git repo initialized?
+      const gitCheck = await orchestrator.checkGitRepo();
+      if (!gitCheck.valid) {
+        res.status(400).json({
+          error: 'Git repository not initialized',
+          code: 'GIT_NOT_INITIALIZED',
+          details: gitCheck.errors,
+          hint: 'Run "git init" in project directory',
+        } as ErrorResponse & { details?: string[]; hint?: string });
+        return;
+      }
+
       const { fromCheckpoint } = req.body;
       const currentState = orchestrator.getState();
 
@@ -246,6 +304,160 @@ export function createControlsRoutes(orchestrator: Orchestrator | null): Router 
       res.status(500).json({
         error: error instanceof Error ? error.message : 'Failed to reset execution',
         code: 'RESET_FAILED',
+      } as ErrorResponse);
+    }
+  });
+
+  /**
+   * POST /api/controls/retry
+   * Retry current failed subtask with a fresh iteration.
+   */
+  router.post('/controls/retry', async (_req: Request, res: Response) => {
+    try {
+      if (!orchestrator) {
+        res.status(503).json({
+          error: 'Orchestrator not available',
+          code: 'ORCHESTRATOR_NOT_AVAILABLE',
+        } as ErrorResponse);
+        return;
+      }
+
+      // For now, return not implemented
+      // TODO: Implement retry logic in Orchestrator
+      res.status(501).json({
+        error: 'Retry functionality not yet implemented',
+        code: 'NOT_IMPLEMENTED',
+      } as ErrorResponse);
+    } catch (error) {
+      console.error('[Controls] Error retrying:', error);
+      res.status(500).json({
+        error: error instanceof Error ? error.message : 'Failed to retry',
+        code: 'RETRY_FAILED',
+      } as ErrorResponse);
+    }
+  });
+
+  /**
+   * POST /api/controls/replan
+   * Regenerate plans for a specific tier (phase/task/subtask).
+   * Body: { tierId: string, scope: 'phase' | 'task' | 'subtask' }
+   */
+  router.post('/controls/replan', async (req: Request, res: Response) => {
+    try {
+      if (!orchestrator) {
+        res.status(503).json({
+          error: 'Orchestrator not available',
+          code: 'ORCHESTRATOR_NOT_AVAILABLE',
+        } as ErrorResponse);
+        return;
+      }
+
+      const { tierId, scope } = req.body;
+
+      if (!tierId || typeof tierId !== 'string') {
+        res.status(400).json({
+          error: 'tierId is required',
+          code: 'TIER_ID_REQUIRED',
+        } as ErrorResponse);
+        return;
+      }
+
+      if (!scope || !['phase', 'task', 'subtask'].includes(scope)) {
+        res.status(400).json({
+          error: 'scope must be one of: phase, task, subtask',
+          code: 'INVALID_SCOPE',
+        } as ErrorResponse);
+        return;
+      }
+
+      // For now, return not implemented
+      // TODO: Implement replan logic in Orchestrator
+      res.status(501).json({
+        error: 'Replan functionality not yet implemented',
+        code: 'NOT_IMPLEMENTED',
+      } as ErrorResponse);
+    } catch (error) {
+      console.error('[Controls] Error replanning:', error);
+      res.status(500).json({
+        error: error instanceof Error ? error.message : 'Failed to replan',
+        code: 'REPLAN_FAILED',
+      } as ErrorResponse);
+    }
+  });
+
+  /**
+   * POST /api/controls/reopen
+   * Reopen a completed item (reset pass=false, iteration count).
+   * Body: { tierId: string, reason: string }
+   */
+  router.post('/controls/reopen', async (req: Request, res: Response) => {
+    try {
+      if (!orchestrator) {
+        res.status(503).json({
+          error: 'Orchestrator not available',
+          code: 'ORCHESTRATOR_NOT_AVAILABLE',
+        } as ErrorResponse);
+        return;
+      }
+
+      const { tierId, reason } = req.body;
+
+      if (!tierId || typeof tierId !== 'string') {
+        res.status(400).json({
+          error: 'tierId is required',
+          code: 'TIER_ID_REQUIRED',
+        } as ErrorResponse);
+        return;
+      }
+
+      if (!reason || typeof reason !== 'string' || reason.trim().length === 0) {
+        res.status(400).json({
+          error: 'reason is required',
+          code: 'REASON_REQUIRED',
+        } as ErrorResponse);
+        return;
+      }
+
+      // For now, return not implemented
+      // TODO: Implement reopen logic in Orchestrator
+      res.status(501).json({
+        error: 'Reopen functionality not yet implemented',
+        code: 'NOT_IMPLEMENTED',
+      } as ErrorResponse);
+    } catch (error) {
+      console.error('[Controls] Error reopening:', error);
+      res.status(500).json({
+        error: error instanceof Error ? error.message : 'Failed to reopen',
+        code: 'REOPEN_FAILED',
+      } as ErrorResponse);
+    }
+  });
+
+  /**
+   * POST /api/controls/kill-spawn
+   * Kill current CLI process and spawn a fresh iteration.
+   */
+  router.post('/controls/kill-spawn', async (_req: Request, res: Response) => {
+    try {
+      if (!orchestrator) {
+        res.status(503).json({
+          error: 'Orchestrator not available',
+          code: 'ORCHESTRATOR_NOT_AVAILABLE',
+        } as ErrorResponse);
+        return;
+      }
+
+      // For now, return not implemented
+      // TODO: Implement kill-spawn logic in Orchestrator
+      res.status(501).json({
+        error: 'Kill-spawn functionality not yet implemented',
+        code: 'NOT_IMPLEMENTED',
+      } as ErrorResponse);
+    } catch (error) {
+      console.error('[Controls] Error killing/spawning:', error);
+      res.status(500).json({
+        error: error instanceof Error ? error.message : 'Failed to kill and spawn fresh',
+        code: 'KILL_SPAWN_FAILED',
       } as ErrorResponse);
     }
   });

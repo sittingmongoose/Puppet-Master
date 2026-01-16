@@ -331,6 +331,7 @@ h1, h2, h3 {
   flex: 1;
   min-width: 0;
   flex-wrap: wrap;
+  overflow: visible;
 }
 
 .logo-link {
@@ -351,6 +352,8 @@ h1, h2, h3 {
   margin: 0;
   white-space: nowrap;
   flex-shrink: 0;
+  overflow: visible;
+  min-width: max-content;
 }
 
 .logo-link:hover .logo {
@@ -422,6 +425,8 @@ h1, h2, h3 {
   
   .logo {
     font-size: 2em;
+    white-space: normal;
+    word-break: break-word;
   }
 }
 
@@ -450,7 +455,10 @@ h1, h2, h3 {
   }
   
   .logo {
-    font-size: 1.8em;
+    font-size: 1.5em;
+    white-space: normal;
+    word-break: break-word;
+    line-height: 1.2;
   }
   
   .header-right {
@@ -461,6 +469,8 @@ h1, h2, h3 {
   
   .project-selector {
     font-size: 0.9em;
+    white-space: normal;
+    word-break: break-word;
   }
 }
 
@@ -518,6 +528,9 @@ h1, h2, h3 {
   flex-wrap: wrap;
   padding: var(--spacing-sm) var(--spacing-md);
   margin-bottom: var(--spacing-lg);
+  min-height: 60px;
+  visibility: visible;
+  opacity: 1;
 }
 
 @media (max-width: 768px) {
@@ -543,6 +556,9 @@ h1, h2, h3 {
   gap: var(--spacing-xs);
   font-weight: 700;
   font-size: 1.1em;
+  white-space: nowrap;
+  overflow: visible;
+  flex-shrink: 0;
 }
 
 .status-dot {
@@ -580,6 +596,9 @@ h1, h2, h3 {
   display: flex;
   gap: var(--spacing-xs);
   font-weight: 600;
+  flex-wrap: wrap;
+  white-space: nowrap;
+  overflow: visible;
 }
 
 .separator {
@@ -590,6 +609,9 @@ h1, h2, h3 {
 .budget-indicators {
   font-weight: 600;
   margin-left: auto;
+  white-space: nowrap;
+  overflow: visible;
+  flex-shrink: 0;
 }
 
 .connection-status {
@@ -597,6 +619,9 @@ h1, h2, h3 {
   align-items: center;
   gap: var(--spacing-xs);
   font-size: 0.9em;
+  white-space: nowrap;
+  overflow: visible;
+  flex-shrink: 0;
 }
 
 #connection-indicator.status-dot {
@@ -625,6 +650,10 @@ h1, h2, h3 {
   color: var(--ink-black);
   margin-bottom: var(--spacing-md);
   font-weight: 500;
+  white-space: normal;
+  overflow: visible;
+  word-wrap: break-word;
+  line-height: 1.6;
 }
 
 .project-actions {
@@ -688,9 +717,10 @@ h1, h2, h3 {
   letter-spacing: 1px;
   border-bottom: var(--border-medium) solid var(--ink-black);
   padding-bottom: var(--spacing-xs);
-  white-space: nowrap;
+  white-space: normal;
   overflow: visible;
-  word-wrap: normal;
+  word-wrap: break-word;
+  min-width: 0;
 }
 
 .panel-header {
@@ -698,11 +728,17 @@ h1, h2, h3 {
   justify-content: space-between;
   align-items: center;
   margin-bottom: var(--spacing-md);
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
 .panel-header .panel-title {
   margin-bottom: 0;
   border-bottom: none;
+  flex: 1;
+  min-width: 0;
+  overflow: visible;
 }
 
 /* ===== Current Item Panel ===== */
@@ -746,6 +782,21 @@ h1, h2, h3 {
   min-width: 100px;
   white-space: nowrap;
   overflow: visible;
+  flex-shrink: 0;
+}
+
+.detail-row span:not(.detail-label) {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  min-width: 0;
+  flex: 1;
+}
+
+.detail-row span.monospace {
+  font-family: var(--font-monospace);
+  word-break: break-all;
+  overflow-wrap: anywhere;
+  max-width: 100%;
 }
 
 .divider {
@@ -1093,6 +1144,11 @@ h1, h2, h3 {
   background: var(--paper-cream);
   font-size: 0.9em;
   font-family: var(--font-monospace);
+  white-space: normal;
+  overflow: visible;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  min-width: 0;
 }
 
 .activity-item.success {
@@ -1272,6 +1328,23 @@ h1, h2, h3 {
   letter-spacing: 2px;
   margin: 0;
   color: var(--ink-black);
+  white-space: normal;
+  overflow: visible;
+  word-wrap: break-word;
+}
+
+.page-description {
+  margin-top: var(--spacing-md);
+  font-size: 1em;
+  color: var(--ink-black);
+  opacity: 0.8;
+  line-height: 1.6;
+  white-space: normal;
+  overflow: visible;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  min-width: 0;
 }
 
 /* Project Cards Grid */
@@ -1373,6 +1446,7 @@ h1, h2, h3 {
   overflow-wrap: break-word;
   white-space: normal;
   max-width: 100%;
+  min-width: 0;
 }
 
 /* Dark mode project cards */
@@ -1444,8 +1518,16 @@ h1, h2, h3 {
   padding: var(--spacing-sm) var(--spacing-md);
   color: var(--ink-black);
   word-break: break-word;
-  max-width: 300px;
+  max-width: none;
   overflow-wrap: break-word;
+  white-space: normal;
+  min-width: 0;
+}
+
+.projects-table td.monospace {
+  font-family: var(--font-monospace);
+  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
 .projects-table td .status-dot {

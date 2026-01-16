@@ -10,6 +10,7 @@
 import type { OrchestratorState } from '../types/state.js';
 import type { PuppetMasterConfig } from '../types/config.js';
 import type { TierPlan } from '../types/tiers.js';
+import type { PRD } from '../types/prd.js';
 import type { PlatformRunnerContract } from '../types/platforms.js';
 import type { IterationContext, IterationResult } from './execution-engine.js';
 import type { AdvancementResult } from './auto-advancement.js';
@@ -32,6 +33,28 @@ import type { EvidenceStore } from '../memory/index.js';
 import type { UsageTracker } from '../memory/index.js';
 import type { GitManager } from '../git/index.js';
 import type { VerificationIntegration } from '../verification/verification-integration.js';
+import type { EventBus } from '../logging/event-bus.js';
+import { spawn } from 'child_process';
+import { existsSync } from 'fs';
+import { join } from 'path';
+import { validateConfig as validateConfigSchema } from '../config/config-schema.js';
+import type { Platform } from '../types/config.js';
+
+/**
+ * Validation result interface
+ */
+export interface ValidationResult {
+  valid: boolean;
+  errors: string[];
+}
+
+/**
+ * CLI check result interface
+ */
+export interface CLICheckResult {
+  allAvailable: boolean;
+  missing: string[];
+}
 
 /**
  * Configuration for orchestrator initialization
@@ -40,6 +63,7 @@ export interface OrchestratorConfig {
   config: PuppetMasterConfig;
   projectPath: string;
   prdPath?: string;
+  eventBus?: EventBus;
 }
 
 /**
@@ -85,6 +109,7 @@ export class Orchestrator {
   private readonly outputParser: OutputParser;
   private readonly deps: OrchestratorDependencies;
   private readonly config: PuppetMasterConfig;
+  private readonly eventBus: EventBus | null;
 
   private startedAt: Date | null = null;
   private iterationsRun: number = 0;
@@ -93,6 +118,7 @@ export class Orchestrator {
 
   constructor(orchestratorConfig: OrchestratorConfig) {
     this.config = orchestratorConfig.config;
+    this.eventBus = orchestratorConfig.eventBus || null;
     this.stateMachine = new OrchestratorStateMachine();
     
     // These will be initialized in initialize() when deps are provided
@@ -138,6 +164,20 @@ export class Orchestrator {
     // Set up execution engine with platform runner
     this.executionEngine.setRunner(deps.platformRunner);
 
+    // Register output callbacks for EventBus streaming
+    if (this.eventBus) {
+      this.executionEngine.onOutput((output: string) => {
+        const currentSubtask = this.tierStateManager.getCurrentSubtask();
+        if (currentSubtask && this.eventBus) {
+          this.eventBus.emit({
+            type: 'output_chunk',
+            subtaskId: currentSubtask.id,
+            chunk: output,
+          });
+        }
+      });
+    }
+
     // Initialize state machine to planning state
     this.stateMachine.send({ type: 'INIT' });
   }
@@ -150,7 +190,19 @@ export class Orchestrator {
       throw new Error(`Cannot start from state: ${this.stateMachine.getCurrentState()}`);
     }
 
+    const previousState = this.stateMachine.getCurrentState();
     this.stateMachine.send({ type: 'START' });
+    const newState = this.stateMachine.getCurrentState();
+
+    // Publish state change event
+    if (this.eventBus) {
+      this.eventBus.emit({
+        type: 'state_changed',
+        from: previousState,
+        to: newState,
+      });
+    }
+
     this.startedAt = new Date();
     this.iterationsRun = 0;
     this.loopRunning = true;
@@ -167,7 +219,19 @@ export class Orchestrator {
       throw new Error(`Cannot pause from state: ${this.stateMachine.getCurrentState()}`);
     }
 
+    const previousState = this.stateMachine.getCurrentState();
     this.stateMachine.send({ type: 'PAUSE', reason });
+    const newState = this.stateMachine.getCurrentState();
+
+    // Publish state change event
+    if (this.eventBus) {
+      this.eventBus.emit({
+        type: 'state_changed',
+        from: previousState,
+        to: newState,
+      });
+    }
+
     this.loopAborted = true;
   }
 
@@ -179,7 +243,19 @@ export class Orchestrator {
       throw new Error(`Cannot resume from state: ${this.stateMachine.getCurrentState()}`);
     }
 
+    const previousState = this.stateMachine.getCurrentState();
     this.stateMachine.send({ type: 'RESUME' });
+    const newState = this.stateMachine.getCurrentState();
+
+    // Publish state change event
+    if (this.eventBus) {
+      this.eventBus.emit({
+        type: 'state_changed',
+        from: previousState,
+        to: newState,
+      });
+    }
+
     this.loopRunning = true;
     this.loopAborted = false;
 
@@ -190,7 +266,19 @@ export class Orchestrator {
    * Cleanly terminate
    */
   async stop(): Promise<void> {
+    const previousState = this.stateMachine.getCurrentState();
     this.stateMachine.send({ type: 'STOP' });
+    const newState = this.stateMachine.getCurrentState();
+
+    // Publish state change event
+    if (this.eventBus) {
+      this.eventBus.emit({
+        type: 'state_changed',
+        from: previousState,
+        to: newState,
+      });
+    }
+
     this.loopAborted = true;
     this.loopRunning = false;
 
@@ -238,6 +326,62 @@ export class Orchestrator {
   }
 
   /**
+   * Load a project into the orchestrator
+   */
+  async loadProject(params: {
+    path: string;
+    prd: PRD;
+    config: PuppetMasterConfig;
+  }): Promise<void> {
+    if (!this.deps || !this.deps.prdManager) {
+      throw new Error('Orchestrator not initialized. Call initialize() first.');
+    }
+
+    // Update PRD manager with new PRD
+    await this.deps.prdManager.save(params.prd);
+
+    // Reload tier state from PRD
+    await this.tierStateManager.initialize();
+
+    // Publish project_loaded event
+    if (this.eventBus) {
+      this.eventBus.emit({
+        type: 'project_loaded',
+        name: params.prd.project,
+        path: params.path,
+        phasesTotal: params.prd.phases?.length || 0,
+        tasksTotal: params.prd.metadata?.totalTasks || 0,
+        subtasksTotal: params.prd.metadata?.totalSubtasks || 0,
+      });
+    }
+  }
+
+  /**
+   * Get current loaded project info
+   */
+  async getCurrentProject(): Promise<{ name: string; phasesTotal: number; tasksTotal: number; subtasksTotal: number } | null> {
+    if (!this.deps || !this.deps.prdManager) {
+      return null;
+    }
+
+    try {
+      const prd = await this.deps.prdManager.load();
+      if (!prd) {
+        return null;
+      }
+
+      return {
+        name: prd.project,
+        phasesTotal: prd.phases?.length || 0,
+        tasksTotal: prd.metadata?.totalTasks || 0,
+        subtasksTotal: prd.metadata?.totalSubtasks || 0,
+      };
+    } catch {
+      return null;
+    }
+  }
+
+  /**
    * Main orchestration loop
    */
   private async runLoop(): Promise<void> {
@@ -255,8 +399,26 @@ export class Orchestrator {
         // Build iteration context
         const context = await this.buildIterationContext(subtask);
 
+        // Publish iteration_started event
+        if (this.eventBus) {
+          this.eventBus.emit({
+            type: 'iteration_started',
+            subtaskId: subtask.id,
+            iterationNumber: context.iterationNumber,
+          });
+        }
+
         // Execute iteration
         const result = await this.executionEngine.spawnIteration(context);
+
+        // Publish iteration_completed event
+        if (this.eventBus) {
+          this.eventBus.emit({
+            type: 'iteration_completed',
+            subtaskId: subtask.id,
+            passed: result.success,
+          });
+        }
 
         // Handle result
         await this.handleIterationResult(result, subtask);
@@ -274,6 +436,19 @@ export class Orchestrator {
         this.iterationsRun++;
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
+
+        // Publish error event
+        if (this.eventBus) {
+          this.eventBus.emit({
+            type: 'error',
+            error: errorMessage,
+            context: {
+              state: this.stateMachine.getCurrentState(),
+              iterationsRun: this.iterationsRun,
+            },
+          });
+        }
+
         this.stateMachine.send({ type: 'ERROR', error: errorMessage });
         throw error;
       }
@@ -603,5 +778,155 @@ export class Orchestrator {
         await this.pause(decision.reason || 'Escalation pause');
         break;
     }
+  }
+
+  /**
+   * Validate PRD structure
+   */
+  async validatePRD(): Promise<ValidationResult> {
+    const errors: string[] = [];
+
+    if (!this.deps || !this.deps.prdManager) {
+      return { valid: false, errors: ['Orchestrator not initialized'] };
+    }
+
+    try {
+      const prd = await this.deps.prdManager.load();
+      if (!prd) {
+        return { valid: false, errors: ['No PRD loaded'] };
+      }
+
+      // Check PRD structure
+      if (!prd.phases || prd.phases.length === 0) {
+        errors.push('PRD has no phases defined');
+      }
+
+      // Check metadata
+      if (!prd.metadata) {
+        errors.push('PRD missing metadata section');
+      }
+
+      // Check each phase has tasks
+      if (prd.phases) {
+        for (const phase of prd.phases) {
+          if (!phase.tasks || phase.tasks.length === 0) {
+            errors.push(`Phase ${phase.id} has no tasks`);
+          }
+        }
+      }
+
+      return {
+        valid: errors.length === 0,
+        errors,
+      };
+    } catch (error) {
+      return {
+        valid: false,
+        errors: [`Failed to load PRD: ${error instanceof Error ? error.message : String(error)}`],
+      };
+    }
+  }
+
+  /**
+   * Validate configuration structure
+   */
+  async validateConfig(): Promise<ValidationResult> {
+    const errors: string[] = [];
+
+    try {
+      // Use the existing validateConfig function from config-schema
+      validateConfigSchema(this.config);
+      return { valid: true, errors: [] };
+    } catch (error) {
+      if (error instanceof Error) {
+        errors.push(error.message);
+      } else {
+        errors.push(String(error));
+      }
+      return {
+        valid: false,
+        errors,
+      };
+    }
+  }
+
+  /**
+   * Check that all required CLI tools are available
+   */
+  async checkRequiredCLIs(): Promise<CLICheckResult> {
+    const requiredPlatforms = new Set<Platform>([
+      this.config.tiers.phase.platform,
+      this.config.tiers.task.platform,
+      this.config.tiers.subtask.platform,
+      this.config.tiers.iteration.platform,
+    ]);
+
+    const missing: string[] = [];
+
+    for (const platform of Array.from(requiredPlatforms)) {
+      const cliPath = this.config.cliPaths[platform];
+      if (!cliPath) {
+        missing.push(platform);
+        continue;
+      }
+
+      const available = await this.isCommandAvailable(cliPath);
+      if (!available) {
+        missing.push(platform);
+      }
+    }
+
+    return {
+      allAvailable: missing.length === 0,
+      missing,
+    };
+  }
+
+  /**
+   * Check if git repository is initialized
+   */
+  async checkGitRepo(): Promise<ValidationResult> {
+    const errors: string[] = [];
+
+    // Check if we have a project path
+    if (!this.deps || !this.deps.prdManager) {
+      return { valid: false, errors: ['Orchestrator not initialized'] };
+    }
+
+    try {
+      const prd = await this.deps.prdManager.load();
+      if (!prd) {
+        return { valid: false, errors: ['No project loaded'] };
+      }
+
+      // Try to get project path from config or use current working directory
+      const projectPath = this.config.project.workingDirectory || process.cwd();
+      const gitDir = join(projectPath, '.git');
+
+      if (!existsSync(gitDir)) {
+        errors.push('Git repository not initialized');
+      }
+
+      return {
+        valid: errors.length === 0,
+        errors,
+      };
+    } catch (error) {
+      return {
+        valid: false,
+        errors: [`Failed to check git repository: ${error instanceof Error ? error.message : String(error)}`],
+      };
+    }
+  }
+
+  /**
+   * Check if a command is available
+   */
+  private async isCommandAvailable(cmd: string): Promise<boolean> {
+    return new Promise((resolve) => {
+      const proc = spawn(cmd, ['--version'], { shell: true });
+      proc.on('close', (code) => resolve(code === 0));
+      proc.on('error', () => resolve(false));
+    });
   }
 }

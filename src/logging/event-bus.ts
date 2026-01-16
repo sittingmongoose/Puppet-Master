@@ -20,7 +20,8 @@ export type PuppetMasterEvent =
   | { type: 'output_chunk'; subtaskId: string; chunk: string }
   | { type: 'error'; error: string; context?: Record<string, unknown> }
   | { type: 'log'; level: LogLevel; message: string }
-  | { type: 'agents_updated'; updatedFiles: string[] };
+  | { type: 'agents_updated'; updatedFiles: string[] }
+  | { type: 'project_loaded'; name: string; path: string; phasesTotal: number; tasksTotal: number; subtasksTotal: number };
 
 /**
  * Event subscription interface.

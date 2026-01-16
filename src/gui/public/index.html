@@ -13,17 +13,17 @@
   <header class="header">
     <div class="header-content">
       <div class="header-left">
-        <a href="/" class="logo-link">
-          <h1 class="logo">RWM Puppet Master</h1>
+        <a href="/" class="logo-link" aria-label="RWM Puppet Master Home">
+          <h1 class="logo" aria-label="RWM Puppet Master">RWM Puppet Master</h1>
         </a>
-        <nav class="main-navigation">
-          <a href="/" class="nav-link" data-page="dashboard">DASHBOARD</a>
-          <a href="/projects" class="nav-link" data-page="projects">PROJECTS</a>
-          <a href="/wizard" class="nav-link" data-page="wizard">WIZARD</a>
-          <a href="/config" class="nav-link" data-page="config">CONFIG</a>
-          <a href="/doctor" class="nav-link" data-page="doctor">DOCTOR</a>
-          <a href="/tiers" class="nav-link" data-page="tiers">TIERS</a>
-          <a href="/evidence" class="nav-link" data-page="evidence">EVIDENCE</a>
+        <nav class="main-navigation" role="navigation" aria-label="Main navigation">
+          <a href="/" class="nav-link" data-page="dashboard" aria-label="Dashboard">DASHBOARD</a>
+          <a href="/projects" class="nav-link" data-page="projects" aria-label="Projects">PROJECTS</a>
+          <a href="/wizard" class="nav-link" data-page="wizard" aria-label="Start Chain Wizard">WIZARD</a>
+          <a href="/config" class="nav-link" data-page="config" aria-label="Configuration">CONFIG</a>
+          <a href="/doctor" class="nav-link" data-page="doctor" aria-label="Doctor - Dependency Check">DOCTOR</a>
+          <a href="/tiers" class="nav-link" data-page="tiers" aria-label="Tiers View">TIERS</a>
+          <a href="/evidence" class="nav-link" data-page="evidence" aria-label="Evidence Viewer">EVIDENCE</a>
         </nav>
       </div>
       <div class="header-right">
@@ -39,26 +39,26 @@
 
   <main class="main-content">
     <!-- Status Bar -->
-    <section class="status-bar panel">
-      <div class="status-indicator" id="status-indicator">
-        <span class="status-dot" id="status-dot"></span>
-        <span id="status-text">IDLE</span>
+    <section class="status-bar panel" role="status" aria-live="polite" aria-label="System status">
+      <div class="status-indicator" id="status-indicator" aria-label="Orchestrator status">
+        <span class="status-dot" id="status-dot" aria-hidden="true"></span>
+        <span id="status-text" aria-label="Current status: IDLE">IDLE</span>
       </div>
-      <div class="status-position">
-        <span id="phase-position">Phase 0/0</span>
-        <span class="separator">│</span>
-        <span id="task-position">Task 0/0</span>
-        <span class="separator">│</span>
-        <span id="subtask-position">Subtask 0/0</span>
-        <span class="separator">│</span>
-        <span id="iteration-position">Iter 0/0</span>
+      <div class="status-position" aria-label="Current position in workflow">
+        <span id="phase-position" aria-label="Phase progress">Phase 0/0</span>
+        <span class="separator" aria-hidden="true">│</span>
+        <span id="task-position" aria-label="Task progress">Task 0/0</span>
+        <span class="separator" aria-hidden="true">│</span>
+        <span id="subtask-position" aria-label="Subtask progress">Subtask 0/0</span>
+        <span class="separator" aria-hidden="true">│</span>
+        <span id="iteration-position" aria-label="Iteration progress">Iter 0/0</span>
       </div>
-      <div class="budget-indicators">
-        <span>Budget: <span id="budget-claude">Claude 0/0</span> │ <span id="budget-codex">Codex 0/0</span> │ <span id="budget-cursor">Cursor ∞</span></span>
+      <div class="budget-indicators" aria-label="Platform budget usage">
+        <span>Budget: <span id="budget-claude" aria-label="Claude budget usage">Claude 0/0</span> │ <span id="budget-codex" aria-label="Codex budget usage">Codex 0/0</span> │ <span id="budget-cursor" aria-label="Cursor budget usage">Cursor ∞</span></span>
       </div>
-      <div class="connection-status" id="connection-status">
-        <span id="connection-indicator" class="status-dot"></span>
-        <span id="connection-text">Disconnected</span>
+      <div class="connection-status" id="connection-status" aria-label="WebSocket connection status">
+        <span id="connection-indicator" class="status-dot" aria-hidden="true"></span>
+        <span id="connection-text" aria-label="Connection status: Disconnected">Disconnected</span>
       </div>
     </section>
 
@@ -68,7 +68,7 @@
       <div class="project-management-content" id="project-management-content">
         <!-- Content will be populated by JavaScript based on project state -->
         <div class="no-project-state">
-          <p class="info-text">No project loaded. Start a new project or select an existing one.</p>
+          <p class="info-text" aria-label="No project loaded. Start a new project or select an existing one.">No project loaded. Start a new project or select an existing one.</p>
           <div class="project-actions">
             <a href="/wizard" class="control-btn start-btn">START NEW PROJECT</a>
             <a href="/projects" class="control-btn retry-btn">SELECT EXISTING PROJECT</a>
@@ -143,7 +143,7 @@
 
       <!-- Progress Panel -->
       <section class="progress-panel panel">
-        <h2 class="panel-title">Progress</h2>
+          <h2 class="panel-title" aria-label="Overall progress">Progress</h2>
         <div class="progress-content">
           <div class="overall-progress">
             <div class="progress-bar-container">
@@ -181,7 +181,7 @@
 
       <!-- Run Controls Panel -->
       <section class="run-controls panel">
-        <h2 class="panel-title">Run Controls</h2>
+        <h2 class="panel-title" aria-label="Execution controls">Run Controls</h2>
         <div class="controls-grid">
           <button class="control-btn start-btn" id="start-btn" disabled>
             START
@@ -231,21 +231,21 @@
     <div class="activity-grid">
       <section class="recent-commits panel">
         <div class="panel-header">
-          <h2 class="panel-title">Recent Commits</h2>
+          <h2 class="panel-title" aria-label="Recent git commits">Recent Commits</h2>
           <button class="icon-btn" id="commits-more-btn" aria-label="View more">→</button>
         </div>
         <ul class="activity-list" id="commits-list">
-          <li class="activity-item">No commits yet</li>
+          <li class="activity-item" aria-label="No commits yet">No commits yet</li>
         </ul>
       </section>
 
       <section class="recent-errors panel">
         <div class="panel-header">
-          <h2 class="panel-title">Recent Errors</h2>
+          <h2 class="panel-title" aria-label="Recent errors and warnings">Recent Errors</h2>
           <button class="icon-btn" id="errors-more-btn" aria-label="View more">→</button>
         </div>
         <ul class="activity-list" id="errors-list">
-          <li class="activity-item">No errors</li>
+          <li class="activity-item" aria-label="No errors">No errors</li>
         </ul>
       </section>
     </div>

@@ -42,7 +42,7 @@
     
     <!-- Project Cards Grid -->
     <section class="panel">
-      <h2 class="panel-title">Projects</h2>
+      <h2 class="panel-title" aria-label="Available projects">Projects</h2>
       <div id="project-cards-grid" class="project-cards-grid">
         <!-- Project cards will be dynamically inserted -->
         <div class="loading-indicator" id="loading-indicator">Loading projects...</div>
@@ -52,7 +52,7 @@
     <!-- Recent Projects Table -->
     <section class="panel">
       <div class="panel-header">
-        <h2 class="panel-title">Recent Projects</h2>
+        <h2 class="panel-title" aria-label="Recent projects list">Recent Projects</h2>
         <button class="icon-btn" id="refresh-projects-btn" aria-label="Refresh projects">REFRESH</button>
       </div>
       <table class="projects-table" id="projects-table">
@@ -89,7 +89,7 @@
         </div>
         <div class="form-actions">
           <button type="submit" class="control-btn start-btn" id="create-project-btn">CREATE PROJECT</button>
-          <button type="button" class="icon-btn" id="browse-path-btn" aria-label="Browse for path">BROWSE</button>
+          <button type="button" class="icon-btn" id="browse-path-btn" aria-label="Browse for directory path">BROWSE</button>
           <input type="file" id="directory-input" webkitdirectory directory style="display: none;" aria-label="Select directory">
         </div>
         <div id="create-project-error" class="form-error" style="display: none;"></div>

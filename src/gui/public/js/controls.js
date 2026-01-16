@@ -14,9 +14,38 @@ const controlsState = {
 };
 
 // ============================================
+// Error Code Mapping
+// ============================================
+const ERROR_MESSAGES = {
+  'ORCHESTRATOR_NOT_AVAILABLE': 'Orchestrator not available. Please restart the application.',
+  'NO_PROJECT_LOADED': 'No project loaded. Please open or create a project first.',
+  'PRD_INVALID': 'PRD validation failed. Please review your project configuration.',
+  'CONFIG_INVALID': 'Configuration validation failed. Please check your config.yaml file.',
+  'CLI_TOOLS_MISSING': 'Required CLI tools not available. Run Doctor to install missing tools.',
+  'GIT_NOT_INITIALIZED': 'Git repository not initialized. Run "git init" in project directory.',
+  'INVALID_STATE': 'Invalid state for this action.',
+  'NOT_IMPLEMENTED': 'This feature is not yet implemented.',
+  'NO_CURRENT_ITEM': 'No current item to retry.',
+  'ITEM_NOT_FAILED': 'Current item has not failed.',
+  'TIER_ID_REQUIRED': 'Tier ID is required.',
+  'INVALID_SCOPE': 'Invalid scope. Must be one of: phase, task, subtask.',
+  'REASON_REQUIRED': 'Reason is required.',
+  'NO_PROCESS_RUNNING': 'No CLI process currently running.',
+  'START_FAILED': 'Failed to start execution.',
+  'PAUSE_FAILED': 'Failed to pause execution.',
+  'RESUME_FAILED': 'Failed to resume execution.',
+  'STOP_FAILED': 'Failed to stop execution.',
+  'RESET_FAILED': 'Failed to reset execution.',
+  'RETRY_FAILED': 'Failed to retry execution.',
+  'REPLAN_FAILED': 'Failed to replan.',
+  'REOPEN_FAILED': 'Failed to reopen item.',
+  'KILL_SPAWN_FAILED': 'Failed to kill and spawn fresh iteration.',
+};
+
+// ============================================
 // Toast Notifications
 // ============================================
-function showToast(message, type = 'info') {
+function showToast(message, type = 'info', duration = 5000) {
   // Create toast element
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
@@ -51,7 +80,7 @@ function showToast(message, type = 'info') {
 
   document.body.appendChild(toast);
 
-  // Remove after 3 seconds
+  // Remove after specified duration (default 5 seconds)
   setTimeout(() => {
     toast.style.animation = 'slideOut 0.3s ease';
     setTimeout(() => {
@@ -59,7 +88,7 @@ function showToast(message, type = 'info') {
         toast.parentNode.removeChild(toast);
       }
     }, 300);
-  }, 3000);
+  }, duration);
 }
 
 // Add CSS animations if not already present
@@ -148,137 +177,167 @@ function hideSpinner(buttonId) {
 }
 
 // ============================================
-// Control Functions
+// Helper Functions
 // ============================================
-async function startExecution(fromCheckpoint) {
-  const buttonId = 'start-btn';
-  showSpinner(buttonId);
-
+async function handleControlAction(endpoint, options = {}) {
+  const { method = 'POST', body = {}, buttonId = null, successMessage = null, toastType = 'success' } = options;
+  
+  if (buttonId) {
+    showSpinner(buttonId);
+  }
+  
   try {
-    const body = fromCheckpoint ? { fromCheckpoint } : {};
-    const response = await fetch('/api/controls/start', {
-      method: 'POST',
+    const response = await fetch(`/api/controls/${endpoint}`, {
+      method,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
+      body: Object.keys(body).length > 0 ? JSON.stringify(body) : undefined,
     });
-
+    
     const data = await response.json();
-
+    
     if (response.ok && data.success) {
-      showToast('Execution started', 'success');
+      if (successMessage) {
+        showToast(successMessage, toastType);
+      }
+      // Log session ID if present
       if (data.sessionId) {
         console.log('[Controls] Session ID:', data.sessionId);
       }
+      return { success: true, data };
     } else {
-      showToast(data.error || 'Failed to start execution', 'error');
+      // Map error code to user-friendly message
+      const errorCode = data.code || 'UNKNOWN_ERROR';
+      let errorMessage = ERROR_MESSAGES[errorCode] || data.error || `Failed to ${endpoint}`;
+      
+      // Add details if available
+      if (data.details && Array.isArray(data.details) && data.details.length > 0) {
+        const detailsText = data.details.length === 1 
+          ? data.details[0] 
+          : data.details.slice(0, 3).join(', ') + (data.details.length > 3 ? '...' : '');
+        errorMessage += ` (${detailsText})`;
+      }
+      
+      // Add hint if available
+      if (data.hint) {
+        errorMessage += ` ${data.hint}`;
+      }
+      
+      showToast(errorMessage, 'error');
+      return { success: false, error: data };
     }
   } catch (error) {
-    console.error('[Controls] Error starting execution:', error);
-    showToast('Error starting execution', 'error');
+    const errorMessage = `Failed to ${endpoint}: ${error.message}`;
+    console.error(`[Controls] Error ${endpoint}:`, error);
+    showToast(errorMessage, 'error');
+    return { success: false, error };
   } finally {
-    hideSpinner(buttonId);
+    if (buttonId) {
+      hideSpinner(buttonId);
+    }
   }
+}
+
+// ============================================
+// Control Functions
+// ============================================
+async function startExecution(fromCheckpoint) {
+  return handleControlAction('start', {
+    body: fromCheckpoint ? { fromCheckpoint } : {},
+    buttonId: 'start-btn',
+    successMessage: 'Execution started',
+  });
 }
 
 async function pauseExecution() {
-  const buttonId = 'pause-btn';
-  showSpinner(buttonId);
-
-  try {
-    const response = await fetch('/api/controls/pause', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    });
-
-    const data = await response.json();
-
-    if (response.ok && data.success) {
-      showToast('Execution paused', 'warning');
-    } else {
-      showToast(data.error || 'Failed to pause execution', 'error');
-    }
-  } catch (error) {
-    console.error('[Controls] Error pausing execution:', error);
-    showToast('Error pausing execution', 'error');
-  } finally {
-    hideSpinner(buttonId);
-  }
+  return handleControlAction('pause', {
+    buttonId: 'pause-btn',
+    successMessage: 'Execution paused',
+    toastType: 'warning',
+  });
 }
 
 async function resumeExecution() {
-  const buttonId = 'resume-btn';
-  showSpinner(buttonId);
-
-  try {
-    const response = await fetch('/api/controls/resume', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    });
-
-    const data = await response.json();
-
-    if (response.ok && data.success) {
-      showToast('Execution resumed', 'success');
-    } else {
-      showToast(data.error || 'Failed to resume execution', 'error');
-    }
-  } catch (error) {
-    console.error('[Controls] Error resuming execution:', error);
-    showToast('Error resuming execution', 'error');
-  } finally {
-    hideSpinner(buttonId);
-  }
+  return handleControlAction('resume', {
+    buttonId: 'resume-btn',
+    successMessage: 'Execution resumed',
+  });
 }
 
 async function stopExecution(force = false) {
-  const buttonId = 'stop-btn';
-  showSpinner(buttonId);
-
-  try {
-    const response = await fetch('/api/controls/stop', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ force }),
-    });
-
-    const data = await response.json();
-
-    if (response.ok && data.success) {
-      showToast('Execution stopped', 'warning');
-    } else {
-      showToast(data.error || 'Failed to stop execution', 'error');
-    }
-  } catch (error) {
-    console.error('[Controls] Error stopping execution:', error);
-    showToast('Error stopping execution', 'error');
-  } finally {
-    hideSpinner(buttonId);
-  }
+  return handleControlAction('stop', {
+    body: { force },
+    buttonId: 'stop-btn',
+    successMessage: 'Execution stopped',
+    toastType: 'warning',
+  });
 }
 
 async function resetExecution() {
-  const buttonId = 'reset-btn';
-  showSpinner(buttonId);
+  return handleControlAction('reset', {
+    buttonId: 'reset-btn',
+    successMessage: 'Execution reset',
+    toastType: 'info',
+  });
+}
 
-  try {
-    const response = await fetch('/api/controls/reset', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    });
+async function retryExecution() {
+  return handleControlAction('retry', {
+    buttonId: 'retry-btn',
+    successMessage: 'Retry initiated',
+  });
+}
 
-    const data = await response.json();
-
-    if (response.ok && data.success) {
-      showToast('Execution reset', 'info');
-    } else {
-      showToast(data.error || 'Failed to reset execution', 'error');
-    }
-  } catch (error) {
-    console.error('[Controls] Error resetting execution:', error);
-    showToast('Error resetting execution', 'error');
-  } finally {
-    hideSpinner(buttonId);
+async function replanExecution(tierId, scope) {
+  if (!tierId) {
+    const tierIdInput = prompt('Tier ID to replan:');
+    if (!tierIdInput) return;
+    tierId = tierIdInput;
   }
+  
+  if (!scope) {
+    scope = prompt('Scope (phase/task/subtask):');
+    if (!scope || !['phase', 'task', 'subtask'].includes(scope)) {
+      showToast('Invalid scope. Must be phase, task, or subtask.', 'error');
+      return;
+    }
+  }
+  
+  return handleControlAction('replan', {
+    buttonId: 'replan-btn',
+    body: { tierId, scope },
+    successMessage: 'Replan initiated',
+  });
+}
+
+async function reopenItem(tierId, reason) {
+  if (!tierId) {
+    const tierIdInput = prompt('Item ID to reopen:');
+    if (!tierIdInput) return;
+    tierId = tierIdInput;
+  }
+  
+  if (!reason) {
+    const reasonInput = prompt('Reason for reopening:');
+    if (!reasonInput) return;
+    reason = reasonInput;
+  }
+  
+  return handleControlAction('reopen', {
+    buttonId: 'reopen-btn',
+    body: { tierId, reason },
+    successMessage: 'Item reopened',
+  });
+}
+
+async function killSpawnExecution() {
+  if (!confirm('Kill current process and spawn fresh? This will abort the current iteration.')) {
+    return;
+  }
+  
+  return handleControlAction('kill-spawn', {
+    buttonId: 'kill-btn',
+    successMessage: 'Process killed, fresh iteration spawned',
+  });
 }
 
 // ============================================
@@ -385,6 +444,10 @@ if (typeof window !== 'undefined') {
     resumeExecution,
     stopExecution,
     resetExecution,
+    retryExecution,
+    replanExecution,
+    reopenItem,
+    killSpawnExecution,
     updateButtonStates,
     initializeControls,
   };

@@ -11,8 +11,11 @@ import { promises as fs } from 'fs';
 import { join, basename, resolve } from 'path';
 import { existsSync, statSync } from 'fs';
 import type { PRD } from '../../types/prd.js';
+import type { PuppetMasterConfig } from '../../types/config.js';
 import { PrdManager } from '../../memory/prd-manager.js';
 import { ConfigManager } from '../../config/config-manager.js';
+import type { Orchestrator } from '../../core/orchestrator.js';
+import yaml from 'js-yaml';
 
 /**
  * Error response interface.
@@ -37,10 +40,12 @@ export interface Project {
 
 /**
  * Create projects routes.
- * 
+ *
  * Returns Express Router with project management endpoints.
+ * @param orchestrator - Optional Orchestrator instance for loading projects
+ * @param baseDirectory - Base directory for project discovery
  */
-export function createProjectsRoutes(baseDirectory?: string): Router {
+export function createProjectsRoutes(orchestrator?: Orchestrator | null, baseDirectory?: string): Router {
   const router = createRouter();
   const projectBaseDir = baseDirectory || process.cwd();
 
@@ -202,6 +207,7 @@ export function createProjectsRoutes(baseDirectory?: string): Router {
       const puppetMasterDir = join(fullPath, '.puppet-master');
       const prdPath = join(fullPath, 'prd.json');
       const puppetMasterPrdPath = join(puppetMasterDir, 'prd.json');
+      const configPath = join(puppetMasterDir, 'config.yaml');
 
       if (!existsSync(puppetMasterDir) && !existsSync(prdPath) && !existsSync(puppetMasterPrdPath)) {
         res.status(400).json({
@@ -211,13 +217,72 @@ export function createProjectsRoutes(baseDirectory?: string): Router {
         return;
       }
 
-      // For now, store in memory (in production, would store in config or session)
-      // The frontend will navigate to dashboard after success
-      
-      res.json({
-        success: true,
-        path: fullPath,
-      });
+      // Load project into orchestrator if available
+      if (orchestrator) {
+        try {
+          // Determine which PRD path to use
+          const prdPathToLoad = existsSync(puppetMasterPrdPath)
+            ? puppetMasterPrdPath
+            : existsSync(prdPath)
+            ? prdPath
+            : null;
+
+          if (!prdPathToLoad) {
+            res.status(400).json({
+              error: 'No PRD file found in project',
+              code: 'PRD_NOT_FOUND',
+            } as ErrorResponse);
+            return;
+          }
+
+          // Load PRD
+          const prdContent = await fs.readFile(prdPathToLoad, 'utf-8');
+          const prd = JSON.parse(prdContent) as PRD;
+
+          // Load config (use default if not exists)
+          let config: PuppetMasterConfig;
+          if (existsSync(configPath)) {
+            const configContent = await fs.readFile(configPath, 'utf-8');
+            config = yaml.load(configContent) as PuppetMasterConfig;
+          } else {
+            const { getDefaultConfig } = await import('../../config/default-config.js');
+            config = getDefaultConfig();
+            config.project.name = prd.project || basename(fullPath);
+            config.project.workingDirectory = fullPath;
+          }
+
+          // Load project into orchestrator
+          await orchestrator.loadProject({
+            path: fullPath,
+            prd,
+            config,
+          });
+
+          res.json({
+            success: true,
+            path: fullPath,
+            project: {
+              name: prd.project,
+              phasesTotal: prd.phases?.length || 0,
+              tasksTotal: prd.metadata?.totalTasks || 0,
+              subtasksTotal: prd.metadata?.totalSubtasks || 0,
+            },
+          });
+        } catch (error) {
+          const err = error as Error;
+          res.status(500).json({
+            error: `Failed to load project: ${err.message}`,
+            code: 'PROJECT_LOAD_FAILED',
+          } as ErrorResponse);
+        }
+      } else {
+        // No orchestrator available, just return success
+        res.json({
+          success: true,
+          path: fullPath,
+          warning: 'Orchestrator not available, project not loaded',
+        });
+      }
     } catch (error) {
       const err = error as Error;
       res.status(500).json({

@@ -208,10 +208,12 @@ function updateConnectionStatus(connected) {
       indicator.classList.add('connected');
       indicator.setAttribute('aria-label', 'WebSocket connected');
       text.textContent = 'Connected';
+      text.setAttribute('aria-label', 'Connection status: Connected');
     } else {
       indicator.classList.remove('connected');
       indicator.setAttribute('aria-label', 'WebSocket disconnected');
       text.textContent = 'Disconnected';
+      text.setAttribute('aria-label', 'Connection status: Disconnected');
     }
   } else {
     console.warn('[Dashboard] Connection status elements not found:', { indicator, text });
@@ -232,7 +234,9 @@ function updateOrchestratorState(newState, previousState) {
   if (statusDot && statusText) {
     statusDot.className = 'status-dot';
     statusDot.classList.add(newState);
-    statusText.textContent = newState.toUpperCase();
+    const statusUpper = newState.toUpperCase();
+    statusText.textContent = statusUpper;
+    statusText.setAttribute('aria-label', `Current status: ${statusUpper}`);
   }
   
   // Update control button states using controls module
@@ -274,21 +278,28 @@ function updateBudgets(budgets) {
   
   if (claudeEl && budgets.claude) {
     const { current = 0, limit = 0 } = budgets.claude;
-    claudeEl.textContent = `Claude ${current}/${limit}`;
+    const text = `Claude ${current}/${limit}`;
+    claudeEl.textContent = text;
+    claudeEl.setAttribute('aria-label', `Claude budget: ${text}`);
   }
   
   if (codexEl && budgets.codex) {
     const { current = 0, limit = 0 } = budgets.codex;
-    codexEl.textContent = `Codex ${current}/${limit}`;
+    const text = `Codex ${current}/${limit}`;
+    codexEl.textContent = text;
+    codexEl.setAttribute('aria-label', `Codex budget: ${text}`);
   }
   
   if (cursorEl && budgets.cursor) {
     const { current = 0, limit = 'unlimited' } = budgets.cursor;
+    let text;
     if (limit === 'unlimited') {
-      cursorEl.textContent = `Cursor ${current} (∞)`;
+      text = `Cursor ${current} (∞)`;
     } else {
-      cursorEl.textContent = `Cursor ${current}/${limit}`;
+      text = `Cursor ${current}/${limit}`;
     }
+    cursorEl.textContent = text;
+    cursorEl.setAttribute('aria-label', `Cursor budget: ${text}`);
   }
 }
 
@@ -299,6 +310,7 @@ function updatePosition(data) {
     const current = data.currentPhaseId || 0;
     const total = data.totalPhases || 0;
     phasePos.textContent = `Phase ${current}/${total}`;
+    phasePos.setAttribute('aria-label', `Phase progress: ${current} of ${total}`);
   }
   
   // Update task position
@@ -307,6 +319,7 @@ function updatePosition(data) {
     const current = data.currentTaskId || 0;
     const total = data.totalTasks || 0;
     taskPos.textContent = `Task ${current}/${total}`;
+    taskPos.setAttribute('aria-label', `Task progress: ${current} of ${total}`);
   }
   
   // Update subtask position
@@ -315,6 +328,7 @@ function updatePosition(data) {
     const current = data.currentSubtaskId || 0;
     const total = data.totalSubtasks || 0;
     subtaskPos.textContent = `Subtask ${current}/${total}`;
+    subtaskPos.setAttribute('aria-label', `Subtask progress: ${current} of ${total}`);
   }
   
   // Update iteration position
@@ -323,6 +337,7 @@ function updatePosition(data) {
     const current = data.currentIteration || 0;
     const max = data.maxIterations || 0;
     iterPos.textContent = `Iter ${current}/${max}`;
+    iterPos.setAttribute('aria-label', `Iteration progress: ${current} of ${max}`);
   }
 }
 
@@ -532,6 +547,7 @@ function addCommit(commit) {
       const li = document.createElement('li');
       li.className = 'activity-item';
       li.textContent = 'No commits yet';
+      li.setAttribute('aria-label', 'No commits yet');
       list.appendChild(li);
     } else {
       state.commits.forEach(commit => {
@@ -558,6 +574,7 @@ function addError(error) {
       const li = document.createElement('li');
       li.className = 'activity-item';
       li.textContent = 'No errors';
+      li.setAttribute('aria-label', 'No errors');
       list.appendChild(li);
     } else {
       state.errors.forEach(error => {
@@ -699,8 +716,17 @@ function updateProjectManagementPanel(hasProject, project) {
       // Update project info
       const nameEl = document.getElementById('project-display-name');
       const pathEl = document.getElementById('project-display-path');
-      if (nameEl) nameEl.textContent = project.name || 'Unknown';
-      if (pathEl) pathEl.textContent = project.path || '-';
+      if (nameEl) {
+        nameEl.textContent = project.name || 'Unknown';
+        nameEl.setAttribute('aria-label', `Project name: ${project.name || 'Unknown'}`);
+      }
+      if (pathEl) {
+        const fullPath = project.path || '-';
+        pathEl.textContent = fullPath;
+        // Add title attribute with full path for tooltip (always, even if truncated)
+        pathEl.setAttribute('title', fullPath);
+        pathEl.setAttribute('aria-label', `Project path: ${fullPath}`);
+      }
       
       // Update project name in header
       const headerNameEl = document.getElementById('project-name');
@@ -723,39 +749,44 @@ function updateProjectManagementPanel(hasProject, project) {
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize navigation
   initNavigation();
+  
+  // Initialize status bar with default values to ensure it's visible
+  initConnectionStatus();
+  updateOrchestratorState('idle', null);
+  updatePosition({
+    currentPhaseId: 0,
+    totalPhases: 0,
+    currentTaskId: 0,
+    totalTasks: 0,
+    currentSubtaskId: 0,
+    totalSubtasks: 0,
+    currentIteration: 0,
+    maxIterations: 0
+  });
+  updateBudgets({
+    claude: { current: 0, limit: 3 },
+    codex: { current: 0, limit: 20 },
+    cursor: { current: 0, limit: 'unlimited' }
+  });
+  
   // Control buttons (start, pause, resume, stop, reset) are handled by controls.js
-  // Only handle additional buttons here (retry, replan, reopen, kill)
+  // Additional buttons (retry, replan, reopen, kill) also use controls.js module
   const retryBtn = document.getElementById('retry-btn');
   const replanBtn = document.getElementById('replan-btn');
   const reopenBtn = document.getElementById('reopen-btn');
   const killBtn = document.getElementById('kill-btn');
   
-  if (retryBtn) {
-    retryBtn.addEventListener('click', () => controlAction('retry'));
+  if (retryBtn && window.controls && window.controls.retryExecution) {
+    retryBtn.addEventListener('click', () => window.controls.retryExecution());
   }
-  if (replanBtn) {
-    replanBtn.addEventListener('click', () => {
-      const reason = prompt('Reason for replan:');
-      if (reason) {
-        controlAction('replan');
-      }
-    });
+  if (replanBtn && window.controls && window.controls.replanExecution) {
+    replanBtn.addEventListener('click', () => window.controls.replanExecution());
   }
-  if (reopenBtn) {
-    reopenBtn.addEventListener('click', () => {
-      const itemId = prompt('Item ID to reopen:');
-      const reason = prompt('Reason:');
-      if (itemId && reason) {
-        controlAction('reopen');
-      }
-    });
+  if (reopenBtn && window.controls && window.controls.reopenItem) {
+    reopenBtn.addEventListener('click', () => window.controls.reopenItem());
   }
-  if (killBtn) {
-    killBtn.addEventListener('click', () => {
-      if (confirm('Kill current process and spawn fresh? This will abort the current iteration.')) {
-        controlAction('kill-spawn');
-      }
-    });
+  if (killBtn && window.controls && window.controls.killSpawnExecution) {
+    killBtn.addEventListener('click', () => window.controls.killSpawnExecution());
   }
   
   // Copy output button

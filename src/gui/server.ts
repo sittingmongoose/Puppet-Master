@@ -104,11 +104,12 @@ export class GuiServer {
   }
 
   /**
-   * Register orchestrator instance for controls API routes.
+   * Register orchestrator instance for controls and projects API routes.
    */
   registerOrchestratorInstance(orchestrator: Orchestrator): void {
     this.orchestratorInstance = orchestrator;
     this.app.use('/api', createControlsRoutes(this.orchestratorInstance));
+    this.app.use('/api', createProjectsRoutes(this.orchestratorInstance));
   }
 
   /**
@@ -180,8 +181,8 @@ export class GuiServer {
     // If no orchestrator instance is registered, controls routes will return 503
     this.app.use('/api', createControlsRoutes(null));
 
-    // Projects routes
-    this.app.use('/api', createProjectsRoutes());
+    // Projects routes (will be updated when orchestrator is registered)
+    this.app.use('/api', createProjectsRoutes(null));
 
     // Wizard routes
     this.app.use('/api', createWizardRoutes());
