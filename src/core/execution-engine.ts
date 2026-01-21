@@ -9,15 +9,23 @@
  */
 
 import type { ExecutionRequest, PlatformRunnerContract, ProcessInfo, TierPlan } from '../types/index.js';
+import type { Platform } from '../types/config.js';
+import type { ProgressEntry } from '../memory/progress-manager.js';
+import type { AgentsContent } from '../memory/agents-manager.js';
+import type { TierNode } from './tier-node.js';
+import type { FailureInfo, PromptContext } from './prompt-builder.js';
+import { PromptBuilder } from './prompt-builder.js';
 
 export interface IterationContext {
-  subtaskId: string;
-  taskId: string;
-  phaseId: string;
+  tierNode: TierNode;
   iterationNumber: number;
+  maxIterations: number;
   projectPath: string;
-  progressContent: string;
-  agentsContent: string[];
+  projectName: string;
+  sessionId: string;
+  platform: Platform;
+  progressEntries: ProgressEntry[];
+  agentsContent: AgentsContent[];
   subtaskPlan: TierPlan;
 }
 
@@ -56,6 +64,7 @@ interface ProcessAuditRecord {
 
 export class ExecutionEngine {
   private readonly config: ExecutionConfig;
+  private readonly promptBuilder: PromptBuilder;
   private runner: PlatformRunnerContract | null = null;
 
   private readonly processInfoByPid = new Map<number, ProcessInfo>();
@@ -64,8 +73,9 @@ export class ExecutionEngine {
   private readonly outputCallbacks: Array<(output: string) => void> = [];
   private readonly completeCallbacks: Array<(result: IterationResult) => void> = [];
 
-  constructor(config: ExecutionConfig) {
+  constructor(config: ExecutionConfig, promptBuilder: PromptBuilder = new PromptBuilder()) {
     this.config = config;
+    this.promptBuilder = promptBuilder;
   }
 
   setRunner(runner: PlatformRunnerContract): void {
@@ -90,7 +100,7 @@ export class ExecutionEngine {
       throw new Error('ExecutionEngine runner not set');
     }
 
-    const prompt = this.buildPrompt(context);
+    const prompt = this.buildIterationPrompt(context);
     const request: ExecutionRequest = {
       prompt,
       workingDirectory: context.projectPath,
@@ -307,53 +317,51 @@ export class ExecutionEngine {
     }
   }
 
-  private buildPrompt(context: IterationContext): string {
-    const agents = context.agentsContent
-      .map((content, index) => `--- AGENTS.md (level ${index + 1}) ---\n${content}`)
-      .join('\n\n');
+  private buildIterationPrompt(context: IterationContext): string {
+    const subtask = context.tierNode;
+    const task = subtask.parent;
+    const phase = task?.parent;
 
-    const planLines: string[] = [
-      `Subtask Plan`,
-      `- id: ${context.subtaskPlan.id}`,
-      `- title: ${context.subtaskPlan.title}`,
-      `- description: ${context.subtaskPlan.description}`,
-    ];
-
-    if (context.subtaskPlan.approach?.length) {
-      planLines.push('- approach:');
-      for (const step of context.subtaskPlan.approach) {
-        planLines.push(`  - ${step}`);
-      }
+    if (!task || !phase) {
+      throw new Error(`IterationContext tierNode ${subtask.id} missing parent task or phase`);
     }
 
-    if (context.subtaskPlan.dependencies?.length) {
-      planLines.push('- dependencies:');
-      for (const dependency of context.subtaskPlan.dependencies) {
-        planLines.push(`  - ${dependency}`);
-      }
-    }
+    const promptContext: PromptContext = {
+      subtask,
+      task,
+      phase,
+      projectName: context.projectName,
+      sessionId: context.sessionId,
+      platform: context.platform,
+      iterationNumber: context.iterationNumber,
+      maxIterations: context.maxIterations,
+      progressEntries: context.progressEntries,
+      agentsContent: context.agentsContent,
+      previousFailures: this.derivePreviousFailures(context),
+    };
 
-    return [
-      `Iteration Context`,
-      `- phaseId: ${context.phaseId}`,
-      `- taskId: ${context.taskId}`,
-      `- subtaskId: ${context.subtaskId}`,
-      `- iterationNumber: ${context.iterationNumber}`,
-      `- projectPath: ${context.projectPath}`,
-      ``,
-      planLines.join('\n'),
-      ``,
-      `progress.txt`,
-      context.progressContent,
-      ``,
-      `AGENTS.md`,
-      agents,
-      ``,
-      `Completion Signals`,
-      `- <ralph>COMPLETE</ralph>`,
-      `- <ralph>GUTTER</ralph>`,
-      ``,
-    ].join('\n');
+    return this.promptBuilder.buildIterationPrompt(promptContext);
+  }
+
+  private derivePreviousFailures(context: IterationContext): FailureInfo[] {
+    const subtaskId = context.tierNode.id;
+
+    const failures = this.processAudits
+      .filter((audit) => audit.context.tierNode.id === subtaskId)
+      .filter((audit) => !audit.result.success)
+      .map((audit) => {
+        const fallbackError =
+          audit.result.error ??
+          (audit.result.completionSignal === 'GUTTER' ? 'Agent signaled GUTTER' : 'Iteration failed');
+
+        return {
+          iterationNumber: audit.context.iterationNumber,
+          error: fallbackError,
+        } satisfies FailureInfo;
+      })
+      .sort((a, b) => a.iterationNumber - b.iterationNumber);
+
+    return failures;
   }
 
   private detectStall(output: string[]): boolean {

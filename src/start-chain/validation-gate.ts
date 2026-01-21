@@ -13,6 +13,7 @@ import type { PuppetMasterConfig } from '../types/config.js';
 import type { Platform } from '../types/config.js';
 import type { TierType } from '../types/state.js';
 import type { TierPlan, PhasePlan, TaskPlan, SubtaskPlan } from './tier-plan-generator.js';
+import { validateNoManualCriteria } from './validators/no-manual-validator.js';
 
 /**
  * Validation error interface.
@@ -70,6 +71,10 @@ export class ValidationGate {
   validatePrd(prd: PRD): ValidationResult {
     const errors: ValidationError[] = [];
     const warnings: ValidationWarning[] = [];
+
+    // Invariant: no manual acceptance criteria allowed.
+    const noManual = validateNoManualCriteria(prd);
+    errors.push(...noManual.errors);
 
     // Check for at least one phase
     if (!prd.phases || prd.phases.length === 0) {

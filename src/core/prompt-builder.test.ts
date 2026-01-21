@@ -39,7 +39,7 @@ describe('PromptBuilder', () => {
         {
           id: 'PH-AC-001',
           description: 'Phase criterion 1',
-          type: 'manual',
+          type: 'ai',
           target: '',
         },
       ],
@@ -613,7 +613,7 @@ describe('PromptBuilder', () => {
           {
             id: 'TK-AC-001',
             description: 'Task criterion',
-            type: 'manual',
+            type: 'ai',
             target: '',
           },
         ],

@@ -275,12 +275,18 @@ export class GateRunner {
       summary: r.summary,
     }));
 
-    // Determine tier type from gate ID
+    // Determine tier type from gate ID.
+    // Gate IDs are typically built as:
+    // - phase-gate-PH-001
+    // - task-gate-TK-001-001
+    // - subtask-gate-ST-001-001-001
+    // But some callers/tests may use raw tier IDs (PH-/TK-/ST-).
+    const tierId = gateId.includes('-gate-') ? gateId.split('-gate-').pop() ?? gateId : gateId;
     // PH-001 = phase, TK-001-001 = task, ST-001-001-001 = subtask
     let tierType: 'phase' | 'task' | 'subtask' = 'task';
-    if (gateId.startsWith('PH-')) {
+    if (tierId.startsWith('PH-')) {
       tierType = 'phase';
-    } else if (gateId.startsWith('ST-')) {
+    } else if (tierId.startsWith('ST-')) {
       tierType = 'subtask';
     }
 

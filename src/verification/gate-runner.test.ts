@@ -464,9 +464,9 @@ describe('GateRunner', () => {
         { id: 'c1', description: 'Test', type: 'regex', target: 'test' },
       ];
 
-      await runner.runGate('PH-001', criteria);
+      await runner.runGate('phase-gate-PH-001', criteria);
 
-      const report = await evidenceStore.getGateReport('PH-001');
+      const report = await evidenceStore.getGateReport('phase-gate-PH-001');
       expect(report?.tierType).toBe('phase');
     });
 
@@ -478,9 +478,9 @@ describe('GateRunner', () => {
         { id: 'c1', description: 'Test', type: 'regex', target: 'test' },
       ];
 
-      await runner.runGate('TK-001-001', criteria);
+      await runner.runGate('task-gate-TK-001-001', criteria);
 
-      const report = await evidenceStore.getGateReport('TK-001-001');
+      const report = await evidenceStore.getGateReport('task-gate-TK-001-001');
       expect(report?.tierType).toBe('task');
     });
 
@@ -492,9 +492,9 @@ describe('GateRunner', () => {
         { id: 'c1', description: 'Test', type: 'regex', target: 'test' },
       ];
 
-      await runner.runGate('ST-001-001-001', criteria);
+      await runner.runGate('subtask-gate-ST-001-001-001', criteria);
 
-      const report = await evidenceStore.getGateReport('ST-001-001-001');
+      const report = await evidenceStore.getGateReport('subtask-gate-ST-001-001-001');
       expect(report?.tierType).toBe('subtask');
     });
   });

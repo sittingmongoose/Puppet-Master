@@ -111,13 +111,13 @@ export class VerificationIntegration {
     const criteria: Criterion[] = [];
 
     // Add acceptance criteria
-    criteria.push(...tier.data.acceptanceCriteria);
+    criteria.push(...(tier.data.acceptanceCriteria ?? []));
 
     // Convert test plan commands to CommandCriterion
     if (tier.data.testPlan.commands && tier.data.testPlan.commands.length > 0) {
       for (let i = 0; i < tier.data.testPlan.commands.length; i++) {
         const cmd = tier.data.testPlan.commands[i];
-        const commandCriterion = this.convertTestCommandToCriterion(cmd, i);
+        const commandCriterion = this.convertTestCommandToCriterion(tier.id, cmd, i);
         criteria.push(commandCriterion);
       }
     }
@@ -127,13 +127,14 @@ export class VerificationIntegration {
 
   /**
    * Converts a test command to a CommandCriterion.
+   * Note: IDs must be prefixed with the tier ID so evidence can be retrieved via EvidenceStore.getEvidence(tierId).
    * @param cmd - Test command
    * @param index - Index in test plan
    * @returns CommandCriterion
    */
-  private convertTestCommandToCriterion(cmd: TestCommand, index: number): CommandCriterion {
+  private convertTestCommandToCriterion(tierId: string, cmd: TestCommand, index: number): CommandCriterion {
     return {
-      id: `command-${index}`,
+      id: `${tierId}-command-${index}`,
       description: `Run test command: ${cmd.command}`,
       type: 'command',
       target: cmd.command,
@@ -176,14 +177,14 @@ export class VerificationIntegration {
     // or more sophisticated checks.
     const allPassed = children.every((child) => child.getState() === 'passed');
     
-    // Use a command that will pass if all children passed
-    // This is a documentation/verification step
     return {
-      id: 'aggregate-check-all-tasks-passed',
+      id: `${phase.id}-aggregate-check-all-tasks-passed`,
       description: `Verify all ${children.length} child task(s) have passed`,
       type: 'command',
-      target: allPassed ? 'true' : 'false', // Simple check - true passes, false fails
+      // Use a portable check (works on Windows/macOS/Linux) without relying on `true`/`false` shell commands.
+      target: 'node',
       options: {
+        args: ['-e', allPassed ? 'process.exit(0)' : 'process.exit(1)'],
         expectedExitCode: 0,
       },
     };

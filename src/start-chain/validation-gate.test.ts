@@ -115,7 +115,7 @@ describe('ValidationGate', () => {
   const createCriterion = (id: string = 'CR-001'): Criterion => ({
     id,
     description: 'Test criterion',
-    type: 'manual',
+    type: 'ai',
     target: 'test',
   });
 

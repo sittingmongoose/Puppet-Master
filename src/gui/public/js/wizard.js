@@ -132,8 +132,12 @@ function handleWebSocketMessage(message) {
   // Handle Start Chain step events
   if (message.type === 'start_chain_step') {
     showStartChainProgress(message.step, message.status);
+    // Also update generate status if we're on step 2/3
+    if (wizardState.currentStep === 2 || wizardState.currentStep === 3) {
+      updateGenerateStatus(message.step, message.status);
+    }
   }
-  
+
   // Handle Start Chain completion
   if (message.type === 'start_chain_complete') {
     handleStartChainComplete(message.projectPath);
@@ -559,10 +563,26 @@ function displaySummary() {
 // ============================================
 function generatePrd() {
   if (!wizardState.parsedRequirements || !elements) return;
-  
-  if (elements.prdPreview) elements.prdPreview.innerHTML = '<div class="loading-indicator">Generating PRD...</div>';
+
+  // Show loading indicator with progress info
+  if (elements.prdPreview) {
+    elements.prdPreview.innerHTML = `
+      <div class="loading-indicator">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Generating PRD using AI...</div>
+        <div class="loading-subtext" id="generate-status">Initializing...</div>
+      </div>
+    `;
+  }
   if (elements.nextBtn) elements.nextBtn.disabled = true;
-  
+
+  // Connect to WebSocket for progress events
+  if (!wizardState.ws || wizardState.ws.readyState !== WebSocket.OPEN) {
+    connectWebSocket();
+  }
+
+  wizardState.startChainInProgress = true;
+
   fetch('/api/wizard/generate', {
     method: 'POST',
     headers: {
@@ -572,10 +592,13 @@ function generatePrd() {
       parsed: wizardState.parsedRequirements,
       projectPath: wizardState.projectPath,
       projectName: wizardState.parsedRequirements.title || 'Untitled Project',
+      useAI: true, // Request AI generation
     }),
   })
     .then(response => response.json())
     .then(data => {
+      wizardState.startChainInProgress = false;
+
       if (data.error) {
         if (elements.prdPreview) elements.prdPreview.innerHTML = `<div class="form-error">Error: ${escapeHtml(data.error)}</div>`;
         if (elements.nextBtn) elements.nextBtn.disabled = true;
@@ -583,19 +606,52 @@ function generatePrd() {
         wizardState.generatedPrd = data.prd;
         wizardState.architecture = data.architecture;
         wizardState.tierPlan = data.tierPlan;
-        
+
+        // Show whether AI was used
+        const aiIndicator = data.usedAI
+          ? '<span class="ai-badge">AI Generated</span>'
+          : '<span class="rule-badge">Rule-Based</span>';
+
         // Advance to step 3
         wizardState.currentStep = 3;
         showStep(3);
         displayPrd();
+
+        // Add AI indicator to the PRD preview header
+        const prdStatsHeader = document.querySelector('#prd-stats');
+        if (prdStatsHeader && data.usedAI !== undefined) {
+          const existingBadge = prdStatsHeader.querySelector('.ai-badge, .rule-badge');
+          if (!existingBadge) {
+            prdStatsHeader.insertAdjacentHTML('beforeend', `<div class="generation-method">${aiIndicator}</div>`);
+          }
+        }
+
         validatePrd();
       }
     })
     .catch(error => {
+      wizardState.startChainInProgress = false;
       console.error('[Wizard] Generate error:', error);
       if (elements.prdPreview) elements.prdPreview.innerHTML = `<div class="form-error">Generation failed: ${escapeHtml(error.message)}</div>`;
       if (elements.nextBtn) elements.nextBtn.disabled = true;
     });
+}
+
+/**
+ * Update generation status text during AI generation.
+ */
+function updateGenerateStatus(step, status) {
+  const statusElement = document.getElementById('generate-status');
+  if (!statusElement) return;
+
+  const stepMessages = {
+    'generate_prd': status === 'started' ? 'Generating PRD from requirements...' : 'PRD generation complete',
+    'generate_architecture': status === 'started' ? 'Generating architecture document...' : 'Architecture generation complete',
+    'generate_tier_plans': status === 'started' ? 'Creating tier execution plans...' : 'Tier plans ready',
+    'validate': status === 'started' ? 'Validating generated artifacts...' : 'Validation complete',
+  };
+
+  statusElement.textContent = stepMessages[step] || `${step}: ${status}`;
 }
 
 function validatePrd() {
@@ -658,34 +714,53 @@ let fallbackTimeout = null;
 
 function savePrd() {
   if (!wizardState.generatedPrd || !elements) return;
-  
+
   if (elements.finishBtn) elements.finishBtn.disabled = true;
   if (elements.saveError) elements.saveError.style.display = 'none';
   if (elements.saveSuccess) elements.saveSuccess.style.display = 'none';
-  
-  // Hide progress indicator initially
+
+  // Show progress indicator for save operation
   const progressContainer = document.getElementById('start-chain-progress');
   if (progressContainer) {
-    progressContainer.style.display = 'none';
+    progressContainer.style.display = 'block';
+    // Reset all progress steps
+    const progressSteps = progressContainer.querySelectorAll('.progress-step');
+    progressSteps.forEach(step => {
+      step.classList.remove('running', 'complete', 'failed');
+      const statusElement = step.querySelector('.progress-step-status');
+      if (statusElement) statusElement.textContent = 'PENDING';
+    });
+    // Mark save step as running
+    const saveStep = progressContainer.querySelector('.progress-step[data-step="save_artifacts"]');
+    if (saveStep) {
+      saveStep.classList.add('running');
+      const statusElement = saveStep.querySelector('.progress-step-status');
+      if (statusElement) statusElement.textContent = 'RUNNING';
+    }
   }
-  
+
   // Connect to WebSocket for Start Chain progress events
   if (!wizardState.ws || wizardState.ws.readyState !== WebSocket.OPEN) {
     connectWebSocket();
   }
-  
+
   wizardState.startChainInProgress = true;
-  
+
+  // Send both parsed requirements and generated artifacts
+  // The backend will save everything without re-running the pipeline
   fetch('/api/wizard/save', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
+      parsed: wizardState.parsedRequirements, // Include parsed for traceability
       prd: wizardState.generatedPrd,
       architecture: wizardState.architecture,
       tierPlan: wizardState.tierPlan,
       projectPath: wizardState.projectPath,
+      projectName: wizardState.parsedRequirements?.title || 'Untitled Project',
+      runPipeline: false, // Don't re-run pipeline, just save artifacts
     }),
   })
     .then(response => response.json())

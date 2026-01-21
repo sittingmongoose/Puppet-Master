@@ -98,7 +98,7 @@ interface Subtask {
 interface Criterion {
   id: string;                    // Format: "{itemId}-AC-001", "{itemId}-AC-002", etc.
   description: string;
-  type: 'regex' | 'file_exists' | 'browser_verify' | 'command' | 'manual' | 'test' | 'cli_verify' | 'perf_verify' | 'ai_verify';
+  type: 'regex' | 'file_exists' | 'browser_verify' | 'command' | 'ai';
   target: string;                // For verifier tokens: "TEST:npm test", "CLI_VERIFY:npm run typecheck", etc.
 }
 
@@ -122,14 +122,22 @@ type ItemStatus = 'pending' | 'planning' | 'running' | 'gating' | 'passed' | 'fa
 1. Break work into Phases → Tasks → Subtasks
 2. Each Subtask must be ~1 context window of work (focused, testable unit)
 3. Include explicit verifier tokens in acceptance criteria where applicable:
-   - \`TEST:npm test\` - Run test suite
-   - \`CLI_VERIFY:npm run typecheck\` - Run type checking
-   - \`FILE_VERIFY:src/auth.ts:exists\` - Verify file exists
-   - \`REGEX_VERIFY:package.json:"version": "1\\.0\\.0"\` - Verify pattern in file
-   - \`BROWSER_VERIFY:login-success\` - Browser verification scenario
-4. Order items by dependency (earlier items don't depend on later)
-5. Include test commands where applicable in testPlan
-6. Use standard verifier tokens: TEST:, CLI_VERIFY:, BROWSER_VERIFY:, FILE_VERIFY:, REGEX_VERIFY:
+   - \`TEST:npm test\` - Run test suite (type: 'command')
+   - \`CLI_VERIFY:npm run typecheck\` - Run type checking (type: 'command')
+   - \`FILE_VERIFY:src/auth.ts:exists\` - Verify file exists (type: 'file_exists')
+   - \`REGEX_VERIFY:package.json:"version": "1\\.0\\.0"\` - Verify pattern in file (type: 'regex')
+   - \`BROWSER_VERIFY:login-success\` - Browser verification scenario (type: 'browser_verify')
+   - \`PERF_VERIFY:...\` - Performance verification (type: 'command')
+   - \`AI_VERIFY:...\` - AI-assisted verification (type: 'ai')
+4. Map criterion types correctly:
+   - 'command' - For TEST:, CLI_VERIFY:, PERF_VERIFY: tokens (runs shell commands)
+   - 'file_exists' - For FILE_VERIFY: tokens (checks file existence)
+   - 'regex' - For REGEX_VERIFY: tokens (pattern matching in files)
+   - 'browser_verify' - For BROWSER_VERIFY: tokens (browser automation)
+   - 'ai' - For AI_VERIFY: tokens or when human-like judgment is needed
+   - NEVER use 'manual' - all criteria must be machine-verifiable
+5. Order items by dependency (earlier items don't depend on later)
+6. Include test commands where applicable in testPlan
 7. Generate IDs following the format: PH-XXX, TK-XXX-XXX, ST-XXX-XXX-XXX
 8. Set all status fields to "pending" for new items
 9. Set createdAt to current ISO timestamp

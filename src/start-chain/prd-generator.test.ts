@@ -94,7 +94,8 @@ describe('PrdGenerator', () => {
       expect(criteria).toHaveLength(3);
       expect(criteria[0].id).toBe('PH-001-AC-001');
       expect(criteria[0].description).toBe('First requirement');
-      expect(criteria[0].type).toBe('manual');
+      expect(criteria[0].type).toBe('ai'); // Default fallback remains AI verification
+      expect(criteria[0].target).toBe('AI_VERIFY:First requirement');
       expect(criteria[1].id).toBe('PH-001-AC-002');
       expect(criteria[2].id).toBe('PH-001-AC-003');
     });
@@ -128,13 +129,36 @@ describe('PrdGenerator', () => {
       expect(criteria).toHaveLength(1);
       expect(criteria[0].id).toBe('ST-001-001-001-AC-001');
       expect(criteria[0].description).toBe('Implementation complete');
-      expect(criteria[0].type).toBe('manual');
+      expect(criteria[0].type).toBe('ai');
+      expect(criteria[0].target).toBe('AI_VERIFY:Implementation complete');
     });
 
     it('should handle empty content', () => {
       const criteria = generator.extractAcceptanceCriteria('', 'PH-001');
       expect(criteria).toHaveLength(1);
       expect(criteria[0].description).toBe('Implementation complete');
+    });
+
+    it('should classify test-related acceptance criteria as command', () => {
+      const content = `
+- Run unit tests
+      `.trim();
+
+      const criteria = generator.extractAcceptanceCriteria(content, 'PH-001');
+      expect(criteria).toHaveLength(1);
+      expect(criteria[0].type).toBe('command');
+      expect(criteria[0].target).toBe('TEST:npm test');
+    });
+
+    it('should classify file existence acceptance criteria when a path exists', () => {
+      const content = `
+- Create \`src/foo.ts\`
+      `.trim();
+
+      const criteria = generator.extractAcceptanceCriteria(content, 'PH-001');
+      expect(criteria).toHaveLength(1);
+      expect(criteria[0].type).toBe('file_exists');
+      expect(criteria[0].target).toBe('FILE_VERIFY:src/foo.ts:exists');
     });
   });
 
@@ -350,6 +374,8 @@ describe('PrdGenerator', () => {
 
   describe('generate', () => {
     it('should generate complete PRD structure', () => {
+      // Use multiple H1s to test the multiple_h1s structure type
+      // (single H1 with H2 children would trigger single_h1_with_h2s behavior)
       const sections: ParsedSection[] = [
         {
           title: 'Phase 1',
@@ -364,6 +390,12 @@ describe('PrdGenerator', () => {
             },
           ],
         },
+        {
+          title: 'Phase 2',
+          content: 'Phase 2 description',
+          level: 1,
+          children: [],
+        },
       ];
 
       const parsed = createParsedRequirements(sections, 'Test Project');
@@ -372,10 +404,11 @@ describe('PrdGenerator', () => {
       expect(prd.project).toBe('test-project');
       expect(prd.version).toBe('1.0.0');
       expect(prd.branchName).toBe('ralph/main');
+      // With multiple_h1s structure, no title is detected, so parsed.title is used
       expect(prd.description).toBe('Test Project');
-      expect(prd.phases).toHaveLength(1);
-      expect(prd.metadata.totalPhases).toBe(1);
-      expect(prd.metadata.totalTasks).toBe(1);
+      expect(prd.phases).toHaveLength(2);
+      expect(prd.metadata.totalPhases).toBe(2);
+      expect(prd.metadata.totalTasks).toBe(1); // Only Phase 1 has a task
       expect(prd.metadata.totalSubtasks).toBeGreaterThan(0);
     });
 
@@ -416,17 +449,26 @@ describe('PrdGenerator', () => {
     });
 
     it('should generate valid PRD structure matching schema', () => {
+      // Use H1 with H2 children where H2 has H3 grandchildren
+      // This way: H1 = title, H2 = phase, H3 = task
       const sections: ParsedSection[] = [
         {
-          title: 'Phase 1',
-          content: 'Phase content',
+          title: 'Project Title',
+          content: 'Project overview',
           level: 1,
           children: [
             {
-              title: 'Task 1',
-              content: 'Task content',
+              title: 'Phase 1',
+              content: 'Phase content',
               level: 2,
-              children: [],
+              children: [
+                {
+                  title: 'Task 1',
+                  content: 'Task content with multiple lines\nLine 2\nLine 3',
+                  level: 3,
+                  children: [],
+                },
+              ],
             },
           ],
         },
@@ -759,6 +801,186 @@ describe('PrdGenerator', () => {
 
       expect(prd).toBeDefined();
       expect(prd.project).toBe('test');
+    });
+  });
+
+  describe('H1 title bug fix (P0-T02)', () => {
+    it('should produce 2 phases from doc with # Title + ## Section1 + ## Section2', () => {
+      // Acceptance criteria: Doc with # Title + ## Section1 + ## Section2 produces 2 phases
+      const sections: ParsedSection[] = [
+        {
+          title: 'My Project Requirements',
+          content: 'Project overview',
+          level: 1,
+          children: [
+            {
+              title: 'User Authentication',
+              content: '- Login feature\n- Logout feature',
+              level: 2,
+              children: [],
+            },
+            {
+              title: 'Database Schema',
+              content: '- Users table\n- Posts table',
+              level: 2,
+              children: [],
+            },
+          ],
+        },
+      ];
+
+      const parsed = createParsedRequirements(sections, 'My Project Requirements');
+      // Disable validation for this test (small doc)
+      const gen = new PrdGenerator({
+        projectName: 'test',
+        structureDetectorOptions: { failOnValidationError: false },
+      });
+      const prd = gen.generate(parsed);
+
+      // Should have 2 phases (the H2 sections), not 1 (the H1)
+      expect(prd.phases).toHaveLength(2);
+      expect(prd.phases[0].title).toBe('User Authentication');
+      expect(prd.phases[1].title).toBe('Database Schema');
+      // Description should use the H1 title
+      expect(prd.description).toBe('My Project Requirements');
+    });
+
+    it('should produce 2 phases from doc with # Phase1 + # Phase2', () => {
+      // Acceptance criteria: Doc with # Phase1 + # Phase2 produces 2 phases
+      const sections: ParsedSection[] = [
+        {
+          title: 'Phase 1: Setup',
+          content: '- Install dependencies\n- Configure environment',
+          level: 1,
+          children: [],
+        },
+        {
+          title: 'Phase 2: Implementation',
+          content: '- Build features\n- Write tests',
+          level: 1,
+          children: [],
+        },
+      ];
+
+      const parsed = createParsedRequirements(sections, 'Project');
+      const gen = new PrdGenerator({
+        projectName: 'test',
+        structureDetectorOptions: { failOnValidationError: false },
+      });
+      const prd = gen.generate(parsed);
+
+      // Should have 2 phases (the H1 sections)
+      expect(prd.phases).toHaveLength(2);
+      expect(prd.phases[0].title).toBe('Phase 1: Setup');
+      expect(prd.phases[1].title).toBe('Phase 2: Implementation');
+    });
+
+    it('should hard fail if large doc produces only 1 phase', () => {
+      // Acceptance criteria: Hard fail if only 1 phase from large doc
+      const largeContent = 'x'.repeat(6000);
+      const sections: ParsedSection[] = [
+        {
+          title: 'Single Section',
+          content: largeContent,
+          level: 1,
+          children: [],
+        },
+      ];
+
+      const parsed: ParsedRequirements = {
+        source: createSource(),
+        title: 'Large Project',
+        sections,
+        extractedGoals: [],
+        extractedConstraints: [],
+        rawText: largeContent,
+        parseErrors: [],
+      };
+
+      const gen = new PrdGenerator({
+        projectName: 'test',
+        structureDetectorOptions: {
+          largeDocThreshold: 5000,
+          minPhasesForLargeDoc: 2,
+          failOnValidationError: true,
+        },
+      });
+
+      expect(() => gen.generate(parsed)).toThrow(/Large document.*resulted in only 1 phase/);
+    });
+
+    it('should log coverage metrics during generation', () => {
+      const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+
+      const sections: ParsedSection[] = [
+        {
+          title: 'Title',
+          content: '',
+          level: 1,
+          children: [
+            { title: 'Phase 1', content: '- Item 1', level: 2, children: [] },
+            { title: 'Phase 2', content: '- Item 2', level: 2, children: [] },
+          ],
+        },
+      ];
+
+      const parsed = createParsedRequirements(sections);
+      const gen = new PrdGenerator({
+        projectName: 'test',
+        structureDetectorOptions: { failOnValidationError: false },
+      });
+      gen.generate(parsed);
+
+      expect(consoleSpy).toHaveBeenCalled();
+      const logMessages = consoleSpy.mock.calls.map(call => call[0]?.toString() || '');
+      expect(logMessages.some(msg =>
+        msg.includes('[PRD Generation] Structure detected') &&
+        msg.includes('phases') &&
+        msg.includes('headings') &&
+        msg.includes('bullets')
+      )).toBe(true);
+
+      consoleSpy.mockRestore();
+    });
+
+    it('should handle H1 with H2 children that have H3 grandchildren', () => {
+      const sections: ParsedSection[] = [
+        {
+          title: 'Project Title',
+          content: '',
+          level: 1,
+          children: [
+            {
+              title: 'Phase A',
+              content: 'Phase A content',
+              level: 2,
+              children: [
+                { title: 'Task A.1', content: 'Task details', level: 3, children: [] },
+              ],
+            },
+            {
+              title: 'Phase B',
+              content: 'Phase B content',
+              level: 2,
+              children: [],
+            },
+          ],
+        },
+      ];
+
+      const parsed = createParsedRequirements(sections);
+      const gen = new PrdGenerator({
+        projectName: 'test',
+        structureDetectorOptions: { failOnValidationError: false },
+      });
+      const prd = gen.generate(parsed);
+
+      // Should still detect 2 phases (H2s)
+      expect(prd.phases).toHaveLength(2);
+      expect(prd.phases[0].title).toBe('Phase A');
+      // Phase A should have its H3 children as tasks
+      expect(prd.phases[0].tasks).toHaveLength(1);
+      expect(prd.phases[0].tasks[0].title).toBe('Task A.1');
     });
   });
 });

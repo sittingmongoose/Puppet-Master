@@ -9,13 +9,33 @@
 import type { TierState, TierType } from './state.js';
 
 /**
+ * Canonical criterion types for the verification system.
+ *
+ * These are the ONLY valid runtime types. The prompt/spec may use other names
+ * (TEST:, CLI_VERIFY:, etc.) which are mapped to these types during parsing.
+ *
+ * Mapping from spec types (STATE_FILES.md) to runtime types:
+ * - TEST:         → 'command'  (runs test suite)
+ * - CLI_VERIFY:   → 'command'  (runs CLI command)
+ * - FILE_VERIFY:  → 'file_exists'
+ * - REGEX_VERIFY: → 'regex'
+ * - BROWSER_VERIFY: → 'browser_verify'
+ * - PERF_VERIFY:  → 'command'  (runs command with timing)
+ * - AI_VERIFY:    → 'ai'
+ *
+ * NOTE: 'manual' type is NOT supported - all criteria must be machine-verifiable.
+ * See REQUIREMENTS.md "no manual tests" requirement.
+ */
+export type CriterionType = 'regex' | 'file_exists' | 'browser_verify' | 'command' | 'ai';
+
+/**
  * Criterion interface.
  * Represents an acceptance criterion for a tier.
  */
 export interface Criterion {
   id: string;
   description: string;
-  type: 'regex' | 'file_exists' | 'browser_verify' | 'command' | 'manual' | 'ai';
+  type: CriterionType;
   target: string;
   options?: Record<string, unknown>;
   passed?: boolean;

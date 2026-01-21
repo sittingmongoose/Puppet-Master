@@ -477,7 +477,7 @@ export class Orchestrator {
     }
 
     // Get iteration number
-    const iterationNumber = subtask.data.iterations + 1;
+    const iterationNumber = subtask.stateMachine.getIterationCount() + 1;
 
     // Load progress entries
     const progressEntries = await this.deps.progressManager.getLatest(10);
@@ -489,35 +489,6 @@ export class Orchestrator {
       filesTargeted: [],
     });
 
-    // Build progress content string
-    const progressContent = progressEntries
-      .map((entry: ProgressEntry) => {
-        const lines = [
-          `${entry.timestamp} - ${entry.itemId} (${entry.status})`,
-          `  Session: ${entry.sessionId}`,
-          `  Platform: ${entry.platform}`,
-          `  Duration: ${entry.duration}`,
-        ];
-
-        if (entry.accomplishments.length > 0) {
-          lines.push('  Accomplishments:');
-          entry.accomplishments.forEach((acc: string) => lines.push(`    - ${acc}`));
-        }
-
-        if (entry.filesChanged.length > 0) {
-          lines.push('  Files Changed:');
-          entry.filesChanged.forEach((file: { path: string; description: string }) =>
-            lines.push(`    - ${file.path} - ${file.description}`)
-          );
-        }
-
-        return lines.join('\n');
-      })
-      .join('\n\n');
-
-    // Build agents content array
-    const agentsContentArray = agentsContent.map((agent) => agent.content);
-
     // Get tier plan from subtask
     const subtaskPlan: TierPlan = {
       id: subtask.id,
@@ -528,13 +499,15 @@ export class Orchestrator {
     };
 
     return {
-      subtaskId: subtask.id,
-      taskId: task.id,
-      phaseId: phase.id,
+      tierNode: subtask,
       iterationNumber,
+      maxIterations: subtask.data.maxIterations,
       projectPath: this.config.project.workingDirectory,
-      progressContent,
-      agentsContent: agentsContentArray,
+      projectName: this.config.project.name,
+      sessionId: this.deps.progressManager.generateSessionId(),
+      platform: this.config.tiers.subtask.platform,
+      progressEntries,
+      agentsContent,
       subtaskPlan,
     };
   }

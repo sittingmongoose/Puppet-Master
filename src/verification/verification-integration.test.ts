@@ -191,7 +191,7 @@ describe('VerificationIntegration', () => {
 
       expect(commandCriteria).toHaveLength(1);
       expect(commandCriteria[0]).toMatchObject({
-        id: 'command-0',
+        id: 'TK-001-001-command-0',
         description: 'Run test command: npm',
         type: 'command',
         target: 'npm',
@@ -303,10 +303,11 @@ describe('VerificationIntegration', () => {
       await integration.runPhaseGate(phase);
 
       const criteria = runGateSpy.mock.calls[0]?.[1] as Criterion[];
-      const aggregateCheck = criteria.find((c) => c.id === 'aggregate-check-all-tasks-passed');
+      const aggregateCheck = criteria.find((c) => c.id === 'PH-001-aggregate-check-all-tasks-passed');
 
       expect(aggregateCheck).toBeDefined();
       expect(aggregateCheck?.type).toBe('command');
+      expect(aggregateCheck?.target).toBe('node');
     });
 
     it('should not include aggregate check if phase has no children', async () => {
@@ -331,7 +332,7 @@ describe('VerificationIntegration', () => {
       await integration.runPhaseGate(phase);
 
       const criteria = runGateSpy.mock.calls[0]?.[1] as Criterion[];
-      const aggregateCheck = criteria.find((c) => c.id === 'aggregate-check-all-tasks-passed');
+      const aggregateCheck = criteria.find((c) => c.id === 'PH-001-aggregate-check-all-tasks-passed');
 
       expect(aggregateCheck).toBeUndefined();
     });
@@ -539,9 +540,9 @@ describe('VerificationIntegration', () => {
       const commandCriteria = criteria.filter((c) => c.type === 'command');
 
       expect(commandCriteria).toHaveLength(3);
-      expect(commandCriteria[0]?.id).toBe('command-0');
-      expect(commandCriteria[1]?.id).toBe('command-1');
-      expect(commandCriteria[2]?.id).toBe('command-2');
+      expect(commandCriteria[0]?.id).toBe('TK-001-001-command-0');
+      expect(commandCriteria[1]?.id).toBe('TK-001-001-command-1');
+      expect(commandCriteria[2]?.id).toBe('TK-001-001-command-2');
     });
   });
 });

@@ -470,12 +470,32 @@ When complete, update this task's Status Log with PASS/FAIL, commands run + resu
 
 ### Task status log
 ```
-Status: PENDING
-Date:
+Status: PASS
+Date: 2026-01-21
 Summary of changes:
+- Defined canonical CriterionType as union of 5 runtime types: 'regex' | 'file_exists' | 'browser_verify' | 'command' | 'ai'
+- Removed 'manual' type from valid types (violates "no manual tests" requirement)
+- Added type mapping documentation (TEST: -> command, CLI_VERIFY: -> command, etc.)
+- Updated prd-prompt.ts schema to request only valid types with clear mapping rules
+- Changed default criterion type from 'manual' to 'ai' in prd-generator.ts and escalation.ts
+- Updated all test fixtures and test files to use 'ai' instead of 'manual'
+- Added verifier registry comments documenting type-to-verifier alignment
+
 Files changed:
+- src/types/tiers.ts (added CriterionType, removed 'manual' from Criterion.type)
+- src/start-chain/prompts/prd-prompt.ts (updated schema and rules)
+- src/start-chain/prd-generator.ts (changed default from 'manual' to 'ai')
+- src/core/escalation.ts (changed default from 'manual' to 'ai')
+- src/core/container.ts (added verifier registry documentation)
+- src/__tests__/fixtures/sample-prd.json (manual -> ai)
+- src/core/prompt-builder.test.ts (manual -> ai)
+- src/start-chain/validation-gate.test.ts (manual -> ai)
+- src/start-chain/prd-generator.test.ts (manual -> ai in assertions)
+
 Commands run + results:
-If FAIL - where stuck + exact error snippets + what remains:
+- npm run typecheck: PASS
+- npm test: PASS (1845 tests)
+- npm run build: PASS
 ```
 
 ---
@@ -594,12 +614,12 @@ When complete, update this task's Status Log with PASS/FAIL, commands run + resu
 
 ### Task status log
 ```
-Status: PENDING
-Date:
-Summary of changes:
-Files changed:
-Commands run + results:
-If FAIL - where stuck + exact error snippets + what remains:
+Status: PASS
+Date: 2026-01-21
+Summary of changes: Added criterion classification + verifier-token target generation for rule-based PRD criteria; added runtime validator to hard-fail any PRD containing manual criteria and integrated it into the Start Chain ValidationGate.
+Files changed: src/start-chain/criterion-classifier.ts; src/start-chain/prd-generator.ts; src/start-chain/validators/no-manual-validator.ts; src/start-chain/validation-gate.ts; src/start-chain/criterion-classifier.test.ts; src/start-chain/prd-generator.test.ts; src/start-chain/validators/no-manual-validator.test.ts
+Commands run + results: npm run typecheck (PASS); npm test -- src/start-chain (PASS)
+If FAIL - where stuck + exact error snippets + what remains: N/A
 ```
 
 ---
@@ -724,12 +744,26 @@ When complete, update this task's Status Log with PASS/FAIL, commands run + resu
 
 ### Task status log
 ```
-Status: PENDING
-Date:
+Status: PASS
+Date: 2026-01-21
 Summary of changes:
+- Added fail-fast verifier registry completeness check for all canonical CriterionType values.
+- Prefixed generated command criterion IDs with tier ID so EvidenceStore can retrieve evidence by tier.
+- Replaced non-portable aggregate `true`/`false` commands with a portable `node -e process.exit(...)` check.
+- Fixed gateId tier type detection for IDs like `phase-gate-PH-001`.
+- Updated verification tests to match new ID formats and gate ID patterns.
 Files changed:
+- src/core/container.ts
+- src/core/container.test.ts
+- src/verification/verification-integration.ts
+- src/verification/gate-runner.ts
+- src/verification/verification-integration.test.ts
+- src/verification/gate-runner.test.ts
 Commands run + results:
+- npm run typecheck (PASS)
+- npm test -- src/verification (PASS)
 If FAIL - where stuck + exact error snippets + what remains:
+- N/A
 ```
 
 ---
@@ -848,12 +882,24 @@ When complete, update this task's Status Log with PASS/FAIL, commands run + resu
 
 ### Task status log
 ```
-Status: PENDING
-Date:
+Status: PASS
+Date: 2026-01-21
 Summary of changes:
+- Added server-side WebSocket event translator so the GUI receives the event names + payload envelope it expects.
+- Added basic ping→pong handling for Dashboard heartbeat compatibility.
+- Updated GUI integration test to assert translated message shape.
 Files changed:
+- src/gui/server.ts
+- src/gui/gui.integration.test.ts
+- BUILD_QUEUE_IMPROVEMENTS.md
 Commands run + results:
+- npm run typecheck (PASS)
+- npm test -- src/gui (PASS; 29 tests)
+- npm run gui (manual smoke-check: Dashboard showed \"Connection status: Connected\")
+Evidence:
+- Browser snapshot confirms \"Connection status: Connected\" on Dashboard after connecting to /events.
 If FAIL - where stuck + exact error snippets + what remains:
+- N/A
 ```
 
 ---
@@ -970,12 +1016,30 @@ When complete, update this task's Status Log with PASS/FAIL, commands run + resu
 
 ### Task status log
 ```
-Status: PENDING
-Date:
+Status: PASS
+Date: 2026-01-21
 Summary of changes:
+  - Unified iteration prompt building by wiring ExecutionEngine to use PromptBuilder.buildIterationPrompt()
+  - Iteration prompts now include acceptance criteria, test requirements, and previous failure context on retry
+  - Updated Orchestrator iteration context to provide full PromptContext inputs (tier nodes + memory + metadata)
+  - Added ExecutionEngine tests to assert prompt content and retry failure inclusion
+
 Files changed:
+  - src/core/execution-engine.ts
+  - src/core/orchestrator.ts
+  - src/core/execution-engine.test.ts
+  - P0-T07_EVIDENCE_sample_iteration_prompt.md
+
 Commands run + results:
-If FAIL - where stuck + exact error snippets + what remains:
+  - npm run typecheck: PASS
+  - npm test -- src/core/execution-engine: PASS (7 tests)
+
+Evidence recorded:
+  - P0-T07_EVIDENCE_sample_iteration_prompt.md (stored at repo root; creating new files under .puppet-master/ was blocked by tooling)
+
+Cleanup:
+  - .test-cache: not found
+  - .test-quota: not found
 ```
 
 ---
@@ -1092,12 +1156,25 @@ When complete, update this task's Status Log with PASS/FAIL, commands run + resu
 
 ### Task status log
 ```
-Status: PENDING
-Date:
+Status: PASS
+Date: 2026-01-21
 Summary of changes:
+  - Fixed router dependency injection using mutable dependency holder pattern
+  - Wizard /generate endpoint now uses real AI generation when dependencies are available
+  - Wizard /save endpoint accepts parsed requirements and saves all artifacts including tier plans
+  - Frontend sends parsed requirements to save endpoint for traceability
+  - Added WebSocket progress streaming during generation
+  - Added generation method indicator (AI Generated vs Rule-Based)
+
 Files changed:
+  - src/gui/routes/wizard.ts (mutable deps pattern, AI generation, full artifact save)
+  - src/gui/server.ts (store wizardRouter, use setDependencies instead of re-registering routes)
+  - src/gui/public/js/wizard.js (send parsed to save, show streaming progress, AI indicator)
+
 Commands run + results:
-If FAIL - where stuck + exact error snippets + what remains:
+  - npm run typecheck: PASS
+  - npm test -- src/gui: PASS (29 tests passed)
+  - npm run build: PASS
 ```
 
 ---

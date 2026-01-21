@@ -433,9 +433,11 @@ describe('GUI Integration Tests', () => {
 
         ws.on('message', (data) => {
           const event = JSON.parse(data.toString());
-          expect(event.type).toBe('state_changed');
-          expect(event.from).toBe('idle');
-          expect(event.to).toBe('executing');
+          expect(event.type).toBe('state_change');
+          expect(event.payload).toEqual({
+            state: 'executing',
+            previousState: 'idle',
+          });
           ws.close();
           resolve();
         });

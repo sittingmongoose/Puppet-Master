@@ -8,6 +8,7 @@
  */
 
 import type { PuppetMasterConfig } from '../types/config.js';
+import type { CriterionType } from '../types/tiers.js';
 import { ConfigManager } from '../config/config-manager.js';
 import { PrdManager } from '../memory/prd-manager.js';
 import { ProgressManager } from '../memory/progress-manager.js';
@@ -161,16 +162,36 @@ export function createContainer(config: PuppetMasterConfig, projectPath: string)
   container.register('platformRegistry', () => new PlatformRegistry(), 'singleton');
 
   // Register verification components
+  // NOTE: Verifiers must match canonical CriterionType from src/types/tiers.ts:
+  //   'regex'         → RegexVerifier
+  //   'file_exists'   → FileExistsVerifier
+  //   'command'       → CommandVerifier (handles TEST:, CLI_VERIFY:, PERF_VERIFY:)
+  //   'browser_verify'→ BrowserVerifier
+  //   'ai'            → AIVerifier
+  // 'manual' type is NOT supported - all criteria must be machine-verifiable.
   container.register('verifierRegistry', () => {
     const registry = new VerifierRegistry();
     const evidenceStore = container.resolve<EvidenceStore>('evidenceStore');
     const platformRegistry = container.resolve<PlatformRegistry>('platformRegistry');
 
-    registry.register(new RegexVerifier());
-    registry.register(new FileExistsVerifier());
-    registry.register(new CommandVerifier(evidenceStore));
-    registry.register(new BrowserVerifier(evidenceStore));
-    registry.register(new AIVerifier(platformRegistry, evidenceStore));
+    registry.register(new RegexVerifier());        // type: 'regex'
+    registry.register(new FileExistsVerifier());   // type: 'file_exists'
+    registry.register(new CommandVerifier(evidenceStore));    // type: 'command'
+    registry.register(new BrowserVerifier(evidenceStore));    // type: 'browser_verify'
+    registry.register(new AIVerifier(platformRegistry, evidenceStore)); // type: 'ai'
+
+    // Fail fast if we missed a canonical verifier type.
+    const canonicalTypes: CriterionType[] = [
+      'regex',
+      'file_exists',
+      'browser_verify',
+      'command',
+      'ai',
+    ];
+    const missing = canonicalTypes.filter((t) => registry.get(t) === null);
+    if (missing.length > 0) {
+      throw new Error(`VerifierRegistry missing verifiers for types: ${missing.join(', ')}`);
+    }
 
     return registry;
   }, 'singleton');

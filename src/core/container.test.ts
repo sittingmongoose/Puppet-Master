@@ -6,6 +6,8 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { Container, createContainer, createOrchestrator } from './container.js';
 import { getDefaultConfig } from '../config/default-config.js';
 import type { PuppetMasterConfig } from '../types/config.js';
+import type { CriterionType } from '../types/tiers.js';
+import { VerifierRegistry } from '../verification/gate-runner.js';
 
 describe('Container', () => {
   let container: Container;
@@ -262,6 +264,23 @@ describe('createContainer', () => {
     // GateRunner should get VerifierRegistry and EvidenceStore
     const gateRunner = container.resolve('gateRunner');
     expect(gateRunner).toBeDefined();
+  });
+
+  it('should register verifiers for all canonical criterion types', () => {
+    const container = createContainer(config, projectPath);
+    const registry = container.resolve<VerifierRegistry>('verifierRegistry');
+
+    const canonicalTypes: CriterionType[] = [
+      'regex',
+      'file_exists',
+      'browser_verify',
+      'command',
+      'ai',
+    ];
+
+    for (const type of canonicalTypes) {
+      expect(registry.get(type)).not.toBeNull();
+    }
   });
 
   it('should return singleton instances for managers', () => {

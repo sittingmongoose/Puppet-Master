@@ -18,6 +18,13 @@ import { PlatformRegistry } from '../platforms/registry.js';
 import { QuotaManager } from '../platforms/quota-manager.js';
 import { UsageTracker } from '../memory/usage-tracker.js';
 import { buildPrdPrompt } from './prompts/prd-prompt.js';
+import {
+  detectDocumentStructure,
+  StructureDetectionError,
+  type DocumentStructure,
+  type StructureDetectorOptions,
+} from './structure-detector.js';
+import { CriterionClassifier } from './criterion-classifier.js';
 
 /**
  * Options for PRD generation.
@@ -29,6 +36,8 @@ export interface PrdGeneratorOptions {
   maxSubtasksPerTask?: number;
   /** Maximum number of tasks per phase (default: 10) */
   maxTasksPerPhase?: number;
+  /** Options for structure detection (default: use defaults from structure-detector) */
+  structureDetectorOptions?: StructureDetectorOptions;
 }
 
 /**
@@ -43,6 +52,8 @@ export class PrdGenerator {
   private readonly quotaManager?: QuotaManager;
   private readonly config?: PuppetMasterConfig;
   private readonly usageTracker?: UsageTracker;
+  private readonly structureDetectorOptions: StructureDetectorOptions;
+  private readonly criterionClassifier: CriterionClassifier;
 
   constructor(
     options: PrdGeneratorOptions,
@@ -58,6 +69,8 @@ export class PrdGenerator {
     this.quotaManager = quotaManager;
     this.config = config;
     this.usageTracker = usageTracker;
+    this.structureDetectorOptions = options.structureDetectorOptions ?? {};
+    this.criterionClassifier = new CriterionClassifier();
   }
 
   /**
@@ -150,14 +163,37 @@ export class PrdGenerator {
    * Rule-based PRD generation (fallback method).
    * This is the original implementation that uses heuristics to transform
    * parsed requirements into PRD structure.
-   * 
+   *
+   * Uses structure detection to correctly handle documents with H1 title + H2 sections.
+   *
    * @param parsed - Parsed requirements document
    * @returns Generated PRD structure
+   * @throws StructureDetectionError if large document produces insufficient phases
    */
   generate(parsed: ParsedRequirements): PRD {
     const now = new Date().toISOString();
-    const phases = this.generatePhases(parsed.sections);
+
+    // Detect document structure to determine correct phase sections
+    const structure = detectDocumentStructure(
+      parsed.sections,
+      parsed.rawText,
+      this.structureDetectorOptions
+    );
+
+    // Log structure detection for debugging
+    console.log(
+      `[PRD Generation] Structure detected: ${structure.type}, ` +
+      `${structure.metrics.phasesCount} phases, ` +
+      `${structure.metrics.headingsCount} headings, ` +
+      `${structure.metrics.bulletsCount} bullets`
+    );
+
+    // Use detected phase sections instead of raw top-level sections
+    const phases = this.generatePhases(structure.phaseSections);
     const metadata = this.calculateMetadata(phases);
+
+    // Use detected title if available, otherwise fall back to parsed title
+    const description = structure.title || parsed.title || 'Generated from requirements';
 
     return {
       project: this.projectName,
@@ -165,7 +201,7 @@ export class PrdGenerator {
       createdAt: now,
       updatedAt: now,
       branchName: 'ralph/main',
-      description: parsed.title || 'Generated from requirements',
+      description,
       phases,
       metadata,
     };
@@ -306,11 +342,19 @@ export class PrdGenerator {
       
       if (bulletMatch || numberedMatch) {
         const description = bulletMatch ? bulletMatch[1] : numberedMatch![1];
-        criteria.push({
+        const baseType = this.criterionClassifier.classifyAcceptanceCriterion(description);
+        const provisional: Criterion = {
           id: `${itemId}-AC-${String(criterionIndex).padStart(3, '0')}`,
           description,
-          type: 'manual',
+          type: baseType,
           target: '',
+        };
+        const target = this.criterionClassifier.generateVerificationTarget(provisional);
+        const finalType = target.startsWith('AI_VERIFY:') ? 'ai' : baseType;
+        criteria.push({
+          ...provisional,
+          type: finalType,
+          target,
         });
         criterionIndex++;
       }
@@ -318,11 +362,17 @@ export class PrdGenerator {
 
     // If no criteria found, create a generic one
     if (criteria.length === 0) {
-      criteria.push({
+      const description = 'Implementation complete';
+      const provisional: Criterion = {
         id: `${itemId}-AC-001`,
-        description: 'Implementation complete',
-        type: 'manual',
+        description,
+        type: 'ai',
         target: '',
+      };
+      const target = this.criterionClassifier.generateVerificationTarget(provisional);
+      criteria.push({
+        ...provisional,
+        target,
       });
     }
 

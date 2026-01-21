@@ -544,8 +544,8 @@ export class Escalation {
     return criteria.map((description, index) => ({
       id: `${subtaskId}-AC-${String(index + 1).padStart(3, '0')}`,
       description,
-      type: 'manual',
-      target: 'manual',
+      type: 'ai' as const, // Default to AI verification - no manual tests allowed
+      target: description, // AI uses description as verification target
     }));
   }
 
