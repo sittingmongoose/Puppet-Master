@@ -50,6 +50,8 @@ export interface ServerConfig {
   host?: string;
   /** CORS allowed origins */
   corsOrigins?: string[];
+  /** Base directory for project discovery (projects + wizard fallbacks) */
+  baseDirectory?: string;
 }
 
 /**
@@ -81,6 +83,8 @@ export class GuiServer {
       port: config.port ?? 3847,
       host: config.host ?? 'localhost',
       corsOrigins: config.corsOrigins ?? ['http://localhost:3847'],
+      // NOTE: This is a discovery/default base directory, not an implicit “current project”.
+      baseDirectory: config.baseDirectory ?? process.cwd(),
     };
     this.eventBus = eventBus;
     this.app = express();
@@ -302,7 +306,7 @@ export class GuiServer {
     }
     
     this.app.use('/api', createControlsRoutes(this.orchestratorInstance));
-    this.app.use('/api', createProjectsRoutes(this.orchestratorInstance));
+    this.app.use('/api', createProjectsRoutes(this.orchestratorInstance, this.config.baseDirectory));
   }
 
   /**
@@ -457,11 +461,11 @@ export class GuiServer {
     this.app.use('/api', createControlsRoutes(null));
 
     // Projects routes (will be updated when orchestrator is registered)
-    this.app.use('/api', createProjectsRoutes(null));
+    this.app.use('/api', createProjectsRoutes(null, this.config.baseDirectory));
 
     // Wizard routes - using mutable dependency holder pattern
     // Dependencies will be injected via registerStartChainDependencies()
-    this.wizardRouter = createWizardRoutes();
+    this.wizardRouter = createWizardRoutes(this.config.baseDirectory);
     this.app.use('/api', this.wizardRouter);
 
     // Config routes

@@ -17,6 +17,10 @@ import { AgentsManager } from '../memory/agents-manager.js';
 import { EvidenceStore } from '../memory/evidence-store.js';
 import { UsageTracker } from '../memory/usage-tracker.js';
 import { GitManager } from '../git/git-manager.js';
+import { createBranchStrategy } from '../git/branch-strategy.js';
+import type { BranchStrategyConfig } from '../git/branch-strategy.js';
+import { CommitFormatter } from '../git/commit-formatter.js';
+import { PRManager } from '../git/pr-manager.js';
 import { PlatformRegistry } from '../platforms/registry.js';
 import { VerifierRegistry } from '../verification/gate-runner.js';
 import { RegexVerifier } from '../verification/verifiers/regex-verifier.js';
@@ -31,6 +35,7 @@ import { AutoAdvancement } from './auto-advancement.js';
 import { Escalation } from './escalation.js';
 import type { ExecutionConfig } from './execution-engine.js';
 import { ExecutionEngine } from './execution-engine.js';
+import { resolveUnderProjectRoot } from '../utils/project-paths.js';
 
 /**
  * Registration type for container entries.
@@ -128,20 +133,34 @@ export class Container {
 /**
  * Creates a container with all dependencies wired up.
  * @param config - Puppet Master configuration
- * @param projectPath - Project working directory path
+ * @param projectRoot - Canonical project root directory path (absolute recommended)
+ * @param configPath - Optional resolved config path used to load the config
+ * @param prdPath - Optional PRD file path override (honors CLI --prd flag)
  * @returns Configured container with all dependencies registered
  */
-export function createContainer(config: PuppetMasterConfig, projectPath: string): Container {
+export function createContainer(config: PuppetMasterConfig, projectRoot: string, configPath?: string, prdPath?: string): Container {
   const container = new Container();
 
   // Register config values (instances)
   container.registerInstance('config', config);
-  container.registerInstance('projectPath', projectPath);
+  // Backwards-compatible key + explicit projectRoot key
+  container.registerInstance('projectPath', projectRoot);
+  container.registerInstance('projectRoot', projectRoot);
 
   // Register managers (singletons)
-  container.register('configManager', () => new ConfigManager(), 'singleton');
-  container.register('prdManager', () => new PrdManager(config.memory.prdFile), 'singleton');
-  container.register('progressManager', () => new ProgressManager(config.memory.progressFile), 'singleton');
+  container.register('configManager', () => new ConfigManager(configPath), 'singleton');
+  // Use prdPath override if provided (from CLI --prd flag), otherwise use config.memory.prdFile
+  const resolvedPrdPath = prdPath ?? config.memory.prdFile;
+  container.register(
+    'prdManager',
+    () => new PrdManager(resolveUnderProjectRoot(projectRoot, resolvedPrdPath)),
+    'singleton'
+  );
+  container.register(
+    'progressManager',
+    () => new ProgressManager(resolveUnderProjectRoot(projectRoot, config.memory.progressFile)),
+    'singleton'
+  );
   
   // Build AgentsManagerConfig from config
   const agentsConfig: AgentsManagerConfig = {
@@ -150,13 +169,41 @@ export function createContainer(config: PuppetMasterConfig, projectPath: string)
     modulePattern: 'src/*/AGENTS.md',
     phasePattern: '.puppet-master/agents/phase-*.md',
     taskPattern: '.puppet-master/agents/task-*.md',
-    projectRoot: projectPath,
+    projectRoot,
   };
   container.register('agentsManager', () => new AgentsManager(agentsConfig), 'singleton');
   
-  container.register('evidenceStore', () => new EvidenceStore(config.verification.evidenceDirectory), 'singleton');
-  container.register('usageTracker', () => new UsageTracker(), 'singleton');
-  container.register('gitManager', () => new GitManager(projectPath), 'singleton');
+  container.register(
+    'evidenceStore',
+    () => new EvidenceStore(resolveUnderProjectRoot(projectRoot, config.verification.evidenceDirectory)),
+    'singleton'
+  );
+  container.register(
+    'usageTracker',
+    () => new UsageTracker(resolveUnderProjectRoot(projectRoot, '.puppet-master/usage/usage.jsonl')),
+    'singleton'
+  );
+  container.register(
+    'gitManager',
+    () =>
+      new GitManager(
+        projectRoot,
+        resolveUnderProjectRoot(projectRoot, '.puppet-master/logs/git-actions.log')
+      ),
+    'singleton'
+  );
+  container.register('branchStrategy', () => {
+    const resolvedConfig = container.resolve<PuppetMasterConfig>('config');
+    const gitManager = container.resolve<GitManager>('gitManager');
+    const strategyConfig: BranchStrategyConfig = {
+      granularity: resolvedConfig.branching.granularity,
+      baseBranch: resolvedConfig.branching.baseBranch,
+      namingPattern: resolvedConfig.branching.namingPattern,
+    };
+    return createBranchStrategy(strategyConfig, gitManager);
+  }, 'singleton');
+  container.register('commitFormatter', () => new CommitFormatter(), 'singleton');
+  container.register('prManager', () => new PRManager(projectRoot), 'singleton');
 
   // Register platform components
   container.register('platformRegistry', () => new PlatformRegistry(), 'singleton');

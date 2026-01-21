@@ -19,6 +19,7 @@ import type { OrchestratorDependencies } from '../../core/orchestrator.js';
 import type { PuppetMasterConfig } from '../../types/config.js';
 import type { OrchestratorState } from '../../types/state.js';
 import { PlatformRegistry } from '../../platforms/registry.js';
+import { deriveProjectRootFromConfigPath, resolveUnderProjectRoot } from '../../utils/project-paths.js';
 import type { CommandModule } from './index.js';
 
 /**
@@ -88,9 +89,12 @@ export async function stopAction(options: StopOptions): Promise<void> {
     // Load configuration
     const configManager = new ConfigManager(options.config);
     const config = await configManager.load();
+    const configPath = configManager.getConfigPath();
+    const projectRoot = deriveProjectRootFromConfigPath(configPath);
 
     // Load PRD to check state
-    const prdManager = new PrdManager(config.memory.prdFile);
+    const prdPath = resolveUnderProjectRoot(projectRoot, config.memory.prdFile);
+    const prdManager = new PrdManager(prdPath);
     const prd = await prdManager.load();
 
     // Check if orchestrator is running
@@ -103,14 +107,12 @@ export async function stopAction(options: StopOptions): Promise<void> {
     console.log('Stopping orchestrator...');
 
     // Create container and resolve dependencies
-    const projectPath = process.cwd();
-    const container = createContainer(config, projectPath);
+    const container = createContainer(config, projectRoot, configPath);
 
     // Create orchestrator instance (minimal, just for stop)
     const orchestrator = new Orchestrator({
       config,
-      projectPath,
-      prdPath: config.memory.prdFile,
+      projectPath: projectRoot,
     });
 
     // Resolve minimal dependencies needed for stop
@@ -122,7 +124,10 @@ export async function stopAction(options: StopOptions): Promise<void> {
       evidenceStore: container.resolve('evidenceStore'),
       usageTracker: container.resolve('usageTracker'),
       gitManager: container.resolve('gitManager'),
-      platformRunner: getPlatformRunner(container, config),
+      branchStrategy: container.resolve('branchStrategy'),
+      commitFormatter: container.resolve('commitFormatter'),
+      prManager: container.resolve('prManager'),
+      platformRunner: getPlatformRunner(container, config, projectRoot),
       verificationIntegration: container.resolve('verificationIntegration'),
     };
 
@@ -178,13 +183,17 @@ export async function stopAction(options: StopOptions): Promise<void> {
 /**
  * Get platform runner for the configured subtask platform
  */
-function getPlatformRunner(container: ReturnType<typeof createContainer>, config: PuppetMasterConfig): OrchestratorDependencies['platformRunner'] {
+function getPlatformRunner(
+  container: ReturnType<typeof createContainer>,
+  config: PuppetMasterConfig,
+  projectRoot: string
+): OrchestratorDependencies['platformRunner'] {
   const registry = container.resolve<PlatformRegistry>('platformRegistry');
   const platform = config.tiers.subtask.platform;
   
   // Initialize registry with runners if needed
   if (registry.getAvailable().length === 0) {
-    const defaultRegistry = PlatformRegistry.createDefault(config);
+    const defaultRegistry = PlatformRegistry.createDefault(config, projectRoot);
     // Copy runners from default registry
     for (const p of defaultRegistry.getAvailable()) {
       const runner = defaultRegistry.get(p);

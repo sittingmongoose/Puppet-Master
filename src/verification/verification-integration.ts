@@ -78,18 +78,39 @@ export class VerificationIntegration {
   }
 
   /**
-   * Runs verification for a subtask.
-   * This is optional and may be used for future subtask-level verification.
+   * Runs a subtask-level gate.
+   * Collects criteria from subtask, executes gate, and returns result.
+   *
+   * Subtasks are the unit of iteration gating (P0-T16).
+   *
    * @param subtask - Subtask tier node
-   * @returns Array of verifier results
+   * @returns Gate result
    */
-  async runSubtaskVerification(subtask: TierNode): Promise<VerifierResult[]> {
+  async runSubtaskGate(subtask: TierNode): Promise<GateResult> {
     const criteria = this.collectCriteria(subtask);
     const gateId = this.buildGateId(subtask, 'subtask');
     
     const report = await this.gateRunner.runGate(gateId, criteria);
     
-    return report.verifiersRun;
+    const result: GateResult = {
+      passed: report.overallPassed,
+      report,
+      failureReason: report.overallPassed ? undefined : this.extractFailureReason(report),
+    };
+
+    return result;
+  }
+
+  /**
+   * Runs verification for a subtask and returns raw verifier results.
+   *
+   * Backwards-compatible convenience wrapper around runSubtaskGate().
+   * @param subtask - Subtask tier node
+   * @returns Array of verifier results
+   */
+  async runSubtaskVerification(subtask: TierNode): Promise<VerifierResult[]> {
+    const result = await this.runSubtaskGate(subtask);
+    return result.report.verifiersRun;
   }
 
   /**

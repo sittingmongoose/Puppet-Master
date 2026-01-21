@@ -13,6 +13,7 @@ import { CapabilityDiscoveryService } from './capability-discovery.js';
 import { CursorRunner } from './cursor-runner.js';
 import { CodexRunner } from './codex-runner.js';
 import { ClaudeRunner } from './claude-runner.js';
+import { resolveUnderProjectRoot } from '../utils/project-paths.js';
 
 /**
  * Platform Registry
@@ -54,11 +55,18 @@ export class PlatformRegistry {
    * platform runners, and registers them.
    * 
    * @param config - Configuration object (used for CLI paths)
+   * @param projectRoot - Optional canonical project root (resolves capability cache under it)
    * @returns A new PlatformRegistry instance with all runners registered
    */
-  static createDefault(config: PuppetMasterConfig): PlatformRegistry {
+  static createDefault(config: PuppetMasterConfig, projectRoot?: string): PlatformRegistry {
     const registry = new PlatformRegistry();
-    const capabilityService = new CapabilityDiscoveryService();
+    const cacheDir = projectRoot
+      ? resolveUnderProjectRoot(projectRoot, '.puppet-master/capabilities')
+      : '.puppet-master/capabilities';
+    const capabilityService = new CapabilityDiscoveryService(
+      cacheDir,
+      config.cliPaths
+    );
 
     // Register Cursor runner
     const cursorRunner = new CursorRunner(

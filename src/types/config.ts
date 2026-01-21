@@ -47,6 +47,16 @@ export interface LoggingConfig {
 export interface TierConfig {
   platform: Platform;
   model: string;
+  /**
+   * Enable Cursor “plan mode” for this tier (best-effort).
+   *
+   * YAML: plan_mode
+   * Notes:
+   * - Only meaningful for Cursor CLI, ignored by other platforms.
+   * - If the platform CLI does not support a dedicated plan mode flag, the runner
+   *   should fall back to a plan-first instruction in the prompt.
+   */
+  planMode?: boolean;
   selfFix: boolean; // YAML: self_fix
   maxIterations: number; // YAML: max_iterations (or max_attempts for iteration tier)
   escalation: 'phase' | 'task' | 'subtask' | null;

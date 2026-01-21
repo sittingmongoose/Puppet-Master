@@ -160,6 +160,36 @@ Test overview.
       expect(results[0].level).toBe('root');
     });
 
+    it('should load root AGENTS.md from projectRoot even when CWD differs', async () => {
+      const content = `# AGENTS.md
+
+## Project Overview
+Test overview.
+`;
+      await writeFile(rootAgentsPath, content, 'utf-8');
+
+      const manager = new AgentsManager(defaultConfig);
+      const context: IterationContext = {
+        phaseId: 'PH1',
+        taskId: 'T01',
+        filesTargeted: [],
+      };
+
+      const originalCwd = process.cwd();
+      const otherCwd = join(testDir, 'othercwd');
+      await mkdir(otherCwd, { recursive: true });
+
+      try {
+        process.chdir(otherCwd);
+        const results = await manager.loadForContext(context);
+        expect(results).toHaveLength(1);
+        expect(results[0].level).toBe('root');
+        expect(results[0].content).toBe(content);
+      } finally {
+        process.chdir(originalCwd);
+      }
+    });
+
     it('should load multi-level files in correct order', async () => {
       // Root
       await writeFile(rootAgentsPath, `# Root\n## Project Overview\nRoot content\n`, 'utf-8');

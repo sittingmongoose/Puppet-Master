@@ -8,6 +8,9 @@ import { getDefaultConfig } from '../config/default-config.js';
 import type { PuppetMasterConfig } from '../types/config.js';
 import type { CriterionType } from '../types/tiers.js';
 import { VerifierRegistry } from '../verification/gate-runner.js';
+import { mkdtemp, rm, access } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 
 describe('Container', () => {
   let container: Container;
@@ -182,12 +185,15 @@ describe('createContainer', () => {
 
     expect(container.has('config')).toBe(true);
     expect(container.has('projectPath')).toBe(true);
+    expect(container.has('projectRoot')).toBe(true);
 
     const resolvedConfig = container.resolve<PuppetMasterConfig>('config');
     const resolvedPath = container.resolve<string>('projectPath');
+    const resolvedRoot = container.resolve<string>('projectRoot');
 
     expect(resolvedConfig).toBe(config);
     expect(resolvedPath).toBe(projectPath);
+    expect(resolvedRoot).toBe(projectPath);
   });
 
   it('should register all managers', () => {
@@ -200,6 +206,9 @@ describe('createContainer', () => {
     expect(container.has('evidenceStore')).toBe(true);
     expect(container.has('usageTracker')).toBe(true);
     expect(container.has('gitManager')).toBe(true);
+    expect(container.has('branchStrategy')).toBe(true);
+    expect(container.has('commitFormatter')).toBe(true);
+    expect(container.has('prManager')).toBe(true);
   });
 
   it('should register platform components', () => {
@@ -236,6 +245,9 @@ describe('createContainer', () => {
     expect(() => container.resolve('evidenceStore')).not.toThrow();
     expect(() => container.resolve('usageTracker')).not.toThrow();
     expect(() => container.resolve('gitManager')).not.toThrow();
+    expect(() => container.resolve('branchStrategy')).not.toThrow();
+    expect(() => container.resolve('commitFormatter')).not.toThrow();
+    expect(() => container.resolve('prManager')).not.toThrow();
     expect(() => container.resolve('platformRegistry')).not.toThrow();
     expect(() => container.resolve('verifierRegistry')).not.toThrow();
     expect(() => container.resolve('gateRunner')).not.toThrow();
@@ -308,6 +320,46 @@ describe('createContainer', () => {
     expect(prdManager).toBeDefined();
     expect(progressManager).toBeDefined();
     expect(evidenceStore).toBeDefined();
+  });
+
+  it('should resolve state paths under projectRoot even when CWD differs', async () => {
+    const originalCwd = process.cwd();
+    const projectRoot = await mkdtemp(join(tmpdir(), 'pm-projectroot-'));
+    const otherCwd = await mkdtemp(join(tmpdir(), 'pm-othercwd-'));
+
+    try {
+      process.chdir(otherCwd);
+
+      const config = getDefaultConfig();
+      const configPath = join(projectRoot, '.puppet-master', 'config.yaml');
+
+      const container = createContainer(config, projectRoot, configPath);
+
+      // PRD path
+      const prdManager = container.resolve<any>('prdManager');
+      const prd = await prdManager.load();
+      await prdManager.save(prd);
+      await access(join(projectRoot, '.puppet-master', 'prd.json'));
+
+      // Evidence path
+      const evidenceStore = container.resolve<any>('evidenceStore');
+      const evidencePath: string = await evidenceStore.saveTestLog('ST-001-001-001', 'hello', 'test');
+      expect(evidencePath.startsWith(join(projectRoot, '.puppet-master'))).toBe(true);
+
+      // Usage path
+      const usageTracker = container.resolve<any>('usageTracker');
+      await usageTracker.track({
+        platform: 'cursor',
+        action: 'test',
+        durationMs: 1,
+        success: true,
+      });
+      await access(join(projectRoot, '.puppet-master', 'usage', 'usage.jsonl'));
+    } finally {
+      process.chdir(originalCwd);
+      await rm(projectRoot, { recursive: true, force: true });
+      await rm(otherCwd, { recursive: true, force: true });
+    }
   });
 });
 

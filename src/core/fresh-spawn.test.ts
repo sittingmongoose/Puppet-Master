@@ -12,6 +12,7 @@ import type { ChildProcess } from 'node:child_process';
 import { FreshSpawner } from './fresh-spawn.js';
 import type { SpawnRequest, SpawnConfig } from './fresh-spawn.js';
 import * as childProcess from 'node:child_process';
+import { resolvePlatformCommand } from '../platforms/constants.js';
 
 // Mock spawn
 const mockSpawn = vi.fn();
@@ -206,6 +207,7 @@ describe('FreshSpawner', () => {
         prompt: 'test prompt',
       });
 
+      const expectedCommand = resolvePlatformCommand('cursor', null);
       let capturedCommand: string | undefined;
       let capturedArgs: string[] | undefined;
 
@@ -218,7 +220,7 @@ describe('FreshSpawner', () => {
           }, 10);
           return proc;
         }
-        if (command === 'cursor-agent') {
+        if (command === expectedCommand) {
           capturedCommand = command;
           capturedArgs = args;
           return createMockChildProcess(12345);
@@ -228,7 +230,7 @@ describe('FreshSpawner', () => {
 
       await spawner.spawn(request);
 
-      expect(capturedCommand).toBe('cursor-agent');
+      expect(capturedCommand).toBe(expectedCommand);
       expect(capturedArgs).toContain('--model');
       expect(capturedArgs).toContain('auto');
       expect(capturedArgs).toContain('-p');
@@ -244,6 +246,7 @@ describe('FreshSpawner', () => {
         prompt: 'test prompt',
       });
 
+      const expectedCommand = resolvePlatformCommand('codex', null);
       let capturedCommand: string | undefined;
       let capturedArgs: string[] | undefined;
 
@@ -256,7 +259,7 @@ describe('FreshSpawner', () => {
           }, 10);
           return proc;
         }
-        if (command === 'codex') {
+        if (command === expectedCommand) {
           capturedCommand = command;
           capturedArgs = args;
           return createMockChildProcess(12345);
@@ -266,7 +269,7 @@ describe('FreshSpawner', () => {
 
       await spawner.spawn(request);
 
-      expect(capturedCommand).toBe('codex');
+      expect(capturedCommand).toBe(expectedCommand);
       expect(capturedArgs?.[0]).toBe('exec');
       expect(capturedArgs).toContain('test prompt');
       expect(capturedArgs).toContain('--model');
@@ -282,6 +285,7 @@ describe('FreshSpawner', () => {
         prompt: 'test prompt',
       });
 
+      const expectedCommand = resolvePlatformCommand('claude', null);
       let capturedCommand: string | undefined;
       let capturedArgs: string[] | undefined;
 
@@ -294,7 +298,7 @@ describe('FreshSpawner', () => {
           }, 10);
           return proc;
         }
-        if (command === 'claude') {
+        if (command === expectedCommand) {
           capturedCommand = command;
           capturedArgs = args;
           return createMockChildProcess(12345);
@@ -304,7 +308,7 @@ describe('FreshSpawner', () => {
 
       await spawner.spawn(request);
 
-      expect(capturedCommand).toBe('claude');
+      expect(capturedCommand).toBe(expectedCommand);
       expect(capturedArgs).toContain('--model');
       expect(capturedArgs).toContain('sonnet-4.5');
       expect(capturedArgs).toContain('-p');

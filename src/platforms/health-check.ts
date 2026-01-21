@@ -9,10 +9,11 @@
  */
 
 import { spawn } from 'child_process';
-import type { Platform } from '../types/config.js';
+import type { CliPathsConfig, Platform } from '../types/config.js';
 import type { PlatformCapabilities } from '../types/capabilities.js';
 import { CapabilityDiscoveryService } from './capability-discovery.js';
 import { PlatformRegistry } from './registry.js';
+import { resolvePlatformCommand } from './constants.js';
 
 /**
  * Result of a platform health check.
@@ -29,24 +30,6 @@ export interface HealthCheckResult {
   
   /** Platform capabilities if available, undefined if not discovered */
   capabilities?: PlatformCapabilities;
-}
-
-/**
- * Maps platform to CLI command name.
- * 
- * Uses the same mapping as capability-discovery.ts for consistency.
- */
-function getPlatformCommand(platform: Platform): string {
-  switch (platform) {
-    case 'cursor':
-      return 'cursor-agent';
-    case 'codex':
-      return 'codex';
-    case 'claude':
-      return 'claude';
-    default:
-      return platform;
-  }
 }
 
 /**
@@ -115,14 +98,20 @@ function parseVersion(output: string): string | undefined {
  */
 export class PlatformHealthChecker {
   private readonly capabilityService: CapabilityDiscoveryService;
+  private readonly cliPaths: Partial<CliPathsConfig> | null;
 
   /**
    * Creates a new PlatformHealthChecker instance.
    * 
    * @param capabilityService - Capability discovery service (optional, creates default if not provided)
+   * @param cliPaths - Optional config-based overrides for CLI commands
    */
-  constructor(capabilityService?: CapabilityDiscoveryService) {
+  constructor(
+    capabilityService?: CapabilityDiscoveryService,
+    cliPaths?: Partial<CliPathsConfig> | null
+  ) {
     this.capabilityService = capabilityService || new CapabilityDiscoveryService();
+    this.cliPaths = cliPaths ?? null;
   }
 
   /**
@@ -137,7 +126,7 @@ export class PlatformHealthChecker {
    * @returns Promise that resolves to health check result
    */
   async checkPlatform(platform: Platform): Promise<HealthCheckResult> {
-    const command = getPlatformCommand(platform);
+    const command = resolvePlatformCommand(platform, this.cliPaths);
     
     let healthy = false;
     let message = '';

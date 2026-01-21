@@ -86,12 +86,19 @@ export class ClaudeRunner extends BasePlatformRunner {
 
     // Non-interactive mode (print mode) with prompt
     // Claude uses -p "prompt" format where prompt is passed as argument to -p
-    if (request.nonInteractive && request.prompt) {
-      args.push('-p', request.prompt);
-    } else if (request.nonInteractive) {
-      // If non-interactive but no prompt yet, just add -p flag
-      // Prompt will be written to stdin
+    if (request.nonInteractive) {
+      // IMPORTANT: OS command-line argument length limits (especially on Windows)
+      // can be exceeded by large prompts. To avoid this, omit the prompt argument
+      // when it's too large and rely on stdin (supported by Claude in -p mode).
+      const prompt = request.prompt ?? '';
+      const promptBytes = prompt ? Buffer.byteLength(prompt, 'utf8') : 0;
+      const MAX_PROMPT_ARG_BYTES = 30_000;
+
       args.push('-p');
+
+      if (prompt && promptBytes <= MAX_PROMPT_ARG_BYTES) {
+        args.push(prompt);
+      }
     }
 
     // Model selection

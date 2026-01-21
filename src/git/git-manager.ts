@@ -538,6 +538,80 @@ export class GitManager {
   }
 
   /**
+   * Gets a list of files changed in the working tree (tracked + untracked).
+   *
+   * This is a lightweight, name-only view intended for iteration bookkeeping.
+   * It intentionally does NOT throw: if git is unavailable or the directory is
+   * not a git repo, it returns an empty list so the execution loop can proceed.
+   *
+   * @returns Promise resolving to a unique list of file paths
+   */
+  async getDiffFiles(): Promise<string[]> {
+    try {
+      const files = new Set<string>();
+      const addLines = (stdout: string): void => {
+        for (const line of stdout.split('\n')) {
+          const trimmed = line.trim();
+          if (trimmed.length > 0) {
+            files.add(trimmed);
+          }
+        }
+      };
+
+      const inRepoResult = await this.run(['rev-parse', '--is-inside-work-tree']);
+      try {
+        await this.logAction('diff_files_check', inRepoResult, {
+          args: ['rev-parse', '--is-inside-work-tree'],
+        });
+      } catch {
+        // ignore logging errors
+      }
+
+      if (!inRepoResult.success || inRepoResult.stdout.trim() !== 'true') {
+        return [];
+      }
+
+      const unstagedResult = await this.run(['diff', '--name-only']);
+      try {
+        await this.logAction('diff_files_unstaged', unstagedResult, { args: ['diff', '--name-only'] });
+      } catch {
+        // ignore logging errors
+      }
+      if (unstagedResult.success) {
+        addLines(unstagedResult.stdout);
+      }
+
+      const stagedResult = await this.run(['diff', '--name-only', '--cached']);
+      try {
+        await this.logAction('diff_files_staged', stagedResult, {
+          args: ['diff', '--name-only', '--cached'],
+        });
+      } catch {
+        // ignore logging errors
+      }
+      if (stagedResult.success) {
+        addLines(stagedResult.stdout);
+      }
+
+      const untrackedResult = await this.run(['ls-files', '--others', '--exclude-standard']);
+      try {
+        await this.logAction('diff_files_untracked', untrackedResult, {
+          args: ['ls-files', '--others', '--exclude-standard'],
+        });
+      } catch {
+        // ignore logging errors
+      }
+      if (untrackedResult.success) {
+        addLines(untrackedResult.stdout);
+      }
+
+      return Array.from(files);
+    } catch {
+      return [];
+    }
+  }
+
+  /**
    * Gets the diff
    * @param staged - Whether to show staged diff (default: false, shows working directory diff)
    * @returns Promise resolving to diff string

@@ -10,6 +10,7 @@
 import { spawn, type ChildProcess } from 'child_process';
 import { BasePlatformRunner } from './base-runner.js';
 import { CapabilityDiscoveryService } from './capability-discovery.js';
+import { PLATFORM_COMMANDS } from './constants.js';
 import type {
   Platform,
   ExecutionRequest,
@@ -25,6 +26,8 @@ import type {
 export class CursorRunner extends BasePlatformRunner {
   readonly platform: Platform = 'cursor';
   private readonly command: string;
+  private modeFlagSupport: boolean | null = null;
+  private modeFlagSupportPromise: Promise<boolean> | null = null;
 
   /**
    * Creates a new CursorRunner instance.
@@ -36,7 +39,7 @@ export class CursorRunner extends BasePlatformRunner {
    */
   constructor(
     capabilityService: CapabilityDiscoveryService,
-    command: string = 'cursor-agent',
+    command: string = PLATFORM_COMMANDS.cursor,
     defaultTimeout: number = 300_000,
     hardTimeout: number = 1_800_000
   ) {
@@ -50,6 +53,10 @@ export class CursorRunner extends BasePlatformRunner {
    * Creates a fresh process (no session reuse) per REQUIREMENTS.md Section 26.1.
    */
   protected async spawn(request: ExecutionRequest): Promise<ChildProcess> {
+    if (request.planMode === true && this.modeFlagSupport === null) {
+      await this.ensureModeFlagSupport();
+    }
+
     const args = this.buildArgs(request);
 
     const proc = spawn(this.command, args, {
@@ -64,7 +71,7 @@ export class CursorRunner extends BasePlatformRunner {
 
     // Write prompt to stdin if provided
     if (request.prompt && proc.stdin) {
-      proc.stdin.write(request.prompt);
+      proc.stdin.write(this.buildPrompt(request));
       proc.stdin.end();
     }
 
@@ -87,6 +94,11 @@ export class CursorRunner extends BasePlatformRunner {
       args.push('-p');
     }
 
+    // Cursor plan mode (best-effort; requires CLI support)
+    if (request.planMode === true && this.modeFlagSupport === true) {
+      args.push('--mode=plan');
+    }
+
     // Model selection
     if (request.model) {
       args.push('--model', request.model);
@@ -96,6 +108,93 @@ export class CursorRunner extends BasePlatformRunner {
     // This matches the pattern from REQUIREMENTS.md Section 3.4.4
 
     return args;
+  }
+
+  private buildPrompt(request: ExecutionRequest): string {
+    if (request.planMode === true && this.modeFlagSupport === false) {
+      // Safe fallback when plan-mode CLI flag is unavailable:
+      // instruct the agent to plan first, then immediately execute.
+      const preamble = [
+        'PLAN FIRST (briefly), THEN EXECUTE:',
+        '- Start with a concise plan (max 10 bullets).',
+        '- Then immediately carry out the plan and make the required changes.',
+        '- Run the required tests/commands and report results.',
+        '',
+      ].join('\n');
+      return `${preamble}${request.prompt}`;
+    }
+
+    return request.prompt;
+  }
+
+  private async ensureModeFlagSupport(): Promise<boolean> {
+    if (this.modeFlagSupport !== null) {
+      return this.modeFlagSupport;
+    }
+    if (this.modeFlagSupportPromise) {
+      return this.modeFlagSupportPromise;
+    }
+
+    this.modeFlagSupportPromise = this.probeModeFlagSupport()
+      .catch(() => false)
+      .then((supported) => {
+        this.modeFlagSupport = supported;
+        return supported;
+      })
+      .finally(() => {
+        this.modeFlagSupportPromise = null;
+      });
+
+    return this.modeFlagSupportPromise;
+  }
+
+  private async probeModeFlagSupport(): Promise<boolean> {
+    const helpOutput = await this.getHelpOutput(5000);
+    const lower = helpOutput.toLowerCase();
+    // Best-effort detection: if help mentions --mode and plan, assume `--mode=plan` is supported.
+    return lower.includes('--mode') && lower.includes('plan');
+  }
+
+  private async getHelpOutput(timeoutMs: number): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const proc = spawn(this.command, ['--help'], {
+        stdio: ['ignore', 'pipe', 'pipe'],
+        env: { ...process.env, CURSOR_NON_INTERACTIVE: '1' },
+      });
+
+      let stdout = '';
+      let stderr = '';
+
+      const timer = setTimeout(() => {
+        try {
+          proc.kill('SIGKILL');
+        } catch {
+          // ignore
+        }
+        reject(new Error(`Cursor CLI --help timed out after ${timeoutMs}ms`));
+      }, timeoutMs);
+
+      proc.stdout?.on('data', (chunk: Buffer | string) => {
+        stdout += typeof chunk === 'string' ? chunk : chunk.toString();
+      });
+      proc.stderr?.on('data', (chunk: Buffer | string) => {
+        stderr += typeof chunk === 'string' ? chunk : chunk.toString();
+      });
+
+      proc.on('error', (error) => {
+        clearTimeout(timer);
+        reject(error);
+      });
+
+      proc.on('close', (code) => {
+        clearTimeout(timer);
+        if (code === 0) {
+          resolve(stdout || stderr);
+        } else {
+          reject(new Error(`Cursor CLI --help failed with code ${code}: ${stderr || stdout}`));
+        }
+      });
+    });
   }
 
   /**

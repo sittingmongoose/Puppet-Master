@@ -451,6 +451,69 @@ describe('VerificationIntegration', () => {
   });
 
   describe('runSubtaskVerification', () => {
+    it('should run a subtask gate and return GateResult', async () => {
+      const prd = createTestPRD();
+      prd.phases[0]!.tasks[0]!.subtasks[0]!.acceptanceCriteria = [
+        {
+          id: 'subtask-ac-1',
+          description: 'Subtask criterion',
+          type: 'regex',
+          target: 'subtask-pattern',
+        },
+      ];
+      prd.phases[0]!.tasks[0]!.subtasks[0]!.testPlan.commands = [
+        {
+          command: 'npm',
+          args: ['test'],
+          workingDirectory: '/test',
+          timeout: 5000,
+        },
+      ];
+
+      await prdManager.save(prd);
+      await tierStateManager.initialize();
+
+      const subtask = tierStateManager.getRoot().findDescendant('ST-001-001-001')!;
+      const runGateSpy = vi.spyOn(gateRunner, 'runGate');
+
+      const mockReport: GateReport = {
+        gateId: 'subtask-gate-ST-001-001-001',
+        timestamp: new Date().toISOString(),
+        verifiersRun: [],
+        overallPassed: true,
+        summary: 'Gate passed',
+      };
+
+      runGateSpy.mockResolvedValue(mockReport);
+
+      const result = await integration.runSubtaskGate(subtask);
+
+      expect(runGateSpy).toHaveBeenCalledWith(
+        'subtask-gate-ST-001-001-001',
+        expect.arrayContaining([
+          expect.objectContaining({
+            id: 'subtask-ac-1',
+            type: 'regex',
+            target: 'subtask-pattern',
+          }),
+          expect.objectContaining({
+            id: 'ST-001-001-001-command-0',
+            type: 'command',
+            target: 'npm',
+            options: expect.objectContaining({
+              args: ['test'],
+              cwd: '/test',
+              timeout: 5000,
+              expectedExitCode: 0,
+            }),
+          }),
+        ])
+      );
+
+      expect(result.passed).toBe(true);
+      expect(result.report).toEqual(mockReport);
+    });
+
     it('should run verification for subtask and return verifier results', async () => {
       const subtask = await createTierNode('ST-001-001-001');
       const runGateSpy = vi.spyOn(gateRunner, 'runGate');

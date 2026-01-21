@@ -41,6 +41,7 @@ export function getDefaultConfig(): PuppetMasterConfig {
       iteration: {
         platform: 'cursor',
         model: 'auto',
+        planMode: true,
         selfFix: false,
         maxIterations: 3,
         escalation: 'subtask',

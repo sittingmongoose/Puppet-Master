@@ -47,7 +47,7 @@ export interface Project {
  */
 export function createProjectsRoutes(orchestrator?: Orchestrator | null, baseDirectory?: string): Router {
   const router = createRouter();
-  const projectBaseDir = baseDirectory || process.cwd();
+  const projectBaseDir = baseDirectory ? resolve(baseDirectory) : process.cwd();
 
   /**
    * GET /api/projects

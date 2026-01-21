@@ -89,7 +89,10 @@ export class AgentsManager {
    */
   constructor(config: AgentsManagerConfig) {
     this.config = config;
-    this.projectRoot = config.projectRoot ?? process.cwd();
+    if (!config.projectRoot || config.projectRoot.trim().length === 0) {
+      throw new Error('AgentsManager requires an explicit projectRoot (P0-T18)');
+    }
+    this.projectRoot = config.projectRoot;
   }
 
   /**
@@ -101,7 +104,8 @@ export class AgentsManager {
     const contents: AgentsContent[] = [];
 
     // Always load root AGENTS.md
-    const rootContent = await this.loadFile(this.config.rootPath, 'root');
+    const rootPath = this.getFilePath('root');
+    const rootContent = await this.loadFile(rootPath, 'root');
     contents.push(rootContent);
 
     if (!this.config.multiLevelEnabled) {

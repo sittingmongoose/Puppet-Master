@@ -118,6 +118,11 @@ function validateTierConfig(value: unknown, path: string[]): asserts value is Ti
     throw new ConfigValidationError('tier.model must be a string', [...path, 'model']);
   }
 
+  // Validate planMode (optional)
+  if ('planMode' in v && typeof v.planMode !== 'boolean') {
+    throw new ConfigValidationError('tier.planMode must be a boolean', [...path, 'planMode']);
+  }
+
   // Validate selfFix
   if (typeof v.selfFix !== 'boolean') {
     throw new ConfigValidationError('tier.selfFix must be a boolean', [...path, 'selfFix']);

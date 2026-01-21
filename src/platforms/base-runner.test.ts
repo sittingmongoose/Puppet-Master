@@ -9,7 +9,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { EventEmitter } from 'events';
 import { ChildProcess } from 'child_process';
 import { Readable, Writable } from 'stream';
-import { BasePlatformRunner } from './base-runner.js';
+import { BasePlatformRunner, TimeoutError } from './base-runner.js';
 import { CapabilityDiscoveryService } from './capability-discovery.js';
 import type {
   Platform,
@@ -348,6 +348,191 @@ describe('BasePlatformRunner', () => {
       expect(result.output).toContain('Test output');
     });
 
+    it('should enforce soft timeout and terminate process (SIGTERM)', async () => {
+      class HangingSoftTimeoutRunner extends BasePlatformRunner {
+        readonly platform: Platform = 'cursor';
+        lastProc: ChildProcess | null = null;
+
+        protected async spawn(_request: ExecutionRequest): Promise<ChildProcess> {
+          const stdoutStream = new Readable({
+            read() {
+              // No-op
+            },
+          });
+          const stderrStream = new Readable({
+            read() {
+              // No-op
+            },
+          });
+
+          const emitter = new EventEmitter();
+
+          const mockProc = Object.assign(emitter, {
+            pid: 54321,
+            stdin: new Writable(),
+            stdout: stdoutStream,
+            stderr: stderrStream,
+            killed: false,
+            exitCode: null as number | null,
+            kill: vi.fn((signal?: string | number) => {
+              // Only terminate on SIGTERM (soft timeout case)
+              if (signal !== 'SIGTERM') {
+                return true;
+              }
+              (mockProc as { killed: boolean }).killed = true;
+              (mockProc as { exitCode: number | null }).exitCode = 143;
+              stdoutStream.push(null);
+              stderrStream.push(null);
+              emitter.emit('exit', 143, 'SIGTERM');
+              emitter.emit('close', 143, 'SIGTERM');
+              return true;
+            }),
+          }) as unknown as ChildProcess;
+
+          this.lastProc = mockProc;
+          return mockProc;
+        }
+
+        protected buildArgs(_request: ExecutionRequest): string[] {
+          return [];
+        }
+
+        protected parseOutput(output: string): ExecutionResult {
+          return {
+            success: true,
+            output,
+            exitCode: 0,
+            duration: 0,
+            processId: 0,
+          };
+        }
+      }
+
+      // Silence timeout logs to keep test output clean.
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+
+      const softRunner = new HangingSoftTimeoutRunner(capabilityService);
+      const request: ExecutionRequest = {
+        prompt: 'test prompt',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+        timeout: 25,
+        hardTimeout: 250,
+      };
+
+      let thrown: unknown;
+      try {
+        await softRunner.execute(request);
+      } catch (error) {
+        thrown = error;
+      }
+
+      expect(thrown).toBeInstanceOf(TimeoutError);
+      const timeoutError = thrown as TimeoutError;
+      expect(timeoutError.type).toBe('soft');
+      expect(timeoutError.elapsed).toBeGreaterThanOrEqual(0);
+
+      const proc = softRunner.lastProc as unknown as { kill?: { mock?: { calls: unknown[][] } } } | null;
+      expect(proc).not.toBeNull();
+      const signals = (proc?.kill?.mock?.calls ?? []).map((call) => call[0]);
+      expect(signals).toContain('SIGTERM');
+      expect(signals).not.toContain('SIGKILL');
+
+      warnSpy.mockRestore();
+    });
+
+    it('should enforce hard timeout and force kill process (SIGKILL) if SIGTERM does not stop it', async () => {
+      class HangingHardTimeoutRunner extends BasePlatformRunner {
+        readonly platform: Platform = 'cursor';
+        lastProc: ChildProcess | null = null;
+
+        protected async spawn(_request: ExecutionRequest): Promise<ChildProcess> {
+          const stdoutStream = new Readable({
+            read() {
+              // No-op
+            },
+          });
+          const stderrStream = new Readable({
+            read() {
+              // No-op
+            },
+          });
+
+          const emitter = new EventEmitter();
+
+          const mockProc = Object.assign(emitter, {
+            pid: 98765,
+            stdin: new Writable(),
+            stdout: stdoutStream,
+            stderr: stderrStream,
+            killed: false,
+            exitCode: null as number | null,
+            kill: vi.fn((signal?: string | number) => {
+              // Ignore SIGTERM; only terminate on SIGKILL (hard timeout case)
+              if (signal !== 'SIGKILL') {
+                return true;
+              }
+              (mockProc as { killed: boolean }).killed = true;
+              (mockProc as { exitCode: number | null }).exitCode = 137;
+              stdoutStream.push(null);
+              stderrStream.push(null);
+              emitter.emit('exit', 137, 'SIGKILL');
+              emitter.emit('close', 137, 'SIGKILL');
+              return true;
+            }),
+          }) as unknown as ChildProcess;
+
+          this.lastProc = mockProc;
+          return mockProc;
+        }
+
+        protected buildArgs(_request: ExecutionRequest): string[] {
+          return [];
+        }
+
+        protected parseOutput(output: string): ExecutionResult {
+          return {
+            success: true,
+            output,
+            exitCode: 0,
+            duration: 0,
+            processId: 0,
+          };
+        }
+      }
+
+      const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => undefined);
+
+      const hardRunner = new HangingHardTimeoutRunner(capabilityService);
+      const request: ExecutionRequest = {
+        prompt: 'test prompt',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+        timeout: 20,
+        hardTimeout: 40,
+      };
+
+      let thrown: unknown;
+      try {
+        await hardRunner.execute(request);
+      } catch (error) {
+        thrown = error;
+      }
+
+      expect(thrown).toBeInstanceOf(TimeoutError);
+      const timeoutError = thrown as TimeoutError;
+      expect(timeoutError.type).toBe('hard');
+
+      const proc = hardRunner.lastProc as unknown as { kill?: { mock?: { calls: unknown[][] } } } | null;
+      expect(proc).not.toBeNull();
+      const signals = (proc?.kill?.mock?.calls ?? []).map((call) => call[0]);
+      // Base runner will attempt SIGTERM first, then SIGKILL.
+      expect(signals).toContain('SIGTERM');
+      expect(signals).toContain('SIGKILL');
+
+      warnSpy.mockRestore();
+    });
+
     it('should emit output events during execution', async () => {
       const request: ExecutionRequest = {
         prompt: 'test prompt',
@@ -531,7 +716,7 @@ describe('BasePlatformRunner', () => {
   });
 
   describe('getTranscript', () => {
-    it('should return full transcript', async () => {
+    it('should return full transcript without stalling (even if streams already ended)', async () => {
       const request: ExecutionRequest = {
         prompt: 'test prompt',
         workingDirectory: '/tmp',
@@ -543,9 +728,36 @@ describe('BasePlatformRunner', () => {
       // Wait for process to complete
       await new Promise((resolve) => setTimeout(resolve, 100));
 
-      const transcript = await runner.getTranscript(runningProcess.pid);
+      const transcript = await Promise.race<string>([
+        runner.getTranscript(runningProcess.pid),
+        new Promise<string>((_resolve, reject) =>
+          setTimeout(() => reject(new Error('getTranscript timed out')), 200)
+        ),
+      ]);
 
       expect(typeof transcript).toBe('string');
+      expect(transcript).toContain('Test output');
+    });
+
+    it('should clean up captured transcript on cleanupAfterExecution', async () => {
+      const request: ExecutionRequest = {
+        prompt: 'test prompt',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+      };
+
+      const runningProcess = await runner.spawnFreshProcess(request);
+
+      // Give time for the mock process to emit output.
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
+      const beforeCleanup = await runner.getTranscript(runningProcess.pid);
+      expect(beforeCleanup).toContain('Test output');
+
+      await runner.cleanupAfterExecution(runningProcess.pid);
+
+      const afterCleanup = await runner.getTranscript(runningProcess.pid);
+      expect(afterCleanup).toBe('');
     });
   });
 

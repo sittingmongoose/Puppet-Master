@@ -1,12 +1,33 @@
 # RWM Puppet Master — addgravity.md
 
-> Plan: Add Google Antigravity (Gemini CLI) + GitHub Copilot CLI as supported platforms
+> Plan: Add Google Gemini CLI, Google Antigravity, and GitHub Copilot CLI as supported platforms
 > Status: Planning
 > Scope: Config + runners + model catalogs + plan-mode + discovery + doctor/install + GUI + docs + tests
+> BUILD_QUEUE-style execution plan: `BUILD_QUEUE_ADDGRAVITY.md`
 
 **Platforms being added:**
-- `antigravity` — Google's Gemini CLI (headless mode)
+- `gemini` — Google's Gemini CLI (terminal-first, fully headless)
+- `antigravity` — Google's Antigravity IDE agent (via `agy` / `antigravity` — headless support TBD)
 - `copilot` — GitHub Copilot CLI (programmatic mode)
+
+---
+
+## Important Distinctions
+
+| Component | Description | Binary | Headless Mode |
+|-----------|-------------|--------|---------------|
+| **Gemini Models** | Google's LLM models (gemini-2.5-pro, gemini-3-pro, etc.) | N/A | N/A |
+| **Gemini CLI** | Open-source terminal agent for Gemini models | `gemini` | ✅ Full (`-p`, `--output-format json`) |
+| **Antigravity** | Google's agent-first IDE with Agent Manager | `agy` (launcher) / `antigravity` (binary) | ⚠️ Limited (primarily GUI launcher) |
+
+**Key insight:** Gemini CLI and Antigravity are **separate products** that both use Gemini models:
+- **Gemini CLI** is terminal-first and explicitly designed for headless/scripted automation
+- **Antigravity** is IDE-first with an Agent Manager UI; the `agy` command is primarily a launcher
+
+Primary sources:
+- Gemini CLI repo + headless docs: https://github.com/google-gemini/gemini-cli and https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/cli/headless.md
+- Antigravity codelab (documents `agy` as an app launcher): https://codelabs.developers.google.com/getting-started-google-antigravity
+- Antigravity Agent docs (models, rules/workflows, skills): https://antigravity.google/assets/docs/agent/models.md, https://antigravity.google/assets/docs/agent/rules-workflows.md, https://antigravity.google/assets/docs/agent/skills.md
 
 ---
 
@@ -14,19 +35,26 @@
 
 ### What Google ships (relevant to Puppet Master)
 
-#### Google Antigravity (desktop “agentic development platform”)
+#### Google Antigravity (desktop "agentic development platform")
 - Product site: https://antigravity.google/
-- Official codelab (“Getting Started with Google Antigravity”): https://codelabs.developers.google.com/getting-started-google-antigravity
-  - During setup, Antigravity can install a command-line launcher named `agy` (“open Antigravity with `agy`”).
+- Official codelab ("Getting Started with Google Antigravity"): https://codelabs.developers.google.com/getting-started-google-antigravity
+  - During setup, Antigravity can install a command-line launcher named `agy` ("open Antigravity with `agy`").
 - Antigravity docs (examples):
-  - Models: Antigravity’s reasoning model selector includes Gemini + Claude + GPT-OSS options (availability depends on account/plan):
+  - Models: Antigravity's reasoning model selector includes Gemini + Claude + GPT-OSS options (availability depends on account/plan):
     - Source: https://antigravity.google/assets/docs/agent/models.md
   - Rules: global rules live at `~/.gemini/GEMINI.md` and workspace rules in `.agent/rules/`
     - Source: https://antigravity.google/assets/docs/agent/rules-workflows.md
+  - Workflows: saved as markdown and invoked in Agent via `/workflow-name`
+    - Source: https://antigravity.google/assets/docs/agent/rules-workflows.md
   - Skills: supports workspace skills in `<workspace-root>/.agent/skills/` and global skills in `~/.gemini/antigravity/global_skills/`
     - Source: https://antigravity.google/assets/docs/agent/skills.md
+- **Headless/Automation capabilities** (based on what is documented today):
+  - Antigravity supports Rules, Workflows, and Skills (file-based; workspace/global)
+  - The codelab documents `agy` as a command-line tool to open Antigravity (launcher behavior)
+  - No official docs located so far describing a prompt-in/prompt-out *headless* `agy` mode (flags like `-p`, `--prompt`, `--output-format`) — treat as **TBD until tested locally**
+  - **Possible binary naming mismatch:** some installs may provide an `antigravity` executable and use `agy` as a shim/alias; treat this as **unverified until AGY-T01 confirms** (and handle both in Doctor)
 
-**Key implication:** Antigravity’s `agy` launcher appears analogous to VS Code’s `code` launcher — useful for opening the GUI, but (based on official docs) not clearly documented as a headless, prompt-in/prompt-out CLI suitable for automated orchestration.
+**Key implication:** Treat `antigravity` as a distinct platform from `gemini`. Only implement an automated runner if `agy` (or another documented Antigravity CLI) supports non-interactive execution; otherwise implement a clear “unsupported in headless mode” path and use `gemini` for headless Google automation.
 
 #### Gemini CLI (terminal-first agent; headless-friendly)
 - Open-source repo: https://github.com/google-gemini/gemini-cli
@@ -58,29 +86,51 @@
 
 **Key implication:** Gemini CLI already matches Puppet Master’s integration shape (fresh process per iteration, non-interactive mode, structured output, configurable approval).
 
-### Recommendation (what "Anti Gravity CLI support" should mean)
+### Recommendations
 
-1. **Primary integration target (requested):** Add `platform: antigravity` to Puppet Master.
-   - **Default runner binary:** use Gemini CLI headless mode (command: `gemini`) because it has a documented non-interactive `-p/--prompt` interface and machine-readable output.
-2. **Secondary support:** Detect Antigravity's `agy` launcher in Doctor and provide guidance, but only implement an `agy`-based runner if we can validate a headless prompt-in/prompt-out mode with a stable output contract.
+#### 1. Gemini CLI (`platform: gemini`) — RECOMMENDED, READY
+- **Platform id:** `gemini`
+- **CLI binary:** `gemini`
+- **Headless flags:** `-p "..." --output-format json --approval-mode yolo`
+- **Status:** ✅ Fully documented headless mode, ready to implement
 
-### Open Decisions / Questions — Antigravity (must be resolved early)
+#### 2. Antigravity (`platform: antigravity`) — CONDITIONAL, NEEDS INVESTIGATION
+- **Platform id:** `antigravity`
+- **CLI binary:** `agy`
+- **Headless flags:** ⚠️ **Unknown** — `agy` appears to be a GUI launcher, not a headless runner
+- **Status:** 🔍 Requires investigation to determine if headless mode exists
 
-1. **Platform id(s)**
-   - Decision: add **`antigravity`** as the canonical Puppet Master platform id (per request).
-   - Open: optionally support `gemini` as an alias (nice for clarity, but adds branching/UX surface area).
-2. **Underlying CLI binary**
-   - Default: `gemini` (Gemini CLI).
-   - Optional: `agy` (Antigravity app launcher) only if it supports headless prompts and stable output.
-3. **Model catalog / "supported models"**
-   - Baseline: ship a curated set derived from Gemini CLI docs/schema + Antigravity docs.
-   - Open: can we reliably enumerate models via CLI (e.g., a list command), or must it be static + user-overridable?
-4. **Plan mode / TODO support**
-   - Gemini CLI supports `--approval-mode plan` but requires `experimental.plan: true` in settings and is documented as not fully mature.
-   - Decide: expose this as a Puppet Master config knob (recommended), and document prerequisites + caveats.
-5. **Output format**
-   - Recommended default: `--output-format json` (simplest + stable schema).
-   - Optional: `--output-format stream-json` for richer progress/events (more work, better GUI streaming).
+#### 3. Both platforms share Gemini models
+- Both can use: `gemini-2.5-pro`, `gemini-2.5-flash`, `gemini-3-pro`, etc.
+- Model selection is separate from platform selection
+
+### Open Decisions / Questions — Gemini CLI
+
+1. **Platform id:** `gemini` (confirmed)
+2. **Model catalog:** Ship curated set from Gemini CLI docs + allow user override
+3. **Plan mode:** Expose `--approval-mode plan` as config knob (requires `experimental.plan: true`)
+4. **Output format:** Default to `--output-format json` (simplest + stable)
+
+### Open Decisions / Questions — Antigravity
+
+1. **Platform id:** `antigravity` (confirmed)
+2. **Critical question:** Does `agy` support headless execution?
+   - Need to test: `agy --help`, `agy -p "..."`, etc.
+   - If NO headless mode exists, options:
+     a. Skip Antigravity platform for now
+     b. Implement as "launch Antigravity GUI with pre-loaded prompt" (not true headless)
+     c. Wait for Google to add headless support
+3. **Plan/TODO/Workflow support:** Antigravity has **Workflows** (invoked via `/workflow-name`) and file-based **Rules/Skills**. Decide what parts Puppet Master should surface in the GUI/CLI (model list suggestions, workflow templates, etc.) even if headless mode is unavailable.
+
+### Implementation Strategy
+
+| Phase | Platform | Priority | Headless Support |
+|-------|----------|----------|------------------|
+| 1 | `gemini` | P0 | ✅ Confirmed |
+| 1 | `copilot` | P0 | ✅ Confirmed |
+| 2 | `antigravity` | P1 | ⚠️ Requires investigation |
+
+**Recommendation:** Implement `gemini` and `copilot` first (both have confirmed headless support), then investigate `antigravity` headless capabilities before implementing.
 
 ---
 
@@ -89,26 +139,30 @@
 #### GitHub Copilot CLI (terminal-first agent; headless-friendly)
 - Product site: https://github.com/features/copilot/cli
 - Open-source repo: https://github.com/github/copilot-cli
-- Official docs: https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli
-- About page: https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli
+- Official docs:
+  - About: https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli
+  - Using: https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli
+  - Installing: https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-cli
 - Key behavior for Puppet Master:
   - Non-interactive prompt execution: `copilot -p "..."` / `copilot --prompt "..."`
     - Source: https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli
   - Tool approval controls:
-    - `--allow-all-tools` / `--yolo` — enable all permissions at once (headless mode)
-    - `--allow-tool 'shell(COMMAND)'` — allow specific shell commands
-    - `--allow-tool 'write'` — allow file modifications
-    - `--deny-tool` — block specific tools (takes precedence)
-    - Source: https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli
+    - `--allow-all-tools` — enable all tools without per-tool approval
+    - `--allow-tool ...` / `--deny-tool ...` — allow/deny specific tools (deny takes precedence)
+    - `--allow-all-paths` — disable path verification
+    - `--allow-all-urls`, `--allow-url <domain>` — disable/relax URL verification
+    - Sources:
+      - https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli
+      - https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli
+    - Version note: some releases also include `--allow-all` and `--yolo` aliases (see changelog: https://raw.githubusercontent.com/github/copilot-cli/main/changelog.md)
   - Output controls:
     - `--silent` — suppress stats output for scripting
     - `--stream off` — disable token-by-token streaming
+    - Source: https://raw.githubusercontent.com/github/copilot-cli/main/changelog.md
     - Note: No documented `--output-format json` equivalent; output is primarily text-based
   - Model selection:
-    - `--model <model>` flag or `/model` slash command
-    - Default: Claude Sonnet 4.5
-    - Available: Claude Sonnet 4, GPT-5, GPT-5 mini, GPT-4.1
-    - Source: https://github.blog/changelog/2026-01-14-github-copilot-cli-enhanced-agents-context-management-and-new-ways-to-install/
+    - `/model` slash command (interactive) — docs: https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli
+    - No `--model` flag is documented in GitHub Docs; treat programmatic model selection as **TBD** (verify via `copilot --help` and/or configuration files)
   - Custom agents:
     - `--agent <agent>` — invoke a custom agent non-interactively
   - Session management:
@@ -124,14 +178,14 @@
     - curl: `curl -fsSL https://gh.io/copilot-install | bash`
     - Source: https://github.com/github/copilot-cli
   - Authentication:
-    - `GH_TOKEN` or `GITHUB_TOKEN` environment variables
-    - `GITHUB_ASKPASS` for CI/CD credential managers
     - `/login` slash command for interactive auth
-    - Fine-grained PAT with "Copilot Requests" permission
+    - Fine-grained PAT with "Copilot Requests" permission via `GH_TOKEN` or `GITHUB_TOKEN` env vars
+    - Source: https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-cli
   - Special features:
     - `/delegate TASK` — hand off to async Copilot coding agent (creates branch + PR)
     - Auto-compaction at 95% token limit
     - Infinite sessions with compaction checkpoints
+    - Source: https://raw.githubusercontent.com/github/copilot-cli/main/changelog.md
 
 **Key implication:** Copilot CLI matches Puppet Master's integration shape (fresh process per iteration, non-interactive mode via `-p`, configurable approval via `--allow-all-tools`). Output parsing will be text-based rather than JSON.
 
@@ -139,7 +193,7 @@
 
 1. **Primary integration target:** Add `platform: copilot` to Puppet Master.
    - **Default runner binary:** `copilot`
-   - **Headless flags:** `-p "..." --allow-all-tools --silent`
+   - **Headless flags:** `-p "..." --allow-all-tools --allow-all-paths --silent --stream off`
 2. **Authentication:** Document GitHub OAuth or PAT setup; detect via `GH_TOKEN`/`GITHUB_TOKEN` in Doctor.
 
 ### Open Decisions / Questions — Copilot (must be resolved early)
@@ -151,11 +205,13 @@
    - Strategy: parse text output for `<ralph>COMPLETE</ralph>` / `<ralph>GUTTER</ralph>` signals (same as Claude/Cursor).
    - Consider: use `--silent` to reduce noise in output.
 3. **Approval mode mapping**
-   - Puppet Master's "yolo" tier config → `--allow-all-tools` (or `--yolo`)
+   - Puppet Master's "yolo" tier config → `--allow-all-tools` (fallback: `--allow-all` / `--yolo` if the installed Copilot CLI version uses those names)
    - Puppet Master's default → no approval flags (interactive prompts, but `-p` mode may still work)
-4. **Model catalog**
-   - Baseline: `claude-sonnet-4.5` (default), `claude-sonnet-4`, `gpt-5`, `gpt-5-mini`, `gpt-4.1`
-   - Note: Models are included with Copilot subscription; no separate billing.
+4. **Model catalog + selection strategy**
+   - The set of available models is shown inside Copilot CLI via `/model` and can vary by account/plan/region.
+   - Decide how Puppet Master should interpret `tiers.*.model` for `copilot`:
+     - Option A: Treat `model` as a **hint only** (document that selection happens inside Copilot)
+     - Option B: Attempt best-effort programmatic selection via configuration directory (`--config-dir`) if a stable config key exists (must be confirmed)
 5. **Subscription requirement**
    - Copilot CLI requires active GitHub Copilot subscription (Individual, Business, or Enterprise).
    - Doctor should detect and warn if not authenticated.
@@ -164,7 +220,7 @@
 
 ## Plan Overview
 
-This plan adds **two new platforms** to Puppet Master while preserving core invariants:
+This plan adds **three new platforms** to Puppet Master while preserving core invariants:
 - CLI-only interaction (no direct API calls)
 - Fresh process per iteration (no session reuse)
 - Strict TypeScript + Vitest test coverage
@@ -172,25 +228,25 @@ This plan adds **two new platforms** to Puppet Master while preserving core inva
 
 ### Platforms Summary
 
-| Platform ID | CLI Binary | Headless Flag | Approval Flag | Output Format |
-|-------------|------------|---------------|---------------|---------------|
-| `antigravity` | `gemini` | `-p "..."` | `--approval-mode yolo` | `--output-format json` |
-| `copilot` | `copilot` | `-p "..."` | `--allow-all-tools` | text (parse signals) |
+| Platform ID | CLI Binary | Headless Flag | Approval Flag | Output Format | Status |
+|-------------|------------|---------------|---------------|---------------|--------|
+| `gemini` | `gemini` | `-p "..."` | `--approval-mode yolo` | `--output-format json` | ✅ Ready |
+| `antigravity` | `agy` | ⚠️ TBD | ⚠️ TBD | ⚠️ TBD | 🔍 Investigate |
+| `copilot` | `copilot` | `-p "..."` | `--allow-all-tools` (+ `--allow-all-paths`) | text (parse signals) | ✅ Ready |
 
 ### Proposed task breakdown
 
-**Antigravity (AGY-Txx) tasks:**
+**Phase 1: Gemini CLI (GEM-Txx) — P0 Priority**
 | Group | Tasks | Can Start After |
 |-------|-------|-----------------|
-| Sequential | AGY-T01 | None |
-| Parallel Group A | AGY-T02, AGY-T03 | AGY-T01 |
-| Parallel Group B | AGY-T04, AGY-T05, AGY-T12 | AGY-T02 |
-| Sequential | AGY-T06 | AGY-T05 |
-| Parallel Group C | AGY-T07, AGY-T08 | AGY-T03 |
-| Parallel Group D | AGY-T09, AGY-T10 | AGY-T04 |
-| Sequential | AGY-T11 | AGY-T06–AGY-T10, AGY-T12 |
+| Sequential | GEM-T01 | None |
+| Parallel Group A | GEM-T02, GEM-T03 | GEM-T01 |
+| Parallel Group B | GEM-T04, GEM-T05 | GEM-T02 |
+| Sequential | GEM-T06 | GEM-T05 |
+| Parallel Group C | GEM-T07, GEM-T08 | GEM-T03 |
+| Sequential | GEM-T09 | GEM-T06–GEM-T08 |
 
-**Copilot (CPL-Txx) tasks:**
+**Phase 1: Copilot (CPL-Txx) — P0 Priority**
 | Group | Tasks | Can Start After |
 |-------|-------|-----------------|
 | Sequential | CPL-T01 | None |
@@ -200,46 +256,585 @@ This plan adds **two new platforms** to Puppet Master while preserving core inva
 | Parallel Group C | CPL-T07, CPL-T08 | CPL-T03 |
 | Sequential | CPL-T09 | CPL-T06–CPL-T08 |
 
-**Cross-platform tasks (can run after both platform types are added):**
+**Phase 2: Antigravity (AGY-Txx) — P1 Priority (pending headless investigation)**
+| Group | Tasks | Can Start After |
+|-------|-------|-----------------|
+| Sequential | AGY-T01 | None |
+| Parallel Group A | AGY-T02, AGY-T03 | AGY-T01 |
+| Parallel Group B | AGY-T04, AGY-T05 | AGY-T02 |
+| Sequential | AGY-T06 | AGY-T05 |
+| Parallel Group C | AGY-T07, AGY-T08 | AGY-T03 |
+| Sequential | AGY-T11 | AGY-T06–AGY-T08 |
+
+> **Note:** AGY tasks are contingent on confirming `agy` headless support. If no headless mode exists, AGY tasks may be deferred or redesigned.
+> **Note:** AGY-T09 (GUI), AGY-T10 (Docs), and AGY-T12 (Hardcoded refs) are superseded by cross-platform tasks `ALL-T01`, `ALL-T02`, and `ALL-T03` (which cover all added platforms).
+
+**Cross-platform tasks (run after all platform types are added):**
 | Task | Description | Can Start After |
 |------|-------------|-----------------|
-| BOTH-T01 | GUI updates for both platforms | AGY-T02, CPL-T02 |
-| BOTH-T02 | Documentation updates | AGY-T02, CPL-T02 |
-| BOTH-T03 | Hardcoded platform reference fixes | AGY-T02, CPL-T02 |
-| BOTH-T04 | Integration validation | AGY-T11, CPL-T09 |
+| ALL-T01 | GUI updates for all 3 platforms | GEM-T02, CPL-T02, AGY-T02 (if AGY proceeds) |
+| ALL-T02 | Documentation updates | GEM-T02, CPL-T02, AGY-T02 (if AGY proceeds) |
+| ALL-T03 | Hardcoded platform reference fixes | GEM-T02, CPL-T02, AGY-T02 (if AGY proceeds) |
+| ALL-T04 | Doctor + Install command updates | GEM-T08, CPL-T08, AGY-T08 (if AGY proceeds) |
+| ALL-T05 | CLI command updates (start, status, etc.) | GEM-T06, CPL-T06, AGY-T06 (if AGY proceeds) |
+| ALL-T06 | Integration validation | GEM-T09, CPL-T09, AGY-T11 (if AGY proceeds) |
 
 ---
 
-## AGY-T01: Confirm CLI Contract + Platform Naming
+# GEMINI CLI PLATFORM TASKS (GEM-Txx) — P0 Priority
+
+These tasks implement Gemini CLI support. Gemini CLI has confirmed headless support and is ready to implement.
+
+---
+
+## GEM-T01: Confirm CLI Contract + Platform Naming
 
 ### Title
-Decide what “Antigravity CLI” means in Puppet Master
+Lock in Gemini CLI platform contract
 
 ### Goal
-Lock in the supported Google CLI(s), platform id(s), and required flags/output contract.
+Confirm the Gemini CLI headless behavior, platform id, and required flags/output contract.
 
 ### Depends on
 - none
 
 ### Read first
 - `REQUIREMENTS.md` Section 3–4 (platform table + no-APIs constraint)
-- Gemini CLI headless docs (output schema + event types):
+- Gemini CLI headless docs:
   - https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/cli/headless.md
-- Antigravity codelab note about `agy` launcher:
-  - https://codelabs.developers.google.com/getting-started-google-antigravity
+  - https://github.com/google-gemini/gemini-cli
 
-### Deliverables (write down decisions in this file)
-- Canonical platform id: `antigravity` (and whether to also support alias `gemini`)
-- Underlying runner binary mapping:
-  - default `cliPaths.antigravity = "gemini"`
-  - optional `agy` runner only if validated as headless-capable
-- Output format default: `json` vs `stream-json`
-- Approval mode mapping (including Plan Mode):
-  - `auto_edit` vs `yolo` vs `plan`
-  - document `experimental.plan: true` prerequisite for `plan`
-- Supported models strategy:
-  - baseline curated list + “Auto” recommendation
-  - whether to attempt runtime enumeration (if possible) or keep user-overridable
+### Deliverables (record decisions here)
+- Canonical platform id: `gemini`
+- CLI binary: `gemini`
+- Headless flags: `-p "..." --output-format json --approval-mode yolo`
+- Output parsing: JSON with `{ response, stats, error? }` schema
+- Approval mode mapping:
+  - `--approval-mode yolo` for full automation
+  - `--approval-mode auto_edit` for edit-only automation
+  - `--approval-mode plan` for read-only (experimental)
+- Supported models:
+  - `gemini-2.5-pro`, `gemini-2.5-flash`, `gemini-2.5-flash-lite`
+  - `gemini-3-pro-preview`, `gemini-3-flash-preview` (with preview features enabled)
+  - "Auto" for automatic model selection
+
+### Acceptance criteria
+- [ ] Platform id decision recorded
+- [ ] CLI binary and flags recorded
+- [ ] Output format + parsing contract recorded
+- [ ] Approval behavior mapped to Puppet Master tier config
+
+### Task status log
+```
+Status: PENDING
+Date:
+Summary of changes:
+Files changed:
+Commands run + results:
+If FAIL - where stuck + exact error snippets + what remains:
+```
+
+---
+
+## GEM-T02: Types + Config Schema Updates
+
+### Title
+Add Gemini platform to config + type system
+
+### Goal
+Extend the canonical `Platform` type and all config surfaces so Gemini can be selected per tier.
+
+### Depends on
+- GEM-T01
+
+### Read first
+- `src/types/config.ts` (Platform, CliPathsConfig, budgets)
+- `src/config/config-schema.ts` (validateConfig, isPlatform, cliPaths validation)
+- `src/config/default-config.ts`
+
+### Files to create/modify
+- `src/types/config.ts`
+- `src/config/config-schema.ts`
+- `src/config/default-config.ts`
+- tests adjacent to the above
+
+### Implementation notes
+- Add `gemini` to the canonical `Platform` union
+- Add `cliPaths.gemini: string` (default: `gemini`)
+- Add `budgets.gemini` alongside existing budgets
+- Ensure fallbackPlatform enums include `gemini`
+
+### Acceptance criteria
+- [ ] New platform appears in `Platform` union
+- [ ] `cliPaths` supports new platform key
+- [ ] `budgets` supports new platform key
+- [ ] Config schema validation accepts new platform
+- [ ] `npm run typecheck` passes
+- [ ] Targeted config tests pass
+
+### Tests to run
+```bash
+npm run typecheck
+npm test -- src/config
+```
+
+### Task status log
+```
+Status: PENDING
+Date:
+Summary of changes:
+Files changed:
+Commands run + results:
+If FAIL - where stuck + exact error snippets + what remains:
+```
+
+---
+
+## GEM-T03: Implement Gemini Platform Runner
+
+### Title
+Add new platform runner using Gemini CLI headless mode (platform id: `gemini`)
+
+### Goal
+Implement a new `BasePlatformRunner` subclass that executes prompts via Gemini CLI headless mode.
+
+### Depends on
+- GEM-T01
+
+### Read first
+- `src/platforms/base-runner.ts`
+- `src/platforms/codex-runner.ts` (pattern: JSON output parsing)
+- Gemini CLI headless docs
+
+### Files to create/modify
+- `src/platforms/gemini-runner.ts` (NEW FILE)
+- `src/platforms/index.ts` (export)
+- `src/platforms/gemini-runner.test.ts` (NEW FILE)
+
+### Implementation notes
+- Use `-p "..."` for non-interactive prompt execution
+- Use `--output-format json` for machine-readable output
+- Use `--approval-mode yolo` for headless mode
+- Use `--model <model>` for model selection
+- Parse JSON output for response/stats/error
+- Also detect `<ralph>COMPLETE</ralph>` / `<ralph>GUTTER</ralph>` signals in response text
+- Command path: resolve from `cliPaths.gemini`
+- Fresh process invariant: new process per iteration
+
+### Acceptance criteria
+- [ ] Runner spawns the configured Gemini binary with `-p`
+- [ ] JSON output is parsed correctly
+- [ ] Completion signals are detected from response text
+- [ ] Model selection works via `--model` flag
+- [ ] `npm run typecheck` passes
+- [ ] `npm test -- src/platforms -t "gemini"` passes
+
+### Tests to run
+```bash
+npm run typecheck
+npm test -- src/platforms -t "gemini"
+```
+
+### Task status log
+```
+Status: PENDING
+Date:
+Summary of changes:
+Files changed:
+Commands run + results:
+If FAIL - where stuck + exact error snippets + what remains:
+```
+
+---
+
+## GEM-T04: Supported Models
+
+### Title
+Load Gemini supported models
+
+### Goal
+Provide a reliable source of truth for which models are supported for the `gemini` platform.
+
+### Depends on
+- GEM-T02 (types + config)
+- GEM-T03 (runner contract)
+
+### Read first
+- `STATE_FILES.md` Section 4 (Capability Discovery Files)
+- Gemini CLI model docs:
+  - https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/cli/model.md
+  - https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/get-started/gemini-3.md
+
+### Files to create/modify
+- `src/platforms/gemini-models.ts` (NEW: curated baseline models)
+- `src/platforms/index.ts` (export)
+- Tests adjacent to the above
+
+### Implementation notes
+- Baseline model list:
+  - `gemini-2.5-pro` (recommended)
+  - `gemini-2.5-flash`
+  - `gemini-2.5-flash-lite`
+  - `gemini-3-pro-preview` (requires preview features)
+  - `gemini-3-flash-preview` (requires preview features)
+  - `Auto` (automatic model selection)
+- Keep list user-overridable in config
+
+### Acceptance criteria
+- [ ] Gemini model list is available from backend code
+- [ ] GUI can fetch model suggestions via API endpoint
+- [ ] `npm run typecheck` passes
+- [ ] Targeted tests pass
+
+### Tests to run
+```bash
+npm run typecheck
+npm test -- src/platforms -t "gemini"
+```
+
+### Task status log
+```
+Status: PENDING
+Date:
+Summary of changes:
+Files changed:
+Commands run + results:
+If FAIL - where stuck + exact error snippets + what remains:
+```
+
+---
+
+## GEM-T05: Platform Registry + Factory Wiring
+
+### Title
+Register Gemini runner in platform registry
+
+### Goal
+Make the Gemini platform selectable from config and instantiable at runtime.
+
+### Depends on
+- GEM-T02
+- GEM-T03
+
+### Read first
+- `src/platforms/registry.ts`
+- `src/platforms/index.ts`
+
+### Files to create/modify
+- `src/platforms/registry.ts`
+- `src/platforms/index.ts`
+- `src/platforms/registry.test.ts`
+
+### Implementation notes
+- Use `config.cliPaths.gemini` when creating the runner
+
+### Acceptance criteria
+- [ ] Registry `createDefault()` registers GeminiRunner
+- [ ] `PlatformRegistry.getAvailable()` includes gemini when configured
+- [ ] `npm test -- src/platforms/registry.test.ts` passes
+
+### Tests to run
+```bash
+npm test -- src/platforms/registry.test.ts
+```
+
+### Task status log
+```
+Status: PENDING
+Date:
+Summary of changes:
+Files changed:
+Commands run + results:
+If FAIL - where stuck + exact error snippets + what remains:
+```
+
+---
+
+## GEM-T06: Core Spawn/Execution Wiring
+
+### Title
+Ensure core execution paths support Gemini platform end-to-end
+
+### Goal
+Update any platform `switch` statements / mappings so Gemini works everywhere.
+
+### Depends on
+- GEM-T02
+- GEM-T05
+
+### Read first
+- `src/core/fresh-spawn.ts` (platform → command mapping)
+- `src/core/execution-engine.ts`
+- `src/core/orchestrator.ts`
+
+### Files to create/modify
+- `src/core/fresh-spawn.ts`
+- Any additional file found via search for platform switches
+- Corresponding tests
+
+### Implementation notes
+- Add switch case:
+  ```typescript
+  case 'gemini':
+    return {
+      command: 'gemini',
+      args: ['-p', request.prompt, '--output-format', 'json', '--approval-mode', 'yolo']
+    };
+  ```
+- Ensure exhaustive-switch TypeScript checking passes
+
+### Acceptance criteria
+- [ ] No exhaustive-switch TypeScript errors after adding the platform
+- [ ] Gemini can be selected in tier config without runtime crashes
+- [ ] `npm run typecheck` passes
+- [ ] Targeted core tests pass
+
+### Tests to run
+```bash
+npm run typecheck
+npm test -- src/core
+```
+
+### Task status log
+```
+Status: PENDING
+Date:
+Summary of changes:
+Files changed:
+Commands run + results:
+If FAIL - where stuck + exact error snippets + what remains:
+```
+
+---
+
+## GEM-T07: Capability Discovery + Health Checks
+
+### Title
+Probe Gemini CLI capabilities
+
+### Goal
+Extend capability discovery to correctly identify Gemini CLI features and record them in `.puppet-master/capabilities/`.
+
+### Depends on
+- GEM-T02
+- GEM-T03
+- GEM-T04
+
+### Read first
+- `STATE_FILES.md` Section 4 (capability cache schema)
+- `src/platforms/capability-discovery.ts`
+- `src/platforms/health-check.ts`
+
+### Files to create/modify
+- `src/platforms/capability-discovery.ts`
+- `src/platforms/health-check.ts`
+- Related tests under `src/platforms/`
+
+### Implementation notes
+- Version probe: run `${cliPaths.gemini} --version`
+- Basic smoke probe: `${cliPaths.gemini} -p "ping" --output-format json`
+- Capabilities to set:
+  - nonInteractive: true
+  - modelSelection: true
+  - streaming: 'full' (supports stream-json)
+  - sessionResume: false (Puppet Master disallows)
+  - mcpSupport: true
+- Detect auth via Google OAuth / API key environment variables
+
+### Acceptance criteria
+- [ ] Discovery produces a stable capabilities record for gemini
+- [ ] Health check distinguishes missing binary vs missing auth
+- [ ] `npm test -- src/platforms -t "capability"` passes
+
+### Tests to run
+```bash
+npm test -- src/platforms -t "capability"
+```
+
+### Task status log
+```
+Status: PENDING
+Date:
+Summary of changes:
+Files changed:
+Commands run + results:
+If FAIL - where stuck + exact error snippets + what remains:
+```
+
+---
+
+## GEM-T08: Doctor + Install Checks
+
+### Title
+Add Doctor + Install checks for Gemini CLI
+
+### Goal
+Surface actionable setup guidance from `puppet-master doctor` and `puppet-master install`.
+
+### Depends on
+- GEM-T02
+- GEM-T03
+- GEM-T04
+
+### Read first
+- `src/cli/commands/doctor.ts`
+- `src/cli/commands/install.ts`
+- `src/doctor/checks/cli-tools.ts`
+- `src/doctor/installation-manager.ts`
+
+### Files to create/modify
+- `src/doctor/checks/cli-tools.ts` (add `GeminiCliCheck`)
+- `src/cli/commands/doctor.ts` (register new check)
+- `src/cli/commands/install.ts` (register new check + tool name mapping)
+- `src/doctor/installation-manager.ts` (install commands)
+- Tests in `src/cli/commands/doctor.test.ts` and/or `src/doctor/*`
+
+### Implementation notes
+- Install commands:
+  - npm: `npm install -g @google/gemini-cli`
+  - Homebrew: `brew install gemini-cli`
+- Auth guidance (Doctor output):
+  - "Run `gemini` to authenticate with Google"
+  - Or set `GOOGLE_API_KEY` / configure Vertex AI credentials
+
+### Acceptance criteria
+- [ ] `puppet-master doctor` reports Gemini CLI as installed/missing with clear fix instructions
+- [ ] Doctor distinguishes missing binary vs missing auth
+- [ ] `puppet-master install --all` includes Gemini CLI installation
+- [ ] `npm test -- src/cli/commands/doctor.test.ts` passes
+
+### Tests to run
+```bash
+npm test -- src/cli/commands/doctor.test.ts
+npm test -- src/cli/commands/install.test.ts
+```
+
+### Task status log
+```
+Status: PENDING
+Date:
+Summary of changes:
+Files changed:
+Commands run + results:
+If FAIL - where stuck + exact error snippets + what remains:
+```
+
+---
+
+## GEM-T09: Validation Gate (Integration-Level)
+
+### Title
+Run end-to-end validation for Gemini CLI platform integration
+
+### Goal
+Prove that selecting Gemini in config can run at least one iteration end-to-end in a real workspace.
+
+### Depends on
+- GEM-T05–GEM-T08
+
+### Evidence to record
+- `.puppet-master/capabilities/gemini.json`
+- `.puppet-master/evidence/test-logs/` output from the run
+
+### Manual smoke test recipe (local machine)
+1. Install Gemini CLI and authenticate:
+   - `npm install -g @google/gemini-cli`
+   - `gemini` → authenticate with Google
+2. Configure Puppet Master tier(s) to use `platform: gemini`.
+3. Run a small, non-destructive subtask and confirm:
+   - fresh process
+   - JSON output parsing
+   - completion signal detection
+   - filesChanged detection + gating behavior
+
+### Acceptance criteria
+- [ ] `npm run typecheck` passes
+- [ ] `npm test` passes (or at least `npm test -- src/platforms` and core subset)
+- [ ] Smoke test run completes and produces evidence artifacts
+
+### Commands to run
+```bash
+npm run typecheck
+npm test
+```
+
+### Task status log
+```
+Status: PENDING
+Date:
+Summary of changes:
+Files changed:
+Commands run + results:
+If FAIL - where stuck + exact error snippets + what remains:
+```
+
+---
+
+# ANTIGRAVITY PLATFORM TASKS (AGY-Txx) — P1 Priority
+
+> **⚠️ IMPORTANT:** Antigravity is a **required** platform, but the implementation approach depends on AGY-T01 investigation.
+> - If `agy` supports headless mode → implement directly using `agy` binary
+> - If `agy` does NOT support headless mode → implement a launcher-only + fail-fast runner (no hanging prompts) and document that `gemini` is the headless Google runner
+
+---
+
+## AGY-T01: Investigate Antigravity CLI Headless Capabilities
+
+### Title
+Investigate whether Antigravity CLI (`agy`) supports headless/non-interactive mode
+
+### Goal
+Determine if `agy` can be used for automated orchestration like other platforms, or if it's purely a GUI launcher.
+
+### Depends on
+- none
+
+### ⚠️ CRITICAL INVESTIGATION TASK
+This task is a **blocker** for all other AGY tasks. The outcome determines whether Antigravity can be a Puppet Master platform.
+
+### Investigation steps
+1. Install Antigravity and locate the `agy` binary
+2. Confirm actual executable name(s) on the machine:
+   - `command -v agy` / `which agy`
+   - `command -v antigravity` / `which antigravity`
+   - Record whether `agy` is a wrapper/shim for `antigravity`
+3. Run `agy --help` (and `antigravity --help` if present) and document all available flags/subcommands
+3. Test potential headless invocations:
+   - `agy -p "test prompt"` or `agy --prompt "test prompt"`
+   - `agy --headless` or `agy --non-interactive`
+   - `agy exec "test prompt"` or similar subcommand
+4. Check Antigravity's config files for headless/scripting options
+5. Search for undocumented CLI flags in Antigravity source code (if accessible)
+6. Check Antigravity community forums/issues for headless mode requests
+
+### Read first
+- Antigravity product site: https://antigravity.google/
+- Antigravity codelab: https://codelabs.developers.google.com/getting-started-google-antigravity
+- Antigravity docs on Skills: https://antigravity.google/assets/docs/agent/skills.md
+
+### Possible outcomes
+
+**Outcome A: Headless mode exists (`agy -p "..."` or similar)**
+- Document the flags and output format
+- Proceed with AGY-T02 through AGY-T11 using `agy` binary
+- Platform id: `antigravity`, CLI binary: `agy`
+
+**Outcome B: Headless mode does NOT exist**
+- Implement a safe, explicit behavior that does **not** pretend to be headless automation:
+  1. **Option B1 - Launcher-only runner:** Runner invokes `agy` to open Antigravity in the correct workspace (best-effort), then returns a clear “manual step required / headless unsupported” result without hanging.
+  2. **Option B2 - Fail-fast runner:** Runner immediately returns an actionable error explaining that Antigravity has no documented headless CLI mode yet and the user should use `platform: gemini` for headless automation.
+  3. **Option B3 - Future wrapper:** If Google ships an official headless Antigravity CLI contract later, implement it as a proper runner (no UI automation hacks).
+
+### Deliverables
+- Investigation report documenting findings
+- Decision: Direct `agy` headless implementation OR launcher-only / fail-fast behavior (if no headless mode exists)
+- Document CLI contract for `agy`:
+  - Any documented prompt-in/prompt-out flags/subcommands (or confirmation they don’t exist)
+  - Output format (text vs structured) if headless mode exists
+  - Whether model selection is possible from CLI (or UI-only)
+- Supported models strategy for UX:
+  - baseline *suggested* list sourced from Antigravity docs (Reasoning Model list)
+  - keep user-overridable (treat as suggestions, not an enforcement guarantee)
 
 ### Acceptance criteria
 - [ ] Platform id decision recorded (and rationale)
@@ -262,7 +857,7 @@ If FAIL - where stuck + exact error snippets + what remains:
 ## AGY-T02: Types + Config Schema Updates
 
 ### Title
-Add Google platform to config + type system
+Add Antigravity platform to config + type system
 
 ### Goal
 Extend the canonical `Platform` type and all config surfaces so the new platform can be selected per tier.
@@ -286,7 +881,7 @@ Extend the canonical `Platform` type and all config surfaces so the new platform
 
 ### Implementation notes
 - Add `antigravity` to the canonical `Platform` union.
-- Add `cliPaths.antigravity: string` (default should typically be `gemini`).
+- Add `cliPaths.antigravity: string` (default: `agy`), but ensure Doctor docs mention `antigravity` as an alternate executable name (if AGY-T01 confirms).
 - Add `budgets.antigravity` alongside existing `budgets.cursor|codex|claude` so quota/cooldown and GUI budget UI can track it.
 - Ensure any “fallbackPlatform” enums/selectors include `antigravity`.
 - Ensure schema validation error messages enumerate the new platform name(s).
@@ -318,49 +913,50 @@ If FAIL - where stuck + exact error snippets + what remains:
 
 ---
 
-## AGY-T03: Implement Antigravity Platform Runner (Gemini CLI headless)
+## AGY-T03: Implement Antigravity Platform Runner (`agy`)
 
 ### Title
-Add new platform runner using Gemini CLI headless mode (platform id: `antigravity`)
+Add new platform runner using Antigravity launcher/CLI (`agy`) (platform id: `antigravity`)
 
 ### Goal
-Implement a new `BasePlatformRunner` subclass that executes prompts via Gemini CLI headless mode and returns output reliably for Puppet Master.
+Implement a new `BasePlatformRunner` subclass for Antigravity that:
+- runs a documented headless prompt mode **if it exists**, OR
+- fails fast (optionally launching the GUI) **if no headless mode exists**
 
 ### Depends on
 - AGY-T01
 
 ### Read first
 - `src/platforms/base-runner.ts`
-- `src/platforms/claude-runner.ts` (pattern: -p prompt, parse signals)
-- Gemini CLI headless output schema:
-  - https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/cli/headless.md
-- Gemini CLI approval flags:
-  - https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/get-started/configuration.md
+- `src/platforms/claude-runner.ts` (pattern: prompt → parse signals)
+- Antigravity codelab (documents `agy` as a launcher): https://codelabs.developers.google.com/getting-started-google-antigravity
 
 ### Files to create/modify
 - `src/platforms/antigravity-runner.ts`
 - `src/platforms/index.ts` (export)
-- `src/platforms/<runner>.test.ts`
+- `src/platforms/antigravity-runner.test.ts`
 
 ### Implementation notes
-- Prefer `--output-format json` initially:
-  - Parse JSON response, pull `response` into `ExecutionResult.output`.
-  - If `.error` exists: mark `success=false` and populate `error`.
-- Support model selection:
-  - `-m <model>` / `--model <model>`
-- Support Gemini CLI approval modes (including Plan Mode):
-  - default: `--approval-mode auto_edit`
-  - allow config override to `yolo` and `plan` (with docs noting `experimental.plan: true` prerequisite)
 - Command path:
-  - resolve from `cliPaths.antigravity` so users can point to `gemini` (default) or another wrapper binary.
+  - resolve from `cliPaths.antigravity` (default: `agy`)
+- If AGY-T01 confirms a headless prompt mode exists:
+  - implement the discovered invocation (flags/subcommand) and capture stdout/stderr
+  - parse output (assume text unless a structured mode is documented)
+  - detect `<ralph>COMPLETE</ralph>` / `<ralph>GUTTER</ralph>` in output
+  - map tier config:
+    - model selection only if the CLI supports it
+    - plan/todo/workflow-only modes only if the CLI supports them
+- If AGY-T01 confirms no headless mode exists:
+  - implement a **fail-fast** runner that returns `success=false` with an actionable message (and never blocks waiting for UI)
+  - optional: best-effort `agy` launch of the workspace as a convenience (still return “manual required”)
 - Fresh process invariant:
-  - Do NOT use `--resume`
-  - Do NOT rely on persistent sessions
+  - do NOT use any session reuse flags
 
 ### Acceptance criteria
-- [ ] Runner spawns the configured Antigravity binary with `-p` and `--output-format json`
-- [ ] Completion signals `<ralph>COMPLETE</ralph>` / `<ralph>GUTTER</ralph>` are detected from response text
-- [ ] JSON error responses become `ExecutionResult.error`
+- [ ] Runner uses `cliPaths.antigravity` to spawn the Antigravity CLI/launcher
+- [ ] Runner never hangs waiting for interactive input
+- [ ] If headless mode exists: output is captured and `<ralph>` signals are detected
+- [ ] If headless mode does not exist: runner returns a clear, actionable error (suggesting `platform: gemini` for headless automation)
 - [ ] `npm run typecheck` passes
 - [ ] `npm test -- src/platforms -t "antigravity"` passes
 
@@ -382,52 +978,52 @@ If FAIL - where stuck + exact error snippets + what remains:
 
 ---
 
-## AGY-T04: Supported Models + Plan Mode Surfacing
+## AGY-T04: Supported Models + Workflow/Plan/TODO Surfacing
 
 ### Title
-Load Antigravity/Gemini supported models and expose Plan Mode (if available)
+Load Antigravity supported models and surface Workflows (and any plan/todo modes if present)
 
 ### Goal
-Provide a reliable, user-visible source of truth for:
-- which models are “supported” for the `antigravity` platform (baseline list + user override)
-- whether Plan Mode can be used (Gemini CLI `--approval-mode plan` + settings prerequisite)
+Provide a user-visible source of truth for:
+- Antigravity **Reasoning Model** options (for GUI suggestions)
+- Antigravity **Workflows** (`/workflow-name`) and where Rules/Workflows/Skills live
+- Any plan/todo/headless features discovered in AGY-T01 (if any)
 
 ### Depends on
 - AGY-T02 (types + config)
-- AGY-T03 (runner contract)
+- AGY-T03 (runner contract) — only for tying “model selection works” to the real CLI contract
 
 ### Read first
-- `STATE_FILES.md` Section 4 (Capability Discovery Files), especially `available_models`
-- Antigravity reasoning model list:
-  - https://antigravity.google/assets/docs/agent/models.md
-- Gemini CLI model selection + preview features:
-  - https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/cli/model.md
-  - https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/get-started/gemini-3.md
-  - https://raw.githubusercontent.com/google-gemini/gemini-cli/main/schemas/settings.schema.json
-- Gemini CLI planning toggle + approval mode:
-  - https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/get-started/configuration.md
+- `STATE_FILES.md` Section 4 (Capability Discovery Files), especially `available_models` (if we choose to surface model lists there)
+- Antigravity model list: https://antigravity.google/assets/docs/agent/models.md
+- Antigravity rules/workflows: https://antigravity.google/assets/docs/agent/rules-workflows.md
+- Antigravity skills: https://antigravity.google/assets/docs/agent/skills.md
 
 ### Files to create/modify
-- `src/platforms/antigravity-models.ts` (new: curated baseline models + helpers)
+- `src/platforms/antigravity-models.ts` (new: curated *suggested* model names + helpers)
 - `src/platforms/index.ts` (export)
-- `src/gui/routes/config.ts` (add endpoint to surface model list to GUI)
+- `src/gui/routes/config.ts` (add endpoint to surface model list + notes to GUI)
 - Tests adjacent to the above (Vitest)
 
 ### Implementation notes
-- Baseline model list (seeded from Gemini CLI docs/schema; keep user-overridable):
-  - `auto`
-  - `gemini-2.5-pro`, `gemini-2.5-flash`, `gemini-2.5-flash-lite`
-  - `gemini-3-pro-preview`, `gemini-3-flash-preview` (requires preview features)
-- Don’t hard-fail if the runtime environment doesn’t have those models; treat the list as “suggested” unless discovery proves otherwise.
-- Plan Mode:
-  - Support passing `--approval-mode plan` in the runner when configured.
-  - Document the prerequisite: `experimental.plan: true` in Gemini CLI settings (user-managed).
-- Prefer exposing the model list to GUI via a simple endpoint (e.g., `GET /api/config/models`) returning `{ platforms: { antigravity: string[] } }`.
+- Baseline model list should be sourced from Antigravity docs “Reasoning Model” section; treat as **display names/suggestions**, not strict ids:
+  - `Gemini 3 Pro (high)`
+  - `Gemini 3 Pro (low)`
+  - `Gemini 3 Flash`
+  - `Claude Sonnet 4.5`
+  - `Claude Sonnet 4.5 (thinking)`
+  - `Claude Opus 4.5 (thinking)`
+  - `GPT-OSS`
+- Document in UI that model selection may be UI-only unless AGY-T01 confirms a CLI flag/subcommand.
+- Workflows:
+  - Antigravity supports workflows invoked via `/workflow-name` and stored as markdown (see rules/workflows docs).
+  - If desired, add a follow-on CLI helper later to generate a `.agent` workflow template from a Puppet Master task (out of scope for initial platform wiring unless explicitly requested).
+- Prefer exposing model suggestions to GUI via a simple endpoint (e.g., `GET /api/config/models`) returning `{ platforms: { antigravity: string[] } }`.
 
 ### Acceptance criteria
 - [ ] Antigravity model list is available from backend code (single source of truth)
 - [ ] GUI can fetch model suggestions via API endpoint
-- [ ] Plan Mode prerequisites and limitations are explicitly documented in the plan and later in README
+- [ ] Docs explain that Antigravity model selection may be UI-only unless headless CLI support exists
 - [ ] `npm run typecheck` passes
 - [ ] Targeted tests pass
 
@@ -550,7 +1146,7 @@ If FAIL - where stuck + exact error snippets + what remains:
 ## AGY-T07: Capability Discovery + Health Checks
 
 ### Title
-Probe Antigravity (Gemini CLI) capabilities (version/output/approval/mcp/models)
+Probe Antigravity (`agy`) capabilities (version/help/headless flag discovery)
 
 ### Goal
 Extend capability discovery to correctly identify the new platform’s features and record them in `.puppet-master/capabilities/`.
@@ -564,9 +1160,7 @@ Extend capability discovery to correctly identify the new platform’s features 
 - `STATE_FILES.md` Section 4 (capability cache schema, including `available_models`)
 - `src/platforms/capability-discovery.ts`
 - `src/platforms/health-check.ts`
-- Gemini CLI `--version` and headless docs:
-  - https://github.com/google-gemini/gemini-cli
-  - https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/cli/headless.md
+- Antigravity codelab (documents `agy` as a launcher): https://codelabs.developers.google.com/getting-started-google-antigravity
 
 ### Files to create/modify
 - `src/platforms/capability-discovery.ts`
@@ -574,20 +1168,17 @@ Extend capability discovery to correctly identify the new platform’s features 
 - Related tests under `src/platforms/`
 
 ### Implementation notes
-- Version probe: run `${cliPaths.antigravity} --version`
-- Basic smoke probe (headless): `${cliPaths.antigravity} -p "ping" --output-format json`
-  - If auth error, surface as “installed but not authenticated”
-- Capabilities to set:
-  - nonInteractive: true
-  - modelSelection: true
-  - streaming: full (if stream-json supported)
-  - sessionResume: false (Puppet Master disallows; CLI may support)
-  - mcpSupport: true (Gemini CLI supports MCP servers)
-- Populate `available_models` for `antigravity` from AGY-T04’s curated list (and/or any reliable discovery).
+- Version probe: run `${cliPaths.antigravity} --version` (if supported) and/or parse from `--help` output
+- Determine whether a headless/non-interactive flag exists:
+  - Prefer deriving this from `agy --help` output and AGY-T01 findings (do not guess)
+- Smoke probe:
+  - Minimum: `${cliPaths.antigravity} --help` returns 0
+  - If (and only if) headless mode exists: run the smallest safe “ping” invocation discovered in AGY-T01 and record output format
+- Populate `available_models` for `antigravity` from AGY-T04’s curated list (treat as “suggested”)
 
 ### Acceptance criteria
 - [ ] Discovery produces a stable capabilities record for the platform
-- [ ] Health check distinguishes missing binary vs missing auth
+- [ ] Health check distinguishes missing binary vs “installed but unusable” (if detectable)
 - [ ] `npm test -- src/platforms -t "capability"` passes
 
 ### Tests to run
@@ -610,7 +1201,7 @@ If FAIL - where stuck + exact error snippets + what remains:
 ## AGY-T08: Doctor + Install Checks + “Fix” Support
 
 ### Title
-Add Doctor + Install checks for Antigravity (Gemini CLI) and optional `agy` launcher
+Add Doctor + Install checks for Antigravity (`agy`)
 
 ### Goal
 Surface actionable setup guidance from:
@@ -627,30 +1218,31 @@ Surface actionable setup guidance from:
 - `src/cli/commands/install.ts`
 - `src/doctor/checks/cli-tools.ts`
 - `src/doctor/installation-manager.ts`
-- Gemini CLI install/auth docs:
-  - https://github.com/google-gemini/gemini-cli
+- Antigravity download + setup:
+  - https://antigravity.google/download
+  - https://codelabs.developers.google.com/getting-started-google-antigravity
 
 ### Files to create/modify
-- `src/doctor/checks/cli-tools.ts` (add `AntigravityCliCheck`, optional `AgyCliCheck`)
+- `src/doctor/checks/cli-tools.ts` (add `AntigravityCliCheck` / `AgyCliCheck` as the same thing)
 - `src/cli/commands/doctor.ts` (register new checks)
 - `src/cli/commands/install.ts` (register new checks + tool name mapping)
 - `src/doctor/installation-manager.ts` (install commands)
 - Tests in `src/cli/commands/doctor.test.ts` and/or `src/doctor/*`
 
 ### Implementation notes
-- Install commands:
-  - npm: `npm install -g @google/gemini-cli`
-  - brew (macOS/Linux): `brew install gemini-cli`
-- Auth guidance (Doctor output):
-  - “Run `gemini` once and choose ‘Login with Google’”
-  - Or set `GEMINI_API_KEY` (AI Studio key) / Vertex env vars for enterprise
-- Plan Mode guidance:
-  - To use `--approval-mode plan`, user must enable `experimental.plan: true` in Gemini CLI settings (`~/.gemini/settings.json` or project `.gemini/settings.json`).
+- Antigravity is a desktop app; installation is typically manual (download + install).
+- Doctor should:
+  - detect whether `cliPaths.antigravity` resolves to a runnable binary (default `agy`)
+  - if `cliPaths.antigravity` fails, try the common alternate name `antigravity` and suggest updating `cliPaths.antigravity` accordingly (only as a *suggestion*, don’t auto-mutate config)
+  - include WSL note (if applicable): symlink `agy` → Windows-installed `antigravity` binary (document exact path as user-specific)
+  - if missing, print OS-specific “download + install” instructions (and the expected path/launcher name)
+  - if present, run `agy --help` (or `--version`) to validate execution
+- `install` command:
+  - Either implement “manual install instructions” (preferred) or a best-effort installer if the project decides that’s acceptable per OS/security policy.
 
 ### Acceptance criteria
-- [ ] `puppet-master doctor` reports Antigravity (Gemini CLI) as installed/missing with clear fix instructions
-- [ ] Doctor distinguishes missing binary vs missing auth (if detectable)
-- [ ] `puppet-master install --all` includes Antigravity tool installation
+- [ ] `puppet-master doctor` reports Antigravity (`agy`) as installed/missing with clear fix instructions
+- [ ] `puppet-master install --all` includes Antigravity (manual) install guidance
 - [ ] `npm test -- src/cli/commands/doctor.test.ts` passes
 
 ### Tests to run
@@ -671,7 +1263,9 @@ If FAIL - where stuck + exact error snippets + what remains:
 
 ---
 
-## AGY-T09: GUI Updates (Config + Budgets + Model Suggestions)
+## AGY-T09: GUI Updates (SUPERSEDED by ALL-T01)
+
+> **⚠️ SUPERSEDED:** This task has been consolidated into `ALL-T01` which handles GUI updates for all added platforms. Keeping this section for reference only.
 
 ### Title
 Update the GUI to support `antigravity` platform selection and model/budget UX
@@ -735,7 +1329,9 @@ If FAIL - where stuck + exact error snippets + what remains:
 
 ---
 
-## AGY-T10: Documentation + Examples
+## AGY-T10: Documentation + Examples (SUPERSEDED by ALL-T02)
+
+> **⚠️ SUPERSEDED:** This task has been consolidated into `ALL-T02` which handles documentation for all added platforms. Keeping this section for reference only.
 
 ### Title
 Document the new Google platform end-to-end
@@ -760,15 +1356,11 @@ Update canonical docs and examples so users can install, authenticate, and confi
 ### Implementation notes
 - Update supported platform table(s) to include:
   - Platform id: `antigravity`
-  - Default CLI binary: `gemini` (via `cliPaths.antigravity`)
-  - Optional: mention `agy` as the GUI launcher (not the headless runner unless proven)
-- Add an “Auth quickstart” section for Google OAuth and/or API key / Vertex auth.
-- Add “Plan Mode” documentation:
-  - how Puppet Master maps config → `--approval-mode plan`
-  - prerequisite `experimental.plan: true` in Gemini CLI settings
+  - Default CLI binary: `agy` (via `cliPaths.antigravity`)
+  - Document current headless status: “headless supported” vs “launcher-only / manual required” (per AGY-T01 findings)
 - Add “Supported models” documentation:
-  - baseline model names + “Auto” recommendation
-  - how to enable preview features for Gemini 3 models
+  - baseline model display names sourced from Antigravity docs (Reasoning Model list)
+  - note that actual availability may vary by account/plan and selection may be UI-only unless a CLI flag exists
 
 ### Acceptance criteria
 - [ ] Docs list the new platform and its CLI command
@@ -803,14 +1395,18 @@ Prove that selecting the new platform in config can run at least one iteration e
 - `.puppet-master/evidence/test-logs/` output from the run
 
 ### Manual smoke test recipe (local machine)
-1. Install Gemini CLI and authenticate:
-   - `npm install -g @google/gemini-cli`
-   - `gemini` → “Login with Google”
-2. Configure Puppet Master tier(s) to use `platform: antigravity` (and pick an appropriate model).
-3. Run a small, non-destructive subtask against a toy repo and confirm:
-   - fresh process
-   - completion signal parsing
-   - filesChanged detection + gating behavior (as applicable)
+1. Install Antigravity and verify the launcher:
+   - Download/install: https://antigravity.google/download
+   - Verify: `agy --help` (and `agy --version` if supported)
+2. Configure Puppet Master tier(s) to use `platform: antigravity`.
+3. If (and only if) AGY-T01 confirms headless mode exists:
+   - Run a small, non-destructive subtask and confirm:
+     - fresh process
+     - output parsing
+     - completion signal parsing
+     - filesChanged detection + gating behavior (as applicable)
+4. If AGY-T01 confirms headless mode does NOT exist:
+   - Confirm the runner fails fast with an actionable message (and optionally opens the GUI without hanging)
 
 ### Acceptance criteria
 - [ ] `npm run typecheck` passes
@@ -835,7 +1431,9 @@ If FAIL - where stuck + exact error snippets + what remains:
 
 ---
 
-## AGY-T12: Additional Hardcoded Platform References (Gap Analysis)
+## AGY-T12: Additional Hardcoded Platform References (SUPERSEDED by ALL-T03)
+
+> **⚠️ SUPERSEDED:** This task has been consolidated into `ALL-T03` which handles hardcoded platform reference fixes for all added platforms. Keeping this section for reference only.
 
 ### Title
 Update all remaining hardcoded platform references discovered during code review
@@ -926,10 +1524,13 @@ Lock in the supported GitHub Copilot CLI behavior, platform id, and required fla
 - Underlying runner binary: `copilot`
 - Output format: text-based (no JSON mode documented); parse for `<ralph>COMPLETE</ralph>` / `<ralph>GUTTER</ralph>`
 - Approval mode mapping:
-  - `--allow-all-tools` for headless/yolo mode
-  - `--silent` to suppress stats noise
-- Supported models:
-  - `claude-sonnet-4.5` (default), `claude-sonnet-4`, `gpt-5`, `gpt-5-mini`, `gpt-4.1`
+  - Prefer `--allow-all-tools` for headless/yolo mode (fallback: `--allow-all` / `--yolo` depending on installed Copilot CLI version)
+  - Add `--allow-all-paths` to avoid interactive path verification prompts in programmatic mode
+  - Optional: `--allow-all-urls` / `--allow-url <domain>` (only if URL verification blocks your workflow)
+  - `--silent` + `--stream off` for scripting-friendly, deterministic output
+- Supported models strategy:
+  - Models are selected inside Copilot CLI via `/model` (interactive) and may vary by account/plan/region
+  - Puppet Master should treat `tiers.*.model` as **TBD** for Copilot until a stable programmatic selection mechanism is confirmed (see CPL-T04)
 
 ### Acceptance criteria
 - [ ] Platform id decision recorded (and rationale)
@@ -1033,9 +1634,10 @@ Implement a new `BasePlatformRunner` subclass that executes prompts via Copilot 
 
 ### Implementation notes
 - Use `-p "..."` for non-interactive prompt execution
-- Use `--allow-all-tools` for headless mode (when tier config requires it)
-- Use `--silent` to suppress stats output
-- Use `--model <model>` for model selection
+- Use `--allow-all-tools` for headless/yolo mode (fallback: `--allow-all` / `--yolo` based on `copilot --help`)
+- Use `--allow-all-paths` to avoid interactive path verification prompts
+- Optional: `--allow-all-urls` / `--allow-url <domain>` if URL verification blocks the run
+- Use `--silent` and `--stream off` to reduce noise and stabilize output parsing
 - Parse text output for `<ralph>COMPLETE</ralph>` / `<ralph>GUTTER</ralph>` signals
 - Command path: resolve from `cliPaths.copilot`
 - Fresh process invariant: do NOT use `--resume`
@@ -1043,7 +1645,7 @@ Implement a new `BasePlatformRunner` subclass that executes prompts via Copilot 
 ### Acceptance criteria
 - [ ] Runner spawns the configured Copilot binary with `-p`
 - [ ] Completion signals are detected from response text
-- [ ] Model selection works via `--model` flag
+- [ ] Runner uses non-interactive approval flags without prompting
 - [ ] `npm run typecheck` passes
 - [ ] `npm test -- src/platforms -t "copilot"` passes
 
@@ -1079,8 +1681,10 @@ Provide a reliable, user-visible source of truth for which models are "supported
 
 ### Read first
 - `STATE_FILES.md` Section 4 (Capability Discovery Files)
-- GitHub Copilot CLI model docs:
-  - https://github.blog/changelog/2026-01-14-github-copilot-cli-enhanced-agents-context-management-and-new-ways-to-install/
+- GitHub Docs: model usage (`/model`) and premium request behavior:
+  - https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli
+- Copilot CLI changelog (tracks model additions and selection behavior):
+  - https://raw.githubusercontent.com/github/copilot-cli/main/changelog.md
 
 ### Files to create/modify
 - `src/platforms/copilot-models.ts` (NEW: curated baseline models)
@@ -1088,14 +1692,15 @@ Provide a reliable, user-visible source of truth for which models are "supported
 - Tests adjacent to the above (Vitest)
 
 ### Implementation notes
-- Baseline model list:
-  - `claude-sonnet-4.5` (default)
-  - `claude-sonnet-4`
-  - `gpt-5`
-  - `gpt-5-mini`
-  - `gpt-4.1`
-- Note: Models are included with Copilot subscription; no separate billing.
-- Keep list user-overridable in config.
+- **Reality check:** Copilot CLI’s available model set varies by account/plan/region and is shown inside Copilot CLI via `/model`. We should not hardcode an authoritative list.
+- Provide a best-effort *suggested* list for UX (and document that the source of truth is `/model`):
+  - `Claude Sonnet 4.5` (default per docs; may change)
+  - `Claude Sonnet 4`
+  - `GPT-5.2-Codex` (from changelog)
+  - `Haiku 4.5` (from changelog)
+- Decide and document how Puppet Master interprets `tiers.*.model` for Copilot:
+  - Option A (initial): treat as a hint only and do not attempt programmatic selection
+  - Option B (later): if a stable config key exists, use `--config-dir` to set the model per run (must be proven before implementing)
 
 ### Acceptance criteria
 - [ ] Copilot model list is available from backend code
@@ -1382,26 +1987,29 @@ If FAIL - where stuck + exact error snippets + what remains:
 
 ---
 
-# CROSS-PLATFORM TASKS (BOTH-Txx)
+# CROSS-PLATFORM TASKS (ALL-Txx)
 
-These tasks handle changes that apply to BOTH new platforms simultaneously.
+These tasks handle changes that apply to ALL new platforms simultaneously.
+- **Phase 1 platforms (P0):** `gemini`, `copilot`
+- **Phase 2 platform (P1, conditional):** `antigravity` (pending AGY-T01 investigation)
 
 ---
 
-## BOTH-T01: GUI Updates for Both Platforms
+## ALL-T01: GUI Updates for All Platforms
 
 ### Title
-Update GUI to support `antigravity` and `copilot` platform selection
+Update GUI to support `gemini`, `copilot`, and `antigravity` platform selection
 
 ### Goal
 Ensure the local GUI can:
-- Select both new platforms in tier platform dropdowns
-- Configure budgets + fallback platforms for both
-- Show budget usage for both on the dashboard
-- Surface model suggestions for both platforms
+- Select all new platforms in tier platform dropdowns
+- Configure budgets + fallback platforms for all
+- Show budget usage for all on the dashboard
+- Surface model suggestions for each platform
 
 ### Depends on
-- AGY-T02, CPL-T02 (types must be in place)
+- GEM-T02, CPL-T02 (required)
+- AGY-T02 (if Antigravity proceeds)
 
 ### Read first
 - `src/gui/server.ts` (route wiring)
@@ -1417,16 +2025,17 @@ Ensure the local GUI can:
 - GUI tests (`src/gui/*.test.ts`) as needed
 
 ### Implementation notes
-- Add `antigravity` and `copilot` to every platform `<select>` in config.html
-- Add budget panels for both platforms mirroring existing budgets
-- Update dashboard budget UI to include both new platforms
+- Add `gemini`, `copilot`, and `antigravity` to every platform `<select>` in config.html
+- Add budget panels for all new platforms mirroring existing budgets
+- Update dashboard budget UI to include all new platforms
 - Model suggestions via datalist approach (user can still type custom models)
+- Consider adding platform icons/logos for visual distinction
 
 ### Acceptance criteria
-- [ ] GUI tier platform dropdowns include both `antigravity` and `copilot`
-- [ ] GUI budgets tab supports both new platforms + fallback selection
-- [ ] Dashboard displays budget usage for both new platforms
-- [ ] Model suggestions appear for both platforms
+- [ ] GUI tier platform dropdowns include `gemini`, `copilot`, and `antigravity`
+- [ ] GUI budgets tab supports all new platforms + fallback selection
+- [ ] Dashboard displays budget usage for all new platforms
+- [ ] Model suggestions appear for each platform
 - [ ] `npm test -- src/gui` passes
 
 ### Tests to run
@@ -1446,16 +2055,17 @@ If FAIL - where stuck + exact error snippets + what remains:
 
 ---
 
-## BOTH-T02: Documentation Updates
+## ALL-T02: Documentation Updates
 
 ### Title
-Document both new platforms end-to-end
+Document all new platforms end-to-end
 
 ### Goal
-Update canonical docs and examples so users can install, authenticate, and configure both new platforms.
+Update canonical docs and examples so users can install, authenticate, and configure all new platforms.
 
 ### Depends on
-- AGY-T02, CPL-T02 (types must be in place)
+- GEM-T02, CPL-T02 (required)
+- AGY-T02 (if Antigravity proceeds)
 
 ### Read first
 - `README.md`
@@ -1470,15 +2080,18 @@ Update canonical docs and examples so users can install, authenticate, and confi
 
 ### Implementation notes
 - Update supported platform table(s) to include:
-  - Platform id: `antigravity` | Default CLI: `gemini`
-  - Platform id: `copilot` | Default CLI: `copilot`
+  - Platform id: `gemini` | Default CLI: `gemini` | Auth: Google OAuth/API key
+  - Platform id: `copilot` | Default CLI: `copilot` | Auth: GitHub OAuth/PAT
+  - Platform id: `antigravity` | Default CLI: `agy` | Auth: Google OAuth (if proceeds)
 - Add "Auth quickstart" section for each platform
 - Add "Supported models" documentation for each platform
+- Add troubleshooting section for common auth issues
 
 ### Acceptance criteria
-- [ ] Docs list both new platforms and their CLI commands
+- [ ] Docs list all new platforms and their CLI commands
 - [ ] Docs show install + auth steps for each
 - [ ] Docs show example tier config snippets using each platform
+- [ ] Docs include model lists for each platform
 
 ### Task status log
 ```
@@ -1492,25 +2105,26 @@ If FAIL - where stuck + exact error snippets + what remains:
 
 ---
 
-## BOTH-T03: Hardcoded Platform Reference Fixes
+## ALL-T03: Hardcoded Platform Reference Fixes
 
 ### Title
-Update all remaining hardcoded platform references for both new platforms
+Update all remaining hardcoded platform references for all new platforms
 
 ### Goal
-Ensure NO hardcoded `'cursor' | 'codex' | 'claude'` patterns remain without both `antigravity` and `copilot`.
+Ensure NO hardcoded `'cursor' | 'codex' | 'claude'` patterns remain without all new platforms.
 
 ### Depends on
-- AGY-T02, CPL-T02 (after types are updated)
+- GEM-T02, CPL-T02 (required)
+- AGY-T02 (if Antigravity proceeds)
 
 ### Discovered gaps
 
 | File | Line(s) | Issue | Fix |
 |------|---------|-------|-----|
-| `src/logging/event-bus.ts` | 27 | `budget_update` event hardcoded | Add both platforms |
-| `src/start-chain/validation-gate.ts` | 347 | `validPlatforms` array hardcoded | Add both platforms |
-| `src/memory/progress-manager.ts` | 203 | Platform string parsing hardcoded | Add both platforms |
-| `src/platforms/quota-manager.test.ts` | 285, 346, 366 | Test assertions | Add both platforms |
+| `src/logging/event-bus.ts` | 27 | `budget_update` event hardcoded | Add `gemini`, `copilot`, `antigravity` |
+| `src/start-chain/validation-gate.ts` | 347 | `validPlatforms` array hardcoded | Add all new platforms |
+| `src/memory/progress-manager.ts` | 203 | Platform string parsing hardcoded | Add all new platforms |
+| `src/platforms/quota-manager.test.ts` | 285, 346, 366 | Test assertions | Add all new platforms |
 | `.cursorrules` | 31 | Documents Platform type | Update example |
 
 ### Files to modify
@@ -1521,7 +2135,7 @@ Ensure NO hardcoded `'cursor' | 'codex' | 'claude'` patterns remain without both
 - `.cursorrules` (optional, for documentation consistency)
 
 ### Acceptance criteria
-- [ ] No grep matches for platform lists without both new platforms in source files
+- [ ] No grep matches for platform lists without all new platforms in source files
 - [ ] `npm run typecheck` passes
 - [ ] `npm test` passes
 
@@ -1544,29 +2158,178 @@ If FAIL - where stuck + exact error snippets + what remains:
 
 ---
 
-## BOTH-T04: Integration Validation
+## ALL-T04: Doctor + Install Command Updates
 
 ### Title
-Run full integration validation for both new platforms
+Update Doctor and Install commands to support all new platforms
 
 ### Goal
-Prove that both new platforms work end-to-end in Puppet Master.
+Ensure `puppet-master doctor` and `puppet-master install` correctly handle all new platform CLIs.
 
 ### Depends on
-- AGY-T11 (Antigravity validation)
-- CPL-T09 (Copilot validation)
-- BOTH-T01, BOTH-T02, BOTH-T03
+- GEM-T08, CPL-T08 (required)
+- AGY-T08 (if Antigravity proceeds)
+
+### Read first
+- `src/cli/commands/doctor.ts`
+- `src/cli/commands/install.ts`
+- `src/doctor/checks/cli-tools.ts`
+- `src/doctor/installation-manager.ts`
+
+### Files to create/modify
+- `src/cli/commands/doctor.ts` (ensure all checks registered)
+- `src/cli/commands/install.ts` (ensure all tools installable)
+- `src/doctor/installation-manager.ts` (ensure all install commands registered)
+- Tests for doctor and install commands
+
+### Implementation notes
+- Doctor should check for:
+  - `gemini` CLI binary + Google auth
+  - `copilot` CLI binary + GitHub auth
+  - `agy` CLI binary + Google auth (if Antigravity proceeds)
+- Install should support:
+  - `puppet-master install gemini` → `npm install -g @google/gemini-cli`
+  - `puppet-master install copilot` → `npm install -g @github/copilot`
+  - `puppet-master install antigravity` → platform-specific instructions (if proceeds)
+  - `puppet-master install --all` → install all missing CLIs
+
+### Acceptance criteria
+- [ ] `puppet-master doctor` reports status of all new platform CLIs
+- [ ] `puppet-master install <platform>` works for each new platform
+- [ ] `puppet-master install --all` includes all new platforms
+- [ ] Clear error messages for missing auth vs missing binary
+- [ ] `npm test -- src/cli/commands/doctor.test.ts` passes
+- [ ] `npm test -- src/cli/commands/install.test.ts` passes
+
+### Tests to run
+```bash
+npm test -- src/cli/commands/doctor.test.ts
+npm test -- src/cli/commands/install.test.ts
+```
+
+### Task status log
+```
+Status: PENDING
+Date:
+Summary of changes:
+Files changed:
+Commands run + results:
+If FAIL - where stuck + exact error snippets + what remains:
+```
+
+---
+
+## ALL-T05: CLI Command Updates (start, status, etc.)
+
+### Title
+Update CLI commands to support all new platforms
+
+### Goal
+Ensure all CLI commands that reference platforms work correctly with new platforms.
+
+### Depends on
+- GEM-T06, CPL-T06 (required)
+- AGY-T06 (if Antigravity proceeds)
+
+### Read first
+- `src/cli/commands/start.ts`
+- `src/cli/commands/status.ts`
+- `src/cli/commands/stop.ts`
+- `src/cli/commands/resume.ts`
+- `src/cli/commands/pause.ts`
+
+### Files to create/modify
+- Any CLI command that filters/displays platforms
+- CLI command tests
+
+### Implementation notes
+- Commands that may need updates:
+  - `start` - platform selection and validation
+  - `status` - platform display in output
+  - `stop` - platform-specific process termination
+  - `resume` - platform validation
+  - `check` - platform health checks
+- Ensure platform flags accept new values
+- Ensure help text includes new platforms
+
+### Acceptance criteria
+- [ ] `puppet-master start --platform gemini` works
+- [ ] `puppet-master start --platform copilot` works
+- [ ] `puppet-master start --platform antigravity` works (if proceeds)
+- [ ] `puppet-master status` displays new platforms correctly
+- [ ] CLI help text includes new platforms
+- [ ] `npm test -- src/cli/commands` passes
+
+### Tests to run
+```bash
+npm test -- src/cli/commands
+```
+
+### Task status log
+```
+Status: PENDING
+Date:
+Summary of changes:
+Files changed:
+Commands run + results:
+If FAIL - where stuck + exact error snippets + what remains:
+```
+
+---
+
+## ALL-T06: Integration Validation
+
+### Title
+Run full integration validation for all new platforms
+
+### Goal
+Prove that all new platforms work end-to-end in Puppet Master.
+
+### Depends on
+- GEM-T09, CPL-T09 (required)
+- AGY-T11 (if Antigravity proceeds)
+- ALL-T01 through ALL-T05
 
 ### Evidence to record
-- `.puppet-master/capabilities/antigravity.json`
+- `.puppet-master/capabilities/gemini.json`
 - `.puppet-master/capabilities/copilot.json`
+- `.puppet-master/capabilities/antigravity.json` (if proceeds)
 - `.puppet-master/evidence/test-logs/` output from runs
+
+### Manual smoke test checklist
+1. **Gemini CLI:**
+   - [ ] Install and authenticate: `npm install -g @google/gemini-cli && gemini`
+   - [ ] Configure tier: `platform: gemini`
+   - [ ] Run iteration, verify JSON output parsing
+   - [ ] Verify completion signals detected
+
+2. **Copilot CLI:**
+   - [ ] Install and authenticate: `npm install -g @github/copilot && copilot`
+   - [ ] Configure tier: `platform: copilot`
+   - [ ] Run iteration, verify text output parsing
+   - [ ] Verify completion signals detected
+
+3. **Antigravity (if proceeds):**
+   - [ ] Install and verify: `agy --version`
+   - [ ] Configure tier: `platform: antigravity`
+   - [ ] Run iteration, verify output parsing
+   - [ ] Verify completion signals detected
+
+4. **GUI:**
+   - [ ] All platforms appear in dropdowns
+   - [ ] Budget dashboard shows all platforms
+   - [ ] Config saves/loads correctly for all platforms
+
+5. **Doctor/Install:**
+   - [ ] `puppet-master doctor` shows status for all platforms
+   - [ ] `puppet-master install --all` installs missing CLIs
 
 ### Acceptance criteria
 - [ ] `npm run typecheck` passes
 - [ ] `npm test` passes (full suite)
-- [ ] Both platforms can be selected and run at least one iteration
-- [ ] GUI correctly displays both platforms in all relevant places
+- [ ] All platforms can be selected and run at least one iteration
+- [ ] GUI correctly displays all platforms
+- [ ] Doctor correctly reports all platform statuses
 
 ### Commands to run
 ```bash
@@ -1590,24 +2353,24 @@ If FAIL - where stuck + exact error snippets + what remains:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────────┐
-│                           ANTIGRAVITY TRACK                                     │
+│                      GEMINI CLI TRACK (P0 - Ready)                              │
 ├─────────────────────────────────────────────────────────────────────────────────┤
-│ AGY-T01 (CLI Contract)                                                          │
+│ GEM-T01 (CLI Contract)                                                          │
 │     │                                                                           │
-│     ├── AGY-T02 (Types) ────┬── AGY-T04 (Models) ─┬── AGY-T05 (Registry) ──┐   │
+│     ├── GEM-T02 (Types) ────┬── GEM-T04 (Models) ─┬── GEM-T05 (Registry) ──┐   │
 │     │                       │                     │                         │   │
-│     │                       │                     └── AGY-T06 (Spawn) ──────┤   │
+│     │                       │                     └── GEM-T06 (Spawn) ──────┤   │
 │     │                       │                                               │   │
-│     └── AGY-T03 (Runner) ───┼── AGY-T07 (Capability) ───────────────────────┤   │
+│     └── GEM-T03 (Runner) ───┼── GEM-T07 (Capability) ───────────────────────┤   │
 │                             │                                               │   │
-│                             └── AGY-T08 (Doctor) ───────────────────────────┤   │
+│                             └── GEM-T08 (Doctor) ───────────────────────────┤   │
 │                                                                             │   │
 │                                                                             v   │
-│                                                                   AGY-T11 (Val) │
+│                                                                   GEM-T09 (Val) │
 └─────────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────────┐
-│                             COPILOT TRACK                                       │
+│                       COPILOT TRACK (P0 - Ready)                                │
 ├─────────────────────────────────────────────────────────────────────────────────┤
 │ CPL-T01 (CLI Contract)                                                          │
 │     │                                                                           │
@@ -1624,18 +2387,56 @@ If FAIL - where stuck + exact error snippets + what remains:
 └─────────────────────────────────────────────────────────────────────────────────┘
 
 ┌─────────────────────────────────────────────────────────────────────────────────┐
-│                           CROSS-PLATFORM                                        │
+│                    ANTIGRAVITY TRACK (P1 - Required)                            │
+├─────────────────────────────────────────────────────────────────────────────────┤
+│ AGY-T01 (Investigate Headless) ◄── Determines implementation approach           │
+│     │                                                                           │
+│     ├── [If `agy` headless exists] ─────────────────────────────────────────┐   │
+│     │       Use `agy` binary directly                                       │   │
+│     │                                                                       │   │
+│     └── [If NO headless] ───────────────────────────────────────────────────┤   │
+│             Launcher-only / fail-fast runner (manual step required)         │   │
+│                                                                             │   │
+│     ├── AGY-T02 (Types) ────┬── AGY-T04 (Models) ─┬── AGY-T05 (Registry) ──┐   │
+│     │                       │                     │                         │   │
+│     │                       │                     └── AGY-T06 (Spawn) ──────┤   │
+│     │                       │                                               │   │
+│     └── AGY-T03 (Runner) ───┼── AGY-T07 (Capability) ───────────────────────┤   │
+│                             │                                               │   │
+│                             └── AGY-T08 (Doctor) ───────────────────────────┤   │
+│                                                                             │   │
+│                                                                             v   │
+│                                                                   AGY-T11 (Val) │
+└─────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                         CROSS-PLATFORM (ALL-Txx)                                │
 ├─────────────────────────────────────────────────────────────────────────────────┤
 │                                                                                 │
-│ AGY-T02 ──┬── BOTH-T01 (GUI) ────────────────────────────────────────┐         │
-│           │                                                           │         │
-│ CPL-T02 ──┼── BOTH-T02 (Docs) ───────────────────────────────────────┤         │
-│           │                                                           │         │
-│           └── BOTH-T03 (Hardcoded Refs) ─────────────────────────────┤         │
+│ GEM-T02 ──┬                                                                     │
+│           ├── ALL-T01 (GUI) ─────────────────────────────────────────┐         │
+│ CPL-T02 ──┤                                                           │         │
+│           ├── ALL-T02 (Docs) ────────────────────────────────────────┤         │
+│ AGY-T02? ─┤                                                           │         │
+│           └── ALL-T03 (Hardcoded Refs) ──────────────────────────────┤         │
 │                                                                       │         │
-│ AGY-T11 ──┬                                                           │         │
-│           ├── BOTH-T04 (Integration Validation) ◄────────────────────┘         │
-│ CPL-T09 ──┘                                                                     │
+│ GEM-T08 ──┬                                                           │         │
+│           ├── ALL-T04 (Doctor/Install) ──────────────────────────────┤         │
+│ CPL-T08 ──┤                                                           │         │
+│           │                                                           │         │
+│ AGY-T08? ─┘                                                           │         │
+│                                                                       │         │
+│ GEM-T06 ──┬                                                           │         │
+│           ├── ALL-T05 (CLI Commands) ────────────────────────────────┤         │
+│ CPL-T06 ──┤                                                           │         │
+│           │                                                           │         │
+│ AGY-T06? ─┘                                                           │         │
+│                                                                       │         │
+│ GEM-T09 ──┬                                                           │         │
+│           ├── ALL-T06 (Integration Validation) ◄─────────────────────┘         │
+│ CPL-T09 ──┤                                                                     │
+│           │                                                                     │
+│ AGY-T11? ─┘                                                                     │
 │                                                                                 │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -1644,75 +2445,99 @@ If FAIL - where stuck + exact error snippets + what remains:
 
 ## Summary of All Files to Modify
 
-### Critical Path (Types + Core) — BOTH PLATFORMS
+### Critical Path (Types + Core) — ALL 3 PLATFORMS
 
 | Task | File | Change |
 |------|------|--------|
-| AGY-T02 + CPL-T02 | `src/types/config.ts` | Add `'antigravity' \| 'copilot'` to Platform, CliPathsConfig, PlatformBudgets |
-| AGY-T02 + CPL-T02 | `src/config/config-schema.ts` | Add validation for both platforms |
-| AGY-T02 + CPL-T02 | `src/config/default-config.ts` | Add default cliPaths + budgets for both |
-| AGY-T03 | `src/platforms/antigravity-runner.ts` | NEW FILE |
+| GEM-T02 + CPL-T02 + AGY-T02 | `src/types/config.ts` | Add `'gemini' \| 'antigravity' \| 'copilot'` to Platform, CliPathsConfig, PlatformBudgets |
+| GEM-T02 + CPL-T02 + AGY-T02 | `src/config/config-schema.ts` | Add validation for all 3 platforms |
+| GEM-T02 + CPL-T02 + AGY-T02 | `src/config/default-config.ts` | Add default cliPaths + budgets for all 3 |
+| GEM-T03 | `src/platforms/gemini-runner.ts` | NEW FILE |
 | CPL-T03 | `src/platforms/copilot-runner.ts` | NEW FILE |
-| AGY-T05 + CPL-T05 | `src/platforms/registry.ts` | Register both runners |
-| AGY-T06 + CPL-T06 | `src/core/fresh-spawn.ts` | Add switch cases for both platforms |
+| AGY-T03 | `src/platforms/antigravity-runner.ts` | NEW FILE |
+| GEM-T05 + CPL-T05 + AGY-T05 | `src/platforms/registry.ts` | Register all 3 runners |
+| GEM-T06 + CPL-T06 + AGY-T06 | `src/core/fresh-spawn.ts` | Add switch cases for all 3 platforms |
 
 ### Models
 
 | Task | File | Change |
 |------|------|--------|
-| AGY-T04 | `src/platforms/antigravity-models.ts` | NEW FILE |
+| GEM-T04 | `src/platforms/gemini-models.ts` | NEW FILE |
 | CPL-T04 | `src/platforms/copilot-models.ts` | NEW FILE |
+| AGY-T04 | `src/platforms/antigravity-models.ts` | NEW FILE |
 
 ### Discovery + Health
 
 | Task | File | Change |
 |------|------|--------|
-| AGY-T07 + CPL-T07 | `src/platforms/capability-discovery.ts` | Add getPlatformCommand cases |
-| AGY-T07 + CPL-T07 | `src/platforms/health-check.ts` | Add getPlatformCommand cases |
-| AGY-T08 | `src/doctor/checks/cli-tools.ts` | Add AntigravityCliCheck class |
+| GEM-T07 + CPL-T07 + AGY-T07 | `src/platforms/capability-discovery.ts` | Add getPlatformCommand cases for all 3 |
+| GEM-T07 + CPL-T07 + AGY-T07 | `src/platforms/health-check.ts` | Add getPlatformCommand cases for all 3 |
+| GEM-T08 | `src/doctor/checks/cli-tools.ts` | Add GeminiCliCheck class |
 | CPL-T08 | `src/doctor/checks/cli-tools.ts` | Add CopilotCliCheck class |
-| AGY-T08 + CPL-T08 | `src/doctor/installation-manager.ts` | Register install commands for both |
+| AGY-T08 | `src/doctor/checks/cli-tools.ts` | Add AntigravityCliCheck class |
+| GEM-T08 + CPL-T08 + AGY-T08 | `src/doctor/installation-manager.ts` | Register install commands for all 3 |
 
-### GUI (BOTH-T01)
-
-| Task | File | Change |
-|------|------|--------|
-| BOTH-T01 | `src/gui/public/config.html` | Add platform options + budget fieldsets + CLI path inputs |
-| BOTH-T01 | `src/gui/public/index.html` | Add budget spans for both platforms |
-| BOTH-T01 | `src/gui/public/js/config.js` | Add both platforms to loops |
-| BOTH-T01 | `src/gui/public/js/dashboard.js` | Add budget rendering for both |
-
-### Hardcoded Refs (BOTH-T03)
+### GUI (ALL-T01)
 
 | Task | File | Change |
 |------|------|--------|
-| BOTH-T03 | `src/logging/event-bus.ts` | Add both platforms to budget_update event type |
-| BOTH-T03 | `src/start-chain/validation-gate.ts` | Add both platforms to validPlatforms array |
-| BOTH-T03 | `src/memory/progress-manager.ts` | Add both platforms to platform parsing |
-| BOTH-T03 | `src/platforms/quota-manager.test.ts` | Update test assertions for 5 platforms |
-| BOTH-T03 | `.cursorrules` | Update Platform type example |
+| ALL-T01 | `src/gui/public/config.html` | Add platform options + budget fieldsets + CLI path inputs for all 3 |
+| ALL-T01 | `src/gui/public/index.html` | Add budget spans for all 3 platforms |
+| ALL-T01 | `src/gui/public/js/config.js` | Add all 3 platforms to loops |
+| ALL-T01 | `src/gui/public/js/dashboard.js` | Add budget rendering for all 3 |
 
-### Documentation (BOTH-T02)
+### CLI Commands (ALL-T05)
 
 | Task | File | Change |
 |------|------|--------|
-| BOTH-T02 | `README.md` | Add both platforms to supported platforms |
-| BOTH-T02 | `REQUIREMENTS.md` | Update platform table |
-| BOTH-T02 | `PROJECT_SETUP_GUIDE.md` | Add setup instructions for both |
+| ALL-T05 | `src/cli/commands/start.ts` | Ensure platform validation includes all 3 |
+| ALL-T05 | `src/cli/commands/status.ts` | Update platform display |
+| ALL-T05 | `src/cli/commands/doctor.ts` | Register checks for all 3 |
+| ALL-T05 | `src/cli/commands/install.ts` | Register install commands for all 3 |
+
+### Hardcoded Refs (ALL-T03)
+
+| Task | File | Change |
+|------|------|--------|
+| ALL-T03 | `src/logging/event-bus.ts` | Add all 3 platforms to budget_update event type |
+| ALL-T03 | `src/start-chain/validation-gate.ts` | Add all 3 platforms to validPlatforms array |
+| ALL-T03 | `src/memory/progress-manager.ts` | Add all 3 platforms to platform parsing |
+| ALL-T03 | `src/platforms/quota-manager.test.ts` | Update test assertions for 6 platforms |
+| ALL-T03 | `.cursorrules` | Update Platform type example |
+
+### Documentation (ALL-T02)
+
+| Task | File | Change |
+|------|------|--------|
+| ALL-T02 | `README.md` | Add all 3 platforms to supported platforms |
+| ALL-T02 | `REQUIREMENTS.md` | Update platform table |
+| ALL-T02 | `PROJECT_SETUP_GUIDE.md` | Add setup instructions for all 3 |
 
 ---
 
-## Platform Comparison Table
+## Platform Comparison Table (After Implementation)
 
-| Feature | Cursor | Codex | Claude | Antigravity | Copilot |
-|---------|--------|-------|--------|-------------|---------|
-| CLI Binary | `cursor-agent` | `codex` | `claude` | `gemini` | `copilot` |
-| Headless Flag | `-p` | `exec` | `-p` | `-p` | `-p` |
-| JSON Output | No | Yes | No | Yes | No |
-| Approval Flag | env var | `--path` | N/A | `--approval-mode` | `--allow-all-tools` |
-| Model Flag | N/A | `--model` | N/A | `--model` | `--model` |
-| MCP Support | Yes | Yes | Yes | Yes | Yes |
-| Auth Method | Cursor account | OpenAI key | Anthropic | Google OAuth/API key | GitHub OAuth/PAT |
+| Feature | Cursor | Codex | Claude | Gemini | Antigravity | Copilot |
+|---------|--------|-------|--------|--------|-------------|---------|
+| CLI Binary | `cursor-agent` | `codex` | `claude` | `gemini` | `agy` | `copilot` |
+| Headless Flag | `-p` | `exec` | `-p` | `-p` | TBD (AGY-T01) | `-p` |
+| JSON Output | No | Yes | No | Yes | TBD (AGY-T01) | No |
+| Approval Flag | env var | `--path` | N/A | `--approval-mode` | TBD (AGY-T01) | `--allow-all-tools` (+ `--allow-all-paths`) |
+| Model Flag | N/A | `--model` | N/A | `--model` | TBD (may be UI-only) | `/model` (interactive; programmatic TBD) |
+| MCP Support | Yes | Yes | Yes | Yes | TBD (AGY-T01) | Yes |
+| Auth Method | Cursor acct | OpenAI key | Anthropic | Google OAuth | Google account/app login | GitHub OAuth/PAT |
+
+---
+
+## Task Count Summary
+
+| Track | Task Count | Status |
+|-------|------------|--------|
+| Gemini CLI (GEM-Txx) | 9 tasks | P0 - Ready to implement |
+| Copilot (CPL-Txx) | 9 tasks | P0 - Ready to implement |
+| Antigravity (AGY-Txx) | 11 tasks | P1 - Pending AGY-T01 investigation |
+| Cross-platform (ALL-Txx) | 6 tasks | Depends on platform tasks |
+| **Total** | **35 tasks** | |
 
 ---
 

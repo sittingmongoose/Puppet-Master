@@ -27,6 +27,10 @@ import { AgentsManager } from '../memory/agents-manager.js';
 import { EvidenceStore } from '../memory/evidence-store.js';
 import { UsageTracker } from '../memory/usage-tracker.js';
 import { GitManager } from '../git/git-manager.js';
+import { createBranchStrategy } from '../git/branch-strategy.js';
+import type { BranchStrategyConfig } from '../git/branch-strategy.js';
+import { CommitFormatter } from '../git/commit-formatter.js';
+import { PRManager } from '../git/pr-manager.js';
 import type { VerificationIntegration } from '../verification/verification-integration.js';
 import type { PRD } from '../types/prd.js';
 import type { ProgressEntry } from '../memory/progress-manager.js';
@@ -294,6 +298,14 @@ describe('Integration', () => {
     const evidenceStore = new EvidenceStore(config.verification.evidenceDirectory);
     const usageTracker = new UsageTracker();
     const gitManager = new GitManager(tempDir);
+    const branchStrategyConfig: BranchStrategyConfig = {
+      granularity: config.branching.granularity,
+      baseBranch: config.branching.baseBranch,
+      namingPattern: config.branching.namingPattern,
+    };
+    const branchStrategy = createBranchStrategy(branchStrategyConfig, gitManager);
+    const commitFormatter = new CommitFormatter();
+    const prManager = new PRManager(tempDir);
 
     // Mock verification integration
     const verificationIntegration = {
@@ -328,6 +340,9 @@ describe('Integration', () => {
       evidenceStore,
       usageTracker,
       gitManager,
+      branchStrategy,
+      commitFormatter,
+      prManager,
       platformRunner: mockRunner,
       verificationIntegration,
     };

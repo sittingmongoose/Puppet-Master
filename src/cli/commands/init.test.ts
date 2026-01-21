@@ -9,6 +9,7 @@ import { join } from 'path';
 import { Command } from 'commander';
 import { InitCommand, initAction, type InitOptions } from './init.js';
 import { ConfigManager } from '../../config/config-manager.js';
+import { PrdManager } from '../../memory/prd-manager.js';
 
 describe('InitCommand', () => {
   let command: InitCommand;
@@ -156,14 +157,44 @@ describe('initAction', () => {
       expect(content).toContain('cooldown_hours');
     });
 
-    it('should create prd.json file with empty JSON object', async () => {
+    it('should create schema-valid prd.json scaffold', async () => {
       await initAction({});
 
       const prdPath = join(testDir, '.puppet-master', 'prd.json');
       expect(existsSync(prdPath)).toBe(true);
 
       const content = await readFile(prdPath, 'utf-8');
-      expect(content.trim()).toBe('{}');
+      const parsed = JSON.parse(content) as Record<string, unknown>;
+
+      expect(parsed).toMatchObject({
+        project: 'Untitled',
+        version: '1.0.0',
+        branchName: 'main',
+        description: '',
+        phases: [],
+        metadata: {
+          totalPhases: 0,
+          completedPhases: 0,
+          totalTasks: 0,
+          completedTasks: 0,
+          totalSubtasks: 0,
+          completedSubtasks: 0,
+        },
+      });
+
+      expect(typeof parsed.createdAt).toBe('string');
+      expect(typeof parsed.updatedAt).toBe('string');
+    });
+
+    it('should allow PrdManager.load() to succeed after init', async () => {
+      await initAction({});
+
+      const prdPath = join(testDir, '.puppet-master', 'prd.json');
+      const prdManager = new PrdManager(prdPath);
+      const prd = await prdManager.load();
+
+      expect(prd.phases).toEqual([]);
+      expect(prd.metadata.totalPhases).toBe(0);
     });
 
     it('should create architecture.md file', async () => {
@@ -204,6 +235,19 @@ describe('initAction', () => {
       const config = await manager.load();
 
       expect(config.project.name).toBe('TestProject');
+    });
+
+    it('should not clobber existing AGENTS.md and progress.txt without --force', async () => {
+      const agentsPath = join(testDir, 'AGENTS.md');
+      const progressPath = join(testDir, 'progress.txt');
+
+      await writeFile(agentsPath, 'existing agents content', 'utf-8');
+      await writeFile(progressPath, 'existing progress content', 'utf-8');
+
+      await initAction({});
+
+      expect(await readFile(agentsPath, 'utf-8')).toBe('existing agents content');
+      expect(await readFile(progressPath, 'utf-8')).toBe('existing progress content');
     });
   });
 

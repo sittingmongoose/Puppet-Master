@@ -9,6 +9,7 @@ import * as yaml from 'js-yaml';
 import { CapabilityDiscoveryService } from './capability-discovery.js';
 import type { CapabilityProbeResult } from '../types/capabilities.js';
 import type { ChildProcess } from 'child_process';
+import { tmpdir } from 'node:os';
 
 // Mock child_process
 vi.mock('child_process', () => {
@@ -23,7 +24,7 @@ describe('CapabilityDiscoveryService', () => {
 
   beforeEach(async () => {
     // Create a temporary directory for each test
-    tempDir = join(process.cwd(), '.test-cache', `test-${Date.now()}`);
+    tempDir = await fs.mkdtemp(join(tmpdir(), 'pm-capability-discovery-test-'));
     service = new CapabilityDiscoveryService(tempDir);
     await fs.mkdir(tempDir, { recursive: true });
   });

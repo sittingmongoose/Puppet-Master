@@ -25,6 +25,7 @@ import { QuotaManager } from '../../platforms/quota-manager.js';
 import type { TierStateManager } from '../../core/tier-state-manager.js';
 import { OrchestratorStateMachine } from '../../core/orchestrator-state-machine.js';
 import type { ProgressManager, AgentsManager, UsageTracker } from '../../memory/index.js';
+import { deriveProjectRootFromConfigPath } from '../../utils/project-paths.js';
 import type { CommandModule } from './index.js';
 
 /**
@@ -59,6 +60,8 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     // Load configuration
     const configManager = new ConfigManager(options.config);
     const config = await configManager.load();
+    const configPath = configManager.getConfigPath();
+    const projectRoot = deriveProjectRootFromConfigPath(configPath);
 
     if (options.verbose) {
       console.log('Configuration loaded successfully');
@@ -85,13 +88,13 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     const eventBus = new EventBus();
 
     // Create dependency injection container
-    const projectPath = process.cwd();
-    const container = createContainer(config, projectPath);
+    const container = createContainer(config, projectRoot, configPath);
 
     // Create GUI server
     const guiConfig = {
       port,
       host,
+      baseDirectory: projectRoot,
     };
     const guiServer = new GuiServer(guiConfig, eventBus);
 
@@ -109,17 +112,15 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     );
 
     // Create Orchestrator instance for controls
-    const prdPath = config.memory.prdFile;
     const orchestratorInstance = new Orchestrator({
       config,
-      projectPath,
-      prdPath,
+      projectPath: projectRoot,
       eventBus, // Pass EventBus for real-time updates
     });
 
     // Create platform registry and get a runner for initialization
     // Use the phase tier's platform as the default runner
-    const platformRegistry = PlatformRegistry.createDefault(config);
+    const platformRegistry = PlatformRegistry.createDefault(config, projectRoot);
     const defaultPlatform = config.tiers.phase.platform;
     const platformRunner = platformRegistry.get(defaultPlatform);
     
@@ -136,6 +137,9 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       evidenceStore: container.resolve('evidenceStore'),
       usageTracker: container.resolve('usageTracker'),
       gitManager: container.resolve('gitManager'),
+      branchStrategy: container.resolve('branchStrategy'),
+      commitFormatter: container.resolve('commitFormatter'),
+      prManager: container.resolve('prManager'),
       platformRunner: platformRunner,
       verificationIntegration: container.resolve('verificationIntegration'),
     });
@@ -163,7 +167,7 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     }
 
     // Create and register SessionTracker for history tracking
-    const sessionTracker = new SessionTracker(eventBus, projectPath);
+    const sessionTracker = new SessionTracker(eventBus, projectRoot);
     sessionTracker.start();
     guiServer.registerSessionTracker(sessionTracker);
 

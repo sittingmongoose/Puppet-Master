@@ -12,7 +12,7 @@ import type { Criterion, TestPlan, TierPlan } from '../types/tiers.js';
 import type { AgentsContent } from '../memory/agents-manager.js';
 import type { ProgressEntry } from '../memory/progress-manager.js';
 
-function createIterationContext(iterationNumber: number): IterationContext {
+function createIterationContext(iterationNumber: number, overrides?: Partial<IterationContext>): IterationContext {
   const tierNode = createSubtaskNode();
   const subtaskPlan: TierPlan = {
     id: tierNode.id,
@@ -33,6 +33,7 @@ function createIterationContext(iterationNumber: number): IterationContext {
     progressEntries: [] satisfies ProgressEntry[],
     agentsContent: [] satisfies AgentsContent[],
     subtaskPlan,
+    ...overrides,
   };
 }
 
@@ -252,6 +253,24 @@ describe('execution-engine', () => {
     expect(firstCall!.prompt).toContain('## Test Requirements');
     expect(firstCall!.prompt).toContain('ST-001-001-001-AC-001');
     expect(firstCall!.prompt).toContain('npm test');
+  });
+
+  it('populates ExecutionRequest.model from IterationContext.model', async () => {
+    const runner = createMockRunner({
+      stdoutForSpawn: () => fromArray(['<ralph>COMPLETE</ralph>']),
+      transcriptForSpawn: () => '<ralph>COMPLETE</ralph>',
+    });
+
+    const engine = new ExecutionEngine(createBaseConfig());
+    engine.setRunner(runner);
+
+    const context = createIterationContext(1);
+    context.model = 'claude-3-opus-20240229';
+    await engine.spawnIteration(context);
+
+    const request = runner.spawnFreshProcess.mock.calls[0]?.[0];
+    expect(request).toBeTruthy();
+    expect(request!.model).toBe('claude-3-opus-20240229');
   });
 
   it('includes previous failure info in the next iteration prompt', async () => {

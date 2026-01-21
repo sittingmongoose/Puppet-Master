@@ -10,29 +10,14 @@ import { spawn } from 'child_process';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import * as yaml from 'js-yaml';
-import type { Platform } from '../types/config.js';
+import type { CliPathsConfig, Platform } from '../types/config.js';
 import type {
   CapabilityProbeResult,
   PlatformCapabilities,
   QuotaInfo,
   CooldownInfo,
 } from '../types/capabilities.js';
-
-/**
- * Maps platform to CLI command name.
- */
-function getPlatformCommand(platform: Platform): string {
-  switch (platform) {
-    case 'cursor':
-      return 'cursor-agent';
-    case 'codex':
-      return 'codex';
-    case 'claude':
-      return 'claude';
-    default:
-      return platform;
-  }
-}
+import { resolvePlatformCommand } from './constants.js';
 
 /**
  * Executes a CLI command and returns stdout output.
@@ -147,9 +132,14 @@ function createDefaultCooldownInfo(): CooldownInfo {
  */
 export class CapabilityDiscoveryService {
   private readonly cacheDir: string;
+  private readonly cliPaths: Partial<CliPathsConfig> | null;
 
-  constructor(cacheDir: string = '.puppet-master/capabilities') {
+  constructor(
+    cacheDir: string = '.puppet-master/capabilities',
+    cliPaths?: Partial<CliPathsConfig> | null
+  ) {
     this.cacheDir = cacheDir;
+    this.cliPaths = cliPaths ?? null;
   }
 
   /**
@@ -183,7 +173,7 @@ export class CapabilityDiscoveryService {
    * Returns default capabilities if CLI is missing.
    */
   async probe(platform: Platform): Promise<CapabilityProbeResult> {
-    const command = getPlatformCommand(platform);
+    const command = resolvePlatformCommand(platform, this.cliPaths);
     const timestamp = new Date().toISOString();
 
     let version = 'unknown';

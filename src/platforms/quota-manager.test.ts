@@ -2,10 +2,13 @@
  * Tests for QuotaManager
  */
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { QuotaManager } from './quota-manager.js';
 import { UsageTracker } from '../memory/usage-tracker.js';
 import type { PlatformBudgets, TierConfig } from '../types/config.js';
+import { mkdtemp, rm } from 'node:fs/promises';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
 
 describe('QuotaManager', () => {
   let usageTracker: UsageTracker;
@@ -13,9 +16,9 @@ describe('QuotaManager', () => {
   let quotaManager: QuotaManager;
   let testDir: string;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     // Create a test UsageTracker with a unique path
-    testDir = `.test-quota-${Date.now()}`;
+    testDir = await mkdtemp(join(tmpdir(), 'pm-test-quota-'));
     usageTracker = new UsageTracker(`${testDir}/usage.jsonl`);
 
     // Create default budgets for testing
@@ -44,6 +47,14 @@ describe('QuotaManager', () => {
     };
 
     quotaManager = new QuotaManager(usageTracker, budgets);
+  });
+
+  afterEach(async () => {
+    try {
+      await rm(testDir, { recursive: true, force: true });
+    } catch {
+      // ignore
+    }
   });
 
   describe('checkQuota', () => {

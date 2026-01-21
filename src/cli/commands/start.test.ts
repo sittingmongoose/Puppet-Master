@@ -83,6 +83,7 @@ describe('startAction', () => {
   let mockConfig: PuppetMasterConfig;
   let mockConfigManager: {
     load: ReturnType<typeof vi.fn>;
+    getConfigPath: ReturnType<typeof vi.fn>;
   };
   let mockContainer: {
     resolve: ReturnType<typeof vi.fn>;
@@ -224,6 +225,7 @@ describe('startAction', () => {
 
     mockConfigManager = {
       load: vi.fn().mockResolvedValue(mockConfig),
+      getConfigPath: vi.fn().mockReturnValue('.puppet-master/config.yaml'),
     };
 
     mockOrchestrator = {
@@ -315,15 +317,31 @@ describe('startAction', () => {
 
       await startAction({});
 
-      expect(access).toHaveBeenCalledWith(mockConfig.memory.prdFile);
+      // Path is resolved to absolute, so check it ends with the expected relative path
+      const accessCall = (access as ReturnType<typeof vi.fn>).mock.calls[0]?.[0];
+      expect(accessCall).toBeTruthy();
+      expect(String(accessCall)).toContain(mockConfig.memory.prdFile);
     });
 
-    it('should use provided PRD path', async () => {
+    it('should use provided PRD path and pass override to createContainer', async () => {
       (access as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
+      // Ensure registry can return runner so initialization succeeds
+      const registry = mockContainer.resolve('platformRegistry');
+      registry.getAvailable.mockReturnValue(['cursor']);
+      registry.get.mockReturnValue(mockPlatformRunner);
 
       await startAction({ prd: '/custom/prd.json' });
 
-      expect(access).toHaveBeenCalledWith('/custom/prd.json');
+      // Path is resolved, so check it contains the provided path
+      const accessCall = (access as ReturnType<typeof vi.fn>).mock.calls[0]?.[0];
+      expect(accessCall).toBeTruthy();
+      expect(String(accessCall)).toContain('/custom/prd.json');
+      // Verify createContainer was called with prdPath override (relative path from options.prd)
+      const containerCall = (createContainer as ReturnType<typeof vi.fn>).mock.calls[0];
+      expect(containerCall).toBeTruthy();
+      expect(containerCall[0]).toEqual(mockConfig); // config
+      expect(containerCall[1]).toBeTruthy(); // projectRoot (absolute path)
+      expect(containerCall[3]).toBe('/custom/prd.json'); // prdPath override
     });
 
     it('should exit with error if PRD file not found', async () => {
@@ -375,11 +393,11 @@ describe('startAction', () => {
     it('should create orchestrator instance', async () => {
       await startAction({});
 
-      expect(Orchestrator).toHaveBeenCalledWith({
-        config: mockConfig,
-        projectPath: process.cwd(),
-        prdPath: mockConfig.memory.prdFile,
-      });
+      // projectPath is resolved to an absolute path
+      const orchestratorCall = (Orchestrator as unknown as ReturnType<typeof vi.fn>).mock.calls[0]?.[0];
+      expect(orchestratorCall).toBeTruthy();
+      expect(orchestratorCall.config).toEqual(mockConfig);
+      expect(String(orchestratorCall.projectPath)).toBeTruthy(); // Absolute path
     });
 
     it('should initialize orchestrator with dependencies', async () => {

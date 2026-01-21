@@ -87,6 +87,19 @@ describe('ClaudeRunner', () => {
       expect(args.indexOf('-p')).toBeLessThan(args.indexOf('Test prompt'));
     });
 
+    it('should omit prompt argument for large prompts and rely on stdin', () => {
+      const largePrompt = 'a'.repeat(50_000);
+      const request: ExecutionRequest = {
+        prompt: largePrompt,
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+      };
+
+      const args = runner['buildArgs'](request);
+      expect(args).toContain('-p');
+      expect(args).not.toContain(largePrompt);
+    });
+
     it('should include -p flag without prompt if prompt not provided', () => {
       const request: ExecutionRequest = {
         prompt: '',
@@ -347,6 +360,30 @@ describe('ClaudeRunner', () => {
 
       // Should not write to stdin since prompt is in args
       expect(writeSpy).not.toHaveBeenCalled();
+    });
+
+    it('should write large prompt to stdin when omitted from -p args', async () => {
+      const largePrompt = 'a'.repeat(50_000);
+      const request: ExecutionRequest = {
+        prompt: largePrompt,
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+      };
+
+      const mockProc = createMockProcess();
+      const writeSpy = vi.spyOn(mockProc.stdin as Writable, 'write');
+      const endSpy = vi.spyOn(mockProc.stdin as Writable, 'end');
+      vi.mocked(spawn).mockReturnValue(mockProc as ChildProcess);
+
+      await runner['spawn'](request);
+
+      expect(spawn).toHaveBeenCalled();
+      const callArgs = vi.mocked(spawn).mock.calls[0];
+      expect(callArgs[1]).toContain('-p');
+      expect(callArgs[1]).not.toContain(largePrompt);
+
+      expect(writeSpy).toHaveBeenCalledWith(largePrompt, 'utf-8');
+      expect(endSpy).toHaveBeenCalled();
     });
 
     it('should include model in args when specified', async () => {

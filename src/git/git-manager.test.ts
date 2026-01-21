@@ -234,4 +234,30 @@ describe('GitManager', () => {
       expect(typeof diff).toBe('string');
     });
   });
+
+  describe('getDiffFiles', () => {
+    it('should list changed files (unstaged, staged, untracked)', async () => {
+      const available = await gitManager.isAvailable();
+      if (!available) return;
+
+      await writeFile(join(testRepoDir, 'tracked.txt'), 'original');
+      await gitManager.commit({ message: 'initial', files: ['tracked.txt'] });
+
+      // Unstaged tracked change
+      await writeFile(join(testRepoDir, 'tracked.txt'), 'modified');
+
+      // Untracked file
+      await writeFile(join(testRepoDir, 'untracked.txt'), 'new');
+
+      // Staged file
+      await writeFile(join(testRepoDir, 'staged.txt'), 'staged');
+      await gitManager.add(['staged.txt']);
+
+      const files = await gitManager.getDiffFiles();
+
+      expect(files).toContain('tracked.txt');
+      expect(files).toContain('untracked.txt');
+      expect(files).toContain('staged.txt');
+    });
+  });
 });

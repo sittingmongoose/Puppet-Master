@@ -17,6 +17,7 @@ import { Orchestrator } from '../../core/orchestrator.js';
 import type { OrchestratorDependencies } from '../../core/orchestrator.js';
 import type { PuppetMasterConfig } from '../../types/config.js';
 import { PlatformRegistry } from '../../platforms/registry.js';
+import { deriveProjectRootFromConfigPath, resolveUnderProjectRoot } from '../../utils/project-paths.js';
 import type { CommandModule } from './index.js';
 
 /**
@@ -42,9 +43,11 @@ export async function startAction(options: StartOptions): Promise<void> {
     // Load configuration
     const configManager = new ConfigManager(options.config);
     const config = await configManager.load();
+    const configPath = configManager.getConfigPath();
+    const projectRoot = deriveProjectRootFromConfigPath(configPath);
 
     // Validate PRD exists
-    const prdPath = options.prd || config.memory.prdFile;
+    const prdPath = resolveUnderProjectRoot(projectRoot, options.prd || config.memory.prdFile);
     try {
       await access(prdPath);
     } catch {
@@ -62,14 +65,15 @@ export async function startAction(options: StartOptions): Promise<void> {
     }
 
     // Create container and resolve dependencies
-    const projectPath = process.cwd();
-    const container = createContainer(config, projectPath);
+    // Pass prdPath override if --prd was provided, so PrdManager uses CLI override instead of config
+    // Pass relative path (options.prd) so createContainer can resolve it properly
+    const prdPathOverride = options.prd ? options.prd : undefined;
+    const container = createContainer(config, projectRoot, configPath, prdPathOverride);
 
     // Create orchestrator instance
     const orchestrator = new Orchestrator({
       config,
-      projectPath,
-      prdPath,
+      projectPath: projectRoot,
     });
 
     // Resolve all dependencies from container
@@ -81,7 +85,10 @@ export async function startAction(options: StartOptions): Promise<void> {
       evidenceStore: container.resolve('evidenceStore'),
       usageTracker: container.resolve('usageTracker'),
       gitManager: container.resolve('gitManager'),
-      platformRunner: getPlatformRunner(container, config),
+      branchStrategy: container.resolve('branchStrategy'),
+      commitFormatter: container.resolve('commitFormatter'),
+      prManager: container.resolve('prManager'),
+      platformRunner: getPlatformRunner(container, config, projectRoot),
       verificationIntegration: container.resolve('verificationIntegration'),
     };
 
@@ -118,13 +125,17 @@ export async function startAction(options: StartOptions): Promise<void> {
 /**
  * Get platform runner for the configured subtask platform
  */
-function getPlatformRunner(container: ReturnType<typeof createContainer>, config: PuppetMasterConfig): OrchestratorDependencies['platformRunner'] {
+function getPlatformRunner(
+  container: ReturnType<typeof createContainer>,
+  config: PuppetMasterConfig,
+  projectRoot: string
+): OrchestratorDependencies['platformRunner'] {
   const registry = container.resolve<PlatformRegistry>('platformRegistry');
   const platform = config.tiers.subtask.platform;
   
   // Initialize registry with runners if needed
   if (registry.getAvailable().length === 0) {
-    const defaultRegistry = PlatformRegistry.createDefault(config);
+    const defaultRegistry = PlatformRegistry.createDefault(config, projectRoot);
     // Copy runners from default registry
     for (const p of defaultRegistry.getAvailable()) {
       const runner = defaultRegistry.get(p);

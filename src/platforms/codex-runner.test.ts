@@ -6,7 +6,7 @@
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { spawn } from 'child_process';
-import { Readable, Writable } from 'stream';
+import { Readable } from 'stream';
 import { CodexRunner } from './codex-runner.js';
 import { CapabilityDiscoveryService } from './capability-discovery.js';
 import type { ExecutionRequest } from '../types/platforms.js';
@@ -46,11 +46,10 @@ describe('CodexRunner', () => {
           // No-op, data will be pushed manually
         },
       });
-      const stdinStream = new Writable({
-        write(_chunk, _encoding, callback) {
-          callback();
-        },
-      });
+      const stdinStream = {
+        write: vi.fn(),
+        end: vi.fn(),
+      } as unknown as NodeJS.WritableStream;
 
       return {
         pid: 12345,
@@ -104,7 +103,17 @@ describe('CodexRunner', () => {
 
       const args = (runner as unknown as { buildArgs: (req: ExecutionRequest) => string[] }).buildArgs(request);
 
-      expect(args).toEqual(['exec', '--path', '/tmp/test']);
+      expect(args).toEqual([
+        'exec',
+        '--cd',
+        '/tmp/test',
+        '--ask-for-approval',
+        'never',
+        '--sandbox',
+        'workspace-write',
+        '--json',
+        'Test prompt',
+      ]);
     });
 
     it('should include model flag when model is specified', () => {
@@ -117,7 +126,19 @@ describe('CodexRunner', () => {
 
       const args = (runner as unknown as { buildArgs: (req: ExecutionRequest) => string[] }).buildArgs(request);
 
-      expect(args).toEqual(['exec', '--path', '/tmp/test', '--model', 'claude-3-opus']);
+      expect(args).toEqual([
+        'exec',
+        '--cd',
+        '/tmp/test',
+        '--model',
+        'claude-3-opus',
+        '--ask-for-approval',
+        'never',
+        '--sandbox',
+        'workspace-write',
+        '--json',
+        'Test prompt',
+      ]);
     });
 
     it('should include max-turns flag when maxTurns is specified', () => {
@@ -130,7 +151,18 @@ describe('CodexRunner', () => {
 
       const args = (runner as unknown as { buildArgs: (req: ExecutionRequest) => string[] }).buildArgs(request);
 
-      expect(args).toEqual(['exec', '--path', '/tmp/test', '--max-turns', '5']);
+      // Codex CLI does not currently document a max-turns flag; ensure we don't add one.
+      expect(args).toEqual([
+        'exec',
+        '--cd',
+        '/tmp/test',
+        '--ask-for-approval',
+        'never',
+        '--sandbox',
+        'workspace-write',
+        '--json',
+        'Test prompt',
+      ]);
     });
 
     it('should include all flags when all options are provided', () => {
@@ -146,12 +178,16 @@ describe('CodexRunner', () => {
 
       expect(args).toEqual([
         'exec',
-        '--path',
+        '--cd',
         '/tmp/test',
         '--model',
         'claude-3-opus',
-        '--max-turns',
-        '10',
+        '--ask-for-approval',
+        'never',
+        '--sandbox',
+        'workspace-write',
+        '--json',
+        'Test prompt',
       ]);
     });
 
@@ -165,7 +201,15 @@ describe('CodexRunner', () => {
       const args = (runner as unknown as { buildArgs: (req: ExecutionRequest) => string[] }).buildArgs(request);
 
       // Empty working directory should not add --path flag
-      expect(args).toEqual(['exec']);
+      expect(args).toEqual([
+        'exec',
+        '--ask-for-approval',
+        'never',
+        '--sandbox',
+        'workspace-write',
+        '--json',
+        'Test prompt',
+      ]);
     });
   });
 
@@ -181,7 +225,17 @@ describe('CodexRunner', () => {
 
       expect(mockSpawn).toHaveBeenCalledWith(
         'codex',
-        ['exec', '--path', '/tmp/test'],
+        [
+          'exec',
+          '--cd',
+          '/tmp/test',
+          '--ask-for-approval',
+          'never',
+          '--sandbox',
+          'workspace-write',
+          '--json',
+          'Test prompt',
+        ],
         {
           cwd: '/tmp/test',
           stdio: ['pipe', 'pipe', 'pipe'],
@@ -189,7 +243,7 @@ describe('CodexRunner', () => {
       );
     });
 
-    it('should write prompt to stdin', async () => {
+    it('should not write prompt to stdin (prompt is positional arg)', async () => {
       const request: ExecutionRequest = {
         prompt: 'Test prompt content',
         workingDirectory: '/tmp/test',
@@ -199,7 +253,9 @@ describe('CodexRunner', () => {
       const proc = await (runner as unknown as { spawn: (req: ExecutionRequest) => Promise<ReturnType<typeof spawn>> }).spawn(request);
 
       expect(proc.stdin).toBeDefined();
-      // The write happens in spawn, so we verify the process was created
+      const stdin = proc.stdin as unknown as { write?: ReturnType<typeof vi.fn>; end?: ReturnType<typeof vi.fn> };
+      expect(stdin.write).not.toHaveBeenCalled();
+      expect(stdin.end).toHaveBeenCalled();
       expect(mockSpawn).toHaveBeenCalled();
     });
 
@@ -215,7 +271,19 @@ describe('CodexRunner', () => {
 
       expect(mockSpawn).toHaveBeenCalledWith(
         'codex',
-        ['exec', '--path', '/tmp/test', '--model', 'claude-3-opus'],
+        [
+          'exec',
+          '--cd',
+          '/tmp/test',
+          '--model',
+          'claude-3-opus',
+          '--ask-for-approval',
+          'never',
+          '--sandbox',
+          'workspace-write',
+          '--json',
+          'Test prompt',
+        ],
         expect.any(Object)
       );
     });

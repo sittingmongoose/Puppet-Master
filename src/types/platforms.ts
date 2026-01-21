@@ -19,8 +19,13 @@ export type { Platform };
 export interface ExecutionRequest {
   prompt: string;
   model?: string;
+  /**
+   * Enable platform “plan mode” (best-effort; currently used by Cursor runner).
+   */
+  planMode?: boolean;
   workingDirectory: string;
   timeout?: number;
+  hardTimeout?: number;
   maxTurns?: number;
   contextFiles?: string[];
   systemPrompt?: string;

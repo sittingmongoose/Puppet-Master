@@ -47,7 +47,8 @@ export class CodexRunner extends BasePlatformRunner {
    * Spawns a Codex CLI process.
    * 
    * Uses `codex exec` subcommand for non-interactive execution.
-   * Writes prompt to stdin and returns the ChildProcess.
+   * Passes the prompt as the positional `PROMPT` argument and disables
+   * stdin input to prevent interactive hangs.
    */
   protected async spawn(
     request: ExecutionRequest
@@ -59,9 +60,9 @@ export class CodexRunner extends BasePlatformRunner {
       stdio: ['pipe', 'pipe', 'pipe'],
     });
 
-    // Write prompt to stdin and end stream
-    if (proc.stdin) {
-      proc.stdin.write(request.prompt, 'utf-8');
+    // Important: avoid interactive prompts/hangs by ensuring stdin is closed
+    // in non-interactive mode. Codex expects the prompt via positional argument.
+    if (request.nonInteractive && proc.stdin) {
       proc.stdin.end();
     }
 
@@ -74,21 +75,20 @@ export class CodexRunner extends BasePlatformRunner {
    * Codex command structure: `codex exec [flags]`
    * 
    * Flags:
-   * - `--path <dir>` - Working directory (alternative to cwd)
+   * - `--cd <dir>` - Working directory (alternative to cwd)
    * - `--model <model>` - Model selection
-   * - `--max-turns <n>` - Cap agentic turns
-   * - `--output-format json` - Structured JSONL output (optional)
-   * - `--approval-policy <policy>` - Command approval control (optional)
-   * - `--sandbox-mode` - Filesystem/network access control (optional)
+   * - `--json` - JSONL event stream output (optional)
+   * - `--ask-for-approval <policy>` - Command approval control
+   * - `--sandbox <mode>` - Filesystem/network access control
    */
   protected buildArgs(request: ExecutionRequest): string[] {
     const args: string[] = ['exec'];
 
-    // Add working directory via --path flag
-    // Note: Codex uses --path instead of relying solely on cwd
+    // Add working directory via --cd flag
+    // Note: Codex supports --cd/-C to set workspace root.
     // Only add if workingDirectory is non-empty
     if (request.workingDirectory && request.workingDirectory.trim() !== '') {
-      args.push('--path', request.workingDirectory);
+      args.push('--cd', request.workingDirectory);
     }
 
     // Add model selection
@@ -96,17 +96,16 @@ export class CodexRunner extends BasePlatformRunner {
       args.push('--model', request.model);
     }
 
-    // Add max turns if specified
-    if (request.maxTurns !== undefined) {
-      args.push('--max-turns', String(request.maxTurns));
+    // Non-interactive execution: ensure Codex never pauses for approval and can
+    // write to the workspace. Emit structured JSONL events for robust parsing.
+    if (request.nonInteractive) {
+      args.push('--ask-for-approval', 'never');
+      args.push('--sandbox', 'workspace-write');
+      args.push('--json');
     }
 
-    // Add output format for structured output (optional, but useful for parsing)
-    // Note: We can handle both JSONL and plain text, so this is optional
-    // args.push('--output-format', 'json');
-
-    // Note: approval-policy and sandbox-mode are optional and not included
-    // by default. They can be added via contextFiles or systemPrompt if needed.
+    // Pass the prompt as the required positional argument for `codex exec`.
+    args.push(request.prompt);
 
     return args;
   }

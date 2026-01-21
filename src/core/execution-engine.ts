@@ -15,6 +15,7 @@ import type { AgentsContent } from '../memory/agents-manager.js';
 import type { TierNode } from './tier-node.js';
 import type { FailureInfo, PromptContext } from './prompt-builder.js';
 import { PromptBuilder } from './prompt-builder.js';
+import { GitManager } from '../git/git-manager.js';
 
 export interface IterationContext {
   tierNode: TierNode;
@@ -24,6 +25,8 @@ export interface IterationContext {
   projectName: string;
   sessionId: string;
   platform: Platform;
+  model?: string;
+  planMode?: boolean;
   progressEntries: ProgressEntry[];
   agentsContent: AgentsContent[];
   subtaskPlan: TierPlan;
@@ -66,6 +69,7 @@ export class ExecutionEngine {
   private readonly config: ExecutionConfig;
   private readonly promptBuilder: PromptBuilder;
   private runner: PlatformRunnerContract | null = null;
+  private gitManager: GitManager | null = null;
 
   private readonly processInfoByPid = new Map<number, ProcessInfo>();
   private readonly processAudits: ProcessAuditRecord[] = [];
@@ -80,6 +84,10 @@ export class ExecutionEngine {
 
   setRunner(runner: PlatformRunnerContract): void {
     this.runner = runner;
+  }
+
+  setGitManager(gitManager: GitManager): void {
+    this.gitManager = gitManager;
   }
 
   onOutput(callback: (output: string) => void): void {
@@ -100,9 +108,21 @@ export class ExecutionEngine {
       throw new Error('ExecutionEngine runner not set');
     }
 
+    // Capture baseline git status for iteration bookkeeping (best-effort).
+    // Do not allow git failures to affect iteration execution.
+    if (this.gitManager) {
+      try {
+        await this.gitManager.getStatus();
+      } catch {
+        // ignore
+      }
+    }
+
     const prompt = this.buildIterationPrompt(context);
     const request: ExecutionRequest = {
       prompt,
+      model: context.model,
+      planMode: context.planMode,
       workingDirectory: context.projectPath,
       nonInteractive: true,
       timeout: this.config.defaultTimeout,
@@ -261,6 +281,15 @@ export class ExecutionEngine {
     const duration = Date.now() - startTime;
     const output = transcript ?? outputChunks.join('');
 
+    let filesChanged: string[] = [];
+    if (this.gitManager) {
+      try {
+        filesChanged = await this.gitManager.getDiffFiles();
+      } catch {
+        filesChanged = [];
+      }
+    }
+
     const success = !timedOut && !stalled && completionSignal === 'COMPLETE';
     const exitCode = success ? 0 : 1;
 
@@ -272,7 +301,7 @@ export class ExecutionEngine {
       exitCode,
       ...(completionSignal ? { completionSignal } : {}),
       learnings: [],
-      filesChanged: [],
+      filesChanged,
       ...(errorMessage ? { error: errorMessage } : {}),
     };
 

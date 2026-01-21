@@ -44,17 +44,6 @@ interface ErrorResponse {
 }
 
 /**
- * Get project directory from request or use current working directory.
- */
-function getProjectDirectory(req: Request): string {
-  const { projectPath } = req.body || {};
-  if (projectPath && typeof projectPath === 'string') {
-    return resolve(projectPath);
-  }
-  return process.cwd();
-}
-
-/**
  * Determine file format from extension or MIME type.
  */
 function detectFormat(filename: string, mimeType?: string): SupportedFormat {
@@ -174,8 +163,9 @@ export function createWizardRoutes(
    */
   router.post('/wizard/upload', async (req: Request, res: Response) => {
     try {
-      const projectDir = getProjectDirectory(req);
       const { text, file, filename, format: providedFormat, projectPath } = req.body;
+      const projectDir =
+        projectPath && typeof projectPath === 'string' ? resolve(projectPath) : projectBaseDir;
       
       let buffer: Buffer;
       let detectedFormat: SupportedFormat;
@@ -257,7 +247,7 @@ export function createWizardRoutes(
         return;
       }
 
-      const projectDir = projectPath ? resolve(projectPath) : process.cwd();
+      const projectDir = projectPath ? resolve(projectPath) : projectBaseDir;
       const name = projectName || parsed.title || 'Untitled Project';
 
       // Load config if available
@@ -394,7 +384,7 @@ export function createWizardRoutes(
         return;
       }
 
-      const projectDir = projectPath ? resolve(projectPath) : process.cwd();
+      const projectDir = projectPath ? resolve(projectPath) : projectBaseDir;
       
       // Load config if available
       const configPath = join(projectDir, '.puppet-master', 'config.yaml');
@@ -462,7 +452,15 @@ export function createWizardRoutes(
     try {
       const { parsed, prd, architecture, tierPlan, projectPath, projectName, runPipeline } = req.body;
 
-      const projectDir = projectPath ? resolve(projectPath) : process.cwd();
+      if (!projectPath || typeof projectPath !== 'string' || projectPath.trim().length === 0) {
+        res.status(400).json({
+          error: 'projectPath is required to save artifacts',
+          code: 'PROJECT_PATH_REQUIRED',
+        } as ErrorResponse);
+        return;
+      }
+
+      const projectDir = resolve(projectPath);
 
       // Check if we have all dependencies for Start Chain Pipeline
       const hasPipelineDependencies = !!(

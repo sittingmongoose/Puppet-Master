@@ -9,7 +9,7 @@ import type {
   OrchestratorDependencies,
 } from './orchestrator.js';
 import type { PuppetMasterConfig } from '../types/config.js';
-import type { TierNode } from './tier-node.js';
+import { TierNode } from './tier-node.js';
 import type { IterationResult } from './execution-engine.js';
 import type { AdvancementResult } from './auto-advancement.js';
 import type { GateResult } from '../types/tiers.js';
@@ -162,6 +162,8 @@ describe('Orchestrator', () => {
       } as unknown as OrchestratorDependencies['evidenceStore'],
       usageTracker: {
         record: vi.fn().mockResolvedValue(undefined),
+        getCallCountInLastHour: vi.fn().mockResolvedValue(0),
+        getCallCountToday: vi.fn().mockResolvedValue(0),
       } as unknown as OrchestratorDependencies['usageTracker'],
       gitManager: {
         getStatus: vi.fn().mockResolvedValue({
@@ -172,9 +174,26 @@ describe('Orchestrator', () => {
           ahead: 0,
           behind: 0,
         }),
+        getDiffFiles: vi.fn().mockResolvedValue([]),
         add: vi.fn().mockResolvedValue({ success: true, stdout: '', stderr: '', exitCode: 0 }),
         commit: vi.fn().mockResolvedValue({ success: true, stdout: '', stderr: '', exitCode: 0 }),
+        push: vi.fn().mockResolvedValue({ success: true, stdout: '', stderr: '', exitCode: 0 }),
+        getHeadSha: vi.fn().mockResolvedValue('deadbeef'),
       } as unknown as OrchestratorDependencies['gitManager'],
+      branchStrategy: {
+        granularity: 'single',
+        getBranchName: vi.fn().mockReturnValue('main'),
+        shouldCreateBranch: vi.fn().mockReturnValue(false),
+        shouldMerge: vi.fn().mockReturnValue(false),
+        ensureBranch: vi.fn().mockResolvedValue(undefined),
+        mergeToBranch: vi.fn().mockResolvedValue({ success: true, stdout: '', stderr: '', exitCode: 0 }),
+      } as unknown as OrchestratorDependencies['branchStrategy'],
+      commitFormatter: {
+        format: vi.fn().mockImplementation((ctx: { itemId: string; summary: string }) => `ralph: ${ctx.itemId} ${ctx.summary}`),
+      } as unknown as OrchestratorDependencies['commitFormatter'],
+      prManager: {
+        createPR: vi.fn().mockResolvedValue({ number: 1, url: 'https://example.com', title: 'Test', state: 'open' }),
+      } as unknown as OrchestratorDependencies['prManager'],
       platformRunner: {
         platform: 'cursor',
         sessionReuseAllowed: false,
@@ -193,6 +212,7 @@ describe('Orchestrator', () => {
       verificationIntegration: {
         runTaskGate: vi.fn(),
         runPhaseGate: vi.fn(),
+        runSubtaskGate: vi.fn(),
         runSubtaskVerification: vi.fn(),
         handleGateResult: vi.fn(),
       } as unknown as OrchestratorDependencies['verificationIntegration'],
@@ -368,7 +388,7 @@ describe('Orchestrator', () => {
           title: 'Test Subtask',
         },
         stateMachine: {
-          send: vi.fn(),
+          send: vi.fn().mockReturnValue(true),
         },
         getState: vi.fn().mockReturnValue('running'),
       } as unknown as TierNode;
@@ -397,7 +417,7 @@ describe('Orchestrator', () => {
           title: 'Test Subtask',
         },
         stateMachine: {
-          send: vi.fn(),
+          send: vi.fn().mockReturnValue(true),
         },
         getState: vi.fn().mockReturnValue('running'),
       } as unknown as TierNode;
@@ -429,8 +449,9 @@ describe('Orchestrator', () => {
 
     it('handles passed gate result', async () => {
       const mockTier = {
+        getState: vi.fn().mockReturnValue('gating'),
         stateMachine: {
-          send: vi.fn(),
+          send: vi.fn().mockReturnValue(true),
         },
       } as unknown as TierNode;
 
@@ -452,8 +473,9 @@ describe('Orchestrator', () => {
 
     it('handles failed gate result (minor)', async () => {
       const mockTier = {
+        getState: vi.fn().mockReturnValue('gating'),
         stateMachine: {
-          send: vi.fn(),
+          send: vi.fn().mockReturnValue(true),
         },
       } as unknown as TierNode;
 
@@ -474,6 +496,144 @@ describe('Orchestrator', () => {
       expect(mockTier.stateMachine.send).toHaveBeenCalledWith({
         type: expect.stringMatching(/GATE_FAILED/),
       });
+    });
+  });
+
+  describe('runLoop (subtask lifecycle)', () => {
+    beforeEach(async () => {
+      await orchestrator.initialize(mockDeps);
+      // Put the orchestrator in executing state so runLoop actually runs.
+      (orchestrator as unknown as OrchestratorForTesting).stateMachine.send({ type: 'START' });
+    });
+
+    it('emits TIER_SELECTED and PLAN_APPROVED before spawning, then runs subtask gate to pass', async () => {
+      const now = new Date().toISOString();
+      const subtask = new TierNode({
+        id: 'ST-001-001-001',
+        type: 'subtask',
+        title: 'Test Subtask',
+        description: 'Test Subtask',
+        plan: { id: 'ST-001-001-001', title: 'Test Subtask', description: 'Test Subtask' },
+        acceptanceCriteria: [],
+        testPlan: { commands: [], failFast: true },
+        evidence: [],
+        iterations: 0,
+        maxIterations: 3,
+        createdAt: now,
+        updatedAt: now,
+      });
+
+      const tierStateManagerStub = {
+        getCurrentSubtask: vi.fn().mockReturnValue(subtask),
+        syncToPrd: vi.fn().mockResolvedValue(undefined),
+        setCurrentSubtask: vi.fn(),
+        setCurrentTask: vi.fn(),
+        setCurrentPhase: vi.fn(),
+        getAllPhases: vi.fn().mockReturnValue([]),
+        getAllTasks: vi.fn().mockReturnValue([]),
+        getAllSubtasks: vi.fn().mockReturnValue([]),
+        getCurrentTask: vi.fn().mockReturnValue(null),
+        getCurrentPhase: vi.fn().mockReturnValue(null),
+      };
+
+      (orchestrator as unknown as OrchestratorForTesting).tierStateManager =
+        tierStateManagerStub as unknown as TierStateManager;
+
+      (orchestrator as unknown as OrchestratorForTesting).autoAdvancement = {
+        checkAndAdvance: vi.fn().mockResolvedValue({ action: 'complete', message: 'done' }),
+      } as unknown as AutoAdvancement;
+
+      // Keep this unit test focused; avoid touching git/progress/budget side effects.
+      (orchestrator as unknown as { buildIterationContext: unknown }).buildIterationContext = vi.fn().mockResolvedValue({
+        tierNode: subtask,
+        iterationNumber: 1,
+        maxIterations: 3,
+        projectPath: '/test/project',
+        projectName: 'test-project',
+        sessionId: 'PM-2026-01-11-12-00-00-001',
+        platform: 'cursor',
+        model: 'default',
+        planMode: false,
+        progressEntries: [],
+        agentsContent: [],
+        subtaskPlan: { id: subtask.id, title: subtask.data.title, description: subtask.data.description },
+      });
+      (orchestrator as unknown as { recordProgress: unknown }).recordProgress = vi.fn().mockResolvedValue(undefined);
+      (orchestrator as unknown as { publishBudgetUpdateEvent: unknown }).publishBudgetUpdateEvent =
+        vi.fn().mockResolvedValue(undefined);
+      (orchestrator as unknown as { commitChanges: unknown }).commitChanges = vi.fn().mockResolvedValue(undefined);
+      (orchestrator as unknown as { publishProgressEvent: unknown }).publishProgressEvent =
+        vi.fn().mockImplementation(() => undefined);
+
+      const spawnSpy = vi
+        .spyOn((orchestrator as unknown as { executionEngine: any }).executionEngine, 'spawnIteration')
+        .mockResolvedValue({
+          success: true,
+          output: '<ralph>COMPLETE</ralph>',
+          processId: 12345,
+          duration: 5,
+          exitCode: 0,
+          completionSignal: 'COMPLETE',
+          learnings: [],
+          filesChanged: [],
+        });
+
+      const gateResult: GateResult = {
+        passed: true,
+        report: {
+          gateId: 'subtask-gate-ST-001-001-001',
+          timestamp: now,
+          overallPassed: true,
+          verifiersRun: [],
+          summary: 'Gate passed',
+        },
+      };
+      vi.mocked(mockDeps.verificationIntegration.runSubtaskGate).mockResolvedValue(gateResult);
+
+      const sendSpy = vi.spyOn(subtask.stateMachine, 'send');
+
+      await (orchestrator as unknown as { runLoop: () => Promise<void> }).runLoop();
+
+      const tierSelectedIdx = sendSpy.mock.calls.findIndex((call) => call[0].type === 'TIER_SELECTED');
+      const planApprovedIdx = sendSpy.mock.calls.findIndex((call) => call[0].type === 'PLAN_APPROVED');
+
+      expect(tierSelectedIdx).toBeGreaterThanOrEqual(0);
+      expect(planApprovedIdx).toBeGreaterThanOrEqual(0);
+
+      const tierSelectedOrder = sendSpy.mock.invocationCallOrder[tierSelectedIdx]!;
+      const planApprovedOrder = sendSpy.mock.invocationCallOrder[planApprovedIdx]!;
+      const spawnOrder = spawnSpy.mock.invocationCallOrder[0]!;
+
+      expect(tierSelectedOrder).toBeLessThan(spawnOrder);
+      expect(planApprovedOrder).toBeLessThan(spawnOrder);
+
+      expect(mockDeps.verificationIntegration.runSubtaskGate).toHaveBeenCalledTimes(1);
+      expect(subtask.getState()).toBe('passed');
+    });
+
+    it('throws when a tier transition is invalid (send returns false)', async () => {
+      const badSubtask = {
+        id: 'ST-001-001-999',
+        type: 'subtask',
+        data: { iterations: 0, title: 'Bad Subtask' },
+        stateMachine: { send: vi.fn().mockReturnValue(false) },
+        getState: vi.fn().mockReturnValue('pending'),
+      } as unknown as TierNode;
+
+      const result: IterationResult = {
+        success: true,
+        output: '<ralph>COMPLETE</ralph>',
+        processId: 12345,
+        duration: 1,
+        exitCode: 0,
+        completionSignal: 'COMPLETE',
+        learnings: [],
+        filesChanged: [],
+      };
+
+      await expect(
+        (orchestrator as unknown as OrchestratorForTesting).handleIterationResult(result, badSubtask)
+      ).rejects.toThrow(/Invalid tier transition/);
     });
   });
 
@@ -556,40 +716,7 @@ describe('Orchestrator', () => {
       await orchestrator.initialize(mockDeps);
     });
 
-    it('commits changes when files are changed', async () => {
-      const mockSubtask = {
-        id: 'ST-001-001-001',
-        data: {
-          title: 'Test Subtask',
-        },
-      } as TierNode;
-
-      const result: IterationResult = {
-        success: true,
-        output: 'Success',
-        processId: 12345,
-        duration: 5000,
-        exitCode: 0,
-        learnings: [],
-        filesChanged: ['src/test.ts'],
-      };
-
-      vi.mocked(mockDeps.gitManager.getStatus).mockResolvedValue({
-        branch: 'main',
-        staged: [],
-        modified: ['src/test.ts'],
-        untracked: [],
-        ahead: 0,
-        behind: 0,
-      });
-
-      await (orchestrator as unknown as OrchestratorForTesting).commitChanges(result, mockSubtask);
-
-      expect(mockDeps.gitManager.add).toHaveBeenCalled();
-      expect(mockDeps.gitManager.commit).toHaveBeenCalled();
-    });
-
-    it('skips commit when no files changed', async () => {
+    it('commits changes when git status shows changes (even if filesChanged is empty)', async () => {
       const mockSubtask = {
         id: 'ST-001-001-001',
         data: {
@@ -605,6 +732,45 @@ describe('Orchestrator', () => {
         exitCode: 0,
         learnings: [],
         filesChanged: [],
+      };
+
+      vi.mocked(mockDeps.gitManager.getStatus).mockResolvedValue({
+        branch: 'main',
+        staged: [],
+        modified: ['src/test.ts'],
+        untracked: [],
+        ahead: 0,
+        behind: 0,
+      });
+      vi.mocked(mockDeps.gitManager.getDiffFiles).mockResolvedValue(['src/test.ts']);
+
+      await (orchestrator as unknown as OrchestratorForTesting).commitChanges(result, mockSubtask);
+
+      expect(mockDeps.gitManager.getDiffFiles).toHaveBeenCalled();
+      expect(mockDeps.gitManager.add).toHaveBeenCalledWith('.');
+      expect(mockDeps.gitManager.commit).toHaveBeenCalledWith(
+        expect.objectContaining({
+          message: expect.stringContaining('ralph: ST-001-001-001'),
+        })
+      );
+    });
+
+    it('skips commit when git status is clean (even if filesChanged is non-empty)', async () => {
+      const mockSubtask = {
+        id: 'ST-001-001-001',
+        data: {
+          title: 'Test Subtask',
+        },
+      } as TierNode;
+
+      const result: IterationResult = {
+        success: true,
+        output: 'Success',
+        processId: 12345,
+        duration: 5000,
+        exitCode: 0,
+        learnings: [],
+        filesChanged: ['src/test.ts'],
       };
 
       await (orchestrator as unknown as OrchestratorForTesting).commitChanges(result, mockSubtask);

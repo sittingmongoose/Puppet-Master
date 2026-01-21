@@ -32,6 +32,7 @@ import { mkdir, writeFile, copyFile, access, rm } from 'node:fs/promises';
 import { join, dirname, basename } from 'node:path';
 import { constants } from 'node:fs';
 import type { Platform } from '../types/index.js';
+import { resolvePlatformCommand } from '../platforms/constants.js';
 
 export interface SpawnConfig {
   workingDirectory: string;
@@ -387,17 +388,17 @@ export class FreshSpawner {
     switch (request.platform) {
       case 'cursor':
         return {
-          command: 'cursor-agent',
+          command: resolvePlatformCommand('cursor', null),
           args: [...baseArgs, '-p', request.prompt],
         };
       case 'claude':
         return {
-          command: 'claude',
+          command: resolvePlatformCommand('claude', null),
           args: [...baseArgs, '-p', request.prompt],
         };
       case 'codex':
         return {
-          command: 'codex',
+          command: resolvePlatformCommand('codex', null),
           args: ['exec', request.prompt, ...baseArgs],
         };
       default: {

@@ -7,11 +7,12 @@
  * See ARCHITECTURE.md Section 2.1 (Core Modules) and BUILD_QUEUE_PHASE_4.md PH4-T08.
  */
 
-import type { OrchestratorState } from '../types/state.js';
+import type { OrchestratorState, TierType } from '../types/state.js';
 import type { PuppetMasterConfig } from '../types/config.js';
 import type { TierPlan } from '../types/tiers.js';
 import type { PRD } from '../types/prd.js';
 import type { PlatformRunnerContract, ExecutionRequest, RunningProcess } from '../types/platforms.js';
+import type { TierEvent } from '../types/events.js';
 import type { IterationContext, IterationResult } from './execution-engine.js';
 import type { AdvancementResult } from './auto-advancement.js';
 import type { GateResult } from '../types/tiers.js';
@@ -31,7 +32,14 @@ import type { ProgressManager } from '../memory/index.js';
 import type { AgentsManager } from '../memory/index.js';
 import type { EvidenceStore } from '../memory/index.js';
 import type { UsageTracker } from '../memory/index.js';
-import type { GitManager } from '../git/index.js';
+import type {
+  GitManager,
+  BranchStrategy,
+  BranchContext,
+  CommitFormatter,
+  CommitContext,
+  PRManager,
+} from '../git/index.js';
 import type { VerificationIntegration } from '../verification/verification-integration.js';
 import type { EventBus } from '../logging/event-bus.js';
 import { spawn } from 'child_process';
@@ -39,6 +47,7 @@ import { existsSync } from 'fs';
 import { join } from 'path';
 import { validateConfig as validateConfigSchema } from '../config/config-schema.js';
 import type { Platform } from '../types/config.js';
+import { resolveWorkingDirectory } from '../utils/project-paths.js';
 
 /**
  * Validation result interface
@@ -62,7 +71,6 @@ export interface CLICheckResult {
 export interface OrchestratorConfig {
   config: PuppetMasterConfig;
   projectPath: string;
-  prdPath?: string;
   eventBus?: EventBus;
 }
 
@@ -77,6 +85,9 @@ export interface OrchestratorDependencies {
   evidenceStore: EvidenceStore;
   usageTracker: UsageTracker;
   gitManager: GitManager;
+  branchStrategy: BranchStrategy;
+  commitFormatter: CommitFormatter;
+  prManager: PRManager;
   platformRunner: PlatformRunnerContract;
   verificationIntegration: VerificationIntegration;
 }
@@ -110,15 +121,58 @@ export class Orchestrator {
   private readonly deps: OrchestratorDependencies;
   private readonly config: PuppetMasterConfig;
   private readonly eventBus: EventBus | null;
+  private readonly projectRoot: string;
+  private readonly workingDirectory: string;
 
   private startedAt: Date | null = null;
   private iterationsRun: number = 0;
   private loopRunning: boolean = false;
   private loopAborted: boolean = false;
 
+  private requireTierTransition(tier: TierNode, event: TierEvent, reason: string): void {
+    const from = tier.getState();
+    const ok = tier.stateMachine.send(event);
+    if (!ok) {
+      throw new Error(
+        `Invalid tier transition: ${tier.type} ${tier.id} (${from}) + ${event.type} (${reason})`
+      );
+    }
+  }
+
+  private ensureSubtaskReadyForIteration(subtask: TierNode): void {
+    const state = subtask.getState();
+
+    switch (state) {
+      case 'pending':
+        this.requireTierTransition(subtask, { type: 'TIER_SELECTED' }, 'selecting subtask for iteration');
+        this.requireTierTransition(subtask, { type: 'PLAN_APPROVED' }, 'approving plan before iteration');
+        return;
+      case 'planning':
+        this.requireTierTransition(subtask, { type: 'PLAN_APPROVED' }, 'approving plan before iteration');
+        return;
+      case 'retrying':
+        this.requireTierTransition(subtask, { type: 'NEW_ATTEMPT' }, 'starting new attempt before iteration');
+        return;
+      case 'running':
+        return;
+      case 'gating':
+      case 'passed':
+      case 'failed':
+      case 'escalated':
+        // These states must be handled by the caller (gate/advance/stop), not by spawning an iteration.
+        return;
+      default: {
+        const exhaustive: never = state;
+        throw new Error(`Unhandled subtask state: ${exhaustive}`);
+      }
+    }
+  }
+
   constructor(orchestratorConfig: OrchestratorConfig) {
     this.config = orchestratorConfig.config;
     this.eventBus = orchestratorConfig.eventBus || null;
+    this.projectRoot = orchestratorConfig.projectPath;
+    this.workingDirectory = resolveWorkingDirectory(this.projectRoot, this.config.project.workingDirectory);
     this.stateMachine = new OrchestratorStateMachine();
     
     // These will be initialized in initialize() when deps are provided
@@ -163,6 +217,7 @@ export class Orchestrator {
 
     // Set up execution engine with platform runner
     this.executionEngine.setRunner(deps.platformRunner);
+    this.executionEngine.setGitManager(deps.gitManager);
 
     // Register output callbacks for EventBus streaming
     if (this.eventBus) {
@@ -403,8 +458,47 @@ export class Orchestrator {
           continue;
         }
 
+        const subtaskState = subtask.getState();
+
+        // If a subtask is already complete, do not spawn an iteration — advance selection.
+        if (subtaskState === 'passed') {
+          const advancement = await this.autoAdvancement.checkAndAdvance();
+          await this.handleAdvancement(advancement);
+          continue;
+        }
+
+        // If we're in gating (e.g., restored from PRD mid-flight), run the subtask gate now.
+        if (subtaskState === 'gating') {
+          const gate = await this.deps.verificationIntegration.runSubtaskGate(subtask);
+          await this.handleGateResult(gate, subtask);
+          const advancement = await this.autoAdvancement.checkAndAdvance();
+          await this.handleAdvancement(advancement);
+          continue;
+        }
+
+        // Escalated/failed subtasks are not runnable; stop rather than looping forever.
+        if (subtaskState === 'escalated' || subtaskState === 'failed') {
+          throw new Error(`Current subtask ${subtask.id} is not runnable (state: ${subtaskState}).`);
+        }
+
+        // Ensure the tier state machine is in a valid state before spawning an iteration.
+        this.ensureSubtaskReadyForIteration(subtask);
+
         // Build iteration context
         const context = await this.buildIterationContext(subtask);
+
+        // Ensure correct branch before executing the iteration
+        const task = subtask.parent;
+        const phase = task?.parent;
+        if (phase && task) {
+          const branchContext: BranchContext = {
+            phaseId: phase.id,
+            taskId: task.id,
+            subtaskId: subtask.id,
+            isComplete: false,
+          };
+          await this.deps.branchStrategy.ensureBranch(branchContext);
+        }
 
         // Publish iteration_started event
         if (this.eventBus) {
@@ -429,6 +523,12 @@ export class Orchestrator {
 
         // Handle result
         await this.handleIterationResult(result, subtask);
+
+        // Run the subtask gate immediately after a COMPLETE signal so advancement can proceed.
+        if (result.success && result.completionSignal === 'COMPLETE') {
+          const gate = await this.deps.verificationIntegration.runSubtaskGate(subtask);
+          await this.handleGateResult(gate, subtask);
+        }
 
         // Record progress
         await this.recordProgress(result, subtask);
@@ -498,14 +598,18 @@ export class Orchestrator {
       dependencies: subtask.data.plan.dependencies,
     };
 
+    const iterationTier = this.config.tiers.iteration;
+
     return {
       tierNode: subtask,
       iterationNumber,
       maxIterations: subtask.data.maxIterations,
-      projectPath: this.config.project.workingDirectory,
+      projectPath: this.workingDirectory,
       projectName: this.config.project.name,
       sessionId: this.deps.progressManager.generateSessionId(),
-      platform: this.config.tiers.subtask.platform,
+      platform: iterationTier.platform,
+      model: iterationTier.model,
+      planMode: iterationTier.planMode,
       progressEntries,
       agentsContent,
       subtaskPlan,
@@ -532,19 +636,25 @@ export class Orchestrator {
     // Parse output
     const parsed = this.outputParser.parse(result.output);
 
+    // Git is the source of truth for changed files. Output parsing is bonus info.
+    if (parsed.filesChanged.length > 0) {
+      const merged = new Set<string>(result.filesChanged);
+      for (const file of parsed.filesChanged) {
+        merged.add(file);
+      }
+      result.filesChanged = Array.from(merged);
+    }
+
     // Update subtask iterations count
     subtask.data.iterations = result.success ? subtask.data.iterations + 1 : subtask.data.iterations;
 
     if (result.success && result.completionSignal === 'COMPLETE') {
       // Mark iteration as complete
-      subtask.stateMachine.send({ type: 'ITERATION_COMPLETE', success: true });
-
-      // Transition to gating
-      subtask.stateMachine.send({ type: 'ITERATION_COMPLETE', success: true });
+      this.requireTierTransition(subtask, { type: 'ITERATION_COMPLETE', success: true }, 'iteration completed');
     } else if (result.completionSignal === 'GUTTER' || !result.success) {
       // Mark iteration as failed
       const errorMsg = result.error ?? parsed.errors.join('; ') ?? 'Iteration failed';
-      subtask.stateMachine.send({ type: 'ITERATION_FAILED', error: errorMsg });
+      this.requireTierTransition(subtask, { type: 'ITERATION_FAILED', error: errorMsg }, 'iteration failed');
 
       // Check if we should retry or escalate
       const state = subtask.getState();
@@ -564,19 +674,20 @@ export class Orchestrator {
    */
   private async handleGateResult(result: GateResult, tier: TierNode): Promise<void> {
     if (result.passed) {
-      tier.stateMachine.send({ type: 'GATE_PASSED' });
+      this.requireTierTransition(tier, { type: 'GATE_PASSED' }, 'gate passed');
     } else {
       // Determine if minor or major failure
-      const isMinor = this.isMinorFailure(result);
-      if (isMinor) {
-        tier.stateMachine.send({ type: 'GATE_FAILED_MINOR' });
-      } else {
-        tier.stateMachine.send({ type: 'GATE_FAILED_MAJOR' });
-      }
+      const explicitFailureType = result.report?.failureType;
+      const isMinor = explicitFailureType ? explicitFailureType === 'minor' : this.isMinorFailure(result);
+      this.requireTierTransition(
+        tier,
+        { type: isMinor ? 'GATE_FAILED_MINOR' : 'GATE_FAILED_MAJOR' },
+        'gate failed'
+      );
     }
 
     // Publish gate_complete event
-    if (this.eventBus) {
+    if (this.eventBus && (tier.type === 'task' || tier.type === 'phase')) {
       const tierType = tier.type === 'task' ? 'task' : tier.type === 'phase' ? 'phase' : 'task';
       const evidence = result.report?.summary;
 
@@ -587,6 +698,24 @@ export class Orchestrator {
         passed: result.passed,
         evidence,
       });
+    }
+
+    // Commit gate result with proper format (best-effort; skip if no changes)
+    const gateTier: CommitContext['tier'] | null =
+      tier.type === 'task' ? 'task_gate' : tier.type === 'phase' ? 'phase_gate' : null;
+    if (gateTier) {
+      const status = await this.deps.gitManager.getStatus();
+      if (status.staged.length > 0 || status.modified.length > 0 || status.untracked.length > 0) {
+        await this.deps.gitManager.add('.');
+        const gateCommitContext: CommitContext = {
+          tier: gateTier,
+          itemId: tier.id,
+          summary: tier.data.title,
+          status: result.passed ? 'PASS' : 'FAIL',
+        };
+        const message = this.deps.commitFormatter.format(gateCommitContext);
+        await this.deps.gitManager.commit({ message });
+      }
     }
 
     // Sync state to PRD
@@ -618,6 +747,27 @@ export class Orchestrator {
 
       case 'advance_task':
         if (result.next) {
+          // Merge completed task branch if strategy indicates it should be merged.
+          const currentSubtask = this.tierStateManager.getCurrentSubtask();
+          const currentTask = this.tierStateManager.getCurrentTask();
+          const completedTask = currentTask ?? currentSubtask?.parent ?? null;
+          const completedPhase = completedTask?.parent ?? null;
+
+          if (completedTask) {
+            const branchContext: BranchContext = {
+              phaseId: completedPhase?.id,
+              taskId: completedTask.id,
+              isComplete: true,
+            };
+            if (this.deps.branchStrategy.shouldMerge(branchContext)) {
+              try {
+                await this.deps.branchStrategy.mergeToBranch(this.config.branching.baseBranch);
+              } catch (error) {
+                console.warn('Failed to merge branch:', error);
+              }
+            }
+          }
+
           this.tierStateManager.setCurrentTask(result.next.id);
         }
         // Publish progress event after task advancement
@@ -626,6 +776,22 @@ export class Orchestrator {
 
       case 'advance_phase':
         if (result.next) {
+          // Merge completed phase branch if strategy indicates it should be merged.
+          const currentPhase = this.tierStateManager.getCurrentPhase();
+          if (currentPhase) {
+            const branchContext: BranchContext = {
+              phaseId: currentPhase.id,
+              isComplete: true,
+            };
+            if (this.deps.branchStrategy.shouldMerge(branchContext)) {
+              try {
+                await this.deps.branchStrategy.mergeToBranch(this.config.branching.baseBranch);
+              } catch (error) {
+                console.warn('Failed to merge branch:', error);
+              }
+            }
+          }
+
           this.tierStateManager.setCurrentPhase(result.next.id);
         }
         // Publish progress event after phase advancement
@@ -655,6 +821,29 @@ export class Orchestrator {
           }
 
           await this.handleGateResult(result.gate, result.next);
+
+          // Push / PR after successful gate
+          if (result.gate.passed) {
+            const shouldPush = this.shouldPushNow(result.next.type);
+            if (shouldPush) {
+              try {
+                await this.deps.gitManager.push();
+              } catch (error) {
+                console.warn('Failed to push:', error);
+              }
+            }
+
+            // Auto-create PR for completed tasks when enabled
+            if (this.config.branching.autoPr && result.next.type === 'task') {
+              try {
+                const prTitle = `Task ${result.next.id}: ${result.next.data.title}`;
+                const prBody = `Completed task ${result.next.id}\n\n${result.next.data.description}`;
+                await this.deps.prManager.createPR(prTitle, prBody, this.config.branching.baseBranch);
+              } catch (error) {
+                console.warn('Failed to create PR:', error);
+              }
+            }
+          }
         }
         // Publish progress event after gate passes
         this.publishProgressEvent();
@@ -767,6 +956,28 @@ export class Orchestrator {
     return limit;
   }
 
+  private shouldPushNow(tierType: TierType): boolean {
+    const policy = this.config.branching.pushPolicy;
+
+    // Iterations aren't pushed independently, only gate completions
+    if (tierType === 'iteration') {
+      return false;
+    }
+
+    switch (policy) {
+      case 'per-iteration':
+        return true;
+      case 'per-subtask':
+        return tierType === 'subtask';
+      case 'per-task':
+        return tierType === 'task' || tierType === 'subtask';
+      case 'per-phase':
+        return tierType === 'phase' || tierType === 'task' || tierType === 'subtask';
+      default:
+        return false;
+    }
+  }
+
   /**
    * Record progress
    */
@@ -796,22 +1007,32 @@ export class Orchestrator {
    * Commit changes to git
    */
   private async commitChanges(result: IterationResult, subtask: TierNode): Promise<void> {
-    if (result.filesChanged.length === 0) {
+    // Check git status
+    const status = await this.deps.gitManager.getStatus();
+    if (status.staged.length === 0 && status.modified.length === 0 && status.untracked.length === 0) {
       return;
     }
 
-    // Check git status
-    const status = await this.deps.gitManager.getStatus();
-    if (status.modified.length === 0 && status.untracked.length === 0) {
-      return;
+    // Ensure we have a best-effort file list for logging/progress (optional).
+    if (result.filesChanged.length === 0) {
+      try {
+        result.filesChanged = await this.deps.gitManager.getDiffFiles();
+      } catch {
+        // ignore
+      }
     }
 
     // Stage all changes
-    await this.deps.gitManager.add(['.']);
+    await this.deps.gitManager.add('.');
 
     // Commit with formatted message
-    const message = `ralph: [subtask] ${subtask.id} ${subtask.data.title}`;
-    const commitResult = await this.deps.gitManager.commit({ message, files: result.filesChanged });
+    const commitContext: CommitContext = {
+      tier: 'iteration',
+      itemId: subtask.id,
+      summary: subtask.data.title,
+    };
+    const message = this.deps.commitFormatter.format(commitContext);
+    const commitResult = await this.deps.gitManager.commit({ message });
 
     // Publish commit event if successful
     if (commitResult.success && this.eventBus) {
@@ -823,7 +1044,10 @@ export class Orchestrator {
           type: 'commit',
           sha,
           message,
-          files: result.filesChanged.length,
+          files:
+            result.filesChanged.length > 0
+              ? result.filesChanged.length
+              : status.staged.length + status.modified.length + status.untracked.length,
           timestamp: new Date().toISOString(),
         });
       }
@@ -1016,9 +1240,8 @@ export class Orchestrator {
         return { valid: false, errors: ['No project loaded'] };
       }
 
-      // Try to get project path from config or use current working directory
-      const projectPath = this.config.project.workingDirectory || process.cwd();
-      const gitDir = join(projectPath, '.git');
+      // Git repository is expected at the canonical project root.
+      const gitDir = join(this.projectRoot, '.git');
 
       if (!existsSync(gitDir)) {
         errors.push('Git repository not initialized');
@@ -1181,13 +1404,13 @@ Return the plan as a JSON object matching this structure:
     const request: ExecutionRequest = {
       prompt,
       model,
-      workingDirectory: this.config.project.workingDirectory,
+      workingDirectory: this.workingDirectory,
       nonInteractive: true,
       timeout: 300000, // 5 minutes for planning
     };
 
     // Spawn process and collect output
-    await runner.prepareWorkingDirectory(this.config.project.workingDirectory);
+    await runner.prepareWorkingDirectory(this.workingDirectory);
     const runningProcess = await runner.spawnFreshProcess(request);
 
     // Collect output from stdout and stderr
@@ -1392,6 +1615,24 @@ Return the plan as a JSON object matching this structure:
       throw new Error('No current subtask to execute');
     }
 
+    const subtaskState = currentSubtask.getState();
+
+    if (subtaskState === 'passed') {
+      throw new Error(`Cannot spawn iteration for passed subtask: ${currentSubtask.id}`);
+    }
+
+    if (subtaskState === 'gating') {
+      const gate = await this.deps.verificationIntegration.runSubtaskGate(currentSubtask);
+      await this.handleGateResult(gate, currentSubtask);
+      return;
+    }
+
+    if (subtaskState === 'failed' || subtaskState === 'escalated') {
+      throw new Error(`Cannot spawn iteration for subtask ${currentSubtask.id} in state: ${subtaskState}`);
+    }
+
+    this.ensureSubtaskReadyForIteration(currentSubtask);
+
     // Increment iteration count
     currentSubtask.data.iterations += 1;
 
@@ -1421,6 +1662,12 @@ Return the plan as a JSON object matching this structure:
 
     // Handle result
     await this.handleIterationResult(result, currentSubtask);
+
+    // Run the subtask gate immediately after a COMPLETE signal.
+    if (result.success && result.completionSignal === 'COMPLETE') {
+      const gate = await this.deps.verificationIntegration.runSubtaskGate(currentSubtask);
+      await this.handleGateResult(gate, currentSubtask);
+    }
 
     // Record progress
     await this.recordProgress(result, currentSubtask);

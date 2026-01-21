@@ -25,6 +25,23 @@ import type {
 import { CapabilityDiscoveryService } from './capability-discovery.js';
 
 /**
+ * Error thrown when a runner execution exceeds its configured time limits.
+ *
+ * - **soft**: `request.timeout` exceeded; runner requested graceful termination (SIGTERM)
+ * - **hard**: `request.hardTimeout` exceeded; runner forced termination (SIGKILL)
+ */
+export class TimeoutError extends Error {
+  readonly name = 'TimeoutError';
+
+  constructor(
+    public readonly type: 'soft' | 'hard',
+    public readonly elapsed: number
+  ) {
+    super(`${type} timeout after ${elapsed}ms`);
+  }
+}
+
+/**
  * Abstract base class for platform runners.
  * 
  * Provides common functionality while leaving platform-specific behavior
@@ -46,6 +63,13 @@ export abstract class BasePlatformRunner
   readonly hardTimeout: number;
 
   protected processes: Map<number, ChildProcess> = new Map();
+  /**
+   * Captured stdout/stderr for each spawned process (keyed by PID).
+   *
+   * Important: transcripts must be captured once at spawn time to avoid
+   * re-attaching stream listeners after a stream has already ended.
+   */
+  private readonly capturedOutput: Map<number, { stdout: string; stderr: string }> = new Map();
   protected capabilityService: CapabilityDiscoveryService;
 
   /**
@@ -112,6 +136,24 @@ export abstract class BasePlatformRunner
     // Track process
     this.processes.set(proc.pid, proc);
 
+    // Capture stdout/stderr once at spawn time to avoid transcript race conditions.
+    const output = { stdout: '', stderr: '' };
+    this.capturedOutput.set(proc.pid, output);
+
+    const appendChunk = (chunk: Buffer | string): string =>
+      typeof chunk === 'string' ? chunk : chunk.toString();
+
+    if (proc.stdout) {
+      proc.stdout.on('data', (chunk: Buffer | string) => {
+        output.stdout += appendChunk(chunk);
+      });
+    }
+    if (proc.stderr) {
+      proc.stderr.on('data', (chunk: Buffer | string) => {
+        output.stderr += appendChunk(chunk);
+      });
+    }
+
     // Create RunningProcess object
     const runningProcess: RunningProcess = {
       pid: proc.pid,
@@ -156,6 +198,8 @@ export abstract class BasePlatformRunner
       // Remove from tracking
       this.processes.delete(pid);
     }
+    // Always clean up captured transcripts to prevent unbounded growth.
+    this.capturedOutput.delete(pid);
   }
 
   /**
@@ -198,7 +242,10 @@ export abstract class BasePlatformRunner
 
     // Use event-based iteration for Node.js streams
     const chunks: string[] = [];
-    let streamEnded = false;
+    let streamEnded =
+      ('readableEnded' in stream &&
+        (stream as NodeJS.ReadableStream & { readableEnded?: boolean }).readableEnded === true) ||
+      ('destroyed' in stream && (stream as NodeJS.ReadableStream & { destroyed?: boolean }).destroyed === true);
     let streamError: Error | null = null;
 
     stream.on('data', (chunk: Buffer) => {
@@ -214,6 +261,10 @@ export abstract class BasePlatformRunner
     });
 
     stream.on('end', () => {
+      streamEnded = true;
+    });
+
+    stream.on('close', () => {
       streamEnded = true;
     });
 
@@ -266,7 +317,10 @@ export abstract class BasePlatformRunner
 
     // Use event-based iteration for Node.js streams
     const chunks: string[] = [];
-    let streamEnded = false;
+    let streamEnded =
+      ('readableEnded' in stream &&
+        (stream as NodeJS.ReadableStream & { readableEnded?: boolean }).readableEnded === true) ||
+      ('destroyed' in stream && (stream as NodeJS.ReadableStream & { destroyed?: boolean }).destroyed === true);
     let streamError: Error | null = null;
 
     stream.on('data', (chunk: Buffer) => {
@@ -282,6 +336,10 @@ export abstract class BasePlatformRunner
     });
 
     stream.on('end', () => {
+      streamEnded = true;
+    });
+
+    stream.on('close', () => {
       streamEnded = true;
     });
 
@@ -324,21 +382,13 @@ export abstract class BasePlatformRunner
    * Implements PlatformRunnerContract.getTranscript.
    */
   async getTranscript(pid: number): Promise<string> {
-    const stdoutParts: string[] = [];
-    const stderrParts: string[] = [];
-
-    // Collect stdout
-    for await (const chunk of this.captureStdout(pid)) {
-      stdoutParts.push(chunk);
+    const captured = this.capturedOutput.get(pid);
+    if (!captured) {
+      return '';
     }
 
-    // Collect stderr
-    for await (const chunk of this.captureStderr(pid)) {
-      stderrParts.push(chunk);
-    }
-
-    const stdout = stdoutParts.join('\n');
-    const stderr = stderrParts.join('\n');
+    const stdout = captured.stdout;
+    const stderr = captured.stderr;
 
     if (stderr) {
       return `STDOUT:\n${stdout}\n\nSTDERR:\n${stderr}`;
@@ -356,6 +406,21 @@ export abstract class BasePlatformRunner
   async execute(request: ExecutionRequest): Promise<ExecutionResult> {
     const startTime = Date.now();
     let runningProcess: RunningProcess | null = null;
+    let softTimeoutId: NodeJS.Timeout | null = null;
+    let hardTimeoutId: NodeJS.Timeout | null = null;
+    let timeoutType: 'soft' | 'hard' | null = null;
+    let didCleanup = false;
+
+    const clearTimers = (): void => {
+      if (softTimeoutId) {
+        clearTimeout(softTimeoutId);
+        softTimeoutId = null;
+      }
+      if (hardTimeoutId) {
+        clearTimeout(hardTimeoutId);
+        hardTimeoutId = null;
+      }
+    };
 
     try {
       // Spawn fresh process
@@ -384,6 +449,37 @@ export abstract class BasePlatformRunner
       const proc = this.processes.get(pid);
       if (!proc) {
         throw new Error(`Process ${pid} not found after spawning`);
+      }
+
+      const timeoutMs = request.timeout ?? this.defaultTimeout;
+      const computedHardTimeoutMs = request.hardTimeout ?? Math.floor(timeoutMs * 1.5);
+      // Ensure hard timeout is always strictly after soft timeout (when both enabled).
+      const hardTimeoutMs =
+        timeoutMs > 0
+          ? Math.max(computedHardTimeoutMs, timeoutMs + 1)
+          : computedHardTimeoutMs;
+
+      // Soft timeout: request graceful stop (SIGTERM).
+      if (timeoutMs > 0) {
+        softTimeoutId = setTimeout(() => {
+          if (timeoutType === null) {
+            timeoutType = 'soft';
+          }
+          // Log + emit for debugging/observability.
+          console.warn(`[${this.platform}] Soft timeout exceeded (${timeoutMs}ms) for pid=${pid}; requesting SIGTERM`);
+          this.emit('timeout', { pid, type: 'soft' as const, timeoutMs, hardTimeoutMs });
+          void this.terminateProcess(pid).catch(() => undefined);
+        }, timeoutMs);
+      }
+
+      // Hard timeout: force kill (SIGKILL).
+      if (hardTimeoutMs > 0) {
+        hardTimeoutId = setTimeout(() => {
+          timeoutType = 'hard';
+          console.warn(`[${this.platform}] Hard timeout exceeded (${hardTimeoutMs}ms) for pid=${pid}; forcing SIGKILL`);
+          this.emit('timeout', { pid, type: 'hard' as const, timeoutMs, hardTimeoutMs });
+          void this.forceKillProcess(pid).catch(() => undefined);
+        }, hardTimeoutMs);
       }
 
       await new Promise<void>((resolve, reject) => {
@@ -422,20 +518,35 @@ export abstract class BasePlatformRunner
 
       // Cleanup
       await this.cleanupAfterExecution(pid);
+      didCleanup = true;
+
+      clearTimers();
+
+      if (timeoutType) {
+        throw new TimeoutError(timeoutType, Date.now() - startTime);
+      }
 
       return result;
     } catch (error) {
       const pid = runningProcess?.pid;
       if (pid) {
-        // Emit error event
-        this.emit('error', {
-          pid,
-          error: error instanceof Error ? error : new Error(String(error)),
-        });
+        // Emit error event (only if listeners exist).
+        // Node's EventEmitter treats 'error' as special and will throw if unhandled.
+        if (this.listenerCount('error') > 0) {
+          this.emit('error', {
+            pid,
+            error: error instanceof Error ? error : new Error(String(error)),
+          });
+        }
 
-        // Cleanup on error
-        await this.cleanupAfterExecution(pid);
+        // Cleanup on error (avoid double-cleanup if we already cleaned up on the happy-path).
+        if (!didCleanup) {
+          await this.cleanupAfterExecution(pid);
+          didCleanup = true;
+        }
       }
+
+      clearTimers();
 
       throw error;
     }

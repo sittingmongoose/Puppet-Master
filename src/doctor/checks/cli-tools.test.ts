@@ -15,6 +15,7 @@ import {
   ClaudeCliCheck,
 } from './cli-tools.js';
 import type { CheckResult } from '../check-registry.js';
+import { getCursorCommandCandidates } from '../../platforms/constants.js';
 
 // Mock child_process
 vi.mock('node:child_process', () => {
@@ -116,6 +117,7 @@ describe('CLI Tools Checks', () => {
   describe('CursorCliCheck', () => {
     it('should pass when cursor-agent is available', async () => {
       const check = new CursorCliCheck();
+      const [primaryCommand] = getCursorCommandCandidates(null);
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('cursor-agent 1.2.3'));
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help\n--model\n--version'));
 
@@ -125,16 +127,17 @@ describe('CLI Tools Checks', () => {
       expect(result.message).toContain('available');
       expect(result.details).toContain('Version:');
       expect(result.fixSuggestion).toBeUndefined();
-      expect(mockSpawn).toHaveBeenCalledWith('cursor-agent', ['--version'], expect.any(Object));
+      expect(mockSpawn).toHaveBeenCalledWith(primaryCommand, ['--version'], expect.any(Object));
     });
 
     it('should pass when agent (fallback) is available', async () => {
       const check = new CursorCliCheck();
-      // First call fails (cursor-agent not found)
-      mockSpawn.mockReturnValueOnce(createMockErrorProcess(new Error('ENOENT')));
-      // Second call succeeds (agent found)
-      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('agent 1.0.0'));
-      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
+      const candidates = getCursorCommandCandidates(null);
+      // Fail first two candidates, succeed on third (platform-independent ordering)
+      mockSpawn.mockReturnValueOnce(createMockErrorProcess(new Error('ENOENT'))); // candidates[0] --version
+      mockSpawn.mockReturnValueOnce(createMockErrorProcess(new Error('ENOENT'))); // candidates[1] --version
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('agent 1.0.0')); // candidates[2] --version
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help')); // candidates[2] --help
 
       const result = await check.run();
 
@@ -144,8 +147,7 @@ describe('CLI Tools Checks', () => {
 
     it('should fail when neither cursor-agent nor agent is available', async () => {
       const check = new CursorCliCheck();
-      mockSpawn.mockReturnValueOnce(createMockErrorProcess(new Error('ENOENT')));
-      mockSpawn.mockReturnValueOnce(createMockErrorProcess(new Error('ENOENT')));
+      mockSpawn.mockImplementation(() => createMockErrorProcess(new Error('ENOENT')));
 
       const result = await check.run();
 

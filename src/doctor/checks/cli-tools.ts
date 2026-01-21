@@ -11,6 +11,7 @@ import { access } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import type { CheckResult, DoctorCheck } from '../check-registry.js';
+import { getCursorCommandCandidates } from '../../platforms/constants.js';
 
 /**
  * Result of checking CLI availability
@@ -98,21 +99,26 @@ export class CursorCliCheck implements DoctorCheck {
   readonly description = 'Check if Cursor Agent CLI is available';
 
   async run(): Promise<CheckResult> {
-    // Try cursor-agent first (preferred)
-    let result = await checkCliAvailable('cursor-agent', '--version');
-    
-    // Fallback to 'agent' if cursor-agent not found
-    if (!result.available) {
-      result = await checkCliAvailable('agent', '--version');
+    const candidates = getCursorCommandCandidates(null);
+
+    let selectedCommand: string | null = null;
+    let versionResult: CliAvailabilityResult | null = null;
+    let lastError: string | undefined;
+
+    for (const candidate of candidates) {
+      const res = await checkCliAvailable(candidate, '--version');
+      if (res.available) {
+        selectedCommand = candidate;
+        versionResult = res;
+        break;
+      }
+      lastError = res.error;
     }
 
-    // Also verify --help works for functionality check
-    if (result.available) {
-      const helpResult = await checkCliAvailable(
-        result.version ? 'cursor-agent' : 'agent',
-        '--help',
-        5000
-      );
+    if (selectedCommand && versionResult?.available) {
+      // Also verify --help works for functionality check
+      const helpResult = await checkCliAvailable(selectedCommand, '--help', 5000);
+
       // Help check failure doesn't fail the check, but we note it
       if (!helpResult.available) {
         return {
@@ -120,20 +126,18 @@ export class CursorCliCheck implements DoctorCheck {
           category: this.category,
           passed: true,
           message: `Cursor CLI found but --help check failed`,
-          details: `Version: ${result.version || 'unknown'}. Help check: ${helpResult.error}`,
+          details: `Command: ${selectedCommand}. Version: ${versionResult.version || 'unknown'}. Help check: ${helpResult.error}`,
           fixSuggestion: undefined,
           durationMs: 0, // Will be set by CheckRegistry
         };
       }
-    }
 
-    if (result.available) {
       return {
         name: this.name,
         category: this.category,
         passed: true,
         message: `Cursor CLI is available`,
-        details: `Version: ${result.version || 'unknown'}`,
+        details: `Command: ${selectedCommand}. Version: ${versionResult.version || 'unknown'}`,
         fixSuggestion: undefined,
         durationMs: 0, // Will be set by CheckRegistry
       };
@@ -142,8 +146,8 @@ export class CursorCliCheck implements DoctorCheck {
         name: this.name,
         category: this.category,
         passed: false,
-        message: `Cursor CLI not found (checked: cursor-agent, agent)`,
-        details: result.error,
+        message: `Cursor CLI not found (checked: ${candidates.join(', ')})`,
+        details: lastError,
         fixSuggestion: 'Install with: curl https://cursor.com/install -fsSL | bash',
         durationMs: 0, // Will be set by CheckRegistry
       };

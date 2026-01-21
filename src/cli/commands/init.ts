@@ -15,6 +15,7 @@ import yaml from 'js-yaml';
 import { getDefaultConfig } from '../../config/default-config.js';
 import type { PuppetMasterConfig } from '../../types/config.js';
 import type { CommandModule } from './index.js';
+import type { PRD } from '../../types/prd.js';
 
 /**
  * Options for the init command
@@ -135,17 +136,43 @@ export async function initAction(options: InitOptions): Promise<void> {
     const configYaml = generateConfigYaml(options.projectName);
     await writeFile(configPath, configYaml, 'utf-8');
 
-    // Create empty prd.json (empty JSON object)
-    await writeFile(prdPath, '{}\n', 'utf-8');
+    // Create schema-valid empty PRD scaffold (PrdManager.load requires phases[])
+    const now = new Date().toISOString();
+    const emptyPrd: PRD = {
+      project: options.projectName ?? 'Untitled',
+      version: '1.0.0',
+      createdAt: now,
+      updatedAt: now,
+      branchName: 'main',
+      description: '',
+      phases: [],
+      metadata: {
+        totalPhases: 0,
+        completedPhases: 0,
+        totalTasks: 0,
+        completedTasks: 0,
+        totalSubtasks: 0,
+        completedSubtasks: 0,
+      },
+    };
+    await writeFile(prdPath, `${JSON.stringify(emptyPrd, null, 2)}\n`, 'utf-8');
 
     // Create empty architecture.md
     await writeFile(architecturePath, '', 'utf-8');
 
-    // Create empty progress.txt
-    await writeFile(progressPath, '', 'utf-8');
+    // Create empty progress.txt (do not clobber unless --force)
+    if (existsSync(progressPath) && !options.force) {
+      console.warn(`⚠️  Skipping existing file (use --force to overwrite): ${progressPath}`);
+    } else {
+      await writeFile(progressPath, '', 'utf-8');
+    }
 
-    // Create empty AGENTS.md at project root
-    await writeFile(agentsPath, '', 'utf-8');
+    // Create empty AGENTS.md at project root (do not clobber unless --force)
+    if (existsSync(agentsPath) && !options.force) {
+      console.warn(`⚠️  Skipping existing file (use --force to overwrite): ${agentsPath}`);
+    } else {
+      await writeFile(agentsPath, '', 'utf-8');
+    }
 
     console.log('✅ Initialized RWM Puppet Master project');
     console.log(`   Created: ${puppetMasterDir}`);

@@ -10,6 +10,7 @@ import { Readable, Writable } from 'stream';
 import type { ChildProcess } from 'child_process';
 import { CursorRunner } from './cursor-runner.js';
 import { CapabilityDiscoveryService } from './capability-discovery.js';
+import { PLATFORM_COMMANDS } from './constants.js';
 import type {
   ExecutionRequest,
 } from '../types/platforms.js';
@@ -131,6 +132,21 @@ describe('CursorRunner', () => {
       const args = runner['buildArgs'](request);
       expect(args).toEqual(['-p', '--model', 'auto']);
     });
+
+    it('should include plan mode flag when enabled and supported', () => {
+      (runner as unknown as { modeFlagSupport: boolean | null }).modeFlagSupport = true;
+
+      const request: ExecutionRequest = {
+        prompt: 'Plan this',
+        workingDirectory: '/tmp',
+        model: 'auto',
+        planMode: true,
+        nonInteractive: true,
+      };
+
+      const args = runner['buildArgs'](request);
+      expect(args).toContain('--mode=plan');
+    });
   });
 
   describe('parseOutput', () => {
@@ -214,7 +230,7 @@ describe('CursorRunner', () => {
 
       expect(spawn).toHaveBeenCalled();
       const callArgs = vi.mocked(spawn).mock.calls[0];
-      expect(callArgs[0]).toBe('cursor-agent');
+      expect(callArgs[0]).toBe(PLATFORM_COMMANDS.cursor);
       expect(callArgs[1]).toEqual(expect.arrayContaining(['-p']));
       expect(callArgs[2]).toMatchObject({
         cwd: '/tmp',
@@ -255,6 +271,22 @@ describe('CursorRunner', () => {
 
       expect(writeSpy).toHaveBeenCalledWith('Test prompt content');
       expect(endSpy).toHaveBeenCalled();
+    });
+
+    it('should prepend plan-first instruction when plan mode enabled but unsupported', async () => {
+      // Force the internal support flag to false so we take the prompt fallback path.
+      (runner as unknown as { modeFlagSupport: boolean | null }).modeFlagSupport = false;
+
+      const request: ExecutionRequest = {
+        prompt: 'Do the work',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+        planMode: true,
+      };
+
+      const builtPrompt = (runner as unknown as { buildPrompt: (r: ExecutionRequest) => string }).buildPrompt(request);
+      expect(builtPrompt).toContain('PLAN FIRST');
+      expect(builtPrompt).toContain('Do the work');
     });
 
     it('should set CURSOR_NON_INTERACTIVE environment variable', async () => {
