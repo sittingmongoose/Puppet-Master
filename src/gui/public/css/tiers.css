@@ -246,6 +246,50 @@
   gap: var(--spacing-sm);
 }
 
+/* ===== Tier Search ===== */
+.tier-search-container {
+  padding: var(--spacing-md);
+  border-bottom: var(--border-thin) solid var(--ink-black);
+}
+
+.tier-search-input {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: var(--border-medium) solid var(--ink-black);
+  background: var(--paper-cream);
+  color: var(--ink-black);
+  font-family: var(--font-geometric);
+  font-size: 0.9em;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tier-search-input:focus {
+  outline: none;
+  border-color: var(--electric-blue);
+  box-shadow: 0 0 0 2px rgba(0, 71, 171, 0.2);
+}
+
+.tier-search-input::placeholder {
+  color: var(--status-idle);
+  opacity: 0.7;
+}
+
+[data-theme="dark"] .tier-search-input {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--ink-black);
+  border-color: var(--ink-black);
+}
+
+[data-theme="dark"] .tier-search-input:focus {
+  border-color: var(--electric-blue);
+  box-shadow: 0 0 0 2px rgba(0, 240, 255, 0.3);
+}
+
+[data-theme="dark"] .tier-search-input::placeholder {
+  color: var(--status-idle);
+  opacity: 0.6;
+}
+
 /* ===== Page Title ===== */
 .page-title {
   font-size: 1.8em;

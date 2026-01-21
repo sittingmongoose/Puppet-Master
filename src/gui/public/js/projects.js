@@ -4,6 +4,8 @@
  * Handles project listing, creation, and opening functionality
  */
 
+import { createSkeletonCards, createSkeletonTableRow, removeSkeletons } from './skeletons.js';
+
 // ============================================
 // State Management
 // ============================================
@@ -18,36 +20,90 @@ const state = {
 async function loadProjects() {
   state.loading = true;
   const loadingIndicator = document.getElementById('loading-indicator');
+  const grid = document.getElementById('project-cards-grid');
+  const tableBody = document.getElementById('projects-table-body');
+
+  // Hide loading indicator and show skeletons
   if (loadingIndicator) {
-    loadingIndicator.style.display = 'block';
+    loadingIndicator.style.display = 'none';
+  }
+
+  // Show skeleton cards in grid
+  if (grid) {
+    grid.innerHTML = '';
+    grid.setAttribute('aria-busy', 'true');
+    const skeletonCards = createSkeletonCards(3);
+    grid.appendChild(skeletonCards);
+  }
+
+  // Show skeleton rows in table
+  if (tableBody) {
+    tableBody.innerHTML = '';
+    tableBody.setAttribute('aria-busy', 'true');
+    // Projects table has 5 columns: Name, Path, Status, Last Updated, Actions
+    const widths = ['long', 'long', 'short', 'medium', 'short'];
+    for (let i = 0; i < 5; i++) {
+      const skeletonRow = createSkeletonTableRow(5, widths);
+      tableBody.appendChild(skeletonRow);
+    }
   }
 
   try {
-    const response = await fetch('/api/projects');
+    // Add timeout to prevent indefinite loading
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+    console.log('[Projects] Fetching projects from /api/projects...');
+    const response = await fetch('/api/projects', {
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+
+    console.log('[Projects] Response status:', response.status, response.statusText);
+
     if (!response.ok) {
-      throw new Error(`Failed to load projects: ${response.statusText}`);
+      const errorText = await response.text();
+      console.error('[Projects] Error response:', errorText);
+      throw new Error(`Failed to load projects: ${response.statusText} - ${errorText}`);
     }
 
     const data = await response.json();
+    console.log('[Projects] Received data:', data);
     state.projects = data.projects || [];
+    console.log('[Projects] Loaded', state.projects.length, 'projects');
 
     renderProjectCards(state.projects);
     renderProjectsTable(state.projects);
+
+    // Remove aria-busy attributes
+    if (grid) grid.removeAttribute('aria-busy');
+    if (tableBody) tableBody.removeAttribute('aria-busy');
   } catch (error) {
     console.error('[Projects] Error loading projects:', error);
-    const grid = document.getElementById('project-cards-grid');
+
+    // Better error display
+    const errorMessage = error.name === 'AbortError'
+      ? 'Request timed out. The server is not responding. Please check your connection and try again.'
+      : `Failed to load projects: ${error.message}`;
+
     if (grid) {
-      grid.innerHTML = `<div class="error-message">[ERROR] Failed to load projects: ${error.message}</div>`;
+      removeSkeletons(grid);
+      grid.innerHTML = `
+        <div class="error-message" style="padding: var(--spacing-xl); text-align: center;">
+          <p style="color: var(--hot-magenta); font-weight: 700; margin-bottom: var(--spacing-md);">[ERROR]</p>
+          <p style="margin-bottom: var(--spacing-lg);">${errorMessage}</p>
+          <button class="control-btn retry-btn" onclick="location.reload()" style="margin: 0 auto;">RETRY</button>
+        </div>
+      `;
+      grid.removeAttribute('aria-busy');
     }
-    const tableBody = document.getElementById('projects-table-body');
     if (tableBody) {
-      tableBody.innerHTML = `<tr><td colspan="5" class="table-error">[ERROR] Failed to load projects</td></tr>`;
+      removeSkeletons(tableBody);
+      tableBody.innerHTML = `<tr><td colspan="5" class="table-error" style="text-align: center; padding: var(--spacing-xl);">${errorMessage}</td></tr>`;
+      tableBody.removeAttribute('aria-busy');
     }
   } finally {
     state.loading = false;
-    if (loadingIndicator) {
-      loadingIndicator.style.display = 'none';
-    }
   }
 }
 
@@ -135,7 +191,9 @@ function renderProjectCards(projects) {
   const grid = document.getElementById('project-cards-grid');
   if (!grid) return;
 
-  // Clear loading indicator
+  // Remove any skeletons before rendering
+  removeSkeletons(grid);
+
   grid.innerHTML = '';
 
   if (projects.length === 0) {
@@ -224,6 +282,9 @@ function createProjectCard(project) {
 function renderProjectsTable(projects) {
   const tableBody = document.getElementById('projects-table-body');
   if (!tableBody) return;
+
+  // Remove any skeletons before rendering
+  removeSkeletons(tableBody);
 
   tableBody.innerHTML = '';
 
@@ -332,23 +393,130 @@ function formatRelativeTime(dateString) {
 }
 
 // ============================================
+// Validation Functions
+// ============================================
+function validateProjectName(nameInput, errorDiv) {
+  const name = nameInput.value.trim();
+
+  // Check if empty
+  if (!name) {
+    showValidationError(errorDiv, 'Project name is required');
+    nameInput.setCustomValidity('Project name is required');
+    return false;
+  }
+
+  // Check for invalid characters (OS-specific restrictions)
+  const invalidChars = /[<>:"|?*\/\\]/;
+  if (invalidChars.test(name)) {
+    showValidationError(errorDiv, 'Project name contains invalid characters (< > : " | ? * / \\)');
+    nameInput.setCustomValidity('Invalid characters in project name');
+    return false;
+  }
+
+  // Check length (reasonable limits)
+  if (name.length < 2) {
+    showValidationError(errorDiv, 'Project name must be at least 2 characters long');
+    nameInput.setCustomValidity('Project name too short');
+    return false;
+  }
+
+  if (name.length > 100) {
+    showValidationError(errorDiv, 'Project name must be less than 100 characters');
+    nameInput.setCustomValidity('Project name too long');
+    return false;
+  }
+
+  // Clear validation
+  nameInput.setCustomValidity('');
+  if (errorDiv && errorDiv.textContent.includes('name')) {
+    errorDiv.style.display = 'none';
+  }
+  return true;
+}
+
+function validateProjectPath(pathInput, errorDiv) {
+  const path = pathInput.value.trim();
+
+  // Check if empty
+  if (!path) {
+    showValidationError(errorDiv, 'Project path is required');
+    pathInput.setCustomValidity('Project path is required');
+    return false;
+  }
+
+  // Check for basic path structure (Unix or Windows)
+  // Unix: starts with / or ~
+  // Windows: starts with drive letter (C:) or UNC path (\\)
+  const validPathPattern = /^(\/|~\/|[A-Za-z]:\\|\\\\)/;
+  if (!validPathPattern.test(path)) {
+    showValidationError(errorDiv, 'Project path must be an absolute path (e.g., /home/user/project or C:\\Users\\project)');
+    pathInput.setCustomValidity('Invalid path format');
+    return false;
+  }
+
+  // Check for invalid characters in path
+  const invalidChars = /[<>:"|?*]/;
+  if (invalidChars.test(path.replace(/^[A-Za-z]:/, ''))) { // Allow colon in drive letter
+    showValidationError(errorDiv, 'Project path contains invalid characters (< > : " | ? *)');
+    pathInput.setCustomValidity('Invalid characters in path');
+    return false;
+  }
+
+  // Clear validation
+  pathInput.setCustomValidity('');
+  if (errorDiv && errorDiv.textContent.includes('path')) {
+    errorDiv.style.display = 'none';
+  }
+  return true;
+}
+
+function showValidationError(errorDiv, message) {
+  if (errorDiv) {
+    errorDiv.textContent = `[VALIDATION ERROR] ${message}`;
+    errorDiv.style.display = 'block';
+    errorDiv.style.borderColor = 'var(--hot-magenta)';
+    errorDiv.style.color = 'var(--hot-magenta)';
+  }
+}
+
+// ============================================
 // Event Listeners
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
   // Create project form
   const form = document.getElementById('create-project-form');
   if (form) {
+    // Add input validation listeners
+    const nameInput = document.getElementById('project-name-input');
+    const pathInput = document.getElementById('project-path-input');
+    const errorDiv = document.getElementById('create-project-error');
+
+    // Validate project name on input
+    if (nameInput) {
+      nameInput.addEventListener('input', () => {
+        validateProjectName(nameInput, errorDiv);
+      });
+    }
+
+    // Validate project path on input
+    if (pathInput) {
+      pathInput.addEventListener('input', () => {
+        validateProjectPath(pathInput, errorDiv);
+      });
+    }
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
-      const nameInput = document.getElementById('project-name-input');
-      const pathInput = document.getElementById('project-path-input');
-      
+
       if (nameInput && pathInput) {
         const name = nameInput.value.trim();
         const path = pathInput.value.trim();
-        
-        if (name && path) {
+
+        // Validate both fields
+        const nameValid = validateProjectName(nameInput, errorDiv);
+        const pathValid = validateProjectPath(pathInput, errorDiv);
+
+        if (nameValid && pathValid && name && path) {
           await createProject(name, path);
         }
       }
@@ -441,37 +609,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Initialize
-  initDarkMode();
+  // Initialize projects (dark mode is handled by navigation.js)
   loadProjects();
 });
-
-// ============================================
-// Dark Mode
-// ============================================
-function initDarkMode() {
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  setTheme(savedTheme);
-  
-  const toggleBtn = document.getElementById('dark-mode-toggle');
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      setTheme(newTheme);
-    });
-  }
-}
-
-function setTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
-  updateToggleButton(theme);
-}
-
-function updateToggleButton(theme) {
-  const toggleBtn = document.getElementById('dark-mode-toggle');
-  if (toggleBtn) {
-    toggleBtn.textContent = theme === 'light' ? 'DARK MODE' : 'LIGHT MODE';
-  }
-}

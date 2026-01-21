@@ -1,0 +1,323 @@
+/**
+ * Pixel Transparency Effect
+ * 
+ * Recreates the authentic Game Boy Color LCD screen look where lighter pixels
+ * appear transparent/muted, making whites softer and more subdued.
+ * 
+ * Based on Pixel Transparency shader v1.1 by mattakins
+ * Translated from GLSL/Slang to CSS for web implementation
+ */
+
+/* ===== CSS Custom Properties ===== */
+:root {
+  /* Background */
+  --pt-bg-color: #7A7A7A; /* RGB(122, 122, 122) - base paper grain color */
+  --pt-bg-tint-pocket: #A6AC84; /* Pocket tint option */
+  --pt-bg-tint-gray: #BCBCBC; /* Gray tint option */
+  --pt-bg-tint-white: #FFFFFF; /* White tint option */
+  
+  /* Transparency */
+  --pt-base-alpha: 0.20; /* Base transparency amount */
+  --pt-threshold: 0.90; /* White pixel detection threshold (90% brightness) */
+  --pt-white-transparency: 0.50; /* White boost transparency */
+  
+  /* Drop Shadow */
+  --pt-shadow-offset-x: 3px;
+  --pt-shadow-offset-y: 3px;
+  --pt-shadow-opacity: 0.5; /* 50% opacity */
+  --pt-shadow-blur: 1px;
+  
+  /* Grain texture */
+  --pt-grain-intensity: 0.065;
+}
+
+/* ===== Pixel Transparency Effect - Light Mode Only ===== */
+/* Apply only when NOT in dark mode */
+/* Override styles.css background-image to remove horizontal lines */
+html:not([data-theme="dark"]) body {
+  position: relative;
+  min-height: 100vh;
+  
+  /* Override styles.css background-image - remove horizontal lines */
+  /* Background layer - paper grain texture for pixel transparency */
+  background-color: var(--pt-bg-color);
+  background-image: 
+    /* Paper grain noise pattern - vertical lines only (no horizontal) */
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      rgba(0, 0, 0, 0.02) 1px,
+      transparent 2px,
+      rgba(255, 255, 255, 0.01) 3px,
+      transparent 4px
+    ),
+    /* Additional fine grain texture */
+    repeating-linear-gradient(
+      45deg,
+      transparent 0px,
+      rgba(0, 0, 0, 0.008) 1px,
+      transparent 2px
+    );
+  background-size: 100% 100%, 200% 200%;
+}
+
+/* Background tint overlay (Pocket tint - default) */
+html:not([data-theme="dark"]) body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  /* Subtle tint overlay to match Pocket palette */
+  /* This creates the warm, muted background that shows through light pixels */
+  background: linear-gradient(
+    to bottom,
+    rgba(166, 172, 132, 0.12) 0%, /* #A6AC84 with low opacity */
+    rgba(166, 172, 132, 0.08) 50%,
+    rgba(166, 172, 132, 0.12) 100%
+  );
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Drop shadow layer - subtle shadows for darker content areas */
+html:not([data-theme="dark"]) body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  /* Subtle shadow pattern - approximates per-pixel shadow detection */
+  background: 
+    /* Multiple radial gradients for varied shadow placement */
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(0, 0, 0, 0.12) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 80% 30%,
+      rgba(0, 0, 0, 0.08) 0%,
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 50% 70%,
+      rgba(0, 0, 0, 0.1) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 30% 80%,
+      rgba(0, 0, 0, 0.09) 0%,
+      transparent 38%
+    );
+  mix-blend-mode: multiply;
+  filter: blur(var(--pt-shadow-blur));
+  pointer-events: none;
+  z-index: 1;
+  opacity: var(--pt-shadow-opacity);
+  /* Offset shadow slightly */
+  transform: translate(var(--pt-shadow-offset-x), var(--pt-shadow-offset-y));
+}
+
+/* Main content wrapper - apply transparency effect to light pixels */
+html:not([data-theme="dark"]) body > * {
+  position: relative;
+  z-index: 2;
+  
+  /* Ensure content is above background layers */
+  isolation: isolate;
+}
+
+/* Apply subtle transparency effect to light backgrounds */
+/* This makes white/light areas appear muted, showing the background through */
+html:not([data-theme="dark"]) body .panel,
+html:not([data-theme="dark"]) body .status-bar {
+  /* Blend light backgrounds with the paper grain background */
+  /* Using mix-blend-mode to create transparency effect for light pixels */
+  mix-blend-mode: multiply;
+  /* Slight opacity reduction for very light areas */
+  opacity: 0.98;
+}
+
+/* Override mix-blend-mode for panels to maintain readability */
+html:not([data-theme="dark"]) body .panel {
+  mix-blend-mode: normal;
+  /* Make panel backgrounds slightly transparent so background shows through */
+  background-color: rgba(250, 246, 241, 0.88); /* --paper-cream with slight transparency */
+}
+
+/* Header background - match pixel transparency background in light mode */
+/* Match header background exactly with body background */
+html:not([data-theme="dark"]) body .header {
+  /* Match header background exactly with body background */
+  background-color: var(--pt-bg-color); /* #7A7A7A */
+  background-image: 
+    /* Paper grain noise pattern - vertical lines only (no horizontal) */
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      rgba(0, 0, 0, 0.02) 1px,
+      transparent 2px,
+      rgba(255, 255, 255, 0.01) 3px,
+      transparent 4px
+    ),
+    /* Additional fine grain texture */
+    repeating-linear-gradient(
+      45deg,
+      transparent 0px,
+      rgba(0, 0, 0, 0.008) 1px,
+      transparent 2px
+    );
+  background-size: 100% 100%, 200% 200%;
+  /* No mix-blend-mode or opacity - should match body exactly */
+  /* position: sticky from styles.css provides positioning context for pseudo-elements */
+}
+
+/* Header overlay - match body's tint overlay */
+html:not([data-theme="dark"]) body .header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Match body's tint overlay */
+  background: linear-gradient(
+    to bottom,
+    rgba(166, 172, 132, 0.12) 0%, /* #A6AC84 with low opacity */
+    rgba(166, 172, 132, 0.08) 50%,
+    rgba(166, 172, 132, 0.12) 100%
+  );
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 0; /* Behind header content */
+}
+
+/* Header shadow overlay - match body's shadow overlay */
+html:not([data-theme="dark"]) body .header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Match body's shadow pattern */
+  background: 
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(0, 0, 0, 0.12) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 80% 30%,
+      rgba(0, 0, 0, 0.08) 0%,
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 50% 70%,
+      rgba(0, 0, 0, 0.1) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 30% 80%,
+      rgba(0, 0, 0, 0.09) 0%,
+      transparent 38%
+    );
+  mix-blend-mode: multiply;
+  filter: blur(var(--pt-shadow-blur));
+  pointer-events: none;
+  z-index: 0; /* Behind header content */
+  opacity: var(--pt-shadow-opacity);
+  transform: translate(var(--pt-shadow-offset-x), var(--pt-shadow-offset-y));
+}
+
+/* Text elements - maintain readability */
+html:not([data-theme="dark"]) body h1,
+html:not([data-theme="dark"]) body h2,
+html:not([data-theme="dark"]) body h3,
+html:not([data-theme="dark"]) body p,
+html:not([data-theme="dark"]) body span,
+html:not([data-theme="dark"]) body div {
+  /* No filter on text - maintain crisp readability */
+  filter: none;
+}
+
+/* Buttons and interactive elements - maintain full visibility */
+html:not([data-theme="dark"]) body .control-btn,
+html:not([data-theme="dark"]) body .nav-link,
+html:not([data-theme="dark"]) body button {
+  /* No filter on interactive elements */
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: 1;
+}
+
+/* Ensure dark mode is completely unaffected */
+html[data-theme="dark"] body {
+  /* Reset all pixel transparency effects */
+  background-color: var(--paper-cream);
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.015) 2px,
+      rgba(255, 255, 255, 0.015) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 1px,
+      rgba(255, 255, 255, 0.008) 1px,
+      rgba(255, 255, 255, 0.008) 2px
+    );
+}
+
+html[data-theme="dark"] body::before,
+html[data-theme="dark"] body::after {
+  display: none;
+}
+
+html[data-theme="dark"] body > *,
+html[data-theme="dark"] body .panel,
+html[data-theme="dark"] body .header,
+html[data-theme="dark"] body .status-bar {
+  mix-blend-mode: normal;
+  opacity: 1;
+  filter: none;
+  background-color: var(--paper-cream);
+}
+
+html[data-theme="dark"] body h1,
+html[data-theme="dark"] body h2,
+html[data-theme="dark"] body h3,
+html[data-theme="dark"] body p,
+html[data-theme="dark"] body span,
+html[data-theme="dark"] body div,
+html[data-theme="dark"] body .control-btn,
+html[data-theme="dark"] body .nav-link,
+html[data-theme="dark"] body button {
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: 1;
+}
+
+/* Performance optimizations */
+html:not([data-theme="dark"]) body::before,
+html:not([data-theme="dark"]) body::after {
+  will-change: transform;
+  transform: translateZ(0); /* Force GPU acceleration */
+}
+
+/* Ensure pointer events work correctly */
+html:not([data-theme="dark"]) body::before,
+html:not([data-theme="dark"]) body::after {
+  pointer-events: none;
+}
+
+/* All content should be interactive */
+html:not([data-theme="dark"]) body > * {
+  pointer-events: auto;
+}
+
+/* Remove detail-row background pattern in all modes */
+/* This eliminates the striped pattern effect that doesn't blend with panels */
+body .detail-row {
+  background: transparent;
+}
+
+/* Explicitly override dark mode detail-row background */
+html[data-theme="dark"] body .detail-row {
+  background: transparent;
+}

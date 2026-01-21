@@ -17,7 +17,9 @@ const wizardState = {
   tierPlan: null,
   validationResult: null,
   projectPath: null,
-  errors: []
+  errors: [],
+  ws: null,
+  startChainInProgress: false
 };
 
 // ============================================
@@ -88,28 +90,144 @@ function initElements() {
 }
 
 // ============================================
-// Dark Mode Initialization
+// WebSocket Connection for Start Chain Progress
 // ============================================
-function initDarkMode() {
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  setTheme(savedTheme);
+function connectWebSocket() {
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const wsUrl = `${protocol}//${window.location.host}/events`;
   
-  const toggleBtn = document.getElementById('dark-mode-toggle');
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      setTheme(newTheme);
-    });
+  try {
+    wizardState.ws = new WebSocket(wsUrl);
+    
+    wizardState.ws.onopen = () => {
+      console.log('[Wizard] WebSocket connected');
+    };
+    
+    wizardState.ws.onmessage = (event) => {
+      try {
+        const message = JSON.parse(event.data);
+        handleWebSocketMessage(message);
+      } catch (error) {
+        console.error('[Wizard] Error parsing WebSocket message:', error);
+      }
+    };
+    
+    wizardState.ws.onerror = (error) => {
+      console.error('[Wizard] WebSocket error:', error);
+    };
+    
+    wizardState.ws.onclose = () => {
+      console.log('[Wizard] WebSocket disconnected');
+      // Attempt to reconnect if Start Chain is in progress
+      if (wizardState.startChainInProgress) {
+        setTimeout(connectWebSocket, 3000);
+      }
+    };
+  } catch (error) {
+    console.error('[Wizard] Error creating WebSocket:', error);
   }
 }
 
-function setTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
-  const toggleBtn = document.getElementById('dark-mode-toggle');
-  if (toggleBtn) {
-    toggleBtn.textContent = theme === 'light' ? 'DARK MODE' : 'LIGHT MODE';
+function handleWebSocketMessage(message) {
+  // Handle Start Chain step events
+  if (message.type === 'start_chain_step') {
+    showStartChainProgress(message.step, message.status);
+  }
+  
+  // Handle Start Chain completion
+  if (message.type === 'start_chain_complete') {
+    handleStartChainComplete(message.projectPath);
+  }
+}
+
+function showStartChainProgress(step, status) {
+  const progressContainer = document.getElementById('start-chain-progress');
+  const progressStep = document.querySelector(`.progress-step[data-step="${step}"]`);
+  
+  if (!progressContainer || !progressStep) return;
+  
+  // Show progress container
+  if (progressContainer.style.display === 'none') {
+    progressContainer.style.display = 'block';
+  }
+  
+  // Update step status
+  progressStep.classList.remove('running', 'complete');
+  const statusElement = progressStep.querySelector('.progress-step-status');
+  
+  if (status === 'started') {
+    progressStep.classList.add('running');
+    if (statusElement) statusElement.textContent = 'RUNNING';
+  } else if (status === 'completed') {
+    progressStep.classList.add('complete');
+    if (statusElement) statusElement.textContent = 'COMPLETE';
+  } else if (status === 'failed') {
+    progressStep.classList.add('failed');
+    if (statusElement) {
+      statusElement.textContent = 'FAILED';
+      statusElement.style.color = 'var(--hot-magenta)';
+    }
+  }
+}
+
+function handleStartChainComplete(projectPath) {
+  wizardState.startChainInProgress = false;
+  
+  // Clear fallback timeout if it exists
+  if (fallbackTimeout) {
+    clearTimeout(fallbackTimeout);
+    fallbackTimeout = null;
+  }
+  
+  const progressContainer = document.getElementById('start-chain-progress');
+  if (progressContainer) {
+    // Mark validation step as complete
+    const validationStep = document.querySelector('.progress-step[data-step="validation"]');
+    if (validationStep) {
+      validationStep.classList.add('complete');
+      const statusElement = validationStep.querySelector('.progress-step-status');
+      if (statusElement) statusElement.textContent = 'COMPLETE';
+    }
+  }
+  
+  // Show success message
+  const saveSuccess = document.getElementById('save-success');
+  if (saveSuccess) {
+    saveSuccess.style.display = 'block';
+  }
+  
+  // Open project and redirect to dashboard
+  openProjectAndRedirect(projectPath || wizardState.projectPath);
+}
+
+async function openProjectAndRedirect(projectPath) {
+  try {
+    // Open project via API
+    const response = await fetch('/api/projects/open', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        projectPath: projectPath || wizardState.projectPath
+      }),
+    });
+    
+    if (response.ok) {
+      // Redirect to dashboard
+      window.location.href = '/';
+    } else {
+      // Still redirect even if open fails
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 2000);
+    }
+  } catch (error) {
+    console.error('[Wizard] Error opening project:', error);
+    // Still redirect on error
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 2000);
   }
 }
 
@@ -250,42 +368,59 @@ function handleFileSelect(file) {
   reader.readAsArrayBuffer(file);
 }
 
-function uploadFile(base64Content, filename) {
+async function uploadFile(base64Content, filename) {
   if (!elements) return;
   if (elements.nextBtn) elements.nextBtn.disabled = true;
   if (elements.uploadError) elements.uploadError.style.display = 'none';
-  
+
   const format = detectFormatFromFilename(filename);
-  
-  fetch('/api/wizard/upload', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      file: base64Content,
-      filename: filename,
-      format: format,
-      projectPath: wizardState.projectPath,
-    }),
-  })
-    .then(response => response.json())
-    .then(data => {
-      if (data.error) {
-        if (elements.uploadError) showError(elements.uploadError, data.error);
-        if (elements.nextBtn) elements.nextBtn.disabled = true;
-      } else {
-        wizardState.parsedRequirements = data.parsed;
-        updateButtonStates();
-        // Auto-advance to step 2
-        nextStep();
-      }
-    })
-    .catch(error => {
-      console.error('[Wizard] Upload error:', error);
-      if (elements.uploadError) showError(elements.uploadError, `Upload failed: ${error.message}`);
-      if (elements.nextBtn) elements.nextBtn.disabled = true;
+
+  try {
+    console.log('[Wizard] Uploading file:', filename, 'format:', format);
+    const response = await fetch('/api/wizard/upload', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        file: base64Content,
+        filename: filename,
+        format: format,
+        projectPath: wizardState.projectPath,
+      }),
     });
+
+    console.log('[Wizard] Upload response status:', response.status, response.statusText);
+
+    // Check if response is JSON before parsing
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await response.text();
+      console.error('[Wizard] Server returned non-JSON response:', text.substring(0, 200));
+      throw new Error(`Server returned ${response.status} ${response.statusText}. Expected JSON response.`);
+    }
+
+    const data = await response.json();
+    console.log('[Wizard] Upload response data:', data);
+
+    if (!response.ok) {
+      throw new Error(data.error || `Upload failed with status ${response.status}`);
+    }
+
+    if (data.error) {
+      if (elements.uploadError) showError(elements.uploadError, data.error);
+      if (elements.nextBtn) elements.nextBtn.disabled = true;
+    } else {
+      wizardState.parsedRequirements = data.parsed;
+      updateButtonStates();
+      // Auto-advance to step 2
+      nextStep();
+    }
+  } catch (error) {
+    console.error('[Wizard] Upload error:', error);
+    if (elements.uploadError) showError(elements.uploadError, `Upload failed: ${error.message}`);
+    if (elements.nextBtn) elements.nextBtn.disabled = true;
+  }
 }
 
 function detectFormatFromFilename(filename) {
@@ -297,46 +432,63 @@ function detectFormatFromFilename(filename) {
   return 'text';
 }
 
-function handleTextPaste() {
+async function handleTextPaste() {
   if (!elements || !elements.textPaste || !elements.formatSelect) return;
   const text = elements.textPaste.value.trim();
   if (!text) {
     if (elements.uploadError) showError(elements.uploadError, 'Please enter some text');
     return;
   }
-  
+
   const format = elements.formatSelect.value;
   if (elements.nextBtn) elements.nextBtn.disabled = true;
   if (elements.uploadError) elements.uploadError.style.display = 'none';
-  
-  fetch('/api/wizard/upload', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      text: text,
-      format: format,
-      projectPath: wizardState.projectPath,
-    }),
-  })
-    .then(response => response.json())
-    .then(data => {
-      if (data.error) {
-        if (elements.uploadError) showError(elements.uploadError, data.error);
-        if (elements.nextBtn) elements.nextBtn.disabled = true;
-      } else {
-        wizardState.parsedRequirements = data.parsed;
-        updateButtonStates();
-        // Auto-advance to step 2
-        nextStep();
-      }
-    })
-    .catch(error => {
-      console.error('[Wizard] Text paste error:', error);
-      if (elements.uploadError) showError(elements.uploadError, `Parse failed: ${error.message}`);
-      if (elements.nextBtn) elements.nextBtn.disabled = true;
+
+  try {
+    console.log('[Wizard] Submitting pasted text, format:', format, 'length:', text.length);
+    const response = await fetch('/api/wizard/upload', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text: text,
+        format: format,
+        projectPath: wizardState.projectPath,
+      }),
     });
+
+    console.log('[Wizard] Text paste response status:', response.status, response.statusText);
+
+    // Check if response is JSON before parsing
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      const text = await response.text();
+      console.error('[Wizard] Server returned non-JSON response:', text.substring(0, 200));
+      throw new Error(`Server returned ${response.status} ${response.statusText}. Expected JSON response.`);
+    }
+
+    const data = await response.json();
+    console.log('[Wizard] Text paste response data:', data);
+
+    if (!response.ok) {
+      throw new Error(data.error || `Parse failed with status ${response.status}`);
+    }
+
+    if (data.error) {
+      if (elements.uploadError) showError(elements.uploadError, data.error);
+      if (elements.nextBtn) elements.nextBtn.disabled = true;
+    } else {
+      wizardState.parsedRequirements = data.parsed;
+      updateButtonStates();
+      // Auto-advance to step 2
+      nextStep();
+    }
+  } catch (error) {
+    console.error('[Wizard] Text paste error:', error);
+    if (elements.uploadError) showError(elements.uploadError, `Parse failed: ${error.message}`);
+    if (elements.nextBtn) elements.nextBtn.disabled = true;
+  }
 }
 
 // ============================================
@@ -502,12 +654,27 @@ function validatePrd() {
     });
 }
 
+let fallbackTimeout = null;
+
 function savePrd() {
   if (!wizardState.generatedPrd || !elements) return;
   
   if (elements.finishBtn) elements.finishBtn.disabled = true;
   if (elements.saveError) elements.saveError.style.display = 'none';
   if (elements.saveSuccess) elements.saveSuccess.style.display = 'none';
+  
+  // Hide progress indicator initially
+  const progressContainer = document.getElementById('start-chain-progress');
+  if (progressContainer) {
+    progressContainer.style.display = 'none';
+  }
+  
+  // Connect to WebSocket for Start Chain progress events
+  if (!wizardState.ws || wizardState.ws.readyState !== WebSocket.OPEN) {
+    connectWebSocket();
+  }
+  
+  wizardState.startChainInProgress = true;
   
   fetch('/api/wizard/save', {
     method: 'POST',
@@ -524,17 +691,42 @@ function savePrd() {
     .then(response => response.json())
     .then(data => {
       if (data.error) {
+        wizardState.startChainInProgress = false;
         if (elements.saveError) showError(elements.saveError, data.error);
         if (elements.finishBtn) elements.finishBtn.disabled = false;
       } else {
-        if (elements.saveSuccess) elements.saveSuccess.style.display = 'block';
-        // Redirect to dashboard after 2 seconds
-        setTimeout(() => {
-          window.location.href = '/';
-        }, 2000);
+        // Check WebSocket connection status
+        const wsConnected = wizardState.ws && wizardState.ws.readyState === WebSocket.OPEN;
+
+        if (!wsConnected) {
+          console.warn('[Wizard] WebSocket not connected, using fallback mode');
+          // Show fallback message to user
+          const progressContainer = document.getElementById('start-chain-progress');
+          if (progressContainer) {
+            progressContainer.style.display = 'block';
+            const fallbackMsg = document.createElement('div');
+            fallbackMsg.className = 'fallback-message';
+            fallbackMsg.style.cssText = 'padding: var(--spacing-sm); margin-top: var(--spacing-sm); border: var(--border-medium) solid var(--electric-blue); background: rgba(0, 71, 171, 0.05); text-align: center;';
+            fallbackMsg.textContent = 'Progress updates unavailable. Start Chain is running in background...';
+            progressContainer.appendChild(fallbackMsg);
+          }
+        }
+
+        // Fallback timeout: wait for WebSocket updates, or complete after 30 seconds
+        fallbackTimeout = setTimeout(() => {
+          if (wizardState.startChainInProgress) {
+            wizardState.startChainInProgress = false;
+            console.log('[Wizard] Fallback timeout reached, assuming Start Chain completed');
+            // Fallback: show success and redirect
+            if (elements.saveSuccess) elements.saveSuccess.style.display = 'block';
+            openProjectAndRedirect(data.projectPath || wizardState.projectPath);
+          }
+        }, 30000); // Extended to 30 seconds for more realistic completion time
       }
     })
     .catch(error => {
+      wizardState.startChainInProgress = false;
+      if (fallbackTimeout) clearTimeout(fallbackTimeout);
       console.error('[Wizard] Save error:', error);
       if (elements.saveError) showError(elements.saveError, `Save failed: ${error.message}`);
       if (elements.finishBtn) elements.finishBtn.disabled = false;
@@ -629,8 +821,8 @@ function setupEventListeners() {
 function init() {
   // Initialize elements first
   initElements();
-  
-  initDarkMode();
+
+  // Dark mode is handled by navigation.js
   setupEventListeners();
   showStep(1);
   

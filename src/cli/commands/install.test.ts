@@ -133,11 +133,9 @@ vi.mock('node:readline', () => ({
 
 // process.exit will be mocked in beforeEach/afterEach per test
 
-// Mock console methods
-const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-
 describe('InstallCommand', () => {
+  let consoleLogSpy: ReturnType<typeof vi.spyOn>;
+  let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
   let mockInstallCommand: InstallCmd;
   let mockCheckRegistryInstance: {
     register: ReturnType<typeof vi.fn>;
@@ -155,8 +153,8 @@ describe('InstallCommand', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    consoleLogSpy.mockClear();
-    consoleErrorSpy.mockClear();
+    consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     // Mock process.exit
     originalExit = process.exit;
@@ -445,7 +443,8 @@ describe('InstallCommand', () => {
       await installAction({ tool: 'cursor' });
 
       expect(consoleErrorSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Error during installation:')
+        expect.stringContaining('Error during installation:'),
+        expect.stringContaining('Check registry error')
       );
       expect(process.exit).toHaveBeenCalledWith(1);
     });

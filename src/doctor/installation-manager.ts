@@ -181,6 +181,57 @@ export class InstallationManager {
   }
 
   /**
+   * Installs a dependency for a failed check and returns detailed output.
+   *
+   * Intended for non-interactive callers (GUI/API) that need command output/error text.
+   * This method does NOT print success/failure banners; it returns them to the caller.
+   */
+  async installWithResult(
+    checkName: string,
+    options: InstallOptions = {}
+  ): Promise<InstallResult> {
+    const cmd = this.getInstallCommand(checkName);
+    if (!cmd) {
+      return {
+        success: false,
+        error: `No install command found for check: ${checkName}`,
+        command: '',
+      };
+    }
+
+    const platform = this.getCurrentPlatform();
+    if (!cmd.platforms.includes(platform)) {
+      return {
+        success: false,
+        error: `Install command for ${checkName} is not supported on platform: ${platform}`,
+        command: cmd.command,
+      };
+    }
+
+    if (options.dryRun) {
+      const sudoNote = cmd.requiresSudo ? '\nNote: requires elevated privileges.' : '';
+      return {
+        success: true,
+        command: cmd.command,
+        output: `[DRY RUN] Would execute: ${cmd.command}\nDescription: ${cmd.description}${sudoNote}`,
+      };
+    }
+
+    if (!options.skipConfirmation) {
+      const confirmed = await this.confirmInstallation(cmd);
+      if (!confirmed) {
+        return {
+          success: false,
+          error: 'Installation cancelled by user',
+          command: cmd.command,
+        };
+      }
+    }
+
+    return this.executeCommand(cmd.command);
+  }
+
+  /**
    * Registers default install commands
    */
   private registerDefaultCommands(): void {

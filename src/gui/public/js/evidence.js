@@ -4,6 +4,8 @@
  * Handles evidence loading, filtering, preview, and download functionality
  */
 
+import { createSkeletonTableRow, removeSkeletons } from './skeletons.js';
+
 // ============================================
 // State Management
 // ============================================
@@ -18,36 +20,11 @@ const state = {
 // Initialization
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
-  initDarkMode();
+  // Dark mode is handled by navigation.js
   setupEventListeners();
+  loadTierSelector();
   loadEvidence({});
 });
-
-// ============================================
-// Dark Mode
-// ============================================
-function initDarkMode() {
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  setTheme(savedTheme);
-  
-  const toggleBtn = document.getElementById('dark-mode-toggle');
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      setTheme(newTheme);
-    });
-  }
-}
-
-function setTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
-  const toggleBtn = document.getElementById('dark-mode-toggle');
-  if (toggleBtn) {
-    toggleBtn.textContent = theme === 'light' ? 'DARK MODE' : 'LIGHT MODE';
-  }
-}
 
 // ============================================
 // Event Listeners
@@ -91,8 +68,8 @@ function setupEventListeners() {
     });
   });
 
-  // Enter key on filter inputs
-  const filterInputs = document.querySelectorAll('#filter-tier-id, #filter-date-from, #filter-date-to');
+  // Enter key on filter inputs (date inputs only - tier is now a dropdown)
+  const filterInputs = document.querySelectorAll('#filter-date-from, #filter-date-to');
   filterInputs.forEach(input => {
     input.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
@@ -100,6 +77,12 @@ function setupEventListeners() {
       }
     });
   });
+
+  // Auto-apply filter when tier selector changes
+  const tierIdSelect = document.getElementById('filter-tier-id');
+  if (tierIdSelect) {
+    tierIdSelect.addEventListener('change', applyFilters);
+  }
 }
 
 // ============================================
@@ -109,7 +92,16 @@ async function loadEvidence(filters) {
   try {
     const tbody = document.getElementById('evidence-table-body');
     if (tbody) {
-      tbody.innerHTML = '<tr><td colspan="6" class="loading-message">Loading evidence...</td></tr>';
+      // Show skeleton rows during loading
+      tbody.innerHTML = '';
+      tbody.setAttribute('aria-busy', 'true');
+      
+      // Create 6 skeleton rows (evidence table has 6 columns: Name, Type, Tier ID, Created, Size, Actions)
+      const widths = ['long', 'short', 'medium', 'medium', 'short', 'short'];
+      for (let i = 0; i < 6; i++) {
+        const skeletonRow = createSkeletonTableRow(6, widths);
+        tbody.appendChild(skeletonRow);
+      }
     }
 
     // Build query string
@@ -136,14 +128,70 @@ async function loadEvidence(filters) {
 
     renderTable();
     updateCount();
+    
+    if (tbody) {
+      tbody.removeAttribute('aria-busy');
+    }
   } catch (error) {
     console.error('[Evidence] Error loading evidence:', error);
     showError(`[ERROR] Failed to load evidence: ${error.message}`);
     const tbody = document.getElementById('evidence-table-body');
     if (tbody) {
       tbody.innerHTML = `<tr><td colspan="6" class="error-message">[ERROR] ${error.message}</td></tr>`;
+      tbody.removeAttribute('aria-busy');
     }
   }
+}
+
+// ============================================
+// Tier Selector
+// ============================================
+/**
+ * Load tiers from API and populate dropdown selector.
+ */
+async function loadTierSelector() {
+  try {
+    const response = await fetch('/api/tiers');
+    if (!response.ok) {
+      // If tiers not available (no project loaded), leave dropdown with just "All Tiers"
+      return;
+    }
+
+    const data = await response.json();
+    if (data.tiers && data.tiers.length > 0) {
+      populateTierSelector(data.tiers);
+    }
+  } catch (error) {
+    console.error('[Evidence] Error loading tier selector:', error);
+    // Silently fail - dropdown will just have "All Tiers" option
+  }
+}
+
+/**
+ * Recursively populate tier selector dropdown with indented hierarchy.
+ * @param {Array} tiers - Array of tier objects with id, title, type, children
+ * @param {number} indent - Current indentation level (0 = phase, 1 = task, 2 = subtask)
+ */
+function populateTierSelector(tiers, indent = 0) {
+  const select = document.getElementById('filter-tier-id');
+  if (!select) return;
+
+  tiers.forEach(tier => {
+    // Create option element
+    const option = document.createElement('option');
+    option.value = tier.id;
+    
+    // Build indented text: 2 spaces per level
+    const indentSpaces = '  '.repeat(indent);
+    option.textContent = `${indentSpaces}${tier.id} - ${tier.title || ''}`;
+    
+    select.appendChild(option);
+
+    // Recursively add children
+    if (tier.children && tier.children.length > 0) {
+      populateTierSelector(tier.children, indent + 1);
+    }
+  });
 }
 
 // ============================================
@@ -157,7 +205,7 @@ function applyFilters() {
   
   const filters = {
     type: typeEl?.value || '',
-    tierId: tierIdEl?.value.trim() || '',
+    tierId: tierIdEl?.value || '', // Select dropdown doesn't need trim()
     dateFrom: dateFromEl?.value || '',
     dateTo: dateToEl?.value || '',
   };
@@ -167,12 +215,12 @@ function applyFilters() {
 
 function clearFilters() {
     const typeSelect = document.getElementById('filter-type');
-    const tierIdInput = document.getElementById('filter-tier-id');
+    const tierIdSelect = document.getElementById('filter-tier-id');
     const dateFromInput = document.getElementById('filter-date-from');
     const dateToInput = document.getElementById('filter-date-to');
 
   if (typeSelect) typeSelect.value = '';
-  if (tierIdInput) tierIdInput.value = '';
+  if (tierIdSelect) tierIdSelect.value = ''; // Reset to "All Tiers"
   if (dateFromInput) dateFromInput.value = '';
   if (dateToInput) dateToInput.value = '';
 
@@ -185,6 +233,9 @@ function clearFilters() {
 function renderTable() {
   const tbody = document.getElementById('evidence-table-body');
   if (!tbody) return;
+
+  // Remove any skeletons before rendering
+  removeSkeletons(tbody);
 
   if (state.filteredArtifacts.length === 0) {
     tbody.innerHTML = '<tr><td colspan="6" class="empty-message">No evidence found</td></tr>';

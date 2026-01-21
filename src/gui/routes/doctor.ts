@@ -51,6 +51,8 @@ interface CheckInfo {
   name: string;
   category: CheckCategory;
   description: string;
+  fixAvailable: boolean;
+  fixDescription?: string;
 }
 
 /**
@@ -66,6 +68,7 @@ interface RunChecksRequest {
  */
 interface FixCheckRequest {
   checkName: string;
+  dryRun?: boolean;
 }
 
 /**
@@ -114,11 +117,14 @@ export function createDoctorRoutes(): Router {
     try {
       const registry = createCheckRegistry();
       const checks = registry.getRegisteredChecks();
+      const installationManager = new InstallationManager();
       
       const checkInfos: CheckInfo[] = checks.map((check) => ({
         name: check.name,
         category: check.category,
         description: check.description,
+        fixAvailable: installationManager.getInstallCommand(check.name) !== null,
+        fixDescription: installationManager.getInstallCommand(check.name)?.description,
       }));
 
       res.json({ checks: checkInfos });
@@ -140,6 +146,7 @@ export function createDoctorRoutes(): Router {
     try {
       const body = req.body as RunChecksRequest;
       const registry = createCheckRegistry();
+      const installationManager = new InstallationManager();
 
       let results: CheckResult[];
 
@@ -158,7 +165,12 @@ export function createDoctorRoutes(): Router {
         results = await registry.runAll();
       }
 
-      res.json({ results });
+      const resultsWithFixInfo = results.map((result) => ({
+        ...result,
+        fixAvailable: installationManager.getInstallCommand(result.name) !== null,
+      }));
+
+      res.json({ results: resultsWithFixInfo });
     } catch (error) {
       const err = error as Error;
       res.status(500).json({
@@ -177,6 +189,7 @@ export function createDoctorRoutes(): Router {
     try {
       const body = req.body as FixCheckRequest;
       const { checkName } = body;
+      const dryRun = body.dryRun === true;
 
       if (!checkName) {
         res.status(400).json({
@@ -198,22 +211,27 @@ export function createDoctorRoutes(): Router {
       }
 
       // Attempt installation (skip confirmation for API calls)
-      const success = await installationManager.install(checkName, {
+      const result = await installationManager.installWithResult(checkName, {
         skipConfirmation: true,
-        dryRun: false,
+        dryRun,
       });
 
-      if (success) {
+      if (result.success) {
         res.json({
           success: true,
-          output: `Successfully fixed: ${installCommand.description}`,
+          output:
+            result.output ||
+            `Successfully fixed: ${installCommand.description}`,
         });
-      } else {
-        res.status(500).json({
-          success: false,
-          output: `Failed to fix: ${checkName}`,
-        });
+        return;
       }
+
+      res.status(500).json({
+        success: false,
+        error: result.error || `Failed to fix: ${checkName}`,
+        output: result.output,
+        code: 'INSTALL_FAILED',
+      });
     } catch (error) {
       const err = error as Error;
       res.status(500).json({

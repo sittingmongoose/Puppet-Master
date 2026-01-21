@@ -124,6 +124,31 @@ export class TierStateManager {
     return this.subtasks.get(subtaskId) ?? null;
   }
 
+  /**
+   * Get a tier node by ID, regardless of type (phase, task, or subtask)
+   */
+  getTierById(tierId: string): TierNode | null {
+    // Check phases first
+    const phase = this.phases.get(tierId);
+    if (phase) {
+      return phase;
+    }
+
+    // Check tasks
+    const task = this.tasks.get(tierId);
+    if (task) {
+      return task;
+    }
+
+    // Check subtasks
+    const subtask = this.subtasks.get(tierId);
+    if (subtask) {
+      return subtask;
+    }
+
+    return null;
+  }
+
   getAllPhases(): TierNode[] {
     return this.root.getChildren();
   }

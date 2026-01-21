@@ -4,6 +4,8 @@
  * Handles tree rendering, node interactions, details panel, and WebSocket integration
  */
 
+import { createSkeletonTree, removeSkeletons } from './skeletons.js';
+
 // ============================================
 // State Management
 // ============================================
@@ -14,6 +16,7 @@ const state = {
   expandedNodes: new Set(),
   currentNodeId: null,
   nodeMap: new Map(), // id -> node element mapping
+  searchQuery: '', // Current search query
 };
 
 // State color mapping
@@ -109,7 +112,11 @@ async function loadTree() {
   const container = document.getElementById('tree-container');
   if (!container) return;
   
-  container.innerHTML = '<div class="loading-indicator">Loading tier hierarchy...</div>';
+  // Show skeleton tree during loading
+  container.innerHTML = '';
+  const skeletonTree = createSkeletonTree(7);
+  container.appendChild(skeletonTree);
+  container.setAttribute('aria-busy', 'true');
   
   try {
     const response = await fetch('/api/tiers');
@@ -120,14 +127,17 @@ async function loadTree() {
     const data = await response.json();
     if (!data.root) {
       container.innerHTML = '<div class="empty-message">No tier hierarchy available. Start a project to see tiers.</div>';
+      container.removeAttribute('aria-busy');
       return;
     }
     
     state.rootNode = data.root;
     renderTree(data.root);
+    container.removeAttribute('aria-busy');
   } catch (error) {
     console.error('[Tiers] Error loading tree:', error);
     container.innerHTML = `<div class="error-message">Error loading tier hierarchy: ${error.message}</div>`;
+    container.removeAttribute('aria-busy');
   }
 }
 
@@ -135,12 +145,20 @@ function renderTree(rootNode) {
   const container = document.getElementById('tree-container');
   if (!container) return;
   
+  // Remove any skeletons before rendering
+  removeSkeletons(container);
+  
   container.innerHTML = '';
   const treeRoot = document.createElement('div');
   treeRoot.className = 'tree-root';
   
   renderNode(rootNode, treeRoot, 0);
   container.appendChild(treeRoot);
+  
+  // Apply current search filter if active
+  if (state.searchQuery) {
+    filterTree(state.searchQuery);
+  }
 }
 
 function renderNode(node, container, level) {
@@ -581,32 +599,118 @@ function hideDetails() {
 }
 
 // ============================================
-// Dark Mode
+// Search/Filter Functionality
 // ============================================
-function initDarkMode() {
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  setTheme(savedTheme);
+function filterTree(query) {
+  state.searchQuery = query;
+  const queryLower = query.toLowerCase().trim();
   
-  const toggleBtn = document.getElementById('dark-mode-toggle');
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      setTheme(newTheme);
+  if (!queryLower) {
+    // Clear search - show all nodes
+    document.querySelectorAll('.tree-node').forEach(node => {
+      node.style.display = 'block';
     });
+    // Remove no results message if present
+    const container = document.getElementById('tree-container');
+    const existingMessage = container?.querySelector('.no-search-results');
+    if (existingMessage) {
+      existingMessage.remove();
+    }
+    return;
+  }
+  
+  // Helper function to check if a node or any of its descendants match
+  function nodeOrDescendantsMatch(nodeElement) {
+    const nodeId = nodeElement.dataset.nodeId || '';
+    const nodeTitle = nodeElement.querySelector('.tree-node-title')?.textContent || '';
+    const nodeIdLower = nodeId.toLowerCase();
+    const nodeTitleLower = nodeTitle.toLowerCase();
+    
+    if (nodeIdLower.includes(queryLower) || nodeTitleLower.includes(queryLower)) {
+      return true;
+    }
+    
+    // Check descendants
+    const childrenContainer = nodeElement.querySelector('.tree-children');
+    if (childrenContainer) {
+      const childNodes = childrenContainer.querySelectorAll('.tree-node');
+      for (const childNode of childNodes) {
+        if (nodeOrDescendantsMatch(childNode)) {
+          return true;
+        }
+      }
+    }
+    
+    return false;
+  }
+  
+  // Filter nodes
+  let hasMatches = false;
+  document.querySelectorAll('.tree-node').forEach(node => {
+    if (nodeOrDescendantsMatch(node)) {
+      node.style.display = 'block';
+      hasMatches = true;
+      // Expand parents to ensure visibility
+      expandParents(node);
+      
+      // Also expand this node if it has children (so matching children are visible)
+      const nodeId = node.dataset.nodeId;
+      const childrenContainer = node.querySelector('.tree-children');
+      if (nodeId && childrenContainer) {
+        state.expandedNodes.add(nodeId);
+        childrenContainer.style.display = 'block';
+        const expandBtn = node.querySelector('.tree-expand-btn');
+        if (expandBtn) {
+          expandBtn.innerHTML = '[-]';
+          expandBtn.setAttribute('aria-label', 'Collapse');
+        }
+      }
+    } else {
+      node.style.display = 'none';
+    }
+  });
+  
+  // If no matches, show a message
+  const container = document.getElementById('tree-container');
+  if (container && !hasMatches && queryLower) {
+    const existingMessage = container.querySelector('.no-search-results');
+    if (!existingMessage) {
+      const message = document.createElement('div');
+      message.className = 'no-search-results empty-message';
+      message.textContent = `No tiers found matching "${query}"`;
+      container.appendChild(message);
+    }
+  } else {
+    const existingMessage = container?.querySelector('.no-search-results');
+    if (existingMessage) {
+      existingMessage.remove();
+    }
   }
 }
 
-function setTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
-  updateToggleButton(theme);
-}
-
-function updateToggleButton(theme) {
-  const toggleBtn = document.getElementById('dark-mode-toggle');
-  if (toggleBtn) {
-    toggleBtn.textContent = theme === 'light' ? 'DARK MODE' : 'LIGHT MODE';
+function expandParents(nodeElement) {
+  let parent = nodeElement.parentElement;
+  while (parent) {
+    if (parent.classList.contains('tree-node')) {
+      const parentId = parent.dataset.nodeId;
+      if (parentId) {
+        // Add to expanded nodes
+        state.expandedNodes.add(parentId);
+        
+        // Update UI to show expanded state
+        const childrenContainer = parent.querySelector('.tree-children');
+        if (childrenContainer) {
+          childrenContainer.style.display = 'block';
+        }
+        
+        const expandBtn = parent.querySelector('.tree-expand-btn');
+        if (expandBtn) {
+          expandBtn.innerHTML = '[-]';
+          expandBtn.setAttribute('aria-label', 'Collapse');
+        }
+      }
+    }
+    parent = parent.parentElement;
   }
 }
 
@@ -614,8 +718,7 @@ function updateToggleButton(theme) {
 // Event Listeners
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize
-  initDarkMode();
+  // Initialize (dark mode is handled by navigation.js)
   loadTree();
   connectWebSocket();
   
@@ -623,6 +726,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const refreshBtn = document.getElementById('refresh-btn');
   if (refreshBtn) {
     refreshBtn.addEventListener('click', () => {
+      // Clear search when refreshing
+      const searchInput = document.getElementById('tier-search');
+      if (searchInput) {
+        searchInput.value = '';
+        state.searchQuery = '';
+      }
       loadTree();
     });
   }
@@ -650,4 +759,21 @@ document.addEventListener('DOMContentLoaded', () => {
       hideDetails();
     }
   });
+  
+  // Search input
+  const searchInput = document.getElementById('tier-search');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      filterTree(e.target.value);
+    });
+    
+    // Clear search on Escape (if not in details panel)
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && e.target.value) {
+        e.target.value = '';
+        filterTree('');
+        e.target.blur();
+      }
+    });
+  }
 });

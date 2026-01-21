@@ -28,6 +28,13 @@ vi.mock('../../logging/event-bus.js', () => ({
   EventBus: vi.fn(),
 }));
 
+vi.mock('../../core/session-tracker.js', () => ({
+  SessionTracker: vi.fn().mockImplementation(() => ({
+    start: vi.fn(),
+    stop: vi.fn(),
+  })),
+}));
+
 vi.mock('open', () => ({
   default: vi.fn(),
 }));
@@ -101,11 +108,14 @@ describe('guiAction', () => {
   let mockGuiServer: {
     registerStateDependencies: ReturnType<typeof vi.fn>;
     registerOrchestratorInstance: ReturnType<typeof vi.fn>;
+    registerStartChainDependencies: ReturnType<typeof vi.fn>;
+    registerSessionTracker: ReturnType<typeof vi.fn>;
     start: ReturnType<typeof vi.fn>;
     stop: ReturnType<typeof vi.fn>;
     getUrl: ReturnType<typeof vi.fn>;
   };
   let mockOrchestrator: {
+    initialize: ReturnType<typeof vi.fn>;
     stop: ReturnType<typeof vi.fn>;
   };
   let mockEventBus: unknown;
@@ -121,6 +131,7 @@ describe('guiAction', () => {
 
   // Store original process.exit to restore later
   const originalExit = process.exit;
+  const originalOn = process.on;
   const originalConsole = { ...console };
 
   beforeEach(() => {
@@ -129,6 +140,7 @@ describe('guiAction', () => {
     console.error = vi.fn();
     console.warn = vi.fn();
     process.exit = vi.fn() as never;
+    process.on = vi.fn() as never;
 
     mockConfig = {
       project: {
@@ -238,8 +250,7 @@ describe('guiAction', () => {
     mockContainer = {
       resolve: vi.fn((key: string) => {
         const map: Record<string, unknown> = {
-          tierManager: mockTierManager,
-          orchestrator: mockOrchestratorStateMachine,
+          tierStateManager: mockTierManager,
           progressManager: mockProgressManager,
           agentsManager: mockAgentsManager,
         };
@@ -250,12 +261,15 @@ describe('guiAction', () => {
     mockGuiServer = {
       registerStateDependencies: vi.fn(),
       registerOrchestratorInstance: vi.fn(),
+      registerStartChainDependencies: vi.fn(),
+      registerSessionTracker: vi.fn(),
       start: vi.fn().mockResolvedValue(undefined),
       stop: vi.fn().mockResolvedValue(undefined),
       getUrl: vi.fn().mockReturnValue('http://localhost:3847'),
     };
 
     mockOrchestrator = {
+      initialize: vi.fn().mockResolvedValue(undefined),
       stop: vi.fn().mockResolvedValue(undefined),
     };
 
@@ -287,16 +301,12 @@ describe('guiAction', () => {
   afterEach(() => {
     vi.clearAllMocks();
     process.exit = originalExit;
+    process.on = originalOn;
     Object.assign(console, originalConsole);
   });
 
   describe('server startup', () => {
     it('should start server on default port 3847', async () => {
-      // Mock process.on to prevent hanging
-      const originalOn = process.on;
-      const mockOn = vi.fn();
-      process.on = mockOn as never;
-
       // Start the action but don't wait for it to complete (it waits forever)
       const actionPromise = guiAction({}).catch(() => {
         // Ignore errors from the hanging promise
@@ -315,15 +325,9 @@ describe('guiAction', () => {
       );
 
       expect(mockGuiServer.start).toHaveBeenCalled();
-
-      // Restore process.on
-      process.on = originalOn;
     }, 10000);
 
     it('should start server on custom port', async () => {
-      const originalOn = process.on;
-      process.on = vi.fn() as never;
-
       const actionPromise = guiAction({ port: 5000 }).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
@@ -335,14 +339,9 @@ describe('guiAction', () => {
         }),
         expect.any(Object)
       );
-
-      process.on = originalOn;
     }, 10000);
 
     it('should start server on custom host', async () => {
-      const originalOn = process.on;
-      process.on = vi.fn() as never;
-
       const actionPromise = guiAction({ host: '0.0.0.0' }).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
@@ -354,24 +353,17 @@ describe('guiAction', () => {
         }),
         expect.any(Object)
       );
-
-      process.on = originalOn;
     }, 10000);
   });
 
   describe('port availability checking', () => {
     it('should check port availability before starting server', async () => {
-      const originalOn = process.on;
-      process.on = vi.fn() as never;
-
       const actionPromise = guiAction({ port: 3847 }).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 
       // Verify net.createServer was called for port checking
       expect(net.createServer).toHaveBeenCalled();
-
-      process.on = originalOn;
     }, 10000);
 
     it('should exit with error if port is unavailable', async () => {
@@ -387,9 +379,6 @@ describe('guiAction', () => {
         return mockNetServer;
       });
 
-      const originalOn = process.on;
-      process.on = vi.fn() as never;
-
       const actionPromise = guiAction({ port: 3847 }).catch(() => {});
 
       // Wait for async operations
@@ -399,43 +388,28 @@ describe('guiAction', () => {
         expect.stringContaining('Port 3847 on localhost is already in use')
       );
       expect(process.exit).toHaveBeenCalledWith(1);
-
-      process.on = originalOn;
     }, 10000);
   });
 
   describe('browser opening', () => {
     it('should open browser by default', async () => {
-      const originalOn = process.on;
-      process.on = vi.fn() as never;
-
       const actionPromise = guiAction({}).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 
       expect(open).toHaveBeenCalledWith('http://localhost:3847');
-
-      process.on = originalOn;
     }, 10000);
 
     it('should not open browser when --no-open flag is set', async () => {
-      const originalOn = process.on;
-      process.on = vi.fn() as never;
-
       const actionPromise = guiAction({ open: false }).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 
       expect(open).not.toHaveBeenCalled();
-
-      process.on = originalOn;
     }, 10000);
 
     it('should handle browser open errors gracefully', async () => {
       (open as ReturnType<typeof vi.fn>).mockRejectedValue(new Error('Browser open failed'));
-
-      const originalOn = process.on;
-      process.on = vi.fn() as never;
 
       const actionPromise = guiAction({}).catch(() => {});
 
@@ -446,34 +420,24 @@ describe('guiAction', () => {
       );
       // Should not exit on browser open failure
       expect(process.exit).not.toHaveBeenCalled();
-
-      process.on = originalOn;
     }, 10000);
   });
 
   describe('server configuration', () => {
     it('should register state dependencies', async () => {
-      const originalOn = process.on;
-      process.on = vi.fn() as never;
-
       const actionPromise = guiAction({}).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 
       expect(mockGuiServer.registerStateDependencies).toHaveBeenCalledWith(
         mockTierManager,
-        mockOrchestratorStateMachine,
+        expect.any(Object),
         mockProgressManager,
         mockAgentsManager
       );
-
-      process.on = originalOn;
     }, 10000);
 
     it('should register orchestrator instance', async () => {
-      const originalOn = process.on;
-      process.on = vi.fn() as never;
-
       const actionPromise = guiAction({}).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
@@ -481,17 +445,12 @@ describe('guiAction', () => {
       expect(mockGuiServer.registerOrchestratorInstance).toHaveBeenCalledWith(
         expect.any(Object)
       );
-
-      process.on = originalOn;
     }, 10000);
   });
 
   describe('error handling', () => {
     it('should handle config load errors', async () => {
       mockConfigManager.load = vi.fn().mockRejectedValue(new Error('Config load failed'));
-
-      const originalOn = process.on;
-      process.on = vi.fn() as never;
 
       await guiAction({});
 
@@ -502,15 +461,10 @@ describe('guiAction', () => {
         expect.stringContaining('Config load failed')
       );
       expect(process.exit).toHaveBeenCalledWith(1);
-
-      process.on = originalOn;
     });
 
     it('should handle server start errors', async () => {
       mockGuiServer.start = vi.fn().mockRejectedValue(new Error('Server start failed'));
-
-      const originalOn = process.on;
-      process.on = vi.fn() as never;
 
       await guiAction({});
 
@@ -521,30 +475,20 @@ describe('guiAction', () => {
         expect.stringContaining('Server start failed')
       );
       expect(process.exit).toHaveBeenCalledWith(1);
-
-      process.on = originalOn;
     });
 
     it('should show verbose output when verbose flag is set', async () => {
-      const originalOn = process.on;
-      process.on = vi.fn() as never;
-
       const actionPromise = guiAction({ verbose: true }).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 
       expect(console.log).toHaveBeenCalledWith('Configuration loaded successfully');
       expect(console.log).toHaveBeenCalledWith('Project: test-project');
-
-      process.on = originalOn;
     }, 10000);
   });
 
   describe('URL display', () => {
     it('should display server URL and links', async () => {
-      const originalOn = process.on;
-      process.on = vi.fn() as never;
-
       const actionPromise = guiAction({}).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
@@ -554,8 +498,6 @@ describe('guiAction', () => {
       expect(console.log).toHaveBeenCalledWith(expect.stringContaining('Wizard:'));
       expect(console.log).toHaveBeenCalledWith(expect.stringContaining('Configuration:'));
       expect(console.log).toHaveBeenCalledWith(expect.stringContaining('Doctor:'));
-
-      process.on = originalOn;
     }, 10000);
   });
 });

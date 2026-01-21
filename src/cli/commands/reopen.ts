@@ -121,6 +121,7 @@ export async function reopenAction(
     if (!item) {
       console.error(`Error: Item not found: ${itemId}`);
       process.exit(1);
+      return;
     }
 
     // Validate item status
@@ -130,6 +131,7 @@ export async function reopenAction(
       const errorMessage = error instanceof Error ? error.message : String(error);
       console.error(`Error: ${errorMessage}`);
       process.exit(1);
+      return;
     }
 
     // Confirm if item is passed (unless --yes flag)
@@ -138,6 +140,7 @@ export async function reopenAction(
       if (!confirmed) {
         console.log('Reopen cancelled.');
         process.exit(0);
+        return;
       }
     }
 
@@ -175,6 +178,7 @@ export async function reopenAction(
     if (!itemToModify) {
       console.error(`Error: Item not found in PRD: ${itemId}`);
       process.exit(1);
+      return;
     }
     
     // Reopen the item: update status, notes, and clear completedAt
@@ -205,6 +209,7 @@ export async function reopenAction(
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error('Error reopening item:', errorMessage);
     process.exit(1);
+    return;
   }
 }
 

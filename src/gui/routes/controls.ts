@@ -322,12 +322,12 @@ export function createControlsRoutes(orchestrator: Orchestrator | null): Router 
         return;
       }
 
-      // For now, return not implemented
-      // TODO: Implement retry logic in Orchestrator
-      res.status(501).json({
-        error: 'Retry functionality not yet implemented',
-        code: 'NOT_IMPLEMENTED',
-      } as ErrorResponse);
+      await orchestrator.retry();
+
+      res.json({
+        success: true,
+        message: 'Retry initiated',
+      });
     } catch (error) {
       console.error('[Controls] Error retrying:', error);
       res.status(500).json({
@@ -370,12 +370,14 @@ export function createControlsRoutes(orchestrator: Orchestrator | null): Router 
         return;
       }
 
-      // For now, return not implemented
-      // TODO: Implement replan logic in Orchestrator
-      res.status(501).json({
-        error: 'Replan functionality not yet implemented',
-        code: 'NOT_IMPLEMENTED',
-      } as ErrorResponse);
+      await orchestrator.replan(tierId, scope);
+
+      res.json({
+        success: true,
+        tierId,
+        scope,
+        message: 'Replan initiated',
+      });
     } catch (error) {
       console.error('[Controls] Error replanning:', error);
       res.status(500).json({
@@ -418,12 +420,14 @@ export function createControlsRoutes(orchestrator: Orchestrator | null): Router 
         return;
       }
 
-      // For now, return not implemented
-      // TODO: Implement reopen logic in Orchestrator
-      res.status(501).json({
-        error: 'Reopen functionality not yet implemented',
-        code: 'NOT_IMPLEMENTED',
-      } as ErrorResponse);
+      await orchestrator.reopenItem(tierId, reason);
+
+      res.json({
+        success: true,
+        tierId,
+        reason,
+        message: 'Item reopened',
+      });
     } catch (error) {
       console.error('[Controls] Error reopening:', error);
       res.status(500).json({
@@ -447,12 +451,13 @@ export function createControlsRoutes(orchestrator: Orchestrator | null): Router 
         return;
       }
 
-      // For now, return not implemented
-      // TODO: Implement kill-spawn logic in Orchestrator
-      res.status(501).json({
-        error: 'Kill-spawn functionality not yet implemented',
-        code: 'NOT_IMPLEMENTED',
-      } as ErrorResponse);
+      await orchestrator.killCurrentProcess();
+      await orchestrator.spawnFreshIteration();
+
+      res.json({
+        success: true,
+        message: 'Process killed, fresh iteration spawned',
+      });
     } catch (error) {
       console.error('[Controls] Error killing/spawning:', error);
       res.status(500).json({

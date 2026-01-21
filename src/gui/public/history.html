@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Inline script to prevent dark mode flash -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate icon" href="/favicon.ico">
+  <title>RWM Puppet Master - Execution History</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <a href="/" class="logo-link" aria-label="RWM Puppet Master Home">
+          <h1 class="logo" aria-label="RWM Puppet Master">RWM Puppet Master</h1>
+        </a>
+        <nav class="main-navigation" role="navigation" aria-label="Main navigation">
+          <a href="/" class="nav-link" data-page="dashboard" aria-label="Dashboard">DASHBOARD</a>
+          <a href="/projects" class="nav-link" data-page="projects" aria-label="Projects">PROJECTS</a>
+          <a href="/wizard" class="nav-link" data-page="wizard" aria-label="Start Chain Wizard">WIZARD</a>
+          <a href="/config" class="nav-link" data-page="config" aria-label="Configuration">CONFIG</a>
+          <a href="/doctor" class="nav-link" data-page="doctor" aria-label="Doctor - Dependency Check">DOCTOR</a>
+          <a href="/tiers" class="nav-link" data-page="tiers" aria-label="Tiers View">TIERS</a>
+          <a href="/evidence" class="nav-link" data-page="evidence" aria-label="Evidence Viewer">EVIDENCE</a>
+          <a href="/history" class="nav-link active" data-page="history" aria-label="Execution History">HISTORY</a>
+        </nav>
+      </div>
+      <div class="header-right">
+        <div class="header-actions">
+          <button class="icon-btn" id="refresh-btn" aria-label="Refresh history">REFRESH</button>
+          <button class="icon-btn" id="dark-mode-toggle" aria-label="Toggle dark mode">
+            <svg class="dark-mode-icon moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg class="dark-mode-icon sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Title Panel -->
+    <section class="panel">
+      <h1 class="page-title">Execution History</h1>
+      <p class="page-description">View past execution sessions with session ID, start time, end time, duration, status, and outcome</p>
+    </section>
+
+    <!-- History Table Panel -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2 class="panel-title">Execution Sessions</h2>
+        <div id="history-count" class="evidence-count">0 sessions</div>
+      </div>
+      <div class="history-table-container">
+        <div id="loading-message" class="loading-message" style="display: none;">Loading history...</div>
+        <div id="empty-state" class="empty-state" style="display: none;">
+          <p>No execution sessions found. Start an execution to see history here.</p>
+        </div>
+        <table class="evidence-table" id="history-table" style="display: none;">
+          <thead>
+            <tr>
+              <th class="sortable" data-sort="sessionId">
+                Session ID <span class="sort-indicator"></span>
+              </th>
+              <th class="sortable" data-sort="startTime">
+                Start Time <span class="sort-indicator"></span>
+              </th>
+              <th class="sortable" data-sort="endTime">
+                End Time <span class="sort-indicator"></span>
+              </th>
+              <th class="sortable" data-sort="duration">
+                Duration <span class="sort-indicator"></span>
+              </th>
+              <th class="sortable" data-sort="status">
+                Status <span class="sort-indicator"></span>
+              </th>
+              <th class="sortable" data-sort="outcome">
+                Outcome <span class="sort-indicator"></span>
+              </th>
+              <th class="sortable" data-sort="iterations">
+                Iterations <span class="sort-indicator"></span>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="history-tbody">
+            <!-- Sessions will be populated by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/navigation.js"></script>
+  <script type="module" src="/js/history.js"></script>
+</body>
+</html>

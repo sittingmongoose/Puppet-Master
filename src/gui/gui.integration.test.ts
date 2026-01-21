@@ -148,8 +148,10 @@ function createMockAgentsManager(): AgentsManager {
  * Create mock Orchestrator
  */
 function createMockOrchestrator(): Orchestrator {
+  const tierManager = createMockTierManager();
   return {
     getState: vi.fn().mockReturnValue('idle' as OrchestratorState),
+    getTierStateManager: vi.fn().mockReturnValue(tierManager),
     start: vi.fn().mockResolvedValue(undefined),
     pause: vi.fn().mockResolvedValue(undefined),
     resume: vi.fn().mockResolvedValue(undefined),
@@ -601,27 +603,14 @@ describe('GUI Integration Tests', () => {
     }, 30000);
 
     it('POST /api/doctor/fix attempts to fix a check', async () => {
-      // First, run checks to find a failing one
-      const runResponse = await request(testContext!.baseUrl)
-        .post('/api/doctor/run')
-        .send({})
+      // Use dry-run mode to avoid executing real install commands during tests.
+      // Pick a known fixable check (installed via InstallationManager).
+      const fixResponse = await request(testContext!.baseUrl)
+        .post('/api/doctor/fix')
+        .send({ checkName: 'codex-cli', dryRun: true })
         .expect(200);
 
-      const failedCheck = runResponse.body.results.find(
-        (r: { passed: boolean }) => !r.passed
-      );
-
-      if (failedCheck) {
-        const fixResponse = await request(testContext!.baseUrl)
-          .post('/api/doctor/fix')
-          .send({ checkName: failedCheck.name })
-          .expect(200);
-
-        expect(fixResponse.body).toHaveProperty('success');
-      } else {
-        // Skip test if no failed checks
-        expect(true).toBe(true);
-      }
+      expect(fixResponse.body).toHaveProperty('success', true);
     }, 30000);
 
     it('POST /api/doctor/fix returns 404 for non-existent check', async () => {

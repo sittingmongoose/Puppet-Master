@@ -830,9 +830,8 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.href = '/evidence?type=error';
     });
   }
-  
-  // Initialize
-  initDarkMode();
+
+  // Initialize (dark mode is handled by navigation.js)
   initConnectionStatus(); // Initialize connection status display
   checkProjectState(); // Check if project is loaded
   
@@ -893,33 +892,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 1000);
 });
-
-// ============================================
-// Dark Mode
-// ============================================
-function initDarkMode() {
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  setTheme(savedTheme);
-  
-  const toggleBtn = document.getElementById('dark-mode-toggle');
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      setTheme(newTheme);
-    });
-  }
-}
-
-function setTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
-  updateToggleButton(theme);
-}
-
-function updateToggleButton(theme) {
-  const toggleBtn = document.getElementById('dark-mode-toggle');
-  if (toggleBtn) {
-    toggleBtn.textContent = theme === 'light' ? 'DARK MODE' : 'LIGHT MODE';
-  }
-}

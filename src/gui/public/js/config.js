@@ -399,36 +399,6 @@ function showError(message) {
 }
 
 // ============================================
-// Dark Mode
-// ============================================
-function initDarkMode() {
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  setTheme(savedTheme);
-  
-  const toggleBtn = document.getElementById('dark-mode-toggle');
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      setTheme(newTheme);
-    });
-  }
-}
-
-function setTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
-  updateToggleButton(theme);
-}
-
-function updateToggleButton(theme) {
-  const toggleBtn = document.getElementById('dark-mode-toggle');
-  if (toggleBtn) {
-    toggleBtn.textContent = theme === 'light' ? 'DARK MODE' : 'LIGHT MODE';
-  }
-}
-
-// ============================================
 // Event Listeners
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
@@ -438,8 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize change tracking
   initChangeTracking();
 
-  // Initialize dark mode
-  initDarkMode();
+  // Dark mode is handled by navigation.js
 
   // Form submission
   const form = document.getElementById('config-form');

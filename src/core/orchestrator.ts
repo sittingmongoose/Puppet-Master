@@ -11,7 +11,7 @@ import type { OrchestratorState } from '../types/state.js';
 import type { PuppetMasterConfig } from '../types/config.js';
 import type { TierPlan } from '../types/tiers.js';
 import type { PRD } from '../types/prd.js';
-import type { PlatformRunnerContract } from '../types/platforms.js';
+import type { PlatformRunnerContract, ExecutionRequest, RunningProcess } from '../types/platforms.js';
 import type { IterationContext, IterationResult } from './execution-engine.js';
 import type { AdvancementResult } from './auto-advancement.js';
 import type { GateResult } from '../types/tiers.js';
@@ -382,6 +382,13 @@ export class Orchestrator {
   }
 
   /**
+   * Get the TierStateManager instance
+   */
+  getTierStateManager(): TierStateManager {
+    return this.tierStateManager;
+  }
+
+  /**
    * Main orchestration loop
    */
   private async runLoop(): Promise<void> {
@@ -425,6 +432,9 @@ export class Orchestrator {
 
         // Record progress
         await this.recordProgress(result, subtask);
+
+        // Publish budget update event
+        await this.publishBudgetUpdateEvent(subtask);
 
         // Commit changes
         await this.commitChanges(result, subtask);
@@ -592,6 +602,20 @@ export class Orchestrator {
       }
     }
 
+    // Publish gate_complete event
+    if (this.eventBus) {
+      const tierType = tier.type === 'task' ? 'task' : tier.type === 'phase' ? 'phase' : 'task';
+      const evidence = result.report?.summary;
+
+      this.eventBus.emit({
+        type: 'gate_complete',
+        tierId: tier.id,
+        tierType,
+        passed: result.passed,
+        evidence,
+      });
+    }
+
     // Sync state to PRD
     await this.tierStateManager.syncToPrd();
   }
@@ -623,20 +647,44 @@ export class Orchestrator {
         if (result.next) {
           this.tierStateManager.setCurrentTask(result.next.id);
         }
+        // Publish progress event after task advancement
+        this.publishProgressEvent();
         break;
 
       case 'advance_phase':
         if (result.next) {
           this.tierStateManager.setCurrentPhase(result.next.id);
         }
+        // Publish progress event after phase advancement
+        this.publishProgressEvent();
         break;
 
       case 'run_task_gate':
       case 'run_phase_gate':
         // Gates are run by AutoAdvancement, result contains gate result
         if (result.gate && result.next) {
+          // Publish gate_start event (gate has already been executed, but we're processing it now)
+          if (this.eventBus) {
+            const tierType = result.next.type === 'task' ? 'task' : 'phase';
+            // Get verifier info from the gate report if available, otherwise from acceptance criteria
+            const gateReport = result.gate.report;
+            const firstVerifier = gateReport?.verifiersRun?.[0];
+            const verifierType = firstVerifier?.type || result.next.data.acceptanceCriteria[0]?.type || 'unknown';
+            const target = firstVerifier?.target || result.next.data.acceptanceCriteria[0]?.target || 'unknown';
+
+            this.eventBus.emit({
+              type: 'gate_start',
+              tierId: result.next.id,
+              tierType,
+              verifierType,
+              target,
+            });
+          }
+
           await this.handleGateResult(result.gate, result.next);
         }
+        // Publish progress event after gate passes
+        this.publishProgressEvent();
         break;
 
       case 'task_gate_failed':
@@ -659,11 +707,91 @@ export class Orchestrator {
       case 'complete':
         this.stateMachine.send({ type: 'COMPLETE' });
         this.loopAborted = true;
+        // Publish final progress event
+        this.publishProgressEvent();
         break;
     }
 
     // Sync state to PRD
     await this.tierStateManager.syncToPrd();
+  }
+
+  /**
+   * Calculate and publish progress event
+   */
+  private publishProgressEvent(): void {
+    if (!this.eventBus) {
+      return;
+    }
+
+    const allPhases = this.tierStateManager.getAllPhases();
+    const allTasks = this.tierStateManager.getAllTasks();
+    const allSubtasks = this.tierStateManager.getAllSubtasks();
+
+    const phasesComplete = allPhases.filter((p) => p.getState() === 'passed').length;
+    const tasksComplete = allTasks.filter((t) => t.getState() === 'passed').length;
+    const subtasksComplete = allSubtasks.filter((s) => s.getState() === 'passed').length;
+
+    this.eventBus.emit({
+      type: 'progress',
+      phasesTotal: allPhases.length,
+      phasesComplete,
+      tasksTotal: allTasks.length,
+      tasksComplete,
+      subtasksTotal: allSubtasks.length,
+      subtasksComplete,
+    });
+  }
+
+  /**
+   * Publish budget update event
+   */
+  private async publishBudgetUpdateEvent(subtask: TierNode): Promise<void> {
+    if (!this.eventBus || !this.deps.usageTracker) {
+      return;
+    }
+
+    const platform = this.config.tiers.subtask.platform;
+
+    // Get current usage counts
+    const hourCount = await this.deps.usageTracker.getCallCountInLastHour(platform);
+    const dayCount = await this.deps.usageTracker.getCallCountToday(platform);
+
+    // Get budget limits from config
+    const budget = this.config.budgets[platform];
+    const hourLimit = this.getLimitValue(budget.maxCallsPerHour);
+    const dayLimit = this.getLimitValue(budget.maxCallsPerDay);
+
+    // Use the most restrictive limit (hour or day)
+    const used = Math.max(hourCount, dayCount);
+    const limit = hourLimit !== Infinity && dayLimit !== Infinity 
+      ? Math.min(hourLimit, dayLimit)
+      : hourLimit !== Infinity ? hourLimit : dayLimit;
+
+    // Check for cooldown (simplified - would need QuotaManager for full cooldown tracking)
+    let cooldownUntil: string | undefined;
+    if (budget.cooldownHours && used >= limit) {
+      const cooldownEnd = new Date(Date.now() + budget.cooldownHours * 60 * 60 * 1000);
+      cooldownUntil = cooldownEnd.toISOString();
+    }
+
+    this.eventBus.emit({
+      type: 'budget_update',
+      platform,
+      used,
+      limit: limit === Infinity ? Number.MAX_SAFE_INTEGER : limit,
+      cooldownUntil,
+    });
+  }
+
+  /**
+   * Helper to get limit value (handles 'unlimited' string)
+   */
+  private getLimitValue(limit: number | 'unlimited'): number {
+    if (limit === 'unlimited') {
+      return Infinity;
+    }
+    return limit;
   }
 
   /**
@@ -710,7 +838,23 @@ export class Orchestrator {
 
     // Commit with formatted message
     const message = `ralph: [subtask] ${subtask.id} ${subtask.data.title}`;
-    await this.deps.gitManager.commit({ message, files: result.filesChanged });
+    const commitResult = await this.deps.gitManager.commit({ message, files: result.filesChanged });
+
+    // Publish commit event if successful
+    if (commitResult.success && this.eventBus) {
+      // Get commit SHA
+      const sha = await this.deps.gitManager.getHeadSha();
+
+      if (sha) {
+        this.eventBus.emit({
+          type: 'commit',
+          sha,
+          message,
+          files: result.filesChanged.length,
+          timestamp: new Date().toISOString(),
+        });
+      }
+    }
   }
 
   /**
@@ -928,5 +1072,390 @@ export class Orchestrator {
       proc.on('close', (code) => resolve(code === 0));
       proc.on('error', () => resolve(false));
     });
+  }
+
+  /**
+   * Get tier by ID (helper method)
+   */
+  getTierById(tierId: string): TierNode | null {
+    return this.tierStateManager.getTierById(tierId);
+  }
+
+  /**
+   * Build prompt for replanning a tier
+   */
+  private buildReplanPrompt(tier: TierNode, scope: 'phase' | 'task' | 'subtask'): string {
+    const currentPlan = tier.data.plan;
+    const acceptanceCriteria = tier.data.acceptanceCriteria.map((c) => c.description).join('\n');
+    const parentContext = tier.parent ? `Parent: ${tier.parent.data.title} (${tier.parent.id})` : '';
+
+    return `You are replanning a ${scope} tier in the RWM Puppet Master system.
+
+TIER INFORMATION:
+- ID: ${tier.id}
+- Title: ${tier.data.title}
+- Description: ${tier.data.description}
+${parentContext ? `- ${parentContext}` : ''}
+
+CURRENT PLAN:
+${JSON.stringify(currentPlan, null, 2)}
+
+ACCEPTANCE CRITERIA:
+${acceptanceCriteria}
+
+Please generate a new plan for this ${scope}. The plan should include:
+1. A clear approach (array of steps)
+2. Dependencies (if any)
+3. Updated description if needed
+
+Return the plan as a JSON object matching this structure:
+{
+  "id": "${tier.id}",
+  "title": "${tier.data.title}",
+  "description": "...",
+  "approach": ["step1", "step2", ...],
+  "dependencies": ["dep1", "dep2", ...]
+}`;
+  }
+
+  /**
+   * Parse plan from AI output
+   */
+  private parsePlanFromOutput(output: string, scope: 'phase' | 'task' | 'subtask'): TierPlan {
+    // Try to extract JSON from output
+    const jsonMatch = output.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      try {
+        const parsed = JSON.parse(jsonMatch[0]);
+        return {
+          id: parsed.id || '',
+          title: parsed.title || '',
+          description: parsed.description || '',
+          approach: parsed.approach || [],
+          dependencies: parsed.dependencies || [],
+        };
+      } catch {
+        // Fall through to default
+      }
+    }
+
+    // Fallback: create a basic plan from the output
+    return {
+      id: '',
+      title: '',
+      description: output.substring(0, 500),
+      approach: output.split('\n').filter((line) => line.trim().length > 0).slice(0, 10),
+      dependencies: [],
+    };
+  }
+
+  /**
+   * Retry current failed subtask
+   */
+  async retry(): Promise<void> {
+    const currentSubtask = this.tierStateManager.getCurrentSubtask();
+
+    if (!currentSubtask) {
+      throw new Error('No current subtask to retry');
+    }
+
+    const state = currentSubtask.getState();
+    if (state !== 'failed' && state !== 'retrying') {
+      throw new Error(`Cannot retry subtask in state: ${state}`);
+    }
+
+    // Reset iteration count (don't increment, just reset to 0)
+    currentSubtask.data.iterations = 0;
+
+    // Reset state to pending
+    currentSubtask.stateMachine.reset();
+
+    // Sync to PRD
+    await this.tierStateManager.syncToPrd();
+
+    // If orchestrator is paused or stopped, resume execution
+    const orchestratorState = this.getState();
+    if (orchestratorState === 'paused' || orchestratorState === 'idle') {
+      await this.resume();
+    }
+  }
+
+  /**
+   * Replan a tier (regenerate its plan using AI)
+   */
+  async replan(tierId: string, scope: 'phase' | 'task' | 'subtask'): Promise<void> {
+    const tier = this.tierStateManager.getTierById(tierId);
+
+    if (!tier) {
+      throw new Error(`Tier not found: ${tierId}`);
+    }
+
+    // Validate scope matches tier type
+    if (tier.type !== scope) {
+      throw new Error(`Scope ${scope} does not match tier type ${tier.type}`);
+    }
+
+    // Get platform and model for this tier type
+    const tierConfig = this.config.tiers[scope];
+    const platform = tierConfig.platform;
+    const model = tierConfig.model;
+
+    // Build replan prompt
+    const prompt = this.buildReplanPrompt(tier, scope);
+
+    // Invoke planning agent via platform runner
+    const runner = this.deps.platformRunner;
+    const request: ExecutionRequest = {
+      prompt,
+      model,
+      workingDirectory: this.config.project.workingDirectory,
+      nonInteractive: true,
+      timeout: 300000, // 5 minutes for planning
+    };
+
+    // Spawn process and collect output
+    await runner.prepareWorkingDirectory(this.config.project.workingDirectory);
+    const runningProcess = await runner.spawnFreshProcess(request);
+
+    // Collect output from stdout and stderr
+    const outputChunks: string[] = [];
+    const errorChunks: string[] = [];
+
+    runningProcess.stdout.on('data', (chunk: Buffer) => {
+      outputChunks.push(chunk.toString());
+    });
+
+    runningProcess.stderr.on('data', (chunk: Buffer) => {
+      errorChunks.push(chunk.toString());
+    });
+
+    // Wait for process to complete
+    await new Promise<void>((resolve, reject) => {
+      let stdoutEnded = false;
+      let stderrEnded = false;
+      let timeout: NodeJS.Timeout | null = null;
+
+      const checkComplete = (): void => {
+        if (stdoutEnded && stderrEnded) {
+          if (timeout) {
+            clearTimeout(timeout);
+          }
+          resolve();
+        }
+      };
+
+      runningProcess.stdout.on('end', () => {
+        stdoutEnded = true;
+        checkComplete();
+      });
+
+      runningProcess.stderr.on('end', () => {
+        stderrEnded = true;
+        checkComplete();
+      });
+
+      runningProcess.stdout.on('error', (err) => {
+        console.warn('Replan stdout error:', err);
+        stdoutEnded = true;
+        checkComplete();
+      });
+
+      runningProcess.stderr.on('error', (err) => {
+        console.warn('Replan stderr error:', err);
+        stderrEnded = true;
+        checkComplete();
+      });
+
+      // Timeout after 5 minutes
+      timeout = setTimeout(() => {
+        reject(new Error('Replan timeout after 5 minutes'));
+      }, 300000);
+    });
+
+    const output = outputChunks.join('');
+    const errors = errorChunks.join('');
+
+    // Log errors but don't fail
+    if (errors) {
+      console.warn('Replan stderr output:', errors);
+    }
+
+    // Parse new plan from output
+    const newPlan = this.parsePlanFromOutput(output, scope);
+
+    // Update tier plan
+    tier.data.plan = {
+      ...tier.data.plan,
+      ...newPlan,
+      id: tier.id,
+      title: tier.data.title,
+    };
+
+    // Reset iteration count
+    tier.data.iterations = 0;
+
+    // Reset state if needed
+    if (tier.getState() === 'failed') {
+      tier.stateMachine.reset();
+    }
+
+    // Sync to PRD
+    await this.tierStateManager.syncToPrd();
+
+    // Publish replan event
+    if (this.eventBus) {
+      this.eventBus.emit({
+        type: 'replan_complete',
+        tierId,
+        scope,
+        timestamp: new Date().toISOString(),
+      });
+    }
+  }
+
+  /**
+   * Reopen a completed item
+   */
+  async reopenItem(tierId: string, reason: string): Promise<void> {
+    const tier = this.tierStateManager.getTierById(tierId);
+
+    if (!tier) {
+      throw new Error(`Tier not found: ${tierId}`);
+    }
+
+    const state = tier.getState();
+    if (state !== 'passed') {
+      throw new Error(`Cannot reopen tier in state: ${state}. Only passed tiers can be reopened.`);
+    }
+
+    // Set pass=false
+    // Reset iteration count
+    tier.data.iterations = 0;
+
+    // Reset state to pending
+    tier.stateMachine.reset();
+
+    // Log reason in progress/audit trail
+    if (this.deps.progressManager) {
+      const sessionId = this.deps.progressManager.generateSessionId();
+      await this.deps.progressManager.append({
+        timestamp: new Date().toISOString(),
+        itemId: tierId,
+        sessionId,
+        platform: this.config.tiers.subtask.platform,
+        duration: '0m 0s',
+        status: 'PARTIAL',
+        accomplishments: [`Reopened: ${reason}`],
+        filesChanged: [],
+        testsRun: [],
+        learnings: [],
+        nextSteps: [],
+      });
+    }
+
+    // Sync to PRD
+    await this.tierStateManager.syncToPrd();
+
+    // Publish reopen event
+    if (this.eventBus) {
+      this.eventBus.emit({
+        type: 'item_reopened',
+        tierId,
+        reason,
+        timestamp: new Date().toISOString(),
+      });
+    }
+  }
+
+  /**
+   * Kill current running process(es)
+   */
+  async killCurrentProcess(): Promise<void> {
+    // Get current running processes from execution engine
+    const runningProcesses = this.executionEngine.getRunningProcesses();
+
+    if (runningProcesses.length === 0) {
+      throw new Error('No process running');
+    }
+
+    // Kill all running processes (there should typically be only one)
+    for (const processInfo of runningProcesses) {
+      try {
+        // Try SIGTERM first
+        process.kill(processInfo.pid, 'SIGTERM');
+
+        // Wait 5 seconds
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+
+        // Check if still alive and SIGKILL if needed
+        try {
+          process.kill(processInfo.pid, 0); // Check if process exists
+          process.kill(processInfo.pid, 'SIGKILL');
+        } catch {
+          // Process already dead, continue
+        }
+      } catch (error) {
+        console.warn(`Failed to kill process ${processInfo.pid}:`, error);
+      }
+    }
+
+    // Publish event
+    if (this.eventBus) {
+      this.eventBus.emit({
+        type: 'process_killed',
+        pids: runningProcesses.map((p) => p.pid),
+        timestamp: new Date().toISOString(),
+      });
+    }
+  }
+
+  /**
+   * Spawn a fresh iteration for the current subtask
+   */
+  async spawnFreshIteration(): Promise<void> {
+    const currentSubtask = this.tierStateManager.getCurrentSubtask();
+
+    if (!currentSubtask) {
+      throw new Error('No current subtask to execute');
+    }
+
+    // Increment iteration count
+    currentSubtask.data.iterations += 1;
+
+    // Build iteration context
+    const context = await this.buildIterationContext(currentSubtask);
+
+    // Publish iteration_started event
+    if (this.eventBus) {
+      this.eventBus.emit({
+        type: 'iteration_started',
+        subtaskId: currentSubtask.id,
+        iterationNumber: context.iterationNumber,
+      });
+    }
+
+    // Execute iteration
+    const result = await this.executionEngine.spawnIteration(context);
+
+    // Publish iteration_completed event
+    if (this.eventBus) {
+      this.eventBus.emit({
+        type: 'iteration_completed',
+        subtaskId: currentSubtask.id,
+        passed: result.success,
+      });
+    }
+
+    // Handle result
+    await this.handleIterationResult(result, currentSubtask);
+
+    // Record progress
+    await this.recordProgress(result, currentSubtask);
+
+    // Publish budget update
+    await this.publishBudgetUpdateEvent(currentSubtask);
+
+    // Commit changes
+    await this.commitChanges(result, currentSubtask);
   }
 }

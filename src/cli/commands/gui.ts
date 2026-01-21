@@ -17,11 +17,14 @@ import open from 'open';
 import { ConfigManager } from '../../config/config-manager.js';
 import { createContainer } from '../../core/container.js';
 import { Orchestrator } from '../../core/orchestrator.js';
+import { SessionTracker } from '../../core/session-tracker.js';
 import { GuiServer } from '../../gui/server.js';
 import { EventBus } from '../../logging/event-bus.js';
+import { PlatformRegistry } from '../../platforms/registry.js';
+import { QuotaManager } from '../../platforms/quota-manager.js';
 import type { TierStateManager } from '../../core/tier-state-manager.js';
-import type { OrchestratorStateMachine } from '../../core/orchestrator-state-machine.js';
-import type { ProgressManager, AgentsManager } from '../../memory/index.js';
+import { OrchestratorStateMachine } from '../../core/orchestrator-state-machine.js';
+import type { ProgressManager, AgentsManager, UsageTracker } from '../../memory/index.js';
 import type { CommandModule } from './index.js';
 
 /**
@@ -93,8 +96,8 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     const guiServer = new GuiServer(guiConfig, eventBus);
 
     // Register state dependencies
-    const tierManager = container.resolve<TierStateManager>('tierManager');
-    const orchestrator = container.resolve<OrchestratorStateMachine>('orchestrator');
+    const tierManager = container.resolve<TierStateManager>('tierStateManager');
+    const orchestrator = new OrchestratorStateMachine();
     const progressManager = container.resolve<ProgressManager>('progressManager');
     const agentsManager = container.resolve<AgentsManager>('agentsManager');
 
@@ -114,11 +117,58 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       eventBus, // Pass EventBus for real-time updates
     });
 
-    // Register orchestrator instance for control routes
+    // Create platform registry and get a runner for initialization
+    // Use the phase tier's platform as the default runner
+    const platformRegistry = PlatformRegistry.createDefault(config);
+    const defaultPlatform = config.tiers.phase.platform;
+    const platformRunner = platformRegistry.get(defaultPlatform);
+    
+    if (!platformRunner) {
+      throw new Error(`Platform runner not available for platform: ${defaultPlatform}`);
+    }
+
+    // Initialize orchestrator with dependencies from container
+    await orchestratorInstance.initialize({
+      configManager: container.resolve('configManager'),
+      prdManager: container.resolve('prdManager'),
+      progressManager: container.resolve('progressManager'),
+      agentsManager: container.resolve('agentsManager'),
+      evidenceStore: container.resolve('evidenceStore'),
+      usageTracker: container.resolve('usageTracker'),
+      gitManager: container.resolve('gitManager'),
+      platformRunner: platformRunner,
+      verificationIntegration: container.resolve('verificationIntegration'),
+    });
+
+    // Register orchestrator instance (this will now use orchestrator's TierStateManager)
     guiServer.registerOrchestratorInstance(orchestratorInstance);
 
     if (options.verbose) {
       console.log('Orchestrator instance registered with GUI server');
+    }
+
+    // Register start chain dependencies for wizard routes
+    const usageTracker = container.resolve<UsageTracker>('usageTracker');
+    const quotaManager = new QuotaManager(usageTracker, config.budgets);
+    
+    guiServer.registerStartChainDependencies(
+      config,
+      platformRegistry,
+      quotaManager,
+      usageTracker
+    );
+
+    if (options.verbose) {
+      console.log('Start chain dependencies registered with GUI server');
+    }
+
+    // Create and register SessionTracker for history tracking
+    const sessionTracker = new SessionTracker(eventBus, projectPath);
+    sessionTracker.start();
+    guiServer.registerSessionTracker(sessionTracker);
+
+    if (options.verbose) {
+      console.log('SessionTracker registered with GUI server');
     }
 
     // Setup signal handlers for graceful shutdown

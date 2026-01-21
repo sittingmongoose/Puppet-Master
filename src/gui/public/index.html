@@ -2,7 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Inline script to prevent dark mode flash -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate icon" href="/favicon.ico">
   <title>RWM Puppet Master - Dashboard</title>
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,6 +35,7 @@
           <a href="/doctor" class="nav-link" data-page="doctor" aria-label="Doctor - Dependency Check">DOCTOR</a>
           <a href="/tiers" class="nav-link" data-page="tiers" aria-label="Tiers View">TIERS</a>
           <a href="/evidence" class="nav-link" data-page="evidence" aria-label="Evidence Viewer">EVIDENCE</a>
+          <a href="/history" class="nav-link" data-page="history" aria-label="Execution History">HISTORY</a>
         </nav>
       </div>
       <div class="header-right">
@@ -31,7 +43,22 @@
           <span>Project: <span id="project-name">Untangle</span> ▼</span>
         </div>
         <div class="header-actions">
-          <button class="icon-btn" id="dark-mode-toggle" aria-label="Toggle dark mode">DARK MODE</button>
+          <button class="icon-btn" id="dark-mode-toggle" aria-label="Toggle dark mode">
+            <svg class="dark-mode-icon moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg class="dark-mode-icon sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
         </div>
       </div>
     </div>
@@ -182,34 +209,52 @@
       <!-- Run Controls Panel -->
       <section class="run-controls panel">
         <h2 class="panel-title" aria-label="Execution controls">Run Controls</h2>
-        <div class="controls-grid">
-          <button class="control-btn start-btn" id="start-btn" disabled>
-            START
-          </button>
-          <button class="control-btn pause-btn" id="pause-btn" disabled>
-            PAUSE
-          </button>
-          <button class="control-btn resume-btn" id="resume-btn" disabled>
-            RESUME
-          </button>
-          <button class="control-btn stop-btn" id="stop-btn" disabled>
-            STOP
-          </button>
-          <button class="control-btn reset-btn" id="reset-btn" disabled>
-            RESET
-          </button>
-          <button class="control-btn retry-btn" id="retry-btn" disabled>
-            RETRY
-          </button>
-          <button class="control-btn replan-btn" id="replan-btn" disabled>
-            REPLAN
-          </button>
-          <button class="control-btn reopen-btn" id="reopen-btn" disabled>
-            REOPEN
-          </button>
-          <button class="control-btn kill-btn" id="kill-btn" disabled>
-            KILL & SPAWN FRESH
-          </button>
+        
+        <!-- Primary Controls -->
+        <div class="controls-primary">
+          <div class="controls-grid controls-primary-grid">
+            <button class="control-btn start-btn" id="start-btn" disabled>
+              START
+            </button>
+            <button class="control-btn pause-btn" id="pause-btn" disabled>
+              PAUSE
+            </button>
+            <button class="control-btn resume-btn" id="resume-btn" disabled>
+              RESUME
+            </button>
+            <button class="control-btn stop-btn" id="stop-btn" disabled>
+              STOP
+            </button>
+          </div>
+        </div>
+
+        <!-- Advanced Controls -->
+        <div class="controls-advanced controls-advanced-collapsed" id="controls-advanced">
+          <div class="controls-advanced-header">
+            <button class="controls-advanced-toggle" id="controls-advanced-toggle" aria-label="Toggle advanced controls" aria-expanded="false">
+              <span class="toggle-icon">▼</span>
+              <span class="toggle-text">SHOW ADVANCED CONTROLS</span>
+            </button>
+          </div>
+          <div class="controls-advanced-content" id="controls-advanced-content">
+            <div class="controls-grid">
+              <button class="control-btn reset-btn" id="reset-btn" disabled>
+                RESET
+              </button>
+              <button class="control-btn retry-btn" id="retry-btn" disabled>
+                RETRY
+              </button>
+              <button class="control-btn replan-btn" id="replan-btn" disabled>
+                REPLAN
+              </button>
+              <button class="control-btn reopen-btn" id="reopen-btn" disabled>
+                REOPEN
+              </button>
+              <button class="control-btn kill-btn" id="kill-btn" disabled>
+                KILL & SPAWN FRESH
+              </button>
+            </div>
+          </div>
         </div>
       </section>
     </div>

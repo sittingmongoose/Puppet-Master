@@ -9,6 +9,7 @@
 // ============================================
 const state = {
   checks: [],
+  fixableChecks: new Set(),
   results: [],
   filteredResults: [],
   currentCategory: '',
@@ -17,39 +18,77 @@ const state = {
 };
 
 // ============================================
+// Toast Notifications (copied from controls.js)
+// ============================================
+function showToast(message, type = 'info', duration = 5000) {
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.textContent = message;
+  toast.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 16px 24px;
+    background-color: var(--paper-cream);
+    border: 2px solid var(--ink-black);
+    box-shadow: 3px 3px 0 0 var(--ink-black), 2px 2px 0 0 var(--ink-black);
+    z-index: 10000;
+    font-family: var(--font-geometric, 'Orbitron', sans-serif);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    animation: slideIn 0.3s ease;
+    max-width: 520px;
+    white-space: pre-wrap;
+  `;
+
+  if (type === 'success') {
+    toast.style.borderLeftColor = 'var(--acid-lime, #00FF41)';
+    toast.style.borderLeftWidth = '4px';
+  } else if (type === 'error') {
+    toast.style.borderLeftColor = 'var(--hot-magenta, #FF1493)';
+    toast.style.borderLeftWidth = '4px';
+  } else if (type === 'warning') {
+    toast.style.borderLeftColor = 'var(--safety-orange, #FF7F27)';
+    toast.style.borderLeftWidth = '4px';
+  }
+
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.animation = 'slideOut 0.3s ease';
+    setTimeout(() => {
+      if (toast.parentNode) {
+        toast.parentNode.removeChild(toast);
+      }
+    }, 300);
+  }, duration);
+}
+
+if (!document.getElementById('toast-styles')) {
+  const style = document.createElement('style');
+  style.id = 'toast-styles';
+  style.textContent = `
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+// ============================================
 // Initialization
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
-  initDarkMode();
+  // Dark mode is handled by navigation.js
   setupEventListeners();
   loadChecks();
 });
-
-// ============================================
-// Dark Mode
-// ============================================
-function initDarkMode() {
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  setTheme(savedTheme);
-  
-  const toggleBtn = document.getElementById('dark-mode-toggle');
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      setTheme(newTheme);
-    });
-  }
-}
-
-function setTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('theme', theme);
-  const toggleBtn = document.getElementById('dark-mode-toggle');
-  if (toggleBtn) {
-    toggleBtn.textContent = theme === 'light' ? 'DARK MODE' : 'LIGHT MODE';
-  }
-}
 
 // ============================================
 // Event Listeners
@@ -85,6 +124,9 @@ async function loadChecks() {
 
     const data = await response.json();
     state.checks = data.checks || [];
+    state.fixableChecks = new Set(
+      state.checks.filter((c) => c.fixAvailable).map((c) => c.name)
+    );
   } catch (error) {
     console.error('[Doctor] Error loading checks:', error);
     showError(`[ERROR] Failed to load checks: ${error.message}`);
@@ -148,7 +190,10 @@ async function runChecks(filter) {
 }
 
 async function attemptFix(checkName) {
-  const fixBtn = document.getElementById(`fix-btn-${escapeHtml(checkName)}`);
+  // Find the currently clicked button via DOM lookup by data-check-name.
+  // Note: element IDs are not stable because we re-render the table frequently.
+  const selector = `.fix-btn[data-check-name="${CSS.escape(checkName)}"]`;
+  const fixBtn = document.querySelector(selector);
   if (fixBtn) {
     fixBtn.disabled = true;
     fixBtn.textContent = 'FIXING...';
@@ -165,13 +210,20 @@ async function attemptFix(checkName) {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error || `Failed to fix: ${response.statusText}`);
+      const extra =
+        errorData.output && typeof errorData.output === 'string'
+          ? `\n\n${errorData.output}`
+          : '';
+      throw new Error(
+        (errorData.error || `Failed to fix: ${response.statusText}`) + extra
+      );
     }
 
     const data = await response.json();
     
     if (data.success) {
-      showMessage(`[OK] ${data.output || 'Fix completed successfully'}`);
+      const output = data.output || 'Fix completed successfully';
+      showMessage(`[OK] ${output}`);
       // Re-run the specific check to verify fix
       await runChecks({ checks: [checkName] });
     } else {
@@ -236,8 +288,7 @@ function renderResults() {
     const statusIcon = result.passed ? '✓' : '✗';
     const statusClass = result.passed ? 'status-pass' : 'status-fail';
     const duration = formatDuration(result.durationMs);
-    const hasFix = result.fixSuggestion ? true : false;
-    const fixBtnId = `fix-btn-${index}`;
+    const hasFix = !!result.fixAvailable || state.fixableChecks.has(result.name);
     const checkNameEscaped = escapeHtml(result.name);
 
     return `
@@ -248,7 +299,7 @@ function renderResults() {
         <td>${escapeHtml(result.message)}</td>
         <td class="duration-cell">${duration}</td>
         <td class="actions-cell">
-          ${hasFix && !result.passed ? `<button class="icon-btn fix-btn" id="${fixBtnId}" data-check-name="${checkNameEscaped}" aria-label="Fix ${checkNameEscaped}">FIX</button>` : '-'}
+          ${hasFix && !result.passed ? `<button class="icon-btn fix-btn" data-check-name="${checkNameEscaped}" aria-label="Fix ${checkNameEscaped}">FIX</button>` : '-'}
         </td>
       </tr>
       ${result.details || result.fixSuggestion ? `
@@ -360,12 +411,12 @@ function escapeHtml(text) {
 
 function showError(message) {
   console.error('[Doctor]', message);
-  // Could show a toast notification here
+  showToast(message, 'error', 7000);
 }
 
 function showMessage(message) {
   console.log('[Doctor]', message);
-  // Could show a toast notification here
+  showToast(message, 'success', 5000);
 }
 
 // attemptFix is called via event listeners, no need for global

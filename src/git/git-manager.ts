@@ -256,6 +256,18 @@ export class GitManager {
   }
 
   /**
+   * Gets the current HEAD commit SHA
+   * @returns Promise resolving to commit SHA (full 40-character hash)
+   */
+  async getHeadSha(): Promise<string | null> {
+    const result = await this.run(['rev-parse', 'HEAD']);
+    if (result.success) {
+      return result.stdout.trim();
+    }
+    return null;
+  }
+
+  /**
    * Stages files for commit
    * @param files - Files to stage (use '.' for all files)
    * @returns Promise resolving to GitResult

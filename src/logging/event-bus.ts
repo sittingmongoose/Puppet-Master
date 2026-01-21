@@ -21,7 +21,17 @@ export type PuppetMasterEvent =
   | { type: 'error'; error: string; context?: Record<string, unknown> }
   | { type: 'log'; level: LogLevel; message: string }
   | { type: 'agents_updated'; updatedFiles: string[] }
-  | { type: 'project_loaded'; name: string; path: string; phasesTotal: number; tasksTotal: number; subtasksTotal: number };
+  | { type: 'project_loaded'; name: string; path: string; phasesTotal: number; tasksTotal: number; subtasksTotal: number }
+  | { type: 'progress'; phasesTotal: number; phasesComplete: number; tasksTotal: number; tasksComplete: number; subtasksTotal: number; subtasksComplete: number }
+  | { type: 'commit'; sha: string; message: string; files: number; timestamp: string }
+  | { type: 'budget_update'; platform: 'claude' | 'codex' | 'cursor'; used: number; limit: number; cooldownUntil?: string }
+  | { type: 'gate_start'; tierId: string; tierType: 'task' | 'phase'; verifierType: string; target: string }
+  | { type: 'gate_complete'; tierId: string; tierType: 'task' | 'phase'; passed: boolean; evidence?: string }
+  | { type: 'replan_complete'; tierId: string; scope: 'phase' | 'task' | 'subtask'; timestamp: string }
+  | { type: 'item_reopened'; tierId: string; reason: string; timestamp: string }
+  | { type: 'process_killed'; pids: number[]; timestamp: string }
+  | { type: 'start_chain_step'; step: string; status: 'started' | 'completed' | 'failed'; timestamp: string }
+  | { type: 'start_chain_complete'; projectPath: string; artifacts: { prdPath: string; architecturePath: string; planPaths: string[] }; timestamp: string };
 
 /**
  * Event subscription interface.

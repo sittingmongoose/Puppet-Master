@@ -1,6 +1,6 @@
-# Project Setup Guide - Cursor/Codex/Claude Code Configuration
+# Project Setup Guide - Cursor/Codex/Claude Code (Stock Setup)
 
-This guide explains how to set up a new project with all the necessary wrappers and settings for Cursor, Codex, and Claude Code extensions when working over SSH.
+This guide explains how to set up a new project so the **Codex** and **Claude Code** extensions work in their **stock/default** configuration (no wrapper scripts, no pinned binary paths).
 
 ## Conventions / Variables
 
@@ -10,207 +10,54 @@ This guide explains how to set up a new project with all the necessary wrappers 
 
 ## Overview
 
-When working on a remote server via SSH, you need:
-1. **Wrapper scripts** - So extensions launch in the correct project directory
-2. **VS Code/Cursor settings** - To tell extensions where to find the wrappers
-3. **MCP configurations** - For Context7 integration
-4. **CLAUDE.md file** - For Claude Code project rules
+When working on a remote server via SSH, you typically only need:
+1. **VS Code/Cursor settings** (optional) - Quality-of-life project settings
+2. **MCP configurations** (optional) - For Context7 integration
+3. **CLAUDE.md file** (optional) - For Claude Code project rules
 
 ---
 
-## Step 1: Create Wrapper Scripts
+## Step 1: Keep Codex stock (no wrappers)
 
-Create two wrapper scripts in `/usr/local/bin/` for each project.
+Do **not** create wrapper scripts and do **not** pin Codex to a custom CLI path.
 
-### 1.1 Claude Code Wrapper
+In particular, leave `chatgpt.cliExecutable` **unset / `null`**. The Codex extension ships with its own CLI binary; overriding it is fragile and can break extension startup.
 
-Create `/usr/local/bin/claude-{PROJECT_SLUG}` (replace `{PROJECT_SLUG}` with a hyphenated project slug, e.g. `my-new-project`):
+### If Codex shows an infinite spinner
 
-```bash
-#!/bin/sh
-PROJECT_DIR="/mnt/user/Cursor/{PROJECT_NAME}"
-cd "$PROJECT_DIR" || exit 1
+Check the Codex extension log on the remote host. A common failure mode is a stale `chatgpt.cliExecutable` pointing at a non-existent wrapper path, e.g.:
 
-# Ensure HOME is set so Claude Code can find global IDE lock files
-export HOME="${HOME:-/root}"
-
-# Set Claude Code configuration directory
-export CLAUDE_CONFIG_DIR="$PROJECT_DIR/.claude/_state"
-
-# Create symlink from project-specific IDE directory to global IDE directory
-# This ensures Claude Code CLI can find IDE lock files even with project-specific config
-PROJECT_IDE_DIR="$PROJECT_DIR/.claude/_state/ide"
-GLOBAL_IDE_DIR="/root/.claude/ide"
-if [ ! -e "$PROJECT_IDE_DIR" ] || [ ! -L "$PROJECT_IDE_DIR" ]; then
-    rm -rf "$PROJECT_IDE_DIR" 2>/dev/null
-    ln -sf "$GLOBAL_IDE_DIR" "$PROJECT_IDE_DIR" 2>/dev/null
-fi
-
-# Set environment variables for IDE detection
-export CURSOR_WORKSPACE_FOLDER="$PROJECT_DIR"
-export VSCODE_AGENT_FOLDER="${VSCODE_AGENT_FOLDER:-/root/.cursor-server}"
-export VSCODE_CWD="$PROJECT_DIR"  # Override Cursor's default /root
-
-# Find and set VSCODE_IPC_HOOK_CLI (most recent active socket by modification time)
-IPC_SOCKET=$(find /run/user/0 -name "vscode-ipc-*.sock" -type s -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2- | sed 's/=$//')
-if [ -z "$IPC_SOCKET" ]; then
-    # Fallback: if find doesn't support -printf, use ls -t
-    IPC_SOCKET=$(ls -t /run/user/0/vscode-ipc-*.sock 2>/dev/null | head -1 | sed 's/=$//')
-fi
-if [ -n "$IPC_SOCKET" ] && [ -S "$IPC_SOCKET" ]; then
-    export VSCODE_IPC_HOOK_CLI="$IPC_SOCKET"
-fi
-
-# Add cursor command to PATH - find cursor binary dynamically or use symlink
-CURSOR_BIN=$(find /root/.cursor-server -name "cursor" -type f -path "*/remote-cli/cursor" 2>/dev/null | head -1)
-if [ -n "$CURSOR_BIN" ] && [ -f "$CURSOR_BIN" ]; then
-    export PATH="$(dirname "$CURSOR_BIN"):$PATH"
-elif [ -f "/usr/local/bin/cursor" ]; then
-    # Use symlink if it exists
-    export PATH="/usr/local/bin:$PATH"
-fi
-
-exec /root/.local/bin/claude "$@"
+```text
+Failed to spawn codex mcp process at /usr/local/bin/codex-RWM-Puppet-Master
+Error: spawn /usr/local/bin/codex-RWM-Puppet-Master ENOENT
 ```
 
-**Make it executable:**
-```bash
-chmod +x /usr/local/bin/claude-{PROJECT_SLUG}
-```
-
-### 1.2 Codex Wrapper
-
-Create `/usr/local/bin/codex-{PROJECT_SLUG}`:
-
-```bash
-#!/bin/sh
-# Ensure a predictable PATH when launched from Finder.
-export PATH="/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-
-PROJECT_DIR="/mnt/user/Cursor/{PROJECT_NAME}"
-CODEX_HOME="$PROJECT_DIR/.codex"
-CODEX_BIN="/root/.cursor-server/extensions/openai.chatgpt-0.4.58-universal/bin/linux-x86_64/codex"
-
-cd "$PROJECT_DIR" || exit 1
-export CODEX_HOME
-export VSCODE_CWD="$PROJECT_DIR"
-exec "$CODEX_BIN" "$@"
-```
-
-**Make it executable:**
-```bash
-chmod +x /usr/local/bin/codex-{PROJECT_SLUG}
-```
-
-**Note:** If your system is ARM64 (not x86_64), change `linux-x86_64` to `linux-aarch64` in the CODEX_BIN path.
-
-### 1.3 Why the Codex Wrapper Matters (Isolation)
-
-The two key lines for project isolation are:
-
-- `CODEX_HOME="$PROJECT_DIR/.codex"`: keeps Codex auth, sessions, and MCP config isolated per project
-- `cd "$PROJECT_DIR"` + `VSCODE_CWD="$PROJECT_DIR"`: ensures relative paths resolve correctly and file links work from Cursor
+**Reset to stock:** remove/clear the `chatgpt.cliExecutable` setting and reload the window.
 
 ---
 
-## Step 2: Create VS Code/Cursor Settings
+## Step 2: Optional project settings (safe, stock-compatible)
 
-Create `.vscode/settings.json` in your project root. This file tells the Codex and Claude Code extensions which wrapper scripts to use.
+Create `.vscode/settings.json` in your project root only if you want project-scoped quality-of-life settings. These settings are compatible with stock Codex/Claude Code (no wrappers).
 
-### 2.1 Complete Settings Template
+### 2.1 Minimal Settings Template
 
 ```json
 {
-    // Make sure key extensions are always installed on the SSH host.
-    "remote.SSH.defaultExtensions": [
-      "openai.codex",
-      "anthropic.claude-code"
-    ],
-  
-    // Quality-of-life defaults (safe, project-scoped).
-    "files.exclude": {
-      "**/.git": true,
-      "**/.DS_Store": true
-    },
-    "search.exclude": {
-      "**/.git": true
-    },
-    
-    // Point Codex extension to your wrapper script (REQUIRED)
-    "chatgpt.cliExecutable": "/usr/local/bin/codex-{PROJECT_SLUG}",
-    
-    // Point Claude Code extension to your wrapper script (REQUIRED)
-    "claudeCode.claudeProcessWrapper": "/usr/local/bin/claude-{PROJECT_SLUG}",
-    
-    // Optional: Set terminal working directory to project root
-    "terminal.integrated.cwd": "${workspaceFolder}",
-    
-    // Disable PowerShell on Linux (PowerShell scripts in bin/ are for Windows only)
-    "powershell.enabled": false,
-    "terminal.integrated.defaultProfile.linux": "bash"
+  // Make sure key extensions are always installed on the SSH host.
+  "remote.SSH.defaultExtensions": [
+    "openai.codex",
+    "anthropic.claude-code"
+  ],
+
+  // Optional: Set terminal working directory to project root
+  "terminal.integrated.cwd": "${workspaceFolder}",
+
+  // Disable PowerShell on Linux (PowerShell scripts in bin/ are for Windows only)
+  "powershell.enabled": false,
+  "terminal.integrated.defaultProfile.linux": "bash"
 }
 ```
-
-**Important:** Replace `{PROJECT_SLUG}` with your actual project slug (hyphenated, lowercase). For example:
-- Project name: "RWM Puppet Master" → slug: "RWM-Puppet-Master"
-- Project name: "Cacherr" → slug: "cacherr"
-- Project name: "Rom Runner" → slug: "romrunner"
-
-### 2.2 Real-World Examples
-
-**RWM Puppet Master** (minimal):
-```json
-{
-    "claudeCode.claudeProcessWrapper": "/usr/local/bin/claude-RWM-Puppet-Master"
-}
-```
-
-**Cacherr** (complete):
-```json
-{
-    "remote.SSH.defaultExtensions": [
-      "openai.codex",
-      "anthropic.claude-code"
-    ],
-    "files.exclude": {
-      "**/.git": true,
-      "**/.DS_Store": true
-    },
-    "search.exclude": {
-      "**/.git": true
-    },
-    "chatgpt.cliExecutable": "/usr/local/bin/codex-cacherr",
-    "claudeCode.claudeProcessWrapper": "/usr/local/bin/claude-cacherr",
-    "powershell.enabled": false,
-    "terminal.integrated.defaultProfile.linux": "bash"
-}
-```
-
-**Rom Runner** (with terminal cwd):
-```json
-{
-    "remote.SSH.defaultExtensions": [
-      "openai.codex",
-      "anthropic.claude-code"
-    ],
-    "files.exclude": {
-      "**/.git": true,
-      "**/.DS_Store": true
-    },
-    "search.exclude": {
-      "**/.git": true
-    },
-    "terminal.integrated.cwd": "${workspaceFolder}",
-    "chatgpt.cliExecutable": "/usr/local/bin/codex-romrunner",
-    "claudeCode.claudeProcessWrapper": "/usr/local/bin/claude-romrunner"
-}
-```
-
-**Key Settings Explained:**
-- `chatgpt.cliExecutable`: Absolute path to Codex wrapper script (required for Codex extension)
-- `claudeCode.claudeProcessWrapper`: Absolute path to Claude Code wrapper script (required for Claude Code extension)
-- `remote.SSH.defaultExtensions`: Ensures extensions are installed on the remote SSH host
-- `terminal.integrated.cwd`: Sets terminal working directory to project root (optional but helpful)
 
 ---
 
@@ -273,7 +120,7 @@ Alternative (CLI-managed MCP entry, no secrets in `config.toml`):
 
 ```bash
 cd "/mnt/user/Cursor/{PROJECT_NAME}"
-/usr/local/bin/codex-{PROJECT_SLUG} mcp add context7 \
+codex mcp add context7 \
   --env CONTEXT7_API_KEY="{CONTEXT7_API_KEY}" \
   -- node "/mnt/user/Cursor/{PROJECT_NAME}/.codex/node_modules/@upstash/context7-mcp/dist/index.js" --transport stdio
 ```
@@ -312,14 +159,14 @@ Add Context7 MCP to Claude Code (stored under `.claude/_state/.claude.json`):
 
 ```bash
 cd "/mnt/user/Cursor/{PROJECT_NAME}"
-/usr/local/bin/claude-{PROJECT_SLUG} mcp add context7 -- npx -y @upstash/context7-mcp --api-key "{CONTEXT7_API_KEY}"
+claude mcp add context7 -- npx -y @upstash/context7-mcp --api-key "{CONTEXT7_API_KEY}"
 ```
 
 **Alternative: Use direct node path (faster startup, but may timeout in GUI):**
 
 ```bash
 cd "/mnt/user/Cursor/{PROJECT_NAME}"
-/usr/local/bin/claude-{PROJECT_SLUG} mcp add context7 -- \
+claude mcp add context7 -- \
   node "/mnt/user/Cursor/{PROJECT_NAME}/.codex/node_modules/@upstash/context7-mcp/dist/index.js" --api-key "{CONTEXT7_API_KEY}"
 ```
 
@@ -469,27 +316,17 @@ If you run into project-specific issues (sandboxing, working directory, offline 
 
 ## Step 6: Verify Setup
 
-### 6.1 Test Claude Code Wrapper
+### 6.1 Verify Codex extension is stock
 
-```bash
-/usr/local/bin/claude-{PROJECT_SLUG} --version
-```
-
-Should output: `2.1.2 (Claude Code)` or similar.
-
-### 6.2 Test Codex Wrapper
-
-```bash
-/usr/local/bin/codex-{PROJECT_SLUG} --version
-```
-
-Should output: `codex-cli 0.78.0` or similar.
+- Ensure `chatgpt.cliExecutable` is unset / `null`.
+- Reload the Cursor window.
+- Open the Codex sidebar and confirm it loads (no infinite spinner).
 
 ### 6.3 Verify Claude Code MCP
 
 ```bash
 cd "/mnt/user/Cursor/{PROJECT_NAME}"
-/usr/local/bin/claude-{PROJECT_SLUG} mcp list
+claude mcp list
 ```
 
 Should show `context7` as connected.
@@ -498,8 +335,8 @@ Should show `context7` as connected.
 
 ```bash
 cd "/mnt/user/Cursor/{PROJECT_NAME}"
-/usr/local/bin/codex-{PROJECT_SLUG} mcp list
-/usr/local/bin/codex-{PROJECT_SLUG} mcp get context7
+codex mcp list
+codex mcp get context7
 ```
 
 ---
@@ -508,8 +345,6 @@ cd "/mnt/user/Cursor/{PROJECT_NAME}"
 
 | Component | Location | Notes |
 |-----------|----------|-------|
-| **Claude Wrapper** | `/usr/local/bin/claude-{PROJECT_SLUG}` | System-wide, executable |
-| **Codex Wrapper** | `/usr/local/bin/codex-{PROJECT_SLUG}` | System-wide, executable |
 | **VS Code Settings** | `{PROJECT}/.vscode/settings.json` | Project-specific |
 | **Claude MCP Config** | `{PROJECT}/.claude/_state/.claude.json` | Auto-generated by `claude mcp add` |
 | **CLAUDE.md** | `{PROJECT}/.claude/CLAUDE.md` | Project-specific rules |
@@ -521,182 +356,39 @@ cd "/mnt/user/Cursor/{PROJECT_NAME}"
 
 ---
 
-## Current Working Setup (Verified Configuration)
+## Deprecated: wrapper-based setup (removed)
 
-This is how the “3 project” setup is structured when it’s working correctly:
-
-### Project: RWM Puppet Master
-
-**Wrapper Scripts:**
-- Claude Code: `/usr/local/bin/claude-RWM-Puppet-Master`
-- Codex: `/usr/local/bin/codex-RWM-Puppet-Master`
-
-**Settings:**
-- `.vscode/settings.json`: `claudeCode.claudeProcessWrapper: "/usr/local/bin/claude-RWM-Puppet-Master"`
-- `CODEX_HOME`: `/mnt/user/Cursor/RWM Puppet Master/.codex`
-
-**MCP Configuration:**
-- **Claude Code**: Uses `npx -y @upstash/context7-mcp --api-key ...` (stored in `.claude/_state/.claude.json`)
-- **Codex**: Uses direct node path to `.codex/node_modules/@upstash/context7-mcp/dist/index.js` (in `.codex/config.toml`)
-
-### Project: Cacherr
-
-**Wrapper Scripts:**
-- Claude Code: `/usr/local/bin/claude-cacherr`
-- Codex: `/usr/local/bin/codex-cacherr`
-
-**Settings:**
-- `.vscode/settings.json`: 
-  - `chatgpt.cliExecutable: "/usr/local/bin/codex-cacherr"`
-  - `claudeCode.claudeProcessWrapper: "/usr/local/bin/claude-cacherr"`
-- `CODEX_HOME`: `/mnt/user/Cursor/Cacherr/.codex`
-
-**MCP Configuration:**
-- **Claude Code**: Uses `npx -y @upstash/context7-mcp --api-key ...` (stored in `.claude/_state/.claude.json`)
-- **Codex**: Uses direct node path to `.codex/node_modules/@upstash/context7-mcp/dist/index.js` (in `.codex/config.toml`)
-
-### Project: Rom Runner
-
-**Wrapper Scripts:**
-- Claude Code: `/usr/local/bin/claude-romrunner`
-- Codex: `/usr/local/bin/codex-romrunner`
-
-**Settings:**
-- `.vscode/settings.json`: 
-  - `chatgpt.cliExecutable: "/usr/local/bin/codex-romrunner"`
-  - `claudeCode.claudeProcessWrapper: "/usr/local/bin/claude-romrunner"`
-  - `terminal.integrated.cwd: "${workspaceFolder}"`
-- `CODEX_HOME`: `/mnt/user/Cursor/Rom Runner/.codex`
-
-**MCP Configuration:**
-- **Claude Code**: Uses `npx -y @upstash/context7-mcp --api-key ...` (stored in `.claude/_state/.claude.json`)
-- **Codex**: Uses direct node path to `.codex/node_modules/@upstash/context7-mcp/dist/index.js` (in `.codex/config.toml`)
-
-### Key Isolation Principles
-
-Each wrapper script:
-1. `cd`s into the project directory
-2. Exports `CODEX_HOME` to project-specific `.codex/` directory
-3. Sets `CLAUDE_CONFIG_DIR` to project-specific `.claude/_state/` directory
-4. Ensures sessions, auth, and MCP state do not leak between projects
-
----
-
-## Example: Setting Up "My New Project"
-
-1. **Create wrappers:**
-   ```bash
-   # Create Claude wrapper
-   sudo nano /usr/local/bin/claude-my-new-project
-   # (paste Claude wrapper template, replace {PROJECT_NAME} with "My New Project")
-   sudo chmod +x /usr/local/bin/claude-my-new-project
-   
-   # Create Codex wrapper
-   sudo nano /usr/local/bin/codex-my-new-project
-   # (paste Codex wrapper template, replace {PROJECT_NAME} with "My New Project")
-   sudo chmod +x /usr/local/bin/codex-my-new-project
-   ```
-
-2. **Create VS Code settings:**
-   ```bash
-   mkdir -p "/mnt/user/Cursor/My New Project/.vscode"
-   nano "/mnt/user/Cursor/My New Project/.vscode/settings.json"
-   # (paste settings template, replace {PROJECT_NAME} with "my-new-project")
-   ```
-
-3. **Install Context7 MCP locally (project-scoped):**
-   ```bash
-   cd "/mnt/user/Cursor/My New Project"
-   mkdir -p .codex
-   cd .codex
-   npm init -y
-   npm install -D @upstash/context7-mcp
-   ```
-
-4. **Configure Codex MCP (Context7):**
-   ```bash
-   nano "/mnt/user/Cursor/My New Project/.codex/config.toml"
-   # Add the [mcp_servers.context7] block from Step 3.2
-   ```
-
-5. **Configure Claude Code MCP (using npx - recommended):**
-   ```bash
-   cd "/mnt/user/Cursor/My New Project"
-   /usr/local/bin/claude-my-new-project mcp add context7 -- npx -y @upstash/context7-mcp --api-key "{CONTEXT7_API_KEY}"
-   ```
-   
-   **Verify:**
-   ```bash
-   /usr/local/bin/claude-my-new-project mcp list
-   ```
-   Should show: `context7: npx -y @upstash/context7-mcp --api-key ... - ✓ Connected`
-
-6. **Create CLAUDE.md:**
-   ```bash
-   mkdir -p "/mnt/user/Cursor/My New Project/.claude"
-   nano "/mnt/user/Cursor/My New Project/.claude/CLAUDE.md"
-   # (paste CLAUDE.md template, replace {PROJECT_NAME} with "My New Project")
-   ```
-
-7. **Verify:**
-   ```bash
-   /usr/local/bin/claude-my-new-project --version
-   /usr/local/bin/codex-my-new-project --version
-   /usr/local/bin/claude-my-new-project mcp list
-   /usr/local/bin/codex-my-new-project mcp list
-   ```
-
----
+This repo previously documented per-project wrapper scripts and `chatgpt.cliExecutable` overrides to force a project working directory.
+That approach is **not stock**, is fragile across extension updates, and can break Codex startup (infinite spinner) if the wrapper path goes stale.
+If you see a `chatgpt.cliExecutable` setting pointing at `/usr/local/bin/codex-...`, remove it to restore stock behavior.
 
 ## Important Notes
 
-1. **Project Name Format**: 
+1. **Project Name Format**:
    - In file paths: Use exact project name (e.g., "My New Project")
-   - In wrapper script names: Use hyphens (e.g., "my-new-project")
-   - In settings.json: Use hyphens (e.g., "my-new-project")
+   - In settings.json: Prefer `${workspaceFolder}` instead of hard-coded paths when possible
 
-2. **Architecture**: 
-   - Current system: `x86_64`
-   - If on ARM64, change Codex binary path from `linux-x86_64` to `linux-aarch64`
-
-3. **SSH Remote Connection**: 
+2. **SSH Remote Connection**:
    - **Windows Client**: Configure `C:\Users\sitti\AppData\Roaming\Cursor\User\settings.json` with SSH settings
    - **Windows SSH Config**: Set up `C:\Users\sitti\.ssh\config` with your remote host
-   - **Project Settings**: The `remote.SSH.defaultExtensions` setting ensures extensions are installed on the SSH host
-   - **Wrappers**: Handle setting the correct working directory for SSH remote sessions
-   - **Connection**: Use `Remote-SSH: Connect to Host...` in Cursor to connect
+   - **Project Settings**: `remote.SSH.defaultExtensions` ensures extensions are installed on the SSH host
+   - **Connection**: Use `Remote-SSH: Connect to Host...` in Cursor to connect, then open the project folder
 
-4. **Context7 API Key**: 
-   - Store `{CONTEXT7_API_KEY}` somewhere safe (environment variable, 1Password, etc.)
+3. **Context7 API Key**:
+   - Store `{CONTEXT7_API_KEY}` somewhere safe (environment variable, password manager, etc.)
    - Avoid committing it to git (prefer env vars or local-only config files)
-
-5. **Claude Binary Location**: 
-   - Currently: `/root/.local/bin/claude` (symlink to `/root/.local/share/claude/versions/2.1.2`)
-   - If Claude is installed elsewhere, update the wrapper script
-
-6. **Codex Binary Location**: 
-   - Currently: `/root/.cursor-server/extensions/openai.chatgpt-0.4.58-universal/bin/linux-x86_64/codex`
-   - Version may change; find current location with:
-     ```bash
-     find /root/.cursor-server/extensions -name "codex" -type f -path "*/bin/linux-x86_64/codex" 2>/dev/null
-     ```
 
 ---
 
 ## Troubleshooting
 
-### Wrapper Script Not Found
-- Check that script exists: `ls -la /usr/local/bin/claude-{PROJECT_SLUG}`
-- Check permissions: `chmod +x /usr/local/bin/claude-{PROJECT_SLUG}`
-- Verify PATH includes `/usr/local/bin`
-
-### Extension Can't Find Wrapper
-- Check `.vscode/settings.json` has correct path
-- Path should be absolute: `/usr/local/bin/claude-{PROJECT_SLUG}`
-- Reload Cursor window after changing settings
+### Codex stuck on an infinite spinner
+- Check the Codex extension log (for Remote-SSH, this is on the remote host under `/root/.cursor-server/data/logs/.../openai.chatgpt/Codex.log`)
+- If you see errors like `Failed to spawn codex mcp process at /usr/local/bin/codex-...` or `ENOENT`, remove/clear `chatgpt.cliExecutable` so it is unset / `null`
+- Reload the Cursor window
 
 ### Claude Code MCP Not Working
-- Verify MCP is added: `claude-{PROJECT_SLUG} mcp list`
+- Verify MCP is added: `claude mcp list`
 - Check `.claude/_state/.claude.json` contains context7 configuration
 - Ensure API key is correct
 - **If CLI works but GUI shows "failed"**: 
@@ -705,15 +397,12 @@ Each wrapper script:
   - Warm up npx cache: `npx -y @upstash/context7-mcp --api-key {KEY} < /dev/null & sleep 3 && kill %1`
 
 ### Codex MCP Not Working
-- Verify the wrapper sets `CODEX_HOME` to `{PROJECT}/.codex`
 - Verify config exists: `{PROJECT}/.codex/config.toml`
-- Verify Codex sees the server: `codex-{PROJECT_SLUG} mcp list`
+- Verify Codex sees the server: `codex mcp list`
 - If Context7 was configured with a relative path, switch to an absolute path
 
-### Wrong Working Directory
-- Verify wrapper script has correct `PROJECT_DIR`
-- Check wrapper script `cd` command succeeds
-- Test wrapper: `claude-{PROJECT_SLUG} pwd` should show project directory
+### Codex auth/config seems corrupted (optional reset)
+- If Codex still fails after restoring stock settings, temporarily move aside `~/.codex` and restart Cursor to force a clean regen/re-auth.
 
 ### SSH Connection Issues
 - Verify Windows SSH config has correct host entry
@@ -722,12 +411,6 @@ Each wrapper script:
 - Test SSH connection directly: `ssh unraid` (or your host name)
 - Check Windows firewall allows SSH connections
 
-### Claude Wrapper Not Found in Cursor GUI
-- Verify `.vscode/settings.json` has `claudeCode.claudeProcessWrapper` set correctly
-- Check the path is absolute: `/usr/local/bin/claude-{PROJECT_SLUG}`
-- Reload Cursor window after changing settings
-- Check that wrapper script exists and is executable on the remote server
-
 ---
 
 ## Complete Setup Checklist
@@ -735,10 +418,9 @@ Each wrapper script:
 For a new project, you need to configure:
 
 ### On Remote Server (Linux/Unraid):
-- [ ] Create Claude wrapper: `/usr/local/bin/claude-{PROJECT_SLUG}`
-- [ ] Create Codex wrapper: `/usr/local/bin/codex-{PROJECT_SLUG}`
-- [ ] Create `.vscode/settings.json` with wrapper paths
-- [ ] Run `claude mcp add context7` command
+- [ ] Do **not** set `chatgpt.cliExecutable` (leave it unset / `null`)
+- [ ] (Optional) Create `.vscode/settings.json` (stock-compatible settings only)
+- [ ] (Optional) Run `claude mcp add context7` command
 - [ ] Create `.claude/CLAUDE.md` file
 
 ### On Windows Client:
@@ -758,19 +440,12 @@ For a new project, you need to configure:
 
 When setting up a new project, an AI agent should follow these steps in order:
 
-### 1. Create Wrapper Scripts (on remote server)
-- [ ] Create `/usr/local/bin/claude-{PROJECT_SLUG}` using the template from Step 1.1
-- [ ] Replace `{PROJECT_NAME}` with actual project folder name (may include spaces)
-- [ ] Make executable: `chmod +x /usr/local/bin/claude-{PROJECT_SLUG}`
-- [ ] Create `/usr/local/bin/codex-{PROJECT_SLUG}` using the template from Step 1.2
-- [ ] Replace `{PROJECT_NAME}` with actual project folder name
-- [ ] Update `CODEX_BIN` path if needed (check with `find /root/.cursor-server/extensions -name "codex"`)
-- [ ] Make executable: `chmod +x /usr/local/bin/codex-{PROJECT_SLUG}`
+### 1. Keep Codex stock (no wrappers)
+- [ ] Do **not** create wrapper scripts
+- [ ] Do **not** set `chatgpt.cliExecutable` (leave it unset / `null`)
 
-### 2. Create Project Settings (on remote server)
+### 2. Create Project Settings (on remote server, optional)
 - [ ] Create `.vscode/settings.json` in project root
-- [ ] Set `chatgpt.cliExecutable` to `/usr/local/bin/codex-{PROJECT_SLUG}`
-- [ ] Set `claudeCode.claudeProcessWrapper` to `/usr/local/bin/claude-{PROJECT_SLUG}`
 - [ ] Add `remote.SSH.defaultExtensions` array with `"openai.codex"` and `"anthropic.claude-code"`
 - [ ] Add optional quality-of-life settings (files.exclude, search.exclude, etc.)
 
@@ -784,11 +459,11 @@ When setting up a new project, an AI agent should follow these steps in order:
 - [ ] Create or update `.codex/config.toml`
 - [ ] Add `[mcp_servers.context7]` block with absolute path to `node_modules/@upstash/context7-mcp/dist/index.js`
 - [ ] Include `--api-key {CONTEXT7_API_KEY}` in args array
-- [ ] Verify: `codex-{PROJECT_SLUG} mcp list` shows context7 as enabled
+- [ ] Verify (if Codex CLI is installed): `codex mcp list` shows context7 as enabled
 
 ### 5. Configure Claude Code MCP (on remote server)
-- [ ] Run: `claude-{PROJECT_SLUG} mcp add context7 -- npx -y @upstash/context7-mcp --api-key {CONTEXT7_API_KEY}`
-- [ ] Verify: `claude-{PROJECT_SLUG} mcp list` shows `✓ Connected`
+- [ ] Run: `claude mcp add context7 -- npx -y @upstash/context7-mcp --api-key {CONTEXT7_API_KEY}`
+- [ ] Verify: `claude mcp list` shows `✓ Connected`
 - [ ] If GUI shows "failed" but CLI works, reload Cursor window
 
 ### 6. Create CLAUDE.md (on remote server)
@@ -803,14 +478,13 @@ When setting up a new project, an AI agent should follow these steps in order:
 - [ ] Test SSH connection: `ssh {HOST_NAME}`
 
 ### 8. Verify Everything Works
-- [ ] Test Claude wrapper: `/usr/local/bin/claude-{PROJECT_SLUG} --version`
-- [ ] Test Codex wrapper: `/usr/local/bin/codex-{PROJECT_SLUG} --version`
-- [ ] Test Claude MCP: `/usr/local/bin/claude-{PROJECT_SLUG} mcp list`
-- [ ] Test Codex MCP: `/usr/local/bin/codex-{PROJECT_SLUG} mcp list`
+- [ ] Open Codex sidebar and verify no infinite spinner
+- [ ] Test Claude MCP: `claude mcp list`
+- [ ] Test Codex MCP (if Codex CLI is installed): `codex mcp list`
 - [ ] Connect via Remote-SSH in Cursor
 - [ ] Open project folder
-- [ ] Verify extensions can find wrappers (check extension output logs if issues)
+- [ ] If issues, check extension output logs
 
 ---
 
-*Last updated: 2026-01-13*
+*Last updated: 2026-01-20*

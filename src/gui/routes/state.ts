@@ -74,20 +74,50 @@ export function createStateRoutes(
    */
   router.get('/tiers', async (_req: Request, res: Response) => {
     try {
-      const root = tierManager?.getRoot() || null;
-      
-      if (!root) {
-        res.json({ root: null });
-        return;
+      if (!tierManager) {
+        return res.status(503).json({
+          error: 'TierStateManager not available',
+          code: 'TIER_MANAGER_NOT_AVAILABLE',
+        } as ErrorResponse);
       }
 
-      const serialized = serializeTierNode(root);
-      res.json({ root: serialized });
+      const root = tierManager.getRoot();
+      
+      if (!root) {
+        return res.json({
+          root: null,
+          message: 'No tiers loaded. Open a project first.',
+        });
+      }
+
+      // Serialize full tree (root node with children)
+      const rootSerialized = serializeTierTree(root);
+      
+      // Get metadata
+      const allPhases = tierManager.getAllPhases() || [];
+      const allTasks = tierManager.getAllTasks() || [];
+      const allSubtasks = tierManager.getAllSubtasks() || [];
+      
+      const completedPhases = allPhases.filter(n => n.getState() === 'passed').length;
+      const completedTasks = allTasks.filter(n => n.getState() === 'passed').length;
+      const completedSubtasks = allSubtasks.filter(n => n.getState() === 'passed').length;
+
+      res.json({
+        root: rootSerialized,
+        metadata: {
+          totalPhases: allPhases.length,
+          totalTasks: allTasks.length,
+          totalSubtasks: allSubtasks.length,
+          completedPhases,
+          completedTasks,
+          completedSubtasks,
+        },
+      });
     } catch (error) {
       const err = error as Error;
       res.status(500).json({
         error: err.message || 'Internal server error',
-        code: 'INTERNAL_ERROR',
+        code: 'TIER_FETCH_FAILED',
       } as ErrorResponse);
     }
   });
@@ -210,6 +240,38 @@ function serializeTierNode(node: TierNode): Record<string, unknown> {
     updatedAt: data.updatedAt,
     title: data.title,
     description: data.description,
+  };
+}
+
+/**
+ * Serialize tier tree for /api/tiers endpoint.
+ * Matches the format expected by the GUI implementation plan.
+ */
+function serializeTierTree(tier: TierNode): Record<string, unknown> {
+  const state = tier.getState();
+  const data = tier.data;
+
+  // Extract verifiers from acceptanceCriteria (verifiers are criteria)
+  const verifiers = (data.acceptanceCriteria || []).map((v) => ({
+    type: v.type,
+    target: v.target,
+    status: v.passed !== undefined ? (v.passed ? 'PASS' : 'FAIL') : 'PENDING',
+    evidence: [],
+  }));
+
+  return {
+    id: tier.id,
+    title: data.title,
+    type: tier.type,
+    status: state,
+    pass: state === 'passed',
+    currentIteration: data.iterations || 0,
+    maxIterations: data.maxIterations || 0,
+    platform: null, // Platform not stored in TierNodeData - would need config access
+    model: null, // Model not stored in TierNodeData - would need config access
+    acceptance: data.acceptanceCriteria || [],
+    verifiers,
+    children: tier.children.map(child => serializeTierTree(child)),
   };
 }
 

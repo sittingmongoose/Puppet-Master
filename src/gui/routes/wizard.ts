@@ -26,9 +26,14 @@ import { PrdGenerator } from '../../start-chain/prd-generator.js';
 import { ArchGenerator } from '../../start-chain/arch-generator.js';
 import { TierPlanGenerator } from '../../start-chain/tier-plan-generator.js';
 import { ValidationGate } from '../../start-chain/validation-gate.js';
+import { StartChainPipeline } from '../../start-chain/index.js';
 import { PrdManager } from '../../memory/prd-manager.js';
 import { ConfigManager } from '../../config/config-manager.js';
 import type { PuppetMasterConfig } from '../../types/config.js';
+import type { PlatformRegistry } from '../../platforms/registry.js';
+import type { QuotaManager } from '../../platforms/quota-manager.js';
+import type { UsageTracker } from '../../memory/usage-tracker.js';
+import type { EventBus } from '../../logging/event-bus.js';
 
 /**
  * Error response interface.
@@ -117,11 +122,19 @@ async function parseFile(
  * 
  * @param baseDirectory - Base directory for project operations (optional)
  * @param config - Puppet Master config (optional, for AI generation)
+ * @param platformRegistry - Platform registry for AI generation (optional)
+ * @param quotaManager - Quota manager for AI generation (optional)
+ * @param usageTracker - Usage tracker for AI generation (optional)
+ * @param eventBus - Event bus for progress events (optional)
  * @returns Express Router with wizard endpoints
  */
 export function createWizardRoutes(
   baseDirectory?: string,
-  config?: PuppetMasterConfig
+  config?: PuppetMasterConfig,
+  platformRegistry?: PlatformRegistry,
+  quotaManager?: QuotaManager,
+  usageTracker?: UsageTracker,
+  eventBus?: EventBus
 ): Router {
   const router = createRouter();
   const projectBaseDir = baseDirectory || process.cwd();
@@ -352,23 +365,70 @@ export function createWizardRoutes(
   /**
    * POST /api/wizard/save
    * Saves PRD, architecture, and tier plan to disk.
+   * Uses Start Chain Pipeline if all dependencies are available, otherwise falls back to direct save.
    * 
-   * Body: { prd: PRD, architecture: string, tierPlan: TierPlan, projectPath?: string }
-   * Response: { success: boolean, path?: string }
+   * Body: { parsed: ParsedRequirements, prd?: PRD, architecture?: string, tierPlan?: TierPlan, projectPath?: string, projectName?: string }
+   * Response: { success: boolean, path?: string, artifacts?: { prdPath, architecturePath, planPaths } }
    */
   router.post('/wizard/save', async (req: Request, res: Response) => {
     try {
-      const { prd, architecture, tierPlan, projectPath } = req.body;
+      const { parsed, prd, architecture, tierPlan, projectPath, projectName } = req.body;
       
+      const projectDir = projectPath ? resolve(projectPath) : process.cwd();
+
+      // Check if we have all dependencies for Start Chain Pipeline
+      const hasAllDependencies = 
+        config && 
+        platformRegistry && 
+        quotaManager && 
+        usageTracker && 
+        parsed; // Parsed requirements required for pipeline
+
+      if (hasAllDependencies) {
+        // Use Start Chain Pipeline for AI-powered generation
+        try {
+          const pipeline = new StartChainPipeline(
+            config,
+            platformRegistry,
+            quotaManager,
+            usageTracker,
+            eventBus
+          );
+
+          const result = await pipeline.execute({
+            parsed,
+            projectPath: projectDir,
+            projectName,
+          });
+
+          res.json({
+            success: true,
+            path: projectDir,
+            artifacts: {
+              prdPath: result.prdPath,
+              architecturePath: result.architecturePath,
+              planPaths: result.planPaths,
+            },
+            message: 'Project initialized via Start Chain Pipeline',
+          });
+
+          return;
+        } catch (pipelineError) {
+          console.error('[Wizard] Start Chain Pipeline error:', pipelineError);
+          // Fall through to fallback behavior
+          // Don't return error immediately - allow fallback to save what was provided
+        }
+      }
+
+      // Fallback: Save provided artifacts directly (or use rule-based generation)
       if (!prd) {
         res.status(400).json({
-          error: 'PRD is required',
+          error: 'PRD is required when Start Chain Pipeline is not available',
           code: 'BAD_REQUEST',
         } as ErrorResponse);
         return;
       }
 
-      const projectDir = projectPath ? resolve(projectPath) : process.cwd();
       const puppetMasterDir = join(projectDir, '.puppet-master');
       
       // Ensure .puppet-master directory exists
@@ -381,10 +441,11 @@ export function createWizardRoutes(
       const prdManager = new PrdManager(prdPath);
       await prdManager.save(prd);
 
-      // Save architecture
+      // Save architecture if provided
+      let architecturePath: string | undefined;
       if (architecture && typeof architecture === 'string') {
-        const archPath = join(puppetMasterDir, 'architecture.md');
-        await fs.writeFile(archPath, architecture, 'utf-8');
+        architecturePath = join(puppetMasterDir, 'architecture.md');
+        await fs.writeFile(architecturePath, architecture, 'utf-8');
       }
 
       // Tier plan is derived from config and PRD, so we don't need to save it separately
@@ -393,6 +454,12 @@ export function createWizardRoutes(
       res.json({
         success: true,
         path: projectDir,
+        artifacts: {
+          prdPath,
+          architecturePath,
+          planPaths: [],
+        },
+        warning: hasAllDependencies ? 'Start Chain Pipeline failed, saved provided artifacts' : 'Start Chain Pipeline not available, saved provided artifacts',
       });
     } catch (error) {
       const err = error as Error;

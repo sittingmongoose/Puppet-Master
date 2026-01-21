@@ -28,3 +28,6 @@ export type {
 
 export { buildPrdPrompt } from './prompts/prd-prompt.js';
 export { buildArchPrompt } from './prompts/arch-prompt.js';
+
+export { StartChainPipeline } from '../core/start-chain/pipeline.js';
+export type { StartChainResult } from '../core/start-chain/pipeline.js';
