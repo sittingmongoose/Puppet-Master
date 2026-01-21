@@ -5656,6 +5656,2466 @@ If FAIL - where stuck + exact error snippets + what remains:
 
 ---
 
+## P1-T22: Implementation Wiring Audit
+
+### Title
+Detect implemented-but-not-wired code (dead registrations, orphan exports, unused infrastructure)
+
+### Goal
+Automatically detect code that was implemented but never connected to the system, preventing the "1000+ lines of unused git infrastructure" pattern.
+
+### Depends on
+- P0-T01 (Schema Alignment)
+- P0-T11 (Git Infrastructure Wiring)
+
+### Parallelizable with
+- P1-T23, P1-T24, P1-T25
+
+### Recommended model quality
+HQ required — complex static analysis
+
+### Read first
+- `src/core/container.ts` (dependency registration)
+- `src/core/orchestrator.ts` (dependency usage)
+- `src/git/branch-strategy.ts` (example of unused code)
+- `src/git/commit-formatter.ts` (example of unused code)
+- `src/git/pr-manager.ts` (example of unused code)
+- `ClaudesMajorImprovements.md` "Git Infrastructure Exists But Is Almost Completely Unused"
+
+### Files to create/modify
+- `src/audits/wiring-audit.ts` (new)
+- `src/audits/types.ts` (new)
+- `scripts/run-wiring-audit.ts` (new)
+- `src/doctor/checks/wiring-check.ts` (new)
+
+### Implementation notes
+
+1. **The Problem**:
+   RWM had comprehensive git infrastructure (555+ lines in GitManager, 322 lines in BranchStrategy, 122 lines in CommitFormatter, 238 lines in PRManager) that was **never instantiated or called** by the orchestrator. This represents a major "implementation completeness" failure that PRD verification alone cannot catch.
+
+2. **Types of Wiring Failures to Detect**:
+
+   ```typescript
+   interface WiringIssue {
+     type: 'orphan_export' | 'unused_registration' | 'missing_injection' |
+           'dead_import' | 'unresolved_dependency' | 'event_mismatch';
+     severity: 'error' | 'warning';
+     location: {
+       file: string;
+       line?: number;
+       symbol: string;
+     };
+     description: string;
+     suggestion: string;
+   }
+   ```
+
+3. **Audit Checks to Implement**:
+
+   **Check 1: Orphan Exports**
+   - Find all exported functions/classes
+   - Check if they're imported anywhere (excluding index.ts re-exports)
+   - Flag exports with zero imports (excluding entry points)
+
+   **Check 2: Unused Container Registrations**
+   - Parse container.ts for all `container.register('key', ...)` calls
+   - Search codebase for `container.get('key')` or `deps.key` usage
+   - Flag registrations that are never resolved
+
+   **Check 3: Missing Injections**
+   - Find classes with constructor dependencies
+   - Check if those dependencies are:
+     a) Registered in container
+     b) Actually passed during construction
+   - Flag mismatches
+
+   **Check 4: Dead Imports**
+   - Find imports that are never used in the file
+   - Flag as warnings (may indicate incomplete implementation)
+
+   **Check 5: Unresolved Interface Dependencies**
+   - Find classes that implement interfaces
+   - Check if the interface methods are called anywhere
+   - Flag interfaces with no callers
+
+4. **Implementation Approach**:
+
+   ```typescript
+   // src/audits/wiring-audit.ts
+   import * as ts from 'typescript';
+   import { glob } from 'glob';
+
+   export interface WiringAuditConfig {
+     rootDir: string;
+     include: string[];
+     exclude: string[];
+     entryPoints: string[];  // Files allowed to have unused exports
+     containerFile: string;  // Path to container.ts
+   }
+
+   export interface WiringAuditResult {
+     issues: WiringIssue[];
+     summary: {
+       totalExports: number;
+       orphanExports: number;
+       totalRegistrations: number;
+       unusedRegistrations: number;
+       totalInjections: number;
+       missingInjections: number;
+     };
+     passed: boolean;
+   }
+
+   export class WiringAuditor {
+     private program: ts.Program;
+     private checker: ts.TypeChecker;
+
+     constructor(private config: WiringAuditConfig) {
+       // Initialize TypeScript compiler
+       const configPath = ts.findConfigFile(config.rootDir, ts.sys.fileExists, 'tsconfig.json');
+       const configFile = ts.readConfigFile(configPath!, ts.sys.readFile);
+       const parsedConfig = ts.parseJsonConfigFileContent(configFile.config, ts.sys, config.rootDir);
+       this.program = ts.createProgram(parsedConfig.fileNames, parsedConfig.options);
+       this.checker = this.program.getTypeChecker();
+     }
+
+     async audit(): Promise<WiringAuditResult> {
+       const issues: WiringIssue[] = [];
+
+       // Run all checks
+       issues.push(...this.checkOrphanExports());
+       issues.push(...this.checkUnusedRegistrations());
+       issues.push(...this.checkMissingInjections());
+       issues.push(...this.checkDeadImports());
+
+       return {
+         issues,
+         summary: this.computeSummary(issues),
+         passed: issues.filter(i => i.severity === 'error').length === 0,
+       };
+     }
+
+     private checkOrphanExports(): WiringIssue[] {
+       const issues: WiringIssue[] = [];
+       const exports = this.findAllExports();
+       const imports = this.findAllImports();
+
+       for (const exp of exports) {
+         // Skip entry points
+         if (this.config.entryPoints.some(ep => exp.file.includes(ep))) continue;
+
+         // Skip index.ts re-exports
+         if (exp.file.endsWith('index.ts')) continue;
+
+         // Check if imported anywhere
+         const isImported = imports.some(imp =>
+           imp.symbol === exp.symbol && imp.fromFile !== exp.file
+         );
+
+         if (!isImported) {
+           issues.push({
+             type: 'orphan_export',
+             severity: 'warning',
+             location: { file: exp.file, line: exp.line, symbol: exp.symbol },
+             description: `Exported '${exp.symbol}' is never imported anywhere`,
+             suggestion: `Either import and use '${exp.symbol}' or remove the export`,
+           });
+         }
+       }
+
+       return issues;
+     }
+
+     private checkUnusedRegistrations(): WiringIssue[] {
+       const issues: WiringIssue[] = [];
+       const registrations = this.parseContainerRegistrations();
+       const resolutions = this.findContainerResolutions();
+
+       for (const reg of registrations) {
+         if (!resolutions.includes(reg.key)) {
+           issues.push({
+             type: 'unused_registration',
+             severity: 'error',
+             location: { file: this.config.containerFile, line: reg.line, symbol: reg.key },
+             description: `Container registration '${reg.key}' is never resolved`,
+             suggestion: `Either use 'container.get("${reg.key}")' or 'deps.${reg.key}' somewhere, or remove the registration`,
+           });
+         }
+       }
+
+       return issues;
+     }
+
+     private checkMissingInjections(): WiringIssue[] {
+       const issues: WiringIssue[] = [];
+       // Implementation: Parse constructor parameters, check if they're provided
+       // This requires analyzing call sites of class constructors
+       return issues;
+     }
+
+     private checkDeadImports(): WiringIssue[] {
+       const issues: WiringIssue[] = [];
+       // Implementation: Find imports not used in file
+       return issues;
+     }
+
+     // ... helper methods for parsing exports, imports, registrations
+   }
+   ```
+
+5. **RWM-Specific Audit Checks** (beyond generic wiring):
+
+   ```typescript
+   // src/audits/rwm-specific-audit.ts
+   export async function auditRWMWiring(projectRoot: string): Promise<WiringAuditResult> {
+     const issues: WiringIssue[] = [];
+
+     // Check 1: Git infrastructure wired into orchestrator
+     const orchestratorSource = await fs.readFile(
+       path.join(projectRoot, 'src/core/orchestrator.ts'), 'utf8'
+     );
+
+     const gitChecks = [
+       { symbol: 'branchStrategy', pattern: /branchStrategy/g },
+       { symbol: 'commitFormatter', pattern: /commitFormatter/g },
+       { symbol: 'prManager', pattern: /prManager/g },
+     ];
+
+     for (const check of gitChecks) {
+       if (!check.pattern.test(orchestratorSource)) {
+         issues.push({
+           type: 'missing_injection',
+           severity: 'error',
+           location: { file: 'src/core/orchestrator.ts', symbol: check.symbol },
+           description: `Git infrastructure '${check.symbol}' not injected into Orchestrator`,
+           suggestion: `Add '${check.symbol}' to Orchestrator dependencies and use it`,
+         });
+       }
+     }
+
+     // Check 2: All verifiers registered for all criterion types
+     const containerSource = await fs.readFile(
+       path.join(projectRoot, 'src/core/container.ts'), 'utf8'
+     );
+     const tiersSource = await fs.readFile(
+       path.join(projectRoot, 'src/types/tiers.ts'), 'utf8'
+     );
+
+     // Extract criterion types from tiers.ts
+     const criterionTypeMatch = tiersSource.match(/type:\s*['"]([^'"]+)['"]/g);
+     const criterionTypes = criterionTypeMatch?.map(m => m.match(/['"]([^'"]+)['"]/)?.[1]).filter(Boolean) || [];
+
+     for (const type of criterionTypes) {
+       const verifierPattern = new RegExp(`${type}.*[Vv]erifier|[Vv]erifier.*${type}`, 'i');
+       if (!verifierPattern.test(containerSource)) {
+         issues.push({
+           type: 'unresolved_dependency',
+           severity: 'error',
+           location: { file: 'src/core/container.ts', symbol: `${type}Verifier` },
+           description: `Criterion type '${type}' has no registered verifier`,
+           suggestion: `Register a verifier for '${type}' criterion type in container.ts`,
+         });
+       }
+     }
+
+     // Check 3: Event names match between backend and frontend
+     const eventBusSource = await fs.readFile(
+       path.join(projectRoot, 'src/logging/event-bus.ts'), 'utf8'
+     );
+     const dashboardSource = await fs.readFile(
+       path.join(projectRoot, 'src/gui/public/js/dashboard.js'), 'utf8'
+     );
+
+     // Extract emitted events
+     const emitPattern = /emit\(['"]([^'"]+)['"]/g;
+     const emittedEvents: string[] = [];
+     let match;
+     while ((match = emitPattern.exec(eventBusSource)) !== null) {
+       emittedEvents.push(match[1]);
+     }
+
+     // Extract listened events
+     const onPattern = /on\(['"]([^'"]+)['"]/g;
+     const listenedEvents: string[] = [];
+     while ((match = onPattern.exec(dashboardSource)) !== null) {
+       listenedEvents.push(match[1]);
+     }
+
+     // Find mismatches
+     for (const emitted of emittedEvents) {
+       if (!listenedEvents.includes(emitted)) {
+         // Check for common transformations (state_changed -> state_change)
+         const possibleVariants = [
+           emitted,
+           emitted.replace(/_changed$/, '_change'),
+           emitted.replace(/_started$/, '_start'),
+           emitted.replace(/_completed$/, '_complete'),
+           emitted.replace(/_chunk$/, ''),
+         ];
+
+         if (!possibleVariants.some(v => listenedEvents.includes(v))) {
+           issues.push({
+             type: 'event_mismatch',
+             severity: 'warning',
+             location: { file: 'src/logging/event-bus.ts', symbol: emitted },
+             description: `Backend emits '${emitted}' but frontend doesn't listen for it`,
+             suggestion: `Add listener for '${emitted}' in dashboard.js or add event translation`,
+           });
+         }
+       }
+     }
+
+     return {
+       issues,
+       summary: computeSummary(issues),
+       passed: issues.filter(i => i.severity === 'error').length === 0,
+     };
+   }
+   ```
+
+6. **Integration with Doctor**:
+
+   ```typescript
+   // src/doctor/checks/wiring-check.ts
+   import { WiringAuditor } from '../../audits/wiring-audit.js';
+   import { auditRWMWiring } from '../../audits/rwm-specific-audit.js';
+
+   export async function checkWiring(projectRoot: string): Promise<DoctorCheckResult> {
+     const genericAudit = await new WiringAuditor({
+       rootDir: projectRoot,
+       include: ['src/**/*.ts'],
+       exclude: ['**/*.test.ts', '**/*.spec.ts'],
+       entryPoints: ['src/cli/index.ts', 'src/gui/server.ts'],
+       containerFile: 'src/core/container.ts',
+     }).audit();
+
+     const rwmAudit = await auditRWMWiring(projectRoot);
+
+     const allIssues = [...genericAudit.issues, ...rwmAudit.issues];
+     const errors = allIssues.filter(i => i.severity === 'error');
+     const warnings = allIssues.filter(i => i.severity === 'warning');
+
+     return {
+       name: 'Implementation Wiring',
+       status: errors.length === 0 ? (warnings.length === 0 ? 'pass' : 'warn') : 'fail',
+       message: errors.length === 0
+         ? `${warnings.length} warnings found`
+         : `${errors.length} wiring errors found`,
+       details: allIssues.map(i => `[${i.severity.toUpperCase()}] ${i.location.file}: ${i.description}`),
+       fix: errors.length > 0 ? 'Run `puppet-master audit --fix` to see suggestions' : undefined,
+     };
+   }
+   ```
+
+7. **CLI Command**:
+
+   ```typescript
+   // Add to src/cli/commands/audit.ts
+   program
+     .command('audit')
+     .description('Run implementation wiring audit')
+     .option('--fix', 'Show fix suggestions')
+     .option('--json', 'Output as JSON')
+     .action(async (options) => {
+       const result = await runWiringAudit(process.cwd());
+
+       if (options.json) {
+         console.log(JSON.stringify(result, null, 2));
+       } else {
+         console.log(`\nWiring Audit Results:\n`);
+         console.log(`  Exports: ${result.summary.totalExports} (${result.summary.orphanExports} orphaned)`);
+         console.log(`  Registrations: ${result.summary.totalRegistrations} (${result.summary.unusedRegistrations} unused)`);
+         console.log(`\nIssues:`);
+         for (const issue of result.issues) {
+           const icon = issue.severity === 'error' ? '❌' : '⚠️';
+           console.log(`  ${icon} ${issue.location.file}:${issue.location.line ?? '?'}`);
+           console.log(`     ${issue.description}`);
+           if (options.fix) {
+             console.log(`     💡 ${issue.suggestion}`);
+           }
+         }
+       }
+
+       process.exit(result.passed ? 0 : 1);
+     });
+   ```
+
+### Acceptance criteria
+- [ ] WiringAuditor detects orphan exports
+- [ ] WiringAuditor detects unused container registrations
+- [ ] WiringAuditor detects missing injections
+- [ ] RWM-specific audit detects git infrastructure wiring gaps
+- [ ] RWM-specific audit detects event name mismatches
+- [ ] RWM-specific audit detects verifier registration gaps
+- [ ] Doctor includes wiring check
+- [ ] `puppet-master audit` CLI command works
+- [ ] Audit results saved to `.puppet-master/audits/wiring.json`
+- [ ] `npm run typecheck` passes
+- [ ] `npm test -- src/audits` passes
+
+### Tests to run
+```bash
+npm run typecheck
+npm test -- src/audits
+npm test -- src/doctor/checks/wiring
+```
+
+### Evidence to record
+- Audit report JSON
+- Doctor output showing wiring check
+
+### Cursor Agent Prompt
+```
+Implement Implementation Wiring Audit for RWM Puppet Master.
+
+CRITICAL CONTEXT:
+RWM had 1000+ lines of git infrastructure that was NEVER WIRED into the orchestrator.
+This represents a "implementation completeness" failure that PRD verification cannot catch.
+
+The audit must detect:
+1. Orphan exports (exported but never imported)
+2. Unused container registrations (registered but never resolved)
+3. Missing injections (dependency expected but not provided)
+4. Event name mismatches (backend emits X, frontend listens for Y)
+5. Verifier registration gaps (criterion type exists but no verifier)
+
+YOUR TASK (P1-T22):
+1. Create src/audits/types.ts with WiringIssue interface and related types
+
+2. Create src/audits/wiring-audit.ts:
+   - WiringAuditor class using TypeScript compiler API
+   - checkOrphanExports(): find exports with no imports
+   - checkUnusedRegistrations(): parse container.ts, find unresolved keys
+   - checkMissingInjections(): analyze constructor params vs actual usage
+   - checkDeadImports(): find imports not used in file
+
+3. Create src/audits/rwm-specific-audit.ts:
+   - auditRWMWiring(): RWM-specific checks
+   - Check git infrastructure wired into orchestrator
+   - Check all criterion types have verifiers
+   - Check event names match between backend/frontend
+
+4. Create src/doctor/checks/wiring-check.ts:
+   - Integrate audit into Doctor
+
+5. Create scripts/run-wiring-audit.ts:
+   - CLI runner for audit
+   - JSON and human-readable output
+   - --fix flag for suggestions
+
+6. Add tests with fixtures representing known wiring failures
+
+CONSTRAINTS:
+- Use TypeScript compiler API for accurate parsing
+- Do NOT modify existing code, only add audit infrastructure
+- Make audit deterministic (no AI calls)
+- Performance: audit should complete in < 30 seconds
+
+After implementation, run:
+- npm run typecheck
+- npm test -- src/audits
+- npm test -- src/doctor
+
+When complete, update this task's Status Log with PASS/FAIL, commands run + results, files changed.
+```
+
+### Task status log
+```
+Status: PENDING
+Date:
+Summary of changes:
+Files changed:
+Commands run + results:
+If FAIL - where stuck + exact error snippets + what remains:
+```
+
+---
+
+## P1-T23: Cross-File Contract Enforcement
+
+### Title
+Enforce single source of truth for events, types, and schemas across files
+
+### Goal
+Prevent drift between related definitions in different files (events, types, schemas) by defining contracts and validating consistency.
+
+### Depends on
+- P0-T01 (Schema Alignment)
+- P0-T05 (WebSocket Events)
+
+### Parallelizable with
+- P1-T22, P1-T24, P1-T25
+
+### Recommended model quality
+HQ required — cross-file analysis
+
+### Read first
+- `src/logging/event-bus.ts` (backend events)
+- `src/gui/public/js/dashboard.js` (frontend listeners)
+- `src/types/tiers.ts` (criterion types)
+- `src/start-chain/prompts/prd-prompt.ts` (prompt schema)
+- `src/core/container.ts` (verifier registry)
+- `STATE_FILES.md` (canonical spec)
+
+### Files to create/modify
+- `src/contracts/events.contract.ts` (new)
+- `src/contracts/criterion-types.contract.ts` (new)
+- `src/contracts/prd-schema.contract.ts` (new)
+- `src/audits/contract-validator.ts` (new)
+- `scripts/validate-contracts.ts` (new)
+
+### Implementation notes
+
+1. **The Problem**:
+   Multiple files define related concepts but can drift:
+   - Backend emits `state_changed`, frontend listens for `state_change`
+   - `tiers.ts` allows `manual`, but no ManualVerifier exists
+   - `STATE_FILES.md` says `TEST:`, but runtime uses `command`
+   - PRD prompt asks for types that runtime rejects
+
+2. **Contract Definition Pattern**:
+
+   ```typescript
+   // src/contracts/events.contract.ts
+   /**
+    * SINGLE SOURCE OF TRUTH for event names.
+    * Backend and frontend MUST use these exact names.
+    * Validated by contract-validator.ts
+    */
+   export const EVENT_CONTRACT = {
+     orchestrator: {
+       stateChanged: 'state_changed',
+       iterationStarted: 'iteration_started',
+       iterationCompleted: 'iteration_completed',
+       outputChunk: 'output_chunk',
+       gateStarted: 'gate_started',
+       gateCompleted: 'gate_completed',
+       error: 'orchestrator_error',
+     },
+     tier: {
+       statusChanged: 'tier_status_changed',
+       progressUpdated: 'tier_progress_updated',
+     },
+     startChain: {
+       stepStarted: 'start_chain_step_started',
+       stepCompleted: 'start_chain_step_completed',
+       complete: 'start_chain_complete',
+     },
+   } as const;
+
+   // Type helper for exhaustive checking
+   export type EventName = typeof EVENT_CONTRACT[keyof typeof EVENT_CONTRACT][keyof typeof EVENT_CONTRACT[keyof typeof EVENT_CONTRACT]];
+
+   // Frontend mapping (if names differ, document it here)
+   export const FRONTEND_EVENT_MAP: Record<EventName, string> = {
+     'state_changed': 'state_change',       // Frontend uses different name
+     'iteration_started': 'iteration_start',
+     'iteration_completed': 'iteration_complete',
+     'output_chunk': 'output',
+     // ... etc
+   };
+   ```
+
+   ```typescript
+   // src/contracts/criterion-types.contract.ts
+   /**
+    * SINGLE SOURCE OF TRUTH for criterion types.
+    * - src/types/tiers.ts MUST match this
+    * - src/core/container.ts MUST register verifiers for all
+    * - src/start-chain/prompts/prd-prompt.ts MUST request only these
+    */
+   export const CRITERION_TYPE_CONTRACT = {
+     // Type name -> Verifier class name
+     command: 'CommandVerifier',
+     regex: 'RegexVerifier',
+     file_exists: 'FileExistsVerifier',
+     browser_verify: 'BrowserVerifier',
+     ai: 'AIVerifier',
+     // NOTE: 'manual' is INTENTIONALLY EXCLUDED - no manual verification allowed
+   } as const;
+
+   export type CriterionType = keyof typeof CRITERION_TYPE_CONTRACT;
+
+   // Mapping from spec names to runtime names (for prompt generation)
+   export const SPEC_TO_RUNTIME_MAP: Record<string, CriterionType> = {
+     'TEST': 'command',
+     'CLI_VERIFY': 'command',
+     'FILE_VERIFY': 'file_exists',
+     'REGEX_VERIFY': 'regex',
+     'BROWSER_VERIFY': 'browser_verify',
+     'AI_VERIFY': 'ai',
+     'PERF_VERIFY': 'command',  // Performance checks run as commands
+   };
+   ```
+
+3. **Contract Validator**:
+
+   ```typescript
+   // src/audits/contract-validator.ts
+   import { EVENT_CONTRACT, FRONTEND_EVENT_MAP } from '../contracts/events.contract.js';
+   import { CRITERION_TYPE_CONTRACT } from '../contracts/criterion-types.contract.js';
+
+   export interface ContractViolation {
+     contract: string;
+     file: string;
+     line?: number;
+     expected: string;
+     actual: string;
+     description: string;
+   }
+
+   export class ContractValidator {
+     async validateAll(projectRoot: string): Promise<ContractViolation[]> {
+       const violations: ContractViolation[] = [];
+
+       violations.push(...await this.validateEventContract(projectRoot));
+       violations.push(...await this.validateCriterionTypeContract(projectRoot));
+       violations.push(...await this.validatePrdSchemaContract(projectRoot));
+
+       return violations;
+     }
+
+     async validateEventContract(projectRoot: string): Promise<ContractViolation[]> {
+       const violations: ContractViolation[] = [];
+
+       // Check backend uses contract event names
+       const eventBusSource = await fs.readFile(
+         path.join(projectRoot, 'src/logging/event-bus.ts'), 'utf8'
+       );
+
+       const allEventNames = Object.values(EVENT_CONTRACT).flatMap(
+         category => Object.values(category)
+       );
+
+       // Find all emit() calls
+       const emitPattern = /emit\(['"]([^'"]+)['"]/g;
+       let match;
+       while ((match = emitPattern.exec(eventBusSource)) !== null) {
+         const emittedName = match[1];
+         if (!allEventNames.includes(emittedName as any)) {
+           violations.push({
+             contract: 'EVENT_CONTRACT',
+             file: 'src/logging/event-bus.ts',
+             expected: `One of: ${allEventNames.join(', ')}`,
+             actual: emittedName,
+             description: `Event '${emittedName}' not in EVENT_CONTRACT`,
+           });
+         }
+       }
+
+       // Check frontend uses mapped names
+       const dashboardSource = await fs.readFile(
+         path.join(projectRoot, 'src/gui/public/js/dashboard.js'), 'utf8'
+       );
+
+       const frontendEventNames = Object.values(FRONTEND_EVENT_MAP);
+       const onPattern = /on\(['"]([^'"]+)['"]/g;
+       while ((match = onPattern.exec(dashboardSource)) !== null) {
+         const listenedName = match[1];
+         if (!frontendEventNames.includes(listenedName)) {
+           violations.push({
+             contract: 'EVENT_CONTRACT (frontend)',
+             file: 'src/gui/public/js/dashboard.js',
+             expected: `One of: ${frontendEventNames.join(', ')}`,
+             actual: listenedName,
+             description: `Frontend listens for '${listenedName}' not in FRONTEND_EVENT_MAP`,
+           });
+         }
+       }
+
+       return violations;
+     }
+
+     async validateCriterionTypeContract(projectRoot: string): Promise<ContractViolation[]> {
+       const violations: ContractViolation[] = [];
+
+       // Check tiers.ts matches contract
+       const tiersSource = await fs.readFile(
+         path.join(projectRoot, 'src/types/tiers.ts'), 'utf8'
+       );
+
+       const contractTypes = Object.keys(CRITERION_TYPE_CONTRACT);
+
+       // Extract type union from tiers.ts
+       const typeUnionMatch = tiersSource.match(/type:\s*['"]?(\w+(?:\s*\|\s*['"]?\w+['"]?)*)['"]?/);
+       if (typeUnionMatch) {
+         const declaredTypes = typeUnionMatch[1].split('|').map(t => t.trim().replace(/['"]/g, ''));
+
+         // Check for types in code but not in contract
+         for (const declared of declaredTypes) {
+           if (!contractTypes.includes(declared)) {
+             violations.push({
+               contract: 'CRITERION_TYPE_CONTRACT',
+               file: 'src/types/tiers.ts',
+               expected: contractTypes.join(' | '),
+               actual: declared,
+               description: `Type '${declared}' in tiers.ts not in CRITERION_TYPE_CONTRACT`,
+             });
+           }
+         }
+
+         // Check for types in contract but not in code
+         for (const contractType of contractTypes) {
+           if (!declaredTypes.includes(contractType)) {
+             violations.push({
+               contract: 'CRITERION_TYPE_CONTRACT',
+               file: 'src/types/tiers.ts',
+               expected: contractType,
+               actual: declaredTypes.join(' | '),
+               description: `Type '${contractType}' in CRITERION_TYPE_CONTRACT not in tiers.ts`,
+             });
+           }
+         }
+       }
+
+       // Check container.ts registers all verifiers
+       const containerSource = await fs.readFile(
+         path.join(projectRoot, 'src/core/container.ts'), 'utf8'
+       );
+
+       for (const [type, verifierName] of Object.entries(CRITERION_TYPE_CONTRACT)) {
+         if (!containerSource.includes(verifierName)) {
+           violations.push({
+             contract: 'CRITERION_TYPE_CONTRACT',
+             file: 'src/core/container.ts',
+             expected: `Registration of ${verifierName}`,
+             actual: 'Not found',
+             description: `Verifier '${verifierName}' for type '${type}' not registered`,
+           });
+         }
+       }
+
+       return violations;
+     }
+
+     async validatePrdSchemaContract(projectRoot: string): Promise<ContractViolation[]> {
+       const violations: ContractViolation[] = [];
+
+       // Check prd-prompt.ts uses contract types
+       const promptSource = await fs.readFile(
+         path.join(projectRoot, 'src/start-chain/prompts/prd-prompt.ts'), 'utf8'
+       );
+
+       const contractTypes = Object.keys(CRITERION_TYPE_CONTRACT);
+
+       // Find type references in prompt
+       const typeRefPattern = /type['"]?\s*:\s*['"](\w+)['"]/g;
+       let match;
+       while ((match = typeRefPattern.exec(promptSource)) !== null) {
+         const usedType = match[1];
+         if (!contractTypes.includes(usedType) && !Object.keys(SPEC_TO_RUNTIME_MAP).includes(usedType)) {
+           violations.push({
+             contract: 'CRITERION_TYPE_CONTRACT',
+             file: 'src/start-chain/prompts/prd-prompt.ts',
+             expected: contractTypes.join(' | '),
+             actual: usedType,
+             description: `Prompt uses type '${usedType}' not in contract`,
+           });
+         }
+       }
+
+       return violations;
+     }
+   }
+   ```
+
+4. **CI Integration**:
+
+   ```typescript
+   // scripts/validate-contracts.ts
+   import { ContractValidator } from '../src/audits/contract-validator.js';
+
+   async function main() {
+     const validator = new ContractValidator();
+     const violations = await validator.validateAll(process.cwd());
+
+     if (violations.length === 0) {
+       console.log('✅ All contracts valid');
+       process.exit(0);
+     } else {
+       console.log(`❌ ${violations.length} contract violation(s):\n`);
+       for (const v of violations) {
+         console.log(`  [${v.contract}] ${v.file}`);
+         console.log(`    Expected: ${v.expected}`);
+         console.log(`    Actual: ${v.actual}`);
+         console.log(`    ${v.description}\n`);
+       }
+       process.exit(1);
+     }
+   }
+
+   main();
+   ```
+
+   ```json
+   // package.json scripts
+   {
+     "scripts": {
+       "validate:contracts": "tsx scripts/validate-contracts.ts",
+       "pretest": "npm run validate:contracts"
+     }
+   }
+   ```
+
+### Acceptance criteria
+- [ ] EVENT_CONTRACT defines all orchestrator/tier/startChain events
+- [ ] CRITERION_TYPE_CONTRACT defines all criterion types with verifier mappings
+- [ ] ContractValidator.validateEventContract() catches event name drift
+- [ ] ContractValidator.validateCriterionTypeContract() catches type/verifier drift
+- [ ] ContractValidator.validatePrdSchemaContract() catches prompt/runtime drift
+- [ ] `npm run validate:contracts` runs as part of test suite
+- [ ] CI fails if contracts violated
+- [ ] `npm run typecheck` passes
+- [ ] `npm test -- src/audits/contract` passes
+
+### Tests to run
+```bash
+npm run typecheck
+npm run validate:contracts
+npm test -- src/audits/contract
+```
+
+### Evidence to record
+- Contract validation output (clean)
+- Example violation detection
+
+### Cursor Agent Prompt
+```
+Implement Cross-File Contract Enforcement for RWM Puppet Master.
+
+CRITICAL CONTEXT:
+The project had drift between related definitions:
+- Backend emits 'state_changed', frontend listens for 'state_change'
+- tiers.ts allows 'manual' but no ManualVerifier exists
+- Prompts ask for types that runtime rejects
+
+SOLUTION: Define contracts as single source of truth, validate consistency.
+
+YOUR TASK (P1-T23):
+1. Create src/contracts/events.contract.ts:
+   - EVENT_CONTRACT with all event names
+   - FRONTEND_EVENT_MAP for any name translations
+   - Type helpers for exhaustive checking
+
+2. Create src/contracts/criterion-types.contract.ts:
+   - CRITERION_TYPE_CONTRACT mapping types to verifiers
+   - SPEC_TO_RUNTIME_MAP for spec name translation
+   - NO 'manual' type (intentionally excluded)
+
+3. Create src/audits/contract-validator.ts:
+   - ContractValidator class
+   - validateEventContract(): check backend emits, frontend listens
+   - validateCriterionTypeContract(): check types match verifiers
+   - validatePrdSchemaContract(): check prompt uses valid types
+
+4. Create scripts/validate-contracts.ts:
+   - CLI runner
+   - Exit 1 on violations (for CI)
+
+5. Add to package.json:
+   - "validate:contracts" script
+   - Add to pretest hook
+
+6. Add tests with intentional violations
+
+CONSTRAINTS:
+- Contracts are the SOURCE OF TRUTH
+- Validation is deterministic (no AI)
+- Must be fast (< 5 seconds)
+
+After implementation, run:
+- npm run typecheck
+- npm run validate:contracts
+- npm test
+
+When complete, update this task's Status Log with PASS/FAIL, commands run + results, files changed.
+```
+
+### Task status log
+```
+Status: PENDING
+Date:
+Summary of changes:
+Files changed:
+Commands run + results:
+If FAIL - where stuck + exact error snippets + what remains:
+```
+
+---
+
+## P1-T24: Platform Compatibility Validator
+
+### Title
+Detect Windows/Unix compatibility issues before runtime
+
+### Goal
+Catch OS-specific code patterns (hardcoded paths, Unix-only commands, shell syntax) that will fail on Windows.
+
+### Depends on
+- P0-T04 (portable aggregate checks)
+
+### Parallelizable with
+- P1-T22, P1-T23, P1-T25
+
+### Recommended model quality
+Medium OK — pattern matching
+
+### Read first
+- `src/verification/verification-integration.ts` (line 185: `target: 'true'`)
+- `src/doctor/installation-manager.ts` (Unix-only install commands)
+- `CodexsMajorImprovements.md` P0.5 (Cursor install is Unix-only)
+
+### Files to create/modify
+- `src/audits/platform-compatibility.ts` (new)
+- `scripts/check-platform-compatibility.ts` (new)
+- `src/doctor/checks/platform-compatibility-check.ts` (new)
+
+### Implementation notes
+
+1. **The Problem**:
+   Multiple places use Unix-only patterns:
+   - `target: 'true'` / `'false'` as shell commands (don't exist on Windows)
+   - `curl | bash` installer scripts
+   - Hardcoded `/tmp/` paths
+   - `&&` and `||` in non-shell contexts
+   - `which` command (use `where` on Windows)
+
+2. **Patterns to Detect**:
+
+   ```typescript
+   // src/audits/platform-compatibility.ts
+
+   export interface PlatformIssue {
+     type: 'unix_only_command' | 'hardcoded_path' | 'shell_syntax' | 'path_separator';
+     severity: 'error' | 'warning';
+     file: string;
+     line: number;
+     code: string;
+     description: string;
+     suggestion: string;
+   }
+
+   export const UNIX_ONLY_COMMANDS = [
+     'true',           // Use process.exit(0) or Boolean check
+     'false',          // Use process.exit(1) or Boolean check
+     'which',          // Use 'where' on Windows or cross-platform alternative
+     'curl',           // Use fetch() or cross-platform http client
+     'wget',           // Use fetch() or cross-platform http client
+     'chmod',          // Use fs.chmod with mode conversion
+     'chown',          // No Windows equivalent
+     'ln',             // Use fs.symlink
+     'grep',           // Use Node regex or cross-platform grep
+     'sed',            // Use Node string manipulation
+     'awk',            // Use Node string manipulation
+     'xargs',          // Use Node array methods
+     'tee',            // Use Node streams
+     'nohup',          // Use detached spawn
+     'kill',           // Use process.kill with PID
+   ];
+
+   export const UNIX_ONLY_PATHS = [
+     '/tmp/',
+     '/var/',
+     '/usr/',
+     '/etc/',
+     '/home/',
+     '/opt/',
+     '~/',
+   ];
+
+   export const SHELL_SYNTAX_PATTERNS = [
+     /\s&&\s/,         // Use Promise.all or sequential await
+     /\s\|\|\s/,       // Use try/catch
+     /\s;\s/,          // Use sequential statements
+     /`[^`]+`/,        // Use $() or avoid shell substitution
+     /\$\([^)]+\)/,    // Shell substitution - may not work
+     /\|\s*bash/,      // Pipe to bash - Unix only
+     /\|\s*sh/,        // Pipe to sh - Unix only
+   ];
+
+   export class PlatformCompatibilityChecker {
+     async check(projectRoot: string): Promise<PlatformIssue[]> {
+       const issues: PlatformIssue[] = [];
+
+       const files = await glob('src/**/*.ts', { cwd: projectRoot });
+
+       for (const file of files) {
+         const content = await fs.readFile(path.join(projectRoot, file), 'utf8');
+         const lines = content.split('\n');
+
+         for (let i = 0; i < lines.length; i++) {
+           const line = lines[i];
+           const lineNum = i + 1;
+
+           // Check for Unix-only commands
+           for (const cmd of UNIX_ONLY_COMMANDS) {
+             // Match command in quotes or as spawn argument
+             const patterns = [
+               new RegExp(`['"\`]${cmd}['"\`]`, 'g'),
+               new RegExp(`spawn\\(['"]${cmd}`, 'g'),
+               new RegExp(`exec\\(['"]${cmd}`, 'g'),
+               new RegExp(`command:\\s*['"]${cmd}`, 'g'),
+               new RegExp(`target:\\s*['"]${cmd}`, 'g'),
+             ];
+
+             for (const pattern of patterns) {
+               if (pattern.test(line)) {
+                 issues.push({
+                   type: 'unix_only_command',
+                   severity: 'error',
+                   file,
+                   line: lineNum,
+                   code: line.trim(),
+                   description: `Unix-only command '${cmd}' will fail on Windows`,
+                   suggestion: this.getSuggestionForCommand(cmd),
+                 });
+               }
+             }
+           }
+
+           // Check for Unix-only paths
+           for (const unixPath of UNIX_ONLY_PATHS) {
+             if (line.includes(unixPath)) {
+               issues.push({
+                 type: 'hardcoded_path',
+                 severity: 'error',
+                 file,
+                 line: lineNum,
+                 code: line.trim(),
+                 description: `Hardcoded Unix path '${unixPath}' won't work on Windows`,
+                 suggestion: `Use os.tmpdir(), os.homedir(), or path.join() with relative paths`,
+               });
+             }
+           }
+
+           // Check for shell syntax in non-shell contexts
+           // (Only flag if it's in a string that looks like a command)
+           if (line.includes('spawn') || line.includes('exec') || line.includes('target')) {
+             for (const pattern of SHELL_SYNTAX_PATTERNS) {
+               if (pattern.test(line)) {
+                 issues.push({
+                   type: 'shell_syntax',
+                   severity: 'warning',
+                   file,
+                   line: lineNum,
+                   code: line.trim(),
+                   description: `Shell syntax may not work cross-platform`,
+                   suggestion: `Use Node.js APIs instead of shell syntax`,
+                 });
+               }
+             }
+           }
+
+           // Check for hardcoded path separators
+           if (line.includes("'/'") || line.includes('"\/"')) {
+             // Check if it's used in path context
+             if (line.includes('path') || line.includes('join') || line.includes('dir')) {
+               issues.push({
+                 type: 'path_separator',
+                 severity: 'warning',
+                 file,
+                 line: lineNum,
+                 code: line.trim(),
+                 description: `Hardcoded '/' separator may fail on Windows`,
+                 suggestion: `Use path.sep or path.join()`,
+               });
+             }
+           }
+         }
+       }
+
+       return issues;
+     }
+
+     private getSuggestionForCommand(cmd: string): string {
+       const suggestions: Record<string, string> = {
+         'true': 'Use process.exit(0) or a function that returns true',
+         'false': 'Use process.exit(1) or a function that returns false',
+         'which': 'Use cross-platform-which package or implement with fs.existsSync + PATH parsing',
+         'curl': 'Use fetch() or node-fetch',
+         'wget': 'Use fetch() or node-fetch',
+         'chmod': 'Use fs.chmod() with numeric mode',
+         'grep': 'Use Node.js regex matching',
+         'sed': 'Use String.replace() or Node.js streams',
+       };
+       return suggestions[cmd] ?? 'Use a cross-platform Node.js alternative';
+     }
+   }
+   ```
+
+3. **Integration**:
+
+   ```typescript
+   // scripts/check-platform-compatibility.ts
+   async function main() {
+     const checker = new PlatformCompatibilityChecker();
+     const issues = await checker.check(process.cwd());
+
+     const errors = issues.filter(i => i.severity === 'error');
+     const warnings = issues.filter(i => i.severity === 'warning');
+
+     if (errors.length > 0) {
+       console.log(`❌ ${errors.length} platform compatibility error(s):\n`);
+       for (const e of errors) {
+         console.log(`  ${e.file}:${e.line}`);
+         console.log(`    ${e.description}`);
+         console.log(`    Code: ${e.code}`);
+         console.log(`    Fix: ${e.suggestion}\n`);
+       }
+     }
+
+     if (warnings.length > 0) {
+       console.log(`⚠️ ${warnings.length} platform compatibility warning(s):\n`);
+       for (const w of warnings) {
+         console.log(`  ${w.file}:${w.line}: ${w.description}`);
+       }
+     }
+
+     if (errors.length === 0 && warnings.length === 0) {
+       console.log('✅ No platform compatibility issues found');
+     }
+
+     process.exit(errors.length > 0 ? 1 : 0);
+   }
+   ```
+
+### Acceptance criteria
+- [ ] Detects Unix-only commands (true, false, which, curl, etc.)
+- [ ] Detects hardcoded Unix paths (/tmp/, /usr/, etc.)
+- [ ] Detects shell syntax in non-shell contexts (&&, ||, |)
+- [ ] Detects hardcoded path separators in path contexts
+- [ ] Provides actionable suggestions for each issue
+- [ ] Doctor includes platform compatibility check
+- [ ] CI runs platform compatibility check
+- [ ] `npm run typecheck` passes
+- [ ] `npm test -- src/audits/platform` passes
+
+### Tests to run
+```bash
+npm run typecheck
+npm run check:platform
+npm test -- src/audits/platform
+```
+
+### Evidence to record
+- Platform check output
+
+### Cursor Agent Prompt
+```
+Implement Platform Compatibility Validator for RWM Puppet Master.
+
+CRITICAL CONTEXT:
+The project has Unix-only patterns that fail on Windows:
+- target: 'true' / 'false' as shell commands
+- curl | bash installer scripts
+- Hardcoded /tmp/ paths
+- && and || in command strings
+
+YOUR TASK (P1-T24):
+1. Create src/audits/platform-compatibility.ts:
+   - UNIX_ONLY_COMMANDS list with alternatives
+   - UNIX_ONLY_PATHS list
+   - SHELL_SYNTAX_PATTERNS list
+   - PlatformCompatibilityChecker class
+   - check() method scanning all .ts files
+
+2. Create scripts/check-platform-compatibility.ts:
+   - CLI runner
+   - Errors vs warnings distinction
+   - Exit 1 on errors
+
+3. Create src/doctor/checks/platform-compatibility-check.ts:
+   - Integrate into Doctor
+
+4. Add to package.json:
+   - "check:platform" script
+
+5. Add tests with known incompatible patterns
+
+PATTERNS TO DETECT:
+- Unix commands: true, false, which, curl, wget, chmod, grep, sed, awk
+- Unix paths: /tmp/, /var/, /usr/, /etc/, /home/
+- Shell syntax: &&, ||, ;, backticks, $(), | bash
+- Path separators: hardcoded '/' in path contexts
+
+CONSTRAINTS:
+- Fast (< 10 seconds)
+- No false positives on legitimate uses (e.g., URLs with /)
+- Provide specific suggestions per issue type
+
+After implementation, run:
+- npm run typecheck
+- npm run check:platform
+- npm test -- src/audits
+
+When complete, update this task's Status Log with PASS/FAIL, commands run + results, files changed.
+```
+
+### Task status log
+```
+Status: PENDING
+Date:
+Summary of changes:
+Files changed:
+Commands run + results:
+If FAIL - where stuck + exact error snippets + what remains:
+```
+
+---
+
+## P1-T25: Dead Code and Orphan Export Detection
+
+### Title
+Detect implemented-but-unused code (dead code, orphan exports)
+
+### Goal
+Find code that was implemented but is never called, imported, or used—preventing "phantom implementations" that create false confidence.
+
+### Depends on
+- P1-T22 (Wiring Audit foundation)
+
+### Parallelizable with
+- P1-T22, P1-T23, P1-T24
+
+### Recommended model quality
+HQ required — TypeScript compiler analysis
+
+### Read first
+- `src/git/branch-strategy.ts` (never instantiated)
+- `src/git/commit-formatter.ts` (never called)
+- `src/git/pr-manager.ts` (never instantiated)
+- TypeScript compiler API documentation
+
+### Files to create/modify
+- `src/audits/dead-code-detector.ts` (new)
+- `scripts/detect-dead-code.ts` (new)
+
+### Implementation notes
+
+1. **The Problem**:
+   RWM had 1000+ lines of working git infrastructure that was implemented but never used:
+   - BranchStrategy: 322 lines, never instantiated
+   - CommitFormatter: 122 lines, never called
+   - PRManager: 238 lines, never instantiated
+   - Multiple methods in GitManager never called
+
+2. **Types of Dead Code to Detect**:
+
+   ```typescript
+   export interface DeadCodeIssue {
+     type: 'orphan_export' | 'unused_class' | 'unused_function' |
+           'unused_method' | 'unreachable_code' | 'unused_parameter';
+     severity: 'error' | 'warning';
+     file: string;
+     line: number;
+     symbol: string;
+     description: string;
+     linesOfCode: number;  // Impact assessment
+   }
+   ```
+
+3. **Implementation Using TypeScript Compiler**:
+
+   ```typescript
+   // src/audits/dead-code-detector.ts
+   import * as ts from 'typescript';
+
+   export class DeadCodeDetector {
+     private program: ts.Program;
+     private checker: ts.TypeChecker;
+     private allSymbols: Map<ts.Symbol, ts.Node[]>;  // Symbol -> usage locations
+
+     constructor(private projectRoot: string) {
+       const configPath = ts.findConfigFile(projectRoot, ts.sys.fileExists, 'tsconfig.json');
+       const configFile = ts.readConfigFile(configPath!, ts.sys.readFile);
+       const parsedConfig = ts.parseJsonConfigFileContent(configFile.config, ts.sys, projectRoot);
+       this.program = ts.createProgram(parsedConfig.fileNames, parsedConfig.options);
+       this.checker = this.program.getTypeChecker();
+       this.allSymbols = new Map();
+     }
+
+     async detect(): Promise<DeadCodeIssue[]> {
+       const issues: DeadCodeIssue[] = [];
+
+       // Phase 1: Collect all symbol definitions and usages
+       this.collectSymbolUsages();
+
+       // Phase 2: Find unused exports
+       issues.push(...this.findOrphanExports());
+
+       // Phase 3: Find unused classes
+       issues.push(...this.findUnusedClasses());
+
+       // Phase 4: Find unused functions
+       issues.push(...this.findUnusedFunctions());
+
+       // Phase 5: Find unused class methods
+       issues.push(...this.findUnusedMethods());
+
+       return issues;
+     }
+
+     private collectSymbolUsages(): void {
+       for (const sourceFile of this.program.getSourceFiles()) {
+         if (sourceFile.isDeclarationFile) continue;
+         if (sourceFile.fileName.includes('node_modules')) continue;
+
+         this.visitNode(sourceFile);
+       }
+     }
+
+     private visitNode(node: ts.Node): void {
+       // Track symbol usages
+       if (ts.isIdentifier(node)) {
+         const symbol = this.checker.getSymbolAtLocation(node);
+         if (symbol) {
+           const usages = this.allSymbols.get(symbol) ?? [];
+           usages.push(node);
+           this.allSymbols.set(symbol, usages);
+         }
+       }
+
+       ts.forEachChild(node, child => this.visitNode(child));
+     }
+
+     private findOrphanExports(): DeadCodeIssue[] {
+       const issues: DeadCodeIssue[] = [];
+
+       for (const sourceFile of this.program.getSourceFiles()) {
+         if (sourceFile.isDeclarationFile) continue;
+         if (sourceFile.fileName.includes('node_modules')) continue;
+         if (this.isEntryPoint(sourceFile.fileName)) continue;
+
+         // Get exported symbols
+         const moduleSymbol = this.checker.getSymbolAtLocation(sourceFile);
+         if (!moduleSymbol) continue;
+
+         const exports = this.checker.getExportsOfModule(moduleSymbol);
+
+         for (const exp of exports) {
+           const usages = this.allSymbols.get(exp) ?? [];
+
+           // Filter out the definition itself
+           const externalUsages = usages.filter(u => {
+             const usageFile = u.getSourceFile();
+             return usageFile !== sourceFile;
+           });
+
+           if (externalUsages.length === 0) {
+             const declaration = exp.declarations?.[0];
+             if (declaration) {
+               issues.push({
+                 type: 'orphan_export',
+                 severity: 'warning',
+                 file: sourceFile.fileName,
+                 line: sourceFile.getLineAndCharacterOfPosition(declaration.getStart()).line + 1,
+                 symbol: exp.name,
+                 description: `Exported '${exp.name}' is never imported`,
+                 linesOfCode: this.countLines(declaration),
+               });
+             }
+           }
+         }
+       }
+
+       return issues;
+     }
+
+     private findUnusedClasses(): DeadCodeIssue[] {
+       const issues: DeadCodeIssue[] = [];
+
+       for (const sourceFile of this.program.getSourceFiles()) {
+         if (sourceFile.isDeclarationFile) continue;
+         if (sourceFile.fileName.includes('node_modules')) continue;
+
+         ts.forEachChild(sourceFile, node => {
+           if (ts.isClassDeclaration(node) && node.name) {
+             const symbol = this.checker.getSymbolAtLocation(node.name);
+             if (symbol) {
+               const usages = this.allSymbols.get(symbol) ?? [];
+
+               // Check for: new ClassName(), extends ClassName, implements ClassName
+               const instantiations = usages.filter(u => {
+                 const parent = u.parent;
+                 return ts.isNewExpression(parent) ||
+                        ts.isHeritageClause(parent?.parent) ||
+                        ts.isExpressionWithTypeArguments(parent);
+               });
+
+               if (instantiations.length === 0 && !this.isExported(node)) {
+                 issues.push({
+                   type: 'unused_class',
+                   severity: 'warning',
+                   file: sourceFile.fileName,
+                   line: sourceFile.getLineAndCharacterOfPosition(node.getStart()).line + 1,
+                   symbol: node.name.text,
+                   description: `Class '${node.name.text}' is never instantiated`,
+                   linesOfCode: this.countLines(node),
+                 });
+               }
+             }
+           }
+         });
+       }
+
+       return issues;
+     }
+
+     private findUnusedFunctions(): DeadCodeIssue[] {
+       const issues: DeadCodeIssue[] = [];
+
+       for (const sourceFile of this.program.getSourceFiles()) {
+         if (sourceFile.isDeclarationFile) continue;
+         if (sourceFile.fileName.includes('node_modules')) continue;
+
+         ts.forEachChild(sourceFile, node => {
+           if (ts.isFunctionDeclaration(node) && node.name) {
+             const symbol = this.checker.getSymbolAtLocation(node.name);
+             if (symbol) {
+               const usages = this.allSymbols.get(symbol) ?? [];
+
+               // Filter out the definition
+               const calls = usages.filter(u => u !== node.name);
+
+               if (calls.length === 0 && !this.isExported(node)) {
+                 issues.push({
+                   type: 'unused_function',
+                   severity: 'warning',
+                   file: sourceFile.fileName,
+                   line: sourceFile.getLineAndCharacterOfPosition(node.getStart()).line + 1,
+                   symbol: node.name.text,
+                   description: `Function '${node.name.text}' is never called`,
+                   linesOfCode: this.countLines(node),
+                 });
+               }
+             }
+           }
+         });
+       }
+
+       return issues;
+     }
+
+     private findUnusedMethods(): DeadCodeIssue[] {
+       const issues: DeadCodeIssue[] = [];
+
+       for (const sourceFile of this.program.getSourceFiles()) {
+         if (sourceFile.isDeclarationFile) continue;
+         if (sourceFile.fileName.includes('node_modules')) continue;
+
+         const visit = (node: ts.Node) => {
+           if (ts.isMethodDeclaration(node) && node.name && ts.isIdentifier(node.name)) {
+             // Skip private methods starting with _ (often internal)
+             if (node.name.text.startsWith('_')) return;
+
+             // Skip lifecycle methods (constructor, etc.)
+             if (['constructor'].includes(node.name.text)) return;
+
+             const symbol = this.checker.getSymbolAtLocation(node.name);
+             if (symbol) {
+               const usages = this.allSymbols.get(symbol) ?? [];
+
+               // Filter out the definition
+               const calls = usages.filter(u => {
+                 const parent = u.parent;
+                 return ts.isCallExpression(parent) ||
+                        ts.isPropertyAccessExpression(parent);
+               });
+
+               // Check if method is from interface implementation
+               const isInterfaceMethod = this.isInterfaceImplementation(node);
+
+               if (calls.length === 0 && !isInterfaceMethod) {
+                 issues.push({
+                   type: 'unused_method',
+                   severity: 'warning',
+                   file: sourceFile.fileName,
+                   line: sourceFile.getLineAndCharacterOfPosition(node.getStart()).line + 1,
+                   symbol: node.name.text,
+                   description: `Method '${node.name.text}' is never called`,
+                   linesOfCode: this.countLines(node),
+                 });
+               }
+             }
+           }
+
+           ts.forEachChild(node, visit);
+         };
+
+         visit(sourceFile);
+       }
+
+       return issues;
+     }
+
+     private isEntryPoint(fileName: string): boolean {
+       const entryPoints = [
+         'src/cli/index.ts',
+         'src/gui/server.ts',
+         'src/gui/start-gui.ts',
+       ];
+       return entryPoints.some(ep => fileName.includes(ep));
+     }
+
+     private isExported(node: ts.Node): boolean {
+       return (ts.getCombinedModifierFlags(node as ts.Declaration) & ts.ModifierFlags.Export) !== 0;
+     }
+
+     private isInterfaceImplementation(node: ts.MethodDeclaration): boolean {
+       const parent = node.parent;
+       if (!ts.isClassDeclaration(parent)) return false;
+
+       // Check heritage clauses for implements
+       const implementsClauses = parent.heritageClauses?.filter(
+         hc => hc.token === ts.SyntaxKind.ImplementsKeyword
+       );
+
+       return (implementsClauses?.length ?? 0) > 0;
+     }
+
+     private countLines(node: ts.Node): number {
+       const sourceFile = node.getSourceFile();
+       const start = sourceFile.getLineAndCharacterOfPosition(node.getStart());
+       const end = sourceFile.getLineAndCharacterOfPosition(node.getEnd());
+       return end.line - start.line + 1;
+     }
+   }
+   ```
+
+4. **Impact Assessment**:
+
+   ```typescript
+   // Add to dead-code-detector.ts
+   export interface DeadCodeReport {
+     issues: DeadCodeIssue[];
+     summary: {
+       totalDeadLines: number;
+       byType: Record<string, number>;
+       largestOrphans: DeadCodeIssue[];  // Top 10 by lines
+     };
+   }
+
+   export function generateReport(issues: DeadCodeIssue[]): DeadCodeReport {
+     const totalDeadLines = issues.reduce((sum, i) => sum + i.linesOfCode, 0);
+
+     const byType: Record<string, number> = {};
+     for (const issue of issues) {
+       byType[issue.type] = (byType[issue.type] ?? 0) + issue.linesOfCode;
+     }
+
+     const largestOrphans = [...issues]
+       .sort((a, b) => b.linesOfCode - a.linesOfCode)
+       .slice(0, 10);
+
+     return {
+       issues,
+       summary: { totalDeadLines, byType, largestOrphans },
+     };
+   }
+   ```
+
+### Acceptance criteria
+- [ ] Detects orphan exports (exported but never imported)
+- [ ] Detects unused classes (never instantiated)
+- [ ] Detects unused functions (never called)
+- [ ] Detects unused methods (never called, not interface impl)
+- [ ] Reports lines of code impacted per issue
+- [ ] Generates summary with total dead lines
+- [ ] Identifies largest orphans (impact prioritization)
+- [ ] `npm run typecheck` passes
+- [ ] `npm test -- src/audits/dead-code` passes
+
+### Tests to run
+```bash
+npm run typecheck
+npm run detect:dead-code
+npm test -- src/audits/dead-code
+```
+
+### Evidence to record
+- Dead code report showing RWM-specific orphans
+
+### Cursor Agent Prompt
+```
+Implement Dead Code and Orphan Export Detection for RWM Puppet Master.
+
+CRITICAL CONTEXT:
+RWM had 1000+ lines of working code that was NEVER USED:
+- BranchStrategy: 322 lines, never instantiated
+- CommitFormatter: 122 lines, never called
+- PRManager: 238 lines, never instantiated
+
+This "phantom implementation" pattern creates false confidence that features work.
+
+YOUR TASK (P1-T25):
+1. Create src/audits/dead-code-detector.ts:
+   - DeadCodeDetector class using TypeScript compiler API
+   - collectSymbolUsages(): track all symbol definitions and usages
+   - findOrphanExports(): exports never imported
+   - findUnusedClasses(): classes never instantiated
+   - findUnusedFunctions(): functions never called
+   - findUnusedMethods(): methods never called (skip interface impls)
+
+2. Create scripts/detect-dead-code.ts:
+   - CLI runner
+   - Report generation
+   - Summary with total dead lines
+   - Top 10 largest orphans
+
+3. Add to package.json:
+   - "detect:dead-code" script
+
+4. Add tests:
+   - Fixture with intentionally dead code
+   - Verify detection accuracy
+
+CONSTRAINTS:
+- Use TypeScript compiler API for accurate analysis
+- Skip: node_modules, declaration files, entry points
+- Skip: interface implementations, constructor
+- Report lines of code per issue (impact assessment)
+- Performance: < 60 seconds for full codebase
+
+After implementation, run:
+- npm run typecheck
+- npm run detect:dead-code
+- npm test -- src/audits
+
+When complete, update this task's Status Log with PASS/FAIL, commands run + results, files changed.
+```
+
+### Task status log
+```
+Status: PENDING
+Date:
+Summary of changes:
+Files changed:
+Commands run + results:
+If FAIL - where stuck + exact error snippets + what remains:
+```
+
+---
+
+## P1-T26: AI-Assisted Gap Detection Pass
+
+### Title
+Use AI to find implementation gaps that static analysis misses
+
+### Goal
+After PRD generation and before execution, use AI to compare PRD, architecture, and codebase to find gaps, misalignments, and missing pieces.
+
+### Depends on
+- P1-T02 (Coverage Gate)
+- P1-T03 (Traceability)
+
+### Parallelizable with
+- P1-T27
+
+### Recommended model quality
+HQ required — AI prompting
+
+### Read first
+- `src/core/start-chain/pipeline.ts`
+- `src/start-chain/validators/` (existing validators)
+- `ClaudesMajorImprovements.md` recommendations
+
+### Files to create/modify
+- `src/audits/ai-gap-detector.ts` (new)
+- `src/start-chain/validators/ai-gap-validator.ts` (new)
+- `src/types/gap-detection.ts` (new)
+
+### Implementation notes
+
+1. **The Problem**:
+   Static analysis can find syntax/structural issues but misses:
+   - Semantic gaps (PRD says "handle errors" but no error handling code)
+   - Integration gaps (components exist but aren't connected)
+   - Missing edge cases
+   - Architectural misalignments
+
+2. **AI Gap Detection Prompt Design**:
+
+   ```typescript
+   // src/audits/ai-gap-detector.ts
+
+   export interface GapDetectionInput {
+     prd: PRD;
+     architecture: string;
+     codebaseStructure: CodebaseStructure;
+     existingTests: TestInfo[];
+   }
+
+   export interface DetectedGap {
+     id: string;
+     type: 'missing_implementation' | 'integration_gap' | 'architectural_mismatch' |
+           'missing_error_handling' | 'missing_edge_case' | 'incomplete_feature' |
+           'untested_path' | 'config_gap';
+     severity: 'critical' | 'high' | 'medium' | 'low';
+     prdItemId?: string;        // Related PRD item
+     location?: string;         // File or component
+     description: string;
+     evidence: string;          // Why AI thinks this is a gap
+     suggestedFix: string;
+   }
+
+   export interface GapDetectionResult {
+     gaps: DetectedGap[];
+     coverage: {
+       prdItemsCovered: number;
+       prdItemsTotal: number;
+       architectureComponentsCovered: number;
+       architectureComponentsTotal: number;
+     };
+     confidence: number;        // 0-1, AI's confidence in analysis
+   }
+
+   export class AIGapDetector {
+     constructor(private aiPlatform: AIPlatform) {}
+
+     async detectGaps(input: GapDetectionInput): Promise<GapDetectionResult> {
+       const prompt = this.buildPrompt(input);
+
+       const response = await this.aiPlatform.generate({
+         prompt,
+         schema: GAP_DETECTION_SCHEMA,
+         temperature: 0.2,  // Low temp for consistency
+         maxTokens: 8000,
+       });
+
+       return this.parseResponse(response);
+     }
+
+     private buildPrompt(input: GapDetectionInput): string {
+       return `You are a senior software architect performing a gap analysis between a PRD, architecture design, and existing codebase.
+
+## Your Task
+Identify gaps, misalignments, and missing pieces that could cause the implementation to fail or be incomplete.
+
+## PRD Summary
+${this.summarizePRD(input.prd)}
+
+## Architecture
+${input.architecture}
+
+## Codebase Structure
+${JSON.stringify(input.codebaseStructure, null, 2)}
+
+## Existing Tests
+${input.existingTests.map(t => `- ${t.file}: ${t.testCount} tests covering ${t.coverage}`).join('\n')}
+
+## Gap Categories to Check
+
+### 1. Missing Implementation
+- PRD items that have no corresponding code
+- Features described but not implemented
+- Acceptance criteria with no verification code
+
+### 2. Integration Gaps
+- Components that exist but aren't connected
+- APIs defined but not called
+- Events emitted but not handled
+- Dependencies registered but not injected
+
+### 3. Architectural Mismatches
+- Code that doesn't follow the architecture
+- Missing layers (e.g., no error handling layer)
+- Incorrect dependency directions
+
+### 4. Missing Error Handling
+- External calls without try/catch
+- No timeout handling
+- No retry logic where specified
+- No graceful degradation
+
+### 5. Missing Edge Cases
+- Boundary conditions not handled
+- Empty/null inputs not checked
+- Concurrent access not considered
+
+### 6. Incomplete Features
+- Partial implementations
+- TODOs or FIXMEs in critical paths
+- Stubbed methods
+
+### 7. Untested Paths
+- Code paths with no test coverage
+- Integration points untested
+- Error paths untested
+
+### 8. Configuration Gaps
+- Config options referenced but not defined
+- Environment differences not handled
+- Secrets not properly managed
+
+## Output Format
+Return a JSON object with this structure:
+{
+  "gaps": [
+    {
+      "id": "GAP-001",
+      "type": "missing_implementation",
+      "severity": "critical",
+      "prdItemId": "ST-001-001-001",
+      "location": "src/core/orchestrator.ts",
+      "description": "PRD requires branch strategy but orchestrator doesn't use it",
+      "evidence": "BranchStrategy is implemented in src/git/branch-strategy.ts but never instantiated in orchestrator",
+      "suggestedFix": "Inject BranchStrategy into Orchestrator and call ensureBranch() before tier execution"
+    }
+  ],
+  "coverage": {
+    "prdItemsCovered": 45,
+    "prdItemsTotal": 50,
+    "architectureComponentsCovered": 8,
+    "architectureComponentsTotal": 10
+  },
+  "confidence": 0.85
+}
+
+## Important Instructions
+1. Be specific - reference exact file paths and PRD item IDs
+2. Provide evidence - explain WHY you think something is a gap
+3. Prioritize by severity - critical gaps should block deployment
+4. Don't flag style issues - only functional gaps
+5. Consider the "no manual tests" requirement - gaps in automated verification are critical`;
+     }
+
+     private summarizePRD(prd: PRD): string {
+       const summary: string[] = [];
+
+       for (const phase of prd.phases) {
+         summary.push(`## Phase: ${phase.id} - ${phase.data.title}`);
+         for (const task of phase.tasks) {
+           summary.push(`  ### Task: ${task.id} - ${task.data.title}`);
+           for (const subtask of task.subtasks) {
+             summary.push(`    - ${subtask.id}: ${subtask.data.title}`);
+             summary.push(`      Criteria: ${subtask.data.acceptanceCriteria.map(c => c.description).join('; ')}`);
+           }
+         }
+       }
+
+       return summary.join('\n');
+     }
+   }
+   ```
+
+3. **Integration into Start Chain**:
+
+   ```typescript
+   // src/start-chain/validators/ai-gap-validator.ts
+
+   export class AIGapValidator {
+     constructor(
+       private gapDetector: AIGapDetector,
+       private config: AIGapValidatorConfig
+     ) {}
+
+     async validate(
+       prd: PRD,
+       architecture: string,
+       projectRoot: string
+     ): Promise<ValidationResult> {
+       // Build codebase structure
+       const codebaseStructure = await this.buildCodebaseStructure(projectRoot);
+       const existingTests = await this.findExistingTests(projectRoot);
+
+       // Run gap detection
+       const result = await this.gapDetector.detectGaps({
+         prd,
+         architecture,
+         codebaseStructure,
+         existingTests,
+       });
+
+       // Persist report
+       await this.persistReport(result, projectRoot);
+
+       // Evaluate pass/fail
+       const criticalGaps = result.gaps.filter(g => g.severity === 'critical');
+       const highGaps = result.gaps.filter(g => g.severity === 'high');
+
+       if (criticalGaps.length > 0) {
+         return {
+           passed: false,
+           errors: criticalGaps.map(g => ({
+             code: 'AI_GAP_CRITICAL',
+             message: g.description,
+             path: g.location,
+             suggestion: g.suggestedFix,
+           })),
+           warnings: highGaps.map(g => ({
+             code: 'AI_GAP_HIGH',
+             message: g.description,
+           })),
+         };
+       }
+
+       if (highGaps.length > this.config.maxHighGaps) {
+         return {
+           passed: false,
+           errors: [{
+             code: 'AI_GAP_TOO_MANY_HIGH',
+             message: `${highGaps.length} high-severity gaps exceed threshold of ${this.config.maxHighGaps}`,
+           }],
+           warnings: [],
+         };
+       }
+
+       return {
+         passed: true,
+         errors: [],
+         warnings: result.gaps.map(g => ({
+           code: `AI_GAP_${g.severity.toUpperCase()}`,
+           message: g.description,
+         })),
+       };
+     }
+
+     private async persistReport(result: GapDetectionResult, projectRoot: string): Promise<void> {
+       const reportPath = path.join(projectRoot, '.puppet-master/audits/ai-gap-detection.json');
+       await fs.mkdir(path.dirname(reportPath), { recursive: true });
+       await fs.writeFile(reportPath, JSON.stringify(result, null, 2));
+     }
+   }
+   ```
+
+4. **Configuration**:
+
+   ```yaml
+   # config.yaml addition
+   startChain:
+     aiGapDetection:
+       enabled: true
+       maxHighGaps: 5
+       blockOnCritical: true
+       platform: claude
+       model: opus
+   ```
+
+### Acceptance criteria
+- [ ] AIGapDetector builds comprehensive prompt with PRD, architecture, codebase
+- [ ] Detects missing implementations (PRD items without code)
+- [ ] Detects integration gaps (components not connected)
+- [ ] Detects architectural mismatches
+- [ ] Detects missing error handling
+- [ ] Produces structured JSON output with gap details
+- [ ] Integrates into Start Chain as optional validation pass
+- [ ] Persists report to `.puppet-master/audits/ai-gap-detection.json`
+- [ ] Configurable severity thresholds
+- [ ] `npm run typecheck` passes
+- [ ] `npm test -- src/audits/ai-gap` passes
+
+### Tests to run
+```bash
+npm run typecheck
+npm test -- src/audits/ai-gap
+npm test -- src/start-chain/validators/ai-gap
+```
+
+### Evidence to record
+- AI gap detection report
+- Example gaps found in RWM itself
+
+### Cursor Agent Prompt
+```
+Implement AI-Assisted Gap Detection for RWM Puppet Master.
+
+CRITICAL CONTEXT:
+Static analysis catches syntax/structural issues but misses semantic gaps:
+- PRD says "handle errors" but no error handling exists
+- Components exist but aren't connected
+- Edge cases not considered
+
+Solution: Use AI to compare PRD, architecture, and codebase to find gaps.
+
+YOUR TASK (P1-T26):
+1. Create src/types/gap-detection.ts:
+   - GapDetectionInput interface
+   - DetectedGap interface with types: missing_implementation, integration_gap, etc.
+   - GapDetectionResult interface
+
+2. Create src/audits/ai-gap-detector.ts:
+   - AIGapDetector class
+   - buildPrompt(): comprehensive prompt with PRD summary, architecture, codebase structure
+   - detectGaps(): call AI platform, parse structured response
+   - Gap categories: missing impl, integration, architectural, error handling, edge cases, untested
+
+3. Create src/start-chain/validators/ai-gap-validator.ts:
+   - AIGapValidator class
+   - validate(): run detection, evaluate pass/fail based on severity thresholds
+   - persistReport(): save to .puppet-master/audits/
+
+4. Add configuration:
+   - startChain.aiGapDetection config section
+   - enabled, maxHighGaps, blockOnCritical, platform, model
+
+5. Integrate into Start Chain pipeline (optional pass after PRD generation)
+
+6. Add tests with mock AI responses
+
+PROMPT DESIGN REQUIREMENTS:
+- Be specific: reference exact file paths, PRD item IDs
+- Require evidence: AI must explain WHY something is a gap
+- Prioritize: critical > high > medium > low
+- Focus on functional gaps, not style
+- Consider "no manual tests" requirement
+
+CONSTRAINTS:
+- Use low temperature (0.2) for consistency
+- Schema-constrained output
+- Configurable (can be disabled)
+- Must not block pipeline if AI fails (graceful degradation)
+
+After implementation, run:
+- npm run typecheck
+- npm test -- src/audits
+- npm test -- src/start-chain
+
+When complete, update this task's Status Log with PASS/FAIL, commands run + results, files changed.
+```
+
+### Task status log
+```
+Status: PENDING
+Date:
+Summary of changes:
+Files changed:
+Commands run + results:
+If FAIL - where stuck + exact error snippets + what remains:
+```
+
+---
+
+## P1-T27: Integration Path Test Matrix
+
+### Title
+Require and validate tests for each critical integration path
+
+### Goal
+Ensure every critical integration path (GUI→Backend→Pipeline, CLI→Orchestrator→Platform, etc.) has explicit end-to-end test coverage.
+
+### Depends on
+- P0-T05 (WebSocket Events)
+- P0-T06 (Wizard Wiring)
+
+### Parallelizable with
+- P1-T26
+
+### Recommended model quality
+HQ required — test infrastructure
+
+### Read first
+- `src/gui/gui.integration.test.ts` (existing integration tests)
+- `src/cli/commands/*.test.ts` (CLI tests)
+- `CodexsMajorImprovements.md` P0.6 (GUI wiring issues)
+
+### Files to create/modify
+- `src/audits/integration-path-matrix.ts` (new)
+- `src/audits/integration-path-validator.ts` (new)
+- `tests/integration/path-registry.ts` (new)
+- `tests/integration/*.integration.test.ts` (new tests)
+
+### Implementation notes
+
+1. **The Problem**:
+   The GUI→Backend→Pipeline path was never tested end-to-end, leading to:
+   - Wizard didn't actually run Start Chain
+   - WebSocket events didn't reach frontend
+   - Project switching didn't work
+
+2. **Integration Path Matrix**:
+
+   ```typescript
+   // src/audits/integration-path-matrix.ts
+
+   export interface IntegrationPath {
+     id: string;
+     name: string;
+     description: string;
+     startPoint: string;      // e.g., "Browser upload"
+     endPoint: string;        // e.g., "parsed.json on disk"
+     criticalComponents: string[];
+     testFile: string;        // Required test file
+     testPattern: string;     // Test name pattern to match
+     priority: 'p0' | 'p1' | 'p2';
+   }
+
+   export const INTEGRATION_PATH_MATRIX: IntegrationPath[] = [
+     // GUI Paths
+     {
+       id: 'GUI-001',
+       name: 'Wizard Upload',
+       description: 'User uploads requirements file through wizard',
+       startPoint: 'Browser file upload',
+       endPoint: '.puppet-master/requirements/parsed.json exists',
+       criticalComponents: [
+         'src/gui/public/js/wizard.js',
+         'src/gui/routes/wizard.ts',
+         'src/start-chain/parsers/',
+       ],
+       testFile: 'tests/integration/wizard.integration.test.ts',
+       testPattern: 'wizard.*upload|upload.*requirements',
+       priority: 'p0',
+     },
+     {
+       id: 'GUI-002',
+       name: 'Wizard AI Generation',
+       description: 'Wizard generates PRD using AI Start Chain',
+       startPoint: 'Generate button click',
+       endPoint: 'AI pipeline completes with PRD',
+       criticalComponents: [
+         'src/gui/routes/wizard.ts',
+         'src/core/start-chain/pipeline.ts',
+         'src/platforms/',
+       ],
+       testFile: 'tests/integration/wizard.integration.test.ts',
+       testPattern: 'wizard.*generate|ai.*generation|start.?chain',
+       priority: 'p0',
+     },
+     {
+       id: 'GUI-003',
+       name: 'Dashboard Real-Time Updates',
+       description: 'Dashboard receives WebSocket updates from orchestrator',
+       startPoint: 'Orchestrator emits event',
+       endPoint: 'Dashboard DOM updated',
+       criticalComponents: [
+         'src/core/orchestrator.ts',
+         'src/logging/event-bus.ts',
+         'src/gui/server.ts',
+         'src/gui/public/js/dashboard.js',
+       ],
+       testFile: 'tests/integration/dashboard.integration.test.ts',
+       testPattern: 'dashboard.*update|websocket.*event|real.?time',
+       priority: 'p0',
+     },
+
+     // CLI Paths
+     {
+       id: 'CLI-001',
+       name: 'CLI Start Execution',
+       description: 'puppet-master start runs first iteration',
+       startPoint: 'puppet-master start command',
+       endPoint: 'First iteration completes',
+       criticalComponents: [
+         'src/cli/commands/start.ts',
+         'src/core/orchestrator.ts',
+         'src/core/execution-engine.ts',
+         'src/platforms/',
+       ],
+       testFile: 'tests/integration/cli-start.integration.test.ts',
+       testPattern: 'start.*iteration|first.*iteration|cli.*start',
+       priority: 'p0',
+     },
+     {
+       id: 'CLI-002',
+       name: 'CLI Pause/Resume',
+       description: 'puppet-master pause/resume preserves state',
+       startPoint: 'puppet-master pause command',
+       endPoint: 'Resume continues from same point',
+       criticalComponents: [
+         'src/cli/commands/pause.ts',
+         'src/cli/commands/resume.ts',
+         'src/core/state-persistence.ts',
+       ],
+       testFile: 'tests/integration/cli-pause-resume.integration.test.ts',
+       testPattern: 'pause.*resume|checkpoint|state.*restore',
+       priority: 'p1',
+     },
+
+     // Verification Paths
+     {
+       id: 'VERIFY-001',
+       name: 'Gate Execution',
+       description: 'Subtask completion triggers gate with evidence',
+       startPoint: 'Subtask marked complete',
+       endPoint: 'Evidence saved, gate result recorded',
+       criticalComponents: [
+         'src/core/orchestrator.ts',
+         'src/verification/gate-runner.ts',
+         'src/memory/evidence-store.ts',
+       ],
+       testFile: 'tests/integration/gate.integration.test.ts',
+       testPattern: 'gate.*execution|evidence.*save|verification',
+       priority: 'p0',
+     },
+     {
+       id: 'VERIFY-002',
+       name: 'All Verifier Types',
+       description: 'Each verifier type executes correctly',
+       startPoint: 'Criterion with specific type',
+       endPoint: 'Verifier returns result with evidence',
+       criticalComponents: [
+         'src/verification/verifiers/',
+         'src/verification/gate-runner.ts',
+       ],
+       testFile: 'tests/integration/verifiers.integration.test.ts',
+       testPattern: 'verifier|command.*verify|regex.*verify|file.*exists',
+       priority: 'p0',
+     },
+
+     // Git Paths
+     {
+       id: 'GIT-001',
+       name: 'Iteration Commit',
+       description: 'Iteration completion creates formatted commit',
+       startPoint: 'Iteration completes with changes',
+       endPoint: 'Git commit with proper format',
+       criticalComponents: [
+         'src/core/orchestrator.ts',
+         'src/git/git-manager.ts',
+         'src/git/commit-formatter.ts',
+       ],
+       testFile: 'tests/integration/git.integration.test.ts',
+       testPattern: 'commit.*iteration|git.*commit|formatted.*commit',
+       priority: 'p1',
+     },
+     {
+       id: 'GIT-002',
+       name: 'Branch Strategy',
+       description: 'Branch creation per configured strategy',
+       startPoint: 'Tier execution starts',
+       endPoint: 'Branch exists per strategy',
+       criticalComponents: [
+         'src/core/orchestrator.ts',
+         'src/git/branch-strategy.ts',
+       ],
+       testFile: 'tests/integration/git.integration.test.ts',
+       testPattern: 'branch.*strategy|branch.*creation|tier.*branch',
+       priority: 'p1',
+     },
+
+     // Start Chain Paths
+     {
+       id: 'SC-001',
+       name: 'Full Start Chain Pipeline',
+       description: 'Requirements → PRD → Architecture → Tier Plan',
+       startPoint: 'Requirements document',
+       endPoint: 'All artifacts exist and are valid',
+       criticalComponents: [
+         'src/core/start-chain/pipeline.ts',
+         'src/start-chain/parsers/',
+         'src/start-chain/prd-generator.ts',
+       ],
+       testFile: 'tests/integration/start-chain.integration.test.ts',
+       testPattern: 'full.*pipeline|end.?to.?end|requirements.*prd',
+       priority: 'p0',
+     },
+   ];
+   ```
+
+3. **Integration Path Validator**:
+
+   ```typescript
+   // src/audits/integration-path-validator.ts
+
+   export interface PathValidationResult {
+     path: IntegrationPath;
+     testFileExists: boolean;
+     testsFound: number;
+     matchingTests: string[];
+     passed: boolean;
+     error?: string;
+   }
+
+   export class IntegrationPathValidator {
+     async validateAll(projectRoot: string): Promise<PathValidationResult[]> {
+       const results: PathValidationResult[] = [];
+
+       for (const path of INTEGRATION_PATH_MATRIX) {
+         results.push(await this.validatePath(path, projectRoot));
+       }
+
+       return results;
+     }
+
+     async validatePath(path: IntegrationPath, projectRoot: string): Promise<PathValidationResult> {
+       const testFilePath = join(projectRoot, path.testFile);
+
+       // Check test file exists
+       const testFileExists = await fs.access(testFilePath).then(() => true).catch(() => false);
+
+       if (!testFileExists) {
+         return {
+           path,
+           testFileExists: false,
+           testsFound: 0,
+           matchingTests: [],
+           passed: false,
+           error: `Test file not found: ${path.testFile}`,
+         };
+       }
+
+       // Read test file and find matching tests
+       const testContent = await fs.readFile(testFilePath, 'utf8');
+       const testPattern = new RegExp(path.testPattern, 'gi');
+
+       // Find test declarations
+       const testDeclarations = testContent.match(/(?:it|test)\s*\(\s*['"`]([^'"`]+)['"`]/g) ?? [];
+       const matchingTests = testDeclarations
+         .map(t => t.match(/['"`]([^'"`]+)['"`]/)?.[1])
+         .filter((name): name is string => name !== undefined && testPattern.test(name));
+
+       return {
+         path,
+         testFileExists: true,
+         testsFound: testDeclarations.length,
+         matchingTests,
+         passed: matchingTests.length > 0,
+         error: matchingTests.length === 0
+           ? `No tests matching pattern '${path.testPattern}' found`
+           : undefined,
+       };
+     }
+
+     generateReport(results: PathValidationResult[]): string {
+       const lines: string[] = ['# Integration Path Test Coverage\n'];
+
+       const p0Results = results.filter(r => r.path.priority === 'p0');
+       const p1Results = results.filter(r => r.path.priority === 'p1');
+       const p2Results = results.filter(r => r.path.priority === 'p2');
+
+       lines.push(`## Summary`);
+       lines.push(`- P0 Paths: ${p0Results.filter(r => r.passed).length}/${p0Results.length} covered`);
+       lines.push(`- P1 Paths: ${p1Results.filter(r => r.passed).length}/${p1Results.length} covered`);
+       lines.push(`- P2 Paths: ${p2Results.filter(r => r.passed).length}/${p2Results.length} covered\n`);
+
+       lines.push(`## P0 Critical Paths\n`);
+       for (const result of p0Results) {
+         const icon = result.passed ? '✅' : '❌';
+         lines.push(`${icon} **${result.path.name}** (${result.path.id})`);
+         lines.push(`   ${result.path.description}`);
+         lines.push(`   Test file: \`${result.path.testFile}\``);
+         if (result.passed) {
+           lines.push(`   Matching tests: ${result.matchingTests.join(', ')}`);
+         } else {
+           lines.push(`   ⚠️ ${result.error}`);
+         }
+         lines.push('');
+       }
+
+       // Similar for P1, P2...
+
+       return lines.join('\n');
+     }
+   }
+   ```
+
+4. **CI Integration**:
+
+   ```typescript
+   // scripts/validate-integration-paths.ts
+
+   async function main() {
+     const validator = new IntegrationPathValidator();
+     const results = await validator.validateAll(process.cwd());
+
+     const p0Failures = results.filter(r => r.path.priority === 'p0' && !r.passed);
+
+     console.log(validator.generateReport(results));
+
+     if (p0Failures.length > 0) {
+       console.error(`\n❌ ${p0Failures.length} P0 integration paths missing tests!`);
+       console.error('P0 paths MUST have integration tests before merge.\n');
+       process.exit(1);
+     }
+
+     console.log('\n✅ All P0 integration paths have test coverage');
+     process.exit(0);
+   }
+   ```
+
+### Acceptance criteria
+- [ ] INTEGRATION_PATH_MATRIX defines all critical paths
+- [ ] IntegrationPathValidator checks test file existence
+- [ ] IntegrationPathValidator finds tests matching patterns
+- [ ] Generates human-readable coverage report
+- [ ] CI blocks merge if P0 paths lack tests
+- [ ] At least one test exists for each P0 path
+- [ ] Report saved to `.puppet-master/audits/integration-paths.md`
+- [ ] `npm run typecheck` passes
+- [ ] `npm test -- src/audits/integration-path` passes
+
+### Tests to run
+```bash
+npm run typecheck
+npm run validate:integration-paths
+npm test -- src/audits/integration-path
+```
+
+### Evidence to record
+- Integration path coverage report
+
+### Cursor Agent Prompt
+```
+Implement Integration Path Test Matrix for RWM Puppet Master.
+
+CRITICAL CONTEXT:
+The GUI→Backend→Pipeline path was NEVER TESTED, leading to:
+- Wizard didn't run Start Chain
+- WebSocket events didn't reach frontend
+- Project switching didn't work
+
+Solution: Define required integration paths and validate test coverage.
+
+YOUR TASK (P1-T27):
+1. Create src/audits/integration-path-matrix.ts:
+   - IntegrationPath interface: id, name, description, startPoint, endPoint, components, testFile, testPattern, priority
+   - INTEGRATION_PATH_MATRIX constant with all critical paths:
+     - GUI: wizard upload, wizard generation, dashboard updates
+     - CLI: start execution, pause/resume
+     - Verification: gate execution, all verifier types
+     - Git: iteration commit, branch strategy
+     - Start Chain: full pipeline
+
+2. Create src/audits/integration-path-validator.ts:
+   - IntegrationPathValidator class
+   - validatePath(): check test file exists, find matching tests
+   - validateAll(): validate all paths
+   - generateReport(): markdown report with coverage
+
+3. Create scripts/validate-integration-paths.ts:
+   - CLI runner
+   - Exit 1 if P0 paths lack tests
+   - Generate report
+
+4. Create tests/integration/path-registry.ts:
+   - Re-export INTEGRATION_PATH_MATRIX for test discovery
+
+5. Create stub integration tests for any P0 paths missing them:
+   - tests/integration/wizard.integration.test.ts
+   - tests/integration/dashboard.integration.test.ts
+   - tests/integration/cli-start.integration.test.ts
+   - tests/integration/gate.integration.test.ts
+   - tests/integration/start-chain.integration.test.ts
+
+6. Add to package.json:
+   - "validate:integration-paths" script
+
+CONSTRAINTS:
+- P0 paths MUST have tests (CI blocks merge)
+- P1/P2 paths are warnings only
+- Test pattern matching should be flexible (regex)
+- Report should be human-readable
+
+After implementation, run:
+- npm run typecheck
+- npm run validate:integration-paths
+- npm test -- src/audits
+
+When complete, update this task's Status Log with PASS/FAIL, commands run + results, files changed.
+```
+
+### Task status log
+```
+Status: PENDING
+Date:
+Summary of changes:
+Files changed:
+Commands run + results:
+If FAIL - where stuck + exact error snippets + what remains:
+```
+
+---
+
 ## P2 Medium Priority Tasks
 
 These are quality-of-life and scale improvements.
@@ -7199,7 +9659,7 @@ puppet-master plan test-requirements.md
 puppet-master doctor
 ```
 
-### P1 Complete Checklist (21 tasks)
+### P1 Complete Checklist (27 tasks)
 - [ ] P1-T01: Requirements interview step added
 - [ ] P1-T02: Coverage validation implemented
 - [ ] P1-T03: Traceability links (sourceRefs) in PRD
@@ -7221,11 +9681,22 @@ puppet-master doctor
 - [ ] P1-T19: Architecture generation context is non-lossy and validated
 - [ ] P1-T20: Requirements inventory (atomic `REQ-*` units) extracted + persisted
 - [ ] P1-T21: PRD quality validator blocks low-quality PRDs (with repair hints)
+- [ ] P1-T22: Implementation wiring audit (orphan exports, unused registrations, missing injections)
+- [ ] P1-T23: Cross-file contract enforcement (events, types, schemas single source of truth)
+- [ ] P1-T24: Platform compatibility validator (Windows/Unix issues detected before runtime)
+- [ ] P1-T25: Dead code / orphan export detection (find implemented-but-unused code)
+- [ ] P1-T26: AI-assisted gap detection pass (semantic gaps static analysis misses)
+- [ ] P1-T27: Integration path test matrix (require tests for critical paths)
 
 **P1 Verification Commands:**
 ```bash
 npm run typecheck
 npm test
+npm run validate:contracts
+npm run check:platform
+npm run detect:dead-code
+npm run validate:integration-paths
+puppet-master audit
 puppet-master plan large-requirements.md --coverage-threshold 80
 puppet-master checkpoints list
 puppet-master status --json

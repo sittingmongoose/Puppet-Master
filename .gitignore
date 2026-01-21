@@ -13,6 +13,7 @@ yarn-error.log*
 .claude/.credentials.json
 .claude/_state/
 .claude/debug/
+.claude/.fuse_hidden*
 
 # Codex-specific: ignore auth, sessions, and runtime data
 .codex/auth.json
