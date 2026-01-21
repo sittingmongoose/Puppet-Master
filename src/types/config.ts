@@ -10,7 +10,7 @@
  * Platform type - the canonical definition.
  * ALL other files should import Platform from here or from the index barrel.
  */
-export type Platform = 'cursor' | 'codex' | 'claude';
+export type Platform = 'cursor' | 'codex' | 'claude' | 'gemini' | 'copilot' | 'antigravity';
 
 /**
  * Project configuration section.
@@ -23,12 +23,15 @@ export interface ProjectConfig {
 
 /**
  * CLI paths configuration.
- * Maps from YAML: cli_paths.cursor, cli_paths.codex, cli_paths.claude
+ * Maps from YAML: cli_paths.cursor, cli_paths.codex, cli_paths.claude, cli_paths.gemini, cli_paths.copilot, cli_paths.antigravity
  */
 export interface CliPathsConfig {
   cursor: string;
   codex: string;
   claude: string;
+  gemini: string;
+  copilot: string;
+  antigravity: string;
 }
 
 /**
@@ -125,13 +128,16 @@ export interface BudgetConfig {
 
 /**
  * Platform budgets configuration.
- * Maps from YAML: budgets.claude, budgets.codex, budgets.cursor
+ * Maps from YAML: budgets.claude, budgets.codex, budgets.cursor, budgets.gemini, budgets.copilot, budgets.antigravity
  * See REQUIREMENTS.md Section 23.3
  */
 export interface PlatformBudgets {
   claude: BudgetConfig;
   codex: BudgetConfig;
   cursor: BudgetConfig;
+  gemini: BudgetConfig;
+  copilot: BudgetConfig;
+  antigravity: BudgetConfig;
 }
 
 /**

@@ -9,6 +9,34 @@ export { BasePlatformRunner } from './base-runner.js';
 export { CursorRunner } from './cursor-runner.js';
 export { CodexRunner } from './codex-runner.js';
 export { ClaudeRunner } from './claude-runner.js';
+export { GeminiRunner, createGeminiRunner } from './gemini-runner.js';
+export { CopilotRunner, createCopilotRunner } from './copilot-runner.js';
+export { AntigravityRunner, createAntigravityRunner } from './antigravity-runner.js';
+
+// Export model catalogs
+export {
+  type GeminiModel,
+  GEMINI_MODELS,
+  getGeminiModels,
+  getStableGeminiModels,
+  getGeminiModelIds,
+} from './gemini-models.js';
+export {
+  type CopilotModel,
+  COPILOT_MODELS,
+  getCopilotModels,
+  getOfficialCopilotModels,
+  getCopilotModelIds,
+  getCopilotModelSelectionNote,
+} from './copilot-models.js';
+export {
+  type AntigravityModel,
+  ANTIGRAVITY_MODELS,
+  getAntigravityModels,
+  getAntigravityModelsByProvider,
+  getAntigravityModelIds,
+  getAntigravityModelSelectionNote,
+} from './antigravity-models.js';
 
 // Export platform registry
 export { PlatformRegistry } from './registry.js';

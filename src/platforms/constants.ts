@@ -27,6 +27,9 @@ export const PLATFORM_COMMANDS: Readonly<Record<Platform, string>> = {
   cursor: process.platform === 'win32' ? 'cursor-agent.exe' : 'cursor-agent',
   codex: process.platform === 'win32' ? 'codex.exe' : 'codex',
   claude: process.platform === 'win32' ? 'claude.exe' : 'claude',
+  gemini: process.platform === 'win32' ? 'gemini.exe' : 'gemini',
+  copilot: process.platform === 'win32' ? 'copilot.exe' : 'copilot',
+  antigravity: process.platform === 'win32' ? 'agy.exe' : 'agy',
 } as const;
 
 /**

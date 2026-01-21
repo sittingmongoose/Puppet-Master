@@ -9,6 +9,11 @@ import type { Router, Request, Response } from 'express';
 import { Router as createRouter } from 'express';
 import { ConfigManager } from '../../config/config-manager.js';
 import type { PuppetMasterConfig } from '../../types/config.js';
+import {
+  getGeminiModels,
+  getCopilotModels,
+  getAntigravityModels,
+} from '../../platforms/index.js';
 
 /**
  * Error response interface.
@@ -133,6 +138,27 @@ export function createConfigRoutes(): Router {
         valid: false,
         errors: [err.message || 'Validation failed'],
       });
+    }
+  });
+
+  /**
+   * GET /api/config/models
+   * Returns suggested models for all platforms.
+   * Useful for GUI model selection dropdowns and datalists.
+   */
+  router.get('/config/models', (_req: Request, res: Response) => {
+    try {
+      res.json({
+        gemini: getGeminiModels(),
+        copilot: getCopilotModels(),
+        antigravity: getAntigravityModels(),
+      });
+    } catch (error) {
+      const err = error as Error;
+      res.status(500).json({
+        error: err.message || 'Failed to fetch model catalogs',
+        code: 'MODELS_ERROR',
+      } as ErrorResponse);
     }
   });
 

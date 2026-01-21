@@ -13,6 +13,9 @@ import { CapabilityDiscoveryService } from './capability-discovery.js';
 import { CursorRunner } from './cursor-runner.js';
 import { CodexRunner } from './codex-runner.js';
 import { ClaudeRunner } from './claude-runner.js';
+import { GeminiRunner } from './gemini-runner.js';
+import { CopilotRunner } from './copilot-runner.js';
+import { AntigravityRunner } from './antigravity-runner.js';
 import { resolveUnderProjectRoot } from '../utils/project-paths.js';
 
 /**
@@ -85,6 +88,24 @@ export class PlatformRegistry {
       config.cliPaths.claude
     );
     registry.register('claude', claudeRunner);
+
+    // Register Gemini runner
+    const geminiRunner = new GeminiRunner(
+      capabilityService,
+      config.cliPaths.gemini
+    );
+    registry.register('gemini', geminiRunner);
+
+    // Register Copilot runner
+    const copilotRunner = new CopilotRunner(
+      capabilityService,
+      config.cliPaths.copilot
+    );
+    registry.register('copilot', copilotRunner);
+
+    // Register Antigravity runner
+    const antigravityRunner = new AntigravityRunner(capabilityService);
+    registry.register('antigravity', antigravityRunner);
 
     return registry;
   }

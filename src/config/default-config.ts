@@ -92,6 +92,24 @@ export function getDefaultConfig(): PuppetMasterConfig {
         maxCallsPerDay: 'unlimited',
         fallbackPlatform: null,
       },
+      gemini: {
+        maxCallsPerRun: 100,
+        maxCallsPerHour: 'unlimited',
+        maxCallsPerDay: 'unlimited',
+        fallbackPlatform: 'copilot',
+      },
+      copilot: {
+        maxCallsPerRun: 'unlimited',
+        maxCallsPerHour: 'unlimited',
+        maxCallsPerDay: 'unlimited',
+        fallbackPlatform: 'gemini',
+      },
+      antigravity: {
+        maxCallsPerRun: 'unlimited',
+        maxCallsPerHour: 'unlimited',
+        maxCallsPerDay: 'unlimited',
+        fallbackPlatform: null,
+      },
     },
     budgetEnforcement: {
       onLimitReached: 'fallback',
@@ -106,6 +124,9 @@ export function getDefaultConfig(): PuppetMasterConfig {
       cursor: 'cursor-agent',
       codex: 'codex',
       claude: 'claude',
+      gemini: 'gemini',
+      copilot: 'copilot',
+      antigravity: 'agy',
     },
   };
 }
