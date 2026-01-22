@@ -17,11 +17,16 @@ import type { CheckCategory, CheckResult } from '../../doctor/check-registry.js'
 import { InstallationManager } from '../../doctor/installation-manager.js';
 import { DoctorReporter } from '../../doctor/doctor-reporter.js';
 import type { ReportOptions } from '../../doctor/doctor-reporter.js';
+import { ConfigManager } from '../../config/config-manager.js';
 
 // CLI checks
 import { CursorCliCheck } from '../../doctor/checks/cli-tools.js';
 import { CodexCliCheck } from '../../doctor/checks/cli-tools.js';
 import { ClaudeCliCheck } from '../../doctor/checks/cli-tools.js';
+import { GeminiCliCheck } from '../../doctor/checks/cli-tools.js';
+import { CopilotCliCheck } from '../../doctor/checks/cli-tools.js';
+import { AntigravityCliCheck } from '../../doctor/checks/cli-tools.js';
+import { PlaywrightBrowsersCheck } from '../../doctor/checks/playwright-check.js';
 
 // Git checks
 import {
@@ -67,13 +72,18 @@ export interface DoctorCommandOptions {
  * @param configPath - Optional config file path (currently unused)
  * @returns CheckRegistry instance with all checks registered
  */
-function createCheckRegistry(configPath?: string): CheckRegistry {
+async function createCheckRegistry(configPath?: string): Promise<CheckRegistry> {
   const registry = new CheckRegistry();
+  const configManager = new ConfigManager(configPath);
+  const config = await configManager.load();
 
   // Register CLI checks
-  registry.register(new CursorCliCheck());
-  registry.register(new CodexCliCheck());
-  registry.register(new ClaudeCliCheck());
+  registry.register(new CursorCliCheck(config.cliPaths));
+  registry.register(new CodexCliCheck(config.cliPaths));
+  registry.register(new ClaudeCliCheck(config.cliPaths));
+  registry.register(new GeminiCliCheck(config.cliPaths));
+  registry.register(new CopilotCliCheck(config.cliPaths));
+  registry.register(new AntigravityCliCheck(config.cliPaths));
 
   // Register Git checks
   registry.register(new GitAvailableCheck());
@@ -83,14 +93,12 @@ function createCheckRegistry(configPath?: string): CheckRegistry {
   // Register Runtime checks
   registry.register(new NodeVersionCheck());
   registry.register(new NpmAvailableCheck());
+  registry.register(new PlaywrightBrowsersCheck());
 
   // Register Project checks
   registry.register(new ProjectDirCheck());
   registry.register(new ConfigFileCheck());
   registry.register(new SubdirectoriesCheck());
-
-  // Note: ConfigFileCheck currently uses a hardcoded path
-  // The configPath parameter is reserved for future use
 
   return registry;
 }
@@ -138,7 +146,7 @@ export async function doctorAction(
 ): Promise<void> {
   try {
     // Create check registry and register all checks
-    const registry = createCheckRegistry(options.config);
+    const registry = await createCheckRegistry(options.config);
 
     // Run checks (all or filtered by category)
     let results: CheckResult[];

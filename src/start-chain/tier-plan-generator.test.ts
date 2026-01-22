@@ -93,6 +93,24 @@ describe('TierPlanGenerator', () => {
         maxCallsPerDay: 'unlimited',
         fallbackPlatform: null,
       },
+        gemini: {
+          maxCallsPerRun: 100,
+          maxCallsPerHour: 50,
+          maxCallsPerDay: 200,
+          fallbackPlatform: null,
+        },
+        copilot: {
+          maxCallsPerRun: 100,
+          maxCallsPerHour: 50,
+          maxCallsPerDay: 200,
+          fallbackPlatform: null,
+        },
+        antigravity: {
+          maxCallsPerRun: 100,
+          maxCallsPerHour: 50,
+          maxCallsPerDay: 200,
+          fallbackPlatform: null,
+        },
     },
     budgetEnforcement: {
       onLimitReached: 'fallback',
@@ -107,6 +125,9 @@ describe('TierPlanGenerator', () => {
       cursor: 'cursor-agent',
       codex: 'codex',
       claude: 'claude',
+        gemini: 'gemini',
+        copilot: 'copilot',
+        antigravity: 'agy',
     },
   });
 

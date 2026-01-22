@@ -72,6 +72,9 @@ describe('CapabilityDiscoveryService', () => {
       const result = await service.probe('cursor');
 
       expect(result.platform).toBe('cursor');
+      expect(result.command).toBeDefined();
+      expect(result.runnable).toBe(true);
+      expect(result.authStatus).toBeDefined();
       expect(result.version).toBe('1.2.3');
       expect(result.capabilities).toBeDefined();
       expect(result.probeTimestamp).toBeDefined();
@@ -97,6 +100,9 @@ describe('CapabilityDiscoveryService', () => {
       const result = await service.probe('cursor');
 
       expect(result.platform).toBe('cursor');
+      expect(result.command).toBeDefined();
+      expect(result.runnable).toBe(false);
+      expect(result.authStatus).toBeDefined();
       expect(result.version).toBe('unknown');
       expect(result.capabilities.streaming).toBe(false);
       expect(result.capabilities.supportedLanguages).toEqual([]);
@@ -136,6 +142,9 @@ describe('CapabilityDiscoveryService', () => {
     it('should read from YAML cache file', async () => {
       const testResult: CapabilityProbeResult = {
         platform: 'cursor',
+        command: 'cursor',
+        runnable: true,
+        authStatus: 'authenticated',
         version: '1.2.3',
         capabilities: {
           streaming: true,
@@ -176,6 +185,9 @@ describe('CapabilityDiscoveryService', () => {
     it('should read from JSON cache file if YAML not found', async () => {
       const testResult: CapabilityProbeResult = {
         platform: 'codex',
+        command: 'codex',
+        runnable: true,
+        authStatus: 'authenticated',
         version: '2.0.0',
         capabilities: {
           streaming: false,
@@ -250,6 +262,9 @@ describe('CapabilityDiscoveryService', () => {
     it('should return true for fresh cache', async () => {
       const testResult: CapabilityProbeResult = {
         platform: 'cursor',
+        command: 'cursor',
+        runnable: true,
+        authStatus: 'authenticated',
         version: '1.0.0',
         capabilities: {
           streaming: false,
@@ -288,6 +303,9 @@ describe('CapabilityDiscoveryService', () => {
       
       const testResult: CapabilityProbeResult = {
         platform: 'cursor',
+        command: 'cursor',
+        runnable: true,
+        authStatus: 'authenticated',
         version: '1.0.0',
         capabilities: {
           streaming: false,

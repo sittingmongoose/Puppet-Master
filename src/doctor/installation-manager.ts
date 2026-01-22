@@ -266,6 +266,15 @@ export class InstallationManager {
       platforms: ['darwin', 'linux', 'win32'],
     });
 
+    // Playwright browser binaries installation
+    this.registerCommand({
+      check: 'playwright-browsers',
+      command: 'npx playwright install',
+      description: 'Install Playwright browser binaries',
+      requiresSudo: false,
+      platforms: ['darwin', 'linux', 'win32'],
+    });
+
     // Project directory initialization
     this.registerCommand({
       check: 'project-dir',

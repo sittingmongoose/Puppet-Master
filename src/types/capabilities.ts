@@ -13,6 +13,12 @@
 
 import type { Platform } from './config.js';
 
+export type PlatformAuthStatus =
+  | 'authenticated'
+  | 'not_authenticated'
+  | 'skipped'
+  | 'unknown';
+
 /**
  * Feature flag type for capability booleans.
  */
@@ -99,7 +105,16 @@ export interface CooldownInfo {
 export interface CapabilityProbeResult {
   /** The platform that was probed */
   platform: Platform;
-  
+
+  /** The CLI command that was used (config override or fallback) */
+  command: string;
+
+  /** Whether the CLI could actually be executed (not just found) */
+  runnable: boolean;
+
+  /** Best-effort auth readiness status (local-only; may be skipped/unknown) */
+  authStatus: PlatformAuthStatus;
+
   /** Version string of the platform CLI */
   version: string;
   

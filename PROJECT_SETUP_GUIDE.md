@@ -1,6 +1,20 @@
-# Project Setup Guide - Cursor/Codex/Claude Code (Stock Setup)
+# Project Setup Guide - All Supported Platforms
 
-This guide explains how to set up a new project so the **Codex** and **Claude Code** extensions work in their **stock/default** configuration (no wrapper scripts, no pinned binary paths).
+This guide explains how to set up a new project for RWM Puppet Master with all supported platforms:
+
+## Supported Platforms
+
+**IDE Extensions (VS Code/Cursor):**
+- **Codex** - OpenAI Codex extension (no wrapper scripts, stock config)
+- **Claude Code** - Anthropic Claude Code extension (stock config)
+
+**Standalone CLI Tools:**
+- **Cursor** - `cursor-agent` CLI
+- **Gemini** - `gemini` CLI (Google Gemini CLI)
+- **Copilot** - `copilot` CLI (GitHub Copilot CLI)
+- **Antigravity** - `agy` launcher (Google Antigravity, GUI-only)
+
+This guide focuses on **Codex** and **Claude Code** extension setup (no wrapper scripts, stock configuration). For standalone CLI tool installation, see the sections below.
 
 ## Conventions / Variables
 
@@ -487,4 +501,83 @@ When setting up a new project, an AI agent should follow these steps in order:
 
 ---
 
-*Last updated: 2026-01-20*
+## Installing Standalone CLI Tools
+
+### Gemini CLI
+
+**Installation:**
+```bash
+# npm (recommended)
+npm install -g @google/gemini-cli
+
+# Homebrew (macOS/Linux)
+brew install gemini-cli
+```
+
+**Authentication:**
+- Run `gemini` and complete OAuth flow
+- Or set `GOOGLE_API_KEY` environment variable
+- Or configure Vertex AI credentials
+
+**Configuration Notes:**
+- Default CLI path: `gemini`
+- Headless mode: `-p "prompt" --output-format json --approval-mode yolo`
+- Model selection: `--model gemini-2.5-pro` (or other supported models)
+- Plan Mode: Requires `experimental.plan: true` in Gemini CLI settings for `--approval-mode plan`
+
+### GitHub Copilot CLI
+
+**Installation:**
+```bash
+# npm (recommended)
+npm install -g @github/copilot
+
+# Homebrew (macOS/Linux)
+brew install copilot-cli
+
+# WinGet (Windows)
+winget install GitHub.Copilot
+
+# curl (Unix-like)
+curl -fsSL https://gh.io/copilot-install | bash
+```
+
+**Authentication:**
+- Run `copilot` and use `/login` command
+- Or set `GH_TOKEN` or `GITHUB_TOKEN` environment variable with "Copilot Requests" permission
+- Requires active GitHub Copilot subscription (Individual, Business, or Enterprise)
+
+**Configuration Notes:**
+- Default CLI path: `copilot`
+- Headless mode: `-p "prompt" --allow-all-tools --allow-all-paths --silent --stream off`
+- Model selection: Use `/model` command interactively (programmatic selection not documented)
+
+### Google Antigravity
+
+**Installation:**
+- Manual download from https://antigravity.google/download
+- Install the desktop application
+- The launcher command is typically `agy` or `antigravity`
+
+**Authentication:**
+- Google account via Antigravity GUI
+
+**Configuration Notes:**
+- Default CLI path: `agy` (or `antigravity` on some systems)
+- **Headless mode: NOT AVAILABLE** - Antigravity is GUI-only
+- For headless automation, use `gemini` platform instead
+- Antigravity features:
+  - Rules: `~/.gemini/GEMINI.md` (global), `.agent/rules/` (workspace)
+  - Workflows: Markdown files invoked via `/workflow-name`
+  - Skills: `.agent/skills/` (workspace), `~/.gemini/antigravity/global_skills/` (global)
+  - Fast Mode vs Planning Mode available in GUI
+  - Model selection: Reasoning Model selector in GUI (includes Gemini, Claude, GPT-OSS models)
+
+**Troubleshooting:**
+- If `agy` command not found, check if the executable is named `antigravity` instead
+- Update `cliPaths.antigravity` in Puppet Master config to match your system's executable name
+- Puppet Master will show a clear error if Antigravity is selected for automation (use `gemini` instead)
+
+---
+
+*Last updated: 2026-01-22*

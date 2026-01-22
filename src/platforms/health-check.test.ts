@@ -214,6 +214,9 @@ describe('PlatformHealthChecker', () => {
         vi.spyOn(capabilityService, 'getCached').mockResolvedValue(null);
         vi.spyOn(capabilityService, 'probe').mockResolvedValue({
           platform: 'cursor',
+          command: 'cursor',
+          runnable: true,
+          authStatus: 'authenticated',
           version: testCase.expected,
           capabilities: {
             streaming: false,
@@ -270,6 +273,9 @@ describe('PlatformHealthChecker', () => {
 
       const cachedCapabilities: CapabilityProbeResult = {
         platform: 'cursor',
+        command: 'cursor',
+        runnable: true,
+        authStatus: 'authenticated',
         version: '1.0.0',
         capabilities: {
           streaming: true,
@@ -330,6 +336,9 @@ describe('PlatformHealthChecker', () => {
 
       const probeResult: CapabilityProbeResult = {
         platform: 'codex',
+        command: 'codex',
+        runnable: true,
+        authStatus: 'authenticated',
         version: '1.0.0',
         capabilities: {
           streaming: false,
@@ -465,6 +474,9 @@ describe('PlatformHealthChecker', () => {
       vi.spyOn(capabilityService, 'getCached').mockResolvedValue(null);
       vi.spyOn(capabilityService, 'probe').mockResolvedValue({
         platform: 'cursor',
+        command: 'cursor',
+        runnable: true,
+        authStatus: 'authenticated',
         version: '1.0.0',
         capabilities: {
           streaming: false,
@@ -563,6 +575,9 @@ describe('PlatformHealthChecker', () => {
       vi.spyOn(capabilityService, 'getCached').mockResolvedValue(null);
       vi.spyOn(capabilityService, 'probe').mockResolvedValue({
         platform: 'cursor',
+        command: 'cursor',
+        runnable: true,
+        authStatus: 'authenticated',
         version: '1.0.0',
         capabilities: {
           streaming: false,

@@ -17,6 +17,36 @@ import { InstallationManager } from '../../doctor/installation-manager.js';
 import { DoctorReporter } from '../../doctor/doctor-reporter.js';
 import type { CheckResult, CheckCategory } from '../../doctor/check-registry.js';
 
+vi.mock('../../config/config-manager.js', () => ({
+  ConfigManager: vi.fn().mockImplementation(() => ({
+    load: vi.fn().mockResolvedValue({
+      cliPaths: {
+        cursor: 'cursor-agent',
+        codex: 'codex',
+        claude: 'claude',
+        gemini: 'gemini',
+        copilot: 'copilot',
+        antigravity: 'agy',
+      },
+    }),
+  })),
+}));
+
+vi.mock('../../doctor/checks/playwright-check.js', () => ({
+  PlaywrightBrowsersCheck: vi.fn().mockImplementation(() => ({
+    name: 'playwright-browsers',
+    category: 'runtime' as const,
+    description: 'Checks Playwright is installed and browsers are available',
+    run: vi.fn().mockResolvedValue({
+      name: 'playwright-browsers',
+      category: 'runtime' as const,
+      passed: true,
+      message: 'Playwright browsers are available',
+      durationMs: 5,
+    }),
+  })),
+}));
+
 // Mock the check classes
 vi.mock('../../doctor/checks/cli-tools.js', () => ({
   CursorCliCheck: vi.fn().mockImplementation(() => ({

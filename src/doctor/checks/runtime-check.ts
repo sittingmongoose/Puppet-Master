@@ -7,8 +7,7 @@
  */
 
 import { spawn } from 'child_process';
-// @ts-expect-error - semver is a transitive dependency without explicit types
-import { gte as semverGte } from 'semver';
+import semver from 'semver';
 import type { DoctorCheck, CheckResult } from '../check-registry.js';
 
 /**
@@ -134,7 +133,7 @@ export class NodeVersionCheck implements DoctorCheck {
       const version = output.trim();
 
       // Use semver for proper comparison
-      if (semverGte(version, this.minimumVersion)) {
+      if (semver.gte(version, this.minimumVersion)) {
         return {
           name: this.name,
           category: this.category,

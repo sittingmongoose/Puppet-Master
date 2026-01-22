@@ -141,6 +141,9 @@ describe('BasePlatformRunner', () => {
     // Create mock probe result
     mockProbeResult = {
       platform: 'cursor',
+      command: 'cursor',
+      runnable: true,
+      authStatus: 'authenticated',
       version: '1.0.0',
       capabilities: {
         streaming: true,

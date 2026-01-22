@@ -371,6 +371,9 @@ project:
           },
           codex: base.budgets.codex,
           cursor: base.budgets.cursor,
+          gemini: base.budgets.gemini,
+          copilot: base.budgets.copilot,
+          antigravity: base.budgets.antigravity,
         },
       };
 

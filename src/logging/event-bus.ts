@@ -24,7 +24,7 @@ export type PuppetMasterEvent =
   | { type: 'project_loaded'; name: string; path: string; phasesTotal: number; tasksTotal: number; subtasksTotal: number }
   | { type: 'progress'; phasesTotal: number; phasesComplete: number; tasksTotal: number; tasksComplete: number; subtasksTotal: number; subtasksComplete: number }
   | { type: 'commit'; sha: string; message: string; files: number; timestamp: string }
-  | { type: 'budget_update'; platform: 'claude' | 'codex' | 'cursor'; used: number; limit: number; cooldownUntil?: string }
+  | { type: 'budget_update'; platform: 'claude' | 'codex' | 'cursor' | 'gemini' | 'copilot' | 'antigravity'; used: number; limit: number; cooldownUntil?: string }
   | { type: 'gate_start'; tierId: string; tierType: 'task' | 'phase'; verifierType: string; target: string }
   | { type: 'gate_complete'; tierId: string; tierType: 'task' | 'phase'; passed: boolean; evidence?: string }
   | { type: 'replan_complete'; tierId: string; scope: 'phase' | 'task' | 'subtask'; timestamp: string }

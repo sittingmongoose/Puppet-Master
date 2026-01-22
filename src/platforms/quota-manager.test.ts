@@ -44,6 +44,27 @@ describe('QuotaManager', () => {
         cooldownHours: undefined,
         fallbackPlatform: null,
       },
+      gemini: {
+        maxCallsPerRun: 100,
+        maxCallsPerHour: 50,
+        maxCallsPerDay: 200,
+        cooldownHours: 0,
+        fallbackPlatform: null,
+      },
+      copilot: {
+        maxCallsPerRun: 'unlimited',
+        maxCallsPerHour: 'unlimited',
+        maxCallsPerDay: 'unlimited',
+        cooldownHours: undefined,
+        fallbackPlatform: null,
+      },
+      antigravity: {
+        maxCallsPerRun: 'unlimited',
+        maxCallsPerHour: 'unlimited',
+        maxCallsPerDay: 'unlimited',
+        cooldownHours: undefined,
+        fallbackPlatform: null,
+      },
     };
 
     quotaManager = new QuotaManager(usageTracker, budgets);

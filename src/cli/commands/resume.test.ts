@@ -136,6 +136,9 @@ describe('resumeAction', () => {
         cursor: 'cursor',
         codex: 'codex',
         claude: 'claude',
+        gemini: 'gemini',
+        copilot: 'copilot',
+        antigravity: 'agy',
       },
       logging: {
         level: 'info',
@@ -210,6 +213,24 @@ describe('resumeAction', () => {
           fallbackPlatform: null,
         },
         claude: {
+          maxCallsPerRun: 100,
+          maxCallsPerHour: 50,
+          maxCallsPerDay: 200,
+          fallbackPlatform: null,
+        },
+        gemini: {
+          maxCallsPerRun: 100,
+          maxCallsPerHour: 50,
+          maxCallsPerDay: 200,
+          fallbackPlatform: null,
+        },
+        copilot: {
+          maxCallsPerRun: 100,
+          maxCallsPerHour: 50,
+          maxCallsPerDay: 200,
+          fallbackPlatform: null,
+        },
+        antigravity: {
           maxCallsPerRun: 100,
           maxCallsPerHour: 50,
           maxCallsPerDay: 200,

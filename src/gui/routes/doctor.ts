@@ -10,11 +10,16 @@ import { Router as createRouter } from 'express';
 import { CheckRegistry } from '../../doctor/check-registry.js';
 import type { CheckCategory, CheckResult } from '../../doctor/check-registry.js';
 import { InstallationManager } from '../../doctor/installation-manager.js';
+import { ConfigManager } from '../../config/config-manager.js';
 
 // CLI checks
 import { CursorCliCheck } from '../../doctor/checks/cli-tools.js';
 import { CodexCliCheck } from '../../doctor/checks/cli-tools.js';
 import { ClaudeCliCheck } from '../../doctor/checks/cli-tools.js';
+import { GeminiCliCheck } from '../../doctor/checks/cli-tools.js';
+import { CopilotCliCheck } from '../../doctor/checks/cli-tools.js';
+import { AntigravityCliCheck } from '../../doctor/checks/cli-tools.js';
+import { PlaywrightBrowsersCheck } from '../../doctor/checks/playwright-check.js';
 
 // Git checks
 import {
@@ -76,13 +81,18 @@ interface FixCheckRequest {
  * 
  * @returns CheckRegistry instance with all checks registered
  */
-function createCheckRegistry(): CheckRegistry {
+async function createCheckRegistry(): Promise<CheckRegistry> {
   const registry = new CheckRegistry();
+  const configManager = new ConfigManager();
+  const config = await configManager.load();
 
   // Register CLI checks
-  registry.register(new CursorCliCheck());
-  registry.register(new CodexCliCheck());
-  registry.register(new ClaudeCliCheck());
+  registry.register(new CursorCliCheck(config.cliPaths));
+  registry.register(new CodexCliCheck(config.cliPaths));
+  registry.register(new ClaudeCliCheck(config.cliPaths));
+  registry.register(new GeminiCliCheck(config.cliPaths));
+  registry.register(new CopilotCliCheck(config.cliPaths));
+  registry.register(new AntigravityCliCheck(config.cliPaths));
 
   // Register Git checks
   registry.register(new GitAvailableCheck());
@@ -92,6 +102,7 @@ function createCheckRegistry(): CheckRegistry {
   // Register Runtime checks
   registry.register(new NodeVersionCheck());
   registry.register(new NpmAvailableCheck());
+  registry.register(new PlaywrightBrowsersCheck());
 
   // Register Project checks
   registry.register(new ProjectDirCheck());
@@ -115,7 +126,7 @@ export function createDoctorRoutes(): Router {
    */
   router.get('/doctor/checks', async (_req: Request, res: Response) => {
     try {
-      const registry = createCheckRegistry();
+      const registry = await createCheckRegistry();
       const checks = registry.getRegisteredChecks();
       const installationManager = new InstallationManager();
       
@@ -145,7 +156,7 @@ export function createDoctorRoutes(): Router {
   router.post('/doctor/run', async (req: Request, res: Response) => {
     try {
       const body = req.body as RunChecksRequest;
-      const registry = createCheckRegistry();
+      const registry = await createCheckRegistry();
       const installationManager = new InstallationManager();
 
       let results: CheckResult[];

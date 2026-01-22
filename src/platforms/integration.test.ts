@@ -220,6 +220,24 @@ function createTestConfig(tempDir: string): PuppetMasterConfig {
         cooldownHours: 1,
         fallbackPlatform: null,
       },
+        gemini: {
+          maxCallsPerRun: 100,
+          maxCallsPerHour: 50,
+          maxCallsPerDay: 200,
+          fallbackPlatform: null,
+        },
+        copilot: {
+          maxCallsPerRun: 100,
+          maxCallsPerHour: 50,
+          maxCallsPerDay: 200,
+          fallbackPlatform: null,
+        },
+        antigravity: {
+          maxCallsPerRun: 100,
+          maxCallsPerHour: 50,
+          maxCallsPerDay: 200,
+          fallbackPlatform: null,
+        },
     },
     budgetEnforcement: {
       onLimitReached: 'fallback',
@@ -234,6 +252,9 @@ function createTestConfig(tempDir: string): PuppetMasterConfig {
       cursor: join(MOCK_CLIS_DIR, 'mock-cursor'),
       codex: join(MOCK_CLIS_DIR, 'mock-codex'),
       claude: join(MOCK_CLIS_DIR, 'mock-claude'),
+      gemini: join(MOCK_CLIS_DIR, 'mock-gemini'),
+      copilot: join(MOCK_CLIS_DIR, 'mock-copilot'),
+      antigravity: join(MOCK_CLIS_DIR, 'mock-antigravity'),
     },
   };
 }
@@ -281,6 +302,9 @@ describe('Platform Integration Tests', () => {
       // Step 1: Mock capability service to avoid actual CLI calls
       const mockProbeResult = {
         platform: 'cursor' as Platform,
+        command: 'cursor',
+        runnable: true,
+        authStatus: 'authenticated' as const,
         version: '1.0.0',
         capabilities: {
           streaming: true,
@@ -351,6 +375,9 @@ describe('Platform Integration Tests', () => {
       // Mock capability service
       const mockProbeResult = {
         platform: 'cursor' as Platform,
+        command: 'cursor',
+        runnable: true,
+        authStatus: 'authenticated' as const,
         version: '1.0.0',
         capabilities: {
           streaming: true,
@@ -422,6 +449,9 @@ describe('Platform Integration Tests', () => {
       // Mock capability service
       const mockProbeResult = {
         platform: 'cursor' as Platform,
+        command: 'cursor',
+        runnable: true,
+        authStatus: 'authenticated' as const,
         version: '1.0.0',
         capabilities: {
           streaming: true,
@@ -496,6 +526,9 @@ describe('Platform Integration Tests', () => {
         },
         codex: config.budgets.codex,
         claude: config.budgets.claude,
+        gemini: config.budgets.gemini,
+        copilot: config.budgets.copilot,
+        antigravity: config.budgets.antigravity,
       };
       const quotaManager = new QuotaManager(usageTracker, lowBudget);
 
@@ -539,6 +572,9 @@ describe('Platform Integration Tests', () => {
         },
         codex: config.budgets.codex,
         claude: config.budgets.claude,
+        gemini: config.budgets.gemini,
+        copilot: config.budgets.copilot,
+        antigravity: config.budgets.antigravity,
       };
       const quotaManager = new QuotaManager(usageTracker, lowBudget);
 
@@ -568,6 +604,9 @@ describe('Platform Integration Tests', () => {
         },
         codex: config.budgets.codex,
         claude: config.budgets.claude,
+        gemini: config.budgets.gemini,
+        copilot: config.budgets.copilot,
+        antigravity: config.budgets.antigravity,
       };
       const quotaManager = new QuotaManager(usageTracker, lowBudget);
 
@@ -592,6 +631,9 @@ describe('Platform Integration Tests', () => {
         },
         codex: config.budgets.codex,
         claude: config.budgets.claude,
+        gemini: config.budgets.gemini,
+        copilot: config.budgets.copilot,
+        antigravity: config.budgets.antigravity,
       };
       const quotaManager = new QuotaManager(usageTracker, lowBudget);
 
@@ -628,6 +670,9 @@ describe('Platform Integration Tests', () => {
         },
         codex: config.budgets.codex,
         claude: config.budgets.claude,
+        gemini: config.budgets.gemini,
+        copilot: config.budgets.copilot,
+        antigravity: config.budgets.antigravity,
       };
       const quotaManager = new QuotaManager(usageTracker, noCooldownBudget);
 
@@ -658,6 +703,9 @@ describe('Platform Integration Tests', () => {
           fallbackPlatform: 'claude',
         },
         claude: config.budgets.claude,
+        gemini: config.budgets.gemini,
+        copilot: config.budgets.copilot,
+        antigravity: config.budgets.antigravity,
       };
       const quotaManager = new QuotaManager(usageTracker, lowBudget);
 
@@ -697,6 +745,9 @@ describe('Platform Integration Tests', () => {
           cooldownHours: 1,
           fallbackPlatform: null,
         },
+        gemini: config.budgets.gemini,
+        copilot: config.budgets.copilot,
+        antigravity: config.budgets.antigravity,
       };
       const quotaManager = new QuotaManager(usageTracker, lowBudget);
 
@@ -738,6 +789,27 @@ describe('Platform Integration Tests', () => {
           cooldownHours: 1,
           fallbackPlatform: null,
         },
+        gemini: {
+          maxCallsPerRun: 100,
+          maxCallsPerHour: 50,
+          maxCallsPerDay: 200,
+          cooldownHours: 0,
+          fallbackPlatform: null,
+        },
+        copilot: {
+          maxCallsPerRun: 100,
+          maxCallsPerHour: 50,
+          maxCallsPerDay: 200,
+          cooldownHours: 0,
+          fallbackPlatform: null,
+        },
+        antigravity: {
+          maxCallsPerRun: 100,
+          maxCallsPerHour: 50,
+          maxCallsPerDay: 200,
+          cooldownHours: 0,
+          fallbackPlatform: null,
+        },
       };
       const quotaManager = new QuotaManager(usageTracker, budget);
 
@@ -763,6 +835,9 @@ describe('Platform Integration Tests', () => {
       // Mock capability service
       const mockProbeResult = {
         platform: 'cursor' as Platform,
+        command: 'cursor',
+        runnable: true,
+        authStatus: 'authenticated' as const,
         version: '1.0.0',
         capabilities: {
           streaming: true,
@@ -872,6 +947,9 @@ describe('Platform Integration Tests', () => {
       // Mock capability service
       const mockProbeResult = {
         platform: 'cursor' as Platform,
+        command: 'cursor',
+        runnable: true,
+        authStatus: 'authenticated' as const,
         version: '1.0.0',
         capabilities: {
           streaming: true,

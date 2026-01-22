@@ -17,19 +17,29 @@ import type {
   QuotaInfo,
   CooldownInfo,
 } from '../types/capabilities.js';
-import { resolvePlatformCommand } from './constants.js';
+import { getPlatformAuthStatus } from './auth-status.js';
+import { getCursorCommandCandidates, resolvePlatformCommand } from './constants.js';
 
 /**
  * Executes a CLI command and returns stdout output.
  */
-async function executeCommand(command: string, args: string[]): Promise<string> {
-  return new Promise((resolve, reject) => {
+async function executeCommand(
+  command: string,
+  args: string[],
+  timeoutMs: number = 10_000
+): Promise<{ ok: true; output: string } | { ok: false; error: string; errorCode?: string }> {
+  return new Promise((resolve) => {
     const proc = spawn(command, args, {
       stdio: ['ignore', 'pipe', 'pipe'],
     });
 
     let stdout = '';
     let stderr = '';
+
+    const timer = setTimeout(() => {
+      proc.kill('SIGKILL');
+      resolve({ ok: false, error: `Command timed out after ${timeoutMs}ms` });
+    }, timeoutMs);
 
     proc.stdout.on('data', (data) => {
       stdout += data.toString();
@@ -40,15 +50,25 @@ async function executeCommand(command: string, args: string[]): Promise<string> 
     });
 
     proc.on('close', (code) => {
+      clearTimeout(timer);
       if (code === 0) {
-        resolve(stdout);
+        resolve({ ok: true, output: stdout || stderr });
       } else {
-        reject(new Error(`Command failed with code ${code}: ${stderr || stdout}`));
+        resolve({
+          ok: false,
+          error: `Command failed with code ${code}: ${stderr || stdout}`,
+        });
       }
     });
 
     proc.on('error', (error) => {
-      reject(error);
+      clearTimeout(timer);
+      const errno = error as NodeJS.ErrnoException;
+      resolve({
+        ok: false,
+        error: error.message,
+        errorCode: typeof errno.code === 'string' ? errno.code : undefined,
+      });
     });
   });
 }
@@ -173,35 +193,43 @@ export class CapabilityDiscoveryService {
    * Returns default capabilities if CLI is missing.
    */
   async probe(platform: Platform): Promise<CapabilityProbeResult> {
-    const command = resolvePlatformCommand(platform, this.cliPaths);
     const timestamp = new Date().toISOString();
 
     let version = 'unknown';
     let capabilities = createDefaultCapabilities();
+    let command = resolvePlatformCommand(platform, this.cliPaths);
+    let runnable = false;
 
-    try {
-      // Try to get version
-      try {
-        const versionOutput = await executeCommand(command, ['--version']);
-        version = parseVersion(versionOutput);
-      } catch {
-        // Version command failed, use default
-      }
+    const candidates =
+      platform === 'cursor'
+        ? getCursorCommandCandidates(this.cliPaths)
+        : [resolvePlatformCommand(platform, this.cliPaths)];
 
-      // Try to get help output for capabilities
-      try {
-        const helpOutput = await executeCommand(command, ['--help']);
-        capabilities = parseCapabilities(helpOutput);
-      } catch {
-        // Help command failed, use default capabilities
+    // Probe candidates until one can actually run.
+    for (const candidate of candidates) {
+      const versionResult = await executeCommand(candidate, ['--version'], 5_000);
+      const helpResult = await executeCommand(candidate, ['--help'], 5_000);
+
+      if (versionResult.ok || helpResult.ok) {
+        command = candidate;
+        runnable = true;
+        if (versionResult.ok) {
+          version = parseVersion(versionResult.output);
+        }
+        if (helpResult.ok) {
+          capabilities = parseCapabilities(helpResult.output);
+        }
+        break;
       }
-    } catch {
-      // CLI is missing or not executable, return default capabilities
-      capabilities = createDefaultCapabilities();
     }
+
+    const authStatus = getPlatformAuthStatus(platform).status;
 
     const result: CapabilityProbeResult = {
       platform,
+      command,
+      runnable,
+      authStatus,
       version,
       capabilities,
       quotaInfo: createDefaultQuotaInfo(),

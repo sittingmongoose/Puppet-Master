@@ -2910,12 +2910,47 @@ When complete, update this task's Status Log with PASS/FAIL, commands run + resu
 
 ### Task status log
 ```
-Status: PENDING
-Date:
+Status: PASS
+Date: 2026-01-22
 Summary of changes:
+- Doctor CLI checks are config-driven (cliPaths) and report installed/runnable/authenticated (or auth check skipped) with safe, local-only auth detection.
+- Capability discovery probes Cursor with fallbacks and records `command`, `runnable`, and `authStatus` in the cache result.
+- Added Playwright browser readiness doctor check with an automated install suggestion.
+- Made Doctor safe from transitive runtime assumptions by adding `semver` as a direct dependency and removing brittle import patterns.
 Files changed:
+- package.json
+- package-lock.json
+- src/platforms/auth-status.ts
+- src/types/capabilities.ts
+- src/platforms/capability-discovery.ts
+- src/platforms/capability-discovery.test.ts
+- src/types/semver.d.ts
+- src/doctor/checks/cli-tools.ts
+- src/doctor/checks/cli-tools.test.ts
+- src/doctor/checks/playwright-check.ts
+- src/doctor/checks/playwright-check.test.ts
+- src/doctor/checks/index.ts
+- src/doctor/checks/runtime-check.ts
+- src/doctor/checks/project-check.test.ts
+- src/doctor/installation-manager.ts
+- src/cli/commands/doctor.ts
+- src/cli/commands/doctor.test.ts
+- src/cli/commands/install.ts
+- src/cli/commands/install.test.ts
+- src/gui/routes/doctor.ts
 Commands run + results:
+- npm install --package-lock-only: PASS (lockfile updated)
+- npm run typecheck: PASS
+- npm test -- src/doctor: PASS
+- npm test -- src/platforms/capability-discovery: PASS
 If FAIL - where stuck + exact error snippets + what remains:
+N/A
+
+EXTENSION (2026-01-22 later): Added CLI checks for new platforms
+- Added GeminiCliCheck, CopilotCliCheck, AntigravityCliCheck to cli-tools.ts
+- Registered new checks in doctor.ts, install.ts, and doctor route
+- All 6 platforms now have doctor checks (cursor, codex, claude, gemini, copilot, antigravity)
+- AntigravityCliCheck includes launcher-only warning directing users to gemini/copilot for headless
 ```
 
 ---

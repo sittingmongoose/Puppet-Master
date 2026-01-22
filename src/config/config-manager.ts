@@ -283,6 +283,9 @@ function deepMerge(base: PuppetMasterConfig, overrides: Partial<PuppetMasterConf
       claude: overrides.budgets.claude ? { ...base.budgets.claude, ...overrides.budgets.claude } : base.budgets.claude,
       codex: overrides.budgets.codex ? { ...base.budgets.codex, ...overrides.budgets.codex } : base.budgets.codex,
       cursor: overrides.budgets.cursor ? { ...base.budgets.cursor, ...overrides.budgets.cursor } : base.budgets.cursor,
+      gemini: overrides.budgets.gemini ? { ...base.budgets.gemini, ...overrides.budgets.gemini } : base.budgets.gemini,
+      copilot: overrides.budgets.copilot ? { ...base.budgets.copilot, ...overrides.budgets.copilot } : base.budgets.copilot,
+      antigravity: overrides.budgets.antigravity ? { ...base.budgets.antigravity, ...overrides.budgets.antigravity } : base.budgets.antigravity,
     };
   }
 

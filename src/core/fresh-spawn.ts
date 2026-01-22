@@ -401,6 +401,21 @@ export class FreshSpawner {
           command: resolvePlatformCommand('codex', null),
           args: ['exec', request.prompt, ...baseArgs],
         };
+      case 'gemini':
+        return {
+          command: resolvePlatformCommand('gemini', null),
+          args: ['-p', request.prompt, '--output-format', 'json', '--approval-mode', 'yolo', ...baseArgs],
+        };
+      case 'copilot':
+        return {
+          command: resolvePlatformCommand('copilot', null),
+          args: ['-p', request.prompt, '--allow-all-tools', '--allow-all-paths', '--silent', '--stream', 'off', ...baseArgs],
+        };
+      case 'antigravity':
+        return {
+          command: resolvePlatformCommand('antigravity', null),
+          args: [...baseArgs],
+        };
       default: {
         const exhaustive: never = request.platform;
         return exhaustive;

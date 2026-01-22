@@ -16,11 +16,16 @@ import { CheckRegistry } from '../../doctor/check-registry.js';
 import type { CheckResult } from '../../doctor/check-registry.js';
 import { InstallationManager } from '../../doctor/installation-manager.js';
 import type { CommandModule } from './index.js';
+import { ConfigManager } from '../../config/config-manager.js';
 
 // CLI checks
 import { CursorCliCheck } from '../../doctor/checks/cli-tools.js';
 import { CodexCliCheck } from '../../doctor/checks/cli-tools.js';
 import { ClaudeCliCheck } from '../../doctor/checks/cli-tools.js';
+import { GeminiCliCheck } from '../../doctor/checks/cli-tools.js';
+import { CopilotCliCheck } from '../../doctor/checks/cli-tools.js';
+import { AntigravityCliCheck } from '../../doctor/checks/cli-tools.js';
+import { PlaywrightBrowsersCheck } from '../../doctor/checks/playwright-check.js';
 
 // Git checks
 import {
@@ -63,13 +68,18 @@ export interface InstallOptions {
  * 
  * @returns CheckRegistry instance with all checks registered
  */
-function createCheckRegistry(): CheckRegistry {
+async function createCheckRegistry(): Promise<CheckRegistry> {
   const registry = new CheckRegistry();
+  const configManager = new ConfigManager();
+  const config = await configManager.load();
 
   // Register CLI checks
-  registry.register(new CursorCliCheck());
-  registry.register(new CodexCliCheck());
-  registry.register(new ClaudeCliCheck());
+  registry.register(new CursorCliCheck(config.cliPaths));
+  registry.register(new CodexCliCheck(config.cliPaths));
+  registry.register(new ClaudeCliCheck(config.cliPaths));
+  registry.register(new GeminiCliCheck(config.cliPaths));
+  registry.register(new CopilotCliCheck(config.cliPaths));
+  registry.register(new AntigravityCliCheck(config.cliPaths));
 
   // Register Git checks
   registry.register(new GitAvailableCheck());
@@ -79,6 +89,7 @@ function createCheckRegistry(): CheckRegistry {
   // Register Runtime checks
   registry.register(new NodeVersionCheck());
   registry.register(new NpmAvailableCheck());
+  registry.register(new PlaywrightBrowsersCheck());
 
   // Register Project checks
   registry.register(new ProjectDirCheck());
@@ -95,6 +106,7 @@ const checkNameToToolName: Record<string, string> = {
   'cursor-cli': 'Cursor CLI',
   'codex-cli': 'Codex CLI',
   'claude-cli': 'Claude CLI',
+  'playwright-browsers': 'Playwright Browsers',
   'project-dir': 'Project Directory',
 };
 
@@ -141,7 +153,7 @@ export async function installAction(
 ): Promise<void> {
   try {
     // Create check registry and run checks
-    const registry = createCheckRegistry();
+    const registry = await createCheckRegistry();
     const results = await registry.runAll();
 
     // Filter to failed checks that have install commands

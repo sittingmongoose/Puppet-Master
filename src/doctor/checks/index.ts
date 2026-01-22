@@ -8,7 +8,12 @@ export {
   CursorCliCheck,
   CodexCliCheck,
   ClaudeCliCheck,
+  GeminiCliCheck,
+  CopilotCliCheck,
+  AntigravityCliCheck,
 } from './cli-tools.js';
+
+export { PlaywrightBrowsersCheck } from './playwright-check.js';
 
 export {
   GitAvailableCheck,

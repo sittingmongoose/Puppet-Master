@@ -37,10 +37,15 @@ describe('CLI Tools Checks', () => {
   beforeEach(() => {
     mockSpawn = vi.mocked(spawn);
     vi.mocked(access).mockClear();
+    vi.mocked(access).mockRejectedValue(new Error('ENOENT'));
+    process.env.OPENAI_API_KEY = 'test';
+    process.env.ANTHROPIC_API_KEY = 'test';
   });
 
   afterEach(() => {
     vi.clearAllMocks();
+    delete process.env.OPENAI_API_KEY;
+    delete process.env.ANTHROPIC_API_KEY;
   });
 
   /**
@@ -124,7 +129,7 @@ describe('CLI Tools Checks', () => {
       const result = await check.run();
 
       expect(result.passed).toBe(true);
-      expect(result.message).toContain('available');
+      expect(result.message).toContain('runnable');
       expect(result.details).toContain('Version:');
       expect(result.fixSuggestion).toBeUndefined();
       expect(mockSpawn).toHaveBeenCalledWith(primaryCommand, ['--version'], expect.any(Object));
@@ -142,7 +147,7 @@ describe('CLI Tools Checks', () => {
       const result = await check.run();
 
       expect(result.passed).toBe(true);
-      expect(result.message).toContain('available');
+      expect(result.message).toContain('runnable');
     });
 
     it('should fail when neither cursor-agent nor agent is available', async () => {
@@ -183,11 +188,12 @@ describe('CLI Tools Checks', () => {
     it('should pass when codex is available', async () => {
       const check = new CodexCliCheck();
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('codex 1.0.0'));
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
 
       const result = await check.run();
 
       expect(result.passed).toBe(true);
-      expect(result.message).toContain('available');
+      expect(result.message).toContain('authenticated');
       expect(result.details).toContain('Version:');
       expect(result.fixSuggestion).toBeUndefined();
     });
@@ -196,15 +202,19 @@ describe('CLI Tools Checks', () => {
       const check = new CodexCliCheck();
       // codex not found
       mockSpawn.mockReturnValueOnce(createMockErrorProcess(new Error('ENOENT')));
-      // npx available
-      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('npx 9.0.0'));
-      // npx codex --version succeeds
+      // npx --no-install codex --version succeeds
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('codex 1.0.0 via npx'));
+      // npx --no-install codex --help succeeds
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
 
       const result = await check.run();
 
       expect(result.passed).toBe(true);
-      expect(mockSpawn).toHaveBeenCalledWith('npx', ['codex', '--version'], expect.any(Object));
+      expect(mockSpawn).toHaveBeenCalledWith(
+        'npx',
+        ['--no-install', 'codex', '--version'],
+        expect.any(Object)
+      );
     });
 
     it('should fail when neither codex nor npx codex is available', async () => {
@@ -222,6 +232,7 @@ describe('CLI Tools Checks', () => {
     it('should include version in details when available', async () => {
       const check = new CodexCliCheck();
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('codex 2.3.4'));
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
 
       const result = await check.run();
 
@@ -232,8 +243,6 @@ describe('CLI Tools Checks', () => {
       const check = new CodexCliCheck();
       // codex not found
       mockSpawn.mockReturnValueOnce(createMockErrorProcess(new Error('ENOENT')));
-      // npx available
-      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('npx 9.0.0'));
       // npx codex times out (simulated by never calling close)
       const timeoutProc = {
         stdout: { on: vi.fn() },
@@ -252,17 +261,29 @@ describe('CLI Tools Checks', () => {
 
       expect(result.passed).toBe(false);
     });
+
+    it('should fail when OPENAI_API_KEY is missing', async () => {
+      delete process.env.OPENAI_API_KEY;
+      const check = new CodexCliCheck();
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('codex 1.0.0'));
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
+
+      const result = await check.run();
+      expect(result.passed).toBe(false);
+      expect(result.message).toContain('not authenticated');
+    });
   });
 
   describe('ClaudeCliCheck', () => {
     it('should pass when claude is available', async () => {
       const check = new ClaudeCliCheck();
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('claude 1.0.0'));
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
 
       const result = await check.run();
 
       expect(result.passed).toBe(true);
-      expect(result.message).toContain('available');
+      expect(result.message).toContain('authenticated');
       expect(result.details).toContain('Version:');
       expect(result.fixSuggestion).toBeUndefined();
     });
@@ -275,6 +296,7 @@ describe('CLI Tools Checks', () => {
       vi.mocked(access).mockResolvedValueOnce(undefined);
       // Local claude works
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('claude 1.0.0'));
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
 
       const result = await check.run();
 
@@ -297,6 +319,7 @@ describe('CLI Tools Checks', () => {
     it('should include version in details when available', async () => {
       const check = new ClaudeCliCheck();
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('claude 3.5.0'));
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
 
       const result = await check.run();
 
@@ -345,6 +368,7 @@ describe('CLI Tools Checks', () => {
     it('should return valid CheckResult for CodexCliCheck', async () => {
       const check = new CodexCliCheck();
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('codex 1.0.0'));
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
 
       const result = await check.run();
 
@@ -357,6 +381,7 @@ describe('CLI Tools Checks', () => {
     it('should return valid CheckResult for ClaudeCliCheck', async () => {
       const check = new ClaudeCliCheck();
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('claude 1.0.0'));
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
 
       const result = await check.run();
 

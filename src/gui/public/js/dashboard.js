@@ -301,6 +301,46 @@ function updateBudgets(budgets) {
     cursorEl.textContent = text;
     cursorEl.setAttribute('aria-label', `Cursor budget: ${text}`);
   }
+
+  // Add support for new platforms
+  const geminiEl = document.getElementById('budget-gemini');
+  if (geminiEl && budgets.gemini) {
+    const { current = 0, limit = 'unlimited' } = budgets.gemini;
+    let text;
+    if (limit === 'unlimited') {
+      text = `Gemini ${current} (∞)`;
+    } else {
+      text = `Gemini ${current}/${limit}`;
+    }
+    geminiEl.textContent = text;
+    geminiEl.setAttribute('aria-label', `Gemini budget: ${text}`);
+  }
+
+  const copilotEl = document.getElementById('budget-copilot');
+  if (copilotEl && budgets.copilot) {
+    const { current = 0, limit = 'unlimited' } = budgets.copilot;
+    let text;
+    if (limit === 'unlimited') {
+      text = `Copilot ${current} (∞)`;
+    } else {
+      text = `Copilot ${current}/${limit}`;
+    }
+    copilotEl.textContent = text;
+    copilotEl.setAttribute('aria-label', `Copilot budget: ${text}`);
+  }
+
+  const antigravityEl = document.getElementById('budget-antigravity');
+  if (antigravityEl && budgets.antigravity) {
+    const { current = 0, limit = 'unlimited' } = budgets.antigravity;
+    let text;
+    if (limit === 'unlimited') {
+      text = `Antigravity ${current} (∞)`;
+    } else {
+      text = `Antigravity ${current}/${limit}`;
+    }
+    antigravityEl.textContent = text;
+    antigravityEl.setAttribute('aria-label', `Antigravity budget: ${text}`);
+  }
 }
 
 function updatePosition(data) {

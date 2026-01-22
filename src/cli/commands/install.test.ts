@@ -16,6 +16,30 @@ import { InstallationManager } from '../../doctor/installation-manager.js';
 import type { CheckResult } from '../../doctor/check-registry.js';
 import type { InstallCommand as InstallCmd } from '../../doctor/installation-manager.js';
 
+vi.mock('../../config/config-manager.js', () => ({
+  ConfigManager: vi.fn().mockImplementation(() => ({
+    load: vi.fn().mockResolvedValue({
+      cliPaths: {
+        cursor: 'cursor-agent',
+        codex: 'codex',
+        claude: 'claude',
+        gemini: 'gemini',
+        copilot: 'copilot',
+        antigravity: 'agy',
+      },
+    }),
+  })),
+}));
+
+vi.mock('../../doctor/checks/playwright-check.js', () => ({
+  PlaywrightBrowsersCheck: vi.fn().mockImplementation(() => ({
+    name: 'playwright-browsers',
+    category: 'runtime' as const,
+    description: 'Checks Playwright is installed and browsers are available',
+    run: vi.fn(),
+  })),
+}));
+
 // Mock CheckRegistry
 vi.mock('../../doctor/check-registry.js', () => {
   return {

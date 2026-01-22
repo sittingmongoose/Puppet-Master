@@ -7,7 +7,7 @@
 
 **Platforms being added:**
 - `gemini` — Google's Gemini CLI (terminal-first, fully headless)
-- `antigravity` — Google's Antigravity IDE agent (via `agy` / `antigravity` — headless support TBD)
+- `antigravity` — Google Antigravity IDE (launcher-only, ❌ no headless support)
 - `copilot` — GitHub Copilot CLI (programmatic mode)
 
 ---
@@ -18,7 +18,7 @@
 |-----------|-------------|--------|---------------|
 | **Gemini Models** | Google's LLM models (gemini-2.5-pro, gemini-3-pro, etc.) | N/A | N/A |
 | **Gemini CLI** | Open-source terminal agent for Gemini models | `gemini` | ✅ Full (`-p`, `--output-format json`) |
-| **Antigravity** | Google's agent-first IDE with Agent Manager | `agy` (launcher) / `antigravity` (binary) | ⚠️ Limited (primarily GUI launcher) |
+| **Antigravity** | Google's agent-first IDE with Agent Manager | `agy` (launcher) / `antigravity` (binary) | ❌ Not supported (GUI launcher only) |
 
 **Key insight:** Gemini CLI and Antigravity are **separate products** that both use Gemini models:
 - **Gemini CLI** is terminal-first and explicitly designed for headless/scripted automation
@@ -51,8 +51,8 @@ Primary sources:
 - **Headless/Automation capabilities** (based on what is documented today):
   - Antigravity supports Rules, Workflows, and Skills (file-based; workspace/global)
   - The codelab documents `agy` as a command-line tool to open Antigravity (launcher behavior)
-  - No official docs located so far describing a prompt-in/prompt-out *headless* `agy` mode (flags like `-p`, `--prompt`, `--output-format`) — treat as **TBD until tested locally**
-  - **Possible binary naming mismatch:** some installs may provide an `antigravity` executable and use `agy` as a shim/alias; treat this as **unverified until AGY-T01 confirms** (and handle both in Doctor)
+  - **Investigation complete (AG-P1-T11):** `agy` is a launcher-only tool with no headless/automation support.
+  - **Possible binary naming mismatch:** some installs may provide an `antigravity` executable and use `agy` as a shim/alias
 
 **Key implication:** Treat `antigravity` as a distinct platform from `gemini`. Only implement an automated runner if `agy` (or another documented Antigravity CLI) supports non-interactive execution; otherwise implement a clear “unsupported in headless mode” path and use `gemini` for headless Google automation.
 
@@ -94,11 +94,17 @@ Primary sources:
 - **Headless flags:** `-p "..." --output-format json --approval-mode yolo`
 - **Status:** ✅ Fully documented headless mode, ready to implement
 
-#### 2. Antigravity (`platform: antigravity`) — CONDITIONAL, NEEDS INVESTIGATION
+#### 2. Antigravity (`platform: antigravity`) — LAUNCHER-ONLY (INVESTIGATION COMPLETE)
 - **Platform id:** `antigravity`
 - **CLI binary:** `agy`
-- **Headless flags:** ⚠️ **Unknown** — `agy` appears to be a GUI launcher, not a headless runner
-- **Status:** 🔍 Requires investigation to determine if headless mode exists
+- **Headless flags:** ❌ **Not supported** (launcher-only)
+- **Status:** ✅ **Investigated (AG-P1-T11)** - Launcher-only; no headless mode available
+
+Investigation results (AG-P1-T11):
+- `agy` functions like `code .` for VS Code - opens Antigravity IDE
+- No `-p`, `--prompt`, `--output-format`, `--json`, or similar flags
+- For headless Google model automation, use `gemini` platform instead
+- See src/platforms/antigravity-runner.ts for implementation details
 
 #### 3. Both platforms share Gemini models
 - Both can use: `gemini-2.5-pro`, `gemini-2.5-flash`, `gemini-3-pro`, etc.
@@ -128,9 +134,9 @@ Primary sources:
 |-------|----------|----------|------------------|
 | 1 | `gemini` | P0 | ✅ Confirmed |
 | 1 | `copilot` | P0 | ✅ Confirmed |
-| 2 | `antigravity` | P1 | ⚠️ Requires investigation |
+| 2 | `antigravity` | P1 | ❌ Not supported (launcher-only) |
 
-**Recommendation:** Implement `gemini` and `copilot` first (both have confirmed headless support), then investigate `antigravity` headless capabilities before implementing.
+**Recommendation:** Implement `gemini` and `copilot` for headless automation. Antigravity is launcher-only (opens IDE) and not suitable for automated workflows.
 
 ---
 
@@ -231,7 +237,7 @@ This plan adds **three new platforms** to Puppet Master while preserving core in
 | Platform ID | CLI Binary | Headless Flag | Approval Flag | Output Format | Status |
 |-------------|------------|---------------|---------------|---------------|--------|
 | `gemini` | `gemini` | `-p "..."` | `--approval-mode yolo` | `--output-format json` | ✅ Ready |
-| `antigravity` | `agy` | ⚠️ TBD | ⚠️ TBD | ⚠️ TBD | 🔍 Investigate |
+| `antigravity` | `agy` | ❌ N/A | ❌ N/A | ❌ N/A | 🚫 Launcher-only |
 | `copilot` | `copilot` | `-p "..."` | `--allow-all-tools` (+ `--allow-all-paths`) | text (parse signals) | ✅ Ready |
 
 ### Proposed task breakdown
@@ -256,7 +262,7 @@ This plan adds **three new platforms** to Puppet Master while preserving core in
 | Parallel Group C | CPL-T07, CPL-T08 | CPL-T03 |
 | Sequential | CPL-T09 | CPL-T06–CPL-T08 |
 
-**Phase 2: Antigravity (AGY-Txx) — P1 Priority (pending headless investigation)**
+**Phase 2: Antigravity (AGY-Txx) — ✅ COMPLETE (investigation confirmed launcher-only design)**
 | Group | Tasks | Can Start After |
 |-------|-------|-----------------|
 | Sequential | AGY-T01 | None |
@@ -2520,11 +2526,11 @@ If FAIL - where stuck + exact error snippets + what remains:
 | Feature | Cursor | Codex | Claude | Gemini | Antigravity | Copilot |
 |---------|--------|-------|--------|--------|-------------|---------|
 | CLI Binary | `cursor-agent` | `codex` | `claude` | `gemini` | `agy` | `copilot` |
-| Headless Flag | `-p` | `exec` | `-p` | `-p` | TBD (AGY-T01) | `-p` |
-| JSON Output | No | Yes | No | Yes | TBD (AGY-T01) | No |
-| Approval Flag | env var | `--path` | N/A | `--approval-mode` | TBD (AGY-T01) | `--allow-all-tools` (+ `--allow-all-paths`) |
-| Model Flag | N/A | `--model` | N/A | `--model` | TBD (may be UI-only) | `/model` (interactive; programmatic TBD) |
-| MCP Support | Yes | Yes | Yes | Yes | TBD (AGY-T01) | Yes |
+| Headless Flag | `-p` | `exec` | `-p` | `-p` | ❌ N/A (launcher-only) | `-p` |
+| JSON Output | No | Yes | No | Yes | ❌ N/A (launcher-only) | No |
+| Approval Flag | env var | `--path` | N/A | `--approval-mode` | ❌ N/A (launcher-only) | `--allow-all-tools` (+ `--allow-all-paths`) |
+| Model Flag | N/A | `--model` | N/A | `--model` | UI-only | `/model` (interactive; programmatic TBD) |
+| MCP Support | Yes | Yes | Yes | Yes | Yes (IDE context) | Yes |
 | Auth Method | Cursor acct | OpenAI key | Anthropic | Google OAuth | Google account/app login | GitHub OAuth/PAT |
 
 ---

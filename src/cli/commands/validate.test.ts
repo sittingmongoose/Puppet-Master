@@ -204,6 +204,24 @@ describe('validateAction', () => {
           maxCallsPerDay: 500,
           fallbackPlatform: null,
         },
+        gemini: {
+          maxCallsPerRun: 100,
+          maxCallsPerHour: 50,
+          maxCallsPerDay: 200,
+          fallbackPlatform: null,
+        },
+        copilot: {
+          maxCallsPerRun: 100,
+          maxCallsPerHour: 50,
+          maxCallsPerDay: 200,
+          fallbackPlatform: null,
+        },
+        antigravity: {
+          maxCallsPerRun: 100,
+          maxCallsPerHour: 50,
+          maxCallsPerDay: 200,
+          fallbackPlatform: null,
+        },
       },
       budgetEnforcement: {
         onLimitReached: 'pause',
@@ -218,6 +236,9 @@ describe('validateAction', () => {
         cursor: 'cursor',
         codex: 'codex',
         claude: 'claude',
+        gemini: 'gemini',
+        copilot: 'copilot',
+        antigravity: 'agy',
       },
     };
   }

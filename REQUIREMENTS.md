@@ -45,11 +45,24 @@
 
 ### 3.1 Supported Platforms
 
-| Platform | CLI Command | Notes |
-|----------|-------------|-------|
-| Cursor | `cursor-agent` | Cheap/unlimited via Auto plan; supports Grok Code |
-| Codex | `codex` | Higher limits than Claude; AGENTS.md native |
-| Claude Code | `claude` | Tight limits (1-4 prompts then 5h cooldown); use sparingly |
+| Platform | CLI Command | Headless | Output Format | Notes |
+|----------|-------------|----------|---------------|-------|
+| Cursor | `cursor-agent` | ✅ | Text | Cheap/unlimited via Auto plan; supports Grok Code |
+| Codex | `codex` | ✅ | Text | Higher limits than Claude; AGENTS.md native |
+| Claude Code | `claude` | ✅ | Text | Tight limits (1-4 prompts then 5h cooldown); use sparingly |
+| Gemini | `gemini` | ✅ | JSON | Google Gemini CLI; `--output-format json`, `--approval-mode yolo`, `--model` flag |
+| Copilot | `copilot` | ✅ | Text | GitHub Copilot CLI; `-p`, `--allow-all-tools`, `--allow-all-paths`, `--silent` |
+| Antigravity | `agy` | ❌ | N/A | Google Antigravity IDE (GUI-only); use `gemini` for headless automation |
+
+**Installation:**
+- Gemini: `npm install -g @google/gemini-cli` or `brew install gemini-cli`
+- Copilot: `npm install -g @github/copilot` or `brew install copilot-cli`
+- Antigravity: Manual download from https://antigravity.google/download
+
+**Authentication:**
+- Gemini: OAuth via `gemini` first run, or `GOOGLE_API_KEY`/Vertex AI credentials
+- Copilot: `/login` command or `GH_TOKEN`/`GITHUB_TOKEN` with "Copilot Requests" permission
+- Antigravity: Google account via GUI
 
 ### 3.2 Platform vs Model Distinction
 
@@ -65,8 +78,11 @@ The tier pipeline is **fully user-configurable**. There is NO hardcoded ladder.
 **Supported configurations include:**
 - Claude Code → Codex → Cursor → Codex
 - Codex → Claude Code → Codex → Cursor
+- Gemini → Copilot → Codex → Cursor
+- Copilot → Gemini → Claude Code → Codex
 - Codex → Codex → Cursor → Cursor
 - Cursor → Cursor → Codex → Cursor
+- Gemini → Gemini → Copilot → Gemini (JSON-first workflow)
 
 **Per-tier configuration:**
 - Platform selection
@@ -89,6 +105,9 @@ All agent interactions happen via CLI invocations only:
 - `cursor-agent "prompt" [flags]`
 - `codex "prompt" [flags]`
 - `claude -p "prompt" [flags]`
+- `gemini -p "prompt" --output-format json --approval-mode yolo [--model <model>]`
+- `copilot -p "prompt" --allow-all-tools --allow-all-paths --silent --stream off`
+- `agy` (launcher only; no headless mode available)
 
 ---
 
