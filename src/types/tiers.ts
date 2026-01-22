@@ -130,6 +130,7 @@ export interface GateReport {
   overallPassed: boolean;
   failureType?: 'minor' | 'major';
   summary: string;
+  enforcementViolations?: import('../agents/gate-enforcer.js').Violation[];
 }
 
 /**

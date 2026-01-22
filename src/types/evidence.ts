@@ -75,4 +75,6 @@ export interface GateReportEvidence {
   overallPassed: boolean;
   /** Tier type for this gate */
   tierType: 'phase' | 'task' | 'subtask';
+  /** Enforcement violations (AGENTS.md rule violations) */
+  enforcementViolations?: import('../agents/gate-enforcer.js').Violation[];
 }

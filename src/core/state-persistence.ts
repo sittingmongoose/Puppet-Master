@@ -280,13 +280,15 @@ export class StatePersistence {
       initialState: state.orchestratorState,
     });
 
-    // The machine is now at the correct state, but context fields need to be restored
-    // Since we can't directly set context, we'll create a new machine and manually
-    // restore context through a workaround: create with initial state, then transition
-    // Note: Context fields like currentPhaseId are typically set by specific events
-    // during execution, so perfect restoration may not be possible without the full event history.
-    // For now, we restore the state correctly, and context restoration would require
-    // additional mechanisms or accepting that some context may be lost.
+    // Restore internal context fields (pauseReason, errorMessage, tier IDs)
+    machine.restoreInternalContext({
+      pauseReason: state.orchestratorContext.pauseReason,
+      errorMessage: state.orchestratorContext.errorMessage,
+      currentPhaseId: state.orchestratorContext.currentPhaseId,
+      currentTaskId: state.orchestratorContext.currentTaskId,
+      currentSubtaskId: state.orchestratorContext.currentSubtaskId,
+      currentIterationId: state.orchestratorContext.currentIterationId,
+    });
 
     return machine;
   }
@@ -318,10 +320,12 @@ export class StatePersistence {
         }
       }
 
-      // Note: iterationCount, lastError, and gateResult are internal to TierStateMachine
-      // and can't be directly restored. The state machine will be in the correct state,
-      // but these fields will need to be restored through additional mechanisms or
-      // accepted as limitations of the restoration process.
+      // Restore internal context fields (iterationCount, lastError, gateResult)
+      machine.restoreInternalContext({
+        iterationCount: context.iterationCount,
+        lastError: context.lastError,
+        gateResult: context.gateResult,
+      });
 
       machines.set(id, machine);
     }
@@ -381,7 +385,47 @@ export class StatePersistence {
       return [];
     }
 
-    // Try direct transition
+    // Define common multi-step restoration paths
+    const multiStepPaths: Record<string, Record<string, TierEvent[]>> = {
+      pending: {
+        planning: [{ type: 'TIER_SELECTED' }],
+        running: [{ type: 'TIER_SELECTED' }, { type: 'PLAN_APPROVED' }],
+        gating: [
+          { type: 'TIER_SELECTED' },
+          { type: 'PLAN_APPROVED' },
+          { type: 'ITERATION_COMPLETE', success: true },
+        ],
+        retrying: [
+          { type: 'TIER_SELECTED' },
+          { type: 'PLAN_APPROVED' },
+          { type: 'ITERATION_FAILED', error: 'Restored from persistence' },
+        ],
+        failed: [
+          { type: 'TIER_SELECTED' },
+          { type: 'PLAN_APPROVED' },
+          { type: 'MAX_ATTEMPTS' },
+        ],
+        escalated: [
+          { type: 'TIER_SELECTED' },
+          { type: 'PLAN_APPROVED' },
+          { type: 'ITERATION_COMPLETE', success: true },
+          { type: 'GATE_FAILED_MAJOR' },
+        ],
+        passed: [
+          { type: 'TIER_SELECTED' },
+          { type: 'PLAN_APPROVED' },
+          { type: 'ITERATION_COMPLETE', success: true },
+          { type: 'GATE_PASSED' },
+        ],
+      },
+    };
+
+    // Try multi-step path from 'pending' if available
+    if (from === 'pending' && multiStepPaths.pending[to]) {
+      return multiStepPaths.pending[to];
+    }
+
+    // Try direct transition for other cases
     const events: TierEvent[] = [
       { type: 'TIER_SELECTED' },
       { type: 'PLAN_APPROVED' },
@@ -402,7 +446,7 @@ export class StatePersistence {
       }
     }
 
-    // If no direct transition, return empty (state machines will start at target state)
+    // If no direct transition found, return empty array
     return [];
   }
 

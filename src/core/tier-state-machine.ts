@@ -81,6 +81,25 @@ export class TierStateMachine {
     });
   }
 
+  /**
+   * Restores internal context fields from persisted state.
+   * Call after state transitions to restore iteration count and error state.
+   *
+   * @param context - Partial context with fields to restore
+   */
+  restoreInternalContext(context: Partial<TierContext>): void {
+    if (context.iterationCount !== undefined) {
+      // Ensure iteration count doesn't exceed maxIterations
+      this.context.iterationCount = Math.min(context.iterationCount, this.maxIterations);
+    }
+    if (context.lastError !== undefined) {
+      this.context.lastError = context.lastError;
+    }
+    if (context.gateResult !== undefined) {
+      this.context.gateResult = context.gateResult;
+    }
+  }
+
   private transition(event: TierEvent): void {
     const from = this.context.state;
 

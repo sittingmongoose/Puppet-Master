@@ -78,6 +78,33 @@ export class OrchestratorStateMachine {
     this.history = [];
   }
 
+  /**
+   * Restores internal context fields from persisted state.
+   * Call after state transitions to restore pauseReason, errorMessage, and tier IDs.
+   *
+   * @param context - Partial context with fields to restore
+   */
+  restoreInternalContext(context: Partial<OrchestratorContext>): void {
+    if (context.pauseReason !== undefined) {
+      this.context.pauseReason = context.pauseReason;
+    }
+    if (context.errorMessage !== undefined) {
+      this.context.errorMessage = context.errorMessage;
+    }
+    if (context.currentPhaseId !== undefined) {
+      this.context.currentPhaseId = context.currentPhaseId;
+    }
+    if (context.currentTaskId !== undefined) {
+      this.context.currentTaskId = context.currentTaskId;
+    }
+    if (context.currentSubtaskId !== undefined) {
+      this.context.currentSubtaskId = context.currentSubtaskId;
+    }
+    if (context.currentIterationId !== undefined) {
+      this.context.currentIterationId = context.currentIterationId;
+    }
+  }
+
   private transition(event: OrchestratorEvent): void {
     const from = this.context.state;
     const to = getNextOrchestratorState(from, event.type);

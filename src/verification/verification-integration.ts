@@ -30,14 +30,15 @@ export class VerificationIntegration {
    * Runs a task-level gate.
    * Collects criteria from task, executes gate, and returns result.
    * @param task - Task tier node
+   * @param transcript - Optional agent execution transcript for AGENTS.md enforcement
    * @returns Gate result
    */
-  async runTaskGate(task: TierNode): Promise<GateResult> {
+  async runTaskGate(task: TierNode, transcript?: string): Promise<GateResult> {
     const criteria = this.collectCriteria(task);
     const gateId = this.buildGateId(task, 'task');
-    
-    const report = await this.gateRunner.runGate(gateId, criteria);
-    
+
+    const report = await this.gateRunner.runGate(gateId, criteria, transcript);
+
     // Convert GateReport to GateResult
     const result: GateResult = {
       passed: report.overallPassed,
@@ -52,21 +53,22 @@ export class VerificationIntegration {
    * Runs a phase-level gate.
    * Collects criteria from phase, adds aggregate checks, executes gate, and returns result.
    * @param phase - Phase tier node
+   * @param transcript - Optional agent execution transcript for AGENTS.md enforcement
    * @returns Gate result
    */
-  async runPhaseGate(phase: TierNode): Promise<GateResult> {
+  async runPhaseGate(phase: TierNode, transcript?: string): Promise<GateResult> {
     const criteria = this.collectCriteria(phase);
-    
+
     // Add aggregate check: verify all child tasks passed
     const aggregateCheck = this.buildAggregateCheck(phase);
     if (aggregateCheck) {
       criteria.push(aggregateCheck);
     }
-    
+
     const gateId = this.buildGateId(phase, 'phase');
-    
-    const report = await this.gateRunner.runGate(gateId, criteria);
-    
+
+    const report = await this.gateRunner.runGate(gateId, criteria, transcript);
+
     // Convert GateReport to GateResult
     const result: GateResult = {
       passed: report.overallPassed,
@@ -84,14 +86,15 @@ export class VerificationIntegration {
    * Subtasks are the unit of iteration gating (P0-T16).
    *
    * @param subtask - Subtask tier node
+   * @param transcript - Optional agent execution transcript for AGENTS.md enforcement
    * @returns Gate result
    */
-  async runSubtaskGate(subtask: TierNode): Promise<GateResult> {
+  async runSubtaskGate(subtask: TierNode, transcript?: string): Promise<GateResult> {
     const criteria = this.collectCriteria(subtask);
     const gateId = this.buildGateId(subtask, 'subtask');
-    
-    const report = await this.gateRunner.runGate(gateId, criteria);
-    
+
+    const report = await this.gateRunner.runGate(gateId, criteria, transcript);
+
     const result: GateResult = {
       passed: report.overallPassed,
       report,

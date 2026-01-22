@@ -269,24 +269,8 @@ h1, h2, h3 {
 
 /* ===== Header ===== */
 .header {
-  background-color: var(--paper-cream);
-  background-image:
-    /* Subtle noise texture */
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.02) 2px,
-      rgba(0, 0, 0, 0.02) 4px
-    ),
-    /* Paper grain */
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 1px,
-      rgba(0, 0, 0, 0.01) 1px,
-      rgba(0, 0, 0, 0.01) 2px
-    );
+  background-color: transparent;
+  background-image: none;
   border-bottom: var(--border-thick) solid var(--ink-black);
   padding: var(--spacing-md) var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
@@ -299,22 +283,8 @@ h1, h2, h3 {
 
 /* Dark mode header */
 [data-theme="dark"] .header {
-  background-color: var(--paper-cream);
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(255, 255, 255, 0.015) 2px,
-      rgba(255, 255, 255, 0.015) 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 1px,
-      rgba(255, 255, 255, 0.008) 1px,
-      rgba(255, 255, 255, 0.008) 2px
-    );
+  background-color: transparent;
+  background-image: none;
   border-bottom-color: var(--ink-black);
   box-shadow: 0 2px 0 0 var(--ink-black);
 }

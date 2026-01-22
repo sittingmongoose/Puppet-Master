@@ -12,6 +12,8 @@ import type { Criterion, VerifierResult, GateReport } from '../types/tiers.js';
 import type { Verifier } from './verifiers/verifier.js';
 import type { EvidenceStore } from '../memory/evidence-store.js';
 import type { VerifierResultSummary, GateReportEvidence } from '../types/evidence.js';
+import type { GateEnforcer } from '../agents/gate-enforcer.js';
+import type { MultiLevelLoader } from '../agents/multi-level-loader.js';
 
 /**
  * Gate configuration interface.
@@ -67,16 +69,20 @@ export class GateRunner {
   constructor(
     private readonly verifierRegistry: VerifierRegistry,
     private readonly evidenceStore: EvidenceStore,
-    private readonly config: GateConfig = {}
+    private readonly config: GateConfig = {},
+    private readonly gateEnforcer?: GateEnforcer,
+    private readonly multiLevelLoader?: MultiLevelLoader,
+    private readonly projectRoot?: string
   ) {}
 
   /**
    * Runs a gate with the given criteria.
    * @param gateId - Gate ID (e.g., 'TK-001-001')
    * @param criteria - Array of criteria to verify
+   * @param transcript - Optional agent execution transcript for enforcement
    * @returns Gate report with all results
    */
-  async runGate(gateId: string, criteria: Criterion[]): Promise<GateReport> {
+  async runGate(gateId: string, criteria: Criterion[], transcript?: string): Promise<GateReport> {
     // Execute verifiers (parallel or sequential)
     const results = this.config.parallel
       ? await this.runParallel(criteria)
@@ -84,6 +90,27 @@ export class GateRunner {
 
     // Aggregate results into gate report
     const report = this.aggregateResults(gateId, results);
+
+    // Run AGENTS.md enforcement if transcript provided and enforcement is enabled
+    if (transcript && report.overallPassed && this.gateEnforcer && this.multiLevelLoader && this.projectRoot) {
+      try {
+        // Load AGENTS.md hierarchy for this gate
+        const agentsDoc = await this.multiLevelLoader.loadForTier(gateId, this.projectRoot);
+
+        // Check transcript against DO/DON'T rules
+        const enforcementResult = await this.gateEnforcer.check(transcript, agentsDoc);
+
+        if (!enforcementResult.passed) {
+          // Add violations to report
+          report.enforcementViolations = enforcementResult.violations;
+          report.overallPassed = false;
+          report.failureType = 'major'; // Treat enforcement violations as major failures
+        }
+      } catch (error) {
+        // Log enforcement error but don't fail the gate
+        console.error('Error running AGENTS.md enforcement:', error);
+      }
+    }
 
     // Save evidence
     await this.saveEvidence(gateId, report);
@@ -296,6 +323,7 @@ export class GateRunner {
       verifiersRun,
       overallPassed: report.overallPassed,
       tierType,
+      enforcementViolations: report.enforcementViolations,
     };
 
     await this.evidenceStore.saveGateReport(gateId, evidence);
