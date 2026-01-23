@@ -122,6 +122,37 @@ export class RequirementsInterviewer {
   private readonly config?: PuppetMasterConfig;
   private readonly usageTracker?: UsageTracker;
 
+  /**
+   * FIX 3: Patterns that indicate a category is explicitly out of scope.
+   */
+  private readonly outOfScopePatterns = [
+    /\b(not applicable|n\/a|out of scope|not in scope|excluded|will not|won't)\b/i,
+    /\b(future (phase|version|release)|v2|phase 2|later|not (for|in) (this|initial|v1))\b/i,
+    /\b(deferred|postponed|not required|not needed|skip(ped)?)\b/i,
+  ];
+
+  /**
+   * FIX 4: Patterns that indicate ambiguous or uncertain language.
+   */
+  private readonly ambiguityPatterns: { pattern: RegExp; type: string }[] = [
+    { pattern: /\b(maybe|possibly|might|could|should consider|potentially)\b/i, type: 'uncertain' },
+    { pattern: /\b(tbd|to be determined|to be decided|pending|undecided)\b/i, type: 'undefined' },
+    { pattern: /\b(or|and\/or|either|alternatively|one of)\b/i, type: 'alternative' },
+  ];
+
+  /**
+   * FIX 4: Patterns that indicate potentially conflicting requirements.
+   */
+  private readonly conflictPatterns: { terms: [string, string]; category: MajorComponentCategory }[] = [
+    { terms: ['synchronous', 'asynchronous'], category: 'data_persistence' },
+    { terms: ['real-time', 'batch'], category: 'performance_budgets' },
+    { terms: ['monolithic', 'microservices'], category: 'deployment_environments' },
+    { terms: ['sql', 'nosql'], category: 'data_persistence' },
+    { terms: ['rest', 'graphql'], category: 'data_persistence' },
+    { terms: ['serverless', 'server-based'], category: 'deployment_environments' },
+    { terms: ['stateful', 'stateless'], category: 'reliability' },
+  ];
+
   constructor(
     options: RequirementsInterviewerOptions,
     platformRegistry?: PlatformRegistry,
@@ -155,9 +186,14 @@ export class RequirementsInterviewer {
       return this.generateQuestions(parsed);
     }
 
-    // Determine platform (use phase tier platform, same as PRD generation)
-    const platform = this.config.tiers?.phase?.platform;
-    const model = this.config.tiers?.phase?.model;
+    // Determine platform (use step-specific config or fallback to phase tier)
+    // Config resolution order (P1-T04):
+    // 1. config.startChain.requirementsInterview.platform/model (step-specific)
+    // 2. config.tiers.phase.platform/model (default phase tier)
+    // Note: config.tiers is required in schema, but config itself is optional, so we use optional chaining
+    const stepConfig = this.config.startChain?.requirementsInterview;
+    const platform = stepConfig?.platform || this.config.tiers?.phase?.platform;
+    const model = stepConfig?.model || this.config.tiers?.phase?.model;
 
     if (!platform || !model) {
       console.warn(`[Requirements Interview] Platform or model not configured. Using rule-based fallback.`);
@@ -224,8 +260,60 @@ export class RequirementsInterviewer {
   }
 
   /**
+   * FIX 4: Detect ambiguities and conflicts in requirements.
+   *
+   * @param parsed - Parsed requirements document
+   * @returns Array of questions for detected ambiguities and conflicts
+   */
+  private detectAmbiguities(parsed: ParsedRequirements): InterviewQuestion[] {
+    const questions: InterviewQuestion[] = [];
+    const content = parsed.rawText;
+    let ambiguityId = 1;
+
+    // Check for ambiguous language (multiple occurrences indicate uncertainty)
+    for (const { pattern, type } of this.ambiguityPatterns) {
+      const matches = content.match(new RegExp(pattern, 'gi'));
+      if (matches && matches.length > 2) {
+        // Multiple occurrences suggest systemic uncertainty
+        questions.push({
+          id: `Q-AMB-${String(ambiguityId).padStart(3, '0')}`,
+          category: 'product_ux', // Default to product_ux for general ambiguity
+          question: `The requirements contain uncertain language ("${matches[0]}") in ${matches.length} places. What is the definitive approach?`,
+          rationale: `Ambiguous requirements (${type}) lead to incorrect implementations and failed verification`,
+          defaultAssumption: 'Interpret ambiguous requirements conservatively, preferring simpler implementations',
+          priority: 'high',
+        });
+        ambiguityId++;
+      }
+    }
+
+    // Check for conflicting terms
+    let conflictId = 1;
+    for (const { terms, category } of this.conflictPatterns) {
+      const [term1, term2] = terms;
+      const hasFirst = content.toLowerCase().includes(term1.toLowerCase());
+      const hasSecond = content.toLowerCase().includes(term2.toLowerCase());
+
+      if (hasFirst && hasSecond) {
+        questions.push({
+          id: `Q-CONFLICT-${String(conflictId).padStart(3, '0')}`,
+          category,
+          question: `Requirements mention both "${term1}" and "${term2}" which may conflict. Which approach should be used?`,
+          rationale: 'Conflicting requirements will cause implementation issues and verification failures',
+          defaultAssumption: `Default to ${term1} unless explicitly specified otherwise`,
+          priority: 'critical', // Conflicts are critical
+        });
+        conflictId++;
+      }
+    }
+
+    return questions;
+  }
+
+  /**
    * Rule-based interview generation (fallback).
    * Analyzes parsed requirements and generates questions based on keyword heuristics.
+   * FIX 4: Now includes ambiguity and conflict detection.
    *
    * @param parsed - Parsed requirements document
    * @returns Interview result with questions and coverage analysis
@@ -233,6 +321,10 @@ export class RequirementsInterviewer {
   generateQuestions(parsed: ParsedRequirements): InterviewResult {
     const coverageChecklist = this.buildCoverageChecklist(parsed);
     const questions: InterviewQuestion[] = [];
+
+    // FIX 4: Detect ambiguities and conflicts first (these are often critical)
+    const ambiguityQuestions = this.detectAmbiguities(parsed);
+    questions.push(...ambiguityQuestions);
 
     // Generate questions for missing categories
     let questionId = 1;
@@ -263,10 +355,13 @@ export class RequirementsInterviewer {
       return priorityOrder[a.priority] - priorityOrder[b.priority];
     });
 
-    const assumptions = questions.map(q => q.defaultAssumption);
+    // Limit to maxQuestions (after sorting to keep most important)
+    const limitedQuestions = questions.slice(0, this.maxQuestions);
+
+    const assumptions = limitedQuestions.map(q => q.defaultAssumption);
 
     return {
-      questions,
+      questions: limitedQuestions,
       assumptions,
       coverageChecklist,
       timestamp: new Date().toISOString(),
@@ -344,7 +439,49 @@ export class RequirementsInterviewer {
   }
 
   /**
+   * FIX 3: Detect if a category is explicitly marked as out of scope.
+   *
+   * @param category - Category to check
+   * @param parsed - Parsed requirements document
+   * @returns Object with found status and rationale if out of scope
+   */
+  private detectOutOfScope(
+    category: MajorComponentCategory,
+    parsed: ParsedRequirements
+  ): { isOutOfScope: boolean; rationale?: string } {
+    const categoryKeywords = this.getCategoryKeywords(category);
+    const content = parsed.rawText;
+
+    for (const keyword of categoryKeywords) {
+      // Check if keyword appears near out-of-scope patterns
+      for (const pattern of this.outOfScopePatterns) {
+        // Create a regex that looks for keyword followed by out-of-scope pattern within same sentence
+        const combinedRegex = new RegExp(
+          `${this.escapeRegex(keyword)}[^.!?]*${pattern.source}|${pattern.source}[^.!?]*${this.escapeRegex(keyword)}`,
+          'i'
+        );
+        const match = content.match(combinedRegex);
+        if (match) {
+          return {
+            isOutOfScope: true,
+            rationale: `Category explicitly marked as out of scope: "${match[0].substring(0, 100)}${match[0].length > 100 ? '...' : ''}"`,
+          };
+        }
+      }
+    }
+    return { isOutOfScope: false };
+  }
+
+  /**
+   * Escape special regex characters in a string.
+   */
+  private escapeRegex(str: string): string {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  /**
    * Detect if a category is covered in requirements using keyword matching.
+   * FIX 3: Now checks for out-of-scope status first.
    *
    * @param category - Category to check
    * @param parsed - Parsed requirements document
@@ -354,6 +491,16 @@ export class RequirementsInterviewer {
     category: MajorComponentCategory,
     parsed: ParsedRequirements
   ): CategoryCoverage {
+    // FIX 3: Check for explicit out-of-scope first
+    const outOfScopeCheck = this.detectOutOfScope(category, parsed);
+    if (outOfScopeCheck.isOutOfScope) {
+      return {
+        category,
+        status: 'out_of_scope',
+        rationale: outOfScopeCheck.rationale,
+      };
+    }
+
     const keywords = this.getCategoryKeywords(category);
     const citations: string[] = [];
 

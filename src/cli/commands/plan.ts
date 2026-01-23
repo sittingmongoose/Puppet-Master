@@ -32,6 +32,8 @@ import type { CommandModule } from './index.js';
 import { PlatformRegistry } from '../../platforms/registry.js';
 import { QuotaManager } from '../../platforms/quota-manager.js';
 import { UsageTracker } from '../../memory/usage-tracker.js';
+import { applyConfigOverrides, type StartChainOverride } from '../../config/config-override.js';
+import type { Platform } from '../../types/config.js';
 
 /**
  * Options for the plan command
@@ -43,6 +45,15 @@ export interface PlanOptions {
   dryRun?: boolean;
   config?: string;
   useAI?: boolean;
+  // CLI overrides for start chain steps
+  prdPlatform?: Platform;
+  prdModel?: string;
+  architecturePlatform?: Platform;
+  architectureModel?: string;
+  interviewPlatform?: Platform;
+  interviewModel?: string;
+  validationPlatform?: Platform;
+  validationModel?: string;
 }
 
 /**
@@ -98,7 +109,39 @@ export async function planAction(options: PlanOptions): Promise<void> {
     // Step 3: Load config for tier plan generation
     console.log('Loading configuration...');
     const configManager = new ConfigManager(options.config);
-    const config = await configManager.load();
+    let config = await configManager.load();
+
+    // Apply CLI overrides if provided
+    const overrides: StartChainOverride = {};
+    if (options.prdPlatform || options.prdModel) {
+      overrides.prd = {
+        platform: options.prdPlatform,
+        model: options.prdModel,
+      };
+    }
+    if (options.architecturePlatform || options.architectureModel) {
+      overrides.architecture = {
+        platform: options.architecturePlatform,
+        model: options.architectureModel,
+      };
+    }
+    if (options.interviewPlatform || options.interviewModel) {
+      overrides.requirementsInterview = {
+        platform: options.interviewPlatform,
+        model: options.interviewModel,
+      };
+    }
+    if (options.validationPlatform || options.validationModel) {
+      overrides.validation = {
+        platform: options.validationPlatform,
+        model: options.validationModel,
+      };
+    }
+
+    if (Object.keys(overrides).length > 0) {
+      config = applyConfigOverrides(config, overrides);
+      console.log('Applied CLI overrides to configuration');
+    }
 
     // Extract project name from config or parsed title
     const projectName = config.project.name || parsed.title || 'Untitled Project';
@@ -391,6 +434,14 @@ export class PlanCommand implements CommandModule {
       .option('--dry-run', 'Validate and display summary without saving files')
       .option('-c, --config <path>', 'Path to config file')
       .option('--no-use-ai', 'Skip AI generation, use rule-based/template-based fallback')
+      .option('--prd-platform <platform>', 'Override platform for PRD generation (cursor, codex, claude, gemini, copilot)')
+      .option('--prd-model <model>', 'Override model for PRD generation')
+      .option('--architecture-platform <platform>', 'Override platform for architecture generation (cursor, codex, claude, gemini, copilot)')
+      .option('--architecture-model <model>', 'Override model for architecture generation')
+      .option('--interview-platform <platform>', 'Override platform for requirements interview (cursor, codex, claude, gemini, copilot)')
+      .option('--interview-model <model>', 'Override model for requirements interview')
+      .option('--validation-platform <platform>', 'Override platform for validation (cursor, codex, claude, gemini, copilot)')
+      .option('--validation-model <model>', 'Override model for validation')
       .action(async (requirementsPath: string, options: Omit<PlanOptions, 'requirementsPath'>) => {
         await planAction({
           requirementsPath,

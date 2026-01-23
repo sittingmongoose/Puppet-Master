@@ -9,7 +9,7 @@
  */
 
 import type { ParsedRequirements, ParsedSection } from '../types/requirements.js';
-import type { PRD, Phase, Task, Subtask, PRDMetadata, ItemStatus } from '../types/prd.js';
+import type { PRD, Phase, Task, Subtask, PRDMetadata, ItemStatus, SourceRef } from '../types/prd.js';
 import type { Criterion, TestPlan } from '../types/tiers.js';
 import type { PuppetMasterConfig } from '../types/config.js';
 import type { Platform } from '../types/config.js';
@@ -25,6 +25,7 @@ import {
   type StructureDetectorOptions,
 } from './structure-detector.js';
 import { CriterionClassifier } from './criterion-classifier.js';
+import { createHash } from 'crypto';
 
 /**
  * Options for PRD generation.
@@ -38,6 +39,8 @@ export interface PrdGeneratorOptions {
   maxTasksPerPhase?: number;
   /** Options for structure detection (default: use defaults from structure-detector) */
   structureDetectorOptions?: StructureDetectorOptions;
+  /** FIX 2: Interview assumptions to include in PRD generation prompt */
+  interviewAssumptions?: string[];
 }
 
 /**
@@ -54,6 +57,8 @@ export class PrdGenerator {
   private readonly usageTracker?: UsageTracker;
   private readonly structureDetectorOptions: StructureDetectorOptions;
   private readonly criterionClassifier: CriterionClassifier;
+  /** FIX 2: Interview assumptions to include in PRD generation */
+  private readonly interviewAssumptions: string[];
 
   constructor(
     options: PrdGeneratorOptions,
@@ -71,6 +76,7 @@ export class PrdGenerator {
     this.usageTracker = usageTracker;
     this.structureDetectorOptions = options.structureDetectorOptions ?? {};
     this.criterionClassifier = new CriterionClassifier();
+    this.interviewAssumptions = options.interviewAssumptions ?? [];
   }
 
   /**
@@ -87,9 +93,13 @@ export class PrdGenerator {
       return this.generate(parsed);
     }
 
-    // Determine platform (use phase tier platform for PRD generation)
-    const platform = this.config.tiers.phase.platform;
-    const model = this.config.tiers.phase.model;
+    // Determine platform (use step-specific config or fallback to phase tier)
+    // Config resolution order (P1-T04):
+    // 1. config.startChain.prd.platform/model (step-specific)
+    // 2. config.tiers.phase.platform/model (default phase tier)
+    const stepConfig = this.config.startChain?.prd;
+    const platform = stepConfig?.platform || this.config.tiers.phase.platform;
+    const model = stepConfig?.model || this.config.tiers.phase.model;
 
     try {
       // Check quota before proceeding
@@ -99,8 +109,8 @@ export class PrdGenerator {
         return this.generate(parsed);
       }
 
-      // Build prompt
-      const prompt = buildPrdPrompt(parsed, this.projectName);
+      // Build prompt (FIX 2: include interview assumptions)
+      const prompt = buildPrdPrompt(parsed, this.projectName, this.interviewAssumptions);
 
       // Get platform runner
       const runner = this.platformRegistry.get(platform);
@@ -189,7 +199,7 @@ export class PrdGenerator {
     );
 
     // Use detected phase sections instead of raw top-level sections
-    const phases = this.generatePhases(structure.phaseSections);
+    const phases = this.generatePhases(structure.phaseSections, parsed);
     const metadata = this.calculateMetadata(phases);
 
     // Use detected title if available, otherwise fall back to parsed title
@@ -210,13 +220,14 @@ export class PrdGenerator {
   /**
    * Generates phases from top-level sections.
    */
-  generatePhases(sections: ParsedSection[]): Phase[] {
+  generatePhases(sections: ParsedSection[], parsed: ParsedRequirements): Phase[] {
     const now = new Date().toISOString();
     return sections.map((section, index) => {
       const phaseId = this.generatePhaseId(index + 1);
-      const tasks = this.generateTasks(phaseId, section, index + 1);
+      const tasks = this.generateTasks(phaseId, section, index + 1, parsed);
       const acceptanceCriteria = this.extractAcceptanceCriteria(section.content, phaseId);
       const testPlan = this.createTestPlan(section.content);
+      const sourceRefs = this.generateSourceRefs(section, parsed);
 
       return {
         id: phaseId,
@@ -227,6 +238,7 @@ export class PrdGenerator {
         acceptanceCriteria,
         testPlan,
         tasks,
+        sourceRefs,
         createdAt: now,
         notes: '',
       };
@@ -236,15 +248,16 @@ export class PrdGenerator {
   /**
    * Generates tasks from a section's children.
    */
-  generateTasks(phaseId: string, section: ParsedSection, phaseIndex: number): Task[] {
+  generateTasks(phaseId: string, section: ParsedSection, phaseIndex: number, parsed: ParsedRequirements): Task[] {
     const now = new Date().toISOString();
     const taskSections = section.children.slice(0, this.maxTasksPerPhase);
 
     return taskSections.map((taskSection, taskIndex) => {
       const taskId = this.generateTaskId(phaseIndex, taskIndex + 1);
-      const subtasks = this.generateSubtasks(taskId, taskSection.content, taskIndex + 1, phaseIndex);
+      const subtasks = this.generateSubtasks(taskId, taskSection.content, taskIndex + 1, phaseIndex, parsed, section);
       const acceptanceCriteria = this.extractAcceptanceCriteria(taskSection.content, taskId);
       const testPlan = this.createTestPlan(taskSection.content);
+      const sourceRefs = this.generateSourceRefs(taskSection, parsed, section);
 
       return {
         id: taskId,
@@ -256,6 +269,7 @@ export class PrdGenerator {
         acceptanceCriteria,
         testPlan,
         subtasks,
+        sourceRefs,
         createdAt: now,
         notes: '',
       };
@@ -265,7 +279,14 @@ export class PrdGenerator {
   /**
    * Generates subtasks by breaking task content into smaller chunks.
    */
-  generateSubtasks(taskId: string, content: string, taskIndex: number, phaseIndex: number): Subtask[] {
+  generateSubtasks(
+    taskId: string,
+    content: string,
+    taskIndex: number,
+    phaseIndex: number,
+    parsed: ParsedRequirements,
+    parentSection: ParsedSection
+  ): Subtask[] {
     const now = new Date().toISOString();
     const lines = content.split('\n').filter(line => line.trim().length > 0);
     
@@ -285,6 +306,8 @@ export class PrdGenerator {
       const subtaskId = this.generateSubtaskId(phaseIndex, taskIndex, subtaskIndex + 1);
       const acceptanceCriteria = this.extractAcceptanceCriteria(chunk, subtaskId);
       const testPlan = this.createTestPlan(chunk);
+      // For subtasks, use the parent section (task section) as the source reference
+      const sourceRefs = this.generateSourceRefs(parentSection, parsed);
 
       return {
         id: subtaskId,
@@ -297,6 +320,7 @@ export class PrdGenerator {
         testPlan,
         iterations: [],
         maxIterations: 3,
+        sourceRefs,
         createdAt: now,
         notes: '',
       };
@@ -431,6 +455,55 @@ export class PrdGenerator {
   }
 
   /**
+   * Generates source references for a PRD item from a section.
+   * Maps the section back to the requirements document and creates a SourceRef.
+   * 
+   * @param section - The section this PRD item is derived from
+   * @param parsed - The parsed requirements document
+   * @param parentSection - Optional parent section for building hierarchical paths
+   * @returns Array of source references
+   */
+  private generateSourceRefs(
+    section: ParsedSection,
+    parsed: ParsedRequirements,
+    parentSection?: ParsedSection
+  ): SourceRef[] {
+    // Build section path: "Title > Section > Subsection"
+    const pathParts: string[] = [];
+    if (parsed.title) {
+      pathParts.push(parsed.title);
+    }
+    if (parentSection) {
+      pathParts.push(parentSection.title);
+    }
+    pathParts.push(section.title);
+    const sectionPath = pathParts.join(' > ');
+
+    // Calculate hash of section content
+    const excerptHash = this.calculateExcerptHash(section.content);
+
+    return [
+      {
+        sourcePath: parsed.source.path,
+        sectionPath,
+        excerptHash,
+      },
+    ];
+  }
+
+  /**
+   * Calculates SHA-256 hash of excerpt text.
+   * 
+   * @param excerpt - Text excerpt to hash
+   * @returns Hex digest of the hash (64 characters)
+   */
+  private calculateExcerptHash(excerpt: string): string {
+    const hash = createHash('sha256');
+    hash.update(excerpt);
+    return hash.digest('hex');
+  }
+
+  /**
    * Parses JSON response from AI platform into PRD structure.
    * Handles JSON wrapped in markdown code blocks or plain JSON.
    * 
@@ -460,6 +533,9 @@ export class PrdGenerator {
       if (!parsed.metadata) {
         parsed.metadata = this.calculateMetadata(parsed.phases || []);
       }
+
+      // sourceRefs are optional and will be parsed from AI output if present
+      // No need to validate or transform them - they should already be in correct format
 
       return parsed;
     } catch (error) {

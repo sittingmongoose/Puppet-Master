@@ -71,9 +71,13 @@ export class ArchGenerator {
       return this.generate(parsed, prd);
     }
 
-    // Determine platform (use phase tier platform for architecture generation)
-    const platform = this.config.tiers.phase.platform;
-    const model = this.config.tiers.phase.model;
+    // Determine platform (use step-specific config or fallback to phase tier)
+    // Config resolution order (P1-T04):
+    // 1. config.startChain.architecture.platform/model (step-specific)
+    // 2. config.tiers.phase.platform/model (default phase tier)
+    const stepConfig = this.config.startChain?.architecture;
+    const platform = stepConfig?.platform || this.config.tiers.phase.platform;
+    const model = stepConfig?.model || this.config.tiers.phase.model;
 
     try {
       // Check quota before proceeding

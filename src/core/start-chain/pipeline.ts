@@ -22,6 +22,11 @@ import { ValidationGate } from '../../start-chain/validation-gate.js';
 import { PrdManager } from '../../memory/prd-manager.js';
 import { RequirementsInterviewer } from '../../start-chain/requirements-interviewer.js';
 import type { InterviewResult } from '../../start-chain/requirements-interviewer.js';
+import { TraceabilityManager } from '../../start-chain/traceability.js';
+import { CoverageValidator } from '../../start-chain/validators/coverage-validator.js';
+import type { CoverageReport } from '../../start-chain/validators/coverage-validator.js';
+import { detectDocumentStructure } from '../../start-chain/structure-detector.js';
+import type { ValidationResult } from '../../start-chain/validation-gate.js';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 
@@ -49,7 +54,12 @@ export interface StartChainResult {
   interviewPaths?: {
     questionsPath: string;
     assumptionsPath: string;
+    jsonPath: string; // FIX 6: Add JSON path
   };
+  /** Coverage validation report */
+  coverageReport?: CoverageReport;
+  /** Path to saved coverage report */
+  coverageReportPath?: string;
 }
 
 /**
@@ -94,19 +104,32 @@ export class StartChainPipeline {
     const projectNameFinal = projectName || parsed.title || 'Untitled Project';
 
     let interview: InterviewResult | undefined;
-    let interviewPaths: { questionsPath: string; assumptionsPath: string } | undefined;
+    let interviewPaths: { questionsPath: string; assumptionsPath: string; jsonPath: string } | undefined;
 
     // Step 1: Requirements Interview (optional)
     if (!skipInterview) {
       await this.publishStep('requirements_interview', 'started');
       interview = await this.conductInterview(parsed, projectNameFinal);
+      this.validateCriticalQuestions(interview); // FIX 1: Gate on critical questions
       interviewPaths = await this.saveInterview(projectPath, interview);
+
+      // FIX 5: Emit EventBus event for interview completion
+      if (this.eventBus) {
+        this.eventBus.emit({
+          type: 'requirements_interview_complete',
+          questionsCount: interview.questions.length,
+          criticalCount: interview.questions.filter(q => q.priority === 'critical').length,
+          timestamp: interview.timestamp,
+        });
+      }
+
       await this.publishStep('requirements_interview', 'completed');
     }
 
     // Step 2: Generate PRD via AI (formerly Step 1)
+    // FIX 2: Pass interview to include assumptions in PRD generation
     await this.publishStep('generate_prd', 'started');
-    const prd = await this.generatePRD(parsed, projectNameFinal);
+    const prd = await this.generatePRD(parsed, projectNameFinal, interview);
     await this.publishStep('generate_prd', 'completed');
 
     // Step 3: Generate architecture.md via AI (formerly Step 2)
@@ -128,9 +151,26 @@ export class StartChainPipeline {
     }
     await this.publishStep('validate', 'completed');
 
+    // Step 5.5: Coverage validation (NEW)
+    await this.publishStep('coverage_validation', 'started');
+    const { coverageReport, coverageValidation, coverageReportPath } =
+      await this.validateCoverage(parsed, prd, projectPath);
+
+    if (!coverageValidation.valid) {
+      const errorMessages = coverageValidation.errors.map(e => e.message).join('; ');
+      throw new Error(`Coverage validation failed: ${errorMessages}`);
+    }
+
+    // Log warnings (non-blocking)
+    for (const warning of coverageValidation.warnings) {
+      console.warn(`[Coverage] WARNING: ${warning.message}`);
+    }
+
+    await this.publishStep('coverage_validation', 'completed');
+
     // Step 6: Save all artifacts (formerly Step 5)
     await this.publishStep('save_artifacts', 'started');
-    const savedPaths = await this.saveArtifacts(projectPath, prd, architecture, tierPlan);
+    const savedPaths = await this.saveArtifacts(projectPath, prd, architecture, tierPlan, parsed);
     await this.publishStep('save_artifacts', 'completed');
 
     // Emit completion event
@@ -157,15 +197,32 @@ export class StartChainPipeline {
       projectPath,
       interview,
       interviewPaths,
+      coverageReport,
+      coverageReportPath,
     };
   }
 
   /**
    * Generate PRD from parsed requirements using AI.
+   * FIX 2: Accepts optional interview to pass assumptions to the prompt.
+   * 
+   * Platform/Model Selection (P1-T04):
+   * The PrdGenerator resolves platform/model using this fallback chain:
+   * 1. config.startChain.prd.platform/model (if step-specific config exists)
+   * 2. config.tiers.phase.platform/model (default phase tier)
+   * 
+   * CLI overrides are applied before this pipeline is instantiated.
    */
-  private async generatePRD(parsed: ParsedRequirements, projectName: string): Promise<PRD> {
+  private async generatePRD(
+    parsed: ParsedRequirements,
+    projectName: string,
+    interview?: InterviewResult
+  ): Promise<PRD> {
     const prdGenerator = new PrdGenerator(
-      { projectName },
+      {
+        projectName,
+        interviewAssumptions: interview?.assumptions, // FIX 2: Pass assumptions
+      },
       this.platformRegistry,
       this.quotaManager,
       this.config,
@@ -178,6 +235,13 @@ export class StartChainPipeline {
 
   /**
    * Generate architecture markdown from parsed requirements and PRD using AI.
+   * 
+   * Platform/Model Selection (P1-T04):
+   * The ArchGenerator resolves platform/model using this fallback chain:
+   * 1. config.startChain.architecture.platform/model (if step-specific config exists)
+   * 2. config.tiers.phase.platform/model (default phase tier)
+   * 
+   * CLI overrides are applied before this pipeline is instantiated.
    */
   private async generateArchitecture(
     parsed: ParsedRequirements,
@@ -223,7 +287,8 @@ export class StartChainPipeline {
     projectPath: string,
     prd: PRD,
     architecture: string,
-    tierPlan: TierPlan
+    tierPlan: TierPlan,
+    parsed: ParsedRequirements
   ): Promise<{
     prdPath: string;
     architecturePath: string;
@@ -281,6 +346,9 @@ export class StartChainPipeline {
       }
     }
 
+    // Save traceability matrix
+    await this.saveTraceabilityMatrix(projectPath, parsed, prd);
+
     return {
       prdPath,
       architecturePath,
@@ -289,7 +357,112 @@ export class StartChainPipeline {
   }
 
   /**
+   * Generates and saves the traceability matrix to `.puppet-master/requirements/traceability.json`.
+   * 
+   * @param projectPath - Project root path
+   * @param parsed - Parsed requirements document
+   * @param prd - Generated PRD
+   */
+  private async saveTraceabilityMatrix(
+    projectPath: string,
+    parsed: ParsedRequirements,
+    prd: PRD
+  ): Promise<void> {
+    const puppetMasterDir = join(projectPath, '.puppet-master');
+    const requirementsDir = join(puppetMasterDir, 'requirements');
+
+    // Ensure requirements directory exists (may already exist from saveInterview)
+    await fs.mkdir(requirementsDir, { recursive: true });
+
+    // Build traceability matrix
+    const traceabilityManager = new TraceabilityManager();
+    const matrix = traceabilityManager.buildTraceabilityMatrix(parsed, prd);
+
+    // Save to traceability.json
+    const traceabilityPath = join(requirementsDir, 'traceability.json');
+    await fs.writeFile(
+      traceabilityPath,
+      JSON.stringify(matrix, null, 2),
+      'utf-8'
+    );
+  }
+
+  /**
+   * Validates coverage of requirements in the PRD.
+   * Returns coverage report and validation result.
+   */
+  private async validateCoverage(
+    parsed: ParsedRequirements,
+    prd: PRD,
+    projectPath: string
+  ): Promise<{
+    coverageReport: CoverageReport;
+    coverageValidation: ValidationResult;
+    coverageReportPath: string;
+  }> {
+    // Get coverage config from main config
+    const coverageConfig = this.config?.startChain?.coverage;
+
+    const coverageValidator = new CoverageValidator(
+      coverageConfig,
+      this.platformRegistry,
+      this.quotaManager,
+      this.config
+    );
+
+    // Get metrics from structure detection
+    const structure = detectDocumentStructure(
+      parsed.sections,
+      parsed.rawText,
+      { failOnValidationError: false }
+    );
+
+    // Compute full coverage report (includes AI diff if enabled)
+    const coverageReport = await coverageValidator.computeCoverageReport(
+      parsed,
+      prd,
+      structure.metrics,
+      projectPath
+    );
+
+    // Get validation result
+    const coverageValidation = coverageValidator.validateCoverage(
+      parsed,
+      prd,
+      structure.metrics
+    );
+
+    // Persist coverage report
+    const coverageReportPath = await this.saveCoverageReport(projectPath, coverageReport);
+
+    return { coverageReport, coverageValidation, coverageReportPath };
+  }
+
+  /**
+   * Saves coverage report to .puppet-master/requirements/coverage.json
+   */
+  private async saveCoverageReport(
+    projectPath: string,
+    report: CoverageReport
+  ): Promise<string> {
+    const requirementsDir = join(projectPath, '.puppet-master', 'requirements');
+    await fs.mkdir(requirementsDir, { recursive: true });
+
+    const coveragePath = join(requirementsDir, 'coverage.json');
+    await fs.writeFile(coveragePath, JSON.stringify(report, null, 2), 'utf-8');
+
+    return coveragePath;
+  }
+
+  /**
    * Conduct requirements interview to identify gaps and generate questions.
+   * 
+   * Platform/Model Selection (P1-T04):
+   * The RequirementsInterviewer resolves platform/model using this fallback chain:
+   * 1. config.startChain.requirementsInterview.platform/model (if step-specific config exists)
+   * 2. config.tiers.phase.platform/model (default phase tier)
+   * 
+   * CLI overrides are applied before this pipeline is instantiated.
    */
   private async conductInterview(
     parsed: ParsedRequirements,
@@ -308,11 +481,12 @@ export class StartChainPipeline {
 
   /**
    * Save interview results to files.
+   * FIX 6: Now also saves interview.json for programmatic access.
    */
   private async saveInterview(
     projectPath: string,
     interview: InterviewResult
-  ): Promise<{ questionsPath: string; assumptionsPath: string }> {
+  ): Promise<{ questionsPath: string; assumptionsPath: string; jsonPath: string }> {
     const puppetMasterDir = join(projectPath, '.puppet-master');
     const requirementsDir = join(puppetMasterDir, 'requirements');
 
@@ -329,7 +503,11 @@ export class StartChainPipeline {
     const assumptionsContent = this.formatAssumptionsMarkdown(interview);
     await fs.writeFile(assumptionsPath, assumptionsContent, 'utf-8');
 
-    return { questionsPath, assumptionsPath };
+    // FIX 6: Save interview.json for programmatic access
+    const jsonPath = join(requirementsDir, 'interview.json');
+    await fs.writeFile(jsonPath, JSON.stringify(interview, null, 2), 'utf-8');
+
+    return { questionsPath, assumptionsPath, jsonPath };
   }
 
   /**
@@ -444,6 +622,33 @@ export class StartChainPipeline {
         status,
         timestamp: new Date().toISOString(),
       });
+    }
+  }
+
+  /**
+   * FIX 1: Validate critical questions and gate PRD generation if required.
+   *
+   * If there are unanswered critical questions and the config disallows proceeding,
+   * throws an error to stop the pipeline.
+   *
+   * @param interview - Interview result containing questions
+   * @throws Error if critical questions exist and allowUnansweredCritical is false
+   */
+  private validateCriticalQuestions(interview: InterviewResult): void {
+    const criticalQuestions = interview.questions.filter(q => q.priority === 'critical');
+    const allowProceed = this.config?.startChain?.requirementsInterview?.allowUnansweredCritical ?? true;
+
+    if (criticalQuestions.length > 0 && !allowProceed) {
+      const questionList = criticalQuestions.map(q => `- ${q.id}: ${q.question}`).join('\n');
+      throw new Error(
+        `GATED: ${criticalQuestions.length} critical question(s) require answers before PRD generation:\n\n${questionList}\n\n` +
+        `To proceed with default assumptions, set startChain.requirementsInterview.allowUnansweredCritical: true in your config.`
+      );
+    } else if (criticalQuestions.length > 0) {
+      console.warn(
+        `[Requirements Interview] WARNING: ${criticalQuestions.length} critical question(s) have default assumptions. ` +
+        `Review .puppet-master/requirements/assumptions.md before proceeding.`
+      );
     }
   }
 }
