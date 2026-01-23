@@ -163,6 +163,20 @@ export interface TiersConfig {
 }
 
 /**
+ * Start Chain configuration.
+ * Maps from YAML: start_chain.requirements_interview
+ */
+export interface StartChainConfig {
+  requirementsInterview?: {
+    enabled: boolean; // YAML: enabled
+    platform?: Platform; // YAML: platform (optional, defaults to tiers.phase.platform)
+    model?: string; // YAML: model (optional, defaults to tiers.phase.model)
+    maxQuestions?: number; // YAML: max_questions (optional, defaults to 10)
+    allowUnansweredCritical?: boolean; // YAML: allow_unanswered_critical (optional, defaults to true)
+  };
+}
+
+/**
  * Main configuration interface combining all configuration sections.
  * This is the root type for the entire configuration system.
  */
@@ -176,4 +190,5 @@ export interface PuppetMasterConfig {
   budgetEnforcement: BudgetEnforcementConfig;
   logging: LoggingConfig;
   cliPaths: CliPathsConfig;
+  startChain?: StartChainConfig; // YAML: start_chain (optional)
 }

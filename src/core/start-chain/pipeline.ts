@@ -20,6 +20,8 @@ import { ArchGenerator } from '../../start-chain/arch-generator.js';
 import { TierPlanGenerator } from '../../start-chain/tier-plan-generator.js';
 import { ValidationGate } from '../../start-chain/validation-gate.js';
 import { PrdManager } from '../../memory/prd-manager.js';
+import { RequirementsInterviewer } from '../../start-chain/requirements-interviewer.js';
+import type { InterviewResult } from '../../start-chain/requirements-interviewer.js';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 
@@ -41,6 +43,13 @@ export interface StartChainResult {
   planPaths: string[];
   /** Project path where artifacts were saved */
   projectPath: string;
+  /** Requirements interview result (optional) */
+  interview?: InterviewResult;
+  /** Paths to saved interview files (optional) */
+  interviewPaths?: {
+    questionsPath: string;
+    assumptionsPath: string;
+  };
 }
 
 /**
@@ -70,7 +79,7 @@ export class StartChainPipeline {
 
   /**
    * Execute the complete start chain pipeline.
-   * 
+   *
    * @param params - Pipeline execution parameters
    * @returns Result with all generated artifacts and their paths
    * @throws Error if pipeline execution fails
@@ -79,26 +88,38 @@ export class StartChainPipeline {
     parsed: ParsedRequirements;
     projectPath: string;
     projectName?: string;
+    skipInterview?: boolean;
   }): Promise<StartChainResult> {
-    const { parsed, projectPath, projectName } = params;
+    const { parsed, projectPath, projectName, skipInterview } = params;
     const projectNameFinal = projectName || parsed.title || 'Untitled Project';
 
-    // Step 1: Generate PRD via AI
+    let interview: InterviewResult | undefined;
+    let interviewPaths: { questionsPath: string; assumptionsPath: string } | undefined;
+
+    // Step 1: Requirements Interview (optional)
+    if (!skipInterview) {
+      await this.publishStep('requirements_interview', 'started');
+      interview = await this.conductInterview(parsed, projectNameFinal);
+      interviewPaths = await this.saveInterview(projectPath, interview);
+      await this.publishStep('requirements_interview', 'completed');
+    }
+
+    // Step 2: Generate PRD via AI (formerly Step 1)
     await this.publishStep('generate_prd', 'started');
     const prd = await this.generatePRD(parsed, projectNameFinal);
     await this.publishStep('generate_prd', 'completed');
 
-    // Step 2: Generate architecture.md via AI
+    // Step 3: Generate architecture.md via AI (formerly Step 2)
     await this.publishStep('generate_architecture', 'started');
     const architecture = await this.generateArchitecture(parsed, prd, projectNameFinal);
     await this.publishStep('generate_architecture', 'completed');
 
-    // Step 3: Generate tier plans
+    // Step 4: Generate tier plans (formerly Step 3)
     await this.publishStep('generate_tier_plans', 'started');
     const tierPlan = this.generateTierPlan(prd);
     await this.publishStep('generate_tier_plans', 'completed');
 
-    // Step 4: Validate all artifacts
+    // Step 5: Validate all artifacts (formerly Step 4)
     await this.publishStep('validate', 'started');
     const validation = this.validateArtifacts(prd, architecture, tierPlan);
     if (!validation.valid) {
@@ -107,7 +128,7 @@ export class StartChainPipeline {
     }
     await this.publishStep('validate', 'completed');
 
-    // Step 5: Save all artifacts
+    // Step 6: Save all artifacts (formerly Step 5)
     await this.publishStep('save_artifacts', 'started');
     const savedPaths = await this.saveArtifacts(projectPath, prd, architecture, tierPlan);
     await this.publishStep('save_artifacts', 'completed');
@@ -134,6 +155,8 @@ export class StartChainPipeline {
       tierPlan,
       planPaths: savedPaths.planPaths,
       projectPath,
+      interview,
+      interviewPaths,
     };
   }
 
@@ -263,6 +286,151 @@ export class StartChainPipeline {
       architecturePath,
       planPaths,
     };
+  }
+
+  /**
+   * Conduct requirements interview to identify gaps and generate questions.
+   */
+  private async conductInterview(
+    parsed: ParsedRequirements,
+    projectName: string
+  ): Promise<InterviewResult> {
+    const interviewer = new RequirementsInterviewer(
+      { projectName },
+      this.platformRegistry,
+      this.quotaManager,
+      this.config,
+      this.usageTracker
+    );
+
+    return interviewer.interviewWithAI(parsed, true);
+  }
+
+  /**
+   * Save interview results to files.
+   */
+  private async saveInterview(
+    projectPath: string,
+    interview: InterviewResult
+  ): Promise<{ questionsPath: string; assumptionsPath: string }> {
+    const puppetMasterDir = join(projectPath, '.puppet-master');
+    const requirementsDir = join(puppetMasterDir, 'requirements');
+
+    // Ensure requirements directory exists
+    await fs.mkdir(requirementsDir, { recursive: true });
+
+    // Generate questions.md
+    const questionsPath = join(requirementsDir, 'questions.md');
+    const questionsContent = this.formatQuestionsMarkdown(interview);
+    await fs.writeFile(questionsPath, questionsContent, 'utf-8');
+
+    // Generate assumptions.md
+    const assumptionsPath = join(requirementsDir, 'assumptions.md');
+    const assumptionsContent = this.formatAssumptionsMarkdown(interview);
+    await fs.writeFile(assumptionsPath, assumptionsContent, 'utf-8');
+
+    return { questionsPath, assumptionsPath };
+  }
+
+  /**
+   * Format interview results as questions markdown.
+   */
+  private formatQuestionsMarkdown(interview: InterviewResult): string {
+    const lines: string[] = [
+      '# Requirements Interview Questions',
+      '',
+      `Generated: ${interview.timestamp}`,
+      `Source: ${interview.sourceDocument.path}`,
+      '',
+      '## Qualifying Questions',
+      '',
+    ];
+
+    // Group questions by priority
+    const byPriority = {
+      critical: interview.questions.filter(q => q.priority === 'critical'),
+      high: interview.questions.filter(q => q.priority === 'high'),
+      medium: interview.questions.filter(q => q.priority === 'medium'),
+      low: interview.questions.filter(q => q.priority === 'low'),
+    };
+
+    for (const [priority, questions] of Object.entries(byPriority)) {
+      if (questions.length > 0) {
+        lines.push(`### ${priority.charAt(0).toUpperCase() + priority.slice(1)} Priority`);
+        lines.push('');
+
+        for (const q of questions) {
+          lines.push(`**${q.id}** [${q.category}]: ${q.question}`);
+          lines.push('');
+          lines.push(`*Rationale:* ${q.rationale}`);
+          lines.push('');
+          lines.push(`*Default Assumption:* ${q.defaultAssumption}`);
+          lines.push('');
+          lines.push('---');
+          lines.push('');
+        }
+      }
+    }
+
+    // Add Coverage Checklist
+    lines.push('## Coverage Checklist');
+    lines.push('');
+    lines.push('Major component categories and their coverage status:');
+    lines.push('');
+
+    for (const coverage of interview.coverageChecklist) {
+      const categoryName = coverage.category.replace(/_/g, ' ').toUpperCase();
+
+      if (coverage.status === 'covered') {
+        lines.push(`- [x] **${categoryName}**: Covered`);
+        if (coverage.citations && coverage.citations.length > 0) {
+          lines.push(`  - Citations: ${coverage.citations.join(', ')}`);
+        }
+      } else if (coverage.status === 'missing') {
+        lines.push(`- [ ] **${categoryName}**: Missing`);
+        if (coverage.topQuestion) {
+          lines.push(`  - Question: ${coverage.topQuestion}`);
+        }
+        if (coverage.defaultAssumption) {
+          lines.push(`  - Default: ${coverage.defaultAssumption}`);
+        }
+      } else if (coverage.status === 'out_of_scope') {
+        lines.push(`- [-] **${categoryName}**: Out of Scope`);
+        if (coverage.rationale) {
+          lines.push(`  - Rationale: ${coverage.rationale}`);
+        }
+      }
+      lines.push('');
+    }
+
+    return lines.join('\n');
+  }
+
+  /**
+   * Format interview results as assumptions markdown.
+   */
+  private formatAssumptionsMarkdown(interview: InterviewResult): string {
+    const lines: string[] = [
+      '# Default Assumptions',
+      '',
+      `Generated: ${interview.timestamp}`,
+      `Source: ${interview.sourceDocument.path}`,
+      '',
+      'These assumptions will be used for PRD generation unless overridden:',
+      '',
+    ];
+
+    for (const q of interview.questions) {
+      const categoryName = q.category.replace(/_/g, ' ').toUpperCase();
+      lines.push(`## ${categoryName}`);
+      lines.push('');
+      lines.push(`**Question:** ${q.question}`);
+      lines.push('');
+      lines.push(`**Assumption:** ${q.defaultAssumption}`);
+      lines.push('');
+    }
+
+    return lines.join('\n');
   }
 
   /**

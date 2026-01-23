@@ -29,6 +29,14 @@ vi.mock('../../core/state-persistence.js', () => ({
   StatePersistence: vi.fn(),
 }));
 
+vi.mock('../../core/process-registry.js', () => ({
+  ProcessRegistry: vi.fn(),
+}));
+
+vi.mock('../../core/session-tracker.js', () => ({
+  SessionTracker: vi.fn(),
+}));
+
 vi.mock('../../platforms/registry.js', () => ({
   PlatformRegistry: {
     createDefault: vi.fn(),
@@ -40,6 +48,8 @@ import { PrdManager } from '../../memory/prd-manager.js';
 import { createContainer } from '../../core/container.js';
 import { Orchestrator } from '../../core/orchestrator.js';
 import { StatePersistence } from '../../core/state-persistence.js';
+import { ProcessRegistry } from '../../core/process-registry.js';
+import { SessionTracker } from '../../core/session-tracker.js';
 import { PlatformRegistry } from '../../platforms/registry.js';
 
 describe('StopCommand', () => {
@@ -89,6 +99,7 @@ describe('stopAction', () => {
   let mockConfig: PuppetMasterConfig;
   let mockConfigManager: {
     load: ReturnType<typeof vi.fn>;
+    getConfigPath: ReturnType<typeof vi.fn>;
   };
   let mockPrdManager: {
     load: ReturnType<typeof vi.fn>;
@@ -102,6 +113,11 @@ describe('stopAction', () => {
   };
   let mockStatePersistence: {
     createCheckpoint: ReturnType<typeof vi.fn>;
+  };
+  let mockProcessRegistry: {
+    initialize: ReturnType<typeof vi.fn>;
+    getRunningProcesses: ReturnType<typeof vi.fn>;
+    terminateAll: ReturnType<typeof vi.fn>;
   };
   let mockPlatformRunner: {
     platform: 'cursor';
@@ -258,6 +274,7 @@ describe('stopAction', () => {
 
     mockConfigManager = {
       load: vi.fn().mockResolvedValue(mockConfig),
+      getConfigPath: vi.fn().mockReturnValue('/test/project/puppet-master.config.yaml'),
     };
 
     mockPrdManager = {
@@ -271,6 +288,12 @@ describe('stopAction', () => {
 
     mockStatePersistence = {
       createCheckpoint: vi.fn().mockResolvedValue(undefined),
+    };
+
+    mockProcessRegistry = {
+      initialize: vi.fn().mockResolvedValue(undefined),
+      getRunningProcesses: vi.fn().mockResolvedValue([]),
+      terminateAll: vi.fn().mockResolvedValue(undefined),
     };
 
     // Create a mock registry that can return runners
@@ -302,6 +325,7 @@ describe('stopAction', () => {
     (createContainer as ReturnType<typeof vi.fn>).mockReturnValue(mockContainer);
     (Orchestrator as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockOrchestrator);
     (StatePersistence as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockStatePersistence);
+    (ProcessRegistry as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockProcessRegistry);
     
     const mockDefaultRegistry = {
       getAvailable: vi.fn().mockReturnValue(['cursor']),

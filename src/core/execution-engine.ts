@@ -16,6 +16,7 @@ import type { TierNode } from './tier-node.js';
 import type { FailureInfo, PromptContext } from './prompt-builder.js';
 import { PromptBuilder } from './prompt-builder.js';
 import { GitManager } from '../git/git-manager.js';
+import type { ProcessRegistry } from './process-registry.js';
 
 export interface IterationContext {
   tierNode: TierNode;
@@ -70,6 +71,7 @@ export class ExecutionEngine {
   private readonly promptBuilder: PromptBuilder;
   private runner: PlatformRunnerContract | null = null;
   private gitManager: GitManager | null = null;
+  private processRegistry: ProcessRegistry | null = null;
 
   private readonly processInfoByPid = new Map<number, ProcessInfo>();
   private readonly processAudits: ProcessAuditRecord[] = [];
@@ -88,6 +90,10 @@ export class ExecutionEngine {
 
   setGitManager(gitManager: GitManager): void {
     this.gitManager = gitManager;
+  }
+
+  setProcessRegistry(processRegistry: ProcessRegistry): void {
+    this.processRegistry = processRegistry;
   }
 
   onOutput(callback: (output: string) => void): void {
@@ -140,6 +146,20 @@ export class ExecutionEngine {
       startedAt: new Date().toISOString(),
       status: 'running',
     });
+
+    // Register with ProcessRegistry
+    if (this.processRegistry) {
+      try {
+        await this.processRegistry.registerProcess(
+          processId,
+          runner.platform,
+          prompt.substring(0, 100) // Store first 100 chars of prompt as command reference
+        );
+      } catch (error) {
+        // Log but don't fail iteration if registry fails
+        console.error('[ExecutionEngine] Failed to register process with ProcessRegistry:', error);
+      }
+    }
 
     const outputChunks: string[] = [];
     const outputHistory: string[] = [];
@@ -338,6 +358,15 @@ export class ExecutionEngine {
       await runner.forceKillProcess(processId);
     } catch {
       // ignore
+    }
+
+    // Also terminate via ProcessRegistry for cross-platform consistency
+    if (this.processRegistry) {
+      try {
+        await this.processRegistry.terminateProcess(processId, true);
+      } catch {
+        // ignore
+      }
     }
 
     const processInfo = this.processInfoByPid.get(processId);

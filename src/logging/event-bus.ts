@@ -31,7 +31,8 @@ export type PuppetMasterEvent =
   | { type: 'item_reopened'; tierId: string; reason: string; timestamp: string }
   | { type: 'process_killed'; pids: number[]; timestamp: string }
   | { type: 'start_chain_step'; step: string; status: 'started' | 'completed' | 'failed'; timestamp: string }
-  | { type: 'start_chain_complete'; projectPath: string; artifacts: { prdPath: string; architecturePath: string; planPaths: string[] }; timestamp: string };
+  | { type: 'start_chain_complete'; projectPath: string; artifacts: { prdPath: string; architecturePath: string; planPaths: string[] }; timestamp: string }
+  | { type: 'requirements_interview_complete'; questionsCount: number; criticalCount: number; timestamp: string };
 
 /**
  * Event subscription interface.

@@ -163,7 +163,8 @@ describe('VerificationIntegration', () => {
             type: 'file_exists',
             target: 'test.txt',
           }),
-        ])
+        ]),
+        undefined // transcript parameter
       );
 
       expect(result.passed).toBe(true);
@@ -280,7 +281,8 @@ describe('VerificationIntegration', () => {
             type: 'ai',
             target: 'phase',
           }),
-        ])
+        ]),
+        undefined // transcript parameter
       );
 
       expect(result.passed).toBe(true);
@@ -507,7 +509,8 @@ describe('VerificationIntegration', () => {
               expectedExitCode: 0,
             }),
           }),
-        ])
+        ]),
+        undefined // transcript parameter
       );
 
       expect(result.passed).toBe(true);
@@ -540,7 +543,8 @@ describe('VerificationIntegration', () => {
 
       expect(runGateSpy).toHaveBeenCalledWith(
         'subtask-gate-ST-001-001-001',
-        expect.any(Array)
+        expect.any(Array),
+        undefined // transcript parameter
       );
 
       expect(results).toEqual(mockReport.verifiersRun);

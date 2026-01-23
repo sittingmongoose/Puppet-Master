@@ -469,7 +469,8 @@ export class Orchestrator {
 
         // If we're in gating (e.g., restored from PRD mid-flight), run the subtask gate now.
         if (subtaskState === 'gating') {
-          const gate = await this.deps.verificationIntegration.runSubtaskGate(subtask);
+          // No transcript available when resuming from gating state
+          const gate = await this.deps.verificationIntegration.runSubtaskGate(subtask, undefined);
           await this.handleGateResult(gate, subtask);
           const advancement = await this.autoAdvancement.checkAndAdvance();
           await this.handleAdvancement(advancement);
@@ -526,7 +527,8 @@ export class Orchestrator {
 
         // Run the subtask gate immediately after a COMPLETE signal so advancement can proceed.
         if (result.success && result.completionSignal === 'COMPLETE') {
-          const gate = await this.deps.verificationIntegration.runSubtaskGate(subtask);
+          // Pass execution output as transcript for AGENTS.md enforcement
+          const gate = await this.deps.verificationIntegration.runSubtaskGate(subtask, result.output);
           await this.handleGateResult(gate, subtask);
         }
 
@@ -1622,7 +1624,8 @@ Return the plan as a JSON object matching this structure:
     }
 
     if (subtaskState === 'gating') {
-      const gate = await this.deps.verificationIntegration.runSubtaskGate(currentSubtask);
+      // No transcript available when resuming from gating state
+      const gate = await this.deps.verificationIntegration.runSubtaskGate(currentSubtask, undefined);
       await this.handleGateResult(gate, currentSubtask);
       return;
     }
@@ -1665,7 +1668,8 @@ Return the plan as a JSON object matching this structure:
 
     // Run the subtask gate immediately after a COMPLETE signal.
     if (result.success && result.completionSignal === 'COMPLETE') {
-      const gate = await this.deps.verificationIntegration.runSubtaskGate(currentSubtask);
+      // Pass execution output as transcript for AGENTS.md enforcement
+      const gate = await this.deps.verificationIntegration.runSubtaskGate(currentSubtask, result.output);
       await this.handleGateResult(gate, currentSubtask);
     }
 

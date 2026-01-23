@@ -31,6 +31,7 @@ export interface ExecutionSession {
   phasesCompleted?: number;
   tasksCompleted?: number;
   subtasksCompleted?: number;
+  processPids?: number[];    // PIDs of processes spawned in this session
 }
 
 /**
@@ -75,6 +76,25 @@ export class SessionTracker {
       this.eventBus.unsubscribe(this.subscriptionId);
       this.subscriptionId = null;
     }
+  }
+
+  /**
+   * Add a process PID to the current session
+   */
+  addProcessPid(pid: number): void {
+    if (this.currentSession) {
+      if (!this.currentSession.processPids) {
+        this.currentSession.processPids = [];
+      }
+      this.currentSession.processPids.push(pid);
+    }
+  }
+
+  /**
+   * Get the current active session
+   */
+  getCurrentSession(): ExecutionSession | null {
+    return this.currentSession;
   }
 
   /**

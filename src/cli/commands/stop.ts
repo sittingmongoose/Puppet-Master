@@ -15,12 +15,15 @@ import { PrdManager } from '../../memory/prd-manager.js';
 import { createContainer } from '../../core/container.js';
 import { Orchestrator } from '../../core/orchestrator.js';
 import { StatePersistence } from '../../core/state-persistence.js';
+import { ProcessRegistry } from '../../core/process-registry.js';
+import { SessionTracker } from '../../core/session-tracker.js';
 import type { OrchestratorDependencies } from '../../core/orchestrator.js';
 import type { PuppetMasterConfig } from '../../types/config.js';
 import type { OrchestratorState } from '../../types/state.js';
 import { PlatformRegistry } from '../../platforms/registry.js';
 import { deriveProjectRootFromConfigPath, resolveUnderProjectRoot } from '../../utils/project-paths.js';
 import type { CommandModule } from './index.js';
+import { join } from 'path';
 
 /**
  * Options for the stop command
@@ -55,29 +58,38 @@ function wait(ms: number): Promise<void> {
 }
 
 /**
- * Terminate all running processes from platform runners
+ * Terminate all running processes via ProcessRegistry
  */
 async function terminateAllProcesses(
-  registry: PlatformRegistry,
+  projectRoot: string,
+  sessionId: string,
   force: boolean
 ): Promise<void> {
-  const availablePlatforms = registry.getAvailable();
-  
-  for (const platform of availablePlatforms) {
-    const runner = registry.get(platform);
-    if (!runner) {
-      continue;
+  try {
+    const registryPath = join(projectRoot, '.puppet-master', 'sessions', `${sessionId}.json`);
+    const processRegistry = new ProcessRegistry(sessionId, registryPath);
+
+    // Initialize registry (loads from file if exists)
+    await processRegistry.initialize();
+
+    // Get running processes
+    const runningProcesses = await processRegistry.getRunningProcesses();
+
+    if (runningProcesses.length === 0) {
+      console.log('No running processes to terminate');
+      return;
     }
 
-    // Access the processes map from the runner
-    // Note: This requires accessing protected members, so we'll use the public API
-    // The base runner has terminateProcess and forceKillProcess methods
-    // We need to get the PIDs somehow - this might require changes to the runner interface
-    // For now, we'll rely on the orchestrator's stop() method to handle process termination
-    // and only use force kill if needed
-    
-    // If we have access to execution engine, we can get running processes from there
-    // For now, we'll skip direct process termination and rely on orchestrator.stop()
+    console.log(`Terminating ${runningProcesses.length} process(es)...`);
+
+    // Terminate all processes
+    await processRegistry.terminateAll(force);
+
+    console.log('All processes terminated');
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.warn(`Warning: Error terminating processes: ${errorMessage}`);
+    // Don't throw - we want stop to continue even if process termination fails
   }
 }
 
@@ -138,21 +150,27 @@ export async function stopAction(options: StopOptions): Promise<void> {
     if (options.force) {
       console.log('Force stopping...');
       await orchestrator.stop();
+
+      // Get session ID from orchestrator context
+      const sessionId = prd.orchestratorContext?.currentIterationId || 'unknown';
+
+      // Force terminate all processes via ProcessRegistry
+      await terminateAllProcesses(projectRoot, sessionId, true);
     } else {
       console.log('Requesting graceful stop...');
       await orchestrator.stop();
 
+      // Get session ID from orchestrator context
+      const sessionId = prd.orchestratorContext?.currentIterationId || 'unknown';
+
+      // Gracefully terminate all processes via ProcessRegistry
+      await terminateAllProcesses(projectRoot, sessionId, false);
+
       // Wait for grace period
       const timeoutSeconds = options.timeout ?? DEFAULT_TIMEOUT_SECONDS;
       console.log(`Waiting up to ${timeoutSeconds} seconds for processes to terminate...`);
-      
-      // Check if processes are still running after grace period
-      // Note: We would need access to execution engine to check this
-      // For now, we'll just wait the grace period
-      await wait(timeoutSeconds * 1000);
 
-      // If force is needed after grace period, we could add logic here
-      // to check running processes and force kill them
+      await wait(timeoutSeconds * 1000);
     }
 
     // Create final checkpoint if requested
