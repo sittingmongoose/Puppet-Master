@@ -6249,12 +6249,12 @@ HQ required — prompt + validation design for large inputs
    - Hard fail if architecture doc is too short, missing key sections, or contains “manual verification” instructions without automated alternatives.
 
 ### Acceptance criteria
-- [ ] Architecture prompt includes enough requirements detail to be non-generic for large docs
-- [ ] Architecture generation supports multi-pass/chunked expansion
-- [ ] Output includes required sections and ties back to PRD/test plans
-- [ ] No manual-only verification guidance; test strategy includes automated checks
-- [ ] `npm run typecheck` passes
-- [ ] `npm test -- src/start-chain` passes
+- [x] Architecture prompt includes enough requirements detail to be non-generic for large docs
+- [x] Architecture generation supports multi-pass/chunked expansion
+- [x] Output includes required sections and ties back to PRD/test plans
+- [x] No manual-only verification guidance; test strategy includes automated checks
+- [x] `npm run typecheck` passes
+- [x] `npm test -- src/start-chain` passes
 
 ### Tests to run
 ```bash
@@ -6288,12 +6288,30 @@ When complete, update this task's Status Log with PASS/FAIL, commands run + resu
 
 ### Task status log
 ```
-Status: PENDING
-Date:
+Status: PASS
+Date: 2026-01-23
 Summary of changes:
+  - Enhanced arch-prompt.ts with rich requirements context, NFR extraction, required sections, and traceability
+  - Added multi-pass architecture generation (Pass A: outline, Pass B: section expansion, Pass C: validation)
+  - Implemented ArchValidationResult with checks for:
+    - Document length (minDocLength threshold)
+    - Required sections (8 sections: overview, data_model, api_boundaries, deployment, observability, security, test_strategy, directory_structure)
+    - Manual-only verification detection (rejectManualOnly option)
+  - Template-based fallback now includes all required sections with test commands
+  - Added new exports: REQUIRED_ARCH_SECTIONS, NFR_CATEGORIES, buildArchOutlinePrompt, buildSectionExpansionPrompt
+  - Added MultiPassArchConfig, ArchValidationResult, ArchOutline, MultiPassArchResult interfaces
+
 Files changed:
+  - src/start-chain/prompts/arch-prompt.ts (rewritten with rich context, NFR extraction, multi-pass prompts)
+  - src/start-chain/arch-generator.ts (added multi-pass support, validation, new sections)
+  - src/start-chain/arch-generator.test.ts (added 9 new tests for P1-T19 features)
+
 Commands run + results:
+  - npm run typecheck: PASS (exit code 0)
+  - npm test -- src/start-chain: PASS (398 tests passed)
+
 If FAIL - where stuck + exact error snippets + what remains:
+  N/A - All acceptance criteria met
 ```
 
 ---
@@ -6360,12 +6378,12 @@ HQ required — large-doc extraction + determinism
    - Ensure inventory step runs before PRD generation when enabled.
 
 ### Acceptance criteria
-- [ ] Inventory generated for any input doc (md/pdf/docx/text), even if AI is unavailable (heuristic fallback)
-- [ ] Inventory IDs are stable across reruns via `id-map.json`
-- [ ] Each RequirementUnit includes `sectionPath` + `excerptHash`
-- [ ] Inventory persisted under `.puppet-master/requirements/`
-- [ ] `npm run typecheck` passes
-- [ ] `npm test -- src/start-chain` passes
+- [x] Inventory generated for any input doc (md/pdf/docx/text), even if AI is unavailable (heuristic fallback)
+- [x] Inventory IDs are stable across reruns via `id-map.json`
+- [x] Each RequirementUnit includes `sectionPath` + `excerptHash`
+- [x] Inventory persisted under `.puppet-master/requirements/`
+- [x] `npm run typecheck` passes
+- [x] `npm test -- src/start-chain` passes
 
 ### Tests to run
 ```bash
@@ -6415,12 +6433,32 @@ When complete, update this task's Status Log with PASS/FAIL, commands run + resu
 
 ### Task status log
 ```
-Status: PENDING
-Date:
+Status: PASS
+Date: 2026-01-23
 Summary of changes:
+Implemented Requirements Inventory step for Start Chain that extracts atomic requirements (REQ-*) from parsed source documents with stable IDs.
+
 Files changed:
+- src/types/requirements-inventory.ts (created) - Type definitions for RequirementUnit, RequirementsInventory, IdMap
+- src/start-chain/requirements-inventory.ts (created) - RequirementsInventoryBuilder class with heuristic + AI extraction
+- src/start-chain/prompts/inventory-prompt.ts (created) - AI refinement prompt template
+- src/start-chain/requirements-inventory.test.ts (created) - 21 unit tests
+- src/types/index.ts (modified) - Export new types
+- src/start-chain/prompts/index.ts (modified) - Export buildInventoryPrompt
+- src/core/start-chain/pipeline.ts (modified) - Integrated inventory step, persist artifacts
+- src/logging/event-bus.ts (modified) - Added requirements_inventory_complete event type
+- src/start-chain/validators/coverage-validator.ts (modified) - Updated checkInventory to handle new format
+
 Commands run + results:
-If FAIL - where stuck + exact error snippets + what remains:
+- npm run typecheck - PASS
+- npm test -- src/start-chain - PASS (419 tests, including 21 new inventory tests)
+
+Evidence:
+- Heuristic extraction supports: bullets, numbered lists, prose with keywords, table rows
+- ID stability: excerptHash -> REQ-NNNN mapping persisted in id-map.json
+- Classification: functional/nfr/constraint/open_question based on keyword patterns
+- Severity detection: must/should/could from RFC 2119 keywords
+- Artifacts persisted: parsed.json, inventory.json, id-map.json under .puppet-master/requirements/
 ```
 
 ---
@@ -10567,7 +10605,7 @@ puppet-master doctor
 - [ ] P1-T16: CLI status command enhanced
 - [ ] P1-T17: GUI settings page improvements
 - [ ] P1-T18: GUI coverage report view
-- [ ] P1-T19: Architecture generation context is non-lossy and validated
+- [x] P1-T19: Architecture generation context is non-lossy and validated
 - [ ] P1-T20: Requirements inventory (atomic `REQ-*` units) extracted + persisted
 - [ ] P1-T21: PRD quality validator blocks low-quality PRDs (with repair hints)
 - [ ] P1-T22: Implementation wiring audit (orphan exports, unused registrations, missing injections)

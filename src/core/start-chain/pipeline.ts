@@ -12,6 +12,7 @@ import type { PRD } from '../../types/prd.js';
 import type { PuppetMasterConfig } from '../../types/config.js';
 import type { TierPlan } from '../../start-chain/tier-plan-generator.js';
 import type { EventBus } from '../../logging/event-bus.js';
+import type { RequirementsInventory, IdMap, InventoryResult } from '../../types/requirements-inventory.js';
 import { PlatformRegistry } from '../../platforms/registry.js';
 import { QuotaManager } from '../../platforms/quota-manager.js';
 import { UsageTracker } from '../../memory/usage-tracker.js';
@@ -27,6 +28,7 @@ import { CoverageValidator } from '../../start-chain/validators/coverage-validat
 import type { CoverageReport } from '../../start-chain/validators/coverage-validator.js';
 import { detectDocumentStructure } from '../../start-chain/structure-detector.js';
 import type { ValidationResult } from '../../start-chain/validation-gate.js';
+import { RequirementsInventoryBuilder } from '../../start-chain/requirements-inventory.js';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 
@@ -60,6 +62,14 @@ export interface StartChainResult {
   coverageReport?: CoverageReport;
   /** Path to saved coverage report */
   coverageReportPath?: string;
+  /** Requirements inventory result (optional, P1-T20) */
+  inventoryResult?: InventoryResult;
+  /** Paths to saved inventory files (optional, P1-T20) */
+  inventoryPaths?: {
+    inventoryPath: string;
+    idMapPath: string;
+    parsedPath: string;
+  };
 }
 
 /**
@@ -99,12 +109,39 @@ export class StartChainPipeline {
     projectPath: string;
     projectName?: string;
     skipInterview?: boolean;
+    skipInventory?: boolean;
   }): Promise<StartChainResult> {
-    const { parsed, projectPath, projectName, skipInterview } = params;
+    const { parsed, projectPath, projectName, skipInterview, skipInventory } = params;
     const projectNameFinal = projectName || parsed.title || 'Untitled Project';
 
     let interview: InterviewResult | undefined;
     let interviewPaths: { questionsPath: string; assumptionsPath: string; jsonPath: string } | undefined;
+    let inventoryResult: InventoryResult | undefined;
+    let inventoryPaths: { inventoryPath: string; idMapPath: string; parsedPath: string } | undefined;
+
+    // Step 0: Requirements Inventory (P1-T20, optional but recommended)
+    if (!skipInventory) {
+      await this.publishStep('requirements_inventory', 'started');
+      const { result, paths } = await this.buildRequirementsInventory(parsed, projectPath);
+      inventoryResult = result;
+      inventoryPaths = paths;
+
+      // Validate inventory size
+      this.validateInventorySize(inventoryResult, parsed);
+
+      // Emit EventBus event for inventory completion
+      if (this.eventBus) {
+        this.eventBus.emit({
+          type: 'requirements_inventory_complete',
+          totalRequirements: inventoryResult.inventory.stats.totalRequirements,
+          aiRefined: inventoryResult.aiRefined,
+          warnings: inventoryResult.warnings,
+          timestamp: new Date().toISOString(),
+        });
+      }
+
+      await this.publishStep('requirements_inventory', 'completed');
+    }
 
     // Step 1: Requirements Interview (optional)
     if (!skipInterview) {
@@ -199,6 +236,8 @@ export class StartChainPipeline {
       interviewPaths,
       coverageReport,
       coverageReportPath,
+      inventoryResult,
+      inventoryPaths,
     };
   }
 
@@ -659,6 +698,81 @@ export class StartChainPipeline {
       console.warn(
         `[Requirements Interview] WARNING: ${criticalQuestions.length} critical question(s) have default assumptions. ` +
         `Review .puppet-master/requirements/assumptions.md before proceeding.`
+      );
+    }
+  }
+
+  /**
+   * Build requirements inventory from parsed requirements (P1-T20).
+   *
+   * @param parsed - Parsed requirements document
+   * @param projectPath - Project path for saving artifacts
+   * @returns Inventory result and paths to saved files
+   */
+  private async buildRequirementsInventory(
+    parsed: ParsedRequirements,
+    projectPath: string
+  ): Promise<{
+    result: InventoryResult;
+    paths: { inventoryPath: string; idMapPath: string; parsedPath: string };
+  }> {
+    const inventoryConfig = this.config?.startChain?.inventory;
+
+    const builder = new RequirementsInventoryBuilder(
+      {
+        enableAIRefinement: inventoryConfig?.enabled !== false,
+      },
+      this.platformRegistry,
+      this.quotaManager,
+      this.config,
+      this.usageTracker
+    );
+
+    // Build inventory (includes loading/updating ID map)
+    const result = await builder.build(parsed, projectPath, inventoryConfig?.enabled !== false);
+
+    // Log warnings
+    for (const warning of result.warnings) {
+      console.warn(`[Requirements Inventory] WARNING: ${warning}`);
+    }
+
+    // Save all artifacts
+    const inventoryPath = await builder.saveInventory(projectPath, result.inventory);
+    const idMapPath = await builder.saveIdMap(projectPath, result.idMap);
+    const parsedPath = await builder.saveParsedRequirements(projectPath, parsed);
+
+    return {
+      result,
+      paths: { inventoryPath, idMapPath, parsedPath },
+    };
+  }
+
+  /**
+   * Validate inventory size against source document (P1-T20).
+   *
+   * @param result - Inventory result to validate
+   * @param parsed - Parsed requirements document for comparison
+   * @throws Error if inventory is suspiciously small
+   */
+  private validateInventorySize(result: InventoryResult, parsed: ParsedRequirements): void {
+    const totalRequirements = result.inventory.stats.totalRequirements;
+    const sourceKChars = parsed.rawText.length / 1000;
+
+    // Default: expect at least 0.5 requirements per 1000 chars
+    const minExpected = Math.floor(sourceKChars * 0.5);
+
+    // Only fail for very suspicious cases (large doc with almost no requirements)
+    if (totalRequirements === 0 && sourceKChars > 1) {
+      throw new Error(
+        `Requirements inventory extraction failed: 0 requirements found in ${sourceKChars.toFixed(1)}K chars of source. ` +
+        `Check that the source document contains recognizable requirement patterns (bullets, numbered lists, must/should/shall keywords).`
+      );
+    }
+
+    if (totalRequirements < minExpected && minExpected > 5) {
+      console.warn(
+        `[Requirements Inventory] WARNING: Low extraction ratio - ${totalRequirements} requirements from ${sourceKChars.toFixed(1)}K chars. ` +
+        `Expected at least ${minExpected}. Consider AI refinement or manual review.`
       );
     }
   }

@@ -33,6 +33,7 @@ export type PuppetMasterEvent =
   | { type: 'start_chain_step'; step: string; status: 'started' | 'completed' | 'failed'; timestamp: string }
   | { type: 'start_chain_complete'; projectPath: string; artifacts: { prdPath: string; architecturePath: string; planPaths: string[] }; timestamp: string }
   | { type: 'requirements_interview_complete'; questionsCount: number; criticalCount: number; timestamp: string }
+  | { type: 'requirements_inventory_complete'; totalRequirements: number; aiRefined: boolean; warnings: string[]; timestamp: string }
   | { type: 'reviewer_verdict'; subtaskId: string; verdict: 'SHIP' | 'REVISE'; confidence: number };
 
 /**

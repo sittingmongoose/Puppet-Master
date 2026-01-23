@@ -1170,7 +1170,7 @@ If there are no gaps, return: { "gaps": [], "confidence": 1.0 }`;
   }
 
   /**
-   * P1-T20 Placeholder: Checks for requirements inventory file.
+   * P1-T20: Checks for requirements inventory file and extracts coverage metrics.
    *
    * @param projectPath - Project root path
    * @returns Inventory information if available
@@ -1182,7 +1182,25 @@ If there are no gaps, return: { "gaps": [], "confidence": 1.0 }`;
       const content = await fs.readFile(inventoryPath, 'utf-8');
       const inventory = JSON.parse(content);
 
-      // Validate expected structure
+      // P1-T20: Handle new inventory format with metadata, units, stats
+      if (
+        typeof inventory === 'object' &&
+        inventory.stats &&
+        typeof inventory.stats.totalRequirements === 'number' &&
+        Array.isArray(inventory.units)
+      ) {
+        // New format from RequirementsInventoryBuilder
+        // Note: requirementsCovered and missingRequirementIds require PRD comparison
+        // which happens later in the pipeline. For now, return totals.
+        return {
+          requirementsTotal: inventory.stats.totalRequirements,
+          requirementsCovered: 0, // Will be computed during coverage validation with PRD
+          missingRequirementIds: [], // Will be computed during coverage validation with PRD
+          inventoryPath,
+        };
+      }
+
+      // Legacy format fallback
       if (
         typeof inventory === 'object' &&
         typeof inventory.requirementsTotal === 'number' &&
@@ -1199,7 +1217,7 @@ If there are no gaps, return: { "gaps": [], "confidence": 1.0 }`;
 
       return undefined;
     } catch {
-      // Inventory file doesn't exist or is invalid - this is expected for P1-T20 placeholder
+      // Inventory file doesn't exist or is invalid
       return undefined;
     }
   }

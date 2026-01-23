@@ -112,3 +112,18 @@ export type {
   ParsedRequirements,
   RequirementsValidation,
 } from './requirements.js';
+
+export type {
+  RequirementKind,
+  RequirementSeverity,
+  RequirementUnit,
+  InventoryMetadata,
+  RequirementsInventory,
+  InventoryStats,
+  IdMap,
+  InventoryConfig,
+  HeuristicCandidate,
+  InventoryResult,
+} from './requirements-inventory.js';
+
+export { DEFAULT_INVENTORY_CONFIG } from './requirements-inventory.js';

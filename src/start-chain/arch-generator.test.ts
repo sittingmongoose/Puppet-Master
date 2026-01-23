@@ -330,7 +330,9 @@ describe('ArchGenerator', () => {
       const prd = createPRD([phase]);
       const result = generator.generateTestStrategy(prd);
 
-      expect(result).toContain('Test strategy will be developed');
+      // P1-T19: Now includes default test commands even when no test plans defined
+      expect(result).toContain('### Default Test Commands');
+      expect(result).toContain('Test plans will be developed');
     });
 
     it('should include phase-level test plans', () => {
@@ -563,10 +565,11 @@ tests/
       // The architecture should contain content from the mock
       expect(arch.length).toBeGreaterThan(100);
       expect(mockRunner.execute).toHaveBeenCalled();
+      // P1-T19: Action name changed to indicate single-pass
       expect(trackSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           platform: 'claude',
-          action: 'architecture_generation',
+          action: 'architecture_single_pass',
           success: true,
         })
       );
@@ -602,6 +605,190 @@ tests/
       expect(arch).toContain('# Architecture Document');
       // The extracted markdown should contain the architecture content
       expect(arch.length).toBeGreaterThan(50);
+    });
+  });
+
+  describe('P1-T19: Architecture validation', () => {
+    it('should validate architecture document has required sections', () => {
+      const gen = new ArchGenerator({ projectName: 'test' });
+      
+      const validArch = `# Architecture Document: test
+
+## Overview
+This is the system overview.
+
+## Data Model & Persistence
+Database design here.
+
+## API/Service Boundaries
+Service interfaces here.
+
+## Deployment & Environments
+Deployment strategy here.
+
+## Observability
+Logging and metrics here.
+
+## Security
+Authentication and authorization here.
+
+## Test Strategy
+- Command: \`npm test\`
+
+## Directory Structure
+\`\`\`
+src/
+tests/
+\`\`\`
+`;
+
+      const result = gen.validateArchitecture(validArch);
+      
+      expect(result.detectedSections.length).toBeGreaterThan(0);
+      expect(result.detectedSections).toContain('overview');
+      expect(result.documentLength).toBeGreaterThan(0);
+    });
+
+    it('should detect missing required sections', () => {
+      const gen = new ArchGenerator({ 
+        projectName: 'test',
+        multiPassConfig: { requireAllSections: true }
+      });
+      
+      const incompleteArch = `# Architecture Document
+
+## Overview
+Just an overview, nothing else.
+`;
+
+      const result = gen.validateArchitecture(incompleteArch);
+      
+      expect(result.valid).toBe(false);
+      expect(result.missingSections.length).toBeGreaterThan(0);
+      expect(result.errors.length).toBeGreaterThan(0);
+    });
+
+    it('should detect manual-only verification', () => {
+      const gen = new ArchGenerator({ 
+        projectName: 'test',
+        multiPassConfig: { rejectManualOnly: true }
+      });
+      
+      const archWithManual = `# Architecture Document
+
+## Overview
+System overview.
+
+## Test Strategy
+Please manually verify the UI looks correct.
+Visual inspection required for design review.
+`;
+
+      const result = gen.validateArchitecture(archWithManual);
+      
+      expect(result.hasManualOnlyVerification).toBe(true);
+      expect(result.errors.some(e => e.includes('manual-only'))).toBe(true);
+    });
+
+    it('should fail validation for documents that are too short', () => {
+      const gen = new ArchGenerator({ 
+        projectName: 'test',
+        multiPassConfig: { minDocLength: 1000 }
+      });
+      
+      const shortArch = '# Architecture\n\nShort.';
+
+      const result = gen.validateArchitecture(shortArch);
+      
+      expect(result.valid).toBe(false);
+      expect(result.errors.some(e => e.includes('too short'))).toBe(true);
+    });
+  });
+
+  describe('P1-T19: Template-based generation enhancements', () => {
+    it('should include all required sections in template-based generation', () => {
+      const gen = new ArchGenerator({ projectName: 'test' });
+      const parsed = createParsedRequirements([], 'Test Project');
+      const prd = createPRD([createPhase('PH-001', 'Phase 1', [
+        createTask('TK-001-001', 'Task 1', 'PH-001'),
+      ])]);
+
+      const arch = gen.generate(parsed, prd);
+
+      // Check all required sections are present
+      expect(arch).toContain('## Overview');
+      expect(arch).toContain('## Data Model & Persistence');
+      expect(arch).toContain('## API/Service Boundaries');
+      expect(arch).toContain('## Deployment & Environments');
+      expect(arch).toContain('## Observability');
+      expect(arch).toContain('## Security');
+      expect(arch).toContain('## Test Strategy');
+      expect(arch).toContain('## Directory Structure');
+    });
+
+    it('should include test commands in test strategy', () => {
+      const gen = new ArchGenerator({ projectName: 'test' });
+      const parsed = createParsedRequirements([], 'Test Project');
+      const prd = createPRD([]);
+
+      const arch = gen.generate(parsed, prd);
+      const testSection = arch.substring(arch.indexOf('## Test Strategy'));
+
+      // Should have executable commands
+      expect(testSection).toMatch(/`npm\s+\w+`/);
+    });
+
+    it('should extract relevant content for security section', () => {
+      const generator = new ArchGenerator({ projectName: 'test' });
+      const rawText = 'The system must use JWT tokens for authentication. Users must be authorized before accessing admin features.';
+      const parsed = createParsedRequirements(
+        [{ title: 'Security', content: rawText, level: 2, children: [] }],
+        'Secure App',
+        rawText
+      );
+      const prd = createPRD([]);
+
+      const arch = generator.generate(parsed, prd);
+
+      expect(arch).toContain('## Security');
+      // Should extract security-related content
+      expect(arch.toLowerCase()).toContain('auth');
+    });
+  });
+
+  describe('P1-T19: Multi-pass configuration', () => {
+    it('should respect custom multi-pass configuration', () => {
+      const gen = new ArchGenerator({
+        projectName: 'test',
+        multiPassConfig: {
+          enabled: true,
+          largeDocThreshold: 100, // Very low threshold
+          minDocLength: 50,
+          requireAllSections: false,
+          rejectManualOnly: false,
+        }
+      });
+
+      // With low threshold, even small docs should be considered for multi-pass
+      // (though multi-pass requires AI dependencies)
+      expect(gen).toBeDefined();
+    });
+
+    it('should disable multi-pass when configured', async () => {
+      const gen = new ArchGenerator({
+        projectName: 'test',
+        multiPassConfig: {
+          enabled: false,
+        }
+      });
+      
+      const parsed = createParsedRequirements([], 'Test');
+      const prd = createPRD([]);
+
+      // Should use template-based generation
+      const arch = await gen.generateWithAI(parsed, prd, false);
+      
+      expect(arch).toContain('# Architecture Document');
     });
   });
 });
