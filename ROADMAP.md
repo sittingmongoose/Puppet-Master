@@ -139,7 +139,11 @@ This roadmap uses **Blocks → Chunks → Pieces** terminology for building RWM 
 
 ## Block 3: Platform Runners
 
-**Purpose:** CLI abstractions for Cursor, Codex, Claude Code.
+**Purpose:** CLI abstractions for Cursor, Codex, Claude Code, Gemini, and Copilot.
+
+> **SDK Update (2026-01):** GitHub Copilot now uses the official Copilot SDK (`@github/copilot-sdk`)
+> instead of CLI spawning. This provides model selection, custom tools, and structured responses.
+> Antigravity support was removed (GUI-only, not suitable for automation).
 
 ### Chunk 3.1: Platform Interface + Runner Contract (UPDATED v2.0)
 

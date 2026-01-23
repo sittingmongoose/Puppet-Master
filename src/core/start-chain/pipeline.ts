@@ -20,6 +20,7 @@ import { PrdGenerator } from '../../start-chain/prd-generator.js';
 import { ArchGenerator } from '../../start-chain/arch-generator.js';
 import { TierPlanGenerator } from '../../start-chain/tier-plan-generator.js';
 import { ValidationGate } from '../../start-chain/validation-gate.js';
+import { PrdQualityValidator } from '../../start-chain/validators/prd-quality-validator.js';
 import { PrdManager } from '../../memory/prd-manager.js';
 import { RequirementsInterviewer } from '../../start-chain/requirements-interviewer.js';
 import type { InterviewResult } from '../../start-chain/requirements-interviewer.js';
@@ -28,6 +29,8 @@ import { CoverageValidator } from '../../start-chain/validators/coverage-validat
 import type { CoverageReport } from '../../start-chain/validators/coverage-validator.js';
 import { detectDocumentStructure } from '../../start-chain/structure-detector.js';
 import type { ValidationResult } from '../../start-chain/validation-gate.js';
+import type { PrdQualityResult } from '../../start-chain/validators/prd-quality-validator.js';
+import type { PrdQualityConfig } from '../../start-chain/validators/prd-quality-validator.js';
 import { RequirementsInventoryBuilder } from '../../start-chain/requirements-inventory.js';
 import { promises as fs } from 'fs';
 import { join } from 'path';
@@ -70,6 +73,10 @@ export interface StartChainResult {
     idMapPath: string;
     parsedPath: string;
   };
+  /** PRD quality validation report (optional, P1-T21) */
+  prdQualityReport?: PrdQualityResult;
+  /** Path to saved PRD quality report (optional, P1-T21) */
+  prdQualityReportPath?: string;
 }
 
 /**
@@ -169,6 +176,26 @@ export class StartChainPipeline {
     const prd = await this.generatePRD(parsed, projectNameFinal, interview);
     await this.publishStep('generate_prd', 'completed');
 
+    // Step 2.5: PRD Quality Validation (P1-T21)
+    await this.publishStep('validate_prd_quality', 'started');
+    const { prdQualityReport, prdQualityReportPath } = await this.validatePrdQuality(
+      prd,
+      parsed,
+      projectPath
+    );
+
+    if (!prdQualityReport.valid) {
+      const errorMessages = prdQualityReport.errors.map(e => e.message).join('; ');
+      throw new Error(`PRD quality validation failed: ${errorMessages}`);
+    }
+
+    // Log warnings (non-blocking)
+    for (const warning of prdQualityReport.warnings) {
+      console.warn(`[PRD Quality] WARNING: ${warning.message}`);
+    }
+
+    await this.publishStep('validate_prd_quality', 'completed');
+
     // Step 3: Generate architecture.md via AI (formerly Step 2)
     await this.publishStep('generate_architecture', 'started');
     const architecture = await this.generateArchitecture(parsed, prd, projectNameFinal);
@@ -238,6 +265,8 @@ export class StartChainPipeline {
       coverageReportPath,
       inventoryResult,
       inventoryPaths,
+      prdQualityReport,
+      prdQualityReportPath,
     };
   }
 
@@ -435,6 +464,55 @@ export class StartChainPipeline {
       JSON.stringify(matrix, null, 2),
       'utf-8'
     );
+  }
+
+  /**
+   * Validates PRD quality (P1-T21).
+   * Returns quality report and persists it to disk.
+   */
+  private async validatePrdQuality(
+    prd: PRD,
+    parsed: ParsedRequirements,
+    projectPath: string
+  ): Promise<{
+    prdQualityReport: PrdQualityResult;
+    prdQualityReportPath: string;
+  }> {
+    // Get quality config from main config
+    const qualityConfig: PrdQualityConfig | undefined = this.config?.startChain?.prdQuality;
+
+    const validationGate = new ValidationGate();
+    const validationResult = validationGate.validatePrdQuality(
+      prd,
+      parsed,
+      qualityConfig,
+      projectPath
+    );
+
+    // Get full quality report with metrics
+    const validator = new PrdQualityValidator(qualityConfig);
+    const prdQualityReport = validator.validate(prd, parsed, projectPath);
+
+    // Persist quality report
+    const prdQualityReportPath = await this.savePrdQualityReport(projectPath, prdQualityReport);
+
+    return { prdQualityReport, prdQualityReportPath };
+  }
+
+  /**
+   * Saves PRD quality report to .puppet-master/requirements/prd-quality.json
+   */
+  private async savePrdQualityReport(
+    projectPath: string,
+    report: PrdQualityResult
+  ): Promise<string> {
+    const requirementsDir = join(projectPath, '.puppet-master', 'requirements');
+    await fs.mkdir(requirementsDir, { recursive: true });
+
+    const qualityPath = join(requirementsDir, 'prd-quality.json');
+    await fs.writeFile(qualityPath, JSON.stringify(report, null, 2), 'utf-8');
+
+    return qualityPath;
   }
 
   /**

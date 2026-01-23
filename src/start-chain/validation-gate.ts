@@ -13,7 +13,10 @@ import type { PuppetMasterConfig } from '../types/config.js';
 import type { Platform } from '../types/config.js';
 import type { TierType } from '../types/state.js';
 import type { TierPlan, PhasePlan, TaskPlan, SubtaskPlan } from './tier-plan-generator.js';
+import type { ParsedRequirements } from '../types/requirements.js';
 import { validateNoManualCriteria } from './validators/no-manual-validator.js';
+import { PrdQualityValidator } from './validators/prd-quality-validator.js';
+import type { PrdQualityConfig } from './validators/prd-quality-validator.js';
 
 /**
  * Validation error interface.
@@ -586,6 +589,32 @@ export class ValidationGate {
       valid: errors.length === 0,
       errors,
       warnings,
+    };
+  }
+
+  /**
+   * Validates PRD quality (P1-T21).
+   * Performs quality checks: verifiability, specificity, test completeness, traceability, structural sanity.
+   * 
+   * @param prd - PRD to validate
+   * @param parsed - Optional parsed requirements for structural checks
+   * @param config - Optional PRD quality configuration
+   * @param projectPath - Optional project path for project type detection
+   * @returns Validation result with errors and warnings
+   */
+  validatePrdQuality(
+    prd: PRD,
+    parsed?: ParsedRequirements,
+    config?: PrdQualityConfig,
+    projectPath?: string
+  ): ValidationResult {
+    const validator = new PrdQualityValidator(config);
+    const result = validator.validate(prd, parsed, projectPath);
+
+    return {
+      valid: result.valid,
+      errors: result.errors,
+      warnings: result.warnings,
     };
   }
 

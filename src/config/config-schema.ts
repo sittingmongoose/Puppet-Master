@@ -129,7 +129,7 @@ function validateTierConfig(value: unknown, path: string[]): asserts value is Ti
 
   // Validate platform
   if (!isPlatform(v.platform)) {
-    throw new ConfigValidationError(`tier.platform must be one of: cursor, codex, claude, gemini, copilot, antigravity`, [...path, 'platform']);
+    throw new ConfigValidationError(`tier.platform must be one of: cursor, codex, claude, gemini, copilot`, [...path, 'platform']);
   }
 
   // Validate model
@@ -284,7 +284,7 @@ function validateBudgetConfig(value: unknown, path: string[]): asserts value is 
     throw new ConfigValidationError('budget.cooldownHours must be a non-negative number', [...path, 'cooldownHours']);
   }
   if (v.fallbackPlatform !== null && !isPlatform(v.fallbackPlatform)) {
-    throw new ConfigValidationError('budget.fallbackPlatform must be null or one of: cursor, codex, claude, gemini, copilot, antigravity', [...path, 'fallbackPlatform']);
+    throw new ConfigValidationError('budget.fallbackPlatform must be null or one of: cursor, codex, claude, gemini, copilot', [...path, 'fallbackPlatform']);
   }
 }
 
@@ -294,7 +294,7 @@ function validatePlatformBudgets(value: unknown, path: string[]): asserts value 
   }
   const v = value as Record<string, unknown>;
 
-  const platforms: Platform[] = ['claude', 'codex', 'cursor', 'gemini', 'copilot', 'antigravity'];
+  const platforms: Platform[] = ['claude', 'codex', 'cursor', 'gemini', 'copilot'];
   for (const platform of platforms) {
     if (!(platform in v)) {
       throw new ConfigValidationError(`Missing required budget for platform: ${platform}`, [...path, platform]);
@@ -323,7 +323,7 @@ function validatePlatformRateLimits(value: unknown, path: string[]): asserts val
   }
   const v = value as Record<string, unknown>;
 
-  const platforms: Platform[] = ['claude', 'codex', 'cursor', 'gemini', 'copilot', 'antigravity'];
+  const platforms: Platform[] = ['claude', 'codex', 'cursor', 'gemini', 'copilot'];
   for (const platform of platforms) {
     if (!(platform in v)) {
       throw new ConfigValidationError(`Missing required rate limit for platform: ${platform}`, [...path, platform]);
@@ -461,7 +461,7 @@ function validateCliPathsConfig(value: unknown, path: string[]): asserts value i
   }
   const v = value as Record<string, unknown>;
 
-  const platforms: Platform[] = ['cursor', 'codex', 'claude', 'gemini', 'copilot', 'antigravity'];
+  const platforms: Platform[] = ['cursor', 'codex', 'claude', 'gemini', 'copilot'];
   for (const platform of platforms) {
     if (!(platform in v)) {
       throw new ConfigValidationError(`Missing required cliPath for platform: ${platform}`, [...path, platform]);
@@ -510,5 +510,5 @@ function validateCheckpointingConfig(value: unknown, path: string[]): asserts va
 }
 
 function isPlatform(value: unknown): value is Platform {
-  return value === 'cursor' || value === 'codex' || value === 'claude' || value === 'gemini' || value === 'copilot' || value === 'antigravity';
+  return value === 'cursor' || value === 'codex' || value === 'claude' || value === 'gemini' || value === 'copilot';
 }

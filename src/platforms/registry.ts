@@ -15,7 +15,7 @@ import { CodexRunner } from './codex-runner.js';
 import { ClaudeRunner } from './claude-runner.js';
 import { GeminiRunner } from './gemini-runner.js';
 import { CopilotRunner } from './copilot-runner.js';
-import { AntigravityRunner } from './antigravity-runner.js';
+import { CopilotSdkRunner } from './copilot-sdk-runner.js';
 import { resolveUnderProjectRoot } from '../utils/project-paths.js';
 import { FreshSpawner } from '../core/fresh-spawn.js';
 
@@ -123,19 +123,23 @@ export class PlatformRegistry {
     );
     registry.register('gemini', geminiRunner);
 
-    // Register Copilot runner
-    const copilotRunner = new CopilotRunner(
+    // Register Copilot SDK runner (replaces CLI-based CopilotRunner)
+    // Uses official GitHub Copilot SDK for structured communication
+    // Note: SDK runner implements PlatformRunnerContract but doesn't extend BasePlatformRunner
+    // since it uses a fundamentally different execution model (JSON-RPC vs process spawning)
+    const copilotSdkRunner = new CopilotSdkRunner(
       capabilityService,
-      config.cliPaths.copilot,
+      {
+        defaultModel: 'claude-sonnet-4.5',
+        sessionPersistence: false, // Fresh context per iteration by default
+      },
       300_000,
-      1_800_000,
-      freshSpawner
+      1_800_000
     );
-    registry.register('copilot', copilotRunner);
+    registry.register('copilot', copilotSdkRunner as unknown as BasePlatformRunner);
 
-    // Register Antigravity runner (doesn't use FreshSpawner since it always fails)
-    const antigravityRunner = new AntigravityRunner(capabilityService);
-    registry.register('antigravity', antigravityRunner);
+    // NOTE: Antigravity runner removed - GUI-only, not suitable for automation
+    // See plan: /root/.claude/plans/snoopy-wondering-mountain.md
 
     return registry;
   }

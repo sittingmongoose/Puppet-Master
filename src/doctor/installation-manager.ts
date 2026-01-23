@@ -283,6 +283,24 @@ export class InstallationManager {
       requiresSudo: false,
       platforms: ['darwin', 'linux', 'win32'],
     });
+
+    // GitHub Copilot SDK installation
+    this.registerCommand({
+      check: 'copilot-sdk',
+      command: 'npm install @github/copilot-sdk',
+      description: 'Install GitHub Copilot SDK (and ensure Copilot CLI is available)',
+      requiresSudo: false,
+      platforms: ['darwin', 'linux', 'win32'],
+    });
+
+    // GitHub Copilot CLI installation (used by SDK)
+    this.registerCommand({
+      check: 'copilot-cli',
+      command: 'npm install -g @github/copilot-cli',
+      description: 'Install GitHub Copilot CLI',
+      requiresSudo: false,
+      platforms: ['darwin', 'linux', 'win32'],
+    });
   }
 
   /**

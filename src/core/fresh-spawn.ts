@@ -444,11 +444,6 @@ export class FreshSpawner {
           command: resolvePlatformCommand('copilot', null),
           args: ['-p', request.prompt, '--allow-all-tools', '--allow-all-paths', '--silent', '--stream', 'off', ...baseArgs],
         };
-      case 'antigravity':
-        return {
-          command: resolvePlatformCommand('antigravity', null),
-          args: [...baseArgs],
-        };
       default: {
         const exhaustive: never = request.platform;
         return exhaustive;

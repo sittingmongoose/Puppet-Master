@@ -1,6 +1,25 @@
 /**
  * GitHub Copilot CLI Platform Runner
  *
+ * @deprecated Use CopilotSdkRunner instead.
+ *
+ * This CLI-based runner is deprecated in favor of the SDK-based runner
+ * which provides:
+ * - Model selection (via SessionConfig.model)
+ * - Custom tool definitions
+ * - Structured responses (no text parsing)
+ * - Session persistence (opt-in)
+ *
+ * The SDK runner is in copilot-sdk-runner.ts and is now the default.
+ * This file is kept as a fallback for edge cases where SDK fails.
+ * It will be removed in a future release.
+ *
+ * @see copilot-sdk-runner.ts - The recommended replacement
+ *
+ * ---
+ *
+ * LEGACY DOCUMENTATION (for reference):
+ *
  * Executes prompts via GitHub Copilot CLI in programmatic mode.
  * Uses fresh process per iteration with text output parsing.
  *

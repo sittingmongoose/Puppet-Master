@@ -11,7 +11,8 @@ export { CodexRunner } from './codex-runner.js';
 export { ClaudeRunner } from './claude-runner.js';
 export { GeminiRunner, createGeminiRunner } from './gemini-runner.js';
 export { CopilotRunner, createCopilotRunner } from './copilot-runner.js';
-export { AntigravityRunner, createAntigravityRunner } from './antigravity-runner.js';
+export { CopilotSdkRunner, createCopilotSdkRunner } from './copilot-sdk-runner.js';
+// NOTE: AntigravityRunner removed - GUI-only, not suitable for automation
 
 // Export model catalogs
 export {
@@ -29,14 +30,7 @@ export {
   getCopilotModelIds,
   getCopilotModelSelectionNote,
 } from './copilot-models.js';
-export {
-  type AntigravityModel,
-  ANTIGRAVITY_MODELS,
-  getAntigravityModels,
-  getAntigravityModelsByProvider,
-  getAntigravityModelIds,
-  getAntigravityModelSelectionNote,
-} from './antigravity-models.js';
+// NOTE: Antigravity models removed - GUI-only, not suitable for automation
 
 // Export platform registry
 export { PlatformRegistry } from './registry.js';

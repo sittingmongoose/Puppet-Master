@@ -86,6 +86,14 @@
 | **CursorRunner** | Cursor-specific invocation, parsing, session management |
 | **CodexRunner** | Codex-specific invocation, JSONL parsing, session management |
 | **ClaudeCodeRunner** | Claude Code-specific invocation, session management |
+| **GeminiRunner** | Gemini CLI invocation, JSONL parsing |
+| **CopilotSdkRunner** | GitHub Copilot via official SDK (JSON-RPC); supports model selection and custom tools |
+
+> **Note:** CopilotRunner (CLI-based) is deprecated in favor of CopilotSdkRunner which uses
+> the official GitHub Copilot SDK (`@github/copilot-sdk`). The SDK provides structured
+> communication via JSON-RPC, model selection, and custom tool definitions.
+>
+> Antigravity support was removed - it is GUI-only and not suitable for automation.
 
 ### 2.3 Verification Layer
 

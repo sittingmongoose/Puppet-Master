@@ -9,8 +9,11 @@
 /**
  * Platform type - the canonical definition.
  * ALL other files should import Platform from here or from the index barrel.
+ *
+ * NOTE: 'antigravity' was removed - GUI-only, not suitable for automation.
+ * 'copilot' now uses the official GitHub Copilot SDK instead of CLI spawning.
  */
-export type Platform = 'cursor' | 'codex' | 'claude' | 'gemini' | 'copilot' | 'antigravity';
+export type Platform = 'cursor' | 'codex' | 'claude' | 'gemini' | 'copilot';
 
 /**
  * Project configuration section.
@@ -23,7 +26,10 @@ export interface ProjectConfig {
 
 /**
  * CLI paths configuration.
- * Maps from YAML: cli_paths.cursor, cli_paths.codex, cli_paths.claude, cli_paths.gemini, cli_paths.copilot, cli_paths.antigravity
+ * Maps from YAML: cli_paths.cursor, cli_paths.codex, cli_paths.claude, cli_paths.gemini, cli_paths.copilot
+ *
+ * NOTE: antigravity removed - GUI-only, not suitable for automation.
+ * copilot CLI is still needed as the SDK communicates with it via JSON-RPC.
  */
 export interface CliPathsConfig {
   cursor: string;
@@ -31,7 +37,6 @@ export interface CliPathsConfig {
   claude: string;
   gemini: string;
   copilot: string;
-  antigravity: string;
 }
 
 /**
@@ -128,7 +133,7 @@ export interface BudgetConfig {
 
 /**
  * Platform budgets configuration.
- * Maps from YAML: budgets.claude, budgets.codex, budgets.cursor, budgets.gemini, budgets.copilot, budgets.antigravity
+ * Maps from YAML: budgets.claude, budgets.codex, budgets.cursor, budgets.gemini, budgets.copilot
  * See REQUIREMENTS.md Section 23.3
  */
 export interface PlatformBudgets {
@@ -137,7 +142,6 @@ export interface PlatformBudgets {
   cursor: BudgetConfig;
   gemini: BudgetConfig;
   copilot: BudgetConfig;
-  antigravity: BudgetConfig;
 }
 
 /**
@@ -163,7 +167,6 @@ export interface PlatformRateLimits {
   claude: RateLimitConfig;
   gemini: RateLimitConfig;
   copilot: RateLimitConfig;
-  antigravity: RateLimitConfig;
 }
 
 /**
@@ -290,6 +293,14 @@ export interface StartChainConfig {
   coverage?: CoverageValidationConfig & StartChainStepConfig;
   /** P1-T05: Multi-pass PRD generation settings */
   multiPass?: MultiPassGenerationConfig;
+  /** P1-T21: PRD quality validation settings */
+  prdQuality?: {
+    maxGenericCriteriaPercent?: number;
+    maxGenericCriteriaAbsolute?: number;
+    requireTraceability?: boolean;
+    largeDocThreshold?: number;
+    minPhasesForLargeDoc?: number;
+  };
 }
 
 /**

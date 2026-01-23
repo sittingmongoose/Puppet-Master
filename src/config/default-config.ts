@@ -104,12 +104,6 @@ export function getDefaultConfig(): PuppetMasterConfig {
         maxCallsPerDay: 'unlimited',
         fallbackPlatform: 'gemini',
       },
-      antigravity: {
-        maxCallsPerRun: 'unlimited',
-        maxCallsPerHour: 'unlimited',
-        maxCallsPerDay: 'unlimited',
-        fallbackPlatform: null,
-      },
     },
     budgetEnforcement: {
       onLimitReached: 'fallback',
@@ -139,10 +133,6 @@ export function getDefaultConfig(): PuppetMasterConfig {
         callsPerMinute: 40,
         cooldownMs: 2500,
       },
-      antigravity: {
-        callsPerMinute: 100,
-        cooldownMs: 1000,
-      },
     },
     logging: {
       level: 'info',
@@ -154,7 +144,6 @@ export function getDefaultConfig(): PuppetMasterConfig {
       claude: 'claude',
       gemini: 'gemini',
       copilot: 'copilot',
-      antigravity: 'agy',
     },
     execution: {
       killAgentOnFailure: true,

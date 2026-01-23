@@ -53,7 +53,6 @@ export class PlatformRouter {
     claude: ['codex', 'cursor', 'gemini', 'copilot'],
     gemini: ['copilot', 'codex', 'cursor', 'claude'],
     copilot: ['gemini', 'codex', 'cursor', 'claude'],
-    antigravity: ['gemini', 'copilot', 'codex', 'cursor', 'claude'],
   };
 
   constructor(config: PuppetMasterConfig, registry: PlatformRegistry) {

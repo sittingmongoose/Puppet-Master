@@ -26,6 +26,9 @@ export type {
   ValidationWarning,
 } from './validation-gate.js';
 
+export { PrdQualityValidator } from './validators/prd-quality-validator.js';
+export type { PrdQualityConfig, PrdQualityResult, PrdQualityMetrics } from './validators/prd-quality-validator.js';
+
 export { buildPrdPrompt } from './prompts/prd-prompt.js';
 export { buildArchPrompt } from './prompts/arch-prompt.js';
 

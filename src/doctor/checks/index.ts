@@ -10,7 +10,8 @@ export {
   ClaudeCliCheck,
   GeminiCliCheck,
   CopilotCliCheck,
-  AntigravityCliCheck,
+  CopilotSdkCheck,
+  // NOTE: AntigravityCliCheck removed - GUI-only, not suitable for automation
 } from './cli-tools.js';
 
 export { PlaywrightBrowsersCheck } from './playwright-check.js';
@@ -37,3 +38,7 @@ export {
   SubdirectoriesCheck,
   AgentsFileCheck,
 } from './project-check.js';
+
+export { WiringCheck, createWiringCheck } from './wiring-check.js';
+
+export { PlatformCompatibilityCheck } from './platform-compatibility-check.js';

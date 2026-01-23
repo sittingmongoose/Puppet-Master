@@ -440,76 +440,80 @@ export class CopilotCliCheck implements DoctorCheck {
 }
 
 /**
- * Check for Antigravity CLI availability
+ * Check for GitHub Copilot SDK availability
  *
- * NOTE: Antigravity (`agy`) is a GUI launcher only and does not support
- * headless/non-interactive execution. This check verifies installation
- * but warns users about the limitation.
+ * Uses the official Copilot SDK to check:
+ * - SDK package installed
+ * - CLI available (SDK communicates with CLI via JSON-RPC)
+ * - Authentication status
+ * - Available models
+ *
+ * This replaces CLI-only checks with richer SDK-based validation.
  */
-export class AntigravityCliCheck implements DoctorCheck {
-  readonly name = 'antigravity-cli';
+export class CopilotSdkCheck implements DoctorCheck {
+  readonly name = 'copilot-sdk';
   readonly category = 'cli' as const;
-  readonly description = 'Check if Antigravity CLI is available';
-
-  constructor(private readonly cliPaths: Partial<CliPathsConfig> | null = null) {}
+  readonly description = 'Check if GitHub Copilot SDK is available and authenticated';
 
   async run(): Promise<CheckResult> {
-    const auth = getPlatformAuthStatus('antigravity');
+    try {
+      // Dynamic import to avoid errors if SDK not installed
+      const { CopilotClient } = await import('@github/copilot-sdk');
 
-    const candidates: CliInvocation[] = [];
-    const configured = resolvePlatformCommand('antigravity', this.cliPaths);
-    candidates.push({ command: configured });
+      const client = new CopilotClient();
+      await client.start();
 
-    let selected: CliInvocation | null = null;
-    let versionResult: CliAvailabilityResult | null = null;
-    let lastError: string | undefined;
+      const [status, authStatus, models] = await Promise.all([
+        client.getStatus(),
+        client.getAuthStatus(),
+        client.listModels().catch(() => [] as string[]),
+      ]);
 
-    for (const candidate of candidates) {
-      // Try --version first, fall back to --help if needed
-      const res = await checkCliAvailable(candidate, ['--version']);
-      if (res.available) {
-        selected = candidate;
-        versionResult = res;
-        break;
-      }
-      // Some launchers may not support --version
-      const helpRes = await checkCliAvailable(candidate, ['--help']);
-      if (helpRes.available) {
-        selected = candidate;
-        versionResult = { available: true, version: 'unknown' };
-        break;
-      }
-      lastError = res.error;
-    }
+      await client.stop();
 
-    if (selected && versionResult?.available) {
-      const helpResult = await checkCliAvailable(selected, ['--help'], 5_000);
-      const runnable = helpResult.available || versionResult.available;
-
-      // IMPORTANT: Always note launcher-only limitation
-      const launcherWarning = 'Note: `agy` is a GUI launcher only. For headless automation, use `gemini` or `copilot` platforms instead.';
+      const authenticated = authStatus.authenticated;
+      const modelCount = models.length;
 
       return {
         name: this.name,
         category: this.category,
-        passed: runnable,
-        message: runnable
-          ? `Antigravity CLI is installed and runnable (launcher-only)`
-          : `Antigravity CLI is installed but not runnable`,
-        details: `Installed: yes. Runnable: ${runnable ? 'yes' : 'no'}. Auth: ${auth.status}. Command: ${formatInvocation(selected)}. Version: ${versionResult.version || 'unknown'}. ${launcherWarning}${helpResult.available ? '' : ` Help check: ${helpResult.error}`}${auth.details ? ` ${auth.details}` : ''}`.trim(),
-        fixSuggestion: undefined,
-        durationMs: 0, // Will be set by CheckRegistry
+        passed: authenticated,
+        message: authenticated
+          ? `Copilot SDK is working and authenticated`
+          : `Copilot SDK is working but not authenticated`,
+        details: `SDK: yes. CLI: v${status.cliVersion ?? status.version ?? 'unknown'}. Auth: ${authenticated ? authStatus.authType ?? 'authenticated' : 'not authenticated'}. Models available: ${modelCount}.`,
+        fixSuggestion: authenticated ? undefined : 'Run `copilot /login` to authenticate',
+        durationMs: 0,
       };
-    } else {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+
+      // Check if it's a module not found error
+      if (errorMessage.includes('Cannot find module') || errorMessage.includes('ERR_MODULE_NOT_FOUND')) {
+        return {
+          name: this.name,
+          category: this.category,
+          passed: false,
+          message: 'Copilot SDK not installed',
+          details: `The @github/copilot-sdk package is not installed.`,
+          fixSuggestion: 'Run: npm install @github/copilot-sdk',
+          durationMs: 0,
+        };
+      }
+
+      // Other errors (CLI not available, connection failed, etc.)
       return {
         name: this.name,
         category: this.category,
         passed: false,
-        message: `Antigravity CLI not found (checked: ${candidates.map(formatInvocation).join(', ')})`,
-        details: lastError,
-        fixSuggestion: 'Install from: https://antigravity.google/',
-        durationMs: 0, // Will be set by CheckRegistry
+        message: 'Copilot SDK initialization failed',
+        details: errorMessage,
+        fixSuggestion: 'Ensure Copilot CLI is installed and run: npm install @github/copilot-sdk',
+        durationMs: 0,
       };
     }
   }
 }
+
+// NOTE: AntigravityCliCheck removed - GUI-only, not suitable for automation
+// See plan: /root/.claude/plans/snoopy-wondering-mountain.md

@@ -34,10 +34,6 @@ describe('RateLimiter', () => {
         callsPerMinute: 15,
         cooldownMs: 400,
       },
-      antigravity: {
-        callsPerMinute: 30,
-        cooldownMs: 200,
-      },
     };
 
     rateLimiter = new RateLimiter(config);

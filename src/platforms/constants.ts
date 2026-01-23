@@ -29,7 +29,7 @@ export const PLATFORM_COMMANDS: Readonly<Record<Platform, string>> = {
   claude: process.platform === 'win32' ? 'claude.exe' : 'claude',
   gemini: process.platform === 'win32' ? 'gemini.exe' : 'gemini',
   copilot: process.platform === 'win32' ? 'copilot.exe' : 'copilot',
-  antigravity: process.platform === 'win32' ? 'agy.exe' : 'agy',
+  // NOTE: antigravity removed - GUI-only, not suitable for automation
 } as const;
 
 /**
