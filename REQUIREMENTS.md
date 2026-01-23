@@ -106,7 +106,14 @@ All agent interactions happen via CLI invocations only:
 - `codex "prompt" [flags]`
 - `claude -p "prompt" [flags]`
 - `gemini -p "prompt" --output-format json --approval-mode yolo [--model <model>]`
-- `copilot -p "prompt" --allow-all-tools --allow-all-paths --silent --stream off`
+  - Alternative: `gemini --prompt "prompt" --output-format json --yolo [-m <model>]`
+  - For streaming: `--output-format stream-json` (JSONL events)
+- `copilot -p "prompt" --allow-all-tools [--allow-all-paths] [--allow-all-urls] [--allow-url <domain>] [--silent] [--stream off]`
+  - Alternative: `copilot --prompt "prompt" --allow-all-tools`
+  - Tool-specific: `--allow-tool 'shell(git)'` or `--deny-tool 'shell(rm)'`
+  - Session resume: `--resume` or `--continue` (for interactive sessions)
+  - Custom agent: `--agent=<agent-name>`
+  - Note: `--allow-all-paths` and `--allow-all-urls` are documented flags
 - `agy` (launcher only; no headless mode available)
 
 ---
@@ -1387,6 +1394,193 @@ Example: `PM-2026-01-10-14-00-00-001`
 - `--max-turns` - Limit turns
 - `--allowedTools` - Restrict tool access
 - `/init` - Generate CLAUDE.md
+
+### Gemini CLI (`gemini`)
+
+**Key capabilities:**
+- `gemini -p "prompt"` or `gemini --prompt "prompt"` - Headless mode with prompt
+- `gemini` (no flags) - Interactive REPL session
+- `--output-format json` - Machine-readable JSON output
+- `--output-format stream-json` - Streaming JSONL events for real-time monitoring
+- `--approval-mode yolo` or `--yolo` - Auto-approve all tool calls
+- `--approval-mode auto_edit` - Auto-approve edit tools (write_file, replace) only
+- `--approval-mode plan` - Read-only mode (requires `experimental.plan: true` in settings)
+- `--model <model>` or `-m <model>` - Model selection
+- `--include-directories <dir1,dir2>` - Multi-directory workspace support (max 5)
+- `--debug` or `-d` - Enable debug mode with verbose output
+- `--sandbox` or `-s` - Enable sandbox execution environment
+- `--resume [session-id]` - Resume previous session (not used by Puppet Master)
+- `--list-sessions` - List available sessions
+- `--delete-session <id>` - Delete a session
+
+**Context files:**
+- Reads `GEMINI.md` from project root and ancestors (hierarchical loading)
+- Global context: `~/.gemini/GEMINI.md`
+- Project context: `.gemini/GEMINI.md` or `GEMINI.md` in project root
+- Sub-directory context: Scans up to 200 directories for local `GEMINI.md` files
+- `/memory show` - Display loaded context
+- `/memory refresh` - Reload all context files
+- `/memory add <text>` - Add text to memory
+- `/memory list` - List GEMINI.md file paths
+
+**Authentication methods:**
+- OAuth via Google account (interactive, recommended)
+- `GEMINI_API_KEY` environment variable (headless/automation)
+- Vertex AI via `GOOGLE_APPLICATION_CREDENTIALS` (service account JSON)
+- Vertex AI via `gcloud auth application-default login` (ADC)
+- Vertex AI via `GOOGLE_API_KEY` (Google Cloud API key)
+- Requires `GOOGLE_CLOUD_PROJECT` for Vertex AI
+
+**Configuration:**
+- Settings file: `~/.gemini/settings.json` (user) or `.gemini/settings.json` (project)
+- Environment variables: `GEMINI_API_KEY`, `GOOGLE_CLOUD_PROJECT`, `GOOGLE_CLOUD_LOCATION`
+- `.env` files: Automatically loaded from project root or `~/.gemini/.env`
+
+**Planning approach:**
+- No dedicated `--plan` flag
+- Use `--approval-mode plan` with `experimental.plan: true` for read-only planning
+- Plan behavior via explicit prompt: "Plan the implementation for X. Then build it."
+- Non-interactive planning: `gemini -p "Outline a plan..." --output-format json > plan.json`
+
+**Models:**
+- `auto` (recommended) - Automatic model selection
+- `gemini-2.5-pro` - High-capability model
+- `gemini-2.5-flash` - Fast, efficient model
+- `gemini-2.5-flash-lite` - Lightweight model
+- `gemini-3-pro-preview` - Next-gen model (requires preview features)
+- `gemini-3-flash-preview` - Preview flash variant (requires preview features)
+
+### GitHub Copilot CLI (`copilot`)
+
+**Key capabilities:**
+- `copilot -p "prompt"` or `copilot --prompt "prompt"` - Programmatic mode with prompt
+- `copilot` (no flags) - Interactive mode (default)
+- `--allow-all-tools` - Auto-approve all tools without manual approval
+- `--allow-tool <spec>` - Allow specific tool without approval
+- `--deny-tool <spec>` - Prevent specific tool usage (takes precedence over allow options)
+- Tool specifications: `'shell(COMMAND)'`, `'write'`, `'MCP_SERVER_NAME'`
+- Model selection: `/model` command (interactive only, not programmatic via CLI flags)
+- Default model: Claude Sonnet 4.5
+- Output format: Text-based (no JSON output format available)
+
+**Approval system:**
+- First-time tool usage prompts for approval (interactive mode)
+- Three approval options: Yes (this time), Yes (this session), No
+- Command-line flags bypass approval prompts for headless operation
+- `--deny-tool` takes precedence over `--allow-all-tools` and `--allow-tool`
+
+**Tool specification syntax:**
+- `'shell(COMMAND)'` - Shell command (e.g., `'shell(git)'`, `'shell(rm)'`)
+- `'shell(git push)'` - Specific git subcommand
+- `'shell'` - Any shell command (no specific command)
+- `'write'` - File modification tools (non-shell)
+- `'MCP_SERVER_NAME'` - All tools from MCP server
+- `'MCP_SERVER_NAME(tool_name)'` - Specific tool from MCP server
+
+**Command-line options:**
+- `--resume` - Cycle through and resume local and remote interactive sessions
+- `--continue` - Quickly resume the most recently closed local session
+- `--agent=<agent-name>` - Specify custom agent to use (e.g., `--agent=refactor-agent`)
+
+**Security considerations:**
+- Trusted directories: Configured in `trusted_folders` array in `~/.copilot/config.json`
+- Directory trust prompt on first launch from new directory
+- Can trust for current session only or permanently
+- Warning: Don't launch from home directory or untrusted locations
+- Heuristic permission scoping (GitHub doesn't guarantee all files outside trusted directories are protected)
+- Risk mitigation: Use in restricted environments (VM, container, dedicated system)
+
+**Path permissions (detailed):**
+- Default access: Current working directory, subdirectories, system temp directory
+- Applies to: Shell commands, file operations (create, edit, view), search tools (grep, glob patterns)
+- Path detection: Heuristically extracted by tokenizing command text
+- Limitations:
+  - Paths in complex shell constructs may not be detected
+  - Only specific env vars expanded (HOME, TMPDIR, PWD, etc.)
+  - Custom variables like $MY_PROJECT_DIR not expanded
+  - Symlinks resolved for existing files, not for files being created
+- Flag: `--allow-all-paths` - Disable path verification (documented)
+
+**URL permissions (detailed):**
+- Default: All URLs require approval before access
+- Applies to: `web_fetch` tool and curated list of shell commands (curl, wget, fetch)
+- URL detection: Extracted using regex patterns
+- Limitations:
+  - URLs in file contents, config files, or env vars read by commands not detected
+  - Obfuscated URLs (split strings, escape sequences) may not be detected
+  - HTTP and HTTPS treated as different protocols (separate approval)
+- Flags:
+  - `--allow-all-urls` - Disable URL verification
+  - `--allow-url <domain>` - Pre-approve specific domain (e.g., `--allow-url github.com`)
+
+**Customization options:**
+- Custom instructions: Project context, build/test/validation instructions
+- MCP servers: Additional data sources and tools via Model Context Protocol
+- Custom agents: Specialized versions for different tasks
+- Hooks: Execute shell commands at key points (validation, logging, security scanning)
+- Skills: Enhanced specialized task performance with instructions, scripts, resources
+
+**Authentication:**
+- GitHub authentication via `/login` command in interactive mode
+- `GH_TOKEN` or `GITHUB_TOKEN` environment variable with "Copilot Requests" permission
+- Requires GitHub Copilot Pro, Pro+, Business, or Enterprise subscription
+- Organization policy must enable Copilot CLI feature
+
+**Model usage:**
+- Default model: Claude Sonnet 4.5 (GitHub reserves right to change)
+- Change model: `/model` slash command in interactive mode
+- Premium requests: Each prompt reduces monthly quota by model multiplier (e.g., "1x", "2x")
+- Model availability: Depends on subscription tier (Pro, Pro+, Business, Enterprise) and region
+
+**Planning approach:**
+- No dedicated `--plan` flag
+- Plan behavior via explicit prompt: "Plan the implementation for X. Then build it."
+- Non-interactive planning: `copilot -p "Outline a plan..." > plan.txt`
+
+**Context file locations (custom instructions):**
+- `CLAUDE.md` - In project root and current working directory
+- `GEMINI.md` - In project root and current working directory
+- `AGENTS.md` - In git root and current working directory
+- `.github/instructions/**/*.instructions.md` - Path-specific instructions (in git root & cwd)
+- `.github/copilot-instructions.md` - Repository-wide instructions
+- `$HOME/.copilot/copilot-instructions.md` - User-level instructions
+- `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` - Additional directories via environment variable
+
+**Default custom agents:**
+- Explore: Performs quick codebase analysis without adding to main context
+- Task: Executes commands (tests, builds) with brief summaries on success, full output on failure
+- Plan: Analyzes dependencies and structure to create implementation plans
+- Code-review: Reviews changes focusing on genuine issues, minimizing noise
+
+**Context management:**
+- `/usage` - Session statistics: premium requests used, session duration, total lines edited, token usage per model
+- `/context` - Visual overview of current token usage
+- `/compact` - Manually compress conversation history to free context space
+- Automatic compression: Triggers when approaching 95% of token limit
+- Warning: Displayed when less than 20% of token limit remaining (context will be truncated)
+
+**File mentions and shell commands:**
+- `@path/to/file` - Include file contents in prompt (e.g., `Explain @config/ci/ci-required-checks.yml`)
+- Path completion: Arrow keys to select, Tab to complete when typing file path
+- `!command` - Execute shell command directly, bypassing Copilot (e.g., `!git clone ...`)
+
+**Delegation to Copilot coding agent:**
+- `/delegate <prompt>` - Push current session to Copilot coding agent on GitHub
+- Creates checkpoint commit in new branch
+- Opens draft pull request with agent session
+- Provides link to PR and agent session on GitHub
+
+**Use cases:**
+- Local tasks: Code changes, file analysis, Git operations, application creation
+- GitHub.com tasks: List PRs/issues, work on issues, create PRs, manage PRs, create workflows
+- Integration with GitHub MCP server for enhanced GitHub.com operations
+
+**Note on flags:**
+- `--allow-all-paths`: Documented flag for disabling path verification
+- `--allow-all-urls`: Documented flag for disabling URL verification
+- `--allow-url <domain>`: Documented flag for pre-approving specific domains
+- `--silent`: Used in our implementation, may be undocumented feature
+- `--stream off`: Used in our implementation, may be undocumented feature
 
 ---
 

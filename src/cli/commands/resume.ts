@@ -1,10 +1,10 @@
 /**
- * Resume command - Resume paused orchestration
+ * Resume command - Resume paused orchestration or from a checkpoint
  * 
  * Implements the `puppet-master resume` command that:
  * - Validates orchestrator is in PAUSED state
- * - Optionally restores from a checkpoint
- * - Resumes execution from the pause point
+ * - Optionally restores from a checkpoint (via positional argument or --checkpoint flag)
+ * - Resumes execution from the pause point or checkpoint position
  */
 
 import { access } from 'fs/promises';
@@ -12,12 +12,15 @@ import { Command } from 'commander';
 import { ConfigManager } from '../../config/config-manager.js';
 import { PrdManager } from '../../memory/prd-manager.js';
 import { StatePersistence } from '../../core/state-persistence.js';
+import { CheckpointManager } from '../../core/checkpoint-manager.js';
 import { createContainer } from '../../core/container.js';
 import { Orchestrator } from '../../core/orchestrator.js';
 import type { OrchestratorDependencies } from '../../core/orchestrator.js';
 import type { PuppetMasterConfig } from '../../types/config.js';
 import { PlatformRegistry } from '../../platforms/registry.js';
+import { PlatformRouter } from '../../core/platform-router.js';
 import { deriveProjectRootFromConfigPath, resolveUnderProjectRoot } from '../../utils/project-paths.js';
+import { join } from 'path';
 import type { CommandModule } from './index.js';
 
 /**
@@ -66,10 +69,12 @@ export async function resumeAction(options: ResumeOptions): Promise<void> {
 
     // Handle checkpoint restoration if specified
     if (options.checkpoint) {
-      const statePersistence = new StatePersistence(prdManager);
-      const checkpointState = await statePersistence.restoreCheckpoint(options.checkpoint);
+      // Use CheckpointManager to load checkpoint
+      const checkpointDir = join(projectRoot, '.puppet-master', 'checkpoints');
+      const checkpointManager = new CheckpointManager(checkpointDir);
+      const checkpoint = await checkpointManager.loadCheckpoint(options.checkpoint);
       
-      if (!checkpointState) {
+      if (!checkpoint) {
         console.error(`Checkpoint not found: ${options.checkpoint}`);
         process.exit(1);
       }
@@ -77,40 +82,39 @@ export async function resumeAction(options: ResumeOptions): Promise<void> {
       // Validate checkpoint integrity unless skipValidation is true
       if (!options.skipValidation) {
         if (
-          !checkpointState.orchestratorState ||
-          !checkpointState.orchestratorContext ||
-          !checkpointState.tierStates ||
-          !checkpointState.savedAt
+          !checkpoint.orchestratorState ||
+          !checkpoint.orchestratorContext ||
+          !checkpoint.tierStates ||
+          !checkpoint.timestamp
         ) {
           console.error('Invalid checkpoint structure');
           process.exit(1);
         }
 
-        // Check that checkpoint state is paused
-        if (checkpointState.orchestratorState !== 'paused') {
-          console.error(`Cannot resume from checkpoint: checkpoint state is not paused (state: ${checkpointState.orchestratorState})`);
-          process.exit(1);
+        // Check that checkpoint state is paused (or allow other states for resume)
+        if (checkpoint.orchestratorState !== 'paused' && checkpoint.orchestratorState !== 'executing') {
+          console.warn(`Warning: Checkpoint state is ${checkpoint.orchestratorState}, not paused. Resuming anyway...`);
         }
       }
 
       // Restore checkpoint state to PRD
-      prd.orchestratorState = checkpointState.orchestratorState;
-      prd.orchestratorContext = checkpointState.orchestratorContext;
+      prd.orchestratorState = checkpoint.orchestratorState;
+      prd.orchestratorContext = checkpoint.orchestratorContext;
 
       // Restore tier contexts to PRD items
       for (const phase of prd.phases) {
-        if (checkpointState.tierStates[phase.id]) {
-          phase.tierContext = checkpointState.tierStates[phase.id];
+        if (checkpoint.tierStates[phase.id]) {
+          phase.tierContext = checkpoint.tierStates[phase.id];
         }
 
         for (const task of phase.tasks) {
-          if (checkpointState.tierStates[task.id]) {
-            task.tierContext = checkpointState.tierStates[task.id];
+          if (checkpoint.tierStates[task.id]) {
+            task.tierContext = checkpoint.tierStates[task.id];
           }
 
           for (const subtask of task.subtasks) {
-            if (checkpointState.tierStates[subtask.id]) {
-              subtask.tierContext = checkpointState.tierStates[subtask.id];
+            if (checkpoint.tierStates[subtask.id]) {
+              subtask.tierContext = checkpoint.tierStates[subtask.id];
             }
           }
         }
@@ -119,6 +123,8 @@ export async function resumeAction(options: ResumeOptions): Promise<void> {
       // Save restored state to PRD
       await prdManager.save(prd);
       console.log(`Restored state from checkpoint: ${options.checkpoint}`);
+      console.log(`  Position: ${checkpoint.currentPosition.phaseId || 'N/A'}/${checkpoint.currentPosition.taskId || 'N/A'}/${checkpoint.currentPosition.subtaskId || 'N/A'}`);
+      console.log(`  Progress: ${checkpoint.metadata.completedSubtasks}/${checkpoint.metadata.totalSubtasks} subtasks, ${checkpoint.metadata.iterationsRun} iterations`);
     }
 
     // Create container and resolve dependencies
@@ -142,7 +148,8 @@ export async function resumeAction(options: ResumeOptions): Promise<void> {
       branchStrategy: container.resolve('branchStrategy'),
       commitFormatter: container.resolve('commitFormatter'),
       prManager: container.resolve('prManager'),
-      platformRunner: getPlatformRunner(container, config, projectRoot),
+      platformRegistry: getPlatformRegistry(container, config, projectRoot),
+      platformRouter: getPlatformRouter(container, config, projectRoot),
       verificationIntegration: container.resolve('verificationIntegration'),
     };
 
@@ -170,15 +177,14 @@ export async function resumeAction(options: ResumeOptions): Promise<void> {
 }
 
 /**
- * Get platform runner for the configured subtask platform
+ * Get platform registry with runners initialized
  */
-function getPlatformRunner(
+function getPlatformRegistry(
   container: ReturnType<typeof createContainer>,
   config: PuppetMasterConfig,
   projectRoot: string
-): OrchestratorDependencies['platformRunner'] {
+): PlatformRegistry {
   const registry = container.resolve<PlatformRegistry>('platformRegistry');
-  const platform = config.tiers.subtask.platform;
   
   // Initialize registry with runners if needed
   if (registry.getAvailable().length === 0) {
@@ -192,14 +198,19 @@ function getPlatformRunner(
     }
   }
   
-  // Try to get runner from registry
-  const runner = registry.get(platform);
-  if (runner) {
-    return runner as OrchestratorDependencies['platformRunner'];
-  }
+  return registry;
+}
 
-  // If not found, throw error
-  throw new Error(`Platform runner for '${platform}' not found. Ensure the platform is properly configured.`);
+/**
+ * Get platform router
+ */
+function getPlatformRouter(
+  container: ReturnType<typeof createContainer>,
+  config: PuppetMasterConfig,
+  projectRoot: string
+): PlatformRouter {
+  const registry = getPlatformRegistry(container, config, projectRoot);
+  return new PlatformRouter(config, registry);
 }
 
 /**
@@ -211,13 +222,16 @@ export class ResumeCommand implements CommandModule {
    */
   register(program: Command): void {
     program
-      .command('resume')
-      .description('Resume paused orchestration')
+      .command('resume [checkpoint-id]')
+      .description('Resume paused orchestration or from a checkpoint')
       .option('-c, --config <path>', 'Path to config file')
-      .option('--checkpoint <name>', 'Resume from specific checkpoint')
+      .option('--checkpoint <name>', 'Resume from specific checkpoint (alternative to positional arg)')
       .option('--skip-validation', 'Skip checkpoint validation')
-      .action(async (options: ResumeOptions) => {
-        await resumeAction(options);
+      .action(async (checkpointId: string | undefined, options: ResumeOptions) => {
+        // Use positional argument if provided, otherwise use flag
+        // Positional argument takes precedence if both are provided
+        const finalCheckpointId = checkpointId || options.checkpoint;
+        await resumeAction({ ...options, checkpoint: finalCheckpointId });
       });
   }
 }

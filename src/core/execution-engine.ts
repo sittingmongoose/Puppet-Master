@@ -49,6 +49,7 @@ export interface ExecutionConfig {
   defaultTimeout: number;
   hardTimeout: number;
   stallDetection: StallDetectionConfig;
+  killAgentOnFailure?: boolean; // Default: true (kill on failure)
 }
 
 export interface StallDetectionConfig {
@@ -108,10 +109,11 @@ export class ExecutionEngine {
     return Array.from(this.processInfoByPid.values());
   }
 
-  async spawnIteration(context: IterationContext): Promise<IterationResult> {
-    const runner = this.runner;
-    if (!runner) {
-      throw new Error('ExecutionEngine runner not set');
+  async spawnIteration(context: IterationContext, runner?: PlatformRunnerContract): Promise<IterationResult> {
+    // Use provided runner or fall back to stored runner (for backwards compatibility)
+    const activeRunner = runner || this.runner;
+    if (!activeRunner) {
+      throw new Error('ExecutionEngine runner not set and no runner provided');
     }
 
     // Capture baseline git status for iteration bookkeeping (best-effort).
@@ -135,14 +137,14 @@ export class ExecutionEngine {
     };
 
     const startTime = Date.now();
-    await runner.prepareWorkingDirectory(context.projectPath);
+    await activeRunner.prepareWorkingDirectory(context.projectPath);
 
-    const runningProcess = await runner.spawnFreshProcess(request);
+    const runningProcess = await activeRunner.spawnFreshProcess(request);
     const processId = runningProcess.pid;
 
     this.processInfoByPid.set(processId, {
       pid: processId,
-      platform: runner.platform,
+      platform: activeRunner.platform,
       startedAt: new Date().toISOString(),
       status: 'running',
     });
@@ -152,7 +154,7 @@ export class ExecutionEngine {
       try {
         await this.processRegistry.registerProcess(
           processId,
-          runner.platform,
+          activeRunner.platform,
           prompt.substring(0, 100) // Store first 100 chars of prompt as command reference
         );
       } catch (error) {
@@ -266,8 +268,8 @@ export class ExecutionEngine {
     };
 
     const outputTask = Promise.allSettled([
-      consume(runner.captureStdout(processId)),
-      consume(runner.captureStderr(processId)),
+      consume(activeRunner.captureStdout(processId)),
+      consume(activeRunner.captureStderr(processId)),
     ]).then(() => undefined);
 
     await Promise.race([outputTask, stopPromise]);
@@ -279,21 +281,28 @@ export class ExecutionEngine {
       clearTimeout(noOutputTimer);
     }
 
+    // Handle timeouts and stalls - respect killAgentOnFailure setting
     if (timedOut) {
       await this.handleTimeout(processId);
     } else if (stalled) {
-      await this.killIteration(processId);
+      const shouldKill = this.config.killAgentOnFailure !== false;
+      if (shouldKill) {
+        await this.killIteration(processId);
+      } else {
+        console.warn(`[ExecutionEngine] Agent kept alive for debugging (stall detected). PID: ${processId}`);
+        this.logManualKillInstructions(processId);
+      }
     }
 
     let transcript: string | null = null;
     try {
-      transcript = await runner.getTranscript(processId);
+      transcript = await activeRunner.getTranscript(processId);
     } catch {
       transcript = null;
     }
 
     try {
-      await runner.cleanupAfterExecution(processId);
+      await activeRunner.cleanupAfterExecution(processId);
     } catch {
       // ignore
     }
@@ -325,12 +334,31 @@ export class ExecutionEngine {
       ...(errorMessage ? { error: errorMessage } : {}),
     };
 
-    const processInfo = this.processInfoByPid.get(processId);
-    if (processInfo) {
-      this.processInfoByPid.set(processId, {
-        ...processInfo,
-        status: timedOut || stalled ? 'killed' : 'completed',
-      });
+    // Handle failed iterations (not timeout/stall) - respect killAgentOnFailure setting
+    if (!success && !timedOut && !stalled) {
+      const shouldKill = this.config.killAgentOnFailure !== false;
+      if (shouldKill) {
+        await this.killIteration(processId);
+      } else {
+        console.warn(`[ExecutionEngine] Agent kept alive for debugging (iteration failed). PID: ${processId}`);
+        this.logManualKillInstructions(processId);
+        // Update process status to indicate kept alive
+        const processInfo = this.processInfoByPid.get(processId);
+        if (processInfo) {
+          this.processInfoByPid.set(processId, {
+            ...processInfo,
+            status: 'completed', // Mark as completed but process is still alive
+          });
+        }
+      }
+    } else {
+      const processInfo = this.processInfoByPid.get(processId);
+      if (processInfo) {
+        this.processInfoByPid.set(processId, {
+          ...processInfo,
+          status: timedOut || stalled ? 'killed' : 'completed',
+        });
+      }
     }
 
     this.recordProcessAudit(context, processId, result);
@@ -446,7 +474,21 @@ export class ExecutionEngine {
   }
 
   private async handleTimeout(processId: number): Promise<void> {
-    await this.killIteration(processId);
+    const shouldKill = this.config.killAgentOnFailure !== false;
+    if (shouldKill) {
+      await this.killIteration(processId);
+    } else {
+      console.warn(`[ExecutionEngine] Agent kept alive for debugging (timeout). PID: ${processId}`);
+      this.logManualKillInstructions(processId);
+    }
+  }
+
+  private logManualKillInstructions(processId: number): void {
+    const isWindows = process.platform === 'win32';
+    const killCommand = isWindows
+      ? `taskkill /PID ${processId} /F`
+      : `kill ${processId}`;
+    console.info(`[ExecutionEngine] To kill manually: ${killCommand}`);
   }
 
   private recordProcessAudit(

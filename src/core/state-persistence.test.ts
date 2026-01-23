@@ -429,6 +429,29 @@ describe('state-persistence', () => {
         'No state to checkpoint'
       );
     });
+
+    it('creates backup files when checkpoint is overwritten', async () => {
+      const orchestrator = new OrchestratorStateMachine();
+      orchestrator.send({ type: 'INIT' });
+      const tierMachines = new Map<string, TierStateMachine>();
+      await persistence.saveState(orchestrator, tierMachines);
+
+      const checkpointPath = join(checkpointDir, 'backup-test.json');
+
+      // Create first checkpoint
+      await persistence.createCheckpoint('backup-test');
+
+      // Create second checkpoint (should backup the first)
+      await persistence.createCheckpoint('backup-test');
+
+      // Verify backup exists
+      const backupPath = `${checkpointPath}.backup`;
+      const backupExists = await fs
+        .access(backupPath)
+        .then(() => true)
+        .catch(() => false);
+      expect(backupExists).toBe(true);
+    });
   });
 
   describe('edge cases', () => {

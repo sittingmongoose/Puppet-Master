@@ -141,39 +141,186 @@ export interface PlatformBudgets {
 }
 
 /**
+ * Rate limit configuration for a single platform.
+ * Maps from YAML: budget.rate_limits.{platform}.calls_per_minute, cooldown_ms
+ * See BUILD_QUEUE_IMPROVEMENTS.md P1-T07
+ */
+export interface RateLimitConfig {
+  /** Maximum number of calls allowed per minute */
+  callsPerMinute: number; // YAML: calls_per_minute
+  /** Cooldown period in milliseconds after rate limit is hit */
+  cooldownMs: number; // YAML: cooldown_ms
+}
+
+/**
+ * Rate limit configuration for all platforms.
+ * Maps from YAML: budget.rate_limits.cursor, budget.rate_limits.codex, etc.
+ * See BUILD_QUEUE_IMPROVEMENTS.md P1-T07
+ */
+export interface PlatformRateLimits {
+  cursor: RateLimitConfig;
+  codex: RateLimitConfig;
+  claude: RateLimitConfig;
+  gemini: RateLimitConfig;
+  copilot: RateLimitConfig;
+  antigravity: RateLimitConfig;
+}
+
+/**
  * Budget enforcement configuration.
- * Maps from YAML: budget_enforcement.on_limit_reached, warn_at_percentage, notify_on_fallback
- * See REQUIREMENTS.md Section 23.3
+ * Maps from YAML: budget_enforcement.on_limit_reached, warn_at_percentage, notify_on_fallback, soft_limit_percent, hard_limit_percent
+ * See REQUIREMENTS.md Section 23.3 and BUILD_QUEUE_IMPROVEMENTS.md P1-T07
  */
 export interface BudgetEnforcementConfig {
   onLimitReached: 'fallback' | 'pause' | 'queue'; // YAML: on_limit_reached
   warnAtPercentage: number; // YAML: warn_at_percentage
   notifyOnFallback: boolean; // YAML: notify_on_fallback
+  /** Soft limit percentage (default: 80) - warns but allows execution */
+  softLimitPercent?: number; // YAML: soft_limit_percent (optional)
+  /** Hard limit percentage (default: 100) - throws error when reached */
+  hardLimitPercent?: number; // YAML: hard_limit_percent (optional)
+}
+
+/**
+ * Reviewer configuration for worker/reviewer separation pattern.
+ * Maps from YAML: tiers.reviewer
+ * See BUILD_QUEUE_IMPROVEMENTS.md P1-T13
+ */
+export interface ReviewerConfig {
+  /** Platform for reviewer agent (can differ from worker) */
+  platform: Platform;
+  /** Model for reviewer agent (can differ from worker) */
+  model: string;
+  /** Enable worker/reviewer separation (default: true when config present) */
+  enabled?: boolean;
+  /** Confidence threshold for SHIP verdict (0.0-1.0, default: 0.7) */
+  confidenceThreshold?: number;
+  /** Maximum reviewer iterations before auto-escalate (default: 3) */
+  maxReviewerIterations?: number;
 }
 
 /**
  * Tiers configuration.
- * Maps from YAML: tiers.phase, tiers.task, tiers.subtask, tiers.iteration
+ * Maps from YAML: tiers.phase, tiers.task, tiers.subtask, tiers.iteration, tiers.gate_review, tiers.reviewer
  */
 export interface TiersConfig {
   phase: TierConfig;
   task: TierConfig;
   subtask: TierConfig;
   iteration: TierConfig;
+  /**
+   * Optional gate review tier configuration.
+   * Used for gate review actions when specified.
+   * Falls back to tier-specific config if not specified.
+   * YAML: tiers.gate_review
+   */
+  gate_review?: TierConfig;
+  /**
+   * Optional reviewer configuration for worker/reviewer separation.
+   * When present, enables two-phase iteration: worker implements, reviewer verifies.
+   * YAML: tiers.reviewer
+   * See BUILD_QUEUE_IMPROVEMENTS.md P1-T13
+   */
+  reviewer?: ReviewerConfig;
+}
+
+/**
+ * Coverage validation configuration.
+ * Maps from YAML: start_chain.coverage
+ */
+export interface CoverageValidationConfig {
+  /** Enable coverage validation (default: true) */
+  enabled: boolean;
+  /** Minimum coverage ratio for large docs (default: 0.5) */
+  minCoverageRatio: number;
+  /** Chars threshold for "large" document (default: 5000) */
+  largeDocThreshold: number;
+  /** Chars threshold for requiring multiple phases (default: 10000) */
+  veryLargeDocThreshold: number;
+  /** Min phases for very large docs (default: 2) */
+  minPhasesForVeryLargeDoc: number;
+  /** Max generic criteria before warning (default: 5) */
+  maxGenericCriteria: number;
+  /** Enable AI coverage diff (default: true) */
+  enableAICoverageDiff: boolean;
+}
+
+/**
+ * Configuration for a generic Start Chain step.
+ * Allows overriding platform/model per step.
+ */
+export interface StartChainStepConfig {
+  enabled?: boolean; // Default: true
+  platform?: Platform; // Optional override
+  model?: string; // Optional override
+}
+
+/**
+ * Multi-pass PRD generation configuration (P1-T05).
+ * Maps from YAML: start_chain.multi_pass
+ */
+export interface MultiPassGenerationConfig {
+  /** Enable multi-pass generation for large docs (default: true) */
+  enabled?: boolean;
+  /** Character threshold for triggering multi-pass (default: 5000) */
+  largeDocThreshold?: number;
+  /** Maximum gap-fill repair passes (default: 3) */
+  maxRepairPasses?: number;
+  /** Coverage threshold to stop gap-fill loop (default: 0.7) */
+  coverageThreshold?: number;
 }
 
 /**
  * Start Chain configuration.
- * Maps from YAML: start_chain.requirements_interview
+ * Maps from YAML: start_chain.requirements_interview, start_chain.coverage, etc.
  */
 export interface StartChainConfig {
-  requirementsInterview?: {
-    enabled: boolean; // YAML: enabled
-    platform?: Platform; // YAML: platform (optional, defaults to tiers.phase.platform)
-    model?: string; // YAML: model (optional, defaults to tiers.phase.model)
+  inventory?: StartChainStepConfig; // YAML: inventory
+  requirementsInterview?: StartChainStepConfig & {
     maxQuestions?: number; // YAML: max_questions (optional, defaults to 10)
     allowUnansweredCritical?: boolean; // YAML: allow_unanswered_critical (optional, defaults to true)
   };
+  prd?: StartChainStepConfig; // YAML: prd
+  architecture?: StartChainStepConfig; // YAML: architecture
+  validation?: StartChainStepConfig; // YAML: validation
+  gapFill?: StartChainStepConfig & {
+    maxRepairPasses?: number; // YAML: max_repair_passes
+  };
+  /** Coverage validation settings */
+  coverage?: CoverageValidationConfig & StartChainStepConfig;
+  /** P1-T05: Multi-pass PRD generation settings */
+  multiPass?: MultiPassGenerationConfig;
+}
+
+/**
+ * Execution configuration.
+ * Maps from YAML: execution.kill_agent_on_failure
+ */
+export interface ExecutionConfig {
+  /**
+   * Whether to kill failed agents immediately or keep them alive for debugging.
+   * Default: true (kill on failure)
+   * YAML: kill_agent_on_failure
+   */
+  killAgentOnFailure?: boolean; // YAML: kill_agent_on_failure
+}
+
+/**
+ * Checkpointing configuration.
+ * Maps from YAML: checkpointing.enabled, checkpointing.interval, etc.
+ * See BUILD_QUEUE_IMPROVEMENTS.md P1-T12
+ */
+export interface CheckpointingConfig {
+  /** Enable automatic checkpointing (default: true) */
+  enabled: boolean; // YAML: enabled
+  /** Checkpoint every N iterations (default: 10) */
+  interval: number; // YAML: interval
+  /** Maximum number of checkpoints to keep (default: 10) */
+  maxCheckpoints: number; // YAML: max_checkpoints
+  /** Create checkpoint when subtask completes (default: true) */
+  checkpointOnSubtaskComplete: boolean; // YAML: checkpoint_on_subtask_complete
+  /** Create checkpoint on graceful shutdown (default: true) */
+  checkpointOnShutdown: boolean; // YAML: checkpoint_on_shutdown
 }
 
 /**
@@ -191,4 +338,7 @@ export interface PuppetMasterConfig {
   logging: LoggingConfig;
   cliPaths: CliPathsConfig;
   startChain?: StartChainConfig; // YAML: start_chain (optional)
+  execution?: ExecutionConfig; // YAML: execution (optional)
+  rateLimits?: PlatformRateLimits; // YAML: budget.rate_limits (optional, P1-T07)
+  checkpointing?: CheckpointingConfig; // YAML: checkpointing (optional, P1-T12)
 }

@@ -17,6 +17,7 @@ import { GeminiRunner } from './gemini-runner.js';
 import { CopilotRunner } from './copilot-runner.js';
 import { AntigravityRunner } from './antigravity-runner.js';
 import { resolveUnderProjectRoot } from '../utils/project-paths.js';
+import { FreshSpawner } from '../core/fresh-spawn.js';
 
 /**
  * Platform Registry
@@ -57,7 +58,7 @@ export class PlatformRegistry {
    * Factory method that creates a new registry instance, instantiates all
    * platform runners, and registers them.
    * 
-   * @param config - Configuration object (used for CLI paths)
+   * @param config - Configuration object (used for CLI paths and working directory)
    * @param projectRoot - Optional canonical project root (resolves capability cache under it)
    * @returns A new PlatformRegistry instance with all runners registered
    */
@@ -71,39 +72,68 @@ export class PlatformRegistry {
       config.cliPaths
     );
 
+    // Create FreshSpawner instance for process isolation (P1-T09)
+    // Use project working directory and default timeouts
+    // Tier-specific timeouts will be set per request, not per runner
+    const workingDirectory = config.project.workingDirectory || '.';
+    const freshSpawner = new FreshSpawner({
+      workingDirectory,
+      timeout: 300_000, // 5 minutes default (will be overridden per request)
+      hardTimeout: 1_800_000, // 30 minutes default (will be overridden per request)
+      environmentVars: {},
+      allowSessionResume: false,
+    });
+
     // Register Cursor runner
     const cursorRunner = new CursorRunner(
       capabilityService,
-      config.cliPaths.cursor
+      config.cliPaths.cursor,
+      300_000,
+      1_800_000,
+      freshSpawner
     );
     registry.register('cursor', cursorRunner);
 
     // Register Codex runner
-    const codexRunner = new CodexRunner(capabilityService);
+    const codexRunner = new CodexRunner(
+      capabilityService,
+      300_000,
+      1_800_000,
+      freshSpawner
+    );
     registry.register('codex', codexRunner);
 
     // Register Claude runner
     const claudeRunner = new ClaudeRunner(
       capabilityService,
-      config.cliPaths.claude
+      config.cliPaths.claude,
+      300_000,
+      1_800_000,
+      freshSpawner
     );
     registry.register('claude', claudeRunner);
 
     // Register Gemini runner
     const geminiRunner = new GeminiRunner(
       capabilityService,
-      config.cliPaths.gemini
+      config.cliPaths.gemini,
+      600_000, // Gemini uses longer default timeout
+      900_000,
+      freshSpawner
     );
     registry.register('gemini', geminiRunner);
 
     // Register Copilot runner
     const copilotRunner = new CopilotRunner(
       capabilityService,
-      config.cliPaths.copilot
+      config.cliPaths.copilot,
+      300_000,
+      1_800_000,
+      freshSpawner
     );
     registry.register('copilot', copilotRunner);
 
-    // Register Antigravity runner
+    // Register Antigravity runner (doesn't use FreshSpawner since it always fails)
     const antigravityRunner = new AntigravityRunner(capabilityService);
     registry.register('antigravity', antigravityRunner);
 

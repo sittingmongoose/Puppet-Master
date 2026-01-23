@@ -4,16 +4,34 @@
  * IMPORTANT: This is a suggested list only.
  * The authoritative source for available models is the `/model` command inside Copilot CLI.
  * Available models vary by:
- * - GitHub Copilot subscription tier (Individual, Business, Enterprise)
+ * - GitHub Copilot subscription tier (Pro, Pro+, Business, Enterprise)
  * - Account region and availability
  * - Organizations and enterprise policies
+ *
+ * Default Model:
+ * - Default model: Claude Sonnet 4.5 (GitHub reserves the right to change this)
+ * - Change model: `/model` slash command in interactive mode only
+ * - Model selection is NOT supported programmatically via `--model` flag
+ *
+ * Premium Requests:
+ * - Each prompt reduces monthly quota of Copilot premium requests
+ * - Quota reduction is multiplied by model multiplier (e.g., "1x", "2x")
+ * - Multiplier is shown in parentheses in the model list (e.g., "Claude Sonnet 4.5 (1x)")
+ * - Premium requests apply to both interactive and programmatic mode
+ *
+ * Subscription Tiers:
+ * - GitHub Copilot Pro: Individual subscription
+ * - GitHub Copilot Pro+: Enhanced individual subscription
+ * - GitHub Copilot Business: Organization-level subscription
+ * - GitHub Copilot Enterprise: Enterprise-level subscription with advanced features
+ * - Model availability and premium request quotas vary by tier
  *
  * Copilot CLI does NOT support the `--model` flag for programmatic model selection.
  * Users must select models interactively via `/model` command.
  *
  * Sources:
- * - https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli
- * - https://github.com/github/copilot-cli
+ * - https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli - Official documentation
+ * - https://docs.github.com/en/copilot/managing-copilot/monitoring-usage-and-entitlements/about-premium-requests - Premium requests
  */
 
 /**
@@ -35,9 +53,14 @@ export interface CopilotModel {
  */
 export const COPILOT_MODELS: CopilotModel[] = [
   {
+    id: 'claude-sonnet-4.5',
+    label: 'Claude Sonnet 4.5 (Default)',
+    description: 'Default model for GitHub Copilot CLI (GitHub reserves right to change)',
+  },
+  {
     id: 'gpt-4o',
-    label: 'GPT-4o (Default)',
-    description: 'Latest OpenAI model (recommended for most tasks)',
+    label: 'GPT-4o',
+    description: 'Latest OpenAI model (if available on your subscription tier)',
   },
   {
     id: 'gpt-4-turbo',

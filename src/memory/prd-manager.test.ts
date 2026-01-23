@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { writeFile, mkdir, rm, readFile } from 'fs/promises';
+import { writeFile, mkdir, rm, readFile, access } from 'fs/promises';
 import { join } from 'path';
 import { PrdManager } from './prd-manager.js';
 import type {
@@ -328,6 +328,29 @@ describe('PrdManager', () => {
 
       const loaded = await manager.load();
       expect(loaded.updatedAt).not.toBe(originalUpdatedAt);
+    });
+
+    it('should create backup files when PRD is overwritten', async () => {
+      const manager = new PrdManager(testPrdPath);
+      const prd1 = createSamplePRD();
+      prd1.project = 'OriginalProject';
+      await manager.save(prd1);
+
+      const prd2 = await manager.load();
+      prd2.project = 'UpdatedProject';
+      await manager.save(prd2);
+
+      // Verify backup exists
+      const backupPath = `${testPrdPath}.backup`;
+      const backupExists = await access(backupPath)
+        .then(() => true)
+        .catch(() => false);
+      expect(backupExists).toBe(true);
+
+      // Verify backup contains original content
+      const backupContent = await readFile(backupPath, 'utf-8');
+      const backupPRD = JSON.parse(backupContent) as PRD;
+      expect(backupPRD.project).toBe('OriginalProject');
     });
   });
 

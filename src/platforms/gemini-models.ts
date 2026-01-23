@@ -4,9 +4,21 @@
  * Curated list of models available in Gemini CLI.
  * This is a baseline set; users can specify custom model IDs in config.
  *
+ * Preview Models:
+ * - Models marked with `preview: true` (gemini-3-pro-preview, gemini-3-flash-preview)
+ *   require preview features to be enabled in Gemini CLI settings.
+ * - Enable preview features via: `general.previewFeatures: true` in `~/.gemini/settings.json`
+ *   or use `/settings` command in interactive mode.
+ * - Preview models may not be available on all account types.
+ *
+ * Model Selection:
+ * - `auto` (recommended) - Automatic model selection based on task complexity
+ * - Pro models (gemini-2.5-pro, gemini-3-pro-preview) - Best for complex reasoning
+ * - Flash models (gemini-2.5-flash, gemini-2.5-flash-lite, gemini-3-flash-preview) - Fast, efficient
+ *
  * Sources:
- * - https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/cli/model.md
- * - https://raw.githubusercontent.com/google-gemini/gemini-cli/main/docs/get-started/gemini-3.md
+ * - https://geminicli.com/docs/cli/model - Model selection documentation
+ * - https://geminicli.com/docs/get-started/gemini-3 - Gemini 3 preview information
  * - https://raw.githubusercontent.com/google-gemini/gemini-cli/main/schemas/settings.schema.json
  */
 

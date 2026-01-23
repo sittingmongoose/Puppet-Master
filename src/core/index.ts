@@ -11,6 +11,14 @@ export type { TierContext, TierStateMachineConfig } from './tier-state-machine.j
 export { StatePersistence } from './state-persistence.js';
 export type { PersistedState } from './state-persistence.js';
 
+export { CheckpointManager } from './checkpoint-manager.js';
+export type {
+  Checkpoint,
+  CheckpointSummary,
+  CurrentPosition,
+  CheckpointMetadata,
+} from './checkpoint-manager.js';
+
 export { TierNode, createTierNode, buildTierTree } from './tier-node.js';
 export type { TierNodeData } from './tier-node.js';
 
@@ -30,6 +38,19 @@ export type { PromptContext, FailureInfo, GateReviewContext } from './prompt-bui
 
 export { FreshSpawner } from './fresh-spawn.js';
 export type { SpawnConfig, SpawnRequest, SpawnResult, ProcessAudit } from './fresh-spawn.js';
+
+export {
+  WorkerReviewerOrchestrator,
+  shouldUseWorkerReviewer,
+  createWorkerReviewerOrchestrator,
+} from './worker-reviewer.js';
+export type {
+  WorkerResult,
+  ReviewerResult,
+  IterationOutcome,
+  ReviewerContext,
+  WorkerReviewerConfig,
+} from './worker-reviewer.js';
 
 export { Orchestrator } from './orchestrator.js';
 export type {

@@ -34,6 +34,9 @@ import { PRManager } from '../git/pr-manager.js';
 import type { VerificationIntegration } from '../verification/verification-integration.js';
 import type { PRD } from '../types/prd.js';
 import type { ProgressEntry } from '../memory/progress-manager.js';
+import { PlatformRegistry } from '../platforms/registry.js';
+import { PlatformRouter } from '../core/platform-router.js';
+import { BasePlatformRunner } from '../platforms/base-runner.js';
 
 /**
  * Mock platform runner that implements PlatformRunnerContract
@@ -343,7 +346,16 @@ describe('Integration', () => {
       branchStrategy,
       commitFormatter,
       prManager,
-      platformRunner: mockRunner,
+      platformRegistry: (() => {
+        const registry = new PlatformRegistry();
+        registry.register('cursor', mockRunner as unknown as BasePlatformRunner);
+        return registry;
+      })(),
+      platformRouter: (() => {
+        const registry = new PlatformRegistry();
+        registry.register('cursor', mockRunner as unknown as BasePlatformRunner);
+        return new PlatformRouter(config, registry);
+      })(),
       verificationIntegration,
     };
 

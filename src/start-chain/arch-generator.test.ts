@@ -389,7 +389,7 @@ describe('ArchGenerator', () => {
     beforeEach(() => {
       config = getDefaultConfig();
       usageTracker = new UsageTracker('.puppet-master/usage/usage.jsonl');
-      quotaManager = new QuotaManager(usageTracker, config.budgets);
+      quotaManager = new QuotaManager(usageTracker, config.budgets, config.budgetEnforcement);
       platformRegistry = PlatformRegistry.createDefault(config);
 
       // Create mock runner

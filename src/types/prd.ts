@@ -101,6 +101,22 @@ export interface GateReport {
 }
 
 /**
+ * Source reference interface.
+ * Represents a link from a PRD item back to the source requirements document.
+ * Used for traceability: "Which PRD items cover Requirement 4.2?"
+ */
+export interface SourceRef {
+  /** File path to the source requirements document */
+  sourcePath: string;
+  /** Section heading path (e.g., "Requirements > Section 4.2") */
+  sectionPath: string;
+  /** SHA-256 hash of the source text excerpt */
+  excerptHash: string;
+  /** Optional line number range [start, end] in the source file */
+  lineNumbers?: [number, number];
+}
+
+/**
  * Iteration interface.
  * Represents a single iteration attempt for a subtask.
  * See STATE_FILES.md Section 3.3.
@@ -144,6 +160,11 @@ export interface Subtask {
   completedAt?: string;
   notes: string;
   /**
+   * Optional source references for traceability.
+   * Links this PRD item back to the source requirements document sections.
+   */
+  sourceRefs?: SourceRef[];
+  /**
    * Optional tier context for state persistence.
    * Used by StatePersistence to save/restore tier state machine state.
    */
@@ -172,6 +193,11 @@ export interface Task {
   completedAt?: string;
   notes: string;
   /**
+   * Optional source references for traceability.
+   * Links this PRD item back to the source requirements document sections.
+   */
+  sourceRefs?: SourceRef[];
+  /**
    * Optional tier context for state persistence.
    * Used by StatePersistence to save/restore tier state machine state.
    */
@@ -198,6 +224,11 @@ export interface Phase {
   startedAt?: string;
   completedAt?: string;
   notes: string;
+  /**
+   * Optional source references for traceability.
+   * Links this PRD item back to the source requirements document sections.
+   */
+  sourceRefs?: SourceRef[];
   /**
    * Optional tier context for state persistence.
    * Used by StatePersistence to save/restore tier state machine state.

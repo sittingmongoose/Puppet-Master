@@ -17,6 +17,7 @@ import { Orchestrator } from '../../core/orchestrator.js';
 import type { OrchestratorDependencies } from '../../core/orchestrator.js';
 import type { PuppetMasterConfig } from '../../types/config.js';
 import { PlatformRegistry } from '../../platforms/registry.js';
+import { PlatformRouter } from '../../core/platform-router.js';
 import { deriveProjectRootFromConfigPath, resolveUnderProjectRoot } from '../../utils/project-paths.js';
 import type { CommandModule } from './index.js';
 
@@ -28,6 +29,7 @@ export interface StartOptions {
   prd?: string;
   verbose?: boolean;
   dryRun?: boolean;
+  keepAliveOnFailure?: boolean;
 }
 
 /**
@@ -45,6 +47,14 @@ export async function startAction(options: StartOptions): Promise<void> {
     const config = await configManager.load();
     const configPath = configManager.getConfigPath();
     const projectRoot = deriveProjectRootFromConfigPath(configPath);
+
+    // Override killAgentOnFailure if CLI flag is provided
+    if (options.keepAliveOnFailure !== undefined) {
+      if (!config.execution) {
+        config.execution = {};
+      }
+      config.execution.killAgentOnFailure = !options.keepAliveOnFailure;
+    }
 
     // Validate PRD exists
     const prdPath = resolveUnderProjectRoot(projectRoot, options.prd || config.memory.prdFile);
@@ -76,6 +86,22 @@ export async function startAction(options: StartOptions): Promise<void> {
       projectPath: projectRoot,
     });
 
+    // Initialize platform registry with runners if needed
+    const platformRegistry = container.resolve<PlatformRegistry>('platformRegistry');
+    if (platformRegistry.getAvailable().length === 0) {
+      const defaultRegistry = PlatformRegistry.createDefault(config, projectRoot);
+      // Copy runners from default registry
+      for (const p of defaultRegistry.getAvailable()) {
+        const runner = defaultRegistry.get(p);
+        if (runner) {
+          platformRegistry.register(p, runner);
+        }
+      }
+    }
+
+    // Create platform router
+    const platformRouter = new PlatformRouter(config, platformRegistry);
+
     // Resolve all dependencies from container
     const deps: OrchestratorDependencies = {
       configManager: container.resolve('configManager'),
@@ -88,7 +114,8 @@ export async function startAction(options: StartOptions): Promise<void> {
       branchStrategy: container.resolve('branchStrategy'),
       commitFormatter: container.resolve('commitFormatter'),
       prManager: container.resolve('prManager'),
-      platformRunner: getPlatformRunner(container, config, projectRoot),
+      platformRegistry,
+      platformRouter,
       verificationIntegration: container.resolve('verificationIntegration'),
     };
 
@@ -122,38 +149,6 @@ export async function startAction(options: StartOptions): Promise<void> {
   }
 }
 
-/**
- * Get platform runner for the configured subtask platform
- */
-function getPlatformRunner(
-  container: ReturnType<typeof createContainer>,
-  config: PuppetMasterConfig,
-  projectRoot: string
-): OrchestratorDependencies['platformRunner'] {
-  const registry = container.resolve<PlatformRegistry>('platformRegistry');
-  const platform = config.tiers.subtask.platform;
-  
-  // Initialize registry with runners if needed
-  if (registry.getAvailable().length === 0) {
-    const defaultRegistry = PlatformRegistry.createDefault(config, projectRoot);
-    // Copy runners from default registry
-    for (const p of defaultRegistry.getAvailable()) {
-      const runner = defaultRegistry.get(p);
-      if (runner) {
-        registry.register(p, runner);
-      }
-    }
-  }
-  
-  // Try to get runner from registry
-  const runner = registry.get(platform);
-  if (runner) {
-    return runner as OrchestratorDependencies['platformRunner'];
-  }
-
-  // If not found, throw error
-  throw new Error(`Platform runner for '${platform}' not found. Ensure the platform is properly configured.`);
-}
 
 /**
  * Setup signal handlers for graceful shutdown
@@ -284,6 +279,7 @@ export class StartCommand implements CommandModule {
       .option('-p, --prd <path>', 'Path to PRD file')
       .option('-v, --verbose', 'Enable verbose output')
       .option('--dry-run', 'Validate configuration without executing')
+      .option('--keep-alive-on-failure', 'Keep failed agents alive for debugging instead of killing them')
       .action(async (options: StartOptions) => {
         await startAction(options);
       });

@@ -3,9 +3,9 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { QuotaManager } from './quota-manager.js';
+import { QuotaManager, QuotaExhaustedError } from './quota-manager.js';
 import { UsageTracker } from '../memory/usage-tracker.js';
-import type { PlatformBudgets, TierConfig } from '../types/config.js';
+import type { PlatformBudgets, TierConfig, BudgetEnforcementConfig } from '../types/config.js';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
@@ -13,6 +13,7 @@ import { tmpdir } from 'node:os';
 describe('QuotaManager', () => {
   let usageTracker: UsageTracker;
   let budgets: PlatformBudgets;
+  let budgetEnforcement: BudgetEnforcementConfig;
   let quotaManager: QuotaManager;
   let testDir: string;
 
@@ -67,7 +68,13 @@ describe('QuotaManager', () => {
       },
     };
 
-    quotaManager = new QuotaManager(usageTracker, budgets);
+    budgetEnforcement = {
+      onLimitReached: 'fallback',
+      warnAtPercentage: 80,
+      notifyOnFallback: true,
+    };
+
+    quotaManager = new QuotaManager(usageTracker, budgets, budgetEnforcement);
   });
 
   afterEach(async () => {
@@ -203,7 +210,7 @@ describe('QuotaManager', () => {
     it('should expire cooldown after time passes', async () => {
       // Create a manager with a past run start time
       const pastTime = new Date(Date.now() - 6 * 60 * 60 * 1000); // 6 hours ago
-      const oldManager = new QuotaManager(usageTracker, budgets, pastTime);
+      const oldManager = new QuotaManager(usageTracker, budgets, budgetEnforcement, pastTime);
 
       // For now, test that a fresh manager has no cooldown
       const cooldownInfo = await oldManager.checkCooldown('claude');
@@ -418,7 +425,7 @@ describe('QuotaManager', () => {
 
     it('should calculate run period count correctly', async () => {
       const runStart = new Date(Date.now() - 2 * 60 * 60 * 1000); // 2 hours ago
-      const managerWithRunStart = new QuotaManager(usageTracker, budgets, runStart);
+      const managerWithRunStart = new QuotaManager(usageTracker, budgets, budgetEnforcement, runStart);
 
       // Record usage
       await usageTracker.track({
@@ -432,6 +439,252 @@ describe('QuotaManager', () => {
       
       // Should account for run period usage
       expect(quotaInfo.remaining).toBeGreaterThanOrEqual(0);
+    });
+  });
+
+  describe('enforcement (P1-T07)', () => {
+    it('should throw QuotaExhaustedError when hard limit is reached', async () => {
+      // Create a budget with low limits
+      const lowBudget: PlatformBudgets = {
+        ...budgets,
+        claude: {
+          maxCallsPerRun: 2,
+          maxCallsPerHour: 2,
+          maxCallsPerDay: 2,
+          cooldownHours: 5,
+          fallbackPlatform: 'codex',
+        },
+      };
+
+      const lowBudgetManager = new QuotaManager(usageTracker, lowBudget, budgetEnforcement);
+
+      // Exhaust quota by recording usage directly (to avoid checkQuota throwing during recordUsage)
+      await usageTracker.track({
+        platform: 'claude',
+        action: 'usage',
+        tokens: 1000,
+        durationMs: 1000,
+        success: true,
+      });
+      await usageTracker.track({
+        platform: 'claude',
+        action: 'usage',
+        tokens: 1000,
+        durationMs: 1000,
+        success: true,
+      });
+
+      // Should throw when checking quota at hard limit (100%)
+      await expect(lowBudgetManager.checkQuota('claude')).rejects.toThrow(QuotaExhaustedError);
+    });
+
+    it('should include quota details in QuotaExhaustedError', async () => {
+      const lowBudget: PlatformBudgets = {
+        ...budgets,
+        claude: {
+          maxCallsPerRun: 1,
+          maxCallsPerHour: 1,
+          maxCallsPerDay: 1,
+          cooldownHours: 5,
+          fallbackPlatform: 'codex',
+        },
+      };
+
+      const lowBudgetManager = new QuotaManager(usageTracker, lowBudget, budgetEnforcement);
+
+      // Exhaust quota by recording usage directly
+      await usageTracker.track({
+        platform: 'claude',
+        action: 'usage',
+        tokens: 1000,
+        durationMs: 1000,
+        success: true,
+      });
+
+      try {
+        await lowBudgetManager.checkQuota('claude');
+        expect.fail('Should have thrown QuotaExhaustedError');
+      } catch (error) {
+        expect(error).toBeInstanceOf(QuotaExhaustedError);
+        if (error instanceof QuotaExhaustedError) {
+          expect(error.platform).toBe('claude');
+          expect(error.period).toBe('run');
+          expect(error.limit).toBe(1);
+          expect(error.count).toBe(1);
+          expect(error.resetsAt).toBeDefined();
+          expect(error.message).toContain('claude');
+          expect(error.message).toContain('run');
+        }
+      }
+    });
+
+    it('should warn but not throw when soft limit is reached', async () => {
+      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      const lowBudget: PlatformBudgets = {
+        ...budgets,
+        claude: {
+          maxCallsPerRun: 10,
+          maxCallsPerHour: 10,
+          maxCallsPerDay: 10,
+          cooldownHours: 5,
+          fallbackPlatform: 'codex',
+        },
+      };
+
+      // Use 80% of quota (soft limit)
+      const softLimitManager = new QuotaManager(usageTracker, lowBudget, budgetEnforcement, undefined, 80, 100);
+
+      // Record 8 calls (80% of 10) directly to avoid checkQuota during recordUsage
+      for (let i = 0; i < 8; i++) {
+        await usageTracker.track({
+          platform: 'claude',
+          action: 'usage',
+          tokens: 1000,
+          durationMs: 1000,
+          success: true,
+        });
+      }
+
+      // Should warn but not throw
+      const quotaInfo = await softLimitManager.checkQuota('claude');
+      expect(quotaInfo.remaining).toBeGreaterThan(0);
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Soft limit warning')
+      );
+
+      consoleSpy.mockRestore();
+    });
+
+    it('should not warn when under soft limit', async () => {
+      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      const lowBudget: PlatformBudgets = {
+        ...budgets,
+        claude: {
+          maxCallsPerRun: 10,
+          maxCallsPerHour: 10,
+          maxCallsPerDay: 10,
+          cooldownHours: 5,
+          fallbackPlatform: 'codex',
+        },
+      };
+
+      const manager = new QuotaManager(usageTracker, lowBudget, budgetEnforcement, undefined, 80, 100);
+
+      // Record 5 calls (50% of 10, under soft limit)
+      for (let i = 0; i < 5; i++) {
+        await manager.recordUsage('claude', 1000, 1000);
+      }
+
+      // Should not warn
+      await manager.checkQuota('claude');
+      expect(consoleSpy).not.toHaveBeenCalled();
+
+      consoleSpy.mockRestore();
+    });
+
+    it('should use configurable soft limit percentage', async () => {
+      const consoleSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+      const lowBudget: PlatformBudgets = {
+        ...budgets,
+        claude: {
+          maxCallsPerRun: 10,
+          maxCallsPerHour: 100, // Make hour limit high so run period is most restrictive
+          maxCallsPerDay: 1000, // Make day limit high so run period is most restrictive
+          cooldownHours: 5,
+          fallbackPlatform: 'codex',
+        },
+      };
+
+      // Create manager with runStartTime set to now, then track calls
+      const runStartTime = new Date();
+      // Use a budgetEnforcement with warnAtPercentage set to 50 to test soft limit
+      const customBudgetEnforcement = {
+        ...budgetEnforcement,
+        warnAtPercentage: 50, // Use 50% as soft limit
+      };
+      const manager = new QuotaManager(usageTracker, lowBudget, customBudgetEnforcement, runStartTime);
+
+      // Record 6 calls (60% of 10, over 50% soft limit) directly
+      for (let i = 0; i < 6; i++) {
+        await usageTracker.track({
+          platform: 'claude',
+          action: 'usage',
+          tokens: 1000,
+          durationMs: 1000,
+          success: true,
+        });
+      }
+
+      // Should warn at 50% soft limit (6/10 = 60% > 50%)
+      await manager.checkQuota('claude');
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Soft limit warning')
+      );
+
+      consoleSpy.mockRestore();
+    });
+
+    it('should use configurable hard limit percentage', async () => {
+      const lowBudget: PlatformBudgets = {
+        ...budgets,
+        claude: {
+          maxCallsPerRun: 10,
+          maxCallsPerHour: 10,
+          maxCallsPerDay: 10,
+          cooldownHours: 5,
+          fallbackPlatform: 'codex',
+        },
+      };
+
+      // Use 90% as hard limit
+      const manager = new QuotaManager(usageTracker, lowBudget, budgetEnforcement, undefined, 80, 90);
+
+      // Record 8 calls (80% of 10, under hard limit)
+      for (let i = 0; i < 8; i++) {
+        await manager.recordUsage('claude', 1000, 1000);
+      }
+
+      // Manually record one more usage to get to 9 (90%)
+      await usageTracker.track({
+        platform: 'claude',
+        action: 'usage',
+        tokens: 1000,
+        durationMs: 1000,
+        success: true,
+      });
+
+      // Should throw at 90% hard limit
+      await expect(manager.checkQuota('claude')).rejects.toThrow(QuotaExhaustedError);
+    });
+
+    it('should return normal info when under all limits', async () => {
+      const lowBudget: PlatformBudgets = {
+        ...budgets,
+        claude: {
+          maxCallsPerRun: 10,
+          maxCallsPerHour: 10,
+          maxCallsPerDay: 10,
+          cooldownHours: 5,
+          fallbackPlatform: 'codex',
+        },
+      };
+
+      const manager = new QuotaManager(usageTracker, lowBudget, budgetEnforcement);
+
+      // Record 3 calls (30% of 10, well under limits)
+      for (let i = 0; i < 3; i++) {
+        await manager.recordUsage('claude', 1000, 1000);
+      }
+
+      // Should return normal quota info
+      const quotaInfo = await manager.checkQuota('claude');
+      expect(quotaInfo.remaining).toBeGreaterThan(0);
+      expect(quotaInfo.limit).toBe(10);
+      expect(quotaInfo.period).toBe('run');
+      expect(quotaInfo.resetsAt).toBeDefined();
     });
   });
 });

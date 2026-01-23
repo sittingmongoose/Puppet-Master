@@ -21,6 +21,7 @@ import { SessionTracker } from '../../core/session-tracker.js';
 import { GuiServer } from '../../gui/server.js';
 import { EventBus } from '../../logging/event-bus.js';
 import { PlatformRegistry } from '../../platforms/registry.js';
+import { PlatformRouter } from '../../core/platform-router.js';
 import { QuotaManager } from '../../platforms/quota-manager.js';
 import type { TierStateManager } from '../../core/tier-state-manager.js';
 import { OrchestratorStateMachine } from '../../core/orchestrator-state-machine.js';
@@ -118,15 +119,21 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       eventBus, // Pass EventBus for real-time updates
     });
 
-    // Create platform registry and get a runner for initialization
-    // Use the phase tier's platform as the default runner
-    const platformRegistry = PlatformRegistry.createDefault(config, projectRoot);
-    const defaultPlatform = config.tiers.phase.platform;
-    const platformRunner = platformRegistry.get(defaultPlatform);
-    
-    if (!platformRunner) {
-      throw new Error(`Platform runner not available for platform: ${defaultPlatform}`);
+    // Initialize platform registry with runners if needed
+    const platformRegistry = container.resolve<PlatformRegistry>('platformRegistry');
+    if (platformRegistry.getAvailable().length === 0) {
+      const defaultRegistry = PlatformRegistry.createDefault(config, projectRoot);
+      // Copy runners from default registry
+      for (const p of defaultRegistry.getAvailable()) {
+        const runner = defaultRegistry.get(p);
+        if (runner) {
+          platformRegistry.register(p, runner);
+        }
+      }
     }
+
+    // Create platform router
+    const platformRouter = new PlatformRouter(config, platformRegistry);
 
     // Initialize orchestrator with dependencies from container
     await orchestratorInstance.initialize({
@@ -140,7 +147,8 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       branchStrategy: container.resolve('branchStrategy'),
       commitFormatter: container.resolve('commitFormatter'),
       prManager: container.resolve('prManager'),
-      platformRunner: platformRunner,
+      platformRegistry,
+      platformRouter,
       verificationIntegration: container.resolve('verificationIntegration'),
     });
 
@@ -153,7 +161,7 @@ export async function guiAction(options: GuiOptions): Promise<void> {
 
     // Register start chain dependencies for wizard routes
     const usageTracker = container.resolve<UsageTracker>('usageTracker');
-    const quotaManager = new QuotaManager(usageTracker, config.budgets);
+    const quotaManager = new QuotaManager(usageTracker, config.budgets, config.budgetEnforcement);
     
     guiServer.registerStartChainDependencies(
       config,

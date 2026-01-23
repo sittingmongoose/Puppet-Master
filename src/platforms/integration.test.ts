@@ -280,7 +280,7 @@ describe('Platform Integration Tests', () => {
     usageTracker = new UsageTracker(usageFile);
 
     // Create quota manager
-    quotaManager = new QuotaManager(usageTracker, config.budgets);
+    quotaManager = new QuotaManager(usageTracker, config.budgets, config.budgetEnforcement);
 
     // Reset mocks
     vi.clearAllMocks();
@@ -530,7 +530,12 @@ describe('Platform Integration Tests', () => {
         copilot: config.budgets.copilot,
         antigravity: config.budgets.antigravity,
       };
-      const quotaManager = new QuotaManager(usageTracker, lowBudget);
+      const budgetEnforcement = {
+        onLimitReached: 'fallback' as const,
+        warnAtPercentage: 80,
+        notifyOnFallback: true,
+      };
+      const quotaManager = new QuotaManager(usageTracker, lowBudget, budgetEnforcement);
 
       // Record usage to exhaust quota
       await quotaManager.recordUsage('cursor', 1000, 1000);
@@ -576,7 +581,12 @@ describe('Platform Integration Tests', () => {
         copilot: config.budgets.copilot,
         antigravity: config.budgets.antigravity,
       };
-      const quotaManager = new QuotaManager(usageTracker, lowBudget);
+      const budgetEnforcement = {
+        onLimitReached: 'fallback' as const,
+        warnAtPercentage: 80,
+        notifyOnFallback: true,
+      };
+      const quotaManager = new QuotaManager(usageTracker, lowBudget, budgetEnforcement);
 
       // First call should succeed
       const firstCheck = await quotaManager.canProceed('cursor');
@@ -608,7 +618,12 @@ describe('Platform Integration Tests', () => {
         copilot: config.budgets.copilot,
         antigravity: config.budgets.antigravity,
       };
-      const quotaManager = new QuotaManager(usageTracker, lowBudget);
+      const budgetEnforcement = {
+        onLimitReached: 'fallback' as const,
+        warnAtPercentage: 80,
+        notifyOnFallback: true,
+      };
+      const quotaManager = new QuotaManager(usageTracker, lowBudget, budgetEnforcement);
 
       // Exhaust quota
       await quotaManager.recordUsage('cursor', 1000, 1000);
@@ -635,7 +650,12 @@ describe('Platform Integration Tests', () => {
         copilot: config.budgets.copilot,
         antigravity: config.budgets.antigravity,
       };
-      const quotaManager = new QuotaManager(usageTracker, lowBudget);
+      const budgetEnforcement = {
+        onLimitReached: 'fallback' as const,
+        warnAtPercentage: 80,
+        notifyOnFallback: true,
+      };
+      const quotaManager = new QuotaManager(usageTracker, lowBudget, budgetEnforcement);
 
       // Exhaust quota to trigger cooldown
       await quotaManager.recordUsage('cursor', 1000, 1000);
@@ -674,7 +694,12 @@ describe('Platform Integration Tests', () => {
         copilot: config.budgets.copilot,
         antigravity: config.budgets.antigravity,
       };
-      const quotaManager = new QuotaManager(usageTracker, noCooldownBudget);
+      const budgetEnforcement = {
+        onLimitReached: 'fallback' as const,
+        warnAtPercentage: 80,
+        notifyOnFallback: true,
+      };
+      const quotaManager = new QuotaManager(usageTracker, noCooldownBudget, budgetEnforcement);
 
       // Exhaust quota
       await quotaManager.recordUsage('cursor', 1000, 1000);
@@ -707,7 +732,12 @@ describe('Platform Integration Tests', () => {
         copilot: config.budgets.copilot,
         antigravity: config.budgets.antigravity,
       };
-      const quotaManager = new QuotaManager(usageTracker, lowBudget);
+      const budgetEnforcement = {
+        onLimitReached: 'fallback' as const,
+        warnAtPercentage: 80,
+        notifyOnFallback: true,
+      };
+      const quotaManager = new QuotaManager(usageTracker, lowBudget, budgetEnforcement);
 
       // Exhaust cursor quota
       await quotaManager.recordUsage('cursor', 1000, 1000);
@@ -749,7 +779,12 @@ describe('Platform Integration Tests', () => {
         copilot: config.budgets.copilot,
         antigravity: config.budgets.antigravity,
       };
-      const quotaManager = new QuotaManager(usageTracker, lowBudget);
+      const budgetEnforcement = {
+        onLimitReached: 'fallback' as const,
+        warnAtPercentage: 80,
+        notifyOnFallback: true,
+      };
+      const quotaManager = new QuotaManager(usageTracker, lowBudget, budgetEnforcement);
 
       // Exhaust all platforms
       await quotaManager.recordUsage('cursor', 1000, 1000);
@@ -811,7 +846,12 @@ describe('Platform Integration Tests', () => {
           fallbackPlatform: null,
         },
       };
-      const quotaManager = new QuotaManager(usageTracker, budget);
+      const budgetEnforcement = {
+        onLimitReached: 'fallback' as const,
+        warnAtPercentage: 80,
+        notifyOnFallback: true,
+      };
+      const quotaManager = new QuotaManager(usageTracker, budget, budgetEnforcement);
 
       // Use some quota on cursor
       await quotaManager.recordUsage('cursor', 1000, 1000);

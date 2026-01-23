@@ -32,9 +32,11 @@ import { createProjectsRoutes } from './routes/projects.js';
 import { createWizardRoutes, type WizardDependencies } from './routes/wizard.js';
 import { createConfigRoutes } from './routes/config.js';
 import { createEvidenceRoutes } from './routes/evidence.js';
+import { createCoverageRoutes } from './routes/coverage.js';
 import { createControlsRoutes } from './routes/controls.js';
 import { createDoctorRoutes } from './routes/doctor.js';
 import { createHistoryRoutes } from './routes/history.js';
+import { createSettingsRoutes } from './routes/settings.js';
 
 // Get __dirname equivalent for ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -471,8 +473,14 @@ export class GuiServer {
     // Config routes
     this.app.use('/api', createConfigRoutes());
 
+    // Settings routes
+    this.app.use('/api', createSettingsRoutes());
+
     // Evidence routes
     this.app.use('/api', createEvidenceRoutes());
+
+    // Coverage routes
+    this.app.use('/api', createCoverageRoutes(this.config.baseDirectory));
 
     // Doctor routes
     this.app.use('/api', createDoctorRoutes());
@@ -504,6 +512,10 @@ export class GuiServer {
       res.sendFile(path.join(publicPath, 'config.html'));
     });
 
+    this.app.get('/settings', (_req, res) => {
+      res.sendFile(path.join(publicPath, 'settings.html'));
+    });
+
     this.app.get('/evidence', (_req, res) => {
       res.sendFile(path.join(publicPath, 'evidence.html'));
     });
@@ -514,6 +526,10 @@ export class GuiServer {
 
     this.app.get('/history', (_req, res) => {
       res.sendFile(path.join(publicPath, 'history.html'));
+    });
+
+    this.app.get('/coverage', (_req, res) => {
+      res.sendFile(path.join(publicPath, 'coverage.html'));
     });
 
     // Serve static files from public directory (AFTER specific routes)

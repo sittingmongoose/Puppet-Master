@@ -205,6 +205,7 @@ export class StartChainPipeline {
   /**
    * Generate PRD from parsed requirements using AI.
    * FIX 2: Accepts optional interview to pass assumptions to the prompt.
+   * P1-T05: Uses multi-pass generation for large documents when enabled.
    * 
    * Platform/Model Selection (P1-T04):
    * The PrdGenerator resolves platform/model using this fallback chain:
@@ -218,10 +219,19 @@ export class StartChainPipeline {
     projectName: string,
     interview?: InterviewResult
   ): Promise<PRD> {
+    // P1-T05: Extract multi-pass config from startChain config
+    const multiPassConfig = this.config.startChain?.multiPass;
+
     const prdGenerator = new PrdGenerator(
       {
         projectName,
         interviewAssumptions: interview?.assumptions, // FIX 2: Pass assumptions
+        multiPassConfig: multiPassConfig ? {
+          enabled: multiPassConfig.enabled,
+          largeDocThreshold: multiPassConfig.largeDocThreshold,
+          maxRepairPasses: multiPassConfig.maxRepairPasses,
+          coverageThreshold: multiPassConfig.coverageThreshold,
+        } : undefined,
       },
       this.platformRegistry,
       this.quotaManager,
@@ -230,6 +240,7 @@ export class StartChainPipeline {
     );
 
     // Use AI generation (useAI=true)
+    // P1-T05: generateWithAI now automatically uses multi-pass for large docs
     return prdGenerator.generateWithAI(parsed, true);
   }
 

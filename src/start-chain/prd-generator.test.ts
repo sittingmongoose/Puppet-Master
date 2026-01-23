@@ -163,17 +163,19 @@ describe('PrdGenerator', () => {
   });
 
   describe('createTestPlan', () => {
-    it('should create default test plan', () => {
-      const testPlan = generator.createTestPlan('some content');
-      expect(testPlan).toEqual({
-        commands: [],
-        failFast: true,
-      });
+    it('should create test plan with project-specific commands', async () => {
+      const testPlan = await generator.createTestPlan('some content');
+      // TestPlanGenerator now detects the project type and generates commands
+      // Since we're in a TypeScript project, it should include typecheck and lint commands
+      expect(testPlan.failFast).toBe(true);
+      expect(testPlan.commands.length).toBeGreaterThan(0);
+      // Should include typecheck command for TypeScript projects
+      expect(testPlan.commands.some((cmd) => cmd.command === 'npm' && cmd.args?.includes('run') && cmd.args?.includes('typecheck'))).toBe(true);
     });
   });
 
   describe('calculateMetadata', () => {
-    it('should calculate metadata correctly', () => {
+    it('should calculate metadata correctly', async () => {
       const sections: ParsedSection[] = [
         {
           title: 'Phase 1',
@@ -209,7 +211,8 @@ describe('PrdGenerator', () => {
         },
       ];
 
-      const phases = generator.generatePhases(sections);
+      const parsed = createParsedRequirements(sections, 'Test Project');
+      const phases = await generator.generatePhases(sections, parsed);
       const metadata = generator.calculateMetadata(phases);
 
       expect(metadata.totalPhases).toBe(2);
@@ -221,7 +224,7 @@ describe('PrdGenerator', () => {
   });
 
   describe('generatePhases', () => {
-    it('should generate phases from sections', () => {
+    it('should generate phases from sections', async () => {
       const sections: ParsedSection[] = [
         {
           title: 'Phase 1',
@@ -237,7 +240,8 @@ describe('PrdGenerator', () => {
         },
       ];
 
-      const phases = generator.generatePhases(sections);
+      const parsed = createParsedRequirements(sections, 'Test Project');
+      const phases = await generator.generatePhases(sections, parsed);
       expect(phases).toHaveLength(2);
       expect(phases[0].id).toBe('PH-001');
       expect(phases[0].title).toBe('Phase 1');
@@ -248,7 +252,28 @@ describe('PrdGenerator', () => {
       expect(phases[1].id).toBe('PH-002');
     });
 
-    it('should generate tasks from phase children', () => {
+    it('should generate sourceRefs for phases', async () => {
+      const sections: ParsedSection[] = [
+        {
+          title: 'Authentication',
+          content: 'Auth content',
+          level: 1,
+          children: [],
+        },
+      ];
+
+      const parsed = createParsedRequirements(sections, 'Requirements');
+      const phases = await generator.generatePhases(sections, parsed);
+      
+      expect(phases[0].sourceRefs).toBeDefined();
+      expect(phases[0].sourceRefs).toHaveLength(1);
+      expect(phases[0].sourceRefs![0].sectionPath).toBe('Requirements > Authentication');
+      expect(phases[0].sourceRefs![0].sourcePath).toBe(parsed.source.path);
+      expect(phases[0].sourceRefs![0].excerptHash).toBeTruthy();
+      expect(phases[0].sourceRefs![0].excerptHash.length).toBe(64); // SHA-256 hex digest
+    });
+
+    it('should generate tasks from phase children', async () => {
       const sections: ParsedSection[] = [
         {
           title: 'Phase 1',
@@ -271,7 +296,8 @@ describe('PrdGenerator', () => {
         },
       ];
 
-      const phases = generator.generatePhases(sections);
+      const parsed = createParsedRequirements(sections, 'Requirements');
+      const phases = await generator.generatePhases(sections, parsed);
       expect(phases).toHaveLength(1);
       expect(phases[0].tasks).toHaveLength(2);
       expect(phases[0].tasks[0].id).toBe('TK-001-001');
@@ -280,7 +306,7 @@ describe('PrdGenerator', () => {
       expect(phases[0].tasks[1].id).toBe('TK-001-002');
     });
 
-    it('should limit tasks per phase', () => {
+    it('should limit tasks per phase', async () => {
       const customGenerator = new PrdGenerator({
         projectName: 'test',
         maxTasksPerPhase: 2,
@@ -300,13 +326,14 @@ describe('PrdGenerator', () => {
         },
       ];
 
-      const phases = customGenerator.generatePhases(sections);
+      const parsed = createParsedRequirements(sections, 'Requirements');
+      const phases = await customGenerator.generatePhases(sections, parsed);
       expect(phases[0].tasks).toHaveLength(2);
     });
   });
 
   describe('generateTasks', () => {
-    it('should generate tasks from phase children', () => {
+    it('should generate tasks from phase children', async () => {
       const section: ParsedSection = {
         title: 'Phase 1',
         content: 'Phase content',
@@ -321,13 +348,14 @@ describe('PrdGenerator', () => {
         ],
       };
 
-      const tasks = generator.generateTasks('PH-001', section, 1);
+      const parsed = createParsedRequirements([section], 'Requirements');
+      const tasks = await generator.generateTasks('PH-001', section, 1, parsed);
       expect(tasks).toHaveLength(1);
       expect(tasks[0].subtasks.length).toBeGreaterThan(0);
       expect(tasks[0].subtasks[0].taskId).toBe('TK-001-001');
     });
 
-    it('should limit subtasks per task', () => {
+    it('should limit subtasks per task', async () => {
       const customGenerator = new PrdGenerator({
         projectName: 'test',
         maxSubtasksPerTask: 2,
@@ -347,15 +375,47 @@ describe('PrdGenerator', () => {
         ],
       };
 
-      const tasks = customGenerator.generateTasks('PH-001', section, 1);
+      const parsed = createParsedRequirements([section], 'Requirements');
+      const tasks = await customGenerator.generateTasks('PH-001', section, 1, parsed);
       expect(tasks[0].subtasks.length).toBeLessThanOrEqual(2);
+    });
+
+    it('should generate sourceRefs for tasks', async () => {
+      const section: ParsedSection = {
+        title: 'Phase 1',
+        content: 'Phase content',
+        level: 1,
+        children: [
+          {
+            title: 'JWT Implementation',
+            content: 'JWT content',
+            level: 2,
+            children: [],
+          },
+        ],
+      };
+
+      const parsed = createParsedRequirements([section], 'Requirements');
+      const tasks = await generator.generateTasks('PH-001', section, 1, parsed);
+      
+      expect(tasks[0].sourceRefs).toBeDefined();
+      expect(tasks[0].sourceRefs).toHaveLength(1);
+      expect(tasks[0].sourceRefs![0].sectionPath).toBe('Requirements > Phase 1 > JWT Implementation');
+      expect(tasks[0].sourceRefs![0].excerptHash).toBeTruthy();
     });
   });
 
   describe('generateSubtasks', () => {
-    it('should generate subtasks with correct IDs', () => {
+    it('should generate subtasks with correct IDs', async () => {
       const content = 'Line 1\nLine 2\nLine 3';
-      const subtasks = generator.generateSubtasks('TK-001-001', content, 1, 1);
+      const parentSection: ParsedSection = {
+        title: 'Task 1',
+        content,
+        level: 2,
+        children: [],
+      };
+      const parsed = createParsedRequirements([parentSection], 'Requirements');
+      const subtasks = await generator.generateSubtasks('TK-001-001', content, 1, 1, parsed, parentSection);
 
       expect(subtasks.length).toBeGreaterThan(0);
       expect(subtasks[0].id).toMatch(/^ST-001-001-\d{3}$/);
@@ -365,15 +425,39 @@ describe('PrdGenerator', () => {
       expect(subtasks[0].iterations).toEqual([]);
     });
 
-    it('should create at least one subtask even for short content', () => {
+    it('should create at least one subtask even for short content', async () => {
       const content = 'Short content';
-      const subtasks = generator.generateSubtasks('TK-001-001', content, 1, 1);
+      const parentSection: ParsedSection = {
+        title: 'Task 1',
+        content,
+        level: 2,
+        children: [],
+      };
+      const parsed = createParsedRequirements([parentSection], 'Requirements');
+      const subtasks = await generator.generateSubtasks('TK-001-001', content, 1, 1, parsed, parentSection);
       expect(subtasks.length).toBeGreaterThanOrEqual(1);
+    });
+
+    it('should generate sourceRefs for subtasks', async () => {
+      const content = 'Subtask content';
+      const parentSection: ParsedSection = {
+        title: 'JWT Task',
+        content,
+        level: 2,
+        children: [],
+      };
+      const parsed = createParsedRequirements([parentSection], 'Requirements');
+      const subtasks = await generator.generateSubtasks('TK-001-001', content, 1, 1, parsed, parentSection);
+      
+      expect(subtasks[0].sourceRefs).toBeDefined();
+      expect(subtasks[0].sourceRefs).toHaveLength(1);
+      expect(subtasks[0].sourceRefs![0].sectionPath).toBe('Requirements > JWT Task');
+      expect(subtasks[0].sourceRefs![0].excerptHash).toBeTruthy();
     });
   });
 
   describe('generate', () => {
-    it('should generate complete PRD structure', () => {
+    it('should generate complete PRD structure', async () => {
       // Use multiple H1s to test the multiple_h1s structure type
       // (single H1 with H2 children would trigger single_h1_with_h2s behavior)
       const sections: ParsedSection[] = [
@@ -399,7 +483,7 @@ describe('PrdGenerator', () => {
       ];
 
       const parsed = createParsedRequirements(sections, 'Test Project');
-      const prd = generator.generate(parsed);
+      const prd = await generator.generate(parsed);
 
       expect(prd.project).toBe('test-project');
       expect(prd.version).toBe('1.0.0');
@@ -412,9 +496,9 @@ describe('PrdGenerator', () => {
       expect(prd.metadata.totalSubtasks).toBeGreaterThan(0);
     });
 
-    it('should handle empty sections', () => {
+    it('should handle empty sections', async () => {
       const parsed = createParsedRequirements([], 'Empty Project');
-      const prd = generator.generate(parsed);
+      const prd = await generator.generate(parsed);
 
       expect(prd.phases).toHaveLength(0);
       expect(prd.metadata.totalPhases).toBe(0);
@@ -422,22 +506,22 @@ describe('PrdGenerator', () => {
       expect(prd.metadata.totalSubtasks).toBe(0);
     });
 
-    it('should use parsed title for description', () => {
+    it('should use parsed title for description', async () => {
       const parsed = createParsedRequirements([], 'My Project Title');
-      const prd = generator.generate(parsed);
+      const prd = await generator.generate(parsed);
       expect(prd.description).toBe('My Project Title');
     });
 
-    it('should use default description if title is empty', () => {
+    it('should use default description if title is empty', async () => {
       const parsed = createParsedRequirements([], '');
-      const prd = generator.generate(parsed);
+      const prd = await generator.generate(parsed);
       expect(prd.description).toBe('Generated from requirements');
     });
 
-    it('should set createdAt and updatedAt timestamps', () => {
+    it('should set createdAt and updatedAt timestamps', async () => {
       const parsed = createParsedRequirements([]);
       const before = new Date().toISOString();
-      const prd = generator.generate(parsed);
+      const prd = await generator.generate(parsed);
       const after = new Date().toISOString();
 
       expect(prd.createdAt).toBeDefined();
@@ -448,7 +532,7 @@ describe('PrdGenerator', () => {
       expect(prd.updatedAt <= after).toBe(true);
     });
 
-    it('should generate valid PRD structure matching schema', () => {
+    it('should generate valid PRD structure matching schema', async () => {
       // Use H1 with H2 children where H2 has H3 grandchildren
       // This way: H1 = title, H2 = phase, H3 = task
       const sections: ParsedSection[] = [
@@ -475,7 +559,7 @@ describe('PrdGenerator', () => {
       ];
 
       const parsed = createParsedRequirements(sections);
-      const prd = generator.generate(parsed);
+      const prd = await generator.generate(parsed);
 
       // Validate PRD structure
       expect(prd).toHaveProperty('project');
@@ -541,7 +625,7 @@ describe('PrdGenerator', () => {
     beforeEach(() => {
       config = getDefaultConfig();
       usageTracker = new UsageTracker('.puppet-master/usage/usage.jsonl');
-      quotaManager = new QuotaManager(usageTracker, config.budgets);
+      quotaManager = new QuotaManager(usageTracker, config.budgets, config.budgetEnforcement);
       platformRegistry = PlatformRegistry.createDefault(config);
 
       // Create mock runner
@@ -805,7 +889,7 @@ describe('PrdGenerator', () => {
   });
 
   describe('H1 title bug fix (P0-T02)', () => {
-    it('should produce 2 phases from doc with # Title + ## Section1 + ## Section2', () => {
+    it('should produce 2 phases from doc with # Title + ## Section1 + ## Section2', async () => {
       // Acceptance criteria: Doc with # Title + ## Section1 + ## Section2 produces 2 phases
       const sections: ParsedSection[] = [
         {
@@ -835,7 +919,7 @@ describe('PrdGenerator', () => {
         projectName: 'test',
         structureDetectorOptions: { failOnValidationError: false },
       });
-      const prd = gen.generate(parsed);
+      const prd = await gen.generate(parsed);
 
       // Should have 2 phases (the H2 sections), not 1 (the H1)
       expect(prd.phases).toHaveLength(2);
@@ -845,7 +929,7 @@ describe('PrdGenerator', () => {
       expect(prd.description).toBe('My Project Requirements');
     });
 
-    it('should produce 2 phases from doc with # Phase1 + # Phase2', () => {
+    it('should produce 2 phases from doc with # Phase1 + # Phase2', async () => {
       // Acceptance criteria: Doc with # Phase1 + # Phase2 produces 2 phases
       const sections: ParsedSection[] = [
         {
@@ -867,7 +951,7 @@ describe('PrdGenerator', () => {
         projectName: 'test',
         structureDetectorOptions: { failOnValidationError: false },
       });
-      const prd = gen.generate(parsed);
+      const prd = await gen.generate(parsed);
 
       // Should have 2 phases (the H1 sections)
       expect(prd.phases).toHaveLength(2);
@@ -875,7 +959,7 @@ describe('PrdGenerator', () => {
       expect(prd.phases[1].title).toBe('Phase 2: Implementation');
     });
 
-    it('should hard fail if large doc produces only 1 phase', () => {
+    it('should hard fail if large doc produces only 1 phase', async () => {
       // Acceptance criteria: Hard fail if only 1 phase from large doc
       const largeContent = 'x'.repeat(6000);
       const sections: ParsedSection[] = [
@@ -906,10 +990,10 @@ describe('PrdGenerator', () => {
         },
       });
 
-      expect(() => gen.generate(parsed)).toThrow(/Large document.*resulted in only 1 phase/);
+      await expect(gen.generate(parsed)).rejects.toThrow(/Large document.*resulted in only 1 phase/);
     });
 
-    it('should log coverage metrics during generation', () => {
+    it('should log coverage metrics during generation', async () => {
       const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
       const sections: ParsedSection[] = [
@@ -929,7 +1013,7 @@ describe('PrdGenerator', () => {
         projectName: 'test',
         structureDetectorOptions: { failOnValidationError: false },
       });
-      gen.generate(parsed);
+      await gen.generate(parsed);
 
       expect(consoleSpy).toHaveBeenCalled();
       const logMessages = consoleSpy.mock.calls.map(call => call[0]?.toString() || '');
@@ -943,7 +1027,7 @@ describe('PrdGenerator', () => {
       consoleSpy.mockRestore();
     });
 
-    it('should handle H1 with H2 children that have H3 grandchildren', () => {
+    it('should handle H1 with H2 children that have H3 grandchildren', async () => {
       const sections: ParsedSection[] = [
         {
           title: 'Project Title',
@@ -973,7 +1057,7 @@ describe('PrdGenerator', () => {
         projectName: 'test',
         structureDetectorOptions: { failOnValidationError: false },
       });
-      const prd = gen.generate(parsed);
+      const prd = await gen.generate(parsed);
 
       // Should still detect 2 phases (H2s)
       expect(prd.phases).toHaveLength(2);
@@ -981,6 +1065,78 @@ describe('PrdGenerator', () => {
       // Phase A should have its H3 children as tasks
       expect(prd.phases[0].tasks).toHaveLength(1);
       expect(prd.phases[0].tasks[0].title).toBe('Task A.1');
+    });
+  });
+
+  describe('sourceRefs and hash generation', () => {
+    it('should generate deterministic excerptHash for same content', async () => {
+      const section1: ParsedSection = {
+        title: 'Section',
+        content: 'Same content',
+        level: 1,
+        children: [],
+      };
+      const section2: ParsedSection = {
+        title: 'Section',
+        content: 'Same content',
+        level: 1,
+        children: [],
+      };
+
+      const parsed = createParsedRequirements([section1], 'Requirements');
+      const phases1 = await generator.generatePhases([section1], parsed);
+      const phases2 = await generator.generatePhases([section2], parsed);
+
+      expect(phases1[0].sourceRefs![0].excerptHash).toBe(phases2[0].sourceRefs![0].excerptHash);
+    });
+
+    it('should generate different excerptHash for different content', async () => {
+      const section1: ParsedSection = {
+        title: 'Section',
+        content: 'Content 1',
+        level: 1,
+        children: [],
+      };
+      const section2: ParsedSection = {
+        title: 'Section',
+        content: 'Content 2',
+        level: 1,
+        children: [],
+      };
+
+      const parsed = createParsedRequirements([section1], 'Requirements');
+      const phases1 = await generator.generatePhases([section1], parsed);
+      const phases2 = await generator.generatePhases([section2], parsed);
+
+      expect(phases1[0].sourceRefs![0].excerptHash).not.toBe(phases2[0].sourceRefs![0].excerptHash);
+    });
+
+    it('should generate sourceRefs with correct section path hierarchy', async () => {
+      const sections: ParsedSection[] = [
+        {
+          title: 'Authentication',
+          content: 'Auth content',
+          level: 1,
+          children: [
+            {
+              title: 'JWT',
+              content: 'JWT content',
+              level: 2,
+              children: [],
+            },
+          ],
+        },
+      ];
+
+      const parsed = createParsedRequirements(sections, 'Requirements');
+      const phases = await generator.generatePhases(sections, parsed);
+      const tasks = await generator.generateTasks('PH-001', sections[0], 1, parsed);
+
+      // Phase should reference top-level section
+      expect(phases[0].sourceRefs![0].sectionPath).toBe('Requirements > Authentication');
+
+      // Task should reference nested section
+      expect(tasks[0].sourceRefs![0].sectionPath).toBe('Requirements > Authentication > JWT');
     });
   });
 });

@@ -10,6 +10,7 @@
 import { promises as fs } from 'fs';
 import { dirname } from 'path';
 import { withFileLock } from '../utils/index.js';
+import { AtomicWriter } from '../state/index.js';
 import type {
   PRD,
   Phase,
@@ -28,23 +29,28 @@ import type {
  */
 export class PrdManager {
   private readonly filePath: string;
+  private readonly atomicWriter: AtomicWriter;
 
   /**
    * Creates a new PrdManager instance.
    * @param filePath - Path to the prd.json file (default: '.puppet-master/prd.json')
+   * @param backupCount - Number of backups to keep (default: 3)
    */
-  constructor(filePath: string = '.puppet-master/prd.json') {
+  constructor(filePath: string = '.puppet-master/prd.json', backupCount: number = 3) {
     this.filePath = filePath;
+    this.atomicWriter = new AtomicWriter(backupCount);
   }
 
   /**
    * Loads the PRD from the file system.
    * Returns an empty PRD structure if the file doesn't exist.
+   * Uses AtomicWriter for recovery from backups if main file is corrupted.
    * @returns The loaded PRD
    */
   async load(): Promise<PRD> {
     try {
-      const content = await fs.readFile(this.filePath, 'utf-8');
+      // Use AtomicWriter for recovery support
+      const content = await this.atomicWriter.read(this.filePath);
       const prd = JSON.parse(content) as PRD;
       
       // Validate structure
@@ -57,10 +63,11 @@ export class PrdManager {
       
       return prd;
     } catch (error) {
-      if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
-        // File doesn't exist, return empty PRD
+      // If it's a recovery error, file doesn't exist - return empty PRD
+      if (error instanceof Error && error.name === 'StateRecoveryError') {
         return this.createEmptyPRD();
       }
+      // Re-throw other errors (like JSON parse errors or validation errors)
       throw error;
     }
   }
@@ -68,21 +75,18 @@ export class PrdManager {
   /**
    * Saves the PRD to the file system.
    * Automatically recalculates metadata before saving.
+   * Uses AtomicWriter for atomic writes with backup and recovery.
    * @param prd - The PRD to save
    */
   async save(prd: PRD): Promise<void> {
     await withFileLock(this.filePath, async () => {
-      // Ensure directory exists
-      await this.ensureDirectoryExists(this.filePath);
-
       // Recalculate metadata before saving
       prd.metadata = this.recalculateMetadata(prd);
       prd.updatedAt = new Date().toISOString();
 
-      // Write atomically using a temporary file
-      const tempPath = `${this.filePath}.tmp`;
-      await fs.writeFile(tempPath, JSON.stringify(prd, null, 2), 'utf-8');
-      await fs.rename(tempPath, this.filePath);
+      // Write atomically using AtomicWriter (handles temp file, verification, backup, and rename)
+      const content = JSON.stringify(prd, null, 2);
+      await this.atomicWriter.write(this.filePath, content);
     });
   }
 

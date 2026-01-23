@@ -31,3 +31,6 @@ export { buildArchPrompt } from './prompts/arch-prompt.js';
 
 export { StartChainPipeline } from '../core/start-chain/pipeline.js';
 export type { StartChainResult } from '../core/start-chain/pipeline.js';
+
+export { TraceabilityManager } from './traceability.js';
+export type { TraceabilityMatrix } from './traceability.js';

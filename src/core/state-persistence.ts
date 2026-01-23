@@ -15,6 +15,7 @@ import type { PrdManager } from '../memory/index.js';
 import type { PRD } from '../types/prd.js';
 import { getNextOrchestratorState } from './state-transitions.js';
 import { getNextTierState } from './state-transitions.js';
+import { AtomicWriter } from '../state/index.js';
 
 /**
  * Persisted state interface.
@@ -34,15 +35,22 @@ export interface PersistedState {
 export class StatePersistence {
   private readonly prdManager: PrdManager;
   private readonly checkpointDir: string;
+  private readonly atomicWriter: AtomicWriter;
 
   /**
    * Creates a new StatePersistence instance.
    * @param prdManager - The PrdManager instance to use for persistence
    * @param checkpointDir - Optional checkpoint directory (default: '.puppet-master/checkpoints')
+   * @param backupCount - Number of backups to keep for checkpoints (default: 3)
    */
-  constructor(prdManager: PrdManager, checkpointDir: string = '.puppet-master/checkpoints') {
+  constructor(
+    prdManager: PrdManager,
+    checkpointDir: string = '.puppet-master/checkpoints',
+    backupCount: number = 3
+  ) {
     this.prdManager = prdManager;
     this.checkpointDir = checkpointDir;
+    this.atomicWriter = new AtomicWriter(backupCount);
   }
 
   /**
@@ -129,8 +137,9 @@ export class StatePersistence {
     // Ensure directory exists
     await fs.mkdir(dirname(checkpointPath), { recursive: true });
 
-    // Write checkpoint file
-    await fs.writeFile(checkpointPath, JSON.stringify(state, null, 2), 'utf-8');
+    // Write checkpoint file atomically
+    const content = JSON.stringify(state, null, 2);
+    await this.atomicWriter.write(checkpointPath, content);
   }
 
   /**
@@ -143,7 +152,8 @@ export class StatePersistence {
     const checkpointPath = join(this.checkpointDir, `${sanitizedName}.json`);
 
     try {
-      const content = await fs.readFile(checkpointPath, 'utf-8');
+      // Use AtomicWriter for recovery support
+      const content = await this.atomicWriter.read(checkpointPath);
       const state = JSON.parse(content) as PersistedState;
 
       // Validate structure
@@ -158,9 +168,11 @@ export class StatePersistence {
 
       return state;
     } catch (error) {
-      if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+      // If it's a recovery error, it means the file doesn't exist
+      if (error instanceof Error && error.name === 'StateRecoveryError') {
         return null;
       }
+      // Re-throw other errors (like JSON parse errors or validation errors)
       throw error;
     }
   }

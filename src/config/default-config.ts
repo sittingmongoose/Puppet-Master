@@ -115,6 +115,34 @@ export function getDefaultConfig(): PuppetMasterConfig {
       onLimitReached: 'fallback',
       warnAtPercentage: 80,
       notifyOnFallback: true,
+      softLimitPercent: 80,
+      hardLimitPercent: 100,
+    },
+    rateLimits: {
+      cursor: {
+        callsPerMinute: 20,
+        cooldownMs: 5000,
+      },
+      codex: {
+        callsPerMinute: 10,
+        cooldownMs: 10000,
+      },
+      claude: {
+        callsPerMinute: 30,
+        cooldownMs: 3000,
+      },
+      gemini: {
+        callsPerMinute: 50,
+        cooldownMs: 2000,
+      },
+      copilot: {
+        callsPerMinute: 40,
+        cooldownMs: 2500,
+      },
+      antigravity: {
+        callsPerMinute: 100,
+        cooldownMs: 1000,
+      },
     },
     logging: {
       level: 'info',
@@ -127,6 +155,16 @@ export function getDefaultConfig(): PuppetMasterConfig {
       gemini: 'gemini',
       copilot: 'copilot',
       antigravity: 'agy',
+    },
+    execution: {
+      killAgentOnFailure: true,
+    },
+    checkpointing: {
+      enabled: true,
+      interval: 10,
+      maxCheckpoints: 10,
+      checkpointOnSubtaskComplete: true,
+      checkpointOnShutdown: true,
     },
   };
 }

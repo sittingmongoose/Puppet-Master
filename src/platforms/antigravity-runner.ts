@@ -26,6 +26,8 @@ import type {
   ExecutionRequest,
   ExecutionResult,
 } from '../types/platforms.js';
+import type { FreshSpawner } from '../core/fresh-spawn.js';
+import { PLATFORM_COMMANDS } from './constants.js';
 
 export class AntigravityRunner extends BasePlatformRunner {
   readonly platform: Platform = 'antigravity';
@@ -34,13 +36,24 @@ export class AntigravityRunner extends BasePlatformRunner {
    * Creates a new AntigravityRunner instance.
    *
    * @param capabilityService - Capability discovery service (required)
+   * @param defaultTimeout - Not used (runner always fails fast)
+   * @param hardTimeout - Not used (runner always fails fast)
+   * @param freshSpawner - Optional FreshSpawner for process isolation (P1-T09, not used)
    */
   constructor(
     capabilityService: CapabilityDiscoveryService,
     defaultTimeout: number = 0, // Not used (runner always fails fast)
-    hardTimeout: number = 0 // Not used (runner always fails fast)
+    hardTimeout: number = 0, // Not used (runner always fails fast)
+    freshSpawner?: FreshSpawner
   ) {
-    super(capabilityService, defaultTimeout, hardTimeout);
+    super(capabilityService, defaultTimeout, hardTimeout, undefined, undefined, undefined, freshSpawner);
+  }
+
+  /**
+   * Gets the Antigravity CLI command (not used, runner always fails).
+   */
+  protected getCommand(): string {
+    return PLATFORM_COMMANDS.antigravity;
   }
 
   /**

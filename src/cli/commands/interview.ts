@@ -132,7 +132,7 @@ export async function interviewAction(options: InterviewOptions): Promise<void> 
       platformRegistry = PlatformRegistry.createDefault(config);
       const usagePath = join(outputDir, 'usage', 'usage.jsonl');
       usageTracker = new UsageTracker(usagePath);
-      quotaManager = new QuotaManager(usageTracker, config.budgets);
+      quotaManager = new QuotaManager(usageTracker, config.budgets, config.budgetEnforcement);
     }
 
     // Step 5: Run interview

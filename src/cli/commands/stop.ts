@@ -21,6 +21,7 @@ import type { OrchestratorDependencies } from '../../core/orchestrator.js';
 import type { PuppetMasterConfig } from '../../types/config.js';
 import type { OrchestratorState } from '../../types/state.js';
 import { PlatformRegistry } from '../../platforms/registry.js';
+import { PlatformRouter } from '../../core/platform-router.js';
 import { deriveProjectRootFromConfigPath, resolveUnderProjectRoot } from '../../utils/project-paths.js';
 import type { CommandModule } from './index.js';
 import { join } from 'path';
@@ -139,7 +140,8 @@ export async function stopAction(options: StopOptions): Promise<void> {
       branchStrategy: container.resolve('branchStrategy'),
       commitFormatter: container.resolve('commitFormatter'),
       prManager: container.resolve('prManager'),
-      platformRunner: getPlatformRunner(container, config, projectRoot),
+      platformRegistry: getPlatformRegistry(container, config, projectRoot),
+      platformRouter: getPlatformRouter(container, config, projectRoot),
       verificationIntegration: container.resolve('verificationIntegration'),
     };
 
@@ -199,15 +201,14 @@ export async function stopAction(options: StopOptions): Promise<void> {
 }
 
 /**
- * Get platform runner for the configured subtask platform
+ * Get platform registry with runners initialized
  */
-function getPlatformRunner(
+function getPlatformRegistry(
   container: ReturnType<typeof createContainer>,
   config: PuppetMasterConfig,
   projectRoot: string
-): OrchestratorDependencies['platformRunner'] {
+): PlatformRegistry {
   const registry = container.resolve<PlatformRegistry>('platformRegistry');
-  const platform = config.tiers.subtask.platform;
   
   // Initialize registry with runners if needed
   if (registry.getAvailable().length === 0) {
@@ -221,14 +222,19 @@ function getPlatformRunner(
     }
   }
   
-  // Try to get runner from registry
-  const runner = registry.get(platform);
-  if (runner) {
-    return runner as OrchestratorDependencies['platformRunner'];
-  }
+  return registry;
+}
 
-  // If not found, throw error
-  throw new Error(`Platform runner for '${platform}' not found. Ensure the platform is properly configured.`);
+/**
+ * Get platform router
+ */
+function getPlatformRouter(
+  container: ReturnType<typeof createContainer>,
+  config: PuppetMasterConfig,
+  projectRoot: string
+): PlatformRouter {
+  const registry = getPlatformRegistry(container, config, projectRoot);
+  return new PlatformRouter(config, registry);
 }
 
 /**

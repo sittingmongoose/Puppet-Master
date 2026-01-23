@@ -373,4 +373,185 @@ describe('execution-engine', () => {
     expect(completeCallback).toHaveBeenCalledTimes(1);
     expect(completeCallback).toHaveBeenCalledWith(result);
   });
+
+  describe('killAgentOnFailure', () => {
+    it('kills failed iteration when killAgentOnFailure is true (default)', async () => {
+      const runner = createMockRunner({
+        stdoutForSpawn: () => fromArray(['<ralph>GUTTER</ralph>']),
+        transcriptForSpawn: () => '<ralph>GUTTER</ralph>',
+      });
+
+      const engine = new ExecutionEngine(createBaseConfig({ killAgentOnFailure: true }));
+      engine.setRunner(runner);
+
+      const result = await engine.spawnIteration(createIterationContext(1));
+
+      expect(result.success).toBe(false);
+      expect(result.completionSignal).toBe('GUTTER');
+      expect(runner.terminateProcess).toHaveBeenCalledTimes(1);
+      expect(runner.forceKillProcess).toHaveBeenCalledTimes(1);
+    });
+
+    it('kills failed iteration when killAgentOnFailure is undefined (defaults to true)', async () => {
+      const runner = createMockRunner({
+        stdoutForSpawn: () => fromArray(['<ralph>GUTTER</ralph>']),
+        transcriptForSpawn: () => '<ralph>GUTTER</ralph>',
+      });
+
+      const engine = new ExecutionEngine(createBaseConfig());
+      engine.setRunner(runner);
+
+      const result = await engine.spawnIteration(createIterationContext(1));
+
+      expect(result.success).toBe(false);
+      expect(result.completionSignal).toBe('GUTTER');
+      expect(runner.terminateProcess).toHaveBeenCalledTimes(1);
+      expect(runner.forceKillProcess).toHaveBeenCalledTimes(1);
+    });
+
+    it('keeps failed iteration alive when killAgentOnFailure is false', async () => {
+      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const consoleInfoSpy = vi.spyOn(console, 'info').mockImplementation(() => {});
+
+      const runner = createMockRunner({
+        stdoutForSpawn: () => fromArray(['<ralph>GUTTER</ralph>']),
+        transcriptForSpawn: () => '<ralph>GUTTER</ralph>',
+      });
+
+      const engine = new ExecutionEngine(createBaseConfig({ killAgentOnFailure: false }));
+      engine.setRunner(runner);
+
+      const result = await engine.spawnIteration(createIterationContext(1));
+
+      expect(result.success).toBe(false);
+      expect(result.completionSignal).toBe('GUTTER');
+      expect(runner.terminateProcess).not.toHaveBeenCalled();
+      expect(runner.forceKillProcess).not.toHaveBeenCalled();
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Agent kept alive for debugging')
+      );
+      expect(consoleInfoSpy).toHaveBeenCalledWith(
+        expect.stringContaining('To kill manually:')
+      );
+
+      consoleWarnSpy.mockRestore();
+      consoleInfoSpy.mockRestore();
+    });
+
+    it('kills on timeout when killAgentOnFailure is true', async () => {
+      vi.useFakeTimers();
+      const runner = createMockRunner({
+        stdoutForSpawn: () => neverEndingIterable(),
+        transcriptForSpawn: () => '',
+      });
+
+      const engine = new ExecutionEngine(createBaseConfig({ hardTimeout: 50, killAgentOnFailure: true }));
+      engine.setRunner(runner);
+
+      const promise = engine.spawnIteration(createIterationContext(1));
+      await vi.advanceTimersByTimeAsync(60);
+      const result = await promise;
+
+      expect(result.success).toBe(false);
+      expect(result.error).toContain('Hard timeout');
+      expect(runner.terminateProcess).toHaveBeenCalledTimes(1);
+      expect(runner.forceKillProcess).toHaveBeenCalledTimes(1);
+    });
+
+    it('keeps alive on timeout when killAgentOnFailure is false', async () => {
+      vi.useFakeTimers();
+      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const consoleInfoSpy = vi.spyOn(console, 'info').mockImplementation(() => {});
+
+      const runner = createMockRunner({
+        stdoutForSpawn: () => neverEndingIterable(),
+        transcriptForSpawn: () => '',
+      });
+
+      const engine = new ExecutionEngine(createBaseConfig({ hardTimeout: 50, killAgentOnFailure: false }));
+      engine.setRunner(runner);
+
+      const promise = engine.spawnIteration(createIterationContext(1));
+      await vi.advanceTimersByTimeAsync(60);
+      const result = await promise;
+
+      expect(result.success).toBe(false);
+      expect(result.error).toContain('Hard timeout');
+      expect(runner.terminateProcess).not.toHaveBeenCalled();
+      expect(runner.forceKillProcess).not.toHaveBeenCalled();
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Agent kept alive for debugging (timeout)')
+      );
+      expect(consoleInfoSpy).toHaveBeenCalledWith(
+        expect.stringContaining('To kill manually:')
+      );
+
+      consoleWarnSpy.mockRestore();
+      consoleInfoSpy.mockRestore();
+    });
+
+    it('kills on stall when killAgentOnFailure is true', async () => {
+      const runner = createMockRunner({
+        stdoutForSpawn: () => fromArray(['same', 'same', 'same']),
+        transcriptForSpawn: () => 'same same same',
+      });
+
+      const engine = new ExecutionEngine(
+        createBaseConfig({
+          stallDetection: {
+            enabled: true,
+            noOutputTimeout: 10_000,
+            identicalOutputThreshold: 3,
+          },
+          killAgentOnFailure: true,
+        })
+      );
+      engine.setRunner(runner);
+
+      const result = await engine.spawnIteration(createIterationContext(1));
+
+      expect(result.success).toBe(false);
+      expect(result.error).toContain('Stall detected');
+      expect(runner.terminateProcess).toHaveBeenCalledTimes(1);
+      expect(runner.forceKillProcess).toHaveBeenCalledTimes(1);
+    });
+
+    it('keeps alive on stall when killAgentOnFailure is false', async () => {
+      const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const consoleInfoSpy = vi.spyOn(console, 'info').mockImplementation(() => {});
+
+      const runner = createMockRunner({
+        stdoutForSpawn: () => fromArray(['same', 'same', 'same']),
+        transcriptForSpawn: () => 'same same same',
+      });
+
+      const engine = new ExecutionEngine(
+        createBaseConfig({
+          stallDetection: {
+            enabled: true,
+            noOutputTimeout: 10_000,
+            identicalOutputThreshold: 3,
+          },
+          killAgentOnFailure: false,
+        })
+      );
+      engine.setRunner(runner);
+
+      const result = await engine.spawnIteration(createIterationContext(1));
+
+      expect(result.success).toBe(false);
+      expect(result.error).toContain('Stall detected');
+      expect(runner.terminateProcess).not.toHaveBeenCalled();
+      expect(runner.forceKillProcess).not.toHaveBeenCalled();
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Agent kept alive for debugging (stall detected)')
+      );
+      expect(consoleInfoSpy).toHaveBeenCalledWith(
+        expect.stringContaining('To kill manually:')
+      );
+
+      consoleWarnSpy.mockRestore();
+      consoleInfoSpy.mockRestore();
+    });
+  });
 });

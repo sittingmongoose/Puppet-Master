@@ -26,6 +26,13 @@ import {
 } from './structure-detector.js';
 import { CriterionClassifier } from './criterion-classifier.js';
 import { createHash } from 'crypto';
+import {
+  MultiPassPrdGenerator,
+  type MultiPassConfig,
+  type MultiPassResult,
+  DEFAULT_MULTI_PASS_CONFIG,
+} from './multi-pass-generator.js';
+import { TestPlanGenerator } from './test-plan-generator.js';
 
 /**
  * Options for PRD generation.
@@ -41,11 +48,14 @@ export interface PrdGeneratorOptions {
   structureDetectorOptions?: StructureDetectorOptions;
   /** FIX 2: Interview assumptions to include in PRD generation prompt */
   interviewAssumptions?: string[];
+  /** P1-T05: Multi-pass configuration for large documents */
+  multiPassConfig?: Partial<MultiPassConfig>;
 }
 
 /**
  * Generator that transforms parsed requirements into PRD structure.
  * Supports AI-powered generation with rule-based fallback.
+ * P1-T05: Now supports multi-pass generation for large documents.
  */
 export class PrdGenerator {
   private readonly projectName: string;
@@ -59,6 +69,8 @@ export class PrdGenerator {
   private readonly criterionClassifier: CriterionClassifier;
   /** FIX 2: Interview assumptions to include in PRD generation */
   private readonly interviewAssumptions: string[];
+  /** P1-T05: Multi-pass configuration */
+  private readonly multiPassConfig: MultiPassConfig;
 
   constructor(
     options: PrdGeneratorOptions,
@@ -77,20 +89,62 @@ export class PrdGenerator {
     this.structureDetectorOptions = options.structureDetectorOptions ?? {};
     this.criterionClassifier = new CriterionClassifier();
     this.interviewAssumptions = options.interviewAssumptions ?? [];
+    this.multiPassConfig = { ...DEFAULT_MULTI_PASS_CONFIG, ...options.multiPassConfig };
+  }
+
+  /**
+   * P1-T05: Generate PRD using multi-pass pipeline for large documents.
+   * Automatically falls back to single-pass for small documents.
+   *
+   * @param parsed - Parsed requirements document
+   * @returns MultiPassResult with PRD and generation metadata
+   */
+  async generateMultiPass(parsed: ParsedRequirements): Promise<MultiPassResult> {
+    const multiPassGenerator = new MultiPassPrdGenerator(
+      {
+        projectName: this.projectName,
+        multiPassConfig: this.multiPassConfig,
+        interviewAssumptions: this.interviewAssumptions,
+      },
+      this.platformRegistry,
+      this.quotaManager,
+      this.config,
+      this.usageTracker
+    );
+
+    return multiPassGenerator.generate(parsed);
   }
 
   /**
    * Main entry point: generates a PRD from parsed requirements using AI.
    * Falls back to rule-based generation if AI is unavailable or quota exhausted.
+   * P1-T05: For large documents, uses multi-pass generation when enabled.
    * 
    * @param parsed - Parsed requirements document
    * @param useAI - Whether to attempt AI generation (default: true)
    * @returns Generated PRD structure
    */
   async generateWithAI(parsed: ParsedRequirements, useAI: boolean = true): Promise<PRD> {
+    // P1-T05: Check if multi-pass should be used for large documents
+    const sourceChars = parsed.rawText.length;
+    if (
+      this.multiPassConfig.enabled &&
+      sourceChars >= this.multiPassConfig.largeDocThreshold &&
+      this.platformRegistry &&
+      this.quotaManager &&
+      this.config &&
+      this.usageTracker
+    ) {
+      console.log(
+        `[PRD Generation] Large document (${sourceChars} chars) - using multi-pass pipeline`
+      );
+      const result = await this.generateMultiPass(parsed);
+      return result.prd;
+    }
+
     // If AI dependencies not provided, use fallback
     if (!useAI || !this.platformRegistry || !this.quotaManager || !this.config || !this.usageTracker) {
-      return this.generate(parsed);
+      return await this.generate(parsed);
     }
 
     // Determine platform (use step-specific config or fallback to phase tier)
@@ -106,7 +160,7 @@ export class PrdGenerator {
       const canProceed = await this.quotaManager.canProceed(platform);
       if (!canProceed.allowed) {
         console.warn(`[PRD Generation] Quota exhausted for ${platform}: ${canProceed.reason}. Using rule-based fallback.`);
-        return this.generate(parsed);
+        return await this.generate(parsed);
       }
 
       // Build prompt (FIX 2: include interview assumptions)
@@ -116,7 +170,7 @@ export class PrdGenerator {
       const runner = this.platformRegistry.get(platform);
       if (!runner) {
         console.warn(`[PRD Generation] Platform runner not available for ${platform}. Using rule-based fallback.`);
-        return this.generate(parsed);
+        return await this.generate(parsed);
       }
 
       // Execute AI request
@@ -143,7 +197,7 @@ export class PrdGenerator {
 
       if (!result.success) {
         console.warn(`[PRD Generation] AI execution failed (exit code ${result.exitCode}). Using rule-based fallback.`);
-        return this.generate(parsed);
+        return await this.generate(parsed);
       }
 
       // Parse JSON response
@@ -161,11 +215,11 @@ export class PrdGenerator {
         console.warn(`[PRD Generation] Failed to parse AI response: ${parseError instanceof Error ? parseError.message : String(parseError)}`);
         console.warn(`[PRD Generation] AI output preview: ${result.output.substring(0, 200)}...`);
         console.warn(`[PRD Generation] Using rule-based fallback.`);
-        return this.generate(parsed);
+        return await this.generate(parsed);
       }
     } catch (error) {
       console.warn(`[PRD Generation] AI generation error: ${error instanceof Error ? error.message : String(error)}. Using rule-based fallback.`);
-      return this.generate(parsed);
+      return await this.generate(parsed);
     }
   }
 
@@ -180,7 +234,7 @@ export class PrdGenerator {
    * @returns Generated PRD structure
    * @throws StructureDetectionError if large document produces insufficient phases
    */
-  generate(parsed: ParsedRequirements): PRD {
+  async generate(parsed: ParsedRequirements): Promise<PRD> {
     const now = new Date().toISOString();
 
     // Detect document structure to determine correct phase sections
@@ -199,7 +253,7 @@ export class PrdGenerator {
     );
 
     // Use detected phase sections instead of raw top-level sections
-    const phases = this.generatePhases(structure.phaseSections, parsed);
+    const phases = await this.generatePhases(structure.phaseSections, parsed);
     const metadata = this.calculateMetadata(phases);
 
     // Use detected title if available, otherwise fall back to parsed title
@@ -220,73 +274,79 @@ export class PrdGenerator {
   /**
    * Generates phases from top-level sections.
    */
-  generatePhases(sections: ParsedSection[], parsed: ParsedRequirements): Phase[] {
+  async generatePhases(sections: ParsedSection[], parsed: ParsedRequirements): Promise<Phase[]> {
     const now = new Date().toISOString();
-    return sections.map((section, index) => {
-      const phaseId = this.generatePhaseId(index + 1);
-      const tasks = this.generateTasks(phaseId, section, index + 1, parsed);
-      const acceptanceCriteria = this.extractAcceptanceCriteria(section.content, phaseId);
-      const testPlan = this.createTestPlan(section.content);
-      const sourceRefs = this.generateSourceRefs(section, parsed);
+    const phases = await Promise.all(
+      sections.map(async (section, index) => {
+        const phaseId = this.generatePhaseId(index + 1);
+        const tasks = await this.generateTasks(phaseId, section, index + 1, parsed);
+        const acceptanceCriteria = this.extractAcceptanceCriteria(section.content, phaseId);
+        const testPlan = await this.createTestPlan(section.content);
+        const sourceRefs = this.generateSourceRefs(section, parsed);
 
-      return {
-        id: phaseId,
-        title: section.title,
-        description: section.content,
-        status: 'pending' as ItemStatus,
-        priority: 1,
-        acceptanceCriteria,
-        testPlan,
-        tasks,
-        sourceRefs,
-        createdAt: now,
-        notes: '',
-      };
-    });
+        return {
+          id: phaseId,
+          title: section.title,
+          description: section.content,
+          status: 'pending' as ItemStatus,
+          priority: 1,
+          acceptanceCriteria,
+          testPlan,
+          tasks,
+          sourceRefs,
+          createdAt: now,
+          notes: '',
+        };
+      })
+    );
+    return phases;
   }
 
   /**
    * Generates tasks from a section's children.
    */
-  generateTasks(phaseId: string, section: ParsedSection, phaseIndex: number, parsed: ParsedRequirements): Task[] {
+  async generateTasks(phaseId: string, section: ParsedSection, phaseIndex: number, parsed: ParsedRequirements): Promise<Task[]> {
     const now = new Date().toISOString();
     const taskSections = section.children.slice(0, this.maxTasksPerPhase);
 
-    return taskSections.map((taskSection, taskIndex) => {
-      const taskId = this.generateTaskId(phaseIndex, taskIndex + 1);
-      const subtasks = this.generateSubtasks(taskId, taskSection.content, taskIndex + 1, phaseIndex, parsed, section);
-      const acceptanceCriteria = this.extractAcceptanceCriteria(taskSection.content, taskId);
-      const testPlan = this.createTestPlan(taskSection.content);
-      const sourceRefs = this.generateSourceRefs(taskSection, parsed, section);
+    const tasks = await Promise.all(
+      taskSections.map(async (taskSection, taskIndex) => {
+        const taskId = this.generateTaskId(phaseIndex, taskIndex + 1);
+        const subtasks = await this.generateSubtasks(taskId, taskSection.content, taskIndex + 1, phaseIndex, parsed, section);
+        const acceptanceCriteria = this.extractAcceptanceCriteria(taskSection.content, taskId);
+        const testPlan = await this.createTestPlan(taskSection.content);
+        const sourceRefs = this.generateSourceRefs(taskSection, parsed, section);
 
-      return {
-        id: taskId,
-        phaseId,
-        title: taskSection.title,
-        description: taskSection.content,
-        status: 'pending' as ItemStatus,
-        priority: 1,
-        acceptanceCriteria,
-        testPlan,
-        subtasks,
-        sourceRefs,
-        createdAt: now,
-        notes: '',
-      };
-    });
+        return {
+          id: taskId,
+          phaseId,
+          title: taskSection.title,
+          description: taskSection.content,
+          status: 'pending' as ItemStatus,
+          priority: 1,
+          acceptanceCriteria,
+          testPlan,
+          subtasks,
+          sourceRefs,
+          createdAt: now,
+          notes: '',
+        };
+      })
+    );
+    return tasks;
   }
 
   /**
    * Generates subtasks by breaking task content into smaller chunks.
    */
-  generateSubtasks(
+  async generateSubtasks(
     taskId: string,
     content: string,
     taskIndex: number,
     phaseIndex: number,
     parsed: ParsedRequirements,
     parentSection: ParsedSection
-  ): Subtask[] {
+  ): Promise<Subtask[]> {
     const now = new Date().toISOString();
     const lines = content.split('\n').filter(line => line.trim().length > 0);
     
@@ -302,29 +362,32 @@ export class PrdGenerator {
     // Limit to maxSubtasksPerTask
     const limitedChunks = chunks.slice(0, this.maxSubtasksPerTask);
 
-    return limitedChunks.map((chunk, subtaskIndex) => {
-      const subtaskId = this.generateSubtaskId(phaseIndex, taskIndex, subtaskIndex + 1);
-      const acceptanceCriteria = this.extractAcceptanceCriteria(chunk, subtaskId);
-      const testPlan = this.createTestPlan(chunk);
-      // For subtasks, use the parent section (task section) as the source reference
-      const sourceRefs = this.generateSourceRefs(parentSection, parsed);
+    const subtasks = await Promise.all(
+      limitedChunks.map(async (chunk, subtaskIndex) => {
+        const subtaskId = this.generateSubtaskId(phaseIndex, taskIndex, subtaskIndex + 1);
+        const acceptanceCriteria = this.extractAcceptanceCriteria(chunk, subtaskId);
+        const testPlan = await this.createTestPlan(chunk);
+        // For subtasks, use the parent section (task section) as the source reference
+        const sourceRefs = this.generateSourceRefs(parentSection, parsed);
 
-      return {
-        id: subtaskId,
-        taskId,
-        title: `Subtask ${subtaskIndex + 1}`,
-        description: chunk,
-        status: 'pending' as ItemStatus,
-        priority: 1,
-        acceptanceCriteria,
-        testPlan,
-        iterations: [],
-        maxIterations: 3,
-        sourceRefs,
-        createdAt: now,
-        notes: '',
-      };
-    });
+        return {
+          id: subtaskId,
+          taskId,
+          title: `Subtask ${subtaskIndex + 1}`,
+          description: chunk,
+          status: 'pending' as ItemStatus,
+          priority: 1,
+          acceptanceCriteria,
+          testPlan,
+          iterations: [],
+          maxIterations: 3,
+          sourceRefs,
+          createdAt: now,
+          notes: '',
+        };
+      })
+    );
+    return subtasks;
   }
 
   /**
@@ -404,14 +467,14 @@ export class PrdGenerator {
   }
 
   /**
-   * Creates a default test plan from content.
-   * Initially returns empty test plan (can be enhanced later).
+   * Creates a test plan from content using TestPlanGenerator.
+   * Detects project type and generates appropriate test commands.
    */
-  createTestPlan(_content: string): TestPlan {
-    return {
-      commands: [],
-      failFast: true,
-    };
+  async createTestPlan(_content: string, subtask?: Subtask): Promise<TestPlan> {
+    const projectPath = this.config?.project.workingDirectory ?? '.';
+    const generator = new TestPlanGenerator(projectPath);
+    const detected = await generator.detectProject(projectPath);
+    return generator.generateTestPlan(detected, subtask);
   }
 
   /**

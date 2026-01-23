@@ -452,6 +452,170 @@ codex --non-interactive --model <model> --approval-mode full-auto
 claude --print --model <model> --output-format stream-json --prompt <prompt>
 ```
 
+### Gemini
+```bash
+gemini -p "prompt" --output-format json --approval-mode yolo [--model <model>]
+```
+
+**Key capabilities:**
+- `gemini -p "prompt"` or `gemini --prompt "prompt"` - Headless mode with prompt
+- `--output-format json` - Machine-readable JSON output
+- `--output-format stream-json` - Streaming JSONL events (real-time)
+- `--approval-mode yolo` or `--yolo` - Auto-approve all tool calls
+- `--approval-mode auto_edit` - Auto-approve edit tools only
+- `--approval-mode plan` - Read-only mode (requires `experimental.plan: true`)
+- `--model <model>` or `-m <model>` - Model selection
+- `--include-directories <dir1,dir2>` - Multi-directory workspace support
+- `--debug` or `-d` - Debug mode
+- `--sandbox` or `-s` - Sandbox execution environment
+- `--resume [session-id]` - Resume previous session (we spawn fresh, so not used)
+- Reads GEMINI.md from project root and ancestors for hierarchical context
+- Supports MCP servers via configuration
+- `/model` command for interactive model selection
+- `/memory` commands for managing GEMINI.md context files
+
+**Authentication:**
+- OAuth via `gemini` first run (interactive)
+- `GEMINI_API_KEY` environment variable (headless)
+- Vertex AI via `GOOGLE_APPLICATION_CREDENTIALS` or `gcloud auth`
+- `GOOGLE_CLOUD_PROJECT` for Vertex AI
+
+**Output formats:**
+- `text` (default) - Human-readable output
+- `json` - Single JSON object with `{response, stats, error?}`
+- `stream-json` - JSONL events with types: `init`, `message`, `tool_use`, `tool_result`, `error`, `result`
+
+**Session management:**
+- Automatic session saving to `~/.gemini/tmp/<project_hash>/chats/`
+- `--resume` to continue previous session
+- `--list-sessions` to view available sessions
+- `--delete-session <id>` to remove sessions
+- Note: Puppet Master spawns fresh processes, so session resume is not used
+
+### GitHub Copilot
+```bash
+copilot -p "prompt" --allow-all-tools [--allow-all-paths] [--allow-all-urls] [--allow-url <domain>] [--silent] [--stream off]
+```
+
+**Key capabilities:**
+- `copilot -p "prompt"` or `copilot --prompt "prompt"` - Programmatic mode with prompt
+- `copilot` (no flags) - Interactive mode (default)
+- `--allow-all-tools` - Auto-approve all tools without manual approval
+- `--allow-tool <spec>` - Allow specific tool without approval
+- `--deny-tool <spec>` - Prevent specific tool usage (takes precedence)
+- Tool specifications: `'shell(COMMAND)'`, `'write'`, `'MCP_SERVER_NAME'`
+- Model selection: `/model` command (interactive only, not programmatic)
+- Default model: Claude Sonnet 4.5
+- Output format: Text-based (no JSON output)
+
+**Keyboard shortcuts:**
+- Global: `@` (mention files), `Esc` (cancel), `!` (shell bypass), `Ctrl+C` (cancel/exit), `Ctrl+D` (shutdown), `Ctrl+L` (clear screen)
+- Timeline: `Ctrl+O` (expand/collapse all), `Ctrl+R` (expand/collapse recent)
+- Motion: `Ctrl+A/E` (beginning/end of line), `Ctrl+H/W/U/K` (delete operations), `Meta+←/→` (word movement), `↑/↓` (command history)
+
+**Slash commands (interactive mode):**
+- `/add-dir <directory>` - Add directory to allowed list for file access
+- `/agent` - Browse and select from available agents
+- `/clear`, `/new` - Clear conversation history
+- `/compact` - Summarize conversation history to reduce context usage
+- `/context` - Show context window token usage and visualization
+- `/cwd`, `/cd [directory]` - Change working directory or show current
+- `/delegate <prompt>` - Delegate changes to remote repository with AI-generated PR
+- `/exit`, `/quit` - Exit the CLI
+- `/share [file|gist] [path]` - Share session to markdown file or GitHub gist
+- `/feedback` - Provide feedback about the CLI
+- `/help` - Show help for interactive commands
+- `/list-dirs` - Display all allowed directories for file access
+- `/login` - Log in to Copilot
+- `/logout` - Log out of Copilot
+- `/mcp [show|add|edit|delete|disable|enable] [server-name]` - Manage MCP server configuration
+- `/model`, `/models [model]` - Select AI model to use
+- `/plan [prompt]` - Create an implementation plan before coding
+- `/plugin [marketplace|install|uninstall|update|list] [args...]` - Manage plugins
+- `/rename <name>` - Rename the current session
+- `/reset-allowed-tools` - Reset the list of allowed tools
+- `/resume [sessionId]` - Switch to a different session
+- `/review [prompt]` - Run code review agent to analyze changes
+- `/session [checkpoints [n]|files|plan|rename <name>]` - Show session info and workspace summary
+- `/skills [list|info|add|remove|reload] [args...]` - Manage skills
+- `/terminal-setup` - Configure terminal for multiline input support
+- `/theme [show|set|list] [auto|dark|light]` - View or configure terminal theme
+- `/usage` - Display session usage metrics and statistics
+- `/user [show|list|switch]` - Manage GitHub user list
+
+**Approval options:**
+- `--allow-all-tools` - Allow all tools automatically
+- `--allow-tool 'shell(git)'` - Allow specific shell command
+- `--allow-tool 'write'` - Allow file modification tools
+- `--allow-tool 'My-MCP-Server'` - Allow all tools from MCP server
+- `--deny-tool 'shell(rm)'` - Prevent specific tool (takes precedence)
+
+**Security:**
+- Trusted directories: `trusted_folders` in `~/.copilot/config.json`
+- Directory trust prompt on first launch
+- Path permissions: Control directory/file access (default: current working directory, subdirectories, system temp)
+  - `--allow-all-paths` - Disable path verification (documented flag)
+  - Path detection limitations: Complex shell constructs, custom env vars, symlinks
+- URL permissions: Control external URL access (default: all require approval)
+  - `--allow-all-urls` - Disable URL verification
+  - `--allow-url <domain>` - Pre-approve specific domain (e.g., `--allow-url github.com`)
+  - URL detection limitations: URLs in file contents, obfuscated URLs, HTTP/HTTPS treated separately
+- Tool approval system for file modifications and shell commands
+- Risk mitigation: Use in restricted environments (VM, container)
+
+**Context files (custom instructions):**
+Copilot respects instructions from these locations (in order):
+- `CLAUDE.md` (in project root and cwd)
+- `GEMINI.md` (in project root and cwd)
+- `AGENTS.md` (in git root & cwd)
+- `.github/instructions/**/*.instructions.md` (in git root & cwd)
+- `.github/copilot-instructions.md` (repository-wide)
+- `$HOME/.copilot/copilot-instructions.md` (user-level)
+- `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` (additional directories via env var)
+
+**Default custom agents:**
+- Explore: Quick codebase analysis without adding to main context
+- Task: Execute commands (tests, builds) with brief summaries on success
+- Plan: Analyze dependencies and structure to create implementation plans
+- Code-review: Review changes focusing on genuine issues, minimizing noise
+
+**Context management:**
+- `/usage` - View session statistics (premium requests, duration, lines edited, token usage per model)
+- `/context` - Visual overview of current token usage
+- `/compact` - Manually compress conversation history to free context space
+- Automatic compression: Triggers at 95% of token limit
+- Warning: Displayed when less than 20% of token limit remaining
+
+**File mentions and shell:**
+- `@path/to/file` - Include file contents in prompt context
+- `!command` - Execute shell command directly, bypassing Copilot
+
+**Customization:**
+- Custom instructions for project context
+- MCP servers for additional data sources and tools
+- Custom agents for specialized tasks
+- Hooks for validation, logging, security scanning
+- Skills for enhanced specialized task performance
+
+**Authentication:**
+- GitHub authentication via `/login` command
+- `GH_TOKEN` or `GITHUB_TOKEN` environment variable with "Copilot Requests" permission
+- Requires GitHub Copilot Pro, Pro+, Business, or Enterprise plan
+- Organization policy must enable Copilot CLI
+
+**Model usage:**
+- Default: Claude Sonnet 4.5 (GitHub reserves right to change)
+- Change via `/model` slash command (interactive mode)
+- Premium requests quota: Each prompt reduces monthly quota by model multiplier
+- Model availability depends on subscription tier and region
+
+**Command-line options:**
+- `--resume` - Cycle through and resume local and remote interactive sessions
+- `--continue` - Quickly resume the most recently closed local session
+- `--agent=<agent-name>` - Specify custom agent to use (e.g., `--agent=refactor-agent`)
+
+**Note:** Flag `--allow-all-paths` is documented in official docs for disabling path verification. Flags `--silent` and `--stream off` are used in our implementation but may be undocumented features.
+
 ---
 
 ## Completion Signals

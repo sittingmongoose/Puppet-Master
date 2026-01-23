@@ -18,6 +18,10 @@ import type {
   LoggingConfig,
   CliPathsConfig,
   AgentsEnforcementConfig,
+  ExecutionConfig,
+  RateLimitConfig,
+  PlatformRateLimits,
+  CheckpointingConfig,
 } from '../types/config.js';
 
 /**
@@ -87,6 +91,21 @@ export function validateConfig(config: unknown): asserts config is PuppetMasterC
 
   // Validate cliPaths
   validateCliPathsConfig(c.cliPaths, ['cliPaths']);
+
+  // Validate startChain (optional)
+  if ('startChain' in c) {
+    validateStartChainConfig(c.startChain, ['startChain']);
+  }
+
+  // Validate execution (optional)
+  if ('execution' in c) {
+    validateExecutionConfig(c.execution, ['execution']);
+  }
+
+  // Validate checkpointing (optional)
+  if ('checkpointing' in c) {
+    validateCheckpointingConfig(c.checkpointing, ['checkpointing']);
+  }
 }
 
 function validateProjectConfig(value: unknown, path: string[]): asserts value is { name: string; workingDirectory: string } {
@@ -139,7 +158,7 @@ function validateTierConfig(value: unknown, path: string[]): asserts value is Ti
   }
 }
 
-function validateTiersConfig(value: unknown, path: string[]): asserts value is { phase: TierConfig; task: TierConfig; subtask: TierConfig; iteration: TierConfig } {
+function validateTiersConfig(value: unknown, path: string[]): asserts value is { phase: TierConfig; task: TierConfig; subtask: TierConfig; iteration: TierConfig; gate_review?: TierConfig } {
   if (typeof value !== 'object' || value === null) {
     throw new ConfigValidationError('tiers must be an object', path);
   }
@@ -151,6 +170,11 @@ function validateTiersConfig(value: unknown, path: string[]): asserts value is {
       throw new ConfigValidationError(`Missing required tier: ${key}`, [...path, key]);
     }
     validateTierConfig(v[key], [...path, key]);
+  }
+
+  // Validate optional gate_review tier config
+  if ('gate_review' in v) {
+    validateTierConfig(v.gate_review, [...path, 'gate_review']);
   }
 }
 
@@ -279,6 +303,35 @@ function validatePlatformBudgets(value: unknown, path: string[]): asserts value 
   }
 }
 
+function validateRateLimitConfig(value: unknown, path: string[]): asserts value is RateLimitConfig {
+  if (typeof value !== 'object' || value === null) {
+    throw new ConfigValidationError('rate limit config must be an object', path);
+  }
+  const v = value as Record<string, unknown>;
+
+  if (typeof v.callsPerMinute !== 'number' || v.callsPerMinute < 1) {
+    throw new ConfigValidationError('rate limit callsPerMinute must be a positive number', [...path, 'callsPerMinute']);
+  }
+  if (typeof v.cooldownMs !== 'number' || v.cooldownMs < 0) {
+    throw new ConfigValidationError('rate limit cooldownMs must be a non-negative number', [...path, 'cooldownMs']);
+  }
+}
+
+function validatePlatformRateLimits(value: unknown, path: string[]): asserts value is PlatformRateLimits {
+  if (typeof value !== 'object' || value === null) {
+    throw new ConfigValidationError('rate limits must be an object', path);
+  }
+  const v = value as Record<string, unknown>;
+
+  const platforms: Platform[] = ['claude', 'codex', 'cursor', 'gemini', 'copilot', 'antigravity'];
+  for (const platform of platforms) {
+    if (!(platform in v)) {
+      throw new ConfigValidationError(`Missing required rate limit for platform: ${platform}`, [...path, platform]);
+    }
+    validateRateLimitConfig(v[platform], [...path, platform]);
+  }
+}
+
 function validateBudgetEnforcementConfig(value: unknown, path: string[]): asserts value is BudgetEnforcementConfig {
   if (typeof value !== 'object' || value === null) {
     throw new ConfigValidationError('budgetEnforcement must be an object', path);
@@ -293,6 +346,12 @@ function validateBudgetEnforcementConfig(value: unknown, path: string[]): assert
   }
   if (typeof v.notifyOnFallback !== 'boolean') {
     throw new ConfigValidationError('budgetEnforcement.notifyOnFallback must be a boolean', [...path, 'notifyOnFallback']);
+  }
+  if ('softLimitPercent' in v && (typeof v.softLimitPercent !== 'number' || v.softLimitPercent < 0 || v.softLimitPercent > 100)) {
+    throw new ConfigValidationError('budgetEnforcement.softLimitPercent must be a number between 0 and 100', [...path, 'softLimitPercent']);
+  }
+  if ('hardLimitPercent' in v && (typeof v.hardLimitPercent !== 'number' || v.hardLimitPercent < 0 || v.hardLimitPercent > 100)) {
+    throw new ConfigValidationError('budgetEnforcement.hardLimitPercent must be a number between 0 and 100', [...path, 'hardLimitPercent']);
   }
 }
 
@@ -310,6 +369,92 @@ function validateLoggingConfig(value: unknown, path: string[]): asserts value is
   }
 }
 
+function validateStartChainStepConfig(value: unknown, path: string[]): void {
+  if (typeof value !== 'object' || value === null) {
+    throw new ConfigValidationError('start chain step config must be an object', path);
+  }
+  const v = value as Record<string, unknown>;
+
+  if ('enabled' in v && typeof v.enabled !== 'boolean') {
+    throw new ConfigValidationError('step.enabled must be a boolean', [...path, 'enabled']);
+  }
+  if ('platform' in v && !isPlatform(v.platform)) {
+    throw new ConfigValidationError('step.platform must be a valid platform', [...path, 'platform']);
+  }
+  if ('model' in v && typeof v.model !== 'string') {
+    throw new ConfigValidationError('step.model must be a string', [...path, 'model']);
+  }
+}
+
+function validateStartChainConfig(value: unknown, path: string[]): void {
+  if (typeof value !== 'object' || value === null) {
+    throw new ConfigValidationError('startChain must be an object', path);
+  }
+  const v = value as Record<string, unknown>;
+
+  // Validate inventory
+  if ('inventory' in v) {
+    validateStartChainStepConfig(v.inventory, [...path, 'inventory']);
+  }
+
+  // Validate requirementsInterview
+  if ('requirementsInterview' in v) {
+    validateStartChainStepConfig(v.requirementsInterview, [...path, 'requirementsInterview']);
+    const ri = v.requirementsInterview as Record<string, unknown>;
+    if ('maxQuestions' in ri && (typeof ri.maxQuestions !== 'number' || ri.maxQuestions < 1)) {
+      throw new ConfigValidationError('requirementsInterview.maxQuestions must be a positive number', [...path, 'requirementsInterview', 'maxQuestions']);
+    }
+    if ('allowUnansweredCritical' in ri && typeof ri.allowUnansweredCritical !== 'boolean') {
+      throw new ConfigValidationError('requirementsInterview.allowUnansweredCritical must be a boolean', [...path, 'requirementsInterview', 'allowUnansweredCritical']);
+    }
+  }
+
+  // Validate prd
+  if ('prd' in v) {
+    validateStartChainStepConfig(v.prd, [...path, 'prd']);
+  }
+
+  // Validate architecture
+  if ('architecture' in v) {
+    validateStartChainStepConfig(v.architecture, [...path, 'architecture']);
+    const arch = v.architecture as Record<string, unknown>;
+    if ('includeTestStrategy' in arch && typeof arch.includeTestStrategy !== 'boolean') {
+      throw new ConfigValidationError('architecture.includeTestStrategy must be a boolean', [...path, 'architecture', 'includeTestStrategy']);
+    }
+  }
+
+  // Validate validation
+  if ('validation' in v) {
+    validateStartChainStepConfig(v.validation, [...path, 'validation']);
+  }
+
+  // Validate gapFill
+  if ('gapFill' in v) {
+    validateStartChainStepConfig(v.gapFill, [...path, 'gapFill']);
+    const gf = v.gapFill as Record<string, unknown>;
+    if ('maxRepairPasses' in gf && (typeof gf.maxRepairPasses !== 'number' || gf.maxRepairPasses < 0)) {
+      throw new ConfigValidationError('gapFill.maxRepairPasses must be a non-negative number', [...path, 'gapFill', 'maxRepairPasses']);
+    }
+  }
+
+  // Validate coverage
+  if ('coverage' in v) {
+    // coverage has StartChainStepConfig properties AND CoverageValidationConfig properties
+    const cov = v.coverage as Record<string, unknown>;
+    // Check basic step config fields manually to avoid type confusion or just pass to helper
+    validateStartChainStepConfig(v.coverage, [...path, 'coverage']);
+    
+    // Check specific coverage fields
+    if ('minCoverageRatio' in cov && (typeof cov.minCoverageRatio !== 'number' || cov.minCoverageRatio < 0 || cov.minCoverageRatio > 1)) {
+      throw new ConfigValidationError('coverage.minCoverageRatio must be between 0 and 1', [...path, 'coverage', 'minCoverageRatio']);
+    }
+    if ('largeDocThreshold' in cov && (typeof cov.largeDocThreshold !== 'number' || cov.largeDocThreshold < 0)) {
+      throw new ConfigValidationError('coverage.largeDocThreshold must be a non-negative number', [...path, 'coverage', 'largeDocThreshold']);
+    }
+    // ... other coverage fields validation ...
+  }
+}
+
 function validateCliPathsConfig(value: unknown, path: string[]): asserts value is CliPathsConfig {
   if (typeof value !== 'object' || value === null) {
     throw new ConfigValidationError('cliPaths must be an object', path);
@@ -324,6 +469,43 @@ function validateCliPathsConfig(value: unknown, path: string[]): asserts value i
     if (typeof v[platform] !== 'string') {
       throw new ConfigValidationError(`cliPaths.${platform} must be a string`, [...path, platform]);
     }
+  }
+}
+
+function validateExecutionConfig(value: unknown, path: string[]): asserts value is ExecutionConfig {
+  if (typeof value !== 'object' || value === null) {
+    throw new ConfigValidationError('execution must be an object', path);
+  }
+  const v = value as Record<string, unknown>;
+
+  // killAgentOnFailure is optional boolean
+  if ('killAgentOnFailure' in v) {
+    if (typeof v.killAgentOnFailure !== 'boolean') {
+      throw new ConfigValidationError('execution.killAgentOnFailure must be a boolean', [...path, 'killAgentOnFailure']);
+    }
+  }
+}
+
+function validateCheckpointingConfig(value: unknown, path: string[]): asserts value is CheckpointingConfig {
+  if (typeof value !== 'object' || value === null) {
+    throw new ConfigValidationError('checkpointing must be an object', path);
+  }
+  const v = value as Record<string, unknown>;
+
+  if (typeof v.enabled !== 'boolean') {
+    throw new ConfigValidationError('checkpointing.enabled must be a boolean', [...path, 'enabled']);
+  }
+  if (typeof v.interval !== 'number' || v.interval < 1) {
+    throw new ConfigValidationError('checkpointing.interval must be a positive number', [...path, 'interval']);
+  }
+  if (typeof v.maxCheckpoints !== 'number' || v.maxCheckpoints < 1) {
+    throw new ConfigValidationError('checkpointing.maxCheckpoints must be a positive number', [...path, 'maxCheckpoints']);
+  }
+  if (typeof v.checkpointOnSubtaskComplete !== 'boolean') {
+    throw new ConfigValidationError('checkpointing.checkpointOnSubtaskComplete must be a boolean', [...path, 'checkpointOnSubtaskComplete']);
+  }
+  if (typeof v.checkpointOnShutdown !== 'boolean') {
+    throw new ConfigValidationError('checkpointing.checkpointOnShutdown must be a boolean', [...path, 'checkpointOnShutdown']);
   }
 }
 

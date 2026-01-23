@@ -24,6 +24,9 @@ import type { CapabilityProbeResult } from '../types/capabilities.js';
  * Provides minimal implementations of abstract methods for testing.
  */
 class TestPlatformRunner extends BasePlatformRunner {
+  protected getCommand(): string {
+    return 'test-command';
+  }
   readonly platform: Platform = 'cursor';
 
   protected async spawn(
@@ -356,6 +359,10 @@ describe('BasePlatformRunner', () => {
         readonly platform: Platform = 'cursor';
         lastProc: ChildProcess | null = null;
 
+        protected getCommand(): string {
+          return 'test-command';
+        }
+
         protected async spawn(_request: ExecutionRequest): Promise<ChildProcess> {
           const stdoutStream = new Readable({
             read() {
@@ -448,6 +455,10 @@ describe('BasePlatformRunner', () => {
       class HangingHardTimeoutRunner extends BasePlatformRunner {
         readonly platform: Platform = 'cursor';
         lastProc: ChildProcess | null = null;
+
+        protected getCommand(): string {
+          return 'test-command';
+        }
 
         protected async spawn(_request: ExecutionRequest): Promise<ChildProcess> {
           const stdoutStream = new Readable({
@@ -798,6 +809,10 @@ describe('BasePlatformRunner', () => {
     it('should emit error events on errors', async () => {
       // Create a runner that throws in spawn
       class ErrorRunner extends TestPlatformRunner {
+        protected getCommand(): string {
+          return 'test-command';
+        }
+
         protected async spawn(): Promise<ChildProcess> {
           throw new Error('Spawn failed');
         }

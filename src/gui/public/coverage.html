@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Inline script to prevent dark mode flash -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate icon" href="/favicon.ico">
+  <title>RWM Puppet Master - Coverage Report</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <a href="/" class="logo-link">
+          <h1 class="logo">RWM Puppet Master</h1>
+        </a>
+        <nav class="main-navigation">
+          <a href="/" class="nav-link" data-page="dashboard">DASHBOARD</a>
+          <a href="/projects" class="nav-link" data-page="projects">PROJECTS</a>
+          <a href="/wizard" class="nav-link" data-page="wizard">WIZARD</a>
+          <a href="/config" class="nav-link" data-page="config">CONFIG</a>
+          <a href="/settings" class="nav-link" data-page="settings">SETTINGS</a>
+          <a href="/doctor" class="nav-link" data-page="doctor">DOCTOR</a>
+          <a href="/tiers" class="nav-link" data-page="tiers">TIERS</a>
+          <a href="/evidence" class="nav-link" data-page="evidence">EVIDENCE</a>
+          <a href="/coverage" class="nav-link active" data-page="coverage">COVERAGE</a>
+          <a href="/history" class="nav-link" data-page="history">HISTORY</a>
+        </nav>
+      </div>
+      <div class="header-right">
+        <div class="header-actions">
+          <button class="icon-btn" id="refresh-btn" aria-label="Refresh coverage report">REFRESH</button>
+          <button class="icon-btn" id="dark-mode-toggle" aria-label="Toggle dark mode">
+            <svg class="dark-mode-icon moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg class="dark-mode-icon sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Title Panel -->
+    <section class="panel">
+      <h1 class="page-title">Coverage Report</h1>
+      <p class="page-description">View requirements coverage metrics, section coverage status, and requirement-to-PRD mappings</p>
+    </section>
+
+    <!-- Coverage Gauge Panel -->
+    <section class="panel">
+      <h2 class="panel-title">Overall Coverage</h2>
+      <div class="coverage-gauge-container">
+        <div class="coverage-gauge" id="coverage-gauge">
+          <svg class="coverage-gauge-svg" viewBox="0 0 200 200">
+            <circle class="coverage-gauge-bg" cx="100" cy="100" r="85" fill="none" stroke="currentColor" stroke-width="20" opacity="0.2"></circle>
+            <circle class="coverage-gauge-progress" cx="100" cy="100" r="85" fill="none" stroke="currentColor" stroke-width="20" 
+                    stroke-dasharray="534" stroke-dashoffset="534" stroke-linecap="round" transform="rotate(-90 100 100)"></circle>
+          </svg>
+          <div class="coverage-gauge-text">
+            <span class="coverage-percentage" id="coverage-percentage">0%</span>
+            <span class="coverage-label">Coverage</span>
+          </div>
+        </div>
+        <div class="coverage-stats" id="coverage-stats">
+          <div class="coverage-stat">
+            <span class="coverage-stat-label">Sections Covered</span>
+            <span class="coverage-stat-value" id="sections-covered">-</span>
+            <span class="coverage-stat-total" id="sections-total">/ -</span>
+          </div>
+          <div class="coverage-stat">
+            <span class="coverage-stat-label">Missing Requirements</span>
+            <span class="coverage-stat-value" id="missing-count">-</span>
+          </div>
+          <div class="coverage-stat">
+            <span class="coverage-stat-label">Phases</span>
+            <span class="coverage-stat-value" id="phases-count">-</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sections List Panel -->
+    <section class="panel">
+      <div class="panel-header">
+        <h2 class="panel-title">Requirement Sections</h2>
+        <div class="coverage-filter">
+          <button class="filter-btn active" data-filter="all" id="filter-all">All</button>
+          <button class="filter-btn" data-filter="covered" id="filter-covered">Covered</button>
+          <button class="filter-btn" data-filter="uncovered" id="filter-uncovered">Uncovered</button>
+        </div>
+      </div>
+      <div class="sections-list" id="sections-list">
+        <div class="loading-message">Loading sections...</div>
+      </div>
+    </section>
+
+    <!-- Requirement Mapping Panel -->
+    <section class="panel">
+      <h2 class="panel-title">Requirement → PRD Mapping</h2>
+      <div class="mapping-tree" id="mapping-tree">
+        <div class="loading-message">Loading mapping...</div>
+      </div>
+    </section>
+
+    <!-- Missing Requirements Panel -->
+    <section class="panel" id="missing-requirements-panel" style="display: none;">
+      <h2 class="panel-title">Missing Requirements</h2>
+      <div class="missing-requirements-list" id="missing-requirements-list">
+        <!-- Populated by JavaScript -->
+      </div>
+    </section>
+
+    <!-- Errors and Warnings Panel -->
+    <section class="panel" id="validation-panel" style="display: none;">
+      <h2 class="panel-title">Validation Status</h2>
+      <div class="validation-content" id="validation-content">
+        <!-- Populated by JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/navigation.js"></script>
+  <script type="module" src="/js/coverage.js"></script>
+</body>
+</html>

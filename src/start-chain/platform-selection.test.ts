@@ -28,7 +28,7 @@ describe('Start Chain Platform Selection (P1-T04)', () => {
     config.tiers.phase.model = 'claude-3-opus-20240229';
 
     usageTracker = new UsageTracker('.puppet-master/usage/usage.jsonl');
-    quotaManager = new QuotaManager(usageTracker, config.budgets);
+    quotaManager = new QuotaManager(usageTracker, config.budgets, config.budgetEnforcement);
     platformRegistry = PlatformRegistry.createDefault(config);
 
     // Create and register mock runner

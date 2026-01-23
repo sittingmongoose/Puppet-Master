@@ -325,7 +325,7 @@ describe('RequirementsInterviewer', () => {
 
       const config = getDefaultConfig();
       const usageTracker = new UsageTracker(':memory:');
-      const quotaManager = new QuotaManager(usageTracker, config.budgets);
+      const quotaManager = new QuotaManager(usageTracker, config.budgets, config.budgetEnforcement);
       const platformRegistry = PlatformRegistry.createDefault(config);
       platformRegistry.register('claude', mockRunner);
 
@@ -366,7 +366,7 @@ describe('RequirementsInterviewer', () => {
 
       const config = getDefaultConfig();
       const usageTracker = new UsageTracker(':memory:');
-      const quotaManager = new QuotaManager(usageTracker, config.budgets);
+      const quotaManager = new QuotaManager(usageTracker, config.budgets, config.budgetEnforcement);
       const platformRegistry = PlatformRegistry.createDefault(config);
       platformRegistry.register('claude', mockRunner);
 
@@ -406,7 +406,7 @@ describe('RequirementsInterviewer', () => {
 
       const config = getDefaultConfig();
       const usageTracker = new UsageTracker(':memory:');
-      const quotaManager = new QuotaManager(usageTracker, config.budgets);
+      const quotaManager = new QuotaManager(usageTracker, config.budgets, config.budgetEnforcement);
       const platformRegistry = PlatformRegistry.createDefault(config);
       platformRegistry.register('claude', mockRunner);
 
@@ -507,7 +507,7 @@ describe('RequirementsInterviewer', () => {
 
       const config = getDefaultConfig();
       const usageTracker = new UsageTracker(':memory:');
-      const quotaManager = new QuotaManager(usageTracker, config.budgets);
+      const quotaManager = new QuotaManager(usageTracker, config.budgets, config.budgetEnforcement);
       const platformRegistry = PlatformRegistry.createDefault(config);
       platformRegistry.register('claude', mockRunner);
 
@@ -530,6 +530,377 @@ describe('RequirementsInterviewer', () => {
 
       expect(result.questions.length).toBe(1);
       expect(result.questions[0].id).toBe('Q-001');
+    });
+  });
+
+  describe('out-of-scope detection (FIX 3)', () => {
+    it('should detect explicit "out of scope" statements', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Security', 'Authentication is out of scope for this project')],
+        'Test Project',
+        'Security: Authentication is out of scope for this project'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const securityCoverage = result.coverageChecklist.find(
+        c => c.category === 'security_secrets'
+      );
+      expect(securityCoverage?.status).toBe('out_of_scope');
+      expect(securityCoverage?.rationale).toContain('out of scope');
+    });
+
+    it('should detect "n/a" and "not applicable" statements', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Deployment', 'Deployment configuration is N/A for this phase')],
+        'Test Project',
+        'Deployment: Deployment configuration is N/A for this phase'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const deploymentCoverage = result.coverageChecklist.find(
+        c => c.category === 'deployment_environments'
+      );
+      expect(deploymentCoverage?.status).toBe('out_of_scope');
+    });
+
+    it('should detect "future version" statements', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Testing', 'Automated testing will be added in a future version')],
+        'Test Project',
+        'Testing: Automated testing will be added in a future version'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const testingCoverage = result.coverageChecklist.find(
+        c => c.category === 'testing_verification'
+      );
+      expect(testingCoverage?.status).toBe('out_of_scope');
+    });
+
+    it('should detect "deferred" statements', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Monitoring', 'Metrics and monitoring are deferred to phase 2')],
+        'Test Project',
+        'Monitoring: Metrics and monitoring are deferred to phase 2'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const observabilityCoverage = result.coverageChecklist.find(
+        c => c.category === 'observability'
+      );
+      expect(observabilityCoverage?.status).toBe('out_of_scope');
+    });
+  });
+
+  describe('ambiguity detection (FIX 4)', () => {
+    it('should detect uncertain language ("maybe", "possibly")', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Features', 'We maybe need caching. It could possibly help. Users might need this feature.')],
+        'Test Project',
+        'Features: We maybe need caching. It could possibly help. Users might need this feature.'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const ambiguityQuestion = result.questions.find(q => q.id.startsWith('Q-AMB'));
+      expect(ambiguityQuestion).toBeDefined();
+      expect(ambiguityQuestion?.priority).toBe('high');
+    });
+
+    it('should detect TBD/pending items', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Architecture', 'Database choice is TBD. Storage layer is pending. Final decision to be determined later.')],
+        'Test Project',
+        'Architecture: Database choice is TBD. Storage layer is pending. Final decision to be determined later.'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const ambiguityQuestion = result.questions.find(q => q.id.startsWith('Q-AMB'));
+      expect(ambiguityQuestion).toBeDefined();
+    });
+
+    it('should detect alternative choices ("or", "either")', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Tech Stack', 'We can use React or Vue. Either would work. We could alternatively use Angular or Svelte.')],
+        'Test Project',
+        'Tech Stack: We can use React or Vue. Either would work. We could alternatively use Angular or Svelte.'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const ambiguityQuestion = result.questions.find(q => q.id.startsWith('Q-AMB'));
+      expect(ambiguityQuestion).toBeDefined();
+    });
+  });
+
+  describe('conflict detection (FIX 4)', () => {
+    it('should detect conflicting terms (SQL vs NoSQL)', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Database', 'Use SQL for transactions and NoSQL for caching')],
+        'Test Project',
+        'Database: Use SQL for transactions and NoSQL for caching'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const conflictQuestion = result.questions.find(q => q.id.startsWith('Q-CONFLICT'));
+      expect(conflictQuestion).toBeDefined();
+      expect(conflictQuestion?.priority).toBe('critical');
+      expect(conflictQuestion?.question).toContain('sql');
+    });
+
+    it('should detect conflicting terms (synchronous vs asynchronous)', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Architecture', 'Use synchronous requests for API and asynchronous for background jobs')],
+        'Test Project',
+        'Architecture: Use synchronous requests for API and asynchronous for background jobs'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const conflictQuestion = result.questions.find(q => q.id.startsWith('Q-CONFLICT'));
+      expect(conflictQuestion).toBeDefined();
+      expect(conflictQuestion?.category).toBe('data_persistence');
+    });
+
+    it('should detect conflicting terms (monolithic vs microservices)', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Deployment', 'Start with monolithic architecture, then move to microservices')],
+        'Test Project',
+        'Deployment: Start with monolithic architecture, then move to microservices'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const conflictQuestion = result.questions.find(q => q.id.startsWith('Q-CONFLICT'));
+      expect(conflictQuestion).toBeDefined();
+      expect(conflictQuestion?.category).toBe('deployment_environments');
+    });
+
+    it('should mark conflict questions as critical priority', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('API', 'Consider both REST and GraphQL approaches')],
+        'Test Project',
+        'API: Consider both REST and GraphQL approaches'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const conflictQuestion = result.questions.find(q => q.id.startsWith('Q-CONFLICT'));
+      expect(conflictQuestion?.priority).toBe('critical');
+    });
+  });
+
+  describe('all category detection', () => {
+    it('should detect deployment_environments category', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Infra', 'Deploy to Docker containers with Kubernetes orchestration')],
+        'Test Project',
+        'Infra: Deploy to Docker containers with Kubernetes orchestration'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const coverage = result.coverageChecklist.find(c => c.category === 'deployment_environments');
+      expect(coverage?.status).toBe('covered');
+    });
+
+    it('should detect observability category', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Monitoring', 'Implement structured logging and metrics collection')],
+        'Test Project',
+        'Monitoring: Implement structured logging and metrics collection'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const coverage = result.coverageChecklist.find(c => c.category === 'observability');
+      expect(coverage?.status).toBe('covered');
+    });
+
+    it('should detect performance_budgets category', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Performance', 'API latency should be under 100ms with high throughput')],
+        'Test Project',
+        'Performance: API latency should be under 100ms with high throughput'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const coverage = result.coverageChecklist.find(c => c.category === 'performance_budgets');
+      expect(coverage?.status).toBe('covered');
+    });
+
+    it('should detect reliability category', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Reliability', 'Implement retry logic with circuit breaker pattern for failover')],
+        'Test Project',
+        'Reliability: Implement retry logic with circuit breaker pattern for failover'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const coverage = result.coverageChecklist.find(c => c.category === 'reliability');
+      expect(coverage?.status).toBe('covered');
+    });
+
+    it('should detect compatibility category', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Platforms', 'Support Windows, Linux, and macOS cross-platform')],
+        'Test Project',
+        'Platforms: Support Windows, Linux, and macOS cross-platform'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const coverage = result.coverageChecklist.find(c => c.category === 'compatibility');
+      expect(coverage?.status).toBe('covered');
+    });
+
+    it('should detect testing_verification category', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('QA', 'Unit test coverage should validate all acceptance criteria')],
+        'Test Project',
+        'QA: Unit test coverage should validate all acceptance criteria'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const coverage = result.coverageChecklist.find(c => c.category === 'testing_verification');
+      expect(coverage?.status).toBe('covered');
+    });
+
+    it('should detect product_ux category', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('UX', 'Design user interface with accessibility in mind')],
+        'Test Project',
+        'UX: Design user interface with accessibility in mind'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const coverage = result.coverageChecklist.find(c => c.category === 'product_ux');
+      expect(coverage?.status).toBe('covered');
+    });
+  });
+
+  describe('edge cases', () => {
+    it('should handle empty requirements document', () => {
+      const parsed = createParsedRequirements([], 'Empty Project', '');
+
+      const result = interviewer.generateQuestions(parsed);
+
+      // Should generate questions for all missing categories
+      expect(result.questions.length).toBeGreaterThan(0);
+      expect(result.coverageChecklist.length).toBe(9);
+      // All should be missing
+      const missingCount = result.coverageChecklist.filter(c => c.status === 'missing').length;
+      expect(missingCount).toBe(9);
+    });
+
+    it('should handle single section only', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Overview', 'Simple project')],
+        'Single Section'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      expect(result.questions.length).toBeGreaterThan(0);
+      expect(result.sourceDocument.sectionCount).toBe(1);
+    });
+
+    it('should handle deeply nested sections (3+ levels)', () => {
+      const level1 = createParsedSection('Level 1', 'Content 1', 1);
+      const level2 = createParsedSection('Level 2', 'Content 2 with auth security', 2);
+      const level3 = createParsedSection('Level 3', 'Content 3 with database storage', 3);
+      level2.children = [level3];
+      level1.children = [level2];
+
+      const parsed = createParsedRequirements(
+        [level1],
+        'Nested Project',
+        'Level 1\nContent 1\nLevel 2\nContent 2 with auth security\nLevel 3\nContent 3 with database storage'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      // Should detect keywords in nested content
+      const securityCoverage = result.coverageChecklist.find(c => c.category === 'security_secrets');
+      expect(securityCoverage?.status).toBe('covered');
+    });
+
+    it('should handle empty section content', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Empty', '', 1)],
+        'Empty Content'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      expect(result.questions.length).toBeGreaterThan(0);
+      expect(result.coverageChecklist.length).toBe(9);
+    });
+
+    it('should handle very long rawText', () => {
+      const longContent = 'This is a test. '.repeat(1000);
+      const parsed = createParsedRequirements(
+        [createParsedSection('Long', longContent)],
+        'Long Project',
+        longContent
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      expect(result.questions.length).toBeGreaterThan(0);
+    });
+
+    it('should handle special characters in content', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Special', 'Use JWT auth <token> & password_hash()')],
+        'Special Chars',
+        'Use JWT auth <token> & password_hash()'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      const securityCoverage = result.coverageChecklist.find(c => c.category === 'security_secrets');
+      expect(securityCoverage?.status).toBe('covered');
+    });
+  });
+
+  describe('assumptions array', () => {
+    it('should populate assumptions array from questions', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Overview', 'Build an app')],
+        'Test Project'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      expect(result.assumptions.length).toBe(result.questions.length);
+      for (const assumption of result.assumptions) {
+        expect(assumption).toBeDefined();
+        expect(assumption.length).toBeGreaterThan(0);
+      }
+    });
+
+    it('should include assumptions from both ambiguity and category questions', () => {
+      const parsed = createParsedRequirements(
+        [createParsedSection('Overview', 'We maybe need a database. It could be SQL or NoSQL.')],
+        'Test Project',
+        'We maybe need a database. It could be SQL or NoSQL.'
+      );
+
+      const result = interviewer.generateQuestions(parsed);
+
+      // Should have both ambiguity/conflict questions and category questions
+      expect(result.assumptions.length).toBe(result.questions.length);
     });
   });
 });

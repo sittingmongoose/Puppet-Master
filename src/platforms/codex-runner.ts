@@ -15,7 +15,9 @@ import type {
 } from '../types/platforms.js';
 import { BasePlatformRunner } from './base-runner.js';
 import { CapabilityDiscoveryService } from './capability-discovery.js';
-import { OutputParser } from '../core/output-parser.js';
+import { CodexOutputParser } from './output-parsers/index.js';
+import type { FreshSpawner } from '../core/fresh-spawn.js';
+import { PLATFORM_COMMANDS } from './constants.js';
 
 /**
  * Codex platform runner.
@@ -25,7 +27,7 @@ import { OutputParser } from '../core/output-parser.js';
  */
 export class CodexRunner extends BasePlatformRunner {
   readonly platform: Platform = 'codex';
-  private readonly outputParser: OutputParser;
+  private readonly outputParser: CodexOutputParser;
 
   /**
    * Creates a new CodexRunner instance.
@@ -33,14 +35,23 @@ export class CodexRunner extends BasePlatformRunner {
    * @param capabilityService - Capability discovery service (required)
    * @param defaultTimeout - Default timeout in milliseconds (default: 300000 = 5 minutes)
    * @param hardTimeout - Hard timeout in milliseconds (default: 1800000 = 30 minutes)
+   * @param freshSpawner - Optional FreshSpawner for process isolation (P1-T09)
    */
   constructor(
     capabilityService: CapabilityDiscoveryService,
     defaultTimeout: number = 300_000,
-    hardTimeout: number = 1_800_000
+    hardTimeout: number = 1_800_000,
+    freshSpawner?: FreshSpawner
   ) {
-    super(capabilityService, defaultTimeout, hardTimeout);
-    this.outputParser = new OutputParser();
+    super(capabilityService, defaultTimeout, hardTimeout, undefined, undefined, undefined, freshSpawner);
+    this.outputParser = new CodexOutputParser();
+  }
+
+  /**
+   * Gets the Codex CLI command.
+   */
+  protected getCommand(): string {
+    return PLATFORM_COMMANDS.codex;
   }
 
   /**
@@ -49,6 +60,7 @@ export class CodexRunner extends BasePlatformRunner {
    * Uses `codex exec` subcommand for non-interactive execution.
    * Passes the prompt as the positional `PROMPT` argument and disables
    * stdin input to prevent interactive hangs.
+   * NOTE: This is used as a fallback when FreshSpawner is not provided.
    */
   protected async spawn(
     request: ExecutionRequest
@@ -113,43 +125,25 @@ export class CodexRunner extends BasePlatformRunner {
   /**
    * Parses Codex output.
    * 
-   * Uses OutputParser to extract:
+   * Uses CodexOutputParser to extract:
    * - Completion signals (<ralph>COMPLETE</ralph>, <ralph>GUTTER</ralph>)
    * - Files changed
    * - Test results
    * - Errors and warnings
    * 
-   * Handles both plain text and JSONL formats (if --output-format json was used).
+   * Handles both plain text and JSONL formats (if --json flag was used).
    */
   protected parseOutput(output: string): ExecutionResult {
-    // Parse output using OutputParser
+    // Use platform-specific parser
     const parsed = this.outputParser.parse(output);
 
     // Determine success based on completion signal and parsed results
-    // Success if COMPLETE signal is present, or if no errors and exit code is 0
-    // (exit code will be set by base class execute() method)
     const hasCompleteSignal = parsed.completionSignal === 'COMPLETE';
     const hasGutterSignal = parsed.completionSignal === 'GUTTER';
     const hasErrors = parsed.errors.length > 0;
 
-    // Default success to false, will be updated based on exit code in execute()
-    // For now, we consider it successful if COMPLETE signal is present
+    // Success if COMPLETE signal is present and no GUTTER or errors
     const success = hasCompleteSignal && !hasGutterSignal && !hasErrors;
-
-    // Extract session ID if present in output
-    // Codex may output session information in JSONL format
-    let sessionId: string | undefined;
-    const sessionIdMatch = output.match(/["']?session[_-]?id["']?\s*[:=]\s*["']?([^"'\s]+)["']?/i);
-    if (sessionIdMatch) {
-      sessionId = sessionIdMatch[1];
-    }
-
-    // Extract token usage if present
-    let tokensUsed: number | undefined;
-    const tokensMatch = output.match(/["']?tokens?["']?\s*[:=]\s*(\d+)/i);
-    if (tokensMatch) {
-      tokensUsed = parseInt(tokensMatch[1], 10);
-    }
 
     return {
       success,
@@ -157,11 +151,13 @@ export class CodexRunner extends BasePlatformRunner {
       exitCode: 0, // Will be updated by base class execute() method
       duration: 0, // Will be updated by base class execute() method
       processId: 0, // Will be updated by base class execute() method
-      tokensUsed,
-      sessionId,
+      tokensUsed: parsed.tokensUsed,
+      sessionId: parsed.sessionId,
       ...(hasErrors && parsed.errors.length > 0
         ? { error: parsed.errors[0] }
-        : {}),
+        : hasGutterSignal
+          ? { error: 'Agent signaled GUTTER - stuck and cannot proceed' }
+          : {}),
     };
   }
 }

@@ -10,11 +10,14 @@
 import { spawn, type ChildProcess } from 'child_process';
 import { BasePlatformRunner } from './base-runner.js';
 import { CapabilityDiscoveryService } from './capability-discovery.js';
+import { ClaudeOutputParser } from './output-parsers/index.js';
 import type {
   Platform,
   ExecutionRequest,
   ExecutionResult,
 } from '../types/platforms.js';
+import type { FreshSpawner } from '../core/fresh-spawn.js';
+import { PLATFORM_COMMANDS } from './constants.js';
 
 /**
  * Claude-specific platform runner.
@@ -25,6 +28,7 @@ import type {
 export class ClaudeRunner extends BasePlatformRunner {
   readonly platform: Platform = 'claude';
   private readonly command: string;
+  private readonly outputParser: ClaudeOutputParser;
 
   /**
    * Creates a new ClaudeRunner instance.
@@ -33,15 +37,25 @@ export class ClaudeRunner extends BasePlatformRunner {
    * @param command - Claude CLI command path (default: 'claude')
    * @param defaultTimeout - Default timeout in milliseconds (default: 300000 = 5 minutes)
    * @param hardTimeout - Hard timeout in milliseconds (default: 1800000 = 30 minutes)
+   * @param freshSpawner - Optional FreshSpawner for process isolation (P1-T09)
    */
   constructor(
     capabilityService: CapabilityDiscoveryService,
-    command: string = 'claude',
+    command: string = PLATFORM_COMMANDS.claude,
     defaultTimeout: number = 300_000,
-    hardTimeout: number = 1_800_000
+    hardTimeout: number = 1_800_000,
+    freshSpawner?: FreshSpawner
   ) {
-    super(capabilityService, defaultTimeout, hardTimeout);
+    super(capabilityService, defaultTimeout, hardTimeout, undefined, undefined, undefined, freshSpawner);
     this.command = command;
+    this.outputParser = new ClaudeOutputParser();
+  }
+
+  /**
+   * Gets the Claude CLI command.
+   */
+  protected getCommand(): string {
+    return this.command;
   }
 
   /**
@@ -49,6 +63,7 @@ export class ClaudeRunner extends BasePlatformRunner {
    * 
    * Creates a fresh process (no session reuse) per REQUIREMENTS.md Section 26.1.
    * Claude CLI uses -p flag to pass prompt as argument, but we also support stdin.
+   * NOTE: This is used as a fallback when FreshSpawner is not provided.
    */
   protected async spawn(request: ExecutionRequest): Promise<ChildProcess> {
     const args = this.buildArgs(request);
@@ -122,75 +137,21 @@ export class ClaudeRunner extends BasePlatformRunner {
   /**
    * Parses claude output to extract execution results.
    * 
-   * Detects completion signals:
+   * Uses ClaudeOutputParser to detect completion signals:
    * - <ralph>COMPLETE</ralph> - Task completed successfully
    * - <ralph>GUTTER</ralph> - Agent stuck, cannot proceed
    * 
    * Also extracts:
    * - Session ID (format: PM-YYYY-MM-DD-HH-MM-SS-NNN)
    * - Token usage if present
-   * - Handles both plain text and JSON/JSONL formats
+   * - Handles plain text, JSON, and stream-json formats
    */
   protected parseOutput(output: string): ExecutionResult {
-    // Detect completion signals (case-insensitive)
-    const hasComplete = /<ralph>COMPLETE<\/ralph>/i.test(output);
-    const hasGutter = /<ralph>GUTTER<\/ralph>/i.test(output);
+    // Use platform-specific parser
+    const parsed = this.outputParser.parse(output);
 
     // Determine success based on signals
-    // If COMPLETE is present, success = true
-    // If GUTTER is present, success = false
-    // Otherwise, assume success (exit code will determine)
-    let success = true;
-    if (hasGutter) {
-      success = false;
-    } else if (hasComplete) {
-      success = true;
-    }
-
-    // Extract session ID if present (format: PM-YYYY-MM-DD-HH-MM-SS-NNN)
-    const sessionIdMatch = output.match(/PM-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}-\d{3}/);
-    const sessionId = sessionIdMatch ? sessionIdMatch[0] : undefined;
-
-    // Try to extract token count if present
-    // Handle various formats: "tokens: 1234", "tokens=1234", "tokens 1234", etc.
-    const tokenMatch = output.match(/["']?tokens?["']?\s*[:=\s]\s*(\d+)/i);
-    const tokensUsed = tokenMatch ? parseInt(tokenMatch[1], 10) : undefined;
-
-    // Handle JSON/JSONL format if --output-format json was used
-    // Try to parse as JSON lines and extract relevant information
-    if (output.trim().startsWith('{') || output.includes('\n{"')) {
-      try {
-        // Try to parse as JSONL (newline-delimited JSON)
-        const lines = output.split('\n').filter(line => line.trim());
-        for (const line of lines) {
-          try {
-            const json = JSON.parse(line);
-            // Extract information from JSON if available
-            if (json.tokens && !tokensUsed) {
-              // tokensUsed will be set below if found in JSON
-            }
-            if (json.session_id && !sessionId) {
-              // sessionId will be set below if found in JSON
-            }
-          } catch {
-            // Not valid JSON, continue
-          }
-        }
-      } catch {
-        // Not JSONL, try single JSON object
-        try {
-          const json = JSON.parse(output);
-          if (json.tokens && !tokensUsed) {
-            // tokensUsed will be set below if found in JSON
-          }
-          if (json.session_id && !sessionId) {
-            // sessionId will be set below if found in JSON
-          }
-        } catch {
-          // Not JSON, treat as plain text
-        }
-      }
-    }
+    const success = parsed.completionSignal !== 'GUTTER';
 
     // Build result
     const result: ExecutionResult = {
@@ -202,15 +163,15 @@ export class ClaudeRunner extends BasePlatformRunner {
     };
 
     // Add optional fields if found
-    if (sessionId) {
-      result.sessionId = sessionId;
+    if (parsed.sessionId) {
+      result.sessionId = parsed.sessionId;
     }
-    if (tokensUsed !== undefined) {
-      result.tokensUsed = tokensUsed;
+    if (parsed.tokensUsed !== undefined) {
+      result.tokensUsed = parsed.tokensUsed;
     }
 
     // If GUTTER signal found, add error message
-    if (hasGutter) {
+    if (parsed.completionSignal === 'GUTTER') {
       result.error = 'Agent signaled GUTTER - stuck and cannot proceed';
     }
 

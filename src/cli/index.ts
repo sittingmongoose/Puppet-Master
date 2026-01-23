@@ -16,6 +16,8 @@ import { replanCommand } from './commands/replan.js';
 import { reopenCommand } from './commands/reopen.js';
 import { guiCommand } from './commands/gui.js';
 import { validateCommand } from './commands/validate.js';
+import { interviewCommand } from './commands/interview.js';
+import { CheckpointsCommand } from './commands/checkpoints.js';
 
 const program = new Command();
 
@@ -77,6 +79,13 @@ guiCommand.register(program);
 
 // Register validate command
 validateCommand.register(program);
+
+// Register interview command (FIX 8: standalone interview command)
+interviewCommand.register(program);
+
+// Register checkpoints command
+const checkpointsCommand = new CheckpointsCommand();
+checkpointsCommand.register(program);
 
 /**
  * Run the CLI with the given arguments

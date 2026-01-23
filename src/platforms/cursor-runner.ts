@@ -11,11 +11,13 @@ import { spawn, type ChildProcess } from 'child_process';
 import { BasePlatformRunner } from './base-runner.js';
 import { CapabilityDiscoveryService } from './capability-discovery.js';
 import { PLATFORM_COMMANDS } from './constants.js';
+import { CursorOutputParser } from './output-parsers/index.js';
 import type {
   Platform,
   ExecutionRequest,
   ExecutionResult,
 } from '../types/platforms.js';
+import type { FreshSpawner } from '../core/fresh-spawn.js';
 
 /**
  * Cursor-specific platform runner.
@@ -28,6 +30,7 @@ export class CursorRunner extends BasePlatformRunner {
   private readonly command: string;
   private modeFlagSupport: boolean | null = null;
   private modeFlagSupportPromise: Promise<boolean> | null = null;
+  private readonly outputParser: CursorOutputParser;
 
   /**
    * Creates a new CursorRunner instance.
@@ -36,21 +39,48 @@ export class CursorRunner extends BasePlatformRunner {
    * @param command - Cursor CLI command path (default: 'cursor-agent')
    * @param defaultTimeout - Default timeout in milliseconds (default: 300000 = 5 minutes)
    * @param hardTimeout - Hard timeout in milliseconds (default: 1800000 = 30 minutes)
+   * @param freshSpawner - Optional FreshSpawner for process isolation (P1-T09)
    */
   constructor(
     capabilityService: CapabilityDiscoveryService,
     command: string = PLATFORM_COMMANDS.cursor,
     defaultTimeout: number = 300_000,
-    hardTimeout: number = 1_800_000
+    hardTimeout: number = 1_800_000,
+    freshSpawner?: FreshSpawner
   ) {
-    super(capabilityService, defaultTimeout, hardTimeout);
+    super(capabilityService, defaultTimeout, hardTimeout, undefined, undefined, undefined, freshSpawner);
     this.command = command;
+    this.outputParser = new CursorOutputParser();
+  }
+
+  /**
+   * Gets the Cursor CLI command.
+   */
+  protected getCommand(): string {
+    return this.command;
+  }
+
+  /**
+   * Cursor writes the prompt to stdin, not as an argument.
+   */
+  protected writesPromptToStdin(): boolean {
+    return true;
+  }
+
+  /**
+   * Get custom environment variables for Cursor.
+   */
+  protected getCustomEnv(_request: ExecutionRequest): Record<string, string> {
+    return {
+      CURSOR_NON_INTERACTIVE: '1',
+    };
   }
 
   /**
    * Spawns a cursor-agent process for execution.
    * 
    * Creates a fresh process (no session reuse) per REQUIREMENTS.md Section 26.1.
+   * NOTE: This is used as a fallback when FreshSpawner is not provided.
    */
   protected async spawn(request: ExecutionRequest): Promise<ChildProcess> {
     if (request.planMode === true && this.modeFlagSupport === null) {
@@ -200,7 +230,7 @@ export class CursorRunner extends BasePlatformRunner {
   /**
    * Parses cursor-agent output to extract execution results.
    * 
-   * Detects completion signals:
+   * Uses CursorOutputParser to detect completion signals:
    * - <ralph>COMPLETE</ralph> - Task completed successfully
    * - <ralph>GUTTER</ralph> - Agent stuck, cannot proceed
    * 
@@ -210,31 +240,11 @@ export class CursorRunner extends BasePlatformRunner {
    * - Session ID (if present)
    */
   protected parseOutput(output: string): ExecutionResult {
-    // Detect completion signals
-    const hasComplete = output.includes('<ralph>COMPLETE</ralph>');
-    const hasGutter = output.includes('<ralph>GUTTER</ralph>');
+    // Use platform-specific parser
+    const parsed = this.outputParser.parse(output);
 
-    // Determine success based on signals
-    // If COMPLETE is present, success = true
-    // If GUTTER is present, success = false
-    // Otherwise, assume success (exit code will determine)
-    let success = true;
-    if (hasGutter) {
-      success = false;
-    } else if (hasComplete) {
-      success = true;
-    }
-
-    // Extract session ID if present (format: PM-YYYY-MM-DD-HH-MM-SS-NNN)
-    const sessionIdMatch = output.match(/PM-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}-\d{3}/);
-    const sessionId = sessionIdMatch ? sessionIdMatch[0] : undefined;
-
-    // Try to extract token count if present
-    const tokenMatch = output.match(/tokens[:\s]+(\d+)/i);
-    const tokensUsed = tokenMatch ? parseInt(tokenMatch[1], 10) : undefined;
-
-    // Note: Files changed extraction would be done here if needed
-    // For now, file tracking is handled elsewhere in the system
+    // Determine success based on completion signal
+    const success = parsed.completionSignal !== 'GUTTER';
 
     // Build result
     const result: ExecutionResult = {
@@ -246,15 +256,15 @@ export class CursorRunner extends BasePlatformRunner {
     };
 
     // Add optional fields if found
-    if (sessionId) {
-      result.sessionId = sessionId;
+    if (parsed.sessionId) {
+      result.sessionId = parsed.sessionId;
     }
-    if (tokensUsed !== undefined) {
-      result.tokensUsed = tokensUsed;
+    if (parsed.tokensUsed !== undefined) {
+      result.tokensUsed = parsed.tokensUsed;
     }
 
     // If GUTTER signal found, add error message
-    if (hasGutter) {
+    if (parsed.completionSignal === 'GUTTER') {
       result.error = 'Agent signaled GUTTER - stuck and cannot proceed';
     }
 

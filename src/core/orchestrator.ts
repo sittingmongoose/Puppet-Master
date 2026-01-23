@@ -12,6 +12,8 @@ import type { PuppetMasterConfig } from '../types/config.js';
 import type { TierPlan } from '../types/tiers.js';
 import type { PRD } from '../types/prd.js';
 import type { PlatformRunnerContract, ExecutionRequest, RunningProcess } from '../types/platforms.js';
+import type { PlatformRouter } from './platform-router.js';
+import { PlatformRegistry } from '../platforms/registry.js';
 import type { TierEvent } from '../types/events.js';
 import type { IterationContext, IterationResult } from './execution-engine.js';
 import type { AdvancementResult } from './auto-advancement.js';
@@ -48,6 +50,16 @@ import { join } from 'path';
 import { validateConfig as validateConfigSchema } from '../config/config-schema.js';
 import type { Platform } from '../types/config.js';
 import { resolveWorkingDirectory } from '../utils/project-paths.js';
+import { StatePersistence } from './state-persistence.js';
+import { CheckpointManager } from './checkpoint-manager.js';
+import type { CurrentPosition, CheckpointMetadata } from './checkpoint-manager.js';
+import { TierStateMachine } from './tier-state-machine.js';
+import {
+  WorkerReviewerOrchestrator,
+  shouldUseWorkerReviewer,
+  createWorkerReviewerOrchestrator,
+} from './worker-reviewer.js';
+import type { IterationOutcome, WorkerResult } from './worker-reviewer.js';
 
 /**
  * Validation result interface
@@ -88,7 +100,8 @@ export interface OrchestratorDependencies {
   branchStrategy: BranchStrategy;
   commitFormatter: CommitFormatter;
   prManager: PRManager;
-  platformRunner: PlatformRunnerContract;
+  platformRegistry: PlatformRegistry;
+  platformRouter: PlatformRouter;
   verificationIntegration: VerificationIntegration;
 }
 
@@ -128,6 +141,10 @@ export class Orchestrator {
   private iterationsRun: number = 0;
   private loopRunning: boolean = false;
   private loopAborted: boolean = false;
+
+  private statePersistence: StatePersistence | null = null;
+  private checkpointManager: CheckpointManager | null = null;
+  private workerReviewerOrchestrator: WorkerReviewerOrchestrator | null = null;
 
   private requireTierTransition(tier: TierNode, event: TierEvent, reason: string): void {
     const from = tier.getState();
@@ -187,6 +204,7 @@ export class Orchestrator {
         noOutputTimeout: 120000, // 2 minutes
         identicalOutputThreshold: 10,
       },
+      killAgentOnFailure: this.config.execution?.killAgentOnFailure ?? true,
     });
     this.promptBuilder = new PromptBuilder();
     this.outputParser = new OutputParser();
@@ -215,8 +233,33 @@ export class Orchestrator {
     // Initialize escalation
     (this as unknown as { escalation: Escalation }).escalation = new Escalation(this.tierStateManager, this.config);
 
-    // Set up execution engine with platform runner
-    this.executionEngine.setRunner(deps.platformRunner);
+    // Initialize state persistence
+    const checkpointDir = join(this.projectRoot, '.puppet-master', 'checkpoints');
+    (this as unknown as { statePersistence: StatePersistence }).statePersistence = new StatePersistence(
+      deps.prdManager,
+      checkpointDir
+    );
+
+    // Initialize checkpoint manager
+    const maxCheckpoints = this.config.checkpointing?.maxCheckpoints ?? 10;
+    (this as unknown as { checkpointManager: CheckpointManager }).checkpointManager = new CheckpointManager(
+      checkpointDir,
+      maxCheckpoints
+    );
+
+    // Initialize worker/reviewer orchestrator if configured (P1-T13)
+    if (shouldUseWorkerReviewer(this.config)) {
+      (this as unknown as { workerReviewerOrchestrator: WorkerReviewerOrchestrator | null }).workerReviewerOrchestrator =
+        createWorkerReviewerOrchestrator(
+          this.config,
+          deps.platformRegistry,
+          deps.progressManager,
+          this.promptBuilder
+        );
+      console.log('[Orchestrator] Worker/Reviewer separation enabled');
+    }
+
+    // Set up execution engine (runner will be set per iteration via PlatformRouter)
     this.executionEngine.setGitManager(deps.gitManager);
 
     // Register output callbacks for EventBus streaming
@@ -235,6 +278,29 @@ export class Orchestrator {
 
     // Initialize state machine to planning state
     this.stateMachine.send({ type: 'INIT' });
+
+    // Set up signal handlers for graceful shutdown with checkpoint
+    this.setupSignalHandlers();
+  }
+
+  /**
+   * Set up signal handlers for graceful shutdown with checkpoint
+   */
+  private setupSignalHandlers(): void {
+    const handleSignal = async (signal: NodeJS.Signals): Promise<void> => {
+      console.log(`Received ${signal}, creating checkpoint and shutting down...`);
+      try {
+        if (this.config.checkpointing?.enabled && this.config.checkpointing?.checkpointOnShutdown) {
+          await this.createCheckpoint('shutdown');
+        }
+      } catch (error) {
+        console.warn('Failed to create checkpoint on shutdown:', error);
+      }
+      process.exit(0);
+    };
+
+    process.on('SIGTERM', handleSignal);
+    process.on('SIGINT', handleSignal);
   }
 
   /**
@@ -336,6 +402,15 @@ export class Orchestrator {
 
     this.loopAborted = true;
     this.loopRunning = false;
+
+    // Create checkpoint before stopping if enabled
+    if (this.config.checkpointing?.enabled && this.config.checkpointing?.checkpointOnShutdown) {
+      try {
+        await this.createCheckpoint('shutdown');
+      } catch (error) {
+        console.warn('Failed to create checkpoint on stop:', error);
+      }
+    }
 
     // Sync state to PRD
     await this.tierStateManager.syncToPrd();
@@ -488,6 +563,12 @@ export class Orchestrator {
         // Build iteration context
         const context = await this.buildIterationContext(subtask);
 
+        // Get platform runner from registry based on selected platform
+        const runner = this.deps.platformRegistry.get(context.platform);
+        if (!runner) {
+          throw new Error(`Platform runner not available for platform: ${context.platform}`);
+        }
+
         // Ensure correct branch before executing the iteration
         const task = subtask.parent;
         const phase = task?.parent;
@@ -510,8 +591,8 @@ export class Orchestrator {
           });
         }
 
-        // Execute iteration
-        const result = await this.executionEngine.spawnIteration(context);
+        // Execute iteration with platform-specific runner (worker phase)
+        const result = await this.executionEngine.spawnIteration(context, runner);
 
         // Publish iteration_completed event
         if (this.eventBus) {
@@ -522,18 +603,56 @@ export class Orchestrator {
           });
         }
 
-        // Handle result
+        // Worker/Reviewer separation (P1-T13): If enabled and worker claims done,
+        // run reviewer phase before proceeding to gate
+        let shouldRunGate = result.success && result.completionSignal === 'COMPLETE';
+        let reviewerFeedback: string | undefined;
+
+        if (shouldRunGate && this.workerReviewerOrchestrator?.isEnabled()) {
+          const workerResult = WorkerReviewerOrchestrator.toWorkerResult(result);
+          const outcome = await this.workerReviewerOrchestrator.runReviewerPhase(workerResult, context);
+
+          // Publish reviewer event
+          if (this.eventBus && outcome.reviewerResult) {
+            this.eventBus.emit({
+              type: 'reviewer_verdict',
+              subtaskId: subtask.id,
+              verdict: outcome.reviewerResult.verdict,
+              confidence: outcome.reviewerResult.confidence,
+            });
+          }
+
+          if (outcome.status === 'revise') {
+            // Reviewer says REVISE - don't run gate, will retry in next iteration
+            shouldRunGate = false;
+            reviewerFeedback = outcome.combinedFeedback;
+            console.log(`[Orchestrator] Reviewer verdict: REVISE for ${subtask.id}`);
+            // Mark iteration as needing revision (not a failure, but not complete)
+            result.success = false;
+            result.completionSignal = undefined;
+            result.error = `Reviewer verdict: REVISE - ${outcome.reviewerResult?.feedback ?? 'No feedback'}`;
+          } else if (outcome.status === 'complete') {
+            // Reviewer says SHIP - proceed to gate
+            console.log(`[Orchestrator] Reviewer verdict: SHIP for ${subtask.id} (confidence: ${outcome.reviewerResult?.confidence})`);
+          } else if (outcome.status === 'failed') {
+            shouldRunGate = false;
+            console.log(`[Orchestrator] Worker failed for ${subtask.id}`);
+          }
+        }
+
+        // Handle result (after potential reviewer modification)
         await this.handleIterationResult(result, subtask);
 
         // Run the subtask gate immediately after a COMPLETE signal so advancement can proceed.
-        if (result.success && result.completionSignal === 'COMPLETE') {
+        // Only if worker completed AND (reviewer approved OR reviewer not enabled)
+        if (shouldRunGate) {
           // Pass execution output as transcript for AGENTS.md enforcement
           const gate = await this.deps.verificationIntegration.runSubtaskGate(subtask, result.output);
           await this.handleGateResult(gate, subtask);
         }
 
-        // Record progress
-        await this.recordProgress(result, subtask);
+        // Record progress (include reviewer feedback if present)
+        await this.recordProgress(result, subtask, reviewerFeedback);
 
         // Publish budget update event
         await this.publishBudgetUpdateEvent(subtask);
@@ -546,6 +665,15 @@ export class Orchestrator {
         await this.handleAdvancement(advancement);
 
         this.iterationsRun++;
+
+        // Create periodic checkpoint if enabled and interval reached
+        if (
+          this.config.checkpointing?.enabled &&
+          this.iterationsRun > 0 &&
+          this.iterationsRun % (this.config.checkpointing.interval ?? 10) === 0
+        ) {
+          await this.createPeriodicCheckpoint();
+        }
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
 
@@ -600,7 +728,8 @@ export class Orchestrator {
       dependencies: subtask.data.plan.dependencies,
     };
 
-    const iterationTier = this.config.tiers.iteration;
+    // Use PlatformRouter to select platform for this tier
+    const platformConfig = this.deps.platformRouter.selectPlatform(subtask, 'execute', subtaskPlan);
 
     return {
       tierNode: subtask,
@@ -609,9 +738,9 @@ export class Orchestrator {
       projectPath: this.workingDirectory,
       projectName: this.config.project.name,
       sessionId: this.deps.progressManager.generateSessionId(),
-      platform: iterationTier.platform,
-      model: iterationTier.model,
-      planMode: iterationTier.planMode,
+      platform: platformConfig.platform,
+      model: platformConfig.model,
+      planMode: platformConfig.planMode,
       progressEntries,
       agentsContent,
       subtaskPlan,
@@ -743,6 +872,16 @@ export class Orchestrator {
 
       case 'advance_subtask':
         if (result.next) {
+          // Check if previous subtask completed (passed state)
+          const previousSubtask = this.tierStateManager.getCurrentSubtask();
+          if (
+            previousSubtask &&
+            previousSubtask.getState() === 'passed' &&
+            this.config.checkpointing?.enabled &&
+            this.config.checkpointing?.checkpointOnSubtaskComplete
+          ) {
+            await this.createCheckpoint('subtask-complete');
+          }
           this.tierStateManager.setCurrentSubtask(result.next.id);
         }
         break;
@@ -983,10 +1122,20 @@ export class Orchestrator {
   /**
    * Record progress
    */
-  private async recordProgress(result: IterationResult, subtask: TierNode): Promise<void> {
+  private async recordProgress(
+    result: IterationResult,
+    subtask: TierNode,
+    reviewerFeedback?: string
+  ): Promise<void> {
     const sessionId = this.deps.progressManager.generateSessionId();
     const platform = this.config.tiers.subtask.platform;
     const duration = `${Math.floor(result.duration / 60000)}m ${Math.floor((result.duration % 60000) / 1000)}s`;
+
+    // Include reviewer feedback in learnings if present
+    const learnings = [...result.learnings];
+    if (reviewerFeedback) {
+      learnings.push(`[Reviewer Feedback] ${reviewerFeedback}`);
+    }
 
     const entry: ProgressEntry = {
       timestamp: new Date().toISOString(),
@@ -998,8 +1147,8 @@ export class Orchestrator {
       accomplishments: result.learnings,
       filesChanged: result.filesChanged.map((path) => ({ path, description: 'Modified' })),
       testsRun: [],
-      learnings: result.learnings,
-      nextSteps: [],
+      learnings,
+      nextSteps: reviewerFeedback ? ['Address reviewer feedback'] : [],
     };
 
     await this.deps.progressManager.append(entry);
@@ -1393,16 +1542,19 @@ Return the plan as a JSON object matching this structure:
       throw new Error(`Scope ${scope} does not match tier type ${tier.type}`);
     }
 
-    // Get platform and model for this tier type
-    const tierConfig = this.config.tiers[scope];
-    const platform = tierConfig.platform;
-    const model = tierConfig.model;
+    // Get platform and model for this tier type using PlatformRouter
+    const platformConfig = this.deps.platformRouter.selectPlatform(tier, 'execute');
+    const platform = platformConfig.platform;
+    const model = platformConfig.model;
 
     // Build replan prompt
     const prompt = this.buildReplanPrompt(tier, scope);
 
-    // Invoke planning agent via platform runner
-    const runner = this.deps.platformRunner;
+    // Get platform runner from registry
+    const runner = this.deps.platformRegistry.get(platform);
+    if (!runner) {
+      throw new Error(`Platform runner not available for platform: ${platform}`);
+    }
     const request: ExecutionRequest = {
       prompt,
       model,
@@ -1642,6 +1794,12 @@ Return the plan as a JSON object matching this structure:
     // Build iteration context
     const context = await this.buildIterationContext(currentSubtask);
 
+    // Get platform runner from registry based on selected platform
+    const runner = this.deps.platformRegistry.get(context.platform);
+    if (!runner) {
+      throw new Error(`Platform runner not available for platform: ${context.platform}`);
+    }
+
     // Publish iteration_started event
     if (this.eventBus) {
       this.eventBus.emit({
@@ -1651,8 +1809,8 @@ Return the plan as a JSON object matching this structure:
       });
     }
 
-    // Execute iteration
-    const result = await this.executionEngine.spawnIteration(context);
+    // Execute iteration with platform-specific runner
+    const result = await this.executionEngine.spawnIteration(context, runner);
 
     // Publish iteration_completed event
     if (this.eventBus) {
@@ -1681,5 +1839,124 @@ Return the plan as a JSON object matching this structure:
 
     // Commit changes
     await this.commitChanges(result, currentSubtask);
+  }
+
+  /**
+   * Collect all tier state machines from tier nodes
+   */
+  private getAllTierMachines(): Map<string, TierStateMachine> {
+    const machines = new Map<string, TierStateMachine>();
+
+    // Collect from all phases, tasks, and subtasks
+    const allPhases = this.tierStateManager.getAllPhases();
+    for (const phase of allPhases) {
+      machines.set(phase.id, phase.stateMachine);
+
+      for (const task of phase.getChildren()) {
+        machines.set(task.id, task.stateMachine);
+
+        for (const subtask of task.getChildren()) {
+          machines.set(subtask.id, subtask.stateMachine);
+        }
+      }
+    }
+
+    return machines;
+  }
+
+  /**
+   * Create a periodic checkpoint
+   */
+  private async createPeriodicCheckpoint(): Promise<void> {
+    if (!this.config.checkpointing?.enabled || !this.statePersistence || !this.checkpointManager) {
+      return;
+    }
+
+    try {
+      // Save current state first
+      await this.statePersistence.saveState(this.stateMachine, this.getAllTierMachines());
+
+      // Get current state
+      const state = await this.statePersistence.loadState();
+      if (!state) {
+        return;
+      }
+
+      // Get current position
+      const position = this.getCurrentPosition();
+
+      // Get metadata
+      const metadata = this.getCheckpointMetadata();
+
+      // Create checkpoint
+      await this.checkpointManager.createCheckpointWithMetadata(state, position, metadata);
+    } catch (error) {
+      // Log but don't fail execution
+      console.warn('Failed to create periodic checkpoint:', error);
+    }
+  }
+
+  /**
+   * Create a checkpoint with a reason
+   */
+  private async createCheckpoint(reason: string): Promise<void> {
+    if (!this.config.checkpointing?.enabled || !this.statePersistence || !this.checkpointManager) {
+      return;
+    }
+
+    try {
+      // Save current state first
+      await this.statePersistence.saveState(this.stateMachine, this.getAllTierMachines());
+
+      // Get current state
+      const state = await this.statePersistence.loadState();
+      if (!state) {
+        return;
+      }
+
+      // Get current position
+      const position = this.getCurrentPosition();
+
+      // Get metadata
+      const metadata = this.getCheckpointMetadata();
+
+      // Create checkpoint
+      await this.checkpointManager.createCheckpointWithMetadata(state, position, metadata);
+    } catch (error) {
+      // Log but don't fail execution
+      console.warn(`Failed to create checkpoint (${reason}):`, error);
+    }
+  }
+
+  /**
+   * Get current position in execution
+   */
+  private getCurrentPosition(): CurrentPosition {
+    const context = this.stateMachine.getContext();
+    const currentSubtask = this.tierStateManager.getCurrentSubtask();
+    const currentTask = this.tierStateManager.getCurrentTask();
+    const currentPhase = this.tierStateManager.getCurrentPhase();
+
+    return {
+      phaseId: currentPhase?.id ?? context.currentPhaseId ?? null,
+      taskId: currentTask?.id ?? context.currentTaskId ?? null,
+      subtaskId: currentSubtask?.id ?? context.currentSubtaskId ?? null,
+      iterationNumber: currentSubtask ? currentSubtask.stateMachine.getIterationCount() : 0,
+    };
+  }
+
+  /**
+   * Get checkpoint metadata
+   */
+  private getCheckpointMetadata(): CheckpointMetadata {
+    const allSubtasks = this.tierStateManager.getAllSubtasks();
+    const completedSubtasks = allSubtasks.filter((s) => s.getState() === 'passed').length;
+
+    return {
+      projectName: this.config.project.name,
+      completedSubtasks,
+      totalSubtasks: allSubtasks.length,
+      iterationsRun: this.iterationsRun,
+    };
   }
 }

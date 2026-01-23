@@ -232,6 +232,7 @@ function collectFormData() {
   if (!config.budgets.cursor) config.budgets.cursor = {};
   if (!config.memory) config.memory = {};
   if (!config.memory.agentsEnforcement) config.memory.agentsEnforcement = {};
+  if (!config.execution) config.execution = {};
 
   // Convert escalation empty strings to null
   if (config.tiers?.phase?.escalation === '') config.tiers.phase.escalation = null;

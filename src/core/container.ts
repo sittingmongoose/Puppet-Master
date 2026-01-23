@@ -22,6 +22,7 @@ import type { BranchStrategyConfig } from '../git/branch-strategy.js';
 import { CommitFormatter } from '../git/commit-formatter.js';
 import { PRManager } from '../git/pr-manager.js';
 import { PlatformRegistry } from '../platforms/registry.js';
+import { PlatformRouter } from './platform-router.js';
 import { VerifierRegistry } from '../verification/gate-runner.js';
 import { RegexVerifier } from '../verification/verifiers/regex-verifier.js';
 import { FileExistsVerifier } from '../verification/verifiers/file-exists-verifier.js';
@@ -206,7 +207,17 @@ export function createContainer(config: PuppetMasterConfig, projectRoot: string,
   container.register('prManager', () => new PRManager(projectRoot), 'singleton');
 
   // Register platform components
-  container.register('platformRegistry', () => new PlatformRegistry(), 'singleton');
+  container.register('platformRegistry', () => {
+    const registry = new PlatformRegistry();
+    // Initialize with default runners if needed (will be done in start command)
+    return registry;
+  }, 'singleton');
+
+  container.register('platformRouter', () => {
+    const config = container.resolve<PuppetMasterConfig>('config');
+    const platformRegistry = container.resolve<PlatformRegistry>('platformRegistry');
+    return new PlatformRouter(config, platformRegistry);
+  }, 'singleton');
 
   // Register verification components
   // NOTE: Verifiers must match canonical CriterionType from src/types/tiers.ts:

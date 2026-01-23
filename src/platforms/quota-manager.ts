@@ -5,9 +5,28 @@
  * Integrates with UsageTracker to calculate remaining quotas and detect active cooldowns.
  */
 
-import type { Platform, PlatformBudgets, TierConfig } from '../types/config.js';
+import type { Platform, PlatformBudgets, TierConfig, BudgetEnforcementConfig } from '../types/config.js';
 import type { QuotaInfo, CooldownInfo } from '../types/capabilities.js';
 import { UsageTracker } from '../memory/usage-tracker.js';
+
+/**
+ * Error thrown when quota is exhausted (hard limit reached).
+ */
+export class QuotaExhaustedError extends Error {
+  readonly name = 'QuotaExhaustedError';
+
+  constructor(
+    public readonly platform: Platform,
+    public readonly period: 'run' | 'hour' | 'day',
+    public readonly limit: number,
+    public readonly count: number,
+    public readonly resetsAt: string
+  ) {
+    super(
+      `Quota exhausted for platform ${platform} in ${period} period: ${count}/${limit} calls used. Resets at ${resetsAt}`
+    );
+  }
+}
 
 /**
  * QuotaManager tracks platform quotas and cooldowns
@@ -15,22 +34,38 @@ import { UsageTracker } from '../memory/usage-tracker.js';
 export class QuotaManager {
   private usageTracker: UsageTracker;
   private budgets: PlatformBudgets;
+  private budgetEnforcement: BudgetEnforcementConfig;
   private runStartTime: Date;
   private cooldownStarts: Map<Platform, Date> = new Map();
+  private softLimitPercent: number;
+  private hardLimitPercent: number;
 
   constructor(
     usageTracker: UsageTracker,
     budgets: PlatformBudgets,
-    runStartTime?: Date
+    budgetEnforcement: BudgetEnforcementConfig,
+    runStartTime?: Date,
+    softLimitPercent: number = 80,
+    hardLimitPercent: number = 100
   ) {
     this.usageTracker = usageTracker;
     this.budgets = budgets;
+    this.budgetEnforcement = budgetEnforcement;
     this.runStartTime = runStartTime || new Date();
+    this.softLimitPercent = softLimitPercent;
+    this.hardLimitPercent = hardLimitPercent;
   }
 
   /**
-   * Checks quota for a platform and returns quota information
-   * Calculates remaining quota across run, hour, and day periods
+   * Checks quota for a platform and returns quota information.
+   * Calculates remaining quota across run, hour, and day periods.
+   * 
+   * Throws QuotaExhaustedError when hard limit is reached.
+   * Logs warning when soft limit is reached but allows execution.
+   * 
+   * @param platform - Platform to check quota for
+   * @returns QuotaInfo with remaining quota and reset time
+   * @throws QuotaExhaustedError when hard limit (100%) is reached
    */
   async checkQuota(platform: Platform): Promise<QuotaInfo> {
     const budget = this.budgets[platform];
@@ -62,6 +97,28 @@ export class QuotaManager {
 
     // Calculate reset time based on period
     const resetsAt = this.calculateResetTime(mostRestrictive.period);
+
+    // Calculate percentage used
+    const percentageUsed = (mostRestrictive.count / mostRestrictive.limit) * 100;
+
+    // Check hard limit (100% or configured hardLimitPercent)
+    if (percentageUsed >= this.hardLimitPercent) {
+      throw new QuotaExhaustedError(
+        platform,
+        mostRestrictive.period,
+        mostRestrictive.limit,
+        mostRestrictive.count,
+        resetsAt
+      );
+    }
+
+    // Check soft limit (warnAtPercentage or configured softLimitPercent)
+    const softLimit = this.budgetEnforcement.warnAtPercentage || this.softLimitPercent;
+    if (percentageUsed >= softLimit) {
+      console.warn(
+        `[QuotaManager] Soft limit warning for ${platform}: ${mostRestrictive.count}/${mostRestrictive.limit} calls used (${percentageUsed.toFixed(1)}%) in ${mostRestrictive.period} period. Resets at ${resetsAt}`
+      );
+    }
 
     return {
       remaining: Math.max(0, mostRestrictive.remaining),

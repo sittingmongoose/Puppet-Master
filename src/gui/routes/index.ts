@@ -8,4 +8,6 @@ export { createWizardRoutes } from './wizard.js';
 export { createConfigRoutes } from './config.js';
 export { createControlsRoutes } from './controls.js';
 export { createEvidenceRoutes } from './evidence.js';
+export { createCoverageRoutes } from './coverage.js';
 export { createDoctorRoutes } from './doctor.js';
+export { createSettingsRoutes } from './settings.js';

@@ -48,6 +48,24 @@ export interface SpawnRequest {
   model?: string;
   contextFiles: string[];
   iterationId: string;
+  /**
+   * Optional custom command and args. If provided, these will be used instead
+   * of building the command internally. This allows platform runners to use
+   * their own command-building logic while still benefiting from FreshSpawner's
+   * git state verification, audit logging, and timeout handling.
+   */
+  customCommand?: string;
+  customArgs?: string[];
+  /**
+   * Optional custom environment variables to merge with the base environment.
+   * Platform runners can use this to set platform-specific environment variables.
+   */
+  customEnv?: Record<string, string>;
+  /**
+   * Whether to write the prompt to stdin instead of passing it as an argument.
+   * Some platforms (like Cursor) write the prompt to stdin.
+   */
+  writePromptToStdin?: boolean;
 }
 
 export interface SpawnResult {
@@ -108,7 +126,16 @@ export class FreshSpawner {
     const tempFiles = await this.copyContextFiles(request.contextFiles);
 
     const env = this.setEnvironment(request.iterationId);
-    const { command, args } = this.buildCommand(request);
+    
+    // Merge custom environment variables if provided
+    if (request.customEnv) {
+      Object.assign(env, request.customEnv);
+    }
+
+    // Use custom command/args if provided, otherwise build internally
+    const { command, args } = request.customCommand && request.customArgs
+      ? { command: request.customCommand, args: request.customArgs }
+      : this.buildCommand(request);
 
     const proc: ChildProcess = spawn(command, args, {
       cwd: this.config.workingDirectory,
@@ -127,6 +154,12 @@ export class FreshSpawner {
         // ignore
       }
       throw new Error('FreshSpawner spawned process without expected stdio streams');
+    }
+
+    // Write prompt to stdin if requested (some platforms like Cursor write prompt to stdin)
+    if (request.writePromptToStdin && request.prompt && proc.stdin) {
+      proc.stdin.write(request.prompt);
+      proc.stdin.end();
     }
 
     const processId = proc.pid;

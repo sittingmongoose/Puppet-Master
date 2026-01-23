@@ -18,8 +18,39 @@ vi.mock('../../memory/prd-manager.js', () => ({
   PrdManager: vi.fn(),
 }));
 
+vi.mock('../../core/checkpoint-manager.js', () => ({
+  CheckpointManager: vi.fn(),
+}));
+
+vi.mock('../../platforms/quota-manager.js', () => ({
+  QuotaManager: vi.fn(),
+  QuotaExhaustedError: class QuotaExhaustedError extends Error {
+    constructor(
+      public platform: string,
+      public period: string,
+      public limit: number,
+      public count: number,
+      public resetsAt: string
+    ) {
+      super('Quota exhausted');
+    }
+  },
+}));
+
+vi.mock('../../memory/usage-tracker.js', () => ({
+  UsageTracker: vi.fn(),
+}));
+
+vi.mock('../../start-chain/validators/coverage-validator.js', () => ({
+  CoverageValidator: vi.fn(),
+}));
+
 import { ConfigManager } from '../../config/config-manager.js';
 import { PrdManager } from '../../memory/prd-manager.js';
+import { CheckpointManager } from '../../core/checkpoint-manager.js';
+import { QuotaManager } from '../../platforms/quota-manager.js';
+import { UsageTracker } from '../../memory/usage-tracker.js';
+import { CoverageValidator } from '../../start-chain/validators/coverage-validator.js';
 
 describe('StatusCommand', () => {
   let command: StatusCommand;
@@ -430,9 +461,10 @@ describe('statusAction', () => {
 
       const logCalls = (console.log as ReturnType<typeof vi.fn>).mock.calls;
       const output = logCalls.map(call => call[0]).join('\n');
-      expect(output).toContain('Current Phase: PH-001');
-      expect(output).toContain('Current Task: TK-001-001');
-      expect(output).toContain('Current Subtask: ST-001-001-001');
+      expect(output).toContain('Current:');
+      expect(output).toContain('Phase: PH-001');
+      expect(output).toContain('Task: TK-001-001');
+      expect(output).toContain('Subtask: ST-001-001-001');
     });
 
     it('should infer current items from statuses', async () => {
@@ -443,7 +475,8 @@ describe('statusAction', () => {
 
       const logCalls = (console.log as ReturnType<typeof vi.fn>).mock.calls;
       const output = logCalls.map(call => call[0]).join('\n');
-      expect(output).toContain('Current Phase: PH-001');
+      expect(output).toContain('Current:');
+      expect(output).toContain('Phase: PH-001');
     });
 
     it('should show progress from metadata', async () => {
@@ -536,6 +569,312 @@ describe('statusAction', () => {
         expect.stringContaining('PRD error')
       );
       expect(process.exit).toHaveBeenCalledWith(1);
+    });
+  });
+
+  describe('completion percentage', () => {
+    it('should calculate completion percentage correctly', async () => {
+      const prd = createSamplePRD();
+      prd.metadata.completedPhases = 1;
+      prd.metadata.completedTasks = 1;
+      prd.metadata.completedSubtasks = 1;
+      mockPrdManager.load.mockResolvedValue(prd);
+
+      await statusAction({ json: true });
+
+      const logCalls = (console.log as ReturnType<typeof vi.fn>).mock.calls;
+      const output = logCalls[0]![0] as string;
+      const parsed = JSON.parse(output);
+      expect(parsed.completionPercentage).toBe(100);
+    });
+
+    it('should calculate partial completion percentage', async () => {
+      const prd = createSamplePRD();
+      prd.metadata.completedPhases = 0;
+      prd.metadata.completedTasks = 1;
+      prd.metadata.completedSubtasks = 0;
+      mockPrdManager.load.mockResolvedValue(prd);
+
+      await statusAction({ json: true });
+
+      const logCalls = (console.log as ReturnType<typeof vi.fn>).mock.calls;
+      const output = logCalls[0]![0] as string;
+      const parsed = JSON.parse(output);
+      expect(parsed.completionPercentage).toBe(33); // 1/3 = 33%
+    });
+
+    it('should show completion percentage in text output', async () => {
+      const prd = createSamplePRD();
+      prd.metadata.completedPhases = 1;
+      prd.metadata.completedTasks = 1;
+      prd.metadata.completedSubtasks = 1;
+      mockPrdManager.load.mockResolvedValue(prd);
+
+      await statusAction({});
+
+      const logCalls = (console.log as ReturnType<typeof vi.fn>).mock.calls;
+      const output = logCalls.map(call => call[0]).join('\n');
+      expect(output).toMatch(/Completion: \d+%/);
+    });
+  });
+
+  describe('failed items', () => {
+    it('should detect failed phases', async () => {
+      const prd = createSamplePRD();
+      prd.phases[0]!.status = 'failed';
+      mockPrdManager.load.mockResolvedValue(prd);
+
+      await statusAction({ json: true });
+
+      const logCalls = (console.log as ReturnType<typeof vi.fn>).mock.calls;
+      const output = logCalls[0]![0] as string;
+      const parsed = JSON.parse(output);
+      expect(parsed.failedItems).toBeDefined();
+      expect(parsed.failedItems).toHaveLength(1);
+      expect(parsed.failedItems[0]).toMatchObject({
+        id: 'PH-001',
+        title: 'Phase 1',
+        type: 'phase',
+      });
+    });
+
+    it('should detect failed tasks', async () => {
+      const prd = createSamplePRD();
+      prd.phases[0]!.tasks[0]!.status = 'failed';
+      mockPrdManager.load.mockResolvedValue(prd);
+
+      await statusAction({ json: true });
+
+      const logCalls = (console.log as ReturnType<typeof vi.fn>).mock.calls;
+      const output = logCalls[0]![0] as string;
+      const parsed = JSON.parse(output);
+      expect(parsed.failedItems).toBeDefined();
+      expect(parsed.failedItems[0]).toMatchObject({
+        id: 'TK-001-001',
+        title: 'Task 1',
+        type: 'task',
+      });
+    });
+
+    it('should detect failed subtasks', async () => {
+      const prd = createSamplePRD();
+      prd.phases[0]!.tasks[0]!.subtasks[0]!.status = 'failed';
+      mockPrdManager.load.mockResolvedValue(prd);
+
+      await statusAction({ json: true });
+
+      const logCalls = (console.log as ReturnType<typeof vi.fn>).mock.calls;
+      const output = logCalls[0]![0] as string;
+      const parsed = JSON.parse(output);
+      expect(parsed.failedItems).toBeDefined();
+      expect(parsed.failedItems[0]).toMatchObject({
+        id: 'ST-001-001-001',
+        title: 'Subtask 1',
+        type: 'subtask',
+      });
+    });
+
+    it('should show failed items in text output', async () => {
+      const prd = createSamplePRD();
+      prd.phases[0]!.status = 'failed';
+      mockPrdManager.load.mockResolvedValue(prd);
+
+      await statusAction({});
+
+      const logCalls = (console.log as ReturnType<typeof vi.fn>).mock.calls;
+      const output = logCalls.map(call => call[0]).join('\n');
+      expect(output).toContain('Failed Items:');
+      expect(output).toContain('phase: PH-001');
+    });
+
+    it('should not include failedItems when none exist', async () => {
+      await statusAction({ json: true });
+
+      const logCalls = (console.log as ReturnType<typeof vi.fn>).mock.calls;
+      const output = logCalls[0]![0] as string;
+      const parsed = JSON.parse(output);
+      expect(parsed.failedItems).toBeUndefined();
+    });
+  });
+
+  describe('checkpoint info', () => {
+    it('should include checkpoint info when available', async () => {
+      const mockCheckpointManager = {
+        listCheckpoints: vi.fn().mockResolvedValue([
+          {
+            id: 'checkpoint-123',
+            timestamp: '2026-01-23T10:00:00Z',
+            position: {
+              phaseId: 'PH-001',
+              taskId: 'TK-001-001',
+              subtaskId: 'ST-001-001-001',
+            },
+            metadata: {
+              projectName: 'TestProject',
+              completedSubtasks: 5,
+              totalSubtasks: 10,
+              iterationsRun: 15,
+            },
+          },
+        ]),
+      };
+
+      (CheckpointManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(
+        () => mockCheckpointManager
+      );
+
+      await statusAction({ json: true });
+
+      const logCalls = (console.log as ReturnType<typeof vi.fn>).mock.calls;
+      const output = logCalls[0]![0] as string;
+      const parsed = JSON.parse(output);
+      expect(parsed.checkpoint).toBeDefined();
+      expect(parsed.checkpoint.id).toBe('checkpoint-123');
+      expect(parsed.checkpoint.position.phaseId).toBe('PH-001');
+    });
+
+    it('should handle missing checkpoints gracefully', async () => {
+      const mockCheckpointManager = {
+        listCheckpoints: vi.fn().mockResolvedValue([]),
+      };
+
+      (CheckpointManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(
+        () => mockCheckpointManager
+      );
+
+      await statusAction({ json: true });
+
+      const logCalls = (console.log as ReturnType<typeof vi.fn>).mock.calls;
+      const output = logCalls[0]![0] as string;
+      const parsed = JSON.parse(output);
+      expect(parsed.checkpoint).toBeUndefined();
+    });
+  });
+
+  describe('budget info', () => {
+    it('should include budget info when available', async () => {
+      const mockUsageTracker = {
+        getSummary: vi.fn().mockResolvedValue({
+          platform: 'cursor',
+          totalCalls: 25,
+          totalTokens: 50000,
+          totalDurationMs: 4500000,
+          successCount: 25,
+          failureCount: 0,
+        }),
+      };
+
+      const mockQuotaManager = {
+        checkQuota: vi.fn().mockResolvedValue({
+          remaining: Number.MAX_SAFE_INTEGER,
+          limit: Number.MAX_SAFE_INTEGER,
+          resetsAt: new Date().toISOString(),
+          period: 'run',
+        }),
+        checkCooldown: vi.fn().mockResolvedValue({
+          active: false,
+          endsAt: null,
+          reason: null,
+        }),
+      };
+
+      (UsageTracker as unknown as ReturnType<typeof vi.fn>).mockImplementation(
+        () => mockUsageTracker
+      );
+      (QuotaManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(
+        () => mockQuotaManager
+      );
+
+      await statusAction({ json: true });
+
+      const logCalls = (console.log as ReturnType<typeof vi.fn>).mock.calls;
+      const output = logCalls[0]![0] as string;
+      const parsed = JSON.parse(output);
+      expect(parsed.budget).toBeDefined();
+      expect(parsed.budget.platforms).toBeDefined();
+      expect(Array.isArray(parsed.budget.platforms)).toBe(true);
+    });
+
+    it('should handle quota exhaustion gracefully', async () => {
+      const { QuotaExhaustedError } = await import('../../platforms/quota-manager.js');
+
+      const mockUsageTracker = {
+        getSummary: vi.fn().mockResolvedValue({
+          platform: 'claude',
+          totalCalls: 5,
+          totalTokens: 10000,
+          totalDurationMs: 50000,
+          successCount: 5,
+          failureCount: 0,
+        }),
+      };
+
+      const mockQuotaManager = {
+        checkQuota: vi.fn().mockRejectedValue(
+          new QuotaExhaustedError('claude', 'hour', 5, 5, new Date().toISOString())
+        ),
+        checkCooldown: vi.fn().mockResolvedValue({
+          active: false,
+          endsAt: null,
+          reason: null,
+        }),
+      };
+
+      (UsageTracker as unknown as ReturnType<typeof vi.fn>).mockImplementation(
+        () => mockUsageTracker
+      );
+      (QuotaManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(
+        () => mockQuotaManager
+      );
+
+      // Should not throw, should skip exhausted platforms
+      await statusAction({ json: true });
+
+      const logCalls = (console.log as ReturnType<typeof vi.fn>).mock.calls;
+      const output = logCalls[0]![0] as string;
+      const parsed = JSON.parse(output);
+      // Budget might be undefined when all platforms fail, which is acceptable
+      // Just verify the command didn't crash
+      expect(parsed).toHaveProperty('project');
+    });
+  });
+
+  describe('JSON output structure', () => {
+    it('should include all new fields in JSON output', async () => {
+      await statusAction({ json: true });
+
+      const logCalls = (console.log as ReturnType<typeof vi.fn>).mock.calls;
+      const output = logCalls[0]![0] as string;
+      const parsed = JSON.parse(output);
+
+      // Check all required fields exist
+      expect(parsed).toHaveProperty('project');
+      expect(parsed).toHaveProperty('state');
+      expect(parsed).toHaveProperty('progress');
+      expect(parsed).toHaveProperty('completionPercentage');
+      // Optional fields may be undefined, but the property should exist in the type
+      // In JSON, undefined properties are omitted, so we check they're not required
+      // The type system ensures they exist when present
+      expect(typeof parsed.failedItems === 'undefined' || Array.isArray(parsed.failedItems)).toBe(true);
+      expect(typeof parsed.checkpoint === 'undefined' || typeof parsed.checkpoint === 'object').toBe(true);
+      expect(typeof parsed.coverage === 'undefined' || typeof parsed.coverage === 'object').toBe(true);
+      expect(typeof parsed.budget === 'undefined' || typeof parsed.budget === 'object').toBe(true);
+    });
+
+    it('should maintain backward compatibility with existing JSON consumers', async () => {
+      await statusAction({ json: true });
+
+      const logCalls = (console.log as ReturnType<typeof vi.fn>).mock.calls;
+      const output = logCalls[0]![0] as string;
+      const parsed = JSON.parse(output);
+
+      // Original fields should still be present
+      expect(parsed).toHaveProperty('project');
+      expect(parsed).toHaveProperty('state');
+      expect(parsed).toHaveProperty('progress');
+      expect(parsed.progress).toHaveProperty('phases');
+      expect(parsed.progress).toHaveProperty('tasks');
+      expect(parsed.progress).toHaveProperty('subtasks');
     });
   });
 });
