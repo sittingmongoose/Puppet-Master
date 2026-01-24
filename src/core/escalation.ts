@@ -16,12 +16,16 @@ import type { GateResult, Criterion, TestCommand, TestPlan } from '../types/tier
 import type { PRD, Phase, Subtask, Task } from '../types/prd.js';
 import { TierNode } from './tier-node.js';
 import { TierStateManager } from './tier-state-manager.js';
+import { mapFailureTypeToChainKey, selectEscalationChainStep, toTierType } from './escalation-chain.js';
+import type { EscalationChainFailureType } from './escalation-chain.js';
+import type { EscalationChainStepConfig } from '../types/config.js';
 
-export type EscalationAction = 'self_fix' | 'kick_down' | 'escalate' | 'pause';
+export type EscalationAction = 'self_fix' | 'kick_down' | 'escalate' | 'pause' | 'retry';
 
 export interface EscalationDecision {
   action: EscalationAction;
   reason: string;
+  notify?: boolean;
   newSubtasks?: SubtaskSpec[];
   newTasks?: TaskSpec[];
   reopenTaskIds?: string[];
@@ -46,12 +50,14 @@ export interface TaskSpec {
 export interface FailureContext {
   tier: TierNode;
   gateResult: GateResult;
-  failureType: 'test' | 'acceptance' | 'timeout' | 'error';
+  failureType: FailureType;
   failureCount: number;
   maxAttempts: number;
 }
 
-export interface EscalationConfig {
+export type FailureType = EscalationChainFailureType;
+
+interface ResolvedEscalationConfig {
   selfFixEnabled: boolean;
   maxSelfFixAttempts: number;
   kickDownEnabled: boolean;
@@ -70,10 +76,21 @@ export class Escalation {
   }
 
   determineAction(context: FailureContext): EscalationDecision {
-    const escalationConfig = this.resolveEscalationConfig(context);
     const failureReason = context.gateResult.failureReason ?? 'No failureReason provided.';
 
-    if (context.failureCount >= escalationConfig.escalateAfterAttempts || context.failureCount >= context.maxAttempts) {
+    // Hard ceiling: never exceed the tier's max attempts.
+    if (context.failureCount >= context.maxAttempts) {
+      return this.createEscalateDecision(context, `Exceeded attempt limits: ${failureReason}`);
+    }
+
+    const chainDecision = this.determineActionFromChain(context);
+    if (chainDecision) {
+      return chainDecision;
+    }
+
+    const escalationConfig = this.resolveEscalationConfig(context);
+
+    if (context.failureCount >= escalationConfig.escalateAfterAttempts) {
       return this.createEscalateDecision(context, `Exceeded attempt limits: ${failureReason}`);
     }
 
@@ -118,12 +135,31 @@ export class Escalation {
     return this.createEscalateDecision(context, `Escalating due to failure type or configuration: ${failureReason}`);
   }
 
+  // NOTE: determineActionFromChain is implemented later in this class.
+  // A previous implementation existed here; it was removed to avoid duplicate
+  // method definitions (TS2393).
+
   async executeSelfFix(decision: EscalationDecision, tier: TierNode): Promise<void> {
     if (decision.action !== 'self_fix') {
       throw new Error(`executeSelfFix called with non-self_fix decision: ${decision.action}`);
     }
 
     if (tier.getState() === 'gating') {
+      tier.stateMachine.send({ type: 'GATE_FAILED_MINOR' });
+    } else if (tier.getState() === 'failed') {
+      tier.stateMachine.send({ type: 'RETRY' });
+    }
+
+    await this.tierStateManager.syncToPrd();
+  }
+
+  async executeRetry(decision: EscalationDecision, tier: TierNode): Promise<void> {
+    if (decision.action !== 'retry') {
+      throw new Error(`executeRetry called with non-retry decision: ${decision.action}`);
+    }
+
+    if (tier.getState() === 'gating') {
+      // Best-effort: re-run by transitioning back to running.
       tier.stateMachine.send({ type: 'GATE_FAILED_MINOR' });
     } else if (tier.getState() === 'failed') {
       tier.stateMachine.send({ type: 'RETRY' });
@@ -233,7 +269,135 @@ export class Escalation {
     await this.tierStateManager.syncToPrd();
   }
 
-  private resolveEscalationConfig(context: FailureContext): EscalationConfig {
+  private determineActionFromChain(context: FailureContext): EscalationDecision | null {
+    const chains = this.config.escalation?.chains;
+    if (!chains) {
+      return null;
+    }
+
+    const chainKey = mapFailureTypeToChainKey(context.failureType);
+    const chain = (chains as Record<string, EscalationChainStepConfig[] | undefined>)[chainKey];
+    if (!chain || chain.length === 0) {
+      return null;
+    }
+
+    const attempt = context.failureCount + 1; // 1-based
+    const selection = selectEscalationChainStep(chain, attempt);
+    const supportedStep = this.findSupportedChainStep(chain, selection.index, context);
+    if (!supportedStep) {
+      return null;
+    }
+
+    return this.buildDecisionFromChainStep(supportedStep, context, attempt);
+  }
+
+  private findSupportedChainStep(
+    chain: readonly EscalationChainStepConfig[],
+    startIndex: number,
+    context: FailureContext
+  ): EscalationChainStepConfig | null {
+    for (let i = Math.max(0, startIndex); i < chain.length; i += 1) {
+      const step = chain[i];
+      if (this.isChainStepSupported(step, context)) {
+        return step;
+      }
+    }
+    return null;
+  }
+
+  private isChainStepSupported(step: EscalationChainStepConfig, context: FailureContext): boolean {
+    switch (step.action) {
+      case 'self_fix':
+        return Boolean(this.config.tiers[context.tier.type].selfFix);
+      case 'kick_down':
+        return context.tier.type === 'task' || context.tier.type === 'phase';
+      case 'retry':
+      case 'pause':
+        return true;
+      case 'escalate': {
+        const targetType = toTierType(step.to) ?? this.getEscalationTarget(context.tier);
+        const canEscalate = targetType !== context.tier.type || Boolean(context.tier.parent);
+        if (!canEscalate) {
+          return false;
+        }
+        return Boolean(Escalation.findAncestorOfType(context.tier, targetType));
+      }
+      default: {
+        const exhaustive: never = step.action;
+        throw new Error(`Unhandled escalation chain action: ${exhaustive}`);
+      }
+    }
+  }
+
+  private buildDecisionFromChainStep(step: EscalationChainStepConfig, context: FailureContext, attempt: number): EscalationDecision {
+    const failureReason = context.gateResult.failureReason ?? 'No failureReason provided.';
+    const notify = step.notify === true;
+    const failureLabel =
+      context.failureType === 'test_failure' ? 'test failure' : context.failureType.replace(/_/g, ' ');
+
+    switch (step.action) {
+      case 'retry':
+        return {
+          action: 'retry',
+          notify,
+          reason: `Retrying after ${failureLabel} (attempt ${attempt}/${context.maxAttempts}): ${failureReason}`,
+        };
+
+      case 'self_fix':
+        return {
+          action: 'self_fix',
+          notify,
+          reason: `Attempting self-fix after ${failureLabel} (attempt ${attempt}/${context.maxAttempts}): ${failureReason}`,
+          selfFixInstructions: this.buildSelfFixInstructions(context),
+        };
+
+      case 'kick_down': {
+        if (context.tier.type === 'phase') {
+          const reopenTaskIds = this.extractReferencedTaskIds(failureReason).filter((taskId) => taskId.startsWith('TK-'));
+          const tasks = this.generateKickDownTasks(context);
+          return {
+            action: 'kick_down',
+            notify,
+            reason: `Kick-down (phase→task) after ${failureLabel}: ${failureReason}`,
+            newTasks: tasks,
+            reopenTaskIds,
+          };
+        }
+
+        const subtasks = this.generateKickDownSubtasks(context);
+        return {
+          action: 'kick_down',
+          notify,
+          reason: `Kick-down (task→subtask) after ${failureLabel}: ${failureReason}`,
+          newSubtasks: subtasks,
+        };
+      }
+
+      case 'pause':
+        return {
+          action: 'pause',
+          notify,
+          reason: `Paused by escalation chain after ${failureLabel}: ${failureReason}`,
+        };
+
+      case 'escalate': {
+        const targetType = toTierType(step.to) ?? this.getEscalationTarget(context.tier);
+        return {
+          action: 'escalate',
+          notify,
+          escalateTo: targetType,
+          reason: `Escalating by chain to ${targetType} after ${failureLabel}: ${failureReason}`,
+        };
+      }
+
+      default: {
+        const exhaustive: never = step.action;
+        throw new Error(`Unhandled escalation chain action: ${exhaustive}`);
+      }
+    }
+  }
+
+  private resolveEscalationConfig(context: FailureContext): ResolvedEscalationConfig {
     const tierConfig = this.config.tiers[context.tier.type];
 
     return {
@@ -244,7 +408,7 @@ export class Escalation {
     };
   }
 
-  private isSelfFixable(context: FailureContext, config: EscalationConfig): boolean {
+  private isSelfFixable(context: FailureContext, config: ResolvedEscalationConfig): boolean {
     if (!config.selfFixEnabled) {
       return false;
     }
@@ -260,7 +424,7 @@ export class Escalation {
     return context.failureCount < context.maxAttempts;
   }
 
-  private shouldKickDown(context: FailureContext, config: EscalationConfig): boolean {
+  private shouldKickDown(context: FailureContext, config: ResolvedEscalationConfig): boolean {
     if (!config.kickDownEnabled) {
       return false;
     }
@@ -277,7 +441,7 @@ export class Escalation {
     const testCommands = Escalation.getTestCommandsFromTier(context.tier);
 
     switch (context.failureType) {
-      case 'test':
+      case 'test_failure':
         return [
           {
             title: `Fix failing tests for ${context.tier.id}`,
@@ -302,6 +466,7 @@ export class Escalation {
           },
         ];
       case 'timeout':
+      case 'structural':
       case 'error':
         return [
           {
@@ -326,7 +491,7 @@ export class Escalation {
     const testCommands = Escalation.getTestCommandsFromTier(context.tier);
 
     switch (context.failureType) {
-      case 'test':
+      case 'test_failure':
         return [
           {
             title: `Fix failing tests for phase ${context.tier.id}`,
@@ -351,6 +516,7 @@ export class Escalation {
           },
         ];
       case 'timeout':
+      case 'structural':
       case 'error':
         return [
           {
@@ -555,7 +721,7 @@ export class Escalation {
   }
 
   private static isMinorFailure(failureType: FailureContext['failureType']): boolean {
-    return failureType === 'test' || failureType === 'acceptance';
+    return failureType === 'test_failure' || failureType === 'acceptance';
   }
 
   private static getTestCommandsFromTier(tier: TierNode): string[] {

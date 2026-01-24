@@ -198,13 +198,17 @@ export class QuotaManager {
    * Composite check to determine if execution can proceed
    */
   async canProceed(platform: Platform): Promise<{ allowed: boolean; reason?: string }> {
-    // Check quota
-    const quotaInfo = await this.checkQuota(platform);
-    if (quotaInfo.remaining <= 0) {
-      return {
-        allowed: false,
-        reason: `Quota exhausted for ${quotaInfo.period} period (${quotaInfo.remaining}/${quotaInfo.limit})`,
-      };
+    // Check quota.
+    // `checkQuota()` enforces hard limits by throwing QuotaExhaustedError, but callers of
+    // `canProceed()` should receive a structured allow/deny result instead of an exception.
+    let quotaInfo: QuotaInfo;
+    try {
+      quotaInfo = await this.checkQuota(platform);
+    } catch (error) {
+      if (error instanceof QuotaExhaustedError) {
+        return { allowed: false, reason: error.message };
+      }
+      throw error;
     }
 
     // Check cooldown
@@ -314,13 +318,20 @@ export class QuotaManager {
       return;
     }
 
-    // Check if any limit was hit
-    const quotaInfo = await this.checkQuota(platform);
-    
-    // If quota is exhausted (remaining <= 0), trigger cooldown
-    if (quotaInfo.remaining <= 0) {
-      const now = new Date();
-      this.cooldownStarts.set(platform, now);
+    // Check if any limit was hit.
+    // `checkQuota()` may throw when hard limits are reached; cooldown should still be triggered,
+    // but recordUsage() must not fail just because we hit a limit.
+    try {
+      const quotaInfo = await this.checkQuota(platform);
+      if (quotaInfo.remaining <= 0) {
+        this.cooldownStarts.set(platform, new Date());
+      }
+    } catch (error) {
+      if (error instanceof QuotaExhaustedError) {
+        this.cooldownStarts.set(platform, new Date());
+        return;
+      }
+      throw error;
     }
   }
 }

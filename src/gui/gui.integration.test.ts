@@ -12,6 +12,7 @@
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import type { Server as HTTPServer } from 'http';
+import { request as httpRequest } from 'http';
 import request from 'supertest';
 import { WebSocket } from 'ws';
 import { EventBus } from '../logging/event-bus.js';
@@ -465,6 +466,130 @@ describe('GUI Integration Tests', () => {
         ws.on('error', (error) => {
           reject(error);
         });
+      });
+    });
+  });
+
+  describe('SSE Event Stream', () => {
+    it('GET /api/events/stream returns text/event-stream', async () => {
+      const streamUrl = new URL('/api/events/stream', testContext!.baseUrl);
+
+      await new Promise<void>((resolve, reject) => {
+        const req = httpRequest(
+          {
+            method: 'GET',
+            hostname: streamUrl.hostname,
+            port: streamUrl.port,
+            path: streamUrl.pathname,
+            headers: { Accept: 'text/event-stream' },
+          },
+          (res) => {
+            try {
+              expect(res.statusCode).toBe(200);
+              expect(res.headers['content-type']).toMatch(/text\/event-stream/);
+              resolve();
+            } catch (error) {
+              reject(error);
+            } finally {
+              req.destroy();
+              res.destroy();
+            }
+          }
+        );
+
+        req.on('error', reject);
+        req.end();
+      });
+    });
+
+    it('streams EventBus events in SSE format and cleans up on disconnect', async () => {
+      const streamUrl = new URL('/api/events/stream', testContext!.baseUrl);
+
+      await new Promise<void>((resolve, reject) => {
+        const req = httpRequest(
+          {
+            method: 'GET',
+            hostname: streamUrl.hostname,
+            port: streamUrl.port,
+            path: streamUrl.pathname,
+            headers: { Accept: 'text/event-stream' },
+          },
+          (res) => {
+            res.setEncoding('utf8');
+
+            let buffer = '';
+            const timeout = setTimeout(() => {
+              cleanup();
+              reject(new Error('Timed out waiting for SSE event'));
+            }, 3000);
+
+            const cleanup = () => {
+              clearTimeout(timeout);
+              res.removeAllListeners('data');
+              req.destroy();
+              res.destroy();
+            };
+
+            res.on('data', (chunk) => {
+              buffer += chunk;
+
+              // Look for a translated state_changed event.
+              if (!buffer.includes('event: state_change')) {
+                return;
+              }
+
+              const frames = buffer
+                .split('\n\n')
+                .map((f) => f.trim())
+                .filter(Boolean);
+              const frame = frames.find((f) => f.includes('event: state_change') && f.includes('data: '));
+              if (!frame) {
+                return;
+              }
+
+              const dataLine = frame
+                .split('\n')
+                .map((l) => l.trim())
+                .find((l) => l.startsWith('data: '));
+              if (!dataLine) {
+                return;
+              }
+
+              try {
+                const parsed = JSON.parse(dataLine.slice('data: '.length));
+                expect(parsed.type).toBe('state_change');
+                expect(parsed.payload).toEqual({
+                  state: 'executing',
+                  previousState: 'idle',
+                });
+
+                cleanup();
+
+                // Allow the server's `req.on('close')` cleanup to run.
+                setTimeout(() => {
+                  try {
+                    expect(testContext!.eventBus.getSubscriptionCount()).toBe(0);
+                    resolve();
+                  } catch (error) {
+                    reject(error);
+                  }
+                }, 25);
+              } catch (error) {
+                cleanup();
+                reject(error);
+              }
+            });
+
+            // Emit after the stream is established.
+            setTimeout(() => {
+              const testEvent: PuppetMasterEvent = { type: 'state_changed', from: 'idle', to: 'executing' };
+              testContext!.eventBus.emit(testEvent);
+            }, 25);
+          }
+        );
+
+        req.on('error', reject);
+        req.end();
       });
     });
   });

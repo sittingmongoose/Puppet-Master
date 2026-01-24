@@ -288,6 +288,7 @@ describe('createContainer', () => {
       'browser_verify',
       'command',
       'ai',
+      'script',
     ];
 
     for (const type of canonicalTypes) {

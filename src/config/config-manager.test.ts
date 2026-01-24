@@ -159,6 +159,16 @@ budgets:
     max_calls_per_hour: "unlimited"
     max_calls_per_day: "unlimited"
     fallback_platform: null
+  gemini:
+    max_calls_per_run: 100
+    max_calls_per_hour: "unlimited"
+    max_calls_per_day: "unlimited"
+    fallback_platform: "copilot"
+  copilot:
+    max_calls_per_run: "unlimited"
+    max_calls_per_hour: "unlimited"
+    max_calls_per_day: "unlimited"
+    fallback_platform: "gemini"
 budget_enforcement:
   on_limit_reached: "fallback"
   warn_at_percentage: 80
@@ -170,6 +180,8 @@ cli_paths:
   cursor: "cursor-agent"
   codex: "codex"
   claude: "claude"
+  gemini: "gemini"
+  copilot: "copilot"
 `;
       await writeFile(testConfigPath, yamlContent, 'utf-8');
 
@@ -249,6 +261,16 @@ budgets:
     max_calls_per_hour: "unlimited"
     max_calls_per_day: "unlimited"
     fallback_platform: null
+  gemini:
+    max_calls_per_run: 1
+    max_calls_per_hour: "unlimited"
+    max_calls_per_day: "unlimited"
+    fallback_platform: null
+  copilot:
+    max_calls_per_run: "unlimited"
+    max_calls_per_hour: "unlimited"
+    max_calls_per_day: "unlimited"
+    fallback_platform: null
 budget_enforcement:
   on_limit_reached: "pause"
   warn_at_percentage: 50
@@ -260,6 +282,8 @@ cli_paths:
   cursor: "test"
   codex: "test"
   claude: "test"
+  gemini: "test"
+  copilot: "test"
 `;
       await writeFile(testConfigPath, yamlContent, 'utf-8');
 

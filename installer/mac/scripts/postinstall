@@ -1,0 +1,29 @@
+#!/bin/sh
+set -eu
+
+INSTALL_ROOT="/usr/local/lib/puppet-master"
+BIN_DIR="/usr/local/bin"
+BIN_PATH="${BIN_DIR}/puppet-master"
+
+if [ ! -d "${INSTALL_ROOT}" ]; then
+  echo "ERROR: Expected install root missing: ${INSTALL_ROOT}" 1>&2
+  exit 1
+fi
+
+mkdir -p "${BIN_DIR}"
+
+# Prefer linking to the installed launcher, but fall back to copying.
+LAUNCHER="${INSTALL_ROOT}/bin/puppet-master"
+if [ ! -x "${LAUNCHER}" ]; then
+  echo "ERROR: Expected launcher missing or not executable: ${LAUNCHER}" 1>&2
+  exit 1
+fi
+
+rm -f "${BIN_PATH}"
+ln -s "${LAUNCHER}" "${BIN_PATH}" || {
+  cp "${LAUNCHER}" "${BIN_PATH}"
+  chmod 0755 "${BIN_PATH}"
+}
+
+echo "Installed puppet-master CLI to ${BIN_PATH}"
+

@@ -7,6 +7,12 @@
 
 export type {
   Platform,
+  Complexity,
+  TaskType,
+  ModelLevel,
+  ModelLevelConfig,
+  ModelsConfig,
+  ComplexityRoutingMatrix,
   ProjectConfig,
   CliPathsConfig,
   LoggingConfig,
@@ -21,6 +27,10 @@ export type {
   TiersConfig,
   PuppetMasterConfig,
   LoopGuardConfig,
+  EscalationChainAction,
+  EscalationChainKey,
+  EscalationChainStepConfig,
+  EscalationChainsConfig,
 } from './config.js';
 
 export type {

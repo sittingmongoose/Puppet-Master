@@ -193,6 +193,49 @@ export class GeminiRunner extends BasePlatformRunner {
    * - `<ralph>GUTTER</ralph>` - Agent stuck, cannot proceed (sets success to false)
    */
   protected parseOutput(output: string): ExecutionResult {
+    const trimmed = output.trim();
+
+    // Gemini is invoked with `--output-format json`, so non-JSON output is treated as a parsing failure.
+    // Allow stream-json (JSONL) output as well.
+    const lines = trimmed.split('\n').filter((line) => line.trim());
+    const looksLikeStreamJson =
+      lines.length >= 2 &&
+      lines.slice(0, 2).every((line) => {
+        try {
+          JSON.parse(line);
+          return true;
+        } catch {
+          return false;
+        }
+      });
+
+    if (!looksLikeStreamJson) {
+      if (!trimmed.startsWith('{')) {
+        return {
+          success: false,
+          output,
+          error: 'Failed to parse Gemini JSON output: expected JSON object',
+          exitCode: 0,
+          duration: 0,
+          processId: 0,
+        };
+      }
+
+      try {
+        JSON.parse(trimmed);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        return {
+          success: false,
+          output,
+          error: `Failed to parse Gemini JSON output: ${message}`,
+          exitCode: 0,
+          duration: 0,
+          processId: 0,
+        };
+      }
+    }
+
     // Use platform-specific parser
     const parsed = this.outputParser.parse(output);
 

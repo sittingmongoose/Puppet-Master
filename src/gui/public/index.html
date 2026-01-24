@@ -36,6 +36,7 @@
           <a href="/doctor" class="nav-link" data-page="doctor" aria-label="Doctor - Dependency Check">DOCTOR</a>
           <a href="/tiers" class="nav-link" data-page="tiers" aria-label="Tiers View">TIERS</a>
           <a href="/evidence" class="nav-link" data-page="evidence" aria-label="Evidence Viewer">EVIDENCE</a>
+          <a href="/metrics" class="nav-link" data-page="metrics" aria-label="Metrics">METRICS</a>
           <a href="/history" class="nav-link" data-page="history" aria-label="Execution History">HISTORY</a>
         </nav>
       </div>
@@ -207,6 +208,28 @@
         </div>
       </section>
 
+      <!-- Platform Health Panel -->
+      <section class="platform-health panel" aria-label="Platform health monitoring">
+        <h2 class="panel-title">Platform Health</h2>
+        <div class="doctor-table-container">
+          <table class="doctor-table health-table" aria-label="Platform health table">
+            <thead>
+              <tr>
+                <th>Platform</th>
+                <th>Status</th>
+                <th>Latency</th>
+                <th>Last Check</th>
+              </tr>
+            </thead>
+            <tbody id="health-table-body">
+              <tr>
+                <td colspan="4" class="loading-message">Loading...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       <!-- Run Controls Panel -->
       <section class="run-controls panel">
         <h2 class="panel-title" aria-label="Execution controls">Run Controls</h2>
@@ -298,6 +321,7 @@
   </main>
 
   <script src="/js/navigation.js"></script>
+  <script src="/js/event-stream.js"></script>
   <script src="/js/controls.js"></script>
   <script src="/js/dashboard.js"></script>
 </body>

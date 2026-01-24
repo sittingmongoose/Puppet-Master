@@ -1,0 +1,109 @@
+name: Build installers
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+jobs:
+  build:
+    name: Build (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            build_script: build:win
+          - os: macos-14
+            build_script: build:mac
+          - os: ubuntu-latest
+            build_script: build:linux
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build TypeScript
+        run: npm run build
+
+      - name: Install NSIS (Windows)
+        if: runner.os == 'Windows'
+        run: choco install nsis -y
+
+      - name: Install Go (Linux for nfpm)
+        if: runner.os == 'Linux'
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22.x'
+
+      - name: Install nfpm (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          go install github.com/goreleaser/nfpm/v2/cmd/nfpm@latest
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+          nfpm --version
+
+      - name: Build installer
+        run: npm run ${{ matrix.build_script }}
+
+      - name: Smoke test (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $installer = Get-ChildItem -Path "dist/installers/win32-x64" -Filter "*.exe" | Select-Object -First 1
+          if (-not $installer) { throw "Installer not found" }
+          Write-Host "Running installer: $($installer.FullName)"
+          Start-Process -FilePath $installer.FullName -ArgumentList "/S" -Wait
+          $pm = Join-Path $Env:ProgramFiles "Puppet Master\\bin\\puppet-master.cmd"
+          if (-not (Test-Path $pm)) { throw "puppet-master not found at $pm" }
+          & $pm --version
+          & $pm doctor --category runtime --json
+
+      - name: Smoke test (macOS)
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          set -euo pipefail
+          dmg="$(ls -1 dist/installers/darwin-arm64/*.dmg | head -n 1)"
+          echo "Mounting DMG: $dmg"
+          mount_dir="$(mktemp -d)"
+          hdiutil attach "$dmg" -mountpoint "$mount_dir" -nobrowse
+          pkg="$(ls -1 "$mount_dir"/*.pkg | head -n 1)"
+          echo "Installing PKG: $pkg"
+          sudo installer -pkg "$pkg" -target /
+          hdiutil detach "$mount_dir"
+          /usr/local/bin/puppet-master --version
+          /usr/local/bin/puppet-master doctor --category runtime --json
+
+      - name: Smoke test (Linux)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          set -euo pipefail
+          deb="$(ls -1 dist/installers/linux-x64/*.deb | head -n 1)"
+          rpm="$(ls -1 dist/installers/linux-x64/*.rpm | head -n 1)"
+          echo "Installing DEB: $deb"
+          sudo dpkg -i "$deb"
+          /usr/bin/puppet-master --version
+          /usr/bin/puppet-master doctor --category runtime --json
+          echo "RPM artifact exists: $rpm"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: installers-${{ matrix.os }}
+          path: dist/installers/**/*
+

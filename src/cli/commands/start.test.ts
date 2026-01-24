@@ -421,7 +421,7 @@ describe('startAction', () => {
       const initCall = mockOrchestrator.initialize.mock.calls[0][0];
       expect(initCall).toHaveProperty('configManager');
       expect(initCall).toHaveProperty('prdManager');
-      expect(initCall).toHaveProperty('platformRunner');
+      expect(initCall).toHaveProperty('platformRegistry');
     });
 
     it('should start orchestrator after initialization', async () => {

@@ -126,8 +126,32 @@ interface Subtask {
 interface Criterion {
   id: string;                    // Format: "{itemId}-AC-001", "{itemId}-AC-002", etc.
   description: string;
-  type: 'regex' | 'file_exists' | 'browser_verify' | 'command' | 'ai';
-  target: string;                // For verifier tokens: "TEST:npm test", "CLI_VERIFY:npm run typecheck", etc.
+  type: 'regex' | 'file_exists' | 'browser_verify' | 'command' | 'ai' | 'script';
+  /**
+   * Runtime target for the verifier. This should be directly executable by the runtime verifier.
+   * Examples:
+   * - command: \`npm test\`
+   * - file_exists: \`src/auth.ts\`
+   * - regex: \`package.json\`
+   * - browser_verify: \`https://example.com/login\`
+   * - script: \`.puppet-master/scripts/verify-ST-001-001-001-AC-001.sh\`
+   */
+  target: string;
+  /**
+   * Explicit verification instruction for this criterion.
+   * Use spec tokens for built-in verifiers (preferred), or a script path for script-based criteria.
+   *
+   * Examples:
+   * - \`TEST:npm test\`
+   * - \`CLI_VERIFY:npm run typecheck\`
+   * - \`FILE_VERIFY:src/auth.ts:exists\`
+   * - \`REGEX_VERIFY:package.json:"version": "1\\.0\\.0"\`
+   * - \`BROWSER_VERIFY:https://example.com/login\`
+   * - \`./verify-dark-mode.sh\`
+   */
+  verification: string;
+  /** Priority for this criterion (defaults to MUST if omitted) */
+  priority?: 'MUST' | 'SHOULD' | 'COULD';
 }
 
 interface TestPlan {

@@ -7,19 +7,21 @@
  * See ARCHITECTURE.md Section 2.1 (Core Modules) and BUILD_QUEUE_PHASE_4.md PH4-T08.
  */
 
-import type { OrchestratorState, TierType } from '../types/state.js';
+import type { OrchestratorContext, OrchestratorState, TierState, TierType } from '../types/state.js';
 import type { PuppetMasterConfig } from '../types/config.js';
 import type { TierPlan } from '../types/tiers.js';
 import type { PRD } from '../types/prd.js';
 import type { PlatformRunnerContract, ExecutionRequest, RunningProcess } from '../types/platforms.js';
 import type { PlatformRouter } from './platform-router.js';
 import { PlatformRegistry } from '../platforms/registry.js';
+import { PlatformHealthChecker } from '../platforms/health-check.js';
+import { HealthMonitor } from '../platforms/health-monitor.js';
 import type { TierEvent } from '../types/events.js';
 import type { IterationContext, IterationResult } from './execution-engine.js';
 import type { AdvancementResult } from './auto-advancement.js';
 import type { GateResult } from '../types/tiers.js';
 import type { ProgressEntry } from '../memory/progress-manager.js';
-import type { EscalationDecision } from './escalation.js';
+import type { EscalationDecision, FailureType } from './escalation.js';
 import { OrchestratorStateMachine } from './orchestrator-state-machine.js';
 import { TierStateManager } from './tier-state-manager.js';
 import { AutoAdvancement } from './auto-advancement.js';
@@ -47,6 +49,7 @@ import type { VerificationIntegration } from '../verification/verification-integ
 import type { EventBus } from '../logging/event-bus.js';
 import { spawn } from 'child_process';
 import { existsSync } from 'fs';
+import { mkdir, writeFile } from 'fs/promises';
 import { join } from 'path';
 import { validateConfig as validateConfigSchema } from '../config/config-schema.js';
 import type { Platform } from '../types/config.js';
@@ -54,7 +57,7 @@ import { resolveWorkingDirectory } from '../utils/project-paths.js';
 import { StatePersistence } from './state-persistence.js';
 import { CheckpointManager } from './checkpoint-manager.js';
 import type { CurrentPosition, CheckpointMetadata } from './checkpoint-manager.js';
-import { TierStateMachine } from './tier-state-machine.js';
+import { TierStateMachine, type TierContext } from './tier-state-machine.js';
 import {
   WorkerReviewerOrchestrator,
   shouldUseWorkerReviewer,
@@ -65,6 +68,18 @@ import { LoopGuard } from './loop-guard.js';
 import { ParallelExecutor } from './parallel-executor.js';
 import type { ParallelExecutionResult } from './parallel-executor.js';
 import { buildDependencyGraph, getParallelizableGroups, validateDependencies, DependencyCycleError } from './dependency-analyzer.js';
+import { EventLedger } from '../state/event-ledger.js';
+import { MetricsCollector } from '../metrics/metrics-collector.js';
+
+// Best-effort copy of PlatformRouter fallback preferences, used when a platform
+// is known-unhealthy and we want deterministic alternatives.
+const ROUTING_FALLBACK_CHAIN: Record<Platform, Platform[]> = {
+  cursor: ['codex', 'claude', 'gemini', 'copilot'],
+  codex: ['claude', 'cursor', 'gemini', 'copilot'],
+  claude: ['codex', 'cursor', 'gemini', 'copilot'],
+  gemini: ['copilot', 'codex', 'cursor', 'claude'],
+  copilot: ['gemini', 'codex', 'cursor', 'claude'],
+};
 
 /**
  * Validation result interface
@@ -125,11 +140,26 @@ export interface OrchestratorProgress {
   elapsedTime: number;
 }
 
+export interface PlatformHealthSnapshot {
+  platforms: Partial<
+    Record<
+      Platform,
+      {
+        status: 'healthy' | 'degraded' | 'unhealthy';
+        latencyMs: number;
+        lastCheck: string;
+        consecutiveFailures: number;
+        lastError?: string;
+      }
+    >
+  >;
+}
+
 /**
  * Main Orchestrator class
  */
 export class Orchestrator {
-  private readonly stateMachine: OrchestratorStateMachine;
+  private stateMachine: OrchestratorStateMachine;
   private readonly tierStateManager: TierStateManager;
   private readonly autoAdvancement: AutoAdvancement;
   private readonly escalation: Escalation;
@@ -141,6 +171,9 @@ export class Orchestrator {
   private readonly eventBus: EventBus | null;
   private readonly projectRoot: string;
   private readonly workingDirectory: string;
+  private eventLedger: EventLedger | null = null;
+  private healthMonitor: HealthMonitor | null = null;
+  private metricsCollector: MetricsCollector | null = null;
 
   private startedAt: Date | null = null;
   private iterationsRun: number = 0;
@@ -163,6 +196,60 @@ export class Orchestrator {
         `Invalid tier transition: ${tier.type} ${tier.id} (${from}) + ${event.type} (${reason})`
       );
     }
+
+    // Persist transition to SQLite ledger (P2-T03).
+    if (this.eventLedger) {
+      const to = tier.getState();
+      const ctx = tier.stateMachine.getContext();
+      const timestamp = new Date().toISOString();
+
+      // Event-type record (matches CLI examples like --type iteration_complete).
+      this.eventLedger.append({
+        timestamp,
+        type: event.type.toLowerCase(),
+        tierId: tier.id,
+        data: {
+          tierType: tier.type,
+          from,
+          to,
+          eventType: event.type,
+          iterationCount: ctx.iterationCount,
+          maxIterations: ctx.maxIterations,
+          lastError: ctx.lastError,
+          gateResult: ctx.gateResult,
+        },
+      });
+
+      // Generic transition record.
+      this.eventLedger.append({
+        timestamp,
+        type: 'tier_state_changed',
+        tierId: tier.id,
+        data: {
+          tierType: tier.type,
+          from,
+          to,
+          eventType: event.type,
+          iterationCount: ctx.iterationCount,
+          maxIterations: ctx.maxIterations,
+          lastError: ctx.lastError,
+          gateResult: ctx.gateResult,
+        },
+      });
+    }
+
+    // Publish tier change event (for GUI/observers).
+    if (this.eventBus) {
+      this.eventBus.emit({
+        type: 'tier_changed',
+        tierId: tier.id,
+        from,
+        to: tier.getState(),
+      });
+    }
+
+    // Record transition for metrics (primarily escalation tracking).
+    this.metricsCollector?.recordTierTransition(tier.id, from, tier.getState());
   }
 
   private ensureSubtaskReadyForIteration(subtask: TierNode): void {
@@ -228,6 +315,20 @@ export class Orchestrator {
   async initialize(deps: OrchestratorDependencies): Promise<void> {
     // Store dependencies
     (this as unknown as { deps: OrchestratorDependencies }).deps = deps;
+
+    // Platform Health Monitoring (P2-T07)
+    // Start periodic checks immediately; status is used to avoid unhealthy platforms.
+    const healthChecker = new PlatformHealthChecker(undefined, this.config.cliPaths);
+    this.healthMonitor = new HealthMonitor({
+      registry: deps.platformRegistry,
+      checker: healthChecker,
+      config: { checkIntervalMs: 30_000 },
+    });
+    await this.healthMonitor.startMonitoring(deps.platformRegistry.getAvailable());
+
+    // Initialize SQLite event ledger (P2-T03)
+    const ledgerPath = join(this.projectRoot, '.puppet-master', 'events.db');
+    (this as unknown as { eventLedger: EventLedger | null }).eventLedger = new EventLedger(ledgerPath);
 
     // Initialize tier state manager
     (this as unknown as { tierStateManager: TierStateManager }).tierStateManager = new TierStateManager(deps.prdManager);
@@ -316,8 +417,56 @@ export class Orchestrator {
       });
     }
 
-    // Initialize state machine to planning state
-    this.stateMachine.send({ type: 'INIT' });
+    // Restore orchestrator state (PRD preferred; ledger is fallback) (P2-T03).
+    const prd = await deps.prdManager.load();
+    const prdHasOrchestratorState = Boolean(prd.orchestratorState && prd.orchestratorContext);
+
+    if (prdHasOrchestratorState) {
+      this.stateMachine = new OrchestratorStateMachine({ initialState: prd.orchestratorState });
+      this.stateMachine.restoreInternalContext(prd.orchestratorContext as OrchestratorContext);
+
+      this.eventLedger?.append({
+        timestamp: new Date().toISOString(),
+        type: 'orchestrator_restored',
+        data: {
+          source: 'prd',
+          state: this.stateMachine.getCurrentState(),
+          context: this.stateMachine.getContext(),
+        },
+      });
+    } else {
+      const recovered = this.eventLedger?.recover() ?? null;
+      if (recovered) {
+        const snap = recovered.snapshot;
+        this.stateMachine = new OrchestratorStateMachine({ initialState: snap.orchestratorState });
+        this.stateMachine.restoreInternalContext(snap.orchestratorContext);
+        this.restoreTierStatesFromLedgerSnapshot(snap.tierStates);
+
+        this.eventLedger?.append({
+          timestamp: new Date().toISOString(),
+          type: 'orchestrator_restored',
+          data: {
+            source: recovered.recoveredFrom,
+            state: this.stateMachine.getCurrentState(),
+            context: this.stateMachine.getContext(),
+            lastEventTimestamp: recovered.lastEventTimestamp,
+          },
+        });
+      } else {
+        const previousState = this.stateMachine.getCurrentState();
+        this.stateMachine.send({ type: 'INIT' });
+        const newState = this.stateMachine.getCurrentState();
+
+        this.eventLedger?.append({
+          timestamp: new Date().toISOString(),
+          type: 'orchestrator_state_changed',
+          data: { from: previousState, to: newState, eventType: 'INIT', context: this.stateMachine.getContext() },
+        });
+      }
+    }
+
+    // Record an initial snapshot for crash recovery and inspection.
+    this.appendLedgerSnapshot('initialize');
 
     // Set up signal handlers for graceful shutdown with checkpoint
     this.setupSignalHandlers();
@@ -364,7 +513,20 @@ export class Orchestrator {
       });
     }
 
+    // Persist orchestrator transition (P2-T03)
+    this.eventLedger?.append({
+      timestamp: new Date().toISOString(),
+      type: 'orchestrator_state_changed',
+      data: {
+        from: previousState,
+        to: newState,
+        eventType: 'START',
+        context: this.stateMachine.getContext(),
+      },
+    });
+
     this.startedAt = new Date();
+    this.metricsCollector = new MetricsCollector({ startedAt: this.startedAt });
     this.iterationsRun = 0;
     this.loopRunning = true;
     this.loopAborted = false;
@@ -393,6 +555,18 @@ export class Orchestrator {
       });
     }
 
+    this.eventLedger?.append({
+      timestamp: new Date().toISOString(),
+      type: 'orchestrator_state_changed',
+      data: {
+        from: previousState,
+        to: newState,
+        eventType: 'PAUSE',
+        reason,
+        context: this.stateMachine.getContext(),
+      },
+    });
+
     this.loopAborted = true;
   }
 
@@ -417,6 +591,17 @@ export class Orchestrator {
       });
     }
 
+    this.eventLedger?.append({
+      timestamp: new Date().toISOString(),
+      type: 'orchestrator_state_changed',
+      data: {
+        from: previousState,
+        to: newState,
+        eventType: 'RESUME',
+        context: this.stateMachine.getContext(),
+      },
+    });
+
     this.loopRunning = true;
     this.loopAborted = false;
 
@@ -431,6 +616,9 @@ export class Orchestrator {
     this.stateMachine.send({ type: 'STOP' });
     const newState = this.stateMachine.getCurrentState();
 
+    // Stop background health checks (P2-T07).
+    this.healthMonitor?.stopMonitoring();
+
     // Publish state change event
     if (this.eventBus) {
       this.eventBus.emit({
@@ -439,6 +627,17 @@ export class Orchestrator {
         to: newState,
       });
     }
+
+    this.eventLedger?.append({
+      timestamp: new Date().toISOString(),
+      type: 'orchestrator_state_changed',
+      data: {
+        from: previousState,
+        to: newState,
+        eventType: 'STOP',
+        context: this.stateMachine.getContext(),
+      },
+    });
 
     this.loopAborted = true;
     this.loopRunning = false;
@@ -454,6 +653,9 @@ export class Orchestrator {
 
     // Sync state to PRD
     await this.tierStateManager.syncToPrd();
+
+    // Ensure ledger is flushed/closed on stop (best-effort)
+    this.eventLedger?.close();
   }
 
   /**
@@ -493,6 +695,29 @@ export class Orchestrator {
       startedAt: this.startedAt?.toISOString() ?? new Date().toISOString(),
       elapsedTime,
     };
+  }
+
+  /**
+   * Get current platform health snapshot for GUI display (P2-T07).
+   *
+   * Returns a JSON-serializable structure (Dates converted to ISO strings).
+   */
+  getPlatformHealthSnapshot(): PlatformHealthSnapshot {
+    const snapshot: PlatformHealthSnapshot['platforms'] = {};
+    const all = this.healthMonitor?.getAllHealth() ?? new Map();
+
+    for (const [platformAny, status] of all.entries()) {
+      const platform = platformAny as Platform;
+      snapshot[platform] = {
+        status: status.status,
+        latencyMs: status.latencyMs,
+        lastCheck: status.lastCheck.toISOString(),
+        consecutiveFailures: status.consecutiveFailures,
+        lastError: status.lastError,
+      };
+    }
+
+    return { platforms: snapshot };
   }
 
   /**
@@ -667,6 +892,9 @@ export class Orchestrator {
               confidence: outcome.reviewerResult.confidence,
             });
           }
+          if (outcome.reviewerResult) {
+            this.metricsCollector?.recordReviewerVerdict(subtask.id, outcome.reviewerResult.verdict);
+          }
 
           if (outcome.status === 'revise') {
             // Reviewer says REVISE - don't run gate, will retry in next iteration
@@ -712,6 +940,9 @@ export class Orchestrator {
           }
         }
 
+        // Record iteration metrics (after potential reviewer modification)
+        this.metricsCollector?.recordIteration(context, result);
+
         // Handle result (after potential reviewer modification)
         await this.handleIterationResult(result, subtask);
 
@@ -735,6 +966,9 @@ export class Orchestrator {
         // Check advancement
         const advancement = await this.autoAdvancement.checkAndAdvance();
         await this.handleAdvancement(advancement);
+
+        // Persist latest metrics snapshot for CLI/GUI consumption (best-effort).
+        await this.writeMetricsSnapshotBestEffort();
 
         this.iterationsRun++;
 
@@ -761,7 +995,23 @@ export class Orchestrator {
           });
         }
 
+        const previousState = this.stateMachine.getCurrentState();
         this.stateMachine.send({ type: 'ERROR', error: errorMessage });
+        const newState = this.stateMachine.getCurrentState();
+
+        this.eventLedger?.append({
+          timestamp: new Date().toISOString(),
+          type: 'orchestrator_state_changed',
+          data: {
+            from: previousState,
+            to: newState,
+            eventType: 'ERROR',
+            error: errorMessage,
+            context: this.stateMachine.getContext(),
+          },
+        });
+
+        this.appendLedgerSnapshot('error');
         throw error;
       }
     }
@@ -796,6 +1046,8 @@ export class Orchestrator {
 
     // Get tier plan from subtask
     const subtaskPlan: TierPlan = {
+      // Preserve any optional routing overrides carried on the plan (e.g., platform/modelLevel).
+      ...subtask.data.plan,
       id: subtask.id,
       title: subtask.data.title,
       description: subtask.data.description,
@@ -804,7 +1056,21 @@ export class Orchestrator {
     };
 
     // Use PlatformRouter to select platform for this tier
-    const platformConfig = this.deps.platformRouter.selectPlatform(subtask, 'execute', subtaskPlan);
+    let platformConfig = this.deps.platformRouter.selectPlatform(subtask, 'execute', subtaskPlan);
+
+    // Avoid unhealthy platforms when routing (P2-T07).
+    if (this.healthMonitor && !this.healthMonitor.isRoutable(platformConfig.platform)) {
+      const preferred = platformConfig.platform;
+      const orderedCandidates = [preferred, ...(ROUTING_FALLBACK_CHAIN[preferred] ?? [])];
+      const available = orderedCandidates.filter((p) => this.deps.platformRegistry.get(p) !== undefined);
+      const routable = available.filter((p) => this.healthMonitor?.isRoutable(p) === true);
+      const best = this.healthMonitor.pickBestPlatform(routable);
+
+      if (best && best !== preferred) {
+        const overridePlan = { ...subtaskPlan, platform: best } as TierPlan & { platform: Platform };
+        platformConfig = this.deps.platformRouter.selectPlatform(subtask, 'execute', overridePlan);
+      }
+    }
 
     // Use override working dir if provided (for worktrees), otherwise use normal working dir
     const projectPath = overrideWorkingDir ?? this.workingDirectory;
@@ -836,6 +1102,30 @@ export class Orchestrator {
 
     const context = await this.buildIterationContext(subtask);
     return await this.executionEngine.spawnIteration(context);
+  }
+
+  /**
+   * Persist latest metrics snapshot for CLI/GUI consumption (P2-T08).
+   *
+   * This is best-effort: failures should not impact orchestration.
+   * The snapshot is written under:
+   *   <projectRoot>/.puppet-master/metrics/latest.json
+   */
+  private async writeMetricsSnapshotBestEffort(): Promise<void> {
+    if (!this.metricsCollector) {
+      return;
+    }
+
+    try {
+      const usageEvents = await this.deps.usageTracker.getAll();
+      const report = this.metricsCollector.generateReport({ usageEvents });
+
+      const dir = join(this.projectRoot, '.puppet-master', 'metrics');
+      await mkdir(dir, { recursive: true });
+      await writeFile(join(dir, 'latest.json'), JSON.stringify(report, null, 2), 'utf-8');
+    } catch (error) {
+      console.warn('[Orchestrator] Failed to write metrics snapshot:', error);
+    }
   }
 
   /**
@@ -876,6 +1166,9 @@ export class Orchestrator {
 
     // Sync state to PRD
     await this.tierStateManager.syncToPrd();
+
+    // Persist a snapshot after each iteration result for crash recovery (P2-T03).
+    this.appendLedgerSnapshot('iteration_result');
   }
 
   /**
@@ -929,6 +1222,9 @@ export class Orchestrator {
 
     // Sync state to PRD
     await this.tierStateManager.syncToPrd();
+
+    // Persist a snapshot after gate results for crash recovery (P2-T03).
+    this.appendLedgerSnapshot('gate_result');
   }
 
   /**
@@ -1086,7 +1382,23 @@ export class Orchestrator {
         break;
 
       case 'complete':
-        this.stateMachine.send({ type: 'COMPLETE' });
+        {
+          const previousState = this.stateMachine.getCurrentState();
+          this.stateMachine.send({ type: 'COMPLETE' });
+          const newState = this.stateMachine.getCurrentState();
+
+          this.eventLedger?.append({
+            timestamp: new Date().toISOString(),
+            type: 'orchestrator_state_changed',
+            data: {
+              from: previousState,
+              to: newState,
+              eventType: 'COMPLETE',
+              context: this.stateMachine.getContext(),
+            },
+          });
+          this.appendLedgerSnapshot('complete');
+        }
         this.loopAborted = true;
         // Publish final progress event
         this.publishProgressEvent();
@@ -1307,7 +1619,7 @@ export class Orchestrator {
   /**
    * Determine failure type from gate result
    */
-  private determineFailureType(result: GateResult): 'test' | 'acceptance' | 'timeout' | 'error' {
+  private determineFailureType(result: GateResult): FailureType {
     if (!result.failureReason) {
       return 'error';
     }
@@ -1316,8 +1628,19 @@ export class Orchestrator {
     if (reason.includes('timeout')) {
       return 'timeout';
     }
+    if (
+      reason.includes('structural') ||
+      reason.includes('schema') ||
+      reason.includes('contract') ||
+      reason.includes('invalid prd') ||
+      reason.includes('parse error') ||
+      reason.includes('yaml') ||
+      reason.includes('json')
+    ) {
+      return 'structural';
+    }
     if (reason.includes('test')) {
-      return 'test';
+      return 'test_failure';
     }
     if (reason.includes('acceptance') || reason.includes('criteria')) {
       return 'acceptance';
@@ -1329,9 +1652,20 @@ export class Orchestrator {
    * Execute escalation decision
    */
   private async executeEscalation(decision: EscalationDecision, tier: TierNode): Promise<void> {
+    if (decision.notify) {
+      const message = `[Escalation] ${tier.type} ${tier.id}: ${decision.action} — ${decision.reason}`;
+      // Always log to console as a fallback; eventBus is optional.
+      console.warn(message);
+      this.eventBus?.emit({ type: 'log', level: 'warn', message });
+    }
+
     switch (decision.action) {
       case 'self_fix':
         await this.escalation.executeSelfFix(decision, tier);
+        break;
+
+      case 'retry':
+        await this.escalation.executeRetry(decision, tier);
         break;
 
       case 'kick_down':
@@ -1919,6 +2253,100 @@ Return the plan as a JSON object matching this structure:
     await this.commitChanges(result, currentSubtask);
   }
 
+  // ============================================================================
+  // SQLite Event Ledger (P2-T03)
+  // ============================================================================
+
+  private appendLedgerSnapshot(reason: string): void {
+    if (!this.eventLedger) {
+      return;
+    }
+
+    const tierStates: Record<string, TierContext> = {};
+    for (const [id, machine] of this.getAllTierMachines().entries()) {
+      tierStates[id] = machine.getContext();
+    }
+
+    this.eventLedger.append({
+      timestamp: new Date().toISOString(),
+      type: 'snapshot',
+      data: {
+        reason,
+        snapshot: {
+          orchestratorState: this.stateMachine.getCurrentState(),
+          orchestratorContext: this.stateMachine.getContext(),
+          tierStates,
+        },
+      },
+    });
+  }
+
+  private restoreTierStatesFromLedgerSnapshot(tierStates: Record<string, TierContext>): void {
+    for (const [tierId, ctx] of Object.entries(tierStates)) {
+      const node = this.tierStateManager.getTierById(tierId);
+      if (!node) {
+        continue;
+      }
+      this.restoreTierNodeFromContext(node, ctx);
+    }
+  }
+
+  private restoreTierNodeFromContext(node: TierNode, ctx: TierContext): void {
+    node.stateMachine.reset();
+    const events = Orchestrator.getEventsFromPendingToState(ctx.state);
+    for (const event of events) {
+      node.stateMachine.send(event);
+    }
+    node.stateMachine.restoreInternalContext({
+      iterationCount: ctx.iterationCount,
+      lastError: ctx.lastError,
+      gateResult: ctx.gateResult,
+    });
+  }
+
+  private static getEventsFromPendingToState(desired: TierState): TierEvent[] {
+    switch (desired) {
+      case 'pending':
+        return [];
+      case 'planning':
+        return [{ type: 'TIER_SELECTED' }];
+      case 'running':
+        return [{ type: 'TIER_SELECTED' }, { type: 'PLAN_APPROVED' }];
+      case 'retrying':
+        return [
+          { type: 'TIER_SELECTED' },
+          { type: 'PLAN_APPROVED' },
+          { type: 'ITERATION_FAILED', error: 'Restored from ledger' },
+        ];
+      case 'gating':
+        return [
+          { type: 'TIER_SELECTED' },
+          { type: 'PLAN_APPROVED' },
+          { type: 'ITERATION_COMPLETE', success: true },
+        ];
+      case 'passed':
+        return [
+          { type: 'TIER_SELECTED' },
+          { type: 'PLAN_APPROVED' },
+          { type: 'ITERATION_COMPLETE', success: true },
+          { type: 'GATE_PASSED' },
+        ];
+      case 'failed':
+        return [{ type: 'TIER_SELECTED' }, { type: 'PLAN_APPROVED' }, { type: 'MAX_ATTEMPTS' }];
+      case 'escalated':
+        return [
+          { type: 'TIER_SELECTED' },
+          { type: 'PLAN_APPROVED' },
+          { type: 'ITERATION_COMPLETE', success: true },
+          { type: 'GATE_FAILED_MAJOR' },
+        ];
+      default: {
+        const exhaustive: never = desired;
+        return exhaustive;
+      }
+    }
+  }
+
   /**
    * Collect all tier state machines from tier nodes
    */
@@ -2136,6 +2564,16 @@ Return the plan as a JSON object matching this structure:
         continue;
       }
 
+      // Record per-subtask iteration metrics for parallel executions (best-effort).
+      if (subtaskResult.iterationResult) {
+        const syntheticContext = {
+          tierNode: subtask,
+          iterationNumber: 1,
+          platform: this.getSubtaskPlatform(subtask),
+        } as unknown as IterationContext;
+        this.metricsCollector?.recordIteration(syntheticContext, subtaskResult.iterationResult);
+      }
+
       if (subtaskResult.success) {
         // Transition subtask through iteration complete and trigger gate
         this.requireTierTransition(
@@ -2182,6 +2620,9 @@ Return the plan as a JSON object matching this structure:
         }
       }
     }
+
+    // Persist snapshot after processing parallel results (best-effort).
+    await this.writeMetricsSnapshotBestEffort();
 
     // Update iteration count for this run
     this.iterationsRun += subtasks.length;

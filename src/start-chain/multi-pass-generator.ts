@@ -26,6 +26,7 @@ import type { CoverageReport, MissingRequirement } from './validators/coverage-v
 import { detectDocumentStructure } from './structure-detector.js';
 import { createHash } from 'crypto';
 import { TestPlanGenerator } from './test-plan-generator.js';
+import { CriterionToScript } from './criterion-to-script.js';
 
 /**
  * Configuration for multi-pass PRD generation.
@@ -183,6 +184,9 @@ export class MultiPassPrdGenerator {
         `[Multi-Pass PRD] Document size (${sourceChars} chars) below threshold (${this.config.largeDocThreshold}). Using single-pass.`
       );
       const prd = await this.generateSinglePass(parsed);
+      const projectPath = this.puppetMasterConfig?.project.workingDirectory ?? '.';
+      const normalizer = new CriterionToScript({ generateScripts: Boolean(this.puppetMasterConfig) });
+      await normalizer.normalizePrd(prd, projectPath);
       return {
         prd,
         passesExecuted: 1,
@@ -272,6 +276,10 @@ export class MultiPassPrdGenerator {
       `[Multi-Pass PRD] Complete: ${prd.phases.length} phases, ${passNumber} gap-fill passes, ` +
       `${(finalCoverageReport.coverageRatio * 100).toFixed(1)}% coverage`
     );
+
+    const projectPath = this.puppetMasterConfig?.project.workingDirectory ?? '.';
+    const normalizer = new CriterionToScript({ generateScripts: Boolean(this.puppetMasterConfig) });
+    await normalizer.normalizePrd(prd, projectPath);
 
     return {
       prd,

@@ -16,6 +16,47 @@
 export type Platform = 'cursor' | 'codex' | 'claude' | 'gemini' | 'copilot';
 
 /**
+ * Model level routing (P2-T05).
+ *
+ * Used by deterministic complexity routing to pick between predefined model tiers.
+ * Mirrors the config-driven concept of model levels (level1/level2/level3).
+ */
+export type ModelLevel = 'level1' | 'level2' | 'level3';
+
+/**
+ * P2-T05: Complexity and task-type classifications.
+ */
+export type Complexity = 'trivial' | 'simple' | 'standard' | 'critical';
+export type TaskType = 'feature' | 'bugfix' | 'refactor' | 'test' | 'docs';
+
+/**
+ * Complexity routing matrix (P2-T05).
+ *
+ * Maps (complexity × taskType) → model level.
+ * This is kept in config types to support future config-driven routing.
+ */
+export type ComplexityRoutingMatrix = Record<Complexity, Record<TaskType, ModelLevel>>;
+
+/**
+ * Model configuration for a specific "level" (level1/2/3).
+ * This is resolved into a concrete platform + model at runtime.
+ */
+export interface ModelLevelConfig {
+  platform: Platform;
+  model: string;
+}
+
+/**
+ * Model definitions for each routing level.
+ * YAML: models.level1, models.level2, models.level3
+ */
+export interface ModelsConfig {
+  level1: ModelLevelConfig;
+  level2: ModelLevelConfig;
+  level3: ModelLevelConfig;
+}
+
+/**
  * Project configuration section.
  * Maps from YAML: project.name, project.working_directory
  */
@@ -410,6 +451,39 @@ export interface LoopGuardConfig {
 }
 
 /**
+ * P2-T09: Configurable escalation chains.
+ *
+ * YAML: escalation.chains.<failure_type>[]
+ *
+ * Note: YAML keys are snake_case and are converted to camelCase at load time.
+ * Example: `test_failure` becomes `testFailure`.
+ */
+export type EscalationChainAction = 'self_fix' | 'kick_down' | 'escalate' | 'pause' | 'retry';
+
+export type EscalationChainKey = 'testFailure' | 'acceptance' | 'timeout' | 'structural' | 'error';
+
+export interface EscalationChainStepConfig {
+  action: EscalationChainAction;
+  /**
+   * Maximum number of attempts this step should apply for.
+   *
+   * Interpreted as a *range width* (e.g. retry for 2 attempts, then self_fix for 1, then escalate forever).
+   *
+   * YAML: max_attempts
+   * NOTE: Prefer YAML `maxAttempts` (camelCase) to avoid the existing global `max_attempts` loader special-case.
+   */
+  maxAttempts?: number;
+  /** Only meaningful for `action: 'escalate'`. */
+  to?: 'phase' | 'task' | 'subtask';
+  /** If true, orchestrator should emit a warning/notification. */
+  notify?: boolean;
+}
+
+export interface EscalationChainsConfig {
+  chains: Partial<Record<EscalationChainKey, EscalationChainStepConfig[]>>;
+}
+
+/**
  * Main configuration interface combining all configuration sections.
  * This is the root type for the entire configuration system.
  */
@@ -428,4 +502,15 @@ export interface PuppetMasterConfig {
   rateLimits?: PlatformRateLimits; // YAML: budget.rate_limits (optional, P1-T07)
   checkpointing?: CheckpointingConfig; // YAML: checkpointing (optional, P1-T12)
   loopGuard?: LoopGuardConfig; // YAML: loop_guard (optional, P2-T02)
+  escalation?: EscalationChainsConfig; // YAML: escalation (optional, P2-T09)
+  /**
+   * P2-T05: Model-level definitions used by complexity routing.
+   * YAML: models
+   */
+  models?: ModelsConfig;
+  /**
+   * P2-T05: Complexity routing matrix (complexity × taskType → model level).
+   * YAML: complexity_routing
+   */
+  complexityRouting?: ComplexityRoutingMatrix;
 }

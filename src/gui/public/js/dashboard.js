@@ -15,6 +15,8 @@ const state = {
   reconnectDelay: 1000,
   currentState: 'idle',
   currentItem: null,
+  platformHealth: null,
+  platformHealthIntervalId: null,
   progress: {
     phases: { current: 0, total: 0 },
     tasks: { current: 0, total: 0 },
@@ -35,66 +37,34 @@ const state = {
 };
 
 // ============================================
-// WebSocket Connection
+// Event Stream (SSE) Connection
 // ============================================
-function connectWebSocket() {
-  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-  const wsUrl = `${protocol}//${window.location.host}/events`;
-  
-  try {
-    state.ws = new WebSocket(wsUrl);
-    
-    state.ws.onopen = () => {
-      console.log('[Dashboard] WebSocket connected');
-      state.connected = true;
-      state.reconnectAttempts = 0;
-      updateConnectionStatus(true);
-      
-      // Fetch initial state
-      fetchState();
-    };
-    
-    state.ws.onmessage = (event) => {
-      try {
-        const message = JSON.parse(event.data);
-        handleWebSocketMessage(message);
-      } catch (error) {
-        console.error('[Dashboard] Error parsing WebSocket message:', error);
-      }
-    };
-    
-    state.ws.onerror = (error) => {
-      console.error('[Dashboard] WebSocket error:', error);
-      updateConnectionStatus(false);
-    };
-    
-    state.ws.onclose = () => {
-      console.log('[Dashboard] WebSocket disconnected');
-      state.connected = false;
-      updateConnectionStatus(false);
-      
-      // Attempt to reconnect with exponential backoff
-      if (state.reconnectAttempts < state.maxReconnectAttempts) {
-        state.reconnectAttempts++;
-        const delay = Math.min(state.reconnectDelay * Math.pow(2, state.reconnectAttempts - 1), 30000);
-        console.log(`[Dashboard] Reconnecting in ${delay}ms (attempt ${state.reconnectAttempts})...`);
-        setTimeout(connectWebSocket, delay);
-      } else {
-        console.error('[Dashboard] Max reconnection attempts reached');
-      }
-    };
-    
-    // Heartbeat ping every 30 seconds
-    setInterval(() => {
-      if (state.ws && state.ws.readyState === WebSocket.OPEN) {
-        state.ws.send(JSON.stringify({ type: 'ping' }));
-      }
-    }, 30000);
-    
-  } catch (error) {
-    console.error('[Dashboard] Error creating WebSocket:', error);
+function connectEventStream() {
+  const eventStream = window.EventStream;
+  if (!eventStream) {
+    console.warn('[Dashboard] EventStream not available');
     updateConnectionStatus(false);
+    return;
   }
+
+  let wasConnected = false;
+
+  eventStream.onStatus(({ connected }) => {
+    state.connected = Boolean(connected);
+    updateConnectionStatus(Boolean(connected));
+
+    // Fetch initial state on first connect (and after reconnect).
+    if (connected && !wasConnected) {
+      fetchState();
+    }
+    wasConnected = Boolean(connected);
+  });
+
+  eventStream.on('*', (message) => {
+    if (message && typeof message === 'object') {
+      handleWebSocketMessage(message);
+    }
+  });
 }
 
 // ============================================
@@ -129,6 +99,21 @@ async function fetchState() {
     if (window.controls && window.controls.updateButtonStates) {
       window.controls.updateButtonStates('idle');
     }
+  }
+}
+
+async function fetchPlatformHealth() {
+  try {
+    const response = await fetch('/api/platforms/health');
+    if (!response.ok) {
+      updatePlatformHealthTable(null, `HTTP ${response.status}`);
+      return;
+    }
+    const data = await response.json();
+    state.platformHealth = data;
+    updatePlatformHealthTable(data?.platforms ?? null);
+  } catch (error) {
+    updatePlatformHealthTable(null, error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -196,6 +181,70 @@ function handleWebSocketMessage(message) {
   }
 }
 
+function updatePlatformHealthTable(platforms, errorMessage = null) {
+  const body = document.getElementById('health-table-body');
+  if (!body) {
+    return;
+  }
+
+  // Clear current rows
+  body.innerHTML = '';
+
+  if (errorMessage) {
+    const row = document.createElement('tr');
+    row.innerHTML = `<td colspan="4" class="loading-message">Error loading health: ${escapeHtml(errorMessage)}</td>`;
+    body.appendChild(row);
+    return;
+  }
+
+  if (!platforms || typeof platforms !== 'object' || Object.keys(platforms).length === 0) {
+    const row = document.createElement('tr');
+    row.innerHTML = `<td colspan="4" class="loading-message">No health data available</td>`;
+    body.appendChild(row);
+    return;
+  }
+
+  const entries = Object.entries(platforms)
+    .filter(([_, v]) => v && typeof v === 'object')
+    .sort(([a], [b]) => a.localeCompare(b));
+
+  for (const [platform, info] of entries) {
+    const status = info.status || 'unknown';
+    const latencyMs = typeof info.latencyMs === 'number' ? info.latencyMs : 0;
+    const lastCheck = info.lastCheck ? new Date(info.lastCheck) : null;
+    const lastCheckText =
+      lastCheck && !Number.isNaN(lastCheck.getTime()) ? lastCheck.toLocaleTimeString() : '-';
+
+    const row = document.createElement('tr');
+
+    const statusDotClass =
+      status === 'healthy' ? 'healthy' : status === 'degraded' ? 'degraded' : status === 'unhealthy' ? 'unhealthy' : '';
+
+    row.innerHTML = `
+      <td class="category-cell">${escapeHtml(platform)}</td>
+      <td>
+        <span class="status-indicator" aria-label="Platform status ${escapeHtml(status)}">
+          <span class="status-dot ${statusDotClass}" aria-hidden="true"></span>
+          <span class="status-text">${escapeHtml(String(status).toUpperCase())}</span>
+        </span>
+      </td>
+      <td class="duration-cell monospace">${escapeHtml(`${latencyMs}ms`)}</td>
+      <td class="duration-cell monospace">${escapeHtml(lastCheckText)}</td>
+    `;
+
+    body.appendChild(row);
+  }
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 // ============================================
 // UI Update Functions
 // ============================================
@@ -206,12 +255,12 @@ function updateConnectionStatus(connected) {
   if (indicator && text) {
     if (connected) {
       indicator.classList.add('connected');
-      indicator.setAttribute('aria-label', 'WebSocket connected');
+      indicator.setAttribute('aria-label', 'Event stream connected');
       text.textContent = 'Connected';
       text.setAttribute('aria-label', 'Connection status: Connected');
     } else {
       indicator.classList.remove('connected');
-      indicator.setAttribute('aria-label', 'WebSocket disconnected');
+      indicator.setAttribute('aria-label', 'Event stream disconnected');
       text.textContent = 'Disconnected';
       text.setAttribute('aria-label', 'Connection status: Disconnected');
     }
@@ -874,6 +923,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize (dark mode is handled by navigation.js)
   initConnectionStatus(); // Initialize connection status display
   checkProjectState(); // Check if project is loaded
+  fetchPlatformHealth(); // Initial platform health snapshot
+  state.platformHealthIntervalId = setInterval(fetchPlatformHealth, 30000); // Refresh platform health periodically
   
   // Initialize status bar with default values
   const statusText = document.getElementById('status-text');
@@ -922,7 +973,7 @@ document.addEventListener('DOMContentLoaded', () => {
       updateControlButtons();
     }
   }, 100);
-  connectWebSocket();
+  connectEventStream();
   
   // Update elapsed time every second
   setInterval(() => {

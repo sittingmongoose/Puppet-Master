@@ -47,6 +47,27 @@ export function getDefaultConfig(): PuppetMasterConfig {
         escalation: 'subtask',
       },
     },
+    // P2-T05: Complexity-based model routing (defaults)
+    models: {
+      level1: {
+        platform: 'claude',
+        model: 'haiku',
+      },
+      level2: {
+        platform: 'claude',
+        model: 'sonnet',
+      },
+      level3: {
+        platform: 'claude',
+        model: 'opus',
+      },
+    },
+    complexityRouting: {
+      trivial: { feature: 'level1', bugfix: 'level1', refactor: 'level1', test: 'level1', docs: 'level1' },
+      simple: { feature: 'level1', bugfix: 'level2', refactor: 'level1', test: 'level1', docs: 'level1' },
+      standard: { feature: 'level2', bugfix: 'level2', refactor: 'level2', test: 'level2', docs: 'level1' },
+      critical: { feature: 'level3', bugfix: 'level3', refactor: 'level3', test: 'level2', docs: 'level2' },
+    },
     branching: {
       baseBranch: 'main',
       namingPattern: 'ralph/{phase}/{task}',

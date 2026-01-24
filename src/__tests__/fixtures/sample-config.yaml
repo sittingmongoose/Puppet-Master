@@ -71,6 +71,17 @@ budgets:
     max_calls_per_day: 200
     cooldown_hours: 1
     fallback_platform: null
+  gemini:
+    max_calls_per_run: 100
+    max_calls_per_hour: "unlimited"
+    max_calls_per_day: "unlimited"
+    cooldown_hours: 1
+    fallback_platform: "copilot"
+  copilot:
+    max_calls_per_run: "unlimited"
+    max_calls_per_hour: "unlimited"
+    max_calls_per_day: "unlimited"
+    fallback_platform: "gemini"
 
 budget_enforcement:
   on_limit_reached: "fallback"
@@ -85,3 +96,5 @@ cli_paths:
   cursor: "cursor"
   codex: "codex"
   claude: "claude"
+  gemini: "gemini"
+  copilot: "copilot"

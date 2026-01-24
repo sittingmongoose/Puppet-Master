@@ -101,6 +101,7 @@ describe('guiAction', () => {
   let mockConfig: PuppetMasterConfig;
   let mockConfigManager: {
     load: ReturnType<typeof vi.fn>;
+    getConfigPath: ReturnType<typeof vi.fn>;
   };
   let mockContainer: {
     resolve: ReturnType<typeof vi.fn>;
@@ -254,6 +255,7 @@ describe('guiAction', () => {
 
     mockConfigManager = {
       load: vi.fn().mockResolvedValue(mockConfig),
+      getConfigPath: vi.fn().mockReturnValue('/test/project/.puppet-master/config.yaml'),
     };
 
     mockTierManager = {};
@@ -267,6 +269,21 @@ describe('guiAction', () => {
           tierStateManager: mockTierManager,
           progressManager: mockProgressManager,
           agentsManager: mockAgentsManager,
+          // Orchestrator initialize deps
+          configManager: mockConfigManager,
+          prdManager: {},
+          evidenceStore: {},
+          usageTracker: {},
+          gitManager: {},
+          branchStrategy: {},
+          commitFormatter: {},
+          prManager: {},
+          verificationIntegration: {},
+          platformRegistry: {
+            getAvailable: vi.fn().mockReturnValue(['cursor']),
+            get: vi.fn(),
+            register: vi.fn(),
+          },
         };
         return map[key];
       }),

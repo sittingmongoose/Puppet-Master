@@ -134,7 +134,7 @@ describe('escalation', () => {
     const decision = escalation.determineAction({
       tier: task,
       gateResult: createGateFailure('tests failing'),
-      failureType: 'test',
+      failureType: 'test_failure',
       failureCount: 0,
       maxAttempts: 3,
     });
@@ -190,7 +190,7 @@ describe('escalation', () => {
     const decision = escalation.determineAction({
       tier: taskBefore,
       gateResult: createGateFailure('tests failing'),
-      failureType: 'test',
+      failureType: 'test_failure',
       failureCount: 0,
       maxAttempts: 3,
     });
@@ -218,7 +218,7 @@ describe('escalation', () => {
     const decision = escalation.determineAction({
       tier: task,
       gateResult: createGateFailure('still failing'),
-      failureType: 'test',
+      failureType: 'test_failure',
       failureCount: 3,
       maxAttempts: 3,
     });
@@ -242,7 +242,7 @@ describe('escalation', () => {
     const decision = escalation.determineAction({
       tier: subtask,
       gateResult: createGateFailure('repeated failures'),
-      failureType: 'test',
+      failureType: 'test_failure',
       failureCount: 2,
       maxAttempts: 2,
     });
@@ -271,6 +271,127 @@ describe('escalation', () => {
     });
 
     expect(decision.action).toBe('pause');
+  });
+
+  it('uses escalation chain for test_failure: retry(2) -> self_fix(1) -> escalate(to task)', () => {
+    const config = getDefaultConfig();
+    config.memory.prdFile = prdPath;
+    config.escalation = {
+      chains: {
+        testFailure: [
+          { action: 'retry', maxAttempts: 2 },
+          { action: 'self_fix', maxAttempts: 1 },
+          { action: 'escalate', to: 'task' },
+        ],
+      },
+    };
+
+    const escalation = new Escalation(tierStateManager, config);
+    const subtask = tierStateManager.getSubtask('ST-001-001-001')!;
+    const gateResult = createGateFailure('tests failing');
+
+    const d1 = escalation.determineAction({
+      tier: subtask,
+      gateResult,
+      failureType: 'test_failure',
+      failureCount: 0,
+      maxAttempts: 10,
+    });
+    expect(d1.action).toBe('retry');
+    expect(d1.reason).toContain('attempt 1/10');
+
+    const d2 = escalation.determineAction({
+      tier: subtask,
+      gateResult,
+      failureType: 'test_failure',
+      failureCount: 1,
+      maxAttempts: 10,
+    });
+    expect(d2.action).toBe('retry');
+    expect(d2.reason).toContain('attempt 2/10');
+
+    const d3 = escalation.determineAction({
+      tier: subtask,
+      gateResult,
+      failureType: 'test_failure',
+      failureCount: 2,
+      maxAttempts: 10,
+    });
+    expect(d3.action).toBe('self_fix');
+    expect(d3.selfFixInstructions).toContain('Investigate and fix');
+    expect(d3.selfFixInstructions).toContain('ST-001-001-001');
+
+    const d4 = escalation.determineAction({
+      tier: subtask,
+      gateResult,
+      failureType: 'test_failure',
+      failureCount: 3,
+      maxAttempts: 10,
+    });
+    expect(d4.action).toBe('escalate');
+    expect(d4.escalateTo).toBe('task');
+    expect(d4.reason).toContain('Escalating by chain to task');
+  });
+
+  it('uses escalation chain for timeout: retry(1) -> pause(notify: true)', () => {
+    const config = getDefaultConfig();
+    config.memory.prdFile = prdPath;
+    config.escalation = {
+      chains: {
+        timeout: [{ action: 'retry', maxAttempts: 1 }, { action: 'pause', notify: true }],
+      },
+    };
+
+    const escalation = new Escalation(tierStateManager, config);
+    const task = tierStateManager.getTask('TK-001-001')!;
+    const gateResult = createGateFailure('process stalled');
+
+    const d1 = escalation.determineAction({
+      tier: task,
+      gateResult,
+      failureType: 'timeout',
+      failureCount: 0,
+      maxAttempts: 10,
+    });
+    expect(d1.action).toBe('retry');
+    expect(d1.notify).toBe(false);
+
+    const d2 = escalation.determineAction({
+      tier: task,
+      gateResult,
+      failureType: 'timeout',
+      failureCount: 1,
+      maxAttempts: 10,
+    });
+    expect(d2.action).toBe('pause');
+    expect(d2.notify).toBe(true);
+    expect(d2.reason).toContain('Paused by escalation chain');
+  });
+
+  it('skips unsupported chain steps (kick_down on subtask) and selects the next supported step', () => {
+    const config = getDefaultConfig();
+    config.memory.prdFile = prdPath;
+    config.escalation = {
+      chains: {
+        testFailure: [{ action: 'kick_down', maxAttempts: 1 }, { action: 'retry' }],
+      },
+    };
+
+    const escalation = new Escalation(tierStateManager, config);
+    const subtask = tierStateManager.getSubtask('ST-001-001-001')!;
+
+    const decision = escalation.determineAction({
+      tier: subtask,
+      gateResult: createGateFailure('tests failing'),
+      failureType: 'test_failure',
+      failureCount: 0,
+      maxAttempts: 3,
+    });
+
+    expect(decision.action).toBe('retry');
+    expect(decision.newSubtasks).toBeUndefined();
+    expect(decision.newTasks).toBeUndefined();
+    expect(decision.reason).toContain('Retrying after test failure');
   });
 });
 

@@ -108,6 +108,7 @@ class MockPlatformRunner implements PlatformRunnerContract {
       exitCode: null as number | null,
       kill: vi.fn(),
       on: vi.fn(),
+      once: vi.fn(),
       emit: vi.fn(),
     } as unknown as ChildProcess;
 

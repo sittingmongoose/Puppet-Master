@@ -15,6 +15,7 @@ import { CheckRegistry } from '../../doctor/check-registry.js';
 import { InstallationManager } from '../../doctor/installation-manager.js';
 import type { CheckResult } from '../../doctor/check-registry.js';
 import type { InstallCommand as InstallCmd } from '../../doctor/installation-manager.js';
+import { ConfigManager } from '../../config/config-manager.js';
 
 vi.mock('../../config/config-manager.js', () => ({
   ConfigManager: vi.fn().mockImplementation(() => ({
@@ -79,6 +80,18 @@ vi.mock('../../doctor/checks/cli-tools.js', () => ({
     name: 'claude-cli',
     category: 'cli' as const,
     description: 'Check if Claude CLI is available',
+    run: vi.fn(),
+  })),
+  GeminiCliCheck: vi.fn().mockImplementation(() => ({
+    name: 'gemini-cli',
+    category: 'cli' as const,
+    description: 'Check if Gemini CLI is available',
+    run: vi.fn(),
+  })),
+  CopilotCliCheck: vi.fn().mockImplementation(() => ({
+    name: 'copilot-cli',
+    category: 'cli' as const,
+    description: 'Check if Copilot CLI is available',
     run: vi.fn(),
   })),
 }));
@@ -182,6 +195,22 @@ describe('InstallCommand', () => {
     // Mock process.exit
     originalExit = process.exit;
     process.exit = vi.fn() as never;
+
+    // Ensure ConfigManager mock returns the expected shape.
+    vi.mocked(ConfigManager).mockImplementation(
+      () =>
+        ({
+          load: vi.fn().mockResolvedValue({
+            cliPaths: {
+              cursor: 'cursor-agent',
+              codex: 'codex',
+              claude: 'claude',
+              gemini: 'gemini',
+              copilot: 'copilot',
+            },
+          }),
+        }) as unknown as ConfigManager
+    );
 
     // Setup mock install command
     mockInstallCommand = {

@@ -44,42 +44,30 @@ const STATE_LABELS = {
 };
 
 // ============================================
-// WebSocket Connection
+// Event Stream (SSE) Connection
 // ============================================
-function connectWebSocket() {
-  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-  const wsUrl = `${protocol}//${window.location.host}/events`;
-  
-  try {
-    state.ws = new WebSocket(wsUrl);
-    
-    state.ws.onopen = () => {
-      console.log('[Tiers] WebSocket connected');
-      state.connected = true;
-    };
-    
-    state.ws.onmessage = (event) => {
-      try {
-        const message = JSON.parse(event.data);
-        handleWebSocketMessage(message);
-      } catch (error) {
-        console.error('[Tiers] Error parsing WebSocket message:', error);
-      }
-    };
-    
-    state.ws.onerror = (error) => {
-      console.error('[Tiers] WebSocket error:', error);
-    };
-    
-    state.ws.onclose = () => {
-      console.log('[Tiers] WebSocket disconnected');
-      state.connected = false;
-      // Attempt to reconnect after 3 seconds
-      setTimeout(connectWebSocket, 3000);
-    };
-  } catch (error) {
-    console.error('[Tiers] Error creating WebSocket:', error);
+let eventStreamAttached = false;
+
+function connectEventStream() {
+  if (eventStreamAttached) return;
+
+  const eventStream = globalThis.EventStream;
+  if (!eventStream) {
+    console.warn('[Tiers] EventStream not available');
+    return;
   }
+
+  eventStreamAttached = true;
+
+  eventStream.onStatus(({ connected }) => {
+    state.connected = Boolean(connected);
+  });
+
+  eventStream.on('*', (message) => {
+    if (message && typeof message === 'object') {
+      handleWebSocketMessage(message);
+    }
+  });
 }
 
 function handleWebSocketMessage(message) {
@@ -720,7 +708,7 @@ function expandParents(nodeElement) {
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize (dark mode is handled by navigation.js)
   loadTree();
-  connectWebSocket();
+  connectEventStream();
   
   // Refresh button
   const refreshBtn = document.getElementById('refresh-btn');

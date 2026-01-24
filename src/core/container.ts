@@ -29,6 +29,7 @@ import { FileExistsVerifier } from '../verification/verifiers/file-exists-verifi
 import { CommandVerifier } from '../verification/verifiers/command-verifier.js';
 import { BrowserVerifier } from '../verification/verifiers/browser-verifier.js';
 import { AIVerifier } from '../verification/verifiers/ai-verifier.js';
+import { ScriptVerifier } from '../verification/verifiers/script-verifier.js';
 import { GateRunner } from '../verification/gate-runner.js';
 import { VerificationIntegration } from '../verification/verification-integration.js';
 import { TierStateManager } from './tier-state-manager.js';
@@ -226,6 +227,7 @@ export function createContainer(config: PuppetMasterConfig, projectRoot: string,
   //   'command'       → CommandVerifier (handles TEST:, CLI_VERIFY:, PERF_VERIFY:)
   //   'browser_verify'→ BrowserVerifier
   //   'ai'            → AIVerifier
+  //   'script'        → ScriptVerifier
   // 'manual' type is NOT supported - all criteria must be machine-verifiable.
   container.register('verifierRegistry', () => {
     const registry = new VerifierRegistry();
@@ -237,6 +239,7 @@ export function createContainer(config: PuppetMasterConfig, projectRoot: string,
     registry.register(new CommandVerifier(evidenceStore));    // type: 'command'
     registry.register(new BrowserVerifier(evidenceStore));    // type: 'browser_verify'
     registry.register(new AIVerifier(platformRegistry, evidenceStore)); // type: 'ai'
+    registry.register(new ScriptVerifier(evidenceStore));    // type: 'script'
 
     // Fail fast if we missed a canonical verifier type.
     const canonicalTypes: CriterionType[] = [
@@ -245,6 +248,7 @@ export function createContainer(config: PuppetMasterConfig, projectRoot: string,
       'browser_verify',
       'command',
       'ai',
+      'script',
     ];
     const missing = canonicalTypes.filter((t) => registry.get(t) === null);
     if (missing.length > 0) {

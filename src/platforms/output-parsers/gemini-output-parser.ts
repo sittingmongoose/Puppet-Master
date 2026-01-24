@@ -164,8 +164,9 @@ export class GeminiOutputParser extends BaseOutputParser {
       }
     }
 
-    // Keep raw output as original
-    parsed.rawOutput = output;
+    // Keep raw output as the extracted response text (not the full JSON wrapper)
+    // so runners can surface the assistant response directly.
+    parsed.rawOutput = responseText;
 
     // Adjust success based on GUTTER signal
     if (parsed.completionSignal === 'GUTTER') {

@@ -12,6 +12,7 @@ import type { TierNode } from './tier-node.js';
 import type { TierPlan } from '../types/tiers.js';
 import type { TierType } from '../types/state.js';
 import { PlatformRegistry } from '../platforms/registry.js';
+import { ComplexityClassifier, DEFAULT_COMPLEXITY_ROUTING_MATRIX } from './complexity-classifier.js';
 
 /**
  * Platform configuration result from router.
@@ -81,6 +82,7 @@ export class PlatformRouter {
     tierPlan?: TierPlan
   ): PlatformConfig {
     const tierType = tier.type;
+    const modelLevelOverride = this.getTierPlanModelLevelOverride(tierPlan);
 
     // Priority 1: TierPlan platform override (if specified)
     // Note: TierPlan from types/tiers.ts is simple, but tier-plan-generator creates
@@ -89,9 +91,27 @@ export class PlatformRouter {
     // This allows future enhancement to pass platform from tier plan generator.
     if (tierPlan && typeof tierPlan === 'object' && 'platform' in tierPlan) {
       const planPlatform = (tierPlan as { platform?: Platform }).platform;
-      if (planPlatform && this.isAvailable(planPlatform)) {
-        const tierConfig = this.getTierConfigForPlatform(planPlatform, tierType);
-        this.logSelection(tier, action, planPlatform, 'tierPlan');
+      if (planPlatform) {
+        // Use the plan-specified platform when possible; otherwise fall back from it.
+        const selectedPlatform = this.isAvailable(planPlatform)
+          ? planPlatform
+          : this.getFallbackWithModel(
+              planPlatform,
+              tierType,
+              this.getModelForOverride(modelLevelOverride) ?? undefined
+            ).platform;
+
+        let tierConfig = this.getTierConfigForPlatform(selectedPlatform, tierType);
+
+        // P2-T05: If a model level override is present for subtask execution, override model only.
+        if (action === 'execute' && tierType === 'subtask') {
+          const overrideModel = this.getModelForOverride(modelLevelOverride);
+          if (overrideModel) {
+            tierConfig = { ...tierConfig, model: overrideModel };
+          }
+        }
+
+        this.logSelection(tier, action, tierConfig.platform, 'tierPlan');
         return tierConfig;
       }
     }
@@ -110,6 +130,15 @@ export class PlatformRouter {
         return fallback;
       }
       // If no gate_review config, fall through to tier-specific config
+    }
+
+    // P2-T05: Complexity-based model routing (subtask execution only)
+    if (action === 'execute' && tierType === 'subtask' && this.config.models) {
+      const routed = this.getComplexityRoutedSubtaskConfig(tier, modelLevelOverride);
+      if (routed) {
+        this.logSelection(tier, action, routed.config.platform, routed.reason);
+        return routed.config;
+      }
     }
 
     // Priority 3: Tier-specific config
@@ -171,6 +200,104 @@ export class PlatformRouter {
     throw new NoPlatformAvailableError(
       `No available platforms found. Preferred: ${preferred}, Tried fallbacks: ${fallbacks.join(', ')}`
     );
+  }
+
+  /**
+   * Like getFallback(), but allows overriding the model string while falling back.
+   */
+  private getFallbackWithModel(preferred: Platform, tierType: TierType, modelOverride?: string): PlatformConfig {
+    const fallbacks = this.fallbackChain[preferred] || [];
+
+    for (const fallbackPlatform of fallbacks) {
+      if (this.isAvailable(fallbackPlatform)) {
+        const fallbackTierConfig = this.config.tiers.subtask;
+        const targetTierConfig = this.config.tiers[tierType];
+        return {
+          platform: fallbackPlatform,
+          model: modelOverride ?? targetTierConfig.model,
+          planMode: fallbackTierConfig.planMode,
+          selfFix: fallbackTierConfig.selfFix,
+          maxIterations: fallbackTierConfig.maxIterations,
+          escalation: fallbackTierConfig.escalation,
+        };
+      }
+    }
+
+    throw new NoPlatformAvailableError(
+      `No available platforms found. Preferred: ${preferred}, Tried fallbacks: ${fallbacks.join(', ')}`
+    );
+  }
+
+  private getTierPlanModelLevelOverride(tierPlan?: TierPlan): 'level1' | 'level2' | 'level3' | null {
+    if (!tierPlan || typeof tierPlan !== 'object') {
+      return null;
+    }
+    if (!('modelLevel' in tierPlan)) {
+      return null;
+    }
+    const value = (tierPlan as { modelLevel?: unknown }).modelLevel;
+    return this.isModelLevel(value) ? value : null;
+  }
+
+  private isModelLevel(value: unknown): value is 'level1' | 'level2' | 'level3' {
+    return value === 'level1' || value === 'level2' || value === 'level3';
+  }
+
+  private getModelForOverride(modelLevel: 'level1' | 'level2' | 'level3' | null): string | null {
+    if (!modelLevel) {
+      return null;
+    }
+    const models = this.config.models;
+    if (!models) {
+      return null;
+    }
+    return models[modelLevel].model;
+  }
+
+  private getComplexityRoutedSubtaskConfig(
+    tier: TierNode,
+    modelLevelOverride: 'level1' | 'level2' | 'level3' | null
+  ): { config: PlatformConfig; reason: string } | null {
+    const models = this.config.models;
+    if (!models) {
+      return null;
+    }
+
+    const matrix = this.config.complexityRouting ?? DEFAULT_COMPLEXITY_ROUTING_MATRIX;
+    const classifier = new ComplexityClassifier(matrix);
+    const { complexity, taskType } = classifier.classify(tier);
+    const modelLevel = modelLevelOverride ?? classifier.getModelLevel(complexity, taskType);
+    const selectedModel = models[modelLevel].model;
+
+    // Use the configured platform for that model level.
+    const preferredPlatform = models[modelLevel].platform;
+
+    const template = this.config.tiers.subtask;
+    if (this.isAvailable(preferredPlatform)) {
+      return {
+        config: {
+          platform: preferredPlatform,
+          model: selectedModel,
+          planMode: template.planMode,
+          selfFix: template.selfFix,
+          maxIterations: template.maxIterations,
+          escalation: template.escalation,
+        },
+        reason: `complexity_routing(${complexity}/${taskType}->${modelLevel})`,
+      };
+    }
+
+    const fallback = this.getFallbackWithModel(preferredPlatform, 'subtask', selectedModel);
+    return {
+      config: {
+        ...fallback,
+        planMode: template.planMode,
+        selfFix: template.selfFix,
+        maxIterations: template.maxIterations,
+        escalation: template.escalation,
+      },
+      reason: `complexity_routing_fallback(${complexity}/${taskType}->${modelLevel})`,
+    };
   }
 
   /**

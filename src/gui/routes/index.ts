@@ -9,5 +9,7 @@ export { createConfigRoutes } from './config.js';
 export { createControlsRoutes } from './controls.js';
 export { createEvidenceRoutes } from './evidence.js';
 export { createCoverageRoutes } from './coverage.js';
+export { createMetricsRoutes } from './metrics.js';
 export { createDoctorRoutes } from './doctor.js';
 export { createSettingsRoutes } from './settings.js';
+export { createEventsRoutes } from './events.js';

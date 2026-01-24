@@ -26,6 +26,7 @@ import {
 } from './structure-detector.js';
 import { CriterionClassifier } from './criterion-classifier.js';
 import { createHash } from 'crypto';
+import { CriterionToScript } from './criterion-to-script.js';
 import {
   MultiPassPrdGenerator,
   type MultiPassConfig,
@@ -112,7 +113,9 @@ export class PrdGenerator {
       this.usageTracker
     );
 
-    return multiPassGenerator.generate(parsed);
+    const result = await multiPassGenerator.generate(parsed);
+    await this.normalizeGeneratedPrd(result.prd);
+    return result;
   }
 
   /**
@@ -203,6 +206,7 @@ export class PrdGenerator {
       // Parse JSON response
       try {
         const prd = this.parsePrdJson(result.output);
+        await this.normalizeGeneratedPrd(prd);
         
         // Validate basic structure
         if (!prd.project || !prd.phases || !Array.isArray(prd.phases)) {
@@ -259,7 +263,7 @@ export class PrdGenerator {
     // Use detected title if available, otherwise fall back to parsed title
     const description = structure.title || parsed.title || 'Generated from requirements';
 
-    return {
+    const prd: PRD = {
       project: this.projectName,
       version: '1.0.0',
       createdAt: now,
@@ -269,6 +273,23 @@ export class PrdGenerator {
       phases,
       metadata,
     };
+    await this.normalizeGeneratedPrd(prd);
+    return prd;
+  }
+
+  /**
+   * P2-T04: Normalize acceptance criteria so they are truly executable.
+   *
+   * - Ensures every criterion has an explicit `verification` field
+   * - Converts token-style verification targets (TEST:, FILE_VERIFY:, etc.) into runtime-executable
+   *   Criterion fields (`type`, `target`, `options`)
+   * - Optionally generates script verifications when this generator has a config
+   *   (i.e., it is being used as part of the start-chain pipeline)
+   */
+  private async normalizeGeneratedPrd(prd: PRD): Promise<void> {
+    const projectPath = this.config?.project.workingDirectory ?? '.';
+    const normalizer = new CriterionToScript({ generateScripts: Boolean(this.config) });
+    await normalizer.normalizePrd(prd, projectPath);
   }
 
   /**

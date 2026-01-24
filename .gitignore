@@ -26,6 +26,11 @@ yarn-error.log*
 .test-quota-*
 .test-cache/
 
+# Secrets (local-only; never commit)
+.env
+.env.*
+!.env.example
+
 # Local configuration files (may contain sensitive local settings)
 **/local.json
 local.json

@@ -42,3 +42,5 @@ export {
 export { WiringCheck, createWiringCheck } from './wiring-check.js';
 
 export { PlatformCompatibilityCheck } from './platform-compatibility-check.js';
+
+export { SecretsCheck } from './secrets-check.js';

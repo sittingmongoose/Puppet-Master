@@ -90,42 +90,24 @@ function initElements() {
 }
 
 // ============================================
-// WebSocket Connection for Start Chain Progress
+// Event Stream (SSE) Connection for Start Chain Progress
 // ============================================
-function connectWebSocket() {
-  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-  const wsUrl = `${protocol}//${window.location.host}/events`;
-  
-  try {
-    wizardState.ws = new WebSocket(wsUrl);
-    
-    wizardState.ws.onopen = () => {
-      console.log('[Wizard] WebSocket connected');
-    };
-    
-    wizardState.ws.onmessage = (event) => {
-      try {
-        const message = JSON.parse(event.data);
-        handleWebSocketMessage(message);
-      } catch (error) {
-        console.error('[Wizard] Error parsing WebSocket message:', error);
-      }
-    };
-    
-    wizardState.ws.onerror = (error) => {
-      console.error('[Wizard] WebSocket error:', error);
-    };
-    
-    wizardState.ws.onclose = () => {
-      console.log('[Wizard] WebSocket disconnected');
-      // Attempt to reconnect if Start Chain is in progress
-      if (wizardState.startChainInProgress) {
-        setTimeout(connectWebSocket, 3000);
-      }
-    };
-  } catch (error) {
-    console.error('[Wizard] Error creating WebSocket:', error);
+let eventStreamAttached = false;
+
+function connectEventStream() {
+  if (eventStreamAttached) return;
+
+  const eventStream = window.EventStream;
+  if (!eventStream) {
+    console.warn('[Wizard] EventStream not available');
+    return;
   }
+
+  eventStreamAttached = true;
+
+  // Start Chain progress events
+  eventStream.on('start_chain_step', handleWebSocketMessage);
+  eventStream.on('start_chain_complete', handleWebSocketMessage);
 }
 
 function handleWebSocketMessage(message) {
@@ -576,10 +558,8 @@ function generatePrd() {
   }
   if (elements.nextBtn) elements.nextBtn.disabled = true;
 
-  // Connect to WebSocket for progress events
-  if (!wizardState.ws || wizardState.ws.readyState !== WebSocket.OPEN) {
-    connectWebSocket();
-  }
+  // Ensure EventStream handlers are attached for progress events
+  connectEventStream();
 
   wizardState.startChainInProgress = true;
 
@@ -739,10 +719,8 @@ function savePrd() {
     }
   }
 
-  // Connect to WebSocket for Start Chain progress events
-  if (!wizardState.ws || wizardState.ws.readyState !== WebSocket.OPEN) {
-    connectWebSocket();
-  }
+  // Ensure EventStream handlers are attached for progress events
+  connectEventStream();
 
   wizardState.startChainInProgress = true;
 
@@ -770,11 +748,12 @@ function savePrd() {
         if (elements.saveError) showError(elements.saveError, data.error);
         if (elements.finishBtn) elements.finishBtn.disabled = false;
       } else {
-        // Check WebSocket connection status
-        const wsConnected = wizardState.ws && wizardState.ws.readyState === WebSocket.OPEN;
+        // Check EventStream connection status
+        const streamConnected =
+          window.EventStream && typeof window.EventStream.isConnected === 'function' ? window.EventStream.isConnected() : false;
 
-        if (!wsConnected) {
-          console.warn('[Wizard] WebSocket not connected, using fallback mode');
+        if (!streamConnected) {
+          console.warn('[Wizard] EventStream not connected, using fallback mode');
           // Show fallback message to user
           const progressContainer = document.getElementById('start-chain-progress');
           if (progressContainer) {
@@ -787,7 +766,7 @@ function savePrd() {
           }
         }
 
-        // Fallback timeout: wait for WebSocket updates, or complete after 30 seconds
+        // Fallback timeout: wait for SSE updates, or complete after 30 seconds
         fallbackTimeout = setTimeout(() => {
           if (wizardState.startChainInProgress) {
             wizardState.startChainInProgress = false;

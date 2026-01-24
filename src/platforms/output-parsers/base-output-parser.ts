@@ -23,10 +23,10 @@ export abstract class BaseOutputParser implements PlatformOutputParser {
   // Common patterns used across all platforms
 
   /** Pattern for COMPLETE signal */
-  protected static readonly COMPLETE_PATTERN = /<ralph>COMPLETE<\/ralph>/i;
+  protected static readonly COMPLETE_PATTERN = /<ralph>COMPLETE<\/ralph>/;
 
   /** Pattern for GUTTER signal */
-  protected static readonly GUTTER_PATTERN = /<ralph>GUTTER<\/ralph>/i;
+  protected static readonly GUTTER_PATTERN = /<ralph>GUTTER<\/ralph>/;
 
   /** Pattern for session ID (PM-YYYY-MM-DD-HH-MM-SS-NNN) */
   protected static readonly SESSION_ID_PATTERN = /PM-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}-\d{3}/;

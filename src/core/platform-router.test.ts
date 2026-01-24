@@ -9,6 +9,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { PlatformRouter, NoPlatformAvailableError } from './platform-router.js';
 import { PlatformRegistry } from '../platforms/registry.js';
 import { TierNode } from './tier-node.js';
+import type { TierNodeData } from './tier-node.js';
 import type { PuppetMasterConfig, Platform } from '../types/config.js';
 import type { TierPlan } from '../types/tiers.js';
 import { BasePlatformRunner } from '../platforms/base-runner.js';
@@ -298,6 +299,78 @@ describe('PlatformRouter', () => {
       const result = router.selectPlatform(tier, 'review');
       // Should fall back from cursor to codex
       expect(result.platform).toBe('codex');
+    });
+
+    describe('P2-T05 complexity-based model routing', () => {
+      function createSubtaskNode(input?: { title?: string; criteriaCount?: number }): TierNode {
+        const title = input?.title ?? 'Test subtask';
+        const description = 'Subtask description';
+        const criteriaCount = input?.criteriaCount ?? 0;
+
+        const data: TierNodeData = {
+          id: 'ST-001-001-001',
+          type: 'subtask',
+          title,
+          description,
+          plan: { id: 'ST-001-001-001', title, description },
+          acceptanceCriteria: Array.from({ length: criteriaCount }, (_, i) => ({
+            id: `AC-${i + 1}`,
+            description: `Criterion ${i + 1}`,
+            type: 'regex',
+            target: 'noop',
+          })),
+          testPlan: { commands: [], failFast: false },
+          evidence: [],
+          iterations: 0,
+          maxIterations: 10,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
+        return new TierNode(data);
+      }
+
+      beforeEach(() => {
+        config.models = {
+          level1: { platform: 'gemini', model: 'L1' },
+          level2: { platform: 'codex', model: 'L2' },
+          level3: { platform: 'claude', model: 'L3' },
+        };
+        // Keep default complexityRouting in place (falls back to built-in matrix if unset).
+        router = new PlatformRouter(config, registry);
+      });
+
+      it('routes subtask execute based on complexity×taskType when models configured', () => {
+        const tier = createSubtaskNode({ title: 'Add feature', criteriaCount: 0 }); // trivial/feature -> level1
+        const result = router.selectPlatform(tier, 'execute');
+        expect(result.platform).toBe('gemini');
+        expect(result.model).toBe('L1');
+      });
+
+      it('respects TierPlan modelLevel override for subtask execute', () => {
+        const tier = createSubtaskNode({ title: 'Add feature', criteriaCount: 0 });
+        const tierPlan: TierPlan = { id: tier.id, title: 'Plan', description: 'Plan', modelLevel: 'level3' };
+        const result = router.selectPlatform(tier, 'execute', tierPlan);
+        expect(result.platform).toBe('claude');
+        expect(result.model).toBe('L3');
+      });
+
+      it('falls back when routed platform is unavailable, preserving model string', () => {
+        // Route level1 to cursor, but make cursor unavailable.
+        config.models = {
+          level1: { platform: 'cursor', model: 'L1' },
+          level2: { platform: 'codex', model: 'L2' },
+          level3: { platform: 'claude', model: 'L3' },
+        };
+        registry.clear();
+        registry.register('codex', mockRunners.get('codex') as BasePlatformRunner);
+        registry.register('claude', mockRunners.get('claude') as BasePlatformRunner);
+        router = new PlatformRouter(config, registry);
+
+        const tier = createSubtaskNode({ title: 'Add feature', criteriaCount: 0 }); // trivial/feature -> level1 (cursor)
+        const result = router.selectPlatform(tier, 'execute');
+        expect(result.platform).toBe('codex'); // cursor -> codex fallback
+        expect(result.model).toBe('L1'); // model preserved from level1
+      });
     });
   });
 });

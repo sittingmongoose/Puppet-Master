@@ -12,6 +12,7 @@ import yaml from 'js-yaml';
 import type { PuppetMasterConfig } from '../types/config.js';
 import { getDefaultConfig } from './default-config.js';
 import { validateConfig } from './config-schema.js';
+import { SecretsManager } from './secrets-manager.js';
 
 /**
  * ConfigManager class for loading and managing configuration files
@@ -41,6 +42,10 @@ export class ConfigManager {
    * @throws ConfigValidationError if config is invalid
    */
   async load(): Promise<PuppetMasterConfig> {
+    // P2-T12: Load secrets from env vars and optional local `.env` file.
+    // Non-fatal when `.env` is missing.
+    new SecretsManager().loadSecrets();
+
     // Check if config file exists
     let fileExists = false;
     try {
@@ -301,6 +306,33 @@ function deepMerge(base: PuppetMasterConfig, overrides: Partial<PuppetMasterConf
   // Merge cliPaths
   if (overrides.cliPaths) {
     result.cliPaths = { ...base.cliPaths, ...overrides.cliPaths };
+  }
+
+  // Merge models (optional, P2-T05)
+  if (overrides.models) {
+    if (base.models) {
+      result.models = {
+        level1: { ...base.models.level1, ...overrides.models.level1 },
+        level2: { ...base.models.level2, ...overrides.models.level2 },
+        level3: { ...base.models.level3, ...overrides.models.level3 },
+      };
+    } else {
+      result.models = overrides.models;
+    }
+  }
+
+  // Merge complexityRouting (optional, P2-T05)
+  if (overrides.complexityRouting) {
+    if (base.complexityRouting) {
+      result.complexityRouting = {
+        trivial: { ...base.complexityRouting.trivial, ...overrides.complexityRouting.trivial },
+        simple: { ...base.complexityRouting.simple, ...overrides.complexityRouting.simple },
+        standard: { ...base.complexityRouting.standard, ...overrides.complexityRouting.standard },
+        critical: { ...base.complexityRouting.critical, ...overrides.complexityRouting.critical },
+      };
+    } else {
+      result.complexityRouting = overrides.complexityRouting;
+    }
   }
 
   // Merge loopGuard (optional, P2-T02)

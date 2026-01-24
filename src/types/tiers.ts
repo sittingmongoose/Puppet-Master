@@ -7,6 +7,7 @@
  */
 
 import type { TierState, TierType } from './state.js';
+import type { Platform, ModelLevel } from './config.js';
 
 /**
  * Canonical criterion types for the verification system.
@@ -26,7 +27,7 @@ import type { TierState, TierType } from './state.js';
  * NOTE: 'manual' type is NOT supported - all criteria must be machine-verifiable.
  * See REQUIREMENTS.md "no manual tests" requirement.
  */
-export type CriterionType = 'regex' | 'file_exists' | 'browser_verify' | 'command' | 'ai';
+export type CriterionType = 'regex' | 'file_exists' | 'browser_verify' | 'command' | 'ai' | 'script';
 
 /**
  * Criterion interface.
@@ -37,6 +38,21 @@ export interface Criterion {
   description: string;
   type: CriterionType;
   target: string;
+  /**
+   * Explicit verification instruction for this criterion.
+   *
+   * - For built-in verifiers, this is typically a spec token (e.g., `TEST:npm test`)
+   *   that can be normalized into a runtime-executable `type` + `target` (+ options).
+   * - For script-based criteria, this is typically a script path (e.g., `./verify-foo.sh`).
+   *
+   * P2-T04: Executable Acceptance Criteria.
+   */
+  verification?: string;
+  /**
+   * Business priority for this criterion.
+   * Defaults to MUST if omitted.
+   */
+  priority?: 'MUST' | 'SHOULD' | 'COULD';
   options?: Record<string, unknown>;
   passed?: boolean;
 }
@@ -69,6 +85,16 @@ export interface TierPlan {
   id: string;
   title: string;
   description: string;
+  /**
+   * Optional platform override for this tier.
+   * Used by PlatformRouter to route execution when explicitly specified.
+   */
+  platform?: Platform;
+  /**
+   * Optional model level override for this tier (P2-T05).
+   * Used by PlatformRouter to select models.level1/level2/level3.
+   */
+  modelLevel?: ModelLevel;
   approach?: string[];
   dependencies?: string[];
   /**

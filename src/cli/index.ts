@@ -18,6 +18,8 @@ import { guiCommand } from './commands/gui.js';
 import { validateCommand } from './commands/validate.js';
 import { interviewCommand } from './commands/interview.js';
 import { CheckpointsCommand } from './commands/checkpoints.js';
+import { ledgerCommand } from './commands/ledger.js';
+import { metricsCommand } from './commands/metrics.js';
 
 const program = new Command();
 
@@ -86,6 +88,12 @@ interviewCommand.register(program);
 // Register checkpoints command
 const checkpointsCommand = new CheckpointsCommand();
 checkpointsCommand.register(program);
+
+// Register ledger command (P2-T03)
+ledgerCommand.register(program);
+
+// Register metrics command (P2-T08)
+metricsCommand.register(program);
 
 /**
  * Run the CLI with the given arguments

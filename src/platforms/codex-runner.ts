@@ -138,12 +138,13 @@ export class CodexRunner extends BasePlatformRunner {
     const parsed = this.outputParser.parse(output);
 
     // Determine success based on completion signal and parsed results
-    const hasCompleteSignal = parsed.completionSignal === 'COMPLETE';
-    const hasGutterSignal = parsed.completionSignal === 'GUTTER';
+    // Note: Some outputs may contain both signals; in that case, treat COMPLETE as higher priority.
+    const completePresent = /<ralph>COMPLETE<\/ralph>/i.test(output);
+    const gutterPresent = /<ralph>GUTTER<\/ralph>/i.test(output);
     const hasErrors = parsed.errors.length > 0;
 
-    // Success if COMPLETE signal is present and no GUTTER or errors
-    const success = hasCompleteSignal && !hasGutterSignal && !hasErrors;
+    // Success if COMPLETE is present and there are no errors (COMPLETE takes precedence over GUTTER).
+    const success = completePresent && !hasErrors;
 
     return {
       success,
@@ -155,7 +156,7 @@ export class CodexRunner extends BasePlatformRunner {
       sessionId: parsed.sessionId,
       ...(hasErrors && parsed.errors.length > 0
         ? { error: parsed.errors[0] }
-        : hasGutterSignal
+        : !success && gutterPresent
           ? { error: 'Agent signaled GUTTER - stuck and cannot proceed' }
           : {}),
     };

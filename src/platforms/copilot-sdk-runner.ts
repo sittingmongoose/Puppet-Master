@@ -204,6 +204,16 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
   }
 
   /**
+   * Best-effort health check (P2-T07).
+   *
+   * Ensures the SDK can initialize and basic status can be retrieved.
+   */
+  async healthCheck(): Promise<void> {
+    await this.initialize();
+    await this.getClientStatus();
+  }
+
+  /**
    * Spawns a fresh "process" for execution.
    *
    * Note: The SDK doesn't use real processes. This creates a virtual process

@@ -26,6 +26,7 @@ import {
   GitConfigCheck,
   GitRepoCheck,
 } from '../../doctor/checks/git-check.js';
+import { SecretsCheck } from '../../doctor/checks/secrets-check.js';
 
 // Runtime checks
 import {
@@ -96,6 +97,7 @@ async function createCheckRegistry(): Promise<CheckRegistry> {
   registry.register(new GitAvailableCheck());
   registry.register(new GitConfigCheck());
   registry.register(new GitRepoCheck());
+  registry.register(new SecretsCheck());
 
   // Register Runtime checks
   registry.register(new NodeVersionCheck());

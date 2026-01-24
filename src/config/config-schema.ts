@@ -8,6 +8,10 @@
 import type {
   PuppetMasterConfig,
   Platform,
+  ModelLevel,
+  ModelsConfig,
+  ModelLevelConfig,
+  ComplexityRoutingMatrix,
   TierConfig,
   BranchingConfig,
   VerificationConfig,
@@ -24,6 +28,8 @@ import type {
   PlatformRateLimits,
   CheckpointingConfig,
   LoopGuardConfig,
+  EscalationChainsConfig,
+  EscalationChainStepConfig,
 } from '../types/config.js';
 
 /**
@@ -94,6 +100,16 @@ export function validateConfig(config: unknown): asserts config is PuppetMasterC
   // Validate cliPaths
   validateCliPathsConfig(c.cliPaths, ['cliPaths']);
 
+  // Validate models (optional, P2-T05)
+  if ('models' in c) {
+    validateModelsConfig(c.models, ['models']);
+  }
+
+  // Validate complexityRouting (optional, P2-T05)
+  if ('complexityRouting' in c) {
+    validateComplexityRoutingMatrix(c.complexityRouting, ['complexityRouting']);
+  }
+
   // Validate startChain (optional)
   if ('startChain' in c) {
     validateStartChainConfig(c.startChain, ['startChain']);
@@ -112,6 +128,94 @@ export function validateConfig(config: unknown): asserts config is PuppetMasterC
   // Validate loopGuard (optional)
   if ('loopGuard' in c) {
     validateLoopGuardConfig(c.loopGuard, ['loopGuard']);
+  }
+
+  // Validate escalation chains (optional, P2-T09)
+  if ('escalation' in c) {
+    validateEscalationChainsConfig(c.escalation, ['escalation']);
+  }
+}
+
+function validateEscalationChainsConfig(value: unknown, path: string[]): asserts value is EscalationChainsConfig {
+  if (typeof value !== 'object' || value === null) {
+    throw new ConfigValidationError('escalation must be an object', path);
+  }
+  const v = value as Record<string, unknown>;
+
+  if (!('chains' in v)) {
+    throw new ConfigValidationError('escalation.chains is required when escalation is present', [...path, 'chains']);
+  }
+
+  validateEscalationChains(v.chains, [...path, 'chains']);
+}
+
+function validateEscalationChains(value: unknown, path: string[]): void {
+  if (typeof value !== 'object' || value === null) {
+    throw new ConfigValidationError('escalation.chains must be an object', path);
+  }
+
+  const v = value as Record<string, unknown>;
+  const allowedKeys = new Set(['testFailure', 'acceptance', 'timeout', 'structural', 'error']);
+
+  for (const [key, chainValue] of Object.entries(v)) {
+    if (!allowedKeys.has(key)) {
+      throw new ConfigValidationError(
+        `escalation.chains.${key} is not a supported chain key (allowed: ${Array.from(allowedKeys).join(', ')})`,
+        [...path, key]
+      );
+    }
+
+    if (!Array.isArray(chainValue) || chainValue.length === 0) {
+      throw new ConfigValidationError(`escalation.chains.${key} must be a non-empty array`, [...path, key]);
+    }
+
+    for (let i = 0; i < chainValue.length; i += 1) {
+      validateEscalationChainStep(chainValue[i], [...path, key, String(i)]);
+    }
+  }
+}
+
+function validateEscalationChainStep(value: unknown, path: string[]): asserts value is EscalationChainStepConfig {
+  if (typeof value !== 'object' || value === null) {
+    throw new ConfigValidationError('escalation chain step must be an object', path);
+  }
+
+  const v = value as Record<string, unknown>;
+
+  const allowedActions = new Set(['self_fix', 'kick_down', 'escalate', 'pause', 'retry']);
+  if (!allowedActions.has(v.action as string)) {
+    throw new ConfigValidationError(
+      `escalation chain step.action must be one of: ${Array.from(allowedActions).join(', ')}`,
+      [...path, 'action']
+    );
+  }
+
+  // Guardrail: ConfigManager maps snake_case `max_attempts` -> `maxIterations` globally.
+  // For escalation chains we require `maxAttempts` to avoid silent misconfiguration.
+  if ('maxIterations' in v) {
+    throw new ConfigValidationError(
+      'escalation chain step.maxIterations is not supported; use maxAttempts (camelCase) instead',
+      [...path, 'maxIterations']
+    );
+  }
+
+  if ('maxAttempts' in v) {
+    if (typeof v.maxAttempts !== 'number' || !Number.isFinite(v.maxAttempts) || Math.trunc(v.maxAttempts) < 1) {
+      throw new ConfigValidationError('escalation chain step.maxAttempts must be a positive integer', [...path, 'maxAttempts']);
+    }
+  }
+
+  if ('notify' in v && typeof v.notify !== 'boolean') {
+    throw new ConfigValidationError('escalation chain step.notify must be a boolean', [...path, 'notify']);
+  }
+
+  if ('to' in v) {
+    if (v.action !== 'escalate') {
+      throw new ConfigValidationError('escalation chain step.to is only valid for action: "escalate"', [...path, 'to']);
+    }
+    if (!['phase', 'task', 'subtask'].includes(v.to as string)) {
+      throw new ConfigValidationError('escalation chain step.to must be one of: phase, task, subtask', [...path, 'to']);
+    }
   }
 }
 
@@ -477,6 +581,78 @@ function validateCliPathsConfig(value: unknown, path: string[]): asserts value i
       throw new ConfigValidationError(`cliPaths.${platform} must be a string`, [...path, platform]);
     }
   }
+}
+
+function validateModelsConfig(value: unknown, path: string[]): asserts value is ModelsConfig {
+  if (typeof value !== 'object' || value === null) {
+    throw new ConfigValidationError('models must be an object', path);
+  }
+  const v = value as Record<string, unknown>;
+
+  const levels: ModelLevel[] = ['level1', 'level2', 'level3'];
+  for (const level of levels) {
+    if (!(level in v)) {
+      throw new ConfigValidationError(`Missing required model level: ${level}`, [...path, level]);
+    }
+    validateModelLevelConfig(v[level], [...path, level]);
+  }
+}
+
+function validateModelLevelConfig(value: unknown, path: string[]): asserts value is ModelLevelConfig {
+  if (typeof value !== 'object' || value === null) {
+    throw new ConfigValidationError('model level config must be an object', path);
+  }
+  const v = value as Record<string, unknown>;
+
+  if (!isPlatform(v.platform)) {
+    throw new ConfigValidationError(
+      'models.*.platform must be one of: cursor, codex, claude, gemini, copilot',
+      [...path, 'platform']
+    );
+  }
+
+  if (typeof v.model !== 'string') {
+    throw new ConfigValidationError('models.*.model must be a string', [...path, 'model']);
+  }
+}
+
+function validateComplexityRoutingMatrix(value: unknown, path: string[]): asserts value is ComplexityRoutingMatrix {
+  if (typeof value !== 'object' || value === null) {
+    throw new ConfigValidationError('complexityRouting must be an object', path);
+  }
+  const v = value as Record<string, unknown>;
+
+  const complexities = ['trivial', 'simple', 'standard', 'critical'] as const;
+  const taskTypes = ['feature', 'bugfix', 'refactor', 'test', 'docs'] as const;
+
+  for (const complexity of complexities) {
+    if (!(complexity in v)) {
+      throw new ConfigValidationError(`Missing required complexity key: ${complexity}`, [...path, complexity]);
+    }
+    const row = v[complexity];
+    if (typeof row !== 'object' || row === null) {
+      throw new ConfigValidationError(`complexityRouting.${complexity} must be an object`, [...path, complexity]);
+    }
+    const r = row as Record<string, unknown>;
+    for (const taskType of taskTypes) {
+      if (!(taskType in r)) {
+        throw new ConfigValidationError(
+          `Missing required task type key: ${taskType}`,
+          [...path, complexity, taskType]
+        );
+      }
+      if (!isModelLevel(r[taskType])) {
+        throw new ConfigValidationError(
+          'complexityRouting values must be one of: level1, level2, level3',
+          [...path, complexity, taskType]
+        );
+      }
+    }
+  }
+}
+
+function isModelLevel(value: unknown): value is ModelLevel {
+  return value === 'level1' || value === 'level2' || value === 'level3';
 }
 
 function validateExecutionConfig(value: unknown, path: string[]): asserts value is ExecutionConfig {

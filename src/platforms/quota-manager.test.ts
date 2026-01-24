@@ -115,17 +115,12 @@ describe('QuotaManager', () => {
           success: true,
         });
       }
-
-      const quotaInfo = await quotaManager.checkQuota('claude');
-      
-      // Hourly limit is 3, so with 3 calls, remaining should be 0
-      // (or the most restrictive period should be exhausted)
-      expect(quotaInfo.remaining).toBeGreaterThanOrEqual(0);
+      await expect(quotaManager.checkQuota('claude')).rejects.toThrow(QuotaExhaustedError);
     });
 
     it('should identify the most restrictive period', async () => {
       // Record usage to exhaust hourly limit but not daily limit
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < 2; i++) {
         await usageTracker.track({
           platform: 'claude',
           action: 'test',

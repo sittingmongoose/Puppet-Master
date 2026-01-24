@@ -85,6 +85,30 @@ vi.mock('../../doctor/checks/cli-tools.js', () => ({
       durationMs: 5,
     }),
   })),
+  GeminiCliCheck: vi.fn().mockImplementation(() => ({
+    name: 'gemini-cli',
+    category: 'cli' as const,
+    description: 'Check if Gemini CLI is available',
+    run: vi.fn().mockResolvedValue({
+      name: 'gemini-cli',
+      category: 'cli' as const,
+      passed: true,
+      message: 'Gemini CLI is available',
+      durationMs: 10,
+    }),
+  })),
+  CopilotCliCheck: vi.fn().mockImplementation(() => ({
+    name: 'copilot-cli',
+    category: 'cli' as const,
+    description: 'Check if Copilot CLI is available',
+    run: vi.fn().mockResolvedValue({
+      name: 'copilot-cli',
+      category: 'cli' as const,
+      passed: true,
+      message: 'Copilot CLI is available',
+      durationMs: 10,
+    }),
+  })),
 }));
 
 vi.mock('../../doctor/checks/git-check.js', () => ({

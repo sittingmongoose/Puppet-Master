@@ -44,4 +44,10 @@ export type {
   AIVerificationResult,
 } from './verifiers/ai-verifier.js';
 
+export { ScriptVerifier } from './verifiers/script-verifier.js';
+export type {
+  ScriptCriterion,
+  ScriptCriterionOptions,
+} from './verifiers/script-verifier.js';
+
 export type { Verifier } from './verifiers/verifier.js';

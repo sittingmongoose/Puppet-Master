@@ -56,6 +56,14 @@ export const CRITERION_TYPE_CONTRACT = {
    */
   ai: 'AIVerifier',
 
+  /**
+   * Script-based verification.
+   * Executes a verification script (typically generated into `.puppet-master/scripts/`).
+   *
+   * P2-T04: Executable Acceptance Criteria.
+   */
+  script: 'ScriptVerifier',
+
   // NOTE: 'manual' type is INTENTIONALLY NOT INCLUDED
   // All criteria must be machine-verifiable per REQUIREMENTS.md
 } as const;
@@ -129,6 +137,7 @@ export const VERIFIER_FILE_MAP: Record<VerifierClassName, string> = {
   FileExistsVerifier: 'verification/verifiers/file-exists-verifier.ts',
   BrowserVerifier: 'verification/verifiers/browser-verifier.ts',
   AIVerifier: 'verification/verifiers/ai-verifier.ts',
+  ScriptVerifier: 'verification/verifiers/script-verifier.ts',
 };
 
 /**

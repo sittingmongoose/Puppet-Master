@@ -63,6 +63,7 @@ function createMockProcess(pid: number = 12345): ChildProcess {
     killed: false,
     exitCode: null as number | null,
     exitCallbacks: [] as Array<(code: number) => void>,
+    closeCallbacks: [] as Array<(code: number) => void>,
     errorCallbacks: [] as Array<(error: Error) => void>,
   };
 
@@ -88,6 +89,7 @@ function createMockProcess(pid: number = 12345): ChildProcess {
         mockState.killed = true;
         mockState.exitCode = signal === 'SIGKILL' ? 137 : 143;
         mockState.exitCallbacks.forEach((cb) => cb(mockState.exitCode!));
+        mockState.closeCallbacks.forEach((cb) => cb(mockState.exitCode!));
       }
     }),
     on: vi.fn((event: string, callback: (...args: unknown[]) => void) => {
@@ -103,15 +105,41 @@ function createMockProcess(pid: number = 12345): ChildProcess {
             }
           });
         }
+      } else if (event === 'close') {
+        mockState.closeCallbacks.push(callback as (code: number) => void);
+        // If exitCode is already set, call immediately
+        if (mockState.exitCode !== null) {
+          setImmediate(() => {
+            try {
+              (callback as (code: number) => void)(mockState.exitCode!);
+            } catch {
+              // Ignore callback errors
+            }
+          });
+        }
       } else if (event === 'error') {
         mockState.errorCallbacks.push(callback as (error: Error) => void);
       }
       return mockProc;
     }),
+    once: vi.fn((event: string, callback: (...args: unknown[]) => void) => {
+      // For these tests, `once` can delegate to `on` because callbacks are invoked
+      // at most once by our mock emit logic.
+      return mockProc.on(event, callback);
+    }),
     emit: vi.fn((event: string, ...args: unknown[]) => {
       if (event === 'exit' && args.length > 0) {
         mockState.exitCode = args[0] as number;
         mockState.exitCallbacks.forEach((cb) => {
+          try {
+            cb(args[0] as number);
+          } catch {
+            // Ignore callback errors
+          }
+        });
+      } else if (event === 'close' && args.length > 0) {
+        mockState.exitCode = args[0] as number;
+        mockState.closeCallbacks.forEach((cb) => {
           try {
             cb(args[0] as number);
           } catch {
@@ -258,6 +286,8 @@ describe('Platform Integration Tests', () => {
   let capabilityService: CapabilityDiscoveryService;
   let usageTracker: UsageTracker;
   let quotaManager: QuotaManager;
+  let spawnOutputQueue: string[];
+  let nextMockPid: number;
 
   beforeEach(async () => {
     // Create temporary directory for test isolation
@@ -277,7 +307,50 @@ describe('Platform Integration Tests', () => {
 
     // Reset mocks
     vi.clearAllMocks();
-    vi.mocked(spawn).mockClear();
+    spawnOutputQueue = [];
+    nextMockPid = 10000;
+
+    // FreshSpawner runs git commands; platform runners spawn their own CLIs.
+    // Mock spawn in a way that:
+    // - git commands complete immediately with exit code 0
+    // - platform CLI commands consume outputs from spawnOutputQueue
+    vi.mocked(spawn).mockImplementation((command: unknown) => {
+      const cmd = String(command);
+      const proc = createMockProcess(nextMockPid++);
+
+      const completeOk = (): void => {
+        if (proc.stdout) {
+          proc.stdout.push(null);
+        }
+        if (proc.stderr) {
+          proc.stderr.push(null);
+        }
+        (proc as { exitCode: number }).exitCode = 0;
+        proc.emit('close', 0);
+        proc.emit('exit', 0);
+      };
+
+      if (cmd === 'git') {
+        setTimeout(completeOk, 0);
+        return proc as ChildProcess;
+      }
+
+      const output = spawnOutputQueue.shift() ?? '';
+      setTimeout(() => {
+        if (proc.stdout) {
+          proc.stdout.push(Buffer.from(output));
+          proc.stdout.push(null);
+        }
+        if (proc.stderr) {
+          proc.stderr.push(null);
+        }
+        (proc as { exitCode: number }).exitCode = 0;
+        proc.emit('close', 0);
+        proc.emit('exit', 0);
+      }, 10);
+
+      return proc as ChildProcess;
+    });
   });
 
   afterEach(async () => {
@@ -333,21 +406,7 @@ describe('Platform Integration Tests', () => {
 
       // Step 3: Mock spawn for execution - use pattern from existing tests
       const mockOutput = 'Processing request...\nSession ID: PM-2026-01-10-14-30-00-001\ntokens: 1234\nOutput: Task completed successfully\n<ralph>COMPLETE</ralph>';
-      const mockProc = createMockProcess(12345);
-      vi.mocked(spawn).mockReturnValue(mockProc as ChildProcess);
-
-      // Simulate output with COMPLETE signal (pattern from cursor-runner.test.ts)
-      setTimeout(() => {
-        if (mockProc.stdout) {
-          mockProc.stdout.push(Buffer.from(mockOutput));
-          mockProc.stdout.push(null);
-        }
-        if (mockProc.stderr) {
-          mockProc.stderr.push(null);
-        }
-        (mockProc as { exitCode: number }).exitCode = 0;
-        mockProc.emit('exit', 0);
-      }, 10);
+      spawnOutputQueue = [mockOutput];
 
       const request: ExecutionRequest = {
         prompt: 'Test prompt',
@@ -412,20 +471,7 @@ describe('Platform Integration Tests', () => {
       expect(cursorRunner).toBeDefined();
 
       const mockOutput = 'Processing request...\nSession ID: PM-2026-01-10-14-30-00-001\ntokens: 1234\nOutput: Task completed successfully\n<ralph>COMPLETE</ralph>';
-      const mockProc = createMockProcess(12345);
-      vi.mocked(spawn).mockReturnValue(mockProc as ChildProcess);
-
-      setTimeout(() => {
-        if (mockProc.stdout) {
-          mockProc.stdout.push(Buffer.from(mockOutput));
-          mockProc.stdout.push(null);
-        }
-        if (mockProc.stderr) {
-          mockProc.stderr.push(null);
-        }
-        (mockProc as { exitCode: number }).exitCode = 0;
-        mockProc.emit('exit', 0);
-      }, 10);
+      spawnOutputQueue = [mockOutput];
 
       const request: ExecutionRequest = {
         prompt: 'Test prompt',
@@ -476,20 +522,7 @@ describe('Platform Integration Tests', () => {
       const cursorRunner = registry.get('cursor')!;
 
       const mockOutput = 'Processing request...\nSession ID: PM-2026-01-10-14-30-00-001\ntokens: 5678\nOutput: Task completed successfully\n<ralph>COMPLETE</ralph>';
-      const mockProc = createMockProcess(12345);
-      vi.mocked(spawn).mockReturnValue(mockProc as ChildProcess);
-
-      setTimeout(() => {
-        if (mockProc.stdout) {
-          mockProc.stdout.push(Buffer.from(mockOutput));
-          mockProc.stdout.push(null);
-        }
-        if (mockProc.stderr) {
-          mockProc.stderr.push(null);
-        }
-        (mockProc as { exitCode: number }).exitCode = 0;
-        mockProc.emit('exit', 0);
-      }, 10);
+      spawnOutputQueue = [mockOutput];
 
       const request: ExecutionRequest = {
         prompt: 'Test prompt',
@@ -885,6 +918,7 @@ describe('Platform Integration Tests', () => {
       vi.spyOn(capabilityService, 'getCached').mockResolvedValue(mockProbeResult);
 
       const registry = PlatformRegistry.createDefault(config);
+      spawnOutputQueue = [mockOutput, mockOutput, mockOutput];
 
       // Test cursor
       const cursorRunner = registry.get('cursor')!;
@@ -893,20 +927,6 @@ describe('Platform Integration Tests', () => {
         workingDirectory: tempDir,
         nonInteractive: true,
       };
-      
-      const mockProc1 = createMockProcess(12345);
-      vi.mocked(spawn).mockReturnValueOnce(mockProc1 as ChildProcess);
-      setTimeout(() => {
-        if (mockProc1.stdout) {
-          mockProc1.stdout.push(Buffer.from(mockOutput));
-          mockProc1.stdout.push(null);
-        }
-        if (mockProc1.stderr) {
-          mockProc1.stderr.push(null);
-        }
-        (mockProc1 as { exitCode: number }).exitCode = 0;
-        mockProc1.emit('exit', 0);
-      }, 10);
       
       const cursorResult = await cursorRunner.execute(cursorRequest);
       expect(cursorResult.success).toBe(true);
@@ -919,20 +939,6 @@ describe('Platform Integration Tests', () => {
         nonInteractive: true,
       };
       
-      const mockProc2 = createMockProcess(12346);
-      vi.mocked(spawn).mockReturnValueOnce(mockProc2 as ChildProcess);
-      setTimeout(() => {
-        if (mockProc2.stdout) {
-          mockProc2.stdout.push(Buffer.from(mockOutput));
-          mockProc2.stdout.push(null);
-        }
-        if (mockProc2.stderr) {
-          mockProc2.stderr.push(null);
-        }
-        (mockProc2 as { exitCode: number }).exitCode = 0;
-        mockProc2.emit('exit', 0);
-      }, 10);
-      
       const codexResult = await codexRunner.execute(codexRequest);
       expect(codexResult.success).toBe(true);
 
@@ -943,20 +949,6 @@ describe('Platform Integration Tests', () => {
         workingDirectory: tempDir,
         nonInteractive: true,
       };
-      
-      const mockProc3 = createMockProcess(12347);
-      vi.mocked(spawn).mockReturnValueOnce(mockProc3 as ChildProcess);
-      setTimeout(() => {
-        if (mockProc3.stdout) {
-          mockProc3.stdout.push(Buffer.from(mockOutput));
-          mockProc3.stdout.push(null);
-        }
-        if (mockProc3.stderr) {
-          mockProc3.stderr.push(null);
-        }
-        (mockProc3 as { exitCode: number }).exitCode = 0;
-        mockProc3.emit('exit', 0);
-      }, 10);
       
       const claudeResult = await claudeRunner.execute(claudeRequest);
       expect(claudeResult.success).toBe(true);
@@ -1000,20 +992,7 @@ describe('Platform Integration Tests', () => {
       const cursorRunner = registry.get('cursor')!;
 
       const mockOutput = 'Processing request...\nSession ID: PM-2026-01-10-14-30-00-001\nOutput: Agent stuck\n<ralph>GUTTER</ralph>';
-      const mockProc = createMockProcess(12345);
-      vi.mocked(spawn).mockReturnValue(mockProc as ChildProcess);
-
-      setTimeout(() => {
-        if (mockProc.stdout) {
-          mockProc.stdout.push(Buffer.from(mockOutput));
-          mockProc.stdout.push(null);
-        }
-        if (mockProc.stderr) {
-          mockProc.stderr.push(null);
-        }
-        (mockProc as { exitCode: number }).exitCode = 0;
-        mockProc.emit('exit', 0);
-      }, 10);
+      spawnOutputQueue = [mockOutput];
 
       const request: ExecutionRequest = {
         prompt: 'Test prompt',

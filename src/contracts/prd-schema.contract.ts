@@ -199,7 +199,7 @@ export const PRD_SCHEMA_EXPECTATIONS = {
   /**
    * Required criterion fields
    */
-  requiredCriterionFields: ['id', 'description', 'type', 'target'] as const,
+  requiredCriterionFields: ['id', 'description', 'type', 'target', 'verification'] as const,
 
   /**
    * Default values for new items

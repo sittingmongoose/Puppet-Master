@@ -296,7 +296,7 @@ function renderResults() {
         <td class="status-cell ${statusClass}">${statusIcon}</td>
         <td>${checkNameEscaped}</td>
         <td class="category-cell">${escapeHtml(result.category.toUpperCase())}</td>
-        <td>${escapeHtml(result.message)}</td>
+        <td>${escapeHtml(maskSecrets(result.message))}</td>
         <td class="duration-cell">${duration}</td>
         <td class="actions-cell">
           ${hasFix && !result.passed ? `<button class="icon-btn fix-btn" data-check-name="${checkNameEscaped}" aria-label="Fix ${checkNameEscaped}">FIX</button>` : '-'}
@@ -305,8 +305,8 @@ function renderResults() {
       ${result.details || result.fixSuggestion ? `
       <tr class="detail-row" data-check-name="${checkNameEscaped}">
         <td colspan="6" class="detail-cell">
-          ${result.details ? `<div class="detail-section"><strong>Details:</strong> ${escapeHtml(result.details)}</div>` : ''}
-          ${result.fixSuggestion ? `<div class="fix-suggestion"><strong>Fix:</strong> ${escapeHtml(result.fixSuggestion)}</div>` : ''}
+          ${result.details ? `<div class="detail-section"><strong>Details:</strong> ${escapeHtml(maskSecrets(result.details))}</div>` : ''}
+          ${result.fixSuggestion ? `<div class="fix-suggestion"><strong>Fix:</strong> ${escapeHtml(maskSecrets(result.fixSuggestion))}</div>` : ''}
         </td>
       </tr>
       ` : ''}
@@ -401,6 +401,50 @@ function formatDuration(ms) {
     return `${ms}ms`;
   }
   return `${(ms / 1000).toFixed(2)}s`;
+}
+
+function maskValue(value) {
+  if (typeof value !== 'string') {
+    return value;
+  }
+  const trimmed = value.trim();
+  if (trimmed.length <= 8) {
+    return '***';
+  }
+  return `${trimmed.slice(0, 4)}...${trimmed.slice(-4)}`;
+}
+
+/**
+ * Best-effort masking for any secret-like strings that may appear in doctor output.
+ * This runs before escapeHtml() and is intentionally conservative.
+ */
+function maskSecrets(text) {
+  if (typeof text !== 'string') {
+    return text;
+  }
+
+  let masked = text;
+
+  // Context7 API keys
+  masked = masked.replace(/\bctx7sk-[a-zA-Z0-9_-]{20,}\b/g, (m) => maskValue(m));
+  // GitHub tokens
+  masked = masked.replace(/\b(ghp|gho|ghu|ghs|ghr)_[a-zA-Z0-9]{36}\b/g, (m) => maskValue(m));
+  // OpenAI-style keys
+  masked = masked.replace(/\bsk-[a-zA-Z0-9]{20,}\b/g, (m) => maskValue(m));
+  // Bearer tokens
+  masked = masked.replace(/\bBearer\s+([a-zA-Z0-9._-]{20,})\b/g, (_m, tok) => `Bearer ${maskValue(tok)}`);
+  // Private key blocks (very defensive)
+  masked = masked.replace(
+    /-----BEGIN\s+[^-]*PRIVATE\s+KEY-----[\s\S]*?-----END\s+[^-]*PRIVATE\s+KEY-----/g,
+    '-----BEGIN PRIVATE KEY-----\n***REDACTED***\n-----END PRIVATE KEY-----'
+  );
+  // Key/value assignments
+  masked = masked.replace(
+    /\b(ANTHROPIC_API_KEY|OPENAI_API_KEY|CONTEXT7_API_KEY|API_KEY|TOKEN|SECRET|PASSWORD)\b(\s*[:=]\s*)(['"]?)([^'"\s]+)(\3)/gi,
+    (_m, key, sep, quote, value) => `${key}${sep}${quote}${maskValue(value)}${quote}`
+  );
+
+  return masked;
 }
 
 function escapeHtml(text) {

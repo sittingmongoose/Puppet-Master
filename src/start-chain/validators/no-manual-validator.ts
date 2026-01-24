@@ -17,7 +17,7 @@ export function validateNoManualCriteria(prd: PRD): ValidationResult {
       code: 'PRD_MANUAL_CRITERIA',
       message: `Manual acceptance criterion found (type: '${foundType}')`,
       path,
-      suggestion: `Replace 'manual' with a machine-verifiable type ('command', 'file_exists', 'regex', 'browser_verify', or 'ai')`,
+      suggestion: `Replace 'manual' with a machine-verifiable type ('command', 'file_exists', 'regex', 'browser_verify', 'script', or 'ai')`,
     });
   };
 

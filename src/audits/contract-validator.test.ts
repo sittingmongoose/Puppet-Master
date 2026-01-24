@@ -147,6 +147,7 @@ describe('Contract definitions', () => {
       expect(ALL_CRITERION_TYPES).toContain('file_exists');
       expect(ALL_CRITERION_TYPES).toContain('browser_verify');
       expect(ALL_CRITERION_TYPES).toContain('ai');
+      expect(ALL_CRITERION_TYPES).toContain('script');
     });
 
     it('should NOT include manual type', () => {
@@ -159,6 +160,7 @@ describe('Contract definitions', () => {
       expect(ALL_VERIFIER_CLASSES).toContain('FileExistsVerifier');
       expect(ALL_VERIFIER_CLASSES).toContain('BrowserVerifier');
       expect(ALL_VERIFIER_CLASSES).toContain('AIVerifier');
+      expect(ALL_VERIFIER_CLASSES).toContain('ScriptVerifier');
     });
 
     it('should have same number of types and verifiers', () => {

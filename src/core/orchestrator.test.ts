@@ -2,7 +2,10 @@
  * Tests for Orchestrator
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { mkdtemp, rm } from 'node:fs/promises';
+import { join } from 'node:path';
+import { tmpdir } from 'node:os';
 import { Orchestrator } from './orchestrator.js';
 import type {
   OrchestratorConfig,
@@ -35,12 +38,15 @@ describe('Orchestrator', () => {
   let mockConfig: PuppetMasterConfig;
   let mockDeps: OrchestratorDependencies;
   let orchestrator: Orchestrator;
+  let testProjectDir: string;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    testProjectDir = await mkdtemp(join(tmpdir(), 'pm-orchestrator-test-'));
+
     mockConfig = {
       project: {
         name: 'test-project',
-        workingDirectory: '/test/project',
+        workingDirectory: testProjectDir,
       },
       cliPaths: {
         cursor: 'cursor',
@@ -154,11 +160,62 @@ describe('Orchestrator', () => {
       } as unknown as OrchestratorDependencies['configManager'],
       prdManager: {
         load: vi.fn().mockResolvedValue({
-          phases: [],
+          project: 'test-project',
+          version: '1.0.0',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          branchName: 'main',
+          description: 'Test PRD',
+          phases: [
+            {
+              id: 'PH-001',
+              title: 'Phase 1',
+              description: 'Test phase',
+              status: 'pending',
+              priority: 1,
+              acceptanceCriteria: [],
+              testPlan: { commands: [], failFast: true },
+              tasks: [
+                {
+                  id: 'TK-001-001',
+                  phaseId: 'PH-001',
+                  title: 'Task 1',
+                  description: 'Test task',
+                  status: 'pending',
+                  priority: 1,
+                  acceptanceCriteria: [],
+                  testPlan: { commands: [], failFast: true },
+                  subtasks: [
+                    {
+                      id: 'ST-001-001-001',
+                      taskId: 'TK-001-001',
+                      title: 'Subtask 1',
+                      description: 'Test subtask',
+                      status: 'pending',
+                      priority: 1,
+                      acceptanceCriteria: [],
+                      testPlan: { commands: [], failFast: true },
+                      iterations: [],
+                      maxIterations: 1,
+                      createdAt: new Date().toISOString(),
+                      notes: '',
+                    },
+                  ],
+                  createdAt: new Date().toISOString(),
+                  notes: '',
+                },
+              ],
+              createdAt: new Date().toISOString(),
+              notes: '',
+            },
+          ],
           metadata: {
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            version: '1.0.0',
+            totalPhases: 1,
+            completedPhases: 0,
+            totalTasks: 1,
+            completedTasks: 0,
+            totalSubtasks: 1,
+            completedSubtasks: 0,
           },
         }),
         save: vi.fn().mockResolvedValue(undefined),
@@ -248,10 +305,20 @@ describe('Orchestrator', () => {
 
     const orchestratorConfig: OrchestratorConfig = {
       config: mockConfig,
-      projectPath: '/test/project',
+      projectPath: testProjectDir,
     };
 
     orchestrator = new Orchestrator(orchestratorConfig);
+    // Prevent leaking SIGINT/SIGTERM listeners across tests.
+    (orchestrator as unknown as { setupSignalHandlers: () => void }).setupSignalHandlers = () => undefined;
+  });
+
+  afterEach(async () => {
+    try {
+      await rm(testProjectDir, { recursive: true, force: true });
+    } catch {
+      // ignore
+    }
   });
 
   describe('constructor', () => {
@@ -281,6 +348,8 @@ describe('Orchestrator', () => {
         getCurrentPhase: vi.fn().mockReturnValue(null),
         getCurrentTask: vi.fn().mockReturnValue(null),
         getAllSubtasks: vi.fn().mockReturnValue([]),
+        getAllTasks: vi.fn().mockReturnValue([]),
+        getAllPhases: vi.fn().mockReturnValue([]),
         syncToPrd: vi.fn().mockResolvedValue(undefined),
       };
 
@@ -343,6 +412,8 @@ describe('Orchestrator', () => {
         getCurrentPhase: vi.fn().mockReturnValue(null),
         getCurrentTask: vi.fn().mockReturnValue(null),
         getAllSubtasks: vi.fn().mockReturnValue([]),
+        getAllTasks: vi.fn().mockReturnValue([]),
+        getAllPhases: vi.fn().mockReturnValue([]),
         syncToPrd: vi.fn().mockResolvedValue(undefined),
       };
 
@@ -417,6 +488,7 @@ describe('Orchestrator', () => {
         },
         stateMachine: {
           send: vi.fn().mockReturnValue(true),
+          getContext: vi.fn().mockReturnValue({}),
         },
         getState: vi.fn().mockReturnValue('running'),
       } as unknown as TierNode;
@@ -446,6 +518,7 @@ describe('Orchestrator', () => {
         },
         stateMachine: {
           send: vi.fn().mockReturnValue(true),
+          getContext: vi.fn().mockReturnValue({}),
         },
         getState: vi.fn().mockReturnValue('running'),
       } as unknown as TierNode;
@@ -480,6 +553,7 @@ describe('Orchestrator', () => {
         getState: vi.fn().mockReturnValue('gating'),
         stateMachine: {
           send: vi.fn().mockReturnValue(true),
+          getContext: vi.fn().mockReturnValue({}),
         },
       } as unknown as TierNode;
 
@@ -504,6 +578,7 @@ describe('Orchestrator', () => {
         getState: vi.fn().mockReturnValue('gating'),
         stateMachine: {
           send: vi.fn().mockReturnValue(true),
+          getContext: vi.fn().mockReturnValue({}),
         },
       } as unknown as TierNode;
 

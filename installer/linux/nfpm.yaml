@@ -1,0 +1,40 @@
+# nfpm.yaml - build .deb/.rpm installers for puppet-master
+#
+# Notes:
+# - nFPM does not support templating; we use environment variable expansion.
+# - The build script sets:
+#   - PM_VERSION: package version (e.g. 0.1.0)
+#   - PM_ARCH: nfpm arch (e.g. amd64)
+#   - PM_NFPM_ROOT: absolute path to a prepared rootfs directory
+#     containing:
+#       ${PM_NFPM_ROOT}/opt/puppet-master/...
+#       ${PM_NFPM_ROOT}/usr/bin/puppet-master
+#
+# Schema reference: https://nfpm.goreleaser.com/schema.json
+
+name: puppet-master
+arch: ${PM_ARCH}
+platform: linux
+version: ${PM_VERSION}
+version_schema: semver
+release: "1"
+section: utils
+priority: optional
+maintainer: "RWM Puppet Master <devnull@example.com>"
+description: |
+  RWM Puppet Master - CLI orchestrator for AI development workflows.
+
+contents:
+  - src: ${PM_NFPM_ROOT}/opt/puppet-master
+    dst: /opt/puppet-master
+    type: tree
+    expand: true
+
+  - src: ${PM_NFPM_ROOT}/usr/bin/puppet-master
+    dst: /usr/bin/puppet-master
+    expand: true
+    file_info:
+      mode: 0755
+      owner: root
+      group: root
+

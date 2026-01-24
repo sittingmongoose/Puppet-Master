@@ -230,14 +230,14 @@ export class PrdQualityValidator {
     allCriteria.forEach(({ criterion, path }) => {
       // All verifiable types must have a non-empty target
       // Note: 'manual' type is not in CriterionType, so it won't appear here
-      const validTypes: Criterion['type'][] = ['command', 'regex', 'file_exists', 'browser_verify', 'ai'];
+      const validTypes: Criterion['type'][] = ['command', 'regex', 'file_exists', 'browser_verify', 'ai', 'script'];
       if (validTypes.includes(criterion.type)) {
         if (!criterion.target || criterion.target.trim() === '') {
           errors.push({
             code: 'PRD_QUALITY_MISSING_TARGET',
             message: `Criterion at ${path} has type '${criterion.type}' but missing or empty target`,
             path: `${path}.target`,
-            suggestion: `Add a valid target value for the ${criterion.type} criterion. For example: command='npm test', regex='pattern', file_exists='path/to/file', etc.`,
+            suggestion: `Add a valid target value for the ${criterion.type} criterion. For example: command='npm test', regex='pattern', file_exists='path/to/file', script='.puppet-master/scripts/verify-foo.sh', etc.`,
           });
           metrics.criteriaWithMissingTargets++;
         }

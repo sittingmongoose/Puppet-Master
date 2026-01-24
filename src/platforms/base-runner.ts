@@ -25,7 +25,9 @@ import type {
 import { CapabilityDiscoveryService } from './capability-discovery.js';
 import type { RateLimiter } from '../budget/rate-limiter.js';
 import type { QuotaManager } from './quota-manager.js';
+import { QuotaExhaustedError } from './quota-manager.js';
 import type { FreshSpawner, SpawnRequest } from '../core/fresh-spawn.js';
+import { CircuitBreaker, CircuitBreakerOpenError } from './circuit-breaker.js';
 
 /**
  * Error thrown when a runner execution exceeds its configured time limits.
@@ -84,6 +86,7 @@ export abstract class BasePlatformRunner
   protected rateLimiter?: RateLimiter;
   protected quotaManager?: QuotaManager;
   protected freshSpawner?: FreshSpawner;
+  protected readonly circuitBreaker: CircuitBreaker;
 
   /**
    * Creates a new BasePlatformRunner instance.
@@ -109,6 +112,7 @@ export abstract class BasePlatformRunner
     this.capabilityService = capabilityService;
     this.defaultTimeout = defaultTimeout;
     this.hardTimeout = hardTimeout;
+    this.circuitBreaker = new CircuitBreaker();
     if (allowedContextFiles) {
       this.allowedContextFiles = allowedContextFiles;
     }
@@ -555,6 +559,7 @@ export abstract class BasePlatformRunner
     let hardTimeoutId: NodeJS.Timeout | null = null;
     let timeoutType: 'soft' | 'hard' | null = null;
     let didCleanup = false;
+    let breakerRecorded = false;
 
     const clearTimers = (): void => {
       if (softTimeoutId) {
@@ -568,6 +573,10 @@ export abstract class BasePlatformRunner
     };
 
     try {
+      // Circuit breaker (P2-T06): fail fast when this platform is unhealthy.
+      // Do this before quota/rate-limit checks so OPEN platforms short-circuit immediately.
+      this.circuitBreaker.assertCanExecute();
+
       // Check rate limit and quota before execution (P1-T07)
       if (this.rateLimiter) {
         await this.rateLimiter.waitForSlot(this.platform);
@@ -694,6 +703,20 @@ export abstract class BasePlatformRunner
       result.duration = Date.now() - startTime;
       result.exitCode = exitCode;
 
+      // Circuit breaker result accounting (P2-T06)
+      // - Any timeout counts as failure (regardless of parse result).
+      // - Otherwise use `result.success` to decide failure vs success.
+      if (timeoutType) {
+        this.circuitBreaker.recordFailure();
+        breakerRecorded = true;
+      } else if (result.success) {
+        this.circuitBreaker.recordSuccess();
+        breakerRecorded = true;
+      } else {
+        this.circuitBreaker.recordFailure();
+        breakerRecorded = true;
+      }
+
       // Emit complete event
       this.emit('complete', {
         pid,
@@ -723,6 +746,19 @@ export abstract class BasePlatformRunner
 
       return result;
     } catch (error) {
+      // Circuit breaker failure accounting (P2-T06)
+      // Count real platform execution failures, but do NOT count:
+      // - CircuitBreakerOpenError: already OPEN, fail-fast only
+      // - QuotaExhaustedError: quota is not "platform unhealthy"
+      if (
+        breakerRecorded === false &&
+        !(error instanceof CircuitBreakerOpenError) &&
+        !(error instanceof QuotaExhaustedError)
+      ) {
+        this.circuitBreaker.recordFailure();
+        breakerRecorded = true;
+      }
+
       const pid = runningProcess?.pid;
       if (pid) {
         // Emit error event (only if listeners exist).
@@ -847,5 +883,20 @@ export abstract class BasePlatformRunner
     // If not cached, probe
     const probeResult = await this.capabilityService.probe(this.platform);
     return probeResult.cooldownInfo;
+  }
+
+  /**
+   * Best-effort platform health check (P2-T07).
+   *
+   * Default implementation uses capability discovery probe and fails if the
+   * underlying CLI is not runnable.
+   *
+   * Runners may override this for richer checks (auth, smoke tests, etc.).
+   */
+  async healthCheck(): Promise<void> {
+    const probe = await this.capabilityService.probe(this.platform);
+    if (!probe.runnable) {
+      throw new Error(`Platform ${this.platform} CLI is not runnable (command: ${probe.command})`);
+    }
   }
 }

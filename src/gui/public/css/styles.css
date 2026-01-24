@@ -579,6 +579,19 @@ h1, h2, h3 {
   background: var(--status-complete);
 }
 
+/* ===== Platform Health Dots (P2-T07) ===== */
+.status-dot.healthy {
+  background: var(--status-complete);
+}
+
+.status-dot.degraded {
+  background: var(--status-paused);
+}
+
+.status-dot.unhealthy {
+  background: var(--status-error);
+}
+
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.6; }

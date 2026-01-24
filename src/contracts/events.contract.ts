@@ -105,6 +105,32 @@ export const EVENT_CONTRACT = {
     /** Requirements inventory completed */
     inventoryComplete: 'requirements_inventory_complete',
   },
+
+  /**
+   * Parallel execution events (P2-T01)
+   */
+  parallel: {
+    /** Parallel execution started */
+    executionStarted: 'parallel_execution_started',
+    /** Parallel execution completed */
+    executionCompleted: 'parallel_execution_completed',
+    /** Subtask completed in parallel execution */
+    subtaskCompleted: 'parallel_subtask_completed',
+    /** Subtask error in parallel execution */
+    subtaskError: 'parallel_subtask_error',
+  },
+
+  /**
+   * Git worktree events (used by parallel executor)
+   */
+  worktree: {
+    /** Worktree creation started */
+    creating: 'worktree_creating',
+    /** Worktree created successfully */
+    created: 'worktree_created',
+    /** Worktree destroyed */
+    destroyed: 'worktree_destroyed',
+  },
 } as const;
 
 /**
@@ -154,6 +180,15 @@ export const ALL_BACKEND_EVENT_NAMES: readonly BackendEventName[] = [
   EVENT_CONTRACT.startChain.complete,
   EVENT_CONTRACT.startChain.interviewComplete,
   EVENT_CONTRACT.startChain.inventoryComplete,
+  // Parallel execution
+  EVENT_CONTRACT.parallel.executionStarted,
+  EVENT_CONTRACT.parallel.executionCompleted,
+  EVENT_CONTRACT.parallel.subtaskCompleted,
+  EVENT_CONTRACT.parallel.subtaskError,
+  // Worktree
+  EVENT_CONTRACT.worktree.creating,
+  EVENT_CONTRACT.worktree.created,
+  EVENT_CONTRACT.worktree.destroyed,
 ] as const;
 
 /**
