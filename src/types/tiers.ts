@@ -71,6 +71,18 @@ export interface TierPlan {
   description: string;
   approach?: string[];
   dependencies?: string[];
+  /**
+   * Subtask IDs within the same task that must complete before this subtask.
+   * Used by ParallelExecutor to determine execution order.
+   * See BUILD_QUEUE_IMPROVEMENTS.md P2-T01.
+   */
+  dependsOn?: string[];
+  /** Planning steps for the tier */
+  steps?: string[];
+  /** Context information for prompt building */
+  context?: string;
+  /** Constraints for this tier */
+  constraints?: string[];
 }
 
 /**

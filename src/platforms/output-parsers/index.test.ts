@@ -49,14 +49,6 @@ describe('getOutputParserForPlatform', () => {
     warnSpy.mockRestore();
   });
 
-  it('should return ClaudeOutputParser for antigravity platform', () => {
-    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-
-    const parser = getOutputParserForPlatform('antigravity');
-    expect(parser).toBeInstanceOf(ClaudeOutputParser);
-
-    warnSpy.mockRestore();
-  });
 });
 
 describe('exports', () => {

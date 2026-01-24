@@ -19,9 +19,11 @@ import type {
   CliPathsConfig,
   AgentsEnforcementConfig,
   ExecutionConfig,
+  ParallelExecutionConfig,
   RateLimitConfig,
   PlatformRateLimits,
   CheckpointingConfig,
+  LoopGuardConfig,
 } from '../types/config.js';
 
 /**
@@ -105,6 +107,11 @@ export function validateConfig(config: unknown): asserts config is PuppetMasterC
   // Validate checkpointing (optional)
   if ('checkpointing' in c) {
     validateCheckpointingConfig(c.checkpointing, ['checkpointing']);
+  }
+
+  // Validate loopGuard (optional)
+  if ('loopGuard' in c) {
+    validateLoopGuardConfig(c.loopGuard, ['loopGuard']);
   }
 }
 
@@ -484,6 +491,48 @@ function validateExecutionConfig(value: unknown, path: string[]): asserts value 
       throw new ConfigValidationError('execution.killAgentOnFailure must be a boolean', [...path, 'killAgentOnFailure']);
     }
   }
+
+  // parallel is optional
+  if ('parallel' in v) {
+    validateParallelExecutionConfig(v.parallel, [...path, 'parallel']);
+  }
+}
+
+function validateParallelExecutionConfig(value: unknown, path: string[]): asserts value is ParallelExecutionConfig {
+  if (typeof value !== 'object' || value === null) {
+    throw new ConfigValidationError('execution.parallel must be an object', path);
+  }
+  const v = value as Record<string, unknown>;
+
+  // enabled is required boolean
+  if (typeof v.enabled !== 'boolean') {
+    throw new ConfigValidationError('execution.parallel.enabled must be a boolean', [...path, 'enabled']);
+  }
+
+  // maxConcurrency is required positive number
+  if (typeof v.maxConcurrency !== 'number' || v.maxConcurrency < 1) {
+    throw new ConfigValidationError('execution.parallel.maxConcurrency must be a positive number', [...path, 'maxConcurrency']);
+  }
+
+  // worktreeDir is optional string
+  if ('worktreeDir' in v && typeof v.worktreeDir !== 'string') {
+    throw new ConfigValidationError('execution.parallel.worktreeDir must be a string', [...path, 'worktreeDir']);
+  }
+
+  // continueOnFailure is optional boolean
+  if ('continueOnFailure' in v && typeof v.continueOnFailure !== 'boolean') {
+    throw new ConfigValidationError('execution.parallel.continueOnFailure must be a boolean', [...path, 'continueOnFailure']);
+  }
+
+  // mergeResults is optional boolean
+  if ('mergeResults' in v && typeof v.mergeResults !== 'boolean') {
+    throw new ConfigValidationError('execution.parallel.mergeResults must be a boolean', [...path, 'mergeResults']);
+  }
+
+  // targetBranch is optional string
+  if ('targetBranch' in v && typeof v.targetBranch !== 'string') {
+    throw new ConfigValidationError('execution.parallel.targetBranch must be a string', [...path, 'targetBranch']);
+  }
 }
 
 function validateCheckpointingConfig(value: unknown, path: string[]): asserts value is CheckpointingConfig {
@@ -506,6 +555,23 @@ function validateCheckpointingConfig(value: unknown, path: string[]): asserts va
   }
   if (typeof v.checkpointOnShutdown !== 'boolean') {
     throw new ConfigValidationError('checkpointing.checkpointOnShutdown must be a boolean', [...path, 'checkpointOnShutdown']);
+  }
+}
+
+function validateLoopGuardConfig(value: unknown, path: string[]): asserts value is LoopGuardConfig {
+  if (typeof value !== 'object' || value === null) {
+    throw new ConfigValidationError('loopGuard must be an object', path);
+  }
+  const v = value as Record<string, unknown>;
+
+  if (typeof v.enabled !== 'boolean') {
+    throw new ConfigValidationError('loopGuard.enabled must be a boolean', [...path, 'enabled']);
+  }
+  if (typeof v.maxRepetitions !== 'number' || v.maxRepetitions < 1) {
+    throw new ConfigValidationError('loopGuard.maxRepetitions must be a positive number', [...path, 'maxRepetitions']);
+  }
+  if (typeof v.suppressReplyRelay !== 'boolean') {
+    throw new ConfigValidationError('loopGuard.suppressReplyRelay must be a boolean', [...path, 'suppressReplyRelay']);
   }
 }
 

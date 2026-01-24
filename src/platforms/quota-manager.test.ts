@@ -59,13 +59,6 @@ describe('QuotaManager', () => {
         cooldownHours: undefined,
         fallbackPlatform: null,
       },
-      antigravity: {
-        maxCallsPerRun: 'unlimited',
-        maxCallsPerHour: 'unlimited',
-        maxCallsPerDay: 'unlimited',
-        cooldownHours: undefined,
-        fallbackPlatform: null,
-      },
     };
 
     budgetEnforcement = {

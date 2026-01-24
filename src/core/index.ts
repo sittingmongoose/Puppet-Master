@@ -61,3 +61,26 @@ export type {
 
 export { Container, createContainer, createOrchestrator } from './container.js';
 export type { RegistrationType } from './container.js';
+
+export { ParallelExecutor, createParallelExecutor } from './parallel-executor.js';
+export type {
+  ParallelExecutionResult,
+  SubtaskExecutionResult,
+  ParallelExecutorConfig,
+} from './parallel-executor.js';
+
+export {
+  buildDependencyGraph,
+  getParallelizableGroups,
+  topologicalSort,
+  hasDependencies,
+  validateDependencies,
+  isReadyToExecute,
+  getReadySubtasks,
+  DependencyCycleError,
+  InvalidDependencyError,
+} from './dependency-analyzer.js';
+export type {
+  DependencyNode,
+  DependencyGraph,
+} from './dependency-analyzer.js';

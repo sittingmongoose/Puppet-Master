@@ -155,5 +155,10 @@ export function getDefaultConfig(): PuppetMasterConfig {
       checkpointOnSubtaskComplete: true,
       checkpointOnShutdown: true,
     },
+    loopGuard: {
+      enabled: true,
+      maxRepetitions: 3,
+      suppressReplyRelay: true,
+    },
   };
 }

@@ -152,11 +152,6 @@ budgets:
     max_calls_per_hour: 1
     max_calls_per_day: 1
     fallback_platform: null
-  antigravity:
-    max_calls_per_run: 1
-    max_calls_per_hour: 1
-    max_calls_per_day: 1
-    fallback_platform: null
 budget_enforcement:
   on_limit_reached: "fallback"
   warn_at_percentage: 80
@@ -170,7 +165,6 @@ cli_paths:
   claude: "claude"
   gemini: "gemini"
   copilot: "copilot"
-  antigravity: "agy"
 `;
     await writeFile(join(tempDir, '.puppet-master', 'config.yaml'), validConfig, 'utf-8');
 

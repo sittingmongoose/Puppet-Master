@@ -20,6 +20,7 @@ export type {
   BudgetEnforcementConfig,
   TiersConfig,
   PuppetMasterConfig,
+  LoopGuardConfig,
 } from './config.js';
 
 export type {
@@ -127,3 +128,31 @@ export type {
 } from './requirements-inventory.js';
 
 export { DEFAULT_INVENTORY_CONFIG } from './requirements-inventory.js';
+
+export type {
+  GapType,
+  GapSeverity,
+  CodebaseFile,
+  CodebaseModule,
+  CodebaseStructure,
+  TestInfo,
+  GapDetectionInput,
+  GapDetectionPRDSummary,
+  GapDetectionPhaseSummary,
+  GapDetectionTaskSummary,
+  GapDetectionSubtaskSummary,
+  DetectedGap,
+  GapDetectionCoverage,
+  GapDetectionResult,
+  AIGapDetectorConfig,
+  AIGapValidatorConfig,
+  GapValidationError,
+  GapValidationWarning,
+  AIGapValidationResult,
+} from './gap-detection.js';
+
+export {
+  DEFAULT_AI_GAP_VALIDATOR_CONFIG,
+  DEFAULT_AI_GAP_DETECTOR_CONFIG,
+  GAP_DETECTION_RESPONSE_SCHEMA,
+} from './gap-detection.js';

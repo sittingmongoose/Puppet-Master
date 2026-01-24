@@ -122,7 +122,6 @@ const createMockConfig = (reviewerEnabled = true): PuppetMasterConfig => ({
     cursor: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 200, fallbackPlatform: null },
     gemini: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 200, fallbackPlatform: null },
     copilot: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 200, fallbackPlatform: null },
-    antigravity: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 200, fallbackPlatform: null },
   },
   budgetEnforcement: { onLimitReached: 'pause', warnAtPercentage: 80, notifyOnFallback: true },
   logging: { level: 'info', retentionDays: 7 },
@@ -132,7 +131,6 @@ const createMockConfig = (reviewerEnabled = true): PuppetMasterConfig => ({
     claude: 'claude',
     gemini: 'gemini',
     copilot: 'copilot',
-    antigravity: 'antigravity',
   },
 });
 

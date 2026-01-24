@@ -86,7 +86,6 @@ describe('PlatformRouter', () => {
         cursor: { maxCallsPerRun: 'unlimited', maxCallsPerHour: 'unlimited', maxCallsPerDay: 'unlimited', fallbackPlatform: null },
         gemini: { maxCallsPerRun: 100, maxCallsPerHour: 'unlimited', maxCallsPerDay: 'unlimited', fallbackPlatform: 'copilot' },
         copilot: { maxCallsPerRun: 'unlimited', maxCallsPerHour: 'unlimited', maxCallsPerDay: 'unlimited', fallbackPlatform: 'gemini' },
-        antigravity: { maxCallsPerRun: 'unlimited', maxCallsPerHour: 'unlimited', maxCallsPerDay: 'unlimited', fallbackPlatform: null },
       },
       budgetEnforcement: {
         onLimitReached: 'fallback',
@@ -100,13 +99,12 @@ describe('PlatformRouter', () => {
         claude: 'claude',
         gemini: 'gemini',
         copilot: 'copilot',
-        antigravity: 'agy',
       },
     };
 
     // Create mock runners
     mockRunners = new Map();
-    const platforms: Platform[] = ['cursor', 'codex', 'claude', 'gemini', 'copilot', 'antigravity'];
+    const platforms: Platform[] = ['cursor', 'codex', 'claude', 'gemini', 'copilot'];
     for (const platform of platforms) {
       const mockRunner = {
         platform,

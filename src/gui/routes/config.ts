@@ -12,7 +12,6 @@ import type { PuppetMasterConfig } from '../../types/config.js';
 import {
   getGeminiModels,
   getCopilotModels,
-  getAntigravityModels,
 } from '../../platforms/index.js';
 
 /**
@@ -151,7 +150,6 @@ export function createConfigRoutes(): Router {
       res.json({
         gemini: getGeminiModels(),
         copilot: getCopilotModels(),
-        antigravity: getAntigravityModels(),
       });
     } catch (error) {
       const err = error as Error;

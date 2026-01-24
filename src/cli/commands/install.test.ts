@@ -25,7 +25,6 @@ vi.mock('../../config/config-manager.js', () => ({
         claude: 'claude',
         gemini: 'gemini',
         copilot: 'copilot',
-        antigravity: 'agy',
       },
     }),
   })),

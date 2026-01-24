@@ -39,3 +39,10 @@ export type {
   PRConfig,
   PRInfo,
 } from './pr-manager.js';
+
+export { WorktreeManager } from './worktree-manager.js';
+export type {
+  WorktreeInfo,
+  MergeResult,
+  WorktreeConfig,
+} from './worktree-manager.js';

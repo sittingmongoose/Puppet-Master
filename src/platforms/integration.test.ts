@@ -232,12 +232,6 @@ function createTestConfig(tempDir: string): PuppetMasterConfig {
           maxCallsPerDay: 200,
           fallbackPlatform: null,
         },
-        antigravity: {
-          maxCallsPerRun: 100,
-          maxCallsPerHour: 50,
-          maxCallsPerDay: 200,
-          fallbackPlatform: null,
-        },
     },
     budgetEnforcement: {
       onLimitReached: 'fallback',
@@ -254,7 +248,6 @@ function createTestConfig(tempDir: string): PuppetMasterConfig {
       claude: join(MOCK_CLIS_DIR, 'mock-claude'),
       gemini: join(MOCK_CLIS_DIR, 'mock-gemini'),
       copilot: join(MOCK_CLIS_DIR, 'mock-copilot'),
-      antigravity: join(MOCK_CLIS_DIR, 'mock-antigravity'),
     },
   };
 }
@@ -528,7 +521,6 @@ describe('Platform Integration Tests', () => {
         claude: config.budgets.claude,
         gemini: config.budgets.gemini,
         copilot: config.budgets.copilot,
-        antigravity: config.budgets.antigravity,
       };
       const budgetEnforcement = {
         onLimitReached: 'fallback' as const,
@@ -579,7 +571,6 @@ describe('Platform Integration Tests', () => {
         claude: config.budgets.claude,
         gemini: config.budgets.gemini,
         copilot: config.budgets.copilot,
-        antigravity: config.budgets.antigravity,
       };
       const budgetEnforcement = {
         onLimitReached: 'fallback' as const,
@@ -616,7 +607,6 @@ describe('Platform Integration Tests', () => {
         claude: config.budgets.claude,
         gemini: config.budgets.gemini,
         copilot: config.budgets.copilot,
-        antigravity: config.budgets.antigravity,
       };
       const budgetEnforcement = {
         onLimitReached: 'fallback' as const,
@@ -648,7 +638,6 @@ describe('Platform Integration Tests', () => {
         claude: config.budgets.claude,
         gemini: config.budgets.gemini,
         copilot: config.budgets.copilot,
-        antigravity: config.budgets.antigravity,
       };
       const budgetEnforcement = {
         onLimitReached: 'fallback' as const,
@@ -692,7 +681,6 @@ describe('Platform Integration Tests', () => {
         claude: config.budgets.claude,
         gemini: config.budgets.gemini,
         copilot: config.budgets.copilot,
-        antigravity: config.budgets.antigravity,
       };
       const budgetEnforcement = {
         onLimitReached: 'fallback' as const,
@@ -730,7 +718,6 @@ describe('Platform Integration Tests', () => {
         claude: config.budgets.claude,
         gemini: config.budgets.gemini,
         copilot: config.budgets.copilot,
-        antigravity: config.budgets.antigravity,
       };
       const budgetEnforcement = {
         onLimitReached: 'fallback' as const,
@@ -777,7 +764,6 @@ describe('Platform Integration Tests', () => {
         },
         gemini: config.budgets.gemini,
         copilot: config.budgets.copilot,
-        antigravity: config.budgets.antigravity,
       };
       const budgetEnforcement = {
         onLimitReached: 'fallback' as const,
@@ -832,13 +818,6 @@ describe('Platform Integration Tests', () => {
           fallbackPlatform: null,
         },
         copilot: {
-          maxCallsPerRun: 100,
-          maxCallsPerHour: 50,
-          maxCallsPerDay: 200,
-          cooldownHours: 0,
-          fallbackPlatform: null,
-        },
-        antigravity: {
           maxCallsPerRun: 100,
           maxCallsPerHour: 50,
           maxCallsPerDay: 200,

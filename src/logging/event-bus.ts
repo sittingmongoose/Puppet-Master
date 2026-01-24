@@ -34,7 +34,15 @@ export type PuppetMasterEvent =
   | { type: 'start_chain_complete'; projectPath: string; artifacts: { prdPath: string; architecturePath: string; planPaths: string[] }; timestamp: string }
   | { type: 'requirements_interview_complete'; questionsCount: number; criticalCount: number; timestamp: string }
   | { type: 'requirements_inventory_complete'; totalRequirements: number; aiRefined: boolean; warnings: string[]; timestamp: string }
-  | { type: 'reviewer_verdict'; subtaskId: string; verdict: 'SHIP' | 'REVISE'; confidence: number };
+  | { type: 'reviewer_verdict'; subtaskId: string; verdict: 'SHIP' | 'REVISE'; confidence: number }
+  // Parallel execution events (P2-T01)
+  | { type: 'parallel_execution_started'; totalSubtasks: number; levels: number; maxConcurrency: number }
+  | { type: 'parallel_execution_completed'; success: boolean; totalSubtasks: number; completedSubtasks: number; failedSubtasks: number; conflictSubtasks: number; totalDurationMs: number; maxConcurrencyUsed: number }
+  | { type: 'parallel_subtask_completed'; subtaskId: string; success: boolean; level: number; durationMs: number }
+  | { type: 'parallel_subtask_error'; subtaskId: string; error: string; level: number }
+  | { type: 'worktree_creating'; agentId: string; subtaskId: string }
+  | { type: 'worktree_created'; agentId: string; subtaskId: string; path: string; branch?: string }
+  | { type: 'worktree_destroyed'; agentId: string; subtaskId: string };
 
 /**
  * Event subscription interface.

@@ -132,7 +132,6 @@ describe('pauseAction', () => {
         claude: 'claude',
         gemini: 'gemini',
         copilot: 'copilot',
-        antigravity: 'agy',
       },
       logging: {
         level: 'info',
@@ -219,12 +218,6 @@ describe('pauseAction', () => {
           fallbackPlatform: null,
         },
         copilot: {
-          maxCallsPerRun: 100,
-          maxCallsPerHour: 50,
-          maxCallsPerDay: 200,
-          fallbackPlatform: null,
-        },
-        antigravity: {
           maxCallsPerRun: 100,
           maxCallsPerHour: 50,
           maxCallsPerDay: 200,

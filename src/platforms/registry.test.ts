@@ -176,7 +176,6 @@ describe('PlatformRegistry', () => {
           claude: 'custom-claude',
           gemini: 'custom-gemini',
           copilot: 'custom-copilot',
-          antigravity: 'custom-agy',
         },
       };
 
@@ -192,13 +191,12 @@ describe('PlatformRegistry', () => {
       const registry = PlatformRegistry.createDefault(config);
       const available = registry.getAvailable();
 
-      expect(available).toHaveLength(6);
+      expect(available).toHaveLength(5);
       expect(available).toContain('cursor');
       expect(available).toContain('codex');
       expect(available).toContain('claude');
       expect(available).toContain('gemini');
       expect(available).toContain('copilot');
-      expect(available).toContain('antigravity');
     });
 
     it('should create runners with CapabilityDiscoveryService', () => {

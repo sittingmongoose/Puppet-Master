@@ -301,11 +301,24 @@ export interface StartChainConfig {
     largeDocThreshold?: number;
     minPhasesForLargeDoc?: number;
   };
+  /** P1-T26: AI gap detection settings */
+  aiGapDetection?: {
+    /** Enable AI gap detection (default: true) */
+    enabled?: boolean;
+    /** Maximum high-severity gaps before failing (default: 5) */
+    maxHighGaps?: number;
+    /** Block pipeline on any critical gaps (default: true) */
+    blockOnCritical?: boolean;
+    /** Platform to use for gap detection (default: claude) */
+    platform?: Platform;
+    /** Model to use (platform-specific, optional) */
+    model?: string;
+  };
 }
 
 /**
  * Execution configuration.
- * Maps from YAML: execution.kill_agent_on_failure
+ * Maps from YAML: execution.kill_agent_on_failure, execution.parallel
  */
 export interface ExecutionConfig {
   /**
@@ -314,6 +327,53 @@ export interface ExecutionConfig {
    * YAML: kill_agent_on_failure
    */
   killAgentOnFailure?: boolean; // YAML: kill_agent_on_failure
+  /**
+   * Parallel execution configuration.
+   * See BUILD_QUEUE_IMPROVEMENTS.md P2-T01.
+   * YAML: execution.parallel
+   */
+  parallel?: ParallelExecutionConfig;
+}
+
+/**
+ * Parallel execution configuration.
+ * Maps from YAML: execution.parallel
+ * See BUILD_QUEUE_IMPROVEMENTS.md P2-T01.
+ */
+export interface ParallelExecutionConfig {
+  /**
+   * Enable parallel subtask execution (default: false).
+   * When enabled, independent subtasks run concurrently in git worktrees.
+   * YAML: enabled
+   */
+  enabled: boolean;
+  /**
+   * Maximum number of concurrent subtask executions (default: 3).
+   * Higher values require more system resources.
+   * YAML: max_concurrency
+   */
+  maxConcurrency: number;
+  /**
+   * Directory for worktrees (default: .puppet-master/worktrees).
+   * YAML: worktree_dir
+   */
+  worktreeDir?: string;
+  /**
+   * Continue execution if a subtask fails (default: false).
+   * When false, stops all parallel execution on first failure.
+   * YAML: continue_on_failure
+   */
+  continueOnFailure?: boolean;
+  /**
+   * Automatically merge worktree branches back to main (default: true).
+   * YAML: merge_results
+   */
+  mergeResults?: boolean;
+  /**
+   * Target branch for merging (default: current branch).
+   * YAML: target_branch
+   */
+  targetBranch?: string;
 }
 
 /**
@@ -335,6 +395,21 @@ export interface CheckpointingConfig {
 }
 
 /**
+ * Loop guard configuration.
+ * Prevents infinite ping-pong loops in multi-agent scenarios.
+ * Maps from YAML: loop_guard.enabled, loop_guard.max_repetitions, loop_guard.suppress_reply_relay
+ * See BUILD_QUEUE_IMPROVEMENTS.md P2-T02
+ */
+export interface LoopGuardConfig {
+  /** Enable loop guard (default: true) */
+  enabled: boolean; // YAML: enabled
+  /** Maximum times a message can repeat before blocking (default: 3) */
+  maxRepetitions: number; // YAML: max_repetitions
+  /** Suppress reply-type messages (prevents A→B→A→B... loops) (default: true) */
+  suppressReplyRelay: boolean; // YAML: suppress_reply_relay
+}
+
+/**
  * Main configuration interface combining all configuration sections.
  * This is the root type for the entire configuration system.
  */
@@ -352,4 +427,5 @@ export interface PuppetMasterConfig {
   execution?: ExecutionConfig; // YAML: execution (optional)
   rateLimits?: PlatformRateLimits; // YAML: budget.rate_limits (optional, P1-T07)
   checkpointing?: CheckpointingConfig; // YAML: checkpointing (optional, P1-T12)
+  loopGuard?: LoopGuardConfig; // YAML: loop_guard (optional, P2-T02)
 }

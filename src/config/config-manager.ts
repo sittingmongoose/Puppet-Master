@@ -303,5 +303,10 @@ function deepMerge(base: PuppetMasterConfig, overrides: Partial<PuppetMasterConf
     result.cliPaths = { ...base.cliPaths, ...overrides.cliPaths };
   }
 
+  // Merge loopGuard (optional, P2-T02)
+  if (overrides.loopGuard) {
+    result.loopGuard = { ...(base.loopGuard ?? {}), ...overrides.loopGuard };
+  }
+
   return result;
 }

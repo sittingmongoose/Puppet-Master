@@ -373,13 +373,40 @@ project:
           cursor: base.budgets.cursor,
           gemini: base.budgets.gemini,
           copilot: base.budgets.copilot,
-          antigravity: base.budgets.antigravity,
         },
       };
 
       const merged = manager.merge(base, overrides);
       expect(merged.budgets.claude.maxCallsPerRun).toBe(10);
       expect(merged.budgets.codex.maxCallsPerRun).toBe(base.budgets.codex.maxCallsPerRun);
+    });
+
+    it('should merge loopGuard correctly', () => {
+      const manager = new ConfigManager();
+      const base = getDefaultConfig();
+      const overrides: Partial<PuppetMasterConfig> = {
+        loopGuard: {
+          enabled: false,
+          maxRepetitions: 5,
+          suppressReplyRelay: false,
+        },
+      };
+
+      const merged = manager.merge(base, overrides);
+      expect(merged.loopGuard?.enabled).toBe(false);
+      expect(merged.loopGuard?.maxRepetitions).toBe(5);
+      expect(merged.loopGuard?.suppressReplyRelay).toBe(false);
+    });
+
+    it('should preserve base loopGuard when no override', () => {
+      const manager = new ConfigManager();
+      const base = getDefaultConfig();
+      const overrides: Partial<PuppetMasterConfig> = {
+        project: { name: 'Test', workingDirectory: '.' },
+      };
+
+      const merged = manager.merge(base, overrides);
+      expect(merged.loopGuard).toEqual(base.loopGuard);
     });
   });
 

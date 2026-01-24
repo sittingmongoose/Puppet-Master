@@ -343,7 +343,7 @@ async function getBudgetInfo(
       resetsAt: string;
       cooldownActive: boolean;
     }> = [];
-    const platformKeys: Platform[] = ['cursor', 'codex', 'claude', 'gemini', 'copilot', 'antigravity'];
+    const platformKeys: Platform[] = ['cursor', 'codex', 'claude', 'gemini', 'copilot'];
 
     for (const platform of platformKeys) {
       try {

@@ -29,6 +29,12 @@ export interface TierNodeData {
   maxIterations: number;
   createdAt: string;
   updatedAt: string;
+  /**
+   * Optional parallel execution flag for tasks.
+   * Only meaningful for task-level nodes.
+   * See BUILD_QUEUE_IMPROVEMENTS.md P2-T01.
+   */
+  parallel?: boolean;
 }
 
 /**
@@ -297,6 +303,7 @@ function buildTaskNodeData(task: Task): TierNodeData {
     maxIterations: 1, // Tasks don't iterate
     createdAt: task.createdAt,
     updatedAt: task.completedAt || task.startedAt || task.createdAt,
+    parallel: task.parallel,
   };
 }
 

@@ -169,6 +169,13 @@ export interface Subtask {
    * Used by StatePersistence to save/restore tier state machine state.
    */
   tierContext?: TierContext;
+  /**
+   * Optional dependency list for parallel execution.
+   * Array of subtask IDs within the same task that must complete before this subtask.
+   * If empty or undefined, subtask has no dependencies and can run in parallel.
+   * See BUILD_QUEUE_IMPROVEMENTS.md P2-T01.
+   */
+  dependsOn?: string[];
 }
 
 /**
@@ -202,6 +209,14 @@ export interface Task {
    * Used by StatePersistence to save/restore tier state machine state.
    */
   tierContext?: TierContext;
+  /**
+   * Optional override for parallel execution of subtasks.
+   * - true: Enable parallel execution for this task's subtasks
+   * - false: Force sequential execution
+   * - undefined: Use global config setting
+   * See BUILD_QUEUE_IMPROVEMENTS.md P2-T01.
+   */
+  parallel?: boolean;
 }
 
 /**

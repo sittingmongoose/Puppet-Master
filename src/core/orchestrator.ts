@@ -42,6 +42,7 @@ import type {
   CommitContext,
   PRManager,
 } from '../git/index.js';
+import { WorktreeManager } from '../git/index.js';
 import type { VerificationIntegration } from '../verification/verification-integration.js';
 import type { EventBus } from '../logging/event-bus.js';
 import { spawn } from 'child_process';
@@ -60,6 +61,10 @@ import {
   createWorkerReviewerOrchestrator,
 } from './worker-reviewer.js';
 import type { IterationOutcome, WorkerResult } from './worker-reviewer.js';
+import { LoopGuard } from './loop-guard.js';
+import { ParallelExecutor } from './parallel-executor.js';
+import type { ParallelExecutionResult } from './parallel-executor.js';
+import { buildDependencyGraph, getParallelizableGroups, validateDependencies, DependencyCycleError } from './dependency-analyzer.js';
 
 /**
  * Validation result interface
@@ -145,6 +150,10 @@ export class Orchestrator {
   private statePersistence: StatePersistence | null = null;
   private checkpointManager: CheckpointManager | null = null;
   private workerReviewerOrchestrator: WorkerReviewerOrchestrator | null = null;
+  private loopGuard: LoopGuard | null = null;
+  private loopGuardSubtaskId: string | undefined;
+  private parallelExecutor: ParallelExecutor | null = null;
+  private worktreeManager: WorktreeManager | null = null;
 
   private requireTierTransition(tier: TierNode, event: TierEvent, reason: string): void {
     const from = tier.getState();
@@ -257,6 +266,37 @@ export class Orchestrator {
           this.promptBuilder
         );
       console.log('[Orchestrator] Worker/Reviewer separation enabled');
+    }
+
+    // Initialize loop guard if configured (P2-T02)
+    if (this.config.loopGuard?.enabled) {
+      (this as unknown as { loopGuard: LoopGuard | null }).loopGuard = new LoopGuard(this.config.loopGuard);
+      console.log('[Orchestrator] Loop guard enabled');
+    }
+
+    // Initialize parallel execution if configured (P2-T01)
+    const parallelConfig = this.config.execution?.parallel;
+    if (parallelConfig?.enabled) {
+      const worktreeDir = parallelConfig.worktreeDir ?? '.puppet-master/worktrees';
+      const worktreeManager = new WorktreeManager(this.projectRoot, deps.gitManager, {
+        worktreeDir,
+        cleanupOnMerge: true,
+      });
+      (this as unknown as { worktreeManager: WorktreeManager }).worktreeManager = worktreeManager;
+      
+      const parallelExecutor = new ParallelExecutor(
+        worktreeManager,
+        this.executionEngine,
+        this.eventBus,
+        {
+          maxConcurrency: parallelConfig.maxConcurrency ?? 3,
+          continueOnFailure: parallelConfig.continueOnFailure ?? false,
+          mergeResults: parallelConfig.mergeResults ?? true,
+          targetBranch: parallelConfig.targetBranch,
+        }
+      );
+      (this as unknown as { parallelExecutor: ParallelExecutor }).parallelExecutor = parallelExecutor;
+      console.log(`[Orchestrator] Parallel execution enabled (maxConcurrency: ${parallelConfig.maxConcurrency ?? 3})`);
     }
 
     // Set up execution engine (runner will be set per iteration via PlatformRouter)
@@ -533,6 +573,12 @@ export class Orchestrator {
           continue;
         }
 
+        // Reset loop guard when switching subtasks (P2-T02)
+        if (this.loopGuard && subtask.id !== this.loopGuardSubtaskId) {
+          this.loopGuard.reset();
+          this.loopGuardSubtaskId = subtask.id;
+        }
+
         const subtaskState = subtask.getState();
 
         // If a subtask is already complete, do not spawn an iteration — advance selection.
@@ -627,10 +673,36 @@ export class Orchestrator {
             shouldRunGate = false;
             reviewerFeedback = outcome.combinedFeedback;
             console.log(`[Orchestrator] Reviewer verdict: REVISE for ${subtask.id}`);
-            // Mark iteration as needing revision (not a failure, but not complete)
-            result.success = false;
-            result.completionSignal = undefined;
-            result.error = `Reviewer verdict: REVISE - ${outcome.reviewerResult?.feedback ?? 'No feedback'}`;
+
+            // Loop guard check (P2-T02): Detect repeated identical feedback
+            if (this.loopGuard) {
+              const feedbackMessage = {
+                kind: 'reviewer_feedback',
+                content: outcome.combinedFeedback ?? '',
+              };
+              if (!this.loopGuard.shouldAllow(feedbackMessage)) {
+                // Identical feedback repeated too many times - force immediate failure
+                console.log(`[Orchestrator] Loop guard triggered: repeated REVISE feedback for ${subtask.id}, forcing MAX_ATTEMPTS`);
+                // Set iteration count to maxIterations-1 so that handleIterationFailed
+                // will increment to maxIterations and trigger MAX_ATTEMPTS failure
+                const maxIter = subtask.data.maxIterations;
+                subtask.stateMachine.restoreInternalContext({ iterationCount: maxIter - 1 });
+                result.success = false;
+                result.completionSignal = undefined;
+                result.error = 'MAX_ATTEMPTS: Reviewer feedback loop detected - identical feedback repeated';
+                // Continue to handleIterationResult which will transition to failed state
+              } else {
+                // Normal REVISE - mark iteration as needing revision
+                result.success = false;
+                result.completionSignal = undefined;
+                result.error = `Reviewer verdict: REVISE - ${outcome.reviewerResult?.feedback ?? 'No feedback'}`;
+              }
+            } else {
+              // Loop guard not enabled - normal REVISE handling
+              result.success = false;
+              result.completionSignal = undefined;
+              result.error = `Reviewer verdict: REVISE - ${outcome.reviewerResult?.feedback ?? 'No feedback'}`;
+            }
           } else if (outcome.status === 'complete') {
             // Reviewer says SHIP - proceed to gate
             console.log(`[Orchestrator] Reviewer verdict: SHIP for ${subtask.id} (confidence: ${outcome.reviewerResult?.confidence})`);
@@ -698,7 +770,10 @@ export class Orchestrator {
   /**
    * Build iteration context for execution
    */
-  private async buildIterationContext(subtask: TierNode): Promise<IterationContext> {
+  private async buildIterationContext(
+    subtask: TierNode,
+    overrideWorkingDir?: string
+  ): Promise<IterationContext> {
     const task = subtask.parent;
     const phase = task?.parent;
 
@@ -731,11 +806,14 @@ export class Orchestrator {
     // Use PlatformRouter to select platform for this tier
     const platformConfig = this.deps.platformRouter.selectPlatform(subtask, 'execute', subtaskPlan);
 
+    // Use override working dir if provided (for worktrees), otherwise use normal working dir
+    const projectPath = overrideWorkingDir ?? this.workingDirectory;
+
     return {
       tierNode: subtask,
       iterationNumber,
       maxIterations: subtask.data.maxIterations,
-      projectPath: this.workingDirectory,
+      projectPath,
       projectName: this.config.project.name,
       sessionId: this.deps.progressManager.generateSessionId(),
       platform: platformConfig.platform,
@@ -1925,6 +2003,228 @@ Return the plan as a JSON object matching this structure:
     } catch (error) {
       // Log but don't fail execution
       console.warn(`Failed to create checkpoint (${reason}):`, error);
+    }
+  }
+
+  // ============================================================================
+  // Parallel Execution Support (P2-T01)
+  // ============================================================================
+
+  /**
+   * Check if a task should be executed in parallel mode
+   * A task is eligible for parallel execution if:
+   * 1. Parallel execution is enabled globally
+   * 2. Task has parallel: true OR has no explicit setting and has multiple pending subtasks
+   * 3. Subtasks have dependencies that allow parallelization
+   */
+  private shouldUseParallelExecution(task: TierNode): boolean {
+    // Must have parallel executor enabled
+    if (!this.parallelExecutor) {
+      return false;
+    }
+
+    // Check task-level parallel flag
+    const taskParallel = task.data.parallel;
+    if (taskParallel === false) {
+      return false; // Explicitly disabled for this task
+    }
+
+    // Get pending subtasks
+    const pendingSubtasks = task.getChildren().filter((s) => s.getState() === 'pending');
+    if (pendingSubtasks.length <= 1) {
+      return false; // No benefit from parallel execution
+    }
+
+    // Validate dependencies are valid before attempting parallel
+    try {
+      const validation = validateDependencies(pendingSubtasks);
+      if (!validation.isValid) {
+        console.log(
+          `[Orchestrator] Parallel execution disabled for ${task.id}: ${validation.errors.join('; ')}`
+        );
+        return false;
+      }
+    } catch (error) {
+      if (error instanceof DependencyCycleError) {
+        console.log(`[Orchestrator] Parallel execution disabled for ${task.id}: dependency cycle detected`);
+        return false;
+      }
+      throw error;
+    }
+
+    // Parallel can be used
+    return taskParallel === true || this.config.execution?.parallel?.enabled === true;
+  }
+
+  /**
+   * Execute a task's subtasks in parallel
+   * Uses worktrees for isolation and merges results back
+   */
+  private async executeTaskInParallel(task: TierNode): Promise<void> {
+    if (!this.parallelExecutor || !this.worktreeManager) {
+      throw new Error('Parallel executor not initialized');
+    }
+
+    const pendingSubtasks = task.getChildren().filter(
+      (s) => s.getState() === 'pending' || s.getState() === 'running'
+    );
+
+    if (pendingSubtasks.length === 0) {
+      console.log(`[Orchestrator] No pending subtasks for parallel execution in ${task.id}`);
+      return;
+    }
+
+    console.log(
+      `[Orchestrator] Starting parallel execution for ${task.id} with ${pendingSubtasks.length} subtasks`
+    );
+
+    // Build context for each subtask
+    const contextBuilder = async (subtask: TierNode, worktreePath: string) => {
+      // Build the iteration context with worktree-specific working directory
+      const context = await this.buildIterationContext(subtask, worktreePath);
+      return context;
+    };
+
+    // Get runner for each subtask
+    const runnerProvider = (subtask: TierNode) => {
+      const platform = this.getSubtaskPlatform(subtask);
+      const runner = this.deps.platformRegistry.get(platform);
+      if (!runner) {
+        throw new Error(`Platform runner not available for platform: ${platform}`);
+      }
+      return runner;
+    };
+
+    // Execute all subtasks in parallel
+    const result = await this.parallelExecutor.executeParallel(
+      pendingSubtasks,
+      contextBuilder,
+      runnerProvider
+    );
+
+    // Process results
+    await this.processParallelResults(result, pendingSubtasks, task);
+  }
+
+  /**
+   * Get the platform for a subtask
+   */
+  private getSubtaskPlatform(subtask: TierNode): Platform {
+    // Try to get from subtask config
+    const tierConfig = this.config.tiers.iteration;
+    return tierConfig?.platform ?? 'cursor';
+  }
+
+  /**
+   * Process results from parallel execution
+   */
+  private async processParallelResults(
+    result: ParallelExecutionResult,
+    subtasks: TierNode[],
+    task: TierNode
+  ): Promise<void> {
+    console.log(
+      `[Orchestrator] Parallel execution completed: success=${result.success}, ` +
+      `maxConcurrencyUsed=${result.maxConcurrencyUsed}, duration=${result.totalDurationMs}ms`
+    );
+
+    // Update each subtask based on its result
+    for (const subtask of subtasks) {
+      const subtaskResult = result.results.get(subtask.id);
+      if (!subtaskResult) {
+        console.warn(`[Orchestrator] No result for subtask ${subtask.id}`);
+        continue;
+      }
+
+      if (subtaskResult.success) {
+        // Transition subtask through iteration complete and trigger gate
+        this.requireTierTransition(
+          subtask,
+          { type: 'ITERATION_COMPLETE', success: true },
+          'parallel complete'
+        );
+        
+        // Run gate for successful subtask
+        if (subtaskResult.iterationResult) {
+          const gate = await this.deps.verificationIntegration.runSubtaskGate(
+            subtask,
+            subtaskResult.iterationResult.output
+          );
+          await this.handleGateResult(gate, subtask);
+        }
+
+        // Record progress
+        if (subtaskResult.iterationResult) {
+          await this.recordProgress(subtaskResult.iterationResult, subtask);
+        }
+      } else {
+        // Handle failure
+        console.log(`[Orchestrator] Parallel subtask ${subtask.id} failed: ${subtaskResult.error}`);
+        
+        // Check if this was a merge conflict
+        if (result.conflictSubtasks.includes(subtask.id)) {
+          // Generate conflict resolution subtask
+          await this.generateConflictResolutionSubtask(subtask, task, subtaskResult);
+        } else {
+          // Normal failure - let existing retry logic handle it
+          const failureResult: IterationResult = {
+            success: false,
+            output: subtaskResult.error ?? 'Parallel execution failed',
+            processId: 0,
+            duration: subtaskResult.durationMs,
+            exitCode: 1,
+            completionSignal: undefined,
+            learnings: [],
+            filesChanged: [],
+            error: subtaskResult.error,
+          };
+          await this.handleIterationResult(failureResult, subtask);
+        }
+      }
+    }
+
+    // Update iteration count for this run
+    this.iterationsRun += subtasks.length;
+  }
+
+  /**
+   * Generate a conflict resolution subtask when merge fails
+   * This creates a synthetic subtask that will resolve the conflict
+   */
+  private async generateConflictResolutionSubtask(
+    conflictSubtask: TierNode,
+    _task: TierNode,
+    result: import('./parallel-executor.js').SubtaskExecutionResult
+  ): Promise<void> {
+    console.log(`[Orchestrator] Generating conflict resolution subtask for ${conflictSubtask.id}`);
+
+    // For now, mark the subtask as failed with conflict info
+    // A full implementation would create a new subtask in the PRD
+    const conflictInfo = result.mergeResult
+      ? `Merge conflict with files: ${result.mergeResult.conflictFiles.join(', ')}`
+      : 'Merge conflict occurred';
+
+    const failureResult: IterationResult = {
+      success: false,
+      output: conflictInfo,
+      processId: 0,
+      duration: result.durationMs,
+      exitCode: 1,
+      completionSignal: undefined,
+      learnings: [],
+      filesChanged: [],
+      error: `MERGE_CONFLICT: ${conflictInfo}. Manual resolution required.`,
+    };
+    await this.handleIterationResult(failureResult, conflictSubtask);
+
+    // Emit event for conflict
+    if (this.eventBus) {
+      this.eventBus.emit({
+        type: 'parallel_subtask_error',
+        subtaskId: conflictSubtask.id,
+        error: conflictInfo,
+        level: result.level,
+      });
     }
   }
 
