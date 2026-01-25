@@ -7,6 +7,7 @@
 
 import type { OrchestratorState, TierState } from '../types/state.js';
 import type { LogLevel } from './logger-service.js';
+import type { Platform } from '../types/config.js';
 
 /**
  * PuppetMasterEvent discriminated union.
@@ -42,7 +43,14 @@ export type PuppetMasterEvent =
   | { type: 'parallel_subtask_error'; subtaskId: string; error: string; level: number }
   | { type: 'worktree_creating'; agentId: string; subtaskId: string }
   | { type: 'worktree_created'; agentId: string; subtaskId: string; path: string; branch?: string }
-  | { type: 'worktree_destroyed'; agentId: string; subtaskId: string };
+  | { type: 'worktree_destroyed'; agentId: string; subtaskId: string }
+  // Preflight validation events (P0-G02)
+  | { type: 'preflight_started'; platforms: Platform[] }
+  | { type: 'preflight_passed'; platforms: Platform[] }
+  | { type: 'preflight_failed'; issues: string[]; suggestions: string[]; mustRunDoctor: boolean }
+  // Quota fallback events (P0-G09)
+  | { type: 'quota_exhausted'; platform: Platform; period: 'run' | 'hour' | 'day'; resetsAt: string; behavior: 'fallback' | 'pause' | 'queue' }
+  | { type: 'platform_fallback'; fromPlatform: Platform; toPlatform: Platform; reason: 'quota_exhausted' | 'unavailable' | 'unhealthy' };
 
 /**
  * Event subscription interface.

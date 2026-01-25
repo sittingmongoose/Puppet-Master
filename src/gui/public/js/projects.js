@@ -406,7 +406,7 @@ function validateProjectName(nameInput, errorDiv) {
   }
 
   // Check for invalid characters (OS-specific restrictions)
-  const invalidChars = /[<>:"|?*\/\\]/;
+  const invalidChars = /[<>:"|?*/\\]/;
   if (invalidChars.test(name)) {
     showValidationError(errorDiv, 'Project name contains invalid characters (< > : " | ? * / \\)');
     nameInput.setCustomValidity('Invalid characters in project name');

@@ -154,11 +154,59 @@ export function createEvidenceRoutes(): Router {
       // Use default evidence directory path
       const baseDir = '.puppet-master/evidence';
       
-      // Construct file path
-      const filePath = resolve(join(baseDir, subdir, decodeURIComponent(name)));
-
-      // Security check: ensure path is within evidence directory
+      // P0-G18: Harden path validation to prevent traversal attacks
+      // 1. Normalize the evidence directory path first
       const evidenceDir = resolve(baseDir);
+      
+      // 2. Decode and sanitize the filename - reject suspicious patterns
+      let decodedName: string;
+      try {
+        decodedName = decodeURIComponent(name);
+      } catch {
+        res.status(400).json({
+          error: 'Invalid filename encoding',
+          code: 'INVALID_ENCODING',
+        } as ErrorResponse);
+        return;
+      }
+      
+      // Reject null bytes and other dangerous characters
+      if (decodedName.includes('\0') || /[\x00-\x1f]/.test(decodedName)) {
+        res.status(400).json({
+          error: 'Invalid characters in filename',
+          code: 'INVALID_FILENAME',
+        } as ErrorResponse);
+        return;
+      }
+      
+      // 3. Construct and normalize the file path
+      const filePath = resolve(join(baseDir, subdir, decodedName));
+
+      // 4. Security check: ensure normalized path is within evidence directory
+      // Use path separator to prevent "evidencedir/../" type attacks
+      if (!filePath.startsWith(evidenceDir + '/') && filePath !== evidenceDir) {
+        res.status(403).json({
+          error: 'Access denied: path outside evidence directory',
+          code: 'PATH_TRAVERSAL',
+        } as ErrorResponse);
+        return;
+      }
+      
+      // 5. Check for symlinks pointing outside evidence directory
+      try {
+        const realPath = await fs.realpath(filePath);
+        const realEvidenceDir = await fs.realpath(evidenceDir);
+        if (!realPath.startsWith(realEvidenceDir + '/') && realPath !== realEvidenceDir) {
+          res.status(403).json({
+            error: 'Access denied: symlink points outside evidence directory',
+            code: 'SYMLINK_TRAVERSAL',
+          } as ErrorResponse);
+          return;
+        }
+      } catch (err) {
+        // If realpath fails, file doesn't exist - let the next check handle it
+        // This is fine because we'll verify access below
+      }
       if (!filePath.startsWith(evidenceDir)) {
         res.status(403).json({
           error: 'Access denied: path outside evidence directory',

@@ -19,21 +19,21 @@ export function getDefaultConfig(): PuppetMasterConfig {
     tiers: {
       phase: {
         platform: 'claude',
-        model: 'opus-4.5',
+        model: 'opus',
         selfFix: false,
         maxIterations: 3,
         escalation: null,
       },
       task: {
         platform: 'codex',
-        model: 'gpt-5.2-high',
+        model: 'gpt-4o',
         selfFix: true,
         maxIterations: 5,
         escalation: 'phase',
       },
       subtask: {
         platform: 'cursor',
-        model: 'sonnet-4.5-thinking',
+        model: 'sonnet',
         selfFix: true,
         maxIterations: 10,
         escalation: 'task',

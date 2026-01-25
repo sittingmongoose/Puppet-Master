@@ -9,7 +9,6 @@
 
 import type { ParsedRequirements, ParsedSection } from '../types/requirements.js';
 import type { PuppetMasterConfig } from '../types/config.js';
-import type { Platform } from '../types/config.js';
 import type { ExecutionRequest } from '../types/platforms.js';
 import { PlatformRegistry } from '../platforms/registry.js';
 import { QuotaManager } from '../platforms/quota-manager.js';
@@ -218,12 +217,16 @@ export class RequirementsInterviewer {
         return this.generateQuestions(parsed);
       }
 
+      // P1-G02: Get planMode from step config (default true for start-chain)
+      const planMode = stepConfig?.planMode ?? true;
+
       const request: ExecutionRequest = {
         prompt,
         model,
         workingDirectory: this.config.project?.workingDirectory || process.cwd(),
         nonInteractive: true,
         timeout: 180_000, // 3 minutes
+        planMode, // P1-G02: Pass planMode to runner
       };
 
       const startTime = Date.now();

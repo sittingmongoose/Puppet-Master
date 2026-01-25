@@ -102,3 +102,8 @@ export function getStableGeminiModels(): GeminiModel[] {
 export function getGeminiModelIds(): string[] {
   return GEMINI_MODELS.map(m => m.id);
 }
+
+/**
+ * P1-G06/P1-G09: Array of known Gemini model IDs for capability discovery.
+ */
+export const KNOWN_GEMINI_MODELS: readonly string[] = GEMINI_MODELS.map(m => m.id);

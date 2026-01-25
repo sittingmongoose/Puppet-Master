@@ -14,7 +14,6 @@ import { PrdManager } from '../../memory/prd-manager.js';
 import { CheckpointManager } from '../../core/checkpoint-manager.js';
 import { QuotaManager } from '../../platforms/quota-manager.js';
 import { UsageTracker } from '../../memory/usage-tracker.js';
-import { CoverageValidator } from '../../start-chain/validators/coverage-validator.js';
 import type { PRD } from '../../types/prd.js';
 import type { OrchestratorState } from '../../types/state.js';
 import type { PuppetMasterConfig, Platform } from '../../types/config.js';
@@ -311,10 +310,6 @@ async function getCoverageInfo(
       return undefined;
     }
 
-    // Load requirements document
-    const requirementsContent = await fs.readFile(requirementsPath, 'utf-8');
-    const parsedRequirements = JSON.parse(requirementsContent);
-
     // CoverageValidator.computeCoverageReport requires CoverageMetrics from StructureDetector
     // For status command, we don't have that, so we'll compute a simplified version
     // or return undefined if we can't compute it properly
@@ -332,7 +327,7 @@ async function getCoverageInfo(
 async function getBudgetInfo(
   quotaManager: QuotaManager,
   usageTracker: UsageTracker,
-  config: PuppetMasterConfig
+  _config: PuppetMasterConfig
 ): Promise<Status['budget']> {
   try {
     const platforms: Array<{

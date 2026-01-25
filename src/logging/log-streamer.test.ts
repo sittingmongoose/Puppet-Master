@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { writeFile, appendFile, unlink, stat } from 'fs/promises';
+import { writeFile, appendFile, unlink } from 'fs/promises';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { tmpdir } from 'os';
@@ -317,7 +317,7 @@ describe('LogStreamer', () => {
       });
       
       const entry = createLogEntry('info', 'Test message');
-      const formatted = (streamer as any).formatEntry(entry);
+      const formatted = (streamer as unknown as { formatEntry: (value: LogEntry) => string }).formatEntry(entry);
       
       expect(formatted).toBe(JSON.stringify(entry));
     });
@@ -333,7 +333,7 @@ describe('LogStreamer', () => {
         'Test message',
         '2026-01-10T14:30:00.000Z'
       );
-      const formatted = (streamer as any).formatEntry(entry);
+      const formatted = (streamer as unknown as { formatEntry: (value: LogEntry) => string }).formatEntry(entry);
       
       expect(formatted).toContain('[2026-01-10 14:30:00]');
       expect(formatted).toContain('INFO');
@@ -352,7 +352,7 @@ describe('LogStreamer', () => {
         message: 'Test message',
         context: { key: 'value' },
       };
-      const formatted = (streamer as any).formatEntry(entry);
+      const formatted = (streamer as unknown as { formatEntry: (value: LogEntry) => string }).formatEntry(entry);
       
       expect(formatted).toContain('Context:');
       expect(formatted).toContain('"key"');
@@ -371,7 +371,7 @@ describe('LogStreamer', () => {
         message: 'Test message',
         sessionId: 'PM-2026-01-10-14-30-00-001',
       };
-      const formatted = (streamer as any).formatEntry(entry);
+      const formatted = (streamer as unknown as { formatEntry: (value: LogEntry) => string }).formatEntry(entry);
       
       expect(formatted).toContain('session: PM-2026-01-10-14-30-00-001');
     });

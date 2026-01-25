@@ -18,7 +18,6 @@ import * as path from 'node:path';
 import {
   INTEGRATION_PATH_MATRIX,
   type IntegrationPath,
-  type IntegrationPathPriority,
   getCriticalPaths,
 } from './integration-path-matrix.js';
 

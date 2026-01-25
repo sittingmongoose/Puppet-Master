@@ -27,9 +27,10 @@ import type { QuotaManager } from '../platforms/quota-manager.js';
 import type { UsageTracker } from '../memory/usage-tracker.js';
 import type { PuppetMasterConfig } from '../types/config.js';
 import type { SessionTracker } from '../core/session-tracker.js';
+import type { CapabilityDiscoveryService } from '../platforms/capability-discovery.js';
 import { createStateRoutes } from './routes/state.js';
 import { createProjectsRoutes } from './routes/projects.js';
-import { createWizardRoutes, type WizardDependencies } from './routes/wizard.js';
+import { createWizardRoutes } from './routes/wizard.js';
 import { createConfigRoutes } from './routes/config.js';
 import { createEvidenceRoutes } from './routes/evidence.js';
 import { createCoverageRoutes } from './routes/coverage.js';
@@ -40,10 +41,12 @@ import { createHistoryRoutes } from './routes/history.js';
 import { createSettingsRoutes } from './routes/settings.js';
 import { createEventsRoutes } from './routes/events.js';
 import { translateEventForGui } from './translate-event-for-gui.js';
-
-// Get __dirname equivalent for ESM
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import {
+  createAuthMiddleware,
+  createAuthStatusHandler,
+  getOrCreateAuthToken,
+  type AuthConfig,
+} from './auth-middleware.js';
 
 /**
  * Server configuration interface.
@@ -57,6 +60,12 @@ export interface ServerConfig {
   corsOrigins?: string[];
   /** Base directory for project discovery (projects + wizard fallbacks) */
   baseDirectory?: string;
+  /** P0-G07: Whether to require authentication (default: true) */
+  authEnabled?: boolean;
+  /** P0-G07: Path to auth token file (default: .puppet-master/gui-token.txt) */
+  authTokenPath?: string;
+  /** Whether to serve React SPA instead of vanilla HTML (default: false) */
+  useReactGui?: boolean;
 }
 
 /**
@@ -69,7 +78,7 @@ export class GuiServer {
   private server: HTTPServer | null = null;
   private wss: WebSocketServer | null = null;
   private readonly clients: Set<WebSocket> = new Set();
-  private readonly config: Required<ServerConfig>;
+  private readonly config: Required<ServerConfig> & { authEnabled: boolean; authTokenPath: string; useReactGui: boolean };
   private readonly eventBus: EventBus;
   private tierManager: TierStateManager | null = null;
   private orchestrator: OrchestratorStateMachine | null = null;
@@ -81,7 +90,15 @@ export class GuiServer {
   private quotaManager: QuotaManager | null = null;
   private usageTracker: UsageTracker | null = null;
   private sessionTracker: SessionTracker | null = null;
+  // P2-G13: Capability discovery service for detailed platform capabilities
+  private capabilityDiscovery: CapabilityDiscoveryService | null = null;
   private wizardRouter: ReturnType<typeof createWizardRoutes> | null = null;
+  // P0-G07: Authentication configuration
+  private authConfig: AuthConfig | null = null;
+  // P1-G17: Heartbeat interval for stale connection detection
+  private heartbeatInterval: ReturnType<typeof setInterval> | null = null;
+  private static readonly HEARTBEAT_INTERVAL_MS = 30000; // 30 seconds
+  private static readonly HEARTBEAT_TIMEOUT_MS = 10000; // 10 seconds to respond
 
   constructor(config: ServerConfig, eventBus: EventBus) {
     this.config = {
@@ -90,6 +107,11 @@ export class GuiServer {
       corsOrigins: config.corsOrigins ?? ['http://localhost:3847'],
       // NOTE: This is a discovery/default base directory, not an implicit “current project”.
       baseDirectory: config.baseDirectory ?? process.cwd(),
+      // P0-G07: Auth defaults - enabled by default for security
+      authEnabled: config.authEnabled ?? true,
+      authTokenPath: config.authTokenPath ?? '.puppet-master/gui-token.txt',
+      // React GUI: disabled by default (vanilla HTML), can be enabled via config
+      useReactGui: config.useReactGui ?? false,
     };
     this.eventBus = eventBus;
     this.app = express();
@@ -98,6 +120,36 @@ export class GuiServer {
     // setupRoutes is now async, but we can't await in constructor
     // Routes will be set up synchronously, path resolution happens at request time
     this.setupRoutesSync();
+  }
+
+  /**
+   * P0-G07: Initialize authentication.
+   * Must be called before start() when auth is enabled.
+   * Returns the auth token for display to the user.
+   */
+  async initializeAuth(): Promise<string | undefined> {
+    if (!this.config.authEnabled) {
+      console.log('[Auth] Authentication disabled');
+      return undefined;
+    }
+
+    const token = await getOrCreateAuthToken(this.config.authTokenPath);
+    this.authConfig = {
+      enabled: true,
+      tokenPath: this.config.authTokenPath,
+      token,
+    };
+
+    // Add auth middleware BEFORE routes
+    this.app.use(createAuthMiddleware(this.authConfig));
+
+    // Add auth status endpoint
+    this.app.get('/api/auth/status', createAuthStatusHandler(this.authConfig));
+
+    console.log('[Auth] Authentication initialized');
+    console.log(`[Auth] Token file: ${this.config.authTokenPath}`);
+
+    return token;
   }
 
   /**
@@ -193,6 +245,14 @@ export class GuiServer {
   }
 
   /**
+   * Register CapabilityDiscoveryService for detailed platform capabilities.
+   * P2-G13: Exposes capability discovery data in the GUI.
+   */
+  registerCapabilityDiscovery(capabilityDiscovery: CapabilityDiscoveryService): void {
+    this.capabilityDiscovery = capabilityDiscovery;
+  }
+
+  /**
    * Setup Express middleware.
    */
   private setupMiddleware(): void {
@@ -280,6 +340,31 @@ export class GuiServer {
   }
 
   /**
+   * Get React SPA build directory path (for useReactGui mode)
+   */
+  private getReactBuildPath(): string {
+    // Calculate the server.ts file's directory
+    const currentFileDir = path.dirname(fileURLToPath(import.meta.url));
+    
+    // React dist from compiled server location
+    const distPath = path.resolve(currentFileDir, 'react', 'dist');
+    
+    // React dist from source (development)
+    const sourcePath = path.resolve(process.cwd(), 'src', 'gui', 'react', 'dist');
+    
+    // Check if dist path exists (production)
+    if (existsSync(distPath)) {
+      return distPath;
+    }
+    // Check if source dist exists (development after build)
+    if (existsSync(sourcePath)) {
+      return sourcePath;
+    }
+    // Fallback
+    return sourcePath;
+  }
+
+  /**
    * Setup HTTP routes.
    */
   private setupRoutesSync(): void {
@@ -291,12 +376,32 @@ export class GuiServer {
       });
     });
 
-    // Status endpoint
+    // Status endpoint (P1-G08: Return actual orchestrator state)
     this.app.get('/api/status', (_req, res) => {
-      res.json({
-        state: 'idle' as OrchestratorState,
-        version: '0.1.0',
-      });
+      if (this.orchestratorInstance) {
+        const progress = this.orchestratorInstance.getProgress();
+        res.json({
+          state: progress.state,
+          version: '0.1.0',
+          currentPhase: progress.currentPhase,
+          currentTask: progress.currentTask,
+          currentSubtask: progress.currentSubtask,
+          totalSubtasks: progress.totalSubtasks,
+          completedSubtasks: progress.completedSubtasks,
+          elapsedTime: progress.elapsedTime,
+        });
+      } else {
+        res.json({
+          state: 'idle' as OrchestratorState,
+          version: '0.1.0',
+          currentPhase: null,
+          currentTask: null,
+          currentSubtask: null,
+          totalSubtasks: 0,
+          completedSubtasks: 0,
+          elapsedTime: 0,
+        });
+      }
     });
 
     // Platform health endpoint (P2-T07)
@@ -310,6 +415,240 @@ export class GuiServer {
       }
 
       res.json(this.orchestratorInstance.getPlatformHealthSnapshot());
+    });
+
+    // P1-G08: Capabilities endpoint - returns platform capabilities
+    // P2-G13: Enhanced to return detailed capability discovery data when available
+    this.app.get('/api/capabilities', async (_req, res) => {
+      if (!this.platformRegistry) {
+        res.status(503).json({
+          error: 'Platform registry not available',
+          code: 'PLATFORM_REGISTRY_NOT_AVAILABLE',
+        });
+        return;
+      }
+
+      try {
+        const available = this.platformRegistry.getAvailable();
+        const allPlatforms: Array<'cursor' | 'codex' | 'claude' | 'gemini' | 'copilot'> = 
+          ['cursor', 'codex', 'claude', 'gemini', 'copilot'];
+        
+        // P2-G13: If capability discovery service is available, return detailed info
+        if (this.capabilityDiscovery) {
+          const detailedCapabilities: Record<string, unknown> = {};
+          
+          for (const platform of allPlatforms) {
+            try {
+              // Try to get cached capabilities first
+              const cached = await this.capabilityDiscovery.getCached(platform);
+              if (cached) {
+                detailedCapabilities[platform] = {
+                  available: cached.runnable,
+                  runnable: cached.runnable,
+                  version: cached.version,
+                  command: cached.command,
+                  authStatus: cached.authStatus,
+                  capabilities: cached.capabilities,
+                  quotaInfo: cached.quotaInfo,
+                  cooldownInfo: cached.cooldownInfo,
+                  probeTimestamp: cached.probeTimestamp,
+                  probedFrom: 'cache',
+                };
+              } else {
+                // No cached data, just check if runner is registered
+                const runner = this.platformRegistry.get(platform);
+                detailedCapabilities[platform] = {
+                  available: !!runner,
+                  runnable: !!runner,
+                  probedFrom: 'registry',
+                };
+              }
+            } catch {
+              detailedCapabilities[platform] = {
+                available: false,
+                runnable: false,
+                error: 'Failed to get capabilities',
+              };
+            }
+          }
+          
+          res.json({
+            platforms: detailedCapabilities,
+            discoveryAvailable: true,
+          });
+          return;
+        }
+        
+        // Fallback: Basic capabilities from registry only
+        const capabilities: Record<string, unknown> = {};
+        
+        for (const platform of available) {
+          const runner = this.platformRegistry.get(platform);
+          capabilities[platform] = {
+            available: !!runner,
+          };
+        }
+        
+        // Add unavailable platforms
+        for (const platform of allPlatforms) {
+          if (!capabilities[platform]) {
+            capabilities[platform] = { available: false };
+          }
+        }
+        
+        res.json({
+          platforms: capabilities,
+          discoveryAvailable: false,
+        });
+      } catch (error) {
+        res.status(500).json({
+          error: error instanceof Error ? error.message : 'Failed to get capabilities',
+        });
+      }
+    });
+
+    // P2-G13: Detailed capabilities for a specific platform
+    this.app.get('/api/capabilities/:platform', async (req, res) => {
+      const platform = req.params.platform as 'cursor' | 'codex' | 'claude' | 'gemini' | 'copilot';
+      const allPlatforms = ['cursor', 'codex', 'claude', 'gemini', 'copilot'];
+      
+      if (!allPlatforms.includes(platform)) {
+        res.status(400).json({
+          error: `Invalid platform: ${platform}. Valid platforms: ${allPlatforms.join(', ')}`,
+          code: 'INVALID_PLATFORM',
+        });
+        return;
+      }
+
+      if (!this.capabilityDiscovery) {
+        res.status(503).json({
+          error: 'Capability discovery service not available',
+          code: 'CAPABILITY_DISCOVERY_NOT_AVAILABLE',
+        });
+        return;
+      }
+
+      try {
+        // Check if we should probe fresh or use cache
+        const forceProbe = req.query.probe === 'true';
+        
+        if (forceProbe) {
+          const probed = await this.capabilityDiscovery.probe(platform);
+          res.json({
+            platform,
+            capabilities: probed,
+            probedAt: new Date().toISOString(),
+            fromCache: false,
+          });
+        } else {
+          const cached = await this.capabilityDiscovery.getCached(platform);
+          if (cached) {
+            res.json({
+              platform,
+              capabilities: cached,
+              fromCache: true,
+            });
+          } else {
+            // No cache, need to probe
+            const probed = await this.capabilityDiscovery.probe(platform);
+            res.json({
+              platform,
+              capabilities: probed,
+              probedAt: new Date().toISOString(),
+              fromCache: false,
+            });
+          }
+        }
+      } catch (error) {
+        res.status(500).json({
+          error: error instanceof Error ? error.message : 'Failed to get capabilities',
+        });
+      }
+    });
+
+    // P1-G08: Budgets endpoint - returns quota/budget information
+    this.app.get('/api/budgets', async (_req, res) => {
+      if (!this.quotaManager) {
+        res.status(503).json({
+          error: 'Quota manager not available',
+          code: 'QUOTA_MANAGER_NOT_AVAILABLE',
+        });
+        return;
+      }
+
+      try {
+        const allPlatforms: Array<'cursor' | 'codex' | 'claude' | 'gemini' | 'copilot'> = 
+          ['cursor', 'codex', 'claude', 'gemini', 'copilot'];
+        const budgets: Record<string, unknown> = {};
+        
+        for (const platform of allPlatforms) {
+          try {
+            const quotaInfo = await this.quotaManager.checkQuota(platform);
+            budgets[platform] = quotaInfo;
+          } catch (error) {
+            // QuotaExhaustedError means quota is at 0
+            budgets[platform] = {
+              remaining: 0,
+              error: error instanceof Error ? error.message : 'Unknown error',
+            };
+          }
+        }
+        
+        res.json(budgets);
+      } catch (error) {
+        res.status(500).json({
+          error: error instanceof Error ? error.message : 'Failed to get budgets',
+        });
+      }
+    });
+
+    // P1-G08: Logs endpoint - returns iteration logs
+    this.app.get('/api/logs', async (req, res) => {
+      try {
+        const { iterationId, sessionId, limit = '50' } = req.query;
+        const logsDir = path.join(this.config.baseDirectory, '.puppet-master', 'logs', 'iterations');
+        
+        // Check if logs directory exists
+        const { existsSync, readdirSync, readFileSync } = await import('fs');
+        if (!existsSync(logsDir)) {
+          res.json({ logs: [] });
+          return;
+        }
+        
+        // Get log files
+        let logFiles = readdirSync(logsDir).filter(f => f.endsWith('.log'));
+        
+        // Filter by iterationId or sessionId if provided
+        if (iterationId) {
+          logFiles = logFiles.filter(f => f.includes(String(iterationId)));
+        }
+        if (sessionId) {
+          logFiles = logFiles.filter(f => f.includes(String(sessionId)));
+        }
+        
+        // Sort by name (which includes timestamp) descending
+        logFiles.sort().reverse();
+        
+        // Limit results
+        const limitNum = Math.min(parseInt(String(limit), 10) || 50, 100);
+        logFiles = logFiles.slice(0, limitNum);
+        
+        // Read log contents
+        const logs = logFiles.map(file => {
+          const content = readFileSync(path.join(logsDir, file), 'utf-8');
+          return {
+            filename: file,
+            content: content.slice(0, 10000), // Limit content size
+            truncated: content.length > 10000,
+          };
+        });
+        
+        res.json({ logs });
+      } catch (error) {
+        res.status(500).json({
+          error: error instanceof Error ? error.message : 'Failed to get logs',
+        });
+      }
     });
 
     // Control endpoints will be registered via registerOrchestratorInstance()
@@ -348,56 +687,75 @@ export class GuiServer {
     // SSE event stream routes (P2-T10)
     this.app.use('/api', createEventsRoutes(this.eventBus));
 
-    // Get public path
-    const publicPath = this.getPublicPath();
+    // Check if using React SPA or vanilla HTML
+    if (this.config.useReactGui) {
+      // React SPA mode - serve from react/dist
+      const reactPath = this.getReactBuildPath();
+      
+      // Serve static assets from React build
+      this.app.use(express.static(reactPath));
+      
+      // SPA fallback: all non-API routes serve index.html
+      // React Router handles client-side routing
+      this.app.get('*', (req, res, next) => {
+        // Skip API routes
+        if (req.path.startsWith('/api')) {
+          return next();
+        }
+        res.sendFile(path.join(reactPath, 'index.html'));
+      });
+    } else {
+      // Vanilla HTML mode (default)
+      const publicPath = this.getPublicPath();
 
-    // Route handlers for specific pages (BEFORE static middleware to ensure they're matched)
-    this.app.get('/', (_req, res) => {
-      res.sendFile(path.join(publicPath, 'index.html'));
-    });
+      // Route handlers for specific pages (BEFORE static middleware to ensure they're matched)
+      this.app.get('/', (_req, res) => {
+        res.sendFile(path.join(publicPath, 'index.html'));
+      });
 
-    this.app.get('/projects', (_req, res) => {
-      res.sendFile(path.join(publicPath, 'projects.html'));
-    });
+      this.app.get('/projects', (_req, res) => {
+        res.sendFile(path.join(publicPath, 'projects.html'));
+      });
 
-    this.app.get('/wizard', (_req, res) => {
-      res.sendFile(path.join(publicPath, 'wizard.html'));
-    });
+      this.app.get('/wizard', (_req, res) => {
+        res.sendFile(path.join(publicPath, 'wizard.html'));
+      });
 
-    this.app.get('/tiers', (_req, res) => {
-      res.sendFile(path.join(publicPath, 'tiers.html'));
-    });
+      this.app.get('/tiers', (_req, res) => {
+        res.sendFile(path.join(publicPath, 'tiers.html'));
+      });
 
-    this.app.get('/config', (_req, res) => {
-      res.sendFile(path.join(publicPath, 'config.html'));
-    });
+      this.app.get('/config', (_req, res) => {
+        res.sendFile(path.join(publicPath, 'config.html'));
+      });
 
-    this.app.get('/settings', (_req, res) => {
-      res.sendFile(path.join(publicPath, 'settings.html'));
-    });
+      this.app.get('/settings', (_req, res) => {
+        res.sendFile(path.join(publicPath, 'settings.html'));
+      });
 
-    this.app.get('/evidence', (_req, res) => {
-      res.sendFile(path.join(publicPath, 'evidence.html'));
-    });
+      this.app.get('/evidence', (_req, res) => {
+        res.sendFile(path.join(publicPath, 'evidence.html'));
+      });
 
-    this.app.get('/doctor', (_req, res) => {
-      res.sendFile(path.join(publicPath, 'doctor.html'));
-    });
+      this.app.get('/doctor', (_req, res) => {
+        res.sendFile(path.join(publicPath, 'doctor.html'));
+      });
 
-    this.app.get('/history', (_req, res) => {
-      res.sendFile(path.join(publicPath, 'history.html'));
-    });
+      this.app.get('/history', (_req, res) => {
+        res.sendFile(path.join(publicPath, 'history.html'));
+      });
 
-    this.app.get('/coverage', (_req, res) => {
-      res.sendFile(path.join(publicPath, 'coverage.html'));
-    });
+      this.app.get('/coverage', (_req, res) => {
+        res.sendFile(path.join(publicPath, 'coverage.html'));
+      });
 
-    this.app.get('/metrics', (_req, res) => {
-      res.sendFile(path.join(publicPath, 'metrics.html'));
-    });
+      this.app.get('/metrics', (_req, res) => {
+        res.sendFile(path.join(publicPath, 'metrics.html'));
+      });
 
-    // Serve static files from public directory (AFTER specific routes)
-    this.app.use(express.static(publicPath));
+      // Serve static files from public directory (AFTER specific routes)
+      this.app.use(express.static(publicPath));
+    }
 
     // Error handler middleware - must be last
     // Ensures all errors return JSON responses
@@ -423,8 +781,16 @@ export class GuiServer {
       path: '/events',
     });
 
+    // P1-G17: Extended WebSocket type for heartbeat tracking
+    type ExtendedWebSocket = WebSocket & {
+      _subscriptionId?: string;
+      _isAlive?: boolean;
+    };
+
     this.wss.on('connection', (ws: WebSocket, _req: IncomingMessage) => {
+      const extWs = ws as ExtendedWebSocket;
       this.clients.add(ws);
+      extWs._isAlive = true;
 
       // Subscribe to all EventBus events and forward to this client
       const subscriptionId = this.eventBus.subscribe('*', (event: PuppetMasterEvent) => {
@@ -438,13 +804,19 @@ export class GuiServer {
       });
 
       // Store subscription ID on the WebSocket object for cleanup
-      (ws as WebSocket & { _subscriptionId?: string })._subscriptionId = subscriptionId;
+      extWs._subscriptionId = subscriptionId;
+
+      // P1-G17: Handle WebSocket pong responses (native protocol level)
+      ws.on('pong', () => {
+        extWs._isAlive = true;
+      });
 
       // Handle client messages (simple heartbeat compatibility)
       ws.on('message', (data) => {
         try {
           const parsed = JSON.parse(data.toString()) as { type?: unknown };
           if (parsed && parsed.type === 'ping' && ws.readyState === WebSocket.OPEN) {
+            extWs._isAlive = true; // P1-G17: Mark as alive on application-level ping too
             ws.send(JSON.stringify({ type: 'pong' }));
           }
         } catch {
@@ -455,7 +827,7 @@ export class GuiServer {
       // Handle client disconnect
       ws.on('close', () => {
         this.clients.delete(ws);
-        const subId = (ws as WebSocket & { _subscriptionId?: string })._subscriptionId;
+        const subId = extWs._subscriptionId;
         if (subId) {
           this.eventBus.unsubscribe(subId);
         }
@@ -465,12 +837,53 @@ export class GuiServer {
       ws.on('error', (error) => {
         console.error('WebSocket error:', error);
         this.clients.delete(ws);
-        const subId = (ws as WebSocket & { _subscriptionId?: string })._subscriptionId;
+        const subId = extWs._subscriptionId;
         if (subId) {
           this.eventBus.unsubscribe(subId);
         }
       });
     });
+
+    // P1-G17: Start heartbeat interval to detect stale connections
+    this.startHeartbeat();
+  }
+
+  /**
+   * P1-G17: Start heartbeat interval to detect and clean up stale WebSocket connections.
+   */
+  private startHeartbeat(): void {
+    if (this.heartbeatInterval) {
+      clearInterval(this.heartbeatInterval);
+    }
+
+    type ExtendedWebSocket = WebSocket & {
+      _subscriptionId?: string;
+      _isAlive?: boolean;
+    };
+
+    this.heartbeatInterval = setInterval(() => {
+      for (const client of this.clients) {
+        const extClient = client as ExtendedWebSocket;
+
+        if (extClient._isAlive === false) {
+          // Client didn't respond to last ping - terminate
+          console.warn('[WebSocket] Terminating stale connection');
+          const subId = extClient._subscriptionId;
+          if (subId) {
+            this.eventBus.unsubscribe(subId);
+          }
+          this.clients.delete(client);
+          client.terminate();
+          continue;
+        }
+
+        // Mark as not alive and send ping
+        extClient._isAlive = false;
+        if (client.readyState === WebSocket.OPEN) {
+          client.ping();
+        }
+      }
+    }, GuiServer.HEARTBEAT_INTERVAL_MS);
   }
 
   /**
@@ -499,6 +912,12 @@ export class GuiServer {
    * Stop the servers and close all connections.
    */
   async stop(): Promise<void> {
+    // P1-G17: Clear heartbeat interval
+    if (this.heartbeatInterval) {
+      clearInterval(this.heartbeatInterval);
+      this.heartbeatInterval = null;
+    }
+
     return new Promise((resolve) => {
       for (const client of this.clients) {
         const subId = (client as WebSocket & { _subscriptionId?: string })._subscriptionId;

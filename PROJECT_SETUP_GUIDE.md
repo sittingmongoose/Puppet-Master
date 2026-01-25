@@ -525,6 +525,17 @@ brew install gemini-cli
 - Model selection: `--model gemini-2.5-pro` (or other supported models)
 - Plan Mode: Requires `experimental.plan: true` in Gemini CLI settings for `--approval-mode plan`
 
+**Context Files (Custom Instructions):**
+
+Gemini CLI reads custom instructions from `GEMINI.md` files:
+- `~/.gemini/GEMINI.md` - User-level instructions (applied to all projects)
+- `GEMINI.md` in project root - Project-specific instructions
+- Files are searched up the directory tree from cwd to root
+
+Recommended for RWM Puppet Master projects:
+- Create `GEMINI.md` in project root with project-specific conventions
+- Instructions from `AGENTS.md` can be copied to `GEMINI.md` for Gemini CLI awareness
+
 ### GitHub Copilot CLI
 
 **Installation:**
@@ -551,6 +562,35 @@ curl -fsSL https://gh.io/copilot-install | bash
 - Default CLI path: `copilot`
 - Headless mode: `-p "prompt" --allow-all-tools --allow-all-paths --silent --stream off`
 - Model selection: Use `/model` command interactively (programmatic selection not documented)
+
+**Model Selection Limitation (P0-G16):**
+
+> ⚠️ **Important:** The Copilot CLI does **NOT** support programmatic model selection via command-line flags.
+> 
+> If you configure a `model` in your Puppet Master config for the Copilot platform, it will be **ignored** 
+> when using the CLI runner (`CopilotRunner`). The default model (Claude Sonnet 4.5) will be used instead.
+
+**Context Files (Custom Instructions):**
+
+Copilot CLI automatically reads context files for custom instructions. These files are loaded in order:
+1. `CLAUDE.md` (in project root and cwd)
+2. `GEMINI.md` (in project root and cwd)
+3. `AGENTS.md` (in git root & cwd)
+4. `.github/instructions/**/*.instructions.md` (in git root & cwd)
+5. `.github/copilot-instructions.md` (repository-wide)
+6. `$HOME/.copilot/copilot-instructions.md` (user-level)
+7. Directories in `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` environment variable
+
+Recommended for RWM Puppet Master projects:
+- Create `AGENTS.md` in project root with project-specific conventions
+- Optionally create `.github/copilot-instructions.md` for repository-wide instructions
+>
+> **Workarounds:**
+> 1. **Use the SDK Runner:** `CopilotSdkRunner` supports model selection via `SessionConfig.model`. 
+>    This requires `@github/copilot-sdk` to be installed.
+> 2. **Interactive Mode:** Use `/model` command in interactive Copilot sessions (not automated).
+> 3. **GitHub Settings:** Configure preferred models in your GitHub account settings at 
+>    github.com → Settings → Copilot → Model preferences.
 
 ### Google Antigravity
 

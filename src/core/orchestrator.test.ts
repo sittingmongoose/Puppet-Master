@@ -668,9 +668,10 @@ describe('Orchestrator', () => {
       (orchestrator as unknown as { publishProgressEvent: unknown }).publishProgressEvent =
         vi.fn().mockImplementation(() => undefined);
 
-      const spawnSpy = vi
-        .spyOn((orchestrator as unknown as { executionEngine: any }).executionEngine, 'spawnIteration')
-        .mockResolvedValue({
+      const executionEngine = (
+        orchestrator as unknown as { executionEngine: { spawnIteration: (...args: unknown[]) => unknown } }
+      ).executionEngine;
+      const spawnSpy = vi.spyOn(executionEngine, 'spawnIteration').mockResolvedValue({
           success: true,
           output: '<ralph>COMPLETE</ralph>',
           processId: 12345,

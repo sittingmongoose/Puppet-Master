@@ -347,7 +347,7 @@ describe('InstallationManager', () => {
         }),
         close: vi.fn(),
       };
-      mockCreateInterface.mockReturnValue(mockRl as any);
+      mockCreateInterface.mockReturnValue(mockRl as unknown as readline.Interface);
 
       setPlatform('linux');
       const proc = createMockSuccessProcess('Installation complete');
@@ -387,7 +387,7 @@ describe('InstallationManager', () => {
         }),
         close: vi.fn(),
       };
-      mockCreateInterface.mockReturnValue(mockRl as any);
+      mockCreateInterface.mockReturnValue(mockRl as unknown as readline.Interface);
 
       setPlatform('linux');
       const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
@@ -511,7 +511,6 @@ describe('InstallationManager', () => {
 
     it('should handle command timeout', async () => {
       setPlatform('linux');
-      let timeoutId: NodeJS.Timeout | undefined;
       const proc = {
         stdout: {
           on: vi.fn(),

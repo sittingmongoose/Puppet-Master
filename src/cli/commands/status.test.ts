@@ -50,7 +50,6 @@ import { PrdManager } from '../../memory/prd-manager.js';
 import { CheckpointManager } from '../../core/checkpoint-manager.js';
 import { QuotaManager } from '../../platforms/quota-manager.js';
 import { UsageTracker } from '../../memory/usage-tracker.js';
-import { CoverageValidator } from '../../start-chain/validators/coverage-validator.js';
 
 describe('StatusCommand', () => {
   let command: StatusCommand;

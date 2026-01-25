@@ -250,7 +250,6 @@ export class LogStreamer {
    * Emit entry to all registered callbacks
    */
   private emitEntry(entry: LogEntry): void {
-    const formatted = this.formatEntry(entry);
     for (const callback of this.callbacks) {
       try {
         callback(entry);

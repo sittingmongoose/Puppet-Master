@@ -31,6 +31,10 @@ export class CursorRunner extends BasePlatformRunner {
   private modeFlagSupport: boolean | null = null;
   private modeFlagSupportPromise: Promise<boolean> | null = null;
   private readonly outputParser: CursorOutputParser;
+  // P1-G03: Track when mode flag support was last probed
+  private modeFlagSupportProbedAt: number = 0;
+  // P1-G03: Cache TTL for mode flag support (1 hour)
+  private static readonly MODE_FLAG_CACHE_TTL_MS = 3600_000;
 
   /**
    * Creates a new CursorRunner instance.
@@ -58,6 +62,15 @@ export class CursorRunner extends BasePlatformRunner {
    */
   protected getCommand(): string {
     return this.command;
+  }
+
+  /**
+   * P1-G03: Invalidate the plan mode support cache.
+   * Call after a Cursor CLI update to re-probe capabilities.
+   */
+  public invalidatePlanModeCache(): void {
+    this.modeFlagSupport = null;
+    this.modeFlagSupportProbedAt = 0;
   }
 
   /**
@@ -157,8 +170,15 @@ export class CursorRunner extends BasePlatformRunner {
     return request.prompt;
   }
 
+  /**
+   * P1-G03: Ensure mode flag support is probed with cache invalidation.
+   */
   private async ensureModeFlagSupport(): Promise<boolean> {
-    if (this.modeFlagSupport !== null) {
+    // P1-G03: Check if cache is still valid
+    const cacheAge = Date.now() - this.modeFlagSupportProbedAt;
+    const cacheValid = cacheAge < CursorRunner.MODE_FLAG_CACHE_TTL_MS;
+    
+    if (this.modeFlagSupport !== null && cacheValid) {
       return this.modeFlagSupport;
     }
     if (this.modeFlagSupportPromise) {
@@ -166,9 +186,16 @@ export class CursorRunner extends BasePlatformRunner {
     }
 
     this.modeFlagSupportPromise = this.probeModeFlagSupport()
-      .catch(() => false)
+      .catch((error) => {
+        console.warn(`[CursorRunner] Failed to probe plan mode support: ${error instanceof Error ? error.message : String(error)}`);
+        return false;
+      })
       .then((supported) => {
         this.modeFlagSupport = supported;
+        this.modeFlagSupportProbedAt = Date.now();
+        if (!supported) {
+          console.info('[CursorRunner] Plan mode (--mode=plan) not detected. Using prompt-based plan fallback.');
+        }
         return supported;
       })
       .finally(() => {
@@ -178,11 +205,35 @@ export class CursorRunner extends BasePlatformRunner {
     return this.modeFlagSupportPromise;
   }
 
+  /**
+   * P1-G03: Enhanced plan mode detection with multiple heuristics.
+   */
   private async probeModeFlagSupport(): Promise<boolean> {
     const helpOutput = await this.getHelpOutput(5000);
     const lower = helpOutput.toLowerCase();
-    // Best-effort detection: if help mentions --mode and plan, assume `--mode=plan` is supported.
-    return lower.includes('--mode') && lower.includes('plan');
+    
+    // P1-G03: Multiple detection heuristics for better robustness
+    // Heuristic 1: Exact flag match
+    const hasModePlanFlag = /--mode[=\s]+plan\b/i.test(helpOutput);
+    if (hasModePlanFlag) {
+      return true;
+    }
+    
+    // Heuristic 2: Mode option with plan as value
+    const hasModeFlagWithPlanValue = 
+      lower.includes('--mode') && 
+      (lower.includes('plan') || lower.includes('read-only') || lower.includes('analysis'));
+    if (hasModeFlagWithPlanValue) {
+      return true;
+    }
+    
+    // Heuristic 3: Plan mode documented in help
+    const planModeDocumented = 
+      lower.includes('plan mode') || 
+      lower.includes('planning mode') ||
+      lower.includes('read-only mode');
+    
+    return planModeDocumented;
   }
 
   private async getHelpOutput(timeoutMs: number): Promise<string> {

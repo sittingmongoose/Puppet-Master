@@ -6,12 +6,11 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { PromotionEngine } from './promotion-engine.js';
 import type {
   AgentsEntry,
-  EntryStats,
   PromotionRule,
   PromotionCandidate,
   PromotionConfig,
 } from './promotion-engine.js';
-import type { AgentsLevel, AgentsManager } from '../memory/agents-manager.js';
+import type { AgentsManager } from '../memory/agents-manager.js';
 import type { MultiLevelLoader } from './multi-level-loader.js';
 
 describe('PromotionEngine', () => {

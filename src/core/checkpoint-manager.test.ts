@@ -311,7 +311,6 @@ describe('checkpoint-manager', () => {
       const checkpointPath = join(checkpointDir, `${checkpointId}.json`);
 
       // Check that backup files might exist (from AtomicWriter)
-      const backupPath = `${checkpointPath}.backup`;
       // Note: AtomicWriter may create backups, but we don't need to verify that here
       // Just verify the main file exists and is valid
       await expect(fs.access(checkpointPath)).resolves.not.toThrow();

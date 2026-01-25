@@ -4,7 +4,7 @@
 
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { writeFile, mkdir, rm } from 'fs/promises';
-import { join, resolve } from 'path';
+import { join } from 'path';
 import { AgentsManager } from '../memory/agents-manager.js';
 import type { AgentsManagerConfig } from '../memory/agents-manager.js';
 import { MultiLevelLoader } from './multi-level-loader.js';

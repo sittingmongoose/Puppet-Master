@@ -7,15 +7,13 @@
  * See P1-T02: Start Chain - Add Coverage Gate.
  */
 
-import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import {
   CoverageValidator,
   DEFAULT_COVERAGE_CONFIG,
-  type CoverageReport,
-  type CoverageConfig,
 } from './coverage-validator.js';
 import type { ParsedRequirements, ParsedSection } from '../../types/requirements.js';
-import type { PRD, Phase, Task, Subtask, SourceRef } from '../../types/prd.js';
+import type { PRD, Phase, Task, SourceRef } from '../../types/prd.js';
 import type { CoverageMetrics } from '../structure-detector.js';
 import type { Criterion } from '../../types/tiers.js';
 

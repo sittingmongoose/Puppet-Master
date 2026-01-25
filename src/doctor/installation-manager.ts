@@ -294,9 +294,10 @@ export class InstallationManager {
     });
 
     // GitHub Copilot CLI installation (used by SDK)
+    // P0-G19: Corrected package name from @github/copilot-cli to @github/copilot
     this.registerCommand({
       check: 'copilot-cli',
-      command: 'npm install -g @github/copilot-cli',
+      command: 'npm install -g @github/copilot',
       description: 'Install GitHub Copilot CLI',
       requiresSudo: false,
       platforms: ['darwin', 'linux', 'win32'],

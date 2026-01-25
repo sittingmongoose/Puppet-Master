@@ -166,9 +166,14 @@ export class GeminiRunner extends BasePlatformRunner {
     // JSON output format
     args.push('--output-format', 'json');
 
-    // Approval mode for automation (default to yolo for headless)
-    // Note: ExecutionRequest doesn't have approvalMode; this is set to yolo for headless execution
-    args.push('--approval-mode', 'yolo');
+    // P0-G10: Approval mode - respect planMode for read-only execution
+    // planMode uses 'plan' mode (read-only), otherwise use 'yolo' for headless automation
+    // Note: plan mode requires experimental.plan: true in Gemini config
+    if (request.planMode === true) {
+      args.push('--approval-mode', 'plan');
+    } else {
+      args.push('--approval-mode', 'yolo');
+    }
 
     // Model selection
     if (request.model && request.model !== 'auto') {
@@ -209,6 +214,10 @@ export class GeminiRunner extends BasePlatformRunner {
         }
       });
 
+    // For JSON output, extract the response text for human-facing output.
+    // (The parser may preserve raw JSON for debugging/audits.)
+    let responseText = '';
+
     if (!looksLikeStreamJson) {
       if (!trimmed.startsWith('{')) {
         return {
@@ -222,7 +231,8 @@ export class GeminiRunner extends BasePlatformRunner {
       }
 
       try {
-        JSON.parse(trimmed);
+        const json = JSON.parse(trimmed) as { response?: unknown };
+        responseText = typeof json.response === 'string' ? json.response : '';
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
         return {
@@ -244,7 +254,7 @@ export class GeminiRunner extends BasePlatformRunner {
 
     const result: ExecutionResult = {
       success,
-      output: parsed.rawOutput,
+      output: looksLikeStreamJson ? parsed.rawOutput : responseText,
       exitCode: 0, // Will be set by execute() method
       duration: 0, // Will be set by execute() method
       processId: 0, // Will be set by execute() method

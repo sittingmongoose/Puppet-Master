@@ -26,7 +26,7 @@ import { CapabilityDiscoveryService } from './capability-discovery.js';
 import type { RateLimiter } from '../budget/rate-limiter.js';
 import type { QuotaManager } from './quota-manager.js';
 import { QuotaExhaustedError } from './quota-manager.js';
-import type { FreshSpawner, SpawnRequest } from '../core/fresh-spawn.js';
+import type { FreshSpawner, SpawnRequest, SpawnResult } from '../core/fresh-spawn.js';
 import { CircuitBreaker, CircuitBreakerOpenError } from './circuit-breaker.js';
 
 /**
@@ -75,6 +75,11 @@ export abstract class BasePlatformRunner
    * but we need to access the streams for captureStdout/captureStderr.
    */
   private readonly runningProcesses: Map<number, RunningProcess> = new Map();
+  /**
+   * P0-G13: Store SpawnResults to access waitForExit method.
+   * Used when FreshSpawner is in use to get actual exit code.
+   */
+  private readonly spawnResults: Map<number, SpawnResult> = new Map();
   /**
    * Captured stdout/stderr for each spawned process (keyed by PID).
    *
@@ -244,6 +249,9 @@ export abstract class BasePlatformRunner
 
       // Store for access by captureStdout/captureStderr
       this.runningProcesses.set(spawnResult.processId, runningProcess);
+      
+      // P0-G13: Store SpawnResult for later access to waitForExit
+      this.spawnResults.set(spawnResult.processId, spawnResult);
 
       return runningProcess;
     }
@@ -298,7 +306,7 @@ export abstract class BasePlatformRunner
    * If FreshSpawner is provided, delegates to it for git state verification.
    * Otherwise, does nothing (subclasses can override).
    */
-  async prepareWorkingDirectory(path: string): Promise<void> {
+  async prepareWorkingDirectory(_path: string): Promise<void> {
     // If FreshSpawner is provided, it handles git state verification
     // FreshSpawner.prepareWorkingDirectory() is called internally during spawn()
     // So we don't need to call it here separately
@@ -327,6 +335,8 @@ export abstract class BasePlatformRunner
     }
     // Clean up running process if using FreshSpawner
     this.runningProcesses.delete(pid);
+    // P0-G13: Clean up SpawnResult tracking
+    this.spawnResults.delete(pid);
     // Always clean up captured transcripts to prevent unbounded growth.
     this.capturedOutput.delete(pid);
   }
@@ -619,10 +629,16 @@ export abstract class BasePlatformRunner
 
         await Promise.all([stdoutPromise, stderrPromise]);
         
-        // For FreshSpawner, we can't directly access the ChildProcess to get exit code
-        // The exit code will be in the audit log, but for now we'll use a default
-        // In a future enhancement, we could read the audit log or extend FreshSpawner's API
-        exitCode = 0; // Assume success if streams completed (can be improved)
+        // P0-G13: Use waitForExit to get actual exit code from FreshSpawner
+        const spawnResult = this.spawnResults.get(pid);
+        if (spawnResult) {
+          const exitResult = await spawnResult.waitForExit();
+          exitCode = exitResult.exitCode ?? 1;
+        } else {
+          // Fallback if spawnResult not found (shouldn't happen)
+          console.warn(`[BasePlatformRunner] SpawnResult not found for PID ${pid}, defaulting to exit code 0`);
+          exitCode = 0;
+        }
       } else {
         // Set up stdout collection
         const stdoutPromise = (async () => {
@@ -735,9 +751,10 @@ export abstract class BasePlatformRunner
         this.rateLimiter.recordCall(this.platform);
       }
       if (this.quotaManager) {
-        // Estimate tokens (can be improved later with actual token counting)
-        const estimatedTokens = Math.max(100, Math.floor(duration / 10));
-        await this.quotaManager.recordUsage(this.platform, estimatedTokens, duration);
+        // P0-G21: Use actual tokens when available, fall back to estimation
+        // Parsers like GeminiOutputParser extract tokensUsed from output
+        const tokens = result.tokensUsed ?? Math.max(100, Math.floor(duration / 10));
+        await this.quotaManager.recordUsage(this.platform, tokens, duration);
       }
 
       if (timeoutType) {
@@ -776,7 +793,7 @@ export abstract class BasePlatformRunner
           this.rateLimiter.recordCall(this.platform);
         }
         if (this.quotaManager) {
-          // Estimate tokens (can be improved later with actual token counting)
+          // P0-G21: On error, we don't have parsed output, so use duration-based estimation
           const estimatedTokens = Math.max(100, Math.floor(duration / 10));
           await this.quotaManager.recordUsage(this.platform, estimatedTokens, duration).catch(() => {
             // Ignore errors when recording usage on failure
@@ -896,7 +913,11 @@ export abstract class BasePlatformRunner
   async healthCheck(): Promise<void> {
     const probe = await this.capabilityService.probe(this.platform);
     if (!probe.runnable) {
-      throw new Error(`Platform ${this.platform} CLI is not runnable (command: ${probe.command})`);
+      // P1-G18: Add recovery guidance to error message
+      throw new Error(
+        `Platform ${this.platform} CLI is not runnable (command: ${probe.command}). ` +
+        `Run 'puppet-master doctor' to diagnose and 'puppet-master login ${this.platform}' to authenticate.`
+      );
     }
   }
 }

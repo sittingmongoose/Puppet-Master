@@ -132,3 +132,161 @@ export class CircuitBreaker {
   }
 }
 
+/**
+ * P1-G05: Stagnation detector for detecting "no progress" scenarios.
+ * 
+ * Complements the CircuitBreaker by detecting:
+ * - No file changes across iterations
+ * - Same error repeated multiple times
+ * - Repeated identical outputs
+ * 
+ * Based on Ralph-Claude-Code's CB_NO_PROGRESS_THRESHOLD=3.
+ */
+export interface StagnationSnapshot {
+  consecutiveNoFileChanges: number;
+  repeatedErrorCount: number;
+  lastErrorHash: string | null;
+  lastOutputHash: string | null;
+  repeatedOutputCount: number;
+  isStagnant: boolean;
+}
+
+export interface StagnationConfig {
+  /** Number of consecutive iterations with no file changes before stagnation (default: 3) */
+  noProgressThreshold?: number;
+  /** Number of repeated identical errors before stagnation (default: 3) */
+  repeatedErrorThreshold?: number;
+  /** Number of repeated identical outputs before stagnation (default: 2) */
+  repeatedOutputThreshold?: number;
+}
+
+/**
+ * Detects stagnation patterns that indicate the agent is not making progress.
+ */
+export class StagnationDetector {
+  private consecutiveNoFileChanges = 0;
+  private repeatedErrorCount = 0;
+  private lastErrorHash: string | null = null;
+  private lastOutputHash: string | null = null;
+  private repeatedOutputCount = 0;
+  
+  private readonly noProgressThreshold: number;
+  private readonly repeatedErrorThreshold: number;
+  private readonly repeatedOutputThreshold: number;
+
+  constructor(config: StagnationConfig = {}) {
+    this.noProgressThreshold = config.noProgressThreshold ?? 3;
+    this.repeatedErrorThreshold = config.repeatedErrorThreshold ?? 3;
+    this.repeatedOutputThreshold = config.repeatedOutputThreshold ?? 2;
+  }
+
+  /**
+   * Record an iteration result and check for stagnation.
+   * 
+   * @param filesChanged - Array of files changed in this iteration
+   * @param error - Error message if iteration failed
+   * @param output - Output hash or summary for comparison
+   * @returns true if stagnation is detected
+   */
+  recordIteration(
+    filesChanged: string[],
+    error: string | null = null,
+    output: string | null = null
+  ): boolean {
+    // Track file changes
+    if (filesChanged.length === 0) {
+      this.consecutiveNoFileChanges++;
+    } else {
+      this.consecutiveNoFileChanges = 0;
+    }
+
+    // Track repeated errors
+    if (error) {
+      const errorHash = this.computeHash(error);
+      if (this.lastErrorHash === errorHash) {
+        this.repeatedErrorCount++;
+      } else {
+        this.lastErrorHash = errorHash;
+        this.repeatedErrorCount = 1;
+      }
+    } else {
+      this.repeatedErrorCount = 0;
+      this.lastErrorHash = null;
+    }
+
+    // Track repeated outputs
+    if (output) {
+      const outputHash = this.computeHash(output);
+      if (this.lastOutputHash === outputHash) {
+        this.repeatedOutputCount++;
+      } else {
+        this.lastOutputHash = outputHash;
+        this.repeatedOutputCount = 1;
+      }
+    }
+
+    return this.isStagnant();
+  }
+
+  /**
+   * Check if any stagnation condition is met.
+   */
+  isStagnant(): boolean {
+    return (
+      this.consecutiveNoFileChanges >= this.noProgressThreshold ||
+      this.repeatedErrorCount >= this.repeatedErrorThreshold ||
+      this.repeatedOutputCount >= this.repeatedOutputThreshold
+    );
+  }
+
+  /**
+   * Get the reason for stagnation (if any).
+   */
+  getStagnationReason(): string | null {
+    if (this.consecutiveNoFileChanges >= this.noProgressThreshold) {
+      return `No file changes for ${this.consecutiveNoFileChanges} consecutive iterations`;
+    }
+    if (this.repeatedErrorCount >= this.repeatedErrorThreshold) {
+      return `Same error repeated ${this.repeatedErrorCount} times`;
+    }
+    if (this.repeatedOutputCount >= this.repeatedOutputThreshold) {
+      return `Identical output ${this.repeatedOutputCount} times in a row`;
+    }
+    return null;
+  }
+
+  /**
+   * Reset all counters (e.g., when starting a new subtask).
+   */
+  reset(): void {
+    this.consecutiveNoFileChanges = 0;
+    this.repeatedErrorCount = 0;
+    this.lastErrorHash = null;
+    this.lastOutputHash = null;
+    this.repeatedOutputCount = 0;
+  }
+
+  /**
+   * Get snapshot for debugging/logging.
+   */
+  getSnapshot(): StagnationSnapshot {
+    return {
+      consecutiveNoFileChanges: this.consecutiveNoFileChanges,
+      repeatedErrorCount: this.repeatedErrorCount,
+      lastErrorHash: this.lastErrorHash,
+      lastOutputHash: this.lastOutputHash,
+      repeatedOutputCount: this.repeatedOutputCount,
+      isStagnant: this.isStagnant(),
+    };
+  }
+
+  /**
+   * Compute a simple hash for comparison.
+   */
+  private computeHash(content: string): string {
+    // Simple hash for comparison - just first 100 chars normalized
+    const normalized = content.toLowerCase().replace(/\s+/g, ' ').trim().slice(0, 100);
+    return normalized;
+  }
+}
+

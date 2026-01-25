@@ -295,20 +295,36 @@ export class RequirementsInventoryBuilder {
     // Build the prompt
     const prompt = buildInventoryPrompt(parsed, candidates);
 
-    // Get platform and model from config
-    const platform =
+    // Get platform and model from config with validation
+    const configuredPlatform =
       this.puppetMasterConfig?.startChain?.inventory?.platform ||
-      this.puppetMasterConfig?.tiers?.phase?.platform ||
-      'cursor';
-    const model =
+      this.puppetMasterConfig?.tiers?.phase?.platform;
+    const configuredModel =
       this.puppetMasterConfig?.startChain?.inventory?.model ||
-      this.puppetMasterConfig?.tiers?.phase?.model ||
-      'claude-sonnet-4-20250514';
+      this.puppetMasterConfig?.tiers?.phase?.model;
 
-    // Check quota
-    const hasQuota = await this.quotaManager.checkQuota(platform);
-    if (!hasQuota) {
-      throw new Error(`No quota available for platform: ${platform}`);
+    // Validate that platform and model are explicitly configured
+    if (!configuredPlatform) {
+      throw new Error(
+        'No platform configured for AI refinement. ' +
+        'Set startChain.inventory.platform or tiers.phase.platform in your config.'
+      );
+    }
+    if (!configuredModel) {
+      throw new Error(
+        'No model configured for AI refinement. ' +
+        'Set startChain.inventory.model or tiers.phase.model in your config.'
+      );
+    }
+
+    const platform = configuredPlatform;
+    const model = configuredModel;
+
+    // Check quota - checkQuota returns QuotaInfo object, not boolean
+    const quotaInfo = await this.quotaManager.checkQuota(platform);
+    // remaining === -1 means unlimited quota
+    if (quotaInfo.remaining !== -1 && quotaInfo.remaining <= 0) {
+      throw new Error(`No quota available for platform: ${platform} (remaining: ${quotaInfo.remaining})`);
     }
 
     // Get runner
@@ -317,12 +333,17 @@ export class RequirementsInventoryBuilder {
       throw new Error(`No runner available for platform: ${platform}`);
     }
 
+    // P1-G02: Get planMode from step config (default true for start-chain)
+    const stepConfig = this.puppetMasterConfig?.startChain?.inventory;
+    const planMode = stepConfig?.planMode ?? true;
+
     // Execute AI call
     const result = await runner.execute({
       prompt,
       model,
       workingDirectory: process.cwd(),
       nonInteractive: true,
+      planMode, // P1-G02: Pass planMode to runner
     });
 
     if (!result.success || !result.output) {

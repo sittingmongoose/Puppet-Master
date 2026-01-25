@@ -15,6 +15,7 @@ import { CheckpointManager } from '../../core/checkpoint-manager.js';
 import { EventLedger } from '../../state/event-ledger.js';
 import type { EventFilter, LedgerEventOrder } from '../../state/event-ledger.js';
 import { deriveProjectRootFromConfigPath, resolveUnderProjectRoot } from '../../utils/project-paths.js';
+import { isValidSessionId } from '../../core/session-tracker.js';
 import type { CommandModule } from './index.js';
 
 export interface LedgerBaseOptions {
@@ -68,6 +69,11 @@ export async function ledgerQueryAction(options: LedgerQueryOptions): Promise<vo
   const { projectRoot } = resolveProjectRoot(options.config);
   const dbPath = resolveLedgerPath(projectRoot, options);
 
+  // Validate session ID format if provided
+  if (options.session && !isValidSessionId(options.session)) {
+    console.warn(`Warning: Session ID "${options.session}" does not match expected format PM-YYYY-MM-DD-HH-MM-SS-NNN`);
+  }
+
   const ledger = new EventLedger(dbPath);
   try {
     const filter: EventFilter = {
@@ -96,6 +102,11 @@ export async function ledgerQueryAction(options: LedgerQueryOptions): Promise<vo
 export async function ledgerReplayAction(options: LedgerReplayOptions): Promise<void> {
   const { projectRoot } = resolveProjectRoot(options.config);
   const dbPath = resolveLedgerPath(projectRoot, options);
+
+  // Validate session ID format if provided
+  if (options.session && !isValidSessionId(options.session)) {
+    console.warn(`Warning: Session ID "${options.session}" does not match expected format PM-YYYY-MM-DD-HH-MM-SS-NNN`);
+  }
 
   let fromTimestamp: string | undefined;
 

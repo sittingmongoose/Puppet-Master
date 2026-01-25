@@ -6,7 +6,7 @@
  * See BUILD_QUEUE_IMPROVEMENTS.md P1-T23 for implementation details.
  */
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import path from 'path';
 import { ContractValidator, createContractValidator, validateContracts } from './contract-validator.js';
 import { ALL_BACKEND_EVENT_NAMES, ALL_FRONTEND_MESSAGE_TYPES } from '../contracts/events.contract.js';

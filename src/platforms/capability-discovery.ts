@@ -146,6 +146,36 @@ function createDefaultCooldownInfo(): CooldownInfo {
 }
 
 /**
+ * Validation result from preflight check.
+ * Per ARCHITECTURE.md Section 8 (Capability Discovery Service).
+ */
+export interface PreflightValidationResult {
+  /** Whether execution can proceed */
+  ready: boolean;
+  /** List of issues that prevent or warn about execution */
+  issues: string[];
+  /** Whether user must run puppet-master doctor */
+  mustRunDoctor: boolean;
+  /** Suggestions for fixing each issue */
+  suggestions: string[];
+}
+
+/**
+ * Error thrown when preflight validation fails.
+ */
+export class CapabilityValidationError extends Error {
+  readonly issues: string[];
+  readonly suggestion: string;
+
+  constructor(message: string, issues: string[], suggestion: string) {
+    super(message);
+    this.name = 'CapabilityValidationError';
+    this.issues = issues;
+    this.suggestion = suggestion;
+  }
+}
+
+/**
  * Capability Discovery Service
  * 
  * Probes platform CLIs to discover capabilities and caches results.
@@ -153,13 +183,17 @@ function createDefaultCooldownInfo(): CooldownInfo {
 export class CapabilityDiscoveryService {
   private readonly cacheDir: string;
   private readonly cliPaths: Partial<CliPathsConfig> | null;
+  /** Default staleness threshold in hours */
+  private readonly stalenessThresholdHours: number;
 
   constructor(
     cacheDir: string = '.puppet-master/capabilities',
-    cliPaths?: Partial<CliPathsConfig> | null
+    cliPaths?: Partial<CliPathsConfig> | null,
+    stalenessThresholdHours: number = 24
   ) {
     this.cacheDir = cacheDir;
     this.cliPaths = cliPaths ?? null;
+    this.stalenessThresholdHours = stalenessThresholdHours;
   }
 
   /**
@@ -283,6 +317,78 @@ export class CapabilityDiscoveryService {
   }
 
   /**
+   * P1-G06/P1-G09: Discovers available models for a platform.
+   * 
+   * For Copilot: Requires SDK (will dynamically import)
+   * For Claude: Returns known model list from claude-models.ts
+   * For Codex: Returns known model list from codex-models.ts
+   * For Cursor: Returns known model list from cursor-models.ts
+   * For Gemini: Returns known model list from gemini-models.ts
+   * 
+   * @param platform Platform to discover models for
+   * @returns List of available model names, or empty array if discovery fails
+   */
+  async discoverModels(platform: Platform): Promise<string[]> {
+    try {
+      if (platform === 'copilot') {
+        // Try to use SDK for dynamic model discovery
+        try {
+          const { CopilotClient: SdkClient } = await import('@github/copilot-sdk');
+          const client = new SdkClient() as unknown as { start(): Promise<void>; listModels(): Promise<string[]>; stop(): Promise<void> };
+          await client.start();
+          const models = await client.listModels();
+          await client.stop();
+          return models;
+        } catch (sdkError) {
+          // SDK not available, fall back to known models
+          console.warn('[CapabilityDiscovery] Copilot SDK not available for model discovery, using static list');
+          const { KNOWN_COPILOT_MODELS } = await import('./copilot-models.js');
+          return [...KNOWN_COPILOT_MODELS];
+        }
+      }
+
+      // For other platforms, return static model lists
+      switch (platform) {
+        case 'claude': {
+          const { KNOWN_CLAUDE_MODELS } = await import('./claude-models.js');
+          return [...KNOWN_CLAUDE_MODELS];
+        }
+        case 'codex': {
+          const { KNOWN_CODEX_MODELS } = await import('./codex-models.js');
+          return [...KNOWN_CODEX_MODELS];
+        }
+        case 'cursor': {
+          const { KNOWN_CURSOR_MODELS } = await import('./cursor-models.js');
+          return [...KNOWN_CURSOR_MODELS];
+        }
+        case 'gemini': {
+          const { KNOWN_GEMINI_MODELS } = await import('./gemini-models.js');
+          return [...KNOWN_GEMINI_MODELS];
+        }
+        default:
+          return [];
+      }
+    } catch (error) {
+      console.warn(`[CapabilityDiscovery] Failed to discover models for ${platform}:`, error instanceof Error ? error.message : String(error));
+      return [];
+    }
+  }
+
+  /**
+   * P1-G06/P1-G09: Probes a platform and includes model discovery.
+   * 
+   * Extended probe that also discovers available models.
+   */
+  async probeWithModels(platform: Platform): Promise<CapabilityProbeResult> {
+    const result = await this.probe(platform);
+    const models = await this.discoverModels(platform);
+    result.capabilities.availableModels = models;
+    // Re-cache with models
+    await this.cacheResult(platform, result);
+    return result;
+  }
+
+  /**
    * Checks if the cache is valid (not older than maxAgeMs).
    */
   async isCacheValid(platform: Platform, maxAgeMs: number): Promise<boolean> {
@@ -319,5 +425,84 @@ export class CapabilityDiscoveryService {
     // Write JSON (machine-readable)
     const jsonContent = JSON.stringify(result, null, 2);
     await fs.writeFile(paths.json, jsonContent, 'utf-8');
+  }
+
+  /**
+   * Validates that all required platforms are ready for execution.
+   * 
+   * Per ARCHITECTURE.md Section 8.1 (Refusal Rules), checks:
+   * - Capability data exists for all required platforms
+   * - All required platforms are runnable (CLI executable)
+   * - All required platforms are authenticated
+   * - Capability data is not stale
+   * 
+   * P0-G02: Preflight validation before orchestrator starts.
+   * 
+   * @param requiredPlatforms - Platforms that must be available for execution
+   * @returns Validation result with issues and suggestions
+   */
+  async validateReadyForExecution(
+    requiredPlatforms: Platform[]
+  ): Promise<PreflightValidationResult> {
+    const issues: string[] = [];
+    const suggestions: string[] = [];
+
+    // Remove duplicates
+    const platforms = [...new Set(requiredPlatforms)];
+
+    for (const platform of platforms) {
+      const cached = await this.getCached(platform);
+
+      // Check 1: Capability data exists
+      if (!cached) {
+        issues.push(`Missing capability discovery for ${platform}`);
+        suggestions.push(`Run 'puppet-master doctor' to discover ${platform} capabilities`);
+        continue;
+      }
+
+      // Check 2: Platform CLI is runnable
+      if (!cached.runnable) {
+        issues.push(`${platform} CLI is not runnable (command: ${cached.command})`);
+        suggestions.push(`Install ${platform} CLI or check your cliPaths configuration`);
+      }
+
+      // Check 3: Platform is authenticated (not_authenticated is a blocker)
+      if (cached.authStatus === 'not_authenticated') {
+        issues.push(`${platform} is not authenticated`);
+        suggestions.push(`Run 'puppet-master login ${platform}' or set required environment variables`);
+      }
+
+      // Check 4: Capability data is not stale
+      const discoveredAt = new Date(cached.probeTimestamp);
+      const hoursOld = (Date.now() - discoveredAt.getTime()) / (1000 * 60 * 60);
+      
+      if (hoursOld > this.stalenessThresholdHours) {
+        issues.push(
+          `Capability data for ${platform} is stale (${hoursOld.toFixed(1)}h old, threshold: ${this.stalenessThresholdHours}h)`
+        );
+        suggestions.push(`Run 'puppet-master doctor --refresh' to update ${platform} capabilities`);
+      }
+
+      // Check 5: Cooldown is not active
+      if (cached.cooldownInfo.active) {
+        const endsAt = cached.cooldownInfo.endsAt 
+          ? new Date(cached.cooldownInfo.endsAt).toLocaleString()
+          : 'unknown';
+        issues.push(
+          `${platform} is in cooldown until ${endsAt}` +
+          (cached.cooldownInfo.reason ? ` (reason: ${cached.cooldownInfo.reason})` : '')
+        );
+        suggestions.push(`Wait for cooldown to end or use a different platform`);
+      }
+    }
+
+    return {
+      ready: issues.length === 0,
+      issues,
+      mustRunDoctor: issues.some(
+        (i) => i.includes('Missing capability') || i.includes('not runnable') || i.includes('stale')
+      ),
+      suggestions,
+    };
   }
 }

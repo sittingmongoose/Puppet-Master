@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { writeFile, unlink, mkdir, readdir, stat } from 'fs/promises';
+import { writeFile, unlink, mkdir, readdir } from 'fs/promises';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { tmpdir } from 'os';
@@ -51,17 +51,6 @@ describe('LogRetention', () => {
   const createLogFile = async (name: string, content: string): Promise<string> => {
     const path = join(logsDir, name);
     await writeFile(path, content, 'utf8');
-    return path;
-  };
-
-  const createOldLogFile = async (name: string, ageDays: number): Promise<string> => {
-    const path = join(logsDir, name);
-    await writeFile(path, 'test content', 'utf8');
-    
-    // Set modification time to make it old
-    const oldTime = new Date(Date.now() - ageDays * 24 * 60 * 60 * 1000);
-    // Note: We can't easily change mtime in tests, so we'll test with actual time
-    // and adjust our expectations
     return path;
   };
 
@@ -374,7 +363,7 @@ describe('LogRetention', () => {
       };
       const retention = new LogRetention(logsDir, config);
       
-      const logPath = await createLogFile('old.log', 'content');
+      await createLogFile('old.log', 'content');
       
       // Wait a bit to ensure file is old enough
       await new Promise((resolve) => setTimeout(resolve, 100));

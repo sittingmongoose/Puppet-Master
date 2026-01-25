@@ -59,6 +59,7 @@ export class QuotaManager {
   /**
    * Checks quota for a platform and returns quota information.
    * Calculates remaining quota across run, hour, and day periods.
+   * P1-G04: Now checks both call-based and token-based quotas.
    * 
    * Throws QuotaExhaustedError when hard limit is reached.
    * Logs warning when soft limit is reached but allows execution.
@@ -70,53 +71,96 @@ export class QuotaManager {
   async checkQuota(platform: Platform): Promise<QuotaInfo> {
     const budget = this.budgets[platform];
     
-    // Get usage counts for each period
+    // Get usage counts for each period (calls)
     const runCount = await this.getRunPeriodCount(platform);
     const hourCount = await this.usageTracker.getCallCountInLastHour(platform);
     const dayCount = await this.usageTracker.getCallCountToday(platform);
 
-    // Calculate remaining for each period
+    // P1-G04: Get token counts for each period
+    const runTokens = await this.getRunPeriodTokens(platform);
+    const hourTokens = await this.getTokenCountInLastHour(platform);
+    const dayTokens = await this.getTokenCountToday(platform);
+
+    // Calculate limits (calls)
     const runLimit = this.getLimitValue(budget.maxCallsPerRun);
     const hourLimit = this.getLimitValue(budget.maxCallsPerHour);
     const dayLimit = this.getLimitValue(budget.maxCallsPerDay);
 
+    // P1-G04: Calculate token limits
+    const runTokenLimit = this.getLimitValue(budget.maxTokensPerRun);
+    const hourTokenLimit = this.getLimitValue(budget.maxTokensPerHour);
+    const dayTokenLimit = this.getLimitValue(budget.maxTokensPerDay);
+
+    // Calculate remaining for calls
     const runRemaining = runLimit - runCount;
     const hourRemaining = hourLimit - hourCount;
     const dayRemaining = dayLimit - dayCount;
 
-    // Find the most restrictive period (lowest remaining)
-    const periods = [
-      { period: 'run' as const, remaining: runRemaining, limit: runLimit, count: runCount },
-      { period: 'hour' as const, remaining: hourRemaining, limit: hourLimit, count: hourCount },
-      { period: 'day' as const, remaining: dayRemaining, limit: dayLimit, count: dayCount },
+    // P1-G04: Calculate remaining for tokens
+    const runTokensRemaining = runTokenLimit - runTokens;
+    const hourTokensRemaining = hourTokenLimit - hourTokens;
+    const dayTokensRemaining = dayTokenLimit - dayTokens;
+
+    // Find the most restrictive period (combining both calls and tokens)
+    type QuotaPeriod = { 
+      period: 'run' | 'hour' | 'day'; 
+      remaining: number; 
+      limit: number; 
+      count: number;
+      type: 'calls' | 'tokens';
+    };
+    
+    const periods: QuotaPeriod[] = [
+      { period: 'run', remaining: runRemaining, limit: runLimit, count: runCount, type: 'calls' },
+      { period: 'hour', remaining: hourRemaining, limit: hourLimit, count: hourCount, type: 'calls' },
+      { period: 'day', remaining: dayRemaining, limit: dayLimit, count: dayCount, type: 'calls' },
+      // P1-G04: Include token periods (only if configured)
+      ...(budget.maxTokensPerRun !== undefined 
+        ? [{ period: 'run' as const, remaining: runTokensRemaining, limit: runTokenLimit, count: runTokens, type: 'tokens' as const }] 
+        : []),
+      ...(budget.maxTokensPerHour !== undefined 
+        ? [{ period: 'hour' as const, remaining: hourTokensRemaining, limit: hourTokenLimit, count: hourTokens, type: 'tokens' as const }] 
+        : []),
+      ...(budget.maxTokensPerDay !== undefined 
+        ? [{ period: 'day' as const, remaining: dayTokensRemaining, limit: dayTokenLimit, count: dayTokens, type: 'tokens' as const }] 
+        : []),
     ];
 
-    // Sort by remaining (ascending) to find most restrictive
-    periods.sort((a, b) => a.remaining - b.remaining);
+    // Sort by percentage used (descending) to find most restrictive
+    // Using percentage because limits have different scales (calls vs tokens)
+    periods.sort((a, b) => {
+      const aPercent = a.limit > 0 ? a.count / a.limit : 0;
+      const bPercent = b.limit > 0 ? b.count / b.limit : 0;
+      return bPercent - aPercent; // Higher percentage = more restrictive
+    });
     const mostRestrictive = periods[0];
 
     // Calculate reset time based on period
     const resetsAt = this.calculateResetTime(mostRestrictive.period);
 
     // Calculate percentage used
-    const percentageUsed = (mostRestrictive.count / mostRestrictive.limit) * 100;
+    const percentageUsed = mostRestrictive.limit > 0 
+      ? (mostRestrictive.count / mostRestrictive.limit) * 100 
+      : 0;
 
     // Check hard limit (100% or configured hardLimitPercent)
     if (percentageUsed >= this.hardLimitPercent) {
+      const unitLabel = mostRestrictive.type === 'tokens' ? 'tokens' : 'calls';
       throw new QuotaExhaustedError(
         platform,
         mostRestrictive.period,
         mostRestrictive.limit,
         mostRestrictive.count,
-        resetsAt
+        `${resetsAt} (${unitLabel})`
       );
     }
 
     // Check soft limit (warnAtPercentage or configured softLimitPercent)
     const softLimit = this.budgetEnforcement.warnAtPercentage || this.softLimitPercent;
     if (percentageUsed >= softLimit) {
+      const unitLabel = mostRestrictive.type === 'tokens' ? 'tokens' : 'calls';
       console.warn(
-        `[QuotaManager] Soft limit warning for ${platform}: ${mostRestrictive.count}/${mostRestrictive.limit} calls used (${percentageUsed.toFixed(1)}%) in ${mostRestrictive.period} period. Resets at ${resetsAt}`
+        `[QuotaManager] Soft limit warning for ${platform}: ${mostRestrictive.count}/${mostRestrictive.limit} ${unitLabel} used (${percentageUsed.toFixed(1)}%) in ${mostRestrictive.period} period. Resets at ${resetsAt}`
       );
     }
 
@@ -201,9 +245,8 @@ export class QuotaManager {
     // Check quota.
     // `checkQuota()` enforces hard limits by throwing QuotaExhaustedError, but callers of
     // `canProceed()` should receive a structured allow/deny result instead of an exception.
-    let quotaInfo: QuotaInfo;
     try {
-      quotaInfo = await this.checkQuota(platform);
+      await this.checkQuota(platform);
     } catch (error) {
       if (error instanceof QuotaExhaustedError) {
         return { allowed: false, reason: error.message };
@@ -266,10 +309,49 @@ export class QuotaManager {
   }
 
   /**
+   * P1-G04: Gets the token count for the run period
+   */
+  private async getRunPeriodTokens(platform: Platform): Promise<number> {
+    const events = await this.usageTracker.getInPeriod(this.runStartTime);
+    return events
+      .filter(event => event.platform === platform)
+      .reduce((sum, event) => sum + (event.tokens || 0), 0);
+  }
+
+  /**
+   * P1-G04: Gets the token count for the last hour
+   */
+  private async getTokenCountInLastHour(platform: Platform): Promise<number> {
+    const now = new Date();
+    const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
+    const events = await this.usageTracker.getInPeriod(oneHourAgo);
+    return events
+      .filter(event => event.platform === platform)
+      .reduce((sum, event) => sum + (event.tokens || 0), 0);
+  }
+
+  /**
+   * P1-G04: Gets the token count for today (UTC)
+   */
+  private async getTokenCountToday(platform: Platform): Promise<number> {
+    const now = new Date();
+    const startOfDay = new Date(Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate(),
+      0, 0, 0, 0
+    ));
+    const events = await this.usageTracker.getInPeriod(startOfDay);
+    return events
+      .filter(event => event.platform === platform)
+      .reduce((sum, event) => sum + (event.tokens || 0), 0);
+  }
+
+  /**
    * Converts 'unlimited' or number to a numeric limit value
    */
-  private getLimitValue(limit: number | 'unlimited'): number {
-    if (limit === 'unlimited') {
+  private getLimitValue(limit: number | 'unlimited' | undefined): number {
+    if (limit === 'unlimited' || limit === undefined) {
       return Number.MAX_SAFE_INTEGER;
     }
     return limit;

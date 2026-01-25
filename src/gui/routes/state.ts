@@ -14,7 +14,6 @@ import type { ProgressManager, ProgressEntry } from '../../memory/progress-manag
 import type { AgentsManager } from '../../memory/agents-manager.js';
 import type { OrchestratorState } from '../../types/state.js';
 import { TierNode } from '../../core/tier-node.js';
-import type { TierNodeData } from '../../core/tier-node.js';
 
 /**
  * Error response interface.

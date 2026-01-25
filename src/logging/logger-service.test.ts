@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
-import { readFile, unlink, mkdir } from 'fs/promises';
+import { readFile, unlink } from 'fs/promises';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { tmpdir } from 'os';
@@ -11,7 +11,6 @@ import {
   LoggerService,
   ConsoleTransport,
   FileTransport,
-  type LogLevel,
   type LogEntry,
   type LogTransport,
 } from './logger-service.js';

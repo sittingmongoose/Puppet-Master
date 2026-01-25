@@ -108,7 +108,6 @@
               <option value="claude">Claude</option>
               <option value="gemini">Gemini</option>
               <option value="copilot">Copilot</option>
-              <option value="antigravity">Antigravity</option>
             </select>
           </div>
           <div class="form-row">
@@ -146,7 +145,6 @@
               <option value="claude">Claude</option>
               <option value="gemini">Gemini</option>
               <option value="copilot">Copilot</option>
-              <option value="antigravity">Antigravity</option>
             </select>
           </div>
           <div class="form-row">
@@ -184,7 +182,6 @@
               <option value="claude">Claude</option>
               <option value="gemini">Gemini</option>
               <option value="copilot">Copilot</option>
-              <option value="antigravity">Antigravity</option>
             </select>
           </div>
           <div class="form-row">
@@ -222,7 +219,6 @@
               <option value="claude">Claude</option>
               <option value="gemini">Gemini</option>
               <option value="copilot">Copilot</option>
-              <option value="antigravity">Antigravity</option>
             </select>
           </div>
           <div class="form-row">
@@ -400,7 +396,6 @@
               <option value="claude">Claude</option>
               <option value="gemini">Gemini</option>
               <option value="copilot">Copilot</option>
-              <option value="antigravity">Antigravity</option>
             </select>
           </div>
         </section>
@@ -428,7 +423,6 @@
               <option value="claude">Claude</option>
               <option value="gemini">Gemini</option>
               <option value="copilot">Copilot</option>
-              <option value="antigravity">Antigravity</option>
             </select>
           </div>
         </section>
@@ -456,7 +450,6 @@
               <option value="claude">Claude</option>
               <option value="gemini">Gemini</option>
               <option value="copilot">Copilot</option>
-              <option value="antigravity">Antigravity</option>
             </select>
           </div>
         </section>
@@ -488,7 +481,6 @@
               <option value="claude">Claude</option>
               <option value="gemini">Gemini</option>
               <option value="copilot">Copilot</option>
-              <option value="antigravity">Antigravity</option>
             </select>
           </div>
         </section>
@@ -520,42 +512,11 @@
               <option value="claude">Claude</option>
               <option value="gemini">Gemini</option>
               <option value="copilot">Copilot</option>
-              <option value="antigravity">Antigravity</option>
             </select>
           </div>
         </section>
 
-        <section class="panel">
-          <h2 class="panel-title">Antigravity Budget</h2>
-          <div class="form-row">
-            <label for="budget-antigravity-max-calls-per-run">Max Calls Per Run:</label>
-            <input type="text" id="budget-antigravity-max-calls-per-run" name="budgets.antigravity.maxCallsPerRun" placeholder="unlimited" aria-label="Antigravity max calls per run" />
-          </div>
-          <div class="form-row">
-            <label for="budget-antigravity-max-calls-per-hour">Max Calls Per Hour:</label>
-            <input type="text" id="budget-antigravity-max-calls-per-hour" name="budgets.antigravity.maxCallsPerHour" placeholder="unlimited" aria-label="Antigravity max calls per hour" />
-          </div>
-          <div class="form-row">
-            <label for="budget-antigravity-max-calls-per-day">Max Calls Per Day:</label>
-            <input type="text" id="budget-antigravity-max-calls-per-day" name="budgets.antigravity.maxCallsPerDay" placeholder="unlimited" aria-label="Antigravity max calls per day" />
-          </div>
-          <div class="form-row">
-            <label for="budget-antigravity-cooldown-hours">Cooldown Hours:</label>
-            <input type="number" id="budget-antigravity-cooldown-hours" name="budgets.antigravity.cooldownHours" min="0" aria-label="Antigravity cooldown hours" />
-          </div>
-          <div class="form-row">
-            <label for="budget-antigravity-fallback-platform">Fallback Platform:</label>
-            <select id="budget-antigravity-fallback-platform" name="budgets.antigravity.fallbackPlatform" aria-label="Antigravity fallback platform">
-              <option value="">None</option>
-              <option value="cursor">Cursor</option>
-              <option value="codex">Codex</option>
-              <option value="claude">Claude</option>
-              <option value="gemini">Gemini</option>
-              <option value="copilot">Copilot</option>
-              <option value="antigravity">Antigravity</option>
-            </select>
-          </div>
-        </section>
+        <!-- NOTE: Antigravity Budget removed - GUI-only, not suitable for automation -->
 
         <section class="panel">
           <h2 class="panel-title">Budget Enforcement</h2>
@@ -632,10 +593,7 @@
             <label for="cli-paths-copilot">Copilot:</label>
             <input type="text" id="cli-paths-copilot" name="cliPaths.copilot" required aria-label="Copilot CLI path" />
           </div>
-          <div class="form-row">
-            <label for="cli-paths-antigravity">Antigravity:</label>
-            <input type="text" id="cli-paths-antigravity" name="cliPaths.antigravity" required aria-label="Antigravity CLI path" />
-          </div>
+          <!-- NOTE: Antigravity CLI path removed - GUI-only, not suitable for automation -->
         </section>
       </section>
 

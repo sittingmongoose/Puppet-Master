@@ -278,4 +278,99 @@ export class CheckpointManager {
       console.warn('Failed to clean old checkpoints:', error);
     }
   }
+
+  /**
+   * P1-G13: Gets the most recent checkpoint for automatic recovery.
+   * @returns The most recent checkpoint, or null if none exist
+   */
+  async getLatestCheckpoint(): Promise<Checkpoint | null> {
+    const summaries = await this.listCheckpoints();
+    if (summaries.length === 0) {
+      return null;
+    }
+    // Summaries are sorted newest first
+    return this.loadCheckpoint(summaries[0].id);
+  }
+
+  /**
+   * P1-G13: Checks if there's an incomplete run that can be recovered.
+   * A run is considered incomplete if a checkpoint exists and the orchestrator
+   * state is not COMPLETE or FAILED.
+   * @returns Recovery information or null if no recovery needed
+   */
+  async checkForRecovery(): Promise<{
+    checkpoint: Checkpoint;
+    reason: string;
+    recoverable: boolean;
+  } | null> {
+    const latest = await this.getLatestCheckpoint();
+    if (!latest) {
+      return null;
+    }
+
+    const state = latest.orchestratorState;
+    
+    // Check if the run was in progress (not complete, error, or idle)
+    // Use lowercase state names per OrchestratorState type
+    if (state !== 'complete' && state !== 'error' && state !== 'idle') {
+      return {
+        checkpoint: latest,
+        reason: `Found incomplete run in state '${state}' at position: ` +
+          `phase=${latest.currentPosition.phaseId || 'none'}, ` +
+          `task=${latest.currentPosition.taskId || 'none'}, ` +
+          `subtask=${latest.currentPosition.subtaskId || 'none'}`,
+        recoverable: true,
+      };
+    }
+
+    return null;
+  }
+
+  /**
+   * P1-G13: Creates state that can be used to restore the orchestrator.
+   * @param checkpoint - Checkpoint to convert to persisted state
+   * @returns PersistedState for restoration
+   */
+  checkpointToPersistedState(checkpoint: Checkpoint): PersistedState {
+    return {
+      orchestratorState: checkpoint.orchestratorState,
+      orchestratorContext: checkpoint.orchestratorContext,
+      tierStates: checkpoint.tierStates,
+      savedAt: checkpoint.timestamp,
+    };
+  }
+
+  /**
+   * P1-G13: Gets recovery suggestions based on checkpoint state.
+   * @param checkpoint - Checkpoint to analyze
+   * @returns Array of suggested recovery actions
+   */
+  getRecoverySuggestions(checkpoint: Checkpoint): string[] {
+    const suggestions: string[] = [];
+    const pos = checkpoint.currentPosition;
+    const state = checkpoint.orchestratorState;
+
+    // Use lowercase state names per OrchestratorState type
+    if (state === 'executing' || state === 'planning') {
+      suggestions.push(`Resume from checkpoint: puppet-master resume ${checkpoint.id}`);
+      suggestions.push('Or restart with fresh state: puppet-master run --no-resume');
+    }
+
+    if (pos.subtaskId) {
+      suggestions.push(`Rerun current subtask: puppet-master run --from-subtask ${pos.subtaskId}`);
+    } else if (pos.taskId) {
+      suggestions.push(`Rerun current task: puppet-master run --from-task ${pos.taskId}`);
+    } else if (pos.phaseId) {
+      suggestions.push(`Rerun current phase: puppet-master run --from-phase ${pos.phaseId}`);
+    }
+
+    if (checkpoint.metadata.completedSubtasks > 0) {
+      const progress = Math.round(
+        (checkpoint.metadata.completedSubtasks / checkpoint.metadata.totalSubtasks) * 100
+      );
+      suggestions.push(`Progress: ${checkpoint.metadata.completedSubtasks}/${checkpoint.metadata.totalSubtasks} subtasks (${progress}%)`);
+    }
+
+    return suggestions;
+  }
 }

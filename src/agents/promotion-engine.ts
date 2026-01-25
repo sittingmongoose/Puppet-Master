@@ -211,7 +211,7 @@ export class PromotionEngine {
     const candidates: PromotionCandidate[] = [];
 
     // Iterate through all tracked entries
-    for (const [entryId, stats] of this.stats.entries()) {
+    for (const [entryId] of this.stats.entries()) {
       const entry = this.entries.get(entryId);
       if (!entry) {
         // Skip if entry not found (shouldn't happen, but be safe)
@@ -406,7 +406,7 @@ export class PromotionEngine {
   private calculateConfidence(
     entry: AgentsEntry,
     stats: EntryStats,
-    rule: PromotionRule
+    _rule: PromotionRule
   ): number {
     let confidence = 0.5; // Base confidence
 

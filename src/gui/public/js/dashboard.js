@@ -274,7 +274,7 @@ function initConnectionStatus() {
   updateConnectionStatus(false); // Start as disconnected
 }
 
-function updateOrchestratorState(newState, previousState) {
+function updateOrchestratorState(newState, _previousState) {
   state.currentState = newState;
   
   const statusDot = document.getElementById('status-dot');
@@ -378,18 +378,7 @@ function updateBudgets(budgets) {
     copilotEl.setAttribute('aria-label', `Copilot budget: ${text}`);
   }
 
-  const antigravityEl = document.getElementById('budget-antigravity');
-  if (antigravityEl && budgets.antigravity) {
-    const { current = 0, limit = 'unlimited' } = budgets.antigravity;
-    let text;
-    if (limit === 'unlimited') {
-      text = `Antigravity ${current} (∞)`;
-    } else {
-      text = `Antigravity ${current}/${limit}`;
-    }
-    antigravityEl.textContent = text;
-    antigravityEl.setAttribute('aria-label', `Antigravity budget: ${text}`);
-  }
+  // NOTE: Antigravity platform removed - GUI-only, not suitable for automation
 }
 
 function updatePosition(data) {
@@ -739,6 +728,9 @@ async function controlAction(action, confirmMessage = null) {
     console.error(`[Dashboard] Error executing ${action}:`, error);
   }
 }
+
+// Expose for legacy inline handlers (retry/replan/reopen/kill buttons)
+window.controlAction = controlAction;
 
 // ============================================
 // Navigation

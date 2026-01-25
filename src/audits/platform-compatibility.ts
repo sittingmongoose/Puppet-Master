@@ -10,7 +10,7 @@
  * Per BUILD_QUEUE_IMPROVEMENTS.md P1-T24 (Platform Compatibility Validator).
  */
 
-import { readdir, readFile, stat } from 'node:fs/promises';
+import { readdir, readFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 
 /**

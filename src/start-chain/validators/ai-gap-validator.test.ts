@@ -6,16 +6,12 @@
  * See BUILD_QUEUE_IMPROVEMENTS.md P1-T26.
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { AIGapValidator, createAIGapValidator, validateGaps } from './ai-gap-validator.js';
-import { AIGapDetector } from '../../audits/ai-gap-detector.js';
 import type { PRD } from '../../types/prd.js';
 import type {
   GapDetectionResult,
-  DetectedGap,
-  AIGapValidatorConfig,
 } from '../../types/gap-detection.js';
-import { DEFAULT_AI_GAP_VALIDATOR_CONFIG } from '../../types/gap-detection.js';
 import { tmpdir } from 'os';
 import { join } from 'path';
 import { mkdir, writeFile, rm, readFile } from 'fs/promises';
@@ -148,7 +144,15 @@ describe('AIGapValidator', () => {
       const validator = new AIGapValidator({ blockOnCritical: true });
 
       // Access private method for testing
-      const evaluateThresholds = (validator as any).evaluateThresholds.bind(validator);
+      const evaluateThresholds = (
+        validator as unknown as {
+          evaluateThresholds: (result: GapDetectionResult) => {
+            passed: boolean;
+            errors: Array<{ code: string }>;
+            warnings: Array<{ code: string; message: string }>;
+          };
+        }
+      ).evaluateThresholds.bind(validator);
 
       const result: GapDetectionResult = {
         gaps: [
@@ -180,7 +184,15 @@ describe('AIGapValidator', () => {
 
     it('fails when high gaps exceed maxHighGaps', () => {
       const validator = new AIGapValidator({ maxHighGaps: 2 });
-      const evaluateThresholds = (validator as any).evaluateThresholds.bind(validator);
+      const evaluateThresholds = (
+        validator as unknown as {
+          evaluateThresholds: (result: GapDetectionResult) => {
+            passed: boolean;
+            errors: Array<{ code: string }>;
+            warnings: Array<{ code: string; message: string }>;
+          };
+        }
+      ).evaluateThresholds.bind(validator);
 
       const result: GapDetectionResult = {
         gaps: [
@@ -202,7 +214,15 @@ describe('AIGapValidator', () => {
 
     it('passes when gaps are within thresholds', () => {
       const validator = new AIGapValidator({ maxHighGaps: 5, blockOnCritical: true });
-      const evaluateThresholds = (validator as any).evaluateThresholds.bind(validator);
+      const evaluateThresholds = (
+        validator as unknown as {
+          evaluateThresholds: (result: GapDetectionResult) => {
+            passed: boolean;
+            errors: Array<{ code: string }>;
+            warnings: Array<{ code: string; message: string }>;
+          };
+        }
+      ).evaluateThresholds.bind(validator);
 
       const result: GapDetectionResult = {
         gaps: [
@@ -224,7 +244,15 @@ describe('AIGapValidator', () => {
 
     it('adds medium and low gaps as warnings', () => {
       const validator = new AIGapValidator();
-      const evaluateThresholds = (validator as any).evaluateThresholds.bind(validator);
+      const evaluateThresholds = (
+        validator as unknown as {
+          evaluateThresholds: (result: GapDetectionResult) => {
+            passed: boolean;
+            errors: Array<{ code: string }>;
+            warnings: Array<{ code: string; message: string }>;
+          };
+        }
+      ).evaluateThresholds.bind(validator);
 
       const result: GapDetectionResult = {
         gaps: [
@@ -246,7 +274,15 @@ describe('AIGapValidator', () => {
 
     it('handles detection errors gracefully', () => {
       const validator = new AIGapValidator();
-      const evaluateThresholds = (validator as any).evaluateThresholds.bind(validator);
+      const evaluateThresholds = (
+        validator as unknown as {
+          evaluateThresholds: (result: GapDetectionResult) => {
+            passed: boolean;
+            errors: Array<{ code: string }>;
+            warnings: Array<{ code: string; message: string }>;
+          };
+        }
+      ).evaluateThresholds.bind(validator);
 
       const result: GapDetectionResult = {
         gaps: [],

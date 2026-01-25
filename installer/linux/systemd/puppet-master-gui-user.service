@@ -1,0 +1,45 @@
+# Puppet Master GUI User Service
+# P2-G10: systemd user service for per-user GUI server installation
+#
+# Installation (per-user):
+#   mkdir -p ~/.config/systemd/user
+#   cp puppet-master-gui-user.service ~/.config/systemd/user/puppet-master-gui.service
+#   systemctl --user daemon-reload
+#   systemctl --user enable puppet-master-gui
+#   systemctl --user start puppet-master-gui
+#
+# To allow service to run after logout:
+#   loginctl enable-linger $USER
+
+[Unit]
+Description=Puppet Master GUI Server (User)
+Documentation=https://github.com/your-org/puppet-master
+After=default.target
+
+[Service]
+Type=simple
+
+# Working directory - set to your project directory
+WorkingDirectory=%h
+
+# Environment variables
+Environment=NODE_ENV=production
+# Default port and host
+Environment=PM_GUI_PORT=3847
+Environment=PM_GUI_HOST=localhost
+
+# The main command
+# Note: puppet-master should be in PATH, or use full path
+ExecStart=puppet-master gui --port $PM_GUI_PORT --host $PM_GUI_HOST
+
+# Restart policy
+Restart=on-failure
+RestartSec=5
+
+# Logging - journal captures stdout/stderr
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=puppet-master-gui
+
+[Install]
+WantedBy=default.target

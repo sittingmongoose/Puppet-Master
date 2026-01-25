@@ -16,7 +16,6 @@ import { createContainer } from '../../core/container.js';
 import { Orchestrator } from '../../core/orchestrator.js';
 import { StatePersistence } from '../../core/state-persistence.js';
 import { ProcessRegistry } from '../../core/process-registry.js';
-import { SessionTracker } from '../../core/session-tracker.js';
 import type { OrchestratorDependencies } from '../../core/orchestrator.js';
 import type { PuppetMasterConfig } from '../../types/config.js';
 import type { OrchestratorState } from '../../types/state.js';

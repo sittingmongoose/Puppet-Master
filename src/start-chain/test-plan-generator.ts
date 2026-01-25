@@ -363,8 +363,8 @@ export class TestPlanGenerator {
    */
   generateTestSetupSubtask(
     detected: DetectedProject,
-    taskId: string,
-    subtaskIndex: number
+    _taskId: string,
+    _subtaskIndex: number
   ): SubtaskSpec | null {
     if (detected.hasTests || detected.language === 'unknown') {
       return null;

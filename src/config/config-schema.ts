@@ -91,6 +91,11 @@ export function validateConfig(config: unknown): asserts config is PuppetMasterC
   // Validate budgets
   validatePlatformBudgets(c.budgets, ['budgets']);
 
+  // Validate rateLimits (optional, P1-T07)
+  if ('rateLimits' in c) {
+    validatePlatformRateLimits(c.rateLimits, ['rateLimits']);
+  }
+
   // Validate budgetEnforcement
   validateBudgetEnforcementConfig(c.budgetEnforcement, ['budgetEnforcement']);
 

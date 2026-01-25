@@ -16,7 +16,6 @@ import { promises as fs } from 'fs';
 import { join, resolve, extname } from 'path';
 import { existsSync } from 'fs';
 import type { ParsedRequirements, SupportedFormat } from '../../types/requirements.js';
-import type { PRD } from '../../types/prd.js';
 import type { TierPlan } from '../../start-chain/tier-plan-generator.js';
 import { MarkdownParser } from '../../start-chain/parsers/markdown-parser.js';
 import { TextParser } from '../../start-chain/parsers/text-parser.js';
@@ -73,7 +72,7 @@ async function parseFile(
   buffer: Buffer,
   filename: string,
   format: SupportedFormat,
-  projectDir: string
+  _projectDir: string
 ): Promise<ParsedRequirements> {
   const source: ParsedRequirements['source'] = {
     path: filename,

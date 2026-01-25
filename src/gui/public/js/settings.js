@@ -285,7 +285,7 @@ function collectFormData() {
 
   // Clean up rateLimits - remove undefined values
   if (config.rateLimits) {
-    ['cursor', 'codex', 'claude', 'gemini', 'copilot', 'antigravity'].forEach(platform => {
+    ['cursor', 'codex', 'claude', 'gemini', 'copilot'].forEach(platform => {
       if (config.rateLimits[platform]) {
         if (config.rateLimits[platform].callsPerMinute === undefined) {
           delete config.rateLimits[platform].callsPerMinute;

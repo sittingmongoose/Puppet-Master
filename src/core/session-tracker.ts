@@ -17,6 +17,34 @@ import { existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 
 /**
+ * Session ID format pattern: PM-YYYY-MM-DD-HH-MM-SS-NNN
+ * Per AGENTS.md specification.
+ */
+export const SESSION_ID_PATTERN = /^PM-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}-\d{3}$/;
+
+/**
+ * Validates a session ID string against the expected format.
+ * @param sessionId - The session ID to validate
+ * @returns true if valid, false otherwise
+ */
+export function isValidSessionId(sessionId: string): boolean {
+  return SESSION_ID_PATTERN.test(sessionId);
+}
+
+/**
+ * Validates a session ID and throws an error if invalid.
+ * @param sessionId - The session ID to validate
+ * @throws Error if the session ID format is invalid
+ */
+export function validateSessionId(sessionId: string): void {
+  if (!isValidSessionId(sessionId)) {
+    throw new Error(
+      `Invalid session ID format: "${sessionId}". Expected format: PM-YYYY-MM-DD-HH-MM-SS-NNN (e.g., PM-2026-01-25-14-30-00-001)`
+    );
+  }
+}
+
+/**
  * Execution session record
  */
 export interface ExecutionSession {

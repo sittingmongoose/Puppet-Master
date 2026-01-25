@@ -432,7 +432,8 @@ export class CopilotCliCheck implements DoctorCheck {
         passed: false,
         message: `Copilot CLI not found (checked: ${candidates.map(formatInvocation).join(', ')})`,
         details: lastError,
-        fixSuggestion: 'Install from: https://github.com/github/copilot-cli',
+        // P0-G19: Updated to correct install command
+        fixSuggestion: 'Install with: npm install -g @github/copilot',
         durationMs: 0, // Will be set by CheckRegistry
       };
     }

@@ -14,6 +14,14 @@
     "ecmaVersion": 2022,
     "sourceType": "module"
   },
+  "overrides": [
+    {
+      "files": ["src/gui/public/js/**/*.js"],
+      "env": {
+        "browser": true
+      }
+    }
+  ],
   "rules": {
     "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "@typescript-eslint/explicit-function-return-type": "off"

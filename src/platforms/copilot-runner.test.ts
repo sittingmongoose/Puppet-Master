@@ -275,22 +275,21 @@ describe('CopilotRunner', () => {
       expect(result.processId).toBe(0);
     });
 
-    it('should detect COMPLETE signal case-sensitively', () => {
+    it('should detect COMPLETE signal case-insensitively', () => {
       const output = 'Output with <RALPH>COMPLETE</RALPH> in different case';
       const result = runner['parseOutput'](output);
 
-      // Should NOT detect the signal (case sensitive)
+      // COMPLETE is a success signal; even if detected, success should remain true.
       expect(result.success).toBe(true);
       expect(result.error).toBeUndefined();
     });
 
-    it('should detect GUTTER signal case-sensitively', () => {
+    it('should detect GUTTER signal case-insensitively', () => {
       const output = 'Output with <RALPH>GUTTER</RALPH> in different case';
       const result = runner['parseOutput'](output);
 
-      // Should NOT detect the signal (case sensitive)
-      expect(result.success).toBe(true);
-      expect(result.error).toBeUndefined();
+      expect(result.success).toBe(false);
+      expect(result.error).toBe('Agent signaled GUTTER - stuck and cannot proceed');
     });
   });
 

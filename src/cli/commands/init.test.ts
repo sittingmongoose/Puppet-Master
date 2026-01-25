@@ -7,7 +7,7 @@ import { mkdir, rm, readFile, writeFile } from 'fs/promises';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { Command } from 'commander';
-import { InitCommand, initAction, type InitOptions } from './init.js';
+import { InitCommand, initAction } from './init.js';
 import { ConfigManager } from '../../config/config-manager.js';
 import { PrdManager } from '../../memory/prd-manager.js';
 

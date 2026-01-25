@@ -117,9 +117,35 @@ export class CodexRunner extends BasePlatformRunner {
     }
 
     // Pass the prompt as the required positional argument for `codex exec`.
-    args.push(request.prompt);
+    // P1-G01: Apply plan mode preamble if planMode is requested
+    args.push(this.buildPrompt(request));
 
     return args;
+  }
+
+  /**
+   * Builds the prompt, adding plan mode preamble if needed.
+   * 
+   * P1-G01: Codex doesn't have a native plan mode CLI flag.
+   * When planMode is requested, we add a preamble instructing the agent to
+   * plan first, then execute. This provides a consistent experience across platforms.
+   */
+  private buildPrompt(request: ExecutionRequest): string {
+    const prompt = request.prompt ?? '';
+    
+    if (request.planMode === true) {
+      // Plan mode via prompt preamble
+      const preamble = [
+        'PLAN FIRST (briefly), THEN EXECUTE:',
+        '- Start with a concise plan (max 10 bullets).',
+        '- Then immediately carry out the plan and make the required changes.',
+        '- Run the required tests/commands and report results.',
+        '',
+      ].join('\n');
+      return `${preamble}${prompt}`;
+    }
+    
+    return prompt;
   }
 
   /**

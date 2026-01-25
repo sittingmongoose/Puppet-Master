@@ -112,7 +112,6 @@ export function createControlsRoutes(orchestrator: Orchestrator | null): Router 
         return;
       }
 
-      const { fromCheckpoint } = req.body;
       const currentState = orchestrator.getState();
 
       // Validate state - can only start from 'idle' or 'planning'

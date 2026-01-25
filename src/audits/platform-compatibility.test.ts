@@ -10,8 +10,6 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import {
   PlatformCompatibilityChecker,
-  UNIX_ONLY_COMMANDS,
-  UNIX_ONLY_PATHS,
 } from './platform-compatibility.js';
 
 describe('PlatformCompatibilityChecker', () => {

@@ -27,3 +27,21 @@ ln -s "${LAUNCHER}" "${BIN_PATH}" || {
 
 echo "Installed puppet-master CLI to ${BIN_PATH}"
 
+# P0-G23: Display post-install guidance
+echo ""
+echo "=============================================="
+echo "  Puppet Master Installation Complete!"
+echo "=============================================="
+echo ""
+echo "Next steps:"
+echo "  1. Open a NEW terminal window"
+echo "  2. Run 'puppet-master doctor' to verify installation"
+echo "     and check platform prerequisites"
+echo ""
+echo "The doctor command will check:"
+echo "  - Required CLI tools (cursor, codex, claude, gemini, copilot)"
+echo "  - Platform authentication status"
+echo "  - Missing configuration"
+echo ""
+echo "For help: puppet-master --help"
+echo ""

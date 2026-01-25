@@ -11,11 +11,15 @@ import type { OrchestratorContext, OrchestratorState, TierState, TierType } from
 import type { PuppetMasterConfig } from '../types/config.js';
 import type { TierPlan } from '../types/tiers.js';
 import type { PRD } from '../types/prd.js';
-import type { PlatformRunnerContract, ExecutionRequest, RunningProcess } from '../types/platforms.js';
-import type { PlatformRouter } from './platform-router.js';
+import type { ExecutionRequest } from '../types/platforms.js';
+import { type PlatformRouter, NoPlatformAvailableError } from './platform-router.js';
 import { PlatformRegistry } from '../platforms/registry.js';
 import { PlatformHealthChecker } from '../platforms/health-check.js';
 import { HealthMonitor } from '../platforms/health-monitor.js';
+import {
+  CapabilityDiscoveryService,
+  CapabilityValidationError,
+} from '../platforms/capability-discovery.js';
 import type { TierEvent } from '../types/events.js';
 import type { IterationContext, IterationResult } from './execution-engine.js';
 import type { AdvancementResult } from './auto-advancement.js';
@@ -63,13 +67,13 @@ import {
   shouldUseWorkerReviewer,
   createWorkerReviewerOrchestrator,
 } from './worker-reviewer.js';
-import type { IterationOutcome, WorkerResult } from './worker-reviewer.js';
 import { LoopGuard } from './loop-guard.js';
 import { ParallelExecutor } from './parallel-executor.js';
 import type { ParallelExecutionResult } from './parallel-executor.js';
-import { buildDependencyGraph, getParallelizableGroups, validateDependencies, DependencyCycleError } from './dependency-analyzer.js';
+import { validateDependencies, DependencyCycleError } from './dependency-analyzer.js';
 import { EventLedger } from '../state/event-ledger.js';
 import { MetricsCollector } from '../metrics/metrics-collector.js';
+import { QuotaExhaustedError } from '../platforms/quota-manager.js';
 
 // Best-effort copy of PlatformRouter fallback preferences, used when a platform
 // is known-unhealthy and we want deterministic alternatives.
@@ -123,6 +127,8 @@ export interface OrchestratorDependencies {
   platformRegistry: PlatformRegistry;
   platformRouter: PlatformRouter;
   verificationIntegration: VerificationIntegration;
+  /** P0-G02: Capability discovery service for preflight validation */
+  capabilityDiscovery?: CapabilityDiscoveryService;
 }
 
 /**
@@ -494,11 +500,17 @@ export class Orchestrator {
 
   /**
    * Begin orchestration loop
+   * 
+   * P0-G02: Calls validateReadyForExecution() before starting to ensure
+   * all required platforms are available, authenticated, and not stale.
    */
   async start(): Promise<void> {
     if (this.stateMachine.getCurrentState() !== 'planning') {
       throw new Error(`Cannot start from state: ${this.stateMachine.getCurrentState()}`);
     }
+
+    // P0-G02: Preflight validation - check all required platforms before starting
+    await this.validatePreflightRequirements();
 
     const previousState = this.stateMachine.getCurrentState();
     this.stateMachine.send({ type: 'START' });
@@ -532,6 +544,89 @@ export class Orchestrator {
     this.loopAborted = false;
 
     await this.runLoop();
+  }
+
+  /**
+   * Validates that all platforms required by the current configuration are ready.
+   * 
+   * P0-G02: Per ARCHITECTURE.md Section 8.3 (Orchestrator Integration).
+   * Throws CapabilityValidationError if validation fails.
+   */
+  private async validatePreflightRequirements(): Promise<void> {
+    const capabilityDiscovery = this.deps.capabilityDiscovery;
+    
+    // If no capability discovery service provided, skip validation (backwards compatibility)
+    if (!capabilityDiscovery) {
+      console.warn(
+        '[Orchestrator] No capability discovery service provided. ' +
+        'Skipping preflight validation. Consider running `puppet-master doctor` first.'
+      );
+      return;
+    }
+
+    // Extract required platforms from tier configuration
+    const requiredPlatforms = this.getRequiredPlatformsFromConfig();
+    
+    if (requiredPlatforms.length === 0) {
+      console.warn('[Orchestrator] No platforms configured in tiers. Skipping preflight validation.');
+      return;
+    }
+
+    // Emit preflight event
+    if (this.eventBus) {
+      this.eventBus.emit({
+        type: 'preflight_started',
+        platforms: requiredPlatforms,
+      });
+    }
+
+    const validation = await capabilityDiscovery.validateReadyForExecution(requiredPlatforms);
+
+    if (!validation.ready) {
+      // Emit failure event
+      if (this.eventBus) {
+        this.eventBus.emit({
+          type: 'preflight_failed',
+          issues: validation.issues,
+          suggestions: validation.suggestions,
+          mustRunDoctor: validation.mustRunDoctor,
+        });
+      }
+
+      // Build helpful error message
+      const suggestion = validation.mustRunDoctor
+        ? "Run 'puppet-master doctor' to discover and validate capabilities"
+        : validation.suggestions.join('; ');
+      
+      throw new CapabilityValidationError(
+        'Cannot start execution: ' + validation.issues.join('; '),
+        validation.issues,
+        suggestion
+      );
+    }
+
+    // Emit success event
+    if (this.eventBus) {
+      this.eventBus.emit({
+        type: 'preflight_passed',
+        platforms: requiredPlatforms,
+      });
+    }
+  }
+
+  /**
+   * Extracts all unique platforms required by the tier configuration.
+   */
+  private getRequiredPlatformsFromConfig(): Platform[] {
+    const platforms = new Set<Platform>();
+    
+    const tierConfigs = this.config.tiers;
+    if (tierConfigs.phase?.platform) platforms.add(tierConfigs.phase.platform);
+    if (tierConfigs.task?.platform) platforms.add(tierConfigs.task.platform);
+    if (tierConfigs.subtask?.platform) platforms.add(tierConfigs.subtask.platform);
+    if (tierConfigs.iteration?.platform) platforms.add(tierConfigs.iteration.platform);
+    
+    return Array.from(platforms);
   }
 
   /**
@@ -862,8 +957,8 @@ export class Orchestrator {
           });
         }
 
-        // Execute iteration with platform-specific runner (worker phase)
-        const result = await this.executionEngine.spawnIteration(context, runner);
+        // P0-G09: Execute iteration with quota fallback handling
+        const result = await this.executeWithQuotaFallback(context, runner, subtask.id);
 
         // Publish iteration_completed event
         if (this.eventBus) {
@@ -1055,8 +1150,26 @@ export class Orchestrator {
       dependencies: subtask.data.plan.dependencies,
     };
 
-    // Use PlatformRouter to select platform for this tier
-    let platformConfig = this.deps.platformRouter.selectPlatform(subtask, 'execute', subtaskPlan);
+    // P0-G06: Use PlatformRouter to select platform, with graceful error handling
+    let platformConfig;
+    try {
+      platformConfig = this.deps.platformRouter.selectPlatform(subtask, 'execute', subtaskPlan);
+    } catch (error) {
+      if (error instanceof NoPlatformAvailableError) {
+        // Emit event for GUI/logging before throwing
+        this.eventBus?.emit({
+          type: 'error',
+          error: `No platform available for subtask ${subtask.id}: ${error.message}`,
+          context: {
+            subtaskId: subtask.id,
+            errorType: 'no_platform_available',
+            suggestion: 'Run `puppet-master doctor` to check platform availability and authentication',
+          },
+        });
+        throw error;
+      }
+      throw error;
+    }
 
     // Avoid unhealthy platforms when routing (P2-T07).
     if (this.healthMonitor && !this.healthMonitor.isRoutable(platformConfig.platform)) {
@@ -1068,7 +1181,24 @@ export class Orchestrator {
 
       if (best && best !== preferred) {
         const overridePlan = { ...subtaskPlan, platform: best } as TierPlan & { platform: Platform };
-        platformConfig = this.deps.platformRouter.selectPlatform(subtask, 'execute', overridePlan);
+        try {
+          platformConfig = this.deps.platformRouter.selectPlatform(subtask, 'execute', overridePlan);
+        } catch (error) {
+          if (error instanceof NoPlatformAvailableError) {
+            this.eventBus?.emit({
+              type: 'error',
+              error: `No fallback platform available: ${error.message}`,
+              context: {
+                subtaskId: subtask.id,
+                preferredPlatform: preferred,
+                errorType: 'no_platform_available',
+                suggestion: 'Run `puppet-master doctor` to check platform availability',
+              },
+            });
+            throw error;
+          }
+          throw error;
+        }
       }
     }
 
@@ -1102,6 +1232,204 @@ export class Orchestrator {
 
     const context = await this.buildIterationContext(subtask);
     return await this.executionEngine.spawnIteration(context);
+  }
+
+  /**
+   * P0-G09: Execute iteration with quota fallback handling.
+   *
+   * Implements 'fallback', 'pause', 'queue' behaviors based on config.budgetEnforcement.onLimitReached.
+   * - 'fallback': Try alternative platform up to maxFallbackDepth (default: 3)
+   * - 'pause': Wait for quota to reset and retry
+   * - 'queue': Queue the iteration for later (currently throws, not fully implemented)
+   *
+   * @param context - Iteration context
+   * @param runner - Primary platform runner
+   * @param subtaskId - Subtask ID for logging
+   * @param fallbackDepth - Current fallback depth (prevents infinite loops)
+   * @param maxFallbackDepth - Maximum fallback depth (default: 3)
+   */
+  private async executeWithQuotaFallback(
+    context: IterationContext,
+    runner: import('../types/platforms.js').PlatformRunnerContract,
+    subtaskId: string,
+    fallbackDepth: number = 0,
+    maxFallbackDepth: number = 3
+  ): Promise<IterationResult> {
+    try {
+      return await this.executionEngine.spawnIteration(context, runner);
+    } catch (error) {
+      // Only handle QuotaExhaustedError
+      if (!(error instanceof QuotaExhaustedError)) {
+        throw error;
+      }
+
+      const quotaError = error as QuotaExhaustedError;
+      const behavior = this.config.budgetEnforcement?.onLimitReached ?? 'pause';
+      const platform = quotaError.platform;
+
+      console.warn(
+        `[Orchestrator] Quota exhausted for ${platform}: ${quotaError.message}`
+      );
+
+      // Emit quota_exhausted event
+      if (this.eventBus) {
+        this.eventBus.emit({
+          type: 'quota_exhausted',
+          platform,
+          period: quotaError.period,
+          resetsAt: quotaError.resetsAt,
+          behavior,
+        });
+      }
+
+      if (behavior === 'fallback') {
+        // Check fallback depth limit
+        if (fallbackDepth >= maxFallbackDepth) {
+          console.error(
+            `[Orchestrator] Max fallback depth (${maxFallbackDepth}) reached, cannot fallback further`
+          );
+          throw new Error(
+            `Quota exhausted on all platforms after ${maxFallbackDepth} fallback attempts: ${quotaError.message}`
+          );
+        }
+
+        // Get fallback platform from budget config
+        const budgetConfig = this.config.budgets?.[platform];
+        const fallbackPlatform = budgetConfig?.fallbackPlatform;
+
+        if (!fallbackPlatform) {
+          console.warn(
+            `[Orchestrator] No fallback platform configured for ${platform}, using fallback chain`
+          );
+          // Use the fallback chain defined at top of file
+          const chain = ROUTING_FALLBACK_CHAIN[platform] ?? [];
+          const availableFallback = chain.find((p) => {
+            try {
+              return this.deps.platformRegistry.get(p) !== undefined;
+            } catch {
+              return false;
+            }
+          });
+
+          if (!availableFallback) {
+            throw new Error(
+              `Quota exhausted for ${platform} and no fallback platforms available: ${quotaError.message}`
+            );
+          }
+
+          return this.tryFallbackPlatform(
+            context,
+            availableFallback,
+            subtaskId,
+            fallbackDepth,
+            maxFallbackDepth,
+            platform
+          );
+        }
+
+        return this.tryFallbackPlatform(
+          context,
+          fallbackPlatform,
+          subtaskId,
+          fallbackDepth,
+          maxFallbackDepth,
+          platform
+        );
+      } else if (behavior === 'pause') {
+        // Wait for quota to reset
+        const resetsAt = new Date(quotaError.resetsAt);
+        const now = new Date();
+        const waitMs = Math.max(0, resetsAt.getTime() - now.getTime());
+
+        // Cap wait time at 1 hour to avoid indefinite waits
+        const maxWaitMs = 60 * 60 * 1000;
+        const actualWaitMs = Math.min(waitMs, maxWaitMs);
+
+        if (actualWaitMs > 0) {
+          console.log(
+            `[Orchestrator] Pausing for ${Math.round(actualWaitMs / 1000)}s until quota resets at ${quotaError.resetsAt}`
+          );
+          await new Promise((resolve) => setTimeout(resolve, actualWaitMs));
+          // Retry with same platform after wait
+          return this.executeWithQuotaFallback(
+            context,
+            runner,
+            subtaskId,
+            fallbackDepth,
+            maxFallbackDepth
+          );
+        } else {
+          // Reset time has passed, retry immediately
+          return this.executeWithQuotaFallback(
+            context,
+            runner,
+            subtaskId,
+            fallbackDepth,
+            maxFallbackDepth
+          );
+        }
+      } else if (behavior === 'queue') {
+        // Queue behavior - not fully implemented, just throw for now
+        // A proper implementation would add to a persistent queue for later processing
+        console.warn(
+          `[Orchestrator] Queue behavior not fully implemented, treating as error`
+        );
+        throw new Error(
+          `Quota exhausted for ${platform}, iteration queued but queue processing not implemented: ${quotaError.message}`
+        );
+      } else {
+        // Unknown behavior, throw
+        throw quotaError;
+      }
+    }
+  }
+
+  /**
+   * P0-G09: Try executing with a fallback platform.
+   */
+  private async tryFallbackPlatform(
+    context: IterationContext,
+    fallbackPlatform: Platform,
+    subtaskId: string,
+    fallbackDepth: number,
+    maxFallbackDepth: number,
+    originalPlatform: Platform
+  ): Promise<IterationResult> {
+    console.log(
+      `[Orchestrator] Falling back from ${originalPlatform} to ${fallbackPlatform} (depth: ${fallbackDepth + 1})`
+    );
+
+    // Emit fallback event if configured to notify
+    if (this.config.budgetEnforcement?.notifyOnFallback && this.eventBus) {
+      this.eventBus.emit({
+        type: 'platform_fallback',
+        fromPlatform: originalPlatform,
+        toPlatform: fallbackPlatform,
+        reason: 'quota_exhausted',
+      });
+    }
+
+    const fallbackRunner = this.deps.platformRegistry.get(fallbackPlatform);
+    if (!fallbackRunner) {
+      throw new Error(
+        `Fallback platform ${fallbackPlatform} not available in registry`
+      );
+    }
+
+    // Update context with new platform
+    const fallbackContext: IterationContext = {
+      ...context,
+      platform: fallbackPlatform,
+    };
+
+    // Recursively try with fallback, incrementing depth
+    return this.executeWithQuotaFallback(
+      fallbackContext,
+      fallbackRunner,
+      subtaskId,
+      fallbackDepth + 1,
+      maxFallbackDepth
+    );
   }
 
   /**
@@ -1278,7 +1606,8 @@ export class Orchestrator {
               try {
                 await this.deps.branchStrategy.mergeToBranch(this.config.branching.baseBranch);
               } catch (error) {
-                console.warn('Failed to merge branch:', error);
+                // P0-G20: Use configurable git error handling
+                this.handleGitError('merge', error, { tierId: completedTask.id });
               }
             }
           }
@@ -1302,7 +1631,8 @@ export class Orchestrator {
               try {
                 await this.deps.branchStrategy.mergeToBranch(this.config.branching.baseBranch);
               } catch (error) {
-                console.warn('Failed to merge branch:', error);
+                // P0-G20: Use configurable git error handling
+                this.handleGitError('merge', error, { tierId: currentPhase.id });
               }
             }
           }
@@ -1344,7 +1674,8 @@ export class Orchestrator {
               try {
                 await this.deps.gitManager.push();
               } catch (error) {
-                console.warn('Failed to push:', error);
+                // P0-G20: Use configurable git error handling
+                this.handleGitError('push', error, { tierId: result.next.id });
               }
             }
 
@@ -1355,7 +1686,8 @@ export class Orchestrator {
                 const prBody = `Completed task ${result.next.id}\n\n${result.next.data.description}`;
                 await this.deps.prManager.createPR(prTitle, prBody, this.config.branching.baseBranch);
               } catch (error) {
-                console.warn('Failed to create PR:', error);
+                // P0-G20: Use configurable git error handling
+                this.handleGitError('pr', error, { tierId: result.next.id, branch: this.config.branching.baseBranch });
               }
             }
           }
@@ -1439,7 +1771,7 @@ export class Orchestrator {
   /**
    * Publish budget update event
    */
-  private async publishBudgetUpdateEvent(subtask: TierNode): Promise<void> {
+  private async publishBudgetUpdateEvent(_subtask: TierNode): Promise<void> {
     if (!this.eventBus || !this.deps.usageTracker) {
       return;
     }
@@ -1506,6 +1838,39 @@ export class Orchestrator {
         return tierType === 'phase' || tierType === 'task' || tierType === 'subtask';
       default:
         return false;
+    }
+  }
+
+  /**
+   * P0-G20: Handle git operation errors based on config.
+   * Checks failOnGitError and criticalGitOperations to decide whether to throw or warn.
+   */
+  private handleGitError(
+    operation: 'merge' | 'push' | 'pr',
+    error: unknown,
+    context?: { tierId?: string; branch?: string }
+  ): void {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const failOnError = this.config.branching.failOnGitError ?? false;
+    const criticalOps = this.config.branching.criticalGitOperations ?? [];
+    const isCritical = criticalOps.includes(operation);
+
+    // Emit warning event (use 'log' type with warn level)
+    this.eventBus?.emit({
+      type: 'log',
+      level: 'warn',
+      message: `Git ${operation} failed: ${errorMessage} (critical: ${isCritical}, will fail: ${failOnError && isCritical})`,
+    });
+
+    // Log warning
+    console.warn(`Failed to ${operation}:`, error);
+
+    // Throw if configured to fail on this operation
+    if (failOnError && isCritical) {
+      throw new Error(
+        `Critical git operation '${operation}' failed: ${errorMessage}. ` +
+          'Set branching.failOnGitError=false to treat as warning.'
+      );
     }
   }
 
@@ -1880,7 +2245,7 @@ Return the plan as a JSON object matching this structure:
   /**
    * Parse plan from AI output
    */
-  private parsePlanFromOutput(output: string, scope: 'phase' | 'task' | 'subtask'): TierPlan {
+  private parsePlanFromOutput(output: string, _scope: 'phase' | 'task' | 'subtask'): TierPlan {
     // Try to extract JSON from output
     const jsonMatch = output.match(/\{[\s\S]*\}/);
     if (jsonMatch) {
@@ -1954,8 +2319,25 @@ Return the plan as a JSON object matching this structure:
       throw new Error(`Scope ${scope} does not match tier type ${tier.type}`);
     }
 
-    // Get platform and model for this tier type using PlatformRouter
-    const platformConfig = this.deps.platformRouter.selectPlatform(tier, 'execute');
+    // P0-G06: Get platform and model for this tier type using PlatformRouter
+    let platformConfig;
+    try {
+      platformConfig = this.deps.platformRouter.selectPlatform(tier, 'execute');
+    } catch (error) {
+      if (error instanceof NoPlatformAvailableError) {
+        this.eventBus?.emit({
+          type: 'error',
+          error: `No platform available for replan: ${error.message}`,
+          context: {
+            tierId: tier.id,
+            errorType: 'no_platform_available',
+            suggestion: 'Run `puppet-master doctor` to check platform availability',
+          },
+        });
+        throw error;
+      }
+      throw error;
+    }
     const platform = platformConfig.platform;
     const model = platformConfig.model;
 
@@ -2537,7 +2919,7 @@ Return the plan as a JSON object matching this structure:
   /**
    * Get the platform for a subtask
    */
-  private getSubtaskPlatform(subtask: TierNode): Platform {
+  private getSubtaskPlatform(_subtask: TierNode): Platform {
     // Try to get from subtask config
     const tierConfig = this.config.tiers.iteration;
     return tierConfig?.platform ?? 'cursor';

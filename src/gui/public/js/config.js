@@ -240,13 +240,17 @@ function collectFormData() {
   if (config.tiers?.subtask?.escalation === '') config.tiers.subtask.escalation = null;
   if (config.tiers?.iteration?.escalation === '') config.tiers.iteration.escalation = null;
 
-  // Convert fallback platform empty strings to null
-  if (config.budgets?.claude?.fallbackPlatform === '') config.budgets.claude.fallbackPlatform = null;
-  if (config.budgets?.codex?.fallbackPlatform === '') config.budgets.codex.fallbackPlatform = null;
-  if (config.budgets?.cursor?.fallbackPlatform === '') config.budgets.cursor.fallbackPlatform = null;
+  // P1-G14: Convert fallback platform empty strings to null for all platforms
+  const allPlatforms = ['claude', 'codex', 'cursor', 'gemini', 'copilot'];
+  allPlatforms.forEach(platform => {
+    if (config.budgets?.[platform]?.fallbackPlatform === '') {
+      config.budgets[platform].fallbackPlatform = null;
+    }
+  });
 
-  // Handle budget unlimited values
-  ['claude', 'codex', 'cursor'].forEach(platform => {
+  // P1-G14: Handle budget unlimited values for all platforms (including Gemini/Copilot)
+  allPlatforms.forEach(platform => {
+    if (!config.budgets?.[platform]) return;
     ['maxCallsPerRun', 'maxCallsPerHour', 'maxCallsPerDay'].forEach(field => {
       const value = config.budgets[platform][field];
       if (value === 'unlimited' || value === '') {

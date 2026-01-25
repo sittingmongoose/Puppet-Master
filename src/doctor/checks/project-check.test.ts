@@ -9,17 +9,14 @@ import { mkdtemp, mkdir, writeFile, rm } from 'fs/promises';
 import { join } from 'path';
 import { tmpdir } from 'os';
 import { ProjectDirCheck, ConfigFileCheck, SubdirectoriesCheck, AgentsFileCheck } from './project-check.js';
-import { ConfigValidationError } from '../../config/config-schema.js';
 
 describe('ProjectDirCheck', () => {
   let tempDir: string;
   let check: ProjectDirCheck;
-  let originalCwd: () => string;
 
   beforeEach(async () => {
     tempDir = await mkdtemp(join(tmpdir(), 'project-dir-check-'));
     check = new ProjectDirCheck();
-    originalCwd = process.cwd;
   });
 
   afterEach(async () => {

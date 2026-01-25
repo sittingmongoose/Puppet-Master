@@ -12,7 +12,7 @@ import type { ParsedRequirements, ParsedSection } from '../../types/requirements
 import type { PRD } from '../../types/prd.js';
 import type { Criterion } from '../../types/tiers.js';
 import type { CoverageMetrics } from '../structure-detector.js';
-import type { PuppetMasterConfig, Platform } from '../../types/config.js';
+import type { PuppetMasterConfig } from '../../types/config.js';
 import type { PlatformRegistry } from '../../platforms/registry.js';
 import type { QuotaManager } from '../../platforms/quota-manager.js';
 import { TraceabilityManager } from '../traceability.js';

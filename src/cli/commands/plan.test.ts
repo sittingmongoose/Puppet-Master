@@ -7,7 +7,6 @@ import { mkdir, writeFile, readFile, rm } from 'fs/promises';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import { planAction, type PlanOptions } from './plan.js';
-import type { ParsedRequirements } from '../../types/requirements.js';
 import type { PRD } from '../../types/prd.js';
 import type { TierPlan } from '../../start-chain/tier-plan-generator.js';
 import type { StartChainResult } from '../../core/start-chain/pipeline.js';

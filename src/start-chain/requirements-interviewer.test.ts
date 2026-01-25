@@ -7,13 +7,12 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { RequirementsInterviewer } from './requirements-interviewer.js';
 import type { ParsedRequirements, ParsedSection, RequirementsSource } from '../types/index.js';
-import type { InterviewResult } from './requirements-interviewer.js';
 import { PlatformRegistry } from '../platforms/registry.js';
 import { QuotaManager } from '../platforms/quota-manager.js';
 import { UsageTracker } from '../memory/usage-tracker.js';
 import { getDefaultConfig } from '../config/default-config.js';
 import type { BasePlatformRunner } from '../platforms/base-runner.js';
-import type { ExecutionRequest, ExecutionResult } from '../types/platforms.js';
+import type { ExecutionResult } from '../types/platforms.js';
 
 describe('RequirementsInterviewer', () => {
   let interviewer: RequirementsInterviewer;

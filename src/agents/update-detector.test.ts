@@ -2,11 +2,10 @@
  * Tests for UpdateDetector
  */
 
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { writeFile, rm, mkdir } from 'fs/promises';
 import { join } from 'path';
 import { UpdateDetector } from './update-detector.js';
-import type { FileSnapshot, UpdateResult } from './update-detector.js';
 import { EventBus } from '../logging/event-bus.js';
 import type { PuppetMasterEvent } from '../logging/event-bus.js';
 

@@ -22,11 +22,40 @@ import type {
 export abstract class BaseOutputParser implements PlatformOutputParser {
   // Common patterns used across all platforms
 
-  /** Pattern for COMPLETE signal */
-  protected static readonly COMPLETE_PATTERN = /<ralph>COMPLETE<\/ralph>/;
+  /**
+   * P1-G11: Enhanced COMPLETE signal pattern - more robust detection
+   * Supports: <ralph>COMPLETE</ralph>, <ralph> COMPLETE </ralph>, whitespace variations
+   */
+  protected static readonly COMPLETE_PATTERN = /<ralph>\s*COMPLETE\s*<\/ralph>/i;
 
-  /** Pattern for GUTTER signal */
-  protected static readonly GUTTER_PATTERN = /<ralph>GUTTER<\/ralph>/;
+  /**
+   * P1-G11: Enhanced GUTTER signal pattern - more robust detection
+   * Supports: <ralph>GUTTER</ralph>, <ralph> GUTTER </ralph>, whitespace variations
+   */
+  protected static readonly GUTTER_PATTERN = /<ralph>\s*GUTTER\s*<\/ralph>/i;
+
+  /**
+   * P1-G11: Alternative natural language completion phrases
+   * These are secondary signals when the formal tag is not found
+   */
+  protected static readonly NATURAL_COMPLETE_PHRASES = [
+    /task\s+(?:is\s+)?complete(?:d)?(?:!|\.|$)/i,
+    /successfully\s+complete(?:d)?(?:!|\.|$)/i,
+    /all\s+(?:tasks?\s+)?done(?:!|\.|$)/i,
+    /implementation\s+complete(?:d)?(?:!|\.|$)/i,
+    /work\s+(?:is\s+)?complete(?:d)?(?:!|\.|$)/i,
+  ];
+
+  /**
+   * P1-G11: Alternative gutter/stuck phrases
+   */
+  protected static readonly NATURAL_GUTTER_PHRASES = [
+    /(?:i(?:'m|'m|\s+am)\s+)?stuck(?:!|\.|$)/i,
+    /cannot\s+(?:proceed|continue)/i,
+    /need(?:s?)?\s+(?:human\s+)?(?:help|assistance|intervention)/i,
+    /unable\s+to\s+(?:proceed|continue|complete)/i,
+    /blocked(?:!|\.|$)/i,
+  ];
 
   /** Pattern for session ID (PM-YYYY-MM-DD-HH-MM-SS-NNN) */
   protected static readonly SESSION_ID_PATTERN = /PM-\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}-\d{3}/;
@@ -64,16 +93,43 @@ export abstract class BaseOutputParser implements PlatformOutputParser {
   abstract parse(output: string): ParsedPlatformOutput;
 
   /**
-   * Detect completion signal in output.
+   * P1-G11: Detect completion signal in output with enhanced robustness.
+   * Checks formal <ralph>COMPLETE</ralph> tags first, then natural language fallbacks.
    */
   protected detectCompletionSignal(output: string): CompletionSignal {
-    // Check for GUTTER first (takes precedence if both present)
+    // Check for formal GUTTER first (takes precedence if both present)
     if (BaseOutputParser.GUTTER_PATTERN.test(output)) {
       return 'GUTTER';
     }
+    
+    // Check for formal COMPLETE tag
     if (BaseOutputParser.COMPLETE_PATTERN.test(output)) {
       return 'COMPLETE';
     }
+
+    // P1-G11: Check natural language gutter phrases as fallback
+    for (const pattern of BaseOutputParser.NATURAL_GUTTER_PHRASES) {
+      if (pattern.test(output)) {
+        // Only use natural language if it appears to be a summary/conclusion
+        // (last 500 chars) to avoid false positives from code comments
+        const tail = output.slice(-500);
+        if (pattern.test(tail)) {
+          return 'GUTTER';
+        }
+      }
+    }
+
+    // P1-G11: Check natural language completion phrases as fallback
+    for (const pattern of BaseOutputParser.NATURAL_COMPLETE_PHRASES) {
+      if (pattern.test(output)) {
+        // Only use natural language if it appears to be a summary/conclusion
+        const tail = output.slice(-500);
+        if (pattern.test(tail)) {
+          return 'COMPLETE';
+        }
+      }
+    }
+
     return 'NONE';
   }
 

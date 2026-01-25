@@ -117,6 +117,12 @@ export function getCopilotModelIds(): string[] {
 }
 
 /**
+ * P1-G06/P1-G09: Array of known Copilot model IDs for capability discovery.
+ * Note: For Copilot, the SDK's listModels() provides authoritative list.
+ */
+export const KNOWN_COPILOT_MODELS: readonly string[] = COPILOT_MODELS.map(m => m.id);
+
+/**
  * Get disclaimer text for Copilot model selection in GUI.
  *
  * Since Copilot doesn't support `--model` programmatically, inform users that

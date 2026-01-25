@@ -12,7 +12,7 @@
  */
 
 import type { ParsedRequirements } from '../types/requirements.js';
-import type { PRD, Phase, Task } from '../types/prd.js';
+import type { PRD } from '../types/prd.js';
 import type { PuppetMasterConfig } from '../types/config.js';
 import type { Platform } from '../types/config.js';
 import type { ExecutionRequest } from '../types/platforms.js';
@@ -23,7 +23,6 @@ import {
   buildArchPrompt,
   buildArchOutlinePrompt,
   buildSectionExpansionPrompt,
-  REQUIRED_ARCH_SECTIONS,
   type RequiredArchSection,
 } from './prompts/arch-prompt.js';
 
@@ -413,13 +412,15 @@ export class ArchGenerator {
 
   /**
    * Executes an AI request and tracks usage.
+   * P1-G02: Now accepts planMode parameter for read-only execution.
    */
   private async executeAIRequest(
     runner: ReturnType<PlatformRegistry['get']>,
     prompt: string,
     platform: Platform,
     model: string,
-    action: string
+    action: string,
+    planMode = true // P1-G02: Default to true for start-chain (read-only analysis)
   ): Promise<{ success: boolean; output: string }> {
     if (!runner || !this.config || !this.usageTracker) {
       return { success: false, output: '' };
@@ -431,6 +432,7 @@ export class ArchGenerator {
       workingDirectory: this.config.project.workingDirectory,
       nonInteractive: true,
       timeout: 300_000,
+      planMode, // P1-G02: Pass planMode to runner
     };
 
     const startTime = Date.now();
@@ -471,7 +473,7 @@ export class ArchGenerator {
     const content = markdownMatch ? markdownMatch[1] : output;
 
     // Parse sections (## headers)
-    const sectionMatches = content.matchAll(/^##\s+(.+?)$([\s\S]*?)(?=^##\s|\z)/gm);
+    const sectionMatches = content.matchAll(/^##\s+(.+?)$([\s\S]*?)(?=^##\s|(?![\s\S]))/gm);
     
     for (const match of sectionMatches) {
       const name = match[1].trim();
@@ -578,7 +580,6 @@ export class ArchGenerator {
     const detectedSections: string[] = [];
     const missingSections: string[] = [];
     
-    const lowerArch = architecture.toLowerCase();
     const documentLength = architecture.length;
 
     // Check document length

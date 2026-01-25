@@ -15,7 +15,6 @@ import { ConfigManager } from '../../config/config-manager.js';
 import { createContainer } from '../../core/container.js';
 import { Orchestrator } from '../../core/orchestrator.js';
 import type { OrchestratorDependencies } from '../../core/orchestrator.js';
-import type { PuppetMasterConfig } from '../../types/config.js';
 import { PlatformRegistry } from '../../platforms/registry.js';
 import { PlatformRouter } from '../../core/platform-router.js';
 import { deriveProjectRootFromConfigPath, resolveUnderProjectRoot } from '../../utils/project-paths.js';

@@ -75,6 +75,11 @@ export interface SpawnResult {
   stdout: NodeJS.ReadableStream;
   stderr: NodeJS.ReadableStream;
   cleanup: () => Promise<void>;
+  /**
+   * P0-G13: Wait for the spawned process to exit and return the exit code.
+   * This should be called after stdout/stderr streams have been consumed.
+   */
+  waitForExit: () => Promise<{ exitCode: number | null; signal: NodeJS.Signals | null }>;
 }
 
 export interface ProcessAudit {
@@ -199,6 +204,15 @@ export class FreshSpawner {
       stdout: proc.stdout,
       stderr: proc.stderr,
       cleanup: async () => this.cleanupAfterSpawn(processId),
+      // P0-G13: Expose waitForExit to get actual exit code
+      waitForExit: async () => {
+        const state = this.runningByPid.get(processId);
+        if (!state) {
+          // Process already cleaned up, return -1 as unknown
+          return { exitCode: -1, signal: null };
+        }
+        return state.exitPromise;
+      },
     };
 
     const audit = this.createProcessAudit(request, result);

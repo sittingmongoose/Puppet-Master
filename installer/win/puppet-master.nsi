@@ -23,6 +23,10 @@ VIAddVersionKey "FileDescription" "RWM Puppet Master Installer"
 VIAddVersionKey "ProductVersion" "${VERSION}"
 VIAddVersionKey "CompanyName" "RWM"
 
+; Customize finish page text (P0-G15)
+!define MUI_FINISHPAGE_TITLE "Installation Complete"
+!define MUI_FINISHPAGE_TEXT "Puppet Master has been installed successfully.$\r$\n$\r$\nIMPORTANT: Open a NEW terminal window (cmd or PowerShell) to use the 'puppet-master' command.$\r$\n$\r$\nExisting terminal windows will not recognize the updated PATH until restarted.$\r$\n$\r$\nAfter opening a new terminal, run 'puppet-master doctor' to verify your installation."
+
 ; Modern UI pages
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_DIRECTORY

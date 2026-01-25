@@ -4,7 +4,7 @@
  * See BUILD_QUEUE_IMPROVEMENTS.md P2-T01
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ParallelExecutor, createParallelExecutor } from './parallel-executor.js';
 import { TierNode, type TierNodeData } from './tier-node.js';
 import type { ExecutionEngine, IterationContext, IterationResult } from './execution-engine.js';
@@ -205,8 +205,8 @@ describe('ParallelExecutor', () => {
       ];
 
       const executionOrder: string[] = [];
-      const originalSpawn = executionEngine.spawnIteration;
-      (executionEngine.spawnIteration as any) = vi.fn(async (context: IterationContext) => {
+      const originalSpawn = executionEngine.spawnIteration.bind(executionEngine);
+      vi.spyOn(executionEngine, 'spawnIteration').mockImplementation(async (context: IterationContext) => {
         executionOrder.push(context.tierNode.id);
         return originalSpawn(context);
       });
@@ -334,15 +334,13 @@ describe('ParallelExecutor', () => {
 
     it('should handle merge conflicts', async () => {
       const conflictWorktreeManager = createMockWorktreeManager();
-      (conflictWorktreeManager.mergeWorktree as any) = vi.fn(
-        async (agentId: string): Promise<MergeResult> => ({
-          success: false,
-          conflictFiles: ['conflicting-file.ts'],
-          sourceBranch: `worktree/${agentId}`,
-          targetBranch: 'main',
-          error: 'Merge conflict detected',
-        })
-      );
+      vi.mocked(conflictWorktreeManager.mergeWorktree).mockImplementation(async (agentId: string): Promise<MergeResult> => ({
+        success: false,
+        conflictFiles: ['conflicting-file.ts'],
+        sourceBranch: `worktree/${agentId}`,
+        targetBranch: 'main',
+        error: 'Merge conflict detected',
+      }));
 
       const conflictExecutor = createParallelExecutor(
         conflictWorktreeManager,
@@ -376,8 +374,8 @@ describe('ParallelExecutor', () => {
       expect(eventBus.emit).toHaveBeenCalled();
 
       // Check for specific event types
-      const emittedEvents = (eventBus.emit as any).mock.calls.map(
-        (call: any[]) => call[0].type
+      const emittedEvents = vi.mocked(eventBus.emit).mock.calls.map(
+        (call) => (call[0] as { type: string }).type
       );
 
       expect(emittedEvents).toContain('parallel_execution_started');

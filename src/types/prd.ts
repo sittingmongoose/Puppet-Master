@@ -21,6 +21,7 @@ export type ItemStatus =
   | 'gating'
   | 'passed'
   | 'failed'
+  | 'skipped'
   | 'escalated'
   | 'reopened';
 

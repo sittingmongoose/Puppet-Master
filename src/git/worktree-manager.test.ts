@@ -4,7 +4,7 @@
  * See BUILD_QUEUE_IMPROVEMENTS.md P2-T01
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { WorktreeManager } from './worktree-manager.js';
 import { GitManager } from './git-manager.js';
 import { mkdir, rm, writeFile } from 'node:fs/promises';
@@ -289,6 +289,7 @@ describe('WorktreeManager', () => {
       // Create a worktree
       await worktreeManager.createWorktree('restore-test');
       const path = worktreeManager.getWorktree('restore-test')?.path;
+      expect(path).toBeDefined();
 
       // Create a new manager (simulating restart)
       const newManager = new WorktreeManager(testDir, gitManager);

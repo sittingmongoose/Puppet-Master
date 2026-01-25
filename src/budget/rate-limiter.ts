@@ -7,7 +7,7 @@
  * See BUILD_QUEUE_IMPROVEMENTS.md P1-T07 for requirements.
  */
 
-import type { Platform, RateLimitConfig, PlatformRateLimits } from '../types/config.js';
+import type { Platform, PlatformRateLimits } from '../types/config.js';
 
 /**
  * Maximum wait time to prevent indefinite blocking (5 minutes).

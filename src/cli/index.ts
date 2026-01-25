@@ -20,6 +20,7 @@ import { interviewCommand } from './commands/interview.js';
 import { CheckpointsCommand } from './commands/checkpoints.js';
 import { ledgerCommand } from './commands/ledger.js';
 import { metricsCommand } from './commands/metrics.js';
+import { loginCommand } from './commands/login.js';
 
 const program = new Command();
 
@@ -94,6 +95,9 @@ ledgerCommand.register(program);
 
 // Register metrics command (P2-T08)
 metricsCommand.register(program);
+
+// Register login command (P0-G25: authentication wizard)
+loginCommand.register(program);
 
 /**
  * Run the CLI with the given arguments

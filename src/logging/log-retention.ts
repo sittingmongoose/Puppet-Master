@@ -7,7 +7,7 @@
 
 import { readdir, stat, unlink, rename, readFile, writeFile, mkdir } from 'fs/promises';
 import { existsSync } from 'fs';
-import { join, dirname, basename, extname } from 'path';
+import { join, dirname, basename } from 'path';
 import { gzip } from 'zlib';
 import { promisify } from 'util';
 

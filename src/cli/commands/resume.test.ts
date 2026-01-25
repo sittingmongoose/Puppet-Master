@@ -7,7 +7,6 @@ import { Command } from 'commander';
 import { ResumeCommand, resumeAction } from './resume.js';
 import type { PuppetMasterConfig } from '../../types/config.js';
 import type { PRD } from '../../types/prd.js';
-import type { PersistedState } from '../../core/state-persistence.js';
 
 // Mock dependencies
 vi.mock('fs/promises', () => ({

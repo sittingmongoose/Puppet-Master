@@ -5,9 +5,7 @@
  * See BUILD_QUEUE_IMPROVEMENTS.md P1-T22.
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import * as fs from 'node:fs';
-import * as path from 'node:path';
+import { describe, it, expect } from 'vitest';
 import { WiringAuditor, createDefaultConfig } from './wiring-audit.js';
 import type { WiringAuditConfig } from './types.js';
 
@@ -142,13 +140,7 @@ describe('WiringAuditor', () => {
       const config = createDefaultConfig(projectRoot);
       const auditor = new WiringAuditor(config);
       
-      const result = await auditor.audit();
-      
-      // Index files with re-exports should not be flagged
-      const orphanIssues = result.issues.filter((i) => i.type === 'orphan_export');
-      const indexReexportIssues = orphanIssues.filter((i) => 
-        i.location.file.endsWith('index.ts')
-      );
+      await auditor.audit();
       
       // Note: Some index files may have non-re-export exports, so we check specifically
       // for re-exports (isReExport should be filtered out)

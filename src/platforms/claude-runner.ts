@@ -67,6 +67,7 @@ export class ClaudeRunner extends BasePlatformRunner {
    */
   protected async spawn(request: ExecutionRequest): Promise<ChildProcess> {
     const args = this.buildArgs(request);
+    const prompt = this.buildPrompt(request);
 
     const proc = spawn(this.command, args, {
       cwd: request.workingDirectory,
@@ -79,8 +80,8 @@ export class ClaudeRunner extends BasePlatformRunner {
     // Write prompt to stdin if provided and not already passed via -p flag
     // Claude supports both -p "prompt" and stdin, but -p is preferred for non-interactive mode
     // If prompt is not in args (via -p), write to stdin as fallback
-    if (request.prompt && proc.stdin && !args.includes(request.prompt)) {
-      proc.stdin.write(request.prompt, 'utf-8');
+    if (prompt && proc.stdin && !args.includes(prompt)) {
+      proc.stdin.write(prompt, 'utf-8');
       proc.stdin.end();
     }
 
@@ -105,7 +106,7 @@ export class ClaudeRunner extends BasePlatformRunner {
       // IMPORTANT: OS command-line argument length limits (especially on Windows)
       // can be exceeded by large prompts. To avoid this, omit the prompt argument
       // when it's too large and rely on stdin (supported by Claude in -p mode).
-      const prompt = request.prompt ?? '';
+      const prompt = this.buildPrompt(request);
       const promptBytes = prompt ? Buffer.byteLength(prompt, 'utf8') : 0;
       const MAX_PROMPT_ARG_BYTES = 30_000;
 
@@ -132,6 +133,31 @@ export class ClaudeRunner extends BasePlatformRunner {
     // args.push('--output-format', 'json');
 
     return args;
+  }
+
+  /**
+   * Builds the prompt, adding plan mode preamble if needed.
+   * 
+   * P1-G01: Claude Code doesn't support plan mode via CLI flag in headless mode.
+   * When planMode is requested, we add a preamble instructing the agent to
+   * plan first, then execute. This provides a consistent experience across platforms.
+   */
+  private buildPrompt(request: ExecutionRequest): string {
+    const prompt = request.prompt ?? '';
+    
+    if (request.planMode === true) {
+      // Plan mode via prompt preamble (Claude Code /plan is interactive only)
+      const preamble = [
+        'PLAN FIRST (briefly), THEN EXECUTE:',
+        '- Start with a concise plan (max 10 bullets).',
+        '- Then immediately carry out the plan and make the required changes.',
+        '- Run the required tests/commands and report results.',
+        '',
+      ].join('\n');
+      return `${preamble}${prompt}`;
+    }
+    
+    return prompt;
   }
 
   /**

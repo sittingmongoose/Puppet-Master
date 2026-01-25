@@ -7,10 +7,7 @@ import { mkdir, writeFile, readFile, rm } from 'fs/promises';
 import { existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { replanAction, type ReplanOptions } from './replan.js';
-import { PrdManager } from '../../memory/prd-manager.js';
-import { ConfigManager } from '../../config/config-manager.js';
-import { ValidationGate } from '../../start-chain/validation-gate.js';
-import type { PRD, Phase, Task, Subtask } from '../../types/prd.js';
+import type { PRD } from '../../types/prd.js';
 import { getDefaultConfig } from '../../config/default-config.js';
 import yaml from 'js-yaml';
 

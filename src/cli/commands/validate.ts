@@ -379,7 +379,7 @@ function formatJSON(summary: ValidationSummary): string {
  */
 async function attemptFixes(
   results: ValidateResult[],
-  options: ValidateOptions
+  _options: ValidateOptions
 ): Promise<ValidateResult[]> {
   // For now, --fix flag reports what could be fixed but doesn't actually fix
   // This is because auto-fixing config/PRD is too risky

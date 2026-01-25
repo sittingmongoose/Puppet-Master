@@ -17,16 +17,11 @@ import path from 'path';
 import {
   ALL_BACKEND_EVENT_NAMES,
   ALL_FRONTEND_MESSAGE_TYPES,
-  FRONTEND_EVENT_MAP,
 } from '../contracts/events.contract.js';
 import {
   ALL_CRITERION_TYPES,
-  ALL_VERIFIER_CLASSES,
   CRITERION_TYPE_CONTRACT,
   ALL_SPEC_TOKENS,
-  SPEC_TO_RUNTIME_MAP,
-  type CriterionType,
-  type VerifierClassName,
 } from '../contracts/criterion-types.contract.js';
 
 /**
@@ -259,7 +254,7 @@ export class ContractValidator {
         line: lineNumber,
         expected: `One of: ${ALL_FRONTEND_MESSAGE_TYPES.join(', ')}`,
         actual: eventName,
-        description: `Frontend handles '${eventName}' which is not in FRONTEND_EVENT_MAP`,
+        description: `Frontend handles '${eventName}' which is not in ALL_FRONTEND_MESSAGE_TYPES`,
         severity: 'warning',
       });
     }
@@ -494,7 +489,7 @@ export class ContractValidator {
           line: lineNumber,
           expected: `One of: ${ALL_SPEC_TOKENS.join(', ')}`,
           actual: token,
-          description: `Prompt uses token '${token}' not in SPEC_TO_RUNTIME_MAP`,
+          description: `Prompt uses token '${token}' not in ALL_SPEC_TOKENS`,
           severity: 'warning',
         });
       }

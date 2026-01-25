@@ -6,7 +6,7 @@
 
 import { describe, it, expect } from 'vitest';
 import { PrdQualityValidator } from './prd-quality-validator.js';
-import type { PRD, Phase, Task, Subtask } from '../../types/prd.js';
+import type { PRD } from '../../types/prd.js';
 import type { ParsedRequirements } from '../../types/requirements.js';
 import type { Criterion, TestPlan } from '../../types/tiers.js';
 

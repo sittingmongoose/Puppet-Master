@@ -284,7 +284,7 @@ function renderResults() {
     return;
   }
 
-  tbody.innerHTML = state.filteredResults.map((result, index) => {
+  tbody.innerHTML = state.filteredResults.map((result, _index) => {
     const statusIcon = result.passed ? '✓' : '✗';
     const statusClass = result.passed ? 'status-pass' : 'status-fail';
     const duration = formatDuration(result.durationMs);
@@ -315,7 +315,7 @@ function renderResults() {
 
   // Attach event listeners to fix buttons
   tbody.querySelectorAll('.fix-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', () => {
       const checkName = btn.getAttribute('data-check-name');
       if (checkName) {
         attemptFix(checkName);

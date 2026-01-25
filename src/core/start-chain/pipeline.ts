@@ -12,7 +12,7 @@ import type { PRD } from '../../types/prd.js';
 import type { PuppetMasterConfig } from '../../types/config.js';
 import type { TierPlan } from '../../start-chain/tier-plan-generator.js';
 import type { EventBus } from '../../logging/event-bus.js';
-import type { RequirementsInventory, IdMap, InventoryResult } from '../../types/requirements-inventory.js';
+import type { InventoryResult } from '../../types/requirements-inventory.js';
 import { PlatformRegistry } from '../../platforms/registry.js';
 import { QuotaManager } from '../../platforms/quota-manager.js';
 import { UsageTracker } from '../../memory/usage-tracker.js';
@@ -482,7 +482,7 @@ export class StartChainPipeline {
     const qualityConfig: PrdQualityConfig | undefined = this.config?.startChain?.prdQuality;
 
     const validationGate = new ValidationGate();
-    const validationResult = validationGate.validatePrdQuality(
+    validationGate.validatePrdQuality(
       prd,
       parsed,
       qualityConfig,

@@ -7,7 +7,6 @@
  * Per BUILD_QUEUE_IMPROVEMENTS.md P1-T10.
  */
 
-import type { TestResult } from '../../types/prd.js';
 import type { ParsedPlatformOutput } from './types.js';
 import { BaseOutputParser } from './base-output-parser.js';
 

@@ -10,7 +10,7 @@
 import type { PRD, Phase, Task, Subtask } from '../../types/prd.js';
 import type { ParsedRequirements } from '../../types/requirements.js';
 import type { Criterion, TestPlan } from '../../types/tiers.js';
-import type { ValidationError, ValidationWarning, ValidationResult } from '../validation-gate.js';
+import type { ValidationError, ValidationWarning } from '../validation-gate.js';
 import { detectDocumentStructure } from '../structure-detector.js';
 import { existsSync } from 'fs';
 import { join } from 'path';
@@ -257,9 +257,9 @@ export class PrdQualityValidator {
   ): void {
     // Match generic phrases that are standalone or at the start/end of description
     const genericPatterns = [
-      /^(?:implementation\s+complete|code\s+works|tests?\s+pass|functionality\s+works|feature\s+complete|done)[\s\.]*$/i,
-      /^(?:implementation\s+complete|code\s+works|tests?\s+pass|functionality\s+works|feature\s+complete|done)[\s,\.]/i,
-      /[\s,\.](?:implementation\s+complete|code\s+works|tests?\s+pass|functionality\s+works|feature\s+complete|done)[\s\.]*$/i,
+      /^(?:implementation\s+complete|code\s+works|tests?\s+pass|functionality\s+works|feature\s+complete|done)[\s.]*$/i,
+      /^(?:implementation\s+complete|code\s+works|tests?\s+pass|functionality\s+works|feature\s+complete|done)[\s,.]/i,
+      /[\s,.](?:implementation\s+complete|code\s+works|tests?\s+pass|functionality\s+works|feature\s+complete|done)[\s.]*$/i,
     ];
 
     const todoPatterns = [

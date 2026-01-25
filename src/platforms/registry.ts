@@ -14,7 +14,6 @@ import { CursorRunner } from './cursor-runner.js';
 import { CodexRunner } from './codex-runner.js';
 import { ClaudeRunner } from './claude-runner.js';
 import { GeminiRunner } from './gemini-runner.js';
-import { CopilotRunner } from './copilot-runner.js';
 import { CopilotSdkRunner } from './copilot-sdk-runner.js';
 import { resolveUnderProjectRoot } from '../utils/project-paths.js';
 import { FreshSpawner } from '../core/fresh-spawn.js';

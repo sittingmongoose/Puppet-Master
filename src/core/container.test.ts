@@ -337,18 +337,25 @@ describe('createContainer', () => {
       const container = createContainer(config, projectRoot, configPath);
 
       // PRD path
-      const prdManager = container.resolve<any>('prdManager');
+      const prdManager = container.resolve('prdManager') as unknown as {
+        load: () => Promise<unknown>;
+        save: (prd: unknown) => Promise<void>;
+      };
       const prd = await prdManager.load();
       await prdManager.save(prd);
       await access(join(projectRoot, '.puppet-master', 'prd.json'));
 
       // Evidence path
-      const evidenceStore = container.resolve<any>('evidenceStore');
+      const evidenceStore = container.resolve('evidenceStore') as unknown as {
+        saveTestLog: (id: string, content: string, name: string) => Promise<string>;
+      };
       const evidencePath: string = await evidenceStore.saveTestLog('ST-001-001-001', 'hello', 'test');
       expect(evidencePath.startsWith(join(projectRoot, '.puppet-master'))).toBe(true);
 
       // Usage path
-      const usageTracker = container.resolve<any>('usageTracker');
+      const usageTracker = container.resolve('usageTracker') as unknown as {
+        track: (entry: { platform: string; action: string; durationMs: number; success: boolean }) => Promise<void>;
+      };
       await usageTracker.track({
         platform: 'cursor',
         action: 'test',

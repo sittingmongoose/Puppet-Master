@@ -16,9 +16,7 @@ import type {
   WiringAuditResult,
   WiringAuditSummary,
   RWMAuditConfig,
-  DEFAULT_RWM_AUDIT_CONFIG,
   EventEmission,
-  EventSubscription,
 } from './types.js';
 
 /**
@@ -307,7 +305,6 @@ async function checkEventNameConsistency(config: RWMAuditConfig): Promise<Wiring
   let match;
   
   // Find line numbers for each event type
-  const eventBusLines = eventBusSource.split('\n');
   while ((match = eventTypePattern.exec(eventBusSource)) !== null) {
     const eventType = match[1];
     const lineIndex = eventBusSource.substring(0, match.index).split('\n').length;

@@ -26,17 +26,20 @@ export function validateNoManualCriteria(prd: PRD): ValidationResult {
 
   phases.forEach((phase, phaseIndex) => {
     const phasePath = `phases[${phaseIndex}]`;
-    scanCriteria((phase as any)?.acceptanceCriteria, `${phasePath}.acceptanceCriteria`, pushError);
+    const phaseObj = isRecord(phase) ? phase : {};
+    scanCriteria(phaseObj.acceptanceCriteria, `${phasePath}.acceptanceCriteria`, pushError);
 
-    const tasks = Array.isArray((phase as any)?.tasks) ? ((phase as any).tasks as unknown[]) : [];
+    const tasks = Array.isArray(phaseObj.tasks) ? (phaseObj.tasks as unknown[]) : [];
     tasks.forEach((task, taskIndex) => {
       const taskPath = `${phasePath}.tasks[${taskIndex}]`;
-      scanCriteria((task as any)?.acceptanceCriteria, `${taskPath}.acceptanceCriteria`, pushError);
+      const taskObj = isRecord(task) ? task : {};
+      scanCriteria(taskObj.acceptanceCriteria, `${taskPath}.acceptanceCriteria`, pushError);
 
-      const subtasks = Array.isArray((task as any)?.subtasks) ? ((task as any).subtasks as unknown[]) : [];
+      const subtasks = Array.isArray(taskObj.subtasks) ? (taskObj.subtasks as unknown[]) : [];
       subtasks.forEach((subtask, subtaskIndex) => {
         const subtaskPath = `${taskPath}.subtasks[${subtaskIndex}]`;
-        scanCriteria((subtask as any)?.acceptanceCriteria, `${subtaskPath}.acceptanceCriteria`, pushError);
+        const subtaskObj = isRecord(subtask) ? subtask : {};
+        scanCriteria(subtaskObj.acceptanceCriteria, `${subtaskPath}.acceptanceCriteria`, pushError);
       });
     });
   });
@@ -56,10 +59,15 @@ function scanCriteria(
   if (!Array.isArray(criteria)) return;
 
   criteria.forEach((criterion, index) => {
-    const typeValue = (criterion as any)?.type;
+    const criterionObj = isRecord(criterion) ? criterion : null;
+    const typeValue = criterionObj?.type;
     if (typeof typeValue === 'string' && typeValue.toLowerCase() === 'manual') {
       onManual(`${basePath}[${index}]`, typeValue);
     }
   });
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
 }
 

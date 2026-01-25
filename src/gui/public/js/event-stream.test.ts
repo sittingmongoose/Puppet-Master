@@ -73,8 +73,13 @@ describe('EventStream (browser SSE client)', () => {
   });
 
   it('dispatches typed events to subscribers (and wildcard subscribers)', () => {
-    const api = (globalThis as unknown as { EventStream?: any }).EventStream;
+    const api = (
+      globalThis as unknown as {
+        EventStream?: { on: (eventType: string, handler: (event: unknown) => void) => void; stop: () => void };
+      }
+    ).EventStream;
     expect(api).toBeDefined();
+    if (!api) throw new Error('EventStream API not initialized');
 
     const onTyped = vi.fn();
     const onAny = vi.fn();
@@ -92,8 +97,13 @@ describe('EventStream (browser SSE client)', () => {
   });
 
   it('reconnects with exponential backoff and resets after successful open', () => {
-    const api = (globalThis as unknown as { EventStream?: any }).EventStream;
+    const api = (
+      globalThis as unknown as {
+        EventStream?: { on: (eventType: string, handler: (event: unknown) => void) => void; stop: () => void };
+      }
+    ).EventStream;
     expect(api).toBeDefined();
+    if (!api) throw new Error('EventStream API not initialized');
 
     // First connection created on import
     expect(MockEventSource.instances.length).toBe(1);

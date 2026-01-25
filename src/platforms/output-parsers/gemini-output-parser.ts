@@ -115,7 +115,6 @@ export class GeminiOutputParser extends BaseOutputParser {
    */
   private parseJsonOutput(output: string): ParsedPlatformOutput {
     let jsonOutput: GeminiJsonOutput;
-    let success = true;
     let responseText = '';
     const errors: string[] = [];
 
@@ -125,7 +124,6 @@ export class GeminiOutputParser extends BaseOutputParser {
 
       // Extract error if present
       if (jsonOutput.error) {
-        success = false;
         if (typeof jsonOutput.error === 'string') {
           errors.push(jsonOutput.error);
         } else if (jsonOutput.error.message) {
@@ -164,9 +162,8 @@ export class GeminiOutputParser extends BaseOutputParser {
       }
     }
 
-    // Keep raw output as the extracted response text (not the full JSON wrapper)
-    // so runners can surface the assistant response directly.
-    parsed.rawOutput = responseText;
+    // Keep raw output as original (full JSON wrapper) for auditing/debugging.
+    parsed.rawOutput = output;
 
     // Adjust success based on GUTTER signal
     if (parsed.completionSignal === 'GUTTER') {

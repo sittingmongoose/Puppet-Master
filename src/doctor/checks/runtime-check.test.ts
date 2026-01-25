@@ -22,6 +22,8 @@ vi.mock('child_process', () => {
   };
 });
 
+type MockProcess = ReturnType<typeof spawn>;
+
 describe('parseVersion', () => {
   it('should parse version string with v prefix', () => {
     const result = parseVersion('v18.0.0');
@@ -98,7 +100,7 @@ describe('compareVersions', () => {
 
 describe('NodeVersionCheck', () => {
   let check: NodeVersionCheck;
-  let mockProcess: any;
+  let mockProcess: MockProcess;
 
   beforeEach(() => {
     check = new NodeVersionCheck();
@@ -109,7 +111,7 @@ describe('NodeVersionCheck', () => {
     vi.restoreAllMocks();
   });
 
-  function createMockProcess(stdout: string, exitCode = 0, error?: Error) {
+  function createMockProcess(stdout: string, exitCode = 0, error?: Error): MockProcess {
     const proc = {
       stdout: {
         on: vi.fn((event: string, callback: (data: Buffer) => void) => {
@@ -130,13 +132,13 @@ describe('NodeVersionCheck', () => {
         }
       }),
       kill: vi.fn(),
-    };
+    } as unknown as MockProcess;
     return proc;
   }
 
   it('should pass when Node.js version meets minimum requirement', async () => {
     mockProcess = createMockProcess('v18.0.0\n');
-    vi.mocked(spawn).mockReturnValue(mockProcess as any);
+    vi.mocked(spawn).mockReturnValue(mockProcess);
 
     const result = await check.run();
 
@@ -147,7 +149,7 @@ describe('NodeVersionCheck', () => {
 
   it('should pass when Node.js version exceeds minimum requirement', async () => {
     mockProcess = createMockProcess('v20.10.0\n');
-    vi.mocked(spawn).mockReturnValue(mockProcess as any);
+    vi.mocked(spawn).mockReturnValue(mockProcess);
 
     const result = await check.run();
 
@@ -157,7 +159,7 @@ describe('NodeVersionCheck', () => {
 
   it('should fail when Node.js version is below minimum requirement', async () => {
     mockProcess = createMockProcess('v16.20.0\n');
-    vi.mocked(spawn).mockReturnValue(mockProcess as any);
+    vi.mocked(spawn).mockReturnValue(mockProcess);
 
     const result = await check.run();
 
@@ -182,7 +184,7 @@ describe('NodeVersionCheck', () => {
 
   it('should fail when command times out', async () => {
     mockProcess = createMockProcess('');
-    vi.mocked(spawn).mockReturnValue(mockProcess as any);
+    vi.mocked(spawn).mockReturnValue(mockProcess);
     // Simulate timeout by not calling close callback
     mockProcess.on = vi.fn();
 
@@ -196,14 +198,14 @@ describe('NodeVersionCheck', () => {
 
 describe('NpmAvailableCheck', () => {
   let check: NpmAvailableCheck;
-  let mockProcess: any;
+  let mockProcess: MockProcess;
 
   beforeEach(() => {
     check = new NpmAvailableCheck();
     vi.clearAllMocks();
   });
 
-  function createMockProcess(stdout: string, exitCode = 0, error?: Error) {
+  function createMockProcess(stdout: string, exitCode = 0, error?: Error): MockProcess {
     const proc = {
       stdout: {
         on: vi.fn((event: string, callback: (data: Buffer) => void) => {
@@ -224,13 +226,13 @@ describe('NpmAvailableCheck', () => {
         }
       }),
       kill: vi.fn(),
-    };
+    } as unknown as MockProcess;
     return proc;
   }
 
   it('should pass when npm is available', async () => {
     mockProcess = createMockProcess('10.2.3\n');
-    vi.mocked(spawn).mockReturnValue(mockProcess as any);
+    vi.mocked(spawn).mockReturnValue(mockProcess);
 
     const result = await check.run();
 
@@ -254,7 +256,7 @@ describe('NpmAvailableCheck', () => {
 
   it('should fail when npm command fails', async () => {
     mockProcess = createMockProcess('', 1);
-    vi.mocked(spawn).mockReturnValue(mockProcess as any);
+    vi.mocked(spawn).mockReturnValue(mockProcess);
 
     const result = await check.run();
 
@@ -264,14 +266,14 @@ describe('NpmAvailableCheck', () => {
 
 describe('YarnAvailableCheck', () => {
   let check: YarnAvailableCheck;
-  let mockProcess: any;
+  let mockProcess: MockProcess;
 
   beforeEach(() => {
     check = new YarnAvailableCheck();
     vi.clearAllMocks();
   });
 
-  function createMockProcess(stdout: string, exitCode = 0, error?: Error) {
+  function createMockProcess(stdout: string, exitCode = 0, error?: Error): MockProcess {
     const proc = {
       stdout: {
         on: vi.fn((event: string, callback: (data: Buffer) => void) => {
@@ -292,13 +294,13 @@ describe('YarnAvailableCheck', () => {
         }
       }),
       kill: vi.fn(),
-    };
+    } as unknown as MockProcess;
     return proc;
   }
 
   it('should pass when yarn is available', async () => {
     mockProcess = createMockProcess('1.22.19\n');
-    vi.mocked(spawn).mockReturnValue(mockProcess as any);
+    vi.mocked(spawn).mockReturnValue(mockProcess);
 
     const result = await check.run();
 
@@ -324,14 +326,14 @@ describe('YarnAvailableCheck', () => {
 
 describe('PythonVersionCheck', () => {
   let check: PythonVersionCheck;
-  let mockProcess: any;
+  let mockProcess: MockProcess;
 
   beforeEach(() => {
     check = new PythonVersionCheck();
     vi.clearAllMocks();
   });
 
-  function createMockProcess(stdout: string, exitCode = 0, error?: Error) {
+  function createMockProcess(stdout: string, exitCode = 0, error?: Error): MockProcess {
     const proc = {
       stdout: {
         on: vi.fn((event: string, callback: (data: Buffer) => void) => {
@@ -352,13 +354,13 @@ describe('PythonVersionCheck', () => {
         }
       }),
       kill: vi.fn(),
-    };
+    } as unknown as MockProcess;
     return proc;
   }
 
   it('should pass when Python 3.8+ is available via python3', async () => {
     mockProcess = createMockProcess('Python 3.8.5\n');
-    vi.mocked(spawn).mockReturnValue(mockProcess as any);
+    vi.mocked(spawn).mockReturnValue(mockProcess);
 
     const result = await check.run();
 
@@ -369,14 +371,12 @@ describe('PythonVersionCheck', () => {
 
   it('should pass when Python 3.8+ is available via python', async () => {
     // First call (python3) fails, second call (python) succeeds
-    let callCount = 0;
     vi.mocked(spawn).mockImplementation((cmd: string) => {
-      callCount++;
       if (cmd === 'python3') {
         throw new Error('spawn python3 ENOENT');
       }
       if (cmd === 'python') {
-        return createMockProcess('Python 3.9.0\n') as any;
+        return createMockProcess('Python 3.9.0\n');
       }
       throw new Error('Unexpected command');
     });
@@ -386,11 +386,14 @@ describe('PythonVersionCheck', () => {
     expect(result.passed).toBe(true);
     expect(result.message).toContain('meets minimum requirement');
     expect(result.details).toContain('python');
+
+    // Ensure we attempted python3 first, then python fallback
+    expect(vi.mocked(spawn).mock.calls.map((call) => call[0])).toEqual(['python3', 'python']);
   });
 
   it('should fail when Python version is below 3.8', async () => {
     mockProcess = createMockProcess('Python 3.7.9\n');
-    vi.mocked(spawn).mockReturnValue(mockProcess as any);
+    vi.mocked(spawn).mockReturnValue(mockProcess);
 
     const result = await check.run();
 
@@ -418,7 +421,7 @@ describe('PythonVersionCheck', () => {
 
   it('should fail when Python version cannot be parsed', async () => {
     mockProcess = createMockProcess('Invalid version string\n');
-    vi.mocked(spawn).mockReturnValue(mockProcess as any);
+    vi.mocked(spawn).mockReturnValue(mockProcess);
 
     const result = await check.run();
 

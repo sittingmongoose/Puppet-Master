@@ -14,7 +14,6 @@ import {
   CodexCliCheck,
   ClaudeCliCheck,
 } from './cli-tools.js';
-import type { CheckResult } from '../check-registry.js';
 import { getCursorCommandCandidates } from '../../platforms/constants.js';
 
 // Mock child_process
@@ -137,7 +136,6 @@ describe('CLI Tools Checks', () => {
 
     it('should pass when agent (fallback) is available', async () => {
       const check = new CursorCliCheck();
-      const candidates = getCursorCommandCandidates(null);
       // Fail first two candidates, succeed on third (platform-independent ordering)
       mockSpawn.mockReturnValueOnce(createMockErrorProcess(new Error('ENOENT'))); // candidates[0] --version
       mockSpawn.mockReturnValueOnce(createMockErrorProcess(new Error('ENOENT'))); // candidates[1] --version

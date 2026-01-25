@@ -5,7 +5,7 @@
  * CLI overrides take precedence over config file values.
  */
 
-import type { PuppetMasterConfig, StartChainStepConfig, Platform } from '../types/config.js';
+import type { PuppetMasterConfig, StartChainStepConfig, CoverageValidationConfig, Platform } from '../types/config.js';
 
 /**
  * Options for overriding start chain step configuration
@@ -24,6 +24,25 @@ export interface StartChainOverride {
   architecture?: StartChainStepOverride;
   validation?: StartChainStepOverride;
   coverage?: StartChainStepOverride;
+}
+
+const DEFAULT_COVERAGE_VALIDATION_CONFIG: CoverageValidationConfig = {
+  enabled: true,
+  minCoverageRatio: 0.5,
+  largeDocThreshold: 5000,
+  veryLargeDocThreshold: 10000,
+  minPhasesForVeryLargeDoc: 2,
+  maxGenericCriteria: 5,
+  enableAICoverageDiff: true,
+};
+
+function applyStepConfigOverride(stepConfig: StartChainStepConfig, override: StartChainStepOverride): void {
+  if (override.platform !== undefined) {
+    stepConfig.platform = override.platform;
+  }
+  if (override.model !== undefined) {
+    stepConfig.model = override.model;
+  }
 }
 
 /**
@@ -51,33 +70,34 @@ export function applyConfigOverrides(
     if (!stepOverride) continue;
 
     const stepKey = step as keyof StartChainOverride;
-    if (!['requirementsInterview', 'prd', 'architecture', 'validation', 'coverage'].includes(stepKey)) {
-      continue;
-    }
-
-    // Initialize step config if it doesn't exist
-    if (!result.startChain[stepKey]) {
-      // For coverage, we need to preserve the CoverageValidationConfig structure
-      // For other steps, we can use an empty object
-      if (stepKey === 'coverage') {
-        // Coverage extends both StartChainStepConfig and CoverageValidationConfig
-        // We'll only override platform/model, preserving existing coverage config if any
-        result.startChain[stepKey] = result.startChain[stepKey] || {} as any;
-      } else {
-        result.startChain[stepKey] = {} as any;
+    switch (stepKey) {
+      case 'requirementsInterview': {
+        result.startChain.requirementsInterview ??= {};
+        applyStepConfigOverride(result.startChain.requirementsInterview, stepOverride);
+        break;
       }
-    }
-
-    const stepConfig = result.startChain[stepKey] as StartChainStepConfig;
-
-    // Apply platform override
-    if (stepOverride.platform !== undefined) {
-      stepConfig.platform = stepOverride.platform;
-    }
-
-    // Apply model override
-    if (stepOverride.model !== undefined) {
-      stepConfig.model = stepOverride.model;
+      case 'prd': {
+        result.startChain.prd ??= {};
+        applyStepConfigOverride(result.startChain.prd, stepOverride);
+        break;
+      }
+      case 'architecture': {
+        result.startChain.architecture ??= {};
+        applyStepConfigOverride(result.startChain.architecture, stepOverride);
+        break;
+      }
+      case 'validation': {
+        result.startChain.validation ??= {};
+        applyStepConfigOverride(result.startChain.validation, stepOverride);
+        break;
+      }
+      case 'coverage': {
+        result.startChain.coverage ??= { ...DEFAULT_COVERAGE_VALIDATION_CONFIG };
+        applyStepConfigOverride(result.startChain.coverage, stepOverride);
+        break;
+      }
+      default:
+        break;
     }
   }
 

@@ -109,6 +109,21 @@ export interface TierConfig {
   selfFix: boolean; // YAML: self_fix
   maxIterations: number; // YAML: max_iterations (or max_attempts for iteration tier)
   escalation: 'phase' | 'task' | 'subtask' | null;
+  /**
+   * P1-G12: Per-tier timeout in milliseconds.
+   * Complex tasks (refactoring, test generation) may need longer than default.
+   *
+   * YAML: timeout_ms
+   * Default: 300000 (5 minutes) for subtask/iteration, 600000 (10 minutes) for task
+   */
+  timeoutMs?: number;
+  /**
+   * P1-G12: Per-tier hard timeout in milliseconds.
+   *
+   * YAML: hard_timeout_ms
+   * Default: timeoutMs * 2
+   */
+  hardTimeoutMs?: number;
 }
 
 /**
@@ -122,6 +137,9 @@ export interface BranchingConfig {
   pushPolicy: 'per-iteration' | 'per-subtask' | 'per-task' | 'per-phase'; // YAML: push_policy
   mergePolicy: 'merge' | 'squash' | 'rebase'; // YAML: merge_policy
   autoPr: boolean; // YAML: auto_pr
+  // P0-G20: Configurable git failure handling
+  failOnGitError?: boolean; // YAML: fail_on_git_error - When true, git failures stop execution (default: false)
+  criticalGitOperations?: ('merge' | 'push' | 'pr')[]; // YAML: critical_git_operations - Which ops are critical
 }
 
 /**
@@ -168,6 +186,10 @@ export interface BudgetConfig {
   maxCallsPerRun: number | 'unlimited'; // YAML: max_calls_per_run
   maxCallsPerHour: number | 'unlimited'; // YAML: max_calls_per_hour
   maxCallsPerDay: number | 'unlimited'; // YAML: max_calls_per_day
+  // P1-G04: Token-based quotas (optional, for platforms that report tokens)
+  maxTokensPerRun?: number | 'unlimited'; // YAML: max_tokens_per_run
+  maxTokensPerHour?: number | 'unlimited'; // YAML: max_tokens_per_hour
+  maxTokensPerDay?: number | 'unlimited'; // YAML: max_tokens_per_day
   cooldownHours?: number; // YAML: cooldown_hours (optional)
   fallbackPlatform: Platform | null; // YAML: fallback_platform
 }
@@ -297,6 +319,8 @@ export interface StartChainStepConfig {
   enabled?: boolean; // Default: true
   platform?: Platform; // Optional override
   model?: string; // Optional override
+  /** P1-G02: Enable plan mode for read-only execution (default: true for start-chain) */
+  planMode?: boolean;
 }
 
 /**

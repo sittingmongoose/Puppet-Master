@@ -4,7 +4,7 @@
  * Handles coverage report loading, visualization, and interaction
  */
 
-import { createSkeletonTree, removeSkeletons } from './skeletons.js';
+import { removeSkeletons } from './skeletons.js';
 
 // ============================================
 // State Management
@@ -167,9 +167,7 @@ function renderSectionsList() {
 
   // For now, we'll create a simplified sections list
   // In a full implementation, we'd need to load the parsed requirements to get section details
-  const totalSections = state.coverage.totalRequirementSections || 0;
   const coveredSections = state.coverage.coveredRequirementSections || 0;
-  const uncoveredSections = totalSections - coveredSections;
 
   // Create section items based on coverage data
   // Since we don't have individual section details in the coverage report,

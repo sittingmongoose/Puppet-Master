@@ -151,7 +151,6 @@ export async function reopenAction(
     let itemToModify: Phase | Task | Subtask | null = null;
     
     // Parse item ID to determine type
-    const itemIdParts = itemId.split('-');
     if (itemId.startsWith('PH-')) {
       itemToModify = prd.phases.find(p => p.id === itemId) || null;
     } else if (itemId.startsWith('TK-')) {

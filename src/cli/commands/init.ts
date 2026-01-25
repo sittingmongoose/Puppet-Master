@@ -13,7 +13,6 @@ import { join } from 'path';
 import { Command } from 'commander';
 import yaml from 'js-yaml';
 import { getDefaultConfig } from '../../config/default-config.js';
-import type { PuppetMasterConfig } from '../../types/config.js';
 import type { CommandModule } from './index.js';
 import type { PRD } from '../../types/prd.js';
 

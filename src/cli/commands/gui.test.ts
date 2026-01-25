@@ -121,7 +121,6 @@ describe('guiAction', () => {
   };
   let mockEventBus: unknown;
   let mockTierManager: unknown;
-  let mockOrchestratorStateMachine: unknown;
   let mockProgressManager: unknown;
   let mockAgentsManager: unknown;
   let mockNetServer: {
@@ -259,7 +258,6 @@ describe('guiAction', () => {
     };
 
     mockTierManager = {};
-    mockOrchestratorStateMachine = {};
     mockProgressManager = {};
     mockAgentsManager = {};
 
@@ -339,7 +337,7 @@ describe('guiAction', () => {
   describe('server startup', () => {
     it('should start server on default port 3847', async () => {
       // Start the action but don't wait for it to complete (it waits forever)
-      const actionPromise = guiAction({}).catch(() => {
+      void guiAction({}).catch(() => {
         // Ignore errors from the hanging promise
       });
 
@@ -359,7 +357,7 @@ describe('guiAction', () => {
     }, 10000);
 
     it('should start server on custom port', async () => {
-      const actionPromise = guiAction({ port: 5000 }).catch(() => {});
+      void guiAction({ port: 5000 }).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 
@@ -373,7 +371,7 @@ describe('guiAction', () => {
     }, 10000);
 
     it('should start server on custom host', async () => {
-      const actionPromise = guiAction({ host: '0.0.0.0' }).catch(() => {});
+      void guiAction({ host: '0.0.0.0' }).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 
@@ -389,7 +387,7 @@ describe('guiAction', () => {
 
   describe('port availability checking', () => {
     it('should check port availability before starting server', async () => {
-      const actionPromise = guiAction({ port: 3847 }).catch(() => {});
+      void guiAction({ port: 3847 }).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 
@@ -399,7 +397,7 @@ describe('guiAction', () => {
 
     it('should exit with error if port is unavailable', async () => {
       // Mock port as unavailable - server.listen should trigger error
-      mockNetServer.listen = vi.fn((port: number, host: string, callback: () => void) => {
+      mockNetServer.listen = vi.fn((_port: number, _host: string, _callback: () => void) => {
         // Simulate error - trigger error event instead of calling callback
         setTimeout(() => {
           const errorHandler = mockNetServer.on.mock.calls.find((call) => call[0] === 'error')?.[1];
@@ -410,7 +408,7 @@ describe('guiAction', () => {
         return mockNetServer;
       });
 
-      const actionPromise = guiAction({ port: 3847 }).catch(() => {});
+      void guiAction({ port: 3847 }).catch(() => {});
 
       // Wait for async operations
       await new Promise((resolve) => setTimeout(resolve, 200));
@@ -424,7 +422,7 @@ describe('guiAction', () => {
 
   describe('browser opening', () => {
     it('should open browser by default', async () => {
-      const actionPromise = guiAction({}).catch(() => {});
+      void guiAction({}).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 
@@ -432,7 +430,7 @@ describe('guiAction', () => {
     }, 10000);
 
     it('should not open browser when --no-open flag is set', async () => {
-      const actionPromise = guiAction({ open: false }).catch(() => {});
+      void guiAction({ open: false }).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 
@@ -442,7 +440,7 @@ describe('guiAction', () => {
     it('should handle browser open errors gracefully', async () => {
       (open as ReturnType<typeof vi.fn>).mockRejectedValue(new Error('Browser open failed'));
 
-      const actionPromise = guiAction({}).catch(() => {});
+      void guiAction({}).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 
@@ -456,7 +454,7 @@ describe('guiAction', () => {
 
   describe('server configuration', () => {
     it('should register state dependencies', async () => {
-      const actionPromise = guiAction({}).catch(() => {});
+      void guiAction({}).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 
@@ -469,7 +467,7 @@ describe('guiAction', () => {
     }, 10000);
 
     it('should register orchestrator instance', async () => {
-      const actionPromise = guiAction({}).catch(() => {});
+      void guiAction({}).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 
@@ -509,7 +507,7 @@ describe('guiAction', () => {
     });
 
     it('should show verbose output when verbose flag is set', async () => {
-      const actionPromise = guiAction({ verbose: true }).catch(() => {});
+      void guiAction({ verbose: true }).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 
@@ -520,7 +518,7 @@ describe('guiAction', () => {
 
   describe('URL display', () => {
     it('should display server URL and links', async () => {
-      const actionPromise = guiAction({}).catch(() => {});
+      void guiAction({}).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 

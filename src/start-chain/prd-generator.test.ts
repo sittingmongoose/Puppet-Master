@@ -13,7 +13,6 @@ import { QuotaManager } from '../platforms/quota-manager.js';
 import { UsageTracker } from '../memory/usage-tracker.js';
 import { getDefaultConfig } from '../config/default-config.js';
 import type { BasePlatformRunner } from '../platforms/base-runner.js';
-import type { ExecutionRequest, ExecutionResult } from '../types/platforms.js';
 
 describe('PrdGenerator', () => {
   let generator: PrdGenerator;

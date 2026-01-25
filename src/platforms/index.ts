@@ -11,7 +11,7 @@ export { CodexRunner } from './codex-runner.js';
 export { ClaudeRunner } from './claude-runner.js';
 export { GeminiRunner, createGeminiRunner } from './gemini-runner.js';
 export { CopilotRunner, createCopilotRunner } from './copilot-runner.js';
-export { CopilotSdkRunner, createCopilotSdkRunner } from './copilot-sdk-runner.js';
+export { CopilotSdkRunner, createCopilotSdkRunner, createCopilotSdkRunnerWithTools } from './copilot-sdk-runner.js';
 // NOTE: AntigravityRunner removed - GUI-only, not suitable for automation
 
 // Export model catalogs
@@ -36,7 +36,11 @@ export {
 export { PlatformRegistry } from './registry.js';
 
 // Export capability discovery
-export { CapabilityDiscoveryService } from './capability-discovery.js';
+export {
+  CapabilityDiscoveryService,
+  CapabilityValidationError,
+  type PreflightValidationResult,
+} from './capability-discovery.js';
 
 // Export quota manager
 export { QuotaManager } from './quota-manager.js';

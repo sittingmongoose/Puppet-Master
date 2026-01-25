@@ -16,7 +16,7 @@
  */
 
 import { EventEmitter } from 'events';
-import { Readable, Writable, PassThrough } from 'stream';
+import { PassThrough } from 'stream';
 import type {
   Platform,
   ExecutionRequest,
@@ -107,6 +107,10 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
   private quotaManager?: QuotaManager;
   private config: CopilotSdkRunnerConfig;
 
+  // P0-G01: Track SDK availability - SDK may not be installed
+  private sdkAvailable: boolean | null = null; // null = not yet checked
+  private sdkUnavailableReason?: string;
+
   // Track "processes" for compatibility with existing interface
   // SDK doesn't use real processes, so we simulate with virtual PIDs
   private virtualProcesses: Map<number, VirtualProcess> = new Map();
@@ -147,16 +151,78 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
   /**
    * Initializes the SDK client.
    * Must be called before executing requests.
+   *
+   * P0-G01: Gracefully handles missing SDK - @github/copilot-sdk may not be installed.
+   * When SDK is unavailable, sdkAvailable is set to false and execution will fail
+   * with a descriptive error message.
    */
   async initialize(): Promise<void> {
     if (this.client) {
       return; // Already initialized
     }
 
-    // Dynamic import of the SDK
-    const { CopilotClient: SdkClient } = await import('@github/copilot-sdk');
-    this.client = new SdkClient() as unknown as CopilotClient;
-    await this.client.start();
+    // If we already checked and SDK is unavailable, don't try again
+    if (this.sdkAvailable === false) {
+      return;
+    }
+
+    try {
+      // Dynamic import of the SDK
+      const { CopilotClient: SdkClient } = await import('@github/copilot-sdk');
+      this.client = new SdkClient() as unknown as CopilotClient;
+      await this.client.start();
+      this.sdkAvailable = true;
+    } catch (error) {
+      this.sdkAvailable = false;
+      const errorMessage = error instanceof Error ? error.message : String(error);
+
+      if (errorMessage.includes('Cannot find module') || errorMessage.includes('MODULE_NOT_FOUND')) {
+        this.sdkUnavailableReason =
+          'GitHub Copilot SDK (@github/copilot-sdk) is not installed. ' +
+          'Install with: npm install @github/copilot-sdk ' +
+          'or use the CLI-based copilot runner instead.';
+      } else {
+        this.sdkUnavailableReason = `Failed to initialize Copilot SDK: ${errorMessage}`;
+      }
+
+      console.warn(`[CopilotSdkRunner] SDK unavailable: ${this.sdkUnavailableReason}`);
+    }
+  }
+
+  /**
+   * Checks if the SDK is available.
+   * Call after initialize() to check SDK status.
+   */
+  isSdkAvailable(): boolean {
+    return this.sdkAvailable === true;
+  }
+
+  /**
+   * Gets the reason why SDK is unavailable (if applicable).
+   */
+  getSdkUnavailableReason(): string | undefined {
+    return this.sdkUnavailableReason;
+  }
+
+  /**
+   * Sets custom tools for the SDK runner.
+   * 
+   * P0-G08: Allows configuring RWM tools with actual manager callbacks after construction.
+   * This is needed because managers are created by the orchestrator, not at registry time.
+   * 
+   * Should be called before first execution to wire up tool callbacks.
+   * 
+   * @param tools - Array of CopilotTool definitions with handlers
+   */
+  setCustomTools(tools: CopilotTool[]): void {
+    this.config.customTools = tools;
+  }
+
+  /**
+   * Gets currently configured custom tools.
+   */
+  getCustomTools(): CopilotTool[] {
+    return this.config.customTools ?? [];
   }
 
   /**
@@ -175,6 +241,7 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
 
   /**
    * Gets SDK client status including authentication.
+   * P0-G01: Returns informative error when SDK is unavailable.
    */
   async getClientStatus(): Promise<{
     version: string;
@@ -184,8 +251,22 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
     models: string[];
   }> {
     await this.initialize();
+
+    // P0-G01: Handle SDK unavailability with P1-G18 recovery guidance
+    if (this.sdkAvailable === false) {
+      throw new Error(
+        this.sdkUnavailableReason ||
+          "GitHub Copilot SDK is not available. Install with: npm install @github/copilot-sdk. " +
+          "Run 'puppet-master doctor' to verify Copilot setup."
+      );
+    }
+
     if (!this.client) {
-      throw new Error('SDK client not initialized');
+      // P1-G18: Add recovery guidance
+      throw new Error(
+        "SDK client not initialized. Run 'puppet-master doctor' to verify Copilot installation " +
+        "and 'puppet-master login copilot' to authenticate."
+      );
     }
 
     const [status, authStatus, models] = await Promise.all([
@@ -350,6 +431,15 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
       }
 
       await this.initialize();
+
+      // P0-G01: Check if SDK is available after initialization attempt
+      if (this.sdkAvailable === false) {
+        throw new Error(
+          this.sdkUnavailableReason ||
+            'GitHub Copilot SDK is not available. Run `puppet-master doctor` for more information.'
+        );
+      }
+
       if (!this.client) {
         throw new Error('SDK client not initialized');
       }
@@ -540,4 +630,123 @@ export function createCopilotSdkRunner(
   config?: CopilotSdkRunnerConfig
 ): CopilotSdkRunner {
   return new CopilotSdkRunner(capabilityService, config);
+}
+
+/**
+ * P0-G08: Factory function to create a CopilotSdkRunner with RWM tools wired up.
+ * 
+ * This creates a runner with the standard RWM tools (mark_complete, mark_stuck,
+ * get_acceptance_criteria, record_evidence) configured with callbacks to the
+ * provided managers.
+ * 
+ * @param capabilityService - Capability discovery service
+ * @param managers - Object containing manager instances for tool callbacks
+ * @param config - Optional additional SDK runner configuration
+ * @returns Configured CopilotSdkRunner with RWM tools
+ */
+export function createCopilotSdkRunnerWithTools(
+  capabilityService: CapabilityDiscoveryService,
+  managers: {
+    prdManager?: { getCurrentCriteria?: () => Promise<{ criteria: string[]; testPlan?: string; verificationTokens?: string[] }> };
+    evidenceStore?: { capture?: (type: string, data: string) => Promise<{ evidenceId: string; type: string; timestamp: string; stored: boolean }> };
+    progressManager?: { recordLearnings?: (learnings: string[]) => Promise<void> };
+  },
+  config?: Omit<CopilotSdkRunnerConfig, 'customTools'>
+): CopilotSdkRunner {
+  // Dynamically import copilot-tools to avoid circular dependencies
+  // The tools module provides createProductionTools factory
+  const runner = new CopilotSdkRunner(capabilityService, config);
+  
+  // Import and create tools asynchronously during first use
+  // For now, create tools inline using the pattern from copilot-tools.ts
+  const tools: CopilotTool[] = [
+    {
+      name: 'mark_complete',
+      description: 'Signal that the current iteration task is complete.',
+      parameters: {
+        type: 'object',
+        properties: {
+          learnings: { type: 'array', description: 'Key learnings from this iteration' },
+          filesChanged: { type: 'array', description: 'Files created or modified' },
+          testsPassed: { type: 'boolean', description: 'Whether tests passed' },
+          summary: { type: 'string', description: 'Brief summary' },
+        },
+        required: ['learnings', 'filesChanged'],
+      },
+      handler: async (params: Record<string, unknown>) => {
+        const learnings = (params.learnings as string[]) ?? [];
+        if (managers.progressManager?.recordLearnings && learnings.length > 0) {
+          await managers.progressManager.recordLearnings(learnings);
+        }
+        return {
+          status: 'complete',
+          learnings,
+          filesChanged: (params.filesChanged as string[]) ?? [],
+          testsPassed: params.testsPassed,
+          summary: params.summary,
+        };
+      },
+    },
+    {
+      name: 'mark_stuck',
+      description: 'Signal that you are stuck and cannot proceed.',
+      parameters: {
+        type: 'object',
+        properties: {
+          reason: { type: 'string', description: 'Why you are stuck' },
+          blockers: { type: 'array', description: 'Specific blockers' },
+          suggestedActions: { type: 'array', description: 'Suggested actions' },
+        },
+        required: ['reason', 'blockers'],
+      },
+      handler: async (params: Record<string, unknown>) => {
+        const reason = (params.reason as string) ?? 'Unknown reason';
+        console.warn(`[Copilot] Agent stuck: ${reason}`);
+        return {
+          status: 'gutter',
+          reason,
+          blockers: (params.blockers as string[]) ?? [],
+          suggestedActions: params.suggestedActions,
+        };
+      },
+    },
+    {
+      name: 'get_acceptance_criteria',
+      description: 'Get acceptance criteria for the current task.',
+      handler: async () => {
+        if (managers.prdManager?.getCurrentCriteria) {
+          return managers.prdManager.getCurrentCriteria();
+        }
+        return { criteria: ['No acceptance criteria available'] };
+      },
+    },
+    {
+      name: 'record_evidence',
+      description: 'Store evidence for verification.',
+      parameters: {
+        type: 'object',
+        properties: {
+          type: { type: 'string', description: 'Type of evidence' },
+          data: { type: 'string', description: 'Evidence data' },
+        },
+        required: ['type', 'data'],
+      },
+      handler: async (params: Record<string, unknown>) => {
+        const type = params.type as string;
+        const data = params.data as string;
+        if (managers.evidenceStore?.capture) {
+          return managers.evidenceStore.capture(type, data);
+        }
+        return {
+          evidenceId: `evidence-${Date.now()}`,
+          type,
+          timestamp: new Date().toISOString(),
+          stored: false,
+        };
+      },
+    },
+  ];
+  
+  runner.setCustomTools(tools);
+  return runner;
 }

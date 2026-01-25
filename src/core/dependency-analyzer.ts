@@ -193,7 +193,6 @@ function findCycle(nodes: Map<string, DependencyNode>, processed: Set<string>): 
     }
     if (visiting.has(id)) {
       // Found cycle - return path from this node
-      const cycleStart = path.indexOf(id);
       return true;
     }
 

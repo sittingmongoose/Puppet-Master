@@ -28,11 +28,32 @@ export interface PlatformConfig {
 
 /**
  * Error thrown when no platforms are available.
+ * Includes suggestions for resolving the issue.
  */
 export class NoPlatformAvailableError extends Error {
-  constructor(message: string) {
-    super(message);
+  public readonly preferred: string;
+  public readonly triedFallbacks: string[];
+  public readonly suggestions: string[];
+
+  constructor(
+    preferred: string,
+    triedFallbacks: string[],
+    suggestions?: string[]
+  ) {
+    const baseMessage = `No available platforms found. Preferred: ${preferred}, Tried fallbacks: ${triedFallbacks.join(', ')}`;
+    const defaultSuggestions = [
+      'Run "puppet-master doctor" to check platform availability',
+      'Run "puppet-master login" to authenticate platforms',
+      'Verify at least one platform CLI is installed and in PATH',
+    ];
+    const allSuggestions = suggestions || defaultSuggestions;
+    const fullMessage = `${baseMessage}\n\nSuggestions:\n${allSuggestions.map(s => `  • ${s}`).join('\n')}`;
+    
+    super(fullMessage);
     this.name = 'NoPlatformAvailableError';
+    this.preferred = preferred;
+    this.triedFallbacks = triedFallbacks;
+    this.suggestions = allSuggestions;
   }
 }
 
@@ -197,9 +218,7 @@ export class PlatformRouter {
     }
 
     // No platforms available
-    throw new NoPlatformAvailableError(
-      `No available platforms found. Preferred: ${preferred}, Tried fallbacks: ${fallbacks.join(', ')}`
-    );
+    throw new NoPlatformAvailableError(preferred, fallbacks);
   }
 
   /**
@@ -223,9 +242,7 @@ export class PlatformRouter {
       }
     }
 
-    throw new NoPlatformAvailableError(
-      `No available platforms found. Preferred: ${preferred}, Tried fallbacks: ${fallbacks.join(', ')}`
-    );
+    throw new NoPlatformAvailableError(preferred, fallbacks);
   }
 
   private getTierPlanModelLevelOverride(tierPlan?: TierPlan): 'level1' | 'level2' | 'level3' | null {

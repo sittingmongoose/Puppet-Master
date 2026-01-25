@@ -7,7 +7,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { TraceabilityManager } from './traceability.js';
 import type { ParsedRequirements, ParsedSection, RequirementsSource } from '../types/requirements.js';
-import type { PRD, Phase, Task, Subtask, SourceRef } from '../types/prd.js';
+import type { PRD, Phase, SourceRef } from '../types/prd.js';
 
 describe('TraceabilityManager', () => {
   let manager: TraceabilityManager;

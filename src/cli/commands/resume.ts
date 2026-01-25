@@ -11,7 +11,6 @@ import { access } from 'fs/promises';
 import { Command } from 'commander';
 import { ConfigManager } from '../../config/config-manager.js';
 import { PrdManager } from '../../memory/prd-manager.js';
-import { StatePersistence } from '../../core/state-persistence.js';
 import { CheckpointManager } from '../../core/checkpoint-manager.js';
 import { createContainer } from '../../core/container.js';
 import { Orchestrator } from '../../core/orchestrator.js';

@@ -124,13 +124,13 @@ describe('reopenAction', () => {
   /**
    * Helper to create a sample phase
    */
-  function createSamplePhase(id: string, status: string): Phase {
+  function createSamplePhase(id: string, status: Phase['status']): Phase {
     const now = new Date().toISOString();
     return {
       id,
       title: `Phase ${id}`,
       description: 'Test phase',
-      status: status as any,
+      status,
       priority: 1,
       acceptanceCriteria: [],
       testPlan: { commands: [], failFast: false },
@@ -143,14 +143,14 @@ describe('reopenAction', () => {
   /**
    * Helper to create a sample task
    */
-  function createSampleTask(id: string, phaseId: string, status: string): Task {
+  function createSampleTask(id: string, phaseId: string, status: Task['status']): Task {
     const now = new Date().toISOString();
     return {
       id,
       phaseId,
       title: `Task ${id}`,
       description: 'Test task',
-      status: status as any,
+      status,
       priority: 1,
       acceptanceCriteria: [],
       testPlan: { commands: [], failFast: false },
@@ -163,14 +163,14 @@ describe('reopenAction', () => {
   /**
    * Helper to create a sample subtask
    */
-  function createSampleSubtask(id: string, taskId: string, status: string): Subtask {
+  function createSampleSubtask(id: string, taskId: string, status: Subtask['status']): Subtask {
     const now = new Date().toISOString();
     return {
       id,
       taskId,
       title: `Subtask ${id}`,
       description: 'Test subtask',
-      status: status as any,
+      status,
       priority: 1,
       acceptanceCriteria: [],
       testPlan: { commands: [], failFast: false },

@@ -8,7 +8,7 @@
  */
 
 import type { ParsedRequirements, ParsedSection } from '../../types/requirements.js';
-import type { PRD, Phase, Task } from '../../types/prd.js';
+import type { PRD } from '../../types/prd.js';
 
 /**
  * Required architecture sections that must be present in the output.
@@ -495,7 +495,6 @@ function formatBriefRequirementsContext(parsed: ParsedRequirements): string {
  */
 function extractNFRSummary(parsed: ParsedRequirements): string {
   const nfrs: Record<string, string[]> = {};
-  const rawText = parsed.rawText.toLowerCase();
   const content = parsed.sections.map(s => s.content).join('\n');
 
   // Keywords for each NFR category
@@ -725,46 +724,4 @@ function extractSectionRelevantPrdItems(
   }
 
   return relevantItems.slice(0, 10).join('\n');
-}
-
-// Keep backward compatibility exports
-/**
- * Formats a concise summary of requirements for the prompt.
- * @deprecated Use formatRichRequirementsContext for better results
- */
-function formatRequirementsSummary(parsed: ParsedRequirements): string {
-  return formatBriefRequirementsContext(parsed);
-}
-
-/**
- * Formats a concise summary of PRD structure for the prompt.
- * @deprecated Use formatDetailedPrdSummary for better results
- */
-function formatPrdSummary(prd: PRD): string {
-  const lines: string[] = [];
-
-  lines.push(`**Project:** ${prd.project}`);
-  lines.push(`**Description:** ${prd.description}`);
-  lines.push('');
-  lines.push(`**Phases:** ${prd.phases.length}`);
-  lines.push('');
-
-  for (const phase of prd.phases) {
-    lines.push(`### Phase: ${phase.id} - ${phase.title}`);
-    if (phase.description) {
-      const preview = phase.description.trim().split('\n')[0];
-      if (preview && preview.length < 200) {
-        lines.push(`  ${preview}`);
-      }
-    }
-    lines.push(`  **Tasks:** ${phase.tasks.length}`);
-    
-    for (const task of phase.tasks) {
-      lines.push(`  - Task: ${task.id} - ${task.title}`);
-      lines.push(`    **Subtasks:** ${task.subtasks.length}`);
-    }
-    lines.push('');
-  }
-
-  return lines.join('\n');
 }

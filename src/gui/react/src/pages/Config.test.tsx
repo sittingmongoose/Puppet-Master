@@ -1,0 +1,232 @@
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import ConfigPage from './Config.js';
+import * as lib from '@/lib';
+
+// Mock the lib
+vi.mock('@/lib', () => ({
+  api: {
+    getConfig: vi.fn(),
+    updateConfig: vi.fn(),
+  },
+}));
+
+const mockApi = lib.api as unknown as {
+  getConfig: ReturnType<typeof vi.fn>;
+  updateConfig: ReturnType<typeof vi.fn>;
+};
+
+describe('ConfigPage', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    mockApi.getConfig.mockResolvedValue({
+      tiers: {
+        phase: { platform: 'cursor', model: 'auto', selfFix: true, maxIterations: 3 },
+        task: { platform: 'cursor', model: 'auto', selfFix: true, maxIterations: 3 },
+        subtask: { platform: 'cursor', model: 'auto', selfFix: true, maxIterations: 3 },
+        iteration: { platform: 'cursor', model: 'auto', selfFix: false, maxIterations: 1 },
+      },
+      branching: {
+        baseBranch: 'main',
+        namingPattern: 'rwm/{tier}/{id}',
+        granularity: 'per-task',
+      },
+      verification: {
+        browserAdapter: 'playwright',
+        screenshotOnFailure: true,
+        evidenceDirectory: '.puppet-master/evidence',
+      },
+      memory: {
+        progressFile: 'progress.txt',
+        agentsFile: 'AGENTS.md',
+        prdFile: 'prd.json',
+        multiLevelAgents: true,
+      },
+      budgets: {
+        claude: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 500 },
+        codex: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 500 },
+        cursor: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 500 },
+      },
+    });
+    mockApi.updateConfig.mockResolvedValue({ success: true });
+  });
+
+  it('renders page title', async () => {
+    render(<ConfigPage />);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Configuration')).toBeInTheDocument();
+    });
+  });
+
+  it('renders all tabs', async () => {
+    render(<ConfigPage />);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Tiers')).toBeInTheDocument();
+      expect(screen.getByText('Branching')).toBeInTheDocument();
+      expect(screen.getByText('Verification')).toBeInTheDocument();
+      expect(screen.getByText('Memory')).toBeInTheDocument();
+      expect(screen.getByText('Budgets')).toBeInTheDocument();
+      expect(screen.getByText('Advanced')).toBeInTheDocument();
+    });
+  });
+
+  it('shows Tiers tab content by default', async () => {
+    render(<ConfigPage />);
+    
+    // Wait for loading to complete
+    await waitFor(() => {
+      expect(screen.queryByText('Loading configuration...')).not.toBeInTheDocument();
+    });
+    
+    expect(screen.getByText('Tier Configuration')).toBeInTheDocument();
+    // Check for tier inputs
+    expect(screen.getAllByLabelText(/Platform/i).length).toBeGreaterThan(0);
+  });
+
+  it('switches to Branching tab when clicked', async () => {
+    render(<ConfigPage />);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Configuration')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('Branching'));
+    
+    expect(screen.getByText('Branching Configuration')).toBeInTheDocument();
+    expect(screen.getByLabelText(/Base Branch/i)).toBeInTheDocument();
+  });
+
+  it('switches to Verification tab when clicked', async () => {
+    render(<ConfigPage />);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Configuration')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('Verification'));
+    
+    expect(screen.getByText('Verification Configuration')).toBeInTheDocument();
+    expect(screen.getByLabelText(/Browser Adapter/i)).toBeInTheDocument();
+  });
+
+  it('switches to Memory tab when clicked', async () => {
+    render(<ConfigPage />);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Configuration')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('Memory'));
+    
+    expect(screen.getByText('Memory Configuration')).toBeInTheDocument();
+    expect(screen.getByLabelText(/Progress File/i)).toBeInTheDocument();
+  });
+
+  it('switches to Budgets tab when clicked', async () => {
+    render(<ConfigPage />);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Configuration')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('Budgets'));
+    
+    expect(screen.getByText('Budget Configuration')).toBeInTheDocument();
+  });
+
+  it('switches to Advanced tab when clicked', async () => {
+    render(<ConfigPage />);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Configuration')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('Advanced'));
+    
+    expect(screen.getByText('Advanced Configuration')).toBeInTheDocument();
+    expect(screen.getByText(/Caution/)).toBeInTheDocument();
+  });
+
+  it('shows loading state initially', () => {
+    // Make API hang
+    mockApi.getConfig.mockImplementation(() => new Promise(() => {}));
+    
+    render(<ConfigPage />);
+    
+    expect(screen.getByText('Loading configuration...')).toBeInTheDocument();
+  });
+
+  it('disables save button when no changes', async () => {
+    render(<ConfigPage />);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Configuration')).toBeInTheDocument();
+    });
+
+    const saveButton = screen.getByRole('button', { name: /SAVE CHANGES/i });
+    expect(saveButton).toBeDisabled();
+  });
+
+  it('enables save button when changes are made', async () => {
+    render(<ConfigPage />);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Configuration')).toBeInTheDocument();
+    });
+
+    // Make a change
+    const modelInputs = screen.getAllByLabelText(/Model/i);
+    if (modelInputs[0]) {
+      fireEvent.change(modelInputs[0], { target: { value: 'claude-3' } });
+    }
+    
+    const saveButton = screen.getByRole('button', { name: /SAVE CHANGES/i });
+    expect(saveButton).not.toBeDisabled();
+  });
+
+  it('shows unsaved changes indicator', async () => {
+    render(<ConfigPage />);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Configuration')).toBeInTheDocument();
+    });
+
+    // Make a change
+    const modelInputs = screen.getAllByLabelText(/Model/i);
+    if (modelInputs[0]) {
+      fireEvent.change(modelInputs[0], { target: { value: 'claude-3' } });
+    }
+    
+    expect(screen.getByText('Unsaved changes')).toBeInTheDocument();
+  });
+
+  it('calls updateConfig API when saving', async () => {
+    render(<ConfigPage />);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Configuration')).toBeInTheDocument();
+    });
+
+    // Make a change
+    const modelInputs = screen.getAllByLabelText(/Model/i);
+    if (modelInputs[0]) {
+      fireEvent.change(modelInputs[0], { target: { value: 'claude-3' } });
+    }
+    
+    fireEvent.click(screen.getByRole('button', { name: /SAVE CHANGES/i }));
+    
+    await waitFor(() => {
+      expect(mockApi.updateConfig).toHaveBeenCalled();
+    });
+  });
+
+  it('fetches config on mount', async () => {
+    render(<ConfigPage />);
+    
+    await waitFor(() => {
+      expect(mockApi.getConfig).toHaveBeenCalled();
+    });
+  });
+});

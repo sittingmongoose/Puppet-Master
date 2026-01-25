@@ -12,7 +12,6 @@ import type { ParsedRequirements, ParsedSection } from '../types/requirements.js
 import type { PRD, Phase, Task, Subtask, PRDMetadata, ItemStatus, SourceRef } from '../types/prd.js';
 import type { Criterion, TestPlan } from '../types/tiers.js';
 import type { PuppetMasterConfig } from '../types/config.js';
-import type { Platform } from '../types/config.js';
 import type { ExecutionRequest } from '../types/platforms.js';
 import { PlatformRegistry } from '../platforms/registry.js';
 import { QuotaManager } from '../platforms/quota-manager.js';
@@ -20,8 +19,6 @@ import { UsageTracker } from '../memory/usage-tracker.js';
 import { buildPrdPrompt } from './prompts/prd-prompt.js';
 import {
   detectDocumentStructure,
-  StructureDetectionError,
-  type DocumentStructure,
   type StructureDetectorOptions,
 } from './structure-detector.js';
 import { CriterionClassifier } from './criterion-classifier.js';
@@ -176,6 +173,9 @@ export class PrdGenerator {
         return await this.generate(parsed);
       }
 
+      // P1-G02: Use planMode from step config (default true for start-chain - read-only analysis)
+      const planMode = stepConfig?.planMode ?? true;
+
       // Execute AI request
       const request: ExecutionRequest = {
         prompt,
@@ -183,6 +183,7 @@ export class PrdGenerator {
         workingDirectory: this.config.project.workingDirectory,
         nonInteractive: true,
         timeout: 300_000, // 5 minutes for PRD generation
+        planMode, // P1-G02: Pass planMode to runner
       };
 
       const startTime = Date.now();

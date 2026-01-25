@@ -8,9 +8,9 @@
  * - Saves output files to .puppet-master/ directory
  */
 
-import { readFile, writeFile, mkdir, copyFile, stat } from 'fs/promises';
+import { readFile, mkdir, copyFile, stat } from 'fs/promises';
 import { existsSync } from 'fs';
-import { join, dirname, extname, basename } from 'path';
+import { join, extname } from 'path';
 import { Command } from 'commander';
 import { ConfigManager } from '../../config/config-manager.js';
 import { StartChainPipeline } from '../../core/start-chain/pipeline.js';
@@ -63,9 +63,7 @@ const DEFAULT_OUTPUT_DIR = '.puppet-master';
 export async function planAction(options: PlanOptions): Promise<void> {
   try {
     const outputDir = options.outputDir || DEFAULT_OUTPUT_DIR;
-    const validate = options.validate ?? true;
     const dryRun = options.dryRun ?? false;
-    const useAI = options.useAI ?? true;
 
     // Step 1: Detect file format and load requirements
     console.log(`Loading requirements from: ${options.requirementsPath}`);

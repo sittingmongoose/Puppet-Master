@@ -155,7 +155,7 @@ describe('PlatformRouter', () => {
       },
       parent: null,
       children: [],
-      stateMachine: {} as any,
+      stateMachine: {} as unknown as TierNode['stateMachine'],
       getState: () => 'pending' as const,
       getChildren: () => [],
       getPath: () => [],

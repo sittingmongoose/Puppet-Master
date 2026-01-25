@@ -14,7 +14,6 @@ import { ConfigManager } from '../../config/config-manager.js';
 import { CheckpointManager } from '../../core/checkpoint-manager.js';
 import { deriveProjectRootFromConfigPath } from '../../utils/project-paths.js';
 import type { CommandModule } from './index.js';
-import type { CheckpointSummary, Checkpoint } from '../../core/checkpoint-manager.js';
 
 /**
  * Options for the checkpoints command

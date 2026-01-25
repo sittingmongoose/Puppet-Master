@@ -454,6 +454,9 @@ export class MultiPassPrdGenerator {
         return null;
       }
 
+      // P1-G02: Get planMode from step config (default true for start-chain)
+      const planMode = stepConfig?.planMode ?? true;
+
       const prompt = this.buildPhaseExpansionPrompt(phaseOutline, parsed);
       const request: ExecutionRequest = {
         prompt,
@@ -461,6 +464,7 @@ export class MultiPassPrdGenerator {
         workingDirectory: this.puppetMasterConfig!.project.workingDirectory,
         nonInteractive: true,
         timeout: 120_000, // 2 minutes per phase
+        planMode, // P1-G02: Pass planMode to runner
       };
 
       const startTime = Date.now();
@@ -495,7 +499,7 @@ export class MultiPassPrdGenerator {
   /**
    * Build prompt for AI phase expansion.
    */
-  private buildPhaseExpansionPrompt(phaseOutline: PhaseOutline, parsed: ParsedRequirements): string {
+  private buildPhaseExpansionPrompt(phaseOutline: PhaseOutline, _parsed: ParsedRequirements): string {
     const assumptionsSection =
       this.interviewAssumptions.length > 0
         ? `\n\nINTERVIEW ASSUMPTIONS:\n${this.interviewAssumptions.map((a) => `- ${a}`).join('\n')}`

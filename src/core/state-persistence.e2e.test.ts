@@ -132,8 +132,7 @@ describe('state-persistence E2E - pause/resume with full context restoration', (
     const checkpointState = await persistence.restoreCheckpoint('pause-after-3-iterations');
     expect(checkpointState).not.toBeNull();
 
-    const { orchestrator: restoredOrch, tiers: restoredTiers } =
-      await persistence.restoreStateMachines(checkpointState!);
+    const { tiers: restoredTiers } = await persistence.restoreStateMachines(checkpointState!);
 
     // Step 4: Verify iterationCount is restored correctly
     const restoredSubtask = restoredTiers.get('ST-001-001-001');

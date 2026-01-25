@@ -6,16 +6,11 @@
  * See BUILD_QUEUE_IMPROVEMENTS.md P1-T26.
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { AIGapDetector, createAIGapDetector } from './ai-gap-detector.js';
 import type {
   GapDetectionInput,
-  GapDetectionPRDSummary,
-  CodebaseStructure,
-  TestInfo,
-  GapDetectionResult,
 } from '../types/gap-detection.js';
-import { DEFAULT_AI_GAP_DETECTOR_CONFIG } from '../types/gap-detection.js';
 import type { PRD } from '../types/prd.js';
 import { tmpdir } from 'os';
 import { join } from 'path';
@@ -391,8 +386,10 @@ describe('App', () => {
     it('validates known gap types', () => {
       const detector = new AIGapDetector();
 
-      // Access private method via any for testing
-      const validateGapType = (detector as any).validateGapType.bind(detector);
+      // Access private method via cast for testing
+      const validateGapType = (
+        detector as unknown as { validateGapType: (value: string) => string }
+      ).validateGapType.bind(detector);
 
       expect(validateGapType('missing_implementation')).toBe('missing_implementation');
       expect(validateGapType('integration_gap')).toBe('integration_gap');
@@ -406,7 +403,9 @@ describe('App', () => {
 
     it('normalizes unknown gap types to missing_implementation', () => {
       const detector = new AIGapDetector();
-      const validateGapType = (detector as any).validateGapType.bind(detector);
+      const validateGapType = (
+        detector as unknown as { validateGapType: (value: string) => string }
+      ).validateGapType.bind(detector);
 
       expect(validateGapType('unknown_type')).toBe('missing_implementation');
       expect(validateGapType('')).toBe('missing_implementation');
@@ -416,7 +415,9 @@ describe('App', () => {
   describe('severity validation', () => {
     it('validates known severities', () => {
       const detector = new AIGapDetector();
-      const validateSeverity = (detector as any).validateSeverity.bind(detector);
+      const validateSeverity = (
+        detector as unknown as { validateSeverity: (value: string) => string }
+      ).validateSeverity.bind(detector);
 
       expect(validateSeverity('critical')).toBe('critical');
       expect(validateSeverity('high')).toBe('high');
@@ -426,7 +427,9 @@ describe('App', () => {
 
     it('defaults unknown severity to medium', () => {
       const detector = new AIGapDetector();
-      const validateSeverity = (detector as any).validateSeverity.bind(detector);
+      const validateSeverity = (
+        detector as unknown as { validateSeverity: (value: string) => string }
+      ).validateSeverity.bind(detector);
 
       expect(validateSeverity('unknown')).toBe('medium');
       expect(validateSeverity('')).toBe('medium');

@@ -12,16 +12,12 @@ import {
 } from './worker-reviewer.js';
 import type {
   WorkerResult,
-  ReviewerResult,
-  WorkerReviewerConfig,
-  ReviewerContext,
 } from './worker-reviewer.js';
-import type { PuppetMasterConfig, ReviewerConfig } from '../types/config.js';
+import type { PuppetMasterConfig } from '../types/config.js';
 import type { IterationContext, IterationResult } from './execution-engine.js';
 import type { TierNode } from './tier-node.js';
-import type { ProgressManager, ProgressEntry } from '../memory/index.js';
+import type { ProgressManager } from '../memory/index.js';
 import { PlatformRegistry } from '../platforms/registry.js';
-import { PromptBuilder } from './prompt-builder.js';
 
 // Mock platform runner
 const createMockRunner = () => ({

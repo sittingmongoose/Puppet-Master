@@ -1,0 +1,61 @@
+# Puppet Master GUI Service
+# P2-G10: systemd service file for the GUI web server
+#
+# Installation:
+#   sudo cp puppet-master-gui.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable puppet-master-gui
+#   sudo systemctl start puppet-master-gui
+#
+# The service runs as the specified user (default: nobody)
+# For per-user service, copy to ~/.config/systemd/user/ and use `systemctl --user`
+
+[Unit]
+Description=Puppet Master GUI Server
+Documentation=https://github.com/your-org/puppet-master
+After=network.target
+
+[Service]
+Type=simple
+# Run as a dedicated user for security
+# You can override this by creating a puppet-master user:
+#   sudo useradd -r -s /bin/false puppet-master
+User=nobody
+Group=nogroup
+
+# Working directory - default is /opt/puppet-master
+# Override with Environment=PM_WORKING_DIR=/path/to/project for a specific project
+WorkingDirectory=/opt/puppet-master
+
+# Environment variables
+Environment=NODE_ENV=production
+# Default port and host
+Environment=PM_GUI_PORT=3847
+Environment=PM_GUI_HOST=localhost
+
+# The main command
+ExecStart=/usr/bin/puppet-master gui --port $PM_GUI_PORT --host $PM_GUI_HOST
+
+# Restart policy
+Restart=on-failure
+RestartSec=5
+
+# Security hardening
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+
+# Allow binding to ports > 1024 (default GUI port is 3847)
+AmbientCapabilities=
+
+# Logging - journal captures stdout/stderr
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=puppet-master-gui
+
+[Install]
+WantedBy=multi-user.target

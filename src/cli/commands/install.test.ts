@@ -9,7 +9,6 @@ import { Command } from 'commander';
 import {
   InstallCommand,
   installAction,
-  type InstallOptions,
 } from './install.js';
 import { CheckRegistry } from '../../doctor/check-registry.js';
 import { InstallationManager } from '../../doctor/installation-manager.js';

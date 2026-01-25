@@ -2,11 +2,10 @@
  * Tests for ArchiveManager
  */
 
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { writeFile, rm, mkdir, readFile } from 'fs/promises';
 import { join } from 'path';
 import { ArchiveManager } from './archive-manager.js';
-import type { ArchiveEntry } from './archive-manager.js';
 
 describe('ArchiveManager', () => {
   const testDir = join(process.cwd(), '.test-archive-manager');
@@ -327,31 +326,41 @@ describe('ArchiveManager', () => {
   describe('prune', () => {
     it('should delete archives older than maxAge', async () => {
       const manager = new ArchiveManager(archiveDir);
-      
-      // Create archive
-      const entry1 = await manager.archive(testFile);
-      const entry1Time = new Date(entry1.createdAt).getTime();
-      
-      // Wait a bit and create another archive
-      await new Promise(resolve => setTimeout(resolve, 50));
-      await writeFile(testFile, 'modified', 'utf-8');
-      const entry2 = await manager.archive(testFile);
-      const entry2Time = new Date(entry2.createdAt).getTime();
-      
-      // Wait a bit more
-      await new Promise(resolve => setTimeout(resolve, 50));
-      
-      // Prune archives older than 30ms from now
-      // This should delete entry1 (older) but keep entry2 (newer)
-      const now = Date.now();
-      const maxAge = now - entry2Time + 10; // 10ms after entry2 was created
-      const deleted = await manager.prune(maxAge);
-      
-      expect(deleted).toBe(1);
-      
-      const list = await manager.list();
-      expect(list).toHaveLength(1);
-      expect(list[0].id).toBe(entry2.id);
+
+      // Use fake timers to make time-based pruning deterministic.
+      vi.useFakeTimers();
+      try {
+        const baseTime = new Date('2026-01-01T00:00:00.000Z');
+        vi.setSystemTime(baseTime);
+
+        // Create older archive
+        const entry1 = await manager.archive(testFile);
+
+        // Advance time and create newer archive
+        vi.setSystemTime(new Date(baseTime.getTime() + 50));
+        await writeFile(testFile, 'modified', 'utf-8');
+        const entry2 = await manager.archive(testFile);
+
+        // Advance time again to establish a stable "now" for pruning
+        vi.setSystemTime(new Date(baseTime.getTime() + 100));
+
+        // Choose maxAge so cutoff sits between entry1 and entry2.
+        // prune() deletes entries where createdAt < (Date.now() - maxAge).
+        const entry2Time = new Date(entry2.createdAt).getTime();
+        const cutoff = entry2Time - 1;
+        const maxAge = Date.now() - cutoff;
+
+        const deleted = await manager.prune(maxAge);
+
+        expect(deleted).toBe(1);
+
+        const list = await manager.list();
+        expect(list).toHaveLength(1);
+        expect(list[0].id).toBe(entry2.id);
+        expect(list[0].id).not.toBe(entry1.id);
+      } finally {
+        vi.useRealTimers();
+      }
     });
 
     it('should return 0 when no archives to prune', async () => {

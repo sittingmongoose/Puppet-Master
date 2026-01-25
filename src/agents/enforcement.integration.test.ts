@@ -14,7 +14,7 @@
 
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { writeFile, mkdir, rm, readFile, appendFile } from 'fs/promises';
-import { join, resolve } from 'path';
+import { join } from 'path';
 import { mkdtemp } from 'fs/promises';
 import { tmpdir } from 'os';
 import { AgentsManager } from '../memory/agents-manager.js';
@@ -178,7 +178,7 @@ describe('test', () => {
 
   describe('Multi-Level Loading End-to-End', () => {
     it('should load and merge multi-level AGENTS.md files', async () => {
-      const { rootAgents, phaseAgents, taskAgents } = await createTempProject();
+      const { rootAgents } = await createTempProject();
 
       const config: AgentsManagerConfig = {
         rootPath: rootAgents,
@@ -393,8 +393,7 @@ import { jest } from '@jest/globals'; // Wrong testing library
       engine.trackUsage(entry, 'TK-002-002');
       engine.trackUsage(entry, 'TK-003-001');
 
-      // Get candidates to access stats
-      const candidates = engine.getPromotionCandidates();
+      // Access stats for the tracked entry
       const stats = engine.getStats(entry);
 
       // Verify stats accumulated correctly

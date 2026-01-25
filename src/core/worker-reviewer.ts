@@ -9,8 +9,8 @@
  */
 
 import type { Platform, ReviewerConfig, PuppetMasterConfig } from '../types/config.js';
-import type { TierPlan, Criterion, TestPlan } from '../types/tiers.js';
-import type { PlatformRunnerContract, ExecutionRequest, RunningProcess } from '../types/platforms.js';
+import type { Criterion, TestPlan } from '../types/tiers.js';
+import type { ExecutionRequest } from '../types/platforms.js';
 import type { IterationContext, IterationResult } from './execution-engine.js';
 import type { TierNode } from './tier-node.js';
 import type { ProgressManager, ProgressEntry } from '../memory/index.js';
@@ -121,6 +121,8 @@ export interface WorkerReviewerConfig {
  * WorkerReviewerOrchestrator
  *
  * Coordinates two-phase iteration execution following the Ralph Wiggum Model pattern.
+ *
+ * P1-G10: Includes ping-pong loop detection to prevent infinite COMPLETE/REVISE cycles.
  */
 export class WorkerReviewerOrchestrator {
   private readonly reviewerConfig: ReviewerConfig;
@@ -128,6 +130,10 @@ export class WorkerReviewerOrchestrator {
   private readonly platformRegistry: PlatformRegistry;
   private readonly progressManager: ProgressManager;
   private readonly promptBuilder: PromptBuilder;
+
+  // P1-G10: Track revision cycles per subtask to detect ping-pong loops
+  private readonly revisionCounts: Map<string, number> = new Map();
+  private readonly lastFeedbackHashes: Map<string, string[]> = new Map();
 
   constructor(workerReviewerConfig: WorkerReviewerConfig) {
     this.reviewerConfig = workerReviewerConfig.reviewerConfig;
@@ -142,6 +148,57 @@ export class WorkerReviewerOrchestrator {
    */
   isEnabled(): boolean {
     return this.reviewerConfig.enabled !== false;
+  }
+
+  /**
+   * P1-G10: Reset revision tracking for a subtask.
+   * Call when starting a new subtask.
+   */
+  resetSubtaskTracking(subtaskId: string): void {
+    this.revisionCounts.delete(subtaskId);
+    this.lastFeedbackHashes.delete(subtaskId);
+  }
+
+  /**
+   * P1-G10: Check if we're in a ping-pong loop for a subtask.
+   */
+  private isPingPongLoop(subtaskId: string, feedback: string): boolean {
+    const hashes = this.lastFeedbackHashes.get(subtaskId) || [];
+    const feedbackHash = this.computeFeedbackHash(feedback);
+    
+    // Check if this feedback is similar to previous feedback
+    const similarCount = hashes.filter(h => h === feedbackHash).length;
+    if (similarCount >= 2) {
+      console.warn(
+        `[WorkerReviewerOrchestrator] Ping-pong loop detected for ${subtaskId}: ` +
+        `same feedback given ${similarCount + 1} times`
+      );
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * P1-G10: Record feedback for loop detection.
+   */
+  private recordFeedback(subtaskId: string, feedback: string): void {
+    const hashes = this.lastFeedbackHashes.get(subtaskId) || [];
+    const feedbackHash = this.computeFeedbackHash(feedback);
+    hashes.push(feedbackHash);
+    // Keep only last 5 feedback hashes
+    if (hashes.length > 5) {
+      hashes.shift();
+    }
+    this.lastFeedbackHashes.set(subtaskId, hashes);
+  }
+
+  /**
+   * P1-G10: Compute simple hash for feedback comparison.
+   */
+  private computeFeedbackHash(feedback: string): string {
+    // Normalize: lowercase, remove extra whitespace, take first 200 chars
+    return feedback.toLowerCase().replace(/\s+/g, ' ').trim().slice(0, 200);
   }
 
   /**
@@ -178,6 +235,8 @@ export class WorkerReviewerOrchestrator {
     if (reviewerResult.verdict === 'SHIP') {
       const threshold = this.reviewerConfig.confidenceThreshold ?? 0.7;
       if (reviewerResult.confidence >= threshold) {
+        // P1-G10: Clear tracking on successful completion
+        this.resetSubtaskTracking(context.tierNode.id);
         return {
           status: 'complete',
           workerResult,
@@ -190,8 +249,45 @@ export class WorkerReviewerOrchestrator {
       );
     }
 
+    // REVISE verdict - check for ping-pong loops before writing feedback
+    const subtaskId = context.tierNode.id;
+    const maxRevisions = this.reviewerConfig.maxReviewerIterations ?? 3;
+    const currentCount = (this.revisionCounts.get(subtaskId) ?? 0) + 1;
+    this.revisionCounts.set(subtaskId, currentCount);
+
+    // P1-G10: Check for max revision limit
+    if (currentCount > maxRevisions) {
+      console.warn(
+        `[WorkerReviewerOrchestrator] Max reviewer iterations (${maxRevisions}) exceeded for ${subtaskId}, escalating`
+      );
+      return {
+        status: 'failed',
+        workerResult,
+        reviewerResult,
+        combinedFeedback: `Max reviewer iterations exceeded. Last feedback: ${reviewerResult.feedback}`,
+      };
+    }
+
     // REVISE verdict - write feedback for next iteration
     const feedback = await this.writeFeedback(context, reviewerResult);
+
+    // P1-G10: Check for ping-pong loop
+    if (feedback && this.isPingPongLoop(subtaskId, feedback)) {
+      console.warn(
+        `[WorkerReviewerOrchestrator] Ping-pong loop detected for ${subtaskId}, escalating`
+      );
+      return {
+        status: 'failed',
+        workerResult,
+        reviewerResult,
+        combinedFeedback: `Ping-pong loop detected. Feedback keeps repeating. Last: ${feedback.slice(0, 200)}...`,
+      };
+    }
+
+    // Record feedback for future loop detection
+    if (feedback) {
+      this.recordFeedback(subtaskId, feedback);
+    }
 
     return {
       status: 'revise',
@@ -255,14 +351,12 @@ export class WorkerReviewerOrchestrator {
 
     // Capture output
     const outputChunks: string[] = [];
-    let completedNormally = false;
 
     try {
       for await (const chunk of runner.captureStdout(processId)) {
         outputChunks.push(chunk);
         // Check for completion signal
         if (chunk.includes('<ralph>COMPLETE</ralph>') || chunk.includes('VERDICT:')) {
-          completedNormally = true;
           break;
         }
       }

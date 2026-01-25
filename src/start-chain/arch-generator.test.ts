@@ -6,7 +6,6 @@
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ArchGenerator } from './arch-generator.js';
-import type { ArchGeneratorOptions } from './arch-generator.js';
 import type { ParsedRequirements, ParsedSection, RequirementsSource } from '../types/index.js';
 import type { PRD, Phase, Task } from '../types/prd.js';
 import { PlatformRegistry } from '../platforms/registry.js';

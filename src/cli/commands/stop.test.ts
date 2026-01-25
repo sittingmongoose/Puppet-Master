@@ -49,7 +49,6 @@ import { createContainer } from '../../core/container.js';
 import { Orchestrator } from '../../core/orchestrator.js';
 import { StatePersistence } from '../../core/state-persistence.js';
 import { ProcessRegistry } from '../../core/process-registry.js';
-import { SessionTracker } from '../../core/session-tracker.js';
 import { PlatformRegistry } from '../../platforms/registry.js';
 
 describe('StopCommand', () => {

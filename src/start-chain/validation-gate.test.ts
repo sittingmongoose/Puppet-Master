@@ -489,7 +489,7 @@ Some content here but missing expected sections.
 
     it('should fail when phase plan has invalid escalation', () => {
       const plan = createValidTierPlan();
-      plan.phases[0].escalation = 'invalid' as any;
+      plan.phases[0].escalation = 'invalid' as unknown as (typeof plan.phases[0])['escalation'];
 
       const result = gate.validateTierPlan(plan, config);
 

@@ -4,16 +4,12 @@
  * Tests for P1-T05: Multi-Pass PRD Generation
  */
 
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import {
   MultiPassPrdGenerator,
   DEFAULT_MULTI_PASS_CONFIG,
-  type PrdOutline,
-  type MultiPassResult,
 } from './multi-pass-generator.js';
 import type { ParsedRequirements, ParsedSection } from '../types/requirements.js';
-import type { PRD } from '../types/prd.js';
-import type { PuppetMasterConfig } from '../types/config.js';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Test Fixtures
@@ -126,7 +122,7 @@ function createLargeDocument(): ParsedRequirements {
 describe('MultiPassPrdGenerator', () => {
   describe('Configuration', () => {
     it('should use default config when none provided', () => {
-      const generator = new MultiPassPrdGenerator({ projectName: 'Test' });
+      new MultiPassPrdGenerator({ projectName: 'Test' });
       expect(DEFAULT_MULTI_PASS_CONFIG.enabled).toBe(true);
       expect(DEFAULT_MULTI_PASS_CONFIG.largeDocThreshold).toBe(5000);
       expect(DEFAULT_MULTI_PASS_CONFIG.maxRepairPasses).toBe(3);

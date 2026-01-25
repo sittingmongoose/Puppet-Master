@@ -8,14 +8,55 @@
 import type { Router, Request, Response } from 'express';
 import { Router as createRouter } from 'express';
 import { promises as fs } from 'fs';
-import { join, basename, resolve } from 'path';
-import { existsSync, statSync } from 'fs';
+import { join, basename, resolve, sep } from 'path';
+import { existsSync, statSync, realpathSync } from 'fs';
 import type { PRD } from '../../types/prd.js';
 import type { PuppetMasterConfig } from '../../types/config.js';
 import { PrdManager } from '../../memory/prd-manager.js';
 import { ConfigManager } from '../../config/config-manager.js';
 import type { Orchestrator } from '../../core/orchestrator.js';
 import yaml from 'js-yaml';
+
+/**
+ * Validates that a path is within the allowed base directory.
+ * Resolves symlinks and normalizes paths before comparison.
+ * @param targetPath - The path to validate
+ * @param baseDir - The base directory that paths must be within
+ * @returns true if the path is safe, false otherwise
+ */
+function isPathWithinBase(targetPath: string, baseDir: string): boolean {
+  try {
+    // Resolve to absolute paths
+    const resolvedTarget = resolve(targetPath);
+    const resolvedBase = resolve(baseDir);
+    
+    // If the target exists, resolve any symlinks
+    let realTarget = resolvedTarget;
+    if (existsSync(resolvedTarget)) {
+      try {
+        realTarget = realpathSync(resolvedTarget);
+      } catch {
+        // If we can't resolve symlinks, be conservative and deny
+        return false;
+      }
+    }
+    
+    // Resolve base directory symlinks too
+    let realBase = resolvedBase;
+    if (existsSync(resolvedBase)) {
+      try {
+        realBase = realpathSync(resolvedBase);
+      } catch {
+        // Keep resolved path if realpath fails
+      }
+    }
+    
+    // Check if target path starts with base path (with separator to avoid /base/dir matching /base/directory)
+    return realTarget === realBase || realTarget.startsWith(realBase + sep);
+  } catch {
+    return false;
+  }
+}
 
 /**
  * Error response interface.
@@ -99,6 +140,15 @@ export function createProjectsRoutes(orchestrator?: Orchestrator | null, baseDir
       }
 
       const fullPath = resolve(projectPath.trim());
+      
+      // Security: Validate path is within allowed base directory
+      if (!isPathWithinBase(fullPath, projectBaseDir)) {
+        res.status(403).json({
+          error: 'Access denied: path outside allowed project directory',
+          code: 'FORBIDDEN',
+        } as ErrorResponse);
+        return;
+      }
       
       // Check if directory already exists
       if (existsSync(fullPath)) {
@@ -184,6 +234,15 @@ export function createProjectsRoutes(orchestrator?: Orchestrator | null, baseDir
       }
 
       const fullPath = resolve(projectPath.trim());
+
+      // Security: Validate path is within allowed base directory
+      if (!isPathWithinBase(fullPath, projectBaseDir)) {
+        res.status(403).json({
+          error: 'Access denied: path outside allowed project directory',
+          code: 'FORBIDDEN',
+        } as ErrorResponse);
+        return;
+      }
 
       // Verify project exists and is valid
       if (!existsSync(fullPath)) {

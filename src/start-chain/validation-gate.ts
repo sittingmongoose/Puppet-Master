@@ -8,11 +8,11 @@
  * BUILD_QUEUE_PHASE_5.md PH5-T08.
  */
 
-import type { PRD, Phase, Task, Subtask } from '../types/prd.js';
+import type { PRD } from '../types/prd.js';
 import type { PuppetMasterConfig } from '../types/config.js';
 import type { Platform } from '../types/config.js';
 import type { TierType } from '../types/state.js';
-import type { TierPlan, PhasePlan, TaskPlan, SubtaskPlan } from './tier-plan-generator.js';
+import type { TierPlan } from './tier-plan-generator.js';
 import type { ParsedRequirements } from '../types/requirements.js';
 import { validateNoManualCriteria } from './validators/no-manual-validator.js';
 import { PrdQualityValidator } from './validators/prd-quality-validator.js';
@@ -331,7 +331,7 @@ export class ValidationGate {
    * @param config - Configuration for validation
    * @returns Validation result with errors and warnings
    */
-  validateTierPlan(plan: TierPlan, config: PuppetMasterConfig): ValidationResult {
+  validateTierPlan(plan: TierPlan, _config: PuppetMasterConfig): ValidationResult {
     const errors: ValidationError[] = [];
     const warnings: ValidationWarning[] = [];
 
@@ -346,8 +346,8 @@ export class ValidationGate {
       return { valid: false, errors, warnings };
     }
 
-    // Valid platforms
-    const validPlatforms: Platform[] = ['cursor', 'codex', 'claude'];
+    // Valid platforms (must match Platform type in config-schema.ts)
+    const validPlatforms: Platform[] = ['cursor', 'codex', 'claude', 'gemini', 'copilot'];
 
     // Valid tier types for escalation
     const validTierTypes: TierType[] = ['phase', 'task', 'subtask', 'iteration'];

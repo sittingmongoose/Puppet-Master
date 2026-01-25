@@ -10,7 +10,6 @@ import {
   detectDocumentStructure,
   StructureDetectionError,
   wouldFailValidation,
-  type DocumentStructureType,
 } from './structure-detector.js';
 import type { ParsedSection } from '../types/requirements.js';
 

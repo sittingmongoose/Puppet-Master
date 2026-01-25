@@ -107,8 +107,15 @@ export class GateRunner {
           report.failureType = 'major'; // Treat enforcement violations as major failures
         }
       } catch (error) {
-        // Log enforcement error but don't fail the gate
+        // P0-G24: Enforcement errors should fail the gate, not be swallowed
         console.error('Error running AGENTS.md enforcement:', error);
+        report.enforcementViolations = [{
+          type: 'do',
+          rule: 'ENFORCEMENT_ERROR',
+          context: `Enforcement check failed: ${error instanceof Error ? error.message : String(error)}`,
+        }];
+        report.overallPassed = false;
+        report.failureType = 'major';
       }
     }
 
@@ -190,6 +197,19 @@ export class GateRunner {
    * @returns Gate report
    */
   private aggregateResults(gateId: string, results: VerifierResult[]): GateReport {
+    // P0-G12: Empty criteria array should NOT automatically pass
+    // .every() on empty array returns true, which is incorrect for gate validation
+    if (results.length === 0) {
+      return {
+        gateId,
+        timestamp: new Date().toISOString(),
+        verifiersRun: [],
+        overallPassed: false,
+        failureType: 'major',
+        summary: 'Gate failed: no verification criteria defined. Gates require at least one criterion.',
+      };
+    }
+
     const overallPassed = results.every((r) => r.passed);
     const failureType = overallPassed ? undefined : this.classifyFailure(results);
     const summary = this.generateSummary(results, failureType);

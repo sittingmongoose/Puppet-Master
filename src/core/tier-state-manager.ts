@@ -453,6 +453,8 @@ export class TierStateManager {
         return 'passed';
       case 'failed':
         return 'failed';
+      case 'skipped':
+        return 'passed';
       case 'escalated':
         return 'escalated';
       case 'reopened':
@@ -495,7 +497,7 @@ export class TierStateManager {
       item.startedAt = now;
     }
 
-    if ((status === 'passed' || status === 'failed' || status === 'escalated') && !item.completedAt) {
+    if ((status === 'passed' || status === 'failed' || status === 'skipped' || status === 'escalated') && !item.completedAt) {
       item.completedAt = now;
     }
 

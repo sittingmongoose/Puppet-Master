@@ -5,9 +5,8 @@
  * See BUILD_QUEUE_IMPROVEMENTS.md P1-T22.
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { WiringCheck, createWiringCheck } from './wiring-check.js';
-import type { CheckResult } from '../check-registry.js';
 
 describe('WiringCheck', () => {
   const projectRoot = process.cwd();

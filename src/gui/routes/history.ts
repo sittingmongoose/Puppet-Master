@@ -7,7 +7,7 @@
 
 import type { Router, Request, Response } from 'express';
 import { Router as createRouter } from 'express';
-import type { SessionTracker, ExecutionSession } from '../../core/session-tracker.js';
+import type { SessionTracker } from '../../core/session-tracker.js';
 
 /**
  * Error response interface.

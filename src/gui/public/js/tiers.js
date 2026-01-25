@@ -383,6 +383,7 @@ async function expandAll() {
   
   // Load all children recursively
   await expandNode(state.rootNode);
+  await loadAllChildren(state.rootNode);
   
   // Re-render tree with all nodes expanded
   renderTree(state.rootNode);
@@ -535,7 +536,7 @@ async function showDetails(nodeId) {
       html += '<div class="detail-section">';
       html += '<h3 class="section-title">Test Plan</h3>';
       html += '<ul class="test-plan-list">';
-      node.testPlan.commands.forEach((cmd, idx) => {
+      node.testPlan.commands.forEach((cmd) => {
         html += `<li class="test-plan-item">`;
         html += `<span class="monospace">${cmd.command}${cmd.args ? ' ' + cmd.args.join(' ') : ''}</span>`;
         if (cmd.workingDirectory) {

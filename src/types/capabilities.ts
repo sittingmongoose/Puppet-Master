@@ -57,6 +57,9 @@ export interface PlatformCapabilities {
   
   /** List of programming languages supported */
   supportedLanguages: string[];
+  
+  /** P1-G06/P1-G09: List of available model names (discovered at runtime) */
+  availableModels?: string[];
 }
 
 /**

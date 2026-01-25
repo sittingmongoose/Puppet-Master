@@ -14,14 +14,12 @@ describe('PlatformCompatibilityCheck', () => {
   let tempDir: string;
   let srcDir: string;
   let check: PlatformCompatibilityCheck;
-  let originalCwd: () => string;
 
   beforeEach(async () => {
     tempDir = await mkdtemp(join(tmpdir(), 'platform-compat-check-'));
     srcDir = join(tempDir, 'src');
     await mkdir(srcDir, { recursive: true });
     check = new PlatformCompatibilityCheck();
-    originalCwd = process.cwd;
   });
 
   afterEach(async () => {

@@ -15,7 +15,7 @@ import {
 import { CheckRegistry } from '../../doctor/check-registry.js';
 import { InstallationManager } from '../../doctor/installation-manager.js';
 import { DoctorReporter } from '../../doctor/doctor-reporter.js';
-import type { CheckResult, CheckCategory } from '../../doctor/check-registry.js';
+import type { CheckResult } from '../../doctor/check-registry.js';
 
 vi.mock('../../config/config-manager.js', () => ({
   ConfigManager: vi.fn().mockImplementation(() => ({

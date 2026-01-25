@@ -4,7 +4,7 @@
  * See BUILD_QUEUE_IMPROVEMENTS.md P2-T01
  */
 
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import {
   buildDependencyGraph,
   getParallelizableGroups,

@@ -34,9 +34,23 @@ export interface ParsedOutput {
  * Extracts structured information from agent output text.
  */
 export class OutputParser {
-  // Pattern for completion signal
-  private static readonly COMPLETE_PATTERN = /<ralph>COMPLETE<\/ralph>/i;
-  private static readonly GUTTER_PATTERN = /<ralph>GUTTER<\/ralph>/i;
+  // P1-G11: Enhanced patterns for completion signal with whitespace tolerance
+  private static readonly COMPLETE_PATTERN = /<ralph>\s*COMPLETE\s*<\/ralph>/i;
+  private static readonly GUTTER_PATTERN = /<ralph>\s*GUTTER\s*<\/ralph>/i;
+
+  // P1-G11: Alternative natural language completion phrases (used as fallback)
+  private static readonly NATURAL_COMPLETE_PHRASES = [
+    /task\s+(?:is\s+)?complete(?:d)?(?:!|\.|$)/i,
+    /successfully\s+complete(?:d)?(?:!|\.|$)/i,
+    /all\s+(?:tasks?\s+)?done(?:!|\.|$)/i,
+    /implementation\s+complete(?:d)?(?:!|\.|$)/i,
+  ];
+
+  private static readonly NATURAL_GUTTER_PHRASES = [
+    /(?:i(?:'m|'m|\s+am)\s+)?stuck(?:!|\.|$)/i,
+    /cannot\s+(?:proceed|continue)/i,
+    /need(?:s?)?\s+(?:human\s+)?(?:help|assistance|intervention)/i,
+  ];
 
   // Pattern for files changed (created, modified, updated, wrote)
   private static readonly FILES_CHANGED_PATTERN =
@@ -92,15 +106,33 @@ export class OutputParser {
   }
 
   /**
-   * Detect completion signal in output.
+   * P1-G11: Detect completion signal in output with enhanced robustness.
+   * Checks formal tags first, then natural language as fallback.
    */
   detectCompletionSignal(output: string): CompletionSignal {
+    // Check formal tags first
     if (OutputParser.COMPLETE_PATTERN.test(output)) {
       return 'COMPLETE';
     }
     if (OutputParser.GUTTER_PATTERN.test(output)) {
       return 'GUTTER';
     }
+
+    // P1-G11: Check natural language as fallback (only in last 500 chars to avoid false positives)
+    const tail = output.slice(-500);
+    
+    for (const pattern of OutputParser.NATURAL_GUTTER_PHRASES) {
+      if (pattern.test(tail)) {
+        return 'GUTTER';
+      }
+    }
+    
+    for (const pattern of OutputParser.NATURAL_COMPLETE_PHRASES) {
+      if (pattern.test(tail)) {
+        return 'COMPLETE';
+      }
+    }
+
     return 'NONE';
   }
 

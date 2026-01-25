@@ -174,6 +174,7 @@ export class CopilotRunner extends BasePlatformRunner {
    */
   protected async spawn(request: ExecutionRequest): Promise<ChildProcess> {
     const args = this.buildArgs(request);
+    const prompt = this.buildPrompt(request);
 
     const proc = spawn(this.command, args, {
       cwd: request.workingDirectory,
@@ -184,8 +185,8 @@ export class CopilotRunner extends BasePlatformRunner {
     });
 
     // Write prompt to stdin as fallback if not already passed via -p flag
-    if (request.prompt && proc.stdin && !args.includes(request.prompt)) {
-      proc.stdin.write(request.prompt, 'utf-8');
+    if (prompt && proc.stdin && !args.includes(prompt)) {
+      proc.stdin.write(prompt, 'utf-8');
       proc.stdin.end();
     }
 
@@ -219,9 +220,20 @@ export class CopilotRunner extends BasePlatformRunner {
   protected buildArgs(request: ExecutionRequest): string[] {
     const args: string[] = [];
 
+    // P0-G16: Warn if model is configured but will be ignored
+    // Copilot CLI does NOT support --model flag; model selection is interactive only
+    if (request.model) {
+      console.warn(
+        `[CopilotRunner] Model '${request.model}' specified but Copilot CLI does not support ` +
+        `programmatic model selection. Default model (Claude Sonnet 4.5) will be used. ` +
+        `Use CopilotSdkRunner for model selection support, or use /model command in interactive mode.`
+      );
+    }
+
     // Non-interactive mode with prompt
     if (request.nonInteractive) {
-      const prompt = request.prompt ?? '';
+      // P1-G01: Apply plan mode preamble if planMode is requested
+      const prompt = this.buildPrompt(request);
       const promptBytes = prompt ? Buffer.byteLength(prompt, 'utf8') : 0;
       const MAX_PROMPT_ARG_BYTES = 30_000;
 
@@ -244,6 +256,31 @@ export class CopilotRunner extends BasePlatformRunner {
     // Users should configure model inside Copilot or via config files.
 
     return args;
+  }
+
+  /**
+   * Builds the prompt, adding plan mode preamble if needed.
+   * 
+   * P1-G01: Copilot CLI doesn't have a native plan mode CLI flag in headless mode.
+   * When planMode is requested, we add a preamble instructing the agent to
+   * plan first, then execute. This provides a consistent experience across platforms.
+   */
+  private buildPrompt(request: ExecutionRequest): string {
+    const prompt = request.prompt ?? '';
+    
+    if (request.planMode === true) {
+      // Plan mode via prompt preamble (Copilot /plan is interactive only)
+      const preamble = [
+        'PLAN FIRST (briefly), THEN EXECUTE:',
+        '- Start with a concise plan (max 10 bullets).',
+        '- Then immediately carry out the plan and make the required changes.',
+        '- Run the required tests/commands and report results.',
+        '',
+      ].join('\n');
+      return `${preamble}${prompt}`;
+    }
+    
+    return prompt;
   }
 
   /**

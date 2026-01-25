@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { CircuitBreaker, CircuitBreakerOpenError } from './circuit-breaker.js';
 import { BasePlatformRunner } from './base-runner.js';
+import type { CapabilityDiscoveryService } from './capability-discovery.js';
 import type { ExecutionRequest, ExecutionResult, Platform, RunningProcess } from '../types/platforms.js';
 import type { ChildProcess } from 'child_process';
 
@@ -107,7 +108,7 @@ describe('BasePlatformRunner circuit breaker integration', () => {
   }
 
   it('fails fast when circuit is OPEN (does not spawn)', async () => {
-    const runner = new NoSpawnWhenOpenRunner({} as any);
+    const runner = new NoSpawnWhenOpenRunner({} as unknown as CapabilityDiscoveryService);
     runner.forceOpen();
 
     const req: ExecutionRequest = {

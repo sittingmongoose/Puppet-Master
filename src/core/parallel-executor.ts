@@ -15,7 +15,6 @@ import type { WorktreeManager, MergeResult, WorktreeInfo } from '../git/worktree
 import type { EventBus } from '../logging/event-bus.js';
 import {
   buildDependencyGraph,
-  getReadySubtasks,
   validateDependencies,
   type DependencyGraph,
 } from './dependency-analyzer.js';
@@ -178,9 +177,6 @@ export class ParallelExecutor {
     let levelIndex = 0;
 
     for (const level of graph.levels) {
-      // Get subtask IDs at this level
-      const levelSubtaskIds = new Set(level.map(n => n.id));
-
       // Execute all subtasks in this level in parallel
       const levelPromises = level.map(async (subtask) => {
         // Wait for semaphore slot

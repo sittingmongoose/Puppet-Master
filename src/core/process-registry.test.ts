@@ -5,8 +5,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { promises as fs } from 'fs';
 import { join } from 'path';
-import { ProcessRegistry, type SessionRegistry, type ProcessRecord } from './process-registry.js';
-import { spawn } from 'child_process';
+import { ProcessRegistry, type SessionRegistry } from './process-registry.js';
 
 describe('ProcessRegistry', () => {
   const testDir = '.puppet-master-test-registry';
