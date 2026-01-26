@@ -18,16 +18,31 @@ async function main() {
   const eventBus = new EventBus();
 
   // Create and start server
+  // Support React GUI via environment variable
+  const useReactGui = process.env.GUI_REACT === 'true' || process.env.GUI_REACT === '1';
+  const authEnabled = process.env.GUI_NO_AUTH !== 'true' && process.env.GUI_NO_AUTH !== '1';
+  
   const server = new GuiServer(
     {
       port,
       host,
       corsOrigins: [`http://${host}:${port}`],
+      useReactGui,
+      authEnabled,
     },
     eventBus
   );
 
   try {
+    // P0-G07: Initialize authentication before starting server
+    const token = await server.initializeAuth();
+    if (token) {
+      console.log(`\n[Auth] Authentication enabled`);
+      console.log(`[Auth] Token file: .puppet-master/gui-token.txt`);
+      console.log(`[Auth] Include this header in API requests:`);
+      console.log(`[Auth]   Authorization: Bearer ${token}\n`);
+    }
+
     await server.start();
     console.log(`GUI Server running at ${server.getUrl()}`);
     console.log(`\nOpen your browser to: ${server.getUrl()}\n`);

@@ -38,6 +38,12 @@ export interface GuiOptions {
   host?: string;
   open?: boolean;
   verbose?: boolean;
+  /** P0-G07: Disable authentication (development only) */
+  noAuth?: boolean;
+  /** P0-G07: Relax CORS policy for development (allows dev ports and LAN IPs) */
+  relaxedCors?: boolean;
+  /** Enable React GUI instead of vanilla HTML */
+  react?: boolean;
 }
 
 /**
@@ -96,6 +102,11 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       port,
       host,
       baseDirectory: projectRoot,
+      // P0-G07: Support --no-auth and --relaxed-cors flags
+      authEnabled: options.noAuth !== true, // Default true, false if --no-auth
+      corsRelaxed: options.relaxedCors === true, // Default false, true if --relaxed-cors
+      // React GUI: enable with --react flag
+      useReactGui: options.react === true, // Default false, true if --react
     };
     const guiServer = new GuiServer(guiConfig, eventBus);
 
@@ -183,6 +194,41 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       console.log('SessionTracker registered with GUI server');
     }
 
+    // P0-G07: Initialize authentication before starting server
+    const token = await guiServer.initializeAuth();
+    if (token) {
+      console.log('');
+      console.log('╔═══════════════════════════════════════════════════════════╗');
+      console.log('║                    Authentication Enabled                  ║');
+      console.log('╚═══════════════════════════════════════════════════════════╝');
+      console.log('');
+      console.log(`  Token file: .puppet-master/gui-token.txt`);
+      console.log(`  Include this header in API requests:`);
+      console.log(`    Authorization: Bearer ${token}`);
+      console.log('');
+    } else if (options.noAuth) {
+      console.log('');
+      console.log('╔═══════════════════════════════════════════════════════════╗');
+      console.log('║              ⚠️  Authentication DISABLED                   ║');
+      console.log('╚═══════════════════════════════════════════════════════════╝');
+      console.log('');
+      console.log('  WARNING: Running without authentication (--no-auth flag)');
+      console.log('  This should only be used for local development!');
+      console.log('');
+    }
+    
+    if (options.relaxedCors) {
+      console.log('');
+      console.log('╔═══════════════════════════════════════════════════════════╗');
+      console.log('║              ⚠️  CORS Policy RELAXED                      ║');
+      console.log('╚═══════════════════════════════════════════════════════════╝');
+      console.log('');
+      console.log('  WARNING: CORS policy relaxed (--relaxed-cors flag)');
+      console.log('  Allows dev ports (3000-9999) and LAN IPs');
+      console.log('  This should only be used for local development!');
+      console.log('');
+    }
+
     // Setup signal handlers for graceful shutdown
     setupSignalHandlers(guiServer, orchestratorInstance);
 
@@ -198,11 +244,17 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     console.log('║                                                           ║');
     console.log('╚═══════════════════════════════════════════════════════════╝');
     console.log('');
-    console.log(`  🌐 Dashboard:     ${url}`);
-    console.log(`  📁 Projects:      ${url}/projects`);
-    console.log(`  🧙 Wizard:        ${url}/wizard`);
-    console.log(`  ⚙️  Configuration: ${url}/config`);
-    console.log(`  🏥 Doctor:        ${url}/doctor`);
+    if (options.react) {
+      console.log(`  🌐 React GUI:     ${url} (React SPA mode)`);
+      console.log(`  📝 Note: React GUI requires 'npm run gui:build' to be run first`);
+    } else {
+      console.log(`  🌐 Dashboard:     ${url} (Vanilla HTML mode)`);
+      console.log(`  📁 Projects:      ${url}/projects`);
+      console.log(`  🧙 Wizard:        ${url}/wizard`);
+      console.log(`  ⚙️  Configuration: ${url}/config`);
+      console.log(`  🏥 Doctor:        ${url}/doctor`);
+      console.log(`  💡 Tip: Use --react flag to enable React GUI`);
+    }
     console.log('');
 
     // Open browser if enabled (default: true, unless --no-open flag is set)
@@ -278,12 +330,15 @@ export class GuiCommand implements CommandModule {
   register(program: Command): void {
     program
       .command('gui')
-      .description('Launch the web-based GUI server')
+      .description('Launch the web-based GUI server (vanilla HTML by default, use --react for React SPA)')
       .option('-c, --config <path>', 'Path to config file')
       .option('-p, --port <number>', 'Port to listen on (default: 3847)', (value) => parseInt(value, 10))
       .option('-h, --host <host>', 'Host to bind to (default: localhost)', 'localhost')
       .option('--no-open', 'Prevent browser from opening automatically')
       .option('-v, --verbose', 'Enable verbose output')
+      .option('--no-auth', 'Disable authentication (development only - NOT recommended for production)')
+      .option('--relaxed-cors', 'Relax CORS policy for development (allows dev ports 3000-9999 and LAN IPs)')
+      .option('--react', 'Enable React GUI (default: vanilla HTML)')
       .action(async (options: GuiOptions) => {
         // Handle --no-open flag (Commander.js sets open to false when --no-open is used)
         if (options.open === undefined) {

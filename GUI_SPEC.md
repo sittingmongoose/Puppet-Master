@@ -29,28 +29,36 @@ The RWM Puppet Master GUI is a browser-based interface that provides visual cont
 | Styling | Tailwind CSS | Utility-first, rapid dev |
 | State | Zustand | Lightweight, simple |
 | Real-time | WebSocket | Native browser support |
-| Icons | Lucide React | Clean, consistent |
+| Icons | Inline SVG | Clean, consistent (matches legacy implementation) |
 | Charts | Recharts | React-native, declarative |
 
 ---
 
 ## 3. Screen Inventory
 
-| Screen | Path | Purpose |
-|--------|------|---------|
-| Dashboard | `/` | Main orchestration view |
-| Project Select | `/projects` | Choose/create project |
-| Start Chain | `/start` | Requirements → Plan wizard |
-| Config | `/config` | Tier/branch/verification settings |
-| Phases | `/phases` | Phase overview |
-| Tasks | `/phases/:id/tasks` | Tasks within phase |
-| Subtasks | `/tasks/:id/subtasks` | Subtasks within task |
-| Evidence | `/evidence/:id` | Evidence viewer |
-| Logs | `/logs` | Activity/error logs |
-| Doctor | `/doctor` | Dependency checker |
-| Capabilities | `/capabilities` | CLI capability matrix (ADDENDUM v2.0) |
-| Budgets | `/budgets` | Platform usage/quotas (ADDENDUM v2.0) |
-| Memory | `/memory` | AGENTS.md viewer/editor (ADDENDUM v2.0) |
+| Screen | Path | Status | Purpose |
+|--------|------|--------|---------|
+| Dashboard | `/` | ✅ Implemented | Main orchestration view |
+| Project Select | `/projects` | ✅ Implemented | Choose/create project |
+| Start Chain Wizard | `/wizard` | ✅ Implemented | Requirements → Plan wizard (note: GUI_SPEC listed `/start`, but implementation uses `/wizard`) |
+| Config | `/config` | ✅ Implemented | Tier/branch/verification settings |
+| Settings | `/settings` | ✅ Implemented | Application settings (not in original GUI_SPEC) |
+| Tiers | `/tiers` | ✅ Implemented | Hierarchical tier view (phases/tasks/subtasks combined) |
+| Evidence | `/evidence` | ✅ Implemented | Evidence list viewer |
+| Evidence Detail | `/evidence/:id` | ✅ Implemented | Individual evidence viewer |
+| Doctor | `/doctor` | ✅ Implemented | Dependency checker |
+| History | `/history` | ✅ Implemented | Execution session history (not in original GUI_SPEC) |
+| Metrics | `/metrics` | ✅ Implemented | Analytics and metrics (not in original GUI_SPEC) |
+| Coverage | `/coverage` | ✅ Implemented | Test coverage viewer (not in original GUI_SPEC) |
+| Phases | `/phases` | ⏳ Planned | Phase overview (consolidated into `/tiers` in current implementation) |
+| Tasks | `/phases/:id/tasks` | ⏳ Planned | Tasks within phase (consolidated into `/tiers` in current implementation) |
+| Subtasks | `/tasks/:id/subtasks` | ⏳ Planned | Subtasks within task (consolidated into `/tiers` in current implementation) |
+| Logs | `/logs` | ⏳ Planned | Activity/error logs (API endpoint exists, UI pending) |
+| Capabilities | `/capabilities` | ⏳ Planned | CLI capability matrix (API endpoint exists, UI pending) (ADDENDUM v2.0) |
+| Budgets | `/budgets` | ⏳ Planned | Platform usage/quotas (API endpoint exists, UI pending) (ADDENDUM v2.0) |
+| Memory | `/memory` | ⏳ Planned | AGENTS.md viewer/editor (API endpoint exists, UI pending) (ADDENDUM v2.0) |
+
+**Note:** Current implementation consolidates phase/task/subtask views into a single `/tiers` hierarchical view. The separate `/phases`, `/tasks`, `/subtasks` routes from the original spec are planned for future implementation but not currently available.
 
 ---
 

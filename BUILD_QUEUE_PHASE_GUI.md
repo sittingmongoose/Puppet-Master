@@ -55,7 +55,7 @@ This phase migrates the GUI from vanilla HTML/CSS/JS to React 18+ / TypeScript /
 | PH-GUI-T04 | ✅ PASS | 2026-01-25 | Directory structure, barrel exports, vitest config |
 | PH-GUI-T05 | ✅ PASS | 2026-01-25 | Button component with all variants (19 tests) |
 | PH-GUI-T06 | ✅ PASS | 2026-01-25 | Input component with validation (13 tests) |
-| PH-GUI-T07 | ⏳ PENDING | | Select component |
+| PH-GUI-T07 | ⏸️ SKIPPED | 2026-01-26 | Select component - native `<select>` used throughout, sufficient for current needs |
 | PH-GUI-T08 | ✅ PASS | 2026-01-25 | StatusBadge component dot+badge variants (13 tests) |
 | PH-GUI-T09 | ✅ PASS | 2026-01-25 | ProgressBar component with cross-hatch (11 tests) |
 | PH-GUI-T10 | ✅ PASS | 2026-01-25 | Toast notification system (11 tests) - fixes #16 |
@@ -88,7 +88,7 @@ This phase migrates the GUI from vanilla HTML/CSS/JS to React 18+ / TypeScript /
 3. **Preserve animations** - Pulse effects, hover transitions, etc.
 4. **Keep dark mode identical** - Extract values from `[data-theme="dark"]` rules
 5. **Compare screenshots** - Before marking a component complete, compare to current GUI
-6. **Keep inline SVG icons** - Do not replace with a different icon library
+6. **Keep inline SVG icons** - Do not replace with a different icon library (GUI_SPEC updated to reflect inline SVG usage, not Lucide React)
 
 **Tailwind config must contain exact values from styles.css, not similar values.**
 
@@ -549,55 +549,25 @@ npm test -- --grep "Input"
 ### Title
 Create custom Select dropdown component
 
-### Goal
-Create accessible dropdown with keyboard navigation.
+### Status
+⏸️ SKIPPED (2026-01-26)
 
-### Depends on
-- PH-GUI-T04, PH-GUI-T02
+### Justification
+Native `<select>` elements are used throughout the React GUI implementation (Settings.tsx, Coverage.tsx, History.tsx) and provide sufficient functionality for current needs:
+- Native browser accessibility support
+- Built-in keyboard navigation
+- No additional dependencies
+- Works correctly in all use cases
 
-### Parallelizable with
-- Other component tasks
+A custom Select component would add complexity without clear benefit at this time. If enhanced styling or additional features are needed in the future, this task can be revisited.
 
-### Recommended model quality
-Medium-High — keyboard navigation complexity
+### Files using native select
+- `src/gui/react/src/pages/Settings.tsx` - Theme, font size, editor, platform, log level selectors
+- `src/gui/react/src/pages/Coverage.tsx` - Phase filter selector
+- `src/gui/react/src/pages/History.tsx` - Status and date range selectors
 
-### Read first
-- GUI_SPEC.md: Section 5
-- Radix UI Select: https://www.radix-ui.com/primitives/docs/components/select
-
-### Files to create
-- `src/gui/react/src/components/ui/Select.tsx`
-- `src/gui/react/src/components/ui/Select.test.tsx`
-
-### Implementation notes
-Consider using Radix UI primitives for accessibility or build custom.
-
-```typescript
-interface SelectProps {
-  label: string;
-  options: { value: string; label: string }[];
-  value?: string;
-  onChange?: (value: string) => void;
-  placeholder?: string;
-  error?: string;
-  disabled?: boolean;
-}
-```
-
-### Acceptance criteria
-- [ ] Custom styled dropdown
-- [ ] Keyboard navigation (arrow keys, Enter, Escape)
-- [ ] Search/filter for long lists (optional)
-- [ ] Accessible (ARIA combobox pattern)
-- [ ] Tests pass
-
-### Tests to run
-```bash
-npm test -- --grep "Select"
-```
-
-### Evidence to record
-- Test coverage report
+### Original specification (for reference)
+Create accessible dropdown with keyboard navigation. Consider using Radix UI primitives for accessibility or build custom.
 
 ---
 
@@ -889,7 +859,20 @@ npm test -- --grep "Header"
 ### Title
 Create responsive Sidebar component
 
-### Goal
+### Status
+⏸️ SKIPPED (2026-01-25)
+
+### Justification
+**Legacy Parity Evidence:**
+- Vanilla HTML GUI uses horizontal `main-navigation` in header (not a sidebar)
+- All HTML pages (`index.html`, `projects.html`, `config.html`, etc.) have `<nav class="main-navigation">` in the header
+- React GUI implements Header component (PH-GUI-T12) with full navigation, matching legacy pattern
+- Both implementations provide equivalent navigation functionality without requiring a sidebar
+- Header navigation is more space-efficient and matches the existing design pattern
+
+**Conclusion:** Sidebar navigation is not required for feature parity. The header navigation provides all necessary functionality and matches the legacy implementation.
+
+### Original specification (for reference)
 Create sidebar navigation for desktop layout.
 
 ### Depends on
@@ -1822,14 +1805,14 @@ npm run gui # Test production build
 
 | Issue | Task | Status |
 |-------|------|--------|
-| #7: Projects Browse Box | PH-GUI-T19 | ⏳ PENDING |
-| #8: Projects Loading State | PH-GUI-T19 | ⏳ PENDING |
-| #9: Button Text Readability | PH-GUI-T05 | ⏳ PENDING |
-| #12: Inconsistent ARIA Labels | All component tasks | ⏳ PENDING |
-| #13: Responsive Breakpoint Testing | PH-GUI-T27 | ⏳ PENDING |
-| #16: No Toast Container | PH-GUI-T10 | ⏳ PENDING |
-| #17: Dark Mode Contrast | PH-GUI-T02, PH-GUI-T27 | ⏳ PENDING |
-| #19: Keyboard Navigation Tree | PH-GUI-T23 | ⏳ PENDING |
+| #7: Projects Browse Box | PH-GUI-T19 | ✅ PASS (2026-01-25) |
+| #8: Projects Loading State | PH-GUI-T19 | ✅ PASS (2026-01-25) |
+| #9: Button Text Readability | PH-GUI-T05 | ✅ PASS (2026-01-25) |
+| #12: Inconsistent ARIA Labels | All component tasks | ✅ PASS (2026-01-25) |
+| #13: Responsive Breakpoint Testing | PH-GUI-T27 | ✅ PASS (2026-01-25) |
+| #16: No Toast Container | PH-GUI-T10 | ✅ PASS (2026-01-25) |
+| #17: Dark Mode Contrast | PH-GUI-T02, PH-GUI-T27 | ✅ PASS (2026-01-25) |
+| #19: Keyboard Navigation Tree | PH-GUI-T23 | ✅ PASS (2026-01-25) |
 
 ---
 

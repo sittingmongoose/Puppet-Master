@@ -64,6 +64,8 @@ export interface ServerConfig {
   authEnabled?: boolean;
   /** P0-G07: Path to auth token file (default: .puppet-master/gui-token.txt) */
   authTokenPath?: string;
+  /** P0-G07: Whether to relax CORS for development (allows dev ports and LAN IPs) */
+  corsRelaxed?: boolean;
   /** Whether to serve React SPA instead of vanilla HTML (default: false) */
   useReactGui?: boolean;
 }
@@ -78,7 +80,7 @@ export class GuiServer {
   private server: HTTPServer | null = null;
   private wss: WebSocketServer | null = null;
   private readonly clients: Set<WebSocket> = new Set();
-  private readonly config: Required<ServerConfig> & { authEnabled: boolean; authTokenPath: string; useReactGui: boolean };
+  private readonly config: Required<ServerConfig> & { authEnabled: boolean; authTokenPath: string; corsRelaxed: boolean; useReactGui: boolean };
   private readonly eventBus: EventBus;
   private tierManager: TierStateManager | null = null;
   private orchestrator: OrchestratorStateMachine | null = null;
@@ -110,6 +112,8 @@ export class GuiServer {
       // P0-G07: Auth defaults - enabled by default for security
       authEnabled: config.authEnabled ?? true,
       authTokenPath: config.authTokenPath ?? '.puppet-master/gui-token.txt',
+      // P0-G07: CORS relaxed mode - disabled by default (secure)
+      corsRelaxed: config.corsRelaxed ?? false,
       // React GUI: disabled by default (vanilla HTML), can be enabled via config
       useReactGui: config.useReactGui ?? false,
     };
@@ -140,8 +144,9 @@ export class GuiServer {
       token,
     };
 
-    // Add auth middleware BEFORE routes
-    this.app.use(createAuthMiddleware(this.authConfig));
+    // Auth middleware is already registered in setupMiddleware() before routes
+    // We just need to set authConfig so the middleware can use it
+    // The middleware will now work because authConfig is set
 
     // Add auth status endpoint
     this.app.get('/api/auth/status', createAuthStatusHandler(this.authConfig));
@@ -256,8 +261,45 @@ export class GuiServer {
    * Setup Express middleware.
    */
   private setupMiddleware(): void {
+    // P0-G07: Register auth middleware BEFORE routes if auth is enabled
+    // This ensures routes are protected. The middleware checks this.authConfig
+    // which will be set when initializeAuth() is called.
+    if (this.config.authEnabled) {
+      this.app.use((req, res, next) => {
+        // Allow auth-related endpoints without authentication
+        if (req.path.startsWith('/api/auth/')) {
+          return next();
+        }
+        
+        // Allow non-API routes (static files, etc.)
+        if (!req.path.startsWith('/api/')) {
+          return next();
+        }
+        
+        // If authConfig doesn't exist yet, auth hasn't been initialized
+        // Return 401 to protect routes until initializeAuth() is called
+        if (!this.authConfig) {
+          res.status(401).json({
+            error: 'Authentication not initialized',
+            code: 'AUTH_NOT_INITIALIZED',
+            hint: 'Server must call initializeAuth() before start()',
+          });
+          return;
+        }
+        
+        // Use the actual auth middleware logic
+        // createAuthMiddleware returns a handler that uses config.token
+        const authMiddleware = createAuthMiddleware(this.authConfig);
+        return authMiddleware(req, res, next);
+      });
+    }
+    
     // CORS configuration
-    // Allow requests from same origin, localhost variants, and configured origins
+    // P0-G07: Secure by default - localhost only, with configurable dev mode
+    const corsRelaxed = process.env.GUI_CORS_RELAXED === 'true' || 
+                        process.env.GUI_CORS_RELAXED === '1' ||
+                        this.config.corsRelaxed === true;
+    
     this.app.use(cors({
       origin: (origin, callback) => {
         // Allow requests with no origin (same-origin, mobile apps, Postman, etc.)
@@ -272,33 +314,39 @@ export class GuiServer {
           return;
         }
         
-        // Allow localhost variants (http://localhost:*, http://127.0.0.1:*, http://0.0.0.0:*)
-        // Also allow IP addresses in the local network range
+        // Always allow localhost variants (http://localhost:*, http://127.0.0.1:*, http://0.0.0.0:*)
         const localhostPattern = /^https?:\/\/(localhost|127\.0\.0\.1|0\.0\.0\.0|::1)(:\d+)?$/;
         if (localhostPattern.test(origin)) {
           callback(null, true);
           return;
         }
         
-        // For development: allow any origin on common development ports (3000-9999)
-        // This helps when accessing via IP address or different hostnames
-        const devPortPattern = /^https?:\/\/[^:]+:(3\d{3}|[4-9]\d{3})$/;
-        if (devPortPattern.test(origin)) {
-          console.log(`[CORS] Allowing development origin: ${origin}`);
-          callback(null, true);
-          return;
-        }
-        
-        // Also allow any local IP address (192.168.x.x, 10.x.x.x, 172.16-31.x.x)
-        const localIPPattern = /^https?:\/\/(192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2[0-9]|3[01])\.\d+\.\d+)(:\d+)?$/;
-        if (localIPPattern.test(origin)) {
-          console.log(`[CORS] Allowing local IP origin: ${origin}`);
-          callback(null, true);
-          return;
+        // If CORS is relaxed (dev mode), allow additional origins
+        if (corsRelaxed) {
+          // Allow any origin on common development ports (3000-9999)
+          const devPortPattern = /^https?:\/\/[^:]+:(3\d{3}|[4-9]\d{3})$/;
+          if (devPortPattern.test(origin)) {
+            console.log(`[CORS] Allowing development origin (relaxed mode): ${origin}`);
+            callback(null, true);
+            return;
+          }
+          
+          // Allow local IP addresses (192.168.x.x, 10.x.x.x, 172.16-31.x.x)
+          const localIPPattern = /^https?:\/\/(192\.168\.\d+\.\d+|10\.\d+\.\d+\.\d+|172\.(1[6-9]|2[0-9]|3[01])\.\d+\.\d+)(:\d+)?$/;
+          if (localIPPattern.test(origin)) {
+            console.log(`[CORS] Allowing local IP origin (relaxed mode): ${origin}`);
+            callback(null, true);
+            return;
+          }
         }
         
         // Log rejected origin for debugging
         console.warn(`[CORS] Rejected origin: ${origin}`);
+        if (corsRelaxed) {
+          console.warn(`[CORS] Relaxed mode enabled but origin doesn't match dev/local patterns`);
+        } else {
+          console.warn(`[CORS] CORS restricted to localhost only. Set GUI_CORS_RELAXED=true for dev mode.`);
+        }
         console.warn(`[CORS] Allowed origins: ${JSON.stringify(this.config.corsOrigins)}`);
         
         // Deny other origins
@@ -919,33 +967,40 @@ export class GuiServer {
     }
 
     return new Promise((resolve) => {
+      // Close all WebSocket connections and unsubscribe from EventBus
       for (const client of this.clients) {
         const subId = (client as WebSocket & { _subscriptionId?: string })._subscriptionId;
         if (subId) {
           this.eventBus.unsubscribe(subId);
         }
+        // Terminate connections immediately (don't wait for graceful close)
         if (client.readyState === WebSocket.OPEN || client.readyState === WebSocket.CONNECTING) {
-          client.close();
+          client.terminate(); // Use terminate() instead of close() for immediate cleanup
         }
       }
       this.clients.clear();
 
+      // Close WebSocket server first
       if (this.wss) {
         this.wss.close(() => {
+          // Then close HTTP server
           if (this.server) {
             this.server.close(() => {
+              // Set to null after close to prevent reuse
               this.server = null;
               this.wss = null;
-              resolve();
+              // Small delay to ensure all cleanup completes
+              setTimeout(() => resolve(), 50);
             });
           } else {
-            resolve();
+            this.wss = null;
+            setTimeout(() => resolve(), 50);
           }
         });
       } else if (this.server) {
         this.server.close(() => {
           this.server = null;
-          resolve();
+          setTimeout(() => resolve(), 50);
         });
       } else {
         resolve();

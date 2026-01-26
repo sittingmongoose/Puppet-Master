@@ -69,49 +69,49 @@ export async function getState(): Promise<StateResponse> {
  * Start the orchestrator
  */
 export async function start(): Promise<{ success: boolean }> {
-  return fetchJSON('/api/control/start', { method: 'POST' });
+  return fetchJSON('/api/controls/start', { method: 'POST' });
 }
 
 /**
  * Pause the orchestrator
  */
 export async function pause(): Promise<{ success: boolean }> {
-  return fetchJSON('/api/control/pause', { method: 'POST' });
+  return fetchJSON('/api/controls/pause', { method: 'POST' });
 }
 
 /**
  * Resume the orchestrator
  */
 export async function resume(): Promise<{ success: boolean }> {
-  return fetchJSON('/api/control/resume', { method: 'POST' });
+  return fetchJSON('/api/controls/resume', { method: 'POST' });
 }
 
 /**
  * Stop the orchestrator
  */
 export async function stop(): Promise<{ success: boolean }> {
-  return fetchJSON('/api/control/stop', { method: 'POST' });
+  return fetchJSON('/api/controls/stop', { method: 'POST' });
 }
 
 /**
  * Retry the current item
  */
 export async function retry(): Promise<{ success: boolean }> {
-  return fetchJSON('/api/control/retry', { method: 'POST' });
+  return fetchJSON('/api/controls/retry', { method: 'POST' });
 }
 
 /**
  * Replan the current phase
  */
 export async function replan(): Promise<{ success: boolean }> {
-  return fetchJSON('/api/control/replan', { method: 'POST' });
+  return fetchJSON('/api/controls/replan', { method: 'POST' });
 }
 
 /**
  * Reopen a closed item
  */
 export async function reopen(itemId: string): Promise<{ success: boolean }> {
-  return fetchJSON('/api/control/reopen', {
+  return fetchJSON('/api/controls/reopen', {
     method: 'POST',
     body: JSON.stringify({ itemId }),
   });
@@ -121,7 +121,7 @@ export async function reopen(itemId: string): Promise<{ success: boolean }> {
  * Kill the current process
  */
 export async function kill(): Promise<{ success: boolean }> {
-  return fetchJSON('/api/control/kill', { method: 'POST' });
+  return fetchJSON('/api/controls/kill', { method: 'POST' });
 }
 
 // ============================================
@@ -132,7 +132,8 @@ export async function kill(): Promise<{ success: boolean }> {
  * List all projects
  */
 export async function listProjects(): Promise<Project[]> {
-  return fetchJSON<Project[]>('/api/projects');
+  const response = await fetchJSON<{ projects: Project[] }>('/api/projects');
+  return response.projects;
 }
 
 /**
@@ -204,7 +205,8 @@ export interface Config {
  * Get current config
  */
 export async function getConfig(): Promise<Config> {
-  return fetchJSON<Config>('/api/config');
+  const response = await fetchJSON<{ config: Config }>('/api/config');
+  return response.config;
 }
 
 /**
@@ -235,7 +237,16 @@ export async function validateConfig(config: Config): Promise<{ valid: boolean; 
  * Get tier hierarchy
  */
 export async function getTiers(): Promise<TierItem[]> {
-  return fetchJSON<TierItem[]>('/api/tiers');
+  const response = await fetchJSON<{ root: TierItem | null; metadata: unknown }>('/api/tiers');
+  // Server returns { root, metadata }, but React expects TierItem[]
+  // The root is the top-level tier node with children nested inside
+  // Return root as array (React Tiers page expects array and handles root structure)
+  if (!response.root) {
+    return [];
+  }
+  // Root has children property, return as single-item array
+  // React Tiers page will handle the nested structure
+  return [response.root as TierItem];
 }
 
 // ============================================
