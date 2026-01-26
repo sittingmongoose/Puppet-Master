@@ -24,16 +24,24 @@ interface ErrorResponse {
 }
 
 /**
+ * Dependency holder for state routes.
+ * Allows routes to access current dependencies even after initial registration.
+ */
+interface StateRouteDependencies {
+  getTierManager: () => TierStateManager | null;
+  getOrchestrator: () => OrchestratorStateMachine | null;
+  getProgressManager: () => ProgressManager | null;
+  getAgentsManager: () => AgentsManager | null;
+}
+
+/**
  * Create state routes.
  * 
  * Returns Express Router with state query endpoints.
- * Dependencies are optional and can be mocked for initial implementation.
+ * Uses dependency getters to access current dependencies at request time.
  */
 export function createStateRoutes(
-  tierManager: TierStateManager | null,
-  orchestrator: OrchestratorStateMachine | null,
-  progressManager: ProgressManager | null,
-  agentsManager: AgentsManager | null
+  dependencies: StateRouteDependencies
 ): Router {
   const router = createRouter();
 
@@ -43,6 +51,8 @@ export function createStateRoutes(
    */
   router.get('/state', async (_req: Request, res: Response) => {
     try {
+      const orchestrator = dependencies.getOrchestrator();
+      const tierManager = dependencies.getTierManager();
       const orchestratorState: OrchestratorState = orchestrator?.getCurrentState() || 'idle';
       const currentPhase = tierManager?.getCurrentPhase() || null;
       const currentTask = tierManager?.getCurrentTask() || null;
@@ -73,6 +83,7 @@ export function createStateRoutes(
    */
   router.get('/tiers', async (_req: Request, res: Response) => {
     try {
+      const tierManager = dependencies.getTierManager();
       if (!tierManager) {
         return res.status(503).json({
           error: 'TierStateManager not available',
@@ -127,6 +138,7 @@ export function createStateRoutes(
    */
   router.get('/tiers/:id', async (req: Request, res: Response) => {
     try {
+      const tierManager = dependencies.getTierManager();
       const { id } = req.params;
       const node = tierManager?.findNode(id) || null;
 
@@ -165,6 +177,7 @@ export function createStateRoutes(
    */
   router.get('/progress', async (req: Request, res: Response) => {
     try {
+      const progressManager = dependencies.getProgressManager();
       const limit = validateLimitParam(req.query.limit as string | undefined);
       
       let entries: ProgressEntry[] = [];
@@ -190,6 +203,7 @@ export function createStateRoutes(
    */
   router.get('/agents', async (_req: Request, res: Response) => {
     try {
+      const agentsManager = dependencies.getAgentsManager();
       let document = '';
       
       if (agentsManager) {

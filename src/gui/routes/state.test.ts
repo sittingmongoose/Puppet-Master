@@ -11,7 +11,12 @@ import { createStateRoutes } from './state.js';
 describe('State Routes', () => {
   describe('createStateRoutes', () => {
     it('returns an Express Router', () => {
-      const router = createStateRoutes(null, null, null, null);
+      const router = createStateRoutes({
+        getTierManager: () => null,
+        getOrchestrator: () => null,
+        getProgressManager: () => null,
+        getAgentsManager: () => null,
+      });
       expect(router).toBeDefined();
       expect(typeof router).toBe('function');
     });
@@ -19,7 +24,12 @@ describe('State Routes', () => {
     it('handles null dependencies gracefully', () => {
       // Should not throw when dependencies are null
       expect(() => {
-        createStateRoutes(null, null, null, null);
+        createStateRoutes({
+        getTierManager: () => null,
+        getOrchestrator: () => null,
+        getProgressManager: () => null,
+        getAgentsManager: () => null,
+      });
       }).not.toThrow();
     });
   });

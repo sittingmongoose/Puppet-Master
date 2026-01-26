@@ -170,15 +170,8 @@ export class GuiServer {
     this.orchestrator = orchestrator;
     this.progressManager = progressManager;
     this.agentsManager = agentsManager;
-
-    if (this.tierManager && this.orchestrator && this.progressManager && this.agentsManager) {
-      this.app.use('/api', createStateRoutes(
-        this.tierManager,
-        this.orchestrator,
-        this.progressManager,
-        this.agentsManager
-      ));
-    }
+    // Routes are already registered in setupRoutesSync() - no need to re-register
+    // The route handlers will use the updated dependency references
   }
 
   /**
@@ -194,15 +187,8 @@ export class GuiServer {
     if (orchestratorTierManager) {
       this.tierManager = orchestratorTierManager;
       
-      // Re-register state routes with orchestrator's TierStateManager
-      if (this.orchestrator && this.progressManager && this.agentsManager) {
-        this.app.use('/api', createStateRoutes(
-          this.tierManager,
-          this.orchestrator,
-          this.progressManager,
-          this.agentsManager
-        ));
-      }
+      // Routes are already registered in setupRoutesSync() - no need to re-register
+      // The route handlers will use the updated this.tierManager reference
     }
     
     this.app.use('/api', createControlsRoutes(this.orchestratorInstance));
@@ -698,6 +684,15 @@ export class GuiServer {
         });
       }
     });
+
+    // State routes - always register with dependency getters
+    // Route handlers will return 503 or empty responses if dependencies aren't available
+    this.app.use('/api', createStateRoutes({
+      getTierManager: () => this.tierManager,
+      getOrchestrator: () => this.orchestrator,
+      getProgressManager: () => this.progressManager,
+      getAgentsManager: () => this.agentsManager,
+    }));
 
     // Control endpoints will be registered via registerOrchestratorInstance()
     // If no orchestrator instance is registered, controls routes will return 503
