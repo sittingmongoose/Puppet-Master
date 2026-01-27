@@ -337,15 +337,17 @@ describe('EvidenceStore', () => {
       expect(content).toBe('');
     });
 
-    it('should handle long filenames', async () => {
+    it('should handle long filenames by truncating for Windows MAX_PATH', async () => {
       await store.initialize();
       const itemId = 'ST-001-001-001';
       const longScenarioName = 'a'.repeat(100);
 
-      const path = await store.saveScreenshot(itemId, Buffer.from('data'), longScenarioName);
-      
-      expect(path).toContain(longScenarioName);
-      const saved = await readFile(path);
+      const savedPath = await store.saveScreenshot(itemId, Buffer.from('data'), longScenarioName);
+      const pathBasename = savedPath.split(/[/\\]/).pop() ?? '';
+
+      expect(pathBasename.length).toBeLessThanOrEqual(180);
+      expect(savedPath).toContain('screenshots');
+      const saved = await readFile(savedPath);
       expect(saved).toEqual(Buffer.from('data'));
     });
   });

@@ -158,6 +158,28 @@ describe('UsageTracker', () => {
     });
   });
 
+  describe(':memory: (no file created)', () => {
+    it('should not create a file when path is :memory:', async () => {
+      const memTracker = new UsageTracker(':memory:');
+      const cwd = process.cwd();
+      const memoryPath = join(cwd, ':memory:');
+
+      await memTracker.track(createTestEvent());
+      const events = await memTracker.getAll();
+
+      expect(events).toEqual([]);
+      expect(existsSync(memoryPath)).toBe(false);
+    });
+
+    it('getAll returns [] for :memory:', async () => {
+      const memTracker = new UsageTracker(':memory:');
+      await memTracker.track(createTestEvent({ platform: 'claude' }));
+
+      const events = await memTracker.getAll();
+      expect(events).toEqual([]);
+    });
+  });
+
   describe('getAll', () => {
     it('should return empty array for non-existent file', async () => {
       const events = await tracker.getAll();

@@ -29,11 +29,30 @@ echo   npm: %NPM_VERSION%
 
 REM Check NSIS
 echo Checking NSIS...
-where makensis >nul 2>&1
-if %ERRORLEVEL% NEQ 0 (
+set NSIS_OK=0
+where makensis >nul 2>&1 && set NSIS_OK=1
+if %NSIS_OK%==0 (
+    if exist "%ProgramFiles%\NSIS\makensis.exe" (
+        set "MAKENSIS_PATH=%ProgramFiles%\NSIS\makensis.exe"
+        set "PATH=%ProgramFiles%\NSIS;%PATH%"
+        set NSIS_OK=1
+    )
+)
+if %NSIS_OK%==0 (
+    if exist "%ProgramFiles(x86)%\NSIS\makensis.exe" (
+        set "MAKENSIS_PATH=%ProgramFiles(x86)%\NSIS\makensis.exe"
+        set "PATH=%ProgramFiles(x86)%\NSIS;%PATH%"
+        set NSIS_OK=1
+    )
+)
+if %NSIS_OK%==0 (
     echo   ERROR: NSIS not found. Please install NSIS:
     echo     1. Download from https://nsis.sourceforge.io/Download
     echo     2. Or install Chocolatey and run: choco install nsis
+    echo.
+    echo   If NSIS is already installed, add its folder (e.g. C:\Program Files ^(x86^)\NSIS^) to your PATH,
+    echo   or set MAKENSIS_PATH to the full path of makensis.exe and try again.
+    echo   Restart the terminal after installing NSIS so PATH updates are picked up.
     exit /b 1
 )
 

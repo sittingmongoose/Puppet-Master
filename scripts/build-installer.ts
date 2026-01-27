@@ -250,6 +250,24 @@ set \"PLAYWRIGHT_BROWSERS_PATH=%ROOT_DIR%\\playwright-browsers\"\r
   await writeFile(path.join(payloadRoot, 'VERSION.txt'), `${version}\n`, 'utf8');
 }
 
+function resolveMakensisCommand(): string {
+  if (process.platform !== 'win32') {
+    return 'makensis';
+  }
+  const explicit = process.env.MAKENSIS_PATH;
+  if (explicit && existsSync(explicit)) {
+    return explicit;
+  }
+  const dir = process.env.NSISDIR;
+  if (dir) {
+    const joined = path.join(dir, 'makensis.exe');
+    if (existsSync(joined)) {
+      return joined;
+    }
+  }
+  return 'makensis';
+}
+
 async function buildWindowsNsis(args: Args, repoRoot: string, stageRoot: string, outDir: string, version: string): Promise<string> {
   const nsiPath = path.join(repoRoot, 'installer', 'win', 'puppet-master.nsi');
   if (!existsSync(nsiPath)) {
@@ -259,8 +277,9 @@ async function buildWindowsNsis(args: Args, repoRoot: string, stageRoot: string,
   await ensureDir(outDir);
   const artifact = path.join(outDir, `puppet-master-${version}-win-${args.arch}.exe`);
 
+  const makensisCmd = resolveMakensisCommand();
   console.log('\n🧱 Building Windows NSIS installer...\n');
-  await run('makensis', [
+  await run(makensisCmd, [
     `/DVERSION=${version}`,
     `/DOUTFILE=${artifact}`,
     `/DSTAGE_DIR=${path.join(stageRoot, 'payload')}`,

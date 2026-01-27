@@ -11,6 +11,9 @@ import { dirname } from 'node:path';
 import type { Platform } from '../types/config.js';
 import type { UsageEvent, UsageQuery, UsageSummary } from '../types/usage.js';
 
+/** Path used to mean "in-memory only"; no file is created (avoids invalid ':memory:' on Windows when zipping). */
+const IN_MEMORY_PATH = ':memory:';
+
 /**
  * UsageTracker handles reading and writing to usage.jsonl
  */
@@ -21,10 +24,16 @@ export class UsageTracker {
     this.filePath = filePath;
   }
 
+  /** True when filePath is :memory: — no disk I/O, no file created. */
+  private isInMemory(): boolean {
+    return this.filePath === IN_MEMORY_PATH;
+  }
+
   /**
    * Ensures the directory and file exist
    */
   private async ensureFileExists(): Promise<void> {
+    if (this.isInMemory()) return;
     const dir = dirname(this.filePath);
     if (!existsSync(dir)) {
       await mkdir(dir, { recursive: true });
@@ -66,6 +75,7 @@ export class UsageTracker {
    * Automatically adds timestamp if not provided
    */
   async track(event: Omit<UsageEvent, 'timestamp'>): Promise<void> {
+    if (this.isInMemory()) return;
     const fullEvent: UsageEvent = {
       ...event,
       timestamp: new Date().toISOString(),
@@ -83,6 +93,7 @@ export class UsageTracker {
    * Returns empty array if file doesn't exist or is empty
    */
   async getAll(): Promise<UsageEvent[]> {
+    if (this.isInMemory()) return [];
     if (!existsSync(this.filePath)) {
       return [];
     }

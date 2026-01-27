@@ -5,6 +5,7 @@
  * file snapshots, metrics, gate reports) with organized directory structure.
  * 
  * See STATE_FILES.md Section 6 for directory structure and naming conventions.
+ * Filenames are capped for Windows MAX_PATH (260) so zipped evidence extracts safely.
  */
 
 import { promises as fs } from 'fs';
@@ -14,6 +15,9 @@ import type {
   EvidenceType,
   GateReportEvidence,
 } from '../types/evidence.js';
+
+/** Max filename length (itemId + suffix) to keep full paths under Windows MAX_PATH when zipped. */
+const MAX_EVIDENCE_FILENAME_LENGTH = 180;
 
 /**
  * EvidenceStore class.
@@ -260,7 +264,21 @@ export class EvidenceStore {
   }
 
   /**
+   * Simple hash for truncated filenames (avoid collisions when capping length).
+   */
+  private static shortHash(s: string): string {
+    let h = 0;
+    for (let i = 0; i < s.length; i++) {
+      h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+    }
+    return Math.abs(h).toString(16).slice(0, 8);
+  }
+
+  /**
    * Generates a file path for evidence storage.
+   * Filenames are capped at MAX_EVIDENCE_FILENAME_LENGTH so full paths stay under
+   * Windows MAX_PATH when the project (or evidence dir) is zipped and extracted.
+   *
    * @param type - Evidence type
    * @param itemId - Item ID
    * @param suffix - Optional suffix (filename part after itemId)
@@ -281,7 +299,15 @@ export class EvidenceStore {
     };
 
     const subdir = subdirMap[type];
-    const filename = suffix ? `${itemId}-${suffix}` : itemId;
+    let filename = suffix ? `${itemId}-${suffix}` : itemId;
+    if (filename.length > MAX_EVIDENCE_FILENAME_LENGTH) {
+      const ext = filename.includes('.') ? filename.slice(filename.lastIndexOf('.')) : '';
+      const base = filename.slice(0, filename.length - ext.length);
+      const trim = MAX_EVIDENCE_FILENAME_LENGTH - ext.length - 9; // "-" + 8-char hash
+      filename = trim > 0
+        ? `${base.slice(0, trim)}-${EvidenceStore.shortHash(filename)}${ext}`
+        : `${base.slice(0, MAX_EVIDENCE_FILENAME_LENGTH - 9)}-${EvidenceStore.shortHash(filename)}`;
+    }
     return join(this.baseDir, subdir, filename);
   }
 
