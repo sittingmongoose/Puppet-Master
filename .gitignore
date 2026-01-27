@@ -36,8 +36,9 @@ yarn-error.log*
 **/local.json
 local.json
 
-# Local notes / docs
+# Local notes / docs (Reference/RalphInfo has deep paths + long .snap names that exceed Windows MAX_PATH when zipping)
 /RalphInfo/
+/Reference/RalphInfo/
 /GBC\ Shader/
 
 # UsageTracker in-memory test artifact (invalid filename on Windows)
