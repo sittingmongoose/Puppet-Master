@@ -28,6 +28,9 @@ export interface IterationContext {
   platform: Platform;
   model?: string;
   planMode?: boolean;
+  outputFormat?: 'text' | 'json' | 'stream-json';
+  permissionMode?: 'default' | 'acceptEdits' | 'plan' | 'dontAsk' | 'bypassPermissions';
+  allowedTools?: string;
   progressEntries: ProgressEntry[];
   agentsContent: AgentsContent[];
   subtaskPlan: TierPlan;
@@ -131,6 +134,9 @@ export class ExecutionEngine {
       prompt,
       model: context.model,
       planMode: context.planMode,
+      outputFormat: context.outputFormat,
+      permissionMode: context.permissionMode,
+      allowedTools: context.allowedTools,
       workingDirectory: context.projectPath,
       nonInteractive: true,
       timeout: this.config.defaultTimeout,

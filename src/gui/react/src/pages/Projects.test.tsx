@@ -301,4 +301,40 @@ describe('ProjectsPage', () => {
     const link = screen.getByRole('link', { name: /START NEW PROJECT/i });
     expect(link).toHaveAttribute('href', '/wizard');
   });
+
+  it('does not throw when listProjects returns null', async () => {
+    mockApi.listProjects.mockResolvedValue(null as unknown as Project[]);
+    expect(() => renderProjects()).not.toThrow();
+    await waitFor(() => {
+      expect(screen.queryByText('Loading projects...')).not.toBeInTheDocument();
+    });
+    expect(screen.getByText('No projects found.')).toBeInTheDocument();
+  });
+
+  it('does not throw when listProjects returns undefined', async () => {
+    mockApi.listProjects.mockResolvedValue(undefined as unknown as Project[]);
+    expect(() => renderProjects()).not.toThrow();
+    await waitFor(() => {
+      expect(screen.queryByText('Loading projects...')).not.toBeInTheDocument();
+    });
+    expect(screen.getByText('No projects found.')).toBeInTheDocument();
+  });
+
+  it('does not throw when listProjects returns empty object', async () => {
+    mockApi.listProjects.mockResolvedValue({} as unknown as Project[]);
+    expect(() => renderProjects()).not.toThrow();
+    await waitFor(() => {
+      expect(screen.queryByText('Loading projects...')).not.toBeInTheDocument();
+    });
+    expect(screen.getByText('No projects found.')).toBeInTheDocument();
+  });
+
+  it('does not throw when listProjects returns { projects: null }', async () => {
+    mockApi.listProjects.mockResolvedValue({ projects: null } as unknown as Project[]);
+    expect(() => renderProjects()).not.toThrow();
+    await waitFor(() => {
+      expect(screen.queryByText('Loading projects...')).not.toBeInTheDocument();
+    });
+    expect(screen.getByText('No projects found.')).toBeInTheDocument();
+  });
 });

@@ -32,10 +32,10 @@ export default function TiersPage() {
       try {
         setLoading(true);
         const data = await api.getTiers();
-        setTiers(data as unknown as TierItem[]);
-        // Auto-expand first level
-        if (data && Array.isArray(data)) {
-          setExpandedIds(new Set(data.map((item: { id: string }) => item.id)));
+        const list = Array.isArray(data) ? data : [];
+        setTiers(list as TierItem[]);
+        if (list.length > 0) {
+          setExpandedIds(new Set((list as TierItem[]).map((item) => item.id)));
         }
       } catch (err) {
         console.error('[Tiers] Failed to fetch tiers:', err);
@@ -63,9 +63,10 @@ export default function TiersPage() {
   // Expand all nodes
   const expandAll = useCallback(() => {
     const getAllIds = (items: TierItem[]): string[] => {
-      return items.flatMap((item) => [
+      const list = Array.isArray(items) ? items : [];
+      return list.flatMap((item) => [
         item.id,
-        ...(item.children ? getAllIds(item.children) : []),
+        ...(Array.isArray(item.children) ? getAllIds(item.children) : []),
       ]);
     };
     setExpandedIds(new Set(getAllIds(tiers)));
@@ -86,13 +87,13 @@ export default function TiersPage() {
         break;
       case 'ArrowRight':
         e.preventDefault();
-        if (item.children && !expandedIds.has(item.id)) {
+        if (Array.isArray(item.children) && item.children.length > 0 && !expandedIds.has(item.id)) {
           toggleExpand(item.id);
         }
         break;
       case 'ArrowLeft':
         e.preventDefault();
-        if (item.children && expandedIds.has(item.id)) {
+        if (Array.isArray(item.children) && item.children.length > 0 && expandedIds.has(item.id)) {
           toggleExpand(item.id);
         }
         break;
@@ -134,7 +135,7 @@ export default function TiersPage() {
         {/* Tree view */}
         <div className="lg:col-span-2">
           <Panel title="Tier Hierarchy">
-            {tiers.length === 0 ? (
+            {(Array.isArray(tiers) ? tiers : []).length === 0 ? (
               <p className="text-ink-faded text-center py-lg">
                 No tiers loaded. Start a project from the Wizard to generate tiers.
               </p>
@@ -144,7 +145,7 @@ export default function TiersPage() {
                 aria-label="Tier hierarchy"
                 className="space-y-xs"
               >
-                {tiers.map((item) => (
+                {(Array.isArray(tiers) ? tiers : []).map((item) => (
                   <TreeNode
                     key={item.id}
                     item={item}
@@ -204,7 +205,7 @@ function TreeNode({
   onSelect,
   onKeyDown,
 }: TreeNodeProps) {
-  const hasChildren = item.children && item.children.length > 0;
+  const hasChildren = Array.isArray(item.children) && item.children.length > 0;
   
   return (
     <div role="treeitem" aria-expanded={hasChildren ? expanded : undefined}>
@@ -268,7 +269,7 @@ function TreeNode({
       {/* Children */}
       {hasChildren && expanded && (
         <div role="group">
-          {item.children?.map((child) => (
+          {(Array.isArray(item.children) ? item.children : []).map((child) => (
             <TreeNode
               key={child.id}
               item={child}
@@ -333,7 +334,7 @@ function ItemDetails({ item }: ItemDetailsProps) {
       )}
 
       {/* Acceptance Criteria */}
-      {item.acceptanceCriteria && item.acceptanceCriteria.length > 0 && (
+      {Array.isArray(item.acceptanceCriteria) && item.acceptanceCriteria.length > 0 && (
         <div>
           <h4 className="font-semibold mb-sm">Acceptance Criteria:</h4>
           <ul className="list-disc list-inside space-y-xs text-sm">
@@ -345,7 +346,7 @@ function ItemDetails({ item }: ItemDetailsProps) {
       )}
 
       {/* Children count */}
-      {item.children && item.children.length > 0 && (
+      {Array.isArray(item.children) && item.children.length > 0 && (
         <div>
           <span className="font-semibold">Children:</span>
           <span className="ml-sm">{item.children.length} items</span>

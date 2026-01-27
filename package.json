@@ -47,6 +47,7 @@
     "vitest": "^2.0.0"
   },
   "dependencies": {
+    "@openai/codex-sdk": "^0.91.0",
     "better-sqlite3": "^12.6.2",
     "commander": "^14.0.2",
     "cors": "^2.8.5",

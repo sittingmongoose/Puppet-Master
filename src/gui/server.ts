@@ -692,6 +692,8 @@ export class GuiServer {
       getOrchestrator: () => this.orchestrator,
       getProgressManager: () => this.progressManager,
       getAgentsManager: () => this.agentsManager,
+      getQuotaManager: () => this.quotaManager,
+      getUsageTracker: () => this.usageTracker,
     }));
 
     // Control endpoints will be registered via registerOrchestratorInstance()

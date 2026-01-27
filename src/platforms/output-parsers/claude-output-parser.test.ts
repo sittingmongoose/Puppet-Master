@@ -82,6 +82,20 @@ describe('ClaudeOutputParser', () => {
       const parsed = parser.parse(output);
       expect(parsed.rawOutput).toBe(output);
     });
+
+    it('should parse headless JSON shape (result, usage, session_id)', () => {
+      const output = JSON.stringify({
+        result: 'Summary <ralph>COMPLETE</ralph>',
+        session_id: 'sess-headless-123',
+        usage: { input_tokens: 100, output_tokens: 50 },
+        model: 'claude-sonnet-4-5',
+      });
+      const parsed = parser.parse(output);
+      expect(parsed.completionSignal).toBe('COMPLETE');
+      expect(parsed.sessionId).toBe('sess-headless-123');
+      expect(parsed.tokensUsed).toBe(50);
+      expect(parsed.model).toBe('claude-sonnet-4-5');
+    });
   });
 
   describe('parse - stream-json (JSONL)', () => {

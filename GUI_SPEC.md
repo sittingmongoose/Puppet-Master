@@ -591,25 +591,36 @@ The RWM Puppet Master GUI is a browser-based interface that provides visual cont
 │  [📄 View Discovery Report] [📋 View capabilities.json]                │
 │                                                                        │
 │  ┌──────────────────────────────────────────────────────────────────┐  │
-│  │ CURSOR-AGENT                                              ✅ OK  │  │
+│  │ CURSOR (agent)                                            ✅ OK  │  │
 │  │ ─────────────────────────────────────────────────────────────── │  │
 │  │ Version: 1.2.3                                                   │  │
-│  │ Command: cursor-agent                                            │  │
+│  │ Command: agent (preferred) / cursor-agent (alias)               │  │
 │  │                                                                  │  │
 │  │ Capabilities:                                                    │  │
-│  │   ✅ Non-interactive mode (-p)                                   │  │
+│  │   ✅ Non-interactive mode (-p/--print)                          │  │
 │  │   ✅ Model selection (--model)                                   │  │
-│  │   ✅ Session resume (--resume)                                   │  │
-│  │   ✅ MCP support                                                 │  │
-│  │   ⚠️ Streaming: partial (stdout only)                           │  │
+│  │   ✅ Plan mode (--mode=plan)                                     │  │
+│  │   ✅ Ask mode (--mode=ask)                                       │  │
+│  │   ✅ Output formats (--output-format json|stream-json)          │  │
+│  │   ✅ MCP support (agent mcp list)                                │  │
+│  │   ✅ Model discovery (agent models)                               │  │
+│  │   ✅ Auth: CURSOR_API_KEY (headless/CI)                          │  │
+│  │   ⚠️ Session resume: Not used (fresh process per iteration)     │  │
 │  │                                                                  │  │
 │  │ Available Models:                                                │  │
-│  │   auto, sonnet-4.5-thinking, grok-code                          │  │
+│  │   auto, sonnet-4.5-thinking, grok-code (discovered: 12 total)   │  │
+│  │                                                                  │  │
+│  │ MCP Status:                                                      │  │
+│  │   2 server(s) configured (context7, context7-local)               │  │
+│  │                                                                  │  │
+│  │ Config:                                                          │  │
+│  │   ~/.cursor/config.json (has permissions)                       │  │
 │  │                                                                  │  │
 │  │ Smoke Tests:                                                     │  │
 │  │   ✅ basic_invocation (1.2s)                                     │  │
 │  │   ✅ non_interactive (2.3s)                                      │  │
 │  │   ✅ model_selection (1.6s)                                      │  │
+│  │   ✅ output_format_json (1.8s)                                   │  │
 │  │                                                                  │  │
 │  │ [🔄 Rediscover] [🧪 Run Smoke Tests] [📄 View Logs]              │  │
 │  └──────────────────────────────────────────────────────────────────┘  │
@@ -758,7 +769,7 @@ The screen MUST:
 │                                                                        │
 │  CLI Tools                                                             │
 │  ┌──────────────────────────────────────────────────────────────────┐  │
-│  │ ✅ cursor-agent    v1.2.3    /usr/local/bin/cursor-agent        │  │
+│  │ ✅ agent (cursor)  v1.2.3    /usr/local/bin/agent                │  │
 │  │ ✅ codex           v0.5.1    /usr/local/bin/codex               │  │
 │  │ ✅ claude          v1.0.8    ~/.claude/bin/claude               │  │
 │  └──────────────────────────────────────────────────────────────────┘  │
@@ -1088,7 +1099,7 @@ Unsubscribe:
 │ ⚠️ Stall Detected                                                    │
 │ ──────────────────────────────────────────────────────────────────── │
 │                                                                      │
-│ No output from cursor-agent for 5 minutes                            │
+│ No output from agent (Cursor CLI) for 5 minutes                      │
 │ Process ID: 12345                                                    │
 │ Item: ST-001-002-003                                                 │
 │                                                                      │

@@ -26,6 +26,7 @@ import { ClaudeCliCheck } from '../../doctor/checks/cli-tools.js';
 import { GeminiCliCheck } from '../../doctor/checks/cli-tools.js';
 import { CopilotCliCheck } from '../../doctor/checks/cli-tools.js';
 import { PlaywrightBrowsersCheck } from '../../doctor/checks/playwright-check.js';
+import { UsageQuotaCheck } from '../../doctor/checks/usage-check.js';
 
 // Git checks
 import {
@@ -99,6 +100,9 @@ async function createCheckRegistry(configPath?: string): Promise<CheckRegistry> 
   registry.register(new ProjectDirCheck());
   registry.register(new ConfigFileCheck());
   registry.register(new SubdirectoriesCheck());
+
+  // P1: Register Usage/Quota checks
+  registry.register(new UsageQuotaCheck());
 
   return registry;
 }

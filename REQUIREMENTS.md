@@ -94,12 +94,20 @@ The tier pipeline is **fully user-configurable**. There is NO hardcoded ladder.
 
 ---
 
-## 4. Constraint: No APIs
+## 4. Constraint: No APIs (Subscription-Based Access Only)
 
-**CRITICAL**: RWM Puppet Master MUST NOT use:
-- OpenAI API
-- Anthropic API
-- Any direct LLM API calls
+**CRITICAL**: RWM Puppet Master MUST NOT use direct API calls that charge per-use. All agent interactions must use subscription-based access via CLI.
+
+**Key Distinction:**
+- ✅ **CLI usage**: Uses subscription account (ChatGPT/Codex plan) - no per-use charges
+- ❌ **Direct API calls**: Pay-per-use billing - NOT allowed
+- ✅ **SDKs that wrap CLI**: Acceptable if they spawn CLI processes and use subscription account
+- ❌ **SDKs that use API keys**: NOT acceptable if they make direct API calls
+
+**Rationale:**
+- CLI tools authenticate via subscription account (ChatGPT/Codex plan)
+- CLI tools don't charge per API call - they use monthly subscription credits
+- Direct API calls charge per token/request, which is not acceptable
 
 All agent interactions happen via CLI invocations only:
 - `cursor-agent "prompt" [flags]`
@@ -805,7 +813,37 @@ Track per-platform usage events in: `.puppet-master/usage/`
 {"timestamp":"2026-01-10T14:30:00Z","platform":"codex","action":"task_gate","tokens":4000,"duration_ms":25000}
 ```
 
-### 23.5 Cooldown Handling
+### 23.5 Platform Usage Tracking Integration
+
+Puppet Master integrates platform-reported usage data from multiple sources:
+
+1. **Platform APIs**:
+   - Claude: Admin API (`GET /v1/organizations/usage_report/claude_code`) - provides request counts, token usage, quota limits, customer_type, subscription_type
+   - GitHub Copilot: Metrics API (`GET /orgs/{org}/copilot/metrics`) - provides premium requests used/limit, monthly reset
+   - Gemini: Cloud Quotas API (`cloudquotas.googleapis.com`) - provides quota limits, usage counts, reset times
+
+2. **Error Message Parsing**:
+   - Codex: "You've reached your 5-hour message limit. Try again in 3h 42m." → extracts limit and reset time
+   - Gemini: "Your quota will reset after 8h44m7s." → extracts reset time
+   - Claude: Rate limit errors (429, 413, 503, 529) with `Retry-After` header
+
+3. **CLI Command Parsing**:
+   - Codex: `/status` command → token usage (Input/Output/Total)
+   - Claude: `/cost` command → API token usage, `/stats` command → usage patterns
+   - Gemini: `/stats` command → per-model usage, tokens, tool stats
+
+4. **Manual Configuration**:
+   - Cursor/Codex: Manual plan configuration (no APIs available)
+   - Cursor: `autoModeUnlimited` flag indicates grandfathered plan
+
+**Integration**: UsageProvider aggregates all sources, QuotaManager merges platform-reported usage with internal UsageTracker data, Usage CLI command displays platform-reported data, Doctor checks use platform-reported usage for warnings.
+
+**Plan Detection**: PlanDetectionService detects subscription tiers:
+- Claude: API-based (customer_type/subscription_type)
+- Copilot/Gemini: Quota limit inference
+- Codex/Cursor: Manual config or quota inference
+
+### 23.6 Cooldown Handling
 
 When a platform hits its limit:
 
@@ -1345,55 +1383,129 @@ Example: `PM-2026-01-10-14-00-00-001`
 
 ## Appendix A: CLI Platform Research Summary
 
-### Cursor CLI (`cursor-agent`)
+### Cursor CLI (`agent` / `cursor-agent`)
+
+**CU-P0-T01, CU-P1-T10: Updated per Cursor January 2026 contract.**
+
+**Binary names:**
+- Primary: `agent` (preferred per Cursor January 2026 docs)
+- Alias: `cursor-agent` (backward compatibility, installed by same script)
+- Install: `curl https://cursor.com/install -fsSL | bash` (installs both to `~/.local/bin`)
 
 **Key capabilities:**
-- `cursor-agent chat "prompt"` - Start interactive session
-- `cursor-agent -p "prompt"` - Non-interactive print mode
-- `--resume <session-id>` - Continue existing session
+- `agent -p "prompt"` or `agent --print "prompt"` - Non-interactive print mode (preferred)
+- `agent --mode=plan` - Plan mode for read-only planning passes
+- `agent --mode=ask` - Ask mode for read-only/discovery/reviewer passes
+- `agent --output-format json` - Single JSON object output
+- `agent --output-format stream-json` - NDJSON streaming events
+- `agent models` or `agent --list-models` - List available models
+- `agent mcp list` - List MCP servers
+- `agent mcp list-tools <server>` - List tools from MCP server
 - Reads AGENTS.md and CLAUDE.md from project root
 - Supports MCP via mcp.json
-- `/model` command to switch models
-- `/compress` to free context space
+- `/model` command (interactive) to switch models
+- `/mcp list` - Interactive MCP menu (browse/enable/configure)
+
+**Authentication:**
+- Interactive: Uses local Cursor app authentication
+- Headless/CI: Set `CURSOR_API_KEY` environment variable
+- Never use `agent resume` or cloud handoff (`&`) in Puppet Master (fresh process per iteration)
 
 **Planning approach:**
-- No dedicated `--plan` flag
-- Plan behavior via explicit prompt: "Plan the implementation for X. Then build it."
-- Non-interactive planning: `cursor-agent -p "Outline a plan..." > plan.md`
+- Use `--mode=plan` when supported (best-effort detection)
+- Fallback: Plan behavior via explicit prompt: "Plan the implementation for X. Then build it."
+- Non-interactive planning: `agent -p "Outline a plan..." > plan.md`
+
+**Puppet Master constraints:**
+- Fresh process per iteration (no session reuse)
+- No `agent resume` usage
+- No cloud handoff (`&` command)
+- Deterministic automation requires isolation
+
+**CU-P2-T11: Shell Mode - Not Integrated**
+- Cursor shell mode is interactive and designed for human interaction
+- Puppet Master requires deterministic, non-interactive automation
+- Shell mode does not provide a reliable non-interactive contract
+- Decision: Shell mode is explicitly not supported in Puppet Master flows
+- Rationale: Interactive nature conflicts with automation requirements; no deterministic contract available
+
+**CU-P2-T12: Cloud Handoff + Session Resume - Explicit Non-Support**
+- Cursor supports cloud handoff (`&` command) and session resume (`agent resume`)
+- Puppet Master does NOT use these features in orchestration flows
+- Rationale: Determinism, isolation, and reproducibility require fresh processes per iteration
+- Each iteration spawns a new `agent` process with no session state
+- Cloud handoff is designed for human workflows, not deterministic automation
+- Session resume would introduce state dependencies that break isolation guarantees
+- Reference: https://cursor.com/docs/cloud-agent, https://cursor.com/changelog/cli-jan-16-2026
 
 ### Codex CLI (`codex`)
 
 **Key capabilities:**
-- `codex "prompt"` - Start TUI session
-- `codex exec "prompt"` - Non-interactive with JSONL output
-- `--model <model>` - Select model
-- `--approval-policy` - Control command approval
-- `--sandbox-mode` - Filesystem/network access control
-- `/model`, `/review`, `/plan` slash commands
+- `codex exec "prompt"` - Non-interactive execution with JSONL output (used by Puppet Master)
+- `codex` (no subcommand) - Launch interactive TUI session
+- `codex mcp-server` - Run Codex as MCP server (CLI-based, acceptable)
+
+**Non-interactive flags (used by Puppet Master):**
+- `--cd <dir>` or `-C <dir>` - Set working directory
+- `--model <model>` or `-m <model>` - Model selection
+- `--full-auto` - Convenience flag: sets `--ask-for-approval on-request` and `--sandbox workspace-write`
+- `--ask-for-approval <policy>` - Control approval: `untrusted | on-failure | on-request | never`
+- `--sandbox <mode>` - Sandbox policy: `read-only | workspace-write | danger-full-access`
+- `--json` or `--experimental-json` - JSONL event stream output
+- `--color <mode>` - ANSI color control: `always | never | auto` (Puppet Master uses `never`)
+- `--max-turns <n>` - Cap agentic turns (when supported)
+- `--skip-git-repo-check` - Allow running outside Git repository
+- `--output-last-message <path>` or `-o <path>` - Write final message to file
+- `--output-schema <path>` - Structured JSON output with custom schema
+
+**Additional flags:**
+- `--add-dir <path>` - Grant additional directories write access (repeatable)
+- `--image <path>` or `-i <path>` - Attach image files to prompts
+- `--profile <name>` or `-p <name>` - Load configuration profile
+- `-c key=value` or `--config key=value` - Inline configuration overrides
+- `--search` - Enable web search capability
+- `--oss` - Use local open source model provider (requires Ollama)
+
+**Configuration:**
+- Reads `~/.codex/config.toml` for persistent settings
+- Explicit CLI flags override config file settings
 - AGENTS.md native support
 
-**Relevant flags:**
-- `--path <dir>` - Set working directory
-- `--resume [session-id]` - Continue session
-- `--max-turns` - Cap agentic turns
-- `--output-format json` - Structured output
+**Slash commands (interactive mode only):**
+- `/model`, `/review`, `/plan`, `/approvals`, `/status`, `/diff`, `/compact`, `/fork`, `/resume`, `/new`, `/exit`
+
+**Codex SDK (`@openai/codex-sdk`):**
+- TypeScript SDK for programmatic control
+- **VERIFIED CLI-based**: SDK wraps the bundled `codex` binary and spawns CLI processes internally
+- SDK exchanges JSONL events over stdin/stdout with the CLI process
+- **Respects "CLI only" constraint**: ✅ SDK is CLI-based, not API-based
+- **Uses subscription account**: SDK spawns CLI processes which use OpenAI subscription account (ChatGPT/Codex plan), NOT pay-per-use API calls
+- **Current implementation**: CodexRunner uses SDK instead of direct CLI spawn
+- **Fresh process requirement**: Each iteration creates a NEW thread via `codexClient.startThread()`, ensuring fresh process per iteration
+- **Important**: The "CLI only" constraint means using subscription-based access (via CLI) rather than direct API calls that charge per-use. SDK qualifies because it uses CLI internally and thus uses the subscription account.
+
+**Codex MCP Server (`codex mcp-server`):**
+- **MCP Server is CLI-based** ✅ Acceptable (running `codex mcp-server` is a CLI invocation)
+- **However**: OpenAI Agents SDK orchestration uses OpenAI API ❌ Violates constraint
+- Can use MCP server directly without Agents SDK
 
 ### Claude Code CLI (`claude`)
 
 **Key capabilities:**
 - `claude "prompt"` - Start interactive REPL
-- `claude -p "prompt"` - Non-interactive print mode
-- `--model <model>` - Select model
-- `--resume <session-id>` - Continue session
-- `--output-format json` - Structured output
-- `--append-system-prompt` - Add custom instructions
-- CLAUDE.md support
-- MCP integration
+- `claude -p "prompt"` - Non-interactive print mode (headless)
+- `--model <model>` - Select model (`sonnet`, `opus`, or full model id)
+- `--output-format text|json|stream-json` - Output format
+- `--no-session-persistence` - Disable session save (print mode only); we use for fresh process per iteration
+- `--permission-mode default|acceptEdits|plan|dontAsk|bypassPermissions` - Permission behavior
+- `--allowedTools "Read,Edit,Bash"` - Auto-approve tools (comma-separated)
+- `--max-turns <n>` - Limit agentic turns
+- `--append-system-prompt` / `--append-system-prompt-file` - Add custom instructions
+- CLAUDE.md support; MCP integration
 
-**Relevant flags:**
-- `--max-turns` - Limit turns
-- `--allowedTools` - Restrict tool access
-- `/init` - Generate CLAUDE.md
+**Puppet Master:** We spawn fresh processes only (no `-c`/`--continue`, no `-r`/`--resume`).
+
+**References:** [CLI reference](https://code.claude.com/docs/en/cli-reference), [Headless](https://code.claude.com/docs/en/headless), [Setup](https://code.claude.com/docs/en/setup). `claude doctor`, `claude update`, `claude mcp`.
 
 ### Gemini CLI (`gemini`)
 

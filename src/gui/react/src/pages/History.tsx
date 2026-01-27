@@ -99,7 +99,7 @@ export default function HistoryPage() {
         
         // Using mock data for now
         await new Promise((r) => setTimeout(r, 300));
-        setSessions(MOCK_SESSIONS);
+        setSessions(Array.isArray(MOCK_SESSIONS) ? MOCK_SESSIONS : []);
       } catch (err) {
         console.error('[History] Failed to fetch sessions:', err);
       } finally {
@@ -109,11 +109,11 @@ export default function HistoryPage() {
     fetchSessions();
   }, []);
 
-  // Get unique projects for filter
-  const projects = Array.from(new Set(sessions.map((s) => s.projectName)));
+  const sessionsList = Array.isArray(sessions) ? sessions : [];
+  const projects = Array.from(new Set(sessionsList.map((s) => s.projectName)));
 
   // Filter sessions
-  const filteredSessions = sessions.filter((session) => {
+  const filteredSessions = sessionsList.filter((session) => {
     // Status filter
     if (filterStatus !== 'all' && session.status !== filterStatus) {
       return false;

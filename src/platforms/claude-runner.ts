@@ -90,12 +90,15 @@ export class ClaudeRunner extends BasePlatformRunner {
 
   /**
    * Builds command-line arguments for claude CLI.
-   * 
-   * Constructs arguments based on request:
-   * - -p flag for non-interactive/print mode (with prompt as value)
-   * - --model flag if model is specified
-   * - --output-format json (optional, for structured output)
-   * - --max-turns flag if maxTurns is specified
+   *
+   * Per https://code.claude.com/docs/en/cli-reference and
+   * https://code.claude.com/docs/en/headless.
+   *
+   * - -p: non-interactive print mode (prompt as arg or stdin)
+   * - --no-session-persistence: fresh process per iteration (print mode only)
+   * - --output-format: text | json | stream-json when specified
+   * - --model, --max-turns
+   * - --permission-mode, --allowedTools when provided (explicit config only)
    */
   protected buildArgs(request: ExecutionRequest): string[] {
     const args: string[] = [];
@@ -115,6 +118,10 @@ export class ClaudeRunner extends BasePlatformRunner {
       if (prompt && promptBytes <= MAX_PROMPT_ARG_BYTES) {
         args.push(prompt);
       }
+
+      // Disable session persistence so each run is truly fresh (no resume).
+      // Per CLI reference: print mode only.
+      args.push('--no-session-persistence');
     }
 
     // Model selection
@@ -127,10 +134,94 @@ export class ClaudeRunner extends BasePlatformRunner {
       args.push('--max-turns', String(request.maxTurns));
     }
 
-    // Optional: structured output format (can help with parsing)
-    // Note: This is optional - we can handle both JSON and plain text
-    // Uncomment if structured output is desired:
-    // args.push('--output-format', 'json');
+    // Output format (text | json | stream-json). Omit when text or unspecified.
+    if (
+      request.nonInteractive &&
+      request.outputFormat &&
+      request.outputFormat !== 'text'
+    ) {
+      args.push('--output-format', request.outputFormat);
+    }
+
+    // Permission mode (only when explicitly configured)
+    if (request.permissionMode) {
+      args.push('--permission-mode', request.permissionMode);
+    }
+
+    // Allowed tools (comma-separated; only when explicitly configured)
+    if (request.allowedTools && request.allowedTools.trim()) {
+      args.push('--allowedTools', request.allowedTools.trim());
+    }
+
+    // Optional system prompt append (CLI reference: --append-system-prompt)
+    if (request.systemPrompt && request.systemPrompt.trim()) {
+      args.push('--append-system-prompt', request.systemPrompt.trim());
+    }
+
+    // P0: Cost control - max budget in USD (print mode only)
+    if (request.maxBudgetUsd !== undefined && request.maxBudgetUsd > 0 && request.nonInteractive) {
+      args.push('--max-budget-usd', request.maxBudgetUsd.toFixed(2));
+    }
+
+    // P0: Structured JSON output validation schema (print mode only)
+    if (request.jsonSchema && request.nonInteractive) {
+      args.push('--json-schema', request.jsonSchema);
+    }
+
+    // P0: Fallback model when primary model is overloaded (print mode only)
+    if (request.fallbackModel && request.nonInteractive) {
+      args.push('--fallback-model', request.fallbackModel);
+    }
+
+    // P0: Include partial streaming events (requires stream-json and print mode)
+    if (request.includePartialMessages && request.outputFormat === 'stream-json' && request.nonInteractive) {
+      args.push('--include-partial-messages');
+    }
+
+    // P0: Input format for agent chaining (print mode only)
+    if (request.inputFormat && request.inputFormat === 'stream-json' && request.nonInteractive) {
+      args.push('--input-format', 'stream-json');
+    }
+
+    // P0: System prompt file (replaces entire prompt, print mode only)
+    if (request.systemPromptFile && request.nonInteractive) {
+      args.push('--system-prompt-file', request.systemPromptFile);
+    }
+
+    // P0: Append system prompt from file (print mode only)
+    if (request.appendSystemPromptFile && request.nonInteractive) {
+      args.push('--append-system-prompt-file', request.appendSystemPromptFile);
+    }
+
+    // P0: Restrict available tools (--tools)
+    if (request.allowedToolsList && request.allowedToolsList.length > 0) {
+      args.push('--tools', request.allowedToolsList.join(','));
+    }
+
+    // P0: Block specific tools (--disallowedTools)
+    if (request.disallowedTools && request.disallowedTools.length > 0) {
+      args.push('--disallowedTools', request.disallowedTools.join(','));
+    }
+
+    // P0: Enable Chrome browser integration
+    if (request.enableChrome) {
+      args.push('--chrome');
+    }
+
+    // P0: Custom subagents definition (JSON)
+    if (request.customAgents && Object.keys(request.customAgents).length > 0) {
+      args.push('--agents', JSON.stringify(request.customAgents));
+    }
+
+    // P0: MCP-based permission handling tool
+    if (request.permissionPromptTool && request.nonInteractive) {
+      args.push('--permission-prompt-tool', request.permissionPromptTool);
+    }
+
+    // P0: Multi-directory workspace support
+    if (request.includeDirectories && request.includeDirectories.length > 0) {
+      args.push('--add-dir', ...request.includeDirectories);
+    }
 
     return args;
   }

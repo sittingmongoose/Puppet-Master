@@ -183,16 +183,38 @@ describe('CLI Tools Checks', () => {
   });
 
   describe('CodexCliCheck', () => {
-    it('should pass when codex is available', async () => {
+    // Mock fs.existsSync for SDK check
+    beforeEach(() => {
+      // Mock fs.existsSync to return true for SDK check
+      const fs = require('fs');
+      const originalExistsSync = fs.existsSync;
+      vi.spyOn(fs, 'existsSync').mockImplementation((path: unknown) => {
+        if (typeof path === 'string' && path.includes('@openai/codex-sdk')) {
+          return true; // SDK is installed
+        }
+        return originalExistsSync(path as Parameters<typeof originalExistsSync>[0]);
+      });
+    });
+
+    afterEach(() => {
+      vi.restoreAllMocks();
+    });
+
+    it('should pass when codex CLI and SDK are available', async () => {
       const check = new CodexCliCheck();
+      // Mock: codex --version
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('codex 1.0.0'));
+      // Mock: codex --help
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
+      // Mock: codex exec --help
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('exec subcommand help'));
 
       const result = await check.run();
 
       expect(result.passed).toBe(true);
       expect(result.message).toContain('authenticated');
       expect(result.details).toContain('Version:');
+      expect(result.details).toContain('SDK package: yes');
       expect(result.fixSuggestion).toBeUndefined();
     });
 
@@ -204,6 +226,8 @@ describe('CLI Tools Checks', () => {
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('codex 1.0.0 via npx'));
       // npx --no-install codex --help succeeds
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
+      // npx --no-install codex exec --help succeeds
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('exec subcommand help'));
 
       const result = await check.run();
 
@@ -225,16 +249,19 @@ describe('CLI Tools Checks', () => {
       expect(result.passed).toBe(false);
       expect(result.message).toContain('not found');
       expect(result.fixSuggestion).toContain('npm install -g @openai/codex');
+      expect(result.fixSuggestion).toContain('@openai/codex-sdk');
     });
 
     it('should include version in details when available', async () => {
       const check = new CodexCliCheck();
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('codex 2.3.4'));
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('exec subcommand help'));
 
       const result = await check.run();
 
       expect(result.details).toContain('2.3.4');
+      expect(result.details).toContain('SDK package: yes');
     });
 
     it('should handle npx codex timeout', async () => {
@@ -249,6 +276,7 @@ describe('CLI Tools Checks', () => {
         kill: vi.fn(),
       } as unknown as ChildProcess;
       mockSpawn.mockReturnValueOnce(timeoutProc);
+      // Note: SDK check will still pass (mocked in beforeEach)
 
       // Advance timers to trigger timeout
       vi.useFakeTimers();
@@ -265,6 +293,7 @@ describe('CLI Tools Checks', () => {
       const check = new CodexCliCheck();
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('codex 1.0.0'));
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('exec subcommand help'));
 
       const result = await check.run();
       expect(result.passed).toBe(false);
@@ -277,12 +306,14 @@ describe('CLI Tools Checks', () => {
       const check = new ClaudeCliCheck();
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('claude 1.0.0'));
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('Installation OK')); // claude doctor
 
       const result = await check.run();
 
       expect(result.passed).toBe(true);
       expect(result.message).toContain('authenticated');
       expect(result.details).toContain('Version:');
+      expect(result.details).toContain('Doctor:');
       expect(result.fixSuggestion).toBeUndefined();
     });
 
@@ -295,6 +326,7 @@ describe('CLI Tools Checks', () => {
       // Local claude works
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('claude 1.0.0'));
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('Installation OK')); // claude doctor
 
       const result = await check.run();
 
@@ -318,6 +350,7 @@ describe('CLI Tools Checks', () => {
       const check = new ClaudeCliCheck();
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('claude 3.5.0'));
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('Installation OK')); // claude doctor
 
       const result = await check.run();
 
@@ -367,6 +400,7 @@ describe('CLI Tools Checks', () => {
       const check = new CodexCliCheck();
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('codex 1.0.0'));
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('exec subcommand help'));
 
       const result = await check.run();
 
@@ -380,6 +414,7 @@ describe('CLI Tools Checks', () => {
       const check = new ClaudeCliCheck();
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('claude 1.0.0'));
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));
+      mockSpawn.mockReturnValueOnce(createMockSuccessProcess('Installation OK')); // claude doctor
 
       const result = await check.run();
 

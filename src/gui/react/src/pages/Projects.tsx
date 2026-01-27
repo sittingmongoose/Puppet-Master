@@ -14,9 +14,10 @@ import type { Project } from '@/types';
 export default function ProjectsPage() {
   const navigate = useNavigate();
   
-  // Store state
+  // Store state - ensure recentProjects is always an array
   const currentProject = useProjectStore((s) => s.currentProject);
-  const recentProjects = useProjectStore((s) => s.recentProjects);
+  const recentProjectsRaw = useProjectStore((s) => s.recentProjects);
+  const recentProjects = Array.isArray(recentProjectsRaw) ? recentProjectsRaw : [];
   const setCurrentProject = useProjectStore((s) => s.setCurrentProject);
   const addRecentProject = useProjectStore((s) => s.addRecentProject);
   
@@ -33,7 +34,7 @@ export default function ProjectsPage() {
         setLoading(true);
         setError(null);
         const data = await api.listProjects();
-        setProjects(data || []);
+        setProjects(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error('[Projects] Failed to fetch projects:', err);
         setError(err instanceof Error ? err.message : 'Failed to load projects');
@@ -56,6 +57,8 @@ export default function ProjectsPage() {
       setError(err instanceof Error ? err.message : 'Failed to open project');
     }
   }, [navigate, setCurrentProject, addRecentProject]);
+
+  const projectsToShow = Array.isArray(projects) ? projects : [];
 
   return (
     <div className="space-y-lg">
@@ -104,7 +107,7 @@ export default function ProjectsPage() {
       )}
 
       {/* Recent Projects */}
-      {recentProjects.length > 0 && (
+      {Array.isArray(recentProjects) && recentProjects.length > 0 && (
         <Panel title="Recent Projects">
           <div className="space-y-md">
             {recentProjects.map((project) => (
@@ -123,12 +126,12 @@ export default function ProjectsPage() {
       <Panel title="All Projects">
         {loading ? (
           <LoadingState />
-        ) : projects.length === 0 ? (
+        ) : projectsToShow.length === 0 ? (
           <EmptyState />
         ) : (
           <div className="overflow-x-auto">
             <ProjectsTable
-              projects={projects}
+              projects={projectsToShow}
               currentProject={currentProject}
               onOpen={handleOpenProject}
             />
@@ -262,6 +265,20 @@ interface ProjectsTableProps {
 }
 
 function ProjectsTable({ projects, currentProject, onOpen }: ProjectsTableProps) {
+  // Multiple defensive checks to ensure we always have an array
+  const list = Array.isArray(projects) ? projects : [];
+  const safeList = Array.isArray(list) ? list : [];
+  
+  // Final runtime check before rendering
+  if (!Array.isArray(safeList)) {
+    console.error('[ProjectsTable] Invalid projects data:', safeList);
+    return (
+      <div className="p-md text-hot-magenta">
+        <p>Error: Invalid project data format</p>
+      </div>
+    );
+  }
+  
   return (
     <table className="w-full">
       <thead>
@@ -274,7 +291,7 @@ function ProjectsTable({ projects, currentProject, onOpen }: ProjectsTableProps)
         </tr>
       </thead>
       <tbody>
-        {projects.map((project) => {
+        {safeList.map((project) => {
           const isCurrent = currentProject?.path === project.path;
           return (
             <tr

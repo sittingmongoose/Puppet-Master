@@ -21,6 +21,7 @@ import { CheckpointsCommand } from './commands/checkpoints.js';
 import { ledgerCommand } from './commands/ledger.js';
 import { metricsCommand } from './commands/metrics.js';
 import { loginCommand } from './commands/login.js';
+import { UsageCommand } from './commands/usage.js';
 
 const program = new Command();
 
@@ -98,6 +99,10 @@ metricsCommand.register(program);
 
 // Register login command (P0-G25: authentication wizard)
 loginCommand.register(program);
+
+// Register usage command (P1: platform usage/quota status)
+const usageCommand = new UsageCommand();
+usageCommand.register(program);
 
 /**
  * Run the CLI with the given arguments

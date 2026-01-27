@@ -69,7 +69,7 @@ async function loadProjects() {
 
     const data = await response.json();
     console.log('[Projects] Received data:', data);
-    state.projects = data.projects || [];
+    state.projects = Array.isArray(data.projects) ? data.projects : [];
     console.log('[Projects] Loaded', state.projects.length, 'projects');
 
     renderProjectCards(state.projects);

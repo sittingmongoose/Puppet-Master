@@ -32,6 +32,8 @@ interface StateRouteDependencies {
   getOrchestrator: () => OrchestratorStateMachine | null;
   getProgressManager: () => ProgressManager | null;
   getAgentsManager: () => AgentsManager | null;
+  getQuotaManager?: () => import('../../platforms/quota-manager.js').QuotaManager | null;
+  getUsageTracker?: () => import('../../memory/usage-tracker.js').UsageTracker | null;
 }
 
 /**
@@ -61,12 +63,48 @@ export function createStateRoutes(
       // Calculate completion stats
       const stats = calculateCompletionStats(tierManager);
 
+      // P1: Get usage/quota info if available
+      let budgets: Record<string, { used: number; limit: number | 'unlimited'; remaining: number; resetsAt?: string }> | undefined;
+      if (dependencies.getQuotaManager && dependencies.getUsageTracker) {
+        const quotaManager = dependencies.getQuotaManager();
+        const usageTracker = dependencies.getUsageTracker();
+        if (quotaManager && usageTracker) {
+          try {
+            const platforms: Array<'cursor' | 'codex' | 'claude' | 'gemini' | 'copilot'> = ['cursor', 'codex', 'claude', 'gemini', 'copilot'];
+            budgets = {};
+            for (const platform of platforms) {
+              try {
+                const quotaInfo = await quotaManager.checkQuota(platform);
+                const used = quotaInfo.limit - quotaInfo.remaining;
+                budgets[platform] = {
+                  used,
+                  limit: quotaInfo.limit === Number.MAX_SAFE_INTEGER ? 'unlimited' : quotaInfo.limit,
+                  remaining: quotaInfo.remaining,
+                  resetsAt: quotaInfo.resetsAt,
+                };
+              } catch (error) {
+                // Quota exhausted or error - still include info
+                budgets[platform] = {
+                  used: 0,
+                  limit: 'unlimited',
+                  remaining: 0,
+                };
+              }
+            }
+          } catch (error) {
+            // Non-fatal - budgets will be undefined
+            console.warn('[State] Failed to get quota info:', error);
+          }
+        }
+      }
+
       res.json({
         orchestratorState,
         currentPhaseId: currentPhase?.id || null,
         currentTaskId: currentTask?.id || null,
         currentSubtaskId: currentSubtask?.id || null,
         completionStats: stats,
+        budgets,
       });
     } catch (error) {
       const err = error as Error;
@@ -80,15 +118,26 @@ export function createStateRoutes(
   /**
    * GET /api/tiers
    * Returns the full tier hierarchy.
+   * When TierStateManager is not registered (e.g. standalone `npm run gui`), returns
+   * 200 with empty tiers so the Tiers page shows "No tiers loaded" instead of a raw error.
    */
   router.get('/tiers', async (_req: Request, res: Response) => {
     try {
       const tierManager = dependencies.getTierManager();
       if (!tierManager) {
-        return res.status(503).json({
-          error: 'TierStateManager not available',
-          code: 'TIER_MANAGER_NOT_AVAILABLE',
-        } as ErrorResponse);
+        return res.json({
+          root: null,
+          metadata: {
+            totalPhases: 0,
+            totalTasks: 0,
+            totalSubtasks: 0,
+            completedPhases: 0,
+            completedTasks: 0,
+            completedSubtasks: 0,
+          },
+          message:
+            'No tiers loaded. Start a project from the Wizard, or run `puppet-master gui` from a project directory to enable tier state.',
+        });
       }
 
       const root = tierManager.getRoot();
@@ -96,6 +145,14 @@ export function createStateRoutes(
       if (!root) {
         return res.json({
           root: null,
+          metadata: {
+            totalPhases: 0,
+            totalTasks: 0,
+            totalSubtasks: 0,
+            completedPhases: 0,
+            completedTasks: 0,
+            completedSubtasks: 0,
+          },
           message: 'No tiers loaded. Open a project first.',
         });
       }
@@ -199,23 +256,65 @@ export function createStateRoutes(
 
   /**
    * GET /api/agents
-   * Returns root AGENTS.md content.
+   * Returns list of AGENTS.md files (per GUI_SPEC.md Section 9.1).
    */
   router.get('/agents', async (_req: Request, res: Response) => {
     try {
       const agentsManager = dependencies.getAgentsManager();
-      let document = '';
       
-      if (agentsManager) {
-        const contents = await agentsManager.loadForContext({
-          filesTargeted: [],
-          phaseId: '',
-          taskId: '',
-        });
-        document = contents.map(c => c.content).join('\n\n---\n\n');
+      if (!agentsManager) {
+        res.json({ files: [] });
+        return;
       }
 
-      res.json({ document });
+      const files = await agentsManager.listFiles();
+      res.json({ files });
+    } catch (error) {
+      const err = error as Error;
+      res.status(500).json({
+        error: err.message || 'Internal server error',
+        code: 'INTERNAL_ERROR',
+      } as ErrorResponse);
+    }
+  });
+
+  /**
+   * GET /api/agents/:path
+   * Returns AGENTS.md content for a specific file (per GUI_SPEC.md Section 9.1).
+   */
+  router.get('/agents/:path(*)', async (req: Request, res: Response) => {
+    try {
+      const agentsManager = dependencies.getAgentsManager();
+      const filePath = req.params.path;
+      
+      if (!agentsManager) {
+        res.status(404).json({
+          error: 'AgentsManager not available',
+          code: 'NOT_FOUND',
+        } as ErrorResponse);
+        return;
+      }
+
+      // Load file content
+      // Note: This is a simplified implementation - in production, you'd want
+      // to resolve the path safely and load the specific file
+      const contents = await agentsManager.loadForContext({
+        filesTargeted: [],
+        phaseId: '',
+        taskId: '',
+      });
+      
+      // Find the file matching the path
+      const file = contents.find(c => c.path === filePath || c.path.endsWith(filePath));
+      if (!file) {
+        res.status(404).json({
+          error: `AGENTS.md file not found: ${filePath}`,
+          code: 'NOT_FOUND',
+        } as ErrorResponse);
+        return;
+      }
+
+      res.json({ document: file.content, path: file.path, level: file.level });
     } catch (error) {
       const err = error as Error;
       res.status(500).json({

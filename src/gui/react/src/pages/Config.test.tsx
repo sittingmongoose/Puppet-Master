@@ -2,23 +2,42 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import ConfigPage from './Config.js';
 import * as lib from '@/lib';
+import type { CursorCapabilities } from '@/lib';
 
 // Mock the lib
 vi.mock('@/lib', () => ({
   api: {
     getConfig: vi.fn(),
     updateConfig: vi.fn(),
+    getCursorCapabilities: vi.fn(),
   },
 }));
 
 const mockApi = lib.api as unknown as {
   getConfig: ReturnType<typeof vi.fn>;
   updateConfig: ReturnType<typeof vi.fn>;
+  getCursorCapabilities: ReturnType<typeof vi.fn>;
 };
 
 describe('ConfigPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockApi.getCursorCapabilities.mockResolvedValue({
+      binary: { selected: 'agent', candidates: ['agent', 'cursor-agent'] },
+      modes: ['default', 'plan', 'ask'],
+      outputFormats: ['text', 'json', 'stream-json'],
+      auth: { status: 'authenticated', hasApiKey: true },
+      models: {
+        source: 'static',
+        count: 5,
+        sample: [
+          { id: 'claude-3-opus', label: 'Claude 3 Opus', source: 'static' },
+          { id: 'claude-3-sonnet', label: 'Claude 3 Sonnet', source: 'static' },
+        ],
+      },
+      mcp: { available: true, serverCount: 2, servers: ['context7', 'filesystem'] },
+      config: { found: true, path: '~/.cursor/config.json', hasPermissions: true },
+    });
     mockApi.getConfig.mockResolvedValue({
       tiers: {
         phase: { platform: 'cursor', model: 'auto', selfFix: true, maxIterations: 3 },
@@ -228,5 +247,111 @@ describe('ConfigPage', () => {
     await waitFor(() => {
       expect(mockApi.getConfig).toHaveBeenCalled();
     });
+  });
+
+  it('fetches capabilities on mount', async () => {
+    render(<ConfigPage />);
+    
+    await waitFor(() => {
+      expect(mockApi.getCursorCapabilities).toHaveBeenCalled();
+    });
+  });
+
+  it('displays capabilities in Advanced tab', async () => {
+    render(<ConfigPage />);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Configuration')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('Advanced'));
+    
+    await waitFor(() => {
+      expect(screen.getByText('Cursor CLI Capabilities')).toBeInTheDocument();
+      expect(screen.getByText(/agent/)).toBeInTheDocument();
+      expect(screen.getByText(/Models:/)).toBeInTheDocument();
+    });
+  });
+
+  it('handles capabilities with empty sample array', async () => {
+    mockApi.getCursorCapabilities.mockResolvedValueOnce({
+      binary: { selected: 'agent', candidates: ['agent'] },
+      modes: ['default'],
+      outputFormats: ['text'],
+      auth: { status: 'unknown', hasApiKey: false },
+      models: {
+        source: 'static',
+        count: 0,
+        sample: [],
+      },
+      mcp: { available: false, serverCount: 0, servers: [] },
+      config: { found: false, hasPermissions: false },
+    });
+
+    render(<ConfigPage />);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Configuration')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('Advanced'));
+    
+    await waitFor(() => {
+      expect(screen.getByText('Cursor CLI Capabilities')).toBeInTheDocument();
+      // Should not crash with empty sample
+      expect(screen.getByText(/Models:/)).toBeInTheDocument();
+    });
+  });
+
+  it('handles capabilities with null/undefined sample gracefully', async () => {
+    mockApi.getCursorCapabilities.mockResolvedValueOnce({
+      binary: { selected: 'agent', candidates: ['agent'] },
+      modes: ['default'],
+      outputFormats: ['text'],
+      auth: { status: 'unknown', hasApiKey: false },
+      models: {
+        source: 'static',
+        count: 0,
+        sample: null as unknown as [],
+      },
+      mcp: { available: false, serverCount: 0, servers: [] },
+      config: { found: false, hasPermissions: false },
+    });
+
+    render(<ConfigPage />);
+    
+    await waitFor(() => {
+      expect(screen.getByText('Configuration')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('Advanced'));
+    
+    // Should not crash - Array.isArray check should prevent .map() call
+    await waitFor(() => {
+      expect(screen.getByText('Cursor CLI Capabilities')).toBeInTheDocument();
+    });
+  });
+
+  it('handles capabilities with missing models / mcp / config without throwing', async () => {
+    const partialCapabilities = {
+      binary: { selected: 'agent', candidates: ['agent'] },
+      auth: { status: 'unknown', hasApiKey: false },
+      // models, mcp, config, modes, outputFormats omitted (partial API response)
+    };
+    mockApi.getCursorCapabilities.mockResolvedValueOnce(partialCapabilities as unknown as CursorCapabilities);
+
+    render(<ConfigPage />);
+
+    await waitFor(() => {
+      expect(screen.getByText('Configuration')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('Advanced'));
+
+    await waitFor(() => {
+      expect(screen.getByText('Cursor CLI Capabilities')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Binary:')).toBeInTheDocument();
+    expect(screen.getByText('Auth:')).toBeInTheDocument();
   });
 });

@@ -92,8 +92,8 @@ export default function MetricsPage() {
         // const data = await api.getMetrics();
         
         await new Promise((r) => setTimeout(r, 300));
-        setPlatformMetrics(MOCK_PLATFORM_METRICS);
-        setDailyStats(MOCK_DAILY_STATS);
+        setPlatformMetrics(Array.isArray(MOCK_PLATFORM_METRICS) ? MOCK_PLATFORM_METRICS : []);
+        setDailyStats(Array.isArray(MOCK_DAILY_STATS) ? MOCK_DAILY_STATS : []);
         setSessionStats(MOCK_SESSION_STATS);
       } catch (err) {
         console.error('[Metrics] Failed to fetch metrics:', err);
@@ -103,6 +103,9 @@ export default function MetricsPage() {
     };
     fetchMetrics();
   }, []);
+
+  const platformMetricsList = Array.isArray(platformMetrics) ? platformMetrics : [];
+  const dailyStatsList = Array.isArray(dailyStats) ? dailyStats : [];
 
   const formatLatency = (ms: number) => {
     if (ms < 1000) return `${ms}ms`;
@@ -157,7 +160,7 @@ export default function MetricsPage() {
               </tr>
             </thead>
             <tbody>
-              {platformMetrics.map((metric) => (
+              {platformMetricsList.map((metric) => (
                 <tr key={metric.platform} className="border-b border-ink-faded/30">
                   <td className="py-sm font-mono capitalize">{metric.platform}</td>
                   <td className="py-sm">{metric.callsToday}</td>
@@ -194,7 +197,7 @@ export default function MetricsPage() {
               </tr>
             </thead>
             <tbody>
-              {dailyStats.map((stat) => {
+              {dailyStatsList.map((stat) => {
                 const successRate = (stat.successfulCalls / stat.totalCalls) * 100;
                 return (
                   <tr key={stat.date} className="border-b border-ink-faded/30">

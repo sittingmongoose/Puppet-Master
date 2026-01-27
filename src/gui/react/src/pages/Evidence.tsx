@@ -61,11 +61,12 @@ export default function EvidencePage() {
         
         // Using mock data for now
         await new Promise((r) => setTimeout(r, 300));
-        setFiles(MOCK_FILES);
+        const fileList = Array.isArray(MOCK_FILES) ? MOCK_FILES : [];
+        setFiles(fileList);
         
         // If an ID was passed, select that file
         if (id) {
-          const file = MOCK_FILES.find((f) => f.id === id);
+          const file = fileList.find((f) => f.id === id);
           if (file) setSelectedFile(file);
         }
       } catch (err) {
@@ -77,17 +78,18 @@ export default function EvidencePage() {
     fetchFiles();
   }, [id]);
 
-  // Filter files by category
-  const filteredFiles = selectedCategory === 'all'
-    ? files
-    : files.filter((f) => f.type === selectedCategory);
+  const filesList = Array.isArray(files) ? files : [];
+  const filteredFiles = Array.isArray(filesList)
+    ? (selectedCategory === 'all'
+      ? filesList
+      : filesList.filter((f) => f.type === selectedCategory))
+    : [];
 
-  // Calculate category counts
   const categoriesWithCounts = CATEGORIES.map((cat) => ({
     ...cat,
     count: cat.id === 'all'
-      ? files.length
-      : files.filter((f) => f.type === cat.id).length,
+      ? filesList.length
+      : filesList.filter((f) => f.type === cat.id).length,
   }));
 
   // Format file size

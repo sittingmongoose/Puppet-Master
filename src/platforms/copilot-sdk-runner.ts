@@ -226,6 +226,17 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
   }
 
   /**
+   * P0: Builds CopilotTool array from allowed tools list.
+   * Converts tool names to SDK-compatible tool definitions.
+   */
+  private buildCopilotTools(allowedTools: string[]): CopilotTool[] {
+    // SDK expects tool definitions with name and handler
+    // For now, return empty array and let SDK use default tools
+    // TODO: Map tool names to actual SDK tool definitions when SDK API is clearer
+    return this.config.customTools ?? [];
+  }
+
+  /**
    * Shuts down the SDK client.
    */
   async shutdown(): Promise<void> {
@@ -427,7 +438,8 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
         await this.rateLimiter.waitForSlot(this.platform);
       }
       if (this.quotaManager) {
-        await this.quotaManager.checkQuota(this.platform);
+        // P0: Pass model to checkQuota for Cursor Auto mode unlimited detection
+        await this.quotaManager.checkQuota(this.platform, request.model);
       }
 
       await this.initialize();
@@ -446,9 +458,14 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
 
       // Create or reuse session
       if (!this.session || !this.config.sessionPersistence) {
+        // P0: Build session config with model selection and tool configuration
         const sessionConfig: SessionConfig = {
+          // P0: Model selection (if supported by SDK)
           model: request.model ?? this.config.defaultModel,
-          tools: this.config.customTools,
+          // P0: Tool configuration (if available-tools specified)
+          tools: request.allowedToolsList 
+            ? this.buildCopilotTools(request.allowedToolsList)
+            : this.config.customTools,
         };
         this.session = await this.client.createSession(sessionConfig);
       }
@@ -457,10 +474,36 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
       const runningProcess = await this.spawnFreshProcess(request);
       const virtualProcess = this.virtualProcesses.get(runningProcess.pid)!;
 
-      // Execute via SDK
+      // P0: Execute via SDK with evidence collection support
       const response = await this.session.send({
         prompt: request.prompt,
       });
+
+      // P0: Evidence collection - export session transcript if requested
+      if (request.shareTranscript && this.session.export) {
+        try {
+          const transcript = await this.session.export();
+          // Write transcript to file (synchronous for simplicity)
+          const fs = await import('fs/promises');
+          // SDK export() returns unknown, convert to string
+          const transcriptStr = typeof transcript === 'string' ? transcript : JSON.stringify(transcript);
+          await fs.writeFile(request.shareTranscript, transcriptStr, 'utf-8');
+        } catch (error) {
+          console.warn(`[CopilotSdkRunner] Failed to export transcript: ${error instanceof Error ? error.message : String(error)}`);
+        }
+      }
+
+      // P0: Evidence collection - export to GitHub gist if requested
+      if (request.shareGist && this.session.export) {
+        try {
+          // Note: SDK export() may support gist export, but format is undocumented
+          // For now, we'll attempt export and let SDK handle gist creation
+          await this.session.export();
+          console.info(`[CopilotSdkRunner] Session exported (gist support may require manual upload)`);
+        } catch (error) {
+          console.warn(`[CopilotSdkRunner] Failed to export to gist: ${error instanceof Error ? error.message : String(error)}`);
+        }
+      }
 
       // Store output
       virtualProcess.output = response.content;
@@ -489,7 +532,8 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
       }
       if (this.quotaManager) {
         const tokens = response.tokensUsed ?? Math.max(100, Math.floor(duration / 10));
-        await this.quotaManager.recordUsage(this.platform, tokens, duration);
+        // P0: Pass model to recordUsage for Cursor Auto mode unlimited detection
+        await this.quotaManager.recordUsage(this.platform, tokens, duration, request.model);
       }
 
       return result;

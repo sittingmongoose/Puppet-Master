@@ -129,11 +129,12 @@ export async function kill(): Promise<{ success: boolean }> {
 // ============================================
 
 /**
- * List all projects
+ * List all projects.
+ * Always returns an array (never null or undefined); normalizes malformed API responses.
  */
 export async function listProjects(): Promise<Project[]> {
-  const response = await fetchJSON<{ projects: Project[] }>('/api/projects');
-  return response.projects;
+  const response = await fetchJSON<{ projects?: Project[] }>('/api/projects');
+  return Array.isArray(response?.projects) ? response.projects : [];
 }
 
 /**
@@ -194,7 +195,46 @@ export interface Config {
     prdFile?: string;
     multiLevelAgents?: boolean;
   };
-  budgets?: {
+}
+
+// ============================================
+// Agents API
+// ============================================
+
+export interface AgentsFile {
+  name: string;
+  path: string;
+  lastAccessed: string | null;
+  level: 'root' | 'module' | 'phase' | 'task';
+}
+
+export interface AgentsListResponse {
+  files: AgentsFile[];
+}
+
+export interface AgentsContentResponse {
+  document: string;
+  path: string;
+  level: 'root' | 'module' | 'phase' | 'task';
+}
+
+export const agents = {
+  /**
+   * Get list of AGENTS.md files
+   */
+  async list(): Promise<AgentsFile[]> {
+    const response = await fetchJSON<AgentsListResponse>('/api/agents');
+    return response.files || [];
+  },
+
+  /**
+   * Get content of a specific AGENTS.md file
+   */
+  async getContent(path: string): Promise<AgentsContentResponse> {
+    const encodedPath = encodeURIComponent(path);
+    return fetchJSON<AgentsContentResponse>(`/api/agents/${encodedPath}`);
+  },
+};
     claude?: { maxCallsPerRun?: number; maxCallsPerHour?: number; maxCallsPerDay?: number };
     codex?: { maxCallsPerRun?: number; maxCallsPerHour?: number; maxCallsPerDay?: number };
     cursor?: { maxCallsPerRun?: number; maxCallsPerHour?: number; maxCallsPerDay?: number };
@@ -229,24 +269,57 @@ export async function validateConfig(config: Config): Promise<{ valid: boolean; 
   });
 }
 
+/**
+ * CU-P1-T09: Get Cursor capabilities
+ */
+export interface CursorCapabilities {
+  binary: {
+    selected: string;
+    candidates: string[];
+  };
+  modes: string[];
+  outputFormats: string[];
+  auth: {
+    status: string;
+    hasApiKey: boolean;
+  };
+  models: {
+    source: 'discovered' | 'static';
+    count: number;
+    sample: Array<{ id: string; label: string; source: string }>;
+  };
+  mcp: {
+    available: boolean;
+    serverCount: number;
+    servers: string[];
+  };
+  config: {
+    found: boolean;
+    path?: string;
+    hasPermissions: boolean;
+  };
+}
+
+export async function getCursorCapabilities(): Promise<CursorCapabilities> {
+  return fetchJSON<CursorCapabilities>('/api/config/capabilities');
+}
+
 // ============================================
 // Tiers API
 // ============================================
 
 /**
- * Get tier hierarchy
+ * Get tier hierarchy.
+ * Returns array of top-level tier nodes (root as single item when present).
+ * Tree structure uses nested `children`; each node shape matches GUI TierItem.
  */
-export async function getTiers(): Promise<TierItem[]> {
-  const response = await fetchJSON<{ root: TierItem | null; metadata: unknown }>('/api/tiers');
-  // Server returns { root, metadata }, but React expects TierItem[]
-  // The root is the top-level tier node with children nested inside
-  // Return root as array (React Tiers page expects array and handles root structure)
-  if (!response.root) {
+export async function getTiers(): Promise<unknown[]> {
+  const response = await fetchJSON<{ root?: unknown; metadata?: unknown }>('/api/tiers');
+  if (!response || typeof response !== 'object' || response.root == null) {
     return [];
   }
-  // Root has children property, return as single-item array
-  // React Tiers page will handle the nested structure
-  return [response.root as TierItem];
+  const root = response.root;
+  return Array.isArray(root) ? root : [root];
 }
 
 // ============================================
@@ -266,17 +339,19 @@ export interface DoctorCheck {
  * Get doctor checks
  */
 export async function getDoctorChecks(): Promise<{ checks: DoctorCheck[] }> {
-  return fetchJSON<{ checks: DoctorCheck[] }>('/api/doctor/checks');
+  const res = await fetchJSON<{ checks?: DoctorCheck[] }>('/api/doctor/checks');
+  return { checks: Array.isArray(res?.checks) ? res.checks : [] };
 }
 
 /**
  * Run doctor checks
  */
 export async function runDoctorChecks(options?: { category?: string }): Promise<{ checks: DoctorCheck[] }> {
-  return fetchJSON('/api/doctor/run', {
+  const res = await fetchJSON<{ checks?: DoctorCheck[] }>('/api/doctor/run', {
     method: 'POST',
     body: JSON.stringify(options ?? {}),
   });
+  return { checks: Array.isArray(res?.checks) ? res.checks : [] };
 }
 
 /**
@@ -418,6 +493,7 @@ export const api = {
   getConfig,
   updateConfig,
   validateConfig,
+  getCursorCapabilities,
   // Tiers
   getTiers,
   // Doctor

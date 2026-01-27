@@ -245,23 +245,27 @@ export class InstallationManager {
     });
 
     // Codex CLI installation
+    // Note: Puppet Master uses @openai/codex-sdk which requires both:
+    // 1. Global CLI: npm install -g @openai/codex
+    // 2. SDK package: npm install @openai/codex-sdk (handled as project dependency)
     this.registerCommand({
       check: 'codex-cli',
-      command: 'npm install -g @openai/codex',
-      description: 'Install Codex CLI',
+      command: 'npm install -g @openai/codex && npm install @openai/codex-sdk',
+      description: 'Install Codex CLI and SDK package',
       requiresSudo: false,
       platforms: ['darwin', 'linux', 'win32'],
     });
 
-    // Claude CLI installation - prefer curl-based install for Unix, npm for Windows
+    // Claude CLI installation - native installers per https://code.claude.com/docs/en/setup
+    // Unix: curl | bash; Windows: PowerShell irm | iex (npm deprecated)
     const claudeCommand =
       this.getCurrentPlatform() === 'win32'
-        ? 'npm install -g @anthropic-ai/claude-code'
+        ? 'powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://claude.ai/install.ps1 | iex"'
         : 'curl -fsSL https://claude.ai/install.sh | bash';
     this.registerCommand({
       check: 'claude-cli',
       command: claudeCommand,
-      description: 'Install Claude CLI',
+      description: 'Install Claude CLI (native)',
       requiresSudo: false,
       platforms: ['darwin', 'linux', 'win32'],
     });
@@ -299,6 +303,21 @@ export class InstallationManager {
       check: 'copilot-cli',
       command: 'npm install -g @github/copilot',
       description: 'Install GitHub Copilot CLI',
+      requiresSudo: false,
+      platforms: ['darwin', 'linux', 'win32'],
+    });
+
+    // Gemini CLI installation
+    // Supports npm (all platforms) and brew (macOS)
+    const platform = this.getCurrentPlatform();
+    const geminiCommand =
+      platform === 'darwin'
+        ? 'brew install gemini-cli || npm install -g @google/gemini-cli'
+        : 'npm install -g @google/gemini-cli';
+    this.registerCommand({
+      check: 'gemini-cli',
+      command: geminiCommand,
+      description: 'Install Gemini CLI',
       requiresSudo: false,
       platforms: ['darwin', 'linux', 'win32'],
     });

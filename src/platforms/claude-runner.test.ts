@@ -170,14 +170,92 @@ describe('ClaudeRunner', () => {
       };
 
       const args = runner['buildArgs'](request);
-      expect(args).toEqual([
-        '-p',
-        'Test prompt',
-        '--model',
-        'claude-sonnet-4.5',
-        '--max-turns',
-        '10',
-      ]);
+      expect(args).toContain('-p');
+      expect(args).toContain('Test prompt');
+      expect(args).toContain('--no-session-persistence');
+      expect(args).toContain('--model');
+      expect(args).toContain('claude-sonnet-4.5');
+      expect(args).toContain('--max-turns');
+      expect(args).toContain('10');
+    });
+
+    it('should include --no-session-persistence in non-interactive mode', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+      };
+
+      const args = runner['buildArgs'](request);
+      expect(args).toContain('--no-session-persistence');
+    });
+
+    it('should include --output-format when json or stream-json requested', () => {
+      const reqJson: ExecutionRequest = {
+        prompt: 'Test',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+        outputFormat: 'json',
+      };
+      const argsJson = runner['buildArgs'](reqJson);
+      expect(argsJson).toContain('--output-format');
+      expect(argsJson).toContain('json');
+
+      const reqStream: ExecutionRequest = {
+        prompt: 'Test',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+        outputFormat: 'stream-json',
+      };
+      const argsStream = runner['buildArgs'](reqStream);
+      expect(argsStream).toContain('--output-format');
+      expect(argsStream).toContain('stream-json');
+    });
+
+    it('should not include --output-format when text or unspecified', () => {
+      const reqText: ExecutionRequest = {
+        prompt: 'Test',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+        outputFormat: 'text',
+      };
+      expect(runner['buildArgs'](reqText)).not.toContain('--output-format');
+
+      const reqNone: ExecutionRequest = {
+        prompt: 'Test',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+      };
+      expect(runner['buildArgs'](reqNone)).not.toContain('--output-format');
+    });
+
+    it('should include --permission-mode and --allowedTools when provided', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+        permissionMode: 'bypassPermissions',
+        allowedTools: 'Read,Edit,Bash',
+      };
+
+      const args = runner['buildArgs'](request);
+      expect(args).toContain('--permission-mode');
+      expect(args).toContain('bypassPermissions');
+      expect(args).toContain('--allowedTools');
+      expect(args).toContain('Read,Edit,Bash');
+    });
+
+    it('should include --append-system-prompt when systemPrompt provided', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+        systemPrompt: 'Always use TypeScript.',
+      };
+
+      const args = runner['buildArgs'](request);
+      expect(args).toContain('--append-system-prompt');
+      expect(args).toContain('Always use TypeScript.');
     });
   });
 
@@ -303,7 +381,8 @@ describe('ClaudeRunner', () => {
       expect(spawn).toHaveBeenCalled();
       const callArgs = vi.mocked(spawn).mock.calls[0];
       expect(callArgs[0]).toBe('claude');
-      expect(callArgs[1]).toEqual(expect.arrayContaining(['-p', 'Test prompt']));
+      const args = callArgs[1] as string[];
+      expect(args).toEqual(expect.arrayContaining(['-p', 'Test prompt', '--no-session-persistence']));
       expect(callArgs[2]).toMatchObject({
         cwd: '/tmp',
         stdio: ['pipe', 'pipe', 'pipe'],

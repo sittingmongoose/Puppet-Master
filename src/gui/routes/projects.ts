@@ -99,18 +99,26 @@ export function createProjectsRoutes(orchestrator?: Orchestrator | null, baseDir
     try {
       const projects = await discoverProjects(projectBaseDir);
       
+      // Ensure projects is always an array
+      const safeProjects = Array.isArray(projects) ? projects : [];
+      
       // Sort by lastModified (descending)
-      projects.sort((a, b) => 
+      safeProjects.sort((a, b) => 
         new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime()
       );
 
-      res.json({ projects });
+      // Always return { projects: [] } structure, even on error
+      res.json({ projects: safeProjects });
     } catch (error) {
       const err = error as Error;
+      // On error, still return { projects: [] } to maintain consistent structure
+      // Log the error but don't break the frontend
+      console.error('[Projects API] Error discovering projects:', err);
       res.status(500).json({
+        projects: [], // Always return array structure
         error: err.message || 'Internal server error',
         code: 'INTERNAL_ERROR',
-      } as ErrorResponse);
+      } as ErrorResponse & { projects: Project[] });
     }
   });
 
@@ -235,20 +243,20 @@ export function createProjectsRoutes(orchestrator?: Orchestrator | null, baseDir
 
       const fullPath = resolve(projectPath.trim());
 
+      // Verify project exists and is valid (check existence before security)
+      if (!existsSync(fullPath)) {
+        res.status(404).json({
+          error: 'Project directory not found',
+          code: 'NOT_FOUND',
+        } as ErrorResponse);
+        return;
+      }
+
       // Security: Validate path is within allowed base directory
       if (!isPathWithinBase(fullPath, projectBaseDir)) {
         res.status(403).json({
           error: 'Access denied: path outside allowed project directory',
           code: 'FORBIDDEN',
-        } as ErrorResponse);
-        return;
-      }
-
-      // Verify project exists and is valid
-      if (!existsSync(fullPath)) {
-        res.status(404).json({
-          error: 'Project directory not found',
-          code: 'NOT_FOUND',
         } as ErrorResponse);
         return;
       }

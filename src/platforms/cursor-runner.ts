@@ -35,6 +35,8 @@ export class CursorRunner extends BasePlatformRunner {
   private modeFlagSupportProbedAt: number = 0;
   // P1-G03: Cache TTL for mode flag support (1 hour)
   private static readonly MODE_FLAG_CACHE_TTL_MS = 3600_000;
+  // CU-P0-T04: Store output format for current execution
+  private currentOutputFormat?: 'text' | 'json' | 'stream-json';
 
   /**
    * Creates a new CursorRunner instance.
@@ -74,11 +76,19 @@ export class CursorRunner extends BasePlatformRunner {
   }
 
   /**
-   * Cursor writes the prompt to stdin, not as an argument.
+   * CU-P0-T03: Cursor prompt transport method.
+   * Prefers prompt-as-arg with -p flag, falls back to stdin for large prompts.
    */
   protected writesPromptToStdin(): boolean {
-    return true;
+    // Will be determined dynamically based on prompt size
+    return false; // Default to arg mode, will override for large prompts
   }
+  
+  /**
+   * CU-P0-T03: Maximum prompt size for argument mode (32KB).
+   * Larger prompts fall back to stdin to avoid command-line length limits.
+   */
+  private static readonly MAX_ARG_PROMPT_SIZE = 32 * 1024; // 32KB
 
   /**
    * Get custom environment variables for Cursor.
@@ -100,6 +110,9 @@ export class CursorRunner extends BasePlatformRunner {
       await this.ensureModeFlagSupport();
     }
 
+    // CU-P0-T04: Store output format for parseOutput
+    this.currentOutputFormat = request.outputFormat;
+
     const args = this.buildArgs(request);
 
     const proc = spawn(this.command, args, {
@@ -112,8 +125,12 @@ export class CursorRunner extends BasePlatformRunner {
       },
     });
 
-    // Write prompt to stdin if provided
-    if (request.prompt && proc.stdin) {
+    // CU-P0-T03: Write prompt to stdin only if not passed as argument
+    // (fallback for large prompts that exceed command-line length limits)
+    const promptSize = request.prompt ? Buffer.byteLength(request.prompt, 'utf8') : 0;
+    const useStdin = request.prompt && promptSize > CursorRunner.MAX_ARG_PROMPT_SIZE;
+    
+    if (useStdin && proc.stdin) {
       proc.stdin.write(this.buildPrompt(request));
       proc.stdin.end();
     }
@@ -124,21 +141,41 @@ export class CursorRunner extends BasePlatformRunner {
   /**
    * Builds command-line arguments for cursor-agent.
    * 
+   * CU-P0-T03: Updated to prefer prompt-as-arg with -p flag per Cursor January 2026 docs.
+   * Falls back to stdin for extremely large prompts.
+   * 
    * Constructs arguments based on request:
-   * - -p flag for non-interactive/print mode
+   * - -p "prompt" for non-interactive/print mode (preferred)
    * - --model flag if model is specified
-   * - Prompt is written to stdin, not passed as argument
+   * - Prompt passed as argument if size allows, otherwise written to stdin
    */
   protected buildArgs(request: ExecutionRequest): string[] {
     const args: string[] = [];
 
     // Non-interactive mode (print mode)
-    if (request.nonInteractive) {
+    if (request.nonInteractive && request.prompt) {
+      const promptSize = Buffer.byteLength(request.prompt, 'utf8');
+      
+      // CU-P0-T03: Prefer prompt-as-arg, fall back to stdin for large prompts
+      if (promptSize <= CursorRunner.MAX_ARG_PROMPT_SIZE) {
+        // Pass prompt as argument (preferred method per docs)
+        args.push('-p', request.prompt);
+      } else {
+        // Fall back to stdin for extremely large prompts
+        args.push('-p');
+        // Prompt will be written to stdin in spawn()
+      }
+    } else if (request.nonInteractive) {
+      // Non-interactive but no prompt (shouldn't happen, but handle gracefully)
       args.push('-p');
     }
 
+    // CU-P0-T05: Cursor ask mode (read-only/discovery/reviewer passes)
+    if (request.askMode === true) {
+      args.push('--mode=ask');
+    }
     // Cursor plan mode (best-effort; requires CLI support)
-    if (request.planMode === true && this.modeFlagSupport === true) {
+    else if (request.planMode === true && this.modeFlagSupport === true) {
       args.push('--mode=plan');
     }
 
@@ -147,8 +184,35 @@ export class CursorRunner extends BasePlatformRunner {
       args.push('--model', request.model);
     }
 
-    // Note: Prompt is written to stdin, not passed as argument
-    // This matches the pattern from REQUIREMENTS.md Section 3.4.4
+    // CU-P0-T04: Output format (requires --print mode, which is set above)
+    if (request.outputFormat && request.outputFormat !== 'text' && request.nonInteractive) {
+      args.push('--output-format', request.outputFormat);
+    }
+
+    // P0: Cost control - max budget in USD
+    if (request.maxBudgetUsd !== undefined && request.maxBudgetUsd > 0) {
+      args.push('--max-budget-usd', request.maxBudgetUsd.toFixed(2));
+    }
+
+    // P0: Structured JSON output validation schema
+    if (request.jsonSchema && request.nonInteractive) {
+      args.push('--json-schema', request.jsonSchema);
+    }
+
+    // P0: Fallback model when primary model is overloaded
+    if (request.fallbackModel) {
+      args.push('--fallback-model', request.fallbackModel);
+    }
+
+    // P0: Include partial streaming events (requires stream-json)
+    if (request.includePartialMessages && request.outputFormat === 'stream-json' && request.nonInteractive) {
+      args.push('--include-partial-messages');
+    }
+
+    // P0: Input format for agent chaining
+    if (request.inputFormat && request.inputFormat === 'stream-json' && request.nonInteractive) {
+      args.push('--input-format', 'stream-json');
+    }
 
     return args;
   }
@@ -281,6 +345,8 @@ export class CursorRunner extends BasePlatformRunner {
   /**
    * Parses cursor-agent output to extract execution results.
    * 
+   * CU-P0-T04: Enhanced to support JSON and stream-json output formats.
+   * 
    * Uses CursorOutputParser to detect completion signals:
    * - <ralph>COMPLETE</ralph> - Task completed successfully
    * - <ralph>GUTTER</ralph> - Agent stuck, cannot proceed
@@ -291,7 +357,36 @@ export class CursorRunner extends BasePlatformRunner {
    * - Session ID (if present)
    */
   protected parseOutput(output: string): ExecutionResult {
-    // Use platform-specific parser
+    const outputFormat = this.currentOutputFormat;
+    
+    // CU-P0-T04: Handle structured output formats
+    if (outputFormat === 'json' || outputFormat === 'stream-json') {
+      const parsed = this.outputParser.parseStructured(output, outputFormat);
+      
+      // Build result from structured output
+      const result: ExecutionResult = {
+        success: parsed.completionSignal !== 'GUTTER',
+        output: parsed.rawOutput || output,
+        exitCode: 0, // Will be set by execute() method
+        duration: 0, // Will be set by execute() method
+        processId: 0, // Will be set by execute() method
+      };
+
+      if (parsed.sessionId) {
+        result.sessionId = parsed.sessionId;
+      }
+      if (parsed.tokensUsed !== undefined) {
+        result.tokensUsed = parsed.tokensUsed;
+      }
+
+      if (parsed.completionSignal === 'GUTTER') {
+        result.error = 'Agent signaled GUTTER - stuck and cannot proceed';
+      }
+
+      return result;
+    }
+
+    // Fallback to text parsing (default behavior)
     const parsed = this.outputParser.parse(output);
 
     // Determine success based on completion signal

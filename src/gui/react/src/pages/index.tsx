@@ -30,6 +30,9 @@ export { default as History } from './History.js';
 // Real Coverage page
 export { default as Coverage } from './Coverage.js';
 
+// Real Memory page
+export { default as Memory } from './Memory.js';
+
 export function NotFound() {
   return (
     <div className="panel">

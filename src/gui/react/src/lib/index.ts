@@ -8,6 +8,7 @@ export type {
   DoctorCheck,
   Session,
   PlatformHealth,
+  CursorCapabilities,
 } from './api.js';
 
 // SSE client

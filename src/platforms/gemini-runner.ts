@@ -17,12 +17,18 @@
  * - Output formats: `--output-format json` (default) or `--output-format stream-json` (JSONL events)
  * - Approval modes: `--approval-mode yolo` (auto-approve all) or `--yolo` (shortcut)
  *   - `--approval-mode auto_edit` (auto-approve edit tools only)
- *   - `--approval-mode plan` (read-only, requires experimental.plan: true)
- * - Model selection: `--model <model>` or `-m <model>`
- * - Multi-directory: `--include-directories <dir1,dir2>` (max 5 directories)
- * - Debug mode: `--debug` or `-d`
- * - Sandbox: `--sandbox` or `-s`
+ *   - `--approval-mode plan` (read-only, requires experimental.plan: true in settings)
+ * - Model selection: `--model <model>` or `-m <model>` (e.g., gemini-2.5-pro, gemini-3-pro-preview)
+ * - Model discovery: `gemini models` - List available models dynamically
+ * - Multi-directory: `--include-directories <dir1,dir2>` (max 5 directories, monorepo support)
+ * - Sandbox: `--sandbox` or `-s` (security isolation for tool execution)
+ * - Debug mode: `--debug` or `-d` (verbose output)
  * - Session resume: `--resume [session-id]` (not used by Puppet Master - we spawn fresh)
+ * 
+ * Configuration:
+ * - Settings: Hierarchical `settings.json` (system/user/project) with env var substitution
+ * - Context files: `GEMINI.md` loaded from project root and ancestors (up to 200 directories)
+ * - Preview features: Enable via `general.previewFeatures: true` in `~/.gemini/settings.json`
  *
  * Authentication (handled via environment variables for headless):
  * - GEMINI_API_KEY - Gemini API key for headless/automation
@@ -141,11 +147,11 @@ export class GeminiRunner extends BasePlatformRunner {
    * Note: Large prompts (>30KB) are passed via stdin instead of command-line argument
    * to avoid shell argument length limits.
    *
-   * Future considerations (not currently implemented):
-   * - `--include-directories <dir1,dir2>` for multi-directory workspace support
-   * - `--output-format stream-json` for real-time event streaming
-   * - `--debug` or `-d` for verbose debug output
-   * - `--sandbox` or `-s` for sandbox execution environment
+   * Supported features:
+   * - `--output-format stream-json` for real-time event streaming (via outputFormat option)
+   * - `--sandbox` or `-s` for sandbox execution environment (via sandbox option)
+   * - `--include-directories <dir1,dir2>` for multi-directory workspace support (via includeDirectories option, max 5)
+   * - `--debug` or `-d` for verbose debug output (not currently exposed)
    */
   protected buildArgs(request: ExecutionRequest): string[] {
     const args: string[] = [];
@@ -163,8 +169,9 @@ export class GeminiRunner extends BasePlatformRunner {
       }
     }
 
-    // JSON output format
-    args.push('--output-format', 'json');
+    // Output format: json (default) or stream-json for real-time events
+    const outputFormat = request.outputFormat === 'stream-json' ? 'stream-json' : 'json';
+    args.push('--output-format', outputFormat);
 
     // P0-G10: Approval mode - respect planMode for read-only execution
     // planMode uses 'plan' mode (read-only), otherwise use 'yolo' for headless automation
@@ -178,6 +185,27 @@ export class GeminiRunner extends BasePlatformRunner {
     // Model selection
     if (request.model && request.model !== 'auto') {
       args.push('--model', request.model);
+    }
+
+    // Sandbox execution (security isolation)
+    if (request.sandbox === true) {
+      args.push('--sandbox');
+    }
+
+    // Multi-directory workspace support (max 5 directories)
+    if (request.includeDirectories && request.includeDirectories.length > 0) {
+      const dirs = request.includeDirectories.slice(0, 5); // Enforce max 5
+      args.push('--include-directories', dirs.join(','));
+    }
+
+    // P0: Include all files in context
+    if (request.includeAllFiles) {
+      args.push('--all-files');
+    }
+
+    // P0: Debug mode (verbose output)
+    if (request.debug) {
+      args.push('--debug');
     }
 
     return args;

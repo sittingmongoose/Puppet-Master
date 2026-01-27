@@ -12,7 +12,7 @@ RWM Puppet Master is a CLI orchestrator implementing the Ralph Wiggum Method - a
 ### Key Concepts
 - **Four Tiers**: Phase → Task → Subtask → Iteration
 - **CLI-Only**: No API calls, only CLI invocations
-- **Fresh Agents**: Every iteration spawns a new process
+- **Fresh Agents**: Every iteration spawns a new process (CU-P2-T12: no session resume, no cloud handoff)
 - **Verification Gates**: Automated checks between tiers
 - **Memory Layers**: progress.txt (short-term), AGENTS.md (long-term), prd.json (work queue)
 
@@ -46,11 +46,18 @@ Tier:         PENDING → PLANNING → RUNNING → GATING → PASSED
 1. Load PRD (prd.json) → Build tier tree
 2. Select next pending subtask
 3. Build iteration prompt (include progress.txt, AGENTS.md)
-4. Spawn fresh agent process
+4. Spawn fresh agent process (CU-P2-T12: always fresh, never resume or cloud handoff)
 5. Parse output for completion signal
 6. Run verification gate
 7. Update state files
 8. Advance to next item or escalate
+
+**CU-P2-T12: Process Isolation Policy**
+- Puppet Master spawns a completely fresh process for each iteration
+- Never uses `agent resume` or session continuation features
+- Never uses cloud handoff (`&` command) or any stateful session features
+- Rationale: Determinism, isolation, and reproducibility require stateless execution
+- Each iteration must be independent and reproducible without session dependencies
 
 ---
 
@@ -439,51 +446,192 @@ budgets:
 
 ### Cursor
 ```bash
-cursor --non-interactive --model <model> --prompt <prompt>
+# CU-P0-T01, CU-P1-T10: Updated per Cursor January 2026 contract
+# Primary binary: agent (preferred), also available as cursor-agent
+agent -p "prompt" --model <model> [--mode=plan|ask] [--output-format json|stream-json]
 ```
+
+**CU-P0-T01, CU-P1-T10: Key changes (January 2026):**
+- Binary: Prefer `agent`, fallback to `cursor-agent` (both installed by `curl https://cursor.com/install -fsSL | bash`)
+- Non-interactive: `-p` or `--print` flag (prefer prompt-as-arg, stdin fallback for large prompts)
+- Modes: `--mode=plan` (planning), `--mode=ask` (read-only/discovery)
+- Output formats: `--output-format json|stream-json` (requires `-p` flag)
+- Model discovery: `agent models` or `--list-models` (best-effort, cached)
+- MCP: `agent mcp list`, `agent mcp list-tools <server>` (read-only probing)
+- Auth: `CURSOR_API_KEY` env var for headless/CI (interactive uses local app auth)
+- Config: `~/.cursor/config.json` or `~/.config/cursor/config.json` (read-only detection)
+
+**Puppet Master policy:**
+- Fresh process per iteration (no `agent resume`, no cloud handoff)
+- Deterministic automation requires process isolation
 
 ### Codex
 ```bash
-codex --non-interactive --model <model> --approval-mode full-auto
+codex exec "prompt" [flags]
 ```
+
+**Key capabilities:**
+- `codex exec "prompt"` - Non-interactive execution with JSONL output
+- `codex` (no subcommand) - Launch interactive TUI session
+- `codex mcp-server` - Run Codex as MCP server (CLI-based, acceptable)
+
+**Non-interactive flags (used by Puppet Master):**
+- `--cd <dir>` or `-C <dir>` - Set working directory
+- `--model <model>` or `-m <model>` - Model selection (e.g., `gpt-5.2-codex`)
+- `--full-auto` - Convenience flag: sets `--ask-for-approval on-request` and `--sandbox workspace-write`
+- `--ask-for-approval <policy>` - Control approval: `untrusted | on-failure | on-request | never`
+- `--sandbox <mode>` - Sandbox policy: `read-only | workspace-write | danger-full-access`
+- `--json` or `--experimental-json` - JSONL event stream output (newline-delimited JSON)
+- `--color <mode>` - ANSI color control: `always | never | auto` (Puppet Master uses `never` for CI/CD)
+- `--max-turns <n>` - Cap agentic turns (when supported)
+- `--skip-git-repo-check` - Allow running outside Git repository
+- `--output-last-message <path>` or `-o <path>` - Write final message to file (CI/CD)
+- `--output-schema <path>` - Structured JSON output with custom schema (advanced)
+
+**Additional flags (available but not currently used):**
+- `--add-dir <path>` - Grant additional directories write access (repeatable, multi-directory workspaces)
+- `--image <path>` or `-i <path>` - Attach image files to prompts (comma-separated or repeatable)
+- `--profile <name>` or `-p <name>` - Load configuration profile from `~/.codex/config.toml`
+- `-c key=value` or `--config key=value` - Inline configuration overrides (repeatable)
+- `--search` - Enable web search capability
+- `--oss` - Use local open source model provider (requires Ollama)
+
+**Configuration file:**
+- Codex reads `~/.codex/config.toml` for persistent settings (default model, profiles, sandbox settings, etc.)
+- Explicit CLI flags override config file settings
+- Config file precedence: CLI flags > config file > defaults
+
+**Slash commands (interactive mode only, not used by Puppet Master):**
+- `/model` - Switch model mid-session
+- `/approvals` - Update approval rules
+- `/status` - Show session configuration and token usage
+- `/review` - Run code review
+- `/plan` - Generate implementation plan
+- `/diff` - Show Git diff
+- `/compact` - Summarize conversation to free tokens
+- `/fork` - Fork conversation into new thread
+- `/resume` - Resume saved conversation
+- `/new` - Start new conversation
+- `/exit` or `/quit` - Exit CLI
+
+**Codex SDK (`@openai/codex-sdk`):**
+- TypeScript SDK for programmatic control
+- **VERIFIED CLI-based**: SDK wraps the bundled `codex` binary and spawns CLI processes internally
+- SDK exchanges JSONL events over stdin/stdout with the CLI process
+- **Respects "CLI only" constraint**: ✅ SDK is CLI-based, not API-based
+- **Uses subscription account**: SDK spawns CLI processes which use OpenAI subscription account (ChatGPT/Codex plan), NOT pay-per-use API calls
+- **Current implementation**: CodexRunner uses SDK instead of direct CLI spawn
+- **Fresh process requirement**: Each iteration creates a NEW thread via `codexClient.startThread()`, ensuring fresh process per iteration
+- **Benefits**: Better TypeScript integration, structured event handling, built-in timeout support via AbortSignal
+- **Note**: The constraint is about using subscription-based access (via CLI) rather than direct API calls that charge per-use. SDK qualifies because it uses CLI internally.
+
+**Codex MCP Server (`codex mcp-server`):**
+- Runs Codex CLI as long-running MCP server process
+- **MCP Server is CLI-based**: Running `codex mcp-server` is a CLI invocation ✅ Acceptable
+- Exposes two tools: `codex()` (start session) and `codex-reply()` (continue session)
+- **However**: OpenAI Agents SDK that orchestrates MCP servers uses OpenAI API ❌ Violates constraint
+- **Key distinction**:
+  - Using `codex mcp-server` directly (CLI-based) ✅ Acceptable
+  - Using OpenAI Agents SDK to orchestrate (uses OpenAI API) ❌ Violates constraint
+- **For Puppet Master**: Could potentially use MCP server directly without Agents SDK
+- **Current decision**: Continue with `codex exec` for simplicity and consistency with fresh-process-per-iteration model
+
+**Puppet Master implementation:**
+- Uses `@openai/codex-sdk` (SDK spawns CLI processes internally - CLI-based ✅)
+- Each iteration creates a NEW thread via `codexClient.startThread()` (fresh process requirement)
+- Thread options: `approvalPolicy: 'never'`, `sandboxMode: 'workspace-write'`, `workingDirectory`, `model`
+- Timeout handling via `AbortSignal` in `TurnOptions`
+- SDK provides structured `Turn` results with `finalResponse`, `items`, `usage` (token counts)
+- Legacy `buildArgs()` method still available for fallback but not used with SDK
+- Config file (`~/.codex/config.toml`) is respected but explicit thread options override it
 
 ### Claude Code
 ```bash
-claude --print --model <model> --output-format stream-json --prompt <prompt>
+claude -p "prompt" [--model <model>] [--output-format text|json|stream-json] [--no-session-persistence] [--permission-mode <mode>] [--allowedTools "Read,Edit,Bash"] [--max-turns <n>] [--append-system-prompt "..."]
 ```
+
+**Key capabilities:**
+- `claude -p "prompt"` or `claude --print "prompt"` - Non-interactive print mode (headless)
+- `--output-format text|json|stream-json` - Plain text, single JSON object, or JSONL events
+- `--no-session-persistence` - Disable session save (print mode); we use this for fresh process per iteration
+- `--permission-mode default|acceptEdits|plan|dontAsk|bypassPermissions` - Permission behavior
+- `--allowedTools "Read,Edit,Bash"` - Auto-approve listed tools (comma-separated)
+- `--max-turns <n>` - Limit agentic turns
+- `--model <model>` - Model selection (e.g. `sonnet`, `opus`, `claude-sonnet-4-5`)
+- `--append-system-prompt "..."` - Append instructions; `--append-system-prompt-file <path>` for file
+- CLAUDE.md support; MCP via `--mcp-config` or config
+
+**Puppet Master policy:**
+- Fresh process per iteration (no `-c`/`--continue`, no `-r`/`--resume`)
+
+**Docs and commands:**
+- [CLI reference](https://code.claude.com/docs/en/cli-reference), [Headless](https://code.claude.com/docs/en/headless), [Setup](https://code.claude.com/docs/en/setup), [Troubleshooting](https://code.claude.com/docs/en/troubleshooting)
+- `claude doctor` - Check installation health; `claude update` - Update CLI; `claude mcp` - Configure MCP
+
+**Agent SDK:** [Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview) (Python/TS) uses Claude Code as runtime; we use CLI subprocess only.
 
 ### Gemini
 ```bash
-gemini -p "prompt" --output-format json --approval-mode yolo [--model <model>]
+gemini -p "prompt" --output-format json --approval-mode yolo [--model <model>] [--sandbox] [--include-directories <dir1,dir2>]
 ```
 
 **Key capabilities:**
 - `gemini -p "prompt"` or `gemini --prompt "prompt"` - Headless mode with prompt
-- `--output-format json` - Machine-readable JSON output
-- `--output-format stream-json` - Streaming JSONL events (real-time)
-- `--approval-mode yolo` or `--yolo` - Auto-approve all tool calls
+- `--output-format json` - Machine-readable JSON output (default for automation)
+- `--output-format stream-json` - Streaming JSONL events (real-time monitoring)
+- `--approval-mode yolo` or `--yolo` - Auto-approve all tool calls (recommended for automation)
 - `--approval-mode auto_edit` - Auto-approve edit tools only
-- `--approval-mode plan` - Read-only mode (requires `experimental.plan: true`)
-- `--model <model>` or `-m <model>` - Model selection
-- `--include-directories <dir1,dir2>` - Multi-directory workspace support
-- `--debug` or `-d` - Debug mode
-- `--sandbox` or `-s` - Sandbox execution environment
-- `--resume [session-id]` - Resume previous session (we spawn fresh, so not used)
-- Reads GEMINI.md from project root and ancestors for hierarchical context
-- Supports MCP servers via configuration
-- `/model` command for interactive model selection
-- `/memory` commands for managing GEMINI.md context files
+- `--approval-mode plan` - Read-only mode (requires `experimental.plan: true` in settings)
+- `--model <model>` or `-m <model>` - Model selection (e.g., `gemini-2.5-pro`, `gemini-3-pro-preview`)
+- `--include-directories <dir1,dir2>` - Multi-directory workspace support (max 5 directories, monorepo compatibility)
+- `--sandbox` or `-s` - Sandbox execution environment (security isolation for tool execution)
+- `--debug` or `-d` - Debug mode (verbose output)
+- `--resume [session-id]` - Resume previous session (not used by Puppet Master - we spawn fresh)
+- Model discovery: `gemini models` - List available models dynamically (best-effort, cached)
+
+**Model Selection:**
+- `auto` (recommended) - Automatic model selection based on task complexity
+- Pro models (`gemini-2.5-pro`, `gemini-3-pro-preview`) - Best for complex reasoning
+- Flash models (`gemini-2.5-flash`, `gemini-2.5-flash-lite`, `gemini-3-flash-preview`) - Fast, efficient
+- Preview models require `general.previewFeatures: true` in `~/.gemini/settings.json`
 
 **Authentication:**
-- OAuth via `gemini` first run (interactive)
-- `GEMINI_API_KEY` environment variable (headless)
-- Vertex AI via `GOOGLE_APPLICATION_CREDENTIALS` or `gcloud auth`
-- `GOOGLE_CLOUD_PROJECT` for Vertex AI
+- OAuth via `gemini` first run (interactive mode)
+- `GEMINI_API_KEY` environment variable (headless/automation)
+- `GOOGLE_API_KEY` environment variable (alternative to GEMINI_API_KEY)
+- Vertex AI via `GOOGLE_APPLICATION_CREDENTIALS` (service account JSON path)
+- `GOOGLE_CLOUD_PROJECT` environment variable (for Vertex AI)
+- `GOOGLE_CLOUD_LOCATION` environment variable (for Vertex AI, optional)
+
+**Configuration (Hierarchical Settings):**
+- System defaults: Built into Gemini CLI
+- User settings: `~/.gemini/settings.json` (highest precedence for user-level config)
+- Project settings: `.gemini/settings.json` or project root (project-specific overrides)
+- Environment variable substitution: `${VAR_NAME}` syntax in settings.json
+- Preview features: `general.previewFeatures: true` enables preview models
+- Settings schema: https://raw.githubusercontent.com/google-gemini/gemini-cli/main/schemas/settings.schema.json
+
+**Context Files (GEMINI.md):**
+- Hierarchical loading: Scans up to 200 directories from project root
+- Global: `~/.gemini/GEMINI.md` (user-level instructions)
+- Project: `.gemini/GEMINI.md` or `GEMINI.md` in project root
+- Sub-directory: Local `GEMINI.md` files in subdirectories
+- Modular imports: `@import` directive for including other files
+- `.geminiignore` - File exclusion patterns (similar to `.gitignore`)
 
 **Output formats:**
 - `text` (default) - Human-readable output
 - `json` - Single JSON object with `{response, stats, error?}`
-- `stream-json` - JSONL events with types: `init`, `message`, `tool_use`, `tool_result`, `error`, `result`
+  - `response`: Main AI-generated content
+  - `stats`: Usage statistics (models, tools, files, tokens)
+  - `error`: Error object if present
+- `stream-json` - JSONL events (one JSON object per line) with types:
+  - `init` - Initialization event
+  - `message` - Message content
+  - `tool_use` - Tool invocation
+  - `tool_result` - Tool execution result
+  - `error` - Error event
+  - `result` - Final result event
 
 **Session management:**
 - Automatic session saving to `~/.gemini/tmp/<project_hash>/chats/`
@@ -491,6 +639,19 @@ gemini -p "prompt" --output-format json --approval-mode yolo [--model <model>]
 - `--list-sessions` to view available sessions
 - `--delete-session <id>` to remove sessions
 - Note: Puppet Master spawns fresh processes, so session resume is not used
+
+**Extensions and Extensibility:**
+- Extensions: Custom prompts, MCP server configs, commands (via `gemini-extension.json`)
+- Hooks: Event-driven scripting (`SessionStart`, `BeforeTool`, `AfterModel`, etc.)
+- MCP Servers: Model Context Protocol integration for external tools and resources
+- Agent Skills: Self-contained directories with instructions and scripts (experimental)
+- Custom commands: Slash commands and at-commands for specialized workflows
+
+**Installation:**
+- `npm install -g @google/gemini-cli` - Global npm installation
+- `npx @google/gemini-cli` - One-off usage without installation
+- `brew install gemini-cli` - Homebrew (macOS)
+- Docker: Official images available (see Gemini CLI documentation)
 
 ### GitHub Copilot
 ```bash
@@ -615,6 +776,95 @@ Copilot respects instructions from these locations (in order):
 - `--agent=<agent-name>` - Specify custom agent to use (e.g., `--agent=refactor-agent`)
 
 **Note:** Flag `--allow-all-paths` is documented in official docs for disabling path verification. Flags `--silent` and `--stream off` are used in our implementation but may be undocumented features.
+
+---
+
+## Usage Tracking & Plan Detection
+
+### Overview
+
+Puppet Master integrates platform-reported usage data from multiple sources to provide accurate quota visibility and plan detection:
+
+1. **Platform APIs** (most reliable): Claude Admin API, GitHub Copilot Metrics API, Gemini Cloud Quotas API
+2. **Error Message Parsing**: Extracts quota/reset information from platform error messages
+3. **CLI Command Parsing**: Parses `/stats`, `/status`, `/cost` command outputs
+4. **Manual Configuration**: For platforms without APIs (Cursor, Codex)
+
+### Usage Tracking APIs
+
+#### Claude Code
+- **API**: `GET /v1/organizations/usage_report/claude_code` (Claude Admin API)
+- **Requirements**: `ANTHROPIC_API_KEY` with admin permissions
+- **Provides**: Request counts, token usage, quota limits, reset times, customer_type, subscription_type
+- **CLI Commands**: `/cost` (API token usage), `/stats` (usage patterns for subscribers)
+
+#### GitHub Copilot
+- **API**: `GET /orgs/{org}/copilot/metrics` (GitHub REST API)
+- **Requirements**: `GITHUB_TOKEN` or `GH_TOKEN` with `copilot:read` scope, organization access, 5+ members with active licenses
+- **Provides**: Premium requests used/limit, monthly reset (1st at 00:00:00 UTC)
+- **Limitation**: Organization-level only
+
+#### Gemini
+- **API**: `https://cloudquotas.googleapis.com` (Google Cloud Quotas API)
+- **Requirements**: `GOOGLE_CLOUD_PROJECT`, `GOOGLE_APPLICATION_CREDENTIALS` or ADC
+- **Provides**: Quota limits, usage counts, reset times
+- **CLI Command**: `/stats` (per-model usage, tokens, tool stats, file modifications)
+
+#### Codex
+- **API**: None (no programmatic API)
+- **CLI Command**: `/status` (token usage: Input/Output/Total)
+- **Error Parsing**: "You've reached your 5-hour message limit. Try again in 3h 42m."
+- **SDK**: `Turn.usage` object provides token counts
+
+#### Cursor
+- **API**: None (no programmatic API)
+- **Status Command**: `agent status` (auth only, not usage)
+- **Dashboard**: `cursor.com/dashboard?tab=usage` (web only)
+- **Manual Config**: `autoModeUnlimited` flag for grandfathered plans
+
+### Error Message Parsing
+
+Puppet Master parses platform error messages to extract quota/reset information:
+
+- **Codex**: `"You've reached your 5-hour message limit. Try again in 3h 42m."` → Extracts limit hours and reset time
+- **Gemini**: `"Your quota will reset after 8h44m7s."` → Extracts reset time (hours/minutes/seconds)
+- **Claude**: Rate limit errors (429, 413, 503, 529) with `Retry-After` header or reset time in body
+
+### Plan Detection
+
+Plan detection identifies subscription tiers to understand quota limits:
+
+- **Claude**: Uses Usage Report API `customer_type` and `subscription_type` fields
+- **Copilot**: Infers tier from premium requests limit (free/pro/team/enterprise)
+- **Gemini**: Infers tier from quota limits via Cloud Quotas API
+- **Codex**: Manual config or quota inference from error messages
+- **Cursor**: Manual config or `autoModeUnlimited` flag detection
+
+### Integration
+
+Usage tracking is integrated into:
+- **QuotaManager**: Merges platform-reported usage with internal UsageTracker data
+- **Usage CLI Command**: `puppet-master usage [platform]` displays platform-reported data
+- **Doctor Checks**: `UsageQuotaCheck` uses platform-reported usage for warnings
+
+### Configuration
+
+Usage tracking uses environment variables:
+- `ANTHROPIC_API_KEY` - Claude Admin API access
+- `GITHUB_TOKEN` or `GH_TOKEN` - GitHub Copilot Metrics API access
+- `GOOGLE_CLOUD_PROJECT` - Gemini Cloud Quotas API project
+- `GOOGLE_APPLICATION_CREDENTIALS` - Gemini service account credentials
+
+Manual plan configuration (for Cursor/Codex):
+```yaml
+# In config.yaml (future enhancement)
+plan_detection:
+  cursor:
+    tier: "pro"  # free, pro, team, enterprise
+    customerType: "individual"
+  codex:
+    tier: "plus"  # free, plus, team, enterprise
+```
 
 ---
 

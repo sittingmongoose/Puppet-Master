@@ -14,3 +14,6 @@ export type { Toast, ToastType } from './Toast.js';
 
 export { Modal } from './Modal.js';
 export type { ModalProps } from './Modal.js';
+
+export { Select } from './Select.js';
+export type { SelectProps } from './Select.js';

@@ -12,6 +12,7 @@ import {
   Metrics,
   History,
   Coverage,
+  Memory,
   NotFound,
 } from '@/pages';
 
@@ -49,6 +50,10 @@ export function AppRoutes() {
       <Route path="/metrics" element={<Metrics />} />
       <Route path="/history" element={<History />} />
       <Route path="/coverage" element={<Coverage />} />
+      
+      {/* Memory */}
+      <Route path="/memory" element={<Memory />} />
+      <Route path="/memory/:path" element={<Memory />} />
       
       {/* 404 catch-all */}
       <Route path="*" element={<NotFound />} />

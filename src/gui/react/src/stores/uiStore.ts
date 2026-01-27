@@ -22,6 +22,7 @@ interface BudgetState {
   
   // Actions
   updatePlatformBudget: (platform: Platform, info: Partial<BudgetInfo>) => void;
+  updatePlatforms: (budgets: Record<string, { used: number; limit: number | 'unlimited'; remaining?: number; resetsAt?: string }>) => void;
   resetBudgets: () => void;
 }
 
@@ -52,6 +53,26 @@ export const useBudgetStore = create<BudgetState>((set) => ({
       [platform]: { ...state.platforms[platform], ...info },
     },
   })),
+  
+  // P1: Update all platforms from API response
+  updatePlatforms: (budgets) => set((state) => {
+    const updated: Record<Platform, BudgetInfo> = { ...state.platforms };
+    for (const [platform, info] of Object.entries(budgets)) {
+      if (platform in updated) {
+        const limit = typeof info.limit === 'number' ? info.limit : Number.MAX_SAFE_INTEGER;
+        const used = info.used || 0;
+        const percentage = limit > 0 ? (used / limit) * 100 : 0;
+        updated[platform as Platform] = {
+          ...state.platforms[platform as Platform],
+          used,
+          limit,
+          warning: percentage >= 80,
+          exceeded: percentage >= 100,
+        };
+      }
+    }
+    return { platforms: updated };
+  }),
   
   resetBudgets: () => set({
     platforms: {

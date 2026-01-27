@@ -21,12 +21,24 @@ export interface PlatformAuthCheckResult {
 
 export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResult {
   switch (platform) {
-    case 'cursor':
-      return {
-        status: 'skipped',
-        details:
-          'Cursor auth is handled by the local Cursor app/session; no automated check performed.',
-      };
+    case 'cursor': {
+      // CU-P0-T02: Check for CURSOR_API_KEY for headless/CI usage
+      const hasApiKey =
+        typeof process.env.CURSOR_API_KEY === 'string' &&
+        process.env.CURSOR_API_KEY.trim() !== '';
+      return hasApiKey
+        ? {
+            status: 'authenticated',
+            details: 'CURSOR_API_KEY is set (headless/CI mode).',
+          }
+        : {
+            status: 'not_authenticated',
+            details:
+              'CURSOR_API_KEY is not set. For headless/CI usage, set CURSOR_API_KEY. For interactive usage, Cursor uses local app authentication.',
+            fixSuggestion:
+              'For headless/CI: Set CURSOR_API_KEY environment variable. See https://cursor.com/docs/cli/reference/authentication for details.',
+          };
+    }
     case 'codex': {
       const hasKey = typeof process.env.OPENAI_API_KEY === 'string' && process.env.OPENAI_API_KEY.trim() !== '';
       return hasKey
@@ -57,13 +69,16 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
           };
     }
     case 'gemini': {
-      // Check for GEMINI_API_KEY or GOOGLE_API_KEY (both are valid for Gemini)
+      // Check for GEMINI_API_KEY, GOOGLE_API_KEY, or GOOGLE_APPLICATION_CREDENTIALS (Vertex AI)
       const hasGeminiKey =
         typeof process.env.GEMINI_API_KEY === 'string' &&
         process.env.GEMINI_API_KEY.trim() !== '';
       const hasGoogleKey =
         typeof process.env.GOOGLE_API_KEY === 'string' &&
         process.env.GOOGLE_API_KEY.trim() !== '';
+      const hasVertexCreds =
+        typeof process.env.GOOGLE_APPLICATION_CREDENTIALS === 'string' &&
+        process.env.GOOGLE_APPLICATION_CREDENTIALS.trim() !== '';
       if (hasGeminiKey) {
         return {
           status: 'authenticated',
@@ -76,11 +91,17 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
           details: 'GOOGLE_API_KEY is set.',
         };
       }
+      if (hasVertexCreds) {
+        return {
+          status: 'authenticated',
+          details: 'GOOGLE_APPLICATION_CREDENTIALS is set (Vertex AI).',
+        };
+      }
       return {
         status: 'not_authenticated',
-        details: 'Neither GEMINI_API_KEY nor GOOGLE_API_KEY is set.',
+        details: 'Neither GEMINI_API_KEY, GOOGLE_API_KEY, nor GOOGLE_APPLICATION_CREDENTIALS is set.',
         fixSuggestion:
-          'Set GEMINI_API_KEY or GOOGLE_API_KEY in your environment (or use Google OAuth).',
+          'Set GEMINI_API_KEY or GOOGLE_API_KEY in your environment, or GOOGLE_APPLICATION_CREDENTIALS for Vertex AI (or use Google OAuth).',
       };
     }
     case 'copilot': {

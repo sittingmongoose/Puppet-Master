@@ -186,3 +186,164 @@ export const KNOWN_CURSOR_MODELS: readonly string[] = CURSOR_MODELS.map(m => m.i
 export function getDefaultCursorModel(): string {
   return 'auto';
 }
+
+/**
+ * CU-P0-T06: Discovered model information with source tracking.
+ */
+export interface DiscoveredCursorModel extends CursorModel {
+  source: 'discovered' | 'static';
+}
+
+/**
+ * CU-P0-T06: Discover Cursor models using `agent models` or `--list-models`.
+ * 
+ * @param command - Cursor CLI command (default: 'agent')
+ * @param timeoutMs - Timeout in milliseconds (default: 5000)
+ * @returns Discovered models or null if discovery fails
+ */
+export async function discoverCursorModels(
+  command: string = 'agent',
+  timeoutMs: number = 5000
+): Promise<DiscoveredCursorModel[] | null> {
+  const { spawn } = await import('child_process');
+  
+  return new Promise((resolve) => {
+    // Try `agent models` first, then `agent --list-models`
+    const proc = spawn(command, ['models'], {
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: { ...process.env, CURSOR_NON_INTERACTIVE: '1' },
+    });
+
+    let stdout = '';
+    let stderr = '';
+
+    const timer = setTimeout(() => {
+      proc.kill('SIGKILL');
+      resolve(null); // Timeout = discovery failed, return null for fallback
+    }, timeoutMs);
+
+    proc.stdout?.on('data', (data: Buffer) => {
+      stdout += data.toString();
+    });
+
+    proc.stderr?.on('data', (data: Buffer) => {
+      stderr += data.toString();
+    });
+
+    proc.on('close', (code) => {
+      clearTimeout(timer);
+      if (code === 0) {
+        const models = parseModelList(stdout || stderr);
+        if (models.length > 0) {
+          resolve(models.map(m => ({ ...m, source: 'discovered' as const })));
+        } else {
+          resolve(null);
+        }
+      } else {
+        resolve(null); // Command failed, return null for fallback
+      }
+    });
+
+    proc.on('error', () => {
+      clearTimeout(timer);
+      resolve(null); // Error = discovery failed, return null for fallback
+    });
+  });
+}
+
+/**
+ * CU-P0-T06: Parse model list from Cursor CLI output.
+ * Handles various output formats (JSON, plain text, table).
+ */
+function parseModelList(output: string): CursorModel[] {
+  const models: CursorModel[] = [];
+  const lines = output.trim().split('\n');
+
+  // Try JSON format first
+  try {
+    const json = JSON.parse(output);
+    if (Array.isArray(json)) {
+      for (const item of json) {
+        if (typeof item === 'object' && item !== null && 'id' in item) {
+          models.push({
+            id: String(item.id),
+            label: String(item.label || item.name || item.id),
+            description: typeof item.description === 'string' ? item.description : undefined,
+            provider: item.provider as CursorModel['provider'],
+            contextWindow: typeof item.contextWindow === 'string' ? item.contextWindow : undefined,
+          });
+        }
+      }
+      return models;
+    }
+  } catch {
+    // Not JSON, try text parsing
+  }
+
+  // Parse text/table format
+  for (const line of lines) {
+    if (!line.trim() || line.startsWith('Available') || line.startsWith('Model')) {
+      continue;
+    }
+
+    // Try to extract model ID (first word or column)
+    const parts = line.trim().split(/\s+/);
+    if (parts.length > 0) {
+      const id = parts[0];
+      // Skip headers and separators
+      if (id && !id.includes('─') && !id.includes('═') && id !== 'ID') {
+        models.push({
+          id,
+          label: id,
+          description: parts.slice(1).join(' ') || undefined,
+        });
+      }
+    }
+  }
+
+  return models;
+}
+
+/**
+ * CU-P0-T06: Get Cursor models with discovery fallback.
+ * 
+ * @param command - Cursor CLI command (default: 'agent')
+ * @param useCache - Whether to use cached discovery results (default: true)
+ * @returns Models with source information
+ */
+let cachedDiscoveredModels: DiscoveredCursorModel[] | null = null;
+let cacheTimestamp: number = 0;
+const CACHE_TTL_MS = 3600_000; // 1 hour
+
+export async function getCursorModelsWithDiscovery(
+  command: string = 'agent',
+  useCache: boolean = true
+): Promise<DiscoveredCursorModel[]> {
+  // Check cache
+  if (useCache && cachedDiscoveredModels && Date.now() - cacheTimestamp < CACHE_TTL_MS) {
+    return cachedDiscoveredModels;
+  }
+
+  // Try discovery
+  const discovered = await discoverCursorModels(command, 5000);
+  
+  if (discovered && discovered.length > 0) {
+    // Merge discovered with static (discovered takes precedence)
+    const staticModels = CURSOR_MODELS.map(m => ({ ...m, source: 'static' as const }));
+    const discoveredIds = new Set(discovered.map(m => m.id));
+    const merged = [
+      ...discovered,
+      ...staticModels.filter(m => !discoveredIds.has(m.id)),
+    ];
+    
+    cachedDiscoveredModels = merged;
+    cacheTimestamp = Date.now();
+    return merged;
+  }
+
+  // Fallback to static list
+  const staticModels = CURSOR_MODELS.map(m => ({ ...m, source: 'static' as const }));
+  cachedDiscoveredModels = staticModels;
+  cacheTimestamp = Date.now();
+  return staticModels;
+}

@@ -8,6 +8,8 @@
 import type { Platform, PlatformBudgets, TierConfig, BudgetEnforcementConfig } from '../types/config.js';
 import type { QuotaInfo, CooldownInfo } from '../types/capabilities.js';
 import { UsageTracker } from '../memory/usage-tracker.js';
+import { UsageProvider } from './usage/usage-provider.js';
+import type { PlatformUsageInfo } from './usage/types.js';
 
 /**
  * Error thrown when quota is exhausted (hard limit reached).
@@ -39,6 +41,7 @@ export class QuotaManager {
   private cooldownStarts: Map<Platform, Date> = new Map();
   private softLimitPercent: number;
   private hardLimitPercent: number;
+  private usageProvider?: UsageProvider;
 
   constructor(
     usageTracker: UsageTracker,
@@ -46,7 +49,8 @@ export class QuotaManager {
     budgetEnforcement: BudgetEnforcementConfig,
     runStartTime?: Date,
     softLimitPercent: number = 80,
-    hardLimitPercent: number = 100
+    hardLimitPercent: number = 100,
+    usageProvider?: UsageProvider
   ) {
     this.usageTracker = usageTracker;
     this.budgets = budgets;
@@ -54,32 +58,98 @@ export class QuotaManager {
     this.runStartTime = runStartTime || new Date();
     this.softLimitPercent = softLimitPercent;
     this.hardLimitPercent = hardLimitPercent;
+    this.usageProvider = usageProvider;
+  }
+
+  /**
+   * Gets platform-reported usage information (if available)
+   * 
+   * @param platform - Platform to get usage for
+   * @returns Platform usage info or null if not available
+   */
+  async getPlatformUsage(platform: Platform): Promise<PlatformUsageInfo | null> {
+    if (!this.usageProvider) {
+      return null;
+    }
+
+    try {
+      return await this.usageProvider.getUsage(platform);
+    } catch {
+      // If usage provider fails, fall back to internal tracking
+      return null;
+    }
   }
 
   /**
    * Checks quota for a platform and returns quota information.
    * Calculates remaining quota across run, hour, and day periods.
    * P1-G04: Now checks both call-based and token-based quotas.
+   * P0: Cursor Auto mode unlimited support - if platform is cursor and autoModeUnlimited is true,
+   *     Auto mode usage is not counted against quotas.
+   * 
+   * NEW: Attempts to use platform-reported usage data (from APIs, error parsing, CLI commands)
+   *      when available, falling back to internal UsageTracker.
    * 
    * Throws QuotaExhaustedError when hard limit is reached.
    * Logs warning when soft limit is reached but allows execution.
    * 
    * @param platform - Platform to check quota for
+   * @param model - Optional model name (used for Cursor Auto mode detection)
    * @returns QuotaInfo with remaining quota and reset time
    * @throws QuotaExhaustedError when hard limit (100%) is reached
    */
-  async checkQuota(platform: Platform): Promise<QuotaInfo> {
+  async checkQuota(platform: Platform, model?: string): Promise<QuotaInfo> {
     const budget = this.budgets[platform];
     
+    // P0: Cursor Auto mode unlimited - if user has grandfathered plan with unlimited Auto mode,
+    //     and model is "auto", skip quota checking (unlimited usage)
+    if (platform === 'cursor' && budget.autoModeUnlimited === true && model === 'auto') {
+      return {
+        remaining: Number.MAX_SAFE_INTEGER,
+        limit: Number.MAX_SAFE_INTEGER,
+        resetsAt: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(), // Far future
+        period: 'run',
+      };
+    }
+    
+    // Try to get platform-reported usage first (from APIs, error parsing, CLI commands)
+    let platformUsage: PlatformUsageInfo | null = null;
+    try {
+      platformUsage = await this.getPlatformUsage(platform);
+    } catch {
+      // If usage provider fails, continue with internal tracking
+      platformUsage = null;
+    }
+    
     // Get usage counts for each period (calls)
+    // If platform-reported usage is available and has limit/reset info, prefer it for hour/day periods
+    let hourCount = await this.usageTracker.getCallCountInLastHour(platform);
+    let dayCount = await this.usageTracker.getCallCountToday(platform);
+    
+    // Override with platform-reported usage if available and more recent
+    if (platformUsage && platformUsage.period === 'hour' && platformUsage.currentUsage > 0) {
+      hourCount = Math.max(hourCount, platformUsage.currentUsage);
+    }
+    if (platformUsage && platformUsage.period === 'day' && platformUsage.currentUsage > 0) {
+      dayCount = Math.max(dayCount, platformUsage.currentUsage);
+    }
+    
     const runCount = await this.getRunPeriodCount(platform);
-    const hourCount = await this.usageTracker.getCallCountInLastHour(platform);
-    const dayCount = await this.usageTracker.getCallCountToday(platform);
 
     // P1-G04: Get token counts for each period
     const runTokens = await this.getRunPeriodTokens(platform);
-    const hourTokens = await this.getTokenCountInLastHour(platform);
-    const dayTokens = await this.getTokenCountToday(platform);
+    let hourTokens = await this.getTokenCountInLastHour(platform);
+    let dayTokens = await this.getTokenCountToday(platform);
+    
+    // Override with platform-reported token usage if available
+    if (platformUsage?.tokens) {
+      if (platformUsage.period === 'hour') {
+        hourTokens = Math.max(hourTokens, platformUsage.tokens.total);
+      }
+      if (platformUsage.period === 'day') {
+        dayTokens = Math.max(dayTokens, platformUsage.tokens.total);
+      }
+    }
 
     // Calculate limits (calls)
     const runLimit = this.getLimitValue(budget.maxCallsPerRun);
@@ -136,7 +206,11 @@ export class QuotaManager {
     const mostRestrictive = periods[0];
 
     // Calculate reset time based on period
-    const resetsAt = this.calculateResetTime(mostRestrictive.period);
+    // Prefer platform-reported reset time if available and matches the period
+    let resetsAt = this.calculateResetTime(mostRestrictive.period);
+    if (platformUsage?.resetsAt && platformUsage.period === mostRestrictive.period) {
+      resetsAt = platformUsage.resetsAt;
+    }
 
     // Calculate percentage used
     const percentageUsed = mostRestrictive.limit > 0 
@@ -159,8 +233,9 @@ export class QuotaManager {
     const softLimit = this.budgetEnforcement.warnAtPercentage || this.softLimitPercent;
     if (percentageUsed >= softLimit) {
       const unitLabel = mostRestrictive.type === 'tokens' ? 'tokens' : 'calls';
+      const platformUsageNote = platformUsage?.source ? ` (platform-reported: ${platformUsage.source})` : '';
       console.warn(
-        `[QuotaManager] Soft limit warning for ${platform}: ${mostRestrictive.count}/${mostRestrictive.limit} ${unitLabel} used (${percentageUsed.toFixed(1)}%) in ${mostRestrictive.period} period. Resets at ${resetsAt}`
+        `[QuotaManager] Soft limit warning for ${platform}: ${mostRestrictive.count}/${mostRestrictive.limit} ${unitLabel} used (${percentageUsed.toFixed(1)}%) in ${mostRestrictive.period} period. Resets at ${resetsAt}${platformUsageNote}`
       );
     }
 
@@ -222,9 +297,32 @@ export class QuotaManager {
   }
 
   /**
-   * Records usage for a platform and checks if limits were hit
+   * Records usage for a platform and checks if limits were hit.
+   * P0: Cursor Auto mode unlimited - if platform is cursor and autoModeUnlimited is true,
+   *     Auto mode usage is not recorded against quotas.
+   * 
+   * @param platform - Platform to record usage for
+   * @param tokens - Token count used
+   * @param duration - Duration in milliseconds
+   * @param model - Optional model name (used for Cursor Auto mode detection)
    */
-  async recordUsage(platform: Platform, tokens: number, duration: number): Promise<void> {
+  async recordUsage(platform: Platform, tokens: number, duration: number, model?: string): Promise<void> {
+    const budget = this.budgets[platform];
+    
+    // P0: Cursor Auto mode unlimited - if user has grandfathered plan with unlimited Auto mode,
+    //     and model is "auto", skip usage recording (unlimited usage)
+    if (platform === 'cursor' && budget.autoModeUnlimited === true && model === 'auto') {
+      // Still track for analytics, but don't count against quotas
+      await this.usageTracker.track({
+        platform,
+        action: 'usage',
+        tokens,
+        durationMs: duration,
+        success: true,
+      });
+      return; // Skip quota checking for unlimited Auto mode
+    }
+    
     // Record usage via UsageTracker
     await this.usageTracker.track({
       platform,
@@ -239,14 +337,18 @@ export class QuotaManager {
   }
 
   /**
-   * Composite check to determine if execution can proceed
+   * Composite check to determine if execution can proceed.
+   * P0: Supports model parameter for Cursor Auto mode unlimited detection.
+   * 
+   * @param platform - Platform to check
+   * @param model - Optional model name (used for Cursor Auto mode detection)
    */
-  async canProceed(platform: Platform): Promise<{ allowed: boolean; reason?: string }> {
+  async canProceed(platform: Platform, model?: string): Promise<{ allowed: boolean; reason?: string }> {
     // Check quota.
     // `checkQuota()` enforces hard limits by throwing QuotaExhaustedError, but callers of
     // `canProceed()` should receive a structured allow/deny result instead of an exception.
     try {
-      await this.checkQuota(platform);
+      await this.checkQuota(platform, model);
     } catch (error) {
       if (error instanceof QuotaExhaustedError) {
         return { allowed: false, reason: error.message };
@@ -267,10 +369,14 @@ export class QuotaManager {
   }
 
   /**
-   * Gets the recommended platform from a list of tier configs
-   * Returns the platform with the best quota availability
+   * Gets the recommended platform from a list of tier configs.
+   * Returns the platform with the best quota availability.
+   * P0: Supports model parameter for Cursor Auto mode unlimited detection.
+   * 
+   * @param tiers - List of tier configs to check
+   * @param model - Optional model name (used for Cursor Auto mode detection)
    */
-  async getRecommendedPlatform(tiers: TierConfig[]): Promise<Platform | null> {
+  async getRecommendedPlatform(tiers: TierConfig[], model?: string): Promise<Platform | null> {
     // Extract unique platforms from tiers
     const platforms = Array.from(new Set(tiers.map(tier => tier.platform)));
 
@@ -278,12 +384,12 @@ export class QuotaManager {
     const platformScores: Array<{ platform: Platform; remaining: number }> = [];
 
     for (const platform of platforms) {
-      const proceed = await this.canProceed(platform);
+      const proceed = await this.canProceed(platform, model);
       if (!proceed.allowed) {
         continue; // Skip platforms that can't proceed
       }
 
-      const quotaInfo = await this.checkQuota(platform);
+      const quotaInfo = await this.checkQuota(platform, model);
       platformScores.push({
         platform,
         remaining: quotaInfo.remaining,

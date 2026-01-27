@@ -24,19 +24,20 @@ interface UsageChartProps {
  * This is a fallback CSS-based chart that maintains the visual style.
  */
 export function UsageChart({ data, className = '' }: UsageChartProps) {
-  // Find max value for scaling
-  const maxValue = Math.max(
-    ...data.map((d) => d.cursor + d.codex + d.claude)
-  );
+  const safeData = Array.isArray(data) ? data : [];
+  const maxValue =
+    safeData.length === 0
+      ? 1
+      : Math.max(...safeData.map((d) => d.cursor + d.codex + d.claude));
 
   return (
     <div className={`space-y-sm ${className}`}>
       <div className="flex items-end gap-xs h-32">
-        {data.map((day) => {
+        {safeData.map((day) => {
           const total = day.cursor + day.codex + day.claude;
-          const cursorHeight = (day.cursor / maxValue) * 100;
-          const codexHeight = (day.codex / maxValue) * 100;
-          const claudeHeight = (day.claude / maxValue) * 100;
+          const cursorHeight = maxValue > 0 ? (day.cursor / maxValue) * 100 : 0;
+          const codexHeight = maxValue > 0 ? (day.codex / maxValue) * 100 : 0;
+          const claudeHeight = maxValue > 0 ? (day.claude / maxValue) * 100 : 0;
 
           return (
             <div
@@ -64,7 +65,7 @@ export function UsageChart({ data, className = '' }: UsageChartProps) {
       
       {/* X-axis labels */}
       <div className="flex gap-xs text-xs text-ink-faded">
-        {data.map((day) => (
+        {safeData.map((day) => (
           <div key={day.date} className="flex-1 text-center truncate">
             {formatDate(day.date)}
           </div>

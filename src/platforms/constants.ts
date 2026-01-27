@@ -23,10 +23,11 @@ import { join } from 'node:path';
  * Default CLI command names for each platform.
  *
  * IMPORTANT: Keep these aligned with repository fixtures and docs.
- * `REQUIREMENTS.md` currently documents Cursor as `cursor-agent`.
+ * CU-P0-T01: Updated to prefer `agent` as primary Cursor CLI binary per
+ * Cursor January 2026 updates. Installer provides both `agent` and `cursor-agent`.
  */
 export const PLATFORM_COMMANDS: Readonly<Record<Platform, string>> = {
-  cursor: process.platform === 'win32' ? 'cursor-agent.exe' : 'cursor-agent',
+  cursor: process.platform === 'win32' ? 'agent.exe' : 'agent',
   codex: process.platform === 'win32' ? 'codex.exe' : 'codex',
   claude: process.platform === 'win32' ? 'claude.exe' : 'claude',
   gemini: process.platform === 'win32' ? 'gemini.exe' : 'gemini',
@@ -37,36 +38,52 @@ export const PLATFORM_COMMANDS: Readonly<Record<Platform, string>> = {
 /**
  * Known installation paths for Cursor CLI.
  * These are common paths where Cursor installs its CLI.
+ * CU-P0-T01: Updated to check for `agent` first, then `cursor-agent` for compatibility.
  */
 const CURSOR_KNOWN_PATHS: readonly string[] = [
-  // Linux - npm global installs
-  '/usr/local/bin/cursor-agent',
-  '/usr/bin/cursor-agent',
-  // Linux - user local installs
+  // Linux - user local installs (prefer agent, then cursor-agent)
+  process.env.HOME ? join(process.env.HOME, '.local', 'bin', 'agent') : '',
   process.env.HOME ? join(process.env.HOME, '.local', 'bin', 'cursor-agent') : '',
+  process.env.HOME ? join(process.env.HOME, 'bin', 'agent') : '',
   process.env.HOME ? join(process.env.HOME, 'bin', 'cursor-agent') : '',
+  // Linux - npm global installs
+  '/usr/local/bin/agent',
+  '/usr/local/bin/cursor-agent',
+  '/usr/bin/agent',
+  '/usr/bin/cursor-agent',
   // macOS - Homebrew and common paths
+  '/opt/homebrew/bin/agent',
   '/opt/homebrew/bin/cursor-agent',
+  '/usr/local/bin/agent',
   '/usr/local/bin/cursor-agent',
   // macOS - Cursor app bundle
+  '/Applications/Cursor.app/Contents/Resources/app/bin/agent',
   '/Applications/Cursor.app/Contents/Resources/app/bin/cursor-agent',
   // Linux - Cursor app image
+  process.env.HOME ? join(process.env.HOME, '.local', 'share', 'cursor', 'agent') : '',
   process.env.HOME ? join(process.env.HOME, '.local', 'share', 'cursor', 'cursor-agent') : '',
   // Windows paths (when running from WSL)
+  '/mnt/c/Users/*/AppData/Local/Programs/cursor/resources/app/bin/agent',
   '/mnt/c/Users/*/AppData/Local/Programs/cursor/resources/app/bin/cursor-agent',
 ].filter(p => p.length > 0) as readonly string[];
 
 /**
  * Known installation paths for Cursor CLI on Windows.
+ * CU-P0-T01: Updated to check for `agent.exe` first, then `cursor-agent.exe` for compatibility.
  */
 const CURSOR_KNOWN_PATHS_WIN32: readonly string[] = [
-  // Windows - User install (most common)
+  // Windows - User install (most common) - prefer agent, then cursor-agent
+  process.env.LOCALAPPDATA ? join(process.env.LOCALAPPDATA, 'Programs', 'cursor', 'resources', 'app', 'bin', 'agent.exe') : '',
   process.env.LOCALAPPDATA ? join(process.env.LOCALAPPDATA, 'Programs', 'cursor', 'resources', 'app', 'bin', 'cursor-agent.exe') : '',
+  process.env.LOCALAPPDATA ? join(process.env.LOCALAPPDATA, 'Programs', 'Cursor', 'resources', 'app', 'bin', 'agent.exe') : '',
   process.env.LOCALAPPDATA ? join(process.env.LOCALAPPDATA, 'Programs', 'Cursor', 'resources', 'app', 'bin', 'cursor-agent.exe') : '',
   // Windows - npm global
+  process.env.APPDATA ? join(process.env.APPDATA, 'npm', 'agent.exe') : '',
   process.env.APPDATA ? join(process.env.APPDATA, 'npm', 'cursor-agent.exe') : '',
   // Windows - Program Files
+  'C:\\Program Files\\Cursor\\resources\\app\\bin\\agent.exe',
   'C:\\Program Files\\Cursor\\resources\\app\\bin\\cursor-agent.exe',
+  'C:\\Program Files (x86)\\Cursor\\resources\\app\\bin\\agent.exe',
   'C:\\Program Files (x86)\\Cursor\\resources\\app\\bin\\cursor-agent.exe',
 ].filter(p => p.length > 0) as readonly string[];
 
@@ -90,10 +107,13 @@ export function resolvePlatformCommand(
 /**
  * Cursor CLI command candidates in preference order.
  *
- * Cursor CLI naming has been inconsistent historically. Use this list when you
- * need to probe availability with fallbacks (doctor, capability discovery).
- * 
- * P2-G11: Enhanced to check known installation paths for non-PATH installs.
+ * CU-P0-T01: Updated preference order per Cursor January 2026 updates:
+ * 1. Prefer `agent` (primary binary per docs)
+ * 2. Then `cursor-agent` (backward compatibility)
+ * 3. Then `cursor` (if verified to behave like agent CLI)
+ *
+ * Use this list when you need to probe availability with fallbacks
+ * (doctor, capability discovery).
  */
 export function getCursorCommandCandidates(
   cliPaths?: Partial<CliPathsConfig> | null
@@ -105,14 +125,14 @@ export function getCursorCommandCandidates(
     candidates.push(cliPaths.cursor);
   }
   
-  // 2. Default command name (expects PATH)
+  // 2. Default command name (expects PATH) - now 'agent' per CU-P0-T01
   candidates.push(PLATFORM_COMMANDS.cursor);
   
-  // 3. Alternate command names (for PATH)
+  // 3. Alternate command names (for PATH) - prefer agent, then cursor-agent, then cursor
   if (process.platform === 'win32') {
-    candidates.push('cursor.exe', 'cursor-agent.exe', 'agent.exe');
+    candidates.push('agent.exe', 'cursor-agent.exe', 'cursor.exe');
   } else {
-    candidates.push('cursor', 'cursor-agent', 'agent');
+    candidates.push('agent', 'cursor-agent', 'cursor');
   }
   
   // 4. Known installation paths (for when not in PATH)

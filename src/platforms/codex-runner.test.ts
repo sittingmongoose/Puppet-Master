@@ -1,26 +1,38 @@
 /**
  * Tests for CodexRunner
  * 
- * Tests Codex-specific CLI invocation, argument building, and output parsing.
+ * Tests Codex SDK-based execution (SDK spawns CLI processes internally).
+ * 
+ * The SDK is CLI-based and respects the "CLI only" constraint.
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { spawn } from 'child_process';
-import { Readable } from 'stream';
 import { CodexRunner } from './codex-runner.js';
 import { CapabilityDiscoveryService } from './capability-discovery.js';
 import type { ExecutionRequest } from '../types/platforms.js';
+import type { Codex, Thread, RunResult } from '@openai/codex-sdk';
 
-// Mock child_process.spawn
-vi.mock('child_process', () => {
-  const mockSpawn = vi.fn();
-  return { spawn: mockSpawn };
+// Mock @openai/codex-sdk
+const mockThread = {
+  id: 'test-thread-id-123',
+  run: vi.fn(),
+  runStreamed: vi.fn(),
+};
+
+const mockCodexInstance = {
+  startThread: vi.fn(() => mockThread),
+  resumeThread: vi.fn(() => mockThread),
+};
+
+vi.mock('@openai/codex-sdk', () => {
+  return {
+    Codex: vi.fn(() => mockCodexInstance),
+  };
 });
 
 describe('CodexRunner', () => {
   let capabilityService: CapabilityDiscoveryService;
   let runner: CodexRunner;
-  let mockSpawn: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
     // Create mock capability service
@@ -32,37 +44,14 @@ describe('CodexRunner', () => {
     } as unknown as CapabilityDiscoveryService;
 
     runner = new CodexRunner(capabilityService);
-
-    // Setup mock spawn
-    mockSpawn = vi.mocked(spawn);
-    mockSpawn.mockImplementation(() => {
-      const stdoutStream = new Readable({
-        read() {
-          // No-op, data will be pushed manually
-        },
-      });
-      const stderrStream = new Readable({
-        read() {
-          // No-op, data will be pushed manually
-        },
-      });
-      const stdinStream = {
-        write: vi.fn(),
-        end: vi.fn(),
-      } as unknown as NodeJS.WritableStream;
-
-      return {
-        pid: 12345,
-        stdin: stdinStream,
-        stdout: stdoutStream,
-        stderr: stderrStream,
-        killed: false,
-        exitCode: null,
-        kill: vi.fn(),
-        on: vi.fn(),
-        emit: vi.fn(),
-      } as unknown as ReturnType<typeof spawn>;
-    });
+    
+    // Reset mocks
+    vi.clearAllMocks();
+    mockThread.id = 'test-thread-id-123';
+    mockThread.run.mockReset();
+    mockThread.runStreamed.mockReset();
+    mockCodexInstance.startThread.mockReturnValue(mockThread);
+    mockCodexInstance.resumeThread.mockReturnValue(mockThread);
   });
 
   afterEach(() => {
@@ -107,11 +96,10 @@ describe('CodexRunner', () => {
         'exec',
         '--cd',
         '/tmp/test',
-        '--ask-for-approval',
-        'never',
-        '--sandbox',
-        'workspace-write',
+        '--full-auto',
         '--json',
+        '--color',
+        'never',
         'Test prompt',
       ]);
     });
@@ -120,7 +108,7 @@ describe('CodexRunner', () => {
       const request: ExecutionRequest = {
         prompt: 'Test prompt',
         workingDirectory: '/tmp/test',
-        model: 'claude-3-opus',
+        model: 'gpt-5.2-codex',
         nonInteractive: true,
       };
 
@@ -131,12 +119,11 @@ describe('CodexRunner', () => {
         '--cd',
         '/tmp/test',
         '--model',
-        'claude-3-opus',
-        '--ask-for-approval',
-        'never',
-        '--sandbox',
-        'workspace-write',
+        'gpt-5.2-codex',
+        '--full-auto',
         '--json',
+        '--color',
+        'never',
         'Test prompt',
       ]);
     });
@@ -151,16 +138,17 @@ describe('CodexRunner', () => {
 
       const args = (runner as unknown as { buildArgs: (req: ExecutionRequest) => string[] }).buildArgs(request);
 
-      // Codex CLI does not currently document a max-turns flag; ensure we don't add one.
+      // Codex CLI may support --max-turns flag; we add it when maxTurns is provided
       expect(args).toEqual([
         'exec',
         '--cd',
         '/tmp/test',
-        '--ask-for-approval',
-        'never',
-        '--sandbox',
-        'workspace-write',
+        '--max-turns',
+        '5',
+        '--full-auto',
         '--json',
+        '--color',
+        'never',
         'Test prompt',
       ]);
     });
@@ -182,11 +170,12 @@ describe('CodexRunner', () => {
         '/tmp/test',
         '--model',
         'claude-3-opus',
-        '--ask-for-approval',
-        'never',
-        '--sandbox',
-        'workspace-write',
+        '--max-turns',
+        '10',
+        '--full-auto',
         '--json',
+        '--color',
+        'never',
         'Test prompt',
       ]);
     });
@@ -200,92 +189,272 @@ describe('CodexRunner', () => {
 
       const args = (runner as unknown as { buildArgs: (req: ExecutionRequest) => string[] }).buildArgs(request);
 
-      // Empty working directory should not add --path flag
+      // Empty working directory should not add --cd flag
       expect(args).toEqual([
         'exec',
-        '--ask-for-approval',
-        'never',
-        '--sandbox',
-        'workspace-write',
+        '--full-auto',
         '--json',
+        '--color',
+        'never',
         'Test prompt',
       ]);
     });
   });
 
-  describe('spawn', () => {
-    it('should spawn codex process with correct command and args', async () => {
+  describe('execute (SDK-based)', () => {
+    it('should create new thread for each execution (fresh process requirement)', async () => {
       const request: ExecutionRequest = {
         prompt: 'Test prompt',
         workingDirectory: '/tmp/test',
         nonInteractive: true,
       };
 
-      await (runner as unknown as { spawn: (req: ExecutionRequest) => Promise<ReturnType<typeof spawn>> }).spawn(request);
-
-      expect(mockSpawn).toHaveBeenCalledWith(
-        'codex',
-        [
-          'exec',
-          '--cd',
-          '/tmp/test',
-          '--ask-for-approval',
-          'never',
-          '--sandbox',
-          'workspace-write',
-          '--json',
-          'Test prompt',
-        ],
-        {
-          cwd: '/tmp/test',
-          stdio: ['pipe', 'pipe', 'pipe'],
-        }
-      );
-    });
-
-    it('should not write prompt to stdin (prompt is positional arg)', async () => {
-      const request: ExecutionRequest = {
-        prompt: 'Test prompt content',
-        workingDirectory: '/tmp/test',
-        nonInteractive: true,
+      // Mock successful turn
+      const mockTurn: RunResult = {
+        finalResponse: 'Task completed. <ralph>COMPLETE</ralph>',
+        items: [],
+        usage: {
+          input_tokens: 100,
+          cached_input_tokens: 0,
+          output_tokens: 50,
+        },
       };
 
-      const proc = await (runner as unknown as { spawn: (req: ExecutionRequest) => Promise<ReturnType<typeof spawn>> }).spawn(request);
+      vi.mocked(mockThread.run).mockResolvedValue(mockTurn);
 
-      expect(proc.stdin).toBeDefined();
-      const stdin = proc.stdin as unknown as { write?: ReturnType<typeof vi.fn>; end?: ReturnType<typeof vi.fn> };
-      expect(stdin.write).not.toHaveBeenCalled();
-      expect(stdin.end).toHaveBeenCalled();
-      expect(mockSpawn).toHaveBeenCalled();
+      const result = await runner.execute(request);
+
+      // Verify new thread was created (fresh process)
+      expect(mockCodexInstance.startThread).toHaveBeenCalledWith(
+        expect.objectContaining({
+          workingDirectory: '/tmp/test',
+          approvalPolicy: 'never',
+          sandboxMode: 'workspace-write',
+        })
+      );
+      
+      // Verify thread.run was called with prompt
+      expect(mockThread.run).toHaveBeenCalledWith(
+        'Test prompt',
+        expect.objectContaining({
+          signal: expect.any(AbortSignal),
+        })
+      );
+
+      expect(result.success).toBe(true);
+      expect(result.output).toContain('COMPLETE');
+      expect(result.tokensUsed).toBe(150); // 100 + 50
+      expect(result.sessionId).toBe('test-thread-id-123');
     });
 
-    it('should include model in args when specified', async () => {
+    it('should pass model to thread options when specified', async () => {
       const request: ExecutionRequest = {
         prompt: 'Test prompt',
         workingDirectory: '/tmp/test',
-        model: 'claude-3-opus',
+        model: 'gpt-5.2-codex',
         nonInteractive: true,
       };
 
-      await (runner as unknown as { spawn: (req: ExecutionRequest) => Promise<ReturnType<typeof spawn>> }).spawn(request);
+      const mockTurn: RunResult = {
+        finalResponse: 'Done',
+        items: [],
+        usage: null,
+      };
 
-      expect(mockSpawn).toHaveBeenCalledWith(
-        'codex',
-        [
-          'exec',
-          '--cd',
-          '/tmp/test',
-          '--model',
-          'claude-3-opus',
-          '--ask-for-approval',
-          'never',
-          '--sandbox',
-          'workspace-write',
-          '--json',
-          'Test prompt',
-        ],
-        expect.any(Object)
+      vi.mocked(mockThread.run).mockResolvedValue(mockTurn);
+
+      await runner.execute(request);
+
+      expect(mockCodexInstance.startThread).toHaveBeenCalledWith(
+        expect.objectContaining({
+          model: 'gpt-5.2-codex',
+        })
       );
+    });
+
+    it('should handle GUTTER signal', async () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp/test',
+        nonInteractive: true,
+      };
+
+      const mockTurn: RunResult = {
+        finalResponse: 'I am stuck. <ralph>GUTTER</ralph>',
+        items: [],
+        usage: null,
+      };
+
+      vi.mocked(mockThread.run).mockResolvedValue(mockTurn);
+
+      const result = await runner.execute(request);
+
+      expect(result.success).toBe(false);
+      expect(result.error).toContain('GUTTER');
+    });
+
+    it('should handle errors gracefully', async () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp/test',
+        nonInteractive: true,
+      };
+
+      vi.mocked(mockThread.run).mockRejectedValue(new Error('SDK error'));
+
+      const result = await runner.execute(request);
+
+      expect(result.success).toBe(false);
+      expect(result.error).toContain('SDK error');
+    });
+
+    it('should handle timeout via AbortSignal', async () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp/test',
+        timeout: 100, // Very short timeout
+        nonInteractive: true,
+      };
+
+      // Mock a slow response that will timeout
+      // The AbortSignal should cause the promise to reject
+      vi.mocked(mockThread.run).mockImplementation((_prompt, options) => {
+        return new Promise((resolve, reject) => {
+          // Check if signal is already aborted
+          if (options?.signal?.aborted) {
+            reject(new Error('Execution timeout after 100ms'));
+            return;
+          }
+          
+          // Set up abort listener
+          if (options?.signal) {
+            options.signal.addEventListener('abort', () => {
+              reject(new Error('Execution timeout after 100ms'));
+            });
+          }
+          
+          // Simulate slow operation
+          setTimeout(() => {
+            if (options?.signal?.aborted) {
+              reject(new Error('Execution timeout after 100ms'));
+            } else {
+              resolve({
+                finalResponse: 'Done',
+                items: [],
+                usage: null,
+              });
+            }
+          }, 200); // Longer than timeout
+        });
+      });
+
+      const result = await runner.execute(request);
+
+      // Should timeout and return error
+      expect(result.success).toBe(false);
+      expect(result.error).toBeDefined();
+      expect(result.error).toContain('timeout');
+    });
+  });
+
+  describe('spawn (legacy fallback - deprecated with SDK)', () => {
+    // Note: spawn() is kept for backward compatibility but shouldn't be called
+    // when using SDK. These tests verify the legacy method still works if needed.
+    it('should build correct args for legacy spawn', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp/test',
+        nonInteractive: true,
+      };
+
+      // Test buildArgs (still used by legacy spawn)
+      const args = (runner as unknown as { buildArgs: (req: ExecutionRequest) => string[] }).buildArgs(request);
+      expect(args).toContain('exec');
+      expect(args).toContain('--cd');
+      expect(args).toContain('/tmp/test');
+    });
+  });
+
+  describe('buildArgs - new flags', () => {
+    it('should include --full-auto flag in non-interactive mode', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp/test',
+        nonInteractive: true,
+      };
+
+      const args = (runner as unknown as { buildArgs: (req: ExecutionRequest) => string[] }).buildArgs(request);
+
+      expect(args).toContain('--full-auto');
+      expect(args).toContain('--json');
+      expect(args).toContain('--color');
+      expect(args).toContain('never');
+    });
+
+    it('should include --max-turns when maxTurns is provided', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp/test',
+        maxTurns: 10,
+        nonInteractive: true,
+      };
+
+      const args = (runner as unknown as { buildArgs: (req: ExecutionRequest) => string[] }).buildArgs(request);
+
+      expect(args).toContain('--max-turns');
+      expect(args).toContain('10');
+    });
+
+    it('should not include --max-turns when maxTurns is not provided', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp/test',
+        nonInteractive: true,
+      };
+
+      const args = (runner as unknown as { buildArgs: (req: ExecutionRequest) => string[] }).buildArgs(request);
+
+      expect(args).not.toContain('--max-turns');
+    });
+
+    it('should not include --max-turns when maxTurns is 0', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp/test',
+        maxTurns: 0,
+        nonInteractive: true,
+      };
+
+      const args = (runner as unknown as { buildArgs: (req: ExecutionRequest) => string[] }).buildArgs(request);
+
+      expect(args).not.toContain('--max-turns');
+    });
+
+    it('should include --color never in non-interactive mode', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp/test',
+        nonInteractive: true,
+      };
+
+      const args = (runner as unknown as { buildArgs: (req: ExecutionRequest) => string[] }).buildArgs(request);
+
+      expect(args).toContain('--color');
+      expect(args[args.indexOf('--color') + 1]).toBe('never');
+    });
+
+    it('should not include non-interactive flags in interactive mode', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp/test',
+        nonInteractive: false,
+      };
+
+      const args = (runner as unknown as { buildArgs: (req: ExecutionRequest) => string[] }).buildArgs(request);
+
+      expect(args).not.toContain('--full-auto');
+      expect(args).not.toContain('--json');
+      expect(args).not.toContain('--color');
     });
   });
 

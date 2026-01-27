@@ -23,9 +23,9 @@ VIAddVersionKey "FileDescription" "RWM Puppet Master Installer"
 VIAddVersionKey "ProductVersion" "${VERSION}"
 VIAddVersionKey "CompanyName" "RWM"
 
-; Customize finish page text (P0-G15)
+; Customize finish page text (P0-G15, CU-P0-T01)
 !define MUI_FINISHPAGE_TITLE "Installation Complete"
-!define MUI_FINISHPAGE_TEXT "Puppet Master has been installed successfully.$\r$\n$\r$\nIMPORTANT: Open a NEW terminal window (cmd or PowerShell) to use the 'puppet-master' command.$\r$\n$\r$\nExisting terminal windows will not recognize the updated PATH until restarted.$\r$\n$\r$\nAfter opening a new terminal, run 'puppet-master doctor' to verify your installation."
+!define MUI_FINISHPAGE_TEXT "Puppet Master has been installed successfully.$\r$\n$\r$\nIMPORTANT: Open a NEW terminal window (cmd or PowerShell) to use the 'puppet-master' command.$\r$\n$\r$\nExisting terminal windows will not recognize the updated PATH until restarted.$\r$\n$\r$\nAfter opening a new terminal, run 'puppet-master doctor' to verify your installation.$\r$\n$\r$\nPlatform CLI Installation:$\r$\n$\r$\n  Cursor CLI:$\r$\n    curl https://cursor.com/install -fsSL | bash$\r$\n    Installs both 'agent' and 'cursor-agent'$\r$\n$\r$\n  Codex CLI:$\r$\n    npm install -g @openai/codex-cli$\r$\n$\r$\n  Claude Code CLI:$\r$\n    npm install -g @anthropic-ai/claude-code-cli$\r$\n    Requires: ANTHROPIC_API_KEY environment variable$\r$\n$\r$\n  Gemini CLI:$\r$\n    npm install -g @google/gemini-cli$\r$\n    Requires: GEMINI_API_KEY or GOOGLE_APPLICATION_CREDENTIALS$\r$\n$\r$\n  GitHub Copilot CLI:$\r$\n    npm install -g @github/copilot-cli$\r$\n    Requires: GitHub Copilot subscription and GH_TOKEN/GITHUB_TOKEN$\r$\n$\r$\nAfter installing platform CLIs, run 'puppet-master doctor' to verify."
 
 ; Modern UI pages
 !insertmacro MUI_PAGE_WELCOME

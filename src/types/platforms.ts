@@ -23,6 +23,38 @@ export interface ExecutionRequest {
    * Enable platform “plan mode” (best-effort; currently used by Cursor runner).
    */
   planMode?: boolean;
+  /**
+   * CU-P0-T05: Enable platform "ask mode" for read-only/discovery/reviewer passes.
+   * Maps to --mode=ask for Cursor CLI.
+   */
+  askMode?: boolean;
+  /**
+   * CU-P0-T04: Output format for Cursor CLI (requires --print mode).
+   * - 'text': Plain text output (default)
+   * - 'json': Single JSON object
+   * - 'stream-json': NDJSON events (streaming)
+   */
+  outputFormat?: 'text' | 'json' | 'stream-json';
+  /**
+   * Claude Code CLI: --permission-mode. Only applied when platform is claude.
+   * See https://code.claude.com/docs/en/iam#permission-modes
+   */
+  permissionMode?: 'default' | 'acceptEdits' | 'plan' | 'dontAsk' | 'bypassPermissions';
+  /**
+   * Claude Code CLI: --allowedTools (comma-separated). Tools that run without permission prompts.
+   * Only applied when platform is claude. See https://code.claude.com/docs/en/headless#auto-approve-tools
+   */
+  allowedTools?: string;
+  /**
+   * Enable sandbox execution environment (Gemini CLI: --sandbox or -s).
+   * Provides security isolation for tool execution.
+   */
+  sandbox?: boolean;
+  /**
+   * Include additional directories in workspace (Gemini CLI: --include-directories).
+   * Maximum 5 directories supported by Gemini CLI.
+   */
+  includeDirectories?: string[];
   workingDirectory: string;
   timeout?: number;
   hardTimeout?: number;
@@ -30,6 +62,126 @@ export interface ExecutionRequest {
   contextFiles?: string[];
   systemPrompt?: string;
   nonInteractive: boolean;
+  /**
+   * Structured JSON output validation schema path.
+   * Supported by: Cursor (--json-schema), Codex (--output-schema), Claude (--json-schema)
+   */
+  jsonSchema?: string;
+  /**
+   * Maximum budget in USD for this execution.
+   * Supported by: Cursor (--max-budget-usd), Claude (--max-budget-usd)
+   */
+  maxBudgetUsd?: number;
+  /**
+   * Fallback model to use when primary model is overloaded.
+   * Supported by: Cursor (--fallback-model), Claude (--fallback-model)
+   */
+  fallbackModel?: string;
+  /**
+   * Include partial streaming events in output.
+   * Supported by: Cursor (--include-partial-messages), Claude (--include-partial-messages)
+   */
+  includePartialMessages?: boolean;
+  /**
+   * Input format for prompts.
+   * Supported by: Cursor (--input-format stream-json), Claude (--input-format stream-json)
+   */
+  inputFormat?: 'text' | 'stream-json';
+  /**
+   * Image file paths to attach to prompt.
+   * Supported by: Codex (--image)
+   */
+  images?: string[];
+  /**
+   * Enable web search capability.
+   * Supported by: Codex (--search)
+   */
+  enableWebSearch?: boolean;
+  /**
+   * System prompt file path (replaces entire system prompt).
+   * Supported by: Claude (--system-prompt-file)
+   */
+  systemPromptFile?: string;
+  /**
+   * Append system prompt from file.
+   * Supported by: Claude (--append-system-prompt-file)
+   */
+  appendSystemPromptFile?: string;
+  /**
+   * List of allowed tools (restrict available tools).
+   * Supported by: Claude (--tools)
+   */
+  allowedToolsList?: string[];
+  /**
+   * List of disallowed tools (block specific tools).
+   * Supported by: Claude (--disallowedTools)
+   */
+  disallowedTools?: string[];
+  /**
+   * Enable Chrome browser integration for web automation.
+   * Supported by: Claude (--chrome)
+   */
+  enableChrome?: boolean;
+  /**
+   * Custom subagents definition (JSON).
+   * Supported by: Claude (--agents)
+   */
+  customAgents?: Record<string, unknown>;
+  /**
+   * MCP-based permission handling tool.
+   * Supported by: Claude (--permission-prompt-tool)
+   */
+  permissionPromptTool?: string;
+  /**
+   * Include all files in context.
+   * Supported by: Gemini (--all-files / -a)
+   */
+  includeAllFiles?: boolean;
+  /**
+   * Enable verbose debug output.
+   * Supported by: Gemini (--debug / -d)
+   */
+  debug?: boolean;
+  /**
+   * Export session transcript to markdown file.
+   * Supported by: Copilot (--share [path])
+   */
+  shareTranscript?: string;
+  /**
+   * Export session to GitHub gist.
+   * Supported by: Copilot (--share-gist)
+   */
+  shareGist?: boolean;
+  /**
+   * Pre-approve URL domains for web access.
+   * Supported by: Copilot (--allow-url <domain>)
+   */
+  allowedUrls?: string[];
+  /**
+   * Custom agent selection.
+   * Supported by: Copilot (--agent=<agent-name>)
+   */
+  agent?: string;
+  /**
+   * Use local Ollama/open-source model support.
+   * Supported by: Codex (--oss)
+   */
+  useOss?: boolean;
+  /**
+   * Configuration profile selection.
+   * Supported by: Codex (--profile <name>)
+   */
+  profile?: string;
+  /**
+   * Inline configuration overrides (key=value pairs).
+   * Supported by: Codex (-c key=value / --config key=value)
+   */
+  configOverrides?: Record<string, unknown>;
+  /**
+   * Output last message to file (for CI/CD integration).
+   * Supported by: Codex (--output-last-message <path>)
+   */
+  outputLastMessage?: string;
 }
 
 /**

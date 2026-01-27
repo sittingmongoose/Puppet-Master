@@ -593,7 +593,8 @@ export abstract class BasePlatformRunner
       }
       if (this.quotaManager) {
         // This will throw QuotaExhaustedError if hard limit is reached
-        await this.quotaManager.checkQuota(this.platform);
+        // P0: Pass model to checkQuota for Cursor Auto mode unlimited detection
+        await this.quotaManager.checkQuota(this.platform, request.model);
       }
 
       // Spawn fresh process
@@ -754,7 +755,8 @@ export abstract class BasePlatformRunner
         // P0-G21: Use actual tokens when available, fall back to estimation
         // Parsers like GeminiOutputParser extract tokensUsed from output
         const tokens = result.tokensUsed ?? Math.max(100, Math.floor(duration / 10));
-        await this.quotaManager.recordUsage(this.platform, tokens, duration);
+        // P0: Pass model to recordUsage for Cursor Auto mode unlimited detection
+        await this.quotaManager.recordUsage(this.platform, tokens, duration, request.model);
       }
 
       if (timeoutType) {
@@ -795,7 +797,8 @@ export abstract class BasePlatformRunner
         if (this.quotaManager) {
           // P0-G21: On error, we don't have parsed output, so use duration-based estimation
           const estimatedTokens = Math.max(100, Math.floor(duration / 10));
-          await this.quotaManager.recordUsage(this.platform, estimatedTokens, duration).catch(() => {
+          // P0: Pass model to recordUsage for Cursor Auto mode unlimited detection
+          await this.quotaManager.recordUsage(this.platform, estimatedTokens, duration, request.model).catch(() => {
             // Ignore errors when recording usage on failure
           });
         }
@@ -875,7 +878,13 @@ export abstract class BasePlatformRunner
    * 
    * Delegates to CapabilityDiscoveryService to get quota info.
    */
-  async checkQuota(): Promise<QuotaInfo> {
+  /**
+   * Checks quota for this platform.
+   * P0: Supports model parameter for Cursor Auto mode unlimited detection.
+   * 
+   * @param model - Optional model name (used for Cursor Auto mode detection)
+   */
+  async checkQuota(model?: string): Promise<QuotaInfo> {
     const cached = await this.capabilityService.getCached(this.platform);
     if (cached) {
       return cached.quotaInfo;

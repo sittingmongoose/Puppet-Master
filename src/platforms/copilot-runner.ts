@@ -252,6 +252,28 @@ export class CopilotRunner extends BasePlatformRunner {
     args.push('--silent');
     args.push('--stream', 'off');
 
+    // P0: Evidence collection - export session transcript to markdown file
+    if (request.shareTranscript) {
+      args.push('--share', request.shareTranscript);
+    }
+
+    // P0: Evidence collection - export session to GitHub gist
+    if (request.shareGist) {
+      args.push('--share-gist');
+    }
+
+    // P0: Pre-approve URL domains for web access
+    if (request.allowedUrls && request.allowedUrls.length > 0) {
+      for (const url of request.allowedUrls) {
+        args.push('--allow-url', url);
+      }
+    }
+
+    // P0: Custom agent selection
+    if (request.agent) {
+      args.push('--agent', request.agent);
+    }
+
     // Note: Model selection via --model is not documented.
     // Users should configure model inside Copilot or via config files.
 

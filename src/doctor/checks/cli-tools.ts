@@ -7,13 +7,14 @@
  */
 
 import { spawn, type ChildProcess } from 'node:child_process';
-import { access } from 'node:fs/promises';
+import { access, readFile } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import type { CheckResult, DoctorCheck } from '../check-registry.js';
 import type { CliPathsConfig } from '../../types/config.js';
 import { getPlatformAuthStatus } from '../../platforms/auth-status.js';
 import { getCursorCommandCandidates, resolvePlatformCommand } from '../../platforms/constants.js';
+import { probeCursorMCP, detectCursorConfig } from '../../platforms/capability-discovery.js';
 
 /**
  * Result of checking CLI availability
@@ -103,6 +104,52 @@ async function checkCliAvailable(
 }
 
 /**
+ * Run `claude doctor` and return a brief summary for details.
+ * Best-effort; failures are not surfaced as check failures.
+ */
+async function runClaudeDoctor(
+  invocation: CliInvocation,
+  timeoutMs: number = 15_000
+): Promise<{ ok: boolean; summary: string }> {
+  return new Promise((resolve) => {
+    const proc = spawn(invocation.command, [...(invocation.argsPrefix ?? []), 'doctor'], {
+      shell: process.platform === 'win32',
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+
+    let stdout = '';
+    let stderr = '';
+
+    const timer = setTimeout(() => {
+      proc.kill('SIGKILL');
+      resolve({ ok: false, summary: 'timed out' });
+    }, timeoutMs);
+
+    proc.stdout?.on('data', (d: Buffer) => {
+      stdout += d.toString();
+    });
+    proc.stderr?.on('data', (d: Buffer) => {
+      stderr += d.toString();
+    });
+
+    proc.on('close', (code) => {
+      clearTimeout(timer);
+      if (code === 0) {
+        const first = stdout.trim().split('\n')[0]?.trim();
+        resolve({ ok: true, summary: first || 'OK' });
+      } else {
+        resolve({ ok: false, summary: stderr.trim() || `exit ${code}` });
+      }
+    });
+
+    proc.on('error', (err) => {
+      clearTimeout(timer);
+      resolve({ ok: false, summary: err.message });
+    });
+  });
+}
+
+/**
  * Check for Cursor Agent CLI availability
  */
 export class CursorCliCheck implements DoctorCheck {
@@ -136,36 +183,84 @@ export class CursorCliCheck implements DoctorCheck {
       const helpResult = await checkCliAvailable(selected, ['--help'], 5000);
       const auth = getPlatformAuthStatus('cursor');
 
+      // CU-P0-T01: Report which binary was selected and preference order
+      const selectedIndex = candidates.findIndex(c => c.command === selected.command);
+      const preferenceNote = selectedIndex === 0 && candidates.length > 1
+        ? ' (preferred: agent)'
+        : selectedIndex === 1 && candidates.length > 2
+          ? ' (fallback: cursor-agent)'
+          : '';
+
+      // CU-P0-T02: Surface auth issues as fixable (especially for headless/CI)
+      const passed = auth.status !== 'not_authenticated';
+      
       // Help check failure doesn't fail the check, but we note it
       if (!helpResult.available) {
         return {
           name: this.name,
           category: this.category,
-          passed: true,
-          message: `Cursor CLI is installed; version works but --help failed (auth check skipped)`,
-          details: `Installed: yes. Runnable: yes. Auth: ${auth.status}. Command: ${formatInvocation(selected)}. Version: ${versionResult.version || 'unknown'}. Help check: ${helpResult.error}. ${auth.details ?? ''}`.trim(),
-          fixSuggestion: undefined,
+          passed,
+          message: passed
+            ? `Cursor CLI is installed; version works but --help failed`
+            : `Cursor CLI is installed but not authenticated for headless/CI usage`,
+          details: `Installed: yes. Runnable: yes. Auth: ${auth.status}. Selected binary: ${formatInvocation(selected)}${preferenceNote}. Version: ${versionResult.version || 'unknown'}. Help check: ${helpResult.error}. ${auth.details ?? ''}`.trim(),
+          fixSuggestion: auth.fixSuggestion,
           durationMs: 0, // Will be set by CheckRegistry
         };
+      }
+
+      // CU-P1-T07: Probe MCP status (non-blocking)
+      let mcpInfo = '';
+      try {
+        const mcpResult = await probeCursorMCP(selected.command, 3000);
+        if (mcpResult.available) {
+          if (mcpResult.serverCount !== undefined && mcpResult.serverCount > 0) {
+            mcpInfo = ` MCP: ${mcpResult.serverCount} server(s) configured (${mcpResult.servers?.slice(0, 3).join(', ') || 'unknown'}${mcpResult.serverCount > 3 ? '...' : ''}).`;
+          } else {
+            mcpInfo = ' MCP: No servers configured. Use `/mcp list` in Cursor CLI to browse and enable MCP servers.';
+          }
+        } else {
+          mcpInfo = ' MCP: Detection failed (may require interactive setup).';
+        }
+      } catch {
+        // MCP probe failure is non-fatal, just skip it
+        mcpInfo = '';
+      }
+
+      // CU-P1-T08: Detect config file (non-blocking)
+      let configInfo = '';
+      try {
+        const configResult = await detectCursorConfig();
+        if (configResult.found) {
+          configInfo = ` Config: Found at ${configResult.path}${configResult.hasPermissions ? ' (has permissions/allow lists)' : ' (no permissions configured)'}.`;
+        } else {
+          configInfo = ' Config: No config file found (using defaults).';
+        }
+      } catch {
+        // Config detection failure is non-fatal
+        configInfo = '';
       }
 
       return {
         name: this.name,
         category: this.category,
-        passed: true,
-        message: `Cursor CLI is installed and runnable (auth check skipped)`,
-        details: `Installed: yes. Runnable: yes. Auth: ${auth.status}. Command: ${formatInvocation(selected)}. Version: ${versionResult.version || 'unknown'}. ${auth.details ?? ''}`.trim(),
-        fixSuggestion: undefined,
+        passed,
+        message: passed
+          ? `Cursor CLI is installed and runnable${auth.status === 'authenticated' ? ' (authenticated for headless/CI)' : ''}`
+          : `Cursor CLI is installed but not authenticated for headless/CI usage`,
+        details: `Installed: yes. Runnable: yes. Auth: ${auth.status}. Selected binary: ${formatInvocation(selected)}${preferenceNote}. Version: ${versionResult.version || 'unknown'}.${mcpInfo}${configInfo} ${auth.details ?? ''}`.trim(),
+        fixSuggestion: auth.fixSuggestion,
         durationMs: 0, // Will be set by CheckRegistry
       };
     } else {
+      // CU-P0-T01: Update fix suggestion to reference cursor.com/install
       return {
         name: this.name,
         category: this.category,
         passed: false,
         message: `Cursor CLI not found (checked: ${candidates.map(formatInvocation).join(', ')})`,
         details: lastError,
-        fixSuggestion: 'Install with: curl https://cursor.com/install -fsSL | bash',
+        fixSuggestion: 'Install with: curl https://cursor.com/install -fsSL | bash\nThis will install both `agent` and `cursor-agent` to ~/.local/bin (ensure it is in your PATH)',
         durationMs: 0, // Will be set by CheckRegistry
       };
     }
@@ -173,17 +268,52 @@ export class CursorCliCheck implements DoctorCheck {
 }
 
 /**
- * Check for Codex CLI availability
+ * Check for Codex CLI availability and SDK package
+ * 
+ * Puppet Master uses @openai/codex-sdk which spawns CLI processes internally.
+ * Both the CLI (global) and SDK (project dependency) must be available.
  */
 export class CodexCliCheck implements DoctorCheck {
   readonly name = 'codex-cli';
   readonly category = 'cli' as const;
-  readonly description = 'Check if Codex CLI is available';
+  readonly description = 'Check if Codex CLI and SDK are available';
 
   constructor(private readonly cliPaths: Partial<CliPathsConfig> | null = null) {}
 
+  /**
+   * Check if @openai/codex-sdk package is installed in node_modules
+   */
+  private checkSdkInstalled(): { installed: boolean; path?: string; error?: string } {
+    try {
+      const fs = require('fs') as typeof import('fs');
+      const path = require('path') as typeof import('path');
+      
+      // Check multiple possible locations
+      const possiblePaths = [
+        path.join(process.cwd(), 'node_modules', '@openai', 'codex-sdk'),
+        path.join(process.cwd(), 'node_modules', '@openai', 'codex-sdk', 'package.json'),
+        path.resolve('node_modules', '@openai', 'codex-sdk'),
+      ];
+      
+      for (const sdkPath of possiblePaths) {
+        if (fs.existsSync(sdkPath)) {
+          // Check if it's a directory or package.json exists
+          const stat = fs.statSync(sdkPath);
+          if (stat.isDirectory() || sdkPath.endsWith('package.json')) {
+            return { installed: true, path: sdkPath };
+          }
+        }
+      }
+      
+      return { installed: false, error: 'SDK not found in node_modules' };
+    } catch (error) {
+      return { installed: false, error: error instanceof Error ? error.message : String(error) };
+    }
+  }
+
   async run(): Promise<CheckResult> {
     const auth = getPlatformAuthStatus('codex');
+    const sdkCheck = this.checkSdkInstalled();
 
     const candidates: CliInvocation[] = [];
     const configured = resolvePlatformCommand('codex', this.cliPaths);
@@ -211,31 +341,85 @@ export class CodexCliCheck implements DoctorCheck {
 
     if (selected && versionResult?.available) {
       const helpResult = await checkCliAvailable(selected, ['--help'], 5_000);
+      // Also verify exec subcommand is available (Codex uses 'exec' for non-interactive mode)
+      const execHelpResult = await checkCliAvailable(selected, ['exec', '--help'], 5_000);
       const runnable = helpResult.available || versionResult.available;
-      const passed = runnable && auth.status !== 'not_authenticated';
+      const execAvailable = execHelpResult.available;
+      
+      // Both CLI and SDK must be available
+      const passed = runnable && execAvailable && sdkCheck.installed && auth.status !== 'not_authenticated';
+
+      const detailsParts: string[] = [
+        `CLI installed: yes`,
+        `CLI runnable: ${runnable ? 'yes' : 'no'}`,
+        `Exec subcommand: ${execAvailable ? 'yes' : 'no'}`,
+        `SDK package: ${sdkCheck.installed ? 'yes' : 'no'}`,
+        `Auth: ${auth.status}`,
+        `Command: ${formatInvocation(selected)}`,
+        `Version: ${versionResult.version || 'unknown'}`,
+      ];
+
+      if (!helpResult.available) {
+        detailsParts.push(`Help check: ${helpResult.error}`);
+      }
+      if (!execAvailable) {
+        detailsParts.push(`Exec help check: ${execHelpResult.error}`);
+      }
+      if (!sdkCheck.installed) {
+        detailsParts.push(`SDK check: ${sdkCheck.error || 'not found'}`);
+      }
+      if (auth.details) {
+        detailsParts.push(auth.details);
+      }
+
+      // Build fix suggestion if SDK is missing
+      let fixSuggestion: string | undefined;
+      if (!sdkCheck.installed) {
+        fixSuggestion = 'Install SDK package: npm install @openai/codex-sdk\n\nThis package is required as Puppet Master uses the SDK (which spawns CLI processes internally).';
+      } else if (auth.status === 'not_authenticated') {
+        fixSuggestion = auth.fixSuggestion;
+      }
 
       return {
         name: this.name,
         category: this.category,
         passed,
         message: passed
-          ? `Codex CLI is installed, runnable, and authenticated`
-          : auth.status === 'not_authenticated'
-            ? `Codex CLI is installed and runnable but not authenticated`
-            : `Codex CLI is installed but not runnable`,
-        details: `Installed: yes. Runnable: ${runnable ? 'yes' : 'no'}. Auth: ${auth.status}. Command: ${formatInvocation(selected)}. Version: ${versionResult.version || 'unknown'}.${helpResult.available ? '' : ` Help check: ${helpResult.error}`}${auth.details ? ` ${auth.details}` : ''}`.trim(),
-        fixSuggestion: auth.status === 'not_authenticated' ? auth.fixSuggestion : undefined,
+          ? `Codex CLI and SDK are installed, runnable, and authenticated`
+          : !sdkCheck.installed
+            ? `Codex CLI is available but SDK package (@openai/codex-sdk) is missing`
+            : auth.status === 'not_authenticated'
+              ? `Codex CLI and SDK are installed but not authenticated`
+              : !execAvailable
+                ? `Codex CLI is installed but exec subcommand is not available`
+                : `Codex CLI is installed but not runnable`,
+        details: detailsParts.join('. ').trim(),
+        fixSuggestion,
         durationMs: 0, // Will be set by CheckRegistry
       };
     } else {
+      // CLI not found - provide comprehensive fix suggestion
+      const fixParts = [
+        'Install Codex CLI: npm install -g @openai/codex',
+        'Install SDK package: npm install @openai/codex-sdk',
+        '',
+        'After installation:',
+        '  - Verify CLI: codex --version',
+        '  - Verify exec subcommand: codex exec --help',
+        '  - Configure: Edit ~/.codex/config.toml (optional)',
+        '  - Authenticate: Set OPENAI_API_KEY environment variable',
+        '',
+        'Note: Puppet Master uses @openai/codex-sdk which spawns CLI processes internally.',
+        'Both the CLI (global) and SDK (project dependency) must be installed.',
+      ];
+      
       return {
         name: this.name,
         category: this.category,
         passed: false,
-        message: `Codex CLI not found (checked: ${candidates.map(formatInvocation).join(', ')})`,
-        details: lastError,
-        fixSuggestion:
-          'Install with: npm install -g @openai/codex (or ensure a local install exists for npx --no-install codex)',
+        message: `Codex CLI not found (checked: ${candidates.map(formatInvocation).join(', ')})${sdkCheck.installed ? '' : '; SDK package also missing'}`,
+        details: lastError || (sdkCheck.installed ? undefined : sdkCheck.error),
+        fixSuggestion: fixParts.join('\n'),
         durationMs: 0, // Will be set by CheckRegistry
       };
     }
@@ -286,6 +470,18 @@ export class ClaudeCliCheck implements DoctorCheck {
       const runnable = helpResult.available || versionResult.available;
       const passed = runnable && auth.status !== 'not_authenticated';
 
+      let doctorSummary = '';
+      try {
+        const doctor = await runClaudeDoctor(selected, 15_000);
+        doctorSummary = doctor.ok
+          ? ` Doctor: ${doctor.summary}`
+          : ` Doctor: ${doctor.summary} (run \`claude doctor\` manually)`;
+      } catch {
+        doctorSummary = ' Doctor: not run';
+      }
+
+      const detailsBase = `Installed: yes. Runnable: ${runnable ? 'yes' : 'no'}. Auth: ${auth.status}. Command: ${formatInvocation(selected)}. Version: ${versionResult.version || 'unknown'}.${helpResult.available ? '' : ` Help check: ${helpResult.error}`}${doctorSummary}${auth.details ? ` ${auth.details}` : ''}`.trim();
+
       return {
         name: this.name,
         category: this.category,
@@ -295,18 +491,20 @@ export class ClaudeCliCheck implements DoctorCheck {
           : auth.status === 'not_authenticated'
             ? `Claude CLI is installed and runnable but not authenticated`
             : `Claude CLI is installed but not runnable`,
-        details: `Installed: yes. Runnable: ${runnable ? 'yes' : 'no'}. Auth: ${auth.status}. Command: ${formatInvocation(selected)}. Version: ${versionResult.version || 'unknown'}.${helpResult.available ? '' : ` Help check: ${helpResult.error}`}${auth.details ? ` ${auth.details}` : ''}`.trim(),
+        details: detailsBase,
         fixSuggestion: auth.status === 'not_authenticated' ? auth.fixSuggestion : undefined,
         durationMs: 0, // Will be set by CheckRegistry
       };
     } else {
+      const installUnix = 'curl -fsSL https://claude.ai/install.sh | bash';
+      const installWin = 'irm https://claude.ai/install.ps1 | iex';
       return {
         name: this.name,
         category: this.category,
         passed: false,
         message: `Claude CLI not found (checked: ${candidates.map(formatInvocation).join(', ')})`,
         details: lastError,
-        fixSuggestion: 'Install with: curl -fsSL https://claude.ai/install.sh | bash\n  OR: npm install -g @anthropic-ai/claude-code',
+        fixSuggestion: `Install: macOS/Linux/WSL: ${installUnix}\n  Windows PowerShell: ${installWin}\n  After install, run \`claude doctor\` to verify and \`claude update\` to update.`,
         durationMs: 0, // Will be set by CheckRegistry
       };
     }
@@ -349,6 +547,90 @@ export class GeminiCliCheck implements DoctorCheck {
       const runnable = helpResult.available || versionResult.available;
       const passed = runnable && auth.status !== 'not_authenticated';
 
+      // Enhanced checks: settings, models, preview features
+      const detailsParts: string[] = [
+        `Installed: yes`,
+        `Runnable: ${runnable ? 'yes' : 'no'}`,
+        `Auth: ${auth.status}`,
+        `Command: ${formatInvocation(selected)}`,
+        `Version: ${versionResult.version || 'unknown'}`,
+      ];
+
+      // Settings validation (non-blocking)
+      let settingsInfo = '';
+      try {
+        const homeDir = homedir();
+        const settingsPath = join(homeDir, '.gemini', 'settings.json');
+        try {
+          await access(settingsPath);
+          const settingsContent = await readFile(settingsPath, 'utf-8');
+          const settings = JSON.parse(settingsContent);
+          const hasPreviewFeatures = settings.general?.previewFeatures === true;
+          settingsInfo = ` Settings: Found at ${settingsPath}${hasPreviewFeatures ? ' (preview features enabled)' : ''}.`;
+        } catch {
+          settingsInfo = ' Settings: No settings file found (using defaults).';
+        }
+      } catch {
+        // Settings check failed, skip it
+      }
+
+      // Model availability (non-blocking)
+      let modelInfo = '';
+      try {
+        const { getGeminiModelsWithDiscovery } = await import('../../platforms/gemini-models.js');
+        const models = await getGeminiModelsWithDiscovery(selected.command, true);
+        const modelCount = models.length;
+        const discoveredCount = models.filter(m => m.source === 'discovered').length;
+        modelInfo = ` Models: ${modelCount} available${discoveredCount > 0 ? ` (${discoveredCount} discovered)` : ' (static list)'}.`;
+      } catch {
+        // Model discovery failed, skip it
+      }
+
+      // Installation method detection (best-effort)
+      let installInfo = '';
+      try {
+        // Check if installed via npm (check for node_modules or npm prefix)
+        const { execSync } = await import('child_process');
+        try {
+          const npmPrefix = execSync('npm config get prefix', { encoding: 'utf-8', timeout: 2000 }).trim();
+          if (selected.command.includes(npmPrefix) || selected.command.includes('node_modules')) {
+            installInfo = ' Install: npm.';
+          }
+        } catch {
+          // Try npx
+          try {
+            const npxCheck = execSync('which npx', { encoding: 'utf-8', timeout: 2000 }).trim();
+            if (npxCheck) {
+              installInfo = ' Install: npx available.';
+            }
+          } catch {
+            // Try brew (macOS)
+            try {
+              const brewCheck = execSync('which brew', { encoding: 'utf-8', timeout: 2000 }).trim();
+              if (brewCheck) {
+                installInfo = ' Install: brew available.';
+              }
+            } catch {
+              // Couldn't detect installation method
+            }
+          }
+        }
+      } catch {
+        // Installation detection failed, skip it
+      }
+
+      const fullDetails = [
+        ...detailsParts,
+        helpResult.available ? '' : ` Help check: ${helpResult.error}`,
+        settingsInfo,
+        modelInfo,
+        installInfo,
+        auth.details ? ` ${auth.details}` : '',
+      ]
+        .filter(Boolean)
+        .join('')
+        .trim();
+
       return {
         name: this.name,
         category: this.category,
@@ -358,18 +640,25 @@ export class GeminiCliCheck implements DoctorCheck {
           : auth.status === 'not_authenticated'
             ? `Gemini CLI is installed and runnable but not authenticated`
             : `Gemini CLI is installed but not runnable`,
-        details: `Installed: yes. Runnable: ${runnable ? 'yes' : 'no'}. Auth: ${auth.status}. Command: ${formatInvocation(selected)}. Version: ${versionResult.version || 'unknown'}.${helpResult.available ? '' : ` Help check: ${helpResult.error}`}${auth.details ? ` ${auth.details}` : ''}`.trim(),
+        details: fullDetails,
         fixSuggestion: auth.status === 'not_authenticated' ? auth.fixSuggestion : undefined,
         durationMs: 0, // Will be set by CheckRegistry
       };
     } else {
+      // Enhanced installation suggestion
+      const installMethods = [
+        'npm install -g @google/gemini-cli',
+        'npx @google/gemini-cli (for one-off usage)',
+        'brew install gemini-cli (macOS)',
+      ].join('\n  OR: ');
+
       return {
         name: this.name,
         category: this.category,
         passed: false,
         message: `Gemini CLI not found (checked: ${candidates.map(formatInvocation).join(', ')})`,
         details: lastError,
-        fixSuggestion: 'Install with: npm install -g @google/gemini-cli',
+        fixSuggestion: `Install with:\n  ${installMethods}\n\nAfter installation, authenticate with:\n  - Set GEMINI_API_KEY environment variable, or\n  - Run 'gemini' interactively for OAuth setup`,
         durationMs: 0, // Will be set by CheckRegistry
       };
     }

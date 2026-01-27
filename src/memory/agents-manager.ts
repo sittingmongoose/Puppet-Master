@@ -5,9 +5,9 @@
  * parsing markdown sections, and content manipulation.
  */
 
-import { readFile, writeFile, mkdir, access } from 'fs/promises';
+import { readFile, writeFile, mkdir, access, readdir, stat } from 'fs/promises';
 import { existsSync } from 'fs';
-import { join, dirname, resolve } from 'path';
+import { join, dirname, resolve, relative } from 'path';
 
 /**
  * Hierarchy levels for AGENTS.md files
@@ -745,6 +745,116 @@ export class AgentsManager {
     }
 
     return items;
+  }
+
+  /**
+   * List all AGENTS.md files in the project
+   * @returns Array of file info with name, path, lastAccessed
+   */
+  async listFiles(): Promise<Array<{ name: string; path: string; lastAccessed: Date | null; level: AgentsLevel }>> {
+    const files: Array<{ name: string; path: string; lastAccessed: Date | null; level: AgentsLevel }> = [];
+
+    // Root AGENTS.md
+    const rootPath = this.getFilePath('root');
+    if (await this.exists(rootPath)) {
+      try {
+        const stats = await stat(rootPath);
+        files.push({
+          name: 'AGENTS.md (root)',
+          path: relative(this.projectRoot, rootPath),
+          lastAccessed: stats.mtime,
+          level: 'root',
+        });
+      } catch {
+        // Ignore stat errors
+      }
+    }
+
+    if (!this.config.multiLevelEnabled) {
+      return files;
+    }
+
+    // Phase-level files
+    const phaseDir = resolve(this.projectRoot, '.puppet-master/agents');
+    if (await this.exists(phaseDir)) {
+      try {
+        const entries = await readdir(phaseDir);
+        for (const entry of entries) {
+          if (entry.startsWith('phase-') && entry.endsWith('.md')) {
+            const filePath = join(phaseDir, entry);
+            try {
+              const stats = await stat(filePath);
+              const phaseId = entry.replace('phase-', '').replace('.md', '');
+              files.push({
+                name: `AGENTS.md (phase ${phaseId})`,
+                path: relative(this.projectRoot, filePath),
+                lastAccessed: stats.mtime,
+                level: 'phase',
+              });
+            } catch {
+              // Ignore stat errors
+            }
+          }
+        }
+      } catch {
+        // Ignore readdir errors
+      }
+    }
+
+    // Task-level files
+    if (await this.exists(phaseDir)) {
+      try {
+        const entries = await readdir(phaseDir);
+        for (const entry of entries) {
+          if (entry.startsWith('task-') && entry.endsWith('.md')) {
+            const filePath = join(phaseDir, entry);
+            try {
+              const stats = await stat(filePath);
+              const taskId = entry.replace('task-', '').replace('.md', '');
+              files.push({
+                name: `AGENTS.md (task ${taskId})`,
+                path: relative(this.projectRoot, filePath),
+                lastAccessed: stats.mtime,
+                level: 'task',
+              });
+            } catch {
+              // Ignore stat errors
+            }
+          }
+        }
+      } catch {
+        // Ignore readdir errors
+      }
+    }
+
+    // Module-level files (scan src/*/AGENTS.md)
+    const srcDir = resolve(this.projectRoot, 'src');
+    if (await this.exists(srcDir)) {
+      try {
+        const entries = await readdir(srcDir);
+        for (const entry of entries) {
+          const moduleDir = join(srcDir, entry);
+          const agentsPath = join(moduleDir, 'AGENTS.md');
+          if (await this.exists(agentsPath)) {
+            try {
+              const stats = await stat(agentsPath);
+              files.push({
+                name: `AGENTS.md (module ${entry})`,
+                path: relative(this.projectRoot, agentsPath),
+                lastAccessed: stats.mtime,
+                level: 'module',
+              });
+            } catch {
+              // Ignore stat errors
+            }
+          }
+        }
+      } catch {
+        // Ignore readdir errors
+      }
+    }
+
+    return files;
   }
 
   /**

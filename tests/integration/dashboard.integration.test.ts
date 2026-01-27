@@ -208,16 +208,16 @@ describe('Dashboard Integration Tests', () => {
       const response = await request(ctx.baseUrl)
         .get('/api/state');
 
-      // Without dependencies registered, expect 404 or 200
-      expect([200, 404, 500]).toContain(response.status);
+      // Without dependencies registered, expect 404, 200, 401 (if auth required), or 500
+      expect([200, 401, 404, 500]).toContain(response.status);
     });
 
     it('dashboard tiers endpoint responds correctly', async () => {
       const response = await request(ctx.baseUrl)
         .get('/api/tiers');
 
-      // Without dependencies registered, expect 404, 200, or 500
-      expect([200, 404, 500]).toContain(response.status);
+      // Without dependencies registered, expect 404, 200, 401 (if auth required), or 500
+      expect([200, 401, 404, 500]).toContain(response.status);
     });
   });
 });

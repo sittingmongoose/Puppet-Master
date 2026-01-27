@@ -20,7 +20,9 @@ const ToastContext = createContext<ToastContextValue | null>(null);
 
 /**
  * Hook to access toast functionality
+ * Note: Exported alongside ToastProvider as they must be used together.
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export function useToast() {
   const context = useContext(ToastContext);
   if (!context) {

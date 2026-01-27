@@ -34,12 +34,13 @@ interface TestServerContext {
   httpServer: HTTPServer | null;
   port: number;
   baseUrl: string;
+  authToken?: string;
 }
 
 /**
  * Create a test server on a random available port
  */
-async function startTestServer(): Promise<TestServerContext> {
+async function startTestServer(): Promise<TestServerContext & { authToken?: string }> {
   const eventBus = new EventBus();
   const port = 30000 + Math.floor(Math.random() * 10000); // Random port in safe range
   const server = new GuiServer(
@@ -47,9 +48,13 @@ async function startTestServer(): Promise<TestServerContext> {
       port,
       host: 'localhost',
       corsOrigins: [`http://localhost:${port}`],
+      authEnabled: true, // Enable auth for tests
     },
     eventBus
   );
+
+  // Initialize authentication before starting server
+  const authToken = await server.initializeAuth();
 
   await server.start();
   const baseUrl = server.getUrl();
@@ -60,6 +65,7 @@ async function startTestServer(): Promise<TestServerContext> {
     httpServer: null, // GuiServer manages its own HTTP server
     port,
     baseUrl,
+    authToken,
   };
 }
 
@@ -198,6 +204,7 @@ describe('GUI Integration Tests', () => {
     it('server provides status endpoint', async () => {
       const response = await request(testContext!.baseUrl)
         .get('/api/status')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .expect(200);
 
       expect(response.body).toHaveProperty('state');
@@ -260,6 +267,7 @@ describe('GUI Integration Tests', () => {
 
       const response = await request(testContext!.baseUrl)
         .get('/api/state')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .expect(200);
 
       expect(response.body).toHaveProperty('orchestratorState');
@@ -283,6 +291,7 @@ describe('GUI Integration Tests', () => {
 
       const response = await request(testContext!.baseUrl)
         .get('/api/tiers')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .expect(200);
 
       expect(response.body).toHaveProperty('root');
@@ -303,6 +312,7 @@ describe('GUI Integration Tests', () => {
 
       const response = await request(testContext!.baseUrl)
         .get('/api/progress')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .expect(200);
 
       expect(response.body).toHaveProperty('entries');
@@ -324,6 +334,7 @@ describe('GUI Integration Tests', () => {
 
       const response = await request(testContext!.baseUrl)
         .get('/api/agents')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .expect(200);
 
       expect(response.body).toHaveProperty('document');
@@ -334,6 +345,7 @@ describe('GUI Integration Tests', () => {
     it('GET /api/config returns configuration', async () => {
       const response = await request(testContext!.baseUrl)
         .get('/api/config')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .expect(200);
 
       expect(response.body).toHaveProperty('config');
@@ -396,6 +408,7 @@ describe('GUI Integration Tests', () => {
 
       const response = await request(testContext!.baseUrl)
         .put('/api/config')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .send({ config: validConfig });
 
       // Config validation might fail if required fields are missing, so accept 200 or 400
@@ -489,7 +502,10 @@ describe('GUI Integration Tests', () => {
             hostname: streamUrl.hostname,
             port: streamUrl.port,
             path: streamUrl.pathname,
-            headers: { Accept: 'text/event-stream' },
+            headers: { 
+              Accept: 'text/event-stream',
+              Authorization: testContext!.authToken ? `Bearer ${testContext!.authToken}` : '',
+            },
           },
           (res) => {
             try {
@@ -520,7 +536,10 @@ describe('GUI Integration Tests', () => {
             hostname: streamUrl.hostname,
             port: streamUrl.port,
             path: streamUrl.pathname,
-            headers: { Accept: 'text/event-stream' },
+            headers: { 
+              Accept: 'text/event-stream',
+              Authorization: testContext!.authToken ? `Bearer ${testContext!.authToken}` : '',
+            },
           },
           (res) => {
             res.setEncoding('utf8');
@@ -607,6 +626,7 @@ describe('GUI Integration Tests', () => {
       // Test that controls return 503 when orchestrator is not registered
       const response = await request(testContext!.baseUrl)
         .post('/api/controls/start')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .send({})
         .expect(503);
 
@@ -624,6 +644,7 @@ describe('GUI Integration Tests', () => {
 
       const response = await request(testContext!.baseUrl)
         .post('/api/controls/start')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .send({});
 
       // Accept either 200 (orchestrator route matched) or 503 (null route matched first)
@@ -639,6 +660,7 @@ describe('GUI Integration Tests', () => {
     it('POST /api/controls/pause returns 503 when orchestrator not registered', async () => {
       const response = await request(testContext!.baseUrl)
         .post('/api/controls/pause')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .expect(503);
 
       expect(response.body).toHaveProperty('error');
@@ -651,7 +673,8 @@ describe('GUI Integration Tests', () => {
       testContext!.server.registerOrchestratorInstance(orchestrator);
 
       const response = await request(testContext!.baseUrl)
-        .post('/api/controls/pause');
+        .post('/api/controls/pause')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '');
 
       expect([200, 503]).toContain(response.status);
       if (response.status === 200) {
@@ -662,6 +685,7 @@ describe('GUI Integration Tests', () => {
     it('POST /api/controls/stop returns 503 when orchestrator not registered', async () => {
       const response = await request(testContext!.baseUrl)
         .post('/api/controls/stop')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .send({})
         .expect(503);
 
@@ -676,6 +700,7 @@ describe('GUI Integration Tests', () => {
 
       const response = await request(testContext!.baseUrl)
         .post('/api/controls/stop')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .send({});
 
       expect([200, 503]).toContain(response.status);
@@ -689,6 +714,7 @@ describe('GUI Integration Tests', () => {
     it('GET /api/doctor/checks returns list of checks', async () => {
       const response = await request(testContext!.baseUrl)
         .get('/api/doctor/checks')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .expect(200);
 
       expect(response.body).toHaveProperty('checks');
@@ -705,6 +731,7 @@ describe('GUI Integration Tests', () => {
     it('POST /api/doctor/run runs all checks', async () => {
       const response = await request(testContext!.baseUrl)
         .post('/api/doctor/run')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .send({})
         .expect(200);
 
@@ -725,6 +752,7 @@ describe('GUI Integration Tests', () => {
     it('POST /api/doctor/run runs checks by category', async () => {
       const response = await request(testContext!.baseUrl)
         .post('/api/doctor/run')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .send({ category: 'cli' })
         .expect(200);
 
@@ -742,6 +770,7 @@ describe('GUI Integration Tests', () => {
       // Pick a known fixable check (installed via InstallationManager).
       const fixResponse = await request(testContext!.baseUrl)
         .post('/api/doctor/fix')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .send({ checkName: 'codex-cli', dryRun: true })
         .expect(200);
 
@@ -751,6 +780,7 @@ describe('GUI Integration Tests', () => {
     it('POST /api/doctor/fix returns 404 for non-existent check', async () => {
       const response = await request(testContext!.baseUrl)
         .post('/api/doctor/fix')
+        .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .send({ checkName: 'non-existent-check' })
         .expect(404);
 

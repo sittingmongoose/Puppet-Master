@@ -124,6 +124,26 @@ export interface TierConfig {
    * Default: timeoutMs * 2
    */
   hardTimeoutMs?: number;
+  /**
+   * Claude Code CLI: --permission-mode (default | acceptEdits | plan | dontAsk | bypassPermissions).
+   * YAML: permission_mode. Only applied when platform is claude.
+   */
+  permissionMode?: 'default' | 'acceptEdits' | 'plan' | 'dontAsk' | 'bypassPermissions';
+  /**
+   * Claude Code CLI: --allowedTools (comma-separated). YAML: allowed_tools.
+   * Only applied when platform is claude.
+   */
+  allowedTools?: string;
+  /**
+   * Output format for headless runs: text | json | stream-json.
+   * YAML: output_format. Used by Cursor and Claude runners.
+   */
+  outputFormat?: 'text' | 'json' | 'stream-json';
+  /**
+   * CU-P0-T05: Enable platform "ask mode" for read-only/discovery/reviewer passes.
+   * YAML: ask_mode. Maps to --mode=ask for Cursor CLI.
+   */
+  askMode?: boolean;
 }
 
 /**
@@ -192,6 +212,12 @@ export interface BudgetConfig {
   maxTokensPerDay?: number | 'unlimited'; // YAML: max_tokens_per_day
   cooldownHours?: number; // YAML: cooldown_hours (optional)
   fallbackPlatform: Platform | null; // YAML: fallback_platform
+  /**
+   * Cursor-specific: Indicates user has grandfathered plan with unlimited Auto mode.
+   * When true, Auto mode usage is not counted against quotas.
+   * YAML: auto_mode_unlimited (only applies to cursor platform)
+   */
+  autoModeUnlimited?: boolean; // YAML: auto_mode_unlimited
 }
 
 /**

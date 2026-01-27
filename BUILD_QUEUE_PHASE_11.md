@@ -63,6 +63,8 @@ This phase consolidates outstanding issues and risks discovered by multiple revi
 | PH11-T18 | ⏳ PENDING | | Add/record screenshot parity evidence (required by GUI phase) |
 | PH11-T19 | ⏳ PENDING | | Investigate/harden against hanging GUI test runs |
 | PH11-T20 | ⏳ PENDING | | Reconcile BUILD_QUEUE_GAPS.md summary vs per-issue sections |
+| GUI e.map hardening | ✅ PASS | 2026-01-27 | Fixed `e.map is not a function`: hardened API (`getTiers`, `listProjects`, `getDoctorChecks`, `runDoctorChecks`) and all GUI pages (Projects, Tiers, Doctor, History, Evidence, Coverage, Metrics, Dashboard). `.map`/`Object.entries` guarded with `Array.isArray` / array fallbacks. Deleted `.test-cache`/`.test-quota` (none found). `npm run gui:typecheck` and React GUI unit tests pass. |
+| GUI e.map hardening round 2 | ✅ PASS | 2026-01-27 | Projects: `projectsToShow` + `safeList` guards; malformed `listProjects` unit tests (null, undefined, `{}`, `{ projects: null }`). UsageChart: `safeData` guard, empty handling. API `listProjects` JSDoc. Audited Doctor, Tiers, Evidence, Coverage, Metrics, Dashboard — already guarded. Root `npm run typecheck` PASS. `.test-cache`/`.test-quota` not present. |
 
 ---
 

@@ -159,6 +159,20 @@ describe('InstallationManager', () => {
       expect(cmd?.check).toBe('claude-cli');
     });
 
+    it('should use native Claude install (curl/powershell) per platform', () => {
+      setPlatform('linux');
+      const mgrLinux = new InstallationManager();
+      const cmdLinux = mgrLinux.getInstallCommand('claude-cli');
+      expect(cmdLinux?.command).toContain('curl');
+      expect(cmdLinux?.command).toContain('claude.ai/install.sh');
+
+      setPlatform('win32');
+      const mgrWin = new InstallationManager();
+      const cmdWin = mgrWin.getInstallCommand('claude-cli');
+      expect(cmdWin?.command).toContain('powershell');
+      expect(cmdWin?.command).toContain('claude.ai/install.ps1');
+    });
+
     it('should register project-dir command', () => {
       const cmd = manager.getInstallCommand('project-dir');
       expect(cmd).not.toBeNull();

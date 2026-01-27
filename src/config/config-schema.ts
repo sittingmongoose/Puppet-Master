@@ -272,6 +272,18 @@ function validateTierConfig(value: unknown, path: string[]): asserts value is Ti
   if (v.escalation !== null && !['phase', 'task', 'subtask'].includes(v.escalation as string)) {
     throw new ConfigValidationError('tier.escalation must be null, "phase", "task", or "subtask"', [...path, 'escalation']);
   }
+
+  const permissionModes = ['default', 'acceptEdits', 'plan', 'dontAsk', 'bypassPermissions'];
+  if ('permissionMode' in v && v.permissionMode != null && !permissionModes.includes(v.permissionMode as string)) {
+    throw new ConfigValidationError(`tier.permissionMode must be one of: ${permissionModes.join(', ')}`, [...path, 'permissionMode']);
+  }
+  if ('allowedTools' in v && v.allowedTools != null && typeof v.allowedTools !== 'string') {
+    throw new ConfigValidationError('tier.allowedTools must be a string', [...path, 'allowedTools']);
+  }
+  const outputFormats = ['text', 'json', 'stream-json'];
+  if ('outputFormat' in v && v.outputFormat != null && !outputFormats.includes(v.outputFormat as string)) {
+    throw new ConfigValidationError(`tier.outputFormat must be one of: ${outputFormats.join(', ')}`, [...path, 'outputFormat']);
+  }
 }
 
 function validateTiersConfig(value: unknown, path: string[]): asserts value is { phase: TierConfig; task: TierConfig; subtask: TierConfig; iteration: TierConfig; gate_review?: TierConfig } {

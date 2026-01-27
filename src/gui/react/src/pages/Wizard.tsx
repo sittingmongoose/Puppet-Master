@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Panel } from '@/components/layout';
-import { Button, Input, ProgressBar } from '@/components/ui';
+import { Button, Input, Select, ProgressBar } from '@/components/ui';
 import { useProjectStore } from '@/stores';
 import { api } from '@/lib';
 import type { Project } from '@/types';
@@ -466,6 +466,14 @@ function ReviewStep({ prd, onChange, onNext, onBack }: ReviewStepProps) {
   );
 }
 
+interface TierConfig {
+  platform: string;
+  model: string;
+  planMode?: boolean;
+  askMode?: boolean;
+  outputFormat?: 'text' | 'json' | 'stream-json';
+}
+
 interface ConfigureStepProps {
   config: Record<string, unknown>;
   onChange: (config: Record<string, unknown>) => void;
@@ -473,7 +481,28 @@ interface ConfigureStepProps {
   onBack: () => void;
 }
 
-function ConfigureStep({ onNext, onBack }: ConfigureStepProps) {
+const DEFAULT_TIER_CONFIG: Record<string, TierConfig> = {
+  phase: { platform: 'cursor', model: 'auto', planMode: false, askMode: false, outputFormat: 'text' },
+  task: { platform: 'cursor', model: 'auto', planMode: false, askMode: false, outputFormat: 'text' },
+  subtask: { platform: 'cursor', model: 'auto', planMode: false, askMode: false, outputFormat: 'text' },
+  iteration: { platform: 'cursor', model: 'auto', planMode: false, askMode: false, outputFormat: 'text' },
+};
+
+function ConfigureStep({ config, onChange, onNext, onBack }: ConfigureStepProps) {
+  // Initialize tier configs from config or defaults
+  const tierConfigs = (config.tiers as Record<string, TierConfig>) || DEFAULT_TIER_CONFIG;
+
+  const updateTier = (tier: string, field: keyof TierConfig, value: string | boolean) => {
+    const updatedTiers = {
+      ...tierConfigs,
+      [tier]: {
+        ...tierConfigs[tier],
+        [field]: value,
+      },
+    };
+    onChange({ ...config, tiers: updatedTiers });
+  };
+
   return (
     <Panel title="Configure Tier Settings">
       <div className="space-y-lg">
@@ -483,19 +512,62 @@ function ConfigureStep({ onNext, onBack }: ConfigureStepProps) {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-lg">
-          {['Phase', 'Task', 'Subtask', 'Iteration'].map((tier) => (
+          {(['phase', 'task', 'subtask', 'iteration'] as const).map((tier) => (
             <div key={tier} className="p-md border-medium border-ink-faded">
-              <h3 className="font-bold mb-sm">{tier} Tier</h3>
+              <h3 className="font-bold mb-sm capitalize">{tier} Tier</h3>
               <div className="space-y-sm">
-                <Input
+                {/* P1: Platform dropdown */}
+                <Select
                   label="Platform"
-                  defaultValue="cursor"
-                  placeholder="cursor | codex | claude"
+                  value={tierConfigs[tier]?.platform || 'cursor'}
+                  onChange={(e) => updateTier(tier, 'platform', e.target.value)}
+                  options={[
+                    { value: 'cursor', label: 'Cursor' },
+                    { value: 'codex', label: 'Codex' },
+                    { value: 'claude', label: 'Claude' },
+                    { value: 'gemini', label: 'Gemini' },
+                    { value: 'copilot', label: 'Copilot' },
+                  ]}
                 />
+                {/* P1: Model input (can be enhanced with dropdown later) */}
                 <Input
                   label="Model"
-                  defaultValue="auto"
+                  value={tierConfigs[tier]?.model || 'auto'}
+                  onChange={(e) => updateTier(tier, 'model', e.target.value)}
                   placeholder="Model name or auto"
+                />
+                {/* P1: Plan Mode toggle */}
+                <div className="flex items-center gap-sm">
+                  <input
+                    type="checkbox"
+                    id={`wizard-${tier}-planMode`}
+                    checked={tierConfigs[tier]?.planMode || false}
+                    onChange={(e) => updateTier(tier, 'planMode', e.target.checked)}
+                    className="w-4 h-4"
+                  />
+                  <label htmlFor={`wizard-${tier}-planMode`} className="text-sm">Plan mode</label>
+                </div>
+                {/* P1: Ask Mode toggle */}
+                <div className="flex items-center gap-sm">
+                  <input
+                    type="checkbox"
+                    id={`wizard-${tier}-askMode`}
+                    checked={tierConfigs[tier]?.askMode || false}
+                    onChange={(e) => updateTier(tier, 'askMode', e.target.checked)}
+                    className="w-4 h-4"
+                  />
+                  <label htmlFor={`wizard-${tier}-askMode`} className="text-sm">Ask mode (read-only)</label>
+                </div>
+                {/* P1: Output Format dropdown */}
+                <Select
+                  label="Output Format"
+                  value={tierConfigs[tier]?.outputFormat || 'text'}
+                  onChange={(e) => updateTier(tier, 'outputFormat', e.target.value)}
+                  options={[
+                    { value: 'text', label: 'Text' },
+                    { value: 'json', label: 'JSON' },
+                    { value: 'stream-json', label: 'Stream JSON' },
+                  ]}
                 />
               </div>
             </div>

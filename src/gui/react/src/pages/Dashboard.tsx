@@ -43,6 +43,10 @@ export default function DashboardPage() {
         if (state.progress) {
           updateProgress(state.progress);
         }
+        // P1: Update budgets from state if available
+        if (state.budgets) {
+          useBudgetStore.getState().updatePlatforms(state.budgets);
+        }
       } catch (err) {
         console.error('[Dashboard] Failed to fetch initial state:', err);
       }
@@ -177,14 +181,27 @@ function StatusBar({ status, progress, budgets, connected }: StatusBarProps) {
           <span>Iter {progress.iteration.current}/{progress.iteration.total}</span>
         </div>
 
-        {/* Budget indicators */}
-        <div className="flex items-center gap-sm text-sm">
+        {/* P1: Enhanced Budget indicators with warnings */}
+        <div className="flex items-center gap-sm text-sm flex-wrap">
           <span>Budget:</span>
-          {Object.entries(budgets).map(([platform, info]) => (
-            <span key={platform} className={info.used >= info.limit ? 'text-hot-magenta' : ''}>
-              {platform} {info.used}/{info.limit}
-            </span>
-          ))}
+          {budgets && typeof budgets === 'object' ? Object.entries(budgets).map(([platform, info]) => {
+            const limit = info.limit === Number.MAX_SAFE_INTEGER || info.limit === 'unlimited' ? Number.MAX_SAFE_INTEGER : (typeof info.limit === 'number' ? info.limit : 100);
+            const used = info.used || 0;
+            const percentage = limit > 0 && limit !== Number.MAX_SAFE_INTEGER ? (used / limit) * 100 : 0;
+            const isWarning = percentage >= 80;
+            const isError = percentage >= 100;
+            
+            return (
+              <span 
+                key={platform} 
+                className={isError ? 'text-hot-magenta font-bold' : isWarning ? 'text-yellow-600' : ''}
+                title={info.resetsAt ? `Resets at: ${new Date(info.resetsAt).toLocaleString()}` : ''}
+              >
+                {platform} {used}/{limit === Number.MAX_SAFE_INTEGER ? '∞' : limit}
+                {limit !== Number.MAX_SAFE_INTEGER && ` (${percentage.toFixed(0)}%)`}
+              </span>
+            );
+          }) : null}
         </div>
 
         {/* Connection status */}
@@ -430,10 +447,10 @@ function OutputPanel({ output }: OutputPanelProps) {
           border-medium border-ink-black
         "
       >
-        {output.length === 0 ? (
+        {(Array.isArray(output) ? output : []).length === 0 ? (
           <div className="text-ink-faded">Waiting for output...</div>
         ) : (
-          output.map((line) => (
+          (Array.isArray(output) ? output : []).map((line) => (
             <div
               key={line.id}
               className={`

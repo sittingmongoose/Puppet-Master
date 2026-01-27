@@ -9,7 +9,8 @@ This guide explains how to set up a new project for RWM Puppet Master with all s
 - **Claude Code** - Anthropic Claude Code extension (stock config)
 
 **Standalone CLI Tools:**
-- **Cursor** - `cursor-agent` CLI
+- **Cursor** - `agent` CLI (primary) or `cursor-agent` (alias) - Install: `curl https://cursor.com/install -fsSL | bash`
+  - Note: Cursor shell mode is not used by Puppet Master (interactive, not suitable for automation)
 - **Gemini** - `gemini` CLI (Google Gemini CLI)
 - **Copilot** - `copilot` CLI (GitHub Copilot CLI)
 - **Antigravity** - `agy` launcher (Google Antigravity, GUI-only)

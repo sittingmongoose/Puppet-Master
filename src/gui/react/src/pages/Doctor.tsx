@@ -30,7 +30,7 @@ export default function DoctorPage() {
       try {
         setLoading(true);
         const data = await api.getDoctorChecks();
-        setChecks(data.checks);
+        setChecks(Array.isArray(data.checks) ? data.checks : []);
       } catch (err) {
         console.error('[Doctor] Failed to fetch checks:', err);
         setError(err instanceof Error ? err.message : 'Failed to load checks');
@@ -47,7 +47,7 @@ export default function DoctorPage() {
       setRunning(true);
       setError(null);
       const data = await api.runDoctorChecks();
-      setChecks(data.checks);
+      setChecks(Array.isArray(data.checks) ? data.checks : []);
     } catch (err) {
       console.error('[Doctor] Failed to run checks:', err);
       setError(err instanceof Error ? err.message : 'Failed to run checks');
@@ -63,7 +63,7 @@ export default function DoctorPage() {
       await api.fixDoctorCheck(checkName);
       // Re-run checks after fix
       const data = await api.runDoctorChecks();
-      setChecks(data.checks);
+      setChecks(Array.isArray(data.checks) ? data.checks : []);
     } catch (err) {
       console.error('[Doctor] Failed to fix check:', err);
       setError(err instanceof Error ? err.message : 'Failed to fix check');
@@ -72,13 +72,13 @@ export default function DoctorPage() {
     }
   }, []);
 
-  // Calculate summary stats
+  const checksList = Array.isArray(checks) ? checks : [];
   const stats = {
-    passed: checks.filter((c) => c.status === 'pass').length,
-    failed: checks.filter((c) => c.status === 'fail').length,
-    warning: checks.filter((c) => c.status === 'warn').length,
-    skipped: checks.filter((c) => c.status === 'skip').length,
-    total: checks.length,
+    passed: checksList.filter((c) => c.status === 'pass').length,
+    failed: checksList.filter((c) => c.status === 'fail').length,
+    warning: checksList.filter((c) => c.status === 'warn').length,
+    skipped: checksList.filter((c) => c.status === 'skip').length,
+    total: checksList.length,
   };
 
   // Get overall status
@@ -151,7 +151,7 @@ export default function DoctorPage() {
 
       {/* Category Panels */}
       {CATEGORIES.map((category) => {
-        const categoryChecks = checks.filter((c) => c.category === category.id);
+        const categoryChecks = checksList.filter((c) => c.category === category.id);
         if (categoryChecks.length === 0) return null;
 
         return (
@@ -166,10 +166,10 @@ export default function DoctorPage() {
       })}
 
       {/* Uncategorized checks */}
-      {checks.filter((c) => !CATEGORIES.some((cat) => cat.id === c.category)).length > 0 && (
+      {checksList.filter((c) => !CATEGORIES.some((cat) => cat.id === c.category)).length > 0 && (
         <CategoryPanel
           title="📋 Other"
-          checks={checks.filter((c) => !CATEGORIES.some((cat) => cat.id === c.category))}
+          checks={checksList.filter((c) => !CATEGORIES.some((cat) => cat.id === c.category))}
           onFix={fixCheck}
           fixing={fixing}
         />
@@ -190,13 +190,14 @@ interface CategoryPanelProps {
 }
 
 function CategoryPanel({ title, checks, onFix, fixing }: CategoryPanelProps) {
-  const passed = checks.filter((c) => c.status === 'pass').length;
-  const total = checks.length;
+  const list = Array.isArray(checks) ? checks : [];
+  const passed = list.filter((c) => c.status === 'pass').length;
+  const total = list.length;
   
   return (
     <Panel title={`${title} (${passed}/${total})`}>
       <div className="space-y-sm">
-        {checks.map((check) => (
+        {list.map((check) => (
           <CheckRow
             key={check.name}
             check={check}

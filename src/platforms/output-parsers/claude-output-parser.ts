@@ -187,14 +187,18 @@ export class ClaudeOutputParser extends BaseOutputParser {
 
   /**
    * Parse single JSON output format.
+   * Supports CLI --output-format json shape per https://code.claude.com/docs/en/headless:
+   * - result: main text; session_id, usage (input_tokens, output_tokens), model.
    */
   private parseSingleJsonOutput(output: string): ParsedPlatformOutput {
     try {
       const json = JSON.parse(output) as Record<string, unknown>;
 
-      // Extract text content from various possible fields
+      // Extract text content from various possible fields (result is headless default)
       let textContent = '';
-      if (typeof json.response === 'string') {
+      if (typeof json.result === 'string') {
+        textContent = json.result;
+      } else if (typeof json.response === 'string') {
         textContent = json.response;
       } else if (typeof json.content === 'string') {
         textContent = json.content;
@@ -213,6 +217,14 @@ export class ClaudeOutputParser extends BaseOutputParser {
       }
       if (typeof json.tokens === 'number') {
         parsed.tokensUsed = json.tokens;
+      }
+      const usage = json.usage as Record<string, unknown> | undefined;
+      if (usage && parsed.tokensUsed === undefined) {
+        if (typeof usage.output_tokens === 'number') {
+          parsed.tokensUsed = usage.output_tokens;
+        } else if (typeof usage.input_tokens === 'number' && typeof usage.output_tokens === 'number') {
+          parsed.tokensUsed = (usage.input_tokens as number) + (usage.output_tokens as number);
+        }
       }
       if (typeof json.model === 'string') {
         parsed.model = json.model;

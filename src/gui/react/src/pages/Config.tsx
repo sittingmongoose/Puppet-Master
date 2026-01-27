@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Panel } from '@/components/layout';
-import { Button, Input } from '@/components/ui';
-import { api } from '@/lib';
+import { Button, Input, Select } from '@/components/ui';
+import { StatusBadge } from '@/components/shared';
+import { api, type CursorCapabilities } from '@/lib';
 import type { Platform } from '@/types';
 
 /**
@@ -21,6 +22,9 @@ const TABS: { id: ConfigTab; label: string }[] = [
 interface TierSettings {
   platform: Platform;
   model: string;
+  planMode?: boolean;
+  askMode?: boolean;
+  outputFormat?: 'text' | 'json' | 'stream-json';
   selfFix: boolean;
   maxIterations: number;
 }
@@ -51,16 +55,23 @@ interface Config {
   budgets: {
     claude: { maxCallsPerRun: number; maxCallsPerHour: number; maxCallsPerDay: number };
     codex: { maxCallsPerRun: number; maxCallsPerHour: number; maxCallsPerDay: number };
-    cursor: { maxCallsPerRun: number; maxCallsPerHour: number; maxCallsPerDay: number };
+    cursor: { maxCallsPerRun: number; maxCallsPerHour: number; maxCallsPerDay: number; autoModeUnlimited?: boolean };
+    gemini: { maxCallsPerRun: number; maxCallsPerHour: number; maxCallsPerDay: number };
+    copilot: { maxCallsPerRun: number; maxCallsPerHour: number; maxCallsPerDay: number };
+  };
+  advanced: {
+    logLevel: string;
+    processTimeout: number;
+    parallelIterations: number;
   };
 }
 
 const DEFAULT_CONFIG: Config = {
   tiers: {
-    phase: { platform: 'cursor', model: 'auto', selfFix: true, maxIterations: 3 },
-    task: { platform: 'cursor', model: 'auto', selfFix: true, maxIterations: 3 },
-    subtask: { platform: 'cursor', model: 'auto', selfFix: true, maxIterations: 3 },
-    iteration: { platform: 'cursor', model: 'auto', selfFix: false, maxIterations: 1 },
+    phase: { platform: 'cursor', model: 'auto', planMode: false, askMode: false, outputFormat: 'text', selfFix: true, maxIterations: 3 },
+    task: { platform: 'cursor', model: 'auto', planMode: false, askMode: false, outputFormat: 'text', selfFix: true, maxIterations: 3 },
+    subtask: { platform: 'cursor', model: 'auto', planMode: false, askMode: false, outputFormat: 'text', selfFix: true, maxIterations: 3 },
+    iteration: { platform: 'cursor', model: 'auto', planMode: false, askMode: false, outputFormat: 'text', selfFix: false, maxIterations: 1 },
   },
   branching: {
     baseBranch: 'main',
@@ -81,7 +92,14 @@ const DEFAULT_CONFIG: Config = {
   budgets: {
     claude: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 500 },
     codex: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 500 },
-    cursor: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 500 },
+    cursor: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 500, autoModeUnlimited: false },
+    gemini: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 500 },
+    copilot: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 500 },
+  },
+  advanced: {
+    logLevel: 'info',
+    processTimeout: 300000,
+    parallelIterations: 1,
   },
 };
 
@@ -95,6 +113,14 @@ export default function ConfigPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isDirty, setIsDirty] = useState(false);
+  const [capabilities, setCapabilities] = useState<CursorCapabilities | null>(null);
+  const [models, setModels] = useState<Record<Platform, Array<{ id: string; label: string }>>>({
+    cursor: [],
+    codex: [],
+    claude: [],
+    gemini: [],
+    copilot: [],
+  });
 
   // Fetch config on mount
   useEffect(() => {
@@ -113,6 +139,43 @@ export default function ConfigPage() {
       }
     };
     fetchConfig();
+  }, []);
+
+  // CU-P1-T09: Fetch Cursor capabilities on mount
+  useEffect(() => {
+    const fetchCapabilities = async () => {
+      try {
+        const caps = await api.getCursorCapabilities();
+        setCapabilities(caps);
+      } catch (err) {
+        console.error('[Config] Failed to fetch capabilities:', err);
+        // Non-fatal, just don't show capabilities
+      }
+    };
+    fetchCapabilities();
+  }, []);
+
+  // P1: Fetch models for all platforms on mount
+  useEffect(() => {
+    const fetchModels = async () => {
+      try {
+        const response = await fetch('/api/config/models');
+        if (response.ok) {
+          const data = await response.json();
+          setModels({
+            cursor: Array.isArray(data.cursor) ? data.cursor : [],
+            codex: Array.isArray(data.codex) ? data.codex : [],
+            claude: Array.isArray(data.claude) ? data.claude : [],
+            gemini: Array.isArray(data.gemini) ? data.gemini : [],
+            copilot: Array.isArray(data.copilot) ? data.copilot : [],
+          });
+        }
+      } catch (err) {
+        console.error('[Config] Failed to fetch models:', err);
+        // Non-fatal, will use empty arrays
+      }
+    };
+    fetchModels();
   }, []);
 
   // Save config
@@ -175,7 +238,13 @@ export default function ConfigPage() {
           />
         );
       case 'advanced':
-        return <AdvancedTab />;
+        return (
+          <AdvancedTab
+            config={config.advanced}
+            onChange={(advanced) => updateConfig('advanced', advanced)}
+            capabilities={capabilities}
+          />
+        );
       default:
         return null;
     }
@@ -272,17 +341,62 @@ function TiersTab({ config, onChange }: TiersTabProps) {
           <div key={tier} className="p-md border-medium border-ink-faded">
             <h3 className="font-bold text-lg mb-md capitalize">{tier} Tier</h3>
             <div className="space-y-md">
-              <Input
+              {/* P1: Platform dropdown */}
+              <Select
                 label="Platform"
                 value={config[tier].platform}
                 onChange={(e) => updateTier(tier, { platform: e.target.value as Platform })}
-                hint="cursor | codex | claude | gemini | copilot"
+                options={[
+                  { value: 'cursor', label: 'Cursor' },
+                  { value: 'codex', label: 'Codex' },
+                  { value: 'claude', label: 'Claude' },
+                  { value: 'gemini', label: 'Gemini' },
+                  { value: 'copilot', label: 'Copilot' },
+                ]}
               />
-              <Input
+              {/* P1: Model dropdown with platform-specific models */}
+              <Select
                 label="Model"
                 value={config[tier].model}
                 onChange={(e) => updateTier(tier, { model: e.target.value })}
-                hint="Model name or 'auto' for default"
+                options={[
+                  { value: 'auto', label: 'Auto (default)' },
+                  ...models[config[tier].platform].map(m => ({ value: m.id, label: m.label || m.id })),
+                ]}
+                placeholder="Select model"
+              />
+              {/* P1: Plan Mode toggle */}
+              <div className="flex items-center gap-sm">
+                <input
+                  type="checkbox"
+                  id={`${tier}-planMode`}
+                  checked={config[tier].planMode || false}
+                  onChange={(e) => updateTier(tier, { planMode: e.target.checked })}
+                  className="w-4 h-4"
+                />
+                <label htmlFor={`${tier}-planMode`}>Enable plan mode</label>
+              </div>
+              {/* P1: Ask Mode toggle */}
+              <div className="flex items-center gap-sm">
+                <input
+                  type="checkbox"
+                  id={`${tier}-askMode`}
+                  checked={config[tier].askMode || false}
+                  onChange={(e) => updateTier(tier, { askMode: e.target.checked })}
+                  className="w-4 h-4"
+                />
+                <label htmlFor={`${tier}-askMode`}>Enable ask mode (read-only)</label>
+              </div>
+              {/* P1: Output Format dropdown */}
+              <Select
+                label="Output Format"
+                value={config[tier].outputFormat || 'text'}
+                onChange={(e) => updateTier(tier, { outputFormat: e.target.value as 'text' | 'json' | 'stream-json' })}
+                options={[
+                  { value: 'text', label: 'Text' },
+                  { value: 'json', label: 'JSON' },
+                  { value: 'stream-json', label: 'Stream JSON' },
+                ]}
               />
               <Input
                 label="Max Iterations"
@@ -462,7 +576,7 @@ interface BudgetsTabProps {
 }
 
 function BudgetsTab({ config, onChange }: BudgetsTabProps) {
-  const updateBudget = (platform: keyof Config['budgets'], field: string, value: number) => {
+  const updateBudget = (platform: keyof Config['budgets'], field: string, value: number | boolean) => {
     onChange({
       ...config,
       [platform]: { ...config[platform], [field]: value },
@@ -476,7 +590,7 @@ function BudgetsTab({ config, onChange }: BudgetsTabProps) {
       </p>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-lg">
-        {(['claude', 'codex', 'cursor'] as const).map((platform) => (
+        {(['claude', 'codex', 'cursor', 'gemini', 'copilot'] as const).map((platform) => (
           <div key={platform} className="p-md border-medium border-ink-faded">
             <h3 className="font-bold text-lg mb-md capitalize">{platform}</h3>
             <div className="space-y-md">
@@ -498,6 +612,21 @@ function BudgetsTab({ config, onChange }: BudgetsTabProps) {
                 value={config[platform].maxCallsPerDay.toString()}
                 onChange={(e) => updateBudget(platform, 'maxCallsPerDay', parseInt(e.target.value) || 0)}
               />
+              {/* P1: Cursor Auto Mode Unlimited toggle */}
+              {platform === 'cursor' && (
+                <div className="flex items-center gap-sm mt-md pt-md border-t border-ink-faded/20">
+                  <input
+                    type="checkbox"
+                    id={`${platform}-autoModeUnlimited`}
+                    checked={config[platform].autoModeUnlimited || false}
+                    onChange={(e) => updateBudget(platform, 'autoModeUnlimited', e.target.checked)}
+                    className="w-4 h-4"
+                  />
+                  <label htmlFor={`${platform}-autoModeUnlimited`} className="text-sm">
+                    Unlimited Auto Mode (grandfathered plan)
+                  </label>
+                </div>
+              )}
             </div>
           </div>
         ))}
@@ -506,39 +635,110 @@ function BudgetsTab({ config, onChange }: BudgetsTabProps) {
   );
 }
 
-function AdvancedTab() {
+interface AdvancedTabProps {
+  config: Config['advanced'];
+  onChange: (config: Config['advanced']) => void;
+  capabilities: CursorCapabilities | null;
+}
+
+function AdvancedTab({ config, onChange, capabilities }: AdvancedTabProps) {
+  // Use defaults if config is undefined (e.g., from API response missing the field)
+  const safeConfig = config || DEFAULT_CONFIG.advanced;
+
   return (
     <Panel title="Advanced Configuration">
       <p className="text-ink-faded mb-lg">
         Advanced settings for power users.
       </p>
-      
+
+      {/* CU-P1-T09: Cursor Capabilities Display — optional chaining for partial API responses */}
+      {capabilities && (
+        <div className="mb-lg p-md border-medium border-ink-faded bg-paper-lined/30">
+          <h3 className="font-bold text-lg mb-md">Cursor CLI Capabilities</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-md text-sm">
+            <div>
+              <span className="font-semibold">Binary: </span>
+              <span className="font-mono">{capabilities.binary?.selected ?? 'N/A'}</span>
+            </div>
+            <div>
+              <span className="font-semibold">Auth: </span>
+              {capabilities.auth?.hasApiKey ? (
+                <StatusBadge status="complete" size="sm" showLabel label="Authenticated" />
+              ) : (
+                <StatusBadge status="pending" size="sm" showLabel label="Not Authenticated" />
+              )}
+            </div>
+            <div>
+              <span className="font-semibold">Modes: </span>
+              <span>{Array.isArray(capabilities.modes) ? capabilities.modes.join(', ') : 'N/A'}</span>
+            </div>
+            <div>
+              <span className="font-semibold">Output Formats: </span>
+              <span>{Array.isArray(capabilities.outputFormats) ? capabilities.outputFormats.join(', ') : 'N/A'}</span>
+            </div>
+            <div>
+              <span className="font-semibold">Models: </span>
+              <span>
+                {capabilities?.models != null
+                  ? `${capabilities.models.count ?? 0} (${capabilities.models.source ?? 'N/A'})`
+                  : 'N/A'}
+                {Array.isArray(capabilities?.models?.sample) && capabilities.models.sample.length > 0 && (
+                  <span className="text-ink-faded ml-xs">
+                    - {capabilities.models.sample.map((m: { id?: string }) => m?.id || '').filter(Boolean).join(', ')}
+                  </span>
+                )}
+              </span>
+            </div>
+            <div>
+              <span className="font-semibold">MCP: </span>
+              {capabilities?.mcp?.available ? (
+                <span>{capabilities.mcp.serverCount} server(s){Array.isArray(capabilities.mcp.servers) && capabilities.mcp.servers.length > 0 ? ` (${capabilities.mcp.servers.join(', ')})` : ''}</span>
+              ) : (
+                <span className="text-ink-faded">Not available</span>
+              )}
+            </div>
+            {capabilities?.config?.found && (
+              <div className="md:col-span-2">
+                <span className="font-semibold">Config: </span>
+                <span className="font-mono text-xs">{capabilities.config.path}</span>
+                {capabilities.config.hasPermissions && (
+                  <span className="ml-xs text-ink-faded">(has permissions)</span>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       <div className="space-y-lg max-w-xl">
         <div className="p-md bg-safety-orange/10 border-medium border-safety-orange">
           <strong>⚠️ Caution</strong>
           <p className="text-sm mt-xs">
-            These settings can significantly affect orchestrator behavior. 
+            These settings can significantly affect orchestrator behavior.
             Only modify if you understand the implications.
           </p>
         </div>
-        
+
         <Input
           label="Log Level"
-          defaultValue="info"
+          value={safeConfig.logLevel}
+          onChange={(e) => onChange({ ...safeConfig, logLevel: e.target.value })}
           hint="debug | info | warn | error"
         />
-        
+
         <Input
           label="Process Timeout (ms)"
           type="number"
-          defaultValue="300000"
+          value={safeConfig.processTimeout.toString()}
+          onChange={(e) => onChange({ ...safeConfig, processTimeout: parseInt(e.target.value) || 300000 })}
           hint="Maximum time for a single iteration"
         />
-        
+
         <Input
           label="Parallel Iterations"
           type="number"
-          defaultValue="1"
+          value={safeConfig.parallelIterations.toString()}
+          onChange={(e) => onChange({ ...safeConfig, parallelIterations: parseInt(e.target.value) || 1 })}
           hint="Number of concurrent iterations (experimental)"
         />
       </div>

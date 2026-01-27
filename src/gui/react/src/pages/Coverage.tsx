@@ -61,8 +61,8 @@ export default function CoveragePage() {
         // const data = await api.getCoverage();
         
         await new Promise((r) => setTimeout(r, 300));
-        setCategories(MOCK_CATEGORIES);
-        setFeatures(MOCK_FEATURES);
+        setCategories(Array.isArray(MOCK_CATEGORIES) ? MOCK_CATEGORIES : []);
+        setFeatures(Array.isArray(MOCK_FEATURES) ? MOCK_FEATURES : []);
       } catch (err) {
         console.error('[Coverage] Failed to fetch coverage:', err);
       } finally {
@@ -72,22 +72,20 @@ export default function CoveragePage() {
     fetchCoverage();
   }, []);
 
-  // Get unique phases
-  const phases = Array.from(new Set(features.map((f) => f.phase)));
+  const categoriesList = Array.isArray(categories) ? categories : [];
+  const featuresList = Array.isArray(features) ? features : [];
+  const phases = Array.from(new Set(featuresList.map((f) => f.phase)));
 
-  // Filter features by phase
   const filteredFeatures = selectedPhase === 'all'
-    ? features
-    : features.filter((f) => f.phase === selectedPhase);
+    ? featuresList
+    : featuresList.filter((f) => f.phase === selectedPhase);
 
-  // Calculate overall coverage
-  const totalCovered = categories.reduce((sum, c) => sum + c.covered, 0);
-  const totalItems = categories.reduce((sum, c) => sum + c.total, 0);
+  const totalCovered = categoriesList.reduce((sum, c) => sum + c.covered, 0);
+  const totalItems = categoriesList.reduce((sum, c) => sum + c.total, 0);
   const overallCoverage = totalItems > 0 ? Math.round((totalCovered / totalItems) * 100) : 0;
 
-  // Calculate feature stats
-  const testedCount = features.filter((f) => f.tested).length;
-  const verifiedCount = features.filter((f) => f.verified).length;
+  const testedCount = featuresList.filter((f) => f.tested).length;
+  const verifiedCount = featuresList.filter((f) => f.verified).length;
 
   if (loading) {
     return (
@@ -134,7 +132,7 @@ export default function CoveragePage() {
       {/* Category Coverage */}
       <Panel title="Coverage by Category">
         <div className="space-y-md">
-          {categories.map((category) => {
+          {categoriesList.map((category) => {
             const percentage = Math.round((category.covered / category.total) * 100);
             return (
               <div key={category.id} className="flex items-center gap-md">

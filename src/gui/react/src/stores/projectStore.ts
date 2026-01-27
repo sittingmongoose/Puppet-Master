@@ -24,6 +24,34 @@ interface ProjectState {
 }
 
 /**
+ * Validates and normalizes project data from localStorage
+ */
+function validateRecentProjects(data: unknown): Project[] {
+  if (!Array.isArray(data)) {
+    return [];
+  }
+  
+  // Filter out invalid entries and ensure all have required fields
+  return data
+    .filter((item): item is Project => {
+      return (
+        typeof item === 'object' &&
+        item !== null &&
+        typeof (item as Project).id === 'string' &&
+        typeof (item as Project).name === 'string' &&
+        typeof (item as Project).path === 'string'
+      );
+    })
+    .map((item) => ({
+      ...item,
+      // Ensure lastAccessed is a Date or null
+      lastAccessed: item.lastAccessed
+        ? new Date(item.lastAccessed)
+        : null,
+    }));
+}
+
+/**
  * Project store - manages project selection and history
  * Persists recent projects to localStorage
  */
@@ -43,8 +71,13 @@ export const useProjectStore = create<ProjectState>()(
       },
       
       addRecentProject: (project) => set((state) => {
+        // Ensure recentProjects is always an array
+        const safeRecentProjects = Array.isArray(state.recentProjects)
+          ? state.recentProjects
+          : [];
+        
         // Remove if already exists (will re-add at top)
-        const filtered = state.recentProjects.filter((p) => p.id !== project.id);
+        const filtered = safeRecentProjects.filter((p) => p.id !== project.id);
         // Add to front and limit to 10
         return {
           recentProjects: [
@@ -54,9 +87,14 @@ export const useProjectStore = create<ProjectState>()(
         };
       }),
       
-      removeRecentProject: (id) => set((state) => ({
-        recentProjects: state.recentProjects.filter((p) => p.id !== id),
-      })),
+      removeRecentProject: (id) => set((state) => {
+        const safeRecentProjects = Array.isArray(state.recentProjects)
+          ? state.recentProjects
+          : [];
+        return {
+          recentProjects: safeRecentProjects.filter((p) => p.id !== id),
+        };
+      }),
       
       setLoading: (loading) => set({ loading }),
       
@@ -67,6 +105,17 @@ export const useProjectStore = create<ProjectState>()(
     {
       name: 'rwm-projects',
       partialize: (state) => ({ recentProjects: state.recentProjects }),
+      // Validate and normalize data when loading from localStorage
+      merge: (persistedState, currentState) => {
+        const persisted = persistedState as Partial<ProjectState> | null;
+        if (persisted?.recentProjects !== undefined) {
+          return {
+            ...currentState,
+            recentProjects: validateRecentProjects(persisted.recentProjects),
+          };
+        }
+        return currentState;
+      },
     }
   )
 );

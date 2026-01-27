@@ -88,7 +88,7 @@ describe('GeminiRunner', () => {
       expect(args.indexOf('-p')).toBeLessThan(args.indexOf('Test prompt'));
     });
 
-    it('should always include --output-format json', () => {
+    it('should always include --output-format json by default', () => {
       const request: ExecutionRequest = {
         prompt: 'Test prompt',
         workingDirectory: '/tmp',
@@ -100,6 +100,21 @@ describe('GeminiRunner', () => {
       expect(args).toContain('json');
       const formatIndex = args.indexOf('--output-format');
       expect(args[formatIndex + 1]).toBe('json');
+    });
+
+    it('should include --output-format stream-json when outputFormat is stream-json', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+        outputFormat: 'stream-json',
+      };
+
+      const args = runner['buildArgs'](request);
+      expect(args).toContain('--output-format');
+      expect(args).toContain('stream-json');
+      const formatIndex = args.indexOf('--output-format');
+      expect(args[formatIndex + 1]).toBe('stream-json');
     });
 
     it('should always include --approval-mode yolo', () => {
@@ -210,6 +225,71 @@ describe('GeminiRunner', () => {
         '--model',
         'gemini-2.5-flash',
       ]);
+    });
+
+    it('should include --sandbox flag when sandbox is enabled', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+        sandbox: true,
+      };
+
+      const args = runner['buildArgs'](request);
+      expect(args).toContain('--sandbox');
+    });
+
+    it('should not include --sandbox flag when sandbox is not enabled', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+        sandbox: false,
+      };
+
+      const args = runner['buildArgs'](request);
+      expect(args).not.toContain('--sandbox');
+    });
+
+    it('should include --include-directories flag with comma-separated directories', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+        includeDirectories: ['/path/to/dir1', '/path/to/dir2'],
+      };
+
+      const args = runner['buildArgs'](request);
+      expect(args).toContain('--include-directories');
+      const dirsIndex = args.indexOf('--include-directories');
+      expect(args[dirsIndex + 1]).toBe('/path/to/dir1,/path/to/dir2');
+    });
+
+    it('should limit --include-directories to max 5 directories', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+        includeDirectories: ['/dir1', '/dir2', '/dir3', '/dir4', '/dir5', '/dir6', '/dir7'],
+      };
+
+      const args = runner['buildArgs'](request);
+      expect(args).toContain('--include-directories');
+      const dirsIndex = args.indexOf('--include-directories');
+      const dirsValue = args[dirsIndex + 1];
+      const dirs = dirsValue.split(',');
+      expect(dirs.length).toBe(5); // Max 5 directories
+    });
+
+    it('should not include --include-directories flag when not provided', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+      };
+
+      const args = runner['buildArgs'](request);
+      expect(args).not.toContain('--include-directories');
     });
   });
 

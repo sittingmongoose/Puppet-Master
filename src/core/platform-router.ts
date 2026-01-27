@@ -24,6 +24,9 @@ export interface PlatformConfig {
   selfFix: boolean;
   maxIterations: number;
   escalation: 'phase' | 'task' | 'subtask' | null;
+  permissionMode?: 'default' | 'acceptEdits' | 'plan' | 'dontAsk' | 'bypassPermissions';
+  allowedTools?: string;
+  outputFormat?: 'text' | 'json' | 'stream-json';
 }
 
 /**
@@ -213,6 +216,9 @@ export class PlatformRouter {
           selfFix: fallbackTierConfig.selfFix,
           maxIterations: fallbackTierConfig.maxIterations,
           escalation: fallbackTierConfig.escalation,
+          permissionMode: fallbackTierConfig.permissionMode,
+          allowedTools: fallbackTierConfig.allowedTools,
+          outputFormat: fallbackTierConfig.outputFormat,
         };
       }
     }
@@ -238,6 +244,9 @@ export class PlatformRouter {
           selfFix: fallbackTierConfig.selfFix,
           maxIterations: fallbackTierConfig.maxIterations,
           escalation: fallbackTierConfig.escalation,
+          permissionMode: fallbackTierConfig.permissionMode,
+          allowedTools: fallbackTierConfig.allowedTools,
+          outputFormat: fallbackTierConfig.outputFormat,
         };
       }
     }
@@ -299,6 +308,9 @@ export class PlatformRouter {
           selfFix: template.selfFix,
           maxIterations: template.maxIterations,
           escalation: template.escalation,
+          permissionMode: template.permissionMode,
+          allowedTools: template.allowedTools,
+          outputFormat: template.outputFormat,
         },
         reason: `complexity_routing(${complexity}/${taskType}->${modelLevel})`,
       };
@@ -312,6 +324,9 @@ export class PlatformRouter {
         selfFix: template.selfFix,
         maxIterations: template.maxIterations,
         escalation: template.escalation,
+        permissionMode: template.permissionMode,
+        allowedTools: template.allowedTools,
+        outputFormat: template.outputFormat,
       },
       reason: `complexity_routing_fallback(${complexity}/${taskType}->${modelLevel})`,
     };
@@ -334,12 +349,15 @@ export class PlatformRouter {
       selfFix: tierConfig.selfFix,
       maxIterations: tierConfig.maxIterations,
       escalation: tierConfig.escalation,
+      permissionMode: tierConfig.permissionMode,
+      allowedTools: tierConfig.allowedTools,
+      outputFormat: tierConfig.outputFormat,
     };
   }
 
   /**
    * Convert TierConfig to PlatformConfig.
-   * 
+   *
    * @param tierConfig - Tier configuration
    * @returns Platform configuration
    */
@@ -351,6 +369,9 @@ export class PlatformRouter {
       selfFix: tierConfig.selfFix,
       maxIterations: tierConfig.maxIterations,
       escalation: tierConfig.escalation,
+      permissionMode: tierConfig.permissionMode,
+      allowedTools: tierConfig.allowedTools,
+      outputFormat: tierConfig.outputFormat,
     };
   }
 
