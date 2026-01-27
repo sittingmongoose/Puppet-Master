@@ -142,6 +142,9 @@ export async function stopAction(options: StopOptions): Promise<void> {
       platformRegistry: getPlatformRegistry(container, config, projectRoot),
       platformRouter: getPlatformRouter(container, config, projectRoot),
       verificationIntegration: container.resolve('verificationIntegration'),
+      // Memory auto-promotion dependencies (optional for stop)
+      promotionEngine: container.resolve('promotionEngine'),
+      multiLevelLoader: container.resolve('multiLevelLoader'),
     };
 
     // Initialize orchestrator (required before stop)

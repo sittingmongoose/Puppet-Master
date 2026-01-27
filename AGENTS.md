@@ -555,6 +555,9 @@ claude -p "prompt" [--model <model>] [--output-format text|json|stream-json] [--
 - `--output-format text|json|stream-json` - Plain text, single JSON object, or JSONL events
 - `--no-session-persistence` - Disable session save (print mode); we use this for fresh process per iteration
 - `--permission-mode default|acceptEdits|plan|dontAsk|bypassPermissions` - Permission behavior
+  - **Plan Mode**: `--permission-mode plan` enables read-only analysis mode (verified via official CLI reference)
+  - Supports both interactive and print modes (`-p` flag)
+  - Documentation: https://code.claude.com/docs/en/cli-reference
 - `--allowedTools "Read,Edit,Bash"` - Auto-approve listed tools (comma-separated)
 - `--max-turns <n>` - Limit agentic turns
 - `--model <model>` - Model selection (e.g. `sonnet`, `opus`, `claude-sonnet-4-5`)
@@ -563,6 +566,7 @@ claude -p "prompt" [--model <model>] [--output-format text|json|stream-json] [--
 
 **Puppet Master policy:**
 - Fresh process per iteration (no `-c`/`--continue`, no `-r`/`--resume`)
+- Plan mode: Uses `--permission-mode plan` flag (not prompt preamble)
 
 **Docs and commands:**
 - [CLI reference](https://code.claude.com/docs/en/cli-reference), [Headless](https://code.claude.com/docs/en/headless), [Setup](https://code.claude.com/docs/en/setup), [Troubleshooting](https://code.claude.com/docs/en/troubleshooting)
@@ -809,6 +813,29 @@ Puppet Master integrates platform-reported usage data from multiple sources to p
 - **Requirements**: `GOOGLE_CLOUD_PROJECT`, `GOOGLE_APPLICATION_CREDENTIALS` or ADC
 - **Provides**: Quota limits, usage counts, reset times
 - **CLI Command**: `/stats` (per-model usage, tokens, tool stats, file modifications)
+
+#### Plan Mode Support Across Platforms
+
+**Summary of plan mode capabilities (verified January 2026):**
+
+| Platform | Plan Mode Support | Implementation |
+|----------|------------------|----------------|
+| **Cursor** | ✅ Native flag | `--mode=plan` (with fallback to prompt preamble if unsupported) |
+| **Claude Code** | ✅ Native flag | `--permission-mode plan` (works in both interactive and print modes) |
+| **Gemini** | ✅ Native flag | `--approval-mode plan` (requires `experimental.plan: true` in settings) |
+| **Codex** | ❌ No flag | Uses prompt preamble (no CLI flag available) |
+| **Copilot** | ❌ No flag | Uses prompt preamble (no CLI flag available) |
+
+**Research sources:**
+- Claude Code: https://code.claude.com/docs/en/cli-reference (verified `--permission-mode plan`)
+- Gemini: Code implementation verified (requires experimental.plan setting)
+- Codex: No plan mode flag found in official documentation
+- Copilot: No plan mode flag found in official documentation
+
+**Implementation notes:**
+- Platforms with native flags use CLI flags when `planMode: true` is requested
+- Platforms without native flags use prompt preamble for consistent behavior
+- All platforms provide read-only/planning behavior when plan mode is enabled
 
 #### Codex
 - **API**: None (no programmatic API)

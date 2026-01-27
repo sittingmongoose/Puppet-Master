@@ -167,7 +167,8 @@ describe('SettingsPage', () => {
     fireEvent.click(saveButton);
     
     await waitFor(() => {
-      expect(screen.getByText('✓ Settings saved')).toBeInTheDocument();
+      expect(screen.getByText('Settings saved')).toBeInTheDocument();
+      expect(screen.getByLabelText('Checkmark')).toBeInTheDocument();
     });
   });
 

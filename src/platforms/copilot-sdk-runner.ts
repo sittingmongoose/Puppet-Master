@@ -229,7 +229,7 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
    * P0: Builds CopilotTool array from allowed tools list.
    * Converts tool names to SDK-compatible tool definitions.
    */
-  private buildCopilotTools(allowedTools: string[]): CopilotTool[] {
+  private buildCopilotTools(_allowedTools: string[]): CopilotTool[] {
     // SDK expects tool definitions with name and handler
     // For now, return empty array and let SDK use default tools
     // TODO: Map tool names to actual SDK tool definitions when SDK API is clearer

@@ -13,7 +13,7 @@
 import type { Request, Response, NextFunction, RequestHandler } from 'express';
 import { randomBytes } from 'crypto';
 import { writeFile, readFile, mkdir } from 'fs/promises';
-import { join, dirname } from 'path';
+import { dirname } from 'path';
 import { existsSync } from 'fs';
 
 /**

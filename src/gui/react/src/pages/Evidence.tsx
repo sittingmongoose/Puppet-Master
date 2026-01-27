@@ -1,8 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import type { ReactNode } from 'react';
 import { Panel } from '@/components/layout';
 import { Button } from '@/components/ui';
 import { StatusBadge } from '@/components/shared';
+import {
+  FolderIcon,
+  CameraIcon,
+  DocumentIcon,
+  ChartIcon,
+  GlobeIcon,
+  FileIcon,
+} from '@/components/icons';
 import type { StatusType } from '@/types';
 
 interface EvidenceFile {
@@ -18,17 +27,17 @@ interface EvidenceFile {
 interface EvidenceCategory {
   id: string;
   name: string;
-  icon: string;
+  icon: ReactNode;
   count: number;
 }
 
 const CATEGORIES: EvidenceCategory[] = [
-  { id: 'all', name: 'All Files', icon: '📁', count: 0 },
-  { id: 'screenshot', name: 'Screenshots', icon: '📸', count: 0 },
-  { id: 'log', name: 'Logs', icon: '📝', count: 0 },
-  { id: 'report', name: 'Gate Reports', icon: '📊', count: 0 },
-  { id: 'trace', name: 'Browser Traces', icon: '🌐', count: 0 },
-  { id: 'snapshot', name: 'File Snapshots', icon: '📄', count: 0 },
+  { id: 'all', name: 'All Files', icon: <FolderIcon size="1em" />, count: 0 },
+  { id: 'screenshot', name: 'Screenshots', icon: <CameraIcon size="1em" />, count: 0 },
+  { id: 'log', name: 'Logs', icon: <DocumentIcon size="1em" />, count: 0 },
+  { id: 'report', name: 'Gate Reports', icon: <ChartIcon size="1em" />, count: 0 },
+  { id: 'trace', name: 'Browser Traces', icon: <GlobeIcon size="1em" />, count: 0 },
+  { id: 'snapshot', name: 'File Snapshots', icon: <FileIcon size="1em" />, count: 0 },
 ];
 
 // Mock data for demonstration
@@ -136,7 +145,7 @@ export default function EvidencePage() {
                     }
                   `}
                 >
-                  <span>
+                  <span className="flex items-center gap-xs">
                     {cat.icon} {cat.name}
                   </span>
                   <span className="text-ink-faded text-sm">{cat.count}</span>
@@ -198,14 +207,14 @@ interface FileRowProps {
 }
 
 function FileRow({ file, selected, formatSize, onSelect }: FileRowProps) {
-  const getTypeIcon = (type: EvidenceFile['type']) => {
+  const getTypeIcon = (type: EvidenceFile['type']): ReactNode => {
     switch (type) {
-      case 'screenshot': return '📸';
-      case 'log': return '📝';
-      case 'report': return '📊';
-      case 'trace': return '🌐';
-      case 'snapshot': return '📄';
-      default: return '📁';
+      case 'screenshot': return <CameraIcon size="1em" />;
+      case 'log': return <DocumentIcon size="1em" />;
+      case 'report': return <ChartIcon size="1em" />;
+      case 'trace': return <GlobeIcon size="1em" />;
+      case 'snapshot': return <FileIcon size="1em" />;
+      default: return <FolderIcon size="1em" />;
     }
   };
 
@@ -221,15 +230,15 @@ function FileRow({ file, selected, formatSize, onSelect }: FileRowProps) {
         }
       `}
     >
-      <span className="text-lg">{getTypeIcon(file.type)}</span>
-      <div className="flex-1 min-w-0">
-        <div className="font-semibold truncate">{file.name}</div>
-        <div className="flex items-center gap-sm text-xs text-ink-faded">
+      <span className="flex items-center">{getTypeIcon(file.type)}</span>
+      <div className="flex-1 min-w-0 break-words">
+        <div className="font-semibold break-words">{file.name}</div>
+        <div className="flex items-center gap-sm text-xs text-ink-faded flex-wrap">
           {file.tierId && (
-            <span className="font-mono">{file.tierId}</span>
+            <span className="font-mono break-all">{file.tierId}</span>
           )}
-          <span>{formatSize(file.size)}</span>
-          <span>{file.createdAt.toLocaleTimeString()}</span>
+          <span className="whitespace-nowrap">{formatSize(file.size)}</span>
+          <span className="whitespace-nowrap">{file.createdAt.toLocaleTimeString()}</span>
         </div>
       </div>
       {file.status && (
@@ -249,9 +258,9 @@ function FilePreview({ file, formatSize }: FilePreviewProps) {
     <div className="space-y-md">
       {/* File info */}
       <div className="space-y-sm text-sm">
-        <div>
+        <div className="break-words">
           <span className="font-semibold">Name:</span>
-          <span className="ml-sm font-mono">{file.name}</span>
+          <span className="ml-sm font-mono break-all">{file.name}</span>
         </div>
         <div>
           <span className="font-semibold">Type:</span>
@@ -266,11 +275,11 @@ function FilePreview({ file, formatSize }: FilePreviewProps) {
           <span className="ml-sm">{file.createdAt.toLocaleString()}</span>
         </div>
         {file.tierId && (
-          <div>
+          <div className="break-all">
             <span className="font-semibold">Tier:</span>
             <Link
               to={`/tiers?item=${file.tierId}`}
-              className="ml-sm font-mono text-electric-blue hover:underline"
+              className="ml-sm font-mono text-electric-blue hover:underline break-all"
             >
               {file.tierId}
             </Link>
@@ -288,7 +297,10 @@ function FilePreview({ file, formatSize }: FilePreviewProps) {
       <div className="border-t-medium border-ink-faded pt-md">
         {file.type === 'screenshot' ? (
           <div className="text-center text-ink-faded">
-            <p>📸 Screenshot preview</p>
+            <p className="flex items-center justify-center gap-xs">
+              <CameraIcon size="1.5em" />
+              Screenshot preview
+            </p>
             <p className="text-xs">(Image would load here)</p>
           </div>
         ) : file.type === 'log' ? (

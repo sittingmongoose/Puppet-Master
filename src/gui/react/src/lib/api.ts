@@ -235,11 +235,6 @@ export const agents = {
     return fetchJSON<AgentsContentResponse>(`/api/agents/${encodedPath}`);
   },
 };
-    claude?: { maxCallsPerRun?: number; maxCallsPerHour?: number; maxCallsPerDay?: number };
-    codex?: { maxCallsPerRun?: number; maxCallsPerHour?: number; maxCallsPerDay?: number };
-    cursor?: { maxCallsPerRun?: number; maxCallsPerHour?: number; maxCallsPerDay?: number };
-  };
-}
 
 /**
  * Get current config
@@ -441,9 +436,25 @@ export async function savePRD(): Promise<{ success: boolean }> {
 }
 
 /**
- * Save wizard state with project info
+ * Tier configuration for wizard save
  */
-export async function wizardSave(data: { prd: string; projectName: string; projectPath: string }): Promise<{ success: boolean }> {
+interface WizardTierConfig {
+  platform: string;
+  model: string;
+  planMode?: boolean;
+  askMode?: boolean;
+  outputFormat?: 'text' | 'json' | 'stream-json';
+}
+
+/**
+ * Save wizard state with project info and tier configuration
+ */
+export async function wizardSave(data: {
+  prd: string;
+  projectName: string;
+  projectPath: string;
+  tierConfigs?: Record<string, WizardTierConfig>;
+}): Promise<{ success: boolean; configPath?: string }> {
   return fetchJSON('/api/wizard/save', {
     method: 'POST',
     body: JSON.stringify(data),

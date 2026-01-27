@@ -150,6 +150,9 @@ export async function resumeAction(options: ResumeOptions): Promise<void> {
       platformRegistry: getPlatformRegistry(container, config, projectRoot),
       platformRouter: getPlatformRouter(container, config, projectRoot),
       verificationIntegration: container.resolve('verificationIntegration'),
+      // Memory auto-promotion dependencies
+      promotionEngine: container.resolve('promotionEngine'),
+      multiLevelLoader: container.resolve('multiLevelLoader'),
     };
 
     // Initialize orchestrator (this will load state from PRD)

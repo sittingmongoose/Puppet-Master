@@ -22,6 +22,16 @@ import { ledgerCommand } from './commands/ledger.js';
 import { metricsCommand } from './commands/metrics.js';
 import { loginCommand } from './commands/login.js';
 import { UsageCommand } from './commands/usage.js';
+// Feature parity commands (CLI ↔ GUI)
+import { evidenceCommand } from './commands/evidence.js';
+import { coverageCommand } from './commands/coverage.js';
+import { historyCommand } from './commands/history.js';
+import { retryCommand } from './commands/retry.js';
+import { resetCommand } from './commands/reset.js';
+import { killSpawnCommand } from './commands/kill-spawn.js';
+import { modelsCommand } from './commands/models.js';
+import { agentsCommand } from './commands/agents.js';
+import { configCommand } from './commands/config.js';
 
 const program = new Command();
 
@@ -104,6 +114,17 @@ loginCommand.register(program);
 const usageCommand = new UsageCommand();
 usageCommand.register(program);
 
+// Feature parity commands (CLI ↔ GUI)
+evidenceCommand.register(program);
+coverageCommand.register(program);
+historyCommand.register(program);
+retryCommand.register(program);
+resetCommand.register(program);
+killSpawnCommand.register(program);
+modelsCommand.register(program);
+agentsCommand.register(program);
+configCommand.register(program);
+
 /**
  * Run the CLI with the given arguments
  * @param argv - Command line arguments (defaults to process.argv)
@@ -113,3 +134,10 @@ export function run(argv: string[] = process.argv): void {
 }
 
 export { program };
+
+// Auto-run when executed directly (not imported as a module)
+// This is needed for the CLI binary to work correctly
+import { fileURLToPath } from 'url';
+if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  run();
+}

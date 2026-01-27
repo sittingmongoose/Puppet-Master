@@ -17,3 +17,12 @@ export type { ModalProps } from './Modal.js';
 
 export { Select } from './Select.js';
 export type { SelectProps } from './Select.js';
+
+export { HelpText } from './HelpText.js';
+export type { HelpTextProps } from './HelpText.js';
+
+export { Checkbox } from './Checkbox.js';
+export type { CheckboxProps } from './Checkbox.js';
+
+export { Radio } from './Radio.js';
+export type { RadioProps } from './Radio.js';

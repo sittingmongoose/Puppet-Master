@@ -8,6 +8,7 @@ import { getDefaultConfig } from '../config/default-config.js';
 import type { PuppetMasterConfig } from '../types/config.js';
 import type { CriterionType } from '../types/tiers.js';
 import { VerifierRegistry } from '../verification/gate-runner.js';
+import { Orchestrator } from './orchestrator.js';
 import { mkdtemp, rm, access } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -379,9 +380,16 @@ describe('createOrchestrator', () => {
     config = getDefaultConfig();
   });
 
-  it('should throw error when orchestrator is not registered', () => {
-    expect(() => createOrchestrator(config, projectPath)).toThrow(
-      'Orchestrator not yet implemented. Please complete PH4-T08 first.'
-    );
+  it('should create orchestrator instance', () => {
+    const orchestrator = createOrchestrator(config, projectPath);
+    expect(orchestrator).toBeInstanceOf(Orchestrator);
+  });
+
+  it('should return same singleton orchestrator from container', () => {
+    const container = createContainer(config, projectPath);
+    const orchestrator1 = container.resolve<Orchestrator>('orchestrator');
+    const orchestrator2 = container.resolve<Orchestrator>('orchestrator');
+    expect(orchestrator1).toBe(orchestrator2);
+    expect(orchestrator1).toBeInstanceOf(Orchestrator);
   });
 });

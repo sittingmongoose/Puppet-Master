@@ -13,3 +13,6 @@ export { createMetricsRoutes } from './metrics.js';
 export { createDoctorRoutes } from './doctor.js';
 export { createSettingsRoutes } from './settings.js';
 export { createEventsRoutes } from './events.js';
+// Feature parity routes (CLI ↔ GUI)
+export { createLedgerRoutes } from './ledger.js';
+export { createLoginRoutes } from './login.js';

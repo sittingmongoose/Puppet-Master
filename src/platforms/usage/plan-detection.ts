@@ -12,9 +12,6 @@
 
 import type { Platform } from '../../types/config.js';
 import type { PlanInfo } from './types.js';
-import { ClaudeUsageApiClient } from './api-clients/claude-api.js';
-import { CopilotUsageApiClient } from './api-clients/copilot-api.js';
-import { GeminiUsageApiClient } from './api-clients/gemini-api.js';
 import { UsageProvider } from './usage-provider.js';
 
 /**

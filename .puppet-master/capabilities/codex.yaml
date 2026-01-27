@@ -1,0 +1,28 @@
+platform: codex
+command: codex
+runnable: true
+authStatus: not_authenticated
+version: 0.89.0
+capabilities:
+  streaming: false
+  codeExecution: true
+  imageGeneration: true
+  fileAccess: true
+  webSearch: true
+  computerUse: true
+  maxContextTokens: 100000
+  maxOutputTokens: 4000
+  supportedLanguages:
+    - typescript
+    - javascript
+    - python
+quotaInfo:
+  remaining: 9007199254740991
+  limit: 9007199254740991
+  resetsAt: '2026-01-28T16:33:46.296Z'
+  period: day
+cooldownInfo:
+  active: false
+  endsAt: null
+  reason: null
+probeTimestamp: '2026-01-27T16:33:45.768Z'

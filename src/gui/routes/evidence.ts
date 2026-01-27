@@ -171,6 +171,7 @@ export function createEvidenceRoutes(): Router {
       }
       
       // Reject null bytes and other dangerous characters
+      // eslint-disable-next-line no-control-regex
       if (decodedName.includes('\0') || /[\x00-\x1f]/.test(decodedName)) {
         res.status(400).json({
           error: 'Invalid characters in filename',

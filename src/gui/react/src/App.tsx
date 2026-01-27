@@ -17,7 +17,7 @@ export function App() {
               isDark={theme === 'dark'}
               onThemeToggle={toggleTheme}
             />
-            <main className="p-xl">
+            <main className="p-xl pt-0">
               <AppRoutes />
             </main>
           </div>

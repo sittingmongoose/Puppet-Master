@@ -558,11 +558,18 @@ export class CapabilityDiscoveryService {
         // Try to use SDK for dynamic model discovery
         try {
           const { CopilotClient: SdkClient } = await import('@github/copilot-sdk');
-          const client = new SdkClient() as unknown as { start(): Promise<void>; listModels(): Promise<string[]>; stop(): Promise<void> };
+          const client = new SdkClient() as unknown as { start(): Promise<void>; listModels(): Promise<Array<string | { id?: string; name?: string }>>; stop(): Promise<void> };
           await client.start();
           const models = await client.listModels();
           await client.stop();
-          return models;
+          // SDK may return model objects or strings - extract IDs only
+          return models.map(m => {
+            if (typeof m === 'string') return m;
+            if (typeof m === 'object' && m !== null) {
+              return m.id || m.name || String(m);
+            }
+            return String(m);
+          });
         } catch (sdkError) {
           // SDK not available, fall back to known models
           console.warn('[CapabilityDiscovery] Copilot SDK not available for model discovery, using static list');
@@ -574,6 +581,31 @@ export class CapabilityDiscoveryService {
       // For other platforms, return static model lists
       switch (platform) {
         case 'claude': {
+          // Try dynamic discovery via Claude API if API key is available
+          const apiKey = process.env.ANTHROPIC_API_KEY;
+          if (apiKey) {
+            try {
+              const response = await fetch('https://api.anthropic.com/v1/models', {
+                headers: {
+                  'x-api-key': apiKey,
+                  'anthropic-version': '2023-06-01',
+                },
+              });
+              if (response.ok) {
+                const data = await response.json() as { data: Array<{ id: string; display_name?: string }> };
+                // Extract model IDs, prioritizing aliases
+                const discoveredModels = data.data
+                  .map(m => m.id)
+                  .filter(id => id.startsWith('claude-') || ['sonnet', 'opus', 'haiku'].includes(id));
+                if (discoveredModels.length > 0) {
+                  return discoveredModels;
+                }
+              }
+            } catch (apiError) {
+              console.warn('[CapabilityDiscovery] Claude API discovery failed, using static list:', apiError instanceof Error ? apiError.message : String(apiError));
+            }
+          }
+          // Fallback to static list
           const { KNOWN_CLAUDE_MODELS } = await import('./claude-models.js');
           return [...KNOWN_CLAUDE_MODELS];
         }

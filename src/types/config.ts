@@ -97,6 +97,16 @@ export interface TierConfig {
   platform: Platform;
   model: string;
   /**
+   * Codex-only: Reasoning effort level for models that support it.
+   *
+   * YAML: reasoning_effort
+   * Values: 'Low' | 'Medium' | 'High' | 'Extra high'
+   * Notes:
+   * - Only meaningful for Codex CLI with supported models (e.g., gpt-5.2-codex).
+   * - Ignored by other platforms.
+   */
+  reasoningEffort?: 'Low' | 'Medium' | 'High' | 'Extra high';
+  /**
    * Enable Cursor “plan mode” for this tier (best-effort).
    *
    * YAML: plan_mode
@@ -182,6 +192,21 @@ export interface AgentsEnforcementConfig {
   requireUpdateOnGotcha: boolean; // YAML: require_update_on_gotcha
   gateFailsOnMissingUpdate: boolean; // YAML: gate_fails_on_missing_update
   reviewerMustAcknowledge: boolean; // YAML: reviewer_must_acknowledge
+  /**
+   * Automatically promote extracted patterns/learnings to AGENTS.md after successful iterations.
+   * When enabled, learnings with prefixes (learned:/gotcha:/note:/important:) are automatically
+   * added to the appropriate AGENTS.md level.
+   * YAML: auto_promote_patterns
+   * Default: false
+   */
+  autoPromotePatterns?: boolean; // YAML: auto_promote_patterns
+  /**
+   * Enforce that gate review updates AGENTS.md when agent indicates update is required.
+   * When enabled, gate will fail if agents_update_required is true but no update was made.
+   * YAML: enforce_gate_agents_update
+   * Default: false
+   */
+  enforceGateAgentsUpdate?: boolean; // YAML: enforce_gate_agents_update
 }
 
 /**

@@ -28,6 +28,7 @@ export interface IterationContext {
   platform: Platform;
   model?: string;
   planMode?: boolean;
+  reasoningEffort?: 'Low' | 'Medium' | 'High' | 'Extra high';
   outputFormat?: 'text' | 'json' | 'stream-json';
   permissionMode?: 'default' | 'acceptEdits' | 'plan' | 'dontAsk' | 'bypassPermissions';
   allowedTools?: string;
@@ -134,6 +135,7 @@ export class ExecutionEngine {
       prompt,
       model: context.model,
       planMode: context.planMode,
+      reasoningEffort: context.reasoningEffort,
       outputFormat: context.outputFormat,
       permissionMode: context.permissionMode,
       allowedTools: context.allowedTools,

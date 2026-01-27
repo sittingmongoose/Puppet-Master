@@ -233,6 +233,14 @@ set \"PLAYWRIGHT_BROWSERS_PATH=%ROOT_DIR%\\playwright-browsers\"\r
 
   if (args.platform === 'win32') {
     await writeFile(path.join(binDir, 'puppet-master.cmd'), winLauncher, 'utf8');
+    
+    // Copy PowerShell helper script for CLI installation (Phase 5.1)
+    const scriptsDir = path.join(payloadRoot, 'scripts');
+    await ensureDir(scriptsDir);
+    const helperScript = path.join(repoRoot, 'installer', 'win', 'scripts', 'install-clis.ps1');
+    if (existsSync(helperScript)) {
+      await cp(helperScript, path.join(scriptsDir, 'install-clis.ps1'));
+    }
   } else {
     const launcherPath = path.join(binDir, 'puppet-master');
     await writeFile(launcherPath, unixLauncher, { encoding: 'utf8', mode: 0o755 });

@@ -502,4 +502,43 @@ export class GateEnforcer {
 
     return parts.join('\n');
   }
+
+  /**
+   * Check if AGENTS.md update was required but not provided.
+   * Parses gate response JSON to check agents_update_required flag.
+   * 
+   * @param gateResponse - JSON response from gate reviewer
+   * @returns Violation if update was required but not provided, null otherwise
+   */
+  checkAgentsUpdateRequired(gateResponse: string): Violation | null {
+    try {
+      // Extract JSON from response (may be wrapped in markdown code block)
+      const jsonMatch = gateResponse.match(/```(?:json)?\s*([\s\S]*?)```/);
+      const jsonStr = jsonMatch ? jsonMatch[1].trim() : gateResponse.trim();
+      
+      const parsed = JSON.parse(jsonStr);
+      
+      // Check if agents_update_required is true
+      if (parsed.agents_update_required === true) {
+        // Check if agents_update_content is provided and non-empty
+        const hasContent = parsed.agents_update_content && 
+          typeof parsed.agents_update_content === 'string' && 
+          parsed.agents_update_content.trim().length > 0;
+        
+        if (!hasContent) {
+          return {
+            type: 'do',
+            rule: 'AGENTS.md update required but not provided',
+            context: 'agents_update_required: true, but agents_update_content is missing or empty',
+            suggestion: 'Provide agents_update_content with the learnings to add to AGENTS.md',
+          };
+        }
+      }
+      
+      return null;
+    } catch {
+      // If JSON parsing fails, assume no violation (can't enforce)
+      return null;
+    }
+  }
 }

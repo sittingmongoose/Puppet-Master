@@ -367,6 +367,13 @@ function validateAgentsEnforcementConfig(value: unknown, path: string[]): assert
   if (typeof v.reviewerMustAcknowledge !== 'boolean') {
     throw new ConfigValidationError('agentsEnforcement.reviewerMustAcknowledge must be a boolean', [...path, 'reviewerMustAcknowledge']);
   }
+  // Optional fields
+  if (v.autoPromotePatterns !== undefined && typeof v.autoPromotePatterns !== 'boolean') {
+    throw new ConfigValidationError('agentsEnforcement.autoPromotePatterns must be a boolean', [...path, 'autoPromotePatterns']);
+  }
+  if (v.enforceGateAgentsUpdate !== undefined && typeof v.enforceGateAgentsUpdate !== 'boolean') {
+    throw new ConfigValidationError('agentsEnforcement.enforceGateAgentsUpdate must be a boolean', [...path, 'enforceGateAgentsUpdate']);
+  }
 }
 
 function validateMemoryConfig(value: unknown, path: string[]): asserts value is MemoryConfig {

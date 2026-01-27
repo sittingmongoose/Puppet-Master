@@ -89,7 +89,7 @@ export function Panel({
       )}
 
       {/* Panel content */}
-      <div className="relative z-10 p-md">
+      <div className="relative z-10 p-md min-w-0 overflow-x-auto">
         {children}
       </div>
     </div>

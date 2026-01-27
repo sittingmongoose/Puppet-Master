@@ -11,9 +11,8 @@
 
 import { Command } from 'commander';
 import * as readline from 'node:readline';
-import { readFile, writeFile, access } from 'fs/promises';
+import { readFile, writeFile } from 'fs/promises';
 import { join } from 'path';
-import { existsSync } from 'fs';
 import type { Platform } from '../../types/config.js';
 import { getPlatformAuthStatus } from '../../platforms/auth-status.js';
 import type { CommandModule } from './index.js';

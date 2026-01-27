@@ -26,7 +26,7 @@ import { BasePlatformRunner } from './base-runner.js';
 import { CapabilityDiscoveryService } from './capability-discovery.js';
 import { CodexOutputParser } from './output-parsers/index.js';
 import type { FreshSpawner } from '../core/fresh-spawn.js';
-import { Codex, type Thread, type RunResult, type ThreadOptions, type TurnOptions } from '@openai/codex-sdk';
+import { Codex, type ThreadOptions, type TurnOptions } from '@openai/codex-sdk';
 import { PLATFORM_COMMANDS } from './constants.js';
 import type { ChildProcess } from 'child_process';
 
@@ -156,16 +156,16 @@ export class CodexRunner extends BasePlatformRunner {
         
         // P0: Add image attachments if provided
         // SDK supports structured input entries with {type: "local_image", path: "..."}
-        if (request.images && request.images.length > 0) {
-          // Convert image paths to SDK format
-          const imageEntries = request.images.map(path => ({
-            type: 'local_image' as const,
-            path,
-          }));
-          // Note: SDK run() accepts array of entries, but we need to combine with text prompt
-          // For now, we'll use CLI flag --image instead (handled in buildArgs)
-          // TODO: Refactor to use SDK structured input entries when prompt is also structured
-        }
+        // Note: SDK run() accepts array of entries, but we need to combine with text prompt
+        // For now, images are passed via CLI flags (handled in buildArgs)
+        // TODO: Refactor to use SDK structured input entries when prompt is also structured
+        // Future SDK structured input support:
+        // if (request.images && request.images.length > 0) {
+        //   const imageEntries = request.images.map(path => ({
+        //     type: 'local_image' as const,
+        //     path,
+        //   }));
+        // }
         
         // Run the turn using SDK
         // SDK internally spawns CLI process and exchanges JSONL events
@@ -397,6 +397,22 @@ export class CodexRunner extends BasePlatformRunner {
     if (request.configOverrides) {
       for (const [key, value] of Object.entries(request.configOverrides)) {
         args.push('-c', `${key}=${typeof value === 'string' ? value : JSON.stringify(value)}`);
+      }
+    }
+
+    // Reasoning effort (Codex-specific for models that support it)
+    if (request.reasoningEffort) {
+      // Codex supports --reasoning-effort flag with values: low, medium, high, extra-high
+      // Map our user-friendly values to CLI values
+      const reasoningMap: Record<string, string> = {
+        'Low': 'low',
+        'Medium': 'medium',
+        'High': 'high',
+        'Extra high': 'extra-high',
+      };
+      const cliValue = reasoningMap[request.reasoningEffort];
+      if (cliValue) {
+        args.push('--reasoning-effort', cliValue);
       }
     }
 

@@ -29,6 +29,10 @@ export interface StartOptions {
   verbose?: boolean;
   dryRun?: boolean;
   keepAliveOnFailure?: boolean;
+  /** Enable auto-promotion of extracted patterns to AGENTS.md */
+  autoPromotePatterns?: boolean;
+  /** Enforce gate failure when AGENTS.md update is required but not provided */
+  enforceGateAgentsUpdate?: boolean;
 }
 
 /**
@@ -53,6 +57,24 @@ export async function startAction(options: StartOptions): Promise<void> {
         config.execution = {};
       }
       config.execution.killAgentOnFailure = !options.keepAliveOnFailure;
+    }
+
+    // Override memory auto-promotion options if CLI flags are provided
+    if (options.autoPromotePatterns !== undefined || options.enforceGateAgentsUpdate !== undefined) {
+      if (!config.memory.agentsEnforcement) {
+        config.memory.agentsEnforcement = {
+          requireUpdateOnFailure: true,
+          requireUpdateOnGotcha: true,
+          gateFailsOnMissingUpdate: true,
+          reviewerMustAcknowledge: true,
+        };
+      }
+      if (options.autoPromotePatterns !== undefined) {
+        config.memory.agentsEnforcement.autoPromotePatterns = options.autoPromotePatterns;
+      }
+      if (options.enforceGateAgentsUpdate !== undefined) {
+        config.memory.agentsEnforcement.enforceGateAgentsUpdate = options.enforceGateAgentsUpdate;
+      }
     }
 
     // Validate PRD exists
@@ -116,6 +138,9 @@ export async function startAction(options: StartOptions): Promise<void> {
       platformRegistry,
       platformRouter,
       verificationIntegration: container.resolve('verificationIntegration'),
+      // Memory auto-promotion dependencies
+      promotionEngine: container.resolve('promotionEngine'),
+      multiLevelLoader: container.resolve('multiLevelLoader'),
     };
 
     // Setup signal handlers
@@ -279,6 +304,10 @@ export class StartCommand implements CommandModule {
       .option('-v, --verbose', 'Enable verbose output')
       .option('--dry-run', 'Validate configuration without executing')
       .option('--keep-alive-on-failure', 'Keep failed agents alive for debugging instead of killing them')
+      .option('--auto-promote-patterns', 'Auto-promote extracted learnings to AGENTS.md after successful iterations')
+      .option('--no-auto-promote-patterns', 'Disable auto-promotion of patterns (default)')
+      .option('--enforce-gate-agents-update', 'Fail gate when AGENTS.md update is required but not provided')
+      .option('--no-enforce-gate-agents-update', 'Disable gate enforcement for AGENTS.md updates (default)')
       .action(async (options: StartOptions) => {
         await startAction(options);
       });

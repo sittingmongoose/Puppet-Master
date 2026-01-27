@@ -539,15 +539,117 @@ export class PromotionEngine {
         break;
       }
       case 'do':
+        await this.addGenericItem(entry, targetLevel, agentsManager, context, 'DO', `- ✅ ${entry.content}`);
+        break;
       case 'dont':
+        await this.addGenericItem(entry, targetLevel, agentsManager, context, "DON'T", `- ❌ ${entry.content}`);
+        break;
       case 'tooling':
+        await this.addGenericItem(entry, targetLevel, agentsManager, context, 'Tooling Rules', `- ${entry.content}`);
+        break;
       case 'architecture':
+        await this.addGenericItem(entry, targetLevel, agentsManager, context, 'Architecture Notes', `- ${entry.content}`);
+        break;
       case 'testing':
-        // These types need custom implementation in AgentsManager
-        // For now, we'll throw an error
-        throw new Error(`Promotion for type ${entry.type} not yet implemented`);
+        await this.addGenericItem(entry, targetLevel, agentsManager, context, 'Testing', `- ${entry.content}`);
+        break;
       default:
         throw new Error(`Unknown entry type: ${(entry as AgentsEntry).type}`);
     }
+  }
+
+  /**
+   * Add a generic item to a specific section of an AGENTS.md file.
+   * This is a helper method for entry types that don't have dedicated
+   * AgentsManager methods (do, dont, tooling, architecture, testing).
+   *
+   * @param entry - Entry to add
+   * @param targetLevel - Target level
+   * @param agentsManager - AgentsManager instance
+   * @param context - Optional iteration context
+   * @param sectionName - Name of the markdown section
+   * @param formattedItem - The formatted item text to append
+   */
+  private async addGenericItem(
+    entry: AgentsEntry,
+    targetLevel: AgentsLevel,
+    agentsManager: AgentsManager,
+    context: IterationContext | undefined,
+    sectionName: string,
+    formattedItem: string
+  ): Promise<void> {
+    // Construct file path based on level
+    const projectRoot = process.cwd();
+    let filePath: string;
+
+    if (targetLevel === 'root') {
+      filePath = resolve(projectRoot, 'AGENTS.md');
+    } else if (targetLevel === 'phase' && context) {
+      filePath = resolve(projectRoot, '.puppet-master', 'agents', `phase-${context.phaseId}.md`);
+    } else if (targetLevel === 'task' && context) {
+      filePath = resolve(projectRoot, '.puppet-master', 'agents', `task-${context.taskId}.md`);
+    } else if (targetLevel === 'module') {
+      // Module level requires additional path resolution
+      console.warn(`Promotion to module level for type ${entry.type} requires explicit path resolution. Skipping.`);
+      return;
+    } else {
+      throw new Error(`Cannot add ${entry.type} to ${targetLevel} level without proper context`);
+    }
+
+    // Read existing content or create new file
+    let content: string;
+    try {
+      content = await agentsManager.read(filePath);
+    } catch {
+      content = '# AGENTS.md\n\n';
+    }
+
+    // Append to section using the same pattern as AgentsManager.appendToSection
+    const updated = this.appendToSection(content, sectionName, formattedItem);
+    await agentsManager.write(filePath, updated);
+  }
+
+  /**
+   * Append an item to a section in markdown content.
+   * This mirrors the private appendToSection method in AgentsManager.
+   *
+   * @param content - Markdown content
+   * @param sectionName - Name of section
+   * @param item - Item to append
+   * @returns Updated markdown content
+   */
+  private appendToSection(content: string, sectionName: string, item: string): string {
+    const sectionHeaderPattern = new RegExp(`^##\\s+${sectionName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`, 'm');
+    const match = content.match(sectionHeaderPattern);
+
+    if (match) {
+      // Section exists, find where it ends
+      const headerStart = match.index!;
+      const headerEnd = headerStart + match[0].length;
+
+      // Find next section or end of file
+      const remaining = content.substring(headerEnd);
+      const nextSectionMatch = remaining.match(/^##\s+/m);
+      const sectionEnd = nextSectionMatch
+        ? headerEnd + nextSectionMatch.index!
+        : content.length;
+
+      const sectionContent = content.substring(headerEnd, sectionEnd).trim();
+
+      // Append item to section content
+      const newSectionContent = sectionContent
+        ? `${sectionContent}\n${item}`
+        : item;
+
+      // Reconstruct content
+      const beforeSection = content.substring(0, headerEnd);
+      const afterSection = content.substring(sectionEnd);
+
+      return beforeSection + '\n' + newSectionContent + (afterSection ? '\n' + afterSection : '');
+    }
+
+    // Section doesn't exist, create it at the end
+    const newSection = `\n## ${sectionName}\n\n${item}\n`;
+    return content.trim() + newSection;
   }
 }

@@ -1,6 +1,9 @@
 {
   "platform": "cursor",
-  "version": "1.0.0",
+  "command": "cursor-agent",
+  "runnable": false,
+  "authStatus": "not_authenticated",
+  "version": "unknown",
   "capabilities": {
     "streaming": false,
     "codeExecution": false,
@@ -8,18 +11,14 @@
     "fileAccess": false,
     "webSearch": false,
     "computerUse": false,
-    "maxContextTokens": 100000,
-    "maxOutputTokens": 4000,
-    "supportedLanguages": [
-      "typescript",
-      "javascript",
-      "python"
-    ]
+    "maxContextTokens": 0,
+    "maxOutputTokens": 0,
+    "supportedLanguages": []
   },
   "quotaInfo": {
     "remaining": 9007199254740991,
     "limit": 9007199254740991,
-    "resetsAt": "2026-01-14T21:36:01.630Z",
+    "resetsAt": "2026-01-28T16:33:45.752Z",
     "period": "day"
   },
   "cooldownInfo": {
@@ -27,5 +26,5 @@
     "endsAt": null,
     "reason": null
   },
-  "probeTimestamp": "2026-01-13T21:36:01.609Z"
+  "probeTimestamp": "2026-01-27T16:33:45.690Z"
 }

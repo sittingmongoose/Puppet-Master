@@ -47,6 +47,7 @@
     "vitest": "^2.0.0"
   },
   "dependencies": {
+    "@github/copilot-sdk": "^0.1.13",
     "@openai/codex-sdk": "^0.91.0",
     "better-sqlite3": "^12.6.2",
     "commander": "^14.0.2",

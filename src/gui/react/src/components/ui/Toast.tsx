@@ -1,5 +1,11 @@
 import { createContext, useContext, useCallback, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
+import {
+  CheckmarkIcon,
+  CrossIcon,
+  WarningIcon,
+  InfoIcon,
+} from '@/components/icons';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
 
@@ -112,11 +118,11 @@ function ToastItem({ toast, onDismiss }: ToastItemProps) {
   };
 
   // Icons for each type
-  const icons: Record<ToastType, string> = {
-    success: '✓',
-    error: '✕',
-    warning: '⚠',
-    info: 'ℹ',
+  const icons: Record<ToastType, ReactNode> = {
+    success: <CheckmarkIcon size="1em" />,
+    error: <CrossIcon size="1em" />,
+    warning: <WarningIcon size="1em" />,
+    info: <InfoIcon size="1em" />,
   };
 
   return (
@@ -133,17 +139,17 @@ function ToastItem({ toast, onDismiss }: ToastItemProps) {
       role="alert"
       aria-live="polite"
     >
-      <span className="text-lg" aria-hidden="true">
+      <span className="flex items-center" aria-hidden="true">
         {icons[toast.type]}
       </span>
       <p className="flex-1">{toast.message}</p>
       <button
         type="button"
         onClick={() => onDismiss(toast.id)}
-        className="text-lg hover:opacity-70 transition-opacity"
+        className="hover:opacity-70 transition-opacity flex items-center"
         aria-label="Dismiss notification"
       >
-        ✕
+        <CrossIcon size="1em" />
       </button>
     </div>
   );

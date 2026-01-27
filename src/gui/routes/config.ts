@@ -20,6 +20,8 @@ import { getCursorCommandCandidates, resolvePlatformCommand } from '../../platfo
 import { getPlatformAuthStatus } from '../../platforms/auth-status.js';
 import { probeCursorMCP, detectCursorConfig } from '../../platforms/capability-discovery.js';
 import { getCursorModelsWithDiscovery, type DiscoveredCursorModel } from '../../platforms/cursor-models.js';
+import { CapabilityDiscoveryService } from '../../platforms/capability-discovery.js';
+import type { Platform } from '../../types/config.js';
 
 /**
  * Error response interface.
@@ -28,6 +30,17 @@ interface ErrorResponse {
   error: string;
   code: string;
 }
+
+/**
+ * Model cache with TTL (24 hours).
+ */
+interface ModelCacheEntry {
+  models: Record<Platform, Array<{ id: string; label: string; reasoningLevels?: string[] }>>;
+  timestamp: number;
+}
+
+const MODEL_CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+let modelCache: ModelCacheEntry | null = null;
 
 /**
  * Create config routes.
@@ -228,16 +241,187 @@ export function createConfigRoutes(): Router {
    * Returns suggested models for all platforms.
    * Useful for GUI model selection dropdowns and datalists.
    * P1: Enhanced to return models for all platforms (cursor, codex, claude, gemini, copilot).
+   * Task 4.3: Enhanced with dynamic discovery and caching.
+   * 
+   * Query parameters:
+   * - refresh: Set to 'true' to bypass cache and force refresh
    */
-  router.get('/config/models', (_req: Request, res: Response) => {
+  router.get('/config/models', async (req: Request, res: Response) => {
     try {
-      res.json({
-        cursor: getCursorModels().map(m => ({ id: m.id, label: m.label || m.id, provider: m.provider })),
-        codex: getCodexModels().map(m => ({ id: m.id, label: m.label || m.id })),
-        claude: getClaudeModels().map(m => ({ id: m.id, label: m.label || m.id })),
-        gemini: getGeminiModels().map(m => ({ id: m.id, label: m.label || m.id })),
-        copilot: getCopilotModels().map(m => ({ id: m.id, label: m.label || m.id })),
-      });
+      const forceRefresh = req.query.refresh === 'true';
+      const now = Date.now();
+      
+      // Check cache validity
+      if (!forceRefresh && modelCache && (now - modelCache.timestamp) < MODEL_CACHE_TTL_MS) {
+        return res.json(modelCache.models);
+      }
+      
+      // Load config to get CLI paths
+      const configManager = new ConfigManager();
+      let config: PuppetMasterConfig;
+      try {
+        config = await configManager.load();
+      } catch {
+        // If config doesn't exist, use defaults
+        const { getDefaultConfig } = await import('../../config/default-config.js');
+        config = getDefaultConfig();
+      }
+      
+      // Initialize discovery service with config CLI paths
+      const discoveryService = new CapabilityDiscoveryService(
+        '.puppet-master/capabilities',
+        config.cliPaths || undefined,
+        24
+      );
+      
+      // Fetch models with dynamic discovery where available
+      const [cursorModels, codexModels, claudeModels, geminiModels, copilotModels] = await Promise.all([
+        // Cursor: Use dynamic discovery with fallback to static
+        (async () => {
+          try {
+            const cliPath = resolvePlatformCommand('cursor', config.cliPaths);
+            const models = await getCursorModelsWithDiscovery(cliPath, true);
+            if (Array.isArray(models) && models.length > 0) {
+              return models.map(m => ({ id: m.id, label: m.label || m.id, provider: m.provider }));
+            }
+          } catch (err) {
+            console.warn('[Config] Cursor model discovery failed, using static list:', err instanceof Error ? err.message : String(err));
+          }
+          // Fallback to static models
+          const staticModels = getCursorModels();
+          if (!Array.isArray(staticModels) || staticModels.length === 0) {
+            console.warn('[Config] Cursor static models list is empty');
+            return [{ id: 'auto', label: 'Auto (recommended)' }];
+          }
+          return staticModels.map(m => ({ id: m.id, label: m.label || m.id, provider: m.provider }));
+        })(),
+        // Codex: Static list with reasoning levels (always available)
+        (() => {
+          const models = getCodexModels();
+          if (!Array.isArray(models) || models.length === 0) {
+            console.warn('[Config] Codex models list is empty, using fallback');
+            return [{ id: 'auto', label: 'Auto (recommended)' }];
+          }
+          return models.map(m => ({ 
+            id: m.id, 
+            label: m.label || m.id,
+            reasoningLevels: m.reasoningLevels,
+          }));
+        })(),
+        // Claude: Try dynamic discovery, fallback to static
+        (async () => {
+          try {
+            const discovered = await discoveryService.discoverModels('claude');
+            if (Array.isArray(discovered) && discovered.length > 0) {
+              // Map discovered IDs to full model info
+              const staticModels = getClaudeModels();
+              const mapped = discovered.map(id => {
+                const staticModel = staticModels.find(m => m.id === id);
+                return {
+                  id,
+                  label: staticModel?.label || id,
+                };
+              });
+              if (mapped.length > 0) return mapped;
+            }
+          } catch (err) {
+            console.warn('[Config] Claude model discovery failed, using static list:', err instanceof Error ? err.message : String(err));
+          }
+          // Fallback to static models
+          const staticModels = getClaudeModels();
+          if (!Array.isArray(staticModels) || staticModels.length === 0) {
+            console.warn('[Config] Claude static models list is empty');
+            return [{ id: 'auto', label: 'Auto (recommended)' }];
+          }
+          return staticModels.map(m => ({ id: m.id, label: m.label || m.id }));
+        })(),
+        // Gemini: Use dynamic discovery with fallback to static
+        (async () => {
+          try {
+            const discovered = await discoveryService.discoverModels('gemini');
+            if (Array.isArray(discovered) && discovered.length > 0) {
+              const staticModels = getGeminiModels();
+              const mapped = discovered.map(id => {
+                const staticModel = staticModels.find(m => m.id === id);
+                return {
+                  id,
+                  label: staticModel?.label || id,
+                };
+              });
+              if (mapped.length > 0) return mapped;
+            }
+          } catch (err) {
+            console.warn('[Config] Gemini model discovery failed, using static list:', err instanceof Error ? err.message : String(err));
+          }
+          // Fallback to static models
+          const staticModels = getGeminiModels();
+          if (!Array.isArray(staticModels) || staticModels.length === 0) {
+            console.warn('[Config] Gemini static models list is empty');
+            return [{ id: 'auto', label: 'Auto (recommended)' }];
+          }
+          return staticModels.map(m => ({ id: m.id, label: m.label || m.id }));
+        })(),
+        // Copilot: Use dynamic discovery with fallback to static
+        (async () => {
+          try {
+            const discovered = await discoveryService.discoverModels('copilot');
+            if (Array.isArray(discovered) && discovered.length > 0) {
+              const staticModels = getCopilotModels();
+              const mapped = discovered.map(rawId => {
+                // Ensure we have a string ID (SDK may return objects)
+                const id = typeof rawId === 'string' ? rawId : String(rawId);
+                const staticModel = staticModels.find(m => m.id === id);
+                return {
+                  id,
+                  label: staticModel?.label || id,
+                };
+              });
+              if (mapped.length > 0) return mapped;
+            }
+          } catch (err) {
+            console.warn('[Config] Copilot model discovery failed, using static list:', err instanceof Error ? err.message : String(err));
+          }
+          // Fallback to static models
+          const staticModels = getCopilotModels();
+          if (!Array.isArray(staticModels) || staticModels.length === 0) {
+            console.warn('[Config] Copilot static models list is empty');
+            return [{ id: 'auto', label: 'Auto (recommended)' }];
+          }
+          return staticModels.map(m => ({ id: m.id, label: m.label || m.id }));
+        })(),
+      ]);
+      
+      // Ensure "auto" is always included as first option for each platform
+      const ensureAutoOption = (platformModels: Array<{ id: string; label: string }>) => {
+        const hasAuto = platformModels.some(m => m.id === 'auto');
+        if (!hasAuto) {
+          return [{ id: 'auto', label: 'Auto (recommended)' }, ...platformModels];
+        }
+        // Move auto to front if it exists
+        const autoIndex = platformModels.findIndex(m => m.id === 'auto');
+        if (autoIndex > 0) {
+          const auto = platformModels[autoIndex];
+          const others = platformModels.filter((_, i) => i !== autoIndex);
+          return [{ ...auto, label: 'Auto (recommended)' }, ...others];
+        }
+        return platformModels.map(m => m.id === 'auto' ? { ...m, label: 'Auto (recommended)' } : m);
+      };
+
+      const models = {
+        cursor: ensureAutoOption(cursorModels),
+        codex: ensureAutoOption(codexModels),
+        claude: ensureAutoOption(claudeModels),
+        gemini: ensureAutoOption(geminiModels),
+        copilot: ensureAutoOption(copilotModels),
+      };
+      
+      // Update cache
+      modelCache = {
+        models,
+        timestamp: now,
+      };
+      
+      res.json(models);
     } catch (error) {
       const err = error as Error;
       res.status(500).json({

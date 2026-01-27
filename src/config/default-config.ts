@@ -91,6 +91,8 @@ export function getDefaultConfig(): PuppetMasterConfig {
         requireUpdateOnGotcha: true,
         gateFailsOnMissingUpdate: true,
         reviewerMustAcknowledge: true,
+        autoPromotePatterns: false,
+        enforceGateAgentsUpdate: false,
       },
     },
     budgets: {

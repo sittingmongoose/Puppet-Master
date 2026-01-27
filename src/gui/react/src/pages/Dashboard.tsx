@@ -164,26 +164,26 @@ interface StatusBarProps {
 function StatusBar({ status, progress, budgets, connected }: StatusBarProps) {
   return (
     <Panel showInnerBorder={false}>
-      <div className="flex flex-wrap items-center justify-between gap-md">
+      <div className="flex flex-wrap items-center justify-between gap-md min-w-0">
         {/* Status indicator */}
-        <div className="flex items-center gap-sm">
+        <div className="flex items-center gap-sm flex-shrink-0">
           <StatusBadge status={status} showLabel />
         </div>
 
         {/* Position in workflow */}
-        <div className="flex items-center gap-sm text-sm font-mono">
-          <span>Phase {progress.phase.current}/{progress.phase.total}</span>
+        <div className="flex items-center gap-sm text-sm font-mono flex-wrap min-w-0">
+          <span className="whitespace-nowrap">Phase {progress.phase.current}/{progress.phase.total}</span>
           <span className="text-ink-faded">│</span>
-          <span>Task {progress.task.current}/{progress.task.total}</span>
+          <span className="whitespace-nowrap">Task {progress.task.current}/{progress.task.total}</span>
           <span className="text-ink-faded">│</span>
-          <span>Subtask {progress.subtask.current}/{progress.subtask.total}</span>
+          <span className="whitespace-nowrap">Subtask {progress.subtask.current}/{progress.subtask.total}</span>
           <span className="text-ink-faded">│</span>
-          <span>Iter {progress.iteration.current}/{progress.iteration.total}</span>
+          <span className="whitespace-nowrap">Iter {progress.iteration.current}/{progress.iteration.total}</span>
         </div>
 
         {/* P1: Enhanced Budget indicators with warnings */}
-        <div className="flex items-center gap-sm text-sm flex-wrap">
-          <span>Budget:</span>
+        <div className="flex items-center gap-sm text-sm flex-wrap min-w-0">
+          <span className="flex-shrink-0">Budget:</span>
           {budgets && typeof budgets === 'object' ? Object.entries(budgets).map(([platform, info]) => {
             const limit = info.limit === Number.MAX_SAFE_INTEGER || info.limit === 'unlimited' ? Number.MAX_SAFE_INTEGER : (typeof info.limit === 'number' ? info.limit : 100);
             const used = info.used || 0;
@@ -194,7 +194,7 @@ function StatusBar({ status, progress, budgets, connected }: StatusBarProps) {
             return (
               <span 
                 key={platform} 
-                className={isError ? 'text-hot-magenta font-bold' : isWarning ? 'text-yellow-600' : ''}
+                className={`${isError ? 'text-hot-magenta font-bold' : isWarning ? 'text-yellow-600' : ''} break-words`}
                 title={info.resetsAt ? `Resets at: ${new Date(info.resetsAt).toLocaleString()}` : ''}
               >
                 {platform} {used}/{limit === Number.MAX_SAFE_INTEGER ? '∞' : limit}
@@ -205,12 +205,12 @@ function StatusBar({ status, progress, budgets, connected }: StatusBarProps) {
         </div>
 
         {/* Connection status */}
-        <div className="flex items-center gap-xs">
+        <div className="flex items-center gap-xs flex-shrink-0">
           <StatusBadge
             status={connected ? 'complete' : 'error'}
             size="sm"
           />
-          <span className="text-sm">{connected ? 'Connected' : 'Disconnected'}</span>
+          <span className="text-sm whitespace-nowrap">{connected ? 'Connected' : 'Disconnected'}</span>
         </div>
       </div>
     </Panel>
@@ -284,12 +284,12 @@ function CurrentItemPanel({ item }: CurrentItemPanelProps) {
   return (
     <Panel title="Current Item">
       {item ? (
-        <div className="space-y-md">
-          <div className="inline-block px-sm py-xs border-medium border-ink-black font-mono font-bold">
+        <div className="space-y-md min-w-0">
+          <div className="inline-block px-sm py-xs border-medium border-ink-black font-mono font-bold break-all">
             {item.id}
           </div>
-          <div className="text-lg font-semibold">{item.title}</div>
-          <div className="flex items-center gap-sm">
+          <div className="text-lg font-semibold break-words">{item.title}</div>
+          <div className="flex items-center gap-sm flex-wrap">
             <span className="font-bold">Status:</span>
             <StatusBadge status={item.status} showLabel />
           </div>

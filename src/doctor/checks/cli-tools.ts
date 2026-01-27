@@ -8,8 +8,9 @@
 
 import { spawn, type ChildProcess } from 'node:child_process';
 import { access, readFile } from 'node:fs/promises';
+import { existsSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import type { CheckResult, DoctorCheck } from '../check-registry.js';
 import type { CliPathsConfig } from '../../types/config.js';
 import { getPlatformAuthStatus } from '../../platforms/auth-status.js';
@@ -285,26 +286,23 @@ export class CodexCliCheck implements DoctorCheck {
    */
   private checkSdkInstalled(): { installed: boolean; path?: string; error?: string } {
     try {
-      const fs = require('fs') as typeof import('fs');
-      const path = require('path') as typeof import('path');
-      
       // Check multiple possible locations
       const possiblePaths = [
-        path.join(process.cwd(), 'node_modules', '@openai', 'codex-sdk'),
-        path.join(process.cwd(), 'node_modules', '@openai', 'codex-sdk', 'package.json'),
-        path.resolve('node_modules', '@openai', 'codex-sdk'),
+        join(process.cwd(), 'node_modules', '@openai', 'codex-sdk'),
+        join(process.cwd(), 'node_modules', '@openai', 'codex-sdk', 'package.json'),
+        resolve('node_modules', '@openai', 'codex-sdk'),
       ];
-      
+
       for (const sdkPath of possiblePaths) {
-        if (fs.existsSync(sdkPath)) {
+        if (existsSync(sdkPath)) {
           // Check if it's a directory or package.json exists
-          const stat = fs.statSync(sdkPath);
+          const stat = statSync(sdkPath);
           if (stat.isDirectory() || sdkPath.endsWith('package.json')) {
             return { installed: true, path: sdkPath };
           }
         }
       }
-      
+
       return { installed: false, error: 'SDK not found in node_modules' };
     } catch (error) {
       return { installed: false, error: error instanceof Error ? error.message : String(error) };

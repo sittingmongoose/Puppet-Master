@@ -14,6 +14,8 @@ const navItems: NavItem[] = [
   { label: 'Tiers', path: '/tiers' },
   { label: 'Evidence', path: '/evidence' },
   { label: 'History', path: '/history' },
+  { label: 'Ledger', path: '/ledger' },
+  { label: 'Login', path: '/login' },
 ];
 
 export interface HeaderProps {
@@ -45,7 +47,7 @@ export function Header({
     <header
       className="
         sticky top-0 z-[100]
-        bg-transparent
+        bg-paper-cream dark:bg-paper-dark
         border-b-thick border-ink-black
         dark:border-ink-light
         shadow-[0_2px_0_0_#1A1A1A]
@@ -104,7 +106,7 @@ export function Header({
 
         {/* Right side: Project selector + Theme toggle */}
         <div className="flex items-center gap-md">
-          {projectName && (
+              {projectName && (
             <button
               type="button"
               onClick={onProjectClick}
@@ -123,7 +125,7 @@ export function Header({
                 hover:-translate-y-px hover:shadow-[2px_2px_0_0_#1A1A1A]
               "
             >
-              📁 {projectName}
+              {projectName}
             </button>
           )}
 
@@ -144,7 +146,7 @@ export function Header({
               "
               aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
             >
-              {isDark ? '☀️' : '🌙'}
+              {isDark ? 'Light' : 'Dark'}
             </button>
           </div>
         </div>

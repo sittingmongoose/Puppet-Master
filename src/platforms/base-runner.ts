@@ -884,7 +884,7 @@ export abstract class BasePlatformRunner
    * 
    * @param model - Optional model name (used for Cursor Auto mode detection)
    */
-  async checkQuota(model?: string): Promise<QuotaInfo> {
+  async checkQuota(_model?: string): Promise<QuotaInfo> {
     const cached = await this.capabilityService.getCached(this.platform);
     if (cached) {
       return cached.quotaInfo;

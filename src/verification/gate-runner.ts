@@ -72,7 +72,8 @@ export class GateRunner {
     private readonly config: GateConfig = {},
     private readonly gateEnforcer?: GateEnforcer,
     private readonly multiLevelLoader?: MultiLevelLoader,
-    private readonly projectRoot?: string
+    private readonly projectRoot?: string,
+    private readonly enforceGateAgentsUpdate: boolean = false
   ) {}
 
   /**
@@ -80,9 +81,10 @@ export class GateRunner {
    * @param gateId - Gate ID (e.g., 'TK-001-001')
    * @param criteria - Array of criteria to verify
    * @param transcript - Optional agent execution transcript for enforcement
+   * @param gateResponse - Optional gate reviewer response JSON for agents_update_required check
    * @returns Gate report with all results
    */
-  async runGate(gateId: string, criteria: Criterion[], transcript?: string): Promise<GateReport> {
+  async runGate(gateId: string, criteria: Criterion[], transcript?: string, gateResponse?: string): Promise<GateReport> {
     // Execute verifiers (parallel or sequential)
     const results = this.config.parallel
       ? await this.runParallel(criteria)
@@ -116,6 +118,17 @@ export class GateRunner {
         }];
         report.overallPassed = false;
         report.failureType = 'major';
+      }
+    }
+
+    // Check for missing AGENTS.md update if enabled and gate response provided
+    if (this.enforceGateAgentsUpdate && gateResponse && this.gateEnforcer && report.overallPassed) {
+      const updateViolation = this.gateEnforcer.checkAgentsUpdateRequired(gateResponse);
+      if (updateViolation) {
+        report.enforcementViolations = report.enforcementViolations || [];
+        report.enforcementViolations.push(updateViolation);
+        report.overallPassed = false;
+        report.failureType = 'minor'; // Missing update is minor (can be fixed in next iteration)
       }
     }
 

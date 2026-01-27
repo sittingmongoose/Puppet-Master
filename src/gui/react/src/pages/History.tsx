@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Panel } from '@/components/layout';
 import { Button, Input } from '@/components/ui';
 import { StatusBadge } from '@/components/shared';
+import { FolderIcon, MonitorIcon, ClockIcon } from '@/components/icons';
 import type { StatusType } from '@/types';
 
 interface Session {
@@ -261,17 +262,26 @@ function SessionCard({ session, formatDuration }: SessionCardProps) {
     <div className="p-md border-medium border-ink-faded hover:border-electric-blue transition-colors">
       <div className="flex flex-wrap items-start justify-between gap-md">
         {/* Session info */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-sm mb-xs">
-            <h3 className="font-semibold truncate">{session.name}</h3>
+        <div className="flex-1 min-w-0 break-words">
+          <div className="flex items-center gap-sm mb-xs flex-wrap">
+            <h3 className="font-semibold break-words min-w-0">{session.name}</h3>
             <StatusBadge status={session.status} size="sm" />
           </div>
-          <div className="text-sm text-ink-faded space-y-xs">
-            <div className="font-mono text-xs">{session.id}</div>
+          <div className="text-sm text-ink-faded space-y-xs min-w-0">
+            <div className="font-mono text-xs break-all">{session.id}</div>
             <div className="flex flex-wrap items-center gap-md">
-              <span>📁 {session.projectName}</span>
-              <span>🖥️ {session.platform}</span>
-              <span>⏱️ {formatDuration(session.startedAt, session.endedAt)}</span>
+              <span className="flex items-center gap-xs break-words">
+                <FolderIcon size="1em" className="flex-shrink-0" />
+                <span className="break-words">{session.projectName}</span>
+              </span>
+              <span className="flex items-center gap-xs">
+                <MonitorIcon size="1em" className="flex-shrink-0" />
+                {session.platform}
+              </span>
+              <span className="flex items-center gap-xs">
+                <ClockIcon size="1em" className="flex-shrink-0" />
+                {formatDuration(session.startedAt, session.endedAt)}
+              </span>
             </div>
             <div className="flex items-center gap-sm">
               <span className="text-xs">

@@ -11,7 +11,6 @@ import type { CommandModule } from './index.js';
 import { QuotaManager } from '../../platforms/quota-manager.js';
 import { UsageTracker } from '../../memory/usage-tracker.js';
 import { ConfigManager } from '../../config/config-manager.js';
-import { UsageProvider } from '../../platforms/usage/usage-provider.js';
 import type { Platform } from '../../types/config.js';
 
 /**

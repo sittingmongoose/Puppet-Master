@@ -10,7 +10,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { CodexRunner } from './codex-runner.js';
 import { CapabilityDiscoveryService } from './capability-discovery.js';
 import type { ExecutionRequest } from '../types/platforms.js';
-import type { Codex, Thread, RunResult } from '@openai/codex-sdk';
+import type { RunResult } from '@openai/codex-sdk';
 
 // Mock @openai/codex-sdk
 const mockThread = {

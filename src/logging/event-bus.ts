@@ -50,7 +50,8 @@ export type PuppetMasterEvent =
   | { type: 'preflight_failed'; issues: string[]; suggestions: string[]; mustRunDoctor: boolean }
   // Quota fallback events (P0-G09)
   | { type: 'quota_exhausted'; platform: Platform; period: 'run' | 'hour' | 'day'; resetsAt: string; behavior: 'fallback' | 'pause' | 'queue' }
-  | { type: 'platform_fallback'; fromPlatform: Platform; toPlatform: Platform; reason: 'quota_exhausted' | 'unavailable' | 'unhealthy' };
+  | { type: 'platform_fallback'; fromPlatform: Platform; toPlatform: Platform; reason: 'quota_exhausted' | 'unavailable' | 'unhealthy' }
+  | { type: 'iteration_queued'; subtaskId: string; platform: Platform; resetsAt: string; queueLength: number };
 
 /**
  * Event subscription interface.

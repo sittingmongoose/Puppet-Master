@@ -27,6 +27,7 @@ export interface CodexModel {
   description?: string; // Brief description
   optimizedForCode?: boolean; // True if code-optimized
   costTier?: 'high' | 'medium' | 'low'; // Relative cost tier
+  reasoningLevels?: ('Low' | 'Medium' | 'High' | 'Extra high')[]; // Available reasoning levels
 }
 
 /**
@@ -40,6 +41,7 @@ export const CODEX_MODELS: CodexModel[] = [
     description: 'Latest agentic coding model, excellent for complex engineering tasks',
     optimizedForCode: true,
     costTier: 'high',
+    reasoningLevels: ['Low', 'Medium', 'High', 'Extra high'],
   },
   {
     id: 'gpt-5.1-codex-max',
@@ -47,6 +49,7 @@ export const CODEX_MODELS: CodexModel[] = [
     description: 'Optimized for long, project-scale coding tasks',
     optimizedForCode: true,
     costTier: 'high',
+    reasoningLevels: ['Low', 'Medium', 'High', 'Extra high'],
   },
   {
     id: 'gpt-5.1-codex',
@@ -61,6 +64,7 @@ export const CODEX_MODELS: CodexModel[] = [
     description: 'Cost-effective for fast, routine coding',
     optimizedForCode: true,
     costTier: 'low',
+    reasoningLevels: ['Medium', 'High'],
   },
   {
     id: 'gpt-5-codex',
@@ -77,6 +81,7 @@ export const CODEX_MODELS: CodexModel[] = [
     description: 'Latest general-purpose model',
     optimizedForCode: false,
     costTier: 'high',
+    reasoningLevels: ['Low', 'Medium', 'High', 'Extra high'],
   },
   {
     id: 'gpt-5.1',

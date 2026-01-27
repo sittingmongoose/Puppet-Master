@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Panel } from '@/components/layout';
-import { Button } from '@/components/ui';
+import { Button, HelpText } from '@/components/ui';
+import { CheckmarkIcon } from '@/components/icons';
 import { useUIStore } from '@/stores/uiStore';
+import { helpContent } from '@/lib/help-content.js';
 import type { Theme, Platform } from '@/types';
 
 interface SettingsState {
@@ -130,7 +132,10 @@ export default function SettingsPage() {
         <h1 className="font-display text-2xl">Settings</h1>
         <div className="flex items-center gap-sm">
           {saved && (
-            <span className="text-neon-green text-sm">✓ Settings saved</span>
+            <span className="text-neon-green text-sm flex items-center gap-xs">
+              <CheckmarkIcon size="1em" />
+              Settings saved
+            </span>
           )}
           <Button variant="ghost" onClick={handleReset}>
             RESET TO DEFAULTS
@@ -149,7 +154,7 @@ export default function SettingsPage() {
       {/* Appearance */}
       <Panel title="Appearance">
         <div className="space-y-md">
-          <SettingRow label="Theme" description="Choose your preferred color scheme">
+          <SettingRow label="Theme" description="Choose your preferred color scheme" helpKey="theme">
             <select
               value={settings.theme}
               onChange={(e) => updateSetting('theme', e.target.value as Theme)}
@@ -161,7 +166,7 @@ export default function SettingsPage() {
             </select>
           </SettingRow>
 
-          <SettingRow label="Font Size" description="Adjust text size throughout the app">
+          <SettingRow label="Font Size" description="Adjust text size throughout the app" helpKey="fontSize">
             <select
               value={settings.fontSize}
               onChange={(e) => updateSetting('fontSize', e.target.value as 'small' | 'medium' | 'large')}
@@ -174,7 +179,7 @@ export default function SettingsPage() {
             </select>
           </SettingRow>
 
-          <SettingRow label="Animations" description="Enable or disable UI animations">
+          <SettingRow label="Animations" description="Enable or disable UI animations" helpKey="animations">
             <ToggleSwitch
               checked={settings.animations}
               onChange={(checked) => updateSetting('animations', checked)}
@@ -187,7 +192,7 @@ export default function SettingsPage() {
       {/* Notifications */}
       <Panel title="Notifications">
         <div className="space-y-md">
-          <SettingRow label="Sound Effects" description="Play sounds for events">
+          <SettingRow label="Sound Effects" description="Play sounds for events" helpKey="notifications">
             <ToggleSwitch
               checked={settings.soundEnabled}
               onChange={(checked) => updateSetting('soundEnabled', checked)}
@@ -195,7 +200,7 @@ export default function SettingsPage() {
             />
           </SettingRow>
 
-          <SettingRow label="Desktop Notifications" description="Show browser notifications">
+          <SettingRow label="Desktop Notifications" description="Show browser notifications" helpKey="notifications">
             <ToggleSwitch
               checked={settings.desktopNotifications}
               onChange={(checked) => updateSetting('desktopNotifications', checked)}
@@ -203,7 +208,7 @@ export default function SettingsPage() {
             />
           </SettingRow>
 
-          <SettingRow label="Notify on Complete" description="Alert when tasks complete">
+          <SettingRow label="Notify on Complete" description="Alert when tasks complete" helpKey="notifications">
             <ToggleSwitch
               checked={settings.notifyOnComplete}
               onChange={(checked) => updateSetting('notifyOnComplete', checked)}
@@ -211,7 +216,7 @@ export default function SettingsPage() {
             />
           </SettingRow>
 
-          <SettingRow label="Notify on Error" description="Alert when errors occur">
+          <SettingRow label="Notify on Error" description="Alert when errors occur" helpKey="notifications">
             <ToggleSwitch
               checked={settings.notifyOnError}
               onChange={(checked) => updateSetting('notifyOnError', checked)}
@@ -252,7 +257,7 @@ export default function SettingsPage() {
       {/* Platform Preferences */}
       <Panel title="Platform Preferences">
         <div className="space-y-md">
-          <SettingRow label="Default Platform" description="Preferred AI platform for new tasks">
+          <SettingRow label="Default Platform" description="Preferred AI platform for new tasks" helpKey="defaultPlatform">
             <select
               value={settings.defaultPlatform}
               onChange={(e) => updateSetting('defaultPlatform', e.target.value as Platform | 'auto')}
@@ -271,7 +276,7 @@ export default function SettingsPage() {
       {/* Advanced */}
       <Panel title="Advanced">
         <div className="space-y-md">
-          <SettingRow label="Debug Mode" description="Enable debug logging and features">
+          <SettingRow label="Debug Mode" description="Enable debug logging and features" helpKey="debugMode">
             <ToggleSwitch
               checked={settings.debugMode}
               onChange={(checked) => updateSetting('debugMode', checked)}
@@ -279,7 +284,7 @@ export default function SettingsPage() {
             />
           </SettingRow>
 
-          <SettingRow label="Log Level" description="Minimum log level to display">
+          <SettingRow label="Log Level" description="Minimum log level to display" helpKey="logLevel">
             <select
               value={settings.logLevel}
               onChange={(e) => updateSetting('logLevel', e.target.value as 'error' | 'warn' | 'info' | 'debug')}
@@ -293,17 +298,19 @@ export default function SettingsPage() {
             </select>
           </SettingRow>
 
-          <SettingRow label="Data Retention" description="Days to keep history and logs">
-            <input
-              type="number"
-              value={settings.dataRetentionDays}
-              onChange={(e) => updateSetting('dataRetentionDays', parseInt(e.target.value, 10) || 30)}
-              min={7}
-              max={365}
-              className="p-sm border-medium border-ink-faded bg-paper-white focus:border-electric-blue outline-none w-24"
-              aria-label="Data retention days"
-            />
-            <span className="ml-sm text-ink-faded">days</span>
+          <SettingRow label="Data Retention" description="Days to keep history and logs" helpKey="dataRetention">
+            <div className="flex items-center gap-sm">
+              <input
+                type="number"
+                value={settings.dataRetentionDays}
+                onChange={(e) => updateSetting('dataRetentionDays', parseInt(e.target.value, 10) || 30)}
+                min={7}
+                max={365}
+                className="p-sm border-medium border-ink-faded bg-paper-white focus:border-electric-blue outline-none w-24"
+                aria-label="Data retention days"
+              />
+              <span className="text-ink-faded">days</span>
+            </div>
           </SettingRow>
         </div>
       </Panel>
@@ -319,16 +326,22 @@ interface SettingRowProps {
   label: string;
   description: string;
   children: React.ReactNode;
+  helpKey?: keyof typeof helpContent.settings;
 }
 
-function SettingRow({ label, description, children }: SettingRowProps) {
+function SettingRow({ label, description, children, helpKey }: SettingRowProps) {
+  const helpContentItem = helpKey ? helpContent.settings[helpKey] : undefined;
+  
   return (
-    <div className="flex flex-wrap items-center justify-between gap-md py-sm border-b border-ink-faded/30">
-      <div>
-        <div className="font-semibold">{label}</div>
-        <div className="text-sm text-ink-faded">{description}</div>
+    <div className="flex flex-col gap-xs py-sm border-b border-ink-faded/30">
+      <div className="flex flex-wrap items-center justify-between gap-md">
+        <div>
+          <div className="font-semibold">{label}</div>
+          <div className="text-sm text-ink-faded">{description}</div>
+        </div>
+        <div className="flex items-center gap-sm">{children}</div>
       </div>
-      <div className="flex items-center gap-sm">{children}</div>
+      {helpContentItem && <HelpText {...helpContentItem} />}
     </div>
   );
 }

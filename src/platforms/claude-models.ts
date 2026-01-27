@@ -84,21 +84,21 @@ export const CLAUDE_MODELS: ClaudeModel[] = [
 
   // Specific model versions (for reproducibility)
   {
-    id: 'claude-sonnet-4-5',
+    id: 'claude-sonnet-4-5-20250929',
     label: 'Claude Sonnet 4.5',
-    description: 'Specific Sonnet 4.5 version',
+    description: 'Specific Sonnet 4.5 version (claude-sonnet-4-5-20250929)',
     contextWindow: '200K',
   },
   {
-    id: 'claude-opus-4-5',
+    id: 'claude-opus-4-5-20251101',
     label: 'Claude Opus 4.5',
-    description: 'Specific Opus 4.5 version',
+    description: 'Specific Opus 4.5 version (claude-opus-4-5-20251101)',
     contextWindow: '200K',
   },
   {
-    id: 'claude-haiku-4-5',
+    id: 'claude-haiku-4-5-20251001',
     label: 'Claude Haiku 4.5',
-    description: 'Specific Haiku 4.5 version',
+    description: 'Specific Haiku 4.5 version (claude-haiku-4-5-20251001)',
     contextWindow: '200K',
   },
 

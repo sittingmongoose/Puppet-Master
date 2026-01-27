@@ -13,6 +13,8 @@ import {
   History,
   Coverage,
   Memory,
+  Ledger,
+  Login,
   NotFound,
 } from '@/pages';
 
@@ -54,6 +56,10 @@ export function AppRoutes() {
       {/* Memory */}
       <Route path="/memory" element={<Memory />} />
       <Route path="/memory/:path" element={<Memory />} />
+      
+      {/* Feature parity pages (CLI ↔ GUI) */}
+      <Route path="/ledger" element={<Ledger />} />
+      <Route path="/login" element={<Login />} />
       
       {/* 404 catch-all */}
       <Route path="*" element={<NotFound />} />

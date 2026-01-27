@@ -18,8 +18,8 @@ async function main() {
   const eventBus = new EventBus();
 
   // Create and start server
-  // Support React GUI via environment variable
-  const useReactGui = process.env.GUI_REACT === 'true' || process.env.GUI_REACT === '1';
+  // React GUI is default, use GUI_CLASSIC=true to disable
+  const useReactGui = process.env.GUI_CLASSIC !== 'true' && process.env.GUI_CLASSIC !== '1';
   const authEnabled = process.env.GUI_NO_AUTH !== 'true' && process.env.GUI_NO_AUTH !== '1';
   
   const server = new GuiServer(

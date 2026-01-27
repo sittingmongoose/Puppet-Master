@@ -24,3 +24,7 @@ export type {
   SSEStatus,
   SSEEventHandler,
 } from './sse.js';
+
+// Help content
+export { helpContent } from './help-content.js';
+export type { HelpContent } from './help-content.js';

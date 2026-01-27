@@ -1,0 +1,317 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "plan-state-v2",
+  "title": "Plan State Schema v2.54.0",
+  "description": "Schema for plan execution with phases, barriers, strict WAIT-ALL consistency, and unified state management",
+  "type": "object",
+  "required": ["version", "plan_id", "phases", "steps", "barriers"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^2\\.5[1-9]\\.[0-9]+$",
+      "description": "Schema version (2.51.x - 2.59.x)"
+    },
+    "plan_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for this plan execution"
+    },
+    "task": {
+      "type": "string",
+      "description": "The original task description"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "phases": {
+      "type": "array",
+      "description": "Ordered phases with dependencies and execution modes",
+      "items": {
+        "type": "object",
+        "required": ["phase_id", "phase_name", "step_ids", "execution_mode", "status"],
+        "properties": {
+          "phase_id": {
+            "type": "string",
+            "description": "Unique identifier for this phase"
+          },
+          "phase_name": {
+            "type": "string",
+            "description": "Human-readable phase name"
+          },
+          "step_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Step IDs that belong to this phase"
+          },
+          "depends_on": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Phase IDs that must complete before this phase starts"
+          },
+          "execution_mode": {
+            "type": "string",
+            "enum": ["sequential", "parallel"],
+            "description": "How steps within this phase execute"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "in_progress", "completed", "failed", "skipped"],
+            "description": "Current phase status"
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completed_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "steps": {
+      "type": "object",
+      "description": "Steps keyed by ID with execution details",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["name", "status"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Human-readable step name"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "in_progress", "completed", "verified", "failed", "skipped"]
+          },
+          "result": {
+            "type": ["string", "null"],
+            "enum": ["success", "failure", "timeout", "skipped", null]
+          },
+          "error": {
+            "type": ["string", "null"],
+            "description": "Error message if failed"
+          },
+          "agent": {
+            "type": ["string", "null"],
+            "description": "Agent that executed this step"
+          },
+          "handoff_id": {
+            "type": ["string", "null"],
+            "description": "Handoff ID if this step was delegated"
+          },
+          "checkpoint_id": {
+            "type": ["string", "null"],
+            "description": "Checkpoint ID before this step"
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "_v1_data": {
+            "type": ["object", "null"],
+            "description": "Preserved data from v1 schema (spec, actual, drift, etc.)"
+          }
+        }
+      }
+    },
+    "current_phase": {
+      "type": ["string", "null"],
+      "description": "Currently executing phase ID"
+    },
+    "active_agent": {
+      "type": ["string", "null"],
+      "description": "Currently active agent (v2.54 - unified state management)",
+      "default": "orchestrator"
+    },
+    "current_handoff_id": {
+      "type": ["string", "null"],
+      "description": "Current handoff ID if a transfer is in progress (v2.54)"
+    },
+    "barriers": {
+      "type": "object",
+      "description": "Barrier status for each phase (WAIT-ALL pattern)",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "classification": {
+      "type": "object",
+      "description": "Task classification from orchestrator (v2.46+ 3-dimension)",
+      "properties": {
+        "complexity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "information_density": {
+          "type": "string",
+          "enum": ["CONSTANT", "LINEAR", "QUADRATIC"],
+          "description": "How answer scales with input (RLM)"
+        },
+        "context_requirement": {
+          "type": "string",
+          "enum": ["FITS", "CHUNKED", "RECURSIVE"],
+          "description": "Whether decomposition is needed"
+        },
+        "model_routing": {
+          "type": "string",
+          "enum": ["opus", "sonnet", "haiku", "minimax", "codex", "gemini"]
+        },
+        "route": {
+          "type": "string",
+          "enum": ["FAST_PATH", "STANDARD", "PARALLEL_CHUNKS", "RECURSIVE_DECOMPOSE"]
+        },
+        "adversarial_required": {
+          "type": "boolean"
+        },
+        "worktree": {
+          "type": "object",
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "path": { "type": ["string", "null"] },
+            "branch": { "type": ["string", "null"] }
+          }
+        }
+      }
+    },
+    "clarification": {
+      "type": "object",
+      "description": "User answers from clarification phase",
+      "properties": {
+        "must_have": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "question": { "type": "string" },
+              "answer": { "type": "string" },
+              "timestamp": { "type": "string", "format": "date-time" }
+            }
+          }
+        },
+        "nice_to_have": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "question": { "type": "string" },
+              "answer": { "type": "string" },
+              "timestamp": { "type": "string", "format": "date-time" }
+            }
+          }
+        }
+      }
+    },
+    "loop_state": {
+      "type": "object",
+      "description": "Ralph Loop state tracking",
+      "properties": {
+        "current_iteration": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_iterations": {
+          "type": "integer",
+          "default": 25
+        },
+        "validate_attempts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "last_gate_result": {
+          "type": "string",
+          "enum": ["pass", "fail", "pending"]
+        }
+      }
+    },
+    "handoffs": {
+      "type": "array",
+      "description": "Agent-to-agent handoffs in this plan (v2.54 enhanced)",
+      "items": {
+        "type": "object",
+        "required": ["handoff_id", "from_agent", "to_agent", "timestamp"],
+        "properties": {
+          "handoff_id": { "type": "string", "description": "Unique handoff identifier" },
+          "from_agent": { "type": "string", "description": "Source agent ID" },
+          "to_agent": { "type": "string", "description": "Target agent ID" },
+          "step_id": { "type": ["string", "null"], "description": "Associated step ID" },
+          "phase_id": { "type": ["string", "null"], "description": "Associated phase ID (v2.54)" },
+          "task": { "type": ["string", "null"], "description": "Task description for handoff" },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "in_progress", "completed", "failed"],
+            "default": "pending"
+          },
+          "memory_transferred": { "type": "boolean", "default": false, "description": "Whether agent memory was transferred (v2.54)" },
+          "event_emitted": { "type": "boolean", "default": false, "description": "Whether handoff event was emitted (v2.54)" },
+          "timestamp": { "type": "string", "format": "date-time" },
+          "completed_at": { "type": ["string", "null"], "format": "date-time" }
+        }
+      }
+    },
+    "checkpoints": {
+      "type": "array",
+      "description": "Checkpoints created during this plan (v2.51)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "checkpoint_name": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" },
+          "before_step": { "type": ["string", "null"] },
+          "before_phase": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "created_at": { "type": "string", "format": "date-time" },
+        "created_by": { "type": "string" },
+        "version": { "type": "string" },
+        "migrated_at": { "type": "string", "format": "date-time" },
+        "migrated_from": { "type": "string" }
+      }
+    },
+    "state_coordinator": {
+      "type": "object",
+      "description": "State Coordinator tracking (v2.54 unified state management)",
+      "properties": {
+        "last_sync": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last successful state synchronization"
+        },
+        "sync_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of state synchronizations"
+        },
+        "last_barrier_check": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last barrier synchronization check"
+        },
+        "consistency_repairs": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of consistency repairs performed"
+        },
+        "active": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether State Coordinator is active"
+        }
+      }
+    }
+  }
+}

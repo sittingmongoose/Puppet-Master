@@ -143,8 +143,12 @@ export class ClaudeRunner extends BasePlatformRunner {
       args.push('--output-format', request.outputFormat);
     }
 
-    // Permission mode (only when explicitly configured)
-    if (request.permissionMode) {
+    // Permission mode - use plan mode when planMode is requested
+    // Verified: Claude Code CLI supports --permission-mode plan flag
+    // Documentation: https://code.claude.com/docs/en/cli-reference
+    if (request.planMode === true) {
+      args.push('--permission-mode', 'plan');
+    } else if (request.permissionMode) {
       args.push('--permission-mode', request.permissionMode);
     }
 
@@ -227,28 +231,14 @@ export class ClaudeRunner extends BasePlatformRunner {
   }
 
   /**
-   * Builds the prompt, adding plan mode preamble if needed.
+   * Builds the prompt.
    * 
-   * P1-G01: Claude Code doesn't support plan mode via CLI flag in headless mode.
-   * When planMode is requested, we add a preamble instructing the agent to
-   * plan first, then execute. This provides a consistent experience across platforms.
+   * Note: Plan mode is now handled via --permission-mode plan flag (not prompt preamble).
+   * Claude Code CLI supports --permission-mode plan flag for both interactive and print modes.
+   * Documentation: https://code.claude.com/docs/en/cli-reference
    */
   private buildPrompt(request: ExecutionRequest): string {
-    const prompt = request.prompt ?? '';
-    
-    if (request.planMode === true) {
-      // Plan mode via prompt preamble (Claude Code /plan is interactive only)
-      const preamble = [
-        'PLAN FIRST (briefly), THEN EXECUTE:',
-        '- Start with a concise plan (max 10 bullets).',
-        '- Then immediately carry out the plan and make the required changes.',
-        '- Run the required tests/commands and report results.',
-        '',
-      ].join('\n');
-      return `${preamble}${prompt}`;
-    }
-    
-    return prompt;
+    return request.prompt ?? '';
   }
 
   /**

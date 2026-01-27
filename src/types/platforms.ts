@@ -182,6 +182,12 @@ export interface ExecutionRequest {
    * Supported by: Codex (--output-last-message <path>)
    */
   outputLastMessage?: string;
+  /**
+   * Codex-only: Reasoning effort level for models that support it.
+   * Supported by: Codex (--reasoning-effort)
+   * Values: 'Low' | 'Medium' | 'High' | 'Extra high'
+   */
+  reasoningEffort?: 'Low' | 'Medium' | 'High' | 'Extra high';
 }
 
 /**

@@ -1,9 +1,10 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Panel } from '@/components/layout';
-import { Button, Input, Select, ProgressBar } from '@/components/ui';
+import { Button, Input, Select, ProgressBar, Checkbox, HelpText } from '@/components/ui';
 import { useProjectStore } from '@/stores';
 import { api } from '@/lib';
+import { helpContent } from '@/lib/help-content.js';
 import type { Project } from '@/types';
 
 /**
@@ -129,11 +130,12 @@ export default function WizardPage() {
   const startProject = useCallback(async () => {
     setState((s) => ({ ...s, loading: true, error: null }));
     try {
-      // Save wizard state
+      // Save wizard state with tier configuration
       await api.wizardSave({
         prd: state.prd || '',
         projectName: state.projectName,
         projectPath: state.projectPath,
+        tierConfigs: state.config.tiers as Record<string, { platform: string; model: string; planMode?: boolean; askMode?: boolean }>,
       });
 
       // Create project record
@@ -306,6 +308,37 @@ function UploadStep({
   onNext,
 }: UploadStepProps) {
   const canProceed = requirements.trim().length > 0 && projectName.trim().length > 0 && projectPath.trim().length > 0;
+  const directoryInputRef = useRef<HTMLInputElement>(null);
+
+  const handleDirectorySelect = useCallback(async () => {
+    // Try File System Access API first (modern browsers)
+    if ('showDirectoryPicker' in window) {
+      try {
+        const directoryHandle = await (window as any).showDirectoryPicker();
+        onChange({ projectPath: directoryHandle.name });
+      } catch (err) {
+        // User cancelled or error
+        if ((err as Error).name !== 'AbortError') {
+          console.error('Failed to select directory:', err);
+        }
+      }
+    } else {
+      // Fallback to file input with webkitdirectory
+      directoryInputRef.current?.click();
+    }
+  }, [onChange]);
+
+  const handleDirectoryChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      // Get directory name from first file's webkitRelativePath
+      const firstFile = files[0];
+      if (firstFile.webkitRelativePath) {
+        const directoryName = firstFile.webkitRelativePath.split('/')[0];
+        onChange({ projectPath: directoryName });
+      }
+    }
+  }, [onChange]);
 
   return (
     <Panel title="Project Details & Requirements">
@@ -319,14 +352,39 @@ function UploadStep({
             placeholder="My New Project"
             required
           />
-          <Input
-            label="Project Path"
-            value={projectPath}
-            onChange={(e) => onChange({ projectPath: e.target.value })}
-            placeholder="/path/to/project"
-            required
-            hint="Full path where project files are located"
-          />
+          <div className="space-y-xs">
+            <label className="block text-sm font-medium">
+              Project Path <span className="text-hot-magenta">*</span>
+            </label>
+            <div className="flex gap-xs items-end">
+              <div className="flex-1">
+                <Input
+                  value={projectPath}
+                  onChange={(e) => onChange({ projectPath: e.target.value })}
+                  placeholder="/path/to/project"
+                  required
+                  hint="Full path where project files will be located"
+                />
+              </div>
+              <input
+                ref={directoryInputRef}
+                type="file"
+                webkitdirectory=""
+                directory=""
+                multiple
+                onChange={handleDirectoryChange}
+                className="hidden"
+              />
+              <Button
+                variant="info"
+                onClick={handleDirectorySelect}
+                type="button"
+              >
+                BROWSE
+              </Button>
+            </div>
+            <p className="text-xs text-ink-faded">Select the directory where the project will be created</p>
+          </div>
         </div>
 
         {/* File upload */}
@@ -472,6 +530,7 @@ interface TierConfig {
   planMode?: boolean;
   askMode?: boolean;
   outputFormat?: 'text' | 'json' | 'stream-json';
+  reasoningLevel?: string; // For Codex models
 }
 
 interface ConfigureStepProps {
@@ -491,6 +550,48 @@ const DEFAULT_TIER_CONFIG: Record<string, TierConfig> = {
 function ConfigureStep({ config, onChange, onNext, onBack }: ConfigureStepProps) {
   // Initialize tier configs from config or defaults
   const tierConfigs = (config.tiers as Record<string, TierConfig>) || DEFAULT_TIER_CONFIG;
+  
+  // Model discovery state
+  const [models, setModels] = useState<Record<string, Array<{ id: string; label: string; reasoningLevels?: string[] }>>>({});
+  const [modelsLoading, setModelsLoading] = useState<Record<string, boolean>>({});
+  const [modelsError, setModelsError] = useState<string | null>(null);
+
+  // Fetch models for a platform
+  const fetchModels = useCallback(async (platform: string, forceRefresh = false) => {
+    if (modelsLoading[platform]) return; // Already loading
+    
+    setModelsLoading(prev => ({ ...prev, [platform]: true }));
+    setModelsError(null);
+    
+    try {
+      const url = forceRefresh ? `/api/config/models?refresh=true` : '/api/config/models';
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Failed to fetch models');
+      const data = await response.json();
+      setModels(data);
+    } catch (error) {
+      console.error('Failed to fetch models:', error);
+      setModelsError(error instanceof Error ? error.message : 'Failed to fetch models');
+      // Fallback: use empty models, will show text input
+    } finally {
+      setModelsLoading(prev => ({ ...prev, [platform]: false }));
+    }
+  }, [modelsLoading]);
+
+  // Fetch models on mount
+  useEffect(() => {
+    fetchModels('all');
+  }, [fetchModels]);
+
+  // Fetch models when platform changes for any tier
+  useEffect(() => {
+    const platforms = new Set(Object.values(tierConfigs).map(t => t.platform));
+    platforms.forEach(platform => {
+      if (platform && !models[platform] && !modelsLoading[platform]) {
+        fetchModels(platform);
+      }
+    });
+  }, [tierConfigs, models, modelsLoading, fetchModels]);
 
   const updateTier = (tier: string, field: keyof TierConfig, value: string | boolean) => {
     const updatedTiers = {
@@ -501,6 +602,36 @@ function ConfigureStep({ config, onChange, onNext, onBack }: ConfigureStepProps)
       },
     };
     onChange({ ...config, tiers: updatedTiers });
+    
+    // If platform changed, fetch models for new platform
+    if (field === 'platform' && typeof value === 'string') {
+      fetchModels(value);
+    }
+  };
+  
+  // Get available models for a platform
+  const getModelsForPlatform = (platform: string): Array<{ value: string; label: string }> => {
+    const platformModels = models[platform] || [];
+    const options: Array<{ value: string; label: string }> = [];
+    
+    // Add "auto" option if platform supports it
+    if (['cursor', 'gemini'].includes(platform)) {
+      options.push({ value: 'auto', label: 'Auto (Recommended)' });
+    }
+    
+    // Add discovered models
+    platformModels.forEach(model => {
+      options.push({ value: model.id, label: model.label || model.id });
+    });
+    
+    return options.length > 0 ? options : [{ value: 'auto', label: 'Auto' }];
+  };
+  
+  // Get reasoning levels for a Codex model
+  const getReasoningLevels = (platform: string, modelId: string): string[] => {
+    if (platform !== 'codex') return [];
+    const model = models.codex?.find(m => m.id === modelId);
+    return model?.reasoningLevels || [];
   };
 
   return (
@@ -529,34 +660,63 @@ function ConfigureStep({ config, onChange, onNext, onBack }: ConfigureStepProps)
                     { value: 'copilot', label: 'Copilot' },
                   ]}
                 />
-                {/* P1: Model input (can be enhanced with dropdown later) */}
-                <Input
-                  label="Model"
-                  value={tierConfigs[tier]?.model || 'auto'}
-                  onChange={(e) => updateTier(tier, 'model', e.target.value)}
-                  placeholder="Model name or auto"
-                />
+                {/* Task 4.3: Model dropdown with dynamic discovery */}
+                {modelsLoading[tierConfigs[tier]?.platform || 'cursor'] ? (
+                  <div className="space-y-xs">
+                    <label className="block text-sm font-medium">Model</label>
+                    <div className="text-sm text-ink-faded">Loading models...</div>
+                  </div>
+                ) : modelsError ? (
+                  <div className="space-y-xs">
+                    <label className="block text-sm font-medium">Model</label>
+                    <Input
+                      label="Model"
+                      value={tierConfigs[tier]?.model || 'auto'}
+                      onChange={(e) => updateTier(tier, 'model', e.target.value)}
+                      placeholder="Model name or auto"
+                    />
+                    <div className="text-xs text-ink-faded">Using manual input (discovery failed)</div>
+                  </div>
+                ) : (
+                  <Select
+                    label="Model"
+                    value={tierConfigs[tier]?.model || 'auto'}
+                    onChange={(e) => updateTier(tier, 'model', e.target.value)}
+                    options={getModelsForPlatform(tierConfigs[tier]?.platform || 'cursor')}
+                  />
+                )}
+                {/* Task 4.3: Reasoning level selector for Codex models */}
+                {tierConfigs[tier]?.platform === 'codex' && 
+                 getReasoningLevels('codex', tierConfigs[tier]?.model || '').length > 0 && (
+                  <Select
+                    label="Reasoning Level"
+                    value={(tierConfigs[tier] as any)?.reasoningLevel || 'Medium'}
+                    onChange={(e) => updateTier(tier, 'reasoningLevel' as any, e.target.value)}
+                    options={getReasoningLevels('codex', tierConfigs[tier]?.model || '').map(level => ({
+                      value: level,
+                      label: level,
+                    }))}
+                  />
+                )}
                 {/* P1: Plan Mode toggle */}
-                <div className="flex items-center gap-sm">
-                  <input
-                    type="checkbox"
+                <div className="space-y-xs">
+                  <Checkbox
                     id={`wizard-${tier}-planMode`}
                     checked={tierConfigs[tier]?.planMode || false}
-                    onChange={(e) => updateTier(tier, 'planMode', e.target.checked)}
-                    className="w-4 h-4"
+                    onChange={(checked) => updateTier(tier, 'planMode', checked)}
+                    label="Plan mode"
                   />
-                  <label htmlFor={`wizard-${tier}-planMode`} className="text-sm">Plan mode</label>
+                  <HelpText {...helpContent.tiers.planMode} />
                 </div>
                 {/* P1: Ask Mode toggle */}
-                <div className="flex items-center gap-sm">
-                  <input
-                    type="checkbox"
+                <div className="space-y-xs">
+                  <Checkbox
                     id={`wizard-${tier}-askMode`}
                     checked={tierConfigs[tier]?.askMode || false}
-                    onChange={(e) => updateTier(tier, 'askMode', e.target.checked)}
-                    className="w-4 h-4"
+                    onChange={(checked) => updateTier(tier, 'askMode', checked)}
+                    label="Ask mode (read-only)"
                   />
-                  <label htmlFor={`wizard-${tier}-askMode`} className="text-sm">Ask mode (read-only)</label>
+                  <HelpText {...helpContent.tiers.askMode} />
                 </div>
                 {/* P1: Output Format dropdown */}
                 <Select
@@ -572,6 +732,25 @@ function ConfigureStep({ config, onChange, onNext, onBack }: ConfigureStepProps)
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Task 4.3: Refresh models button */}
+        <div className="flex items-center justify-between gap-sm">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              const platforms = new Set(Object.values(tierConfigs).map(t => t.platform));
+              platforms.forEach(platform => {
+                if (platform) fetchModels(platform, true);
+              });
+            }}
+          >
+            <span className="flex items-center gap-xs">
+              <RefreshIcon size="1em" />
+              Refresh Models
+            </span>
+          </Button>
         </div>
 
         <div className="flex justify-between">
@@ -658,7 +837,10 @@ function StartStep({ projectName, projectPath, loading, onStart, onBack }: Start
         </div>
 
         <div className="p-md bg-safety-orange/10 border-medium border-safety-orange">
-          <strong>⚠️ Ready to start?</strong>
+          <strong className="flex items-center gap-xs">
+            <WarningIcon size="1em" />
+            Ready to start?
+          </strong>
           <p className="mt-xs text-sm">
             The orchestrator will begin executing the tier plan. You can pause or stop
             execution at any time from the dashboard.
@@ -674,7 +856,10 @@ function StartStep({ projectName, projectPath, loading, onStart, onBack }: Start
             onClick={onStart}
             loading={loading}
           >
-            🚀 START CHAIN
+            <span className="flex items-center gap-xs">
+              <RocketIcon size="1em" />
+              START CHAIN
+            </span>
           </Button>
         </div>
       </div>

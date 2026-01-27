@@ -1,17 +1,27 @@
 import { useState, useEffect, useCallback } from 'react';
+import type { ReactNode } from 'react';
 import { Panel } from '@/components/layout';
 import { Button } from '@/components/ui';
 import { StatusBadge } from '@/components/shared';
+import {
+  WrenchIcon,
+  PackageIcon,
+  GearIcon,
+  GlobeIcon,
+  CheckIcon,
+  FolderIcon,
+  ClipboardIcon,
+} from '@/components/icons';
 import { api, type DoctorCheck } from '@/lib';
 import type { StatusType } from '@/types';
 
-const CATEGORIES = [
-  { id: 'cli', label: 'CLI Tools', icon: '🔧' },
-  { id: 'git', label: 'Git', icon: '📦' },
-  { id: 'runtimes', label: 'Runtimes', icon: '⚙️' },
-  { id: 'browser', label: 'Browser Tools', icon: '🌐' },
-  { id: 'capabilities', label: 'Capabilities', icon: '✅' },
-  { id: 'project', label: 'Project Setup', icon: '📁' },
+const CATEGORIES: Array<{ id: string; label: string; icon: ReactNode }> = [
+  { id: 'cli', label: 'CLI Tools', icon: <WrenchIcon size="1em" /> },
+  { id: 'git', label: 'Git', icon: <PackageIcon size="1em" /> },
+  { id: 'runtimes', label: 'Runtimes', icon: <GearIcon size="1em" /> },
+  { id: 'browser', label: 'Browser Tools', icon: <GlobeIcon size="1em" /> },
+  { id: 'capabilities', label: 'Capabilities', icon: <CheckIcon size="1em" /> },
+  { id: 'project', label: 'Project Setup', icon: <FolderIcon size="1em" /> },
 ];
 
 /**
@@ -157,7 +167,12 @@ export default function DoctorPage() {
         return (
           <CategoryPanel
             key={category.id}
-            title={`${category.icon} ${category.label}`}
+            title={
+              <span className="flex items-center gap-xs">
+                {category.icon}
+                {category.label}
+              </span>
+            }
             checks={categoryChecks}
             onFix={fixCheck}
             fixing={fixing}
@@ -168,7 +183,12 @@ export default function DoctorPage() {
       {/* Uncategorized checks */}
       {checksList.filter((c) => !CATEGORIES.some((cat) => cat.id === c.category)).length > 0 && (
         <CategoryPanel
-          title="📋 Other"
+          title={
+            <span className="flex items-center gap-xs">
+              <ClipboardIcon size="1em" />
+              Other
+            </span>
+          }
           checks={checksList.filter((c) => !CATEGORIES.some((cat) => cat.id === c.category))}
           onFix={fixCheck}
           fixing={fixing}
@@ -183,7 +203,7 @@ export default function DoctorPage() {
 // ============================================
 
 interface CategoryPanelProps {
-  title: string;
+  title: ReactNode;
   checks: DoctorCheck[];
   onFix: (checkName: string) => void;
   fixing: string | null;

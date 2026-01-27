@@ -51,6 +51,8 @@ import type {
 import { WorktreeManager } from '../git/index.js';
 import type { VerificationIntegration } from '../verification/verification-integration.js';
 import type { EventBus } from '../logging/event-bus.js';
+import type { PromotionEngine, AgentsEntry } from '../agents/index.js';
+import type { MultiLevelLoader } from '../agents/index.js';
 import { spawn } from 'child_process';
 import { existsSync } from 'fs';
 import { mkdir, writeFile } from 'fs/promises';
@@ -129,6 +131,10 @@ export interface OrchestratorDependencies {
   verificationIntegration: VerificationIntegration;
   /** P0-G02: Capability discovery service for preflight validation */
   capabilityDiscovery?: CapabilityDiscoveryService;
+  /** Promotion engine for auto-promoting learnings to AGENTS.md */
+  promotionEngine?: PromotionEngine;
+  /** Multi-level loader for checking duplicate entries during promotion */
+  multiLevelLoader?: MultiLevelLoader;
 }
 
 /**
@@ -193,6 +199,17 @@ export class Orchestrator {
   private loopGuardSubtaskId: string | undefined;
   private parallelExecutor: ParallelExecutor | null = null;
   private worktreeManager: WorktreeManager | null = null;
+
+  /**
+   * P0-G09: Queue for storing iterations when quota is exhausted.
+   * Items are added when 'queue' behavior is triggered and processed on resume.
+   */
+  private iterationQueue: Array<{
+    subtaskId: string;
+    platform: Platform;
+    queuedAt: Date;
+    resetsAt: string; // ISO string from QuotaExhaustedError
+  }> = [];
 
   private requireTierTransition(tier: TierNode, event: TierEvent, reason: string): void {
     const from = tier.getState();
@@ -673,6 +690,30 @@ export class Orchestrator {
       throw new Error(`Cannot resume from state: ${this.stateMachine.getCurrentState()}`);
     }
 
+    // P0-G09: Log queue status on resume
+    if (this.iterationQueue.length > 0) {
+      console.log(`[Orchestrator] Resuming with ${this.iterationQueue.length} queued iteration(s)`);
+
+      // Check if any queued items have passed their reset time
+      const now = new Date().toISOString();
+      const readyItems = this.iterationQueue.filter((item) => item.resetsAt <= now);
+      const waitingItems = this.iterationQueue.filter((item) => item.resetsAt > now);
+
+      if (readyItems.length > 0) {
+        console.log(`[Orchestrator] ${readyItems.length} queued item(s) ready for retry`);
+      }
+      if (waitingItems.length > 0) {
+        const nextReset = waitingItems.reduce(
+          (min, item) => (item.resetsAt < min ? item.resetsAt : min),
+          waitingItems[0].resetsAt
+        );
+        console.log(`[Orchestrator] ${waitingItems.length} item(s) still waiting, next reset at ${nextReset}`);
+      }
+
+      // Clear the queue - runLoop will naturally retry the current subtask
+      this.iterationQueue = [];
+    }
+
     const previousState = this.stateMachine.getCurrentState();
     this.stateMachine.send({ type: 'RESUME' });
     const newState = this.stateMachine.getCurrentState();
@@ -1078,7 +1119,49 @@ export class Orchestrator {
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
 
-        // Publish error event
+        // P0-G06: Handle NoPlatformAvailableError gracefully by pausing instead of crashing
+        if (error instanceof NoPlatformAvailableError) {
+          console.warn(`[Orchestrator] No platform available: ${errorMessage}`);
+          console.warn('[Orchestrator] Pausing execution. Run `puppet-master doctor` to resolve, then resume.');
+
+          // Emit specific event for GUI/monitoring
+          if (this.eventBus) {
+            this.eventBus.emit({
+              type: 'error',
+              error: `No platform available: ${errorMessage}`,
+              context: {
+                state: this.stateMachine.getCurrentState(),
+                iterationsRun: this.iterationsRun,
+                errorType: 'no_platform_available',
+                recoverable: true,
+                suggestion: 'Run `puppet-master doctor` to check platform availability and authentication, then resume execution.',
+              },
+            });
+          }
+
+          // Pause instead of transitioning to error state
+          const previousState = this.stateMachine.getCurrentState();
+          this.stateMachine.send({ type: 'PAUSE', reason: `No platform available: ${errorMessage}` });
+          const newState = this.stateMachine.getCurrentState();
+
+          this.eventLedger?.append({
+            timestamp: new Date().toISOString(),
+            type: 'orchestrator_state_changed',
+            data: {
+              from: previousState,
+              to: newState,
+              eventType: 'PAUSE',
+              reason: `No platform available: ${errorMessage}`,
+              context: this.stateMachine.getContext(),
+            },
+          });
+
+          // Exit loop gracefully (don't throw)
+          this.loopRunning = false;
+          return;
+        }
+
+        // Publish error event for other errors
         if (this.eventBus) {
           this.eventBus.emit({
             type: 'error',
@@ -1215,6 +1298,7 @@ export class Orchestrator {
       platform: platformConfig.platform,
       model: platformConfig.model,
       planMode: platformConfig.planMode,
+      reasoningEffort: platformConfig.reasoningEffort,
       outputFormat: platformConfig.outputFormat,
       permissionMode: platformConfig.permissionMode,
       allowedTools: platformConfig.allowedTools,
@@ -1372,14 +1456,62 @@ export class Orchestrator {
           );
         }
       } else if (behavior === 'queue') {
-        // Queue behavior - not fully implemented, just throw for now
-        // A proper implementation would add to a persistent queue for later processing
-        console.warn(
-          `[Orchestrator] Queue behavior not fully implemented, treating as error`
-        );
-        throw new Error(
-          `Quota exhausted for ${platform}, iteration queued but queue processing not implemented: ${quotaError.message}`
-        );
+        // P0-G09: Queue the iteration for later processing
+        console.log(`[Orchestrator] Quota exhausted for ${platform}, queueing iteration for ${subtaskId}`);
+
+        // Add to queue
+        this.iterationQueue.push({
+          subtaskId,
+          platform,
+          queuedAt: new Date(),
+          resetsAt: quotaError.resetsAt,
+        });
+
+        // Emit event for GUI/monitoring
+        if (this.eventBus) {
+          this.eventBus.emit({
+            type: 'iteration_queued',
+            subtaskId,
+            platform,
+            resetsAt: quotaError.resetsAt,
+            queueLength: this.iterationQueue.length,
+          });
+        }
+
+        // Pause orchestrator - user can resume after quota refreshes
+        const previousState = this.stateMachine.getCurrentState();
+        this.stateMachine.send({
+          type: 'PAUSE',
+          reason: `Quota exhausted for ${platform}. ${this.iterationQueue.length} iteration(s) queued. Quota resets at ${quotaError.resetsAt}`,
+        });
+
+        this.eventLedger?.append({
+          timestamp: new Date().toISOString(),
+          type: 'orchestrator_state_changed',
+          data: {
+            from: previousState,
+            to: this.stateMachine.getCurrentState(),
+            eventType: 'PAUSE',
+            reason: `Quota exhausted - iteration queued`,
+            queueLength: this.iterationQueue.length,
+          },
+        });
+
+        // Exit the execution (will be retried on resume)
+        this.loopRunning = false;
+
+        // Return a placeholder result - the iteration didn't actually run
+        return {
+          success: false,
+          output: '',
+          error: `Iteration queued due to quota exhaustion. Resume after ${quotaError.resetsAt}`,
+          completionSignal: undefined,
+          filesChanged: [],
+          learnings: [],
+          processId: -1,
+          duration: 0,
+          exitCode: -1,
+        };
       } else {
         // Unknown behavior, throw
         throw quotaError;
@@ -1851,7 +1983,7 @@ export class Orchestrator {
   private handleGitError(
     operation: 'merge' | 'push' | 'pr',
     error: unknown,
-    context?: { tierId?: string; branch?: string }
+    _context?: { tierId?: string; branch?: string }
   ): void {
     const errorMessage = error instanceof Error ? error.message : String(error);
     const failOnError = this.config.branching.failOnGitError ?? false;
@@ -1910,6 +2042,88 @@ export class Orchestrator {
     };
 
     await this.deps.progressManager.append(entry);
+
+    // Auto-promote patterns if enabled
+    if (this.config.memory.agentsEnforcement?.autoPromotePatterns && result.success) {
+      await this.autoPromoteLearnings(result.learnings, subtask.id);
+    }
+  }
+
+  /**
+   * Auto-promote extracted learnings to AGENTS.md.
+   * Called when autoPromotePatterns is enabled.
+   */
+  private async autoPromoteLearnings(learnings: string[], tierId: string): Promise<void> {
+    if (!this.deps.promotionEngine || !this.deps.multiLevelLoader) {
+      return;
+    }
+
+    for (const learning of learnings) {
+      // Determine entry type based on learning content
+      const lowerLearning = learning.toLowerCase();
+      let entryType: AgentsEntry['type'] = 'pattern';
+      
+      if (lowerLearning.includes('gotcha') || lowerLearning.includes('error') || lowerLearning.includes('failed')) {
+        entryType = 'gotcha';
+      } else if (lowerLearning.includes('do not') || lowerLearning.includes("don't") || lowerLearning.includes('never')) {
+        entryType = 'dont';
+      } else if (lowerLearning.includes('always') || lowerLearning.includes('must') || lowerLearning.includes('should')) {
+        entryType = 'do';
+      }
+
+      const entry: AgentsEntry = {
+        type: entryType,
+        content: learning,
+        section: entryType === 'pattern' ? 'codebasePatterns' : entryType === 'gotcha' ? 'commonFailureModes' : entryType === 'do' ? 'doItems' : 'dontItems',
+        level: 'root', // Start at root, promotion engine will handle hierarchy
+      };
+
+      // Track usage for potential future promotion
+      this.deps.promotionEngine.trackUsage(entry, tierId);
+
+      // Evaluate for immediate promotion based on rules
+      const candidate = this.deps.promotionEngine.evaluate(entry);
+      
+      if (candidate) {
+        try {
+          await this.deps.promotionEngine.promote(
+            candidate,
+            this.deps.multiLevelLoader,
+            this.deps.agentsManager
+          );
+          
+          if (this.eventBus) {
+            this.eventBus.emit({
+              type: 'agents_updated',
+              updatedFiles: [this.config.memory.agentsFile],
+            });
+          }
+        } catch {
+          // Silently ignore promotion errors (e.g., duplicate entries)
+        }
+      }
+
+      // Also directly add to AGENTS.md if it matches certain patterns
+      if (entryType === 'gotcha') {
+        try {
+          await this.deps.agentsManager.addGotcha({
+            description: learning,
+            fix: '', // Agent should provide fix in future iterations
+          });
+        } catch {
+          // Ignore if already exists
+        }
+      } else if (entryType === 'pattern') {
+        try {
+          await this.deps.agentsManager.addPattern({
+            description: learning,
+            context: 'Auto-extracted from iteration learnings',
+          });
+        } catch {
+          // Ignore if already exists
+        }
+      }
+    }
   }
 
   /**

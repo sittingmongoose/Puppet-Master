@@ -1,8 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import type { ReactNode } from 'react';
 import { Panel } from '@/components/layout';
 import { Button } from '@/components/ui';
 import { StatusBadge } from '@/components/shared';
+import {
+  FolderIcon,
+  CameraIcon,
+  DocumentIcon,
+  ChartIcon,
+  GlobeIcon,
+  FileIcon,
+} from '@/components/icons';
 import type { StatusType } from '@/types';
 
 interface EvidenceFile {
@@ -78,14 +87,14 @@ export default function EvidenceDetail() {
   }, []);
 
   // Get type icon
-  const getTypeIcon = (type: EvidenceFile['type']) => {
+  const getTypeIcon = (type: EvidenceFile['type']): ReactNode => {
     switch (type) {
-      case 'screenshot': return '📸';
-      case 'log': return '📝';
-      case 'report': return '📊';
-      case 'trace': return '🌐';
-      case 'snapshot': return '📄';
-      default: return '📁';
+      case 'screenshot': return <CameraIcon size="1em" />;
+      case 'log': return <DocumentIcon size="1em" />;
+      case 'report': return <ChartIcon size="1em" />;
+      case 'trace': return <GlobeIcon size="1em" />;
+      case 'snapshot': return <FileIcon size="1em" />;
+      default: return <FolderIcon size="1em" />;
     }
   };
 
@@ -140,7 +149,7 @@ export default function EvidenceDetail() {
       <div className="flex flex-wrap items-start justify-between gap-md">
         <div>
           <h1 className="font-display text-2xl flex items-center gap-sm">
-            <span>{getTypeIcon(file.type)}</span>
+            <span className="flex items-center">{getTypeIcon(file.type)}</span>
             {file.name}
           </h1>
           <div className="flex items-center gap-md mt-sm text-ink-faded">
@@ -251,7 +260,9 @@ function FileContent({ file }: FileContentProps) {
     case 'screenshot':
       return (
         <div className="text-center py-xl bg-ink-black/5 dark:bg-ink-light/5 rounded">
-          <div className="text-6xl mb-md">📸</div>
+          <div className="flex justify-center mb-md">
+            <CameraIcon size="4rem" />
+          </div>
           <p className="text-ink-faded">Screenshot Preview</p>
           <p className="text-xs text-ink-faded mt-sm">
             (Image would render here in production)
@@ -292,7 +303,9 @@ function FileContent({ file }: FileContentProps) {
     case 'trace':
       return (
         <div className="text-center py-xl">
-          <div className="text-6xl mb-md">🌐</div>
+          <div className="flex justify-center mb-md">
+            <GlobeIcon size="4rem" />
+          </div>
           <p className="text-ink-faded">Browser Trace Archive</p>
           <p className="text-sm text-ink-faded mt-sm">
             Download to view in Chrome DevTools

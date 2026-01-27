@@ -21,6 +21,7 @@ export interface PlatformConfig {
   platform: Platform;
   model: string;
   planMode?: boolean;
+  reasoningEffort?: 'Low' | 'Medium' | 'High' | 'Extra high';
   selfFix: boolean;
   maxIterations: number;
   escalation: 'phase' | 'task' | 'subtask' | null;
@@ -213,6 +214,7 @@ export class PlatformRouter {
           platform: fallbackPlatform,
           model: targetTierConfig.model, // Keep model from tier type
           planMode: fallbackTierConfig.planMode,
+          reasoningEffort: fallbackTierConfig.reasoningEffort,
           selfFix: fallbackTierConfig.selfFix,
           maxIterations: fallbackTierConfig.maxIterations,
           escalation: fallbackTierConfig.escalation,
@@ -241,6 +243,7 @@ export class PlatformRouter {
           platform: fallbackPlatform,
           model: modelOverride ?? targetTierConfig.model,
           planMode: fallbackTierConfig.planMode,
+          reasoningEffort: fallbackTierConfig.reasoningEffort,
           selfFix: fallbackTierConfig.selfFix,
           maxIterations: fallbackTierConfig.maxIterations,
           escalation: fallbackTierConfig.escalation,
@@ -305,6 +308,7 @@ export class PlatformRouter {
           platform: preferredPlatform,
           model: selectedModel,
           planMode: template.planMode,
+          reasoningEffort: template.reasoningEffort,
           selfFix: template.selfFix,
           maxIterations: template.maxIterations,
           escalation: template.escalation,
@@ -321,6 +325,7 @@ export class PlatformRouter {
       config: {
         ...fallback,
         planMode: template.planMode,
+        reasoningEffort: template.reasoningEffort,
         selfFix: template.selfFix,
         maxIterations: template.maxIterations,
         escalation: template.escalation,
@@ -346,6 +351,7 @@ export class PlatformRouter {
       platform,
       model: tierConfig.model,
       planMode: tierConfig.planMode,
+      reasoningEffort: tierConfig.reasoningEffort,
       selfFix: tierConfig.selfFix,
       maxIterations: tierConfig.maxIterations,
       escalation: tierConfig.escalation,
@@ -366,6 +372,7 @@ export class PlatformRouter {
       platform: tierConfig.platform,
       model: tierConfig.model,
       planMode: tierConfig.planMode,
+      reasoningEffort: tierConfig.reasoningEffort,
       selfFix: tierConfig.selfFix,
       maxIterations: tierConfig.maxIterations,
       escalation: tierConfig.escalation,

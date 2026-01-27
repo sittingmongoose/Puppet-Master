@@ -33,6 +33,10 @@ export { default as Coverage } from './Coverage.js';
 // Real Memory page
 export { default as Memory } from './Memory.js';
 
+// Feature parity pages (CLI ↔ GUI)
+export { default as Ledger } from './Ledger.js';
+export { default as Login } from './Login.js';
+
 export function NotFound() {
   return (
     <div className="panel">

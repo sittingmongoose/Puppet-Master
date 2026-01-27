@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Panel } from '@/components/layout';
 import { Button } from '@/components/ui';
 import { StatusBadge } from '@/components/shared';
+import { CheckmarkIcon, XIcon } from '@/components/icons';
 import type { StatusType } from '@/types';
 
 interface CoverageCategory {
@@ -194,14 +195,20 @@ export default function CoveragePage() {
                   <td className="py-sm text-ink-faded">{feature.phase}</td>
                   <td className="py-sm text-center">
                     {feature.tested ? (
-                      <span className="text-neon-green">✓</span>
+                      <span className="text-neon-green flex items-center justify-center">
+                        <CheckmarkIcon size="1em" />
+                      </span>
                     ) : (
-                      <span className="text-hot-magenta">✗</span>
+                      <span className="text-hot-magenta flex items-center justify-center">
+                        <XIcon size="1em" />
+                      </span>
                     )}
                   </td>
                   <td className="py-sm text-center">
                     {feature.verified ? (
-                      <span className="text-neon-green">✓</span>
+                      <span className="text-neon-green flex items-center justify-center">
+                        <CheckmarkIcon size="1em" />
+                      </span>
                     ) : (
                       <span className="text-ink-faded">—</span>
                     )}
@@ -230,11 +237,15 @@ export default function CoveragePage() {
             <span>&lt;70% Coverage</span>
           </div>
           <div className="flex items-center gap-sm">
-            <span className="text-neon-green">✓</span>
+            <span className="text-neon-green flex items-center">
+              <CheckmarkIcon size="1em" />
+            </span>
             <span>Complete</span>
           </div>
           <div className="flex items-center gap-sm">
-            <span className="text-hot-magenta">✗</span>
+            <span className="text-hot-magenta flex items-center">
+              <XIcon size="1em" />
+            </span>
             <span>Not Complete</span>
           </div>
         </div>

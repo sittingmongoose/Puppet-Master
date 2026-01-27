@@ -116,8 +116,8 @@ describe('CoveragePage', () => {
     renderCoverage();
     
     await waitFor(() => {
-      // Should have checkmarks for tested/verified features
-      const checkmarks = screen.getAllByText('✓');
+      // Should have checkmark icons for tested/verified features
+      const checkmarks = screen.getAllByLabelText('Checkmark');
       expect(checkmarks.length).toBeGreaterThan(0);
     });
   });

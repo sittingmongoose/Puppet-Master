@@ -39,11 +39,11 @@ export interface GuiOptions {
   open?: boolean;
   verbose?: boolean;
   /** P0-G07: Disable authentication (development only) */
-  noAuth?: boolean;
+  auth?: boolean;
   /** P0-G07: Relax CORS policy for development (allows dev ports and LAN IPs) */
   relaxedCors?: boolean;
-  /** Enable React GUI instead of vanilla HTML */
-  react?: boolean;
+  /** Use classic vanilla HTML GUI instead of React */
+  classic?: boolean;
 }
 
 /**
@@ -103,10 +103,11 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       host,
       baseDirectory: projectRoot,
       // P0-G07: Support --no-auth and --relaxed-cors flags
-      authEnabled: options.noAuth !== true, // Default true, false if --no-auth
+      // Commander.js --no-auth sets options.auth to false
+      authEnabled: options.auth !== false, // Default true, false if --no-auth
       corsRelaxed: options.relaxedCors === true, // Default false, true if --relaxed-cors
-      // React GUI: enable with --react flag
-      useReactGui: options.react === true, // Default false, true if --react
+      // React GUI: default true, disable with --classic flag
+      useReactGui: options.classic !== true, // Default true, false if --classic
     };
     const guiServer = new GuiServer(guiConfig, eventBus);
 
@@ -161,6 +162,9 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       platformRegistry,
       platformRouter,
       verificationIntegration: container.resolve('verificationIntegration'),
+      // Memory auto-promotion dependencies
+      promotionEngine: container.resolve('promotionEngine'),
+      multiLevelLoader: container.resolve('multiLevelLoader'),
     });
 
     // Register orchestrator instance (this will now use orchestrator's TierStateManager)
@@ -206,7 +210,7 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       console.log(`  Include this header in API requests:`);
       console.log(`    Authorization: Bearer ${token}`);
       console.log('');
-    } else if (options.noAuth) {
+    } else if (options.auth === false) {
       console.log('');
       console.log('╔═══════════════════════════════════════════════════════════╗');
       console.log('║              ⚠️  Authentication DISABLED                   ║');
@@ -244,16 +248,16 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     console.log('║                                                           ║');
     console.log('╚═══════════════════════════════════════════════════════════╝');
     console.log('');
-    if (options.react) {
-      console.log(`  🌐 React GUI:     ${url} (React SPA mode)`);
-      console.log(`  📝 Note: React GUI requires 'npm run gui:build' to be run first`);
-    } else {
+    if (options.classic) {
       console.log(`  🌐 Dashboard:     ${url} (Vanilla HTML mode)`);
       console.log(`  📁 Projects:      ${url}/projects`);
       console.log(`  🧙 Wizard:        ${url}/wizard`);
       console.log(`  ⚙️  Configuration: ${url}/config`);
       console.log(`  🏥 Doctor:        ${url}/doctor`);
-      console.log(`  💡 Tip: Use --react flag to enable React GUI`);
+      console.log(`  💡 Tip: Remove --classic flag to use React GUI`);
+    } else {
+      console.log(`  🌐 React GUI:     ${url} (React SPA mode)`);
+      console.log(`  📝 Note: React GUI requires 'npm run gui:build' to be run first`);
     }
     console.log('');
 
@@ -338,7 +342,7 @@ export class GuiCommand implements CommandModule {
       .option('-v, --verbose', 'Enable verbose output')
       .option('--no-auth', 'Disable authentication (development only - NOT recommended for production)')
       .option('--relaxed-cors', 'Relax CORS policy for development (allows dev ports 3000-9999 and LAN IPs)')
-      .option('--react', 'Enable React GUI (default: vanilla HTML)')
+      .option('--classic', 'Use classic vanilla HTML GUI instead of React')
       .action(async (options: GuiOptions) => {
         // Handle --no-open flag (Commander.js sets open to false when --no-open is used)
         if (options.open === undefined) {

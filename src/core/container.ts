@@ -37,7 +37,10 @@ import { AutoAdvancement } from './auto-advancement.js';
 import { Escalation } from './escalation.js';
 import type { ExecutionConfig } from './execution-engine.js';
 import { ExecutionEngine } from './execution-engine.js';
+import { Orchestrator } from './orchestrator.js';
+import type { OrchestratorConfig } from './orchestrator.js';
 import { resolveUnderProjectRoot } from '../utils/project-paths.js';
+import { GateEnforcer, MultiLevelLoader, PromotionEngine } from '../agents/index.js';
 
 /**
  * Registration type for container entries.
@@ -258,10 +261,39 @@ export function createContainer(config: PuppetMasterConfig, projectRoot: string,
     return registry;
   }, 'singleton');
 
+  container.register('gateEnforcer', () => {
+    return new GateEnforcer();
+  }, 'singleton');
+
+  container.register('multiLevelLoader', () => {
+    const agentsManager = container.resolve<AgentsManager>('agentsManager');
+    return new MultiLevelLoader(agentsManager);
+  }, 'singleton');
+
+  container.register('promotionEngine', () => {
+    const config = container.resolve<PuppetMasterConfig>('config');
+    return new PromotionEngine({
+      enableAutoPromotion: config.memory.agentsEnforcement?.autoPromotePatterns ?? false,
+    });
+  }, 'singleton');
+
   container.register('gateRunner', () => {
     const verifierRegistry = container.resolve<VerifierRegistry>('verifierRegistry');
     const evidenceStore = container.resolve<EvidenceStore>('evidenceStore');
-    return new GateRunner(verifierRegistry, evidenceStore);
+    const config = container.resolve<PuppetMasterConfig>('config');
+    const gateEnforcer = container.resolve<GateEnforcer>('gateEnforcer');
+    const multiLevelLoader = container.resolve<MultiLevelLoader>('multiLevelLoader');
+    const projectRoot = config.project.workingDirectory;
+    const enforceGateAgentsUpdate = config.memory.agentsEnforcement?.enforceGateAgentsUpdate ?? false;
+    return new GateRunner(
+      verifierRegistry,
+      evidenceStore,
+      {},
+      gateEnforcer,
+      multiLevelLoader,
+      projectRoot,
+      enforceGateAgentsUpdate
+    );
   }, 'singleton');
 
   // Register core components (must come after verification for VerificationIntegration)
@@ -305,25 +337,30 @@ export function createContainer(config: PuppetMasterConfig, projectRoot: string,
     return new ExecutionEngine(executionConfig);
   }, 'singleton');
 
+  // Register Orchestrator (PH4-T08)
+  // Note: The Orchestrator requires initialize() to be called with dependencies before use.
+  // This registration creates the Orchestrator instance; callers must call initialize() separately.
+  container.register('orchestrator', () => {
+    const resolvedConfig = container.resolve<PuppetMasterConfig>('config');
+    const resolvedProjectPath = container.resolve<string>('projectRoot');
+    const orchestratorConfig: OrchestratorConfig = {
+      config: resolvedConfig,
+      projectPath: resolvedProjectPath,
+    };
+    return new Orchestrator(orchestratorConfig);
+  }, 'singleton');
+
   return container;
 }
 
 /**
  * Creates an orchestrator instance using the container.
- * Note: This function may not work until PH4-T08 (Orchestrator class) is implemented.
+ * Note: The returned Orchestrator requires initialize() to be called with dependencies before use.
  * @param config - Puppet Master configuration
  * @param projectPath - Project working directory path
- * @returns Orchestrator instance
- * @throws Error if Orchestrator class is not available
+ * @returns Orchestrator instance (not yet initialized)
  */
-export function createOrchestrator(config: PuppetMasterConfig, projectPath: string): unknown {
+export function createOrchestrator(config: PuppetMasterConfig, projectPath: string): Orchestrator {
   const container = createContainer(config, projectPath);
-  
-  // Try to resolve orchestrator - will fail if not registered
-  // This is a placeholder until Orchestrator class is implemented (PH4-T08)
-  if (!container.has('orchestrator')) {
-    throw new Error('Orchestrator not yet implemented. Please complete PH4-T08 first.');
-  }
-  
-  return container.resolve('orchestrator');
+  return container.resolve<Orchestrator>('orchestrator');
 }

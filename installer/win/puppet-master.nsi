@@ -10,6 +10,7 @@
 
 !include "MUI2.nsh"
 !include "LogicLib.nsh"
+!include "nsDialogs.nsh"
 
 Name "Puppet Master"
 OutFile "${OUTFILE}"
@@ -23,14 +24,29 @@ VIAddVersionKey "FileDescription" "RWM Puppet Master Installer"
 VIAddVersionKey "ProductVersion" "${VERSION}"
 VIAddVersionKey "CompanyName" "RWM"
 
-; Customize finish page text (P0-G15, CU-P0-T01)
-!define MUI_FINISHPAGE_TITLE "Installation Complete"
-!define MUI_FINISHPAGE_TEXT "Puppet Master has been installed successfully.$\r$\n$\r$\nIMPORTANT: Open a NEW terminal window (cmd or PowerShell) to use the 'puppet-master' command.$\r$\n$\r$\nExisting terminal windows will not recognize the updated PATH until restarted.$\r$\n$\r$\nAfter opening a new terminal, run 'puppet-master doctor' to verify your installation.$\r$\n$\r$\nPlatform CLI Installation:$\r$\n$\r$\n  Cursor CLI:$\r$\n    curl https://cursor.com/install -fsSL | bash$\r$\n    Installs both 'agent' and 'cursor-agent'$\r$\n$\r$\n  Codex CLI:$\r$\n    npm install -g @openai/codex-cli$\r$\n$\r$\n  Claude Code CLI:$\r$\n    npm install -g @anthropic-ai/claude-code-cli$\r$\n    Requires: ANTHROPIC_API_KEY environment variable$\r$\n$\r$\n  Gemini CLI:$\r$\n    npm install -g @google/gemini-cli$\r$\n    Requires: GEMINI_API_KEY or GOOGLE_APPLICATION_CREDENTIALS$\r$\n$\r$\n  GitHub Copilot CLI:$\r$\n    npm install -g @github/copilot-cli$\r$\n    Requires: GitHub Copilot subscription and GH_TOKEN/GITHUB_TOKEN$\r$\n$\r$\nAfter installing platform CLIs, run 'puppet-master doctor' to verify."
+; Customize finish page text (P0-G15, CU-P0-T01, P0-G23)
+!define MUI_FINISHPAGE_TITLE "Puppet Master Installation Complete!"
+!define MUI_FINISHPAGE_TEXT "Puppet Master has been installed successfully.$\r$\n$\r$\nNext steps:$\r$\n  1. Open a NEW terminal window (cmd or PowerShell)$\r$\n  2. Run 'puppet-master doctor' to verify installation$\r$\n     and check platform prerequisites$\r$\n$\r$\nThe doctor command will check:$\r$\n  - Required CLI tools (cursor, codex, claude, gemini, copilot)$\r$\n  - Platform authentication status$\r$\n  - Missing configuration$\r$\n$\r$\nClick 'Finish' to complete the installation."
+
+; Option to run puppet-master doctor after install
+!define MUI_FINISHPAGE_RUN "$INSTDIR\bin\puppet-master.cmd"
+!define MUI_FINISHPAGE_RUN_TEXT "Run 'puppet-master doctor' now (opens new terminal)"
+!define MUI_FINISHPAGE_RUN_PARAMETERS "doctor"
+
+; Option to show README / help
+!define MUI_FINISHPAGE_SHOWREADME
+!define MUI_FINISHPAGE_SHOWREADME_TEXT "Show CLI installation instructions"
+!define MUI_FINISHPAGE_SHOWREADME_FUNCTION ShowCLIInstructions
+
+; Variables for CLI installation page
+Var CLIInstallDialog
+Var CLIInstallCheckbox
 
 ; Modern UI pages
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
+Page Custom CLIInstallPageCreate CLIInstallPageLeave
 !insertmacro MUI_PAGE_FINISH
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
@@ -42,6 +58,10 @@ Section "Install"
 
   ; Copy payload
   File /r "${STAGE_DIR}\\puppet-master\\*.*"
+  
+  ; Copy PowerShell helper script for CLI installation
+  SetOutPath "$INSTDIR\scripts"
+  File "installer\win\scripts\install-clis.ps1"
 
   ; Create an uninstaller
   WriteUninstaller "$INSTDIR\\Uninstall.exe"
@@ -75,6 +95,70 @@ Section "Uninstall"
 SectionEnd
 
 ; --- Helper functions ---
+
+; Show CLI installation instructions in a message box
+Function ShowCLIInstructions
+  MessageBox MB_OK|MB_ICONINFORMATION "Platform CLI Installation:$\r$\n$\r$\n\
+Cursor CLI:$\r$\n\
+  curl https://cursor.com/install -fsSL | bash$\r$\n\
+  Installs both 'agent' and 'cursor-agent' to ~/.local/bin$\r$\n$\r$\n\
+Codex CLI:$\r$\n\
+  npm install -g @openai/codex-cli$\r$\n\
+  Or download from: https://github.com/openai/codex-cli$\r$\n$\r$\n\
+Claude Code CLI:$\r$\n\
+  npm install -g @anthropic-ai/claude-code-cli$\r$\n\
+  Or download from: https://github.com/anthropics/claude-code-cli$\r$\n\
+  Requires: ANTHROPIC_API_KEY environment variable$\r$\n$\r$\n\
+Gemini CLI:$\r$\n\
+  npm install -g @google/gemini-cli$\r$\n\
+  Requires: GEMINI_API_KEY or GOOGLE_APPLICATION_CREDENTIALS$\r$\n$\r$\n\
+GitHub Copilot CLI:$\r$\n\
+  npm install -g @github/copilot-cli$\r$\n\
+  Requires: GitHub Copilot subscription and GH_TOKEN/GITHUB_TOKEN$\r$\n$\r$\n\
+After installing platform CLIs, run 'puppet-master doctor' to verify."
+FunctionEnd
+
+; Custom page for CLI installation (Phase 5.1)
+Function CLIInstallPageCreate
+  !insertmacro MUI_HEADER_TEXT "Install AI Platform CLIs" "Select platform CLIs to install automatically"
+  
+  nsDialogs::Create 1018
+  Pop $CLIInstallDialog
+  
+  ${If} $CLIInstallDialog == error
+    Abort
+  ${EndIf}
+  
+  ; Check which CLIs are missing using PowerShell script
+  ; Set environment variable so script knows install directory
+  System::Call 'Kernel32::SetEnvironmentVariable(t "PuppetMasterInstallDir", t "$INSTDIR")'
+  
+  ; Run PowerShell script to check missing CLIs
+  ; Note: We'll show a simple checkbox to offer installation
+  ; The actual checking happens in the leave function
+  
+  ; Create info label
+  ${NSD_CreateLabel} 0 10u 100% 40u "After installing Puppet Master, you may want to install platform CLIs:$\r$\n$\r$\n- Codex CLI (npm install -g @openai/codex)$\r$\n- Claude Code CLI (PowerShell installer)$\r$\n- Gemini CLI (npm install -g @google/gemini-cli)$\r$\n- GitHub Copilot CLI (npm install -g @github/copilot)$\r$\n$\r$\nCursor CLI requires WSL or Git Bash (no Windows native installer)."
+  Pop $0
+  
+  ; Create checkbox to offer running installation helper
+  ${NSD_CreateCheckbox} 0 120u 100% 12u "Run CLI installation helper after installation"
+  Pop $CLIInstallCheckbox
+  ${NSD_Check} $CLIInstallCheckbox ; Check by default
+  
+  nsDialogs::Show
+FunctionEnd
+
+Function CLIInstallPageLeave
+  ${NSD_GetState} $CLIInstallCheckbox $0
+  
+  ${If} $0 == 1
+    ; User wants to install CLIs - launch PowerShell helper script
+    ; Note: This will open a new window for user interaction
+    ExecWait 'powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$INSTDIR\scripts\install-clis.ps1"'
+  ${EndIf}
+FunctionEnd
+
 ; StrStr implementation (haystack on stack, needle on stack)
 ; Returns substring or empty string.
 Function StrStr

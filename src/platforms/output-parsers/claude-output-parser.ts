@@ -220,10 +220,10 @@ export class ClaudeOutputParser extends BaseOutputParser {
       }
       const usage = json.usage as Record<string, unknown> | undefined;
       if (usage && parsed.tokensUsed === undefined) {
-        if (typeof usage.output_tokens === 'number') {
-          parsed.tokensUsed = usage.output_tokens;
-        } else if (typeof usage.input_tokens === 'number' && typeof usage.output_tokens === 'number') {
+        if (typeof usage.input_tokens === 'number' && typeof usage.output_tokens === 'number') {
           parsed.tokensUsed = (usage.input_tokens as number) + (usage.output_tokens as number);
+        } else if (typeof usage.output_tokens === 'number') {
+          parsed.tokensUsed = usage.output_tokens;
         }
       }
       if (typeof json.model === 'string') {

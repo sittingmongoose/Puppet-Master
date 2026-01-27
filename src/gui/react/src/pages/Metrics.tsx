@@ -162,17 +162,17 @@ export default function MetricsPage() {
             <tbody>
               {platformMetricsList.map((metric) => (
                 <tr key={metric.platform} className="border-b border-ink-faded/30">
-                  <td className="py-sm font-mono capitalize">{metric.platform}</td>
-                  <td className="py-sm">{metric.callsToday}</td>
-                  <td className="py-sm">{metric.callsThisHour}</td>
-                  <td className="py-sm">{metric.callsThisWeek}</td>
-                  <td className="py-sm">{formatLatency(metric.avgLatencyMs)}</td>
-                  <td className="py-sm">
+                  <td className="py-sm font-mono capitalize min-w-0 break-words">{metric.platform}</td>
+                  <td className="py-sm min-w-0 break-words">{metric.callsToday}</td>
+                  <td className="py-sm min-w-0 break-words">{metric.callsThisHour}</td>
+                  <td className="py-sm min-w-0 break-words">{metric.callsThisWeek}</td>
+                  <td className="py-sm min-w-0 break-words">{formatLatency(metric.avgLatencyMs)}</td>
+                  <td className="py-sm min-w-0">
                     <span className={metric.successRate >= 95 ? 'text-neon-green' : metric.successRate >= 90 ? 'text-safety-orange' : 'text-hot-magenta'}>
                       {metric.successRate.toFixed(1)}%
                     </span>
                   </td>
-                  <td className="py-sm text-ink-faded">
+                  <td className="py-sm text-ink-faded min-w-0 break-words">
                     {metric.lastCall?.toLocaleTimeString() ?? 'N/A'}
                   </td>
                 </tr>

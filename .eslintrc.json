@@ -6,6 +6,7 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended"
   ],
+  "ignorePatterns": ["**/dist/**", "**/node_modules/**", "src/gui/react/**"],
   "env": {
     "node": true,
     "es2022": true

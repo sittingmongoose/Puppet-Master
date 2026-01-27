@@ -231,17 +231,17 @@ function ProjectCard({ project, isCurrent, onOpen }: ProjectCardProps) {
       ${isCurrent ? 'border-electric-blue bg-electric-blue/5' : 'border-ink-black hover:border-electric-blue'}
       transition-colors
     `}>
-      <div className="flex flex-wrap items-center justify-between gap-md">
-        <div className="space-y-xs">
-          <div className="flex items-center gap-sm">
-            <span className="font-bold text-lg">{project.name}</span>
+      <div className="flex flex-wrap items-center justify-between gap-md min-w-0">
+        <div className="space-y-xs min-w-0 flex-1 break-words">
+          <div className="flex items-center gap-sm flex-wrap">
+            <span className="font-bold text-lg break-words">{project.name}</span>
             {isCurrent && (
-              <span className="px-sm py-xs bg-electric-blue text-white text-xs font-bold">
+              <span className="px-sm py-xs bg-electric-blue text-white text-xs font-bold flex-shrink-0">
                 CURRENT
               </span>
             )}
           </div>
-          <div className="font-mono text-sm text-ink-faded">{project.path}</div>
+          <div className="font-mono text-sm text-ink-faded break-all">{project.path}</div>
           {project.lastAccessed && (
             <div className="text-xs text-ink-faded">
               Last opened: {new Date(project.lastAccessed).toLocaleDateString()}
@@ -301,11 +301,11 @@ function ProjectsTable({ projects, currentProject, onOpen }: ProjectsTableProps)
                 ${isCurrent ? 'bg-electric-blue/10' : 'hover:bg-paper-lined/50'}
               `}
             >
-              <td className="py-sm px-md">
-                <span className="font-semibold">{project.name}</span>
+              <td className="py-sm px-md min-w-0">
+                <span className="font-semibold break-words">{project.name}</span>
               </td>
-              <td className="py-sm px-md">
-                <span className="font-mono text-sm">{project.path}</span>
+              <td className="py-sm px-md min-w-0">
+                <span className="font-mono text-sm break-all">{project.path}</span>
               </td>
               <td className="py-sm px-md">
                 {isCurrent ? (

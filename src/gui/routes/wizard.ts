@@ -28,7 +28,8 @@ import { ValidationGate } from '../../start-chain/validation-gate.js';
 import { StartChainPipeline } from '../../start-chain/index.js';
 import { PrdManager } from '../../memory/prd-manager.js';
 import { ConfigManager } from '../../config/config-manager.js';
-import type { PuppetMasterConfig } from '../../types/config.js';
+import type { PuppetMasterConfig, TierConfig, Platform } from '../../types/config.js';
+import * as yaml from 'js-yaml';
 import type { PlatformRegistry } from '../../platforms/registry.js';
 import type { QuotaManager } from '../../platforms/quota-manager.js';
 import type { UsageTracker } from '../../memory/usage-tracker.js';
@@ -103,6 +104,118 @@ async function parseFile(
     default:
       throw new Error(`Unsupported format: ${format}`);
   }
+}
+
+/**
+ * Wizard tier configuration (from frontend)
+ */
+interface WizardTierConfig {
+  platform: string;
+  model: string;
+  planMode?: boolean;
+  askMode?: boolean;
+  outputFormat?: 'text' | 'json' | 'stream-json';
+}
+
+/**
+ * Generate a default PuppetMasterConfig from wizard tier settings.
+ * Returns a complete config matching the actual types.
+ */
+function generateDefaultConfig(
+  projectName: string,
+  projectPath: string,
+  tierConfigs?: Record<string, WizardTierConfig>
+): PuppetMasterConfig {
+  // Use defaults if no tier configs provided
+  const tiers = tierConfigs || {
+    phase: { platform: 'cursor', model: 'auto' },
+    task: { platform: 'cursor', model: 'auto' },
+    subtask: { platform: 'cursor', model: 'auto' },
+    iteration: { platform: 'cursor', model: 'auto' },
+  };
+
+  // Convert wizard tier config to PuppetMasterConfig tier format
+  const makeTierConfig = (wizardTier: WizardTierConfig): TierConfig => ({
+    platform: wizardTier.platform as Platform,
+    model: wizardTier.model,
+    planMode: wizardTier.planMode,
+    askMode: wizardTier.askMode,
+    outputFormat: wizardTier.outputFormat,
+    selfFix: true,
+    maxIterations: 3,
+    escalation: null,
+  });
+
+  // Default budget config for each platform
+  const defaultBudget = {
+    maxCallsPerRun: 100,
+    maxCallsPerHour: 500,
+    maxCallsPerDay: 2000,
+    fallbackPlatform: null as Platform | null,
+  };
+
+  return {
+    project: {
+      name: projectName,
+      workingDirectory: projectPath,
+    },
+    tiers: {
+      phase: makeTierConfig(tiers.phase || { platform: 'cursor', model: 'auto' }),
+      task: makeTierConfig(tiers.task || { platform: 'cursor', model: 'auto' }),
+      subtask: makeTierConfig(tiers.subtask || { platform: 'cursor', model: 'auto' }),
+      iteration: makeTierConfig(tiers.iteration || { platform: 'cursor', model: 'auto' }),
+    },
+    branching: {
+      baseBranch: 'main',
+      namingPattern: 'pm/{tier}-{id}',
+      granularity: 'per-task',
+      pushPolicy: 'per-task',
+      mergePolicy: 'squash',
+      autoPr: true,
+      failOnGitError: false,
+      criticalGitOperations: [],
+    },
+    verification: {
+      browserAdapter: 'playwright',
+      screenshotOnFailure: true,
+      evidenceDirectory: '.puppet-master/evidence',
+    },
+    memory: {
+      progressFile: '.puppet-master/progress.jsonl',
+      agentsFile: '.puppet-master/agents.md',
+      prdFile: '.puppet-master/prd.json',
+      multiLevelAgents: true,
+      agentsEnforcement: {
+        requireUpdateOnFailure: true,
+        requireUpdateOnGotcha: true,
+        gateFailsOnMissingUpdate: false,
+        reviewerMustAcknowledge: false,
+      },
+    },
+    budgets: {
+      cursor: defaultBudget,
+      codex: defaultBudget,
+      claude: defaultBudget,
+      gemini: defaultBudget,
+      copilot: defaultBudget,
+    },
+    budgetEnforcement: {
+      onLimitReached: 'pause',
+      warnAtPercentage: 80,
+      notifyOnFallback: true,
+    },
+    logging: {
+      level: 'info',
+      retentionDays: 30,
+    },
+    cliPaths: {
+      cursor: '',
+      codex: '',
+      claude: '',
+      gemini: '',
+      copilot: '',
+    },
+  };
 }
 
 /**
@@ -439,17 +552,18 @@ export function createWizardRoutes(
 
   /**
    * POST /api/wizard/save
-   * Saves PRD, architecture, and tier plan to disk.
+   * Saves PRD, architecture, tier plan, and config.yaml to disk.
    *
    * If 'parsed' is provided and pipeline dependencies are available, runs the full Start Chain Pipeline.
    * Otherwise, saves the provided artifacts directly (useful when artifacts were already generated via /generate).
    *
-   * Body: { parsed?: ParsedRequirements, prd?: PRD, architecture?: string, tierPlan?: TierPlan, projectPath?: string, projectName?: string, runPipeline?: boolean }
-   * Response: { success: boolean, path?: string, artifacts?: { prdPath, architecturePath, planPaths }, usedPipeline?: boolean }
+   * Body: { parsed?: ParsedRequirements, prd?: PRD, architecture?: string, tierPlan?: TierPlan,
+   *         projectPath?: string, projectName?: string, tierConfigs?: Record<string, WizardTierConfig>, runPipeline?: boolean }
+   * Response: { success: boolean, path?: string, artifacts?: { prdPath, architecturePath, planPaths, configPath }, usedPipeline?: boolean }
    */
   router.post('/wizard/save', async (req: Request, res: Response) => {
     try {
-      const { parsed, prd, architecture, tierPlan, projectPath, projectName, runPipeline } = req.body;
+      const { parsed, prd, architecture, tierPlan, projectPath, projectName, tierConfigs, runPipeline } = req.body;
 
       if (!projectPath || typeof projectPath !== 'string' || projectPath.trim().length === 0) {
         res.status(400).json({
@@ -583,6 +697,20 @@ export function createWizardRoutes(
         await fs.writeFile(parsedPath, JSON.stringify(parsed, null, 2), 'utf-8');
       }
 
+      // Generate and save config.yaml with tier settings and sensible defaults
+      const configPath = join(puppetMasterDir, 'config.yaml');
+      const generatedConfig = generateDefaultConfig(
+        projectName || 'Unnamed Project',
+        projectDir,
+        tierConfigs as Record<string, WizardTierConfig> | undefined
+      );
+      const configYaml = yaml.dump(generatedConfig, {
+        indent: 2,
+        lineWidth: 120,
+        noRefs: true,
+      });
+      await fs.writeFile(configPath, configYaml, 'utf-8');
+
       // Emit completion event
       if (deps.eventBus) {
         deps.eventBus.emit({
@@ -604,9 +732,10 @@ export function createWizardRoutes(
           prdPath,
           architecturePath,
           planPaths,
+          configPath,
         },
         usedPipeline: false,
-        message: 'Artifacts saved successfully',
+        message: 'Artifacts saved successfully (including config.yaml)',
       });
     } catch (error) {
       const err = error as Error;

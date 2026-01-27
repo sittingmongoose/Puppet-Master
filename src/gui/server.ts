@@ -40,6 +40,9 @@ import { createDoctorRoutes } from './routes/doctor.js';
 import { createHistoryRoutes } from './routes/history.js';
 import { createSettingsRoutes } from './routes/settings.js';
 import { createEventsRoutes } from './routes/events.js';
+// Feature parity routes (CLI ↔ GUI)
+import { createLedgerRoutes } from './routes/ledger.js';
+import { createLoginRoutes } from './routes/login.js';
 import { translateEventForGui } from './translate-event-for-gui.js';
 import {
   createAuthMiddleware,
@@ -114,8 +117,8 @@ export class GuiServer {
       authTokenPath: config.authTokenPath ?? '.puppet-master/gui-token.txt',
       // P0-G07: CORS relaxed mode - disabled by default (secure)
       corsRelaxed: config.corsRelaxed ?? false,
-      // React GUI: disabled by default (vanilla HTML), can be enabled via config
-      useReactGui: config.useReactGui ?? false,
+      // React GUI: enabled by default (vanilla HTML available via --classic flag)
+      useReactGui: config.useReactGui ?? true,
     };
     this.eventBus = eventBus;
     this.app = express();
@@ -732,6 +735,10 @@ export class GuiServer {
     // SSE event stream routes (P2-T10)
     this.app.use('/api', createEventsRoutes(this.eventBus));
 
+    // Feature parity routes (CLI ↔ GUI)
+    this.app.use('/api', createLedgerRoutes(this.config.baseDirectory));
+    this.app.use('/api', createLoginRoutes());
+
     // Check if using React SPA or vanilla HTML
     if (this.config.useReactGui) {
       // React SPA mode - serve from react/dist
@@ -750,56 +757,13 @@ export class GuiServer {
         res.sendFile(path.join(reactPath, 'index.html'));
       });
     } else {
-      // Vanilla HTML mode (default)
+      // Vanilla HTML mode (legacy - old HTML files removed, React GUI is default)
+      // Keep static file serving for any remaining assets (e.g., favicon.svg)
       const publicPath = this.getPublicPath();
-
-      // Route handlers for specific pages (BEFORE static middleware to ensure they're matched)
-      this.app.get('/', (_req, res) => {
-        res.sendFile(path.join(publicPath, 'index.html'));
-      });
-
-      this.app.get('/projects', (_req, res) => {
-        res.sendFile(path.join(publicPath, 'projects.html'));
-      });
-
-      this.app.get('/wizard', (_req, res) => {
-        res.sendFile(path.join(publicPath, 'wizard.html'));
-      });
-
-      this.app.get('/tiers', (_req, res) => {
-        res.sendFile(path.join(publicPath, 'tiers.html'));
-      });
-
-      this.app.get('/config', (_req, res) => {
-        res.sendFile(path.join(publicPath, 'config.html'));
-      });
-
-      this.app.get('/settings', (_req, res) => {
-        res.sendFile(path.join(publicPath, 'settings.html'));
-      });
-
-      this.app.get('/evidence', (_req, res) => {
-        res.sendFile(path.join(publicPath, 'evidence.html'));
-      });
-
-      this.app.get('/doctor', (_req, res) => {
-        res.sendFile(path.join(publicPath, 'doctor.html'));
-      });
-
-      this.app.get('/history', (_req, res) => {
-        res.sendFile(path.join(publicPath, 'history.html'));
-      });
-
-      this.app.get('/coverage', (_req, res) => {
-        res.sendFile(path.join(publicPath, 'coverage.html'));
-      });
-
-      this.app.get('/metrics', (_req, res) => {
-        res.sendFile(path.join(publicPath, 'metrics.html'));
-      });
-
-      // Serve static files from public directory (AFTER specific routes)
       this.app.use(express.static(publicPath));
+      
+      // All routes now handled by React SPA catch-all above
+      // Old HTML route handlers removed (Task 6.3)
     }
 
     // Error handler middleware - must be last

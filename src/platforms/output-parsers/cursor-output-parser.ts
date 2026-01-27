@@ -154,11 +154,12 @@ export class CursorOutputParser extends BaseOutputParser {
             }
             break;
 
-          case 'error':
+          case 'error': {
             // Extract error information
             const errorMsg = typeof event.error === 'string' ? event.error : String(event.error);
             parsed.errors.push(errorMsg);
             break;
+          }
         }
       } catch {
         // Skip invalid JSON lines

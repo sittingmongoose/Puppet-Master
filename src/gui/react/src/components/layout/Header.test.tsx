@@ -39,7 +39,7 @@ describe('Header', () => {
 
   it('renders project name when provided', () => {
     renderWithRouter(<Header projectName="My Project" />);
-    expect(screen.getByText('📁 My Project')).toBeInTheDocument();
+    expect(screen.getByText('My Project')).toBeInTheDocument();
   });
 
   it('calls onProjectClick when project button is clicked', async () => {
@@ -48,7 +48,7 @@ describe('Header', () => {
     
     renderWithRouter(<Header projectName="Test Project" onProjectClick={onProjectClick} />);
     
-    await user.click(screen.getByText('📁 Test Project'));
+    await user.click(screen.getByText('Test Project'));
     expect(onProjectClick).toHaveBeenCalledTimes(1);
   });
 
@@ -57,14 +57,14 @@ describe('Header', () => {
     expect(screen.getByRole('button', { name: /switch to dark mode/i })).toBeInTheDocument();
   });
 
-  it('shows sun icon when dark mode is active', () => {
+  it('shows light text when dark mode is active', () => {
     renderWithRouter(<Header isDark={true} />);
-    expect(screen.getByRole('button', { name: /switch to light mode/i })).toHaveTextContent('☀️');
+    expect(screen.getByRole('button', { name: /switch to light mode/i })).toHaveTextContent('Light');
   });
 
-  it('shows moon icon when light mode is active', () => {
+  it('shows dark text when light mode is active', () => {
     renderWithRouter(<Header isDark={false} />);
-    expect(screen.getByRole('button', { name: /switch to dark mode/i })).toHaveTextContent('🌙');
+    expect(screen.getByRole('button', { name: /switch to dark mode/i })).toHaveTextContent('Dark');
   });
 
   it('calls onThemeToggle when theme button is clicked', async () => {
