@@ -49,6 +49,7 @@ async function startTestServer(): Promise<TestServerContext & { authToken?: stri
       host: 'localhost',
       corsOrigins: [`http://localhost:${port}`],
       authEnabled: true, // Enable auth for tests
+      useReactGui: true,
     },
     eventBus
   );
@@ -148,6 +149,14 @@ function createMockAgentsManager(): AgentsManager {
     loadForContext: vi.fn().mockResolvedValue([
       { content: '# AGENTS.md\n\nContent here', level: 'root', path: 'AGENTS.md' },
     ]),
+    listFiles: vi.fn().mockResolvedValue([
+      {
+        name: 'AGENTS.md (root)',
+        path: 'AGENTS.md',
+        lastAccessed: new Date(),
+        level: 'root',
+      },
+    ]),
   } as unknown as AgentsManager;
 }
 
@@ -224,8 +233,17 @@ describe('GUI Integration Tests', () => {
     });
 
     it('serves CSS files', async () => {
+      const htmlResponse = await request(testContext!.baseUrl)
+        .get('/')
+        .expect(200);
+      const cssMatch = htmlResponse.text.match(/href="(\/assets\/[^"]+\.css)"/);
+      expect(cssMatch).not.toBeNull();
+      const cssPath = cssMatch?.[1];
+      if (!cssPath) {
+        throw new Error('Unable to find CSS asset in index.html');
+      }
       const response = await request(testContext!.baseUrl)
-        .get('/css/styles.css')
+        .get(cssPath)
         .expect(200);
 
       expect(response.headers['content-type']).toMatch(/text\/css/);
@@ -233,21 +251,30 @@ describe('GUI Integration Tests', () => {
     });
 
     it('serves JavaScript files', async () => {
+      const htmlResponse = await request(testContext!.baseUrl)
+        .get('/')
+        .expect(200);
+      const jsMatch = htmlResponse.text.match(/src="(\/assets\/[^"]+\.js)"/);
+      expect(jsMatch).not.toBeNull();
+      const jsPath = jsMatch?.[1];
+      if (!jsPath) {
+        throw new Error('Unable to find JavaScript asset in index.html');
+      }
       const response = await request(testContext!.baseUrl)
-        .get('/js/dashboard.js')
+        .get(jsPath)
         .expect(200);
 
       expect(response.headers['content-type']).toMatch(/application\/javascript|text\/javascript/);
       expect(response.text.length).toBeGreaterThan(0);
     });
 
-    it('serves doctor.html page', async () => {
+    it('serves doctor route', async () => {
       const response = await request(testContext!.baseUrl)
         .get('/doctor')
         .expect(200);
 
       expect(response.text).toContain('<!DOCTYPE html>');
-      expect(response.text).toContain('Doctor');
+      expect(response.text).toMatch(/id="root"/);
     });
   });
 
@@ -319,7 +346,7 @@ describe('GUI Integration Tests', () => {
       expect(Array.isArray(response.body.entries)).toBe(true);
     });
 
-    it('GET /api/agents returns agents document', async () => {
+    it('GET /api/agents returns agents list', async () => {
       const tierManager = createMockTierManager();
       const orchestrator = createMockOrchestratorStateMachine();
       const progressManager = createMockProgressManager();
@@ -337,7 +364,8 @@ describe('GUI Integration Tests', () => {
         .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .expect(200);
 
-      expect(response.body).toHaveProperty('document');
+      expect(response.body).toHaveProperty('files');
+      expect(Array.isArray(response.body.files)).toBe(true);
     });
   });
 
@@ -362,21 +390,21 @@ describe('GUI Integration Tests', () => {
           phase: {
             platform: 'cursor' as const,
             model: 'sonnet-4.5-thinking',
-            self_fix: true,
+            task_failure_style: 'spawn_new_agent',
             max_iterations: 3,
             escalation: null,
           },
           task: {
             platform: 'cursor' as const,
             model: 'sonnet-4.5-thinking',
-            self_fix: true,
+            task_failure_style: 'spawn_new_agent',
             max_iterations: 5,
             escalation: 'phase' as const,
           },
           subtask: {
             platform: 'cursor' as const,
             model: 'sonnet-4.5-thinking',
-            self_fix: true,
+            task_failure_style: 'spawn_new_agent',
             max_iterations: 10,
             escalation: 'task' as const,
           },
@@ -728,15 +756,16 @@ describe('GUI Integration Tests', () => {
       expect(check).toHaveProperty('description');
     });
 
-    it('POST /api/doctor/run runs all checks', async () => {
+    it('POST /api/doctor/run runs selected checks', async () => {
       const response = await request(testContext!.baseUrl)
         .post('/api/doctor/run')
         .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
-        .send({})
+        .send({ checks: ['project-dir', 'config-file'] })
         .expect(200);
 
       expect(response.body).toHaveProperty('results');
       expect(Array.isArray(response.body.results)).toBe(true);
+      expect(response.body.results).toHaveLength(2);
 
       // Verify result structure
       if (response.body.results.length > 0) {

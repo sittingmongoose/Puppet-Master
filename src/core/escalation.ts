@@ -306,9 +306,10 @@ export class Escalation {
   }
 
   private isChainStepSupported(step: EscalationChainStepConfig, context: FailureContext): boolean {
+    const failureStyle = this.config.tiers[context.tier.type].taskFailureStyle;
     switch (step.action) {
       case 'self_fix':
-        return Boolean(this.config.tiers[context.tier.type].selfFix);
+        return failureStyle !== 'skip_retries';
       case 'kick_down':
         return context.tier.type === 'task' || context.tier.type === 'phase';
       case 'retry':
@@ -401,7 +402,7 @@ export class Escalation {
     const tierConfig = this.config.tiers[context.tier.type];
 
     return {
-      selfFixEnabled: tierConfig.selfFix,
+      selfFixEnabled: tierConfig.taskFailureStyle !== 'skip_retries',
       maxSelfFixAttempts: Escalation.toPositiveInt(tierConfig.maxIterations, 1),
       kickDownEnabled: context.tier.type === 'task' || context.tier.type === 'phase',
       escalateAfterAttempts: Escalation.toPositiveInt(context.maxAttempts, 1),

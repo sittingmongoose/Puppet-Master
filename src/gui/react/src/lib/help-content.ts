@@ -140,44 +140,33 @@ Choose based on how you'll process the output. Use text for human review, json f
 
 **Escalation**: When max iterations is reached, the task escalates to the parent tier (e.g., subtask → task → phase). This allows higher-level agents to take over.
 
-**Self-fix interaction**: When self-fix is enabled, the agent will attempt to fix issues automatically within the iteration limit.
+**Task Failure Style interaction**: Retry behavior depends on Task Failure Style. Spawn New Agent retries with fresh context, Continue With Same Agent retries in the same session (best-effort), Skip Retries escalates immediately.
 
 **Trade-offs**: Higher values allow more self-correction but may waste time on impossible tasks. Lower values escalate faster but may miss fixable issues.`,
       example: 'Phase: 3 iterations\nTask: 5 iterations\nSubtask: 10 iterations\nIteration: 3 iterations',
       warning: 'Setting very high values (>20) may cause the agent to loop indefinitely on impossible tasks.',
     },
-    selfFix: {
-      short: 'Enable automatic error correction. Agent will attempt to fix issues and retry without escalation.',
-      detailed: `Self-fix enables automatic error correction:
+    taskFailureStyle: {
+      short: 'Controls what happens after a failed iteration: spawn a fresh agent, continue the same agent, or skip retries.',
+      detailed: `Task Failure Style governs retry behavior when a tier fails:
 
-**What it does**: When an error occurs or tests fail, the agent will:
-1. Analyze the error
-2. Attempt to fix the issue
-3. Retry the task
-4. Repeat until success or max iterations reached
+**Spawn New Agent (default)**:
+- Equivalent to the old \`self_fix: true\`.
+- Each retry launches a fresh agent process and context.
+- Best for avoiding stuck contexts while still retrying up to max iterations.
 
-**When to enable**:
-- Implementation tasks (subtask, iteration tiers)
-- Tasks with clear error messages
-- When you want maximum automation
+**Continue With Same Agent**:
+- Attempts to keep the same agent context across retries (best-effort).
+- Most platforms still spawn fresh processes; use primarily for compatibility or future support.
+- Use when you accept that retries may still be fresh agents.
 
-**When to disable**:
-- Planning phases (phase tier)
-- Tasks requiring human review
-- When errors indicate fundamental issues
+**Skip Retries**:
+- Equivalent to the old \`self_fix: false\`.
+- Immediately escalates after the first failure (no retries).
+- Best for planning tiers or when failures require human judgment.
 
-**Interaction with max iterations**: Self-fix attempts count toward max iterations. If self-fix fails repeatedly, the task will escalate.
-
-**Limitations**: Self-fix works best with:
-- Clear error messages
-- Testable code
-- Deterministic failures
-
-May not work well for:
-- Design decisions
-- Ambiguous requirements
-- Non-deterministic issues`,
-      example: 'Enable for: Code implementation, bug fixes\nDisable for: Planning, architecture decisions',
+**Interaction with max iterations**: Retries (when enabled) still count toward max iterations. Skip Retries bypasses those retries entirely.`,
+      example: 'Default: Spawn New Agent\nUse Continue With Same Agent when you want continuity\nUse Skip Retries for immediate escalation',
     },
   },
 

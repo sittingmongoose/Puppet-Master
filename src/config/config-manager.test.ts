@@ -100,25 +100,25 @@ tiers:
   phase:
     platform: "claude"
     model: "opus-4.5"
-    self_fix: false
+    task_failure_style: "skip_retries"
     max_iterations: 3
     escalation: null
   task:
     platform: "codex"
     model: "gpt-5.2-high"
-    self_fix: true
+    task_failure_style: "spawn_new_agent"
     max_iterations: 5
     escalation: "phase"
   subtask:
     platform: "cursor"
     model: "sonnet-4.5-thinking"
-    self_fix: true
+    task_failure_style: "spawn_new_agent"
     max_iterations: 10
     escalation: "task"
   iteration:
     platform: "cursor"
     model: "auto"
-    self_fix: false
+    task_failure_style: "skip_retries"
     max_attempts: 3
     escalation: "subtask"
 branching:
@@ -203,25 +203,25 @@ tiers:
   phase:
     platform: "cursor"
     model: "auto"
-    self_fix: true
+    task_failure_style: "spawn_new_agent"
     max_iterations: 1
     escalation: null
   task:
     platform: "cursor"
     model: "auto"
-    self_fix: true
+    task_failure_style: "spawn_new_agent"
     max_iterations: 1
     escalation: "phase"
   subtask:
     platform: "cursor"
     model: "auto"
-    self_fix: true
+    task_failure_style: "spawn_new_agent"
     max_iterations: 1
     escalation: "task"
   iteration:
     platform: "cursor"
     model: "auto"
-    self_fix: true
+    task_failure_style: "spawn_new_agent"
     max_attempts: 1
     escalation: "subtask"
 branching:
@@ -292,7 +292,7 @@ cli_paths:
 
       // Verify camelCase conversion
       expect(config.project.workingDirectory).toBeDefined();
-      expect(config.tiers.phase.selfFix).toBe(true);
+      expect(config.tiers.phase.taskFailureStyle).toBe('spawn_new_agent');
       expect(config.tiers.phase.maxIterations).toBe(1);
       expect(config.branching.baseBranch).toBe('main');
       expect(config.branching.namingPattern).toBe('test');
@@ -309,6 +309,108 @@ cli_paths:
       expect(config.budgetEnforcement.warnAtPercentage).toBe(50);
       expect(config.logging.retentionDays).toBe(1);
       expect(config.cliPaths.cursor).toBe('test');
+    });
+
+    it('should map legacy self_fix to taskFailureStyle', async () => {
+      const yamlContent = `
+project:
+  name: "Test"
+  working_directory: "."
+tiers:
+  phase:
+    platform: "cursor"
+    model: "auto"
+    self_fix: true
+    max_iterations: 1
+    escalation: null
+  task:
+    platform: "cursor"
+    model: "auto"
+    self_fix: false
+    max_iterations: 1
+    escalation: "phase"
+  subtask:
+    platform: "cursor"
+    model: "auto"
+    self_fix: true
+    max_iterations: 1
+    escalation: "task"
+  iteration:
+    platform: "cursor"
+    model: "auto"
+    self_fix: false
+    max_attempts: 1
+    escalation: "subtask"
+branching:
+  base_branch: "main"
+  naming_pattern: "test"
+  granularity: "single"
+  push_policy: "per-phase"
+  merge_policy: "merge"
+  auto_pr: false
+verification:
+  browser_adapter: "test"
+  screenshot_on_failure: false
+  evidence_directory: "test"
+memory:
+  progress_file: "test"
+  agents_file: "test"
+  prd_file: "test"
+  multi_level_agents: false
+  agents_enforcement:
+    require_update_on_failure: false
+    require_update_on_gotcha: false
+    gate_fails_on_missing_update: false
+    reviewer_must_acknowledge: false
+budgets:
+  cursor:
+    max_calls_per_run: "unlimited"
+    max_calls_per_hour: "unlimited"
+    max_calls_per_day: "unlimited"
+    fallback_platform: null
+  codex:
+    max_calls_per_run: "unlimited"
+    max_calls_per_hour: "unlimited"
+    max_calls_per_day: "unlimited"
+    fallback_platform: null
+  claude:
+    max_calls_per_run: "unlimited"
+    max_calls_per_hour: "unlimited"
+    max_calls_per_day: "unlimited"
+    fallback_platform: null
+  gemini:
+    max_calls_per_run: "unlimited"
+    max_calls_per_hour: "unlimited"
+    max_calls_per_day: "unlimited"
+    fallback_platform: null
+  copilot:
+    max_calls_per_run: "unlimited"
+    max_calls_per_hour: "unlimited"
+    max_calls_per_day: "unlimited"
+    fallback_platform: null
+budget_enforcement:
+  on_limit_reached: "pause"
+  warn_at_percentage: 50
+  notify_on_fallback: false
+logging:
+  level: "error"
+  retention_days: 1
+cli_paths:
+  cursor: "test"
+  codex: "test"
+  claude: "test"
+  gemini: "test"
+  copilot: "test"
+`;
+      await writeFile(testConfigPath, yamlContent, 'utf-8');
+
+      const manager = new ConfigManager(testConfigPath);
+      const config = await manager.load();
+
+      expect(config.tiers.phase.taskFailureStyle).toBe('spawn_new_agent');
+      expect(config.tiers.task.taskFailureStyle).toBe('skip_retries');
+      expect(config.tiers.subtask.taskFailureStyle).toBe('spawn_new_agent');
+      expect(config.tiers.iteration.taskFailureStyle).toBe('skip_retries');
     });
 
     it('should throw on invalid YAML', async () => {

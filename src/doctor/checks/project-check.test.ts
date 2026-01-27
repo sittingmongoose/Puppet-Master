@@ -72,7 +72,7 @@ describe('ConfigFileCheck', () => {
   });
 
   it('should pass when valid config.yaml exists', async () => {
-    const validConfig = `
+  const validConfig = `
 project:
   name: "TestProject"
   working_directory: "."
@@ -80,25 +80,25 @@ tiers:
   phase:
     platform: "claude"
     model: "opus-4.5"
-    self_fix: false
+    task_failure_style: "skip_retries"
     max_iterations: 3
     escalation: null
   task:
     platform: "codex"
     model: "gpt-5.2-high"
-    self_fix: true
+    task_failure_style: "spawn_new_agent"
     max_iterations: 5
     escalation: "phase"
   subtask:
     platform: "cursor"
     model: "sonnet-4.5-thinking"
-    self_fix: true
+    task_failure_style: "spawn_new_agent"
     max_iterations: 10
     escalation: "task"
   iteration:
     platform: "cursor"
     model: "auto"
-    self_fix: false
+    task_failure_style: "skip_retries"
     max_iterations: 3
     escalation: "subtask"
 branching:

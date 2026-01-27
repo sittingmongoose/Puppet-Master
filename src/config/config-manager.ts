@@ -65,6 +65,7 @@ export class ConfigManager {
     
     // Convert snake_case to camelCase
     const converted = convertSnakeCaseToCamelCase(yamlContent);
+    applyLegacyTaskFailureStyle(converted);
     
     // Validate and return
     validateConfig(converted);
@@ -80,6 +81,7 @@ export class ConfigManager {
   validate(config: unknown): PuppetMasterConfig {
     // Convert snake_case to camelCase if needed
     const converted = convertSnakeCaseToCamelCase(config);
+    applyLegacyTaskFailureStyle(converted);
     validateConfig(converted);
     return converted as PuppetMasterConfig;
   }
@@ -189,6 +191,37 @@ function convertSnakeCaseToCamelCase(obj: unknown): unknown {
     result[camelKey] = convertSnakeCaseToCamelCase(value);
   }
   return result;
+}
+
+function applyLegacyTaskFailureStyle(config: unknown): void {
+  if (typeof config !== 'object' || config === null) {
+    return;
+  }
+  const root = config as Record<string, unknown>;
+  const tiers = root.tiers;
+  if (!tiers || typeof tiers !== 'object') {
+    return;
+  }
+  const tierKeys = ['phase', 'task', 'subtask', 'iteration', 'gateReview', 'gate_review'];
+  for (const key of tierKeys) {
+    const tier = (tiers as Record<string, unknown>)[key];
+    if (!tier || typeof tier !== 'object') {
+      continue;
+    }
+    const tierRecord = tier as Record<string, unknown>;
+    if (tierRecord.taskFailureStyle !== undefined) {
+      continue;
+    }
+    if (tierRecord.selfFix === true) {
+      tierRecord.taskFailureStyle = 'spawn_new_agent';
+      delete tierRecord.selfFix;
+      continue;
+    }
+    if (tierRecord.selfFix === false) {
+      tierRecord.taskFailureStyle = 'skip_retries';
+      delete tierRecord.selfFix;
+    }
+  }
 }
 
 /**

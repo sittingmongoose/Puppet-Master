@@ -119,6 +119,7 @@ async function createCheckRegistry(): Promise<CheckRegistry> {
  */
 export function createDoctorRoutes(): Router {
   const router = createRouter();
+  const registryPromise = createCheckRegistry();
 
   /**
    * GET /api/doctor/checks
@@ -126,7 +127,7 @@ export function createDoctorRoutes(): Router {
    */
   router.get('/doctor/checks', async (_req: Request, res: Response) => {
     try {
-      const registry = await createCheckRegistry();
+      const registry = await registryPromise;
       const checks = registry.getRegisteredChecks();
       const installationManager = new InstallationManager();
       
@@ -156,7 +157,7 @@ export function createDoctorRoutes(): Router {
   router.post('/doctor/run', async (req: Request, res: Response) => {
     try {
       const body = req.body as RunChecksRequest;
-      const registry = await createCheckRegistry();
+      const registry = await registryPromise;
       const installationManager = new InstallationManager();
 
       let results: CheckResult[];

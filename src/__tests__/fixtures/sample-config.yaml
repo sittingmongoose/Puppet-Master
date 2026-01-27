@@ -6,25 +6,25 @@ tiers:
   phase:
     platform: "cursor"
     model: "claude-3-5-sonnet-20241022"
-    self_fix: true
+    task_failure_style: "spawn_new_agent"
     max_iterations: 3
     escalation: null
   task:
     platform: "cursor"
     model: "claude-3-5-sonnet-20241022"
-    self_fix: true
+    task_failure_style: "spawn_new_agent"
     max_iterations: 5
     escalation: "phase"
   subtask:
     platform: "cursor"
     model: "claude-3-5-sonnet-20241022"
-    self_fix: true
+    task_failure_style: "spawn_new_agent"
     max_iterations: 10
     escalation: "task"
   iteration:
     platform: "cursor"
     model: "claude-3-5-sonnet-20241022"
-    self_fix: false
+    task_failure_style: "skip_retries"
     max_attempts: 1
     escalation: "subtask"
 

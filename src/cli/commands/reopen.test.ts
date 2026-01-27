@@ -205,10 +205,10 @@ describe('reopenAction', () => {
         workingDirectory: '/test',
       },
       tiers: {
-        phase: { platform: 'cursor', model: 'claude-sonnet', selfFix: false, maxIterations: 3, escalation: null },
-        task: { platform: 'cursor', model: 'claude-sonnet', selfFix: false, maxIterations: 3, escalation: 'phase' },
-        subtask: { platform: 'cursor', model: 'claude-sonnet', selfFix: false, maxIterations: 3, escalation: 'task' },
-        iteration: { platform: 'cursor', model: 'claude-sonnet', selfFix: false, maxIterations: 3, escalation: 'subtask' },
+        phase: { platform: 'cursor', model: 'claude-sonnet', taskFailureStyle: 'skip_retries', maxIterations: 3, escalation: null },
+        task: { platform: 'cursor', model: 'claude-sonnet', taskFailureStyle: 'skip_retries', maxIterations: 3, escalation: 'phase' },
+        subtask: { platform: 'cursor', model: 'claude-sonnet', taskFailureStyle: 'skip_retries', maxIterations: 3, escalation: 'task' },
+        iteration: { platform: 'cursor', model: 'claude-sonnet', taskFailureStyle: 'skip_retries', maxIterations: 3, escalation: 'subtask' },
       },
       branching: {
         baseBranch: 'main',

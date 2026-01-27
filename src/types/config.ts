@@ -16,6 +16,12 @@
 export type Platform = 'cursor' | 'codex' | 'claude' | 'gemini' | 'copilot';
 
 /**
+ * Task failure handling style.
+ * Controls how the system retries after failures at a tier.
+ */
+export type TaskFailureStyle = 'spawn_new_agent' | 'continue_same_agent' | 'skip_retries';
+
+/**
  * Model level routing (P2-T05).
  *
  * Used by deterministic complexity routing to pick between predefined model tiers.
@@ -91,7 +97,7 @@ export interface LoggingConfig {
 
 /**
  * Configuration for a single tier (phase, task, subtask, or iteration).
- * Maps from YAML: tiers.{tier}.platform, model, self_fix, max_iterations (or max_attempts for iteration), escalation
+ * Maps from YAML: tiers.{tier}.platform, model, task_failure_style, max_iterations (or max_attempts for iteration), escalation
  */
 export interface TierConfig {
   platform: Platform;
@@ -116,7 +122,7 @@ export interface TierConfig {
    * - Codex: prompt-based plan then execute in a single pass.
    */
   planMode?: boolean;
-  selfFix: boolean; // YAML: self_fix
+  taskFailureStyle: TaskFailureStyle; // YAML: task_failure_style
   maxIterations: number; // YAML: max_iterations (or max_attempts for iteration tier)
   escalation: 'phase' | 'task' | 'subtask' | null;
   /**

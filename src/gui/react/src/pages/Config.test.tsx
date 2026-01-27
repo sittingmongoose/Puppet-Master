@@ -40,10 +40,10 @@ describe('ConfigPage', () => {
     });
     mockApi.getConfig.mockResolvedValue({
       tiers: {
-        phase: { platform: 'cursor', model: 'auto', selfFix: true, maxIterations: 3 },
-        task: { platform: 'cursor', model: 'auto', selfFix: true, maxIterations: 3 },
-        subtask: { platform: 'cursor', model: 'auto', selfFix: true, maxIterations: 3 },
-        iteration: { platform: 'cursor', model: 'auto', selfFix: false, maxIterations: 1 },
+        phase: { platform: 'cursor', model: 'auto', taskFailureStyle: 'spawn_new_agent', maxIterations: 3 },
+        task: { platform: 'cursor', model: 'auto', taskFailureStyle: 'spawn_new_agent', maxIterations: 3 },
+        subtask: { platform: 'cursor', model: 'auto', taskFailureStyle: 'spawn_new_agent', maxIterations: 3 },
+        iteration: { platform: 'cursor', model: 'auto', taskFailureStyle: 'skip_retries', maxIterations: 1 },
       },
       branching: {
         baseBranch: 'main',

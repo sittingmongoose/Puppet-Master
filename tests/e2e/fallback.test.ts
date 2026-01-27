@@ -170,7 +170,7 @@ describe('E2E: Platform Fallback', () => {
       const tiers = platforms.map(p => ({ 
         platform: p, 
         model: 'test', 
-        selfFix: true, 
+        taskFailureStyle: 'spawn_new_agent', 
         maxIterations: 3 
       }));
       const recommended = await quotaManager.getRecommendedPlatform(tiers);
@@ -240,9 +240,9 @@ describe('E2E: Platform Fallback', () => {
       // cursor has full quota remaining
 
       const tiers = [
-        { platform: 'claude' as Platform, model: 'sonnet', selfFix: true, maxIterations: 3 },
-        { platform: 'codex' as Platform, model: 'gpt-5.2-codex', selfFix: true, maxIterations: 3 },
-        { platform: 'cursor' as Platform, model: 'auto', selfFix: true, maxIterations: 3 },
+        { platform: 'claude' as Platform, model: 'sonnet', taskFailureStyle: 'spawn_new_agent', maxIterations: 3 },
+        { platform: 'codex' as Platform, model: 'gpt-5.2-codex', taskFailureStyle: 'spawn_new_agent', maxIterations: 3 },
+        { platform: 'cursor' as Platform, model: 'auto', taskFailureStyle: 'spawn_new_agent', maxIterations: 3 },
       ];
 
       const recommended = await quotaManager.getRecommendedPlatform(tiers);

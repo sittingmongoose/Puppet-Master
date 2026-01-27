@@ -79,10 +79,10 @@ const createMockTierNode = (id: string, type: 'subtask' | 'task' | 'phase'): Tie
 const createMockConfig = (reviewerEnabled = true): PuppetMasterConfig => ({
   project: { name: 'test-project', workingDirectory: '/test' },
   tiers: {
-    phase: { platform: 'cursor', model: 'gpt-4', selfFix: true, maxIterations: 3, escalation: null },
-    task: { platform: 'cursor', model: 'gpt-4', selfFix: true, maxIterations: 3, escalation: 'phase' },
-    subtask: { platform: 'cursor', model: 'gpt-4', selfFix: true, maxIterations: 5, escalation: 'task' },
-    iteration: { platform: 'cursor', model: 'gpt-4', selfFix: false, maxIterations: 1, escalation: null },
+    phase: { platform: 'cursor', model: 'gpt-4', taskFailureStyle: 'spawn_new_agent', maxIterations: 3, escalation: null },
+    task: { platform: 'cursor', model: 'gpt-4', taskFailureStyle: 'spawn_new_agent', maxIterations: 3, escalation: 'phase' },
+    subtask: { platform: 'cursor', model: 'gpt-4', taskFailureStyle: 'spawn_new_agent', maxIterations: 5, escalation: 'task' },
+    iteration: { platform: 'cursor', model: 'gpt-4', taskFailureStyle: 'skip_retries', maxIterations: 1, escalation: null },
     reviewer: reviewerEnabled ? {
       platform: 'claude',
       model: 'sonnet',

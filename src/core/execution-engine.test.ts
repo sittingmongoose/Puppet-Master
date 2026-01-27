@@ -291,6 +291,69 @@ describe('execution-engine', () => {
     expect(secondCall!.prompt).toContain('Iteration 1:');
   });
 
+  it('runs plan then execution pass when planMode enabled for claude', async () => {
+    const runner = createMockRunner({
+      stdoutForSpawn: (pid) =>
+        fromArray(
+          pid === 10_000 ? ['Plan step', '<ralph>COMPLETE</ralph>'] : ['Executed', '<ralph>COMPLETE</ralph>']
+        ),
+      transcriptForSpawn: (pid) =>
+        pid === 10_000 ? 'Plan step\n<ralph>COMPLETE</ralph>' : 'Executed\n<ralph>COMPLETE</ralph>',
+    });
+
+    const engine = new ExecutionEngine(createBaseConfig());
+    engine.setRunner(runner);
+
+    const context = createIterationContext(1, {
+      platform: 'claude',
+      planMode: true,
+      permissionMode: 'plan',
+    });
+    const result = await engine.spawnIteration(context);
+
+    expect(runner.spawnFreshProcess).toHaveBeenCalledTimes(2);
+
+    const planCall = runner.spawnFreshProcess.mock.calls[0]?.[0];
+    expect(planCall?.planMode).toBe(true);
+    expect(planCall?.permissionMode).toBe('plan');
+    expect(planCall?.prompt).toContain('PLAN MODE - READ ONLY');
+
+    const executionCall = runner.spawnFreshProcess.mock.calls[1]?.[0];
+    expect(executionCall?.planMode).toBe(false);
+    expect(executionCall?.permissionMode).toBeUndefined();
+    expect(executionCall?.prompt).toContain('EXECUTE THE APPROVED PLAN:');
+    expect(executionCall?.prompt).toContain('Plan step');
+
+    expect(result.output).toContain('=== PLAN PASS ===');
+    expect(result.output).toContain('=== EXECUTION PASS ===');
+  });
+
+  it('runs plan then execution pass for copilot without plan flag', async () => {
+    const runner = createMockRunner({
+      stdoutForSpawn: (pid) =>
+        fromArray(
+          pid === 10_000 ? ['Copilot plan', '<ralph>COMPLETE</ralph>'] : ['Copilot exec', '<ralph>COMPLETE</ralph>']
+        ),
+      transcriptForSpawn: (pid) =>
+        pid === 10_000 ? 'Copilot plan\n<ralph>COMPLETE</ralph>' : 'Copilot exec\n<ralph>COMPLETE</ralph>',
+    });
+
+    const engine = new ExecutionEngine(createBaseConfig());
+    engine.setRunner(runner);
+
+    const context = createIterationContext(1, {
+      platform: 'copilot',
+      planMode: true,
+    });
+    await engine.spawnIteration(context);
+
+    expect(runner.spawnFreshProcess).toHaveBeenCalledTimes(2);
+
+    const planCall = runner.spawnFreshProcess.mock.calls[0]?.[0];
+    expect(planCall?.planMode).toBe(false);
+    expect(planCall?.prompt).toContain('PLAN MODE - READ ONLY');
+  });
+
   it('tracks process IDs for audit', async () => {
     const runner = createMockRunner({
       stdoutForSpawn: () => fromArray(['<ralph>COMPLETE</ralph>']),

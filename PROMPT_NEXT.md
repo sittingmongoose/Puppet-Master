@@ -318,7 +318,7 @@ export type Platform = 'cursor' | 'codex' | 'claude';
 export interface TierConfig {
   platform: Platform;
   model: string;
-  selfFix: boolean;
+  taskFailureStyle: 'spawn_new_agent' | 'continue_same_agent' | 'skip_retries';
   maxIterations: number;
   escalation: 'phase' | 'task' | 'subtask' | null;
 }
@@ -402,10 +402,10 @@ export const DEFAULT_CONFIG: PuppetMasterConfig = {
     workingDirectory: '.',
   },
   tiers: {
-    phase: { platform: 'claude', model: 'opus-4.5', selfFix: false, maxIterations: 3, escalation: null },
-    task: { platform: 'codex', model: 'gpt-5.2-high', selfFix: true, maxIterations: 5, escalation: 'phase' },
-    subtask: { platform: 'cursor', model: 'sonnet-4.5-thinking', selfFix: true, maxIterations: 10, escalation: 'task' },
-    iteration: { platform: 'cursor', model: 'auto', selfFix: false, maxIterations: 3, escalation: 'subtask' },
+    phase: { platform: 'claude', model: 'opus-4.5', taskFailureStyle: 'skip_retries', maxIterations: 3, escalation: null },
+    task: { platform: 'codex', model: 'gpt-5.2-high', taskFailureStyle: 'spawn_new_agent', maxIterations: 5, escalation: 'phase' },
+    subtask: { platform: 'cursor', model: 'sonnet-4.5-thinking', taskFailureStyle: 'spawn_new_agent', maxIterations: 10, escalation: 'task' },
+    iteration: { platform: 'cursor', model: 'auto', taskFailureStyle: 'skip_retries', maxIterations: 3, escalation: 'subtask' },
   },
   budgets: {
     claude: { maxCallsPerRun: 5, maxCallsPerHour: 3, maxCallsPerDay: 10, cooldownHours: 5, fallbackPlatform: 'codex' },
@@ -516,10 +516,10 @@ describe('config', () => {
     const config: PuppetMasterConfig = {
       ...DEFAULT_CONFIG,
       tiers: {
-        phase: { platform: 'cursor', model: 'auto', selfFix: false, maxIterations: 3, escalation: null },
-        task: { platform: 'cursor', model: 'auto', selfFix: true, maxIterations: 5, escalation: 'phase' },
-        subtask: { platform: 'cursor', model: 'auto', selfFix: true, maxIterations: 10, escalation: 'task' },
-        iteration: { platform: 'cursor', model: 'auto', selfFix: false, maxIterations: 3, escalation: 'subtask' },
+        phase: { platform: 'cursor', model: 'auto', taskFailureStyle: 'skip_retries', maxIterations: 3, escalation: null },
+        task: { platform: 'cursor', model: 'auto', taskFailureStyle: 'spawn_new_agent', maxIterations: 5, escalation: 'phase' },
+        subtask: { platform: 'cursor', model: 'auto', taskFailureStyle: 'spawn_new_agent', maxIterations: 10, escalation: 'task' },
+        iteration: { platform: 'cursor', model: 'auto', taskFailureStyle: 'skip_retries', maxIterations: 3, escalation: 'subtask' },
       },
     };
     const required = getRequiredPlatforms(config);

@@ -412,7 +412,7 @@ tiers:
   phase:
     platform: cursor | codex | claude
     model: string
-    selfFix: boolean
+    taskFailureStyle: spawn_new_agent | continue_same_agent | skip_retries
     maxIterations: number
   task: ...
   subtask: ...

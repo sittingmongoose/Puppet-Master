@@ -22,7 +22,7 @@ export interface PlatformConfig {
   model: string;
   planMode?: boolean;
   reasoningEffort?: 'Low' | 'Medium' | 'High' | 'Extra high';
-  selfFix: boolean;
+  taskFailureStyle: PuppetMasterConfig['tiers']['phase']['taskFailureStyle'];
   maxIterations: number;
   escalation: 'phase' | 'task' | 'subtask' | null;
   permissionMode?: 'default' | 'acceptEdits' | 'plan' | 'dontAsk' | 'bypassPermissions';
@@ -215,7 +215,7 @@ export class PlatformRouter {
           model: targetTierConfig.model, // Keep model from tier type
           planMode: fallbackTierConfig.planMode,
           reasoningEffort: fallbackTierConfig.reasoningEffort,
-          selfFix: fallbackTierConfig.selfFix,
+          taskFailureStyle: fallbackTierConfig.taskFailureStyle,
           maxIterations: fallbackTierConfig.maxIterations,
           escalation: fallbackTierConfig.escalation,
           permissionMode: fallbackTierConfig.permissionMode,
@@ -244,7 +244,7 @@ export class PlatformRouter {
           model: modelOverride ?? targetTierConfig.model,
           planMode: fallbackTierConfig.planMode,
           reasoningEffort: fallbackTierConfig.reasoningEffort,
-          selfFix: fallbackTierConfig.selfFix,
+          taskFailureStyle: fallbackTierConfig.taskFailureStyle,
           maxIterations: fallbackTierConfig.maxIterations,
           escalation: fallbackTierConfig.escalation,
           permissionMode: fallbackTierConfig.permissionMode,
@@ -309,7 +309,7 @@ export class PlatformRouter {
           model: selectedModel,
           planMode: template.planMode,
           reasoningEffort: template.reasoningEffort,
-          selfFix: template.selfFix,
+          taskFailureStyle: template.taskFailureStyle,
           maxIterations: template.maxIterations,
           escalation: template.escalation,
           permissionMode: template.permissionMode,
@@ -322,16 +322,16 @@ export class PlatformRouter {
 
     const fallback = this.getFallbackWithModel(preferredPlatform, 'subtask', selectedModel);
     return {
-      config: {
-        ...fallback,
-        planMode: template.planMode,
-        reasoningEffort: template.reasoningEffort,
-        selfFix: template.selfFix,
-        maxIterations: template.maxIterations,
-        escalation: template.escalation,
-        permissionMode: template.permissionMode,
-        allowedTools: template.allowedTools,
-        outputFormat: template.outputFormat,
+        config: {
+          ...fallback,
+          planMode: template.planMode,
+          reasoningEffort: template.reasoningEffort,
+          taskFailureStyle: template.taskFailureStyle,
+          maxIterations: template.maxIterations,
+          escalation: template.escalation,
+          permissionMode: template.permissionMode,
+          allowedTools: template.allowedTools,
+          outputFormat: template.outputFormat,
       },
       reason: `complexity_routing_fallback(${complexity}/${taskType}->${modelLevel})`,
     };
@@ -352,7 +352,7 @@ export class PlatformRouter {
       model: tierConfig.model,
       planMode: tierConfig.planMode,
       reasoningEffort: tierConfig.reasoningEffort,
-      selfFix: tierConfig.selfFix,
+      taskFailureStyle: tierConfig.taskFailureStyle,
       maxIterations: tierConfig.maxIterations,
       escalation: tierConfig.escalation,
       permissionMode: tierConfig.permissionMode,
@@ -373,7 +373,7 @@ export class PlatformRouter {
       model: tierConfig.model,
       planMode: tierConfig.planMode,
       reasoningEffort: tierConfig.reasoningEffort,
-      selfFix: tierConfig.selfFix,
+      taskFailureStyle: tierConfig.taskFailureStyle,
       maxIterations: tierConfig.maxIterations,
       escalation: tierConfig.escalation,
       permissionMode: tierConfig.permissionMode,

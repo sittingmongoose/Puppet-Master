@@ -976,6 +976,8 @@ export class Orchestrator {
           throw new Error(`Platform runner not available for platform: ${context.platform}`);
         }
 
+        const failureStyle = this.config.tiers.iteration.taskFailureStyle;
+
         // Ensure correct branch before executing the iteration
         const task = subtask.parent;
         const phase = task?.parent;
@@ -1080,7 +1082,7 @@ export class Orchestrator {
         this.metricsCollector?.recordIteration(context, result);
 
         // Handle result (after potential reviewer modification)
-        await this.handleIterationResult(result, subtask);
+        await this.handleIterationResult(result, subtask, failureStyle);
 
         // Run the subtask gate immediately after a COMPLETE signal so advancement can proceed.
         // Only if worker completed AND (reviewer approved OR reviewer not enabled)
@@ -1594,7 +1596,11 @@ export class Orchestrator {
   /**
    * Handle iteration result
    */
-  private async handleIterationResult(result: IterationResult, subtask: TierNode): Promise<void> {
+  private async handleIterationResult(
+    result: IterationResult,
+    subtask: TierNode,
+    failureStyle: PuppetMasterConfig['tiers']['iteration']['taskFailureStyle']
+  ): Promise<void> {
     // Parse output
     const parsed = this.outputParser.parse(result.output);
 
@@ -1616,6 +1622,10 @@ export class Orchestrator {
     } else if (result.completionSignal === 'GUTTER' || !result.success) {
       // Mark iteration as failed
       const errorMsg = result.error ?? parsed.errors.join('; ') ?? 'Iteration failed';
+      if (failureStyle === 'skip_retries') {
+        const maxIter = subtask.data.maxIterations;
+        subtask.stateMachine.restoreInternalContext({ iterationCount: maxIter - 1 });
+      }
       this.requireTierTransition(subtask, { type: 'ITERATION_FAILED', error: errorMsg }, 'iteration failed');
 
       // Check if we should retry or escalate
@@ -2833,7 +2843,7 @@ Return the plan as a JSON object matching this structure:
     }
 
     // Handle result
-    await this.handleIterationResult(result, currentSubtask);
+    await this.handleIterationResult(result, currentSubtask, this.config.tiers.iteration.taskFailureStyle);
 
     // Run the subtask gate immediately after a COMPLETE signal.
     if (result.success && result.completionSignal === 'COMPLETE') {
@@ -3215,7 +3225,11 @@ Return the plan as a JSON object matching this structure:
             filesChanged: [],
             error: subtaskResult.error,
           };
-          await this.handleIterationResult(failureResult, subtask);
+          await this.handleIterationResult(
+            failureResult,
+            subtask,
+            this.config.tiers.iteration.taskFailureStyle
+          );
         }
       }
     }
@@ -3255,7 +3269,11 @@ Return the plan as a JSON object matching this structure:
       filesChanged: [],
       error: `MERGE_CONFLICT: ${conflictInfo}. Manual resolution required.`,
     };
-    await this.handleIterationResult(failureResult, conflictSubtask);
+    await this.handleIterationResult(
+      failureResult,
+      conflictSubtask,
+      this.config.tiers.iteration.taskFailureStyle
+    );
 
     // Emit event for conflict
     if (this.eventBus) {

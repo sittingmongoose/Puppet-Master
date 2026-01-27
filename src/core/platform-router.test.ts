@@ -29,21 +29,21 @@ describe('PlatformRouter', () => {
         phase: {
           platform: 'claude',
           model: 'opus-4.5',
-          selfFix: false,
+          taskFailureStyle: 'skip_retries',
           maxIterations: 3,
           escalation: null,
         },
         task: {
           platform: 'codex',
           model: 'gpt-5.2-high',
-          selfFix: true,
+          taskFailureStyle: 'spawn_new_agent',
           maxIterations: 5,
           escalation: 'phase',
         },
         subtask: {
           platform: 'cursor',
           model: 'sonnet-4.5-thinking',
-          selfFix: true,
+          taskFailureStyle: 'spawn_new_agent',
           maxIterations: 10,
           escalation: 'task',
         },
@@ -51,7 +51,7 @@ describe('PlatformRouter', () => {
           platform: 'cursor',
           model: 'auto',
           planMode: true,
-          selfFix: false,
+          taskFailureStyle: 'skip_retries',
           maxIterations: 3,
           escalation: 'subtask',
         },
@@ -204,7 +204,7 @@ describe('PlatformRouter', () => {
       config.tiers.gate_review = {
         platform: 'claude',
         model: 'sonnet',
-        selfFix: false,
+        taskFailureStyle: 'skip_retries',
         maxIterations: 1,
         escalation: null,
       };
@@ -277,7 +277,7 @@ describe('PlatformRouter', () => {
       expect(result).toMatchObject({
         platform: 'codex',
         model: 'gpt-5.2-high',
-        selfFix: true,
+        taskFailureStyle: 'spawn_new_agent',
         maxIterations: 5,
         escalation: 'phase',
       });
@@ -287,7 +287,7 @@ describe('PlatformRouter', () => {
       config.tiers.gate_review = {
         platform: 'cursor',
         model: 'sonnet',
-        selfFix: false,
+        taskFailureStyle: 'skip_retries',
         maxIterations: 1,
         escalation: null,
       };

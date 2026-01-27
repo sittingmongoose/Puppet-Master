@@ -175,28 +175,28 @@ function createTestConfig(tempDir: string): PuppetMasterConfig {
       phase: {
         platform: 'cursor',
         model: 'claude-3-5-sonnet-20241022',
-        selfFix: true,
+        taskFailureStyle: 'spawn_new_agent' as const,
         maxIterations: 3,
         escalation: null,
       },
       task: {
         platform: 'cursor',
         model: 'claude-3-5-sonnet-20241022',
-        selfFix: true,
+        taskFailureStyle: 'spawn_new_agent' as const,
         maxIterations: 5,
         escalation: 'phase',
       },
       subtask: {
         platform: 'cursor',
         model: 'claude-3-5-sonnet-20241022',
-        selfFix: true,
+        taskFailureStyle: 'spawn_new_agent' as const,
         maxIterations: 10,
         escalation: 'task',
       },
       iteration: {
         platform: 'cursor',
         model: 'claude-3-5-sonnet-20241022',
-        selfFix: false,
+        taskFailureStyle: 'skip_retries' as const,
         maxIterations: 1,
         escalation: 'subtask',
       },
@@ -764,8 +764,8 @@ describe('Platform Integration Tests', () => {
 
       // Get recommended platform from tier configs
       const tiers = [
-        { platform: 'cursor' as Platform, model: 'test', selfFix: true, maxIterations: 1, escalation: null },
-        { platform: 'codex' as Platform, model: 'test', selfFix: true, maxIterations: 1, escalation: null },
+        { platform: 'cursor' as Platform, model: 'test', taskFailureStyle: 'spawn_new_agent' as const, maxIterations: 1, escalation: null },
+        { platform: 'codex' as Platform, model: 'test', taskFailureStyle: 'spawn_new_agent' as const, maxIterations: 1, escalation: null },
       ];
 
       const recommended = await quotaManager.getRecommendedPlatform(tiers);
@@ -811,9 +811,9 @@ describe('Platform Integration Tests', () => {
       await quotaManager.recordUsage('claude', 1000, 1000);
 
       const tiers = [
-        { platform: 'cursor' as Platform, model: 'test', selfFix: true, maxIterations: 1, escalation: null },
-        { platform: 'codex' as Platform, model: 'test', selfFix: true, maxIterations: 1, escalation: null },
-        { platform: 'claude' as Platform, model: 'test', selfFix: true, maxIterations: 1, escalation: null },
+        { platform: 'cursor' as Platform, model: 'test', taskFailureStyle: 'spawn_new_agent' as const, maxIterations: 1, escalation: null },
+        { platform: 'codex' as Platform, model: 'test', taskFailureStyle: 'spawn_new_agent' as const, maxIterations: 1, escalation: null },
+        { platform: 'claude' as Platform, model: 'test', taskFailureStyle: 'spawn_new_agent' as const, maxIterations: 1, escalation: null },
       ];
 
       const recommended = await quotaManager.getRecommendedPlatform(tiers);
@@ -870,8 +870,8 @@ describe('Platform Integration Tests', () => {
       await quotaManager.recordUsage('cursor', 1000, 1000);
 
       const tiers = [
-        { platform: 'cursor' as Platform, model: 'test', selfFix: true, maxIterations: 1, escalation: null },
-        { platform: 'codex' as Platform, model: 'test', selfFix: true, maxIterations: 1, escalation: null },
+        { platform: 'cursor' as Platform, model: 'test', taskFailureStyle: 'spawn_new_agent' as const, maxIterations: 1, escalation: null },
+        { platform: 'codex' as Platform, model: 'test', taskFailureStyle: 'spawn_new_agent' as const, maxIterations: 1, escalation: null },
       ];
 
       const recommended = await quotaManager.getRecommendedPlatform(tiers);

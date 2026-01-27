@@ -300,9 +300,9 @@ describe('QuotaManager', () => {
   describe('getRecommendedPlatform', () => {
     it('should return platform with best quota availability', async () => {
       const tiers: TierConfig[] = [
-        { platform: 'claude', model: 'claude-3-opus', selfFix: false, maxIterations: 1, escalation: null },
-        { platform: 'codex', model: 'gpt-4', selfFix: false, maxIterations: 1, escalation: null },
-        { platform: 'cursor', model: 'gpt-4', selfFix: false, maxIterations: 1, escalation: null },
+        { platform: 'claude', model: 'claude-3-opus', taskFailureStyle: 'skip_retries', maxIterations: 1, escalation: null },
+        { platform: 'codex', model: 'gpt-4', taskFailureStyle: 'skip_retries', maxIterations: 1, escalation: null },
+        { platform: 'cursor', model: 'gpt-4', taskFailureStyle: 'skip_retries', maxIterations: 1, escalation: null },
       ];
 
       const recommended = await quotaManager.getRecommendedPlatform(tiers);
@@ -337,8 +337,8 @@ describe('QuotaManager', () => {
       await quotaManager.recordUsage('codex', 1000, 1000);
 
       const tiers: TierConfig[] = [
-        { platform: 'claude', model: 'claude-3-opus', selfFix: false, maxIterations: 1, escalation: null },
-        { platform: 'codex', model: 'gpt-4', selfFix: false, maxIterations: 1, escalation: null },
+        { platform: 'claude', model: 'claude-3-opus', taskFailureStyle: 'skip_retries', maxIterations: 1, escalation: null },
+        { platform: 'codex', model: 'gpt-4', taskFailureStyle: 'skip_retries', maxIterations: 1, escalation: null },
       ];
 
       const recommended = await quotaManager.getRecommendedPlatform(tiers);
@@ -362,8 +362,8 @@ describe('QuotaManager', () => {
       });
 
       const tiers: TierConfig[] = [
-        { platform: 'claude', model: 'claude-3-opus', selfFix: false, maxIterations: 1, escalation: null },
-        { platform: 'codex', model: 'gpt-4', selfFix: false, maxIterations: 1, escalation: null },
+        { platform: 'claude', model: 'claude-3-opus', taskFailureStyle: 'skip_retries', maxIterations: 1, escalation: null },
+        { platform: 'codex', model: 'gpt-4', taskFailureStyle: 'skip_retries', maxIterations: 1, escalation: null },
       ];
 
       const recommended = await quotaManager.getRecommendedPlatform(tiers);
@@ -381,9 +381,9 @@ describe('QuotaManager', () => {
 
     it('should handle duplicate platforms in tiers', async () => {
       const tiers: TierConfig[] = [
-        { platform: 'claude', model: 'claude-3-opus', selfFix: false, maxIterations: 1, escalation: null },
-        { platform: 'claude', model: 'claude-3-opus', selfFix: false, maxIterations: 1, escalation: null },
-        { platform: 'codex', model: 'gpt-4', selfFix: false, maxIterations: 1, escalation: null },
+        { platform: 'claude', model: 'claude-3-opus', taskFailureStyle: 'skip_retries', maxIterations: 1, escalation: null },
+        { platform: 'claude', model: 'claude-3-opus', taskFailureStyle: 'skip_retries', maxIterations: 1, escalation: null },
+        { platform: 'codex', model: 'gpt-4', taskFailureStyle: 'skip_retries', maxIterations: 1, escalation: null },
       ];
 
       const recommended = await quotaManager.getRecommendedPlatform(tiers);

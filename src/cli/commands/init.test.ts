@@ -128,7 +128,7 @@ describe('initAction', () => {
 
       // Verify snake_case format
       expect(content).toContain('working_directory');
-      expect(content).toContain('self_fix');
+      expect(content).toContain('task_failure_style');
       expect(content).toContain('max_iterations');
       expect(content).toContain('base_branch');
       expect(content).toContain('naming_pattern');

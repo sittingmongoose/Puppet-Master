@@ -126,7 +126,7 @@ describe('escalation', () => {
   it('returns self-fix decision when enabled for minor failures', () => {
     const config = getDefaultConfig();
     config.memory.prdFile = prdPath;
-    config.tiers.task.selfFix = true;
+    config.tiers.task.taskFailureStyle = 'spawn_new_agent';
 
     const escalation = new Escalation(tierStateManager, config);
     const task = tierStateManager.getTask('TK-001-001')!;
@@ -146,7 +146,7 @@ describe('escalation', () => {
   it('rejects self-fix when disabled and returns kick-down for task-tier minor failures', () => {
     const config = getDefaultConfig();
     config.memory.prdFile = prdPath;
-    config.tiers.task.selfFix = false;
+    config.tiers.task.taskFailureStyle = 'skip_retries';
 
     const escalation = new Escalation(tierStateManager, config);
     const task = tierStateManager.getTask('TK-001-001')!;
@@ -182,7 +182,7 @@ describe('escalation', () => {
   it('executeKickDown creates new subtasks in the PRD', async () => {
     const config = getDefaultConfig();
     config.memory.prdFile = prdPath;
-    config.tiers.task.selfFix = false;
+    config.tiers.task.taskFailureStyle = 'skip_retries';
 
     const escalation = new Escalation(tierStateManager, config);
     const taskBefore = tierStateManager.getTask('TK-001-001')!;
@@ -394,4 +394,3 @@ describe('escalation', () => {
     expect(decision.reason).toContain('Retrying after test failure');
   });
 });
-

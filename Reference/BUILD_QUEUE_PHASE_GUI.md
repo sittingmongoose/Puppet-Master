@@ -69,13 +69,65 @@ This phase migrates the GUI from vanilla HTML/CSS/JS to React 18+ / TypeScript /
 | PH-GUI-T18 | ✅ PASS | 2026-01-25 | Dashboard page with all panels (20 tests) |
 | PH-GUI-T19 | ✅ PASS | 2026-01-25 | Projects page with loading/form/table (16 tests) |
 | PH-GUI-T20 | ✅ PASS | 2026-01-25 | Wizard page 6-step flow (15 tests) |
-| PH-GUI-T21 | ✅ PASS | 2026-01-25 | Config page with 6 tabs (14 tests) |
+| PH-GUI-T21 | ✅ PASS | 2026-01-27 | Task Failure Style dropdown + help text; GUI integration test updates |
 | PH-GUI-T22 | ✅ PASS | 2026-01-25 | Doctor page with category panels (12 tests) |
 | PH-GUI-T23 | ✅ PASS | 2026-01-25 | Tiers page tree view (14 tests) |
 | PH-GUI-T24 | ✅ PASS | 2026-01-25 | Evidence page with categories/preview (12 tests) |
 | PH-GUI-T25 | ✅ PASS | 2026-01-25 | History, Metrics, Coverage, Settings pages (60 tests) |
 | PH-GUI-T26 | ✅ PASS | 2026-01-25 | Charts (UsageChart, BudgetDonut) + keyboard shortcuts (49 tests) |
 | PH-GUI-T27 | ✅ PASS | 2026-01-25 | Server integration + test suite (353 tests total) |
+
+### Task status log
+Status: PASS  
+Date: 2026-01-27  
+Summary of changes: Replaced selfFix with taskFailureStyle across config/schema/defaults and core retry behavior (including session reuse for "Continue With Same Agent"), updated the Config page to a Task Failure Style dropdown with expanded help text, and fixed GUI integration tests to use React assets and run selected doctor checks with cached registry.  
+Files changed:  
+- AGENTS.md  
+- PROMPT_NEXT.md  
+- REQUIREMENTS.md  
+- Reference/BUILD_QUEUE_PHASE_2.md  
+- src/__tests__/fixtures/sample-config.yaml  
+- src/cli/commands/gui.test.ts  
+- src/cli/commands/init.test.ts  
+- src/cli/commands/pause.test.ts  
+- src/cli/commands/reopen.test.ts  
+- src/cli/commands/resume.test.ts  
+- src/cli/commands/start.test.ts  
+- src/cli/commands/status.test.ts  
+- src/cli/commands/stop.test.ts  
+- src/cli/commands/validate.test.ts  
+- src/config/config-manager.test.ts  
+- src/config/config-manager.ts  
+- src/config/config-schema.ts  
+- src/config/default-config.ts  
+- src/core/escalation.test.ts  
+- src/core/escalation.ts  
+- src/core/execution-engine.test.ts  
+- src/core/execution-engine.ts  
+- src/core/orchestrator.test.ts  
+- src/core/orchestrator.ts  
+- src/core/platform-router.test.ts  
+- src/core/platform-router.ts  
+- src/core/worker-reviewer.test.ts  
+- src/doctor/checks/project-check.test.ts  
+- src/gui/gui.integration.test.ts  
+- src/gui/react/src/lib/help-content.ts  
+- src/gui/react/src/pages/Config.test.tsx  
+- src/gui/react/src/pages/Config.tsx  
+- src/gui/routes/doctor.ts  
+- src/gui/routes/wizard.ts  
+- src/platforms/copilot-sdk-runner.ts  
+- src/platforms/integration.test.ts  
+- src/platforms/quota-manager.test.ts  
+- src/platforms/registry.ts  
+- src/start-chain/tier-plan-generator.test.ts  
+- src/start-chain/validation-gate.test.ts  
+- src/types/config.ts  
+- tests/e2e/fallback.test.ts  
+- tests/e2e/quota.test.ts  
+Commands run + results:  
+- npm test -- --run src/gui/gui.integration.test.ts: PASS  
+If FAIL - where stuck + exact error snippets + what remains: N/A  
 
 ---
 

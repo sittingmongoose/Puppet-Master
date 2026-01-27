@@ -28,7 +28,7 @@ interface TierSettings {
   planMode?: boolean;
   askMode?: boolean;
   outputFormat?: 'text' | 'json' | 'stream-json';
-  selfFix: boolean;
+  taskFailureStyle: 'spawn_new_agent' | 'continue_same_agent' | 'skip_retries';
   maxIterations: number;
 }
 
@@ -117,10 +117,10 @@ interface Config {
 
 const DEFAULT_CONFIG: Config = {
   tiers: {
-    phase: { platform: 'cursor', model: 'auto', planMode: false, askMode: false, outputFormat: 'text', selfFix: true, maxIterations: 3 },
-    task: { platform: 'cursor', model: 'auto', planMode: false, askMode: false, outputFormat: 'text', selfFix: true, maxIterations: 3 },
-    subtask: { platform: 'cursor', model: 'auto', planMode: false, askMode: false, outputFormat: 'text', selfFix: true, maxIterations: 3 },
-    iteration: { platform: 'cursor', model: 'auto', planMode: false, askMode: false, outputFormat: 'text', selfFix: false, maxIterations: 1 },
+    phase: { platform: 'cursor', model: 'auto', planMode: false, askMode: false, outputFormat: 'text', taskFailureStyle: 'spawn_new_agent', maxIterations: 3 },
+    task: { platform: 'cursor', model: 'auto', planMode: false, askMode: false, outputFormat: 'text', taskFailureStyle: 'spawn_new_agent', maxIterations: 3 },
+    subtask: { platform: 'cursor', model: 'auto', planMode: false, askMode: false, outputFormat: 'text', taskFailureStyle: 'spawn_new_agent', maxIterations: 3 },
+    iteration: { platform: 'cursor', model: 'auto', planMode: false, askMode: false, outputFormat: 'text', taskFailureStyle: 'skip_retries', maxIterations: 1 },
   },
   branching: {
     baseBranch: 'main',
@@ -606,13 +606,17 @@ function TiersTab({ config, onChange, models, onRefreshModels }: TiersTabProps) 
                   <HelpText {...helpContent.tiers.maxIterations} />
                 </div>
                 <div className="space-y-xs">
-                  <Checkbox
-                    id={`${tier}-selfFix`}
-                    checked={config[tier].selfFix}
-                    onChange={(checked) => updateTier(tier, { selfFix: checked })}
-                    label="Enable self-fix"
+                  <Select
+                    label="Task Failure Style"
+                    value={config[tier].taskFailureStyle}
+                    onChange={(e) => updateTier(tier, { taskFailureStyle: e.target.value as TierSettings['taskFailureStyle'] })}
+                    options={[
+                      { value: 'spawn_new_agent', label: 'Spawn New Agent (default)' },
+                      { value: 'continue_same_agent', label: 'Continue With Same Agent (best-effort)' },
+                      { value: 'skip_retries', label: 'Skip Retries' },
+                    ]}
                   />
-                  <HelpText {...helpContent.tiers.selfFix} />
+                  <HelpText {...helpContent.tiers.taskFailureStyle} />
                 </div>
               </div>
             </div>
@@ -1264,7 +1268,7 @@ function AdvancedTab({
                 size="sm"
                 onClick={() => {
                   // Add a new step (simplified - in production would have full editor)
-                  const newStep = { action: 'self_fix' as const };
+                  const newStep = { action: 'retry' as const };
                   onEscalationChange({
                     chains: {
                       ...safeEscalation.chains,

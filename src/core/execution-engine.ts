@@ -210,6 +210,71 @@ export class ExecutionEngine {
       ...requestOverrides,
     };
 
+    const runnerWithExecute = activeRunner as {
+      execute?: (req: ExecutionRequest) => Promise<import('../types/platforms.js').ExecutionResult>;
+      setSessionPersistence?: (enabled: boolean) => Promise<void>;
+    };
+    if (
+      activeRunner.platform === 'copilot' &&
+      typeof runnerWithExecute.execute === 'function' &&
+      typeof runnerWithExecute.setSessionPersistence === 'function'
+    ) {
+      const startTime = Date.now();
+      const result = await runnerWithExecute.execute(request);
+      const output = result.output ?? '';
+      const completionSignal = ExecutionEngine.extractCompletionSignal(output);
+      const success = result.success && completionSignal === 'COMPLETE';
+      const processId = result.processId || Math.max(1000, Date.now());
+      const duration = result.duration || Date.now() - startTime;
+      const exitCode = result.exitCode ?? (success ? 0 : 1);
+
+      let filesChanged: string[] = [];
+      if (this.gitManager) {
+        try {
+          filesChanged = await this.gitManager.getDiffFiles();
+        } catch {
+          filesChanged = [];
+        }
+      }
+
+      const iterationResult: IterationResult = {
+        success,
+        output,
+        processId,
+        duration,
+        exitCode,
+        ...(completionSignal ? { completionSignal } : {}),
+        learnings: [],
+        filesChanged,
+        ...(result.error ? { error: result.error } : {}),
+      };
+
+      this.processInfoByPid.set(processId, {
+        pid: processId,
+        platform: activeRunner.platform,
+        startedAt: new Date().toISOString(),
+        status: 'completed',
+      });
+
+      if (output) {
+        for (const callback of this.outputCallbacks) {
+          callback(output);
+        }
+      }
+
+      if (options.recordAudit !== false) {
+        this.recordProcessAudit(context, processId, iterationResult);
+      }
+
+      if (options.emitComplete !== false) {
+        for (const callback of this.completeCallbacks) {
+          callback(iterationResult);
+        }
+      }
+
+      return iterationResult;
+    }
+
     const startTime = Date.now();
     await activeRunner.prepareWorkingDirectory(context.projectPath);
 

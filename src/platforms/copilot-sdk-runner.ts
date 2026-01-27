@@ -143,9 +143,20 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
     };
     this.defaultTimeout = defaultTimeout;
     this.hardTimeout = hardTimeout;
-    this.sessionReuseAllowed = config.sessionPersistence ?? false;
+    this.sessionReuseAllowed = true;
     this.rateLimiter = rateLimiter;
     this.quotaManager = quotaManager;
+  }
+
+  async setSessionPersistence(enabled: boolean): Promise<void> {
+    if (this.config.sessionPersistence === enabled) {
+      return;
+    }
+    this.config.sessionPersistence = enabled;
+    if (!enabled && this.session) {
+      await this.session.destroy();
+      this.session = null;
+    }
   }
 
   /**

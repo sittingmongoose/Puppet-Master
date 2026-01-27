@@ -258,9 +258,13 @@ function validateTierConfig(value: unknown, path: string[]): asserts value is Ti
     throw new ConfigValidationError('tier.planMode must be a boolean', [...path, 'planMode']);
   }
 
-  // Validate selfFix
-  if (typeof v.selfFix !== 'boolean') {
-    throw new ConfigValidationError('tier.selfFix must be a boolean', [...path, 'selfFix']);
+  // Validate taskFailureStyle
+  const taskFailureStyles = ['spawn_new_agent', 'continue_same_agent', 'skip_retries'];
+  if (typeof v.taskFailureStyle !== 'string' || !taskFailureStyles.includes(v.taskFailureStyle)) {
+    throw new ConfigValidationError(
+      `tier.taskFailureStyle must be one of: ${taskFailureStyles.join(', ')}`,
+      [...path, 'taskFailureStyle']
+    );
   }
 
   // Validate maxIterations

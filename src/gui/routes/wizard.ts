@@ -141,7 +141,7 @@ function generateDefaultConfig(
     planMode: wizardTier.planMode,
     askMode: wizardTier.askMode,
     outputFormat: wizardTier.outputFormat,
-    selfFix: true,
+    taskFailureStyle: 'spawn_new_agent',
     maxIterations: 3,
     escalation: null,
   });

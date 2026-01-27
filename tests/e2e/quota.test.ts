@@ -214,8 +214,8 @@ describe('E2E: Quota Management', () => {
 
       // Codex should have more remaining quota
       const tiers = [
-        { platform: 'claude' as Platform, model: 'sonnet', selfFix: true, maxIterations: 3 },
-        { platform: 'codex' as Platform, model: 'gpt-5.2-codex', selfFix: true, maxIterations: 3 },
+        { platform: 'claude' as Platform, model: 'sonnet', taskFailureStyle: 'spawn_new_agent', maxIterations: 3 },
+        { platform: 'codex' as Platform, model: 'gpt-5.2-codex', taskFailureStyle: 'spawn_new_agent', maxIterations: 3 },
       ];
 
       const recommended = await quotaManager.getRecommendedPlatform(tiers);
@@ -230,8 +230,8 @@ describe('E2E: Quota Management', () => {
       }
 
       const tiers = [
-        { platform: 'claude' as Platform, model: 'sonnet', selfFix: true, maxIterations: 3 },
-        { platform: 'codex' as Platform, model: 'gpt-5.2-codex', selfFix: true, maxIterations: 3 },
+        { platform: 'claude' as Platform, model: 'sonnet', taskFailureStyle: 'spawn_new_agent', maxIterations: 3 },
+        { platform: 'codex' as Platform, model: 'gpt-5.2-codex', taskFailureStyle: 'spawn_new_agent', maxIterations: 3 },
       ];
 
       const recommended = await quotaManager.getRecommendedPlatform(tiers);
