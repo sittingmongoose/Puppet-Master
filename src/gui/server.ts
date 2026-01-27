@@ -256,7 +256,8 @@ export class GuiServer {
     if (this.config.authEnabled) {
       this.app.use((req, res, next) => {
         // Allow auth-related endpoints without authentication
-        if (req.path.startsWith('/api/auth/')) {
+        // P0-G07: Also allow /api/login/* routes (platform auth status, not GUI auth)
+        if (req.path.startsWith('/api/auth/') || req.path.startsWith('/api/login/')) {
           return next();
         }
         

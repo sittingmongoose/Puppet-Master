@@ -59,10 +59,10 @@ Cost/performance tradeoff: More capable models cost more but provide better resu
       example: 'auto - Automatic selection\nopus - Maximum capability\nhaiku - Fast and efficient',
     },
     planMode: {
-      short: 'Enable plan mode for read-only analysis before execution. Agent will analyze and plan without making changes.',
-      detailed: `Plan mode enables read-only analysis mode:
+      short: 'Enable plan-first behavior. Agent will plan, then execute the plan in a follow-up run.',
+      detailed: `Plan mode enables a plan-first workflow:
 
-**What it does**: Agent analyzes the task, reviews code, and creates a plan without executing changes. Useful for:
+**What it does**: Agent analyzes the task, reviews code, and creates a plan, then executes that plan in a follow-up run. Useful for:
 - Understanding codebase before making changes
 - Reviewing implementation approaches
 - Validating task feasibility
@@ -70,16 +70,17 @@ Cost/performance tradeoff: More capable models cost more but provide better resu
 **When to enable**:
 - Phase tier: For initial planning and architecture
 - Iteration tier: For review passes before implementation
-- When you want to review plans before execution
+- When you want a plan recorded before execution
 
 **Platform support**:
-- Cursor: Uses \`--mode=plan\` flag
-- Claude: Uses \`--permission-mode plan\` flag
-- Gemini: Uses \`--approval-mode plan\` (requires experimental.plan setting)
-- Codex/Copilot: Uses prompt preamble (no native flag)
+- Cursor: Uses \`--mode=plan\` flag (best-effort)
+- Claude: Uses \`--permission-mode plan\` in planning pass, then re-runs to execute
+- Gemini: Uses \`--approval-mode plan\` in planning pass (requires experimental.plan), then re-runs to execute
+- Copilot: Uses a plan-first prompt, then re-runs to execute
+- Codex: Uses prompt-based plan then execute (single pass)
 
-**Implications**: Plan mode prevents code changes, ensuring safe analysis. Disable when you want the agent to execute changes.`,
-      example: 'Enable for: Planning phases, code reviews\nDisable for: Implementation, bug fixes',
+**Implications**: Planning output is captured and execution runs with full permissions. Disable when you want a single-pass execution.`,
+      example: 'Enable for: Planning phases, code reviews\nDisable for: Quick fixes, single-pass execution',
     },
     askMode: {
       short: 'Enable ask mode for read-only discovery. Agent can explore codebase but cannot make changes.',

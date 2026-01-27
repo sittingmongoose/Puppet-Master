@@ -24,7 +24,8 @@
       "Bash(npm ci:*)",
       "Bash(xargs:*)",
       "Read(//mnt/user/Cursor/**)",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash(npm run test:coverage:*)"
     ]
   }
 }

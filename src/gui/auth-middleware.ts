@@ -98,7 +98,8 @@ export function createAuthMiddleware(config: AuthConfig): RequestHandler {
     }
     
     // Allow auth-related endpoints without authentication
-    if (req.path.startsWith('/api/auth/')) {
+    // P0-G07: Also allow /api/login/* routes (platform auth status, not GUI auth)
+    if (req.path.startsWith('/api/auth/') || req.path.startsWith('/api/login/')) {
       next();
       return;
     }
@@ -150,12 +151,24 @@ export function createAuthMiddleware(config: AuthConfig): RequestHandler {
 /**
  * Create auth status route handler.
  * Returns current auth configuration (enabled/disabled, token path).
+ * P0-G07: Also returns token when auth is enabled (for frontend to use).
  */
 export function createAuthStatusHandler(config: AuthConfig): RequestHandler {
   return (_req: Request, res: Response): void => {
-    res.json({
+    const response: {
+      enabled: boolean;
+      tokenPath?: string;
+      token?: string;
+    } = {
       enabled: config.enabled,
       tokenPath: config.tokenPath,
-    });
+    };
+    
+    // Return token if auth is enabled (frontend needs it for API calls)
+    if (config.enabled && config.token) {
+      response.token = config.token;
+    }
+    
+    res.json(response);
   };
 }

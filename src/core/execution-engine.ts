@@ -71,6 +71,14 @@ interface ProcessAuditRecord {
   timestamp: string;
 }
 
+interface IterationPassOptions {
+  recordAudit?: boolean;
+  emitComplete?: boolean;
+}
+
+const TWO_PASS_PLAN_PLATFORMS = new Set<Platform>(['claude', 'gemini', 'copilot']);
+const PLAN_MODE_FLAG_PLATFORMS = new Set<Platform>(['claude', 'gemini']);
+
 export class ExecutionEngine {
   private readonly config: ExecutionConfig;
   private readonly promptBuilder: PromptBuilder;
@@ -130,7 +138,64 @@ export class ExecutionEngine {
       }
     }
 
-    const prompt = this.buildIterationPrompt(context);
+    const basePrompt = this.buildIterationPrompt(context);
+    const shouldTwoPass =
+      context.planMode === true && TWO_PASS_PLAN_PLATFORMS.has(context.platform);
+
+    if (!shouldTwoPass) {
+      return await this.runIterationPass(context, activeRunner, basePrompt, {});
+    }
+
+    const planPrompt = this.buildPlanOnlyPrompt(basePrompt);
+    const usePlanModeFlag = PLAN_MODE_FLAG_PLATFORMS.has(context.platform);
+    const planResult = await this.runIterationPass(
+      context,
+      activeRunner,
+      planPrompt,
+      {
+        planMode: usePlanModeFlag ? true : false,
+      },
+      {
+        recordAudit: false,
+        emitComplete: false,
+      }
+    );
+
+    if (!planResult.success) {
+      return {
+        ...planResult,
+        output: this.formatPlanFailureOutput(planResult.output),
+        ...(planResult.error
+          ? { error: `Plan pass failed: ${planResult.error}` }
+          : { error: 'Plan pass failed' }),
+      };
+    }
+
+    const planOutput = this.normalizePlanOutput(planResult.output);
+    const executionPrompt = this.buildExecutePlanPrompt(basePrompt, planOutput);
+    const executionPermissionMode =
+      context.permissionMode === 'plan' ? undefined : context.permissionMode;
+
+    const executionResult = await this.runIterationPass(
+      context,
+      activeRunner,
+      executionPrompt,
+      {
+        planMode: false,
+        permissionMode: executionPermissionMode,
+      }
+    );
+
+    return this.combinePlanAndExecutionResults(planResult, executionResult);
+  }
+
+  private async runIterationPass(
+    context: IterationContext,
+    activeRunner: PlatformRunnerContract,
+    prompt: string,
+    requestOverrides: Partial<ExecutionRequest>,
+    options: IterationPassOptions = {}
+  ): Promise<IterationResult> {
     const request: ExecutionRequest = {
       prompt,
       model: context.model,
@@ -142,6 +207,7 @@ export class ExecutionEngine {
       workingDirectory: context.projectPath,
       nonInteractive: true,
       timeout: this.config.defaultTimeout,
+      ...requestOverrides,
     };
 
     const startTime = Date.now();
@@ -369,10 +435,14 @@ export class ExecutionEngine {
       }
     }
 
-    this.recordProcessAudit(context, processId, result);
+    if (options.recordAudit !== false) {
+      this.recordProcessAudit(context, processId, result);
+    }
 
-    for (const callback of this.completeCallbacks) {
-      callback(result);
+    if (options.emitComplete !== false) {
+      for (const callback of this.completeCallbacks) {
+        callback(result);
+      }
     }
 
     return result;
@@ -435,6 +505,81 @@ export class ExecutionEngine {
     };
 
     return this.promptBuilder.buildIterationPrompt(promptContext);
+  }
+
+  private buildPlanOnlyPrompt(basePrompt: string): string {
+    const preamble = [
+      'PLAN MODE - READ ONLY:',
+      '- Produce a concise step-by-step plan (max 12 bullets).',
+      '- Do NOT implement changes, edit files, or run commands.',
+      '- Do NOT claim tests were run.',
+      '- End with <ralph>COMPLETE</ralph> once the plan is ready.',
+      '',
+      '---',
+      '',
+    ].join('\n');
+    return `${preamble}${basePrompt}`;
+  }
+
+  private buildExecutePlanPrompt(basePrompt: string, planOutput: string): string {
+    const planBlock =
+      planOutput.trim().length > 0
+        ? planOutput.trim()
+        : 'Plan output missing. Use best judgment to proceed.';
+    const preamble = [
+      'EXECUTE THE APPROVED PLAN:',
+      '- Follow the plan below; adjust only if needed.',
+      '- Then implement changes and run required tests.',
+      '',
+      '## Plan (from planning pass)',
+      planBlock,
+      '',
+      '---',
+      '',
+    ].join('\n');
+    return `${preamble}${basePrompt}`;
+  }
+
+  private normalizePlanOutput(output: string): string {
+    const withoutStatusBlock = output.replace(/<RALPH_STATUS>[\s\S]*?<\/RALPH_STATUS>/gi, '');
+    const withoutSignals = withoutStatusBlock.replace(
+      /<ralph>\s*(?:COMPLETE|GUTTER)\s*<\/ralph>/gi,
+      ''
+    );
+    const withoutStdoutPrefix = withoutSignals.replace(/^STDOUT:\s*/i, '');
+    const stderrIndex = withoutStdoutPrefix.search(/\n\nSTDERR:/i);
+    const trimmed = stderrIndex >= 0 ? withoutStdoutPrefix.slice(0, stderrIndex) : withoutStdoutPrefix;
+    return trimmed.trim();
+  }
+
+  private formatPassOutput(label: string, output: string): string {
+    const trimmed = output.trim();
+    const body = trimmed.length > 0 ? trimmed : '(no output)';
+    return `=== ${label} PASS ===\n${body}`;
+  }
+
+  private formatPlanFailureOutput(output: string): string {
+    return this.formatPassOutput('PLAN', output);
+  }
+
+  private combinePlanAndExecutionResults(
+    planResult: IterationResult,
+    executionResult: IterationResult
+  ): IterationResult {
+    const combinedOutput = [
+      this.formatPassOutput('PLAN', planResult.output),
+      this.formatPassOutput('EXECUTION', executionResult.output),
+    ].join('\n\n');
+    const mergedFilesChanged = Array.from(
+      new Set([...planResult.filesChanged, ...executionResult.filesChanged])
+    );
+
+    return {
+      ...executionResult,
+      output: combinedOutput,
+      duration: planResult.duration + executionResult.duration,
+      filesChanged: mergedFilesChanged,
+    };
   }
 
   private derivePreviousFailures(context: IterationContext): FailureInfo[] {
@@ -522,4 +667,3 @@ export class ExecutionEngine {
     return undefined;
   }
 }
-

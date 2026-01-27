@@ -107,13 +107,13 @@ export interface TierConfig {
    */
   reasoningEffort?: 'Low' | 'Medium' | 'High' | 'Extra high';
   /**
-   * Enable Cursor “plan mode” for this tier (best-effort).
+   * Enable plan-first behavior for this tier.
    *
    * YAML: plan_mode
    * Notes:
-   * - Only meaningful for Cursor CLI, ignored by other platforms.
-   * - If the platform CLI does not support a dedicated plan mode flag, the runner
-   *   should fall back to a plan-first instruction in the prompt.
+   * - Cursor: uses --mode=plan when supported.
+   * - Claude/Gemini/Copilot: run a plan-only pass, then re-run to execute the plan.
+   * - Codex: prompt-based plan then execute in a single pass.
    */
   planMode?: boolean;
   selfFix: boolean; // YAML: self_fix

@@ -22,16 +22,96 @@ export class APIError extends Error {
 }
 
 /**
- * Base fetch wrapper with error handling
+ * Get auth token from localStorage or fetch from server
+ */
+let authToken: string | null = null;
+let authTokenPromise: Promise<string | null> | null = null;
+
+async function getAuthToken(): Promise<string | null> {
+  // Check localStorage first
+  const stored = localStorage.getItem('rwm-auth-token');
+  if (stored) {
+    authToken = stored;
+    return stored;
+  }
+  
+  // If already fetching, wait for that
+  if (authTokenPromise) {
+    return authTokenPromise;
+  }
+  
+  // Fetch auth status to get token
+  authTokenPromise = (async () => {
+    try {
+      const response = await fetch('/api/auth/status');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.enabled && data.token) {
+          authToken = data.token;
+          localStorage.setItem('rwm-auth-token', data.token);
+          return data.token;
+        }
+      }
+    } catch (err) {
+      console.error('[API] Failed to fetch auth token:', err);
+    }
+    return null;
+  })();
+  
+  const token = await authTokenPromise;
+  authTokenPromise = null;
+  return token;
+}
+
+/**
+ * Base fetch wrapper with error handling and automatic auth token injection
  */
 async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
+  // Skip auth for auth endpoints and login endpoints (platform auth, not GUI auth)
+  const needsAuth = url.startsWith('/api/') && !url.startsWith('/api/auth/') && !url.startsWith('/api/login/');
+  
+  // Get auth token if needed
+  let headers: HeadersInit = {
+    'Content-Type': 'application/json',
+    ...options?.headers,
+  };
+  
+  if (needsAuth) {
+    const token = authToken || await getAuthToken();
+    if (token) {
+      headers = {
+        ...headers,
+        'Authorization': `Bearer ${token}`,
+      };
+    }
+  }
+  
   const response = await fetch(url, {
     ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options?.headers,
-    },
+    headers,
   });
+
+  // If we get 401, try refreshing token and retry once
+  if (response.status === 401 && needsAuth && !authTokenPromise) {
+    localStorage.removeItem('rwm-auth-token');
+    authToken = null;
+    const token = await getAuthToken();
+    if (token) {
+      headers = {
+        ...headers,
+        'Authorization': `Bearer ${token}`,
+      };
+      const retryResponse = await fetch(url, {
+        ...options,
+        headers,
+      });
+      if (!retryResponse.ok) {
+        const message = await retryResponse.text().catch(() => retryResponse.statusText);
+        throw new APIError(message, retryResponse.status, retryResponse.statusText);
+      }
+      return retryResponse.json();
+    }
+  }
 
   if (!response.ok) {
     const message = await response.text().catch(() => response.statusText);
