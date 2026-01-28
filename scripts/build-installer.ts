@@ -313,7 +313,7 @@ async function buildWindowsNsis(args: Args, repoRoot: string, stageRoot: string,
     `/DOUTFILE=${artifact}`,
     `/DSTAGE_DIR=${path.join(stageRoot, 'payload')}`,
     nsiPath,
-  ]);
+  ], { cwd: repoRoot });
 
   return artifact;
 }
