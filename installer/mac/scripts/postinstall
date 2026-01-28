@@ -7,6 +7,7 @@ BIN_PATH="${BIN_DIR}/puppet-master"
 
 if [ ! -d "${INSTALL_ROOT}" ]; then
   echo "ERROR: Expected install root missing: ${INSTALL_ROOT}" 1>&2
+  echo "Expected install root missing: ${INSTALL_ROOT}" > /tmp/puppet-master-install-err.log 2>/dev/null || true
   exit 1
 fi
 
@@ -16,14 +17,21 @@ mkdir -p "${BIN_DIR}"
 LAUNCHER="${INSTALL_ROOT}/bin/puppet-master"
 if [ ! -x "${LAUNCHER}" ]; then
   echo "ERROR: Expected launcher missing or not executable: ${LAUNCHER}" 1>&2
+  echo "Expected launcher missing or not executable: ${LAUNCHER}" > /tmp/puppet-master-install-err.log 2>/dev/null || true
   exit 1
 fi
 
 rm -f "${BIN_PATH}"
-ln -s "${LAUNCHER}" "${BIN_PATH}" || {
-  cp "${LAUNCHER}" "${BIN_PATH}"
-  chmod 0755 "${BIN_PATH}"
-}
+if ln -s "${LAUNCHER}" "${BIN_PATH}"; then
+  :
+elif cp "${LAUNCHER}" "${BIN_PATH}" && chmod 0755 "${BIN_PATH}"; then
+  :
+else
+  msg="Could not create ${BIN_PATH}; need write access to ${BIN_DIR}"
+  echo "ERROR: ${msg}" 1>&2
+  echo "${msg}" > /tmp/puppet-master-install-err.log 2>/dev/null || true
+  exit 1
+fi
 
 echo "Installed puppet-master CLI to ${BIN_PATH}"
 
@@ -71,3 +79,5 @@ echo "After installing platform CLIs, run 'puppet-master doctor' to verify."
 echo ""
 echo "For help: puppet-master --help"
 echo ""
+
+exit 0

@@ -14,7 +14,7 @@
 
 import { spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
-import { mkdir, readdir, rm, writeFile, cp } from 'node:fs/promises';
+import { chmod, mkdir, readdir, rm, writeFile, cp } from 'node:fs/promises';
 import * as path from 'node:path';
 
 import { getNodeDistribution, type NodeArch, type NodePlatform } from '../src/installers/node-distribution.js';
@@ -299,6 +299,10 @@ async function buildMacPkgAndDmg(args: Args, repoRoot: string, stageRoot: string
   const scriptsDir = path.join(repoRoot, 'installer', 'mac', 'scripts');
   if (!existsSync(scriptsDir)) {
     throw new Error(`Missing mac installer scripts dir: ${scriptsDir}`);
+  }
+  const postinstallPath = path.join(scriptsDir, 'postinstall');
+  if (existsSync(postinstallPath)) {
+    await chmod(postinstallPath, 0o755);
   }
 
   console.log('\n🧱 Building macOS pkg...\n');
