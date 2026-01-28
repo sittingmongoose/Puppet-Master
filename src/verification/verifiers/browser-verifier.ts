@@ -83,6 +83,16 @@ export interface BrowserVerifierConfig {
   screenshotOnFailure?: boolean;
   /** Capture browser trace on failure (default: false) */
   traceOnFailure?: boolean;
+  /** Capture console messages on failure (default: false) */
+  captureConsoleOnFailure?: boolean;
+  /** Capture page errors on failure (default: true - page errors are critical) */
+  capturePageErrorsOnFailure?: boolean;
+  /** Capture network requests on failure (default: false) */
+  captureNetworkOnFailure?: boolean;
+  /** Console message types to capture (default: ['error', 'warning']) */
+  consoleFilter?: ('error' | 'warning' | 'log' | 'info')[];
+  /** Maximum number of network requests to capture (default: 50) */
+  maxNetworkRequests?: number;
 }
 
 /**
@@ -102,6 +112,12 @@ interface BrowserCheckResult {
   screenshotPath?: string;
   /** Path to trace if captured */
   tracePath?: string;
+  /** Path to console messages JSON if captured */
+  consolePath?: string;
+  /** Path to page errors JSON if captured */
+  pageErrorsPath?: string;
+  /** Path to network requests JSON if captured */
+  networkPath?: string;
   /** Error message if verification failed */
   error?: string;
 }
@@ -131,6 +147,11 @@ export class BrowserVerifier {
       browser: config.browser ?? 'chromium',
       screenshotOnFailure: config.screenshotOnFailure ?? true,
       traceOnFailure: config.traceOnFailure ?? false,
+      captureConsoleOnFailure: config.captureConsoleOnFailure ?? false,
+      capturePageErrorsOnFailure: config.capturePageErrorsOnFailure ?? true,
+      captureNetworkOnFailure: config.captureNetworkOnFailure ?? false,
+      consoleFilter: config.consoleFilter ?? ['error', 'warning'],
+      maxNetworkRequests: config.maxNetworkRequests ?? 50,
     };
   }
 
@@ -177,6 +198,32 @@ export class BrowserVerifier {
         checkResult.tracePath = tracePath;
       }
 
+      // Capture diagnostics on failure if configured
+      if (!checkResult.passed && page) {
+        const itemId = criterion.id || 'unknown';
+
+        if (this.config.captureConsoleOnFailure) {
+          const consolePath = await this.captureConsoleMessages(page, itemId);
+          if (consolePath) {
+            checkResult.consolePath = consolePath;
+          }
+        }
+
+        if (this.config.capturePageErrorsOnFailure) {
+          const pageErrorsPath = await this.capturePageErrors(page, itemId);
+          if (pageErrorsPath) {
+            checkResult.pageErrorsPath = pageErrorsPath;
+          }
+        }
+
+        if (this.config.captureNetworkOnFailure) {
+          const networkPath = await this.captureNetworkRequests(page, itemId);
+          if (networkPath) {
+            checkResult.networkPath = networkPath;
+          }
+        }
+      }
+
       const durationMs = Date.now() - startTime;
 
       // Build summary
@@ -202,6 +249,15 @@ export class BrowserVerifier {
       if (checkResult.tracePath) {
         summaryParts.push(`Trace: ${checkResult.tracePath}`);
       }
+      if (checkResult.consolePath) {
+        summaryParts.push(`Console: ${checkResult.consolePath}`);
+      }
+      if (checkResult.pageErrorsPath) {
+        summaryParts.push(`Page Errors: ${checkResult.pageErrorsPath}`);
+      }
+      if (checkResult.networkPath) {
+        summaryParts.push(`Network: ${checkResult.networkPath}`);
+      }
 
       const summary =
         summaryParts.length > 0
@@ -214,7 +270,12 @@ export class BrowserVerifier {
         type: this.type,
         target: criterion.target,
         passed: checkResult.passed,
-        evidencePath: checkResult.screenshotPath || checkResult.tracePath,
+        evidencePath:
+          checkResult.screenshotPath ||
+          checkResult.tracePath ||
+          checkResult.consolePath ||
+          checkResult.pageErrorsPath ||
+          checkResult.networkPath,
         summary,
         error: checkResult.error,
         durationMs,
@@ -246,11 +307,52 @@ export class BrowserVerifier {
         }
       }
 
+      // Try to capture diagnostics on error
+      let consolePath: string | undefined;
+      let pageErrorsPath: string | undefined;
+      let networkPath: string | undefined;
+
+      if (page) {
+        const itemId = criterion.id || 'unknown';
+
+        if (this.config.captureConsoleOnFailure) {
+          try {
+            consolePath = await this.captureConsoleMessages(page, itemId);
+          } catch {
+            // Ignore console capture errors
+          }
+        }
+
+        if (this.config.capturePageErrorsOnFailure) {
+          try {
+            pageErrorsPath = await this.capturePageErrors(page, itemId);
+          } catch {
+            // Ignore page errors capture errors
+          }
+        }
+
+        if (this.config.captureNetworkOnFailure) {
+          try {
+            networkPath = await this.captureNetworkRequests(page, itemId);
+          } catch {
+            // Ignore network capture errors
+          }
+        }
+      }
+
+      const evidencePaths = [
+        screenshotPath,
+        tracePath,
+        consolePath,
+        pageErrorsPath,
+        networkPath,
+      ].filter((p): p is string => p !== undefined);
+
       return {
         type: this.type,
         target: criterion.target,
         passed: false,
-        evidencePath: screenshotPath || tracePath,
+        evidencePath: evidencePaths[0],
         summary: `Browser verification failed: ${errorMessage}`,
         error: errorMessage,
         durationMs,
@@ -329,12 +431,16 @@ export class BrowserVerifier {
       // Check element existence if selector specified
       if (options.selector) {
         const element = page.locator(options.selector);
+        element.describe(`Element selector: ${options.selector}`);
         const count = await element.count();
         result.elementFound = count > 0;
 
         if (!result.elementFound) {
           result.passed = false;
-          result.error = `Element not found: ${options.selector}`;
+          const description = element.description();
+          result.error = description
+            ? `Element not found: ${description}`
+            : `Element not found: ${options.selector}`;
           return result;
         }
 
@@ -345,13 +451,19 @@ export class BrowserVerifier {
 
           if (options.visible && !isVisible) {
             result.passed = false;
-            result.error = `Element is not visible: ${options.selector}`;
+            const description = element.description();
+            result.error = description
+              ? `Element is not visible: ${description}`
+              : `Element is not visible: ${options.selector}`;
             return result;
           }
 
           if (!options.visible && isVisible) {
             result.passed = false;
-            result.error = `Element is visible but should be hidden: ${options.selector}`;
+            const description = element.description();
+            result.error = description
+              ? `Element is visible but should be hidden: ${description}`
+              : `Element is visible but should be hidden: ${options.selector}`;
             return result;
           }
         }
@@ -388,32 +500,44 @@ export class BrowserVerifier {
    */
   private async performAction(page: Page, action: BrowserAction): Promise<void> {
     const element = page.locator(action.selector);
+    element.describe(`Action ${action.type} on selector: ${action.selector}`);
 
-    switch (action.type) {
-      case 'click':
-        await element.click();
-        break;
+    try {
+      switch (action.type) {
+        case 'click':
+          await element.click();
+          break;
 
-      case 'fill':
-        if (!action.value) {
-          throw new Error('Fill action requires a value');
-        }
-        await element.fill(action.value);
-        break;
+        case 'fill':
+          if (!action.value) {
+            throw new Error('Fill action requires a value');
+          }
+          await element.fill(action.value);
+          break;
 
-      case 'select':
-        if (!action.value) {
-          throw new Error('Select action requires a value');
-        }
-        await element.selectOption(action.value);
-        break;
+        case 'select':
+          if (!action.value) {
+            throw new Error('Select action requires a value');
+          }
+          await element.selectOption(action.value);
+          break;
 
-      case 'hover':
-        await element.hover();
-        break;
+        case 'hover':
+          await element.hover();
+          break;
 
-      default:
-        throw new Error(`Unknown action type: ${action.type}`);
+        default:
+          throw new Error(`Unknown action type: ${action.type}`);
+      }
+    } catch (error) {
+      const description = element.description();
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      throw new Error(
+        description
+          ? `${errorMessage} (${description})`
+          : `${errorMessage} (selector: ${action.selector})`
+      );
     }
   }
 
@@ -434,6 +558,167 @@ export class BrowserVerifier {
       screenshotBuffer,
       scenarioName
     );
+  }
+
+  /**
+   * Saves JSON content to gate-reports directory.
+   * @param itemId - Item ID for naming
+   * @param jsonContent - JSON content as string
+   * @param filename - Filename for the JSON file
+   * @returns Path to saved JSON file
+   */
+  private async saveJsonEvidence(
+    itemId: string,
+    jsonContent: string,
+    filename: string
+  ): Promise<string> {
+    const { promises: fs } = await import('fs');
+    const { join } = await import('path');
+    const evidenceDir = join('.puppet-master', 'evidence', 'gate-reports');
+    await fs.mkdir(evidenceDir, { recursive: true });
+    const timestamp = Date.now();
+    const safeItemId = itemId.replace(/[^a-zA-Z0-9-_]/g, '_');
+    const path = join(evidenceDir, `${safeItemId}-${filename}-${timestamp}.json`);
+    await fs.writeFile(path, jsonContent, 'utf-8');
+    return path;
+  }
+
+  /**
+   * Captures console messages and saves them as JSON via EvidenceStore.
+   * @param page - Playwright page instance
+   * @param itemId - Item ID for naming
+   * @returns Path to saved console messages JSON, or undefined if none captured
+   */
+  private async captureConsoleMessages(
+    page: Page,
+    itemId: string
+  ): Promise<string | undefined> {
+    try {
+      const messages = await page.consoleMessages();
+      const filtered = messages.filter((msg) =>
+        this.config.consoleFilter.includes(msg.type() as 'error' | 'warning' | 'log' | 'info')
+      );
+
+      if (filtered.length === 0) {
+        return undefined;
+      }
+
+      const consoleData = filtered.map((msg) => ({
+        type: msg.type(),
+        text: msg.text(),
+        location: msg.location(),
+      }));
+
+      const jsonContent = JSON.stringify(consoleData, null, 2);
+      return this.saveJsonEvidence(itemId, jsonContent, 'console-messages');
+    } catch (error) {
+      // Ignore errors capturing console messages
+      return undefined;
+    }
+  }
+
+  /**
+   * Captures page errors and saves them as JSON via EvidenceStore.
+   * @param page - Playwright page instance
+   * @param itemId - Item ID for naming
+   * @returns Path to saved page errors JSON, or undefined if none captured
+   */
+  private async capturePageErrors(
+    page: Page,
+    itemId: string
+  ): Promise<string | undefined> {
+    try {
+      const errors = await page.pageErrors();
+
+      if (errors.length === 0) {
+        return undefined;
+      }
+
+      const errorsData = errors.map((error) => ({
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+      }));
+
+      const jsonContent = JSON.stringify(errorsData, null, 2);
+      return this.saveJsonEvidence(itemId, jsonContent, 'page-errors');
+    } catch (error) {
+      // Ignore errors capturing page errors
+      return undefined;
+    }
+  }
+
+  /**
+   * Captures network requests and saves them as JSON via EvidenceStore.
+   * @param page - Playwright page instance
+   * @param itemId - Item ID for naming
+   * @returns Path to saved network requests JSON, or undefined if none captured
+   */
+  private async captureNetworkRequests(
+    page: Page,
+    itemId: string
+  ): Promise<string | undefined> {
+    try {
+      const requests = await page.requests();
+      const maxRequests = this.config.maxNetworkRequests;
+      const recentRequests = requests.slice(-maxRequests);
+
+      // Filter for failed requests and HTTP error responses
+      const failedRequests = await Promise.all(
+        recentRequests.map(async (request) => {
+          const failure = request.failure();
+          if (failure) {
+            return { request, failed: true };
+          }
+          const response = await request.response();
+          if (response) {
+            const status = response.status();
+            if (status >= 400 && status < 600) {
+              return { request, failed: true, response };
+            }
+          }
+          return { request, failed: false };
+        })
+      );
+
+      const filtered = failedRequests
+        .filter((item) => item.failed)
+        .map((item) => item.request);
+
+      if (filtered.length === 0) {
+        return undefined;
+      }
+
+      const networkData = await Promise.all(
+        filtered.map(async (request) => {
+          const response = await request.response();
+          const failure = request.failure();
+          return {
+            url: request.url(),
+            method: request.method(),
+            status: response?.status(),
+            statusText: response?.statusText(),
+            failure: failure?.errorText,
+            timing: {
+              startTime: request.timing().startTime,
+              domainLookupStart: request.timing().domainLookupStart,
+              domainLookupEnd: request.timing().domainLookupEnd,
+              connectStart: request.timing().connectStart,
+              connectEnd: request.timing().connectEnd,
+              requestStart: request.timing().requestStart,
+              responseStart: request.timing().responseStart,
+              responseEnd: request.timing().responseEnd,
+            },
+          };
+        })
+      );
+
+      const jsonContent = JSON.stringify(networkData, null, 2);
+      return this.saveJsonEvidence(itemId, jsonContent, 'network-requests');
+    } catch (error) {
+      // Ignore errors capturing network requests
+      return undefined;
+    }
   }
 
   /**

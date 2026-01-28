@@ -26,7 +26,24 @@
       "Read(//mnt/user/Cursor/**)",
       "Bash(tree:*)",
       "Bash(npm run test:coverage:*)",
-      "Bash(npx vitest:*)"
+      "Bash(npx vitest:*)",
+      "Bash(gh workflow run:*)",
+      "Bash(git check-ignore:*)",
+      "Bash(git status:*)",
+      "Bash(git add:*)",
+      "Bash(curl:*)",
+      "Bash(sudo dd:*)",
+      "Bash(sudo chmod:*)",
+      "Bash(sudo tee:*)",
+      "Bash(sudo apt update:*)",
+      "Bash(sudo apt install:*)",
+      "Bash(sudo mkdir:*)",
+      "Bash(gh auth:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh run view:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git check-attr:*)"
     ]
   }
 }
