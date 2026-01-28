@@ -46,15 +46,14 @@ jobs:
         shell: pwsh
         run: |
           choco install nsis -y
-          # Add NSIS to PATH for subsequent steps
+          # Add NSIS to PATH for subsequent steps via GITHUB_PATH
           $nsisPath = "C:\Program Files (x86)\NSIS"
           if (Test-Path $nsisPath) {
+            Write-Host "NSIS installed at: $nsisPath"
             echo "$nsisPath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          } else {
+            throw "NSIS installation failed - directory not found"
           }
-          # Verify makensis is available
-          refreshenv
-          $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-          makensis /VERSION
 
       - name: Install Go (Linux for nfpm)
         if: runner.os == 'Linux'
