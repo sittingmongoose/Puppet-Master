@@ -205,10 +205,14 @@ describe('ParallelExecutor', () => {
       ];
 
       const executionOrder: string[] = [];
-      const originalSpawn = executionEngine.spawnIteration.bind(executionEngine);
-      vi.spyOn(executionEngine, 'spawnIteration').mockImplementation(async (context: IterationContext) => {
+      const spawnIterationMock = vi.mocked(executionEngine.spawnIteration);
+      const originalImplementation = spawnIterationMock.getMockImplementation();
+      spawnIterationMock.mockImplementation(async (context: IterationContext) => {
         executionOrder.push(context.tierNode.id);
-        return originalSpawn(context);
+        if (!originalImplementation) {
+          throw new Error('Missing spawnIteration implementation');
+        }
+        return originalImplementation(context);
       });
 
       const result = await executor.executeParallel(

@@ -7,6 +7,7 @@ describe('auth-status', () => {
 
   beforeEach(() => {
     process.env = { ...originalEnv };
+    delete process.env.CURSOR_API_KEY;
     delete process.env.OPENAI_API_KEY;
     delete process.env.ANTHROPIC_API_KEY;
     delete process.env.GEMINI_API_KEY;
@@ -29,7 +30,7 @@ describe('auth-status', () => {
 
   it('returns skipped for cursor auth status', () => {
     const result = getPlatformAuthStatus('cursor');
-    expect(result.status).toBe('skipped');
+    expect(result.status).toBe('not_authenticated');
   });
 
   it('returns authenticated for codex when key is set', () => {

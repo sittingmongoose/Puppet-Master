@@ -27,7 +27,7 @@ describe('QuotaManager Integration with UsageProvider', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    usageTracker = new UsageTracker();
+    usageTracker = new UsageTracker(':memory:');
     usageProvider = new UsageProvider({
       claudeApiKey: 'test-claude-key',
     });
@@ -80,11 +80,11 @@ describe('QuotaManager Integration with UsageProvider', () => {
       // QuotaManager returns QuotaInfo (no 'allowed' property)
       // Platform-reported usage (150) should be used for day period
       expect(result.remaining).toBeGreaterThanOrEqual(0);
-      expect(result.limit).toBe(1000);
+      expect(result.limit).toBe(10000);
       expect(result.resetsAt).toBeTruthy();
       // Remaining should account for platform-reported usage (150)
       // QuotaManager uses most restrictive period, so remaining may vary
-      expect(result.remaining).toBeLessThanOrEqual(1000);
+      expect(result.remaining).toBeLessThanOrEqual(10000);
     });
 
     it('should fall back to internal tracking when platform data unavailable', async () => {
@@ -103,13 +103,13 @@ describe('QuotaManager Integration with UsageProvider', () => {
         success: true,
       });
 
-      // Budgets are set in beforeEach (1000 per hour)
+      // Budgets are set in beforeEach (run/hour/day: 100/1000/10000)
       // Internal usage is tracked via UsageTracker
       const result = await quotaManager.checkQuota('claude');
 
       // Should use internal tracking (no platform data)
       expect(result.remaining).toBeGreaterThanOrEqual(0);
-      expect(result.limit).toBe(1000); // From budgets in beforeEach
+      expect(result.limit).toBe(100); // Most restrictive period (run)
     });
 
     it('should merge platform and internal usage correctly', async () => {
@@ -148,9 +148,9 @@ describe('QuotaManager Integration with UsageProvider', () => {
       // Internal usage (50) is tracked separately but platform data takes precedence
       // QuotaManager uses most restrictive period, so exact remaining may vary
       expect(result.remaining).toBeGreaterThanOrEqual(0);
-      expect(result.limit).toBe(1000);
+      expect(result.limit).toBe(10000);
       // Platform-reported usage should be considered, so remaining should be reasonable
-      expect(result.remaining).toBeLessThanOrEqual(1000);
+      expect(result.remaining).toBeLessThanOrEqual(10000);
     });
 
     it('should respect platform-reported reset times', async () => {
@@ -260,7 +260,7 @@ describe('QuotaManager Integration with UsageProvider', () => {
 
       // Should handle gracefully and fall back to internal tracking
       expect(result).toBeDefined();
-      expect(result.limit).toBe(1000); // From budgets in beforeEach
+      expect(result.limit).toBe(100); // Most restrictive period (run)
       expect(result.remaining).toBeGreaterThanOrEqual(0);
     });
 
@@ -275,7 +275,7 @@ describe('QuotaManager Integration with UsageProvider', () => {
 
       // Should handle gracefully and fall back
       expect(result).toBeDefined();
-      expect(result.limit).toBe(1000); // From budgets in beforeEach
+      expect(result.limit).toBe(100); // Most restrictive period (run)
       expect(result.remaining).toBeGreaterThanOrEqual(0);
     });
   });

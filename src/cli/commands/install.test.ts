@@ -17,7 +17,8 @@ import type { InstallCommand as InstallCmd } from '../../doctor/installation-man
 import { ConfigManager } from '../../config/config-manager.js';
 
 vi.mock('../../config/config-manager.js', () => ({
-  ConfigManager: vi.fn().mockImplementation(() => ({
+  ConfigManager: vi.fn().mockImplementation(function () {
+    return {
     load: vi.fn().mockResolvedValue({
       cliPaths: {
         cursor: 'cursor-agent',
@@ -27,129 +28,162 @@ vi.mock('../../config/config-manager.js', () => ({
         copilot: 'copilot',
       },
     }),
-  })),
+  };
+  }),
 }));
 
 vi.mock('../../doctor/checks/playwright-check.js', () => ({
-  PlaywrightBrowsersCheck: vi.fn().mockImplementation(() => ({
+  PlaywrightBrowsersCheck: vi.fn().mockImplementation(function () {
+    return {
     name: 'playwright-browsers',
     category: 'runtime' as const,
     description: 'Checks Playwright is installed and browsers are available',
     run: vi.fn(),
-  })),
+  };
+  }),
 }));
 
 // Mock CheckRegistry
 vi.mock('../../doctor/check-registry.js', () => {
   return {
-    CheckRegistry: vi.fn().mockImplementation(() => ({
+    CheckRegistry: vi.fn().mockImplementation(function () {
+    return {
       register: vi.fn(),
       runAll: vi.fn(),
       runCategory: vi.fn(),
       unregister: vi.fn(),
-    })),
+    };
+  }),
   };
 });
 
 // Mock InstallationManager
 vi.mock('../../doctor/installation-manager.js', () => ({
-  InstallationManager: vi.fn().mockImplementation(() => ({
+  InstallationManager: vi.fn().mockImplementation(function () {
+    return {
     getInstallCommand: vi.fn(),
     install: vi.fn(),
     getAvailableInstalls: vi.fn(),
     getCurrentPlatform: vi.fn().mockReturnValue('linux'),
-  })),
+  };
+  }),
 }));
 
 // Mock all check classes
 vi.mock('../../doctor/checks/cli-tools.js', () => ({
-  CursorCliCheck: vi.fn().mockImplementation(() => ({
+  CursorCliCheck: vi.fn().mockImplementation(function () {
+    return {
     name: 'cursor-cli',
     category: 'cli' as const,
     description: 'Check if Cursor Agent CLI is available',
     run: vi.fn(),
-  })),
-  CodexCliCheck: vi.fn().mockImplementation(() => ({
+  };
+  }),
+  CodexCliCheck: vi.fn().mockImplementation(function () {
+    return {
     name: 'codex-cli',
     category: 'cli' as const,
     description: 'Check if Codex CLI is available',
     run: vi.fn(),
-  })),
-  ClaudeCliCheck: vi.fn().mockImplementation(() => ({
+  };
+  }),
+  ClaudeCliCheck: vi.fn().mockImplementation(function () {
+    return {
     name: 'claude-cli',
     category: 'cli' as const,
     description: 'Check if Claude CLI is available',
     run: vi.fn(),
-  })),
-  GeminiCliCheck: vi.fn().mockImplementation(() => ({
+  };
+  }),
+  GeminiCliCheck: vi.fn().mockImplementation(function () {
+    return {
     name: 'gemini-cli',
     category: 'cli' as const,
     description: 'Check if Gemini CLI is available',
     run: vi.fn(),
-  })),
-  CopilotCliCheck: vi.fn().mockImplementation(() => ({
+  };
+  }),
+  CopilotCliCheck: vi.fn().mockImplementation(function () {
+    return {
     name: 'copilot-cli',
     category: 'cli' as const,
     description: 'Check if Copilot CLI is available',
     run: vi.fn(),
-  })),
+  };
+  }),
 }));
 
 vi.mock('../../doctor/checks/git-check.js', () => ({
-  GitAvailableCheck: vi.fn().mockImplementation(() => ({
+  GitAvailableCheck: vi.fn().mockImplementation(function () {
+    return {
     name: 'git-available',
     category: 'git' as const,
     description: 'Check if git is available',
     run: vi.fn(),
-  })),
-  GitConfigCheck: vi.fn().mockImplementation(() => ({
+  };
+  }),
+  GitConfigCheck: vi.fn().mockImplementation(function () {
+    return {
     name: 'git-config',
     category: 'git' as const,
     description: 'Check git configuration',
     run: vi.fn(),
-  })),
-  GitRepoCheck: vi.fn().mockImplementation(() => ({
+  };
+  }),
+  GitRepoCheck: vi.fn().mockImplementation(function () {
+    return {
     name: 'git-repo',
     category: 'git' as const,
     description: 'Check if in a git repository',
     run: vi.fn(),
-  })),
+  };
+  }),
 }));
 
 vi.mock('../../doctor/checks/runtime-check.js', () => ({
-  NodeVersionCheck: vi.fn().mockImplementation(() => ({
+  NodeVersionCheck: vi.fn().mockImplementation(function () {
+    return {
     name: 'node-version',
     category: 'runtime' as const,
     description: 'Check Node.js version',
     run: vi.fn(),
-  })),
-  NpmAvailableCheck: vi.fn().mockImplementation(() => ({
+  };
+  }),
+  NpmAvailableCheck: vi.fn().mockImplementation(function () {
+    return {
     name: 'npm-available',
     category: 'runtime' as const,
     description: 'Check if npm is available',
     run: vi.fn(),
-  })),
+  };
+  }),
 }));
 
 vi.mock('../../doctor/checks/project-check.js', () => ({
-  ProjectDirCheck: vi.fn().mockImplementation(() => ({
+  ProjectDirCheck: vi.fn().mockImplementation(function () {
+    return {
     name: 'project-dir',
     category: 'project' as const,
     description: 'Check project directory',
     run: vi.fn(),
-  })),
-  ConfigFileCheck: vi.fn().mockImplementation(() => ({
+  };
+  }),
+  ConfigFileCheck: vi.fn().mockImplementation(function () {
+    return {
     name: 'config-file',
     category: 'project' as const,
     description: 'Check config file',
     run: vi.fn(),
-  })),
-  SubdirectoriesCheck: vi.fn().mockImplementation(() => ({
+  };
+  }),
+  SubdirectoriesCheck: vi.fn().mockImplementation(function () {
+    return {
     name: 'subdirectories',
     category: 'project' as const,
     description: 'Check subdirectories',
     run: vi.fn(),
-  })),
+  };
+  }),
 }));
 
 // Mock readline
@@ -197,8 +231,8 @@ describe('InstallCommand', () => {
 
     // Ensure ConfigManager mock returns the expected shape.
     vi.mocked(ConfigManager).mockImplementation(
-      () =>
-        ({
+      function () {
+        return {
           load: vi.fn().mockResolvedValue({
             cliPaths: {
               cursor: 'cursor-agent',
@@ -208,7 +242,8 @@ describe('InstallCommand', () => {
               copilot: 'copilot',
             },
           }),
-        }) as unknown as ConfigManager
+        } as unknown as ConfigManager;
+      }
     );
 
     // Setup mock install command
@@ -229,7 +264,9 @@ describe('InstallCommand', () => {
     };
 
     // Override CheckRegistry to return our mock instance
-    vi.mocked(CheckRegistry).mockImplementation(() => mockCheckRegistryInstance as unknown as CheckRegistry);
+    vi.mocked(CheckRegistry).mockImplementation(function () {
+      return mockCheckRegistryInstance as unknown as CheckRegistry;
+    });
 
     // Create a fresh mock installation manager instance for each test
     mockInstallationManagerInstance = {
@@ -240,7 +277,9 @@ describe('InstallCommand', () => {
     };
 
     // Override InstallationManager to return our mock instance
-    vi.mocked(InstallationManager).mockImplementation(() => mockInstallationManagerInstance as unknown as InstallationManager);
+    vi.mocked(InstallationManager).mockImplementation(function () {
+      return mockInstallationManagerInstance as unknown as InstallationManager;
+    });
 
     // Setup CheckRegistry mock
     vi.mocked(mockCheckRegistryInstance.runAll).mockResolvedValue([

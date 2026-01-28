@@ -46,6 +46,14 @@ contents:
       owner: root
       group: root
 
+  # Desktop entry for app menu
+  - src: ./applications/com.rwm.puppet-master.desktop
+    dst: /usr/share/applications/com.rwm.puppet-master.desktop
+    file_info:
+      mode: 0644
+      owner: root
+      group: root
+
 # P0-G23: Post-install guidance
 scripts:
   postinstall: ./scripts/postinstall

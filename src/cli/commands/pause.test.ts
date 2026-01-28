@@ -121,6 +121,7 @@ describe('pauseAction', () => {
   }
 
   beforeEach(() => {
+    vi.clearAllMocks();
     mockConfig = {
       project: {
         name: 'test-project',
@@ -244,9 +245,15 @@ describe('pauseAction', () => {
       createCheckpoint: vi.fn().mockResolvedValue(undefined),
     };
 
-    (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockConfigManager);
-    (PrdManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockPrdManager);
-    (StatePersistence as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockStatePersistence);
+    (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function () {
+      return mockConfigManager;
+    });
+    (PrdManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function () {
+      return mockPrdManager;
+    });
+    (StatePersistence as unknown as ReturnType<typeof vi.fn>).mockImplementation(function () {
+      return mockStatePersistence;
+    });
 
     vi.spyOn(process, 'exit').mockImplementation(() => undefined as never);
     vi.spyOn(console, 'log').mockImplementation(() => {});

@@ -24,6 +24,9 @@ VIAddVersionKey "FileDescription" "RWM Puppet Master Installer"
 VIAddVersionKey "ProductVersion" "${VERSION}"
 VIAddVersionKey "CompanyName" "RWM"
 
+!define MUI_ICON "installer\\assets\\puppet-master.ico"
+!define MUI_UNICON "installer\\assets\\puppet-master.ico"
+
 ; Customize finish page text (P0-G15, CU-P0-T01, P0-G23)
 !define MUI_FINISHPAGE_TITLE "Puppet Master Installation Complete!"
 !define MUI_FINISHPAGE_TEXT "Puppet Master has been installed successfully.$\r$\n$\r$\nNext steps:$\r$\n  1. Open a NEW terminal window (cmd or PowerShell)$\r$\n  2. Run 'puppet-master doctor' to verify installation$\r$\n     and check platform prerequisites$\r$\n$\r$\nThe doctor command will check:$\r$\n  - Required CLI tools (cursor, codex, claude, gemini, copilot)$\r$\n  - Platform authentication status$\r$\n  - Missing configuration$\r$\n$\r$\nClick 'Finish' to complete the installation."
@@ -62,9 +65,29 @@ Section "Install"
   ; Copy PowerShell helper script for CLI installation
   SetOutPath "$INSTDIR\scripts"
   File "installer\win\scripts\install-clis.ps1"
+  
+  ; Copy GUI launchers (VBS runs without console; BAT kept for CLI/script use)
+  SetOutPath "$INSTDIR"
+  File "installer\win\scripts\Launch-Puppet-Master-GUI.bat"
+  File "installer\win\scripts\Launch-Puppet-Master-GUI.vbs"
+  File "installer\assets\puppet-master.ico"
+  File "${STAGE_DIR}\\puppet-master\\puppet-master.png"
 
   ; Create an uninstaller
   WriteUninstaller "$INSTDIR\\Uninstall.exe"
+  
+  ; Start Menu and Desktop shortcuts use VBS so GUI launches without a console window
+  CreateDirectory "$SMPROGRAMS\Puppet Master"
+  CreateShortcut "$SMPROGRAMS\Puppet Master\Puppet Master.lnk" "$INSTDIR\Launch-Puppet-Master-GUI.vbs" "" "$INSTDIR\puppet-master.ico" 0
+  
+  ; Create Desktop shortcut (optional)
+  CreateShortcut "$DESKTOP\Puppet Master.lnk" "$INSTDIR\Launch-Puppet-Master-GUI.vbs" "" "$INSTDIR\puppet-master.ico" 0
+
+  WriteRegStr HKLM "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Puppet Master" "DisplayName" "Puppet Master"
+  WriteRegStr HKLM "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Puppet Master" "UninstallString" "$INSTDIR\\Uninstall.exe"
+  WriteRegStr HKLM "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Puppet Master" "DisplayIcon" "$INSTDIR\\puppet-master.ico"
+  WriteRegStr HKLM "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Puppet Master" "DisplayVersion" "${VERSION}"
+  WriteRegStr HKLM "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Puppet Master" "Publisher" "RWM"
 
   ; Add install dir to PATH (system-wide)
   ; NOTE: We use the registry directly to avoid requiring extra NSIS plugins.
@@ -88,6 +111,12 @@ Section "Install"
 SectionEnd
 
 Section "Uninstall"
+  ; Remove shortcuts
+  Delete "$SMPROGRAMS\Puppet Master\Puppet Master.lnk"
+  RMDir "$SMPROGRAMS\Puppet Master"
+  Delete "$DESKTOP\Puppet Master.lnk"
+  DeleteRegKey HKLM "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Puppet Master"
+  
   ; Remove installed files
   RMDir /r "$INSTDIR"
 
@@ -188,4 +217,3 @@ Function StrStr
     Pop $R1
     Exch $R0
 FunctionEnd
-

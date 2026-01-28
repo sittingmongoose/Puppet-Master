@@ -104,7 +104,7 @@ describe('stopAction', () => {
     load: ReturnType<typeof vi.fn>;
   };
   let mockContainer: {
-    resolve: ReturnType<typeof vi.fn>;
+    resolve: (key: string) => unknown;
   };
   let mockOrchestrator: {
     initialize: ReturnType<typeof vi.fn>;
@@ -124,6 +124,7 @@ describe('stopAction', () => {
   let mockPrd: PRD;
 
   beforeEach(() => {
+    vi.clearAllMocks();
     mockConfig = {
       project: {
         name: 'test-project',
@@ -309,15 +310,17 @@ describe('stopAction', () => {
           return mockRegistry;
         }
         return null;
-      }) as ReturnType<typeof vi.fn>,
+      }),
     };
 
-    (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockConfigManager);
-    (PrdManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockPrdManager);
+    // Vitest 4: Constructor mocks must use function/class, not arrow functions
+    (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function() { return mockConfigManager; });
+    (PrdManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function() { return mockPrdManager; });
     (createContainer as ReturnType<typeof vi.fn>).mockReturnValue(mockContainer);
-    (Orchestrator as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockOrchestrator);
-    (StatePersistence as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockStatePersistence);
-    (ProcessRegistry as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockProcessRegistry);
+    // Vitest 4: Constructor mocks must use function/class, not arrow functions
+    (Orchestrator as unknown as ReturnType<typeof vi.fn>).mockImplementation(function() { return mockOrchestrator; });
+    (StatePersistence as unknown as ReturnType<typeof vi.fn>).mockImplementation(function() { return mockStatePersistence; });
+    (ProcessRegistry as unknown as ReturnType<typeof vi.fn>).mockImplementation(function() { return mockProcessRegistry; });
     
     const mockDefaultRegistry = {
       getAvailable: vi.fn().mockReturnValue(['cursor']),
@@ -359,7 +362,7 @@ describe('stopAction', () => {
       await stopAction({});
 
       expect(console.log).toHaveBeenCalledWith('Orchestrator is not running.');
-      expect(Orchestrator).not.toHaveBeenCalled();
+      expect(Orchestrator as unknown as ReturnType<typeof vi.fn>).not.toHaveBeenCalled();
     });
 
     it('should proceed if orchestrator is in executing state', async () => {
@@ -369,7 +372,7 @@ describe('stopAction', () => {
       mockPrdManager.load.mockResolvedValue(mockPrd);
       
       // Ensure registry can return runner
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
 
@@ -377,7 +380,7 @@ describe('stopAction', () => {
       await vi.advanceTimersByTimeAsync(11000);
       await stopPromise;
 
-      expect(Orchestrator).toHaveBeenCalled();
+      expect(Orchestrator as unknown as ReturnType<typeof vi.fn>).toHaveBeenCalled();
       
       vi.useRealTimers();
     });
@@ -389,7 +392,7 @@ describe('stopAction', () => {
       mockPrdManager.load.mockResolvedValue(mockPrd);
       
       // Ensure registry can return runner
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
 
@@ -397,7 +400,7 @@ describe('stopAction', () => {
       await vi.advanceTimersByTimeAsync(11000);
       await stopPromise;
 
-      expect(Orchestrator).toHaveBeenCalled();
+      expect(Orchestrator as unknown as ReturnType<typeof vi.fn>).toHaveBeenCalled();
       
       vi.useRealTimers();
     });
@@ -409,7 +412,7 @@ describe('stopAction', () => {
       mockPrdManager.load.mockResolvedValue(mockPrd);
       
       // Ensure registry can return runner
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
 
@@ -417,7 +420,7 @@ describe('stopAction', () => {
       await vi.advanceTimersByTimeAsync(11000);
       await stopPromise;
 
-      expect(Orchestrator).toHaveBeenCalled();
+      expect(Orchestrator as unknown as ReturnType<typeof vi.fn>).toHaveBeenCalled();
       
       vi.useRealTimers();
     });
@@ -426,7 +429,7 @@ describe('stopAction', () => {
   describe('graceful stop', () => {
     beforeEach(() => {
       // Ensure registry can return runner
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
     });
@@ -478,7 +481,7 @@ describe('stopAction', () => {
   describe('force stop', () => {
     beforeEach(() => {
       // Ensure registry can return runner
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
     });
@@ -516,7 +519,7 @@ describe('stopAction', () => {
   describe('checkpoint creation', () => {
     beforeEach(() => {
       // Ensure registry can return runner
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
     });
@@ -609,7 +612,7 @@ describe('stopAction', () => {
 
     it('should handle orchestrator initialization errors', async () => {
       // Ensure registry can return runner
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
       
@@ -627,7 +630,7 @@ describe('stopAction', () => {
 
     it('should handle orchestrator stop errors', async () => {
       // Ensure registry can return runner
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
       
@@ -647,7 +650,7 @@ describe('stopAction', () => {
   describe('options handling', () => {
     beforeEach(() => {
       // Ensure registry can return runner
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
     });
@@ -659,7 +662,7 @@ describe('stopAction', () => {
       await vi.advanceTimersByTimeAsync(11000);
       await stopPromise;
 
-      expect(ConfigManager).toHaveBeenCalledWith('/custom/config.yaml');
+      expect(ConfigManager as unknown as ReturnType<typeof vi.fn>).toHaveBeenCalledWith('/custom/config.yaml');
       
       vi.useRealTimers();
     });

@@ -120,7 +120,7 @@ describe('resumeAction', () => {
     restoreCheckpoint: ReturnType<typeof vi.fn>;
   };
   let mockContainer: {
-    resolve: ReturnType<typeof vi.fn>;
+    resolve: (key: string) => unknown;
   };
   let mockOrchestrator: {
     initialize: ReturnType<typeof vi.fn>;
@@ -390,14 +390,15 @@ describe('resumeAction', () => {
           return mockRegistry;
         }
         return null;
-      }) as ReturnType<typeof vi.fn>,
+      }),
     };
 
-    (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockConfigManager);
-    (PrdManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockPrdManager);
-    (StatePersistence as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockStatePersistence);
+    // Vitest 4: Constructor mocks must use function/class, not arrow functions
+    (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function() { return mockConfigManager; });
+    (PrdManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function() { return mockPrdManager; });
+    (StatePersistence as unknown as ReturnType<typeof vi.fn>).mockImplementation(function() { return mockStatePersistence; });
     (createContainer as ReturnType<typeof vi.fn>).mockReturnValue(mockContainer);
-    (Orchestrator as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockOrchestrator);
+    (Orchestrator as unknown as ReturnType<typeof vi.fn>).mockImplementation(function() { return mockOrchestrator; });
     const mockDefaultRegistry = {
       getAvailable: vi.fn().mockReturnValue(['cursor']),
       get: vi.fn((platform: string) => {
@@ -421,25 +422,25 @@ describe('resumeAction', () => {
   describe('config and PRD loading', () => {
     it('should load config using ConfigManager', async () => {
       (access as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
 
       await resumeAction({});
 
-      expect(ConfigManager).toHaveBeenCalled();
+      expect(ConfigManager as unknown as ReturnType<typeof vi.fn>).toHaveBeenCalled();
       expect(mockConfigManager.load).toHaveBeenCalled();
     });
 
     it('should load PRD using PrdManager', async () => {
       (access as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
 
       await resumeAction({});
 
-      expect(PrdManager).toHaveBeenCalled();
+      expect(PrdManager as unknown as ReturnType<typeof vi.fn>).toHaveBeenCalled();
       expect(mockPrdManager.load).toHaveBeenCalled();
     });
 
@@ -484,13 +485,13 @@ describe('resumeAction', () => {
 
     it('should proceed if orchestrator is paused', async () => {
       (access as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
 
       await resumeAction({});
 
-      expect(Orchestrator).toHaveBeenCalled();
+      expect(Orchestrator as unknown as ReturnType<typeof vi.fn>).toHaveBeenCalled();
       expect(mockOrchestrator.initialize).toHaveBeenCalled();
     });
   });
@@ -502,14 +503,15 @@ describe('resumeAction', () => {
 
     beforeEach(() => {
       (access as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
 
       mockCheckpointManager = {
         loadCheckpoint: vi.fn(),
       };
-      (CheckpointManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockCheckpointManager);
+      // Vitest 4: Constructor mocks must use function/class, not arrow functions
+      (CheckpointManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function() { return mockCheckpointManager; });
     });
 
     it('should restore from checkpoint if specified via flag', async () => {
@@ -759,7 +761,7 @@ describe('resumeAction', () => {
   describe('orchestrator initialization and resume', () => {
     beforeEach(() => {
       (access as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
     });
@@ -846,7 +848,7 @@ describe('resumeAction', () => {
 
     it('should handle orchestrator initialization errors', async () => {
       (access as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
       
@@ -864,7 +866,7 @@ describe('resumeAction', () => {
 
     it('should handle orchestrator resume errors', async () => {
       (access as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
       
@@ -884,7 +886,7 @@ describe('resumeAction', () => {
   describe('options handling', () => {
     beforeEach(() => {
       (access as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
     });
@@ -892,7 +894,7 @@ describe('resumeAction', () => {
     it('should use provided config path', async () => {
       await resumeAction({ config: '/custom/config.yaml' });
 
-      expect(ConfigManager).toHaveBeenCalledWith('/custom/config.yaml');
+      expect(ConfigManager as unknown as ReturnType<typeof vi.fn>).toHaveBeenCalledWith('/custom/config.yaml');
     });
 
     it('should handle checkpoint option (backward compatibility)', async () => {
@@ -923,7 +925,8 @@ describe('resumeAction', () => {
           },
         } as Checkpoint),
       };
-      (CheckpointManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockCheckpointManager);
+      // Vitest 4: Constructor mocks must use function/class, not arrow functions
+      (CheckpointManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function() { return mockCheckpointManager; });
 
       await resumeAction({ checkpoint: 'my-checkpoint' });
 
@@ -958,7 +961,8 @@ describe('resumeAction', () => {
           },
         } as Checkpoint),
       };
-      (CheckpointManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockCheckpointManager);
+      // Vitest 4: Constructor mocks must use function/class, not arrow functions
+      (CheckpointManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function() { return mockCheckpointManager; });
 
       await resumeAction({ checkpoint: 'test-checkpoint', skipValidation: true });
 

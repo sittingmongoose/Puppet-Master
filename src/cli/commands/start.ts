@@ -78,7 +78,8 @@ export async function startAction(options: StartOptions): Promise<void> {
     }
 
     // Validate PRD exists
-    const prdPath = resolveUnderProjectRoot(projectRoot, options.prd || config.memory.prdFile);
+    const prdOverride = options.prd;
+    const prdPath = resolveUnderProjectRoot(projectRoot, prdOverride || config.memory.prdFile);
     try {
       await access(prdPath);
     } catch {
@@ -98,7 +99,7 @@ export async function startAction(options: StartOptions): Promise<void> {
     // Create container and resolve dependencies
     // Pass prdPath override if --prd was provided, so PrdManager uses CLI override instead of config
     // Pass relative path (options.prd) so createContainer can resolve it properly
-    const prdPathOverride = options.prd ? options.prd : undefined;
+    const prdPathOverride = prdOverride ? prdOverride : undefined;
     const container = createContainer(config, projectRoot, configPath, prdPathOverride);
 
     // Create orchestrator instance

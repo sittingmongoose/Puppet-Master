@@ -1,19 +1,24 @@
 #!/bin/sh
 set -eu
 
-INSTALL_ROOT="/usr/local/lib/puppet-master"
-BIN_DIR="/usr/local/bin"
-BIN_PATH="${BIN_DIR}/puppet-master"
+APP_BUNDLE="/Applications/Puppet Master.app"
 
+# Verify .app bundle was installed
+if [ ! -d "${APP_BUNDLE}" ]; then
+  echo "ERROR: Expected app bundle missing: ${APP_BUNDLE}" 1>&2
+  echo "Expected app bundle missing: ${APP_BUNDLE}" > /tmp/puppet-master-install-err.log 2>/dev/null || true
+  exit 1
+fi
+
+# Verify Contents/Resources/puppet-master exists
+RESOURCES_DIR="${APP_BUNDLE}/Contents/Resources"
+INSTALL_ROOT="${RESOURCES_DIR}/puppet-master"
 if [ ! -d "${INSTALL_ROOT}" ]; then
   echo "ERROR: Expected install root missing: ${INSTALL_ROOT}" 1>&2
   echo "Expected install root missing: ${INSTALL_ROOT}" > /tmp/puppet-master-install-err.log 2>/dev/null || true
   exit 1
 fi
 
-mkdir -p "${BIN_DIR}"
-
-# Prefer linking to the installed launcher, but fall back to copying.
 LAUNCHER="${INSTALL_ROOT}/bin/puppet-master"
 if [ ! -x "${LAUNCHER}" ]; then
   echo "ERROR: Expected launcher missing or not executable: ${LAUNCHER}" 1>&2
@@ -21,19 +26,8 @@ if [ ! -x "${LAUNCHER}" ]; then
   exit 1
 fi
 
-rm -f "${BIN_PATH}"
-if ln -s "${LAUNCHER}" "${BIN_PATH}"; then
-  :
-elif cp "${LAUNCHER}" "${BIN_PATH}" && chmod 0755 "${BIN_PATH}"; then
-  :
-else
-  msg="Could not create ${BIN_PATH}; need write access to ${BIN_DIR}"
-  echo "ERROR: ${msg}" 1>&2
-  echo "${msg}" > /tmp/puppet-master-install-err.log 2>/dev/null || true
-  exit 1
-fi
-
-echo "Installed puppet-master CLI to ${BIN_PATH}"
+echo "Installed Puppet Master.app to ${APP_BUNDLE}"
+echo "CLI available at ${LAUNCHER} (inside the app bundle)"
 
 # P0-G23: Display post-install guidance
 echo ""
@@ -42,7 +36,8 @@ echo "  Puppet Master Installation Complete!"
 echo "=============================================="
 echo ""
 echo "Next steps:"
-echo "  1. Open a NEW terminal window"
+echo "  1. Open 'Puppet Master' from Applications to launch the GUI"
+echo "     (or run ${LAUNCHER} gui in Terminal)"
 echo "  2. Run 'puppet-master doctor' to verify installation"
 echo "     and check platform prerequisites"
 echo ""

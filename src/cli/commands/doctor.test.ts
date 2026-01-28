@@ -18,243 +18,279 @@ import { DoctorReporter } from '../../doctor/doctor-reporter.js';
 import type { CheckResult } from '../../doctor/check-registry.js';
 
 vi.mock('../../config/config-manager.js', () => ({
-  ConfigManager: vi.fn().mockImplementation(() => ({
-    load: vi.fn().mockResolvedValue({
-      cliPaths: {
-        cursor: 'cursor-agent',
-        codex: 'codex',
-        claude: 'claude',
-        gemini: 'gemini',
-        copilot: 'copilot',
-      },
-    }),
-  })),
+  ConfigManager: vi.fn().mockImplementation(function () {
+    return {
+      load: vi.fn().mockResolvedValue({
+        cliPaths: {
+          cursor: 'cursor-agent',
+          codex: 'codex',
+          claude: 'claude',
+          gemini: 'gemini',
+          copilot: 'copilot',
+        },
+      }),
+    };
+  }),
 }));
 
 vi.mock('../../doctor/checks/playwright-check.js', () => ({
-  PlaywrightBrowsersCheck: vi.fn().mockImplementation(() => ({
-    name: 'playwright-browsers',
-    category: 'runtime' as const,
-    description: 'Checks Playwright is installed and browsers are available',
-    run: vi.fn().mockResolvedValue({
+  PlaywrightBrowsersCheck: vi.fn().mockImplementation(function () {
+    return {
       name: 'playwright-browsers',
       category: 'runtime' as const,
-      passed: true,
-      message: 'Playwright browsers are available',
-      durationMs: 5,
-    }),
-  })),
+      description: 'Checks Playwright is installed and browsers are available',
+      run: vi.fn().mockResolvedValue({
+        name: 'playwright-browsers',
+        category: 'runtime' as const,
+        passed: true,
+        message: 'Playwright browsers are available',
+        durationMs: 5,
+      }),
+    };
+  }),
 }));
 
 // Mock the check classes
 vi.mock('../../doctor/checks/cli-tools.js', () => ({
-  CursorCliCheck: vi.fn().mockImplementation(() => ({
-    name: 'cursor-cli',
-    category: 'cli' as const,
-    description: 'Check if Cursor Agent CLI is available',
-    run: vi.fn().mockResolvedValue({
+  CursorCliCheck: vi.fn().mockImplementation(function () {
+    return {
       name: 'cursor-cli',
       category: 'cli' as const,
-      passed: true,
-      message: 'Cursor CLI is available',
-      durationMs: 10,
-    }),
-  })),
-  CodexCliCheck: vi.fn().mockImplementation(() => ({
-    name: 'codex-cli',
-    category: 'cli' as const,
-    description: 'Check if Codex CLI is available',
-    run: vi.fn().mockResolvedValue({
+      description: 'Check if Cursor Agent CLI is available',
+      run: vi.fn().mockResolvedValue({
+        name: 'cursor-cli',
+        category: 'cli' as const,
+        passed: true,
+        message: 'Cursor CLI is available',
+        durationMs: 10,
+      }),
+    };
+  }),
+  CodexCliCheck: vi.fn().mockImplementation(function () {
+    return {
       name: 'codex-cli',
       category: 'cli' as const,
-      passed: true,
-      message: 'Codex CLI is available',
-      durationMs: 10,
-    }),
-  })),
-  ClaudeCliCheck: vi.fn().mockImplementation(() => ({
-    name: 'claude-cli',
-    category: 'cli' as const,
-    description: 'Check if Claude CLI is available',
-    run: vi.fn().mockResolvedValue({
+      description: 'Check if Codex CLI is available',
+      run: vi.fn().mockResolvedValue({
+        name: 'codex-cli',
+        category: 'cli' as const,
+        passed: true,
+        message: 'Codex CLI is available',
+        durationMs: 10,
+      }),
+    };
+  }),
+  ClaudeCliCheck: vi.fn().mockImplementation(function () {
+    return {
       name: 'claude-cli',
       category: 'cli' as const,
-      passed: false,
-      message: 'Claude CLI not found',
-      fixSuggestion: 'Install with: curl -fsSL https://claude.ai/install.sh | bash',
-      durationMs: 5,
-    }),
-  })),
-  GeminiCliCheck: vi.fn().mockImplementation(() => ({
-    name: 'gemini-cli',
-    category: 'cli' as const,
-    description: 'Check if Gemini CLI is available',
-    run: vi.fn().mockResolvedValue({
+      description: 'Check if Claude CLI is available',
+      run: vi.fn().mockResolvedValue({
+        name: 'claude-cli',
+        category: 'cli' as const,
+        passed: false,
+        message: 'Claude CLI not found',
+        fixSuggestion: 'Install with: curl -fsSL https://claude.ai/install.sh | bash',
+        durationMs: 5,
+      }),
+    };
+  }),
+  GeminiCliCheck: vi.fn().mockImplementation(function () {
+    return {
       name: 'gemini-cli',
       category: 'cli' as const,
-      passed: true,
-      message: 'Gemini CLI is available',
-      durationMs: 10,
-    }),
-  })),
-  CopilotCliCheck: vi.fn().mockImplementation(() => ({
-    name: 'copilot-cli',
-    category: 'cli' as const,
-    description: 'Check if Copilot CLI is available',
-    run: vi.fn().mockResolvedValue({
+      description: 'Check if Gemini CLI is available',
+      run: vi.fn().mockResolvedValue({
+        name: 'gemini-cli',
+        category: 'cli' as const,
+        passed: true,
+        message: 'Gemini CLI is available',
+        durationMs: 10,
+      }),
+    };
+  }),
+  CopilotCliCheck: vi.fn().mockImplementation(function () {
+    return {
       name: 'copilot-cli',
       category: 'cli' as const,
-      passed: true,
-      message: 'Copilot CLI is available',
-      durationMs: 10,
-    }),
-  })),
+      description: 'Check if Copilot CLI is available',
+      run: vi.fn().mockResolvedValue({
+        name: 'copilot-cli',
+        category: 'cli' as const,
+        passed: true,
+        message: 'Copilot CLI is available',
+        durationMs: 10,
+      }),
+    };
+  }),
 }));
 
 vi.mock('../../doctor/checks/git-check.js', () => ({
-  GitAvailableCheck: vi.fn().mockImplementation(() => ({
-    name: 'git-available',
-    category: 'git' as const,
-    description: 'Check if git is available',
-    run: vi.fn().mockResolvedValue({
+  GitAvailableCheck: vi.fn().mockImplementation(function () {
+    return {
       name: 'git-available',
       category: 'git' as const,
-      passed: true,
-      message: 'git is available',
-      durationMs: 5,
-    }),
-  })),
-  GitConfigCheck: vi.fn().mockImplementation(() => ({
-    name: 'git-config',
-    category: 'git' as const,
-    description: 'Check git configuration',
-    run: vi.fn().mockResolvedValue({
+      description: 'Check if git is available',
+      run: vi.fn().mockResolvedValue({
+        name: 'git-available',
+        category: 'git' as const,
+        passed: true,
+        message: 'git is available',
+        durationMs: 5,
+      }),
+    };
+  }),
+  GitConfigCheck: vi.fn().mockImplementation(function () {
+    return {
       name: 'git-config',
       category: 'git' as const,
-      passed: true,
-      message: 'Git config is valid',
-      durationMs: 3,
-    }),
-  })),
-  GitRepoCheck: vi.fn().mockImplementation(() => ({
-    name: 'git-repo',
-    category: 'git' as const,
-    description: 'Check if in a git repository',
-    run: vi.fn().mockResolvedValue({
+      description: 'Check git configuration',
+      run: vi.fn().mockResolvedValue({
+        name: 'git-config',
+        category: 'git' as const,
+        passed: true,
+        message: 'Git config is valid',
+        durationMs: 3,
+      }),
+    };
+  }),
+  GitRepoCheck: vi.fn().mockImplementation(function () {
+    return {
       name: 'git-repo',
       category: 'git' as const,
-      passed: true,
-      message: 'In a git repository',
-      durationMs: 2,
-    }),
-  })),
+      description: 'Check if in a git repository',
+      run: vi.fn().mockResolvedValue({
+        name: 'git-repo',
+        category: 'git' as const,
+        passed: true,
+        message: 'In a git repository',
+        durationMs: 2,
+      }),
+    };
+  }),
 }));
 
 vi.mock('../../doctor/checks/runtime-check.js', () => ({
-  NodeVersionCheck: vi.fn().mockImplementation(() => ({
-    name: 'node-version',
-    category: 'runtime' as const,
-    description: 'Check Node.js version',
-    run: vi.fn().mockResolvedValue({
+  NodeVersionCheck: vi.fn().mockImplementation(function () {
+    return {
       name: 'node-version',
       category: 'runtime' as const,
-      passed: true,
-      message: 'Node.js version meets requirement',
-      durationMs: 1,
-    }),
-  })),
-  NpmAvailableCheck: vi.fn().mockImplementation(() => ({
-    name: 'npm-available',
-    category: 'runtime' as const,
-    description: 'Check if npm is available',
-    run: vi.fn().mockResolvedValue({
+      description: 'Check Node.js version',
+      run: vi.fn().mockResolvedValue({
+        name: 'node-version',
+        category: 'runtime' as const,
+        passed: true,
+        message: 'Node.js version meets requirement',
+        durationMs: 1,
+      }),
+    };
+  }),
+  NpmAvailableCheck: vi.fn().mockImplementation(function () {
+    return {
       name: 'npm-available',
       category: 'runtime' as const,
-      passed: true,
-      message: 'npm is available',
-      durationMs: 2,
-    }),
-  })),
+      description: 'Check if npm is available',
+      run: vi.fn().mockResolvedValue({
+        name: 'npm-available',
+        category: 'runtime' as const,
+        passed: true,
+        message: 'npm is available',
+        durationMs: 2,
+      }),
+    };
+  }),
 }));
 
 vi.mock('../../doctor/checks/project-check.js', () => ({
-  ProjectDirCheck: vi.fn().mockImplementation(() => ({
-    name: 'project-dir',
-    category: 'project' as const,
-    description: 'Check project directory',
-    run: vi.fn().mockResolvedValue({
+  ProjectDirCheck: vi.fn().mockImplementation(function () {
+    return {
       name: 'project-dir',
       category: 'project' as const,
-      passed: true,
-      message: '.puppet-master directory exists',
-      durationMs: 1,
-    }),
-  })),
-  ConfigFileCheck: vi.fn().mockImplementation(() => ({
-    name: 'config-file',
-    category: 'project' as const,
-    description: 'Check config file',
-    run: vi.fn().mockResolvedValue({
+      description: 'Check project directory',
+      run: vi.fn().mockResolvedValue({
+        name: 'project-dir',
+        category: 'project' as const,
+        passed: true,
+        message: '.puppet-master directory exists',
+        durationMs: 1,
+      }),
+    };
+  }),
+  ConfigFileCheck: vi.fn().mockImplementation(function () {
+    return {
       name: 'config-file',
       category: 'project' as const,
-      passed: true,
-      message: 'config.yaml exists and is valid',
-      durationMs: 2,
-    }),
-  })),
-  SubdirectoriesCheck: vi.fn().mockImplementation(() => ({
-    name: 'subdirectories',
-    category: 'project' as const,
-    description: 'Check subdirectories',
-    run: vi.fn().mockResolvedValue({
+      description: 'Check config file',
+      run: vi.fn().mockResolvedValue({
+        name: 'config-file',
+        category: 'project' as const,
+        passed: true,
+        message: 'config.yaml exists and is valid',
+        durationMs: 2,
+      }),
+    };
+  }),
+  SubdirectoriesCheck: vi.fn().mockImplementation(function () {
+    return {
       name: 'subdirectories',
       category: 'project' as const,
-      passed: true,
-      message: 'All required subdirectories exist',
-      durationMs: 1,
-    }),
-  })),
+      description: 'Check subdirectories',
+      run: vi.fn().mockResolvedValue({
+        name: 'subdirectories',
+        category: 'project' as const,
+        passed: true,
+        message: 'All required subdirectories exist',
+        durationMs: 1,
+      }),
+    };
+  }),
 }));
 
 // Mock CheckRegistry
 vi.mock('../../doctor/check-registry.js', () => {
   const mockCheckResults: CheckResult[] = [];
   return {
-    CheckRegistry: vi.fn().mockImplementation(() => ({
-      register: vi.fn(),
-      runAll: vi.fn().mockResolvedValue(mockCheckResults),
-      runCategory: vi.fn().mockResolvedValue(mockCheckResults),
-      runOne: vi.fn(),
-      getRegisteredChecks: vi.fn().mockReturnValue([]),
-      getCategories: vi.fn().mockReturnValue(['cli', 'git', 'runtime', 'project']),
-    })),
+    CheckRegistry: vi.fn().mockImplementation(function () {
+      return {
+        register: vi.fn(),
+        runAll: vi.fn().mockResolvedValue(mockCheckResults),
+        runCategory: vi.fn().mockResolvedValue(mockCheckResults),
+        runOne: vi.fn(),
+        getRegisteredChecks: vi.fn().mockReturnValue([]),
+        getCategories: vi.fn().mockReturnValue(['cli', 'git', 'runtime', 'project']),
+      };
+    }),
   };
 });
 
 // Mock InstallationManager
 vi.mock('../../doctor/installation-manager.js', () => ({
-  InstallationManager: vi.fn().mockImplementation(() => ({
-    getInstallCommand: vi.fn().mockReturnValue({
-      check: 'claude-cli',
-      command: 'npm install -g @anthropic-ai/claude-code',
-      description: 'Install Claude CLI',
-      requiresSudo: false,
-      platforms: ['darwin', 'linux', 'win32'],
-    }),
-    install: vi.fn().mockResolvedValue(true),
-    getAvailableInstalls: vi.fn().mockReturnValue([]),
-    getCurrentPlatform: vi.fn().mockReturnValue('linux'),
-  })),
+  InstallationManager: vi.fn().mockImplementation(function () {
+    return {
+      getInstallCommand: vi.fn().mockReturnValue({
+        check: 'claude-cli',
+        command: 'npm install -g @anthropic-ai/claude-code',
+        description: 'Install Claude CLI',
+        requiresSudo: false,
+        platforms: ['darwin', 'linux', 'win32'],
+      }),
+      install: vi.fn().mockResolvedValue(true),
+      getAvailableInstalls: vi.fn().mockReturnValue([]),
+      getCurrentPlatform: vi.fn().mockReturnValue('linux'),
+    };
+  }),
 }));
 
 // Mock DoctorReporter
 vi.mock('../../doctor/doctor-reporter.js', () => ({
-  DoctorReporter: vi.fn().mockImplementation(() => ({
-    formatResults: vi.fn().mockReturnValue('Formatted output'),
-    formatSingleResult: vi.fn(),
-    formatSummary: vi.fn().mockReturnValue('Summary'),
-    groupResultsByCategory: vi.fn(),
-  })),
+  DoctorReporter: vi.fn().mockImplementation(function () {
+    return {
+      formatResults: vi.fn().mockReturnValue('Formatted output'),
+      formatSingleResult: vi.fn(),
+      formatSummary: vi.fn().mockReturnValue('Summary'),
+      groupResultsByCategory: vi.fn(),
+    };
+  }),
 }));
 
 describe('DoctorCommand', () => {
@@ -348,7 +384,9 @@ describe('doctorAction', () => {
       };
 
       // Replace CheckRegistry with our mock
-      vi.mocked(CheckRegistry).mockImplementation(() => mockRegistry as unknown as CheckRegistry);
+      vi.mocked(CheckRegistry).mockImplementation(function () {
+        return mockRegistry as unknown as CheckRegistry;
+      });
 
       const options: DoctorCommandOptions = {};
       await doctorAction(options);
@@ -379,7 +417,9 @@ describe('doctorAction', () => {
         ]),
       };
 
-      vi.mocked(CheckRegistry).mockImplementation(() => mockRegistry as unknown as CheckRegistry);
+      vi.mocked(CheckRegistry).mockImplementation(function () {
+        return mockRegistry as unknown as CheckRegistry;
+      });
 
       const options: DoctorCommandOptions = {};
       await doctorAction(options);
@@ -408,7 +448,9 @@ describe('doctorAction', () => {
         ]),
       };
 
-      vi.mocked(CheckRegistry).mockImplementation(() => mockRegistry as unknown as CheckRegistry);
+      vi.mocked(CheckRegistry).mockImplementation(function () {
+        return mockRegistry as unknown as CheckRegistry;
+      });
 
       const options: DoctorCommandOptions = {};
       await doctorAction(options);
@@ -433,7 +475,9 @@ describe('doctorAction', () => {
         ]),
       };
 
-      vi.mocked(CheckRegistry).mockImplementation(() => mockRegistry as unknown as CheckRegistry);
+      vi.mocked(CheckRegistry).mockImplementation(function () {
+        return mockRegistry as unknown as CheckRegistry;
+      });
 
       const options: DoctorCommandOptions = { category: 'cli' };
       await doctorAction(options);
@@ -457,7 +501,9 @@ describe('doctorAction', () => {
         ]),
       };
 
-      vi.mocked(CheckRegistry).mockImplementation(() => mockRegistry as unknown as CheckRegistry);
+      vi.mocked(CheckRegistry).mockImplementation(function () {
+        return mockRegistry as unknown as CheckRegistry;
+      });
 
       const options: DoctorCommandOptions = { category: 'git' };
       await doctorAction(options);
@@ -483,7 +529,9 @@ describe('doctorAction', () => {
         runAll: vi.fn().mockResolvedValue(mockResults),
       };
 
-      vi.mocked(CheckRegistry).mockImplementation(() => mockRegistry as unknown as CheckRegistry);
+      vi.mocked(CheckRegistry).mockImplementation(function () {
+        return mockRegistry as unknown as CheckRegistry;
+      });
 
       const options: DoctorCommandOptions = { json: true };
       await doctorAction(options);
@@ -506,7 +554,9 @@ describe('doctorAction', () => {
         ]),
       };
 
-      vi.mocked(CheckRegistry).mockImplementation(() => mockRegistry as unknown as CheckRegistry);
+      vi.mocked(CheckRegistry).mockImplementation(function () {
+        return mockRegistry as unknown as CheckRegistry;
+      });
 
       const options: DoctorCommandOptions = { json: true };
       await doctorAction(options);
@@ -536,7 +586,9 @@ describe('doctorAction', () => {
         ]),
       };
 
-      vi.mocked(CheckRegistry).mockImplementation(() => mockRegistry as unknown as CheckRegistry);
+      vi.mocked(CheckRegistry).mockImplementation(function () {
+        return mockRegistry as unknown as CheckRegistry;
+      });
 
       const options: DoctorCommandOptions = { verbose: true };
       await doctorAction(options);
@@ -562,7 +614,9 @@ describe('doctorAction', () => {
         ]),
       };
 
-      vi.mocked(CheckRegistry).mockImplementation(() => mockRegistry as unknown as CheckRegistry);
+      vi.mocked(CheckRegistry).mockImplementation(function () {
+        return mockRegistry as unknown as CheckRegistry;
+      });
 
       const options: DoctorCommandOptions = {};
       await doctorAction(options);
@@ -604,8 +658,12 @@ describe('doctorAction', () => {
         install: vi.fn().mockResolvedValue(true),
       };
 
-      vi.mocked(CheckRegistry).mockImplementation(() => mockRegistry as unknown as CheckRegistry);
-      vi.mocked(InstallationManager).mockImplementation(() => mockInstallationManager as unknown as InstallationManager);
+      vi.mocked(CheckRegistry).mockImplementation(function () {
+        return mockRegistry as unknown as CheckRegistry;
+      });
+      vi.mocked(InstallationManager).mockImplementation(function () {
+        return mockInstallationManager as unknown as InstallationManager;
+      });
 
       const options: DoctorCommandOptions = { fix: true };
       await doctorAction(options);
@@ -638,8 +696,12 @@ describe('doctorAction', () => {
         install: vi.fn(),
       };
 
-      vi.mocked(CheckRegistry).mockImplementation(() => mockRegistry as unknown as CheckRegistry);
-      vi.mocked(InstallationManager).mockImplementation(() => mockInstallationManager as unknown as InstallationManager);
+      vi.mocked(CheckRegistry).mockImplementation(function () {
+        return mockRegistry as unknown as CheckRegistry;
+      });
+      vi.mocked(InstallationManager).mockImplementation(function () {
+        return mockInstallationManager as unknown as InstallationManager;
+      });
 
       const options: DoctorCommandOptions = { fix: true };
       await doctorAction(options);
@@ -662,7 +724,9 @@ describe('doctorAction', () => {
         ]),
       };
 
-      vi.mocked(CheckRegistry).mockImplementation(() => mockRegistry as unknown as CheckRegistry);
+      vi.mocked(CheckRegistry).mockImplementation(function () {
+        return mockRegistry as unknown as CheckRegistry;
+      });
 
       const options: DoctorCommandOptions = {}; // No fix flag
       await doctorAction(options);
@@ -679,7 +743,9 @@ describe('doctorAction', () => {
         runAll: vi.fn().mockRejectedValue(new Error('Registry error')),
       };
 
-      vi.mocked(CheckRegistry).mockImplementation(() => mockRegistry as unknown as CheckRegistry);
+      vi.mocked(CheckRegistry).mockImplementation(function () {
+        return mockRegistry as unknown as CheckRegistry;
+      });
 
       const options: DoctorCommandOptions = {};
       await doctorAction(options);
@@ -700,7 +766,9 @@ describe('doctorAction', () => {
         runAll: vi.fn().mockRejectedValue(error),
       };
 
-      vi.mocked(CheckRegistry).mockImplementation(() => mockRegistry as unknown as CheckRegistry);
+      vi.mocked(CheckRegistry).mockImplementation(function () {
+        return mockRegistry as unknown as CheckRegistry;
+      });
 
       const options: DoctorCommandOptions = { verbose: true };
       await doctorAction(options);
@@ -731,8 +799,12 @@ describe('doctorAction', () => {
         formatResults: vi.fn().mockReturnValue('Formatted output'),
       };
 
-      vi.mocked(CheckRegistry).mockImplementation(() => mockRegistry as unknown as CheckRegistry);
-      vi.mocked(DoctorReporter).mockImplementation(() => mockReporter as unknown as DoctorReporter);
+      vi.mocked(CheckRegistry).mockImplementation(function () {
+        return mockRegistry as unknown as CheckRegistry;
+      });
+      vi.mocked(DoctorReporter).mockImplementation(function () {
+        return mockReporter as unknown as DoctorReporter;
+      });
 
       const options: DoctorCommandOptions = {}; // No JSON flag
       await doctorAction(options);
@@ -750,7 +822,9 @@ describe('doctorAction', () => {
         runAll: vi.fn().mockResolvedValue([]),
       };
 
-      vi.mocked(CheckRegistry).mockImplementation(() => mockRegistry as unknown as CheckRegistry);
+      vi.mocked(CheckRegistry).mockImplementation(function () {
+        return mockRegistry as unknown as CheckRegistry;
+      });
 
       const options: DoctorCommandOptions = {};
       await doctorAction(options);

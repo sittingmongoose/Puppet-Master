@@ -39,12 +39,14 @@ describe('CLI Tools Checks', () => {
     vi.mocked(access).mockRejectedValue(new Error('ENOENT'));
     process.env.OPENAI_API_KEY = 'test';
     process.env.ANTHROPIC_API_KEY = 'test';
+    process.env.CURSOR_API_KEY = 'test';
   });
 
   afterEach(() => {
     vi.clearAllMocks();
     delete process.env.OPENAI_API_KEY;
     delete process.env.ANTHROPIC_API_KEY;
+    delete process.env.CURSOR_API_KEY;
   });
 
   /**

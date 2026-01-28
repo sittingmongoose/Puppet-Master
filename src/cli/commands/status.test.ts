@@ -329,8 +329,9 @@ describe('statusAction', () => {
       load: vi.fn().mockResolvedValue(createSamplePRD()),
     };
 
-    (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockConfigManager);
-    (PrdManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockPrdManager);
+    // Vitest 4: Constructor mocks must use function/class, not arrow functions
+    (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function() { return mockConfigManager; });
+    (PrdManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function() { return mockPrdManager; });
 
     vi.spyOn(process, 'exit').mockImplementation(() => undefined as never);
     vi.spyOn(console, 'log').mockImplementation(() => {});
@@ -711,8 +712,9 @@ describe('statusAction', () => {
         ]),
       };
 
+      // Vitest 4: Constructor mocks must use function/class, not arrow functions
       (CheckpointManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(
-        () => mockCheckpointManager
+        function() { return mockCheckpointManager; }
       );
 
       await statusAction({ json: true });
@@ -730,8 +732,9 @@ describe('statusAction', () => {
         listCheckpoints: vi.fn().mockResolvedValue([]),
       };
 
+      // Vitest 4: Constructor mocks must use function/class, not arrow functions
       (CheckpointManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(
-        () => mockCheckpointManager
+        function() { return mockCheckpointManager; }
       );
 
       await statusAction({ json: true });
@@ -770,11 +773,12 @@ describe('statusAction', () => {
         }),
       };
 
+      // Vitest 4: Constructor mocks must use function/class, not arrow functions
       (UsageTracker as unknown as ReturnType<typeof vi.fn>).mockImplementation(
-        () => mockUsageTracker
+        function() { return mockUsageTracker; }
       );
       (QuotaManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(
-        () => mockQuotaManager
+        function() { return mockQuotaManager; }
       );
 
       await statusAction({ json: true });
@@ -812,11 +816,12 @@ describe('statusAction', () => {
         }),
       };
 
+      // Vitest 4: Constructor mocks must use function/class, not arrow functions
       (UsageTracker as unknown as ReturnType<typeof vi.fn>).mockImplementation(
-        () => mockUsageTracker
+        function() { return mockUsageTracker; }
       );
       (QuotaManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(
-        () => mockQuotaManager
+        function() { return mockQuotaManager; }
       );
 
       // Should not throw, should skip exhausted platforms

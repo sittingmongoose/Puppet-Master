@@ -86,7 +86,7 @@ describe('startAction', () => {
     getConfigPath: ReturnType<typeof vi.fn>;
   };
   let mockContainer: {
-    resolve: ReturnType<typeof vi.fn>;
+    resolve: (key: string) => unknown;
   };
   let mockOrchestrator: {
     initialize: ReturnType<typeof vi.fn>;
@@ -111,6 +111,7 @@ describe('startAction', () => {
   };
 
   beforeEach(() => {
+    vi.clearAllMocks();
     mockConfig = {
       project: {
         name: 'test-project',
@@ -281,12 +282,14 @@ describe('startAction', () => {
           return mockRegistry;
         }
         return null;
-      }) as ReturnType<typeof vi.fn>,
+      }),
     };
 
-    (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockConfigManager);
+    // Vitest 4: Constructor mocks must use function/class, not arrow functions
+    (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function() { return mockConfigManager; });
     (createContainer as ReturnType<typeof vi.fn>).mockReturnValue(mockContainer);
-    (Orchestrator as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockOrchestrator);
+    // Vitest 4: Constructor mocks must use function/class, not arrow functions
+    (Orchestrator as unknown as ReturnType<typeof vi.fn>).mockImplementation(function() { return mockOrchestrator; });
     const mockDefaultRegistry = {
       getAvailable: vi.fn().mockReturnValue(['cursor']),
       get: vi.fn((platform: string) => {
@@ -312,7 +315,7 @@ describe('startAction', () => {
 
       await startAction({});
 
-      expect(ConfigManager).toHaveBeenCalled();
+      expect(ConfigManager as unknown as ReturnType<typeof vi.fn>).toHaveBeenCalled();
       expect(mockConfigManager.load).toHaveBeenCalled();
     });
 
@@ -321,7 +324,7 @@ describe('startAction', () => {
 
       await startAction({ config: '/custom/config.yaml' });
 
-      expect(ConfigManager).toHaveBeenCalledWith('/custom/config.yaml');
+      expect(ConfigManager as unknown as ReturnType<typeof vi.fn>).toHaveBeenCalledWith('/custom/config.yaml');
     });
   });
 
@@ -340,7 +343,7 @@ describe('startAction', () => {
     it('should use provided PRD path and pass override to createContainer', async () => {
       (access as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
       // Ensure registry can return runner so initialization succeeds
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
 
@@ -378,7 +381,7 @@ describe('startAction', () => {
 
       expect(mockConfigManager.load).toHaveBeenCalled();
       expect(access).toHaveBeenCalled();
-      expect(Orchestrator).not.toHaveBeenCalled();
+      expect(Orchestrator as unknown as ReturnType<typeof vi.fn>).not.toHaveBeenCalled();
       expect(mockOrchestrator.initialize).not.toHaveBeenCalled();
       expect(mockOrchestrator.start).not.toHaveBeenCalled();
     });
@@ -399,7 +402,7 @@ describe('startAction', () => {
     beforeEach(() => {
       (access as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
       // Ensure registry can return runner so initialization succeeds
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
     });
@@ -455,7 +458,7 @@ describe('startAction', () => {
     beforeEach(() => {
       (access as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
       // Ensure registry can return runner so initialization succeeds
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
     });
@@ -487,7 +490,7 @@ describe('startAction', () => {
     beforeEach(() => {
       (access as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
       // Ensure registry can return runner so initialization succeeds
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
     });
@@ -496,7 +499,7 @@ describe('startAction', () => {
       await startAction({});
 
       // Verify orchestrator was created and has getProgress method
-      expect(Orchestrator).toHaveBeenCalled();
+      expect(Orchestrator as unknown as ReturnType<typeof vi.fn>).toHaveBeenCalled();
       expect(mockOrchestrator.getProgress).toBeDefined();
       expect(typeof mockOrchestrator.getProgress).toBe('function');
     });
@@ -530,7 +533,7 @@ describe('startAction', () => {
     it('should output error details in verbose mode', async () => {
       (access as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
       // Ensure registry can return runner so we get past initialization
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
       
@@ -552,7 +555,7 @@ describe('startAction', () => {
     beforeEach(() => {
       (access as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
       // Ensure registry can return runner so initialization succeeds
-      const registry = mockContainer.resolve('platformRegistry');
+      const registry = mockContainer.resolve('platformRegistry') as { getAvailable: ReturnType<typeof vi.fn>; get: ReturnType<typeof vi.fn>; register: ReturnType<typeof vi.fn> };
       registry.getAvailable.mockReturnValue(['cursor']);
       registry.get.mockReturnValue(mockPlatformRunner);
     });
@@ -570,7 +573,7 @@ describe('startAction', () => {
         prd: '/custom/prd.json',
       });
 
-      expect(ConfigManager).toHaveBeenCalledWith('/custom/config.yaml');
+      expect(ConfigManager as unknown as ReturnType<typeof vi.fn>).toHaveBeenCalledWith('/custom/config.yaml');
       expect(access).toHaveBeenCalledWith('/custom/prd.json');
     });
   });

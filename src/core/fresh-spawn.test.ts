@@ -531,6 +531,7 @@ describe('FreshSpawner', () => {
       const request = createSpawnRequest();
 
       let mockProc: MockChildProcess | undefined;
+      const closeListeners: Array<(code: number, signal?: NodeJS.Signals) => void> = [];
 
       mockSpawn.mockImplementation((command: string, args: string[]) => {
         if (command === 'git' && args[0] === 'status') {
@@ -543,6 +544,12 @@ describe('FreshSpawner', () => {
         }
         if (command === 'codex') {
           mockProc = createMockChildProcess(12345);
+          mockProc.once = vi.fn((event: string, listener: (...args: unknown[]) => void) => {
+            if (event === 'close') {
+              closeListeners.push(listener as (code: number, signal?: NodeJS.Signals) => void);
+            }
+            return mockProc;
+          }) as unknown as MockChildProcess['once'];
           // Don't auto-close, let cleanup handle it
           return mockProc;
         }
@@ -560,7 +567,7 @@ describe('FreshSpawner', () => {
           // Simulate process termination after a short delay
           setTimeout(() => {
             proc._setExitCode(signal === 'SIGKILL' ? 137 : 0);
-            proc.emit('close', proc.exitCode, signal as NodeJS.Signals);
+            closeListeners.forEach((listener) => listener(proc.exitCode ?? 0, signal as NodeJS.Signals));
           }, 10);
           return true;
         });

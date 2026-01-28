@@ -29,10 +29,10 @@ vi.mock('../../logging/event-bus.js', () => ({
 }));
 
 vi.mock('../../core/session-tracker.js', () => ({
-  SessionTracker: vi.fn().mockImplementation(() => ({
-    start: vi.fn(),
-    stop: vi.fn(),
-  })),
+  SessionTracker: vi.fn().mockImplementation(function () {
+    this.start = vi.fn();
+    this.stop = vi.fn();
+  }),
 }));
 
 vi.mock('open', () => ({
@@ -58,6 +58,7 @@ describe('GuiCommand', () => {
   let mockProgram: Command;
 
   beforeEach(() => {
+    vi.clearAllMocks();
     command = new GuiCommand();
     mockProgram = new Command();
     vi.clearAllMocks();
@@ -80,7 +81,9 @@ describe('GuiCommand', () => {
       const descriptionSpy = vi.spyOn(Command.prototype, 'description');
       command.register(mockProgram);
 
-      expect(descriptionSpy).toHaveBeenCalledWith('Launch the web-based GUI server');
+      expect(descriptionSpy).toHaveBeenCalledWith(
+        'Launch the web-based GUI server (vanilla HTML by default, use --react for React SPA)'
+      );
     });
 
     it('should register all expected options', () => {
@@ -111,6 +114,7 @@ describe('guiAction', () => {
     registerOrchestratorInstance: ReturnType<typeof vi.fn>;
     registerStartChainDependencies: ReturnType<typeof vi.fn>;
     registerSessionTracker: ReturnType<typeof vi.fn>;
+    initializeAuth: ReturnType<typeof vi.fn>;
     start: ReturnType<typeof vi.fn>;
     stop: ReturnType<typeof vi.fn>;
     getUrl: ReturnType<typeof vi.fn>;
@@ -292,6 +296,7 @@ describe('guiAction', () => {
       registerOrchestratorInstance: vi.fn(),
       registerStartChainDependencies: vi.fn(),
       registerSessionTracker: vi.fn(),
+      initializeAuth: vi.fn().mockResolvedValue(undefined),
       start: vi.fn().mockResolvedValue(undefined),
       stop: vi.fn().mockResolvedValue(undefined),
       getUrl: vi.fn().mockReturnValue('http://localhost:3847'),
@@ -318,11 +323,19 @@ describe('guiAction', () => {
     };
 
     // Setup mocks
-    (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockConfigManager);
+    (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function () {
+      return mockConfigManager;
+    });
     (createContainer as ReturnType<typeof vi.fn>).mockReturnValue(mockContainer);
-    (GuiServer as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockGuiServer);
-    (EventBus as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockEventBus);
-    (Orchestrator as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockOrchestrator);
+    (GuiServer as unknown as ReturnType<typeof vi.fn>).mockImplementation(function () {
+      return mockGuiServer;
+    });
+    (EventBus as unknown as ReturnType<typeof vi.fn>).mockImplementation(function () {
+      return mockEventBus;
+    });
+    (Orchestrator as unknown as ReturnType<typeof vi.fn>).mockImplementation(function () {
+      return mockOrchestrator;
+    });
     (net.createServer as ReturnType<typeof vi.fn>).mockReturnValue(mockNetServer);
     (open as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
   });
@@ -518,7 +531,7 @@ describe('guiAction', () => {
 
   describe('URL display', () => {
     it('should display server URL and links', async () => {
-      void guiAction({}).catch(() => {});
+      void guiAction({ classic: true }).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 

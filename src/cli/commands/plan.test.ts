@@ -14,9 +14,11 @@ import type { StartChainResult } from '../../core/start-chain/pipeline.js';
 // Mock StartChainPipeline
 const mockExecute = vi.fn();
 vi.mock('../../core/start-chain/pipeline.js', () => ({
-  StartChainPipeline: vi.fn().mockImplementation(() => ({
-    execute: mockExecute,
-  })),
+  StartChainPipeline: vi.fn().mockImplementation(function () {
+    return {
+      execute: mockExecute,
+    };
+  }),
 }));
 
 describe('plan command', () => {

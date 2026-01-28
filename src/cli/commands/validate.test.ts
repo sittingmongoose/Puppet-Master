@@ -318,10 +318,18 @@ describe('validateAction', () => {
       loadFile: vi.fn().mockResolvedValue(createSampleAgentsContent()),
     };
 
-    (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockConfigManager);
-    (PrdManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockPrdManager);
-    (ValidationGate as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockValidationGate);
-    (AgentsManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockAgentsManager);
+    (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function () {
+      return mockConfigManager;
+    });
+    (PrdManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function () {
+      return mockPrdManager;
+    });
+    (ValidationGate as unknown as ReturnType<typeof vi.fn>).mockImplementation(function () {
+      return mockValidationGate;
+    });
+    (AgentsManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function () {
+      return mockAgentsManager;
+    });
     (existsSync as ReturnType<typeof vi.fn>).mockReturnValue(true);
   });
 

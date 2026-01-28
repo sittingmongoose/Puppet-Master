@@ -26,7 +26,9 @@ const mockCodexInstance = {
 
 vi.mock('@openai/codex-sdk', () => {
   return {
-    Codex: vi.fn(() => mockCodexInstance),
+    Codex: vi.fn(function () {
+      return mockCodexInstance;
+    }),
   };
 });
 

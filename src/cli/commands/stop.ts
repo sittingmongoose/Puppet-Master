@@ -121,12 +121,6 @@ export async function stopAction(options: StopOptions): Promise<void> {
     // Create container and resolve dependencies
     const container = createContainer(config, projectRoot, configPath);
 
-    // Create orchestrator instance (minimal, just for stop)
-    const orchestrator = new Orchestrator({
-      config,
-      projectPath: projectRoot,
-    });
-
     // Resolve minimal dependencies needed for stop
     const deps: OrchestratorDependencies = {
       configManager: container.resolve('configManager'),
@@ -146,6 +140,12 @@ export async function stopAction(options: StopOptions): Promise<void> {
       promotionEngine: container.resolve('promotionEngine'),
       multiLevelLoader: container.resolve('multiLevelLoader'),
     };
+
+    // Create orchestrator instance (minimal, just for stop)
+    const orchestrator = new Orchestrator({
+      config,
+      projectPath: projectRoot,
+    });
 
     // Initialize orchestrator (required before stop)
     await orchestrator.initialize(deps);

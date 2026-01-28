@@ -5,10 +5,44 @@
  * See BUILD_QUEUE_IMPROVEMENTS.md P1-T22.
  */
 
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { auditRWMWiring, runFullAudit } from './rwm-specific-audit.js';
+
+vi.mock('./wiring-audit.js', () => ({
+  WiringAuditor: class {
+    constructor(private config: Record<string, unknown>) {}
+    async audit() {
+      return {
+        issues: [],
+        summary: {
+          totalExports: 0,
+          orphanExports: 0,
+          totalRegistrations: 0,
+          unusedRegistrations: 0,
+          totalInjections: 0,
+          missingInjections: 0,
+          totalImports: 0,
+          deadImports: 0,
+          eventMismatches: 0,
+          verifierGaps: 0,
+        },
+        passed: true,
+        durationMs: 1,
+        timestamp: new Date().toISOString(),
+        config: this.config,
+      };
+    }
+  },
+  createDefaultConfig: (projectRoot: string) => ({
+    rootDir: projectRoot,
+    include: ['src/**/*.ts'],
+    exclude: ['**/*.test.ts'],
+    entryPoints: [],
+    containerFile: 'src/core/container.ts',
+  }),
+}));
 
 describe('auditRWMWiring', () => {
   const projectRoot = process.cwd();

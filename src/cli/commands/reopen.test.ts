@@ -197,6 +197,10 @@ describe('reopenAction', () => {
   beforeEach(() => {
     // Reset readline mock
     vi.clearAllMocks();
+    mockReadlineInterface = {
+      question: vi.fn().mockResolvedValue('y'),
+      close: vi.fn(),
+    };
     (readline.createInterface as ReturnType<typeof vi.fn>).mockReturnValue(mockReadlineInterface);
     
     mockConfig = {
@@ -299,14 +303,15 @@ describe('reopenAction', () => {
       getEvidence: vi.fn().mockResolvedValue([]),
     };
 
-    mockReadlineInterface = {
-      question: vi.fn().mockResolvedValue('y'),
-      close: vi.fn(),
-    };
-
-    (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockConfigManager);
-    (PrdManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockPrdManager);
-    (EvidenceStore as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => mockEvidenceStore);
+    (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function () {
+      return mockConfigManager;
+    });
+    (PrdManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function () {
+      return mockPrdManager;
+    });
+    (EvidenceStore as unknown as ReturnType<typeof vi.fn>).mockImplementation(function () {
+      return mockEvidenceStore;
+    });
     // Reset the mock before each test
     (readline.createInterface as ReturnType<typeof vi.fn>).mockReturnValue(mockReadlineInterface);
 

@@ -35,6 +35,30 @@ vi.mock('child_process', async () => {
   };
 });
 
+const { codexOutputQueue, mockCodexThread, mockCodexInstance } = vi.hoisted(() => {
+  const codexOutputQueue: string[] = [];
+  const mockCodexThread = {
+    id: 'test-thread-id-123',
+    run: vi.fn(async () => ({
+      finalResponse: codexOutputQueue.shift() ?? '',
+      usage: { input_tokens: 1, output_tokens: 1 },
+    })),
+    runStreamed: vi.fn(),
+  };
+  const mockCodexInstance = {
+    startThread: vi.fn(() => mockCodexThread),
+    resumeThread: vi.fn(() => mockCodexThread),
+  };
+  return { codexOutputQueue, mockCodexThread, mockCodexInstance };
+});
+
+// Mock Codex SDK (used by CodexRunner)
+vi.mock('@openai/codex-sdk', () => ({
+  Codex: vi.fn(function () {
+    return mockCodexInstance;
+  }),
+}));
+
 // Get path to mock CLI scripts
 const MOCK_CLIS_DIR = join(process.cwd(), 'tests', 'fixtures', 'mock-clis');
 
@@ -308,7 +332,12 @@ describe('Platform Integration Tests', () => {
     // Reset mocks
     vi.clearAllMocks();
     spawnOutputQueue = [];
+    codexOutputQueue.length = 0;
     nextMockPid = 10000;
+    mockCodexThread.run.mockClear();
+    mockCodexThread.runStreamed.mockClear();
+    mockCodexInstance.startThread.mockClear();
+    mockCodexInstance.resumeThread.mockClear();
 
     // FreshSpawner runs git commands; platform runners spawn their own CLIs.
     // Mock spawn in a way that:
@@ -918,7 +947,8 @@ describe('Platform Integration Tests', () => {
       vi.spyOn(capabilityService, 'getCached').mockResolvedValue(mockProbeResult);
 
       const registry = PlatformRegistry.createDefault(config);
-      spawnOutputQueue = [mockOutput, mockOutput, mockOutput];
+      spawnOutputQueue = [mockOutput, mockOutput];
+      codexOutputQueue.push(mockOutput);
 
       // Test cursor
       const cursorRunner = registry.get('cursor')!;

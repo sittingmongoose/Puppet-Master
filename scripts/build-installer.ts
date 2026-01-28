@@ -182,6 +182,14 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
   await emptyDir(guiPublicDst);
   await copyDir(guiPublicSrc, guiPublicDst);
 
+  // Copy app icon assets into payload for installers
+  const assetsDir = path.join(repoRoot, 'installer', 'assets');
+  const iconPng = path.join(assetsDir, 'puppet-master.png');
+  if (!existsSync(iconPng)) {
+    throw new Error(`Missing installer icon asset: ${iconPng}`);
+  }
+  await cp(iconPng, path.join(payloadRoot, 'puppet-master.png'));
+
   // 4) Copy package manifests and install production dependencies
   console.log('\n📦 Installing production dependencies into staged app...\n');
   await (await import('node:fs/promises')).copyFile(path.join(repoRoot, 'package.json'), path.join(appDir, 'package.json'));
@@ -214,7 +222,17 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
   console.log('\n🚀 Writing launcher scripts...\n');
   const unixLauncher = `#!/usr/bin/env sh
 set -eu
-SCRIPT_DIR=$(CDPATH= cd -- \"$(dirname -- \"$0\")\" && pwd)
+# Resolve real script path when invoked via symlink (e.g. /usr/local/bin/puppet-master)
+# so ROOT_DIR is the install dir (/usr/local/lib/puppet-master), not /usr/local.
+SCRIPT_PATH=\"$0\"
+if [ -L \"$SCRIPT_PATH\" ]; then
+  TARGET=$(readlink \"$SCRIPT_PATH\")
+  case \"$TARGET\" in
+    /*) SCRIPT_PATH=\"$TARGET\" ;;
+    *) SCRIPT_PATH=\"$(cd \"$(dirname \"$SCRIPT_PATH\")\" && pwd)/$TARGET\" ;;
+  esac
+fi
+SCRIPT_DIR=$(cd \"$(dirname \"$SCRIPT_PATH\")\" && pwd)
 ROOT_DIR=$(cd \"$SCRIPT_DIR/..\" && pwd)
 NODE_BIN=\"$ROOT_DIR/node/bin/node\"
 APP_ENTRY=\"$ROOT_DIR/app/dist/cli/index.js\"
@@ -240,6 +258,17 @@ set \"PLAYWRIGHT_BROWSERS_PATH=%ROOT_DIR%\\playwright-browsers\"\r
     const helperScript = path.join(repoRoot, 'installer', 'win', 'scripts', 'install-clis.ps1');
     if (existsSync(helperScript)) {
       await cp(helperScript, path.join(scriptsDir, 'install-clis.ps1'));
+    }
+    
+    // Copy GUI launcher batch file to payload root for NSIS installation
+    const guiLauncher = path.join(repoRoot, 'installer', 'win', 'scripts', 'Launch-Puppet-Master-GUI.bat');
+    if (existsSync(guiLauncher)) {
+      await cp(guiLauncher, path.join(payloadRoot, 'Launch-Puppet-Master-GUI.bat'));
+    }
+
+    const guiLauncherVbs = path.join(repoRoot, 'installer', 'win', 'scripts', 'Launch-Puppet-Master-GUI.vbs');
+    if (existsSync(guiLauncherVbs)) {
+      await cp(guiLauncherVbs, path.join(payloadRoot, 'Launch-Puppet-Master-GUI.vbs'));
     }
   } else {
     const launcherPath = path.join(binDir, 'puppet-master');
@@ -289,13 +318,100 @@ async function buildWindowsNsis(args: Args, repoRoot: string, stageRoot: string,
   return artifact;
 }
 
+/**
+ * Build macOS .app bundle structure
+ * Creates Puppet Master.app with Contents/MacOS, Contents/Resources, and Info.plist
+ */
+async function buildMacAppBundle(
+  args: Args,
+  repoRoot: string,
+  stageRoot: string,
+  version: string
+): Promise<string> {
+  const appName = 'Puppet Master.app';
+  const appPath = path.join(stageRoot, 'app-bundle', appName);
+  const contentsPath = path.join(appPath, 'Contents');
+  const macosPath = path.join(contentsPath, 'MacOS');
+  const resourcesPath = path.join(contentsPath, 'Resources');
+
+  await emptyDir(appPath);
+  await ensureDir(macosPath);
+  await ensureDir(resourcesPath);
+
+  // Copy payload into Contents/Resources/puppet-master
+  const payloadSrc = path.join(stageRoot, 'payload', 'puppet-master');
+  const resourcesPayload = path.join(resourcesPath, 'puppet-master');
+  await copyDir(payloadSrc, resourcesPayload);
+
+  const iconSrc = path.join(repoRoot, 'installer', 'assets', 'puppet-master.icns');
+  if (!existsSync(iconSrc)) {
+    throw new Error(`Missing macOS app icon: ${iconSrc}`);
+  }
+  await cp(iconSrc, path.join(resourcesPath, 'puppet-master.icns'));
+
+  // Create MacOS executable that runs puppet-master gui directly
+  const macosExecutable = path.join(macosPath, 'Puppet Master');
+  const macosScript = `#!/usr/bin/env sh
+set -eu
+# Get the app bundle root (Contents/MacOS/.. = Contents, Contents/.. = .app root)
+APP_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
+RESOURCES_DIR="$APP_ROOT/Contents/Resources"
+ROOT_DIR="$RESOURCES_DIR/puppet-master"
+NODE_BIN="$ROOT_DIR/node/bin/node"
+APP_ENTRY="$ROOT_DIR/app/dist/cli/index.js"
+
+# Export environment variables
+export PATH="$ROOT_DIR/node/bin:$PATH"
+export PLAYWRIGHT_BROWSERS_PATH="$ROOT_DIR/playwright-browsers"
+
+cd "$ROOT_DIR"
+exec "$NODE_BIN" "$APP_ENTRY" gui
+`;
+  await writeFile(macosExecutable, macosScript, { encoding: 'utf8', mode: 0o755 });
+
+  // Create Info.plist
+  const infoPlist = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleExecutable</key>
+  <string>Puppet Master</string>
+  <key>CFBundleIdentifier</key>
+  <string>com.rwm.puppet-master</string>
+  <key>CFBundleName</key>
+  <string>Puppet Master</string>
+  <key>CFBundlePackageType</key>
+  <string>APPL</string>
+  <key>CFBundleIconFile</key>
+  <string>puppet-master</string>
+  <key>CFBundleVersion</key>
+  <string>${version}</string>
+  <key>CFBundleShortVersionString</key>
+  <string>${version}</string>
+  <key>LSMinimumSystemVersion</key>
+  <string>10.13</string>
+  <key>NSHighResolutionCapable</key>
+  <true/>
+</dict>
+</plist>
+`;
+  await writeFile(path.join(contentsPath, 'Info.plist'), infoPlist, { encoding: 'utf8' });
+
+  return appPath;
+}
+
 async function buildMacPkgAndDmg(args: Args, repoRoot: string, stageRoot: string, outDir: string, version: string): Promise<string> {
   await ensureDir(outDir);
 
   const pkgOut = path.join(outDir, `puppet-master-${version}-mac-${args.arch}.pkg`);
   const dmgOut = path.join(outDir, `puppet-master-${version}-mac-${args.arch}.dmg`);
 
-  const payloadDir = path.join(stageRoot, 'payload');
+  // Build .app bundle
+  console.log('\n🍎 Building macOS .app bundle...\n');
+  const appPath = await buildMacAppBundle(args, repoRoot, stageRoot, version);
+
+  // Prepare app bundle directory for pkgbuild (directory containing only the .app)
+  const appBundleDir = path.join(stageRoot, 'app-bundle');
   const scriptsDir = path.join(repoRoot, 'installer', 'mac', 'scripts');
   if (!existsSync(scriptsDir)) {
     throw new Error(`Missing mac installer scripts dir: ${scriptsDir}`);
@@ -306,12 +422,12 @@ async function buildMacPkgAndDmg(args: Args, repoRoot: string, stageRoot: string
   }
 
   console.log('\n🧱 Building macOS pkg...\n');
-  // Install puppet-master directory under /usr/local/lib
+  // Install .app bundle to /Applications
   await run('pkgbuild', [
     '--root',
-    payloadDir,
+    appBundleDir,
     '--install-location',
-    '/usr/local/lib',
+    '/Applications',
     '--identifier',
     'com.rwm.puppet-master',
     '--version',
@@ -419,4 +535,3 @@ main().catch((error) => {
   console.error('Installer build failed:', error instanceof Error ? error.message : String(error));
   process.exit(1);
 });
-

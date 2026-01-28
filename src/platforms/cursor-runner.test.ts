@@ -130,7 +130,7 @@ describe('CursorRunner', () => {
       };
 
       const args = runner['buildArgs'](request);
-      expect(args).toEqual(['-p', '--model', 'auto']);
+      expect(args).toEqual(['-p', 'Test prompt', '--model', 'auto']);
     });
 
     it('should include plan mode flag when enabled and supported', () => {
@@ -255,9 +255,10 @@ describe('CursorRunner', () => {
       expect(vi.mocked(spawn).mock.calls[0][0]).toBe('custom-cursor');
     });
 
-    it('should write prompt to stdin', async () => {
+    it('should write large prompt to stdin', async () => {
+      const prompt = 'a'.repeat(40000);
       const request: ExecutionRequest = {
-        prompt: 'Test prompt content',
+        prompt,
         workingDirectory: '/tmp',
         nonInteractive: true,
       };
@@ -269,7 +270,7 @@ describe('CursorRunner', () => {
 
       await runner['spawn'](request);
 
-      expect(writeSpy).toHaveBeenCalledWith('Test prompt content');
+      expect(writeSpy).toHaveBeenCalledWith(prompt);
       expect(endSpy).toHaveBeenCalled();
     });
 
