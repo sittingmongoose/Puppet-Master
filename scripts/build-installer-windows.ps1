@@ -96,8 +96,8 @@ if ($env:PATH -notlike "*$nsisDir*") {
 $env:MAKENSIS_PATH = $nsisPath
 Write-Host "  NSIS found: $nsisPath" -ForegroundColor Green
 
-# Get repository root
-$repoRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
+# Get repository root (script is in scripts/, parent is repo root)
+$repoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $repoRoot
 
 Write-Host ""
@@ -109,6 +109,14 @@ Write-Host "Installing dependencies..." -ForegroundColor Yellow
 npm ci
 if ($LASTEXITCODE -ne 0) {
     Write-Host "  ERROR: npm ci failed" -ForegroundColor Red
+    exit 1
+}
+
+# Install GUI dependencies
+Write-Host "Installing GUI dependencies..." -ForegroundColor Yellow
+npm --prefix src/gui/react install
+if ($LASTEXITCODE -ne 0) {
+    Write-Host "  ERROR: GUI dependency install failed" -ForegroundColor Red
     exit 1
 }
 
@@ -135,6 +143,10 @@ if ($LASTEXITCODE -ne 0) {
     Write-Host "  ERROR: Installer build failed" -ForegroundColor Red
     exit 1
 }
+
+# Cleanup test artifacts
+if (Test-Path ".test-cache") { Remove-Item -Recurse -Force ".test-cache" }
+Get-ChildItem -Path "." -Filter ".test-quota*" -Force -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
 
 # Verify output
 Write-Host ""

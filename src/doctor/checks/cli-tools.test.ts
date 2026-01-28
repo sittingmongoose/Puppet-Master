@@ -186,7 +186,6 @@ describe('CLI Tools Checks', () => {
     // Mock fs.existsSync for SDK check
     beforeEach(() => {
       // Mock fs.existsSync to return true for SDK check
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const fs = require('fs');
       const originalExistsSync = fs.existsSync;
       vi.spyOn(fs, 'existsSync').mockImplementation((path: unknown) => {

@@ -74,6 +74,14 @@ if %ERRORLEVEL% NEQ 0 (
     exit /b 1
 )
 
+REM Install GUI dependencies
+echo Installing GUI dependencies...
+call npm --prefix src/gui/react install
+if %ERRORLEVEL% NEQ 0 (
+    echo   ERROR: GUI dependency install failed
+    exit /b 1
+)
+
 REM Build TypeScript
 echo Building TypeScript...
 call npm run build
@@ -97,6 +105,11 @@ if %ERRORLEVEL% NEQ 0 (
     echo   ERROR: Installer build failed
     exit /b 1
 )
+
+REM Cleanup test artifacts
+if exist ".test-cache" rmdir /s /q ".test-cache"
+if exist ".test-quota" del /q ".test-quota"
+del .test-quota-* 2>nul
 
 REM Verify output
 echo.

@@ -13,7 +13,7 @@ import { Command } from 'commander';
 import { promises as fs } from 'fs';
 import { join, resolve } from 'path';
 import { existsSync } from 'fs';
-import type { CoverageReport, MissingRequirement } from '../../start-chain/validators/coverage-validator.js';
+import type { CoverageReport } from '../../start-chain/validators/coverage-validator.js';
 import type { CommandModule } from './index.js';
 
 export interface CoverageOptions {

@@ -71,6 +71,9 @@ echo ""
 echo "Installing dependencies..."
 npm ci
 
+echo "Installing GUI dependencies..."
+npm --prefix src/gui/react install
+
 # Build TypeScript
 echo "Building TypeScript..."
 npm run build
@@ -82,6 +85,9 @@ npm run gui:build
 # Build installer
 echo "Building macOS installer..."
 npm run build:mac
+
+# Cleanup test artifacts
+rm -rf .test-cache .test-quota .test-quota-* 2>/dev/null || true
 
 # Verify output
 echo ""

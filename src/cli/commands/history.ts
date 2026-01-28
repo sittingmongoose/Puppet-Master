@@ -9,7 +9,7 @@
  */
 
 import { Command } from 'commander';
-import { SessionTracker, type ExecutionSession } from '../../core/session-tracker.js';
+import { SessionTracker } from '../../core/session-tracker.js';
 import { EventBus } from '../../logging/index.js';
 import type { CommandModule } from './index.js';
 

@@ -8,7 +8,7 @@
 import type { Router, Request, Response } from 'express';
 import { Router as createRouter } from 'express';
 import type { Platform } from '../../types/config.js';
-import { getPlatformAuthStatus, type PlatformAuthStatus, type PlatformAuthCheckResult } from '../../platforms/auth-status.js';
+import { getPlatformAuthStatus, type PlatformAuthStatus } from '../../platforms/auth-status.js';
 
 /**
  * Error response interface.

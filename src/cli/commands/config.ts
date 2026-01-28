@@ -14,7 +14,6 @@ import { Command } from 'commander';
 import { promises as fs } from 'fs';
 import * as yaml from 'js-yaml';
 import { ConfigManager } from '../../config/config-manager.js';
-import type { PuppetMasterConfig } from '../../types/config.js';
 import type { CommandModule } from './index.js';
 
 export interface ConfigShowOptions {
