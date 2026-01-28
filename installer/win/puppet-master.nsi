@@ -24,8 +24,8 @@ VIAddVersionKey "FileDescription" "RWM Puppet Master Installer"
 VIAddVersionKey "ProductVersion" "${VERSION}"
 VIAddVersionKey "CompanyName" "RWM"
 
-!define MUI_ICON "installer\\assets\\puppet-master.ico"
-!define MUI_UNICON "installer\\assets\\puppet-master.ico"
+!define MUI_ICON "..\\assets\\puppet-master.ico"
+!define MUI_UNICON "..\\assets\\puppet-master.ico"
 
 ; Customize finish page text (P0-G15, CU-P0-T01, P0-G23)
 !define MUI_FINISHPAGE_TITLE "Puppet Master Installation Complete!"
