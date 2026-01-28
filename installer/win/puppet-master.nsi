@@ -64,13 +64,13 @@ Section "Install"
   
   ; Copy PowerShell helper script for CLI installation
   SetOutPath "$INSTDIR\scripts"
-  File "installer\win\scripts\install-clis.ps1"
-  
+  File "scripts\install-clis.ps1"
+
   ; Copy GUI launchers (VBS runs without console; BAT kept for CLI/script use)
   SetOutPath "$INSTDIR"
-  File "installer\win\scripts\Launch-Puppet-Master-GUI.bat"
-  File "installer\win\scripts\Launch-Puppet-Master-GUI.vbs"
-  File "installer\assets\puppet-master.ico"
+  File "scripts\Launch-Puppet-Master-GUI.bat"
+  File "scripts\Launch-Puppet-Master-GUI.vbs"
+  File "..\assets\puppet-master.ico"
   File "${STAGE_DIR}\\puppet-master\\puppet-master.png"
 
   ; Create an uninstaller
