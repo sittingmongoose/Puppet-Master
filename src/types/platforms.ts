@@ -55,6 +55,11 @@ export interface ExecutionRequest {
    * Maximum 5 directories supported by Gemini CLI.
    */
   includeDirectories?: string[];
+  /**
+   * Skip Git repository check (Codex CLI: --skip-git-repo-check).
+   * Allow running outside a Git repository. Use for one-off or non-git workspaces.
+   */
+  skipGitRepoCheck?: boolean;
   workingDirectory: string;
   timeout?: number;
   hardTimeout?: number;

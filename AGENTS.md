@@ -501,6 +501,19 @@ codex exec "prompt" [flags]
 - Explicit CLI flags override config file settings
 - Config file precedence: CLI flags > config file > defaults
 
+**Team Config (layered config):**
+- Codex loads config from `.codex/` in cwd, parents, repo root, plus `~/.codex` and `/etc/codex`
+- Higher-precedence locations override lower. Explicit CLI/SDK options override all
+
+**CI / headless authentication:**
+- `codex exec` reuses saved CLI auth by default. For CI/headless, provide credentials explicitly:
+  - **`CODEX_API_KEY`** env var (supported for `codex exec` only): set as secret in CI jobs
+  - **`codex login --device-auth`**: device-code flow when browser login is not possible (e.g. SSH, headless)
+- CLI auto-switches to device-code login when headless is detected (Codex 0.81+)
+
+**Web search:**
+- `--search` enables web search. When enabled, cached `web_search` is the default client behavior (Codex 0.92+)
+
 **Slash commands (interactive mode only, not used by Puppet Master):**
 - `/model` - Switch model mid-session
 - `/approvals` - Update approval rules
@@ -540,6 +553,7 @@ codex exec "prompt" [flags]
 - Uses `@openai/codex-sdk` (SDK spawns CLI processes internally - CLI-based ✅)
 - Each iteration creates a NEW thread via `codexClient.startThread()` (fresh process requirement)
 - Thread options: `approvalPolicy: 'never'`, `sandboxMode: 'workspace-write'`, `workingDirectory`, `model`
+- Optional: `skipGitRepoCheck` (from `ExecutionRequest`), `additionalDirectories` (from `includeDirectories`), `modelReasoningEffort` (from `reasoningEffort`, mapped to SDK: low/medium/high/xhigh)
 - Timeout handling via `AbortSignal` in `TurnOptions`
 - SDK provides structured `Turn` results with `finalResponse`, `items`, `usage` (token counts)
 - Legacy `buildArgs()` method still available for fallback but not used with SDK

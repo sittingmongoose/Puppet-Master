@@ -30,6 +30,20 @@ import { Codex, type ThreadOptions, type TurnOptions } from '@openai/codex-sdk';
 import { PLATFORM_COMMANDS } from './constants.js';
 import type { ChildProcess } from 'child_process';
 
+/** Map ExecutionRequest.reasoningEffort to SDK modelReasoningEffort (minimal|low|medium|high|xhigh). */
+function mapReasoningEffortToSdk(
+  value?: 'Low' | 'Medium' | 'High' | 'Extra high'
+): 'low' | 'medium' | 'high' | 'xhigh' | undefined {
+  if (!value) return undefined;
+  const map: Record<string, 'low' | 'medium' | 'high' | 'xhigh'> = {
+    Low: 'low',
+    Medium: 'medium',
+    High: 'high',
+    'Extra high': 'xhigh',
+  };
+  return map[value];
+}
+
 /**
  * Codex platform runner.
  * 
@@ -121,15 +135,27 @@ export class CodexRunner extends BasePlatformRunner {
         // This ensures we meet the "fresh process per iteration" requirement
         const threadOptions: ThreadOptions = {
           workingDirectory: request.workingDirectory,
-          skipGitRepoCheck: false, // Could be made configurable via ExecutionRequest
+          skipGitRepoCheck: request.skipGitRepoCheck ?? false,
           // Non-interactive execution: ensure Codex never pauses for approval and can write
           approvalPolicy: 'never', // Full automation - no approval prompts
           sandboxMode: 'workspace-write', // Allow writes within workspace
         };
-        
+
         // Add model if specified
         if (request.model) {
           threadOptions.model = request.model;
+        }
+
+        // Pass additional directories when provided (Codex --add-dir / SDK additionalDirectories)
+        if (request.includeDirectories && request.includeDirectories.length > 0) {
+          (threadOptions as { additionalDirectories?: string[] }).additionalDirectories =
+            request.includeDirectories;
+        }
+
+        // Pass reasoning effort when provided (Codex --reasoning-effort / SDK modelReasoningEffort)
+        const sdkEffort = mapReasoningEffortToSdk(request.reasoningEffort);
+        if (sdkEffort) {
+          (threadOptions as { modelReasoningEffort?: string }).modelReasoningEffort = sdkEffort;
         }
         
         const thread = this.codexClient.startThread(threadOptions);
@@ -416,10 +442,9 @@ export class CodexRunner extends BasePlatformRunner {
       }
     }
 
-    // Add skip-git-repo-check if needed
-    // This is useful for one-off directories that aren't Git repos
-    // We could detect this automatically, but for now we'll add it when explicitly needed
-    // (Future: could add a flag to ExecutionRequest or detect Git repo presence)
+    if (request.skipGitRepoCheck === true) {
+      args.push('--skip-git-repo-check');
+    }
 
     // Pass the prompt as the required positional argument for `codex exec`.
     // P1-G01: Apply plan mode preamble if planMode is requested

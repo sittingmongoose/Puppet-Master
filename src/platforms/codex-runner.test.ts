@@ -274,6 +274,106 @@ describe('CodexRunner', () => {
       );
     });
 
+    it('should pass skipGitRepoCheck true to thread options when specified', async () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp/test',
+        nonInteractive: true,
+        skipGitRepoCheck: true,
+      };
+
+      const mockTurn: RunResult = {
+        finalResponse: 'Done <ralph>COMPLETE</ralph>',
+        items: [],
+        usage: null,
+      };
+
+      vi.mocked(mockThread.run).mockResolvedValue(mockTurn);
+
+      await runner.execute(request);
+
+      expect(mockCodexInstance.startThread).toHaveBeenCalledWith(
+        expect.objectContaining({
+          skipGitRepoCheck: true,
+        })
+      );
+    });
+
+    it('should pass additionalDirectories to thread options when includeDirectories provided', async () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp/test',
+        nonInteractive: true,
+        includeDirectories: ['/shared/libs', '/config'],
+      };
+
+      const mockTurn: RunResult = {
+        finalResponse: 'Done <ralph>COMPLETE</ralph>',
+        items: [],
+        usage: null,
+      };
+
+      vi.mocked(mockThread.run).mockResolvedValue(mockTurn);
+
+      await runner.execute(request);
+
+      expect(mockCodexInstance.startThread).toHaveBeenCalledWith(
+        expect.objectContaining({
+          additionalDirectories: ['/shared/libs', '/config'],
+        })
+      );
+    });
+
+    it('should pass modelReasoningEffort to thread options when reasoningEffort provided', async () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp/test',
+        nonInteractive: true,
+        reasoningEffort: 'High',
+      };
+
+      const mockTurn: RunResult = {
+        finalResponse: 'Done <ralph>COMPLETE</ralph>',
+        items: [],
+        usage: null,
+      };
+
+      vi.mocked(mockThread.run).mockResolvedValue(mockTurn);
+
+      await runner.execute(request);
+
+      expect(mockCodexInstance.startThread).toHaveBeenCalledWith(
+        expect.objectContaining({
+          modelReasoningEffort: 'high',
+        })
+      );
+    });
+
+    it('should map Extra high reasoningEffort to xhigh for SDK', async () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp/test',
+        nonInteractive: true,
+        reasoningEffort: 'Extra high',
+      };
+
+      const mockTurn: RunResult = {
+        finalResponse: 'Done <ralph>COMPLETE</ralph>',
+        items: [],
+        usage: null,
+      };
+
+      vi.mocked(mockThread.run).mockResolvedValue(mockTurn);
+
+      await runner.execute(request);
+
+      expect(mockCodexInstance.startThread).toHaveBeenCalledWith(
+        expect.objectContaining({
+          modelReasoningEffort: 'xhigh',
+        })
+      );
+    });
+
     it('should handle GUTTER signal', async () => {
       const request: ExecutionRequest = {
         prompt: 'Test prompt',
@@ -457,6 +557,34 @@ describe('CodexRunner', () => {
       expect(args).not.toContain('--full-auto');
       expect(args).not.toContain('--json');
       expect(args).not.toContain('--color');
+    });
+
+    it('should include --skip-git-repo-check when skipGitRepoCheck is true', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test prompt',
+        workingDirectory: '/tmp/test',
+        nonInteractive: true,
+        skipGitRepoCheck: true,
+      };
+
+      const args = (runner as unknown as { buildArgs: (req: ExecutionRequest) => string[] }).buildArgs(request);
+
+      expect(args).toContain('--skip-git-repo-check');
+    });
+
+    it('should not include --skip-git-repo-check when skipGitRepoCheck is false or undefined', () => {
+      for (const skip of [false, undefined]) {
+        const request: ExecutionRequest = {
+          prompt: 'Test prompt',
+          workingDirectory: '/tmp/test',
+          nonInteractive: true,
+          ...(skip !== undefined && { skipGitRepoCheck: skip }),
+        };
+
+        const args = (runner as unknown as { buildArgs: (req: ExecutionRequest) => string[] }).buildArgs(request);
+
+        expect(args).not.toContain('--skip-git-repo-check');
+      }
     });
   });
 
