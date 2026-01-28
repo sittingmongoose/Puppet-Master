@@ -22,6 +22,9 @@ yarn-error.log*
 
 # Cursor-specific: no sensitive files to ignore (commands/ can be tracked)
 
+# Installer staging (build output)
+installer-work/
+
 # Test artifacts
 .test-quota-*
 .test-init-*

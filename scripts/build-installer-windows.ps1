@@ -106,6 +106,7 @@ Write-Host ""
 
 # Install dependencies
 Write-Host "Installing dependencies..." -ForegroundColor Yellow
+$env:npm_config_update_notifier = "false"
 npm ci
 if ($LASTEXITCODE -ne 0) {
     Write-Host "  ERROR: npm ci failed" -ForegroundColor Red

@@ -49,7 +49,7 @@ function parseArgs(argv: string[]): Args {
   const arch = (map.get('arch') ?? (process.arch === 'x64' ? 'x64' : 'arm64')) as InstallerArch;
   const nodeVersion = map.get('node-version') ?? process.env.PUPPET_MASTER_NODE_VERSION ?? '20.11.1';
   const outDir = map.get('out-dir') ?? path.resolve(process.cwd(), 'dist', 'installers');
-  const workDir = map.get('work-dir') ?? path.resolve(process.cwd(), 'dist', 'installer-work');
+  const workDir = map.get('work-dir') ?? path.resolve(process.cwd(), 'installer-work');
 
   if (platform !== 'win32' && platform !== 'darwin' && platform !== 'linux') {
     throw new Error(`--platform must be win32|darwin|linux (got ${platform})`);

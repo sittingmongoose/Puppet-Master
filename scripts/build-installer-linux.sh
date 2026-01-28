@@ -91,10 +91,10 @@ echo ""
 
 # Install dependencies
 echo "Installing dependencies..."
-npm ci
+npm_config_update_notifier=false npm ci
 
 echo "Installing GUI dependencies..."
-npm --prefix src/gui/react install
+npm_config_update_notifier=false npm --prefix src/gui/react install
 
 # Build TypeScript
 echo "Building TypeScript..."

@@ -49,7 +49,7 @@ if ! command -v pkgbuild &> /dev/null; then
     echo "  ERROR: pkgbuild not found. This should come with Xcode Command Line Tools." >&2
     exit 1
 fi
-echo "  pkgbuild: $(pkgbuild --version 2>&1 | head -n1)"
+echo "  pkgbuild: available"
 
 # Check hdiutil
 echo "Checking hdiutil..."
@@ -69,10 +69,10 @@ echo ""
 
 # Install dependencies
 echo "Installing dependencies..."
-npm ci
+npm_config_update_notifier=false npm ci
 
 echo "Installing GUI dependencies..."
-npm --prefix src/gui/react install
+npm_config_update_notifier=false npm --prefix src/gui/react install
 
 # Build TypeScript
 echo "Building TypeScript..."
