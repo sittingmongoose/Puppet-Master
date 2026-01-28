@@ -83,7 +83,9 @@ jobs:
           if (-not (Test-Path $pm)) { throw "puppet-master not found at $pm" }
           & $pm --version
           # Doctor command may fail due to quota/config issues in CI - just log output
-          try { & $pm doctor --category runtime --json } catch { Write-Host "Doctor check had issues (expected in CI)" }
+          & $pm doctor --category runtime --json
+          if ($LASTEXITCODE -ne 0) { Write-Host "Doctor check had issues (expected in CI, exit code: $LASTEXITCODE)" }
+          exit 0
 
       - name: Smoke test (macOS)
         if: runner.os == 'macOS'
