@@ -29,7 +29,7 @@ vi.mock('../../logging/event-bus.js', () => ({
 }));
 
 vi.mock('../../core/session-tracker.js', () => ({
-  SessionTracker: vi.fn().mockImplementation(function () {
+  SessionTracker: vi.fn().mockImplementation(function (this: Record<string, unknown>) {
     this.start = vi.fn();
     this.stop = vi.fn();
   }),

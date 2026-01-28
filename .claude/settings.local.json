@@ -25,7 +25,8 @@
       "Bash(xargs:*)",
       "Read(//mnt/user/Cursor/**)",
       "Bash(tree:*)",
-      "Bash(npm run test:coverage:*)"
+      "Bash(npm run test:coverage:*)",
+      "Bash(npx vitest:*)"
     ]
   }
 }
