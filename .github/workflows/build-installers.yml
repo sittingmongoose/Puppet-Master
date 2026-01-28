@@ -43,7 +43,18 @@ jobs:
 
       - name: Install NSIS (Windows)
         if: runner.os == 'Windows'
-        run: choco install nsis -y
+        shell: pwsh
+        run: |
+          choco install nsis -y
+          # Add NSIS to PATH for subsequent steps
+          $nsisPath = "C:\Program Files (x86)\NSIS"
+          if (Test-Path $nsisPath) {
+            echo "$nsisPath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          }
+          # Verify makensis is available
+          refreshenv
+          $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+          makensis /VERSION
 
       - name: Install Go (Linux for nfpm)
         if: runner.os == 'Linux'
@@ -87,8 +98,15 @@ jobs:
           echo "Installing PKG: $pkg"
           sudo installer -pkg "$pkg" -target /
           hdiutil detach "$mount_dir"
-          /usr/local/bin/puppet-master --version
-          /usr/local/bin/puppet-master doctor --category runtime --json
+          # CLI is inside the app bundle
+          pm_cli="/Applications/Puppet Master.app/Contents/Resources/puppet-master/bin/puppet-master"
+          if [ ! -x "$pm_cli" ]; then
+            echo "ERROR: CLI not found or not executable at: $pm_cli"
+            ls -la "/Applications/Puppet Master.app/Contents/Resources/" || true
+            exit 1
+          fi
+          "$pm_cli" --version
+          "$pm_cli" doctor --category runtime --json
 
       - name: Smoke test (Linux)
         if: runner.os == 'Linux'

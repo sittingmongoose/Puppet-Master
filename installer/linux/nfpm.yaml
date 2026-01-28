@@ -39,7 +39,7 @@ contents:
       group: root
 
   # P2-G10: systemd service file for GUI server
-  - src: ./systemd/puppet-master-gui.service
+  - src: installer/linux/systemd/puppet-master-gui.service
     dst: /usr/lib/systemd/system/puppet-master-gui.service
     file_info:
       mode: 0644
@@ -47,7 +47,7 @@ contents:
       group: root
 
   # Desktop entry for app menu
-  - src: ./applications/com.rwm.puppet-master.desktop
+  - src: installer/linux/applications/com.rwm.puppet-master.desktop
     dst: /usr/share/applications/com.rwm.puppet-master.desktop
     file_info:
       mode: 0644
@@ -56,5 +56,5 @@ contents:
 
 # P0-G23: Post-install guidance
 scripts:
-  postinstall: ./scripts/postinstall
+  postinstall: installer/linux/scripts/postinstall
 
