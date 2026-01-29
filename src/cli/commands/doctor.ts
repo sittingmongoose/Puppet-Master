@@ -12,12 +12,15 @@
  */
 
 import { Command } from 'commander';
+import * as readline from 'readline';
 import { CheckRegistry } from '../../doctor/check-registry.js';
 import type { CheckCategory, CheckResult } from '../../doctor/check-registry.js';
 import { InstallationManager } from '../../doctor/installation-manager.js';
 import { DoctorReporter } from '../../doctor/doctor-reporter.js';
 import type { ReportOptions } from '../../doctor/doctor-reporter.js';
 import { ConfigManager } from '../../config/config-manager.js';
+import { PlatformDetector } from '../../platforms/platform-detector.js';
+import type { Platform } from '../../types/config.js';
 
 // CLI checks
 import { CursorCliCheck } from '../../doctor/checks/cli-tools.js';
@@ -57,6 +60,8 @@ import type { CommandModule } from './index.js';
 export interface DoctorCommandOptions {
   /** Filter checks by category */
   category?: CheckCategory;
+  /** Filter checks by platforms (comma-separated) */
+  platforms?: string;
   /** Attempt to install missing dependencies */
   fix?: boolean;
   /** Output results as JSON */
@@ -65,6 +70,8 @@ export interface DoctorCommandOptions {
   verbose?: boolean;
   /** Path to config file (currently not used by checks, reserved for future) */
   config?: string;
+  /** Interactive platform selection */
+  interactive?: boolean;
 }
 
 /**
@@ -141,6 +148,105 @@ async function attemptFixes(
 }
 
 /**
+ * Prompt user to select platforms interactively
+ */
+async function promptPlatformSelection(
+  installedPlatforms: Platform[],
+  allPlatforms: Platform[]
+): Promise<Platform[]> {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  return new Promise((resolve) => {
+    console.log('\nAvailable platforms:');
+    allPlatforms.forEach((platform, index) => {
+      const isInstalled = installedPlatforms.includes(platform);
+      const status = isInstalled ? '[INSTALLED]' : '[NOT INSTALLED]';
+      console.log(`  ${index + 1}. ${platform.charAt(0).toUpperCase() + platform.slice(1)} ${status}`);
+    });
+    console.log(`  ${allPlatforms.length + 1}. All installed platforms`);
+    console.log(`  ${allPlatforms.length + 2}. All platforms (including uninstalled)`);
+    console.log('  0. Cancel\n');
+
+    rl.question('Select platforms to check (comma-separated numbers, or press Enter for all installed): ', (answer) => {
+      rl.close();
+
+      if (!answer.trim()) {
+        // Default to all installed platforms
+        resolve(installedPlatforms);
+        return;
+      }
+
+      const selections = answer.split(',').map((s) => parseInt(s.trim(), 10));
+      
+      if (selections.includes(0)) {
+        // Cancel
+        process.exit(0);
+      }
+
+      if (selections.includes(allPlatforms.length + 1)) {
+        // All installed platforms
+        resolve(installedPlatforms);
+        return;
+      }
+
+      if (selections.includes(allPlatforms.length + 2)) {
+        // All platforms
+        resolve(allPlatforms);
+        return;
+      }
+
+      const selectedPlatforms: Platform[] = [];
+      selections.forEach((num) => {
+        if (num >= 1 && num <= allPlatforms.length) {
+          selectedPlatforms.push(allPlatforms[num - 1]);
+        }
+      });
+
+      resolve(selectedPlatforms.length > 0 ? selectedPlatforms : installedPlatforms);
+    });
+  });
+}
+
+/**
+ * Parse platforms from comma-separated string
+ */
+function parsePlatforms(platformsStr: string): Platform[] {
+  const validPlatforms: Platform[] = ['cursor', 'codex', 'claude', 'gemini', 'copilot'];
+  const platforms = platformsStr.split(',').map((p) => p.trim().toLowerCase() as Platform);
+  return platforms.filter((p) => validPlatforms.includes(p));
+}
+
+/**
+ * Filter check results by selected platforms
+ */
+function filterResultsByPlatforms(results: CheckResult[], platforms: Platform[]): CheckResult[] {
+  if (platforms.length === 0) {
+    return results;
+  }
+
+  const platformCheckNames = new Set<string>();
+  platforms.forEach((platform) => {
+    platformCheckNames.add(`${platform}-cli`);
+  });
+
+  return results.filter((result) => {
+    // Include platform-specific CLI checks
+    if (platformCheckNames.has(result.name)) {
+      return true;
+    }
+    // Include non-platform checks (git, runtime, project, etc.)
+    if (!result.name.includes('-cli')) {
+      return true;
+    }
+    // Exclude other platform checks
+    return false;
+  });
+}
+
+/**
  * Main doctor action function
  * 
  * @param options - Doctor command options
@@ -149,6 +255,39 @@ export async function doctorAction(
   options: DoctorCommandOptions
 ): Promise<void> {
   try {
+    // Load config
+    const configManager = new ConfigManager(options.config);
+    const config = await configManager.load();
+
+    // Detect installed platforms
+    const detector = new PlatformDetector(config.cliPaths);
+    const detectionResult = await detector.detectInstalledPlatforms();
+    const installedPlatforms = detectionResult.installedPlatforms;
+    const allPlatforms: Platform[] = ['cursor', 'codex', 'claude', 'gemini', 'copilot'];
+
+    // Determine which platforms to check
+    let selectedPlatforms: Platform[] = [];
+    
+    if (options.platforms) {
+      // Parse platforms from command line
+      selectedPlatforms = parsePlatforms(options.platforms);
+      if (selectedPlatforms.length === 0) {
+        console.error('Error: Invalid platforms specified. Valid platforms: cursor, codex, claude, gemini, copilot');
+        process.exit(1);
+      }
+    } else if (options.interactive || (!options.json && process.stdin.isTTY)) {
+      // Interactive selection (if TTY and not JSON mode)
+      selectedPlatforms = await promptPlatformSelection(installedPlatforms, allPlatforms);
+    } else {
+      // Default: use all installed platforms
+      selectedPlatforms = installedPlatforms;
+    }
+
+    // Show selected platforms
+    if (!options.json && selectedPlatforms.length > 0) {
+      console.log(`\nChecking platforms: ${selectedPlatforms.map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join(', ')}\n`);
+    }
+
     // Create check registry and register all checks
     const registry = await createCheckRegistry(options.config);
 
@@ -158,6 +297,11 @@ export async function doctorAction(
       results = await registry.runCategory(options.category);
     } else {
       results = await registry.runAll();
+    }
+
+    // Filter results by selected platforms
+    if (selectedPlatforms.length > 0) {
+      results = filterResultsByPlatforms(results, selectedPlatforms);
     }
 
     // If --fix flag is set, attempt to install missing dependencies
@@ -224,6 +368,8 @@ export class DoctorCommand implements CommandModule {
       .description('Run system health checks and validate configuration')
       .option('-c, --config <path>', 'Path to config file')
       .option('--category <cat>', 'Filter checks by category (cli, git, runtime, project, network)')
+      .option('--platforms <platforms>', 'Filter checks by platforms (comma-separated: cursor,codex,claude,gemini,copilot)')
+      .option('--interactive', 'Interactively select platforms to check')
       .option('--fix', 'Attempt to install missing dependencies')
       .option('--json', 'Output results as JSON')
       .option('-v, --verbose', 'Show detailed output')

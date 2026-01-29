@@ -9,6 +9,9 @@ export type {
   Session,
   PlatformHealth,
   CursorCapabilities,
+  PlatformStatus,
+  PlatformStatusType,
+  PlatformStatusResponse,
 } from './api.js';
 
 // SSE client

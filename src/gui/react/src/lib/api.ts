@@ -421,12 +421,14 @@ export async function getDoctorChecks(): Promise<{ checks: DoctorCheck[] }> {
 /**
  * Run doctor checks
  */
-export async function runDoctorChecks(options?: { category?: string }): Promise<{ checks: DoctorCheck[] }> {
-  const res = await fetchJSON<{ checks?: DoctorCheck[] }>('/api/doctor/run', {
+export async function runDoctorChecks(options?: { category?: string; platforms?: string[] }): Promise<{ checks: DoctorCheck[] }> {
+  const res = await fetchJSON<{ checks?: DoctorCheck[]; results?: DoctorCheck[] }>('/api/doctor/run', {
     method: 'POST',
     body: JSON.stringify(options ?? {}),
   });
-  return { checks: Array.isArray(res?.checks) ? res.checks : [] };
+  // API returns 'results' but we normalize to 'checks' for consistency
+  const checks = res.checks || res.results || [];
+  return { checks: Array.isArray(checks) ? checks : [] };
 }
 
 /**
@@ -492,6 +494,61 @@ export async function wizardGenerate(data: { requirements: string }): Promise<{ 
   return fetchJSON('/api/wizard/generate', {
     method: 'POST',
     body: JSON.stringify(data),
+  });
+}
+
+// ============================================
+// Platform API
+// ============================================
+
+export interface PlatformStatus {
+  platform: string;
+  installed: boolean;
+  version?: string;
+  error?: string;
+  authenticated?: boolean;
+  command?: string;
+}
+
+export type { PlatformStatus as PlatformStatusType };
+
+export interface PlatformStatusResponse {
+  platforms: Record<string, PlatformStatus>;
+  installedPlatforms: string[];
+  uninstalledPlatforms: string[];
+}
+
+/**
+ * Get platform installation status
+ */
+export async function getPlatformStatus(): Promise<PlatformStatusResponse> {
+  return fetchJSON<PlatformStatusResponse>('/api/platforms/status');
+}
+
+/**
+ * Get list of installed platforms
+ */
+export async function getInstalledPlatforms(): Promise<{ platforms: string[] }> {
+  return fetchJSON<{ platforms: string[] }>('/api/platforms/installed');
+}
+
+/**
+ * Install a platform
+ */
+export async function installPlatform(platform: string, dryRun = false): Promise<{ success: boolean; output?: string; error?: string; command?: string }> {
+  return fetchJSON('/api/platforms/install', {
+    method: 'POST',
+    body: JSON.stringify({ platform, dryRun }),
+  });
+}
+
+/**
+ * Select platforms to use
+ */
+export async function selectPlatforms(platforms: string[]): Promise<{ success: boolean; message?: string }> {
+  return fetchJSON('/api/platforms/select', {
+    method: 'POST',
+    body: JSON.stringify({ platforms }),
   });
 }
 
@@ -597,6 +654,11 @@ export const api = {
   uploadRequirements,
   generatePRD,
   wizardGenerate,
+  // Platform
+  getPlatformStatus,
+  getInstalledPlatforms,
+  installPlatform,
+  selectPlatforms,
   validatePRD,
   savePRD,
   wizardSave,

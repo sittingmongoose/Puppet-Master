@@ -66,6 +66,7 @@ interface CheckInfo {
 interface RunChecksRequest {
   checks?: string[];
   category?: CheckCategory;
+  platforms?: string[]; // Filter checks to only run for selected platforms
 }
 
 /**
@@ -152,7 +153,7 @@ export function createDoctorRoutes(): Router {
   /**
    * POST /api/doctor/run
    * Runs checks with optional filtering.
-   * Body: { checks?: string[], category?: CheckCategory }
+   * Body: { checks?: string[], category?: CheckCategory, platforms?: string[] }
    */
   router.post('/doctor/run', async (req: Request, res: Response) => {
     try {
@@ -177,12 +178,34 @@ export function createDoctorRoutes(): Router {
         results = await registry.runAll();
       }
 
+      // Filter by platforms if specified
+      if (body.platforms && body.platforms.length > 0) {
+        const platformCheckNames = new Set<string>();
+        body.platforms.forEach((platform) => {
+          platformCheckNames.add(`${platform}-cli`);
+        });
+        
+        results = results.filter((result) => {
+          // Include platform-specific CLI checks
+          if (platformCheckNames.has(result.name)) {
+            return true;
+          }
+          // Include non-platform checks (git, runtime, project, etc.)
+          if (!result.name.includes('-cli')) {
+            return true;
+          }
+          // Exclude other platform checks
+          return false;
+        });
+      }
+
       const resultsWithFixInfo = results.map((result) => ({
         ...result,
         fixAvailable: installationManager.getInstallCommand(result.name) !== null,
       }));
 
-      res.json({ results: resultsWithFixInfo });
+      // Return as 'checks' for consistency with frontend expectations
+      res.json({ checks: resultsWithFixInfo, results: resultsWithFixInfo });
     } catch (error) {
       const err = error as Error;
       res.status(500).json({

@@ -4,7 +4,8 @@
  * Provides sensible defaults matching REQUIREMENTS.md Section 17 and Section 23.3
  */
 
-import type { PuppetMasterConfig } from '../types/config.js';
+import type { PuppetMasterConfig, Platform } from '../types/config.js';
+import { PlatformDetector } from '../platforms/platform-detector.js';
 
 /**
  * Get default configuration values
@@ -184,4 +185,84 @@ export function getDefaultConfig(): PuppetMasterConfig {
       suppressReplyRelay: true,
     },
   };
+}
+
+/**
+ * Adjust config to use only installed platforms
+ * 
+ * If a tier uses an uninstalled platform, changes it to the first installed platform.
+ * If no platforms are installed, returns config as-is (user will need to install platforms).
+ * 
+ * @param config - Configuration to adjust
+ * @param installedPlatforms - List of installed platforms
+ * @returns Adjusted configuration
+ */
+export function adjustConfigForInstalledPlatforms(
+  config: PuppetMasterConfig,
+  installedPlatforms: Platform[]
+): PuppetMasterConfig {
+  if (installedPlatforms.length === 0) {
+    // No platforms installed - return config as-is
+    // User will need to install platforms via wizard
+    return config;
+  }
+
+  const firstInstalled = installedPlatforms[0];
+  const adjustedConfig = { ...config };
+
+  // Adjust tier platforms
+  if (adjustedConfig.tiers) {
+    if (adjustedConfig.tiers.phase && !installedPlatforms.includes(adjustedConfig.tiers.phase.platform)) {
+      adjustedConfig.tiers.phase.platform = firstInstalled;
+    }
+    if (adjustedConfig.tiers.task && !installedPlatforms.includes(adjustedConfig.tiers.task.platform)) {
+      adjustedConfig.tiers.task.platform = firstInstalled;
+    }
+    if (adjustedConfig.tiers.subtask && !installedPlatforms.includes(adjustedConfig.tiers.subtask.platform)) {
+      adjustedConfig.tiers.subtask.platform = firstInstalled;
+    }
+    if (adjustedConfig.tiers.iteration && !installedPlatforms.includes(adjustedConfig.tiers.iteration.platform)) {
+      adjustedConfig.tiers.iteration.platform = firstInstalled;
+    }
+  }
+
+  // Adjust model level platforms
+  if (adjustedConfig.models) {
+    if (adjustedConfig.models.level1 && !installedPlatforms.includes(adjustedConfig.models.level1.platform)) {
+      adjustedConfig.models.level1.platform = firstInstalled;
+    }
+    if (adjustedConfig.models.level2 && !installedPlatforms.includes(adjustedConfig.models.level2.platform)) {
+      adjustedConfig.models.level2.platform = firstInstalled;
+    }
+    if (adjustedConfig.models.level3 && !installedPlatforms.includes(adjustedConfig.models.level3.platform)) {
+      adjustedConfig.models.level3.platform = firstInstalled;
+    }
+  }
+
+  return adjustedConfig;
+}
+
+/**
+ * Get default configuration adjusted for installed platforms
+ * 
+ * This is an async version that detects installed platforms and adjusts defaults.
+ * Use this when you need to ensure config only uses installed platforms.
+ * 
+ * @param cliPaths - CLI paths configuration
+ * @returns Default config adjusted for installed platforms
+ */
+export async function getDefaultConfigForInstalledPlatforms(
+  cliPaths: PuppetMasterConfig['cliPaths']
+): Promise<PuppetMasterConfig> {
+  const defaultConfig = getDefaultConfig();
+  
+  try {
+    const detector = new PlatformDetector(cliPaths);
+    const installed = await detector.getInstalledPlatforms();
+    return adjustConfigForInstalledPlatforms(defaultConfig, installed);
+  } catch (error) {
+    // If detection fails, return default config as-is
+    console.warn('[Config] Failed to detect installed platforms, using defaults:', error);
+    return defaultConfig;
+  }
 }

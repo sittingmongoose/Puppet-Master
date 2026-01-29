@@ -10,9 +10,10 @@ import { existsSync } from 'fs';
 import { join, dirname } from 'path';
 import yaml from 'js-yaml';
 import type { PuppetMasterConfig } from '../types/config.js';
-import { getDefaultConfig } from './default-config.js';
+import { getDefaultConfig, adjustConfigForInstalledPlatforms } from './default-config.js';
 import { validateConfig } from './config-schema.js';
 import { SecretsManager } from './secrets-manager.js';
+import { PlatformDetector } from '../platforms/platform-detector.js';
 
 /**
  * ConfigManager class for loading and managing configuration files
@@ -52,12 +53,27 @@ export class ConfigManager {
       await access(this.configPath);
       fileExists = true;
     } catch {
-      // File doesn't exist, return defaults
-      return getDefaultConfig();
+      // File doesn't exist, return defaults adjusted for installed platforms
+      const defaultConfig = getDefaultConfig();
+      try {
+        const detector = new PlatformDetector(defaultConfig.cliPaths);
+        const installed = await detector.getInstalledPlatforms();
+        return adjustConfigForInstalledPlatforms(defaultConfig, installed);
+      } catch {
+        // If detection fails, return default config as-is
+        return defaultConfig;
+      }
     }
 
     if (!fileExists) {
-      return getDefaultConfig();
+      const defaultConfig = getDefaultConfig();
+      try {
+        const detector = new PlatformDetector(defaultConfig.cliPaths);
+        const installed = await detector.getInstalledPlatforms();
+        return adjustConfigForInstalledPlatforms(defaultConfig, installed);
+      } catch {
+        return defaultConfig;
+      }
     }
 
     // Load YAML file
@@ -67,9 +83,19 @@ export class ConfigManager {
     const converted = convertSnakeCaseToCamelCase(yamlContent);
     applyLegacyTaskFailureStyle(converted);
     
-    // Validate and return
+    // Validate
     validateConfig(converted);
-    return converted as PuppetMasterConfig;
+    const config = converted as PuppetMasterConfig;
+    
+    // Adjust config to use only installed platforms
+    try {
+      const detector = new PlatformDetector(config.cliPaths);
+      const installed = await detector.getInstalledPlatforms();
+      return adjustConfigForInstalledPlatforms(config, installed);
+    } catch {
+      // If detection fails, return config as-is
+      return config;
+    }
   }
 
   /**

@@ -40,6 +40,7 @@ import { createDoctorRoutes } from './routes/doctor.js';
 import { createHistoryRoutes } from './routes/history.js';
 import { createSettingsRoutes } from './routes/settings.js';
 import { createEventsRoutes } from './routes/events.js';
+import { createPlatformRoutes } from './routes/platforms.js';
 // Feature parity routes (CLI ↔ GUI)
 import { createLedgerRoutes } from './routes/ledger.js';
 import { createLoginRoutes } from './routes/login.js';
@@ -729,6 +730,9 @@ export class GuiServer {
 
     // Doctor routes
     this.app.use('/api', createDoctorRoutes());
+
+    // Platform routes
+    this.app.use('/api', createPlatformRoutes());
 
     // History routes (will be updated when SessionTracker is registered)
     this.app.use('/api', createHistoryRoutes(null));

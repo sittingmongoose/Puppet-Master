@@ -3,7 +3,7 @@ import { Panel } from '@/components/layout';
 import { Button, Input, Select, HelpText, Checkbox, Radio } from '@/components/ui';
 import { StatusBadge } from '@/components/shared';
 import { WarningIcon, RefreshIcon } from '@/components/icons';
-import { api, type CursorCapabilities } from '@/lib';
+import { api, type CursorCapabilities, type PlatformStatusType } from '@/lib';
 import { helpContent } from '@/lib/help-content.js';
 import type { Platform } from '@/types';
 
@@ -170,6 +170,9 @@ export default function ConfigPage() {
     gemini: [],
     copilot: [],
   });
+  const [platformStatus, setPlatformStatus] = useState<Record<string, PlatformStatusType>>({});
+  const [installedPlatforms, setInstalledPlatforms] = useState<Platform[]>([]);
+  const [installing, setInstalling] = useState<string | null>(null);
 
   // Fetch config on mount
   useEffect(() => {
@@ -202,6 +205,20 @@ export default function ConfigPage() {
       }
     };
     fetchCapabilities();
+  }, []);
+
+  // Fetch platform status on mount
+  useEffect(() => {
+    const fetchPlatformStatus = async () => {
+      try {
+        const status = await api.getPlatformStatus();
+        setPlatformStatus(status.platforms);
+        setInstalledPlatforms(status.installedPlatforms as Platform[]);
+      } catch (err) {
+        console.error('[Config] Failed to fetch platform status:', err);
+      }
+    };
+    fetchPlatformStatus();
   }, []);
 
   // P1: Fetch models for all platforms on mount
@@ -250,6 +267,26 @@ export default function ConfigPage() {
     fetchModels();
   }, []);
 
+  // Handle platform installation
+  const handleInstallPlatform = useCallback(async (platform: Platform) => {
+    try {
+      setInstalling(platform);
+      const result = await api.installPlatform(platform);
+      if (result.success) {
+        // Reload platform status
+        const status = await api.getPlatformStatus();
+        setPlatformStatus(status.platforms);
+        setInstalledPlatforms(status.installedPlatforms as Platform[]);
+      } else {
+        setError(result.error || `Failed to install ${platform}`);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : `Failed to install ${platform}`);
+    } finally {
+      setInstalling(null);
+    }
+  }, []);
+
   // Save config
   const handleSave = useCallback(async () => {
     try {
@@ -280,6 +317,10 @@ export default function ConfigPage() {
             config={config.tiers}
             onChange={(tiers) => updateConfig('tiers', tiers)}
             models={models}
+            installedPlatforms={installedPlatforms}
+            platformStatus={platformStatus}
+            installing={installing}
+            onInstallPlatform={handleInstallPlatform}
             onRefreshModels={async () => {
               try {
                 const response = await fetch('/api/config/models?refresh=true');
@@ -463,15 +504,41 @@ interface TiersTabProps {
   config: Config['tiers'];
   onChange: (config: Config['tiers']) => void;
   models: Record<Platform, Array<{ id: string; label: string; reasoningLevels?: string[] }>>;
+  installedPlatforms: Platform[];
+  platformStatus?: Record<string, PlatformStatusType>;
+  installing: string | null;
+  onInstallPlatform: (platform: Platform) => Promise<void>;
   onRefreshModels?: () => Promise<void>;
 }
 
-function TiersTab({ config, onChange, models, onRefreshModels }: TiersTabProps) {
+function TiersTab({ 
+  config, 
+  onChange, 
+  models, 
+  installedPlatforms,
+  installing,
+  onInstallPlatform,
+}: TiersTabProps) {
   const updateTier = (tier: keyof Config['tiers'], updates: Partial<TierSettings>) => {
-    onChange({
+    const newConfig = {
       ...config,
       [tier]: { ...config[tier], ...updates },
-    });
+    };
+    
+    // If platform changed and new platform is not installed, try to use first installed platform
+    if (updates.platform && !installedPlatforms.includes(updates.platform) && installedPlatforms.length > 0) {
+      const firstInstalled = installedPlatforms[0];
+      if (firstInstalled) {
+        newConfig[tier].platform = firstInstalled;
+        // Reset model for the new platform
+        const newModel = newConfig[tier].platform === 'cursor' 
+          ? 'auto' 
+          : (models[newConfig[tier].platform]?.[0]?.id || '');
+        newConfig[tier].model = newModel;
+      }
+    }
+    
+    onChange(newConfig);
   };
 
   // Get reasoning levels for the selected model (Codex only)
@@ -506,31 +573,75 @@ function TiersTab({ config, onChange, models, onRefreshModels }: TiersTabProps) 
             <div key={tier} className="p-md border-medium border-ink-faded min-w-0 break-words">
               <h3 className="font-bold text-lg mb-md capitalize break-words">{tier} Tier</h3>
               <div className="space-y-md min-w-0">
-                {/* P1: Platform dropdown */}
+                {/* P1: Platform dropdown - filtered to installed platforms */}
                 <div>
-                  <Select
-                    label="Platform"
-                    value={currentPlatform}
-                    onChange={(e) => {
-                      const newPlatform = e.target.value as Platform;
-                      // When platform changes, reset model to first available or auto for Cursor
-                      const newModel = newPlatform === 'cursor' 
-                        ? 'auto' 
-                        : (models[newPlatform]?.[0]?.id || '');
-                      updateTier(tier, { 
-                        platform: newPlatform, 
-                        model: newModel,
-                        reasoningEffort: undefined, // Reset reasoning effort when platform changes
-                      });
-                    }}
-                    options={[
-                      { value: 'cursor', label: 'Cursor' },
-                      { value: 'codex', label: 'Codex' },
-                      { value: 'claude', label: 'Claude' },
-                      { value: 'gemini', label: 'Gemini' },
-                      { value: 'copilot', label: 'Copilot' },
-                    ]}
-                  />
+                  <div className="flex items-center gap-sm">
+                    <div className="flex-1">
+                      <Select
+                        label="Platform"
+                        value={installedPlatforms.includes(currentPlatform) 
+                          ? currentPlatform 
+                          : (installedPlatforms.length > 0 ? (installedPlatforms[0] as Platform) : 'cursor')}
+                        onChange={(e) => {
+                          const newPlatform = e.target.value as Platform;
+                          // When platform changes, reset model to first available or auto for Cursor
+                          const newModel = newPlatform === 'cursor' 
+                            ? 'auto' 
+                            : (models[newPlatform]?.[0]?.id || '');
+                          updateTier(tier, { 
+                            platform: newPlatform, 
+                            model: newModel,
+                            reasoningEffort: undefined, // Reset reasoning effort when platform changes
+                          });
+                        }}
+                        options={installedPlatforms.length > 0 
+                          ? installedPlatforms.map((platform) => ({
+                              value: platform,
+                              label: platform.charAt(0).toUpperCase() + platform.slice(1),
+                            }))
+                          : [
+                              { value: 'cursor', label: 'Cursor (not installed)' },
+                              { value: 'codex', label: 'Codex (not installed)' },
+                              { value: 'claude', label: 'Claude (not installed)' },
+                              { value: 'gemini', label: 'Gemini (not installed)' },
+                              { value: 'copilot', label: 'Copilot (not installed)' },
+                            ]
+                        }
+                      />
+                    </div>
+                    {!installedPlatforms.includes(currentPlatform) && installedPlatforms.length > 0 && (
+                      <div className="pt-lg">
+                        <Button
+                          variant="info"
+                          size="sm"
+                          onClick={() => onInstallPlatform(currentPlatform)}
+                          loading={installing === currentPlatform}
+                          disabled={installing !== null}
+                        >
+                          INSTALL
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                  {!installedPlatforms.includes(currentPlatform) && (
+                    <div className="mt-xs p-sm bg-safety-orange/10 border-medium border-safety-orange rounded">
+                      <p className="text-sm text-safety-orange">
+                        <WarningIcon size="1em" className="inline mr-xs" />
+                        {currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1)} is not installed. 
+                        {installedPlatforms.length > 0 
+                          ? ' Please install it to use this platform, or select an installed platform.'
+                          : ' Please run the platform setup wizard to install platforms.'}
+                      </p>
+                    </div>
+                  )}
+                  {installedPlatforms.length === 0 && (
+                    <div className="mt-xs p-sm bg-hot-magenta/10 border-medium border-hot-magenta rounded">
+                      <p className="text-sm text-hot-magenta">
+                        <WarningIcon size="1em" className="inline mr-xs" />
+                        No platforms are installed. Please run the platform setup wizard to install platforms.
+                      </p>
+                    </div>
+                  )}
                   <HelpText {...helpContent.tiers.platform} />
                 </div>
                 {/* P1: Model dropdown with platform-specific models */}
