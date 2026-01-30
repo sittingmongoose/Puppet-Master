@@ -104,6 +104,20 @@ exec "$NODE_BIN" "$APP_ENTRY" gui
 
 ---
 
+## Troubleshooting: macOS App Crashes on Launch
+
+If the app appears in the Dock briefly then exits:
+
+1. **Check logs** (when launched from Finder, stdout/stderr are redirected):
+   ```bash
+   cat ~/.puppet-master/logs/gui.log
+   cat ~/.puppet-master/logs/crash.log
+   ```
+2. **Architecture**: The macOS DMG is built for Apple Silicon (arm64) only. Intel Macs require a separate x64 build.
+3. **App bundle detection**: The launcher sets `PUPPET_MASTER_APP_ROOT`; the GUI command uses this for auth paths and crash logging.
+
+---
+
 ## Reference
 
 - **GUI command:** `src/cli/commands/gui.ts` — already opens browser and handles SIGINT/SIGTERM.

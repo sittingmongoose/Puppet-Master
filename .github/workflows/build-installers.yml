@@ -118,6 +118,22 @@ jobs:
           # Doctor command may fail due to quota/config issues in CI - just log output
           "$pm_cli" doctor --category runtime --json || echo "Doctor check had issues (expected in CI)"
 
+      - name: Smoke test GUI launch (macOS)
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          set -euo pipefail
+          open -a "Puppet Master"
+          sleep 5
+          if ! lsof -i :3847 >/dev/null 2>&1; then
+            echo "GUI did not start - port 3847 not listening. Check logs:"
+            cat ~/.puppet-master/logs/gui.log 2>/dev/null || true
+            cat ~/.puppet-master/logs/crash.log 2>/dev/null || true
+            osascript -e 'quit app "Puppet Master"' 2>/dev/null || true
+            exit 1
+          fi
+          osascript -e 'quit app "Puppet Master"' 2>/dev/null || true
+
       - name: Smoke test (Linux)
         if: runner.os == 'Linux'
         shell: bash

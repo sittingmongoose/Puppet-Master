@@ -2,9 +2,11 @@
 
 ## Status
 
-**PASS** — 2026-01-28
+**PASS** — 2026-01-30
 
 ## Summary
+
+**macOS app launch fix (2026-01-30):** Fixed app appearing in Dock then immediately closing. App bundle detection now uses `PUPPET_MASTER_APP_ROOT` env var; added crash logging to `~/.puppet-master/logs/crash.log` and unhandled-rejection handler; CI smoke test verifies GUI launch. See Phase 8 below.
 
 Fixed macOS installer build failure (cp EINVAL recursion), pkgbuild check error, npm update-notifier noise, and aligned Linux/Windows build scripts. Staging now uses `installer-work` at repo root instead of `dist/installer-work`, avoiding copying `dist` into a subdirectory of itself. Added cross-platform app icons, updated macOS launcher to run Node directly (no Terminal), and ensured Windows/Linux shortcuts show proper icons and uninstall entries.
 
@@ -81,6 +83,12 @@ Fixed macOS installer build failure (cp EINVAL recursion), pkgbuild check error,
 - **scripts/build-installer.ts**: macOS launcher runs Node directly (no Terminal), app Info.plist includes icon + high-res, Windows staging includes .vbs launcher, Linux/Windows use icon assets.
 - **installer/win/puppet-master.nsi**: Adds DisplayIcon and uses .ico for shortcuts.
 
+### Phase 8: macOS app launch fix (appears then closes)
+
+- **src/cli/commands/gui.ts**: Detect app bundle via `PUPPET_MASTER_APP_ROOT` (set by launcher) instead of cwd; add `writeToCrashLog()` and `installAppBundleCrashHandlers()` for unhandled rejections and catch-block errors; write to `~/.puppet-master/logs/crash.log` before exit.
+- **.github/workflows/build-installers.yml**: Added "Smoke test GUI launch (macOS)" step—launches app, waits 5s, verifies port 3847 is listening, quits app. Dumps gui.log and crash.log on failure.
+- **Reference/APP_LAUNCHER_NO_TERMINAL_PROMPT.md**: Added troubleshooting section with crash log paths and architecture note (arm64 only).
+
 ## Files touched
 
 | File | Change |
@@ -113,6 +121,9 @@ Fixed macOS installer build failure (cp EINVAL recursion), pkgbuild check error,
 | `installer/linux/applications/com.rwm.puppet-master.desktop` | Icon entry set (Phase 7.1) |
 | `installer/win/puppet-master.nsi` | Shortcut icon + DisplayIcon (Phase 7.1) |
 | `scripts/build-installer.ts` | macOS launcher direct exec + icon staging (Phase 7.1) |
+| `src/cli/commands/gui.ts` | App bundle detection via env; crash logging; unhandled-rejection handler (Phase 8) |
+| `.github/workflows/build-installers.yml` | macOS GUI launch smoke test (Phase 8) |
+| `Reference/APP_LAUNCHER_NO_TERMINAL_PROMPT.md` | Troubleshooting section (Phase 8) |
 
 ## Commands run
 

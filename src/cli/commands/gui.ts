@@ -13,6 +13,7 @@
 
 import { Command } from 'commander';
 import path from 'node:path';
+import { mkdirSync, appendFileSync } from 'node:fs';
 import net from 'net';
 import open from 'open';
 import { ConfigManager } from '../../config/config-manager.js';
@@ -48,6 +49,57 @@ export interface GuiOptions {
 }
 
 /**
+ * Get crash log path when running from macOS app bundle.
+ * Uses $HOME/.puppet-master/logs/crash.log
+ */
+function getCrashLogPath(): string | undefined {
+  if (process.platform !== 'darwin' || !process.env.PUPPET_MASTER_APP_ROOT) {
+    return undefined;
+  }
+  const home = process.env.HOME || '/tmp';
+  return path.join(home, '.puppet-master', 'logs', 'crash.log');
+}
+
+/**
+ * Ensure crash log directory exists and write error to crash.log.
+ * Used when running from macOS app bundle to capture failures for debugging.
+ */
+function writeToCrashLog(error: unknown): void {
+  const crashPath = getCrashLogPath();
+  if (!crashPath) return;
+  try {
+    const logDir = path.dirname(crashPath);
+    mkdirSync(logDir, { recursive: true });
+    const timestamp = new Date().toISOString();
+    const message = error instanceof Error ? error.message : String(error);
+    const stack = error instanceof Error ? error.stack : undefined;
+    const entry = `[${timestamp}] Error: ${message}${stack ? `\n${stack}` : ''}\n\n`;
+    appendFileSync(crashPath, entry, 'utf8');
+  } catch {
+    // Best-effort; ignore write failures
+  }
+}
+
+/**
+ * Install unhandled rejection handler for macOS app bundle.
+ * Logs to crash.log before Node's default exit-on-rejection behavior.
+ */
+function installAppBundleCrashHandlers(): void {
+  const crashPath = getCrashLogPath();
+  if (!crashPath) return;
+  try {
+    const logDir = path.dirname(crashPath);
+    mkdirSync(logDir, { recursive: true });
+  } catch {
+    // Ignore
+  }
+  process.on('unhandledRejection', (reason: unknown) => {
+    writeToCrashLog(reason instanceof Error ? reason : new Error(String(reason)));
+    process.exit(1);
+  });
+}
+
+/**
  * Check if a port is available for binding
  */
 async function checkPortAvailable(port: number, host: string): Promise<boolean> {
@@ -64,6 +116,12 @@ async function checkPortAvailable(port: number, host: string): Promise<boolean> 
  * Main action function for the GUI command
  */
 export async function guiAction(options: GuiOptions): Promise<void> {
+  // When running from macOS app bundle, install crash handlers and ensure log dir exists
+  const isAppBundle = process.platform === 'darwin' && !!process.env.PUPPET_MASTER_APP_ROOT;
+  if (isAppBundle) {
+    installAppBundleCrashHandlers();
+  }
+
   try {
     // Load configuration
     const configManager = new ConfigManager(options.config);
@@ -98,10 +156,7 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     // Create dependency injection container
     const container = createContainer(config, projectRoot, configPath);
 
-    // When running from .app bundle (cwd inside Contents/Resources), use writable auth token path
-    const cwd = process.cwd();
-    const isAppBundle =
-      process.platform === 'darwin' && (cwd.includes('.app/Contents/Resources') || cwd.includes('.app\\Contents\\Resources'));
+    // When running from .app bundle (PUPPET_MASTER_APP_ROOT set by launcher), use writable auth token path
     const authTokenPath = isAppBundle && process.env.HOME
       ? path.join(process.env.HOME, '.puppet-master', 'gui-token.txt')
       : undefined; // server default: .puppet-master/gui-token.txt relative to cwd
@@ -298,6 +353,9 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     console.error('Error starting GUI server:', errorMessage);
     if (options.verbose) {
       console.error(error);
+    }
+    if (isAppBundle) {
+      writeToCrashLog(error);
     }
     process.exit(1);
   }
