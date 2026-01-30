@@ -123,16 +123,25 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          open -a "Puppet Master"
-          sleep 5
-          if ! lsof -i :3847 >/dev/null 2>&1; then
-            echo "GUI did not start - port 3847 not listening. Check logs:"
-            cat ~/.puppet-master/logs/gui.log 2>/dev/null || true
-            cat ~/.puppet-master/logs/crash.log 2>/dev/null || true
-            osascript -e 'quit app "Puppet Master"' 2>/dev/null || true
-            exit 1
-          fi
-          osascript -e 'quit app "Puppet Master"' 2>/dev/null || true
+          ROOT="/Applications/Puppet Master.app/Contents/Resources/puppet-master"
+          export PATH="$ROOT/node/bin:$PATH"
+          export PLAYWRIGHT_BROWSERS_PATH="$ROOT/playwright-browsers"
+          cd ~
+          "$ROOT/bin/puppet-master" gui --no-open &
+          GUI_PID=$!
+          for i in $(seq 1 15); do
+            sleep 1
+            if lsof -i :3847 >/dev/null 2>&1; then
+              echo "GUI server started on port 3847"
+              kill $GUI_PID 2>/dev/null || true
+              exit 0
+            fi
+          done
+          echo "GUI did not start within 15s - port 3847 not listening. Check logs:"
+          cat ~/.puppet-master/logs/gui.log 2>/dev/null || true
+          cat ~/.puppet-master/logs/crash.log 2>/dev/null || true
+          kill $GUI_PID 2>/dev/null || true
+          exit 1
 
       - name: Smoke test (Linux)
         if: runner.os == 'Linux'
