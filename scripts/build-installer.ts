@@ -377,14 +377,15 @@ export PLAYWRIGHT_BROWSERS_PATH="$ROOT_DIR/playwright-browsers"
 export PUPPET_MASTER_APP_ROOT="$ROOT_DIR"
 
 # Run from writable directory so .puppet-master/gui-token.txt and config can be created
-GUI_CWD="${HOME}"
+# Use \${HOME} so this is literal in the script (shell expands at runtime), not JS template
+GUI_CWD="\${HOME:-/tmp}"
 cd "$GUI_CWD"
 
 # When not attached to a TTY (e.g. double-click from Finder), log to file for diagnosis
 if [ -t 1 ]; then
   exec "$NODE_BIN" "$APP_ENTRY" gui
 else
-  LOG_DIR="${HOME}/.puppet-master/logs"
+  LOG_DIR="\${HOME:-/tmp}/.puppet-master/logs"
   LOG_FILE="$LOG_DIR/gui.log"
   mkdir -p "$LOG_DIR"
   exec "$NODE_BIN" "$APP_ENTRY" gui >> "$LOG_FILE" 2>&1
