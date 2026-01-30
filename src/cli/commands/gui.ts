@@ -12,6 +12,7 @@
  */
 
 import { Command } from 'commander';
+import path from 'node:path';
 import net from 'net';
 import open from 'open';
 import { ConfigManager } from '../../config/config-manager.js';
@@ -97,17 +98,24 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     // Create dependency injection container
     const container = createContainer(config, projectRoot, configPath);
 
+    // When running from .app bundle (cwd inside Contents/Resources), use writable auth token path
+    const cwd = process.cwd();
+    const isAppBundle =
+      process.platform === 'darwin' && (cwd.includes('.app/Contents/Resources') || cwd.includes('.app\\Contents\\Resources'));
+    const authTokenPath = isAppBundle && process.env.HOME
+      ? path.join(process.env.HOME, '.puppet-master', 'gui-token.txt')
+      : undefined; // server default: .puppet-master/gui-token.txt relative to cwd
+
     // Create GUI server
     const guiConfig = {
       port,
       host,
       baseDirectory: projectRoot,
       // P0-G07: Support --no-auth and --relaxed-cors flags
-      // Commander.js --no-auth sets options.auth to false
-      authEnabled: options.auth !== false, // Default true, false if --no-auth
-      corsRelaxed: options.relaxedCors === true, // Default false, true if --relaxed-cors
-      // React GUI: default true, disable with --classic flag
-      useReactGui: options.classic !== true, // Default true, false if --classic
+      authEnabled: options.auth !== false,
+      corsRelaxed: options.relaxedCors === true,
+      useReactGui: options.classic !== true,
+      ...(authTokenPath !== undefined && { authTokenPath }),
     };
     const guiServer = new GuiServer(guiConfig, eventBus);
 

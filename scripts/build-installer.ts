@@ -182,6 +182,17 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
   await emptyDir(guiPublicDst);
   await copyDir(guiPublicSrc, guiPublicDst);
 
+  // 3b) Copy React SPA build into dist/gui/react/dist (for .app bundle and server getReactBuildPath())
+  if (args.platform === 'darwin') {
+    const reactDistSrc = path.join(repoRoot, 'src', 'gui', 'react', 'dist');
+    if (existsSync(reactDistSrc)) {
+      console.log('\n📦 Staging React GUI build...\n');
+      const reactDistDst = path.join(appDir, 'dist', 'gui', 'react', 'dist');
+      await ensureDir(path.dirname(reactDistDst));
+      await copyDir(reactDistSrc, reactDistDst);
+    }
+  }
+
   // Copy app icon assets into payload for installers
   const assetsDir = path.join(repoRoot, 'installer', 'assets');
   const iconPng = path.join(assetsDir, 'puppet-master.png');
@@ -360,12 +371,24 @@ ROOT_DIR="$RESOURCES_DIR/puppet-master"
 NODE_BIN="$ROOT_DIR/node/bin/node"
 APP_ENTRY="$ROOT_DIR/app/dist/cli/index.js"
 
-# Export environment variables
+# Export environment variables (Node/Playwright find app via these)
 export PATH="$ROOT_DIR/node/bin:$PATH"
 export PLAYWRIGHT_BROWSERS_PATH="$ROOT_DIR/playwright-browsers"
+export PUPPET_MASTER_APP_ROOT="$ROOT_DIR"
 
-cd "$ROOT_DIR"
-exec "$NODE_BIN" "$APP_ENTRY" gui
+# Run from writable directory so .puppet-master/gui-token.txt and config can be created
+GUI_CWD="${HOME}"
+cd "$GUI_CWD"
+
+# When not attached to a TTY (e.g. double-click from Finder), log to file for diagnosis
+if [ -t 1 ]; then
+  exec "$NODE_BIN" "$APP_ENTRY" gui
+else
+  LOG_DIR="${HOME}/.puppet-master/logs"
+  LOG_FILE="$LOG_DIR/gui.log"
+  mkdir -p "$LOG_DIR"
+  exec "$NODE_BIN" "$APP_ENTRY" gui >> "$LOG_FILE" 2>&1
+fi
 `;
   await writeFile(macosExecutable, macosScript, { encoding: 'utf8', mode: 0o755 });
 
@@ -403,12 +426,12 @@ exec "$NODE_BIN" "$APP_ENTRY" gui
 async function buildMacPkgAndDmg(args: Args, repoRoot: string, stageRoot: string, outDir: string, version: string): Promise<string> {
   await ensureDir(outDir);
 
-  const pkgOut = path.join(outDir, `puppet-master-${version}-mac-${args.arch}.pkg`);
+  const pkgBasename = `puppet-master-${version}-mac-${args.arch}.pkg`;
   const dmgOut = path.join(outDir, `puppet-master-${version}-mac-${args.arch}.dmg`);
 
   // Build .app bundle
   console.log('\n🍎 Building macOS .app bundle...\n');
-  const appPath = await buildMacAppBundle(args, repoRoot, stageRoot, version);
+  await buildMacAppBundle(args, repoRoot, stageRoot, version);
 
   // Prepare app bundle directory for pkgbuild (directory containing only the .app)
   const appBundleDir = path.join(stageRoot, 'app-bundle');
@@ -421,8 +444,12 @@ async function buildMacPkgAndDmg(args: Args, repoRoot: string, stageRoot: string
     await chmod(postinstallPath, 0o755);
   }
 
-  console.log('\n🧱 Building macOS pkg...\n');
-  // Install .app bundle to /Applications
+  // Build pkg only inside DMG staging (no standalone .pkg in outDir)
+  const dmgStage = path.join(stageRoot, 'dmg');
+  await emptyDir(dmgStage);
+  const pkgOut = path.join(dmgStage, pkgBasename);
+
+  console.log('\n🧱 Building macOS pkg (inside DMG)...\n');
   await run('pkgbuild', [
     '--root',
     appBundleDir,
@@ -438,9 +465,6 @@ async function buildMacPkgAndDmg(args: Args, repoRoot: string, stageRoot: string
   ]);
 
   console.log('\n🧱 Building macOS dmg (containing the pkg)...\n');
-  const dmgStage = path.join(stageRoot, 'dmg');
-  await emptyDir(dmgStage);
-  await (await import('node:fs/promises')).copyFile(pkgOut, path.join(dmgStage, path.basename(pkgOut)));
   await run('hdiutil', ['create', '-volname', 'Puppet Master', '-srcfolder', dmgStage, '-ov', '-format', 'UDZO', dmgOut]);
 
   return dmgOut;
