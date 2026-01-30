@@ -41,8 +41,7 @@ jobs:
       - name: Build TypeScript
         run: npm run build
 
-      - name: Build GUI (macOS)
-        if: runner.os == 'macOS'
+      - name: Build GUI
         run: |
           npm --prefix src/gui/react install
           npm run gui:build

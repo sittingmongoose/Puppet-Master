@@ -49,20 +49,30 @@ export interface GuiOptions {
 }
 
 /**
- * Get crash log path when running from macOS app bundle.
- * Uses $HOME/.puppet-master/logs/crash.log
+ * Get crash log path when running without TTY (GUI launch from desktop/shortcut).
+ * Linux/macOS: ~/.puppet-master/logs/crash.log
+ * Windows: %USERPROFILE%\.puppet-master\logs\crash.log
  */
 function getCrashLogPath(): string | undefined {
-  if (process.platform !== 'darwin' || !process.env.PUPPET_MASTER_APP_ROOT) {
-    return undefined;
+  if (process.platform === 'win32') {
+    const home = process.env.USERPROFILE || process.env.HOME || process.env.TEMP || 'C:\\tmp';
+    return path.join(home, '.puppet-master', 'logs', 'crash.log');
   }
   const home = process.env.HOME || '/tmp';
   return path.join(home, '.puppet-master', 'logs', 'crash.log');
 }
 
 /**
+ * Returns true when crash logging should be enabled: GUI launched without a TTY
+ * (desktop shortcut, app menu, etc.) where stdout/stderr are not visible.
+ */
+function shouldEnableCrashLogging(): boolean {
+  return !process.stdout.isTTY;
+}
+
+/**
  * Ensure crash log directory exists and write error to crash.log.
- * Used when running from macOS app bundle to capture failures for debugging.
+ * Used when running without TTY to capture failures for debugging.
  */
 function writeToCrashLog(error: unknown): void {
   const crashPath = getCrashLogPath();
@@ -81,10 +91,10 @@ function writeToCrashLog(error: unknown): void {
 }
 
 /**
- * Install unhandled rejection handler for macOS app bundle.
+ * Install unhandled rejection handler when running without TTY.
  * Logs to crash.log before Node's default exit-on-rejection behavior.
  */
-function installAppBundleCrashHandlers(): void {
+function installCrashHandlers(): void {
   const crashPath = getCrashLogPath();
   if (!crashPath) return;
   try {
@@ -116,11 +126,14 @@ async function checkPortAvailable(port: number, host: string): Promise<boolean> 
  * Main action function for the GUI command
  */
 export async function guiAction(options: GuiOptions): Promise<void> {
-  // When running from macOS app bundle, install crash handlers and ensure log dir exists
-  const isAppBundle = process.platform === 'darwin' && !!process.env.PUPPET_MASTER_APP_ROOT;
-  if (isAppBundle) {
-    installAppBundleCrashHandlers();
+  // When running without TTY (desktop shortcut, app menu), install crash handlers for diagnostics
+  const enableCrashLogging = shouldEnableCrashLogging();
+  if (enableCrashLogging) {
+    installCrashHandlers();
   }
+
+  // Auth token path: use $HOME when from app bundle (macOS) or when crash logging enabled
+  const isAppBundle = process.platform === 'darwin' && !!process.env.PUPPET_MASTER_APP_ROOT;
 
   try {
     // Load configuration
@@ -156,9 +169,11 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     // Create dependency injection container
     const container = createContainer(config, projectRoot, configPath);
 
-    // When running from .app bundle (PUPPET_MASTER_APP_ROOT set by launcher), use writable auth token path
-    const authTokenPath = isAppBundle && process.env.HOME
-      ? path.join(process.env.HOME, '.puppet-master', 'gui-token.txt')
+    // When running from .app bundle or without TTY (desktop launch), use writable auth token path
+    const useHomeForAuth = isAppBundle || enableCrashLogging;
+    const homeDir = process.env.HOME || process.env.USERPROFILE;
+    const authTokenPath = useHomeForAuth && homeDir
+      ? path.join(homeDir, '.puppet-master', 'gui-token.txt')
       : undefined; // server default: .puppet-master/gui-token.txt relative to cwd
 
     // Create GUI server
@@ -354,7 +369,7 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     if (options.verbose) {
       console.error(error);
     }
-    if (isAppBundle) {
+    if (enableCrashLogging) {
       writeToCrashLog(error);
     }
     process.exit(1);

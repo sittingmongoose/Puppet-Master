@@ -6,6 +6,8 @@
 
 ## Summary
 
+**Linux DEB installer + cross-platform crash logging (2026-01-30):** Linux .deb now shows desktop notification on successful install; React GUI staged for Linux/Windows; Build GUI runs for all platforms in CI; crash logging extended to Linux and Windows when launched without TTY. See Phase 9 below.
+
 **macOS app launch fix (2026-01-30):** Fixed app appearing in Dock then immediately closing. App bundle detection now uses `PUPPET_MASTER_APP_ROOT` env var; added crash logging to `~/.puppet-master/logs/crash.log` and unhandled-rejection handler; CI smoke test verifies GUI launch. See Phase 8 below.
 
 Fixed macOS installer build failure (cp EINVAL recursion), pkgbuild check error, npm update-notifier noise, and aligned Linux/Windows build scripts. Staging now uses `installer-work` at repo root instead of `dist/installer-work`, avoiding copying `dist` into a subdirectory of itself. Added cross-platform app icons, updated macOS launcher to run Node directly (no Terminal), and ensured Windows/Linux shortcuts show proper icons and uninstall entries.
@@ -85,9 +87,26 @@ Fixed macOS installer build failure (cp EINVAL recursion), pkgbuild check error,
 
 ### Phase 8: macOS app launch fix (appears then closes)
 
-- **src/cli/commands/gui.ts**: Detect app bundle via `PUPPET_MASTER_APP_ROOT` (set by launcher) instead of cwd; add `writeToCrashLog()` and `installAppBundleCrashHandlers()` for unhandled rejections and catch-block errors; write to `~/.puppet-master/logs/crash.log` before exit.
+- **src/cli/commands/gui.ts**: Detect app bundle via `PUPPET_MASTER_APP_ROOT` (set by launcher) instead of cwd; add `writeToCrashLog()` and `installCrashHandlers()` for unhandled rejections and catch-block errors; write to `~/.puppet-master/logs/crash.log` before exit.
 - **.github/workflows/build-installers.yml**: Added "Smoke test GUI launch (macOS)" step—launches app, waits 5s, verifies port 3847 is listening, quits app. Dumps gui.log and crash.log on failure.
 - **Reference/APP_LAUNCHER_NO_TERMINAL_PROMPT.md**: Added troubleshooting section with crash log paths and architecture note (arm64 only).
+
+### Phase 9: Linux DEB installer + cross-platform crash logging
+
+- **installer/linux/scripts/postinstall**: Add `notify-send` on success so user sees "Installation complete" when GUI installer closes.
+- **scripts/build-installer.ts**: Stage React GUI for linux and win32 (not just darwin); chmod postinstall 0o755 before nfpm.
+- **.github/workflows/build-installers.yml**: Run Build GUI for all platforms (remove macOS-only condition).
+- **src/cli/commands/gui.ts**: Extend crash logging to Linux and Windows when `!process.stdout.isTTY`; use `shouldEnableCrashLogging()`; auth token path uses home dir when crash logging enabled.
+
+## Linux DEB troubleshooting
+
+When the .deb "installer closes and nothing happens":
+
+1. **Verify install**: `dpkg -l puppet-master`, `ls -la /opt/puppet-master`
+2. **CLI**: `/usr/bin/puppet-master --version`
+3. **App menu**: Search for "Puppet Master" in your application launcher
+4. **If GUI install fails**: Run `sudo dpkg -i puppet-master-*.deb` in a terminal to see dpkg output
+5. **Crash logs** (when launched from app menu): `~/.puppet-master/logs/gui.log` and `~/.puppet-master/logs/crash.log`
 
 ## Files touched
 
@@ -124,6 +143,10 @@ Fixed macOS installer build failure (cp EINVAL recursion), pkgbuild check error,
 | `src/cli/commands/gui.ts` | App bundle detection via env; crash logging; unhandled-rejection handler (Phase 8) |
 | `.github/workflows/build-installers.yml` | macOS GUI launch smoke test (Phase 8) |
 | `Reference/APP_LAUNCHER_NO_TERMINAL_PROMPT.md` | Troubleshooting section (Phase 8) |
+| `installer/linux/scripts/postinstall` | notify-send on success (Phase 9) |
+| `scripts/build-installer.ts` | Stage React for linux/win32; chmod postinstall (Phase 9) |
+| `.github/workflows/build-installers.yml` | Build GUI for all platforms (Phase 9) |
+| `src/cli/commands/gui.ts` | Crash logging for Linux/Windows when no TTY (Phase 9) |
 
 ## Commands run
 

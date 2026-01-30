@@ -54,3 +54,7 @@ echo "  systemctl --user start puppet-master-gui"
 echo ""
 echo "For help: puppet-master --help"
 echo ""
+# Notify user (if notify-send available, e.g. GNOME/KDE)
+if command -v notify-send >/dev/null 2>&1; then
+  notify-send "Puppet Master" "Installation complete. Find 'Puppet Master' in your application menu." -i /opt/puppet-master/puppet-master.png 2>/dev/null || true
+fi

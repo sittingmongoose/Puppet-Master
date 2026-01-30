@@ -183,7 +183,7 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
   await copyDir(guiPublicSrc, guiPublicDst);
 
   // 3b) Copy React SPA build into dist/gui/react/dist (for .app bundle and server getReactBuildPath())
-  if (args.platform === 'darwin') {
+  if (args.platform === 'darwin' || args.platform === 'linux' || args.platform === 'win32') {
     const reactDistSrc = path.join(repoRoot, 'src', 'gui', 'react', 'dist');
     if (existsSync(reactDistSrc)) {
       console.log('\n📦 Staging React GUI build...\n');
@@ -495,6 +495,11 @@ set -eu
 exec /opt/puppet-master/bin/puppet-master \"$@\"
 `;
   await writeFile(path.join(usrBinDir, 'puppet-master'), wrapper, { encoding: 'utf8', mode: 0o755 });
+
+  const postinstallPath = path.join(repoRoot, 'installer', 'linux', 'scripts', 'postinstall');
+  if (existsSync(postinstallPath)) {
+    await chmod(postinstallPath, 0o755);
+  }
 
   const debOut = path.join(outDir, `puppet-master-${version}-linux-${args.arch}.deb`);
   const rpmOut = path.join(outDir, `puppet-master-${version}-linux-${args.arch}.rpm`);
