@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import type { Project } from '@/types';
 
 // Re-export Project type for convenience
@@ -104,6 +104,17 @@ export const useProjectStore = create<ProjectState>()(
     }),
     {
       name: 'rwm-projects',
+      storage: createJSONStorage(() => {
+        const ls = (globalThis as { localStorage?: Storage }).localStorage;
+        if (ls && typeof ls.getItem === 'function' && typeof ls.setItem === 'function' && typeof ls.removeItem === 'function') {
+          return ls;
+        }
+        return {
+          getItem: () => null,
+          setItem: () => undefined,
+          removeItem: () => undefined,
+        };
+      }),
       partialize: (state) => ({ recentProjects: state.recentProjects }),
       // Validate and normalize data when loading from localStorage
       merge: (persistedState, currentState) => {

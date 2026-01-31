@@ -127,6 +127,7 @@ describe('startAction', () => {
       logging: {
         level: 'info',
         retentionDays: 7,
+        intensive: false,
       },
       tiers: {
         phase: {

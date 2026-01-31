@@ -17,18 +17,18 @@ import {
 
 describe('LoggerService', () => {
   let tempDir: string;
-  let consoleLogSpy: ReturnType<typeof vi.spyOn>;
-  let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
+  let stdoutWriteSpy: ReturnType<typeof vi.spyOn>;
+  let stderrWriteSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
     tempDir = join(tmpdir(), `logger-test-${Date.now()}`);
-    consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    stdoutWriteSpy = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);
+    stderrWriteSpy = vi.spyOn(process.stderr, 'write').mockImplementation(() => true);
   });
 
   afterEach(async () => {
-    consoleLogSpy.mockRestore();
-    consoleErrorSpy.mockRestore();
+    stdoutWriteSpy.mockRestore();
+    stderrWriteSpy.mockRestore();
     // Cleanup temp files
     if (existsSync(tempDir)) {
       try {
@@ -51,7 +51,7 @@ describe('LoggerService', () => {
         transports: [new ConsoleTransport()],
       });
       logger.debug('Debug message');
-      expect(consoleLogSpy).toHaveBeenCalled();
+      expect(stdoutWriteSpy).toHaveBeenCalled();
     });
 
     it('should log info messages', () => {
@@ -60,7 +60,7 @@ describe('LoggerService', () => {
         transports: [new ConsoleTransport()],
       });
       logger.info('Info message');
-      expect(consoleLogSpy).toHaveBeenCalled();
+      expect(stdoutWriteSpy).toHaveBeenCalled();
     });
 
     it('should log warn messages', () => {
@@ -69,7 +69,7 @@ describe('LoggerService', () => {
         transports: [new ConsoleTransport()],
       });
       logger.warn('Warning message');
-      expect(consoleLogSpy).toHaveBeenCalled();
+      expect(stdoutWriteSpy).toHaveBeenCalled();
     });
 
     it('should log error messages', () => {
@@ -78,7 +78,7 @@ describe('LoggerService', () => {
         transports: [new ConsoleTransport()],
       });
       logger.error('Error message');
-      expect(consoleErrorSpy).toHaveBeenCalled();
+      expect(stderrWriteSpy).toHaveBeenCalled();
     });
   });
 
@@ -89,7 +89,7 @@ describe('LoggerService', () => {
         transports: [new ConsoleTransport()],
       });
       logger.debug('Debug message');
-      expect(consoleLogSpy).not.toHaveBeenCalled();
+      expect(stdoutWriteSpy).not.toHaveBeenCalled();
     });
 
     it('should filter out debug and info when minLevel is warn', () => {
@@ -99,7 +99,7 @@ describe('LoggerService', () => {
       });
       logger.debug('Debug message');
       logger.info('Info message');
-      expect(consoleLogSpy).not.toHaveBeenCalled();
+      expect(stdoutWriteSpy).not.toHaveBeenCalled();
     });
 
     it('should allow warn and error when minLevel is warn', () => {
@@ -109,8 +109,8 @@ describe('LoggerService', () => {
       });
       logger.warn('Warning message');
       logger.error('Error message');
-      expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-      expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+      expect(stdoutWriteSpy).toHaveBeenCalledTimes(1);
+      expect(stderrWriteSpy).toHaveBeenCalledTimes(1);
     });
 
     it('should allow only error when minLevel is error', () => {
@@ -122,8 +122,8 @@ describe('LoggerService', () => {
       logger.info('Info message');
       logger.warn('Warning message');
       logger.error('Error message');
-      expect(consoleLogSpy).not.toHaveBeenCalled();
-      expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+      expect(stdoutWriteSpy).not.toHaveBeenCalled();
+      expect(stderrWriteSpy).toHaveBeenCalledTimes(1);
     });
 
     it('should update level with setLevel', () => {
@@ -133,7 +133,7 @@ describe('LoggerService', () => {
       });
       logger.setLevel('debug');
       logger.debug('Debug message');
-      expect(consoleLogSpy).toHaveBeenCalled();
+      expect(stdoutWriteSpy).toHaveBeenCalled();
     });
   });
 
@@ -202,8 +202,8 @@ describe('LoggerService', () => {
         transports: [new ConsoleTransport()],
       });
       logger.info('Test message');
-      expect(consoleLogSpy).toHaveBeenCalled();
-      const call = consoleLogSpy.mock.calls[0]![0] as string;
+      expect(stdoutWriteSpy).toHaveBeenCalled();
+      const call = stdoutWriteSpy.mock.calls[0]![0] as string;
       expect(call).toContain('INFO');
       expect(call).toContain('Test message');
       expect(call).toMatch(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/);
@@ -215,7 +215,7 @@ describe('LoggerService', () => {
         transports: [new ConsoleTransport()],
       });
       logger.info('Test message', { key: 'value', num: 42 });
-      const call = consoleLogSpy.mock.calls[0]![0] as string;
+      const call = stdoutWriteSpy.mock.calls[0]![0] as string;
       expect(call).toContain('Context:');
       expect(call).toContain('key');
       expect(call).toContain('value');
@@ -227,8 +227,8 @@ describe('LoggerService', () => {
         transports: [new ConsoleTransport()],
       });
       logger.error('Error message');
-      expect(consoleErrorSpy).toHaveBeenCalled();
-      expect(consoleLogSpy).not.toHaveBeenCalled();
+      expect(stderrWriteSpy).toHaveBeenCalled();
+      expect(stdoutWriteSpy).not.toHaveBeenCalled();
     });
   });
 
@@ -241,7 +241,7 @@ describe('LoggerService', () => {
       const childLogger = parentLogger.child({ parentKey: 'parentValue' });
       childLogger.info('Child message', { childKey: 'childValue' });
 
-      const call = consoleLogSpy.mock.calls[0]![0] as string;
+      const call = stdoutWriteSpy.mock.calls[0]![0] as string;
       expect(call).toContain('parentKey');
       expect(call).toContain('parentValue');
       expect(call).toContain('childKey');
@@ -256,7 +256,7 @@ describe('LoggerService', () => {
       const childLogger = parentLogger.child({ key: 'parentValue' });
       childLogger.info('Child message', { key: 'childValue' });
 
-      const call = consoleLogSpy.mock.calls[0]![0] as string;
+      const call = stdoutWriteSpy.mock.calls[0]![0] as string;
       // Child value should override parent
       expect(call).toContain('childValue');
       expect(call).not.toContain('parentValue');
@@ -272,11 +272,11 @@ describe('LoggerService', () => {
       
       // Debug should be filtered
       childLogger.debug('Debug message');
-      expect(consoleLogSpy).not.toHaveBeenCalled();
+      expect(stdoutWriteSpy).not.toHaveBeenCalled();
       
       // Warn should pass
       childLogger.warn('Warning message');
-      expect(consoleLogSpy).toHaveBeenCalled();
+      expect(stdoutWriteSpy).toHaveBeenCalled();
     });
   });
 
@@ -294,7 +294,7 @@ describe('LoggerService', () => {
       logger.info('Test message');
       await new Promise((resolve) => setTimeout(resolve, 100));
 
-      expect(consoleLogSpy).toHaveBeenCalled();
+      expect(stdoutWriteSpy).toHaveBeenCalled();
       expect(existsSync(logFile)).toBe(true);
       const content = await readFile(logFile, 'utf8');
       const entry: LogEntry = JSON.parse(content.trim());
@@ -326,7 +326,7 @@ describe('LoggerService', () => {
         transports: [new ConsoleTransport()],
       });
       logger.info('Test message');
-      const call = consoleLogSpy.mock.calls[0]![0] as string;
+      const call = stdoutWriteSpy.mock.calls[0]![0] as string;
       expect(call).toContain('PM-2026-01-10-14-30-00-001');
     });
   });
@@ -405,7 +405,7 @@ describe('LoggerService', () => {
       await new Promise((resolve) => setTimeout(resolve, 200));
 
       // The important thing is the logger doesn't crash
-      // Error is caught internally and logged to console.error
+      // Error is caught internally and written to stderr
       // We verify the logger continues to work
       expect(logger).toBeDefined();
     });
@@ -424,7 +424,7 @@ describe('LoggerService', () => {
 
       // Should not throw
       logger.info('Test message');
-      expect(consoleErrorSpy).toHaveBeenCalled();
+      expect(stderrWriteSpy).toHaveBeenCalled();
     });
   });
 
@@ -437,7 +437,7 @@ describe('LoggerService', () => {
 
       logger.addTransport(new ConsoleTransport());
       logger.info('Test message');
-      expect(consoleLogSpy).toHaveBeenCalled();
+      expect(stdoutWriteSpy).toHaveBeenCalled();
     });
   });
 });

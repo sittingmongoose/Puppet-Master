@@ -66,6 +66,7 @@ interface Config {
     logLevel: string;
     processTimeout: number;
     parallelIterations: number;
+    intensiveLogging?: boolean;
   };
   cliPaths?: {
     cursor: string;
@@ -113,6 +114,11 @@ interface Config {
       error?: Array<{ action: string; maxAttempts?: number; to?: string; notify?: boolean }>;
     };
   };
+  network?: {
+    trustProxy?: boolean;
+    allowedOrigins?: string[];
+    corsRelaxed?: boolean;
+  };
 }
 
 const DEFAULT_CONFIG: Config = {
@@ -149,6 +155,12 @@ const DEFAULT_CONFIG: Config = {
     logLevel: 'info',
     processTimeout: 300000,
     parallelIterations: 1,
+    intensiveLogging: false,
+  },
+  network: {
+    trustProxy: false,
+    allowedOrigins: ['http://localhost:3847'],
+    corsRelaxed: false,
   },
 };
 
@@ -181,7 +193,16 @@ export default function ConfigPage() {
         setLoading(true);
         const data = await api.getConfig();
         if (data) {
-          setConfig(data as unknown as Config);
+          const cfg = data as unknown as Config;
+          const logging = (cfg as unknown as { logging?: { level?: string; intensive?: boolean } }).logging;
+          if (logging) {
+            cfg.advanced = {
+              ...cfg.advanced,
+              logLevel: logging.level ?? cfg.advanced.logLevel,
+              intensiveLogging: logging.intensive ?? cfg.advanced.intensiveLogging,
+            };
+          }
+          setConfig(cfg);
         }
       } catch (err) {
         console.error('[Config] Failed to fetch config:', err);
@@ -292,7 +313,19 @@ export default function ConfigPage() {
     try {
       setSaving(true);
       setError(null);
-      await api.updateConfig(config as unknown as Record<string, unknown>);
+
+      const existingLogging = (config as unknown as { logging?: { retentionDays?: number } }).logging;
+
+      const toSave = {
+        ...config,
+        logging: {
+          level: config.advanced.logLevel,
+          retentionDays: existingLogging?.retentionDays ?? 30,
+          intensive: config.advanced.intensiveLogging || false,
+        },
+      };
+
+      await api.updateConfig(toSave as unknown as Record<string, unknown>);
       setIsDirty(false);
     } catch (err) {
       console.error('[Config] Failed to save config:', err);
@@ -388,6 +421,7 @@ export default function ConfigPage() {
             checkpointing={config.checkpointing}
             loopGuard={config.loopGuard}
             escalation={config.escalation}
+            network={config.network}
             onChange={(advanced) => updateConfig('advanced', advanced)}
             onCliPathsChange={(cliPaths) => updateConfig('cliPaths' as any, cliPaths)}
             onRateLimitsChange={(rateLimits) => updateConfig('rateLimits' as any, rateLimits)}
@@ -395,6 +429,7 @@ export default function ConfigPage() {
             onCheckpointingChange={(checkpointing) => updateConfig('checkpointing' as any, checkpointing)}
             onLoopGuardChange={(loopGuard) => updateConfig('loopGuard' as any, loopGuard)}
             onEscalationChange={(escalation) => updateConfig('escalation' as any, escalation)}
+            onNetworkChange={(network) => updateConfig('network' as any, network)}
             capabilities={capabilities}
           />
         );
@@ -975,6 +1010,7 @@ interface AdvancedTabProps {
   checkpointing?: Config['checkpointing'];
   loopGuard?: Config['loopGuard'];
   escalation?: Config['escalation'];
+  network?: Config['network'];
   onChange: (config: Config['advanced']) => void;
   onCliPathsChange: (cliPaths: Config['cliPaths']) => void;
   onRateLimitsChange: (rateLimits: Config['rateLimits']) => void;
@@ -982,28 +1018,35 @@ interface AdvancedTabProps {
   onCheckpointingChange: (checkpointing: Config['checkpointing']) => void;
   onLoopGuardChange: (loopGuard: Config['loopGuard']) => void;
   onEscalationChange: (escalation: Config['escalation']) => void;
+  onNetworkChange: (network: Config['network']) => void;
   capabilities: CursorCapabilities | null;
 }
 
-function AdvancedTab({ 
-  config, 
+function AdvancedTab({
+  config,
   cliPaths,
   rateLimits,
   execution,
   checkpointing,
   loopGuard,
   escalation,
-  onChange, 
+  network,
+  onChange,
   onCliPathsChange,
   onRateLimitsChange,
   onExecutionChange,
   onCheckpointingChange,
   onLoopGuardChange,
   onEscalationChange,
+  onNetworkChange,
   capabilities 
 }: AdvancedTabProps) {
   // Use defaults if config is undefined (e.g., from API response missing the field)
   const safeConfig = config || DEFAULT_CONFIG.advanced;
+  const safeAdvanced = {
+    ...DEFAULT_CONFIG.advanced,
+    ...safeConfig,
+  };
   const safeCliPaths = cliPaths || { cursor: 'cursor-agent', codex: 'codex', claude: 'claude', gemini: 'gemini', copilot: 'copilot' };
   const safeRateLimits = rateLimits || {
     cursor: { callsPerMinute: 60, cooldownMs: 1000 },
@@ -1016,6 +1059,7 @@ function AdvancedTab({
   const safeCheckpointing = checkpointing || { enabled: true, interval: 10, maxCheckpoints: 10, checkpointOnSubtaskComplete: true, checkpointOnShutdown: true };
   const safeLoopGuard = loopGuard || { enabled: true, maxRepetitions: 3, suppressReplyRelay: true };
   const safeEscalation = escalation || { chains: {} };
+  const safeNetwork = network || DEFAULT_CONFIG.network || { trustProxy: false, allowedOrigins: ['http://localhost:3847'], corsRelaxed: false };
 
   return (
     <Panel title="Advanced Configuration">
@@ -1097,8 +1141,8 @@ function AdvancedTab({
         <div>
           <Input
             label="Log Level"
-            value={safeConfig.logLevel}
-            onChange={(e) => onChange({ ...safeConfig, logLevel: e.target.value })}
+            value={safeAdvanced.logLevel}
+            onChange={(e) => onChange({ ...safeAdvanced, logLevel: e.target.value })}
           />
           <HelpText {...helpContent.advanced.logLevel} />
         </div>
@@ -1107,8 +1151,8 @@ function AdvancedTab({
           <Input
             label="Process Timeout (ms)"
             type="number"
-            value={safeConfig.processTimeout.toString()}
-            onChange={(e) => onChange({ ...safeConfig, processTimeout: parseInt(e.target.value) || 300000 })}
+            value={safeAdvanced.processTimeout.toString()}
+            onChange={(e) => onChange({ ...safeAdvanced, processTimeout: parseInt(e.target.value) || 300000 })}
           />
           <HelpText {...helpContent.advanced.processTimeout} />
         </div>
@@ -1117,10 +1161,22 @@ function AdvancedTab({
           <Input
             label="Parallel Iterations"
             type="number"
-            value={safeConfig.parallelIterations.toString()}
-            onChange={(e) => onChange({ ...safeConfig, parallelIterations: parseInt(e.target.value) || 1 })}
+            value={safeAdvanced.parallelIterations.toString()}
+            onChange={(e) => onChange({ ...safeAdvanced, parallelIterations: parseInt(e.target.value) || 1 })}
           />
           <HelpText {...helpContent.advanced.parallelIterations} />
+        </div>
+
+        <div className="space-y-xs">
+          <Checkbox
+            id="intensiveLogging"
+            checked={safeAdvanced.intensiveLogging || false}
+            onChange={(checked) => onChange({ ...safeAdvanced, intensiveLogging: checked })}
+            label="Intensive logging"
+          />
+          <HelpText
+            hint="Captures decision rationale and forwards console.* output into runtime logs. Useful for debugging but can produce a lot of output."
+          />
         </div>
       </div>
 
@@ -1394,6 +1450,68 @@ function AdvancedTab({
             </div>
           );
         })}
+      </div>
+
+      {/* Network & Security Settings */}
+      <div className="mt-xl space-y-md">
+        <div>
+          <h3 className="font-bold text-lg">Network & Security</h3>
+          <p className="text-sm text-ink-faded mt-xs">
+            Configure network settings for mobile access and reverse proxy deployments.
+          </p>
+        </div>
+
+        <div className="space-y-md p-md border-medium border-ink-faded rounded bg-paper-lined/20">
+          <div className="space-y-xs">
+            <Checkbox
+              id="corsRelaxed"
+              checked={safeNetwork.corsRelaxed || false}
+              onChange={(checked) => onNetworkChange({ ...safeNetwork, corsRelaxed: checked })}
+              label="LAN Mode (Relaxed CORS)"
+            />
+            <HelpText
+              hint="Enable to allow access from other devices on your local network. Allows dev ports (3000-9999) and private IP ranges (192.168.x.x, 10.x.x.x, 172.16-31.x.x). Use for mobile testing or LAN deployments."
+            />
+          </div>
+
+          <div className="space-y-xs">
+            <Checkbox
+              id="trustProxy"
+              checked={safeNetwork.trustProxy || false}
+              onChange={(checked) => onNetworkChange({ ...safeNetwork, trustProxy: checked })}
+              label="Trust Proxy Headers"
+            />
+            <HelpText
+              hint="Enable when running behind a reverse proxy (nginx, Apache, etc.). Allows the server to trust X-Forwarded-* headers for client IP detection. Required for proper rate limiting and security logging behind proxies."
+            />
+          </div>
+
+          <div>
+            <label htmlFor="allowedOrigins" className="block font-semibold mb-xs">
+              Allowed Origins (CORS)
+            </label>
+            <Input
+              id="allowedOrigins"
+              value={(safeNetwork.allowedOrigins || []).join(', ')}
+              onChange={(e) => {
+                const origins = e.target.value
+                  .split(',')
+                  .map(o => o.trim())
+                  .filter(Boolean);
+                onNetworkChange({ ...safeNetwork, allowedOrigins: origins });
+              }}
+              placeholder="http://localhost:3847, https://mydomain.com"
+            />
+            <HelpText
+              hint="Comma-separated list of allowed origins for CORS. Localhost variants are always allowed. Add custom domains or mobile app origins here."
+            />
+          </div>
+
+          <div className="p-sm bg-electric-blue/10 border-medium border-electric-blue text-sm rounded">
+            <strong>Note: </strong>
+            Changes to network settings require a server restart to take effect.
+          </div>
+        </div>
       </div>
     </Panel>
   );

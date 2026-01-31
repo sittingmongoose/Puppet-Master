@@ -1,0 +1,44 @@
+feat: Add Tauri v2 desktop wrapper with tauri-plugin-log
+
+Implemented minimal Tauri v2 desktop wrapper for Puppet Master GUI.
+
+Core Features:
+- tauri-plugin-log v2 with LogDir, Stdout, and Webview targets
+- Configurable server URL via PUPPET_MASTER_URL env var (default: http://127.0.0.1:3847)
+- External URL loading (zero changes to existing codebase)
+- Full ESM/NodeNext compatibility
+
+Implementation:
+- src-tauri/src/main.rs: 40 lines, zero unsafe code
+- Tauri v2 + tauri-plugin-log v2 dependencies
+- Upgraded tauri.conf.json from v1 to v2 schema
+- Added npm scripts: tauri, tauri:dev, tauri:build
+
+Documentation (5 guides):
+- README.md: Complete user guide
+- DEVELOPMENT.md: Developer guide with ADRs
+- IMPLEMENTATION.md: Implementation summary
+- QUICKREF.md: Quick reference card
+- CHANGES.md: Detailed changelog
+
+Helper Scripts:
+- run-desktop.sh: Auto-start server + Tauri
+
+No Breaking Changes:
+- All TypeScript/JavaScript code unchanged
+- React frontend preserved
+- Node.js backend unchanged
+- All existing npm scripts work
+- ESM module resolution unchanged
+
+Architecture:
+Tauri window → WebView loads http://127.0.0.1:3847 → Node.js Express Server
+
+Usage:
+  npm run gui          # Terminal 1: Start server
+  npm run tauri:dev    # Terminal 2: Launch desktop
+
+System Dependencies:
+- Linux: libwebkit2gtk-4.1-dev, libgtk-3-dev, pkg-config, etc.
+- macOS: Xcode Command Line Tools
+- Windows: MSVC 2015-2022, WebView2

@@ -93,6 +93,8 @@ export interface CliPathsConfig {
 export interface LoggingConfig {
   level: 'debug' | 'info' | 'warn' | 'error';
   retentionDays: number; // YAML: retention_days
+  /** When enabled, capture decision rationale and as much runtime detail as practical. */
+  intensive?: boolean; // YAML: intensive
 }
 
 /**

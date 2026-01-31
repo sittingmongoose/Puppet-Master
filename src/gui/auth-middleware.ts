@@ -26,6 +26,8 @@ export interface AuthConfig {
   tokenPath?: string;
   /** Existing token to use (if not provided, generates new one) */
   token?: string;
+  /** Allow token exposure for non-loopback requests (default: false) */
+  exposeTokenRemotely?: boolean;
 }
 
 /**
@@ -149,12 +151,43 @@ export function createAuthMiddleware(config: AuthConfig): RequestHandler {
 }
 
 /**
+ * Check if a request is from loopback/localhost.
+ * Uses socket remoteAddress by default; only considers req.ip when Express trust proxy is enabled.
+ */
+export function isLoopbackRequest(req: Request): boolean {
+  const trustProxy = Boolean(req.app?.get('trust proxy'));
+
+  const isLoopbackIp = (ip: string): boolean => {
+    const raw = ip || '';
+    if (raw === '::1') return true;
+    if (raw.startsWith('127.')) return true;
+    if (raw.startsWith('::ffff:127.')) return true;
+    return false;
+  };
+
+  const remote = req.socket.remoteAddress || '';
+
+  // When behind a trusted proxy, req.ip represents the client (from X-Forwarded-For),
+  // while remoteAddress is the proxy itself (often 127.0.0.1 in local tests).
+  if (trustProxy) {
+    if (isLoopbackIp(req.ip || '')) return true;
+    if (!req.ip && isLoopbackIp(remote)) return true;
+    return false;
+  }
+
+  return isLoopbackIp(remote);
+}
+
+/**
  * Create auth status route handler.
  * Returns current auth configuration (enabled/disabled, token path).
  * P0-G07: Also returns token when auth is enabled (for frontend to use).
+ * 
+ * Security: By default, only exposes token to loopback requests.
+ * Set exposeTokenRemotely: true to allow token exposure for non-loopback requests.
  */
 export function createAuthStatusHandler(config: AuthConfig): RequestHandler {
-  return (_req: Request, res: Response): void => {
+  return (req: Request, res: Response): void => {
     const response: {
       enabled: boolean;
       tokenPath?: string;
@@ -164,8 +197,11 @@ export function createAuthStatusHandler(config: AuthConfig): RequestHandler {
       tokenPath: config.tokenPath,
     };
     
-    // Return token if auth is enabled (frontend needs it for API calls)
-    if (config.enabled && config.token) {
+    // Return token if auth is enabled AND (loopback request OR explicitly allowed remotely)
+    const isLoopback = isLoopbackRequest(req);
+    const allowTokenExposure = isLoopback || (config.exposeTokenRemotely === true);
+    
+    if (config.enabled && config.token && allowTokenExposure) {
       response.token = config.token;
     }
     

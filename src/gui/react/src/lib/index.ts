@@ -28,6 +28,17 @@ export type {
   SSEEventHandler,
 } from './sse.js';
 
+// PWA utilities
+export {
+  registerServiceWorker,
+  unregisterServiceWorker,
+  isPWAInstalled,
+  isMobileDevice,
+} from './pwa.js';
+export type {
+  ServiceWorkerRegistrationResult,
+} from './pwa.js';
+
 // Help content
 export { helpContent } from './help-content.js';
 export type { HelpContent } from './help-content.js';

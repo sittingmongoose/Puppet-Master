@@ -4,7 +4,7 @@
  * Provides sensible defaults matching REQUIREMENTS.md Section 17 and Section 23.3
  */
 
-import type { PuppetMasterConfig, Platform } from '../types/config.js';
+import type { LoggingConfig, PuppetMasterConfig, Platform } from '../types/config.js';
 import { PlatformDetector } from '../platforms/platform-detector.js';
 
 /**
@@ -161,7 +161,8 @@ export function getDefaultConfig(): PuppetMasterConfig {
     logging: {
       level: 'info',
       retentionDays: 30,
-    },
+      intensive: false,
+    } satisfies LoggingConfig,
     cliPaths: {
       cursor: 'cursor-agent',
       codex: 'codex',

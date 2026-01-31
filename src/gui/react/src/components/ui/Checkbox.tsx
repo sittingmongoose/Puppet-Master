@@ -132,7 +132,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
               <CheckIcon
                 size="0.75em"
                 className="text-white"
-                style={{ color: '#ffffff' }}
                 aria-hidden="true"
               />
             )}

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Panel } from '@/components/layout';
 import { Button } from '@/components/ui';
 import { StatusBadge } from '@/components/shared';
@@ -137,9 +137,11 @@ export default function MemoryPage() {
                           <span className="font-mono text-sm">{file.path}</span>
                         </td>
                         <td className="py-sm px-md">
-                          <StatusBadge status={getLevelBadge(file.level)} showLabel>
-                            {getLevelLabel(file.level)}
-                          </StatusBadge>
+                          <StatusBadge
+                            status={getLevelBadge(file.level)}
+                            showLabel
+                            label={getLevelLabel(file.level)}
+                          />
                         </td>
                         <td className="py-sm px-md text-sm text-ink-faded">
                           {file.lastAccessed ? new Date(file.lastAccessed).toLocaleDateString() : '-'}

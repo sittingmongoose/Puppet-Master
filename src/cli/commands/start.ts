@@ -19,6 +19,9 @@ import { PlatformRegistry } from '../../platforms/registry.js';
 import { PlatformRouter } from '../../core/platform-router.js';
 import { deriveProjectRootFromConfigPath, resolveUnderProjectRoot } from '../../utils/project-paths.js';
 import type { CommandModule } from './index.js';
+import path from 'node:path';
+import { ConsoleTransport, FileTransport, LoggerService, installConsoleCapture, logDecision } from '../../logging/index.js';
+import type { PuppetMasterEvent } from '../../logging/event-bus.js';
 
 /**
  * Options for the start command
@@ -33,6 +36,8 @@ export interface StartOptions {
   autoPromotePatterns?: boolean;
   /** Enforce gate failure when AGENTS.md update is required but not provided */
   enforceGateAgentsUpdate?: boolean;
+  /** Enable intensive logging (captures console.* and emits more runtime detail) */
+  intensiveLogging?: boolean;
 }
 
 /**
@@ -50,6 +55,24 @@ export async function startAction(options: StartOptions): Promise<void> {
     const config = await configManager.load();
     const configPath = configManager.getConfigPath();
     const projectRoot = deriveProjectRootFromConfigPath(configPath);
+
+    const intensive = options.intensiveLogging ?? config.logging.intensive ?? false;
+    config.logging.intensive = intensive;
+
+    const runtimeLogPath = path.join(projectRoot, '.puppet-master', 'logs', 'runtime.log');
+    const logger = new LoggerService({
+      minLevel: intensive ? 'debug' : config.logging.level,
+      transports: [new ConsoleTransport(), new FileTransport(runtimeLogPath)],
+    });
+    const consoleCapture = intensive ? installConsoleCapture(logger, runtimeLogPath) : null;
+    if (intensive) {
+      logDecision(logger, {
+        title: 'Intensive logging enabled',
+        rationale: 'Enabled via CLI/config; capturing console.* and writing verbose runtime logs to .puppet-master/logs/runtime.log.',
+        alternatives: ['Standard logging only (default)'],
+        consequences: ['Larger log volume; may include verbose operational details'],
+      });
+    }
 
     // Override killAgentOnFailure if CLI flag is provided
     if (options.keepAliveOnFailure !== undefined) {
@@ -102,10 +125,28 @@ export async function startAction(options: StartOptions): Promise<void> {
     const prdPathOverride = prdOverride ? prdOverride : undefined;
     const container = createContainer(config, projectRoot, configPath, prdPathOverride);
 
+    if (intensive && prdOverride) {
+      logDecision(logger, {
+        title: 'PRD override applied',
+        rationale: 'User supplied --prd; prefer explicit CLI selection over config file value.',
+        context: { prdOverride },
+      });
+    }
+
+    const { EventBus } = await import('../../logging/event-bus.js');
+    const eventBus = new EventBus();
+
+    if (intensive) {
+      eventBus.subscribe('*', (event: PuppetMasterEvent) => {
+        logger.debug('[EventBus] event', event as unknown as Record<string, unknown>);
+      });
+    }
+
     // Create orchestrator instance
     const orchestrator = new Orchestrator({
       config,
       projectPath: projectRoot,
+      eventBus,
     });
 
     // Initialize platform registry with runners if needed
@@ -154,6 +195,18 @@ export async function startAction(options: StartOptions): Promise<void> {
     console.log('Initializing orchestrator...');
     await orchestrator.initialize(deps);
 
+    if (intensive) {
+      logDecision(logger, {
+        title: 'Orchestrator initialized',
+        rationale: 'Dependencies resolved and core services initialized; entering run loop next.',
+        context: {
+          projectRoot,
+          workingDirectory: config.project.workingDirectory,
+          verbose: options.verbose ?? false,
+        },
+      });
+    }
+
     // Start
     console.log('Starting orchestration...');
     await orchestrator.start();
@@ -162,6 +215,8 @@ export async function startAction(options: StartOptions): Promise<void> {
     if (progressInterval) {
       clearInterval(progressInterval);
     }
+
+    consoleCapture?.restore();
 
     console.log('Orchestration complete');
   } catch (error) {
@@ -309,6 +364,8 @@ export class StartCommand implements CommandModule {
       .option('--no-auto-promote-patterns', 'Disable auto-promotion of patterns (default)')
       .option('--enforce-gate-agents-update', 'Fail gate when AGENTS.md update is required but not provided')
       .option('--no-enforce-gate-agents-update', 'Disable gate enforcement for AGENTS.md updates (default)')
+      .option('--intensive-logging', 'Enable intensive logging (captures console.* and adds verbose runtime logs)')
+      .option('--no-intensive-logging', 'Disable intensive logging (default)')
       .action(async (options: StartOptions) => {
         await startAction(options);
       });

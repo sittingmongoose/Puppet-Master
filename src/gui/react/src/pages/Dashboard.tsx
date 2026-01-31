@@ -10,6 +10,7 @@ import {
 } from '@/stores';
 import { useSSEStatus, useSSEStoreIntegration, api } from '@/lib';
 import type { StatusType, Platform } from '@/types';
+import type { BudgetInfo } from '@/stores';
 
 /**
  * Dashboard page - main orchestration view
@@ -157,7 +158,7 @@ interface StatusBarProps {
     subtask: { current: number; total: number };
     iteration: { current: number; total: number };
   };
-  budgets: Record<Platform, { used: number; limit: number }>;
+  budgets: Record<Platform, BudgetInfo>;
   connected: boolean;
 }
 
@@ -185,8 +186,8 @@ function StatusBar({ status, progress, budgets, connected }: StatusBarProps) {
         <div className="flex items-center gap-sm text-sm flex-wrap min-w-0">
           <span className="flex-shrink-0">Budget:</span>
           {budgets && typeof budgets === 'object' ? Object.entries(budgets).map(([platform, info]) => {
-            const limit = info.limit === Number.MAX_SAFE_INTEGER || info.limit === 'unlimited' ? Number.MAX_SAFE_INTEGER : (typeof info.limit === 'number' ? info.limit : 100);
-            const used = info.used || 0;
+            const limit = info.limit;
+            const used = info.used;
             const percentage = limit > 0 && limit !== Number.MAX_SAFE_INTEGER ? (used / limit) * 100 : 0;
             const isWarning = percentage >= 80;
             const isError = percentage >= 100;

@@ -10,6 +10,17 @@
  * This script is designed to be executed on the target OS in CI, because:
  * - native deps (e.g. better-sqlite3) must be built per-platform
  * - Playwright browser downloads are per-platform
+ *
+ * TODO: TAURI INTEGRATION (see docs/TAURI_INTEGRATION.md)
+ * - Add --with-tauri flag to build and bundle Tauri desktop app
+ * - Auto-detect Rust/Cargo availability with --auto-detect-tauri
+ * - Build Tauri app before staging: `npx tauri build`
+ * - Copy Tauri artifacts into payload:
+ *   - Windows: src-tauri/target/release/puppet-master.exe → payload/app/
+ *   - macOS: src-tauri/target/release/bundle/macos/Puppet Master.app → merge into .app bundle
+ *   - Linux: src-tauri/target/release/puppet-master → payload/bin/puppet-master-gui
+ * - Update shortcuts to launch Tauri app by default (with CLI fallback)
+ * - Modify launcher scripts to prefer Tauri if available
  */
 
 import { spawn } from 'node:child_process';
@@ -28,6 +39,8 @@ interface Args {
   nodeVersion: string;
   outDir: string;
   workDir: string;
+  withTauri: boolean;
+  autoDetectTauri: boolean;
 }
 
 function parseArgs(argv: string[]): Args {
@@ -50,6 +63,8 @@ function parseArgs(argv: string[]): Args {
   const nodeVersion = map.get('node-version') ?? process.env.PUPPET_MASTER_NODE_VERSION ?? '20.11.1';
   const outDir = map.get('out-dir') ?? path.resolve(process.cwd(), 'dist', 'installers');
   const workDir = map.get('work-dir') ?? path.resolve(process.cwd(), 'installer-work');
+  const withTauri = map.has('with-tauri');
+  const autoDetectTauri = map.has('auto-detect-tauri');
 
   if (platform !== 'win32' && platform !== 'darwin' && platform !== 'linux') {
     throw new Error(`--platform must be win32|darwin|linux (got ${platform})`);
@@ -65,7 +80,68 @@ function parseArgs(argv: string[]): Args {
     );
   }
 
-  return { platform, arch, nodeVersion, outDir, workDir };
+  return { platform, arch, nodeVersion, outDir, workDir, withTauri, autoDetectTauri };
+}
+
+// TODO: TAURI - Detect if Rust/Cargo is available
+async function detectTauriAvailable(): Promise<boolean> {
+  try {
+    await run('cargo', ['--version'], {});
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// TODO: TAURI - Build Tauri application
+async function buildTauriApp(repoRoot: string, platform: InstallerPlatform): Promise<string | null> {
+  console.log('\n🦀 Building Tauri desktop app...\n');
+
+  try {
+    // Build the Tauri app (bundles + release binary)
+    await run('npx', ['tauri', 'build'], { cwd: repoRoot });
+
+    // Stage the runnable binary (simplest integration with our existing installers)
+    const targetDir = path.join(repoRoot, 'src-tauri', 'target', 'release');
+
+    if (platform === 'win32') {
+      return path.join(targetDir, 'puppet-master.exe');
+    }
+    return path.join(targetDir, 'puppet-master');
+  } catch (error) {
+    console.error('❌ Tauri build failed:', error);
+    return null;
+  }
+}
+
+// TODO: TAURI - Copy Tauri artifacts into payload
+async function stageTauriApp(tauriPath: string, payloadRoot: string, platform: InstallerPlatform): Promise<void> {
+  console.log('\n📦 Staging Tauri desktop app...\n');
+
+  if (platform === 'win32') {
+    // Copy .exe (and any adjacent .dlls, if present) to app directory
+    const appDir = path.join(payloadRoot, 'app');
+    await ensureDir(appDir);
+    await cp(tauriPath, path.join(appDir, 'puppet-master-gui.exe'));
+
+    try {
+      const releaseDir = path.dirname(tauriPath);
+      const entries = await readdir(releaseDir);
+      const dlls = entries.filter((e) => e.toLowerCase().endsWith('.dll'));
+      for (const dll of dlls) {
+        await cp(path.join(releaseDir, dll), path.join(appDir, dll));
+      }
+    } catch {
+      // Best-effort
+    }
+
+  } else {
+    // Copy binary to bin directory
+    const binDir = path.join(payloadRoot, 'bin');
+    await ensureDir(binDir);
+    await cp(tauriPath, path.join(binDir, 'puppet-master-gui'));
+    await chmod(path.join(binDir, 'puppet-master-gui'), 0o755);
+  }
 }
 
 async function ensureDir(dir: string): Promise<void> {
@@ -247,6 +323,7 @@ SCRIPT_DIR=$(cd \"$(dirname \"$SCRIPT_PATH\")\" && pwd)
 ROOT_DIR=$(cd \"$SCRIPT_DIR/..\" && pwd)
 NODE_BIN=\"$ROOT_DIR/node/bin/node\"
 APP_ENTRY=\"$ROOT_DIR/app/dist/cli/index.js\"
+export PUPPET_MASTER_INSTALL_ROOT=\"$ROOT_DIR\"
 export PATH=\"$ROOT_DIR/node/bin:$PATH\"
 export PLAYWRIGHT_BROWSERS_PATH=\"$ROOT_DIR/playwright-browsers\"
 exec \"$NODE_BIN\" \"$APP_ENTRY\" \"$@\"
@@ -255,6 +332,7 @@ exec \"$NODE_BIN\" \"$APP_ENTRY\" \"$@\"
 setlocal\r
 set \"SCRIPT_DIR=%~dp0\"\r
 set \"ROOT_DIR=%SCRIPT_DIR%..\"\r
+set \"PUPPET_MASTER_INSTALL_ROOT=%ROOT_DIR%\"\r
 set \"PATH=%ROOT_DIR%\\node;%PATH%\"\r
 set \"PLAYWRIGHT_BROWSERS_PATH=%ROOT_DIR%\\playwright-browsers\"\r
 \"%ROOT_DIR%\\node\\node.exe\" \"%ROOT_DIR%\\app\\dist\\cli\\index.js\" %*\r
@@ -375,6 +453,7 @@ APP_ENTRY="$ROOT_DIR/app/dist/cli/index.js"
 export PATH="$ROOT_DIR/node/bin:$PATH"
 export PLAYWRIGHT_BROWSERS_PATH="$ROOT_DIR/playwright-browsers"
 export PUPPET_MASTER_APP_ROOT="$ROOT_DIR"
+export PUPPET_MASTER_INSTALL_ROOT="$ROOT_DIR"
 
 # Run from writable directory so .puppet-master/gui-token.txt and config can be created
 # Use \${HOME} so this is literal in the script (shell expands at runtime), not JS template
@@ -542,12 +621,42 @@ async function main(): Promise<void> {
   console.log(`version:  ${version}`);
   console.log(`node:     ${args.nodeVersion}`);
   console.log(`stage:    ${stageRoot}`);
-  console.log(`out:      ${outDir}\n`);
+  console.log(`out:      ${outDir}`);
+
+  // TODO: TAURI - Check if Tauri should be built
+  let shouldBuildTauri = args.withTauri;
+  if (args.autoDetectTauri && !shouldBuildTauri) {
+    const tauriAvailable = await detectTauriAvailable();
+    if (tauriAvailable) {
+      console.log('\n✅ Rust/Cargo detected, Tauri build enabled');
+      shouldBuildTauri = true;
+    } else {
+      console.log('\n⚠️  Rust/Cargo not found, skipping Tauri build');
+    }
+  }
+
+  if (shouldBuildTauri) {
+    console.log('\n🦀 Tauri build enabled (see docs/TAURI_INTEGRATION.md for details)\n');
+  } else {
+    console.log('\n📦 Building traditional installer (no Tauri)\n');
+  }
 
   await emptyDir(stageRoot);
   await ensureDir(outDir);
 
   await stageApp(args, repoRoot, stageRoot, version);
+
+  // TODO: TAURI - Build and stage Tauri app if requested
+  if (shouldBuildTauri) {
+    const tauriPath = await buildTauriApp(repoRoot, args.platform);
+    if (tauriPath && existsSync(tauriPath)) {
+      const payloadRoot = path.join(stageRoot, 'payload', 'puppet-master');
+      await stageTauriApp(tauriPath, payloadRoot, args.platform);
+      console.log('\n✅ Tauri app staged successfully\n');
+    } else {
+      console.warn('\n⚠️  Tauri build failed or artifacts not found, continuing without Tauri\n');
+    }
+  }
 
   if (args.platform === 'win32') {
     const artifact = await buildWindowsNsis(args, repoRoot, stageRoot, outDir, version);

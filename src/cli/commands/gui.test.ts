@@ -45,6 +45,20 @@ vi.mock('net', () => ({
   },
 }));
 
+vi.mock('node:child_process', () => ({
+  spawn: vi.fn(),
+}));
+
+vi.mock('node:fs', () => ({
+  existsSync: vi.fn(),
+  mkdirSync: vi.fn(),
+  appendFileSync: vi.fn(),
+}));
+
+vi.mock('node:url', () => ({
+  fileURLToPath: vi.fn(),
+}));
+
 import { ConfigManager } from '../../config/config-manager.js';
 import { createContainer } from '../../core/container.js';
 import { Orchestrator } from '../../core/orchestrator.js';
@@ -52,6 +66,9 @@ import { GuiServer } from '../../gui/server.js';
 import { EventBus } from '../../logging/event-bus.js';
 import open from 'open';
 import net from 'net';
+import { spawn } from 'node:child_process';
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 describe('GuiCommand', () => {
   let command: GuiCommand;
@@ -82,7 +99,7 @@ describe('GuiCommand', () => {
       command.register(mockProgram);
 
       expect(descriptionSpy).toHaveBeenCalledWith(
-        'Launch the web-based GUI server (vanilla HTML by default, use --react for React SPA)'
+        'Launch the GUI server and open the desktop GUI (Tauri if available; falls back to browser)'
       );
     });
 
@@ -131,6 +148,9 @@ describe('guiAction', () => {
     listen: ReturnType<typeof vi.fn>;
     close: ReturnType<typeof vi.fn>;
     on: ReturnType<typeof vi.fn>;
+  };
+  let mockSpawnChild: {
+    unref: ReturnType<typeof vi.fn>;
   };
 
   // Store original process.exit to restore later
@@ -322,6 +342,10 @@ describe('guiAction', () => {
       on: vi.fn(),
     };
 
+    mockSpawnChild = {
+      unref: vi.fn(),
+    };
+
     // Setup mocks
     (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function () {
       return mockConfigManager;
@@ -338,6 +362,9 @@ describe('guiAction', () => {
     });
     (net.createServer as ReturnType<typeof vi.fn>).mockReturnValue(mockNetServer);
     (open as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
+    (spawn as unknown as ReturnType<typeof vi.fn>).mockReturnValue(mockSpawnChild);
+    (existsSync as unknown as ReturnType<typeof vi.fn>).mockReturnValue(false);
+    (fileURLToPath as unknown as ReturnType<typeof vi.fn>).mockReturnValue('/mock/path/dist/cli/commands/gui.js');
   });
 
   afterEach(() => {
@@ -434,23 +461,104 @@ describe('guiAction', () => {
   });
 
   describe('browser opening', () => {
-    it('should open browser by default', async () => {
+    it('should attempt Tauri GUI launch first then fallback to browser by default', async () => {
+      // No Tauri binary found, so should fallback to browser
+      (existsSync as unknown as ReturnType<typeof vi.fn>).mockReturnValue(false);
+
       void guiAction({}).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 
+      // Should not spawn since no Tauri binary exists
+      expect(spawn).not.toHaveBeenCalled();
+      // Should fallback to open browser
       expect(open).toHaveBeenCalledWith('http://localhost:3847');
     }, 10000);
 
-    it('should not open browser when --no-open flag is set', async () => {
+    it('should launch Tauri GUI when binary exists and not call open', async () => {
+      // Mock install root detection and Tauri binary exists
+      (existsSync as unknown as ReturnType<typeof vi.fn>).mockImplementation((path: string) => {
+        const pathStr = String(path);
+        // Mock install root detection (needs bin and app directories)
+        if (pathStr.includes('/bin') && !pathStr.includes('puppet-master-gui')) {
+          return true;
+        }
+        if (pathStr.includes('/app') && !pathStr.includes('puppet-master-gui')) {
+          return true;
+        }
+        // Mock Tauri binary exists
+        if (pathStr.includes('puppet-master-gui')) {
+          return true;
+        }
+        return false;
+      });
+
+      void guiAction({}).catch(() => {});
+
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
+      // Should spawn Tauri GUI
+      expect(spawn).toHaveBeenCalledWith(
+        expect.stringContaining('puppet-master-gui'),
+        ['--server-url', 'http://localhost:3847'],
+        expect.objectContaining({
+          detached: true,
+          stdio: 'ignore',
+          windowsHide: true,
+        })
+      );
+      expect(mockSpawnChild.unref).toHaveBeenCalled();
+      // Should NOT open browser
+      expect(open).not.toHaveBeenCalled();
+    }, 10000);
+
+    it('should fallback to browser if Tauri spawn fails', async () => {
+      // Mock install root detection and Tauri binary exists but spawn throws
+      (existsSync as unknown as ReturnType<typeof vi.fn>).mockImplementation((path: string) => {
+        const pathStr = String(path);
+        // Mock install root detection
+        if (pathStr.includes('/bin') && !pathStr.includes('puppet-master-gui')) {
+          return true;
+        }
+        if (pathStr.includes('/app') && !pathStr.includes('puppet-master-gui')) {
+          return true;
+        }
+        // Mock Tauri binary exists
+        if (pathStr.includes('puppet-master-gui')) {
+          return true;
+        }
+        return false;
+      });
+      (spawn as unknown as ReturnType<typeof vi.fn>).mockImplementation(() => {
+        throw new Error('Spawn failed');
+      });
+
+      void guiAction({}).catch(() => {});
+
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
+      // Should attempt spawn
+      expect(spawn).toHaveBeenCalled();
+      // Should fallback to browser
+      expect(open).toHaveBeenCalledWith('http://localhost:3847');
+      // Should warn about fallback
+      expect(console.warn).toHaveBeenCalledWith(
+        expect.stringContaining('Could not launch Tauri GUI, falling back to browser')
+      );
+    }, 10000);
+
+    it('should not open browser or spawn when --no-open flag is set', async () => {
       void guiAction({ open: false }).catch(() => {});
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 
+      expect(spawn).not.toHaveBeenCalled();
       expect(open).not.toHaveBeenCalled();
     }, 10000);
 
-    it('should handle browser open errors gracefully', async () => {
+    it('should handle browser open errors gracefully when browser fallback is taken', async () => {
+      // No Tauri binary, so browser fallback will be used
+      (existsSync as unknown as ReturnType<typeof vi.fn>).mockReturnValue(false);
       (open as ReturnType<typeof vi.fn>).mockRejectedValue(new Error('Browser open failed'));
 
       void guiAction({}).catch(() => {});
@@ -462,6 +570,33 @@ describe('guiAction', () => {
       );
       // Should not exit on browser open failure
       expect(process.exit).not.toHaveBeenCalled();
+    }, 10000);
+
+    it('should use verbose output for Tauri launch', async () => {
+      // Mock install root detection and Tauri binary exists
+      (existsSync as unknown as ReturnType<typeof vi.fn>).mockImplementation((path: string) => {
+        const pathStr = String(path);
+        // Mock install root detection
+        if (pathStr.includes('/bin') && !pathStr.includes('puppet-master-gui')) {
+          return true;
+        }
+        if (pathStr.includes('/app') && !pathStr.includes('puppet-master-gui')) {
+          return true;
+        }
+        // Mock Tauri binary exists
+        if (pathStr.includes('puppet-master-gui')) {
+          return true;
+        }
+        return false;
+      });
+
+      void guiAction({ verbose: true }).catch(() => {});
+
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
+      expect(console.log).toHaveBeenCalledWith(
+        expect.stringContaining('Launched Tauri GUI:')
+      );
     }, 10000);
   });
 

@@ -951,6 +951,19 @@ evidence/
 
 **Recommendation**: Enable only when debugging. Disable for normal use.`,
     },
+    logLevel: {
+      short: 'Minimum log level to display in the UI (does not change backend logging).',
+      detailed: `Log level controls filtering of logs shown in the UI:
+
+**error**: Only errors
+**warn**: Warnings + errors
+**info**: Normal operational info (default)
+**debug**: Most verbose UI logs
+
+**Note**: This affects UI display verbosity. Backend logging verbosity is configured separately.
+
+**Recommendation**: Use *info* for normal use; switch to *debug* while troubleshooting.`,
+    },
     dataRetention: {
       short: 'Days to keep history and logs. Older data is automatically cleaned up.',
       detailed: `Data retention controls cleanup:

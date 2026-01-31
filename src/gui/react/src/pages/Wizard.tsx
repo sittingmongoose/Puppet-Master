@@ -2,6 +2,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Panel } from '@/components/layout';
 import { Button, Input, Select, ProgressBar, Checkbox, HelpText } from '@/components/ui';
+import { RefreshIcon, WarningIcon, RocketIcon } from '@/components/icons';
 import { useProjectStore } from '@/stores';
 import { api } from '@/lib';
 import { helpContent } from '@/lib/help-content.js';
@@ -333,7 +334,7 @@ function UploadStep({
     if (files && files.length > 0) {
       // Get directory name from first file's webkitRelativePath
       const firstFile = files[0];
-      if (firstFile.webkitRelativePath) {
+      if (firstFile?.webkitRelativePath) {
         const directoryName = firstFile.webkitRelativePath.split('/')[0];
         onChange({ projectPath: directoryName });
       }
@@ -369,6 +370,7 @@ function UploadStep({
               <input
                 ref={directoryInputRef}
                 type="file"
+                // @ts-expect-error - nonstandard attribute supported by Chromium browsers
                 webkitdirectory=""
                 directory=""
                 multiple

@@ -31,7 +31,7 @@ export interface Project {
   id: string;
   name: string;
   path: string;
-  lastAccessed: Date;
+  lastAccessed: Date | null;
   status?: 'active' | 'completed' | 'error';
   prdPath?: string;
   configPath?: string;

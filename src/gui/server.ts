@@ -72,6 +72,12 @@ export interface ServerConfig {
   corsRelaxed?: boolean;
   /** Whether to serve React SPA instead of vanilla HTML (default: false) */
   useReactGui?: boolean;
+  /** Trust proxy headers (X-Forwarded-For, X-Forwarded-Proto, etc.) for reverse proxy setups (default: false) */
+  trustProxy?: boolean;
+  /** CORS allowed origins allowlist (overrides corsOrigins when specified) */
+  allowedOrigins?: string[];
+  /** Allow token exposure in /api/auth/status for non-loopback requests (default: false for security) */
+  exposeTokenRemotely?: boolean;
 }
 
 /**
@@ -84,7 +90,15 @@ export class GuiServer {
   private server: HTTPServer | null = null;
   private wss: WebSocketServer | null = null;
   private readonly clients: Set<WebSocket> = new Set();
-  private readonly config: Required<ServerConfig> & { authEnabled: boolean; authTokenPath: string; corsRelaxed: boolean; useReactGui: boolean };
+  private readonly config: Required<ServerConfig> & { 
+    authEnabled: boolean; 
+    authTokenPath: string; 
+    corsRelaxed: boolean; 
+    useReactGui: boolean;
+    trustProxy: boolean;
+    allowedOrigins: string[];
+    exposeTokenRemotely: boolean;
+  };
   private readonly eventBus: EventBus;
   private tierManager: TierStateManager | null = null;
   private orchestrator: OrchestratorStateMachine | null = null;
@@ -120,6 +134,12 @@ export class GuiServer {
       corsRelaxed: config.corsRelaxed ?? false,
       // React GUI: enabled by default (vanilla HTML available via --classic flag)
       useReactGui: config.useReactGui ?? true,
+      // Reverse proxy support - disabled by default (secure)
+      trustProxy: config.trustProxy ?? false,
+      // Allow list for CORS origins - use allowedOrigins if provided, otherwise corsOrigins
+      allowedOrigins: config.allowedOrigins ?? config.corsOrigins ?? ['http://localhost:3847'],
+      // Token exposure - disabled by default for security (only loopback)
+      exposeTokenRemotely: config.exposeTokenRemotely ?? false,
     };
     this.eventBus = eventBus;
     this.app = express();
@@ -146,6 +166,7 @@ export class GuiServer {
       enabled: true,
       tokenPath: this.config.authTokenPath,
       token,
+      exposeTokenRemotely: this.config.exposeTokenRemotely,
     };
 
     // Auth middleware is already registered in setupMiddleware() before routes
@@ -251,6 +272,13 @@ export class GuiServer {
    * Setup Express middleware.
    */
   private setupMiddleware(): void {
+    // Configure trust proxy for reverse proxy support
+    // When enabled, Express will trust X-Forwarded-* headers
+    if (this.config.trustProxy) {
+      this.app.set('trust proxy', true);
+      console.log('[Server] Trust proxy enabled - will use X-Forwarded-* headers');
+    }
+    
     // P0-G07: Register auth middleware BEFORE routes if auth is enabled
     // This ensures routes are protected. The middleware checks this.authConfig
     // which will be set when initializeAuth() is called.
@@ -299,8 +327,8 @@ export class GuiServer {
           return;
         }
         
-        // Check if origin is in configured list
-        if (this.config.corsOrigins.includes(origin)) {
+        // Check if origin is in configured allowlist (allowedOrigins takes precedence)
+        if (this.config.allowedOrigins.includes(origin)) {
           callback(null, true);
           return;
         }
@@ -338,7 +366,7 @@ export class GuiServer {
         } else {
           console.warn(`[CORS] CORS restricted to localhost only. Set GUI_CORS_RELAXED=true for dev mode.`);
         }
-        console.warn(`[CORS] Allowed origins: ${JSON.stringify(this.config.corsOrigins)}`);
+        console.warn(`[CORS] Allowed origins: ${JSON.stringify(this.config.allowedOrigins)}`);
         
         // Deny other origins
         callback(new Error('Not allowed by CORS'));

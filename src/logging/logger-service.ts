@@ -91,11 +91,12 @@ export class ConsoleTransport implements LogTransport {
       output += ` ${dim}(session: ${entry.sessionId})${reset}`;
     }
     
-    // Write to appropriate stream
+    // Write to appropriate stream.
+    // Use stdout/stderr directly to avoid recursion if console.* is captured.
     if (entry.level === 'error') {
-      console.error(output);
+      process.stderr.write(output + '\n');
     } else {
-      console.log(output);
+      process.stdout.write(output + '\n');
     }
   }
 }
@@ -126,8 +127,9 @@ export class FileTransport implements LogTransport {
       const line = JSON.stringify(entry) + '\n';
       await appendFile(this.filePath, line, 'utf8');
     } catch (error) {
-      // Log to console.error if file write fails
-      console.error(`[Logger] Failed to write to file ${this.filePath}:`, error);
+      // Best-effort fallback if file write fails (avoid console recursion).
+      const msg = `[Logger] Failed to write to file ${this.filePath}: ${error instanceof Error ? error.message : String(error)}\n`;
+      process.stderr.write(msg);
     }
   }
 }
@@ -237,11 +239,11 @@ export class LoggerService {
         // Handle async transports
         if (result instanceof Promise) {
           result.catch((error) => {
-            console.error(`[Logger] Transport write failed:`, error);
+            process.stderr.write(`[Logger] Transport write failed: ${error instanceof Error ? error.message : String(error)}\n`);
           });
         }
       } catch (error) {
-        console.error(`[Logger] Transport write error:`, error);
+        process.stderr.write(`[Logger] Transport write error: ${error instanceof Error ? error.message : String(error)}\n`);
       }
     }
   }

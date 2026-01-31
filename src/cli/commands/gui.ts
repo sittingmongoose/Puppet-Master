@@ -13,7 +13,9 @@
 
 import { Command } from 'commander';
 import path from 'node:path';
-import { mkdirSync, appendFileSync } from 'node:fs';
+import { spawn } from 'node:child_process';
+import { mkdirSync, appendFileSync, existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import net from 'net';
 import open from 'open';
 import { ConfigManager } from '../../config/config-manager.js';
@@ -46,6 +48,12 @@ export interface GuiOptions {
   relaxedCors?: boolean;
   /** Use classic vanilla HTML GUI instead of React */
   classic?: boolean;
+  /** Trust proxy headers (X-Forwarded-For, etc.) for reverse proxy setups */
+  trustProxy?: boolean;
+  /** Allowed origins for CORS (comma-separated) */
+  allowedOrigins?: string;
+  /** Allow token exposure for non-loopback requests (security risk, use with caution) */
+  exposeTokenRemotely?: boolean;
 }
 
 /**
@@ -123,6 +131,59 @@ async function checkPortAvailable(port: number, host: string): Promise<boolean> 
 }
 
 /**
+ * Best-effort: resolve install root when running from an installed payload.
+ * - Prefer env var set by installers.
+ * - Fallback: derive from current module path (dist/cli/commands/*.js).
+ */
+function resolveInstallRoot(): string | undefined {
+  const envRoot = process.env.PUPPET_MASTER_INSTALL_ROOT || process.env.PUPPET_MASTER_APP_ROOT;
+  if (envRoot && existsSync(envRoot)) return envRoot;
+
+  try {
+    const here = path.dirname(fileURLToPath(import.meta.url));
+    const candidate = path.resolve(here, '../../../../');
+    if (existsSync(path.join(candidate, 'bin')) && existsSync(path.join(candidate, 'app'))) {
+      return candidate;
+    }
+  } catch {
+    // ignore
+  }
+
+  return undefined;
+}
+
+function resolveTauriGuiBinary(installRoot: string | undefined): string | undefined {
+  if (!installRoot) return undefined;
+  if (process.platform === 'win32') {
+    const exe = path.join(installRoot, 'app', 'puppet-master-gui.exe');
+    return existsSync(exe) ? exe : undefined;
+  }
+  const bin = path.join(installRoot, 'bin', 'puppet-master-gui');
+  return existsSync(bin) ? bin : undefined;
+}
+
+function launchTauriGui(tauriBin: string, serverUrl: string, verbose: boolean | undefined): boolean {
+  try {
+    const child = spawn(tauriBin, ['--server-url', serverUrl], {
+      detached: true,
+      stdio: 'ignore',
+      windowsHide: true,
+    });
+    child.unref();
+    if (verbose) {
+      console.log(`  Launched Tauri GUI: ${tauriBin} --server-url ${serverUrl}`);
+    }
+    return true;
+  } catch (error) {
+    console.warn('  Could not launch Tauri GUI, falling back to browser.');
+    if (verbose) {
+      console.warn(`  Error: ${error instanceof Error ? error.message : String(error)}`);
+    }
+    return false;
+  }
+}
+
+/**
  * Main action function for the GUI command
  */
 export async function guiAction(options: GuiOptions): Promise<void> {
@@ -185,6 +246,14 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       authEnabled: options.auth !== false,
       corsRelaxed: options.relaxedCors === true,
       useReactGui: options.classic !== true,
+      // Reverse proxy support
+      trustProxy: options.trustProxy === true,
+      // CORS allowed origins (parse from comma-separated string)
+      ...(options.allowedOrigins && { 
+        allowedOrigins: options.allowedOrigins.split(',').map(o => o.trim()) 
+      }),
+      // Token exposure (security-sensitive option)
+      exposeTokenRemotely: options.exposeTokenRemotely === true,
       ...(authTokenPath !== undefined && { authTokenPath }),
     };
     const guiServer = new GuiServer(guiConfig, eventBus);
@@ -288,6 +357,18 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       console.log(`  Include this header in API requests:`);
       console.log(`    Authorization: Bearer ${token}`);
       console.log('');
+      
+      // Warn if token exposure is enabled remotely
+      if (options.exposeTokenRemotely) {
+        console.log('╔═══════════════════════════════════════════════════════════╗');
+        console.log('║       ⚠️  SECURITY WARNING: Token Exposed Remotely       ║');
+        console.log('╚═══════════════════════════════════════════════════════════╝');
+        console.log('');
+        console.log('  WARNING: Auth token is exposed to non-loopback requests!');
+        console.log('  /api/auth/status will return the token to ANY client.');
+        console.log('  This is a SECURITY RISK unless behind a trusted reverse proxy.');
+        console.log('');
+      }
     } else if (options.auth === false) {
       console.log('');
       console.log('╔═══════════════════════════════════════════════════════════╗');
@@ -296,6 +377,17 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       console.log('');
       console.log('  WARNING: Running without authentication (--no-auth flag)');
       console.log('  This should only be used for local development!');
+      console.log('');
+    }
+    
+    if (options.trustProxy) {
+      console.log('');
+      console.log('╔═══════════════════════════════════════════════════════════╗');
+      console.log('║           ℹ️  Trust Proxy Enabled                         ║');
+      console.log('╚═══════════════════════════════════════════════════════════╝');
+      console.log('');
+      console.log('  INFO: Trusting X-Forwarded-* headers from proxy');
+      console.log('  Make sure your reverse proxy is configured correctly!');
       console.log('');
     }
     
@@ -319,6 +411,9 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     await guiServer.start();
 
     const url = guiServer.getUrl();
+    const localUrl = `http://127.0.0.1:${port}`;
+    const uiUrl = host === 'localhost' || host === '127.0.0.1' || host === '::1' ? url : localUrl;
+
     console.log('');
     console.log('╔═══════════════════════════════════════════════════════════╗');
     console.log('║                                                           ║');
@@ -337,20 +432,30 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       console.log(`  🌐 React GUI:     ${url} (React SPA mode)`);
       console.log(`  📝 Note: React GUI requires 'npm run gui:build' to be run first`);
     }
+    if (uiUrl !== url) {
+      console.log(`  🖥️  Local UI:      ${uiUrl} (for desktop apps / local browser)`);
+    }
     console.log('');
 
-    // Open browser if enabled (default: true, unless --no-open flag is set)
+    // Launch desktop GUI if enabled (default: true, unless --no-open flag is set)
     if (options.open !== false) {
-      try {
-        await open(url);
-        if (options.verbose) {
-          console.log(`  Browser opened to ${url}`);
-        }
-      } catch (error) {
-        // Log warning but don't fail - browser opening is optional
-        console.warn('  Could not open browser automatically. Please open manually.');
-        if (options.verbose) {
-          console.warn(`  Error: ${error instanceof Error ? error.message : String(error)}`);
+      const installRoot = resolveInstallRoot();
+      const tauriBin = resolveTauriGuiBinary(installRoot);
+
+      const launched = tauriBin ? launchTauriGui(tauriBin, uiUrl, options.verbose) : false;
+
+      if (!launched) {
+        try {
+          await open(uiUrl);
+          if (options.verbose) {
+            console.log(`  Browser opened to ${uiUrl}`);
+          }
+        } catch (error) {
+          // Log warning but don't fail - browser opening is optional
+          console.warn('  Could not open browser automatically. Please open manually.');
+          if (options.verbose) {
+            console.warn(`  Error: ${error instanceof Error ? error.message : String(error)}`);
+          }
         }
       }
     }
@@ -415,7 +520,7 @@ export class GuiCommand implements CommandModule {
   register(program: Command): void {
     program
       .command('gui')
-      .description('Launch the web-based GUI server (vanilla HTML by default, use --react for React SPA)')
+      .description('Launch the GUI server and open the desktop GUI (Tauri if available; falls back to browser)')
       .option('-c, --config <path>', 'Path to config file')
       .option('-p, --port <number>', 'Port to listen on (default: 3847)', (value) => parseInt(value, 10))
       .option('-h, --host <host>', 'Host to bind to (default: localhost)', 'localhost')
@@ -424,6 +529,9 @@ export class GuiCommand implements CommandModule {
       .option('--no-auth', 'Disable authentication (development only - NOT recommended for production)')
       .option('--relaxed-cors', 'Relax CORS policy for development (allows dev ports 3000-9999 and LAN IPs)')
       .option('--classic', 'Use classic vanilla HTML GUI instead of React')
+      .option('--trust-proxy', 'Trust proxy headers (X-Forwarded-For, etc.) for reverse proxy setups')
+      .option('--allowed-origins <origins>', 'Comma-separated list of allowed CORS origins (e.g., "https://app.example.com,https://mobile.example.com")')
+      .option('--expose-token-remotely', 'Allow /api/auth/status to expose token for non-loopback requests (security risk - use with caution)')
       .action(async (options: GuiOptions) => {
         // Handle --no-open flag (Commander.js sets open to false when --no-open is used)
         if (options.open === undefined) {

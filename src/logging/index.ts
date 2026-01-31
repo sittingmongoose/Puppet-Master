@@ -50,6 +50,16 @@ export type {
 
 export { LogRetention } from './log-retention.js';
 
+export {
+  installConsoleCapture,
+  logDecision,
+} from './intensive-logging.js';
+
+export type {
+  DecisionLog,
+  ConsoleCaptureHandle,
+} from './intensive-logging.js';
+
 export type {
   RetentionConfig,
   CleanupResult,

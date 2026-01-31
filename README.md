@@ -46,6 +46,36 @@ Start the local GUI:
 puppet-master gui
 ```
 
+## Intensive logging mode
+
+Enable via CLI:
+
+```bash
+puppet-master start --intensive-logging
+```
+
+Or via GUI: **Config → Advanced → Intensive logging**.
+
+Logs:
+- `.puppet-master/logs/runtime.log` (file transport + optional raw console capture)
+- console output remains unchanged
+
+## Desktop Application (Tauri v2)
+
+A native desktop wrapper is available in `src-tauri/`. It provides:
+- Native window management
+- System tray integration  
+- tauri-plugin-log (LogDir, Stdout, Webview)
+- Connects to existing GUI server (http://127.0.0.1:3847)
+
+See [src-tauri/README.md](src-tauri/README.md) for setup and usage instructions.
+
+Quick start:
+```bash
+npm run gui          # Terminal 1: Start server
+npm run tauri:dev    # Terminal 2: Launch desktop app
+```
+
 ## Important Note (GUI “Fix” Buttons)
 
 Doctor “Fix” actions run on the **machine where the GUI server is running**. If you want the GUI to install tools on *your* computer, run `puppet-master gui` locally (not on a remote host).

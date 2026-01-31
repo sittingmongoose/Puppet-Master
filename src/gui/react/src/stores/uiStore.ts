@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import type { Platform, Theme } from '@/types';
 
 /**
@@ -12,6 +12,7 @@ export interface BudgetInfo {
   period: 'hourly' | 'daily' | 'run';
   warning: boolean;
   exceeded: boolean;
+  resetsAt?: string;
 }
 
 /**
@@ -22,7 +23,7 @@ interface BudgetState {
   
   // Actions
   updatePlatformBudget: (platform: Platform, info: Partial<BudgetInfo>) => void;
-  updatePlatforms: (budgets: Record<string, { used: number; limit: number | 'unlimited'; remaining?: number; resetsAt?: string }>) => void;
+  updatePlatforms: (budgets: Record<string, { used?: number; current?: number; limit: number | 'unlimited'; remaining?: number; resetsAt?: string }>) => void;
   resetBudgets: () => void;
 }
 
@@ -60,7 +61,7 @@ export const useBudgetStore = create<BudgetState>((set) => ({
     for (const [platform, info] of Object.entries(budgets)) {
       if (platform in updated) {
         const limit = typeof info.limit === 'number' ? info.limit : Number.MAX_SAFE_INTEGER;
-        const used = info.used || 0;
+        const used = info.used ?? info.current ?? 0;
         const percentage = limit > 0 ? (used / limit) * 100 : 0;
         updated[platform as Platform] = {
           ...state.platforms[platform as Platform],
@@ -68,6 +69,7 @@ export const useBudgetStore = create<BudgetState>((set) => ({
           limit,
           warning: percentage >= 80,
           exceeded: percentage >= 100,
+          resetsAt: info.resetsAt,
         };
       }
     }
@@ -136,6 +138,17 @@ export const useUIStore = create<UIState>()(
     }),
     {
       name: 'rwm-ui',
+      storage: createJSONStorage(() => {
+        const ls = (globalThis as { localStorage?: Storage }).localStorage;
+        if (ls && typeof ls.getItem === 'function' && typeof ls.setItem === 'function' && typeof ls.removeItem === 'function') {
+          return ls;
+        }
+        return {
+          getItem: () => null,
+          setItem: () => undefined,
+          removeItem: () => undefined,
+        };
+      }),
       partialize: (state) => ({ theme: state.theme }),
       onRehydrateStorage: () => (state) => {
         // Apply theme on rehydration

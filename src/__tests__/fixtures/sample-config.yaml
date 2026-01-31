@@ -91,6 +91,7 @@ budget_enforcement:
 logging:
   level: "info"
   retention_days: 30
+  intensive: false
 
 cli_paths:
   cursor: "cursor"

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Puppet Master",
+  "identifier": "com.rwm.puppet-master",
+  "version": "0.1.0",
+  "build": {
+    "beforeDevCommand": "",
+    "beforeBuildCommand": "npm run gui:build",
+    "devUrl": "http://127.0.0.1:3847",
+    "frontendDist": "../src/gui/react/dist"
+  },
+  "bundle": {
+    "active": true,
+    "category": "DeveloperTool",
+    "copyright": "Copyright © 2024 RWM",
+    "longDescription": "RWM Puppet Master is an AI development orchestrator that coordinates multiple AI CLI platforms (Cursor, Codex, Claude, Gemini, Copilot) using the Ralph Wiggum Method.",
+    "shortDescription": "AI Development Orchestrator",
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "linux": {
+      "deb": {
+        "depends": []
+      }
+    }
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Puppet Master",
+        "width": 1280,
+        "height": 800,
+        "minWidth": 800,
+        "minHeight": 600,
+        "resizable": true,
+        "fullscreen": false,
+        "center": true,
+        "decorations": true,
+        "transparent": false,
+        "label": "main"
+      }
+    ],
+    "security": {
+      "capabilities": ["default"],
+      "csp": "default-src 'self' http://127.0.0.1:3847 ws://127.0.0.1:3847 http://localhost:3847 ws://localhost:3847; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: http://127.0.0.1:3847 http://localhost:3847; connect-src 'self' http://127.0.0.1:3847 ws://127.0.0.1:3847 http://localhost:3847 ws://localhost:3847"
+    }
+  }
+}

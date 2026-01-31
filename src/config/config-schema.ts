@@ -506,6 +506,9 @@ function validateLoggingConfig(value: unknown, path: string[]): asserts value is
   if (typeof v.retentionDays !== 'number' || v.retentionDays < 1) {
     throw new ConfigValidationError('logging.retentionDays must be a positive number', [...path, 'retentionDays']);
   }
+  if ('intensive' in v && v.intensive !== undefined && typeof v.intensive !== 'boolean') {
+    throw new ConfigValidationError('logging.intensive must be a boolean', [...path, 'intensive']);
+  }
 }
 
 function validateStartChainStepConfig(value: unknown, path: string[]): void {
