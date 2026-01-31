@@ -411,24 +411,44 @@ export interface DoctorCheck {
 }
 
 /**
- * Get doctor checks
+ * Get doctor checks (list only; no run results).
+ * Normalizes fixAvailable -> fixable and adds status: 'skip' for unrun checks.
  */
 export async function getDoctorChecks(): Promise<{ checks: DoctorCheck[] }> {
-  const res = await fetchJSON<{ checks?: DoctorCheck[] }>('/api/doctor/checks');
-  return { checks: Array.isArray(res?.checks) ? res.checks : [] };
+  const res = await fetchJSON<{
+    checks?: Array<{ fixAvailable?: boolean; [k: string]: unknown }>;
+  }>('/api/doctor/checks');
+  const raw = Array.isArray(res?.checks) ? res.checks : [];
+  const checks: DoctorCheck[] = raw.map((c) => ({
+    ...c,
+    status: 'skip' as const,
+    message: (c as { message?: string }).message ?? '',
+    fixable: c.fixAvailable === true,
+  })) as DoctorCheck[];
+  return { checks };
 }
 
 /**
  * Run doctor checks
+ * Normalizes API response: passed -> status, fixAvailable -> fixable
  */
 export async function runDoctorChecks(options?: { category?: string; platforms?: string[] }): Promise<{ checks: DoctorCheck[] }> {
-  const res = await fetchJSON<{ checks?: DoctorCheck[]; results?: DoctorCheck[] }>('/api/doctor/run', {
+  const res = await fetchJSON<{
+    checks?: Array<{ passed?: boolean; fixAvailable?: boolean; [k: string]: unknown }>;
+    results?: Array<{ passed?: boolean; fixAvailable?: boolean; [k: string]: unknown }>;
+  }>('/api/doctor/run', {
     method: 'POST',
     body: JSON.stringify(options ?? {}),
   });
-  // API returns 'results' but we normalize to 'checks' for consistency
-  const checks = res.checks || res.results || [];
-  return { checks: Array.isArray(checks) ? checks : [] };
+  const raw = res.checks || res.results || [];
+  const checks: DoctorCheck[] = Array.isArray(raw)
+    ? raw.map((c) => ({
+        ...c,
+        status: c.passed === true ? 'pass' : (c.passed === false ? 'fail' : 'skip'),
+        fixable: c.fixAvailable === true,
+      })) as DoctorCheck[]
+    : [];
+  return { checks };
 }
 
 /**

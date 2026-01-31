@@ -153,15 +153,43 @@ export class DoctorReporter {
   }
 
   /**
-   * Formats a summary line showing pass/fail counts
-   * 
+   * Formats a summary line showing pass/fail counts with category breakdown.
+   * Includes a note so "X/16 passed" is less alarming when failures are optional or context-dependent.
+   *
    * @param results - Array of check results
-   * @returns Summary string
+   * @returns Summary string (may be multiple lines)
    */
   formatSummary(results: CheckResult[]): string {
     const passed = results.filter((r) => r.passed).length;
     const total = results.length;
-    return `Summary: ${passed}/${total} checks passed`;
+    const lines: string[] = [`Summary: ${passed}/${total} checks passed`];
+
+    const grouped = this.groupResultsByCategory(results);
+    const parts: string[] = [];
+    for (const category of CATEGORY_ORDER) {
+      const categoryResults = grouped.get(category);
+      if (!categoryResults || categoryResults.length === 0) continue;
+      const p = categoryResults.filter((r) => r.passed).length;
+      const n = categoryResults.length;
+      const label = category === 'cli' ? 'CLI platforms' : CATEGORY_NAMES[category];
+      parts.push(`${label}: ${p}/${n}`);
+    }
+    if (parts.length > 0) {
+      lines.push(`  ${parts.join('  ')}`);
+    }
+
+    const failedCli = grouped.get('cli')?.filter((r) => !r.passed).length ?? 0;
+    const failedProject = grouped.get('project')?.filter((r) => !r.passed).length ?? 0;
+    if (failedCli > 0 || failedProject > 0) {
+      const hints: string[] = [];
+      if (failedCli > 0) hints.push("use the GUI 'Install all missing' button or run 'puppet-master doctor --fix' to install");
+      if (failedProject > 0) hints.push("run 'puppet-master init' in a project for project checks");
+      if (hints.length > 0) {
+        lines.push(`  Note: ${hints.join('. ')}`);
+      }
+    }
+
+    return lines.join('\n');
   }
 
   /**

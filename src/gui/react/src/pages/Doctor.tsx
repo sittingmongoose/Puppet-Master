@@ -12,7 +12,7 @@ import {
   FolderIcon,
   ClipboardIcon,
 } from '@/components/icons';
-import { api, type DoctorCheck, type PlatformStatusType } from '@/lib';
+import { api, APIError, type DoctorCheck, type PlatformStatusType } from '@/lib';
 import type { StatusType, Platform } from '@/types';
 
 const CATEGORIES: Array<{ id: string; label: string; icon: ReactNode }> = [
@@ -33,6 +33,8 @@ export default function DoctorPage() {
   const [running, setRunning] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fixing, setFixing] = useState<string | null>(null);
+  const [installingAll, setInstallingAll] = useState(false);
+  const [installAllProgress, setInstallAllProgress] = useState<string | null>(null);
   const [platformStatus, setPlatformStatus] = useState<Record<string, PlatformStatusType>>({});
   const [selectedPlatforms, setSelectedPlatforms] = useState<Platform[]>([]);
   const [showPlatformSelection, setShowPlatformSelection] = useState(false);
@@ -102,6 +104,52 @@ export default function DoctorPage() {
     }
   }, []);
 
+  // Install all failed/warn checks that have a fix (only after run; not for unrun/skip)
+  const failedFixable = checksList.filter(
+    (c) => (c.status === 'fail' || c.status === 'warn') && c.fixable === true
+  );
+  const installAllMissing = useCallback(async () => {
+    if (failedFixable.length === 0) return;
+    try {
+      setInstallingAll(true);
+      setError(null);
+      const total = failedFixable.length;
+      for (let i = 0; i < failedFixable.length; i++) {
+        const check = failedFixable[i];
+        const label = check.name.replace(/-cli$/, ' CLI').replace(/-/g, ' ');
+        setInstallAllProgress(`Installing ${label} (${i + 1}/${total})...`);
+        try {
+          await api.fixDoctorCheck(check.name);
+        } catch (err) {
+          console.error(`[Doctor] Failed to install ${check.name}:`, err);
+          let message = err instanceof Error ? err.message : `Failed to install ${check.name}`;
+          if (err instanceof APIError && err.status === 500) {
+            try {
+              const body = JSON.parse(message) as { error?: string; output?: string };
+              message = body.error || message;
+              if (body.output) message += `\n\nDetails:\n${body.output}`;
+            } catch {
+              // keep message as-is if not JSON
+            }
+          }
+          setError(message);
+          break;
+        }
+      }
+      setInstallAllProgress(null);
+      const data = await api.runDoctorChecks({
+        platforms: selectedPlatforms.length > 0 ? selectedPlatforms : undefined,
+      });
+      setChecks(Array.isArray(data.checks) ? data.checks : []);
+    } catch (err) {
+      console.error('[Doctor] Install all failed:', err);
+      setError(err instanceof Error ? err.message : 'Install all failed');
+    } finally {
+      setInstallingAll(false);
+      setInstallAllProgress(null);
+    }
+  }, [failedFixable, selectedPlatforms]);
+
   const checksList = Array.isArray(checks) ? checks : [];
   const stats = {
     passed: checksList.filter((c) => c.status === 'pass').length,
@@ -144,17 +192,30 @@ export default function DoctorPage() {
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-md">
         <h1 className="font-display text-2xl">Doctor</h1>
-        <div className="flex gap-sm">
+        <div className="flex flex-wrap items-center gap-sm">
           <Button
             variant="ghost"
             onClick={() => setShowPlatformSelection(!showPlatformSelection)}
           >
             {showPlatformSelection ? 'HIDE' : 'SELECT'} PLATFORMS
           </Button>
+          {failedFixable.length > 0 && (
+            <Button
+              variant="info"
+              onClick={installAllMissing}
+              loading={installingAll}
+              disabled={running}
+            >
+              {installingAll && installAllProgress
+                ? installAllProgress
+                : `INSTALL ALL MISSING (${failedFixable.length})`}
+            </Button>
+          )}
           <Button
             variant="primary"
             onClick={runChecks}
             loading={running}
+            disabled={installingAll}
           >
             RUN ALL CHECKS
           </Button>
@@ -225,7 +286,7 @@ export default function DoctorPage() {
               {stats.passed}/{stats.total} checks passed
             </span>
           </div>
-          
+
           <div className="flex gap-lg text-sm">
             <div className="flex items-center gap-sm">
               <StatusBadge status="complete" size="sm" />
@@ -245,6 +306,16 @@ export default function DoctorPage() {
             </div>
           </div>
         </div>
+        {stats.failed > 0 && (
+          <p className="mt-md text-sm text-muted">
+            Use <strong>Install all missing</strong> above to install platform CLIs for you. Run <code>puppet-master init</code> in a project for project checks.
+          </p>
+        )}
+        {stats.total > 0 && stats.skipped === stats.total && (
+          <p className="mt-md text-sm text-muted">
+            Click <strong>Run all checks</strong> first to see which platforms need installing; then <strong>Install all missing</strong> will appear.
+          </p>
+        )}
       </Panel>
 
       {/* Category Panels */}

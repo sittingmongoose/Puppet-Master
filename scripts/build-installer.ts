@@ -309,6 +309,7 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
   console.log('\n🚀 Writing launcher scripts...\n');
   const unixLauncher = `#!/usr/bin/env sh
 set -eu
+
 # Resolve real script path when invoked via symlink (e.g. /usr/local/bin/puppet-master)
 # so ROOT_DIR is the install dir (/usr/local/lib/puppet-master), not /usr/local.
 SCRIPT_PATH=\"$0\"
@@ -319,10 +320,28 @@ if [ -L \"$SCRIPT_PATH\" ]; then
     *) SCRIPT_PATH=\"$(cd \"$(dirname \"$SCRIPT_PATH\")\" && pwd)/$TARGET\" ;;
   esac
 fi
+
 SCRIPT_DIR=$(cd \"$(dirname \"$SCRIPT_PATH\")\" && pwd)
 ROOT_DIR=$(cd \"$SCRIPT_DIR/..\" && pwd)
 NODE_BIN=\"$ROOT_DIR/node/bin/node\"
 APP_ENTRY=\"$ROOT_DIR/app/dist/cli/index.js\"
+
+# Validate Node.js exists
+if [ ! -x \"$NODE_BIN\" ]; then
+  echo "Error: Node.js not found or not executable: $NODE_BIN" >&2
+  mkdir -p \"$HOME/.puppet-master/logs\" 2>/dev/null || true
+  echo "[$(date -Iseconds)] Error: Node.js missing: $NODE_BIN" >> \"$HOME/.puppet-master/logs/crash.log\" 2>/dev/null || true
+  exit 1
+fi
+
+# Validate app entry exists
+if [ ! -f \"$APP_ENTRY\" ]; then
+  echo "Error: Application entry not found: $APP_ENTRY" >&2
+  mkdir -p \"$HOME/.puppet-master/logs\" 2>/dev/null || true
+  echo "[$(date -Iseconds)] Error: App entry missing: $APP_ENTRY" >> \"$HOME/.puppet-master/logs/crash.log\" 2>/dev/null || true
+  exit 1
+fi
+
 export PUPPET_MASTER_INSTALL_ROOT=\"$ROOT_DIR\"
 export PATH=\"$ROOT_DIR/node/bin:$PATH\"
 export PLAYWRIGHT_BROWSERS_PATH=\"$ROOT_DIR/playwright-browsers\"
@@ -571,7 +590,14 @@ async function buildLinuxPackages(args: Args, repoRoot: string, stageRoot: strin
   await ensureDir(usrBinDir);
   const wrapper = `#!/usr/bin/env sh
 set -eu
-exec /opt/puppet-master/bin/puppet-master \"$@\"
+TARGET="/opt/puppet-master/bin/puppet-master"
+if [ ! -x "$TARGET" ]; then
+  echo "Error: Puppet Master launcher not found or not executable: $TARGET" >&2
+  mkdir -p "$HOME/.puppet-master/logs" 2>/dev/null || true
+  echo "[$(date -Iseconds)] Error: Launcher missing: $TARGET" >> "$HOME/.puppet-master/logs/crash.log" 2>/dev/null || true
+  exit 1
+fi
+exec "$TARGET" "$@"
 `;
   await writeFile(path.join(usrBinDir, 'puppet-master'), wrapper, { encoding: 'utf8', mode: 0o755 });
 

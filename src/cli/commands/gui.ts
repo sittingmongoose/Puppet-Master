@@ -191,6 +191,17 @@ export async function guiAction(options: GuiOptions): Promise<void> {
   const enableCrashLogging = shouldEnableCrashLogging();
   if (enableCrashLogging) {
     installCrashHandlers();
+    const crashPath = getCrashLogPath();
+    if (crashPath) {
+      try {
+        const logDir = path.dirname(crashPath);
+        mkdirSync(logDir, { recursive: true });
+        const startMsg = `[${new Date().toISOString()}] Puppet Master GUI starting (no terminal). If nothing opens, open http://127.0.0.1:${options.port ?? 3847} in your browser or check this log for errors.\n`;
+        appendFileSync(crashPath, startMsg, 'utf8');
+      } catch {
+        // ignore
+      }
+    }
   }
 
   // Auth token path: use $HOME when from app bundle (macOS) or when crash logging enabled
@@ -456,6 +467,21 @@ export async function guiAction(options: GuiOptions): Promise<void> {
           if (options.verbose) {
             console.warn(`  Error: ${error instanceof Error ? error.message : String(error)}`);
           }
+          // When no TTY, write URL to crash log so user knows what to open
+          if (enableCrashLogging) {
+            const crashPath = getCrashLogPath();
+            if (crashPath) {
+              try {
+                appendFileSync(
+                  crashPath,
+                  `[${new Date().toISOString()}] GUI server is running. Open this URL in your browser: ${uiUrl}\n`,
+                  'utf8'
+                );
+              } catch {
+                // ignore
+              }
+            }
+          }
         }
       }
     }
@@ -476,6 +502,19 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     }
     if (enableCrashLogging) {
       writeToCrashLog(error);
+      const crashPath = getCrashLogPath();
+      if (crashPath) {
+        try {
+          const port = options.port ?? 3847;
+          appendFileSync(
+            crashPath,
+            `[${new Date().toISOString()}] If the server is already running, open http://127.0.0.1:${port} in your browser.\n`,
+            'utf8'
+          );
+        } catch {
+          // ignore
+        }
+      }
     }
     process.exit(1);
   }

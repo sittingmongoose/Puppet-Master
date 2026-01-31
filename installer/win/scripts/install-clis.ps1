@@ -68,9 +68,25 @@ try {
         }
     }
     
-    # Output JSON for NSIS to parse
+    # Output JSON for NSIS to parse (only when -CheckOnly)
     if ($CheckOnly) {
         $missingClis | ConvertTo-Json -Compress
+        exit 0
+    }
+    
+    # When run with no args (e.g. after install): show friendly message, do not dump JSON
+    if (-not $Install) {
+        if ($missingClis.Count -eq 0) {
+            Write-Host "All platform CLIs are installed. Run 'puppet-master doctor' to verify." -ForegroundColor Green
+        } else {
+            Write-Host "`nMissing platform CLIs:" -ForegroundColor Yellow
+            foreach ($cli in $missingClis) {
+                Write-Host "  - $($cli.DisplayName)" -ForegroundColor Cyan
+                Write-Host "    Install: $($cli.InstallCmd)" -ForegroundColor Gray
+                if ($cli.Note) { Write-Host "    Note: $($cli.Note)" -ForegroundColor Gray }
+            }
+            Write-Host "`nTo install later: Run 'puppet-master doctor' for full checks, or use Start Menu > Puppet Master to open the GUI." -ForegroundColor Yellow
+        }
         exit 0
     }
     
@@ -134,9 +150,6 @@ try {
         $results | ConvertTo-Json -Compress
         exit 0
     }
-    
-    # If no install requested, just list missing CLIs
-    $missingClis | ConvertTo-Json -Compress
     
 } catch {
     Write-Error "Failed to check CLI status: $_"

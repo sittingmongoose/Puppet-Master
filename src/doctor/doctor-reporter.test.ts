@@ -197,7 +197,7 @@ describe('DoctorReporter', () => {
   });
 
   describe('formatSummary', () => {
-    it('should format summary with correct pass/fail counts', () => {
+    it('should format summary with correct pass/fail counts and category breakdown', () => {
       const reporter = new DoctorReporter();
       const results = [
         createResult({ name: 'check1', passed: true }),
@@ -206,8 +206,9 @@ describe('DoctorReporter', () => {
         createResult({ name: 'check4', passed: true }),
       ];
       const summary = reporter.formatSummary(results);
-      
-      expect(summary).toBe('Summary: 3/4 checks passed');
+
+      expect(summary).toContain('Summary: 3/4 checks passed');
+      expect(summary).toContain('Runtime: 3/4');
     });
 
     it('should handle all passed checks', () => {
@@ -217,8 +218,9 @@ describe('DoctorReporter', () => {
         createResult({ name: 'check2', passed: true }),
       ];
       const summary = reporter.formatSummary(results);
-      
-      expect(summary).toBe('Summary: 2/2 checks passed');
+
+      expect(summary).toContain('Summary: 2/2 checks passed');
+      expect(summary).toContain('Runtime: 2/2');
     });
 
     it('should handle all failed checks', () => {
@@ -228,15 +230,29 @@ describe('DoctorReporter', () => {
         createResult({ name: 'check2', passed: false }),
       ];
       const summary = reporter.formatSummary(results);
-      
-      expect(summary).toBe('Summary: 0/2 checks passed');
+
+      expect(summary).toContain('Summary: 0/2 checks passed');
+      expect(summary).toContain('Runtime: 0/2');
     });
 
     it('should handle empty results', () => {
       const reporter = new DoctorReporter();
       const summary = reporter.formatSummary([]);
-      
-      expect(summary).toBe('Summary: 0/0 checks passed');
+
+      expect(summary).toContain('Summary: 0/0 checks passed');
+    });
+
+    it('should include note when CLI or project checks failed', () => {
+      const reporter = new DoctorReporter();
+      const results = [
+        createResult({ name: 'cursor-cli', category: 'cli', passed: false }),
+        createResult({ name: 'config-file', category: 'project', passed: false }),
+      ];
+      const summary = reporter.formatSummary(results);
+
+      expect(summary).toContain('Summary: 0/2 checks passed');
+      expect(summary).toContain("use the GUI 'Install all missing'");
+      expect(summary).toContain("run 'puppet-master init'");
     });
   });
 
@@ -280,12 +296,15 @@ describe('DoctorReporter', () => {
         createResult({ name: 'check2', category: 'git', passed: false }),
       ];
       const output = reporter.formatResults(results);
-      
-      expect(output).not.toContain('CLI Tools:');
-      expect(output).not.toContain('Git:');
+
+      // No category section headers (standalone "CLI Tools:" or "Git:" lines)
+      expect(output).not.toMatch(/\nCLI Tools:\n/);
+      expect(output).not.toMatch(/\nGit:\n/);
       expect(output).toContain('check1:');
       expect(output).toContain('check2:');
       expect(output).toContain('Summary: 1/2 checks passed');
+      expect(output).toContain('CLI platforms: 1/1');
+      expect(output).toContain('Git: 0/1');
     });
 
     it('should format results with category grouping', () => {
@@ -303,6 +322,8 @@ describe('DoctorReporter', () => {
       expect(output).toContain('codex-cli:');
       expect(output).toContain('git-available:');
       expect(output).toContain('Summary: 2/3 checks passed');
+      expect(output).toContain('CLI platforms: 1/2');
+      expect(output).toContain('Git: 1/1');
     });
 
     it('should maintain category order', () => {

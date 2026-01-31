@@ -29,12 +29,11 @@ VIAddVersionKey "CompanyName" "RWM"
 
 ; Customize finish page text (P0-G15, CU-P0-T01, P0-G23)
 !define MUI_FINISHPAGE_TITLE "Puppet Master Installation Complete!"
-!define MUI_FINISHPAGE_TEXT "Puppet Master has been installed successfully.$\r$\n$\r$\nNext steps:$\r$\n  1. Open a NEW terminal window (cmd or PowerShell)$\r$\n  2. Run 'puppet-master doctor' to verify installation$\r$\n     and check platform prerequisites$\r$\n$\r$\nThe doctor command will check:$\r$\n  - Required CLI tools (cursor, codex, claude, gemini, copilot)$\r$\n  - Platform authentication status$\r$\n  - Missing configuration$\r$\n$\r$\nClick 'Finish' to complete the installation."
+!define MUI_FINISHPAGE_TEXT "Puppet Master has been installed successfully.$\r$\n$\r$\nTo open the GUI:$\r$\n  Use Start Menu or Desktop shortcut 'Puppet Master' (opens the web interface).$\r$\n$\r$\nOptional - verify installation:$\r$\n  Open a terminal and run 'puppet-master doctor' to check platform CLIs and config.$\r$\n$\r$\nClick 'Finish' to complete the installation."
 
-; Option to run puppet-master doctor after install
-!define MUI_FINISHPAGE_RUN "$INSTDIR\bin\puppet-master.cmd"
-!define MUI_FINISHPAGE_RUN_TEXT "Run 'puppet-master doctor' now (opens new terminal)"
-!define MUI_FINISHPAGE_RUN_PARAMETERS "doctor"
+; Option to launch Puppet Master GUI after install
+!define MUI_FINISHPAGE_RUN "$INSTDIR\Launch-Puppet-Master-GUI.vbs"
+!define MUI_FINISHPAGE_RUN_TEXT "Launch Puppet Master now (opens the GUI)"
 
 ; Option to show README / help
 !define MUI_FINISHPAGE_SHOWREADME
@@ -79,7 +78,9 @@ Section "Install"
   ; Start Menu and Desktop shortcuts use VBS so GUI launches without a console window
   CreateDirectory "$SMPROGRAMS\Puppet Master"
   CreateShortcut "$SMPROGRAMS\Puppet Master\Puppet Master.lnk" "$INSTDIR\Launch-Puppet-Master-GUI.vbs" "" "$INSTDIR\puppet-master.ico" 0
-  
+  ; Debug shortcut: runs with visible console so you can see errors if "nothing happens"
+  CreateShortcut "$SMPROGRAMS\Puppet Master\Puppet Master (Debug).lnk" "$INSTDIR\Launch-Puppet-Master-GUI.bat" "" "$INSTDIR\puppet-master.ico" 0
+
   ; Create Desktop shortcut (optional)
   CreateShortcut "$DESKTOP\Puppet Master.lnk" "$INSTDIR\Launch-Puppet-Master-GUI.vbs" "" "$INSTDIR\puppet-master.ico" 0
 
@@ -113,6 +114,7 @@ SectionEnd
 Section "Uninstall"
   ; Remove shortcuts
   Delete "$SMPROGRAMS\Puppet Master\Puppet Master.lnk"
+  Delete "$SMPROGRAMS\Puppet Master\Puppet Master (Debug).lnk"
   RMDir "$SMPROGRAMS\Puppet Master"
   Delete "$DESKTOP\Puppet Master.lnk"
   DeleteRegKey HKLM "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Puppet Master"
