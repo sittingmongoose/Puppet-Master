@@ -4,6 +4,7 @@
 use std::env;
 use tauri::Manager;
 use tauri_plugin_log::{Target, TargetKind};
+use url::Url;
 
 fn main() {
     // Read server URL from args/env (args win; supports macOS `open ... --args`)
@@ -41,7 +42,8 @@ fn main() {
 
             // Load the GUI server URL
             log::info!("Loading GUI server from: {}", server_url);
-            window.navigate(tauri::WebviewUrl::External(server_url.parse().unwrap()))?;
+            let url = Url::parse(&server_url).expect("invalid server URL");
+            window.navigate(url)?;
 
             Ok(())
         })
