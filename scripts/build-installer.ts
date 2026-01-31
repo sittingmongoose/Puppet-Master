@@ -682,8 +682,8 @@ read x
     await chmod(postinstallPath, 0o755);
   }
 
-  const debOut = path.join(outDir, `puppet-master-${version}-linux-${args.arch}.deb`);
-  const rpmOut = path.join(outDir, `puppet-master-${version}-linux-${args.arch}.rpm`);
+  const debOut = path.join(outDir, `rwm-puppet-master-${version}-linux-${args.arch}.deb`);
+  const rpmOut = path.join(outDir, `rwm-puppet-master-${version}-linux-${args.arch}.rpm`);
 
   console.log('\n🧱 Building Linux deb...\n');
   await run('nfpm', ['pkg', '--packager', 'deb', '--config', nfpmConfig, '--target', debOut], {

@@ -30,7 +30,7 @@ VIAddVersionKey "CompanyName" "RWM"
 !define MUI_FINISHPAGE_TITLE "Puppet Master Installation Complete!"
 !define MUI_FINISHPAGE_TEXT "Puppet Master has been installed successfully.$\r$\n$\r$\nClick 'Launch Puppet Master' below to open the GUI. On first launch, a setup wizard will guide you through installing AI platform CLIs.$\r$\n$\r$\nYou can also launch from the Start Menu or Desktop shortcut.$\r$\n$\r$\nOptional: Open a terminal and run 'puppet-master doctor' to verify your setup."
 
-; Option to launch Puppet Master GUI after install
+; Option to launch Puppet Master GUI after install (checked by default when MUI_FINISHPAGE_RUN is defined)
 !define MUI_FINISHPAGE_RUN "$INSTDIR\Launch-Puppet-Master-GUI.vbs"
 !define MUI_FINISHPAGE_RUN_TEXT "Launch Puppet Master now (opens the GUI)"
 

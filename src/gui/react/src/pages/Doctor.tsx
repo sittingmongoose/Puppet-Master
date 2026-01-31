@@ -104,6 +104,9 @@ export default function DoctorPage() {
     }
   }, []);
 
+  // Define checksList first (required by failedFixable below)
+  const checksList = Array.isArray(checks) ? checks : [];
+
   // Install all failed/warn checks that have a fix (only after run; not for unrun/skip)
   const failedFixable = checksList.filter(
     (c) => (c.status === 'fail' || c.status === 'warn') && c.fixable === true
@@ -149,8 +152,6 @@ export default function DoctorPage() {
       setInstallAllProgress(null);
     }
   }, [failedFixable, selectedPlatforms]);
-
-  const checksList = Array.isArray(checks) ? checks : [];
   const stats = {
     passed: checksList.filter((c) => c.status === 'pass').length,
     failed: checksList.filter((c) => c.status === 'fail').length,
