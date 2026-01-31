@@ -10,7 +10,6 @@
 
 !include "MUI2.nsh"
 !include "LogicLib.nsh"
-!include "nsDialogs.nsh"
 
 Name "Puppet Master"
 OutFile "${OUTFILE}"
@@ -29,26 +28,16 @@ VIAddVersionKey "CompanyName" "RWM"
 
 ; Customize finish page text (P0-G15, CU-P0-T01, P0-G23)
 !define MUI_FINISHPAGE_TITLE "Puppet Master Installation Complete!"
-!define MUI_FINISHPAGE_TEXT "Puppet Master has been installed successfully.$\r$\n$\r$\nTo open the GUI:$\r$\n  Use Start Menu or Desktop shortcut 'Puppet Master' (opens the web interface).$\r$\n$\r$\nOptional - verify installation:$\r$\n  Open a terminal and run 'puppet-master doctor' to check platform CLIs and config.$\r$\n$\r$\nClick 'Finish' to complete the installation."
+!define MUI_FINISHPAGE_TEXT "Puppet Master has been installed successfully.$\r$\n$\r$\nClick 'Launch Puppet Master' below to open the GUI. On first launch, a setup wizard will guide you through installing AI platform CLIs.$\r$\n$\r$\nYou can also launch from the Start Menu or Desktop shortcut.$\r$\n$\r$\nOptional: Open a terminal and run 'puppet-master doctor' to verify your setup."
 
 ; Option to launch Puppet Master GUI after install
 !define MUI_FINISHPAGE_RUN "$INSTDIR\Launch-Puppet-Master-GUI.vbs"
 !define MUI_FINISHPAGE_RUN_TEXT "Launch Puppet Master now (opens the GUI)"
 
-; Option to show README / help
-!define MUI_FINISHPAGE_SHOWREADME
-!define MUI_FINISHPAGE_SHOWREADME_TEXT "Show CLI installation instructions"
-!define MUI_FINISHPAGE_SHOWREADME_FUNCTION ShowCLIInstructions
-
-; Variables for CLI installation page
-Var CLIInstallDialog
-Var CLIInstallCheckbox
-
 ; Modern UI pages
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
-Page Custom CLIInstallPageCreate CLIInstallPageLeave
 !insertmacro MUI_PAGE_FINISH
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
@@ -61,13 +50,10 @@ Section "Install"
   ; Copy payload
   File /r "${STAGE_DIR}\\puppet-master\\*.*"
   
-  ; Copy PowerShell helper script for CLI installation
-  SetOutPath "$INSTDIR\scripts"
-  File "scripts\install-clis.ps1"
-
-  ; Copy GUI launchers (VBS runs without console; BAT kept for CLI/script use)
+  ; Copy GUI launchers (VBS runs without console; BAT for CLI/script; Debug BAT keeps console open)
   SetOutPath "$INSTDIR"
   File "scripts\Launch-Puppet-Master-GUI.bat"
+  File "scripts\Launch-Puppet-Master-GUI-Debug.bat"
   File "scripts\Launch-Puppet-Master-GUI.vbs"
   File "..\assets\puppet-master.ico"
   File "${STAGE_DIR}\\puppet-master\\puppet-master.png"
@@ -79,7 +65,7 @@ Section "Install"
   CreateDirectory "$SMPROGRAMS\Puppet Master"
   CreateShortcut "$SMPROGRAMS\Puppet Master\Puppet Master.lnk" "$INSTDIR\Launch-Puppet-Master-GUI.vbs" "" "$INSTDIR\puppet-master.ico" 0
   ; Debug shortcut: runs with visible console so you can see errors if "nothing happens"
-  CreateShortcut "$SMPROGRAMS\Puppet Master\Puppet Master (Debug).lnk" "$INSTDIR\Launch-Puppet-Master-GUI.bat" "" "$INSTDIR\puppet-master.ico" 0
+  CreateShortcut "$SMPROGRAMS\Puppet Master\Puppet Master (Debug).lnk" "$INSTDIR\Launch-Puppet-Master-GUI-Debug.bat" "" "$INSTDIR\puppet-master.ico" 0
 
   ; Create Desktop shortcut (optional)
   CreateShortcut "$DESKTOP\Puppet Master.lnk" "$INSTDIR\Launch-Puppet-Master-GUI.vbs" "" "$INSTDIR\puppet-master.ico" 0
@@ -126,69 +112,6 @@ Section "Uninstall"
 SectionEnd
 
 ; --- Helper functions ---
-
-; Show CLI installation instructions in a message box
-Function ShowCLIInstructions
-  MessageBox MB_OK|MB_ICONINFORMATION "Platform CLI Installation:$\r$\n$\r$\n\
-Cursor CLI:$\r$\n\
-  curl https://cursor.com/install -fsSL | bash$\r$\n\
-  Installs both 'agent' and 'cursor-agent' to ~/.local/bin$\r$\n$\r$\n\
-Codex CLI:$\r$\n\
-  npm install -g @openai/codex-cli$\r$\n\
-  Or download from: https://github.com/openai/codex-cli$\r$\n$\r$\n\
-Claude Code CLI:$\r$\n\
-  npm install -g @anthropic-ai/claude-code-cli$\r$\n\
-  Or download from: https://github.com/anthropics/claude-code-cli$\r$\n\
-  Requires: ANTHROPIC_API_KEY environment variable$\r$\n$\r$\n\
-Gemini CLI:$\r$\n\
-  npm install -g @google/gemini-cli$\r$\n\
-  Requires: GEMINI_API_KEY or GOOGLE_APPLICATION_CREDENTIALS$\r$\n$\r$\n\
-GitHub Copilot CLI:$\r$\n\
-  npm install -g @github/copilot-cli$\r$\n\
-  Requires: GitHub Copilot subscription and GH_TOKEN/GITHUB_TOKEN$\r$\n$\r$\n\
-After installing platform CLIs, run 'puppet-master doctor' to verify."
-FunctionEnd
-
-; Custom page for CLI installation (Phase 5.1)
-Function CLIInstallPageCreate
-  !insertmacro MUI_HEADER_TEXT "Install AI Platform CLIs" "Select platform CLIs to install automatically"
-  
-  nsDialogs::Create 1018
-  Pop $CLIInstallDialog
-  
-  ${If} $CLIInstallDialog == error
-    Abort
-  ${EndIf}
-  
-  ; Check which CLIs are missing using PowerShell script
-  ; Set environment variable so script knows install directory
-  System::Call 'Kernel32::SetEnvironmentVariable(t "PuppetMasterInstallDir", t "$INSTDIR")'
-  
-  ; Run PowerShell script to check missing CLIs
-  ; Note: We'll show a simple checkbox to offer installation
-  ; The actual checking happens in the leave function
-  
-  ; Create info label
-  ${NSD_CreateLabel} 0 10u 100% 40u "After installing Puppet Master, you may want to install platform CLIs:$\r$\n$\r$\n- Codex CLI (npm install -g @openai/codex)$\r$\n- Claude Code CLI (PowerShell installer)$\r$\n- Gemini CLI (npm install -g @google/gemini-cli)$\r$\n- GitHub Copilot CLI (npm install -g @github/copilot)$\r$\n$\r$\nCursor CLI requires WSL or Git Bash (no Windows native installer)."
-  Pop $0
-  
-  ; Create checkbox to offer running installation helper
-  ${NSD_CreateCheckbox} 0 120u 100% 12u "Run CLI installation helper after installation"
-  Pop $CLIInstallCheckbox
-  ${NSD_Check} $CLIInstallCheckbox ; Check by default
-  
-  nsDialogs::Show
-FunctionEnd
-
-Function CLIInstallPageLeave
-  ${NSD_GetState} $CLIInstallCheckbox $0
-  
-  ${If} $0 == 1
-    ; User wants to install CLIs - launch PowerShell helper script
-    ; Note: This will open a new window for user interaction
-    ExecWait 'powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$INSTDIR\scripts\install-clis.ps1"'
-  ${EndIf}
-FunctionEnd
 
 ; StrStr implementation (haystack on stack, needle on stack)
 ; Returns substring or empty string.

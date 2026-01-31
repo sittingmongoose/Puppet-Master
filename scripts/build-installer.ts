@@ -191,6 +191,45 @@ async function copyDir(src: string, dst: string): Promise<void> {
   await cp(src, dst, { recursive: true });
 }
 
+/**
+ * Remove optional native addons for other architectures from staged node_modules
+ * so the .deb does not ship wrong-arch binaries (fixes Lintian binary-from-other-architecture).
+ */
+async function pruneOtherArchBinaries(appDir: string, arch: InstallerArch): Promise<void> {
+  const nodeModules = path.join(appDir, 'node_modules');
+  if (!existsSync(nodeModules)) return;
+
+  const otherArchPatterns =
+    arch === 'x64'
+      ? ['arm64', 'aarch64']
+      : ['x64', 'amd64', 'x86_64'];
+
+  const toRemove: string[] = [];
+  async function collect(root: string): Promise<void> {
+    const entries = await readdir(root, { withFileTypes: true });
+    for (const e of entries) {
+      const full = path.join(root, e.name);
+      if (e.isDirectory()) {
+        if (otherArchPatterns.some((p) => e.name.toLowerCase().includes(p))) {
+          toRemove.push(full);
+        } else {
+          await collect(full);
+        }
+      }
+    }
+  }
+  await collect(nodeModules);
+  toRemove.sort((a, b) => b.length - a.length);
+  for (const dir of toRemove) {
+    if (existsSync(dir)) {
+      await rm(dir, { recursive: true, force: true });
+    }
+  }
+  if (toRemove.length > 0) {
+    console.log(`\n🗑  Pruned ${toRemove.length} other-arch optional native dir(s) from node_modules\n`);
+  }
+}
+
 async function downloadNodeRuntime(args: Args, repoRoot: string, downloadDir: string, nodeOutDir: string): Promise<void> {
   const dist = getNodeDistribution({ version: args.nodeVersion, platform: args.platform, arch: args.arch });
   await ensureDir(downloadDir);
@@ -297,6 +336,12 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
   const downloadsDir = path.join(path.dirname(stageRoot), 'downloads');
   await downloadNodeRuntime(args, repoRoot, downloadsDir, nodeDir);
 
+  // 5b) Rebuild native modules with bundled Node so ABI matches (e.g. better-sqlite3)
+  const nodeBin = path.join(nodeDir, 'bin');
+  const pathEnv = `${nodeBin}${path.delimiter}${process.env.PATH ?? ''}`;
+  console.log('\n🔨 Rebuilding native modules for bundled Node...\n');
+  await run('npm', ['rebuild'], { cwd: appDir, env: { ...process.env, PATH: pathEnv } });
+
   // 6) Install Playwright Chromium into payload/playwright-browsers
   console.log('\n🌐 Installing Playwright Chromium into staged payload...\n');
   await ensureDir(browsersDir);
@@ -306,6 +351,12 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
       PLAYWRIGHT_BROWSERS_PATH: browsersDir,
     },
   });
+
+  // 6b) Linux .deb: remove other-arch optional native addons (fixes Lintian binary-from-other-architecture)
+  if (args.platform === 'linux') {
+    console.log('\n🧹 Pruning other-arch binaries from node_modules (Linux package)...\n');
+    await pruneOtherArchBinaries(appDir, args.arch);
+  }
 
   // 7) Create launchers
   console.log('\n🚀 Writing launcher scripts...\n');
@@ -370,10 +421,14 @@ set \"PLAYWRIGHT_BROWSERS_PATH=%ROOT_DIR%\\playwright-browsers\"\r
       await cp(helperScript, path.join(scriptsDir, 'install-clis.ps1'));
     }
     
-    // Copy GUI launcher batch file to payload root for NSIS installation
+    // Copy GUI launcher batch files to payload root for NSIS installation
     const guiLauncher = path.join(repoRoot, 'installer', 'win', 'scripts', 'Launch-Puppet-Master-GUI.bat');
     if (existsSync(guiLauncher)) {
       await cp(guiLauncher, path.join(payloadRoot, 'Launch-Puppet-Master-GUI.bat'));
+    }
+    const guiLauncherDebug = path.join(repoRoot, 'installer', 'win', 'scripts', 'Launch-Puppet-Master-GUI-Debug.bat');
+    if (existsSync(guiLauncherDebug)) {
+      await cp(guiLauncherDebug, path.join(payloadRoot, 'Launch-Puppet-Master-GUI-Debug.bat'));
     }
 
     const guiLauncherVbs = path.join(repoRoot, 'installer', 'win', 'scripts', 'Launch-Puppet-Master-GUI.vbs');
@@ -459,36 +514,45 @@ async function buildMacAppBundle(
   }
   await cp(iconSrc, path.join(resourcesPath, 'puppet-master.icns'));
 
-  // Create MacOS executable that runs puppet-master gui directly
+  // Create MacOS executable that runs puppet-master gui with pre-flight and failure alert
   const macosExecutable = path.join(macosPath, 'Puppet Master');
   const macosScript = `#!/usr/bin/env sh
 set -eu
-# Get the app bundle root (Contents/MacOS/.. = Contents, Contents/.. = .app root)
 APP_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 RESOURCES_DIR="$APP_ROOT/Contents/Resources"
 ROOT_DIR="$RESOURCES_DIR/puppet-master"
 NODE_BIN="$ROOT_DIR/node/bin/node"
 APP_ENTRY="$ROOT_DIR/app/dist/cli/index.js"
+LAUNCH_LOG="\${HOME:-/tmp}/.puppet-master/logs/launch.log"
+LOG_DIR="\${HOME:-/tmp}/.puppet-master/logs"
 
-# Export environment variables (Node/Playwright find app via these)
 export PATH="$ROOT_DIR/node/bin:$PATH"
 export PLAYWRIGHT_BROWSERS_PATH="$ROOT_DIR/playwright-browsers"
 export PUPPET_MASTER_APP_ROOT="$ROOT_DIR"
 export PUPPET_MASTER_INSTALL_ROOT="$ROOT_DIR"
 
-# Run from writable directory so .puppet-master/gui-token.txt and config can be created
-# Use \${HOME} so this is literal in the script (shell expands at runtime), not JS template
+fail_msg() {
+  mkdir -p "$LOG_DIR"
+  echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) $1" >> "$LAUNCH_LOG"
+  osascript -e 'display alert "Puppet Master could not start" message "See ~/.puppet-master/logs/launch.log"' 2>/dev/null || true
+  exit 1
+}
+
+# Pre-flight: Node and app entry must exist and be runnable
+[ -x "$NODE_BIN" ] || fail_msg "Node.js not found or not executable: $NODE_BIN"
+[ -f "$APP_ENTRY" ] || fail_msg "App entry not found: $APP_ENTRY"
+
 GUI_CWD="\${HOME:-/tmp}"
 cd "$GUI_CWD"
 
-# When not attached to a TTY (e.g. double-click from Finder), log to file for diagnosis
 if [ -t 1 ]; then
-  exec "$NODE_BIN" "$APP_ENTRY" gui
+  "$NODE_BIN" "$APP_ENTRY" gui || fail_msg "GUI exited with error."
 else
-  LOG_DIR="\${HOME:-/tmp}/.puppet-master/logs"
   LOG_FILE="$LOG_DIR/gui.log"
   mkdir -p "$LOG_DIR"
-  exec "$NODE_BIN" "$APP_ENTRY" gui >> "$LOG_FILE" 2>&1
+  if ! "$NODE_BIN" "$APP_ENTRY" gui >> "$LOG_FILE" 2>&1; then
+    fail_msg "GUI exited with error. See $LOG_FILE"
+  fi
 fi
 `;
   await writeFile(macosExecutable, macosScript, { encoding: 'utf8', mode: 0o755 });
@@ -602,6 +666,16 @@ fi
 exec "$TARGET" "$@"
 `;
   await writeFile(path.join(usrBinDir, 'puppet-master'), wrapper, { encoding: 'utf8', mode: 0o755 });
+
+  // GUI launcher: run puppet-master gui and keep terminal open on exit so user can see errors
+  const guiLauncher = `#!/usr/bin/env sh
+set -eu
+puppet-master gui "$@" || true
+echo ""
+echo "Press Enter to close this window."
+read x
+`;
+  await writeFile(path.join(usrBinDir, 'puppet-master-gui'), guiLauncher, { encoding: 'utf8', mode: 0o755 });
 
   const postinstallPath = path.join(repoRoot, 'installer', 'linux', 'scripts', 'postinstall');
   if (existsSync(postinstallPath)) {

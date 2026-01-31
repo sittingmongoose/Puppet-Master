@@ -178,11 +178,25 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
     }
 
     try {
-      // Dynamic import of the SDK
-      const { CopilotClient: SdkClient } = await import('@github/copilot-sdk');
-      this.client = new SdkClient() as unknown as CopilotClient;
-      await this.client.start();
-      this.sdkAvailable = true;
+      // The Copilot SDK (vscode-jsonrpc) writes to process streams during start().
+      // When launched from the desktop (puppet-master-gui), those streams can be destroyed
+      // and any write throws ERR_STREAM_DESTROYED. Always replace stdout/stderr with safe
+      // dummies during init so the SDK never touches the real streams.
+      const savedStdout = process.stdout;
+      const savedStderr = process.stderr;
+      (process as unknown as { stdout: NodeJS.WritableStream; stderr: NodeJS.WritableStream }).stdout =
+        new PassThrough() as unknown as NodeJS.WritableStream;
+      (process as unknown as { stdout: NodeJS.WritableStream; stderr: NodeJS.WritableStream }).stderr =
+        new PassThrough() as unknown as NodeJS.WritableStream;
+      try {
+        const { CopilotClient: SdkClient } = await import('@github/copilot-sdk');
+        this.client = new SdkClient() as unknown as CopilotClient;
+        await this.client.start();
+        this.sdkAvailable = true;
+      } finally {
+        (process as unknown as { stdout: NodeJS.WritableStream; stderr: NodeJS.WritableStream }).stdout = savedStdout;
+        (process as unknown as { stdout: NodeJS.WritableStream; stderr: NodeJS.WritableStream }).stderr = savedStderr;
+      }
     } catch (error) {
       this.sdkAvailable = false;
       const errorMessage = error instanceof Error ? error.message : String(error);
@@ -196,14 +210,9 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
         this.sdkUnavailableReason = `Failed to initialize Copilot SDK: ${errorMessage}`;
       }
 
-      // Suppress console output errors that may occur if streams are destroyed during module load failure
-      try {
-        if (process.stderr.writable) {
-          console.warn(`[CopilotSdkRunner] SDK unavailable: ${this.sdkUnavailableReason}`);
-        }
-      } catch {
-        // Stream already destroyed, silently skip warning
-      }
+      // Do not write to process.stderr/stdout here: when running under the GUI launcher
+      // (no TTY, or streams destroyed), any write can throw ERR_STREAM_DESTROYED and
+      // crash the process. Callers (execute, getClientStatus) will surface the reason.
     }
   }
 

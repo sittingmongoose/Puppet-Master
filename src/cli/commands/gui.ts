@@ -172,6 +172,20 @@ function installCrashHandlers(): void {
     writeToCrashLog(reason instanceof Error ? reason : new Error(String(reason)));
     process.exit(1);
   });
+  // Catch uncaught exceptions (e.g. ERR_STREAM_DESTROYED from vscode-jsonrpc when
+  // launched from a desktop shortcut with no TTY). Log but do NOT exit for stream
+  // errors since the GUI server can continue running without stdout/stderr.
+  process.on('uncaughtException', (error: Error) => {
+    const errno = error as NodeJS.ErrnoException;
+    if (errno.code === 'ERR_STREAM_DESTROYED' || errno.code === 'EPIPE' || errno.code === 'ERR_STREAM_WRITE_AFTER_END') {
+      writeToCrashLog(error);
+      // Do NOT exit - the GUI server can continue without stdout/stderr
+      return;
+    }
+    // For other uncaught exceptions, log and exit
+    writeToCrashLog(error);
+    process.exit(1);
+  });
 }
 
 /**
@@ -301,14 +315,26 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     }
 
     // Determine port and host
-    const port = options.port || 3847;
+    const requestedPort = options.port || 3847;
     const host = options.host || 'localhost';
 
-    // Check if port is available
+    // Check if port is available; if the default port is in use, try alternatives
     if (options.verbose) {
-      console.log(`Checking if port ${port} is available...`);
+      console.log(`Checking if port ${requestedPort} is available...`);
     }
-    const portAvailable = await checkPortAvailable(port, host);
+    let port = requestedPort;
+    let portAvailable = await checkPortAvailable(port, host);
+    if (!portAvailable && !options.port) {
+      // Only auto-retry if the user didn't explicitly choose a port
+      const maxRetries = 10;
+      for (let i = 1; i <= maxRetries && !portAvailable; i++) {
+        port = requestedPort + i;
+        portAvailable = await checkPortAvailable(port, host);
+      }
+      if (portAvailable) {
+        console.log(`Default port ${requestedPort} is in use, using port ${port} instead.`);
+      }
+    }
     if (!portAvailable) {
       console.error(`Error: Port ${port} on ${host} is already in use.`);
       console.error(`Please choose a different port using --port <number>`);

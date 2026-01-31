@@ -74,20 +74,48 @@ try {
         exit 0
     }
     
-    # When run with no args (e.g. after install): show friendly message, do not dump JSON
+    # When run with no args (e.g. after install): show message and optional interactive install
+    $InteractiveSession = $false
     if (-not $Install) {
         if ($missingClis.Count -eq 0) {
             Write-Host "All platform CLIs are installed. Run 'puppet-master doctor' to verify." -ForegroundColor Green
-        } else {
-            Write-Host "`nMissing platform CLIs:" -ForegroundColor Yellow
-            foreach ($cli in $missingClis) {
-                Write-Host "  - $($cli.DisplayName)" -ForegroundColor Cyan
-                Write-Host "    Install: $($cli.InstallCmd)" -ForegroundColor Gray
-                if ($cli.Note) { Write-Host "    Note: $($cli.Note)" -ForegroundColor Gray }
-            }
-            Write-Host "`nTo install later: Run 'puppet-master doctor' for full checks, or use Start Menu > Puppet Master to open the GUI." -ForegroundColor Yellow
+            exit 0
         }
-        exit 0
+        Write-Host "`nMissing platform CLIs:" -ForegroundColor Yellow
+        $idx = 1
+        foreach ($cli in $missingClis) {
+            Write-Host "  $idx. $($cli.DisplayName)" -ForegroundColor Cyan
+            Write-Host "      Install: $($cli.InstallCmd)" -ForegroundColor Gray
+            if ($cli.Note) { Write-Host "      Note: $($cli.Note)" -ForegroundColor Gray }
+            $idx++
+        }
+        Write-Host "`nWould you like to install missing CLIs now? (Y/N)" -ForegroundColor Yellow
+        $response = Read-Host
+        if ($response -notmatch '^[Yy]') {
+            Write-Host "To install later: Run 'puppet-master doctor' for full checks, or use Start Menu > Puppet Master to open the GUI." -ForegroundColor Gray
+            exit 0
+        }
+        Write-Host "`nEnter numbers to install (comma-separated, e.g. 1,2), or 0 to skip:" -ForegroundColor Yellow
+        $numList = Read-Host
+        if ($numList -eq '0' -or [string]::IsNullOrWhiteSpace($numList)) {
+            Write-Host "Skipped. Run 'puppet-master doctor' later to install." -ForegroundColor Gray
+            exit 0
+        }
+        $selections = $numList -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ -match '^\d+$' }
+        $clisToInstall = @()
+        foreach ($n in $selections) {
+            $i = [int]$n
+            if ($i -ge 1 -and $i -le $missingClis.Count) {
+                $clisToInstall += $missingClis[$i - 1].CheckName
+            }
+        }
+        if ($clisToInstall.Count -eq 0) {
+            Write-Host "No valid selection. Run 'puppet-master doctor' later to install." -ForegroundColor Gray
+            exit 0
+        }
+        $Install = $clisToInstall -join ','
+        $InteractiveSession = $true
+        # Fall through to Install block below
     }
     
     # Install selected CLIs
@@ -146,7 +174,19 @@ try {
             }
         }
         
-        # Output results as JSON
+        if ($InteractiveSession) {
+            Write-Host "`nDone." -ForegroundColor Green
+            foreach ($r in $results) {
+                if ($r.Success) {
+                    Write-Host "  OK: $($r.DisplayName)" -ForegroundColor Green
+                } else {
+                    Write-Host "  Failed: $($r.DisplayName) - $($r.Error)" -ForegroundColor Red
+                }
+            }
+            Write-Host "`nRun 'puppet-master doctor' to verify." -ForegroundColor Gray
+            exit 0
+        }
+        # Output results as JSON (non-interactive / scripted use)
         $results | ConvertTo-Json -Compress
         exit 0
     }

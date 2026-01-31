@@ -8,7 +8,9 @@ Set WshShell = CreateObject("WScript.Shell")
 ' Use the directory containing this script as the install root
 scriptPath = WScript.ScriptFullName
 installDir = fso.GetParentFolderName(scriptPath)
-WshShell.CurrentDirectory = installDir
+
+' Set CWD to user's home directory (writable), NOT Program Files (read-only)
+WshShell.CurrentDirectory = WshShell.ExpandEnvironmentStrings("%USERPROFILE%")
 
 ' Run puppet-master gui with hidden window (0), don't wait for exit (False)
 ' cmd /c ensures PATH and env from cmd; "bin\puppet-master.cmd" gui is the command

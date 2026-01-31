@@ -38,6 +38,14 @@ contents:
       owner: root
       group: root
 
+  - src: ${PM_NFPM_ROOT}/usr/bin/puppet-master-gui
+    dst: /usr/bin/puppet-master-gui
+    expand: true
+    file_info:
+      mode: 0755
+      owner: root
+      group: root
+
   # P2-G10: systemd service file for GUI server
   - src: installer/linux/systemd/puppet-master-gui.service
     dst: /usr/lib/systemd/system/puppet-master-gui.service

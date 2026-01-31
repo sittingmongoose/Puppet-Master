@@ -2,59 +2,24 @@
 # P0-G23: Post-install guidance for Linux packages
 # P2-G10: Updated to include systemd service instructions
 
+# Rebuild native modules (e.g. better-sqlite3) with bundled Node so ABI matches
+ROOT="/opt/puppet-master"
+if [ -x "$ROOT/node/bin/node" ] && [ -f "$ROOT/app/package.json" ]; then
+  PATH="$ROOT/node/bin:$PATH" npm rebuild --prefix "$ROOT/app" 2>/dev/null || true
+fi
+
+# Update desktop database so the .desktop file is picked up
+if command -v update-desktop-database >/dev/null 2>&1; then
+  update-desktop-database /usr/share/applications 2>/dev/null || true
+fi
+
 echo ""
-echo "=============================================="
-echo "  Puppet Master Installation Complete!"
-echo "=============================================="
+echo "Puppet Master installed. Find 'Puppet Master' in your application menu,"
+echo "or run 'puppet-master gui' from the terminal."
+echo "On first launch, a setup wizard will help install AI platform CLIs."
 echo ""
-echo "Next steps:"
-echo "  1. Run 'puppet-master doctor' to verify installation"
-echo "     and check platform prerequisites"
-echo ""
-echo "The doctor command will check:"
-echo "  - Required CLI tools (cursor, codex, claude, gemini, copilot)"
-echo "  - Platform authentication status"
-echo "  - Missing configuration"
-echo ""
-echo "Platform CLI Installation:"
-echo ""
-echo "  Cursor CLI:"
-echo "    curl https://cursor.com/install -fsSL | bash"
-echo "    Installs both 'agent' and 'cursor-agent' to ~/.local/bin"
-echo ""
-echo "  Codex CLI:"
-echo "    npm install -g @openai/codex-cli"
-echo "    Or download from: https://github.com/openai/codex-cli"
-echo ""
-echo "  Claude Code CLI:"
-echo "    npm install -g @anthropic-ai/claude-code-cli"
-echo "    Or download from: https://github.com/anthropics/claude-code-cli"
-echo "    Requires: ANTHROPIC_API_KEY environment variable"
-echo ""
-echo "  Gemini CLI:"
-echo "    npm install -g @google/gemini-cli"
-echo "    Or: npx @google/gemini-cli"
-echo "    Requires: GEMINI_API_KEY or GOOGLE_APPLICATION_CREDENTIALS"
-echo ""
-echo "  GitHub Copilot CLI:"
-echo "    npm install -g @github/copilot-cli"
-echo "    Requires: GitHub Copilot subscription and GH_TOKEN/GITHUB_TOKEN"
-echo ""
-echo "After installing platform CLIs, run 'puppet-master doctor' to verify."
-echo ""
-echo "Optional: Enable the GUI server as a systemd service:"
-echo "  sudo systemctl enable puppet-master-gui"
-echo "  sudo systemctl start puppet-master-gui"
-echo ""
-echo "For per-user service (runs without root):"
-echo "  cp /usr/lib/systemd/system/puppet-master-gui.service ~/.config/systemd/user/"
-echo "  systemctl --user daemon-reload"
-echo "  systemctl --user enable puppet-master-gui"
-echo "  systemctl --user start puppet-master-gui"
-echo ""
-echo "For help: puppet-master --help"
-echo ""
-# Notify user (if notify-send available, e.g. GNOME/KDE)
+
+# Notify user (optional; must not cause install to fail)
 if command -v notify-send >/dev/null 2>&1; then
-  notify-send "Puppet Master" "Installation complete. Find 'Puppet Master' in your application menu." -i /opt/puppet-master/puppet-master.png 2>/dev/null || true
+  ( notify-send "Puppet Master" "Installation complete. Find 'Puppet Master' in your application menu." -i /opt/puppet-master/puppet-master.png 2>/dev/null ) || true
 fi

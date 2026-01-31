@@ -27,52 +27,16 @@ if [ ! -x "${LAUNCHER}" ]; then
 fi
 
 echo "Installed Puppet Master.app to ${APP_BUNDLE}"
-echo "CLI available at ${LAUNCHER} (inside the app bundle)"
+echo "CLI available at ${LAUNCHER}"
 
-# P0-G23: Display post-install guidance
+# Create /usr/local/bin symlink so 'puppet-master' works from Terminal
+if [ -d /usr/local/bin ]; then
+  ln -sf "${LAUNCHER}" /usr/local/bin/puppet-master 2>/dev/null || true
+fi
+
 echo ""
-echo "=============================================="
-echo "  Puppet Master Installation Complete!"
-echo "=============================================="
-echo ""
-echo "Next steps:"
-echo "  1. Open 'Puppet Master' from Applications to launch the GUI"
-echo "     (or run ${LAUNCHER} gui in Terminal)"
-echo "  2. Run 'puppet-master doctor' to verify installation"
-echo "     and check platform prerequisites"
-echo ""
-echo "The doctor command will check:"
-echo "  - Required CLI tools (cursor, codex, claude, gemini, copilot)"
-echo "  - Platform authentication status"
-echo "  - Missing configuration"
-echo ""
-echo "Platform CLI Installation:"
-echo ""
-echo "  Cursor CLI:"
-echo "    curl https://cursor.com/install -fsSL | bash"
-echo "    Installs both 'agent' and 'cursor-agent' to ~/.local/bin"
-echo ""
-echo "  Codex CLI:"
-echo "    npm install -g @openai/codex-cli"
-echo "    Or download from: https://github.com/openai/codex-cli"
-echo ""
-echo "  Claude Code CLI:"
-echo "    npm install -g @anthropic-ai/claude-code-cli"
-echo "    Or download from: https://github.com/anthropics/claude-code-cli"
-echo "    Requires: ANTHROPIC_API_KEY environment variable"
-echo ""
-echo "  Gemini CLI:"
-echo "    npm install -g @google/gemini-cli"
-echo "    Or: brew install gemini-cli"
-echo "    Requires: GEMINI_API_KEY or GOOGLE_APPLICATION_CREDENTIALS"
-echo ""
-echo "  GitHub Copilot CLI:"
-echo "    npm install -g @github/copilot-cli"
-echo "    Requires: GitHub Copilot subscription and GH_TOKEN/GITHUB_TOKEN"
-echo ""
-echo "After installing platform CLIs, run 'puppet-master doctor' to verify."
-echo ""
-echo "For help: puppet-master --help"
+echo "Puppet Master installed. Open from Applications or run 'puppet-master gui'."
+echo "On first launch, a setup wizard will help install AI platform CLIs."
 echo ""
 
 exit 0

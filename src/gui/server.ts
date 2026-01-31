@@ -760,7 +760,7 @@ export class GuiServer {
     this.app.use('/api', createDoctorRoutes());
 
     // Platform routes
-    this.app.use('/api', createPlatformRoutes());
+    this.app.use('/api', createPlatformRoutes(this.config.baseDirectory));
 
     // History routes (will be updated when SessionTracker is registered)
     this.app.use('/api', createHistoryRoutes(null));

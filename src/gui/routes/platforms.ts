@@ -6,7 +6,7 @@
 
 import type { Router, Request, Response } from 'express';
 import { Router as createRouter } from 'express';
-import { existsSync } from 'fs';
+import { existsSync, readdirSync } from 'fs';
 import { join } from 'path';
 import { PlatformDetector, type PlatformStatus } from '../../platforms/platform-detector.js';
 import { InstallationManager } from '../../doctor/installation-manager.js';
@@ -59,7 +59,7 @@ interface SelectPlatformsRequest {
  * 
  * @returns Express Router with platform management endpoints
  */
-export function createPlatformRoutes(): Router {
+export function createPlatformRoutes(baseDirectory?: string): Router {
   const router = createRouter();
 
   /**
@@ -118,9 +118,18 @@ export function createPlatformRoutes(): Router {
       const configPath = configManager.getConfigPath();
       const configExists = existsSync(configPath);
 
-      // Check for capabilities file
-      const capabilitiesPath = join(process.cwd(), '.puppet-master', 'capabilities', 'capabilities.json');
-      const capabilitiesExists = existsSync(capabilitiesPath);
+      // Check for capabilities directory with actual platform files (claude.json, codex.json, etc.)
+      const baseDir = baseDirectory || process.cwd();
+      const capabilitiesDir = join(baseDir, '.puppet-master', 'capabilities');
+      let capabilitiesExists = false;
+      if (existsSync(capabilitiesDir)) {
+        try {
+          const files = readdirSync(capabilitiesDir).filter(f => f.endsWith('.json') || f.endsWith('.yaml'));
+          capabilitiesExists = files.length > 0;
+        } catch {
+          capabilitiesExists = false;
+        }
+      }
 
       // Check if config has any platforms configured
       let hasPlatformsConfigured = false;
