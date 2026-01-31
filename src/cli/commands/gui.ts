@@ -79,6 +79,63 @@ function shouldEnableCrashLogging(): boolean {
 }
 
 /**
+ * Wrap a stream's write so that ERR_STREAM_DESTROYED is caught and ignored.
+ * After the first destroyed write we replace with a no-op to avoid a CPU spin
+ * if the caller (e.g. vscode-jsonrpc) retries writes in a tight loop.
+ */
+function wrapStreamWriteToIgnoreDestroyed(
+  stream: NodeJS.WriteStream & { write: NodeJS.WriteStream['write'] }
+): void {
+  const origWrite = stream.write.bind(stream);
+  let destroyed = false;
+
+  function noopWrite(
+    _chunk: string | Uint8Array,
+    encodingOrCallback?: BufferEncoding | ((err?: Error | null) => void),
+    callback?: (err?: Error | null) => void
+  ): boolean {
+    const cb = typeof encodingOrCallback === 'function' ? encodingOrCallback : callback;
+    if (cb) setImmediate(cb, null);
+    return false;
+  }
+
+  stream.write = function (
+    chunk: string | Uint8Array,
+    encodingOrCallback?: BufferEncoding | ((err?: Error | null) => void),
+    callback?: (err?: Error | null) => void
+  ): boolean {
+    if (destroyed) {
+      return noopWrite(chunk, encodingOrCallback, callback);
+    }
+    const cb = typeof encodingOrCallback === 'function' ? encodingOrCallback : callback;
+    const enc = typeof encodingOrCallback === 'function' ? undefined : encodingOrCallback;
+    const wrappedCb = cb
+      ? (err?: Error | null) => {
+          if (err && (err as NodeJS.ErrnoException).code === 'ERR_STREAM_DESTROYED') {
+            destroyed = true;
+            stream.write = noopWrite;
+            cb(null);
+            return;
+          }
+          cb(err);
+        }
+      : undefined;
+    try {
+      return origWrite(chunk, enc as BufferEncoding | undefined, wrappedCb);
+    } catch (err) {
+      const e = err as NodeJS.ErrnoException;
+      if (e?.code === 'ERR_STREAM_DESTROYED') {
+        destroyed = true;
+        stream.write = noopWrite;
+        if (cb) setImmediate(cb, null);
+        return false;
+      }
+      throw err;
+    }
+  };
+}
+
+/**
  * Ensure crash log directory exists and write error to crash.log.
  * Used when running without TTY to capture failures for debugging.
  */
@@ -153,13 +210,30 @@ function resolveInstallRoot(): string | undefined {
 }
 
 function resolveTauriGuiBinary(installRoot: string | undefined): string | undefined {
-  if (!installRoot) return undefined;
-  if (process.platform === 'win32') {
-    const exe = path.join(installRoot, 'app', 'puppet-master-gui.exe');
-    return existsSync(exe) ? exe : undefined;
+  if (installRoot) {
+    if (process.platform === 'win32') {
+      const exe = path.join(installRoot, 'app', 'puppet-master-gui.exe');
+      if (existsSync(exe)) return exe;
+    } else {
+      const bin = path.join(installRoot, 'bin', 'puppet-master-gui');
+      if (existsSync(bin)) return bin;
+    }
   }
-  const bin = path.join(installRoot, 'bin', 'puppet-master-gui');
-  return existsSync(bin) ? bin : undefined;
+  // Dev: look for Tauri binary in project (src-tauri/target/release/)
+  try {
+    const here = path.dirname(fileURLToPath(import.meta.url));
+    const projectRoot = path.resolve(here, '../../../../');
+    if (process.platform === 'win32') {
+      const exe = path.join(projectRoot, 'src-tauri', 'target', 'release', 'puppet-master.exe');
+      if (existsSync(exe)) return exe;
+    } else {
+      const bin = path.join(projectRoot, 'src-tauri', 'target', 'release', 'puppet-master');
+      if (existsSync(bin)) return bin;
+    }
+  } catch {
+    // ignore
+  }
+  return undefined;
 }
 
 function launchTauriGui(tauriBin: string, serverUrl: string, verbose: boolean | undefined): boolean {
@@ -187,6 +261,12 @@ function launchTauriGui(tauriBin: string, serverUrl: string, verbose: boolean | 
  * Main action function for the GUI command
  */
 export async function guiAction(options: GuiOptions): Promise<void> {
+  // When launched from the desktop, process.stdout/stderr can be destroyed and any write
+  // (e.g. from Copilot SDK / vscode-jsonrpc) throws ERR_STREAM_DESTROYED. process.stdout
+  // and process.stderr are read-only in Node, so wrap their write methods to no-op on that error.
+  wrapStreamWriteToIgnoreDestroyed(process.stdout as NodeJS.WriteStream & { write: NodeJS.WriteStream['write'] });
+  wrapStreamWriteToIgnoreDestroyed(process.stderr as NodeJS.WriteStream & { write: NodeJS.WriteStream['write'] });
+
   // When running without TTY (desktop shortcut, app menu), install crash handlers for diagnostics
   const enableCrashLogging = shouldEnableCrashLogging();
   if (enableCrashLogging) {
@@ -448,8 +528,9 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     }
     console.log('');
 
-    // Launch desktop GUI if enabled (default: true, unless --no-open flag is set)
-    if (options.open !== false) {
+    // Launch desktop GUI if enabled (default: true, unless --no-open or PUPPET_MASTER_NO_OPEN)
+    const skipOpen = process.env.PUPPET_MASTER_NO_OPEN === '1' || process.env.PUPPET_MASTER_NO_OPEN === 'true';
+    if (options.open !== false && !skipOpen) {
       const installRoot = resolveInstallRoot();
       const tauriBin = resolveTauriGuiBinary(installRoot);
 
