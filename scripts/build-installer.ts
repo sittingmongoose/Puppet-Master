@@ -98,8 +98,10 @@ async function buildTauriApp(repoRoot: string, platform: InstallerPlatform): Pro
   console.log('\n🦀 Building Tauri desktop app...\n');
 
   try {
-    // Build the Tauri app (bundles + release binary)
-    await run('npx', ['tauri', 'build'], { cwd: repoRoot });
+    // Build the Tauri app (bundles + release binary).
+    // Tauri CLI expects CI to be "true" or "false"; GitHub Actions sets CI=1, so normalize it.
+    const env = { ...process.env, CI: process.env.CI ? 'true' : 'false' };
+    await run('npx', ['tauri', 'build'], { cwd: repoRoot, env });
 
     // Stage the runnable binary (simplest integration with our existing installers)
     const targetDir = path.join(repoRoot, 'src-tauri', 'target', 'release');
