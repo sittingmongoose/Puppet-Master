@@ -60,6 +60,22 @@ jobs:
           npm --prefix src/gui/react install
           npm run gui:build
 
+      - name: Install WebView2 SDK (Windows for Tauri)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          # Download and extract WebView2 SDK for Tauri compilation
+          $sdkUrl = "https://www.nuget.org/api/v2/package/Microsoft.Web.WebView2/1.0.2592.51"
+          $sdkZip = "$env:TEMP\webview2.zip"
+          $sdkDir = "$env:TEMP\webview2-sdk"
+          Write-Host "Downloading WebView2 SDK..."
+          Invoke-WebRequest -Uri $sdkUrl -OutFile $sdkZip
+          Expand-Archive -Path $sdkZip -DestinationPath $sdkDir -Force
+          # Set environment variable for Tauri build
+          $libPath = "$sdkDir\build\native\x64"
+          echo "WEBVIEW2_LIB_PATH=$libPath" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          Write-Host "WebView2 SDK installed at: $sdkDir"
+
       - name: Install NSIS (Windows)
         if: runner.os == 'Windows'
         shell: pwsh

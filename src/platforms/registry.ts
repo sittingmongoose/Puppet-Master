@@ -126,6 +126,9 @@ export class PlatformRegistry {
     // Uses official GitHub Copilot SDK for structured communication
     // Note: SDK runner implements PlatformRunnerContract but doesn't extend BasePlatformRunner
     // since it uses a fundamentally different execution model (JSON-RPC vs process spawning)
+    // 
+    // P0-G01: Copilot SDK is optional - runner will handle unavailability gracefully during initialize()
+    // If SDK is not available (e.g., in CI builds without bundled SDK), execute() will fail with clear error
     const copilotSdkRunner = new CopilotSdkRunner(
       capabilityService,
       {

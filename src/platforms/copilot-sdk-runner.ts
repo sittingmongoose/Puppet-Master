@@ -196,7 +196,14 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
         this.sdkUnavailableReason = `Failed to initialize Copilot SDK: ${errorMessage}`;
       }
 
-      console.warn(`[CopilotSdkRunner] SDK unavailable: ${this.sdkUnavailableReason}`);
+      // Suppress console output errors that may occur if streams are destroyed during module load failure
+      try {
+        if (process.stderr.writable) {
+          console.warn(`[CopilotSdkRunner] SDK unavailable: ${this.sdkUnavailableReason}`);
+        }
+      } catch {
+        // Stream already destroyed, silently skip warning
+      }
     }
   }
 

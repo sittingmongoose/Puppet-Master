@@ -654,7 +654,13 @@ async function main(): Promise<void> {
       await stageTauriApp(tauriPath, payloadRoot, args.platform);
       console.log('\n✅ Tauri app staged successfully\n');
     } else {
-      console.warn('\n⚠️  Tauri build failed or artifacts not found, continuing without Tauri\n');
+      // When --with-tauri is explicitly requested, fail the build instead of continuing
+      // This ensures CI catches Tauri build failures rather than silently building without it
+      throw new Error(
+        'Tauri build failed or artifacts not found. ' +
+        'When using --with-tauri flag, the build must include the Tauri desktop application. ' +
+        'Check the logs above for the actual build error.'
+      );
     }
   }
 
