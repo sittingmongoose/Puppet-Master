@@ -27,6 +27,11 @@ description: |
   RWM Puppet Master - CLI orchestrator for AI development workflows.
   (Not related to Puppetlabs Puppet configuration management)
 
+depends:
+  - libwebkit2gtk-4.1-0
+  - libjavascriptcoregtk-4.1-0
+  - libgtk-3-0t64 | libgtk-3-0
+
 conflicts:
   - puppet-master
 replaces:

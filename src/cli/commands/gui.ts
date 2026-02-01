@@ -251,11 +251,21 @@ function resolveTauriGuiBinary(installRoot: string | undefined): string | undefi
 }
 
 function launchTauriGui(tauriBin: string, serverUrl: string, verbose: boolean | undefined): boolean {
+  // On Linux, Tauri (GTK) aborts with SIGABRT if no display server is available.
+  // Skip the native GUI and fall back to the browser when DISPLAY/WAYLAND_DISPLAY are unset.
+  if (process.platform === 'linux' && !process.env.DISPLAY && !process.env.WAYLAND_DISPLAY) {
+    if (verbose) {
+      console.log('  No DISPLAY or WAYLAND_DISPLAY set — skipping Tauri GUI');
+    }
+    return false;
+  }
+
   try {
     const child = spawn(tauriBin, ['--server-url', serverUrl], {
       detached: true,
       stdio: 'ignore',
       windowsHide: true,
+      env: { ...process.env },
     });
     child.unref();
     if (verbose) {

@@ -13,6 +13,18 @@ if command -v update-desktop-database >/dev/null 2>&1; then
   update-desktop-database /usr/share/applications 2>/dev/null || true
 fi
 
+# Set gdebi as the default handler for .deb files (many desktops default to
+# an archive manager like Engrampa, which cannot install packages).
+if command -v xdg-mime >/dev/null 2>&1 && [ -f /usr/share/applications/gdebi.desktop ]; then
+  xdg-mime default gdebi.desktop application/vnd.debian.binary-package 2>/dev/null || true
+  xdg-mime default gdebi.desktop application/x-deb 2>/dev/null || true
+fi
+
+# Clear any previous Puppet Master crash reports to avoid confusing the user
+rm -f /var/crash/_opt_puppet-master_bin_puppet-master-gui.*.crash 2>/dev/null || true
+rm -f /var/crash/_opt_puppet-master_bin_puppet-master-gui.*.upload 2>/dev/null || true
+rm -f /var/crash/_opt_puppet-master_bin_puppet-master-gui.*.uploaded 2>/dev/null || true
+
 echo ""
 echo "Puppet Master installed. Find 'Puppet Master' in your application menu,"
 echo "or run 'puppet-master gui' from the terminal."

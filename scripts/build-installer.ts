@@ -705,6 +705,16 @@ read x
     },
   });
 
+  // Copy the GUI-friendly install.sh alongside the .deb so users can
+  // double-click it instead of relying on gdebi (which crashes on large .deb files).
+  const installSh = path.join(repoRoot, 'installer', 'linux', 'scripts', 'install.sh');
+  if (existsSync(installSh)) {
+    const installShDest = path.join(outDir, 'install.sh');
+    await (await import('node:fs/promises')).copyFile(installSh, installShDest);
+    await chmod(installShDest, 0o755);
+    console.log(`  Copied install.sh → ${installShDest}`);
+  }
+
   return [debOut, rpmOut];
 }
 
