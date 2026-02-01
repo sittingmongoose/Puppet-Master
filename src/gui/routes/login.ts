@@ -7,6 +7,9 @@
 
 import type { Router, Request, Response } from 'express';
 import { Router as createRouter } from 'express';
+import { spawn } from 'node:child_process';
+import { homedir } from 'node:os';
+import { join } from 'node:path';
 import type { Platform } from '../../types/config.js';
 import { getPlatformAuthStatus, type PlatformAuthStatus } from '../../platforms/auth-status.js';
 
@@ -224,6 +227,99 @@ export function createLoginRoutes(): Router {
         error: err.message || 'Failed to get instructions',
         code: 'INSTRUCTIONS_ERROR',
       } as ErrorResponse);
+    }
+  });
+
+  /**
+   * POST /api/login/:platform
+   * Trigger CLI-based login for a platform (fire-and-forget).
+   *
+   * Spawns the platform's native login command which typically opens a browser.
+   * The response is returned immediately — the caller should poll /api/login/status
+   * to detect when authentication completes.
+   */
+  router.post('/login/:platform', async (req: Request, res: Response) => {
+    try {
+      const { platform } = req.params;
+      const normalizedPlatform = platform.toLowerCase() as Platform;
+
+      if (!PLATFORMS.includes(normalizedPlatform)) {
+        res.status(400).json({
+          success: false,
+          error: `Invalid platform: ${platform}`,
+          code: 'INVALID_PLATFORM',
+          validPlatforms: PLATFORMS,
+        });
+        return;
+      }
+
+      // Cursor has no CLI login — advise user to open the app
+      if (normalizedPlatform === 'cursor') {
+        res.json({
+          success: true,
+          message: 'Cursor uses app-based authentication. Open the Cursor IDE and sign in through Settings > Account.',
+        });
+        return;
+      }
+
+      // Map platform to CLI login command + args
+      const loginCommands: Record<string, { cmd: string; args: string[] }> = {
+        claude:  { cmd: 'claude',  args: ['login'] },
+        codex:   { cmd: 'codex',   args: ['login'] },
+        gemini:  { cmd: 'gemini',  args: ['auth', 'login'] },
+        copilot: { cmd: 'gh',      args: ['auth', 'login', '--web', '-p', 'https'] },
+      };
+
+      const loginCmd = loginCommands[normalizedPlatform];
+      if (!loginCmd) {
+        res.status(400).json({
+          success: false,
+          error: `No CLI login command available for ${normalizedPlatform}.`,
+        });
+        return;
+      }
+
+      // Build enriched PATH (same pattern as installation-manager.ts)
+      const home = homedir();
+      const extraPaths = [
+        '/usr/local/bin',
+        '/opt/homebrew/bin',
+        '/opt/homebrew/sbin',
+        join(home, '.local', 'bin'),
+        '/usr/local/lib/puppet-master/node/bin',
+        '/opt/puppet-master/node/bin',
+      ];
+      const currentPath = process.env.PATH || '/usr/bin:/bin';
+      const enrichedPath = [...extraPaths, currentPath].join(':');
+
+      // Fire-and-forget: spawn the login process detached
+      const child = spawn(loginCmd.cmd, loginCmd.args, {
+        shell: true,
+        detached: true,
+        stdio: 'ignore',
+        env: { ...process.env, PATH: enrichedPath },
+      });
+
+      // Unref so the parent process is not held open
+      child.unref();
+
+      // Listen for immediate spawn errors (e.g. command not found)
+      child.on('error', (err) => {
+        // Already responded — just log
+        console.error(`[login] spawn error for ${normalizedPlatform}:`, err.message);
+      });
+
+      res.json({
+        success: true,
+        message: `Login initiated for ${normalizedPlatform} — check your browser to complete authentication.`,
+      });
+    } catch (error) {
+      const err = error as Error;
+      res.status(500).json({
+        success: false,
+        error: err.message || `Failed to initiate login`,
+        code: 'LOGIN_SPAWN_ERROR',
+      });
     }
   });
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import { Panel } from '@/components/layout';
 import { Button, HelpText } from '@/components/ui';
@@ -17,7 +17,7 @@ import type { StatusType } from '@/types';
 
 interface PlatformAuthInfo {
   platform: string;
-  status: 'authenticated' | 'failed' | 'skipped';
+  status: 'authenticated' | 'not_authenticated' | 'failed' | 'skipped';
   details: string;
   fixSuggestion?: string;
   envVar?: string;
@@ -27,20 +27,22 @@ interface PlatformAuthInfo {
 interface AuthSummary {
   total: number;
   authenticated: number;
+  notAuthenticated: number;
   failed: number;
   skipped: number;
 }
 
-interface PlatformInstructions {
-  platform: string;
-  description: string;
-  envVar: string;
-  getUrl: string;
-  instructions: string[];
+interface GitInfo {
+  branches: string[];
+  remoteName: string;
+  remoteUrl: string;
+  userName: string;
+  userEmail: string;
+  currentBranch: string;
 }
 
 /**
- * Login page - Platform authentication status and management
+ * Login page - Platform authentication status and CLI-based login
  * Feature parity with CLI `puppet-master login` command
  */
 export default function LoginPage() {
@@ -48,25 +50,42 @@ export default function LoginPage() {
   const [summary, setSummary] = useState<AuthSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
-  const [instructions, setInstructions] = useState<PlatformInstructions | null>(null);
+  const [loggingIn, setLoggingIn] = useState<Record<string, boolean>>({});
+  const [loginMessages, setLoginMessages] = useState<Record<string, string>>({});
+  const [gitInfo, setGitInfo] = useState<GitInfo | null>(null);
 
   // Fetch auth status on mount
   useEffect(() => {
     fetchAuthStatus();
   }, []);
 
+  // Fetch git info on mount
+  useEffect(() => {
+    const fetchGitInfo = async () => {
+      try {
+        const response = await fetch('/api/config/git-info');
+        if (response.ok) {
+          const data = await response.json();
+          setGitInfo(data);
+        }
+      } catch (err) {
+        console.error('[Login] Failed to fetch git info:', err);
+      }
+    };
+    fetchGitInfo();
+  }, []);
+
   const fetchAuthStatus = async () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       const response = await fetch('/api/login/status');
       if (!response.ok) {
         const errData = await response.json();
         throw new Error(errData.error || 'Failed to fetch auth status');
       }
-      
+
       const data = await response.json();
       setPlatforms(data.platforms || []);
       setSummary(data.summary || null);
@@ -78,25 +97,42 @@ export default function LoginPage() {
     }
   };
 
-  const fetchInstructions = async (platform: string) => {
+  const handleLogin = useCallback(async (platform: string) => {
     try {
-      const response = await fetch(`/api/login/instructions/${platform}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch instructions');
-      }
+      setLoggingIn((prev) => ({ ...prev, [platform]: true }));
+      setLoginMessages((prev) => ({ ...prev, [platform]: '' }));
+
+      const response = await fetch(`/api/login/${platform}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
       const data = await response.json();
-      setInstructions(data);
-      setSelectedPlatform(platform);
+
+      if (data.success) {
+        setLoginMessages((prev) => ({ ...prev, [platform]: data.message }));
+      } else {
+        setLoginMessages((prev) => ({
+          ...prev,
+          [platform]: `Error: ${data.error || 'Login failed'}`,
+        }));
+      }
     } catch (err) {
-      console.error('[Login] Failed to fetch instructions:', err);
+      console.error(`[Login] Failed to trigger login for ${platform}:`, err);
+      setLoginMessages((prev) => ({
+        ...prev,
+        [platform]: `Error: ${err instanceof Error ? err.message : 'Unknown error'}`,
+      }));
+    } finally {
+      setLoggingIn((prev) => ({ ...prev, [platform]: false }));
     }
-  };
+  }, []);
 
   // Map auth status to StatusType
   const mapStatusToType = (status: string): StatusType => {
     switch (status) {
       case 'authenticated':
         return 'complete';
+      case 'not_authenticated':
       case 'failed':
         return 'error';
       case 'skipped':
@@ -138,8 +174,8 @@ export default function LoginPage() {
               <div className="text-sm text-ink-faded">Authenticated</div>
             </div>
             <div className="text-center p-md border-medium border-hot-magenta">
-              <div className="text-2xl font-bold text-hot-magenta">{summary.failed}</div>
-              <div className="text-sm text-ink-faded">Failed</div>
+              <div className="text-2xl font-bold text-hot-magenta">{summary.notAuthenticated ?? summary.failed ?? 0}</div>
+              <div className="text-sm text-ink-faded">Not Authenticated</div>
             </div>
             <div className="text-center p-md border-medium border-ink-faded">
               <div className="text-2xl font-bold text-ink-faded">{summary.skipped}</div>
@@ -165,161 +201,93 @@ export default function LoginPage() {
               key={platform.platform}
               platform={platform}
               statusType={mapStatusToType(platform.status)}
-              onShowInstructions={() => fetchInstructions(platform.platform)}
-              isSelected={selectedPlatform === platform.platform}
+              isLoggingIn={!!loggingIn[platform.platform]}
+              loginMessage={loginMessages[platform.platform] || ''}
+              onLogin={() => handleLogin(platform.platform)}
+              onRefresh={fetchAuthStatus}
             />
           ))}
         </div>
       </Panel>
-
-      {/* Instructions Modal/Panel */}
-      {instructions && selectedPlatform && (
-        <Panel title={`${selectedPlatform.toUpperCase()} Setup Instructions`}>
-          <HelpText {...helpContent.login.setupInstructions} />
-          <div className="space-y-md mt-md">
-            <p className="text-ink-faded">{instructions.description}</p>
-            
-            {instructions.envVar && instructions.envVar !== 'N/A (CLI-based auth)' && (
-              <div className="p-md bg-paper-lined">
-                <div className="text-sm text-ink-faded mb-xs">Environment Variable</div>
-                <code className="font-mono text-electric-blue">{instructions.envVar}</code>
-              </div>
-            )}
-            
-            {instructions.getUrl && (
-              <div className="p-md bg-paper-lined">
-                <div className="text-sm text-ink-faded mb-xs">Get Credentials</div>
-                <a 
-                  href={instructions.getUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-electric-blue hover:underline"
-                >
-                  {instructions.getUrl}
-                </a>
-              </div>
-            )}
-            
-            <div className="space-y-sm">
-              <div className="text-sm font-semibold">Steps:</div>
-              <ol className="list-decimal list-inside space-y-xs">
-                {instructions.instructions.map((step, index) => (
-                  <li key={index} className="text-sm">{step}</li>
-                ))}
-              </ol>
-            </div>
-            
-            <div className="pt-md border-t border-ink-faded">
-              <Button variant="ghost" onClick={() => { setSelectedPlatform(null); setInstructions(null); }}>
-                CLOSE
-              </Button>
-            </div>
-          </div>
-        </Panel>
-      )}
 
       {/* CLI Alternative */}
       <Panel title="CLI Alternative">
         <HelpText {...helpContent.login.cliAlternative} />
         <div className="space-y-md mt-md">
           <p className="text-sm text-ink-faded">
-            You can also configure authentication using the command line interface (CLI). 
-            This is useful for headless servers or if you prefer working in a terminal.
+            You can also authenticate using the command line. Each platform has its own login command.
           </p>
-          
-          {/* Step 1: Open Terminal */}
-          <div className="space-y-sm">
-            <div className="font-semibold text-sm">Step 1: Open a Terminal</div>
-            <div className="p-md bg-paper-lined text-sm space-y-xs">
-              <div className="text-ink-faded">
-                <strong>macOS:</strong> Open Spotlight (Cmd+Space), type "Terminal", press Enter
-              </div>
-              <div className="text-ink-faded">
-                <strong>Windows:</strong> Press Win+R, type "cmd" or "powershell", press Enter
-              </div>
-              <div className="text-ink-faded">
-                <strong>Linux:</strong> Press Ctrl+Alt+T, or find Terminal in your applications
-              </div>
+
+          <div className="p-md bg-paper-lined font-mono text-sm space-y-sm">
+            <div>
+              <div className="text-ink-faded"># Claude Code</div>
+              <div className="text-electric-blue">claude login</div>
+            </div>
+            <div>
+              <div className="text-ink-faded"># Codex CLI</div>
+              <div className="text-electric-blue">codex login</div>
+            </div>
+            <div>
+              <div className="text-ink-faded"># Gemini CLI</div>
+              <div className="text-electric-blue">gemini auth login</div>
+            </div>
+            <div>
+              <div className="text-ink-faded"># GitHub Copilot (via gh CLI)</div>
+              <div className="text-electric-blue">gh auth login --web -p https</div>
+            </div>
+            <div>
+              <div className="text-ink-faded"># Cursor (open the app and sign in)</div>
+              <div className="text-electric-blue">cursor</div>
             </div>
           </div>
 
-          {/* Step 2: Navigate to Project */}
           <div className="space-y-sm">
-            <div className="font-semibold text-sm">Step 2: Navigate to Your Project</div>
-            <div className="p-md bg-paper-lined text-sm space-y-xs">
-              <div className="font-mono">
-                <div className="text-ink-faded"># Change to your project directory</div>
-                <div className="text-electric-blue">cd /path/to/your/project</div>
-              </div>
-              <div className="border-t border-ink-faded pt-xs mt-xs">
-                <div className="text-ink-faded mb-xs"><strong>Examples:</strong></div>
-                <div className="font-mono text-sm">
-                  <div className="text-ink-faded"><strong>macOS/Linux:</strong></div>
-                  <div className="text-electric-blue">cd ~/Documents/my-project</div>
-                  <div className="text-electric-blue">cd ~/Desktop/rwm-puppet-master</div>
-                </div>
-              </div>
-              <div>
-                <div className="font-mono text-sm">
-                  <div className="text-ink-faded"><strong>Windows:</strong></div>
-                  <div className="text-electric-blue">cd C:\Users\YourName\Documents\my-project</div>
-                  <div className="text-electric-blue">cd C:\Users\YourName\Desktop\rwm-puppet-master</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Step 3: Run Login Commands */}
-          <div className="space-y-sm">
-            <div className="font-semibold text-sm">Step 3: Run the Login Command</div>
-            <div className="p-md bg-paper-lined font-mono text-sm space-y-sm">
-              <div>
-                <div className="text-ink-faded"># Option A: Interactive wizard (guides you through all platforms)</div>
-                <div className="text-electric-blue">puppet-master login</div>
-              </div>
-              <div>
-                <div className="text-ink-faded"># Option B: Configure a specific platform only</div>
-                <div className="text-electric-blue">puppet-master login claude</div>
-                <div className="text-electric-blue">puppet-master login codex</div>
-                <div className="text-electric-blue">puppet-master login gemini</div>
-                <div className="text-electric-blue">puppet-master login copilot</div>
-                <div className="text-electric-blue">puppet-master login cursor</div>
-              </div>
-              <div>
-                <div className="text-ink-faded"># Option C: Configure all platforms at once</div>
-                <div className="text-electric-blue">puppet-master login --all</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Step 4: Follow Prompts */}
-          <div className="space-y-sm">
-            <div className="font-semibold text-sm">Step 4: Follow the Prompts</div>
-            <div className="p-md bg-paper-lined text-sm text-ink-faded">
-              <p>The CLI will guide you through entering your API keys or credentials.</p>
-              <p className="mt-xs">Keys are saved securely to a <code className="font-mono text-electric-blue">.env</code> file in your project.</p>
-            </div>
-          </div>
-
-          {/* Verify Setup */}
-          <div className="space-y-sm">
-            <div className="font-semibold text-sm">Step 5: Verify Your Setup</div>
+            <div className="font-semibold text-sm">Verify Your Setup</div>
             <div className="p-md bg-paper-lined font-mono text-sm space-y-xs">
               <div className="text-ink-faded"># Check which platforms are authenticated</div>
               <div className="text-electric-blue">puppet-master doctor</div>
-              <div className="mt-sm text-ink-faded"># Or check a specific platform</div>
-              <div className="text-electric-blue">puppet-master login claude --status</div>
             </div>
           </div>
+        </div>
+      </Panel>
 
-          {/* Troubleshooting */}
-          <div className="space-y-sm">
-            <div className="font-semibold text-sm">Troubleshooting</div>
-            <div className="p-md bg-paper-lined text-sm text-ink-faded space-y-xs">
-              <div><strong>Command not found?</strong> Make sure puppet-master is installed: <code className="font-mono text-electric-blue">npm install -g puppet-master</code></div>
-              <div><strong>Permission denied?</strong> Try running with elevated permissions or check your npm global path.</div>
-              <div><strong>Still having issues?</strong> Run <code className="font-mono text-electric-blue">puppet-master doctor</code> to diagnose problems.</div>
+      {/* Git Configuration */}
+      <Panel title="Git Configuration">
+        <div className="space-y-md mt-md">
+          <p className="text-sm text-ink-faded">
+            Git identity and remote configuration for this repository.
+          </p>
+
+          {gitInfo ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
+              {gitInfo.userName && (
+                <div className="p-md border-medium border-ink-faded">
+                  <div className="text-xs text-ink-faded uppercase tracking-wide mb-xs">Git User</div>
+                  <div className="font-mono text-sm">{gitInfo.userName}</div>
+                </div>
+              )}
+              {gitInfo.userEmail && (
+                <div className="p-md border-medium border-ink-faded">
+                  <div className="text-xs text-ink-faded uppercase tracking-wide mb-xs">Git Email</div>
+                  <div className="font-mono text-sm">{gitInfo.userEmail}</div>
+                </div>
+              )}
+              {gitInfo.remoteUrl && (
+                <div className="p-md border-medium border-ink-faded md:col-span-2">
+                  <div className="text-xs text-ink-faded uppercase tracking-wide mb-xs">Remote URL</div>
+                  <div className="font-mono text-sm break-all">{gitInfo.remoteUrl}</div>
+                </div>
+              )}
             </div>
+          ) : (
+            <p className="text-sm text-ink-faded">Loading git information...</p>
+          )}
+
+          <div className="p-sm bg-electric-blue/10 border-medium border-electric-blue text-sm">
+            <strong>Note: </strong>
+            Git authentication is managed through your system git credential helper
+            (e.g. <span className="font-mono">git credential-store</span>, <span className="font-mono">git credential-cache</span>,
+            or platform-specific helpers like GitHub CLI). Configure it via <span className="font-mono">git config credential.helper</span>.
           </div>
         </div>
       </Panel>
@@ -334,11 +302,13 @@ export default function LoginPage() {
 interface PlatformCardProps {
   platform: PlatformAuthInfo;
   statusType: StatusType;
-  onShowInstructions: () => void;
-  isSelected: boolean;
+  isLoggingIn: boolean;
+  loginMessage: string;
+  onLogin: () => void;
+  onRefresh: () => void;
 }
 
-function PlatformCard({ platform, statusType, onShowInstructions, isSelected }: PlatformCardProps) {
+function PlatformCard({ platform, statusType, isLoggingIn, loginMessage, onLogin, onRefresh }: PlatformCardProps) {
   // Platform icons
   const platformIcons: Record<string, ReactNode> = {
     cursor: <CursorIcon size="1.5em" />,
@@ -347,16 +317,13 @@ function PlatformCard({ platform, statusType, onShowInstructions, isSelected }: 
     gemini: <SparkleIcon size="1.5em" />,
     copilot: <ArmIcon size="1.5em" />,
   };
-  
+
   const icon = platformIcons[platform.platform] || <PackageIcon size="1.5em" />;
-  
+  const isCursor = platform.platform === 'cursor';
+
   return (
-    <div 
-      className={`p-md border-medium transition-colors ${
-        isSelected 
-          ? 'border-electric-blue bg-electric-blue/5' 
-          : 'border-ink-faded hover:border-electric-blue'
-      }`}
+    <div
+      className="p-md border-medium transition-colors border-ink-faded hover:border-electric-blue"
     >
       <div className="flex items-center justify-between mb-md">
         <div className="flex items-center gap-sm">
@@ -365,33 +332,48 @@ function PlatformCard({ platform, statusType, onShowInstructions, isSelected }: 
         </div>
         <StatusBadge status={statusType} size="sm" />
       </div>
-      
+
       <p className="text-sm text-ink-faded mb-md line-clamp-2">
         {platform.details}
       </p>
-      
-      {platform.status === 'failed' && platform.fixSuggestion && (
+
+      {(platform.status === 'not_authenticated' || platform.status === 'failed') && platform.fixSuggestion && (
         <p className="text-xs text-hot-magenta mb-md flex items-center gap-xs">
           <LightbulbIcon size="1em" />
           {platform.fixSuggestion}
         </p>
       )}
-      
+
+      {/* Login message / spinner */}
+      {isLoggingIn && (
+        <div className="text-sm text-electric-blue mb-md animate-pulse">
+          Logging in... check your browser
+        </div>
+      )}
+      {loginMessage && !isLoggingIn && (
+        <div className={`text-xs mb-md ${loginMessage.startsWith('Error') ? 'text-hot-magenta' : 'text-neon-green'}`}>
+          {loginMessage}
+        </div>
+      )}
+
       <div className="flex gap-xs">
-        <Button variant="ghost" size="sm" onClick={onShowInstructions}>
-          {platform.status === 'authenticated' ? 'VIEW SETUP' : 'SETUP'}
-        </Button>
-        {platform.getUrl && (
-          <a 
-            href={platform.getUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+        {platform.status !== 'authenticated' && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onLogin}
+            disabled={isLoggingIn}
           >
-            <Button variant="ghost" size="sm">
-              GET KEY
-            </Button>
-          </a>
+            {isLoggingIn
+              ? 'LOGGING IN...'
+              : isCursor
+                ? 'OPEN CURSOR APP'
+                : 'LOGIN'}
+          </Button>
         )}
+        <Button variant="ghost" size="sm" onClick={onRefresh}>
+          REFRESH
+        </Button>
       </div>
     </div>
   );

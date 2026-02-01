@@ -619,6 +619,46 @@ export async function wizardSave(data: {
 }
 
 // ============================================
+// Login API (platform authentication)
+// ============================================
+
+export interface PlatformAuthInfo {
+  platform: string;
+  status: 'authenticated' | 'not_authenticated' | 'failed' | 'skipped';
+  details: string;
+  fixSuggestion?: string;
+}
+
+export interface AuthSummary {
+  total: number;
+  authenticated: number;
+  notAuthenticated: number;
+  failed: number;
+  skipped: number;
+}
+
+export interface LoginStatusResponse {
+  platforms: PlatformAuthInfo[];
+  summary: AuthSummary;
+}
+
+/**
+ * Get login/auth status for all platforms
+ */
+export async function getLoginStatus(): Promise<LoginStatusResponse> {
+  return fetchJSON<LoginStatusResponse>('/api/login/status');
+}
+
+/**
+ * Trigger CLI login for a specific platform
+ */
+export async function loginPlatform(platform: string): Promise<{ success: boolean; message?: string }> {
+  return fetchJSON('/api/login/' + encodeURIComponent(platform), {
+    method: 'POST',
+  });
+}
+
+// ============================================
 // Platform Health API
 // ============================================
 
@@ -684,6 +724,9 @@ export const api = {
   wizardSave,
   // Platforms
   getPlatformHealth,
+  // Login
+  getLoginStatus,
+  loginPlatform,
 };
 
 export default api;

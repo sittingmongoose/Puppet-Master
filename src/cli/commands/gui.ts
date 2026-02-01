@@ -13,6 +13,7 @@
 
 import { Command } from 'commander';
 import path from 'node:path';
+import http from 'node:http';
 import { spawn } from 'node:child_process';
 import { mkdirSync, appendFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -189,6 +190,52 @@ function installCrashHandlers(): void {
 }
 
 /**
+ * Check if an existing Puppet Master instance is already running on the given port.
+ * Makes a GET request to /health and verifies the response looks like our server.
+ * Returns the server URL if a valid instance is found, undefined otherwise.
+ */
+async function checkExistingInstance(port: number, host: string): Promise<string | undefined> {
+  const url = `http://127.0.0.1:${port}/health`;
+  return new Promise((resolve) => {
+    const req = http.get(url, { timeout: 2000 }, (res) => {
+      let data = '';
+      res.on('data', (chunk: Buffer) => { data += chunk.toString(); });
+      res.on('end', () => {
+        try {
+          const json = JSON.parse(data) as { status?: string };
+          if (res.statusCode === 200 && json.status === 'ok') {
+            // This is a running Puppet Master instance
+            resolve(`http://${host === '0.0.0.0' ? '127.0.0.1' : host}:${port}`);
+          } else {
+            resolve(undefined);
+          }
+        } catch {
+          resolve(undefined);
+        }
+      });
+    });
+    req.on('error', () => resolve(undefined));
+    req.on('timeout', () => {
+      req.destroy();
+      resolve(undefined);
+    });
+  });
+}
+
+/**
+ * Wait for the local server to respond on /health, confirming it is ready to serve requests.
+ * Retries up to maxAttempts times with a short delay between attempts.
+ */
+async function waitForServerReady(port: number, maxAttempts = 10, delayMs = 200): Promise<boolean> {
+  for (let i = 0; i < maxAttempts; i++) {
+    const result = await checkExistingInstance(port, '127.0.0.1');
+    if (result) return true;
+    await new Promise((r) => setTimeout(r, delayMs));
+  }
+  return false;
+}
+
+/**
  * Check if a port is available for binding
  */
 async function checkPortAvailable(port: number, host: string): Promise<boolean> {
@@ -328,12 +375,40 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     const requestedPort = options.port || 3847;
     const host = options.host || 'localhost';
 
-    // Check if port is available; if the default port is in use, try alternatives
+    // C4 fix: Before starting a new server, check if an existing Puppet Master
+    // instance is already running on the requested port. If so, just open the
+    // GUI to that instance and exit (avoids "bounces then disappears" on relaunch).
     if (options.verbose) {
       console.log(`Checking if port ${requestedPort} is available...`);
     }
     let port = requestedPort;
     let portAvailable = await checkPortAvailable(port, host);
+
+    if (!portAvailable) {
+      // Port is in use -- check if it's an existing Puppet Master instance
+      const existingUrl = await checkExistingInstance(port, host);
+      if (existingUrl) {
+        console.log(`Puppet Master is already running at ${existingUrl}`);
+        console.log('Opening existing instance...');
+
+        const skipOpen = process.env.PUPPET_MASTER_NO_OPEN === '1' || process.env.PUPPET_MASTER_NO_OPEN === 'true';
+        if (options.open !== false && !skipOpen) {
+          const installRoot = resolveInstallRoot();
+          const tauriBin = resolveTauriGuiBinary(installRoot);
+          const launched = tauriBin ? launchTauriGui(tauriBin, existingUrl, options.verbose) : false;
+          if (!launched) {
+            try {
+              await open(existingUrl);
+            } catch {
+              console.log(`  Open this URL in your browser: ${existingUrl}`);
+            }
+          }
+        }
+        // Exit cleanly -- the existing server is already handling requests
+        process.exit(0);
+      }
+    }
+
     if (!portAvailable && !options.port) {
       // Only auto-retry if the user didn't explicitly choose a port
       const maxRetries = 10;
@@ -563,6 +638,16 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       console.log(`  🖥️  Local UI:      ${uiUrl} (for desktop apps / local browser)`);
     }
     console.log('');
+
+    // C3 fix: Verify the server is actually responding before launching Tauri/browser.
+    // Even though await guiServer.start() resolved, on macOS the listen callback can fire
+    // before the server is fully ready to handle HTTP requests. This prevents a blank page.
+    const serverReady = await waitForServerReady(port);
+    if (!serverReady) {
+      console.warn('  Warning: Server may not be fully ready. Launching GUI anyway.');
+    } else if (options.verbose) {
+      console.log('  Server readiness confirmed via /health endpoint');
+    }
 
     // Launch desktop GUI if enabled (default: true, unless --no-open or PUPPET_MASTER_NO_OPEN)
     const skipOpen = process.env.PUPPET_MASTER_NO_OPEN === '1' || process.env.PUPPET_MASTER_NO_OPEN === 'true';

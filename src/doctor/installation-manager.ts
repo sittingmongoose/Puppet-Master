@@ -236,12 +236,17 @@ export class InstallationManager {
    */
   private registerDefaultCommands(): void {
     // Cursor CLI installation
+    // Unix: curl installer; Windows: winget
+    const cursorCommand =
+      this.getCurrentPlatform() === 'win32'
+        ? 'winget install Cursor.Cursor --accept-package-agreements --accept-source-agreements'
+        : 'curl https://cursor.com/install -fsSL | bash';
     this.registerCommand({
       check: 'cursor-cli',
-      command: 'curl https://cursor.com/install -fsSL | bash',
+      command: cursorCommand,
       description: 'Install Cursor Agent CLI',
       requiresSudo: false,
-      platforms: ['darwin', 'linux'],
+      platforms: ['darwin', 'linux', 'win32'],
     });
 
     // Codex CLI installation

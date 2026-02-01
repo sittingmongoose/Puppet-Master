@@ -24,29 +24,37 @@ const CATEGORIES: Array<{ id: string; label: string; icon: ReactNode }> = [
   { id: 'project', label: 'Project Setup', icon: <FolderIcon size="1em" /> },
 ];
 
+// Module-level cache so Doctor results persist across navigation
+let cachedChecks: DoctorCheck[] | null = null;
+let cachedPlatformStatus: Record<string, PlatformStatusType> | null = null;
+let cachedSelectedPlatforms: Platform[] | null = null;
+
 /**
  * Doctor page - dependency checker
  */
 export default function DoctorPage() {
-  const [checks, setChecks] = useState<DoctorCheck[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [checks, setChecks] = useState<DoctorCheck[]>(cachedChecks ?? []);
+  const [loading, setLoading] = useState(cachedChecks === null);
   const [running, setRunning] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fixing, setFixing] = useState<string | null>(null);
   const [installingAll, setInstallingAll] = useState(false);
   const [installAllProgress, setInstallAllProgress] = useState<string | null>(null);
-  const [platformStatus, setPlatformStatus] = useState<Record<string, PlatformStatusType>>({});
-  const [selectedPlatforms, setSelectedPlatforms] = useState<Platform[]>([]);
+  const [platformStatus, setPlatformStatus] = useState<Record<string, PlatformStatusType>>(cachedPlatformStatus ?? {});
+  const [selectedPlatforms, setSelectedPlatforms] = useState<Platform[]>(cachedSelectedPlatforms ?? []);
   const [showPlatformSelection, setShowPlatformSelection] = useState(false);
 
-  // Fetch platform status on mount
+  // Fetch platform status on mount (refresh in background if cached)
   useEffect(() => {
     const fetchPlatformStatus = async () => {
       try {
         const status = await api.getPlatformStatus();
         setPlatformStatus(status.platforms);
-        // Pre-select installed platforms
-        setSelectedPlatforms(status.installedPlatforms as Platform[]);
+        cachedPlatformStatus = status.platforms;
+        if (!cachedSelectedPlatforms) {
+          setSelectedPlatforms(status.installedPlatforms as Platform[]);
+          cachedSelectedPlatforms = status.installedPlatforms as Platform[];
+        }
       } catch (err) {
         console.error('[Doctor] Failed to fetch platform status:', err);
       }
@@ -54,16 +62,18 @@ export default function DoctorPage() {
     fetchPlatformStatus();
   }, []);
 
-  // Fetch checks on mount
+  // Fetch checks on mount (refresh in background if cached)
   useEffect(() => {
     const fetchChecks = async () => {
       try {
-        setLoading(true);
+        if (!cachedChecks) setLoading(true);
         const data = await api.getDoctorChecks();
-        setChecks(Array.isArray(data.checks) ? data.checks : []);
+        const newChecks = Array.isArray(data.checks) ? data.checks : [];
+        setChecks(newChecks);
+        cachedChecks = newChecks;
       } catch (err) {
         console.error('[Doctor] Failed to fetch checks:', err);
-        setError(err instanceof Error ? err.message : 'Failed to load checks');
+        if (!cachedChecks) setError(err instanceof Error ? err.message : 'Failed to load checks');
       } finally {
         setLoading(false);
       }
@@ -79,7 +89,9 @@ export default function DoctorPage() {
       const data = await api.runDoctorChecks({ 
         platforms: selectedPlatforms.length > 0 ? selectedPlatforms : undefined 
       });
-      setChecks(Array.isArray(data.checks) ? data.checks : []);
+      const newChecks = Array.isArray(data.checks) ? data.checks : [];
+      setChecks(newChecks);
+      cachedChecks = newChecks;
     } catch (err) {
       console.error('[Doctor] Failed to run checks:', err);
       setError(err instanceof Error ? err.message : 'Failed to run checks');
@@ -96,6 +108,8 @@ export default function DoctorPage() {
       // Re-run checks after fix
       const data = await api.runDoctorChecks();
       setChecks(Array.isArray(data.checks) ? data.checks : []);
+      // Trigger capabilities refresh so tier page picks up new installs
+      try { await fetch('/api/config/models?refresh=true'); } catch { /* best-effort */ }
     } catch (err) {
       console.error('[Doctor] Failed to fix check:', err);
       setError(err instanceof Error ? err.message : 'Failed to fix check');
@@ -118,7 +132,7 @@ export default function DoctorPage() {
       setError(null);
       const total = failedFixable.length;
       for (let i = 0; i < failedFixable.length; i++) {
-        const check = failedFixable[i];
+        const check = failedFixable[i]!;
         const label = check.name.replace(/-cli$/, ' CLI').replace(/-/g, ' ');
         setInstallAllProgress(`Installing ${label} (${i + 1}/${total})...`);
         try {
@@ -144,6 +158,8 @@ export default function DoctorPage() {
         platforms: selectedPlatforms.length > 0 ? selectedPlatforms : undefined,
       });
       setChecks(Array.isArray(data.checks) ? data.checks : []);
+      // Trigger capabilities refresh so tier page picks up new installs
+      try { await fetch('/api/config/models?refresh=true'); } catch { /* best-effort */ }
     } catch (err) {
       console.error('[Doctor] Install all failed:', err);
       setError(err instanceof Error ? err.message : 'Install all failed');

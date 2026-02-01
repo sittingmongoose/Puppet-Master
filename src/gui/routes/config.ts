@@ -7,6 +7,7 @@
 
 import type { Router, Request, Response } from 'express';
 import { Router as createRouter } from 'express';
+import { execSync } from 'node:child_process';
 import { ConfigManager } from '../../config/config-manager.js';
 import type { PuppetMasterConfig } from '../../types/config.js';
 import {
@@ -429,6 +430,43 @@ export function createConfigRoutes(): Router {
         code: 'MODELS_ERROR',
       } as ErrorResponse);
     }
+  });
+
+  /**
+   * GET /api/config/git-info
+   * Returns git repository information: branches, remote URL, user name/email, current branch.
+   */
+  router.get('/config/git-info', async (_req: Request, res: Response) => {
+    const execOpts = { encoding: 'utf8' as const, timeout: 5000 };
+
+    const runGit = (cmd: string): string => {
+      try {
+        return execSync(cmd, execOpts).trim();
+      } catch {
+        return '';
+      }
+    };
+
+    const branchesRaw = runGit("git branch -a --format='%(refname:short)'");
+    const branches = branchesRaw
+      ? branchesRaw.split('\n').map(b => b.replace(/^'|'$/g, '').trim()).filter(Boolean)
+      : [];
+    const remoteUrl = runGit('git remote get-url origin');
+    const userName = runGit('git config user.name');
+    const userEmail = runGit('git config user.email');
+    const currentBranch = runGit('git rev-parse --abbrev-ref HEAD');
+
+    // Derive remote name from the first remote (usually "origin")
+    const remoteName = runGit('git remote') ? runGit('git remote').split('\n')[0] : '';
+
+    res.json({
+      branches,
+      remoteName,
+      remoteUrl,
+      userName,
+      userEmail,
+      currentBranch,
+    });
   });
 
   return router;

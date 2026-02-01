@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Panel } from '@/components/layout';
 import { Button, Input, Select, HelpText, Checkbox, Radio } from '@/components/ui';
 import { StatusBadge } from '@/components/shared';
@@ -121,6 +121,15 @@ interface Config {
   };
 }
 
+interface GitInfo {
+  branches: string[];
+  remoteName: string;
+  remoteUrl: string;
+  userName: string;
+  userEmail: string;
+  currentBranch: string;
+}
+
 const DEFAULT_CONFIG: Config = {
   tiers: {
     phase: { platform: 'cursor', model: 'auto', planMode: false, askMode: false, outputFormat: 'text', taskFailureStyle: 'spawn_new_agent', maxIterations: 3 },
@@ -164,13 +173,16 @@ const DEFAULT_CONFIG: Config = {
   },
 };
 
+// Module-level cache so Config data persists across navigation
+let cachedConfig: Config | null = null;
+
 /**
  * Config page - configuration tabs
  */
 export default function ConfigPage() {
   const [activeTab, setActiveTab] = useState<ConfigTab>('tiers');
-  const [config, setConfig] = useState<Config>(DEFAULT_CONFIG);
-  const [loading, setLoading] = useState(true);
+  const [config, setConfig] = useState<Config>(cachedConfig ?? DEFAULT_CONFIG);
+  const [loading, setLoading] = useState(cachedConfig === null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isDirty, setIsDirty] = useState(false);
@@ -185,12 +197,48 @@ export default function ConfigPage() {
   const [platformStatus, setPlatformStatus] = useState<Record<string, PlatformStatusType>>({});
   const [installedPlatforms, setInstalledPlatforms] = useState<Platform[]>([]);
   const [installing, setInstalling] = useState<string | null>(null);
+  const [gitInfo, setGitInfo] = useState<GitInfo | null>(null);
+  const [uninstalling, setUninstalling] = useState(false);
+  const [uninstallMessage, setUninstallMessage] = useState<string | null>(null);
+
+  // C6: Detect Linux platform (navigator.platform or userAgent)
+  const isLinux = useMemo(() => {
+    if (typeof navigator !== 'undefined') {
+      return navigator.userAgent.includes('Linux') || navigator.platform.includes('Linux');
+    }
+    return false;
+  }, []);
+
+  // C6: Handle uninstall
+  const handleUninstall = useCallback(async () => {
+    const confirmed = window.confirm(
+      'Are you sure you want to uninstall RWM Puppet Master?\n\n' +
+      'This will remove the application via apt. You may be prompted for your password.'
+    );
+    if (!confirmed) return;
+
+    try {
+      setUninstalling(true);
+      setUninstallMessage(null);
+      const response = await fetch('/api/system/uninstall', { method: 'POST' });
+      const data = await response.json() as { success: boolean; message?: string; error?: string };
+      if (data.success) {
+        setUninstallMessage(data.message || 'Uninstall initiated. The application will close shortly.');
+      } else {
+        setUninstallMessage(data.error || 'Uninstall failed.');
+      }
+    } catch (err) {
+      setUninstallMessage(err instanceof Error ? err.message : 'Failed to initiate uninstall');
+    } finally {
+      setUninstalling(false);
+    }
+  }, []);
 
   // Fetch config on mount
   useEffect(() => {
     const fetchConfig = async () => {
       try {
-        setLoading(true);
+        if (!cachedConfig) setLoading(true);
         const data = await api.getConfig();
         if (data) {
           const cfg = data as unknown as Config;
@@ -203,10 +251,11 @@ export default function ConfigPage() {
             };
           }
           setConfig(cfg);
+          cachedConfig = cfg;
         }
       } catch (err) {
         console.error('[Config] Failed to fetch config:', err);
-        setError(err instanceof Error ? err.message : 'Failed to load config');
+        if (!cachedConfig) setError(err instanceof Error ? err.message : 'Failed to load config');
       } finally {
         setLoading(false);
       }
@@ -286,6 +335,22 @@ export default function ConfigPage() {
       }
     };
     fetchModels();
+  }, []);
+
+  // Fetch git info on mount
+  useEffect(() => {
+    const fetchGitInfo = async () => {
+      try {
+        const response = await fetch('/api/config/git-info');
+        if (response.ok) {
+          const data = await response.json();
+          setGitInfo(data);
+        }
+      } catch (err) {
+        console.error('[Config] Failed to fetch git info:', err);
+      }
+    };
+    fetchGitInfo();
   }, []);
 
   // Handle platform installation
@@ -388,6 +453,7 @@ export default function ConfigPage() {
           <BranchingTab
             config={config.branching}
             onChange={(branching) => updateConfig('branching', branching)}
+            gitInfo={gitInfo}
           />
         );
       case 'verification':
@@ -527,6 +593,34 @@ export default function ConfigPage() {
 
       {/* Tab content */}
       {renderTabContent()}
+
+      {/* C6: Linux uninstall option */}
+      {isLinux && (
+        <Panel title="System">
+          <div className="space-y-md">
+            <p className="text-ink-faded text-sm">
+              Remove RWM Puppet Master from this system. This will run the system package
+              manager to uninstall the application. You may be prompted for your password.
+            </p>
+            {uninstallMessage && (
+              <div className={`p-sm border-medium rounded text-sm ${
+                uninstallMessage.includes('initiated')
+                  ? 'border-status-success bg-status-success/10'
+                  : 'border-hot-magenta bg-hot-magenta/10 text-hot-magenta'
+              }`}>
+                {uninstallMessage}
+              </div>
+            )}
+            <Button
+              variant="danger"
+              onClick={handleUninstall}
+              loading={uninstalling}
+            >
+              UNINSTALL PUPPET MASTER
+            </Button>
+          </div>
+        </Panel>
+      )}
     </div>
   );
 }
@@ -776,22 +870,75 @@ function TiersTab({
 interface BranchingTabProps {
   config: Config['branching'];
   onChange: (config: Config['branching']) => void;
+  gitInfo: GitInfo | null;
 }
 
-function BranchingTab({ config, onChange }: BranchingTabProps) {
+function BranchingTab({ config, onChange, gitInfo }: BranchingTabProps) {
+  // Build branch options from git info, ensuring current baseBranch is always included
+  const branchOptions = useMemo(() => {
+    const branches = gitInfo?.branches ?? [];
+    const uniqueBranches = new Set(branches);
+    if (config.baseBranch) {
+      uniqueBranches.add(config.baseBranch);
+    }
+    return Array.from(uniqueBranches).map(b => ({ value: b, label: b }));
+  }, [gitInfo?.branches, config.baseBranch]);
+
   return (
     <Panel title="Branching Configuration">
       <p className="text-ink-faded mb-lg">
         Configure Git branch creation and naming conventions.
       </p>
-      
+
+      {/* Git Repository Info */}
+      {gitInfo && (gitInfo.currentBranch || gitInfo.remoteUrl || gitInfo.userName) && (
+        <div className="mb-lg p-md border-medium border-ink-faded bg-paper-lined/30">
+          <h3 className="font-bold text-sm mb-md uppercase tracking-wide">Repository Info</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-sm text-sm">
+            {gitInfo.currentBranch && (
+              <div>
+                <span className="font-semibold">Current Branch: </span>
+                <span className="font-mono">{gitInfo.currentBranch}</span>
+              </div>
+            )}
+            {gitInfo.remoteUrl && (
+              <div>
+                <span className="font-semibold">Remote URL: </span>
+                <span className="font-mono text-xs break-all">{gitInfo.remoteUrl}</span>
+              </div>
+            )}
+            {gitInfo.userName && (
+              <div>
+                <span className="font-semibold">Git User: </span>
+                <span>{gitInfo.userName}</span>
+              </div>
+            )}
+            {gitInfo.userEmail && (
+              <div>
+                <span className="font-semibold">Git Email: </span>
+                <span>{gitInfo.userEmail}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       <div className="space-y-lg max-w-xl">
         <div>
-          <Input
-            label="Base Branch"
-            value={config.baseBranch}
-            onChange={(e) => onChange({ ...config, baseBranch: e.target.value })}
-          />
+          {branchOptions.length > 0 ? (
+            <Select
+              label="Base Branch"
+              value={config.baseBranch}
+              onChange={(e) => onChange({ ...config, baseBranch: e.target.value })}
+              options={branchOptions}
+            />
+          ) : (
+            <Input
+              label="Base Branch"
+              value={config.baseBranch}
+              onChange={(e) => onChange({ ...config, baseBranch: e.target.value })}
+            />
+          )}
           <HelpText {...helpContent.branching.baseBranch} />
         </div>
         
@@ -1139,11 +1286,17 @@ function AdvancedTab({
         </div>
 
         <div>
-          <Input
-            label="Log Level"
+          <label className="block font-mono text-sm font-semibold mb-xs">Log Level</label>
+          <select
             value={safeAdvanced.logLevel}
             onChange={(e) => onChange({ ...safeAdvanced, logLevel: e.target.value })}
-          />
+            className="w-full px-md py-sm bg-paper-cream dark:bg-paper-dark border-medium border-ink-black dark:border-ink-light font-mono text-sm"
+          >
+            <option value="error">error</option>
+            <option value="warn">warn</option>
+            <option value="info">info</option>
+            <option value="debug">debug</option>
+          </select>
           <HelpText {...helpContent.advanced.logLevel} />
         </div>
 

@@ -286,7 +286,7 @@ export class GuiServer {
       this.app.use((req, res, next) => {
         // Allow auth-related endpoints without authentication
         // P0-G07: Also allow /api/login/* routes (platform auth status, not GUI auth)
-        if (req.path.startsWith('/api/auth/') || req.path.startsWith('/api/login/') || req.path === '/api/platforms/first-boot') {
+        if (req.path.startsWith('/api/auth/') || req.path.startsWith('/api/login/') || req.path === '/api/platforms/first-boot' || req.path.startsWith('/api/ledger')) {
           return next();
         }
 
@@ -771,6 +771,29 @@ export class GuiServer {
     // Feature parity routes (CLI ↔ GUI)
     this.app.use('/api', createLedgerRoutes(this.config.baseDirectory));
     this.app.use('/api', createLoginRoutes());
+
+    // C6: Linux uninstall endpoint
+    this.app.post('/api/system/uninstall', (_req: Request, res: Response) => {
+      if (process.platform !== 'linux') {
+        res.json({ success: false, error: 'Uninstall only supported on Linux via this endpoint' });
+        return;
+      }
+      try {
+        const { spawn: spawnChild } = require('child_process') as typeof import('child_process');
+        const child = spawnChild('pkexec', ['apt', 'remove', 'rwm-puppet-master', '-y'], {
+          detached: true,
+          stdio: 'ignore',
+        });
+        child.unref();
+        child.on('error', (err: Error) => {
+          console.error('[Uninstall] spawn error:', err.message);
+        });
+        res.json({ success: true, message: 'Uninstall initiated' });
+      } catch (err) {
+        const error = err as Error;
+        res.status(500).json({ success: false, error: error.message || 'Failed to initiate uninstall' });
+      }
+    });
 
     // Check if using React SPA or vanilla HTML
     if (this.config.useReactGui) {
