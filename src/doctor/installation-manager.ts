@@ -362,9 +362,25 @@ export class InstallationManager {
     timeout: number = 300000
   ): Promise<InstallResult> {
     return new Promise((resolve) => {
+      // Build PATH that includes common tool locations (npm, brew, etc.)
+      // When launched from a desktop shortcut (Tauri/Finder), the PATH may not
+      // include /usr/local/bin, /opt/homebrew/bin, or ~/.local/bin.
+      const extraPaths = [
+        '/usr/local/bin',
+        '/opt/homebrew/bin',
+        '/opt/homebrew/sbin',
+        `${process.env.HOME}/.local/bin`,
+        `${process.env.HOME}/.nvm/versions/node/*/bin`,
+        '/usr/local/lib/puppet-master/node/bin',
+        '/opt/puppet-master/node/bin',
+      ].filter(Boolean);
+      const currentPath = process.env.PATH || '/usr/bin:/bin';
+      const enrichedPath = [...extraPaths, currentPath].join(':');
+
       const proc: ChildProcess = spawn(command, [], {
         shell: true,
         stdio: ['ignore', 'pipe', 'pipe'],
+        env: { ...process.env, PATH: enrichedPath },
       });
 
       let stdout = '';

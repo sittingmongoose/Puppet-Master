@@ -53,6 +53,7 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
   const [platforms, setPlatforms] = useState<Record<string, PlatformStatusType>>({});
   const [selectedPlatforms, setSelectedPlatforms] = useState<Platform[]>([]);
   const [installing, setInstalling] = useState<string | null>(null);
+  const [installingAll, setInstallingAll] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -96,7 +97,7 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
       setInstalling(platform);
       setError(null);
       const result = await api.installPlatform(platform);
-      
+
       if (result.success) {
         // Reload platform status after installation
         await loadPlatformStatus();
@@ -111,6 +112,36 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
       setError(err instanceof Error ? err.message : `Failed to install ${PLATFORM_NAMES[platform]}`);
     } finally {
       setInstalling(null);
+    }
+  };
+
+  const handleInstallAllMissing = async () => {
+    const missing = allPlatforms.filter((p) => !(platforms[p]?.installed));
+    if (missing.length === 0) return;
+
+    setInstallingAll(true);
+    setError(null);
+    const errors: string[] = [];
+
+    for (const platform of missing) {
+      setInstalling(platform);
+      try {
+        const result = await api.installPlatform(platform);
+        if (!result.success) {
+          errors.push(`${PLATFORM_NAMES[platform]}: ${result.error || 'failed'}`);
+        }
+      } catch (err) {
+        errors.push(`${PLATFORM_NAMES[platform]}: ${err instanceof Error ? err.message : 'failed'}`);
+      }
+      setInstalling(null);
+    }
+
+    // Reload status after all installs
+    await loadPlatformStatus();
+    setInstallingAll(false);
+
+    if (errors.length > 0) {
+      setError(`Some installs failed:\n${errors.join('\n')}`);
     }
   };
 
@@ -158,7 +189,7 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
         </div>
       }
     >
-      <div className="space-y-lg">
+      <div className="space-y-lg" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
         <div>
           <p className="text-ink-faded mb-md">
             Select which AI platforms you want to use with Puppet Master. You can install missing platforms now or skip and install them later.
@@ -166,7 +197,7 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
         </div>
 
         {error && (
-          <div className="p-md bg-hot-magenta/10 border-medium border-hot-magenta text-hot-magenta">
+          <div className="p-md bg-hot-magenta/10 border-medium border-hot-magenta text-hot-magenta" style={{ whiteSpace: 'pre-line' }}>
             {error}
           </div>
         )}
@@ -176,71 +207,85 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
             <p className="text-ink-faded">Checking platform status...</p>
           </div>
         ) : (
-          <div className="space-y-md">
-            {allPlatforms.map((platform) => {
-              const status = platforms[platform];
-              const isInstalled = status?.installed ?? false;
-              const isSelected = selectedPlatforms.includes(platform);
-              const isInstalling = installing === platform;
-
-              return (
-                <div
-                  key={platform}
-                  className={`
-                    p-md border-medium rounded
-                    ${isSelected ? 'border-electric-blue bg-electric-blue/5' : 'border-ink-faded'}
-                  `}
+          <>
+            {allPlatforms.some((p) => !(platforms[p]?.installed)) && (
+              <div className="flex justify-end">
+                <Button
+                  variant="info"
+                  size="sm"
+                  onClick={handleInstallAllMissing}
+                  loading={installingAll}
+                  disabled={installingAll || installing !== null}
                 >
-                  <div className="flex items-start justify-between gap-md">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-sm mb-xs">
-                        <Checkbox
-                          id={`platform-${platform}`}
-                          checked={isSelected}
-                          onChange={() => handlePlatformToggle(platform)}
-                          disabled={!isInstalled && !isInstalling}
-                        />
-                        <label
-                          htmlFor={`platform-${platform}`}
-                          className="font-bold text-lg cursor-pointer"
-                        >
-                          {PLATFORM_NAMES[platform]}
-                        </label>
-                        <StatusBadge
-                          status={isInstalled ? 'complete' : 'error'}
-                          size="sm"
-                          showLabel
-                          label={isInstalled ? 'Installed' : 'Not Installed'}
-                        />
-                        {status?.version && (
-                          <span className="text-sm text-ink-faded">v{status.version}</span>
+                  INSTALL ALL MISSING
+                </Button>
+              </div>
+            )}
+            <div className="space-y-md">
+              {allPlatforms.map((platform) => {
+                const status = platforms[platform];
+                const isInstalled = status?.installed ?? false;
+                const isSelected = selectedPlatforms.includes(platform);
+                const isInstalling = installing === platform;
+
+                return (
+                  <div
+                    key={platform}
+                    className={`
+                      p-md border-medium rounded
+                      ${isSelected ? 'border-electric-blue bg-electric-blue/5' : 'border-ink-faded'}
+                    `}
+                  >
+                    <div className="flex items-start justify-between gap-md">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-sm mb-xs">
+                          <Checkbox
+                            id={`platform-${platform}`}
+                            checked={isSelected}
+                            onChange={() => handlePlatformToggle(platform)}
+                          />
+                          <label
+                            htmlFor={`platform-${platform}`}
+                            className="font-bold text-lg cursor-pointer"
+                          >
+                            {PLATFORM_NAMES[platform]}
+                          </label>
+                          <StatusBadge
+                            status={isInstalled ? 'complete' : 'error'}
+                            size="sm"
+                            showLabel
+                            label={isInstalled ? 'Installed' : 'Not Installed'}
+                          />
+                          {status?.version && (
+                            <span className="text-sm text-ink-faded">v{status.version}</span>
+                          )}
+                        </div>
+                        <p className="text-sm text-ink-faded ml-lg">
+                          {PLATFORM_DESCRIPTIONS[platform]}
+                        </p>
+                        {status?.error && !isInstalled && (
+                          <p className="text-sm text-hot-magenta ml-lg mt-xs">
+                            {status.error}
+                          </p>
                         )}
                       </div>
-                      <p className="text-sm text-ink-faded ml-lg">
-                        {PLATFORM_DESCRIPTIONS[platform]}
-                      </p>
-                      {status?.error && !isInstalled && (
-                        <p className="text-sm text-hot-magenta ml-lg mt-xs">
-                          {status.error}
-                        </p>
+                      {!isInstalled && (
+                        <Button
+                          variant="info"
+                          size="sm"
+                          onClick={() => handleInstall(platform)}
+                          loading={isInstalling}
+                          disabled={isInstalling || installing !== null}
+                        >
+                          INSTALL
+                        </Button>
                       )}
                     </div>
-                    {!isInstalled && (
-                      <Button
-                        variant="info"
-                        size="sm"
-                        onClick={() => handleInstall(platform)}
-                        loading={isInstalling}
-                        disabled={isInstalling || installing !== null}
-                      >
-                        INSTALL
-                      </Button>
-                    )}
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          </>
         )}
 
         {selectedPlatforms.length > 0 && (

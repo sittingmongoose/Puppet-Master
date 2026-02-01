@@ -48,8 +48,10 @@ Section "Install"
   ; Kill any running Puppet Master processes to unlock files for overwrite
   nsExec::ExecToLog 'taskkill /f /im puppet-master-gui.exe'
   nsExec::ExecToLog 'taskkill /f /im puppet-master.exe'
-  ; Wait briefly for processes to fully exit
-  Sleep 1000
+  ; Kill node.exe running from the install directory (Express server holds file locks)
+  nsExec::ExecToLog 'wmic process where "ExecutablePath like ''%Puppet Master%''" call terminate'
+  ; Wait briefly for processes to fully exit and release file handles
+  Sleep 2000
 
   SetOutPath "$INSTDIR"
 
@@ -107,7 +109,8 @@ Section "Uninstall"
   ; Kill any running Puppet Master processes before uninstalling
   nsExec::ExecToLog 'taskkill /f /im puppet-master-gui.exe'
   nsExec::ExecToLog 'taskkill /f /im puppet-master.exe'
-  Sleep 1000
+  nsExec::ExecToLog 'wmic process where "ExecutablePath like ''%Puppet Master%''" call terminate'
+  Sleep 2000
 
   ; Remove shortcuts
   Delete "$SMPROGRAMS\Puppet Master\Puppet Master.lnk"
