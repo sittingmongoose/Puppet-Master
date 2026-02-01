@@ -11,13 +11,18 @@
 
 ## Phase 1: SSH Diagnosis
 
-### Linux Diagnosis - COMPLETE
-- Package status: `dpkg -l puppet-master` shows "un" (not installed)
-- `/opt/puppet-master/` exists but only contains 4 files: `app/dist/cli/commands/gui.js` and `app/dist/gui/public/js/event-stream.test.js` plus map files
-- Missing: `bin/`, `node/`, `node_modules/`, React build, Tauri binary, everything else
-- `/usr/bin/puppet-master` does not exist
-- **Root cause**: The .deb package was never successfully installed, or the build is producing a broken .deb
-- Crash log contains only test errors (vitest), not runtime errors
+### SSH Run 2026-02-01
+Full diagnosis: [SSH_DIAGNOSIS_2026-02-01.md](SSH_DIAGNOSIS_2026-02-01.md)
+
+**Linux**: rwm-puppet-master 0.1.0-1 now installed; Codex/Copilot install fails with EACCES on `/opt/puppet-master/node/lib/node_modules/@openai`.  
+**macOS**: ERR_STREAM_DESTROYED confirmed in crash.log; Node symlinks (npm/npx) point to CI paths; port 3847 in use by Cursor, auto-retry working.  
+**Windows**: Codex 0.93.0 and Copilot 0.0.400 installed; VBS CWD fix present; better_sqlite3.node exists.
+
+### Linux Diagnosis - COMPLETE (updated 2026-02-01)
+- Package status: `dpkg -l rwm-puppet-master` shows "ii" (installed)
+- `/opt/puppet-master/` now has full structure: bin/, app/, node/, playwright-browsers/
+- **Codex/Copilot install**: GUI Install fails with EACCES — npm targets `/opt/puppet-master/node/lib/node_modules/@openai` (root-owned) when PATH includes app's node
+- Crash log: GUI startup messages; no runtime crash traces
 
 ### macOS Diagnosis - COMPLETE
 - App bundle is COMPLETE: bin/, node/, app/, playwright-browsers/, Tauri binary all present
@@ -124,6 +129,43 @@
 
 **File: `src/gui/server.ts`**
 - Updated call to pass `this.config.baseDirectory` to `createPlatformRoutes()`
+
+### 9. Linux: Add autostart entry for GUI
+**Files: `installer/linux/autostart/puppet-master-gui.desktop`, `installer/linux/nfpm.yaml`**
+- Added XDG autostart desktop entry to start GUI after login
+- Installed into `/etc/xdg/autostart/puppet-master-gui.desktop` via nfpm
+- Updated Linux postinstall to refresh autostart desktop database
+
+### 10. macOS: Fix npm/npx/corepack launchers
+**File: `installer/mac/scripts/postinstall`**
+- Rewrote npm/npx/corepack launchers to point to bundled Node runtime
+- Avoids broken CI symlink paths in app bundle
+
+### 11. GUI: Auth/login improvements + errors
+**Files: `src/gui/routes/login.ts`, `src/gui/react/src/pages/Login.tsx`, `src/gui/react/src/components/wizard/PlatformSetupWizard.tsx`**
+- Enriched PATH for login commands with user npm global prefix
+- Encode platform in login URL to avoid invalid URL errors
+- Added error normalization helper for readable messages
+- Added GitHub login card to onboarding wizard (uses gh auth login)
+
+### 12. GUI: Doctor/config stability + uninstall placement
+**Files: `src/gui/react/src/pages/Doctor.tsx`, `src/gui/react/src/pages/Config.tsx`**
+- Keep cache in sync after fixes and platform status refresh
+- Move Linux uninstall control to Advanced tab only
+
+### 13. API: Ledger session ID validation
+**File: `src/gui/routes/ledger.ts`**
+- Return 400 for invalid sessionId instead of warning
+
+### 14. Installers: npm prefix for CLI installs
+**File: `src/doctor/installation-manager.ts`**
+- Use ~/.npm-global prefix and PATH when running global npm installs
+
+### 15. Tauri: Tray/menu bar status + actions
+**Files: `src-tauri/src/main.rs`, `src-tauri/Cargo.toml`**
+- Added TrayIconBuilder menu (Open GUI, Open CLI, Restart App, Quit)
+- Left-click tray icon focuses the GUI
+- Added tray-icon feature to Tauri dependency
 
 ---
 

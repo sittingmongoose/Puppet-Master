@@ -3,7 +3,7 @@ import { Panel } from '@/components/layout';
 import { Button, Input, Select, HelpText, Checkbox, Radio } from '@/components/ui';
 import { StatusBadge } from '@/components/shared';
 import { WarningIcon, RefreshIcon } from '@/components/icons';
-import { api, type CursorCapabilities, type PlatformStatusType } from '@/lib';
+import { api, getErrorMessage, type CursorCapabilities, type PlatformStatusType } from '@/lib';
 import { helpContent } from '@/lib/help-content.js';
 import type { Platform } from '@/types';
 
@@ -228,13 +228,13 @@ export default function ConfigPage() {
         setUninstallMessage(data.error || 'Uninstall failed.');
       }
     } catch (err) {
-      setUninstallMessage(err instanceof Error ? err.message : 'Failed to initiate uninstall');
+      setUninstallMessage(getErrorMessage(err, 'Failed to initiate uninstall'));
     } finally {
       setUninstalling(false);
     }
   }, []);
 
-  // Fetch config on mount
+  // Fetch config on mount (refresh in background if cached)
   useEffect(() => {
     const fetchConfig = async () => {
       try {
@@ -255,7 +255,7 @@ export default function ConfigPage() {
         }
       } catch (err) {
         console.error('[Config] Failed to fetch config:', err);
-        if (!cachedConfig) setError(err instanceof Error ? err.message : 'Failed to load config');
+        if (!cachedConfig) setError(getErrorMessage(err, 'Failed to load config'));
       } finally {
         setLoading(false);
       }
@@ -367,7 +367,7 @@ export default function ConfigPage() {
         setError(result.error || `Failed to install ${platform}`);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : `Failed to install ${platform}`);
+      setError(getErrorMessage(err, `Failed to install ${platform}`));
     } finally {
       setInstalling(null);
     }
@@ -394,7 +394,7 @@ export default function ConfigPage() {
       setIsDirty(false);
     } catch (err) {
       console.error('[Config] Failed to save config:', err);
-      setError(err instanceof Error ? err.message : 'Failed to save config');
+      setError(getErrorMessage(err, 'Failed to save config'));
     } finally {
       setSaving(false);
     }
@@ -488,6 +488,10 @@ export default function ConfigPage() {
             loopGuard={config.loopGuard}
             escalation={config.escalation}
             network={config.network}
+            isLinux={isLinux}
+            onUninstall={handleUninstall}
+            uninstalling={uninstalling}
+            uninstallMessage={uninstallMessage}
             onChange={(advanced) => updateConfig('advanced', advanced)}
             onCliPathsChange={(cliPaths) => updateConfig('cliPaths' as any, cliPaths)}
             onRateLimitsChange={(rateLimits) => updateConfig('rateLimits' as any, rateLimits)}
@@ -593,34 +597,6 @@ export default function ConfigPage() {
 
       {/* Tab content */}
       {renderTabContent()}
-
-      {/* C6: Linux uninstall option */}
-      {isLinux && (
-        <Panel title="System">
-          <div className="space-y-md">
-            <p className="text-ink-faded text-sm">
-              Remove RWM Puppet Master from this system. This will run the system package
-              manager to uninstall the application. You may be prompted for your password.
-            </p>
-            {uninstallMessage && (
-              <div className={`p-sm border-medium rounded text-sm ${
-                uninstallMessage.includes('initiated')
-                  ? 'border-status-success bg-status-success/10'
-                  : 'border-hot-magenta bg-hot-magenta/10 text-hot-magenta'
-              }`}>
-                {uninstallMessage}
-              </div>
-            )}
-            <Button
-              variant="danger"
-              onClick={handleUninstall}
-              loading={uninstalling}
-            >
-              UNINSTALL PUPPET MASTER
-            </Button>
-          </div>
-        </Panel>
-      )}
     </div>
   );
 }
@@ -1158,6 +1134,10 @@ interface AdvancedTabProps {
   loopGuard?: Config['loopGuard'];
   escalation?: Config['escalation'];
   network?: Config['network'];
+  isLinux: boolean;
+  onUninstall: () => void;
+  uninstalling: boolean;
+  uninstallMessage: string | null;
   onChange: (config: Config['advanced']) => void;
   onCliPathsChange: (cliPaths: Config['cliPaths']) => void;
   onRateLimitsChange: (rateLimits: Config['rateLimits']) => void;
@@ -1178,6 +1158,10 @@ function AdvancedTab({
   loopGuard,
   escalation,
   network,
+  isLinux,
+  onUninstall,
+  uninstalling,
+  uninstallMessage,
   onChange,
   onCliPathsChange,
   onRateLimitsChange,
@@ -1319,6 +1303,32 @@ function AdvancedTab({
           />
           <HelpText {...helpContent.advanced.parallelIterations} />
         </div>
+
+        {isLinux && (
+          <div className="space-y-sm border-medium border-ink-faded rounded p-md">
+            <div className="font-semibold">System</div>
+            <p className="text-ink-faded text-sm">
+              Remove RWM Puppet Master from this system. This will run the system package
+              manager to uninstall the application. You may be prompted for your password.
+            </p>
+            {uninstallMessage && (
+              <div className={`p-sm border-medium rounded text-sm ${
+                uninstallMessage.includes('initiated')
+                  ? 'border-status-success bg-status-success/10'
+                  : 'border-hot-magenta bg-hot-magenta/10 text-hot-magenta'
+              }`}>
+                {uninstallMessage}
+              </div>
+            )}
+            <Button
+              variant="danger"
+              onClick={onUninstall}
+              loading={uninstalling}
+            >
+              UNINSTALL PUPPET MASTER
+            </Button>
+          </div>
+        )}
 
         <div className="space-y-xs">
           <Checkbox

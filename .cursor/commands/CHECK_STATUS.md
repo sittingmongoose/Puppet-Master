@@ -1,6 +1,29 @@
 # Check command – status (GUI / Tauri / launcher)
 
-**Date:** 2026-01-31
+**Date:** 2026-02-01
+
+## SSH Cross-Platform Log Collection (2026-02-01)
+
+- **Status:** COMPLETE
+- **Agent:** Debugger (plan-based)
+- SSH into Linux, macOS, Windows; collected installer/runtime logs; verified Codex/Copilot install errors.
+- **Output:** [SSH_DIAGNOSIS_2026-02-01.md](../../SSH_DIAGNOSIS_2026-02-01.md)
+- **Findings:** Linux Codex/Copilot EACCES (npm targets /opt); macOS ERR_STREAM_DESTROYED + broken Node symlinks; Windows Codex/Copilot installed, VBS CWD fix present.
+- **Cleanup:** `.test-cache` and `.test-quota` removed when done (none were present).
+
+## VM uninstall (2026-02-01, run again)
+
+- **Linux VM** `sittingmongoose@192.168.50.72`: Puppet Master uninstalled without touching the project folder (same steps repeated on request).
+  - Removed **.deb package** `rwm-puppet-master` (system install under `/opt/puppet-master`, `/usr/bin/puppet-master`, `/usr/bin/puppet-master-gui`, systemd service, `/usr/share/applications/com.rwm.puppet-master.desktop`).
+  - Removed **dev desktop entry** `~/.local/share/applications/com.rwm.puppet-master-dev.desktop`.
+  - **Project folder** `/home/sittingmongoose/Cursor/RWM Puppet Master/` on the VM was **not modified**.
+- **Check cleanup:** `.test-cache` and `.test-quota` removed when done (none were present).
+
+## CI
+
+- **Commit:** `6f3e4a2` – ralph: gui stream freeze fix, launcher, check status
+- **Pushed:** origin/main
+- **GitHub Action:** Build installers (run 39) – **PASSED** (status: completed, conclusion: success)
 
 ## Done
 

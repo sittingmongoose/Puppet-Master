@@ -1,7 +1,7 @@
 // Library utilities barrel export
 
 // API client
-export { api, APIError } from './api.js';
+export { api, APIError, getErrorMessage } from './api.js';
 export type {
   StateResponse,
   Config,

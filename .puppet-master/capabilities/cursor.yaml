@@ -1,25 +1,28 @@
 platform: cursor
-command: cursor-agent
-runnable: false
+command: cursor
+runnable: true
 authStatus: not_authenticated
-version: unknown
+version: 2.4.23
 capabilities:
   streaming: false
   codeExecution: false
   imageGeneration: false
-  fileAccess: false
+  fileAccess: true
   webSearch: false
-  computerUse: false
-  maxContextTokens: 0
-  maxOutputTokens: 0
-  supportedLanguages: []
+  computerUse: true
+  maxContextTokens: 100000
+  maxOutputTokens: 4000
+  supportedLanguages:
+    - typescript
+    - javascript
+    - python
 quotaInfo:
   remaining: 9007199254740991
   limit: 9007199254740991
-  resetsAt: '2026-01-28T16:33:45.752Z'
+  resetsAt: '2026-02-01T06:35:00.693Z'
   period: day
 cooldownInfo:
   active: false
   endsAt: null
   reason: null
-probeTimestamp: '2026-01-27T16:33:45.690Z'
+probeTimestamp: '2026-01-31T06:35:00.551Z'

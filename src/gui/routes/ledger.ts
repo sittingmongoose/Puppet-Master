@@ -57,7 +57,11 @@ export function createLedgerRoutes(baseDirectory?: string): Router {
 
       // Validate session ID format if provided
       if (sessionId && typeof sessionId === 'string' && !isValidSessionId(sessionId)) {
-        console.warn(`Warning: Session ID "${sessionId}" does not match expected format`);
+        res.status(400).json({
+          error: `Invalid sessionId: ${sessionId}`,
+          code: 'INVALID_SESSION_ID',
+        } as ErrorResponse);
+        return;
       }
 
       const dbPath = join(projectRoot, '.puppet-master', 'events.db');
@@ -117,7 +121,11 @@ export function createLedgerRoutes(baseDirectory?: string): Router {
 
       // Validate session ID format if provided
       if (sessionId && typeof sessionId === 'string' && !isValidSessionId(sessionId)) {
-        console.warn(`Warning: Session ID "${sessionId}" does not match expected format`);
+        res.status(400).json({
+          error: `Invalid sessionId: ${sessionId}`,
+          code: 'INVALID_SESSION_ID',
+        } as ErrorResponse);
+        return;
       }
 
       let fromTimestamp: string | undefined;

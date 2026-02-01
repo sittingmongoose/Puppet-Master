@@ -13,6 +13,11 @@ if command -v update-desktop-database >/dev/null 2>&1; then
   update-desktop-database /usr/share/applications 2>/dev/null || true
 fi
 
+# Ensure autostart entry is recognized (best-effort)
+if command -v update-desktop-database >/dev/null 2>&1; then
+  update-desktop-database /etc/xdg/autostart 2>/dev/null || true
+fi
+
 # Set gdebi as the default handler for .deb files (many desktops default to
 # an archive manager like Engrampa, which cannot install packages).
 if command -v xdg-mime >/dev/null 2>&1 && [ -f /usr/share/applications/gdebi.desktop ]; then

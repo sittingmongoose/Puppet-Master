@@ -19,6 +19,36 @@ if [ ! -d "${INSTALL_ROOT}" ]; then
   exit 1
 fi
 
+# Fix npm/npx/corepack launchers to bundled Node runtime
+NODE_BIN="${INSTALL_ROOT}/node/bin"
+NODE_EXE="${NODE_BIN}/node"
+NPM_CLI="${INSTALL_ROOT}/node/lib/node_modules/npm/bin/npm-cli.js"
+NPX_CLI="${INSTALL_ROOT}/node/lib/node_modules/npm/bin/npx-cli.js"
+COREPACK_CLI="${INSTALL_ROOT}/node/lib/node_modules/corepack/dist/corepack.js"
+if [ -x "${NODE_EXE}" ] && [ -d "${NODE_BIN}" ]; then
+  if [ -f "${NPM_CLI}" ]; then
+    cat > "${NODE_BIN}/npm" <<EOF
+#!/bin/sh
+exec "${NODE_EXE}" "${NPM_CLI}" "\$@"
+EOF
+    chmod +x "${NODE_BIN}/npm" 2>/dev/null || true
+  fi
+  if [ -f "${NPX_CLI}" ]; then
+    cat > "${NODE_BIN}/npx" <<EOF
+#!/bin/sh
+exec "${NODE_EXE}" "${NPX_CLI}" "\$@"
+EOF
+    chmod +x "${NODE_BIN}/npx" 2>/dev/null || true
+  fi
+  if [ -f "${COREPACK_CLI}" ]; then
+    cat > "${NODE_BIN}/corepack" <<EOF
+#!/bin/sh
+exec "${NODE_EXE}" "${COREPACK_CLI}" "\$@"
+EOF
+    chmod +x "${NODE_BIN}/corepack" 2>/dev/null || true
+  fi
+fi
+
 LAUNCHER="${INSTALL_ROOT}/bin/puppet-master"
 if [ ! -x "${LAUNCHER}" ]; then
   echo "ERROR: Expected launcher missing or not executable: ${LAUNCHER}" 1>&2

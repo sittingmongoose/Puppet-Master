@@ -1,25 +1,28 @@
 platform: claude
 command: claude
-runnable: false
+runnable: true
 authStatus: not_authenticated
-version: unknown
+version: 2.1.23
 capabilities:
-  streaming: false
-  codeExecution: false
+  streaming: true
+  codeExecution: true
   imageGeneration: false
-  fileAccess: false
-  webSearch: false
-  computerUse: false
-  maxContextTokens: 0
-  maxOutputTokens: 0
-  supportedLanguages: []
+  fileAccess: true
+  webSearch: true
+  computerUse: true
+  maxContextTokens: 100000
+  maxOutputTokens: 4000
+  supportedLanguages:
+    - typescript
+    - javascript
+    - python
 quotaInfo:
   remaining: 9007199254740991
   limit: 9007199254740991
-  resetsAt: '2026-01-28T16:33:45.812Z'
+  resetsAt: '2026-02-01T06:35:02.540Z'
   period: day
 cooldownInfo:
   active: false
   endsAt: null
   reason: null
-probeTimestamp: '2026-01-27T16:33:45.786Z'
+probeTimestamp: '2026-01-31T06:35:00.560Z'

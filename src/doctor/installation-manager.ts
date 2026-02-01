@@ -7,6 +7,8 @@
  */
 
 import { spawn, type ChildProcess } from 'node:child_process';
+import { homedir } from 'node:os';
+import path from 'node:path';
 import * as readline from 'node:readline';
 
 /**
@@ -367,10 +369,18 @@ export class InstallationManager {
     timeout: number = 300000
   ): Promise<InstallResult> {
     return new Promise((resolve) => {
+      const home = homedir();
+      const npmGlobalPrefix = home ? path.join(home, '.npm-global') : '';
+      const npmGlobalBin = npmGlobalPrefix
+        ? (process.platform === 'win32' ? npmGlobalPrefix : path.join(npmGlobalPrefix, 'bin'))
+        : '';
+      const needsNpmGlobalPrefix = command.includes('npm install -g');
+
       // Build PATH that includes common tool locations (npm, brew, etc.)
       // When launched from a desktop shortcut (Tauri/Finder), the PATH may not
       // include /usr/local/bin, /opt/homebrew/bin, or ~/.local/bin.
       const extraPaths = [
+        npmGlobalBin,
         '/usr/local/bin',
         '/opt/homebrew/bin',
         '/opt/homebrew/sbin',
@@ -381,11 +391,18 @@ export class InstallationManager {
       ].filter(Boolean);
       const currentPath = process.env.PATH || '/usr/bin:/bin';
       const enrichedPath = [...extraPaths, currentPath].join(':');
+      const env: NodeJS.ProcessEnv = { ...process.env, PATH: enrichedPath };
+      if (needsNpmGlobalPrefix && npmGlobalPrefix) {
+        env.npm_config_prefix = npmGlobalPrefix;
+        if (npmGlobalBin) {
+          env.PATH = [npmGlobalBin, env.PATH].filter(Boolean).join(path.delimiter);
+        }
+      }
 
       const proc: ChildProcess = spawn(command, [], {
         shell: true,
         stdio: ['ignore', 'pipe', 'pipe'],
-        env: { ...process.env, PATH: enrichedPath },
+        env,
       });
 
       let stdout = '';

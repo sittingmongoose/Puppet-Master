@@ -13,6 +13,7 @@ import {
   LightbulbIcon,
 } from '@/components/icons';
 import { helpContent } from '@/lib/help-content.js';
+import { getErrorMessage } from '@/lib';
 import type { StatusType } from '@/types';
 
 interface PlatformAuthInfo {
@@ -91,7 +92,7 @@ export default function LoginPage() {
       setSummary(data.summary || null);
     } catch (err) {
       console.error('[Login] Failed to fetch auth status:', err);
-      setError(err instanceof Error ? err.message : 'Unknown error');
+      setError(getErrorMessage(err, 'Unknown error'));
     } finally {
       setLoading(false);
     }
@@ -102,7 +103,7 @@ export default function LoginPage() {
       setLoggingIn((prev) => ({ ...prev, [platform]: true }));
       setLoginMessages((prev) => ({ ...prev, [platform]: '' }));
 
-      const response = await fetch(`/api/login/${platform}`, {
+      const response = await fetch(`/api/login/${encodeURIComponent(platform)}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       });
@@ -120,7 +121,7 @@ export default function LoginPage() {
       console.error(`[Login] Failed to trigger login for ${platform}:`, err);
       setLoginMessages((prev) => ({
         ...prev,
-        [platform]: `Error: ${err instanceof Error ? err.message : 'Unknown error'}`,
+        [platform]: `Error: ${getErrorMessage(err, 'Unknown error')}`,
       }));
     } finally {
       setLoggingIn((prev) => ({ ...prev, [platform]: false }));

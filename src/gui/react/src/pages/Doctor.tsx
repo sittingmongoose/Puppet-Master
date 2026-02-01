@@ -12,7 +12,7 @@ import {
   FolderIcon,
   ClipboardIcon,
 } from '@/components/icons';
-import { api, APIError, type DoctorCheck, type PlatformStatusType } from '@/lib';
+import { api, APIError, getErrorMessage, type DoctorCheck, type PlatformStatusType } from '@/lib';
 import type { StatusType, Platform } from '@/types';
 
 const CATEGORIES: Array<{ id: string; label: string; icon: ReactNode }> = [
@@ -51,10 +51,8 @@ export default function DoctorPage() {
         const status = await api.getPlatformStatus();
         setPlatformStatus(status.platforms);
         cachedPlatformStatus = status.platforms;
-        if (!cachedSelectedPlatforms) {
-          setSelectedPlatforms(status.installedPlatforms as Platform[]);
-          cachedSelectedPlatforms = status.installedPlatforms as Platform[];
-        }
+        setSelectedPlatforms(status.installedPlatforms as Platform[]);
+        cachedSelectedPlatforms = status.installedPlatforms as Platform[];
       } catch (err) {
         console.error('[Doctor] Failed to fetch platform status:', err);
       }
@@ -73,7 +71,7 @@ export default function DoctorPage() {
         cachedChecks = newChecks;
       } catch (err) {
         console.error('[Doctor] Failed to fetch checks:', err);
-        if (!cachedChecks) setError(err instanceof Error ? err.message : 'Failed to load checks');
+        if (!cachedChecks) setError(getErrorMessage(err, 'Failed to load checks'));
       } finally {
         setLoading(false);
       }
@@ -94,7 +92,7 @@ export default function DoctorPage() {
       cachedChecks = newChecks;
     } catch (err) {
       console.error('[Doctor] Failed to run checks:', err);
-      setError(err instanceof Error ? err.message : 'Failed to run checks');
+      setError(getErrorMessage(err, 'Failed to run checks'));
     } finally {
       setRunning(false);
     }
@@ -107,12 +105,14 @@ export default function DoctorPage() {
       await api.fixDoctorCheck(checkName);
       // Re-run checks after fix
       const data = await api.runDoctorChecks();
-      setChecks(Array.isArray(data.checks) ? data.checks : []);
+      const nextChecks = Array.isArray(data.checks) ? data.checks : [];
+      setChecks(nextChecks);
+      cachedChecks = nextChecks;
       // Trigger capabilities refresh so tier page picks up new installs
       try { await fetch('/api/config/models?refresh=true'); } catch { /* best-effort */ }
     } catch (err) {
       console.error('[Doctor] Failed to fix check:', err);
-      setError(err instanceof Error ? err.message : 'Failed to fix check');
+      setError(getErrorMessage(err, 'Failed to fix check'));
     } finally {
       setFixing(null);
     }
@@ -162,7 +162,7 @@ export default function DoctorPage() {
       try { await fetch('/api/config/models?refresh=true'); } catch { /* best-effort */ }
     } catch (err) {
       console.error('[Doctor] Install all failed:', err);
-      setError(err instanceof Error ? err.message : 'Install all failed');
+      setError(getErrorMessage(err, 'Install all failed'));
     } finally {
       setInstallingAll(false);
       setInstallAllProgress(null);

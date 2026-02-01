@@ -22,6 +22,28 @@ export class APIError extends Error {
 }
 
 /**
+ * Normalize unknown error values into a readable message.
+ */
+export function getErrorMessage(error: unknown, fallback: string): string {
+  if (error instanceof Error && error.message) {
+    return error.message;
+  }
+  if (typeof error === 'string' && error.trim() !== '') {
+    return error;
+  }
+  if (error && typeof error === 'object') {
+    const maybeError = error as { error?: string; message?: string };
+    if (typeof maybeError.error === 'string' && maybeError.error.trim() !== '') {
+      return maybeError.error;
+    }
+    if (typeof maybeError.message === 'string' && maybeError.message.trim() !== '') {
+      return maybeError.message;
+    }
+  }
+  return fallback;
+}
+
+/**
  * Get auth token from localStorage or fetch from server
  */
 let authToken: string | null = null;

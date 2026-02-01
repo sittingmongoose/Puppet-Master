@@ -43,7 +43,22 @@
       "Bash(gh run view:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(git check-attr:*)"
+      "Bash(git check-attr:*)",
+      "Bash(sudo apt-get install:*)",
+      "Bash(sudo -S apt-get install:*)",
+      "Bash(/usr/bin/puppet-master:*)",
+      "Bash(sshpass:*)",
+      "Bash(expect:*)",
+      "Bash(gh:*)",
+      "Bash(git remote:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(chmod:*)",
+      "Bash(python3 -c \" import json, sys data = json.load\\(sys.stdin\\) for run in data.get\\(''workflow_runs'', []\\): print\\(f\"\"Run #{run[''run_number'']}: {run[''conclusion'']} - {run[''head_commit''][''message''].split\\(chr\\(10\\)\\)[0]}\"\"\\) print\\(f\"\" URL: {run[''html_url'']}\"\"\\) print\\(f\"\" ID: {run[''id'']}\"\"\\) \")",
+      "Bash(python3 -c \" import json, sys data = json.load\\(sys.stdin\\) for job in data.get\\(''jobs'', []\\): print\\(f\"\"{job[''name'']}: {job[''conclusion'']} \\({job[''status'']}\\)\"\"\\) if job[''conclusion''] == ''failure'': for step in job.get\\(''steps'', []\\): if step.get\\(''conclusion''\\) == ''failure'': print\\(f\"\" FAILED step: {step[''name'']}\"\"\\) \")",
+      "Bash(python3 -c \" import json, sys data = json.load\\(sys.stdin\\) for job in data.get\\(''jobs'', []\\): if job[''name''] == ''Build \\(macos-14\\)'': print\\(f\"\"Job ID: {job[''id'']}\"\"\\) print\\(f\"\"URL: {job[''html_url'']}\"\"\\) \")",
+      "Bash(python3 -c \" import json, sys data = json.load\\(sys.stdin\\) for job in data.get\\(''jobs'', []\\): if ''macos'' in job[''name'']: print\\(''Job ID:'', job[''id'']\\) print\\(''URL:'', job[''html_url'']\\) \")",
+      "Bash(python3:*)",
+      "Bash(node -e:*)"
     ]
   }
 }

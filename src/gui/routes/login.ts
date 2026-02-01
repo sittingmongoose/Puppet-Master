@@ -9,6 +9,7 @@ import type { Router, Request, Response } from 'express';
 import { Router as createRouter } from 'express';
 import { spawn } from 'node:child_process';
 import { homedir } from 'node:os';
+import path from 'node:path';
 import { join } from 'node:path';
 import type { Platform } from '../../types/config.js';
 import { getPlatformAuthStatus, type PlatformAuthStatus } from '../../platforms/auth-status.js';
@@ -281,7 +282,12 @@ export function createLoginRoutes(): Router {
 
       // Build enriched PATH (same pattern as installation-manager.ts)
       const home = homedir();
+      const npmGlobalPrefix = home ? path.join(home, '.npm-global') : '';
+      const npmGlobalBin = npmGlobalPrefix
+        ? (process.platform === 'win32' ? npmGlobalPrefix : path.join(npmGlobalPrefix, 'bin'))
+        : '';
       const extraPaths = [
+        npmGlobalBin,
         '/usr/local/bin',
         '/opt/homebrew/bin',
         '/opt/homebrew/sbin',
@@ -291,13 +297,20 @@ export function createLoginRoutes(): Router {
       ];
       const currentPath = process.env.PATH || '/usr/bin:/bin';
       const enrichedPath = [...extraPaths, currentPath].join(':');
+      const env: NodeJS.ProcessEnv = { ...process.env, PATH: enrichedPath };
+      if (npmGlobalPrefix) {
+        env.npm_config_prefix = npmGlobalPrefix;
+        if (npmGlobalBin) {
+          env.PATH = [npmGlobalBin, env.PATH].filter(Boolean).join(path.delimiter);
+        }
+      }
 
       // Fire-and-forget: spawn the login process detached
       const child = spawn(loginCmd.cmd, loginCmd.args, {
         shell: true,
         detached: true,
         stdio: 'ignore',
-        env: { ...process.env, PATH: enrichedPath },
+        env,
       });
 
       // Unref so the parent process is not held open

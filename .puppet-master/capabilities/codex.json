@@ -1,28 +1,24 @@
 {
   "platform": "codex",
   "command": "codex",
-  "runnable": true,
+  "runnable": false,
   "authStatus": "not_authenticated",
-  "version": "0.89.0",
+  "version": "unknown",
   "capabilities": {
     "streaming": false,
-    "codeExecution": true,
-    "imageGeneration": true,
-    "fileAccess": true,
-    "webSearch": true,
-    "computerUse": true,
-    "maxContextTokens": 100000,
-    "maxOutputTokens": 4000,
-    "supportedLanguages": [
-      "typescript",
-      "javascript",
-      "python"
-    ]
+    "codeExecution": false,
+    "imageGeneration": false,
+    "fileAccess": false,
+    "webSearch": false,
+    "computerUse": false,
+    "maxContextTokens": 0,
+    "maxOutputTokens": 0,
+    "supportedLanguages": []
   },
   "quotaInfo": {
     "remaining": 9007199254740991,
     "limit": 9007199254740991,
-    "resetsAt": "2026-01-28T16:33:46.296Z",
+    "resetsAt": "2026-02-01T06:35:00.560Z",
     "period": "day"
   },
   "cooldownInfo": {
@@ -30,5 +26,5 @@
     "endsAt": null,
     "reason": null
   },
-  "probeTimestamp": "2026-01-27T16:33:45.768Z"
+  "probeTimestamp": "2026-01-31T06:35:00.558Z"
 }

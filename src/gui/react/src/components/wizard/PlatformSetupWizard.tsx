@@ -13,7 +13,7 @@ import { Modal } from '@/components/ui';
 import { Button } from '@/components/ui';
 import { Checkbox } from '@/components/ui';
 import { StatusBadge } from '@/components/shared';
-import { api, type PlatformStatusType } from '@/lib';
+import { api, getErrorMessage, type PlatformStatusType } from '@/lib';
 import type { Platform } from '@/types';
 import type { PlatformAuthInfo } from '@/lib/api';
 
@@ -88,7 +88,7 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
       const installed = status.installedPlatforms as Platform[];
       setSelectedPlatforms(installed);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load platform status');
+      setError(getErrorMessage(err, 'Failed to load platform status'));
     } finally {
       setLoading(false);
     }
@@ -105,7 +105,7 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
       }
       setAuthStatuses(statusMap);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load auth status');
+      setError(getErrorMessage(err, 'Failed to load auth status'));
     } finally {
       setAuthLoading(false);
     }
@@ -138,7 +138,7 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
         setError(result.error || `Failed to install ${PLATFORM_NAMES[platform]}`);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : `Failed to install ${PLATFORM_NAMES[platform]}`);
+      setError(getErrorMessage(err, `Failed to install ${PLATFORM_NAMES[platform]}`));
     } finally {
       setInstalling(null);
     }
@@ -160,7 +160,7 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
           errors.push(`${PLATFORM_NAMES[platform]}: ${result.error || 'failed'}`);
         }
       } catch (err) {
-        errors.push(`${PLATFORM_NAMES[platform]}: ${err instanceof Error ? err.message : 'failed'}`);
+        errors.push(`${PLATFORM_NAMES[platform]}: ${getErrorMessage(err, 'failed')}`);
       }
       setInstalling(null);
     }
@@ -201,7 +201,7 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
         setError(result.message || `Login failed for ${PLATFORM_NAMES[platform]}`);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : `Login failed for ${PLATFORM_NAMES[platform]}`);
+      setError(getErrorMessage(err, `Login failed for ${PLATFORM_NAMES[platform]}`));
     } finally {
       setLoggingIn(null);
     }
@@ -232,7 +232,7 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
       await api.selectPlatforms(selectedPlatforms);
       onComplete();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to save platform selections');
+      setError(getErrorMessage(err, 'Failed to save platform selections'));
     } finally {
       setSaving(false);
     }
@@ -266,7 +266,10 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
   };
 
   // Determine if at least one selected platform is authenticated or skipped (for CONTINUE enablement)
-  const hasAtLeastOneReady = selectedPlatforms.length > 0;
+  const hasAtLeastOneReady = selectedPlatforms.some((platform) => {
+    if (skippedAuths.has(platform)) return true;
+    return authStatuses[platform]?.status === 'authenticated';
+  });
 
   // ==========================================
   // Footer per step
@@ -527,6 +530,42 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
               </div>
             );
           })}
+          {!selectedPlatforms.includes('copilot') && (
+            <div className="p-md border-medium rounded border-ink-faded">
+              <div className="flex items-start justify-between gap-md">
+                <div className="flex-1">
+                  <div className="flex items-center gap-sm mb-xs">
+                    <span className="font-bold text-lg">GitHub Login</span>
+                    {(() => {
+                      const badge = getAuthBadgeProps('copilot');
+                      return (
+                        <StatusBadge
+                          status={badge.status}
+                          size="sm"
+                          showLabel
+                          label={badge.label}
+                        />
+                      );
+                    })()}
+                  </div>
+                  <p className="text-sm text-ink-faded mt-xs">
+                    Sign in with GitHub (via <span className="font-mono">gh auth login</span>) to enable Git operations.
+                  </p>
+                </div>
+                <div className="flex items-center gap-sm">
+                  <Button
+                    variant="info"
+                    size="sm"
+                    onClick={() => handleLogin('copilot')}
+                    loading={loggingIn === 'copilot'}
+                    disabled={loggingIn !== null}
+                  >
+                    LOGIN
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
