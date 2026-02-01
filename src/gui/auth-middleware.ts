@@ -101,11 +101,11 @@ export function createAuthMiddleware(config: AuthConfig): RequestHandler {
     
     // Allow auth-related endpoints without authentication
     // P0-G07: Also allow /api/login/* routes (platform auth status, not GUI auth)
-    if (req.path.startsWith('/api/auth/') || req.path.startsWith('/api/login/')) {
+    if (req.path.startsWith('/api/auth/') || req.path.startsWith('/api/login/') || req.path === '/api/platforms/first-boot') {
       next();
       return;
     }
-    
+
     // Allow non-API routes (static files, etc.)
     if (!req.path.startsWith('/api/')) {
       next();

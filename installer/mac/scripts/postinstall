@@ -39,4 +39,10 @@ echo "Puppet Master installed. Open from Applications or run 'puppet-master gui'
 echo "On first launch, a setup wizard will help install AI platform CLIs."
 echo ""
 
+# Auto-launch the GUI after installation (run as the actual user, not root)
+CURRENT_USER=$(stat -f "%Su" /dev/console 2>/dev/null || echo "")
+if [ -n "$CURRENT_USER" ] && [ "$CURRENT_USER" != "root" ]; then
+  sudo -u "$CURRENT_USER" open "/Applications/Puppet Master.app" &
+fi
+
 exit 0

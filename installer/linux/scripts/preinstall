@@ -1,0 +1,14 @@
+#!/bin/sh
+# Pre-install script for rwm-puppet-master
+# Cleans up stale files from broken previous installs and stops running processes.
+
+# Stop any running puppet-master processes to avoid file conflicts
+pkill -f puppet-master-gui 2>/dev/null || true
+pkill -f "puppet-master gui" 2>/dev/null || true
+sleep 1
+
+# Clean up stale /opt/puppet-master from a broken previous install
+# (e.g. if dpkg left partial files after a failed install)
+if [ -d /opt/puppet-master ]; then
+  rm -rf /opt/puppet-master
+fi

@@ -45,6 +45,12 @@ VIAddVersionKey "CompanyName" "RWM"
 !insertmacro MUI_LANGUAGE "English"
 
 Section "Install"
+  ; Kill any running Puppet Master processes to unlock files for overwrite
+  nsExec::ExecToLog 'taskkill /f /im puppet-master-gui.exe'
+  nsExec::ExecToLog 'taskkill /f /im puppet-master.exe'
+  ; Wait briefly for processes to fully exit
+  Sleep 1000
+
   SetOutPath "$INSTDIR"
 
   ; Copy payload
@@ -98,6 +104,11 @@ Section "Install"
 SectionEnd
 
 Section "Uninstall"
+  ; Kill any running Puppet Master processes before uninstalling
+  nsExec::ExecToLog 'taskkill /f /im puppet-master-gui.exe'
+  nsExec::ExecToLog 'taskkill /f /im puppet-master.exe'
+  Sleep 1000
+
   ; Remove shortcuts
   Delete "$SMPROGRAMS\Puppet Master\Puppet Master.lnk"
   Delete "$SMPROGRAMS\Puppet Master\Puppet Master (Debug).lnk"

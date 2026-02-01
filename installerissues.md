@@ -144,4 +144,7 @@
 ---
 
 ## CI Build Status
-(Pending - will push and monitor)
+- **Commit**: `fa2bd55` - pushed to `main`
+- **CI Workflow**: "Build installers" triggered on push
+- **Status**: In progress (builds on windows-latest, macos-14, ubuntu-latest)
+- **URL**: https://github.com/sittingmongoose/RWM-Puppet-Master/actions
