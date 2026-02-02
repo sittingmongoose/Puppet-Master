@@ -61,10 +61,28 @@ This phase consolidates outstanding issues and risks discovered by multiple revi
 | PH11-T16 | ⏳ PENDING | | Reconcile icons stack (Lucide in spec vs inline/custom) |
 | PH11-T17 | ⏳ PENDING | | Verify/record coverage evidence for React GUI (>80% claim) |
 | PH11-T18 | ⏳ PENDING | | Add/record screenshot parity evidence (required by GUI phase) |
-| PH11-T19 | ⏳ PENDING | | Investigate/harden against hanging GUI test runs |
+| PH11-T19 | ✅ PASS | 2026-02-02 | Added deterministic doctor registry + fast capability probing to prevent GUI/E2E test timeouts |
 | PH11-T20 | ⏳ PENDING | | Reconcile BUILD_QUEUE_GAPS.md summary vs per-issue sections |
 | GUI e.map hardening | ✅ PASS | 2026-01-27 | Fixed `e.map is not a function`: hardened API (`getTiers`, `listProjects`, `getDoctorChecks`, `runDoctorChecks`) and all GUI pages (Projects, Tiers, Doctor, History, Evidence, Coverage, Metrics, Dashboard). `.map`/`Object.entries` guarded with `Array.isArray` / array fallbacks. Deleted `.test-cache`/`.test-quota` (none found). `npm run gui:typecheck` and React GUI unit tests pass. |
 | GUI e.map hardening round 2 | ✅ PASS | 2026-01-27 | Projects: `projectsToShow` + `safeList` guards; malformed `listProjects` unit tests (null, undefined, `{}`, `{ projects: null }`). UsageChart: `safeData` guard, empty handling. API `listProjects` JSDoc. Audited Doctor, Tiers, Evidence, Coverage, Metrics, Dashboard — already guarded. Root `npm run typecheck` PASS. `.test-cache`/`.test-quota` not present. |
+
+### Task status log (PH11-T19)
+Status: PASS  
+Date: 2026-02-02  
+Summary of changes: Added a mock doctor registry for GUI integration tests and fast-fail capability probing for multi-platform E2E tests to eliminate timeouts; wired the registry factory into GUI server routes and updated tests to use test mode probing.  
+Files changed:  
+- src/gui/test-helpers/mock-doctor-registry.ts  
+- src/gui/gui.integration.test.ts  
+- src/gui/routes/doctor.ts  
+- src/gui/server.ts  
+- src/platforms/capability-discovery.ts  
+- tests/e2e/multi-platform.test.ts  
+Commands run + results:  
+- npm test -- --run tests/e2e/multi-platform.test.ts: PASS  
+- npm test -- --run src/gui/gui.integration.test.ts: PASS  
+- npm run typecheck: PASS  
+- npm run gui:build: PASS  
+If FAIL: N/A  
 
 ---
 
