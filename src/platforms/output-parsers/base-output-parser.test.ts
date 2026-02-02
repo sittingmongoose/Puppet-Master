@@ -7,9 +7,14 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { BaseOutputParser } from './base-output-parser.js';
 import type { ParsedPlatformOutput } from './types.js';
+import type { Platform } from '../../types/platforms.js';
 
 // Create a concrete implementation for testing
 class TestableBaseParser extends BaseOutputParser {
+  protected getPlatformName(): Platform {
+    return 'claude';
+  }
+
   parse(output: string): ParsedPlatformOutput {
     return this.createBaseParsedOutput(output);
   }

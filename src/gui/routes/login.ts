@@ -7,7 +7,7 @@
 
 import type { Router, Request, Response } from 'express';
 import { Router as createRouter } from 'express';
-import { spawn } from 'node:child_process';
+import { spawn, execSync } from 'node:child_process';
 import { homedir } from 'node:os';
 import path from 'node:path';
 import { join } from 'node:path';
@@ -66,6 +66,27 @@ const PLATFORM_AUTH_CONFIG: Record<Platform, { envVar: string; getUrl: string; d
 };
 
 const PLATFORMS: Platform[] = ['cursor', 'codex', 'claude', 'gemini', 'copilot'];
+
+/**
+ * Check if a CLI command is available in PATH.
+ * Uses 'which' on Unix-like systems, 'where' on Windows.
+ * @param command - Command name to check
+ * @param enrichedPath - Optional enriched PATH to use
+ * @returns true if command exists, false otherwise
+ */
+function isCommandAvailable(command: string, enrichedPath?: string): boolean {
+  try {
+    const env = enrichedPath ? { ...process.env, PATH: enrichedPath } : process.env;
+    const whichCmd = process.platform === 'win32' ? 'where' : 'which';
+    execSync(`${whichCmd} ${command}`, { 
+      stdio: 'ignore',
+      env,
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 /**
  * Create login routes.
@@ -276,6 +297,7 @@ export function createLoginRoutes(): Router {
         res.status(400).json({
           success: false,
           error: `No CLI login command available for ${normalizedPlatform}.`,
+          code: 'NO_LOGIN_COMMAND',
         });
         return;
       }
@@ -305,6 +327,21 @@ export function createLoginRoutes(): Router {
         }
       }
 
+      // Validate CLI command is available BEFORE spawning
+      if (!isCommandAvailable(loginCmd.cmd, enrichedPath)) {
+        const config = PLATFORM_AUTH_CONFIG[normalizedPlatform];
+        res.status(400).json({
+          success: false,
+          error: `CLI command '${loginCmd.cmd}' not found in PATH`,
+          code: 'CLI_NOT_FOUND',
+          details: `The ${normalizedPlatform} CLI is not installed or not in PATH.`,
+          fixSuggestion: `Install the ${normalizedPlatform} CLI first, or set ${config.envVar || 'the API key'} directly.`,
+          envVar: config.envVar || undefined,
+          getUrl: config.getUrl,
+        });
+        return;
+      }
+
       // Fire-and-forget: spawn the login process detached
       const child = spawn(loginCmd.cmd, loginCmd.args, {
         shell: true,
@@ -316,15 +353,21 @@ export function createLoginRoutes(): Router {
       // Unref so the parent process is not held open
       child.unref();
 
-      // Listen for immediate spawn errors (e.g. command not found)
+      // Listen for immediate spawn errors (shouldn't happen after validation, but defensive)
       child.on('error', (err) => {
         // Already responded — just log
         console.error(`[login] spawn error for ${normalizedPlatform}:`, err.message);
       });
 
+      // Get the config URL for this platform
+      const config = PLATFORM_AUTH_CONFIG[normalizedPlatform];
+
       res.json({
         success: true,
-        message: `Login initiated for ${normalizedPlatform} — check your browser to complete authentication.`,
+        message: `Login initiated for ${normalizedPlatform}. A browser window should open shortly to complete authentication.`,
+        note: 'Poll /api/login/status to detect when authentication completes.',
+        authUrl: config.getUrl,
+        command: `${loginCmd.cmd} ${loginCmd.args.join(' ')}`,
       });
     } catch (error) {
       const err = error as Error;

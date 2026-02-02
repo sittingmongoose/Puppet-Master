@@ -38,6 +38,12 @@ export class CursorRunner extends BasePlatformRunner {
   // CU-P0-T04: Store output format for current execution
   private currentOutputFormat?: 'text' | 'json' | 'stream-json';
 
+  // Permission hardening: approval flag discovery
+  private approvalFlagSupport: string | null = null; // null = not probed; '' = none found; string = flag name
+  private approvalFlagSupportPromise: Promise<string> | null = null;
+  private approvalFlagSupportProbedAt: number = 0;
+  private static readonly APPROVAL_FLAG_CACHE_TTL_MS = 3600_000; // 1 hour
+
   /**
    * Creates a new CursorRunner instance.
    * 
@@ -109,6 +115,10 @@ export class CursorRunner extends BasePlatformRunner {
     if (request.planMode === true && this.modeFlagSupport === null) {
       await this.ensureModeFlagSupport();
     }
+    // Permission hardening: probe for approval flags on first spawn
+    if (this.approvalFlagSupport === null) {
+      await this.ensureApprovalFlagSupport();
+    }
 
     // CU-P0-T04: Store output format for parseOutput
     this.currentOutputFormat = request.outputFormat;
@@ -177,6 +187,19 @@ export class CursorRunner extends BasePlatformRunner {
     // Cursor plan mode (best-effort; requires CLI support)
     else if (request.planMode === true && this.modeFlagSupport === true) {
       args.push('--mode=plan');
+    }
+
+    // Permission hardening: apply discovered approval flag (if any)
+    if (this.approvalFlagSupport && this.approvalFlagSupport.length > 0) {
+      const flag = this.approvalFlagSupport;
+      if (flag === '--approval-mode') {
+        args.push('--approval-mode', 'yolo');
+      } else if (flag === '--permission-mode') {
+        args.push('--permission-mode', request.permissionMode ?? 'acceptEdits');
+      } else {
+        // Simple flags: --auto-approve, --no-confirm, --yolo, --full-auto, --allow-all-tools
+        args.push(flag);
+      }
     }
 
     // Model selection
@@ -298,6 +321,82 @@ export class CursorRunner extends BasePlatformRunner {
       lower.includes('read-only mode');
     
     return planModeDocumented;
+  }
+
+  /**
+   * Permission hardening: Invalidate the approval flag cache.
+   * Call after a Cursor CLI update to re-probe capabilities.
+   */
+  public invalidateApprovalFlagCache(): void {
+    this.approvalFlagSupport = null;
+    this.approvalFlagSupportProbedAt = 0;
+  }
+
+  /**
+   * Permission hardening: Ensure approval flag support is probed with cache.
+   * Follows the same pattern as ensureModeFlagSupport().
+   */
+  private async ensureApprovalFlagSupport(): Promise<string> {
+    const cacheAge = Date.now() - this.approvalFlagSupportProbedAt;
+    const cacheValid = cacheAge < CursorRunner.APPROVAL_FLAG_CACHE_TTL_MS;
+
+    if (this.approvalFlagSupport !== null && cacheValid) {
+      return this.approvalFlagSupport;
+    }
+    if (this.approvalFlagSupportPromise) {
+      return this.approvalFlagSupportPromise;
+    }
+
+    this.approvalFlagSupportPromise = this.probeApprovalFlagSupport()
+      .catch((error) => {
+        console.warn(
+          `[CursorRunner] Failed to probe approval flag support: ${error instanceof Error ? error.message : String(error)}`
+        );
+        return '';
+      })
+      .then((flag) => {
+        this.approvalFlagSupport = flag;
+        this.approvalFlagSupportProbedAt = Date.now();
+        if (flag) {
+          console.info(`[CursorRunner] Approval flag detected: ${flag}`);
+        } else {
+          console.info(
+            '[CursorRunner] No approval/permission flags detected in cursor-agent --help.'
+          );
+        }
+        return flag;
+      })
+      .finally(() => {
+        this.approvalFlagSupportPromise = null;
+      });
+
+    return this.approvalFlagSupportPromise;
+  }
+
+  /**
+   * Permission hardening: Probe cursor-agent --help for approval/permission flags.
+   */
+  private async probeApprovalFlagSupport(): Promise<string> {
+    const helpOutput = await this.getHelpOutput(5000);
+
+    // Check for common approval/permission flag patterns
+    const flagPatterns: Array<{ pattern: RegExp; flagName: string }> = [
+      { pattern: /--(?:approval|approve)-mode/i, flagName: '--approval-mode' },
+      { pattern: /--allow-all-tools\b/i, flagName: '--allow-all-tools' },
+      { pattern: /--(?:auto-approve|autoApprove)\b/i, flagName: '--auto-approve' },
+      { pattern: /--permission-mode\b/i, flagName: '--permission-mode' },
+      { pattern: /--(?:no-confirm|noconfirm|skip-confirm)\b/i, flagName: '--no-confirm' },
+      { pattern: /--yolo\b/i, flagName: '--yolo' },
+      { pattern: /--full-auto\b/i, flagName: '--full-auto' },
+    ];
+
+    for (const { pattern, flagName } of flagPatterns) {
+      if (pattern.test(helpOutput)) {
+        return flagName;
+      }
+    }
+
+    return ''; // No flags found
   }
 
   private async getHelpOutput(timeoutMs: number): Promise<string> {

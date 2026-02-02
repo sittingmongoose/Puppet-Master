@@ -431,16 +431,12 @@ export class BrowserVerifier {
       // Check element existence if selector specified
       if (options.selector) {
         const element = page.locator(options.selector);
-        element.describe(`Element selector: ${options.selector}`);
         const count = await element.count();
         result.elementFound = count > 0;
 
         if (!result.elementFound) {
           result.passed = false;
-          const description = element.description();
-          result.error = description
-            ? `Element not found: ${description}`
-            : `Element not found: ${options.selector}`;
+          result.error = `Element not found: ${options.selector}`;
           return result;
         }
 
@@ -451,19 +447,13 @@ export class BrowserVerifier {
 
           if (options.visible && !isVisible) {
             result.passed = false;
-            const description = element.description();
-            result.error = description
-              ? `Element is not visible: ${description}`
-              : `Element is not visible: ${options.selector}`;
+            result.error = `Element is not visible: ${options.selector}`;
             return result;
           }
 
           if (!options.visible && isVisible) {
             result.passed = false;
-            const description = element.description();
-            result.error = description
-              ? `Element is visible but should be hidden: ${description}`
-              : `Element is visible but should be hidden: ${options.selector}`;
+            result.error = `Element is visible but should be hidden: ${options.selector}`;
             return result;
           }
         }
@@ -500,7 +490,6 @@ export class BrowserVerifier {
    */
   private async performAction(page: Page, action: BrowserAction): Promise<void> {
     const element = page.locator(action.selector);
-    element.describe(`Action ${action.type} on selector: ${action.selector}`);
 
     try {
       switch (action.type) {
@@ -530,14 +519,9 @@ export class BrowserVerifier {
           throw new Error(`Unknown action type: ${action.type}`);
       }
     } catch (error) {
-      const description = element.description();
       const errorMessage =
         error instanceof Error ? error.message : String(error);
-      throw new Error(
-        description
-          ? `${errorMessage} (${description})`
-          : `${errorMessage} (selector: ${action.selector})`
-      );
+      throw new Error(`${errorMessage} (selector: ${action.selector})`);
     }
   }
 

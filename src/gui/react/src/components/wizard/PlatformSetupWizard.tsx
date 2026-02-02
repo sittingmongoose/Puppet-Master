@@ -195,8 +195,18 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
       setError(null);
       const result = await api.loginPlatform(platform);
       if (result.success) {
-        // Refresh auth status after login attempt
-        await loadAuthStatus();
+        // Show success message with URL if provided
+        let message = result.message || 'Login initiated';
+        const responseData = result as { message?: string; authUrl?: string };
+        if (responseData.authUrl) {
+          message += ` If the browser doesn't open, visit: ${responseData.authUrl}`;
+        }
+        setError(null); // Clear any previous errors
+        
+        // Refresh auth status after 5 seconds to check if login succeeded
+        setTimeout(() => {
+          loadAuthStatus();
+        }, 5000);
       } else {
         setError(result.message || `Login failed for ${PLATFORM_NAMES[platform]}`);
       }
@@ -493,7 +503,7 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
                     )}
                     {isLoggingIn && (
                       <p className="text-sm text-ink-faded ml-0 mt-xs animate-pulse">
-                        Logging in... check your browser
+                        Opening browser for login... This may take a few moments.
                       </p>
                     )}
                   </div>

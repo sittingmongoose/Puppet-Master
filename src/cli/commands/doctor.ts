@@ -43,6 +43,7 @@ import { SecretsCheck } from '../../doctor/checks/secrets-check.js';
 import {
   NodeVersionCheck,
   NpmAvailableCheck,
+  NpmNodeCompatibilityCheck,
 } from '../../doctor/checks/runtime-check.js';
 
 // Project checks
@@ -101,6 +102,7 @@ async function createCheckRegistry(configPath?: string): Promise<CheckRegistry> 
   // Register Runtime checks
   registry.register(new NodeVersionCheck());
   registry.register(new NpmAvailableCheck());
+  registry.register(new NpmNodeCompatibilityCheck());
   registry.register(new PlaywrightBrowsersCheck());
 
   // Register Project checks

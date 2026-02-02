@@ -2,7 +2,7 @@
  * Tests for GitManager
  */
 
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, beforeAll, afterAll } from 'vitest';
 import { mkdir, rm, writeFile, readFile } from 'fs/promises';
 import { join } from 'path';
 import { existsSync } from 'fs';
@@ -14,6 +14,42 @@ describe('GitManager', () => {
   let testRepoDir: string;
   let testLogPath: string;
   let gitManager: GitManager;
+  let originalSafeDirectories: string[] = [];
+
+  beforeAll(() => {
+    // Save original safe.directory config
+    try {
+      const output = execSync('git config --global --get-all safe.directory', { 
+        encoding: 'utf-8',
+        stdio: ['pipe', 'pipe', 'pipe']
+      });
+      originalSafeDirectories = output.trim().split('\n').filter(Boolean);
+    } catch {
+      // No safe.directory configs exist
+      originalSafeDirectories = [];
+    }
+
+    // Set wildcard to allow all directories (test environment only)
+    try {
+      execSync('git config --global --add safe.directory "*"', { stdio: 'pipe' });
+    } catch {
+      // Git might not support this
+    }
+  });
+
+  afterAll(() => {
+    // Restore original safe.directory settings
+    try {
+      execSync('git config --global --unset-all safe.directory', { stdio: 'pipe' });
+      for (const dir of originalSafeDirectories) {
+        if (dir && dir !== '*') {
+          execSync(`git config --global --add safe.directory "${dir}"`, { stdio: 'pipe' });
+        }
+      }
+    } catch {
+      // Ignore restoration errors
+    }
+  });
 
   beforeEach(async () => {
     testRepoDir = join(testBaseDir, `repo-${Date.now()}-${Math.random().toString(36).substring(7)}`);

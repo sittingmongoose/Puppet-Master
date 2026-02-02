@@ -358,6 +358,75 @@ export class InstallationManager {
   }
 
   /**
+   * Validates that node and npm versions are compatible for installation
+   * 
+   * @returns Object with compatible flag and error message if incompatible
+   */
+  private async validateNodeNpmVersions(): Promise<{ compatible: boolean; error?: string; details?: string }> {
+    try {
+      const { spawn } = await import('node:child_process');
+      
+      // Get node version
+      const nodeVersion = await new Promise<string>((resolve, reject) => {
+        const proc = spawn('node', ['--version'], { stdio: ['ignore', 'pipe', 'pipe'] });
+        let stdout = '';
+        proc.stdout?.on('data', (data: Buffer) => { stdout += data.toString(); });
+        proc.on('close', (code) => {
+          if (code === 0) resolve(stdout.trim());
+          else reject(new Error('Failed to get node version'));
+        });
+        proc.on('error', reject);
+        setTimeout(() => { proc.kill(); reject(new Error('Timeout')); }, 5000);
+      });
+
+      // Get npm version
+      const npmVersion = await new Promise<string>((resolve, reject) => {
+        const proc = spawn('npm', ['--version'], { stdio: ['ignore', 'pipe', 'pipe'] });
+        let stdout = '';
+        proc.stdout?.on('data', (data: Buffer) => { stdout += data.toString(); });
+        proc.on('close', (code) => {
+          if (code === 0) resolve(stdout.trim());
+          else reject(new Error('Failed to get npm version'));
+        });
+        proc.on('error', reject);
+        setTimeout(() => { proc.kill(); reject(new Error('Timeout')); }, 5000);
+      });
+
+      // Parse versions
+      const nodeMatch = nodeVersion.match(/v?(\d+)\.(\d+)\.(\d+)/);
+      const npmMatch = npmVersion.match(/(\d+)\.(\d+)\.(\d+)/);
+
+      if (!nodeMatch || !npmMatch) {
+        return {
+          compatible: false,
+          error: 'Unable to parse node or npm version',
+          details: `Node: ${nodeVersion}, npm: ${npmVersion}`,
+        };
+      }
+
+      const nodeMajor = parseInt(nodeMatch[1], 10);
+      const npmMajor = parseInt(npmMatch[1], 10);
+
+      // Node 18+ requires npm 8+, Node 20+ requires npm 9+
+      const requiredNpmVersion = nodeMajor >= 20 ? 9 : 8;
+
+      if (npmMajor < requiredNpmVersion) {
+        return {
+          compatible: false,
+          error: `npm version ${npmVersion} is not compatible with Node.js ${nodeVersion}`,
+          details: `Node.js ${nodeMajor}.x requires npm ${requiredNpmVersion}.x or higher. Current npm: ${npmVersion}. Update with: npm install -g npm@latest`,
+        };
+      }
+
+      return { compatible: true };
+    } catch (error) {
+      // If we can't check, assume compatible but log warning
+      console.warn('[InstallationManager] Could not validate node/npm versions:', error);
+      return { compatible: true };
+    }
+  }
+
+  /**
    * Executes a shell command
    * 
    * @param command - Command to execute
@@ -368,7 +437,21 @@ export class InstallationManager {
     command: string,
     timeout: number = 300000
   ): Promise<InstallResult> {
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
+      // Validate node/npm versions before npm install commands
+      if (command.includes('npm install')) {
+        const validation = await this.validateNodeNpmVersions();
+        if (!validation.compatible) {
+          resolve({
+            success: false,
+            error: validation.error || 'Node/npm version incompatibility',
+            command,
+            output: validation.details,
+          });
+          return;
+        }
+      }
+
       const home = homedir();
       const npmGlobalPrefix = home ? path.join(home, '.npm-global') : '';
       const npmGlobalBin = npmGlobalPrefix
@@ -392,6 +475,9 @@ export class InstallationManager {
       const currentPath = process.env.PATH || '/usr/bin:/bin';
       const enrichedPath = [...extraPaths, currentPath].join(':');
       const env: NodeJS.ProcessEnv = { ...process.env, PATH: enrichedPath };
+      
+      // CRITICAL FIX: Always use user-writable prefix for npm -g installs
+      // This prevents EACCES errors when system node is in /opt or /usr/local
       if (needsNpmGlobalPrefix && npmGlobalPrefix) {
         env.npm_config_prefix = npmGlobalPrefix;
         if (npmGlobalBin) {
@@ -434,11 +520,39 @@ export class InstallationManager {
             output: stdout || stderr,
           });
         } else {
+          // Enhanced error messages for common issues
+          let errorMessage = `Command exited with code ${code}`;
+          let actionableDetails = stderr || stdout || '';
+          
+          // EACCES - Permission denied
+          if (actionableDetails.includes('EACCES') || actionableDetails.includes('permission denied')) {
+            errorMessage = 'Permission denied - cannot write to system directories';
+            actionableDetails = `${actionableDetails}\n\nACTION: The installer is trying to use user-writable directories (~/.npm-global), but npm may be configured to use system directories. Try:\n1. Run: npm config get prefix\n2. If it shows /usr/local or /opt, run: npm config set prefix ~/.npm-global\n3. Add ~/.npm-global/bin to your PATH\n4. Retry installation from Doctor page`;
+          }
+          
+          // ENOTFOUND - Network error
+          else if (actionableDetails.includes('ENOTFOUND') || actionableDetails.includes('getaddrinfo')) {
+            errorMessage = 'Network error - cannot reach package registry';
+            actionableDetails = `${actionableDetails}\n\nACTION: Check your internet connection and try again. If you're behind a proxy, configure npm proxy settings.`;
+          }
+          
+          // ETARGET - Version not found
+          else if (actionableDetails.includes('ETARGET') || actionableDetails.includes('No matching version')) {
+            errorMessage = 'Package version not found';
+            actionableDetails = `${actionableDetails}\n\nACTION: The requested package or version does not exist. Check the package name and try again.`;
+          }
+          
+          // ERR_INVALID_URL - Invalid package name
+          else if (actionableDetails.includes('ERR_INVALID_URL') || actionableDetails.includes('Invalid URL')) {
+            errorMessage = 'Invalid package name or URL';
+            actionableDetails = `${actionableDetails}\n\nACTION: Check that the package name is correct.`;
+          }
+          
           resolve({
             success: false,
-            error: `Command exited with code ${code}${stderr ? `: ${stderr.trim()}` : ''}`,
+            error: stderr ? errorMessage : `${errorMessage}${stderr ? `: ${stderr.trim()}` : ''}`,
             command,
-            output: stderr || stdout,
+            output: actionableDetails.trim(),
           });
         }
       });

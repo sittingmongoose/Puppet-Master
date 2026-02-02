@@ -3,5 +3,13 @@
   "identifier": "default",
   "description": "Capability for the main window",
   "windows": ["main"],
-  "permissions": ["core:default", "log:default"]
+  "permissions": [
+    "core:default",
+    "log:default",
+    "tray:allow-new",
+    "tray:allow-set-icon",
+    "tray:allow-set-menu",
+    "tray:allow-set-tooltip",
+    "tray:default"
+  ]
 }

@@ -54,11 +54,19 @@ export class ErrorLogger {
    */
   private async ensureLogDir(): Promise<void> {
     if (!this.initialized) {
-      const dir = dirname(this.logPath);
-      if (!existsSync(dir)) {
-        await mkdir(dir, { recursive: true });
+      try {
+        const dir = dirname(this.logPath);
+        if (!existsSync(dir)) {
+          await mkdir(dir, { recursive: true });
+        }
+        this.initialized = true;
+      } catch (error) {
+        // Log to console.error if directory creation fails
+        console.error(
+          `[ErrorLogger] Failed to create log directory for ${this.logPath}:`,
+          error
+        );
       }
-      this.initialized = true;
     }
   }
 

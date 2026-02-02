@@ -54,11 +54,20 @@ export function createConfigRoutes(): Router {
   /**
    * GET /api/config
    * Returns current configuration loaded from file or defaults.
+   * Query parameter: ?refresh=true to bypass cache (for frontend cache invalidation)
    */
-  router.get('/config', async (_req: Request, res: Response) => {
+  router.get('/config', async (req: Request, res: Response) => {
     try {
       const configManager = new ConfigManager();
       const config = await configManager.load();
+
+      // Add cache control header to hint to frontend about caching
+      const refresh = req.query.refresh === 'true';
+      if (refresh) {
+        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      } else {
+        res.setHeader('Cache-Control', 'private, max-age=300'); // 5 minutes
+      }
 
       res.json({ config });
     } catch (error) {
@@ -102,6 +111,9 @@ export function createConfigRoutes(): Router {
 
       // Save configuration
       await configManager.save(config as PuppetMasterConfig);
+
+      // Invalidate model cache to force refresh on next request
+      modelCache = null;
 
       res.json({ success: true });
     } catch (error) {

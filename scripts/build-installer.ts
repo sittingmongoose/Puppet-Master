@@ -93,11 +93,11 @@ async function detectTauriAvailable(): Promise<boolean> {
   }
 }
 
-// TODO: TAURI - Build Tauri application
 async function buildTauriApp(repoRoot: string, platform: InstallerPlatform): Promise<string | null> {
   console.log('\n🦀 Building Tauri desktop app...\n');
 
   try {
+    await ensureReactGuiBuild(repoRoot);
     // Build the Tauri app (bundles + release binary).
     // Tauri CLI expects CI to be "true" or "false"; GitHub Actions sets CI=1, so normalize it.
     const env = { ...process.env, CI: process.env.CI ? 'true' : 'false' };
@@ -183,6 +183,29 @@ async function getPackageVersion(repoRoot: string): Promise<string> {
     throw new Error('package.json missing string "version"');
   }
   return json.version;
+}
+
+/**
+ * Copy a directory with retry logic to handle transient file locks
+ */
+async function copyDirWithRetry(src: string, dst: string, maxRetries = 3): Promise<void> {
+  await ensureDir(dst);
+  
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      // Node 18+ cp supports recursive
+      await cp(src, dst, { recursive: true });
+      return;
+    } catch (error) {
+      if (attempt < maxRetries) {
+        const delay = attempt * 1000; // Increasing delay: 1s, 2s, 3s
+        console.warn(`⚠️  Copy attempt ${attempt}/${maxRetries} failed, retrying in ${delay}ms...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      } else {
+        throw error;
+      }
+    }
+  }
 }
 
 async function copyDir(src: string, dst: string): Promise<void> {
@@ -271,6 +294,84 @@ async function downloadNodeRuntime(args: Args, repoRoot: string, downloadDir: st
   await copyDir(extractedRoot, nodeOutDir);
 }
 
+/**
+ * Rewrite npm/npx/corepack in bundled Node to use relative paths instead of absolute CI paths.
+ * This ensures the launchers work after installation (CI-built symlinks are broken on user machines).
+ * 
+ * This fixes the issue at BUILD time instead of relying only on postinstall scripts,
+ * which provides better reliability and allows testing before packaging.
+ */
+async function fixNodeSymlinks(nodeDir: string, platform: InstallerPlatform): Promise<void> {
+  const nodeBin = path.join(nodeDir, 'bin');
+  const nodeExe = path.join(nodeBin, platform === 'win32' ? 'node.exe' : 'node');
+  
+  // Only fix on macOS and Linux (Unix platforms)
+  if (platform === 'win32') {
+    return;
+  }
+  
+  // Verify Node binary exists
+  if (!existsSync(nodeExe)) {
+    console.warn(`⚠️  Node binary not found at ${nodeExe}, skipping symlink fix`);
+    return;
+  }
+  
+  const npmCli = path.join(nodeDir, 'lib', 'node_modules', 'npm', 'bin', 'npm-cli.js');
+  const npxCli = path.join(nodeDir, 'lib', 'node_modules', 'npm', 'bin', 'npx-cli.js');
+  const corepackCli = path.join(nodeDir, 'lib', 'node_modules', 'corepack', 'dist', 'corepack.js');
+  
+  const launchers = [
+    { name: 'npm', cli: npmCli, cliPath: '../lib/node_modules/npm/bin/npm-cli.js' },
+    { name: 'npx', cli: npxCli, cliPath: '../lib/node_modules/npm/bin/npx-cli.js' },
+    { name: 'corepack', cli: corepackCli, cliPath: '../lib/node_modules/corepack/dist/corepack.js' },
+  ];
+  
+  let fixedCount = 0;
+  for (const launcher of launchers) {
+    const launcherPath = path.join(nodeBin, launcher.name);
+    
+    // Skip if CLI doesn't exist
+    if (!existsSync(launcher.cli)) {
+      continue;
+    }
+    
+    // Remove existing (likely a symlink with absolute CI path)
+    if (existsSync(launcherPath)) {
+      await rm(launcherPath, { force: true });
+    }
+    
+    // Create a script launcher that uses relative paths
+    const script = `#!/bin/sh
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+NODE_EXE="$SCRIPT_DIR/node"
+CLI="$SCRIPT_DIR/${launcher.cliPath}"
+exec "$NODE_EXE" "$CLI" "$@"
+`;
+    
+    await writeFile(launcherPath, script, { encoding: 'utf8', mode: 0o755 });
+    fixedCount++;
+  }
+  
+  if (fixedCount > 0) {
+    console.log(`  ✓ Rewrote ${fixedCount} Node launcher(s) to use relative paths`);
+  }
+}
+
+async function ensureReactGuiBuild(repoRoot: string): Promise<void> {
+  const reactRoot = path.join(repoRoot, 'src', 'gui', 'react');
+  const reactDistSrc = path.join(reactRoot, 'dist');
+  if (existsSync(reactDistSrc)) {
+    return;
+  }
+  const reactNodeModules = path.join(reactRoot, 'node_modules');
+  if (!existsSync(reactNodeModules)) {
+    console.log('\n📦 Installing React GUI dependencies...\n');
+    await run('npm', ['--prefix', reactRoot, 'ci'], { cwd: repoRoot });
+  }
+  console.log('\n🧱 Building React GUI...\n');
+  await run('npm', ['--prefix', reactRoot, 'run', 'build'], { cwd: repoRoot });
+}
+
 async function stageApp(args: Args, repoRoot: string, stageRoot: string, version: string): Promise<void> {
   const payloadRoot = path.join(stageRoot, 'payload', 'puppet-master');
   const nodeDir = path.join(payloadRoot, 'node');
@@ -301,12 +402,15 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
 
   // 3b) Copy React SPA build into dist/gui/react/dist (for .app bundle and server getReactBuildPath())
   if (args.platform === 'darwin' || args.platform === 'linux' || args.platform === 'win32') {
+    await ensureReactGuiBuild(repoRoot);
     const reactDistSrc = path.join(repoRoot, 'src', 'gui', 'react', 'dist');
     if (existsSync(reactDistSrc)) {
       console.log('\n📦 Staging React GUI build...\n');
       const reactDistDst = path.join(appDir, 'dist', 'gui', 'react', 'dist');
       await ensureDir(path.dirname(reactDistDst));
       await copyDir(reactDistSrc, reactDistDst);
+    } else {
+      throw new Error('React GUI build not found after build step; ensure "npm run gui:build" succeeds.');
     }
   }
 
@@ -336,11 +440,40 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
   const downloadsDir = path.join(path.dirname(stageRoot), 'downloads');
   await downloadNodeRuntime(args, repoRoot, downloadsDir, nodeDir);
 
+  // 5a) Fix npm/npx/corepack symlinks to use relative paths (not CI absolute paths)
+  // This ensures they work after installation without relying solely on postinstall
+  if (args.platform === 'darwin' || args.platform === 'linux') {
+    console.log('\n🔧 Fixing Node.js launcher symlinks...\n');
+    await fixNodeSymlinks(nodeDir, args.platform);
+  }
+
   // 5b) Rebuild native modules with bundled Node so ABI matches (e.g. better-sqlite3)
   const nodeBin = path.join(nodeDir, 'bin');
   const pathEnv = `${nodeBin}${path.delimiter}${process.env.PATH ?? ''}`;
   console.log('\n🔨 Rebuilding native modules for bundled Node...\n');
-  await run('npm', ['rebuild'], { cwd: appDir, env: { ...process.env, PATH: pathEnv } });
+  // Windows: Ensure better-sqlite3 is rebuilt properly for the bundled Node version
+  // This prevents "Error opening file for writing" during NSIS install
+  // Try multiple times with delays to handle transient file locks
+  let rebuildSuccess = false;
+  const maxRetries = 3;
+  
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      await run('npm', ['rebuild'], { cwd: appDir, env: { ...process.env, PATH: pathEnv } });
+      rebuildSuccess = true;
+      console.log('  ✓ Native modules rebuilt successfully');
+      break;
+    } catch (error) {
+      const errorMsg = error instanceof Error ? error.message : String(error);
+      if (attempt < maxRetries) {
+        console.warn(`⚠️  Native module rebuild attempt ${attempt}/${maxRetries} failed, retrying in 3 seconds...`);
+        await new Promise(resolve => setTimeout(resolve, 3000));
+      } else {
+        console.warn('⚠️  Native module rebuild failed after', maxRetries, 'attempts (may succeed during postinstall):', errorMsg);
+        // Non-fatal: NSIS/pkg postinstall can retry
+      }
+    }
+  }
 
   // 6) Install Playwright Chromium into payload/playwright-browsers
   console.log('\n🌐 Installing Playwright Chromium into staged payload...\n');

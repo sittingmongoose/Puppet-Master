@@ -8,12 +8,14 @@
  */
 
 import type { TestResult } from '../../types/prd.js';
+import type { Platform } from '../../types/platforms.js';
 import type {
   CompletionSignal,
   ParsedPlatformOutput,
   PlatformOutputParser,
   RalphStatusBlock,
 } from './types.js';
+import { scanTailForPermissionPrompt } from '../permission-prompt-detector.js';
 
 /**
  * Base output parser with shared utilities.
@@ -91,6 +93,12 @@ export abstract class BaseOutputParser implements PlatformOutputParser {
    * Parse output. Subclasses implement platform-specific logic.
    */
   abstract parse(output: string): ParsedPlatformOutput;
+
+  /**
+   * Returns the platform name for this parser.
+   * Used by the permission prompt detector for audit context.
+   */
+  protected abstract getPlatformName(): Platform;
 
   /**
    * P1-G11: Detect completion signal in output with enhanced robustness.
@@ -320,6 +328,20 @@ export abstract class BaseOutputParser implements PlatformOutputParser {
     const learnings = this.extractLearnings(output);
     const suggestedAgentsUpdate = this.extractSuggestedAgentsUpdate(output);
 
+    // Permission hardening: universal permission prompt detection (safety net)
+    const permDetection = scanTailForPermissionPrompt(output, this.getPlatformName());
+    const permissionPromptDetected = permDetection
+      ? { detected: true, pattern: permDetection.pattern, context: permDetection.context }
+      : undefined;
+
+    // If a permission prompt is detected, add a warning
+    if (permissionPromptDetected) {
+      warnings.push(
+        `[PERMISSION PROMPT DETECTED] Pattern "${permissionPromptDetected.pattern}" found in output. ` +
+        'This may indicate the process is waiting for user input and will hang.'
+      );
+    }
+
     return {
       completionSignal,
       statusBlock,
@@ -332,6 +354,7 @@ export abstract class BaseOutputParser implements PlatformOutputParser {
       tokensUsed,
       learnings: learnings.length > 0 ? learnings : undefined,
       suggestedAgentsUpdate,
+      permissionPromptDetected,
     };
   }
 }

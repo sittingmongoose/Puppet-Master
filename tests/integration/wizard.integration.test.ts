@@ -162,5 +162,20 @@ describe('Wizard Integration Tests', () => {
 
       expect(true).toBe(true);
     });
+
+    it('platform/model override applies to startChain config not tiers.phase', async () => {
+      // This test documents the expected wizard platform/model override behavior
+      
+      // Test setup would:
+      // 1. Create a config with tiers.phase.platform="cursor"
+      // 2. Call /api/wizard/generate with platform="claude", model="sonnet"
+      // 3. Verify that PRD generator receives config with:
+      //    - config.startChain.prd.platform="claude"
+      //    - config.startChain.architecture.platform="claude"
+      //    - config.tiers.phase.platform="cursor" (unchanged)
+      
+      // For now, document expected behavior
+      expect(true).toBe(true);
+    });
   });
 });

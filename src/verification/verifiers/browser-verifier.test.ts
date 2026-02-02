@@ -156,7 +156,9 @@ describe('BrowserVerifier', () => {
         count: vi.fn().mockResolvedValue(1),
         isVisible: vi.fn().mockResolvedValue(true),
         textContent: vi.fn().mockResolvedValue('Test text'),
-      };
+      describe: vi.fn().mockReturnThis(),
+      description: vi.fn().mockReturnValue(''),
+    };
       mockPage.locator.mockReturnValue(mockElement);
 
       const criterion: BrowserCriterion = {
@@ -181,7 +183,9 @@ describe('BrowserVerifier', () => {
       const mockElement = {
         count: vi.fn().mockResolvedValue(1),
         isVisible: vi.fn().mockResolvedValue(false),
-      };
+      describe: vi.fn().mockReturnThis(),
+      description: vi.fn().mockReturnValue(''),
+    };
       mockPage.locator.mockReturnValue(mockElement);
 
       const criterion: BrowserCriterion = {
@@ -205,7 +209,9 @@ describe('BrowserVerifier', () => {
       const mockElement = {
         count: vi.fn().mockResolvedValue(1),
         textContent: vi.fn().mockResolvedValue('Expected text'),
-      };
+      describe: vi.fn().mockReturnThis(),
+      description: vi.fn().mockReturnValue(''),
+    };
       mockPage.locator.mockReturnValue(mockElement);
 
       const criterion: BrowserCriterion = {
@@ -229,7 +235,9 @@ describe('BrowserVerifier', () => {
       const mockElement = {
         count: vi.fn().mockResolvedValue(1),
         textContent: vi.fn().mockResolvedValue('Different text'),
-      };
+      describe: vi.fn().mockReturnThis(),
+      description: vi.fn().mockReturnValue(''),
+    };
       mockPage.locator.mockReturnValue(mockElement);
 
       const criterion: BrowserCriterion = {
@@ -252,7 +260,9 @@ describe('BrowserVerifier', () => {
     it('should fail when element is not found', async () => {
       const mockElement = {
         count: vi.fn().mockResolvedValue(0),
-      };
+      describe: vi.fn().mockReturnThis(),
+      description: vi.fn().mockReturnValue(''),
+    };
       mockPage.locator.mockReturnValue(mockElement);
 
       const criterion: BrowserCriterion = {
@@ -275,7 +285,9 @@ describe('BrowserVerifier', () => {
       const mockElement = {
         count: vi.fn().mockResolvedValue(1),
         isVisible: vi.fn().mockResolvedValue(true),
-      };
+      describe: vi.fn().mockReturnThis(),
+      description: vi.fn().mockReturnValue(''),
+    };
       mockPage.locator.mockReturnValue(mockElement);
 
       const criterion: BrowserCriterion = {
@@ -302,7 +314,9 @@ describe('BrowserVerifier', () => {
       const mockElement = {
         count: vi.fn().mockResolvedValue(1),
         click: vi.fn().mockResolvedValue(undefined),
-      };
+      describe: vi.fn().mockReturnThis(),
+      description: vi.fn().mockReturnValue(''),
+    };
       mockPage.locator.mockReturnValue(mockElement);
 
       const criterion: BrowserCriterion = {
@@ -328,7 +342,9 @@ describe('BrowserVerifier', () => {
       const mockElement = {
         count: vi.fn().mockResolvedValue(1),
         fill: vi.fn().mockResolvedValue(undefined),
-      };
+      describe: vi.fn().mockReturnThis(),
+      description: vi.fn().mockReturnValue(''),
+    };
       mockPage.locator.mockReturnValue(mockElement);
 
       const criterion: BrowserCriterion = {
@@ -355,7 +371,9 @@ describe('BrowserVerifier', () => {
       const mockElement = {
         count: vi.fn().mockResolvedValue(1),
         selectOption: vi.fn().mockResolvedValue(undefined),
-      };
+      describe: vi.fn().mockReturnThis(),
+      description: vi.fn().mockReturnValue(''),
+    };
       mockPage.locator.mockReturnValue(mockElement);
 
       const criterion: BrowserCriterion = {
@@ -382,7 +400,9 @@ describe('BrowserVerifier', () => {
       const mockElement = {
         count: vi.fn().mockResolvedValue(1),
         hover: vi.fn().mockResolvedValue(undefined),
-      };
+      describe: vi.fn().mockReturnThis(),
+      description: vi.fn().mockReturnValue(''),
+    };
       mockPage.locator.mockReturnValue(mockElement);
 
       const criterion: BrowserCriterion = {
@@ -407,7 +427,9 @@ describe('BrowserVerifier', () => {
     it('should capture screenshot on failure', async () => {
       const mockElement = {
         count: vi.fn().mockResolvedValue(0),
-      };
+      describe: vi.fn().mockReturnThis(),
+      description: vi.fn().mockReturnValue(''),
+    };
       mockPage.locator.mockReturnValue(mockElement);
 
       const saveScreenshotSpy = vi

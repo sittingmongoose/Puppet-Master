@@ -45,6 +45,8 @@ describe('CursorRunner', () => {
     } as unknown as CapabilityDiscoveryService;
 
     runner = new CursorRunner(capabilityService);
+    // Pre-set approval flag cache so the probe doesn't fire during tests
+    (runner as unknown as Record<string, unknown>)['approvalFlagSupport'] = '';
   });
 
   afterEach(() => {
@@ -240,6 +242,8 @@ describe('CursorRunner', () => {
 
     it('should use custom command if provided', async () => {
       const customRunner = new CursorRunner(capabilityService, 'custom-cursor');
+      // Pre-set approval flag cache so the probe doesn't fire
+      (customRunner as unknown as Record<string, unknown>)['approvalFlagSupport'] = '';
       const request: ExecutionRequest = {
         prompt: 'Test prompt',
         workingDirectory: '/tmp',

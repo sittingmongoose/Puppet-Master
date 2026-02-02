@@ -89,8 +89,12 @@ async function getAuthToken(): Promise<string | null> {
  * Base fetch wrapper with error handling and automatic auth token injection
  */
 async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
-  // Skip auth for auth endpoints and login endpoints (platform auth, not GUI auth)
-  const needsAuth = url.startsWith('/api/') && !url.startsWith('/api/auth/') && !url.startsWith('/api/login/');
+  // Skip auth for auth endpoints, login endpoints (platform auth, not GUI auth), and config endpoints (needed during onboarding)
+  const needsAuth = url.startsWith('/api/') && 
+    !url.startsWith('/api/auth/') && 
+    !url.startsWith('/api/login/') &&
+    !url.startsWith('/api/config/') &&
+    !url.startsWith('/api/platforms/');
   
   // Get auth token if needed
   let headers: HeadersInit = {
@@ -341,8 +345,13 @@ export const agents = {
 /**
  * Get current config
  */
-export async function getConfig(): Promise<Config> {
-  const response = await fetchJSON<{ config: Config }>('/api/config');
+/**
+ * Get config
+ * @param refresh - Optional flag to bypass cache
+ */
+export async function getConfig(refresh = false): Promise<Config> {
+  const url = refresh ? '/api/config?refresh=true' : '/api/config';
+  const response = await fetchJSON<{ config: Config }>(url);
   return response.config;
 }
 
@@ -520,6 +529,22 @@ export async function uploadRequirements(content: string, filename?: string): Pr
 }
 
 /**
+ * Upload and parse requirements document
+ */
+export async function wizardUpload(data: {
+  text?: string;
+  file?: string;
+  filename?: string;
+  format?: string;
+  projectPath?: string;
+}): Promise<{ parsed: unknown }> {
+  return fetchJSON('/api/wizard/upload', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+}
+
+/**
  * Generate PRD from requirements
  */
 export async function generatePRD(options?: { style?: string }): Promise<{ success: boolean }> {
@@ -532,7 +557,14 @@ export async function generatePRD(options?: { style?: string }): Promise<{ succe
 /**
  * Generate PRD from requirements with full response
  */
-export async function wizardGenerate(data: { requirements: string }): Promise<{ prd: string }> {
+export async function wizardGenerate(data: {
+  parsed: unknown;
+  projectPath?: string;
+  projectName?: string;
+  platform?: string;
+  model?: string;
+  useAI?: boolean;
+}): Promise<{ prd: unknown; architecture?: string; tierPlan?: unknown; usedAI: boolean }> {
   return fetchJSON('/api/wizard/generate', {
     method: 'POST',
     body: JSON.stringify(data),
@@ -629,7 +661,9 @@ interface WizardTierConfig {
  * Save wizard state with project info and tier configuration
  */
 export async function wizardSave(data: {
-  prd: string;
+  prd?: unknown;
+  architecture?: string | null;
+  tierPlan?: unknown;
   projectName: string;
   projectPath: string;
   tierConfigs?: Record<string, WizardTierConfig>;
@@ -674,7 +708,15 @@ export async function getLoginStatus(): Promise<LoginStatusResponse> {
 /**
  * Trigger CLI login for a specific platform
  */
-export async function loginPlatform(platform: string): Promise<{ success: boolean; message?: string }> {
+export async function loginPlatform(platform: string): Promise<{ 
+  success: boolean; 
+  message?: string; 
+  authUrl?: string;
+  command?: string;
+  error?: string;
+  code?: string;
+  getUrl?: string;
+}> {
   return fetchJSON('/api/login/' + encodeURIComponent(platform), {
     method: 'POST',
   });
@@ -733,6 +775,7 @@ export const api = {
   // History
   getHistory,
   // Wizard
+  wizardUpload,
   uploadRequirements,
   generatePRD,
   wizardGenerate,

@@ -257,11 +257,15 @@ export async function discoverCursorModels(
  */
 function parseModelList(output: string): CursorModel[] {
   const models: CursorModel[] = [];
-  const lines = output.trim().split('\n');
+  
+  // Strip ANSI escape codes first to prevent them from appearing in model IDs
+  // eslint-disable-next-line no-control-regex
+  const cleanOutput = output.replace(/\x1b\[[0-9;]*[a-zA-Z]/g, '');
+  const lines = cleanOutput.trim().split('\n');
 
   // Try JSON format first
   try {
-    const json = JSON.parse(output);
+    const json = JSON.parse(cleanOutput);
     if (Array.isArray(json)) {
       for (const item of json) {
         if (typeof item === 'object' && item !== null && 'id' in item) {
@@ -282,16 +286,17 @@ function parseModelList(output: string): CursorModel[] {
 
   // Parse text/table format
   for (const line of lines) {
-    if (!line.trim() || line.startsWith('Available') || line.startsWith('Model')) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('Available') || trimmed.startsWith('Model') || trimmed.startsWith('Loading')) {
       continue;
     }
 
     // Try to extract model ID (first word or column)
-    const parts = line.trim().split(/\s+/);
+    const parts = trimmed.split(/\s+/);
     if (parts.length > 0) {
       const id = parts[0];
-      // Skip headers and separators
-      if (id && !id.includes('─') && !id.includes('═') && id !== 'ID') {
+      // Skip headers, separators, empty strings, and invalid IDs
+      if (id && !id.includes('─') && !id.includes('═') && id !== 'ID' && id !== 'No' && id.length > 2) {
         models.push({
           id,
           label: id,

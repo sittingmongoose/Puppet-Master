@@ -7,6 +7,7 @@
  * Per BUILD_QUEUE_IMPROVEMENTS.md P1-T10.
  */
 
+import type { Platform } from '../../types/platforms.js';
 import type { ParsedPlatformOutput } from './types.js';
 import { BaseOutputParser } from './base-output-parser.js';
 
@@ -54,6 +55,10 @@ interface GeminiStreamEvent {
  * - error: Error object if present
  */
 export class GeminiOutputParser extends BaseOutputParser {
+  protected getPlatformName(): Platform {
+    return 'gemini';
+  }
+
   /**
    * Parse Gemini CLI output.
    *

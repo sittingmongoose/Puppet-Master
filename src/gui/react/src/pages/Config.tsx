@@ -239,7 +239,7 @@ export default function ConfigPage() {
     const fetchConfig = async () => {
       try {
         if (!cachedConfig) setLoading(true);
-        const data = await api.getConfig();
+        const data = await api.getConfig(false);
         if (data) {
           const cfg = data as unknown as Config;
           const logging = (cfg as unknown as { logging?: { level?: string; intensive?: boolean } }).logging;
@@ -261,6 +261,34 @@ export default function ConfigPage() {
       }
     };
     fetchConfig();
+  }, []);
+
+  // Manual refresh function to bypass cache
+  const refreshConfig = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await api.getConfig(true);
+      if (data) {
+        const cfg = data as unknown as Config;
+        const logging = (cfg as unknown as { logging?: { level?: string; intensive?: boolean } }).logging;
+        if (logging) {
+          cfg.advanced = {
+            ...cfg.advanced,
+            logLevel: logging.level ?? cfg.advanced.logLevel,
+            intensiveLogging: logging.intensive ?? cfg.advanced.intensiveLogging,
+          };
+        }
+        setConfig(cfg);
+        cachedConfig = cfg;
+        setIsDirty(false);
+      }
+    } catch (err) {
+      console.error('[Config] Failed to refresh config:', err);
+      setError(getErrorMessage(err, 'Failed to refresh config'));
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   // CU-P1-T09: Fetch Cursor capabilities on mount
@@ -391,6 +419,9 @@ export default function ConfigPage() {
       };
 
       await api.updateConfig(toSave as unknown as Record<string, unknown>);
+      
+      // Update cache with saved config
+      cachedConfig = config;
       setIsDirty(false);
     } catch (err) {
       console.error('[Config] Failed to save config:', err);
@@ -702,7 +733,7 @@ function TiersTab({
                         options={installedPlatforms.length > 0 
                           ? installedPlatforms.map((platform) => ({
                               value: platform,
-                              label: platform.charAt(0).toUpperCase() + platform.slice(1),
+                              label: platform ? platform.charAt(0).toUpperCase() + platform.slice(1) : 'Unknown',
                             }))
                           : [
                               { value: 'cursor', label: 'Cursor (not installed)' },
@@ -732,7 +763,7 @@ function TiersTab({
                     <div className="mt-xs p-sm bg-safety-orange/10 border-medium border-safety-orange rounded">
                       <p className="text-sm text-safety-orange">
                         <WarningIcon size="1em" className="inline mr-xs" />
-                        {currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1)} is not installed. 
+                        {currentPlatform ? currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1) : 'Platform'} is not installed. 
                         {installedPlatforms.length > 0 
                           ? ' Please install it to use this platform, or select an installed platform.'
                           : ' Please run the platform setup wizard to install platforms.'}

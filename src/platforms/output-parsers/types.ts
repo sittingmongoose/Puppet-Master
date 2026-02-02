@@ -67,6 +67,13 @@ export interface ParsedPlatformOutput {
 
   /** Suggested AGENTS.md update if detected */
   suggestedAgentsUpdate?: string;
+
+  /** Permission prompt detected in output (potential hang risk in headless mode) */
+  permissionPromptDetected?: {
+    detected: boolean;
+    pattern: string;
+    context: string;
+  };
 }
 
 /**

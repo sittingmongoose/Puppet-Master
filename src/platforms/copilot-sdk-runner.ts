@@ -17,6 +17,7 @@
 
 import { EventEmitter } from 'events';
 import { PassThrough } from 'stream';
+import path from 'path';
 import type {
   Platform,
   ExecutionRequest,
@@ -32,6 +33,7 @@ import type {
 import { CapabilityDiscoveryService } from './capability-discovery.js';
 import type { RateLimiter } from '../budget/rate-limiter.js';
 import type { QuotaManager } from './quota-manager.js';
+import { PermissionAuditLogger } from './permission-audit-logger.js';
 
 // SDK types - will be available after npm install
 // For now, define minimal interfaces for type safety
@@ -48,6 +50,10 @@ interface CopilotClient {
 interface SessionConfig {
   model?: string;
   tools?: CopilotTool[];
+  onPermissionRequest?: (
+    request: { kind: string; path?: string; command?: string; url?: string },
+    context: { sessionId: string }
+  ) => Promise<{ kind: string; rules?: Array<{ reason: string }> }>;
 }
 
 interface CopilotSession {
@@ -71,6 +77,22 @@ interface CopilotTool {
 }
 
 /**
+ * Permission policy for Copilot SDK operations.
+ *
+ * - 'allow-all': Auto-approves ALL operations (default for headless automation)
+ * - 'scoped': Applies rules -- approves reads always, writes/shell within workspace,
+ *   URLs for configured domains
+ */
+export interface CopilotSdkPermissionConfig {
+  /** Permission policy */
+  policy: 'allow-all' | 'scoped';
+  /** Allowed URL domains for 'url' permission type (scoped mode only) */
+  allowedDomains?: string[];
+  /** Workspace root path for boundary checking on 'write'/'shell' (scoped mode only) */
+  workspaceRoot?: string;
+}
+
+/**
  * Configuration for the Copilot SDK runner.
  */
 export interface CopilotSdkRunnerConfig {
@@ -80,6 +102,8 @@ export interface CopilotSdkRunnerConfig {
   sessionPersistence?: boolean;
   /** Custom tools to expose to Copilot */
   customTools?: CopilotTool[];
+  /** Permission handling configuration (default: allow-all) */
+  permissionConfig?: CopilotSdkPermissionConfig;
 }
 
 /**
@@ -111,6 +135,9 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
   private sdkAvailable: boolean | null = null; // null = not yet checked
   private sdkUnavailableReason?: string;
 
+  // Permission audit logger for tracking all permission decisions
+  private auditLogger: PermissionAuditLogger;
+
   // Track "processes" for compatibility with existing interface
   // SDK doesn't use real processes, so we simulate with virtual PIDs
   private virtualProcesses: Map<number, VirtualProcess> = new Map();
@@ -140,7 +167,9 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
       defaultModel: config.defaultModel ?? 'claude-sonnet-4.5',
       sessionPersistence: config.sessionPersistence ?? false,
       customTools: config.customTools ?? [],
+      permissionConfig: config.permissionConfig ?? { policy: 'allow-all' },
     };
+    this.auditLogger = new PermissionAuditLogger();
     this.defaultTimeout = defaultTimeout;
     this.hardTimeout = hardTimeout;
     this.sessionReuseAllowed = true;
@@ -250,6 +279,121 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
    */
   getCustomTools(): CopilotTool[] {
     return this.config.customTools ?? [];
+  }
+
+  /**
+   * Gets the permission audit logger for inspection/testing.
+   */
+  getAuditLogger(): PermissionAuditLogger {
+    return this.auditLogger;
+  }
+
+  /**
+   * Builds the onPermissionRequest callback for Copilot SDK sessions.
+   *
+   * Implements two policies:
+   * - 'allow-all': Approves all operations unconditionally (default for automation)
+   * - 'scoped': Approves reads always, writes/shell within workspace, URLs for configured domains
+   *
+   * All decisions are logged to the audit logger for traceability.
+   */
+  private buildPermissionHandler(
+    workingDirectory?: string
+  ): SessionConfig['onPermissionRequest'] {
+    const permConfig = this.config.permissionConfig ?? { policy: 'allow-all' };
+    const auditLogger = this.auditLogger;
+
+    return async (request, _context) => {
+      const resource = request.path ?? request.command ?? request.url ?? 'unknown';
+
+      auditLogger.logSdkPermissionRequest('copilot', request.kind, resource);
+
+      let decision: { kind: string; rules?: Array<{ reason: string }> };
+      let reason: string;
+
+      if (permConfig.policy === 'allow-all') {
+        reason = 'allow-all policy';
+        decision = { kind: 'approved' };
+      } else {
+        // Scoped approval logic
+        switch (request.kind) {
+          case 'read':
+            reason = 'reads always allowed';
+            decision = { kind: 'approved' };
+            break;
+
+          case 'write':
+          case 'shell': {
+            const wsRoot = permConfig.workspaceRoot ?? workingDirectory;
+            if (wsRoot && resource !== 'unknown') {
+              const resolved = path.resolve(resource);
+              const root = path.resolve(wsRoot);
+              if (resolved.startsWith(root)) {
+                reason = `within workspace boundary: ${wsRoot}`;
+                decision = { kind: 'approved' };
+              } else {
+                reason = `outside workspace: ${wsRoot}`;
+                decision = {
+                  kind: 'denied-by-rules',
+                  rules: [{ reason }],
+                };
+              }
+            } else {
+              // No workspace configured, approve by default for automation
+              reason = 'no workspace boundary configured';
+              decision = { kind: 'approved' };
+            }
+            break;
+          }
+
+          case 'url': {
+            const domains = permConfig.allowedDomains;
+            if (!domains || domains.length === 0) {
+              reason = 'no domain restrictions';
+              decision = { kind: 'approved' };
+            } else {
+              let hostname: string;
+              try {
+                hostname = new URL(resource).hostname;
+              } catch {
+                hostname = resource;
+              }
+              const allowed = domains.some((d) => hostname.endsWith(d));
+              if (allowed) {
+                reason = `domain ${hostname} in allowlist`;
+                decision = { kind: 'approved' };
+              } else {
+                reason = `domain ${hostname} not in allowlist`;
+                decision = {
+                  kind: 'denied-by-rules',
+                  rules: [{ reason }],
+                };
+              }
+            }
+            break;
+          }
+
+          case 'mcp':
+            reason = 'MCP tools allowed in automation';
+            decision = { kind: 'approved' };
+            break;
+
+          default:
+            reason = `unknown kind "${request.kind}", defaulting to approved`;
+            decision = { kind: 'approved' };
+        }
+      }
+
+      auditLogger.logSdkPermissionDecision(
+        'copilot',
+        request.kind,
+        resource,
+        decision.kind,
+        reason
+      );
+
+      return decision;
+    };
   }
 
   /**
@@ -485,14 +629,16 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
 
       // Create or reuse session
       if (!this.session || !this.config.sessionPersistence) {
-        // P0: Build session config with model selection and tool configuration
+        // P0: Build session config with model selection, tool configuration, and permission handler
         const sessionConfig: SessionConfig = {
           // P0: Model selection (if supported by SDK)
           model: request.model ?? this.config.defaultModel,
           // P0: Tool configuration (if available-tools specified)
-          tools: request.allowedToolsList 
+          tools: request.allowedToolsList
             ? this.buildCopilotTools(request.allowedToolsList)
             : this.config.customTools,
+          // Permission hardening: programmatic auto-approval handler
+          onPermissionRequest: this.buildPermissionHandler(request.workingDirectory),
         };
         this.session = await this.client.createSession(sessionConfig);
       }

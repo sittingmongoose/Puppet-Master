@@ -110,11 +110,24 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (data.success) {
-        setLoginMessages((prev) => ({ ...prev, [platform]: data.message }));
+        let message = data.message || 'Login initiated';
+        // If authUrl is provided, append it to the message
+        if (data.authUrl) {
+          message += ` If the browser doesn't open automatically, visit: ${data.authUrl}`;
+        }
+        setLoginMessages((prev) => ({ ...prev, [platform]: message }));
+        
+        // Auto-refresh status after 5 seconds to check if login succeeded
+        setTimeout(() => fetchAuthStatus(), 5000);
       } else {
+        let errorMsg = `Error: ${data.error || 'Login failed'}`;
+        // If CLI not found and authUrl is available, provide manual login option
+        if (data.code === 'CLI_NOT_FOUND' && data.getUrl) {
+          errorMsg += ` Please visit ${data.getUrl} to authenticate manually.`;
+        }
         setLoginMessages((prev) => ({
           ...prev,
-          [platform]: `Error: ${data.error || 'Login failed'}`,
+          [platform]: errorMsg,
         }));
       }
     } catch (err) {
@@ -126,7 +139,7 @@ export default function LoginPage() {
     } finally {
       setLoggingIn((prev) => ({ ...prev, [platform]: false }));
     }
-  }, []);
+  }, [fetchAuthStatus]);
 
   // Map auth status to StatusType
   const mapStatusToType = (status: string): StatusType => {
@@ -348,7 +361,7 @@ function PlatformCard({ platform, statusType, isLoggingIn, loginMessage, onLogin
       {/* Login message / spinner */}
       {isLoggingIn && (
         <div className="text-sm text-electric-blue mb-md animate-pulse">
-          Logging in... check your browser
+          Opening browser for login... This may take a few moments.
         </div>
       )}
       {loginMessage && !isLoggingIn && (

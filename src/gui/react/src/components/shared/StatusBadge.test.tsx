@@ -11,6 +11,22 @@ describe('StatusBadge', () => {
       expect(badge).toHaveAttribute('aria-label', 'Status: RUNNING');
     });
 
+    it('handles undefined status gracefully', () => {
+      // @ts-expect-error - testing runtime safety
+      render(<StatusBadge status={undefined} />);
+      const badge = screen.getByRole('status');
+      expect(badge).toBeInTheDocument();
+      expect(badge).toHaveAttribute('aria-label', 'Status: IDLE');
+    });
+
+    it('handles null status gracefully', () => {
+      // @ts-expect-error - testing runtime safety
+      render(<StatusBadge status={null} />);
+      const badge = screen.getByRole('status');
+      expect(badge).toBeInTheDocument();
+      expect(badge).toHaveAttribute('aria-label', 'Status: IDLE');
+    });
+
     it('applies running status color and glow', () => {
       render(<StatusBadge status="running" />);
       const dot = screen.getByRole('status').querySelector('span');
@@ -79,6 +95,13 @@ describe('StatusBadge', () => {
       render(<StatusBadge status="running" variant="badge" />);
       const badge = screen.getByRole('status');
       expect(badge).toHaveTextContent('RUNNING');
+    });
+
+    it('handles undefined status in badge variant', () => {
+      // @ts-expect-error - testing runtime safety
+      render(<StatusBadge status={undefined} variant="badge" />);
+      const badge = screen.getByRole('status');
+      expect(badge).toHaveTextContent('IDLE');
     });
 
     it('applies badge styling', () => {

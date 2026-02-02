@@ -98,6 +98,19 @@ export default function DoctorPage() {
     }
   }, [selectedPlatforms]);
 
+  // Reset cache - useful for debugging or forcing fresh data
+  const resetCache = useCallback(() => {
+    cachedChecks = null;
+    cachedPlatformStatus = null;
+    cachedSelectedPlatforms = null;
+    setChecks([]);
+    setPlatformStatus({});
+    setSelectedPlatforms([]);
+    setLoading(true);
+    // Trigger re-fetch by running checks
+    runChecks();
+  }, [runChecks]);
+
   // Fix a check
   const fixCheck = useCallback(async (checkName: string) => {
     try {
@@ -263,7 +276,7 @@ export default function DoctorPage() {
                     id={`doctor-platform-${platform}`}
                     checked={isSelected}
                     onChange={() => handlePlatformToggle(platform)}
-                    label={platform.charAt(0).toUpperCase() + platform.slice(1)}
+                    label={platform ? platform.charAt(0).toUpperCase() + platform.slice(1) : 'Unknown'}
                   />
                   <div className="mt-xs">
                     <StatusBadge
@@ -280,7 +293,7 @@ export default function DoctorPage() {
           {selectedPlatforms.length > 0 && (
             <div className="mt-md p-sm bg-electric-blue/10 border-medium border-electric-blue rounded">
               <p className="text-sm">
-                Selected: {selectedPlatforms.map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join(', ')}
+                Selected: {selectedPlatforms.map((p) => p ? p.charAt(0).toUpperCase() + p.slice(1) : 'Unknown').join(', ')}
               </p>
             </div>
           )}

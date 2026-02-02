@@ -344,12 +344,19 @@ export function createWizardRoutes(
    * Generates PRD, architecture, and tier plan from parsed requirements.
    * Uses AI generation when platform dependencies are available, otherwise falls back to rule-based.
    *
-   * Body: { parsed: ParsedRequirements, projectPath?: string, projectName?: string, useAI?: boolean }
+   * Platform/Model Override Behavior:
+   * - When `platform` and `model` are specified, they override config.startChain.prd,
+   *   config.startChain.architecture, and config.startChain.requirementsInterview.
+   * - If no override is specified, generators fall back to step-specific config or config.tiers.phase.
+   * - This ensures wizard platform selection affects Start Chain generation, not tier execution.
+   *
+   * Body: { parsed: ParsedRequirements, projectPath?: string, projectName?: string, 
+   *         platform?: string, model?: string, useAI?: boolean }
    * Response: { prd: PRD, architecture: string, tierPlan: TierPlan, usedAI: boolean }
    */
   router.post('/wizard/generate', async (req: Request, res: Response) => {
     try {
-      const { parsed, projectPath, projectName, useAI: requestUseAI } = req.body;
+      const { parsed, projectPath, projectName, platform, model, useAI: requestUseAI } = req.body;
 
       if (!parsed) {
         res.status(400).json({
@@ -373,7 +380,38 @@ export function createWizardRoutes(
           // Ignore config load errors, use provided config or undefined
         }
       }
-      const effectiveConfig = deps.config || loadedConfig;
+      let effectiveConfig = deps.config || loadedConfig;
+
+      // If platform/model are specified, create a temporary config override for Start Chain
+      // This ensures platform/model selections in the wizard UI correctly override
+      // config.startChain.prd, config.startChain.architecture, and config.startChain.requirementsInterview
+      // instead of config.tiers.phase (which is used for tier execution, not Start Chain generation)
+      if (platform && effectiveConfig) {
+        effectiveConfig = {
+          ...effectiveConfig,
+          startChain: {
+            ...effectiveConfig.startChain,
+            prd: {
+              ...effectiveConfig.startChain?.prd,
+              platform: platform as Platform,
+              model: model || effectiveConfig.startChain?.prd?.model || 'auto',
+              enabled: effectiveConfig.startChain?.prd?.enabled ?? true,
+            },
+            architecture: {
+              ...effectiveConfig.startChain?.architecture,
+              platform: platform as Platform,
+              model: model || effectiveConfig.startChain?.architecture?.model || 'auto',
+              enabled: effectiveConfig.startChain?.architecture?.enabled ?? true,
+            },
+            requirementsInterview: {
+              ...effectiveConfig.startChain?.requirementsInterview,
+              platform: platform as Platform,
+              model: model || effectiveConfig.startChain?.requirementsInterview?.model || 'auto',
+              enabled: effectiveConfig.startChain?.requirementsInterview?.enabled ?? true,
+            },
+          },
+        };
+      }
 
       // Check if we have all dependencies for AI generation
       const hasAIDependencies = !!(

@@ -26,6 +26,7 @@ export {
 export {
   NodeVersionCheck,
   NpmAvailableCheck,
+  NpmNodeCompatibilityCheck,
   YarnAvailableCheck,
   PythonVersionCheck,
   parseVersion,

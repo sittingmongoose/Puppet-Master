@@ -15,6 +15,7 @@ import {
   ClaudeCliCheck,
 } from './cli-tools.js';
 import { getCursorCommandCandidates } from '../../platforms/constants.js';
+import { getPlatformAuthStatus } from '../../platforms/auth-status.js';
 
 // Mock child_process
 vi.mock('node:child_process', () => {
@@ -30,16 +31,34 @@ vi.mock('node:fs/promises', () => {
   };
 });
 
+vi.mock('../../platforms/auth-status.js', () => ({
+  getPlatformAuthStatus: vi.fn((platform: string) => {
+    if (platform === 'codex') {
+      return { status: 'not_authenticated', fixSuggestion: 'Run `codex login` or set OPENAI_API_KEY in your environment.' };
+    }
+    return { status: 'authenticated' };
+  }),
+}));
+
 describe('CLI Tools Checks', () => {
   let mockSpawn: ReturnType<typeof vi.fn>;
+
+  let codexAuthStatus: 'authenticated' | 'not_authenticated' = 'authenticated';
 
   beforeEach(() => {
     mockSpawn = vi.mocked(spawn);
     vi.mocked(access).mockClear();
     vi.mocked(access).mockRejectedValue(new Error('ENOENT'));
+    codexAuthStatus = 'authenticated';
     process.env.OPENAI_API_KEY = 'test';
     process.env.ANTHROPIC_API_KEY = 'test';
     process.env.CURSOR_API_KEY = 'test';
+    vi.mocked(getPlatformAuthStatus).mockImplementation((platform: string) => {
+      if (platform === 'codex') {
+        return { status: codexAuthStatus, fixSuggestion: 'Run `codex login` or set OPENAI_API_KEY in your environment.' };
+      }
+      return { status: 'authenticated' };
+    });
   });
 
   afterEach(() => {
@@ -292,6 +311,7 @@ describe('CLI Tools Checks', () => {
 
     it('should fail when OPENAI_API_KEY is missing', async () => {
       delete process.env.OPENAI_API_KEY;
+      codexAuthStatus = 'not_authenticated';
       const check = new CodexCliCheck();
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('codex 1.0.0'));
       mockSpawn.mockReturnValueOnce(createMockSuccessProcess('--help'));

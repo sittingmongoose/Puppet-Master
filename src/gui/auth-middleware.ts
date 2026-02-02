@@ -101,7 +101,14 @@ export function createAuthMiddleware(config: AuthConfig): RequestHandler {
     
     // Allow auth-related endpoints without authentication
     // P0-G07: Also allow /api/login/* routes (platform auth status, not GUI auth)
-    if (req.path.startsWith('/api/auth/') || req.path.startsWith('/api/login/') || req.path === '/api/platforms/first-boot' || req.path.startsWith('/api/ledger')) {
+    // Also allow /api/config/* and /api/platforms/* for onboarding wizard
+    // Also exempt /api/system/uninstall (requires pkexec elevation, no token needed)
+    if (req.path.startsWith('/api/auth/') || 
+        req.path.startsWith('/api/login/') || 
+        req.path.startsWith('/api/config/') ||
+        req.path.startsWith('/api/platforms/') ||
+        req.path === '/api/ledger' ||
+        req.path === '/api/system/uninstall') {
       next();
       return;
     }

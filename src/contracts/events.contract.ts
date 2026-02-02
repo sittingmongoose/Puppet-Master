@@ -131,6 +131,14 @@ export const EVENT_CONTRACT = {
     /** Worktree destroyed */
     destroyed: 'worktree_destroyed',
   },
+
+  /**
+   * Permission/approval events (permission hardening)
+   */
+  permission: {
+    /** Permission prompt detected in platform output (safety net) */
+    promptDetected: 'permission_prompt_detected',
+  },
 } as const;
 
 /**
@@ -189,6 +197,8 @@ export const ALL_BACKEND_EVENT_NAMES: readonly BackendEventName[] = [
   EVENT_CONTRACT.worktree.creating,
   EVENT_CONTRACT.worktree.created,
   EVENT_CONTRACT.worktree.destroyed,
+  // Permission
+  EVENT_CONTRACT.permission.promptDetected,
 ] as const;
 
 /**

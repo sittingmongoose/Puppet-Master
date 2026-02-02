@@ -10,11 +10,16 @@ import type { PersistedState } from './state-persistence.js';
 import type { CurrentPosition, CheckpointMetadata } from './checkpoint-manager.js';
 
 describe('checkpoint-manager', () => {
-  const testDir = '.puppet-master-test';
-  const checkpointDir = join(testDir, 'checkpoints');
+  // Use unique directory for each test to avoid conflicts when running in parallel
+  const getTestDir = () => `.puppet-master-test-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  let testDir: string;
+  let checkpointDir: string;
   let checkpointManager: CheckpointManager;
 
   beforeEach(async () => {
+    testDir = getTestDir();
+    checkpointDir = join(testDir, 'checkpoints');
+    
     // Clean up test directory
     try {
       await fs.rm(testDir, { recursive: true, force: true });

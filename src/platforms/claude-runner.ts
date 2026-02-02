@@ -150,6 +150,12 @@ export class ClaudeRunner extends BasePlatformRunner {
       args.push('--permission-mode', 'plan');
     } else if (request.permissionMode) {
       args.push('--permission-mode', request.permissionMode);
+    } else if (request.nonInteractive) {
+      // DEFAULT HARDENING: For autonomous headless execution, default to 'acceptEdits'
+      // to prevent Claude from prompting for file edit approval when no explicit
+      // permissionMode is configured. Can be overridden by setting permissionMode
+      // in tier config. See permission-hardening plan for rationale.
+      args.push('--permission-mode', 'acceptEdits');
     }
 
     // Allowed tools (comma-separated; only when explicitly configured)

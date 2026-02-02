@@ -7,6 +7,7 @@
  * Per BUILD_QUEUE_IMPROVEMENTS.md P1-T10.
  */
 
+import type { Platform } from '../../types/platforms.js';
 import type { ParsedPlatformOutput } from './types.js';
 import { BaseOutputParser } from './base-output-parser.js';
 
@@ -43,6 +44,10 @@ interface JsonOutput {
  * - Token counts as "tokens: N" or similar
  */
 export class CursorOutputParser extends BaseOutputParser {
+  protected getPlatformName(): Platform {
+    return 'cursor';
+  }
+
   /**
    * Parse Cursor CLI output (text format).
    *

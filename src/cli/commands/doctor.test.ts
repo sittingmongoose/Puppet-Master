@@ -33,6 +33,24 @@ vi.mock('../../config/config-manager.js', () => ({
   }),
 }));
 
+vi.mock('../../platforms/platform-detector.js', () => ({
+  PlatformDetector: vi.fn().mockImplementation(function () {
+    return {
+      detectInstalledPlatforms: vi.fn().mockResolvedValue({
+        installedPlatforms: ['cursor', 'codex', 'claude'],
+        platformStatuses: [
+          { platform: 'cursor', installed: true, version: '1.0.0' },
+          { platform: 'codex', installed: true, version: '1.0.0' },
+          { platform: 'claude', installed: true, version: '1.0.0' },
+          { platform: 'gemini', installed: false },
+          { platform: 'copilot', installed: false },
+        ],
+      }),
+      checkPlatform: vi.fn(),
+    };
+  }),
+}));
+
 vi.mock('../../doctor/checks/playwright-check.js', () => ({
   PlaywrightBrowsersCheck: vi.fn().mockImplementation(function () {
     return {
@@ -170,6 +188,40 @@ vi.mock('../../doctor/checks/git-check.js', () => ({
   }),
 }));
 
+vi.mock('../../doctor/checks/secrets-check.js', () => ({
+  SecretsCheck: vi.fn().mockImplementation(function () {
+    return {
+      name: 'secrets',
+      category: 'git' as const,
+      description: 'Check for secrets in repository',
+      run: vi.fn().mockResolvedValue({
+        name: 'secrets',
+        category: 'git' as const,
+        passed: true,
+        message: 'No secrets found in repository',
+        durationMs: 10,
+      }),
+    };
+  }),
+}));
+
+vi.mock('../../doctor/checks/usage-check.js', () => ({
+  UsageQuotaCheck: vi.fn().mockImplementation(function () {
+    return {
+      name: 'usage-quota',
+      category: 'runtime' as const,
+      description: 'Check platform usage/quota status',
+      run: vi.fn().mockResolvedValue({
+        name: 'usage-quota',
+        category: 'runtime' as const,
+        passed: true,
+        message: 'Usage within limits',
+        durationMs: 5,
+      }),
+    };
+  }),
+}));
+
 vi.mock('../../doctor/checks/runtime-check.js', () => ({
   NodeVersionCheck: vi.fn().mockImplementation(function () {
     return {
@@ -196,6 +248,64 @@ vi.mock('../../doctor/checks/runtime-check.js', () => ({
         passed: true,
         message: 'npm is available',
         durationMs: 2,
+      }),
+    };
+  }),
+  NpmNodeCompatibilityCheck: vi.fn().mockImplementation(function () {
+    return {
+      name: 'npm-node-compatibility',
+      category: 'runtime' as const,
+      description: 'Check npm/node compatibility',
+      run: vi.fn().mockResolvedValue({
+        name: 'npm-node-compatibility',
+        category: 'runtime' as const,
+        passed: true,
+        message: 'npm/node compatibility OK',
+        durationMs: 2,
+      }),
+    };
+  }),
+}));
+
+vi.mock('../../doctor/checks/secrets-check.js', () => ({
+  SecretsCheck: vi.fn().mockImplementation(function () {
+    return {
+      name: 'secrets-check',
+      category: 'git' as const,
+      description: 'Check for secrets',
+      run: vi.fn().mockResolvedValue({
+        name: 'secrets-check',
+        category: 'git' as const,
+        passed: true,
+        message: 'No secrets found',
+        durationMs: 2,
+      }),
+    };
+  }),
+}));
+
+vi.mock('../../doctor/checks/usage-check.js', () => ({
+  UsageQuotaCheck: vi.fn().mockImplementation(function () {
+    return {
+      name: 'usage-quota',
+      category: 'cli' as const,
+      description: 'Check usage quota',
+      run: vi.fn().mockResolvedValue({
+        name: 'usage-quota',
+        category: 'cli' as const,
+        passed: true,
+        message: 'Usage OK',
+        durationMs: 2,
+      }),
+    };
+  }),
+}));
+
+vi.mock('../../platforms/platform-detector.js', () => ({
+  PlatformDetector: vi.fn().mockImplementation(function () {
+    return {
+      detectInstalledPlatforms: vi.fn().mockResolvedValue({
+        installedPlatforms: ['cursor', 'claude'],
       }),
     };
   }),

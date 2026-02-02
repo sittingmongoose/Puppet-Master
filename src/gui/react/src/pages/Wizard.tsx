@@ -30,6 +30,8 @@ interface WizardState {
   config: Record<string, unknown>;
   loading: boolean;
   error: string | null;
+  prdPlatform: string;
+  prdModel: string;
 }
 
 const STEPS: WizardStep[] = ['upload', 'generate', 'review', 'configure', 'plan', 'start'];
@@ -63,6 +65,8 @@ export default function WizardPage() {
     config: {},
     loading: false,
     error: null,
+    prdPlatform: 'cursor',
+    prdModel: 'auto',
   });
 
   const currentStepIndex = STEPS.indexOf(state.step);
@@ -111,10 +115,27 @@ export default function WizardPage() {
 
     setState((s) => ({ ...s, loading: true, error: null }));
     try {
-      const result = await api.wizardGenerate({ requirements: state.requirements });
+      // First upload/parse the requirements
+      const uploadResult = await api.wizardUpload({
+        text: state.requirements,
+        format: 'text',
+      });
+
+      // Then generate PRD with platform/model selection
+      const generateResult = await api.wizardGenerate({
+        parsed: uploadResult.parsed,
+        projectName: state.projectName,
+        projectPath: state.projectPath,
+        platform: state.prdPlatform,
+        model: state.prdModel,
+        useAI: true,
+      });
+
       setState((s) => ({
         ...s,
-        prd: result.prd,
+        prd: typeof generateResult.prd === 'string' ? generateResult.prd : JSON.stringify(generateResult.prd, null, 2),
+        architecture: generateResult.architecture || null,
+        tierPlan: generateResult.tierPlan ? JSON.stringify(generateResult.tierPlan, null, 2) : null,
         loading: false,
       }));
       nextStep();
@@ -125,15 +146,21 @@ export default function WizardPage() {
         error: err instanceof Error ? err.message : 'Failed to generate PRD',
       }));
     }
-  }, [state.requirements, nextStep]);
+  }, [state.requirements, state.projectName, state.projectPath, state.prdPlatform, state.prdModel, nextStep]);
 
   // Start the project
   const startProject = useCallback(async () => {
     setState((s) => ({ ...s, loading: true, error: null }));
     try {
+      // Parse the PRD and tier plan back to objects if they're strings
+      const prdObj = state.prd ? (typeof state.prd === 'string' ? JSON.parse(state.prd) : state.prd) : null;
+      const tierPlanObj = state.tierPlan ? (typeof state.tierPlan === 'string' ? JSON.parse(state.tierPlan) : state.tierPlan) : null;
+
       // Save wizard state with tier configuration
       await api.wizardSave({
-        prd: state.prd || '',
+        prd: prdObj,
+        architecture: state.architecture,
+        tierPlan: tierPlanObj,
         projectName: state.projectName,
         projectPath: state.projectPath,
         tierConfigs: state.config.tiers as Record<string, { platform: string; model: string; planMode?: boolean; askMode?: boolean }>,
@@ -182,7 +209,11 @@ export default function WizardPage() {
         return (
           <GenerateStep
             requirements={state.requirements}
+            prdPlatform={state.prdPlatform}
+            prdModel={state.prdModel}
             loading={state.loading}
+            onPlatformChange={(platform) => setState((s) => ({ ...s, prdPlatform: platform }))}
+            onModelChange={(model) => setState((s) => ({ ...s, prdModel: model }))}
             onGenerate={generatePRD}
             onBack={prevStep}
           />
@@ -446,19 +477,100 @@ function UploadStep({
 
 interface GenerateStepProps {
   requirements: string;
+  prdPlatform: string;
+  prdModel: string;
   loading: boolean;
+  onPlatformChange: (platform: string) => void;
+  onModelChange: (model: string) => void;
   onGenerate: () => void;
   onBack: () => void;
 }
 
-function GenerateStep({ requirements, loading, onGenerate, onBack }: GenerateStepProps) {
+function GenerateStep({ 
+  requirements, 
+  prdPlatform, 
+  prdModel, 
+  loading, 
+  onPlatformChange, 
+  onModelChange, 
+  onGenerate, 
+  onBack 
+}: GenerateStepProps) {
+  const [models, setModels] = useState<Array<{ id: string; label: string }>>([]);
+  const [modelsLoading, setModelsLoading] = useState(false);
+
+  // Fetch models for selected platform
+  useEffect(() => {
+    const fetchModels = async () => {
+      setModelsLoading(true);
+      try {
+        const response = await fetch('/api/config/models');
+        if (response.ok) {
+          const data = await response.json();
+          const platformModels = data[prdPlatform] || [];
+          setModels(platformModels);
+        }
+      } catch (err) {
+        console.error('Failed to fetch models:', err);
+      } finally {
+        setModelsLoading(false);
+      }
+    };
+    fetchModels();
+  }, [prdPlatform]);
+
+  const getModelOptions = (): Array<{ value: string; label: string }> => {
+    const options: Array<{ value: string; label: string }> = [];
+    
+    // Add "auto" option for cursor and gemini
+    if (['cursor', 'gemini'].includes(prdPlatform)) {
+      options.push({ value: 'auto', label: 'Auto (Recommended)' });
+    }
+    
+    // Add discovered models
+    models.forEach(model => {
+      options.push({ value: model.id, label: model.label || model.id });
+    });
+    
+    return options.length > 0 ? options : [{ value: 'auto', label: 'Auto' }];
+  };
+
   return (
     <Panel title="Generate PRD">
       <div className="space-y-lg">
         <p className="text-ink-faded">
-          Review your requirements below. Click "Generate PRD" to create a structured 
-          Product Requirements Document using AI.
+          Review your requirements below and select the AI platform and model to use for PRD generation.
+          Click "Generate PRD" to create a structured Product Requirements Document using AI.
         </p>
+
+        {/* Platform and Model Selection */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-md p-md border-medium border-electric-blue/30 bg-electric-blue/5">
+          <Select
+            label="PRD Generation Platform"
+            value={prdPlatform}
+            onChange={(e) => onPlatformChange(e.target.value)}
+            options={[
+              { value: 'cursor', label: 'Cursor' },
+              { value: 'codex', label: 'Codex' },
+              { value: 'claude', label: 'Claude' },
+              { value: 'gemini', label: 'Gemini' },
+              { value: 'copilot', label: 'Copilot' },
+            ]}
+          />
+          {modelsLoading ? (
+            <div className="space-y-xs">
+              <label className="block text-sm font-medium">Model</label>
+              <div className="text-sm text-ink-faded">Loading models...</div>
+            </div>
+          ) : (
+            <Select
+              label="Model"
+              value={prdModel}
+              onChange={(e) => onModelChange(e.target.value)}
+              options={getModelOptions()}
+            />
+          )}
+        </div>
 
         <div className="p-md bg-paper-lined border-medium border-dashed border-ink-faded">
           <pre className="font-mono text-sm whitespace-pre-wrap overflow-x-auto max-h-64">

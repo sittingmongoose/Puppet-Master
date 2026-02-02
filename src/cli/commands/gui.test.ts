@@ -45,6 +45,12 @@ vi.mock('net', () => ({
   },
 }));
 
+vi.mock('node:http', () => ({
+  default: {
+    get: vi.fn(),
+  },
+}));
+
 vi.mock('node:child_process', () => ({
   spawn: vi.fn(),
 }));
@@ -66,6 +72,7 @@ import { GuiServer } from '../../gui/server.js';
 import { EventBus } from '../../logging/event-bus.js';
 import open from 'open';
 import net from 'net';
+import http from 'node:http';
 import { spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -152,11 +159,20 @@ describe('guiAction', () => {
   let mockSpawnChild: {
     unref: ReturnType<typeof vi.fn>;
   };
+  let mockHttpRequest: {
+    on: ReturnType<typeof vi.fn>;
+    destroy: ReturnType<typeof vi.fn>;
+  };
+  let mockHttpResponse: {
+    statusCode: number;
+    on: ReturnType<typeof vi.fn>;
+  };
 
   // Store original process.exit to restore later
   const originalExit = process.exit;
   const originalOn = process.on;
   const originalConsole = { ...console };
+  const originalEnv = { ...process.env };
 
   beforeEach(() => {
     // Mock console methods
@@ -165,6 +181,8 @@ describe('guiAction', () => {
     console.warn = vi.fn();
     process.exit = vi.fn() as never;
     process.on = vi.fn() as never;
+    // Set DISPLAY env var so Tauri launch works on Linux in tests
+    process.env.DISPLAY = ':0';
 
     mockConfig = {
       project: {
@@ -346,6 +364,29 @@ describe('guiAction', () => {
       unref: vi.fn(),
     };
 
+    // Mock HTTP request/response for server readiness check
+    mockHttpResponse = {
+      statusCode: 200,
+      on: vi.fn((event: string, callback: (...args: unknown[]) => void) => {
+        if (event === 'data') {
+          // Immediately call with health check response
+          setTimeout(() => callback(Buffer.from('{"status":"ok"}')), 0);
+        } else if (event === 'end') {
+          // Immediately call end
+          setTimeout(() => callback(), 0);
+        }
+        return mockHttpResponse;
+      }),
+    };
+
+    mockHttpRequest = {
+      on: vi.fn((event: string, _callback: (...args: unknown[]) => void) => {
+        // Don't trigger error or timeout - simulate successful request
+        return mockHttpRequest;
+      }),
+      destroy: vi.fn(),
+    };
+
     // Setup mocks
     (ConfigManager as unknown as ReturnType<typeof vi.fn>).mockImplementation(function () {
       return mockConfigManager;
@@ -361,6 +402,13 @@ describe('guiAction', () => {
       return mockOrchestrator;
     });
     (net.createServer as ReturnType<typeof vi.fn>).mockReturnValue(mockNetServer);
+    (http.get as ReturnType<typeof vi.fn>).mockImplementation(
+      (_url: string, _options: unknown, callback: (res: typeof mockHttpResponse) => void) => {
+        // Immediately call the callback with the mock response
+        setTimeout(() => callback(mockHttpResponse), 0);
+        return mockHttpRequest;
+      }
+    );
     (open as ReturnType<typeof vi.fn>).mockResolvedValue(undefined);
     (spawn as unknown as ReturnType<typeof vi.fn>).mockReturnValue(mockSpawnChild);
     (existsSync as unknown as ReturnType<typeof vi.fn>).mockReturnValue(false);
@@ -372,6 +420,8 @@ describe('guiAction', () => {
     process.exit = originalExit;
     process.on = originalOn;
     Object.assign(console, originalConsole);
+    // Restore original environment
+    process.env = { ...originalEnv };
   });
 
   describe('server startup', () => {

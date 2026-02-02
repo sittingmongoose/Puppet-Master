@@ -28,6 +28,7 @@ import type { QuotaManager } from './quota-manager.js';
 import { QuotaExhaustedError } from './quota-manager.js';
 import type { FreshSpawner, SpawnRequest, SpawnResult } from '../core/fresh-spawn.js';
 import { CircuitBreaker, CircuitBreakerOpenError } from './circuit-breaker.js';
+import { scanTailForPermissionPrompt } from './permission-prompt-detector.js';
 
 /**
  * Error thrown when a runner execution exceeds its configured time limits.
@@ -714,7 +715,19 @@ export abstract class BasePlatformRunner
 
       // Parse output
       const result = this.parseOutput(fullOutput);
-      
+
+      // Permission prompt safety-net detection (permission hardening)
+      const permissionHit = scanTailForPermissionPrompt(fullOutput, this.platform);
+      if (permissionHit) {
+        this.emit('permissionPromptDetected', {
+          pid,
+          platform: this.platform,
+          pattern: permissionHit.pattern,
+          context: permissionHit.context,
+          timestamp: permissionHit.timestamp,
+        });
+      }
+
       // Update result with process info
       result.processId = pid;
       result.duration = Date.now() - startTime;

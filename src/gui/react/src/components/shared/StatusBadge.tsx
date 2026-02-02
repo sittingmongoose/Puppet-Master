@@ -53,7 +53,8 @@ export function StatusBadge({
     idle: 'bg-status-idle text-paper-cream',
   };
 
-  const displayLabel = label ?? status.toUpperCase();
+  const resolvedStatus = status ?? 'idle';
+  const displayLabel = label ?? (resolvedStatus ? String(resolvedStatus).toUpperCase() : 'IDLE');
 
   if (variant === 'badge') {
     // Badge style (.status-badge)
@@ -65,7 +66,7 @@ export function StatusBadge({
           border-medium border-ink-black
           font-bold text-[0.85em] uppercase tracking-wide
           rounded-sm
-          ${badgeColors[status]}
+          ${badgeColors[resolvedStatus]}
         `}
         role="status"
         aria-label={`Status: ${displayLabel}`}
@@ -76,7 +77,7 @@ export function StatusBadge({
   }
 
   // Dot style (.status-indicator + .status-dot)
-  const { bg, glow } = statusColors[status];
+  const { bg, glow } = statusColors[resolvedStatus];
   
   return (
     <span
@@ -92,7 +93,7 @@ export function StatusBadge({
           dark:border-ink-light
           ${bg}
           ${glow ?? ''}
-          ${status === 'running' ? 'animate-pulse-status' : ''}
+          ${resolvedStatus === 'running' ? 'animate-pulse-status' : ''}
         `}
       />
       {showLabel && <span>{displayLabel}</span>}

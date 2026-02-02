@@ -290,9 +290,10 @@ describe('InstallationManager', () => {
     it('should filter out commands not supported on current platform', () => {
       setPlatform('win32');
       const available = manager.getAvailableInstalls();
-      // cursor-cli is not supported on win32
+      // cursor-cli now supports all platforms including win32
       const cursorCmd = available.find((cmd) => cmd.check === 'cursor-cli');
-      expect(cursorCmd).toBeUndefined();
+      expect(cursorCmd).toBeDefined();
+      expect(cursorCmd?.platforms).toContain('win32');
     });
   });
 
@@ -507,13 +508,23 @@ describe('InstallationManager', () => {
     });
 
     it('should return false for unsupported platform', async () => {
+      // Register a command that specifically doesn't support win32
+      const linuxOnlyCmd: InstallCommand = {
+        check: 'linux-only-tool',
+        command: 'apt-get install linux-tool',
+        description: 'Install Linux-only tool',
+        requiresSudo: true,
+        platforms: ['linux'],
+      };
+      manager.registerCommand(linuxOnlyCmd);
+
       setPlatform('win32');
       const consoleErrorSpy = vi
         .spyOn(console, 'error')
         .mockImplementation(() => {});
 
       const options: InstallOptions = { skipConfirmation: true };
-      const result = await manager.install('cursor-cli', options);
+      const result = await manager.install('linux-only-tool', options);
 
       expect(result).toBe(false);
       expect(consoleErrorSpy).toHaveBeenCalledWith(
