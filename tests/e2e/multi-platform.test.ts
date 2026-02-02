@@ -22,7 +22,7 @@ describe('E2E: Multi-Platform Execution', () => {
     tempDir = join(tmpdir(), `multi-platform-test-${Date.now()}`);
     await fs.mkdir(tempDir, { recursive: true });
     const cacheDir = join(tempDir, 'capabilities');
-    capabilityService = new CapabilityDiscoveryService(cacheDir);
+    capabilityService = new CapabilityDiscoveryService(cacheDir, undefined, 24, true);
   });
 
   afterEach(async () => {
@@ -189,7 +189,9 @@ describe('E2E: Multi-Platform Execution', () => {
       
       const customService = new CapabilityDiscoveryService(
         join(tempDir, 'custom-capabilities'),
-        customPaths
+        customPaths,
+        24,
+        true
       );
       
       // Probe should use custom path (will likely fail since paths don't exist)

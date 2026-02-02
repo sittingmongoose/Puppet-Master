@@ -14,6 +14,34 @@
 ### SSH Run 2026-02-01
 Full diagnosis: [SSH_DIAGNOSIS_2026-02-01.md](SSH_DIAGNOSIS_2026-02-01.md)
 
+### Linux Validation 2026-02-02
+Four-step runbook on sittingmongoose@192.168.50.72: install/versions, GUI/autostart, doctor, logs. See [SSH_DIAGNOSIS_2026-02-01.md](SSH_DIAGNOSIS_2026-02-01.md) "SSH Run 2026-02-02" and [.puppet-master/evidence/linux-ssh-validation-2026-02-02-raw.txt](.puppet-master/evidence/linux-ssh-validation-2026-02-02-raw.txt). Summary: install PASS (rwm-puppet-master 0.1.0-1), autostart desktop present, GUI already running at localhost:3847, doctor run from home (expected git-repo/subdirectories failures), crash.log startup-only. Codex/Copilot EACCES unchanged per prior diagnosis.
+
+### macOS Validation 2026-02-02
+Five-step validation on jaredsmacbookair@192.168.50.115: [MACOS_VALIDATION_2026-02-02.md](MACOS_VALIDATION_2026-02-02.md). Summary: app bundle present; in-bundle npm/npx/corepack symlinks still broken (CI paths); GUI launch via `open -a` succeeded with no crash in this run; port retry working; **observer reports tray icon missing and GUI opens to blank screen**; Open CLI not verified (manual).
+
+### Windows Validation 2026-02-02
+SSH validation on sitti@192.168.50.253 (JaredGamingPC):
+
+| Check | Result |
+|-------|--------|
+| **Version** | 0.1.0 (VERSION.txt) |
+| **better_sqlite3.node** | PASS — exists (1,896,448 bytes) at `app\node_modules\better-sqlite3\build\Release\` |
+| **puppet-master-gui.exe** (Tauri) | PASS — exists (3,185,664 bytes) at `app\` |
+| **bin/ directory** | FAIL — **missing**; VBS/BAT launchers reference `bin\puppet-master.cmd` which does not exist |
+| **Start Menu shortcut** | Would fail — VBS runs `bin\puppet-master.cmd gui` |
+| **Tauri GUI (direct launch)** | PASS — `Start-Process app\puppet-master-gui.exe` succeeds; process runs (PID confirmed) |
+| **crash.log** | Single benign entry at `%USERPROFILE%\.puppet-master\logs\crash.log` |
+| **Tray icon** | FAIL — **missing** per observer |
+| **Open CLI** | Not verified (requires graphical session) |
+
+**Findings:**
+- Install dir structure: `app/`, `node/`, launchers (VBS, BAT), VERSION.txt — no `bin/`
+- VBS launcher has CWD fix (uses %USERPROFILE%) but invokes missing `bin\puppet-master.cmd`
+- Tauri GUI works when launched directly; Start Menu shortcut would fail
+- Node CLI (`puppet-master --version`) not in PATH; direct Node invocation fails with ERR_MODULE_NOT_FOUND (needs app cwd)
+- Recommend: either ensure `bin/` is staged/copied in Windows build, or update launchers to use `app\puppet-master-gui.exe` for Tauri builds
+
 **Linux**: rwm-puppet-master 0.1.0-1 now installed; Codex/Copilot install fails with EACCES on `/opt/puppet-master/node/lib/node_modules/@openai`.  
 **macOS**: ERR_STREAM_DESTROYED confirmed in crash.log; Node symlinks (npm/npx) point to CI paths; port 3847 in use by Cursor, auto-retry working.  
 **Windows**: Codex 0.93.0 and Copilot 0.0.400 installed; VBS CWD fix present; better_sqlite3.node exists.
@@ -38,13 +66,13 @@ Full diagnosis: [SSH_DIAGNOSIS_2026-02-01.md](SSH_DIAGNOSIS_2026-02-01.md)
 - **PORT CONFLICT**: Default port 3847 conflicts with Cursor IDE (which uses it for `msfw-control`)
 - GUI starts fine from SSH (TTY) on a free port - the issue is exclusively the non-TTY launch path
 
-### Windows Diagnosis - COMPLETE
-- SSH connected via `expect` (password has special characters)
-- Full install present: `bin/`, `node/`, `app/`, `node_modules/` all exist
-- `puppet-master --version` returns 0.1.0
-- GUI works when launched from terminal with CWD set to `%USERPROFILE%`
-- **ROOT CAUSE**: VBS/BAT launchers set CWD to `C:\Program Files\Puppet Master\` which is read-only
-- **ISSUE**: NSIS installer has interactive PowerShell CLI install page that requires manual terminal input
+### Windows Diagnosis - COMPLETE (updated 2026-02-02)
+- SSH connected via `sshpass` (password has special characters)
+- Install present: `app/`, `node/` exist; **`bin/` missing** on this machine (see Windows Validation 2026-02-02)
+- VBS/BAT launchers reference `bin\puppet-master.cmd` — Start Menu shortcut would fail without bin/
+- Tauri GUI (`app\puppet-master-gui.exe`) works when launched directly
+- better_sqlite3.node: EXISTS (1.8 MB)
+- VBS CWD fix applied (uses %USERPROFILE%); Codex 0.93.0 and Copilot 0.0.400 installed
 
 ---
 
@@ -63,14 +91,22 @@ Full diagnosis: [SSH_DIAGNOSIS_2026-02-01.md](SSH_DIAGNOSIS_2026-02-01.md)
    - Cursor uses port 3847 for msfw-control
    - Fix: Auto-detect port conflict and try next port, or change default
 
-4. **[HIGH] Windows: Interactive PowerShell CLI install page**
-   - Opens terminal requiring user interaction during install
+4. **[HIGH] Windows: bin/ directory missing — Start Menu shortcut broken**
+   - VBS/BAT launchers invoke `bin\puppet-master.cmd` which does not exist on sitti@192.168.50.253
+   - Tauri GUI (`app\puppet-master-gui.exe`) works when launched directly
+   - Either ensure bin/ is staged/copied in Windows build, or update launchers to use Tauri exe
 
-5. **[MEDIUM] macOS: Node symlinks broken**
+5. **[HIGH] macOS: GUI opens to blank screen**
+   - Observer reports Tauri window opens blank (no UI), despite server log showing load.
+
+6. **[HIGH] Tray icon missing on macOS + Windows**
+   - Menu bar/tray icon does not appear in current builds.
+
+7. **[MEDIUM] macOS: Node symlinks broken**
    - npm/npx/corepack symlinks point to CI runner paths
    - Won't affect puppet-master CLI (uses node directly) but npm won't work
 
-6. **[MEDIUM] All platforms: PlatformSetupWizard never appears**
+8. **[MEDIUM] All platforms: PlatformSetupWizard never appears**
    - App crashes before GUI loads (macOS/Linux)
    - First-boot endpoint uses wrong capabilities path
 
@@ -166,6 +202,26 @@ Full diagnosis: [SSH_DIAGNOSIS_2026-02-01.md](SSH_DIAGNOSIS_2026-02-01.md)
 - Added TrayIconBuilder menu (Open GUI, Open CLI, Restart App, Quit)
 - Left-click tray icon focuses the GUI
 - Added tray-icon feature to Tauri dependency
+- Keep TrayIcon handle alive via app state (prevents tray icon disappearing on macOS/Windows)
+
+### 16. Tauri: GUI load + tray icon fixes in progress (2026-02-02)
+**Files: `src-tauri/src/main.rs`, `src-tauri/tauri.conf.json`**
+- Tray icon missing fix: store TrayIcon in app state (prevents drop)
+- CSP updated to allow asset: protocol (required for bundled `asset://` resources), including script-src asset
+- Added tray icon fallbacks for platform-specific formats
+- External server optional: Tauri uses bundled frontend unless `--server-url` provided
+- **Pending validation:** macOS/Windows tray icon and blank screen should be re-tested on new build
+
+### 17. Windows installer: bin/ directory missing fix (2026-02-02)
+**Files: `installer/win/puppet-master.nsi`**
+- NSIS file copy now uses `*` instead of `*.*` to include directories/files without extensions (ensures `bin/` is copied)
+- better_sqlite3.node copied separately with retry + rebuild after install
+
+### 18. macOS installer: Node symlink fix at build time (2026-02-02)
+**File: `scripts/build-installer.ts`**
+- Rewrites npm/npx/corepack launchers in bundled Node to relative scripts during staging
+- Prevents CI absolute symlinks from shipping in app bundle
+- Ensures React GUI is built and staged in payload (builds if missing)
 
 ---
 
@@ -181,7 +237,9 @@ Full diagnosis: [SSH_DIAGNOSIS_2026-02-01.md](SSH_DIAGNOSIS_2026-02-01.md)
 ---
 
 ## Test Results
-(Pending - awaiting CI build with fixes)
+2026-02-02 (local):
+- `npm test -- --run tests/e2e/multi-platform.test.ts` ✅ pass
+- `npm test -- --run src/gui/gui.integration.test.ts` ✅ pass
 
 ---
 

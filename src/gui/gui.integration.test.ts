@@ -24,6 +24,7 @@ import type { Orchestrator } from '../core/orchestrator.js';
 import type { ProgressManager } from '../memory/progress-manager.js';
 import type { AgentsManager } from '../memory/agents-manager.js';
 import type { OrchestratorState } from '../types/state.js';
+import { createMockCheckRegistry } from './test-helpers/mock-doctor-registry.js';
 
 /**
  * Test server instance and dependencies
@@ -50,6 +51,8 @@ async function startTestServer(): Promise<TestServerContext & { authToken?: stri
       corsOrigins: [`http://localhost:${port}`],
       authEnabled: true, // Enable auth for tests
       useReactGui: true,
+      // Use mock doctor registry for fast, deterministic tests
+      doctorRegistryFactory: createMockCheckRegistry,
     },
     eventBus
   );

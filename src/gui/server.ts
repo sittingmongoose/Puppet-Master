@@ -78,6 +78,8 @@ export interface ServerConfig {
   allowedOrigins?: string[];
   /** Allow token exposure in /api/auth/status for non-loopback requests (default: false for security) */
   exposeTokenRemotely?: boolean;
+  /** Optional factory for creating CheckRegistry (for testing) */
+  doctorRegistryFactory?: () => Promise<import('../doctor/check-registry.js').CheckRegistry>;
 }
 
 /**
@@ -90,14 +92,8 @@ export class GuiServer {
   private server: HTTPServer | null = null;
   private wss: WebSocketServer | null = null;
   private readonly clients: Set<WebSocket> = new Set();
-  private readonly config: Required<ServerConfig> & { 
-    authEnabled: boolean; 
-    authTokenPath: string; 
-    corsRelaxed: boolean; 
-    useReactGui: boolean;
-    trustProxy: boolean;
-    allowedOrigins: string[];
-    exposeTokenRemotely: boolean;
+  private readonly config: Required<Omit<ServerConfig, 'doctorRegistryFactory'>> & {
+    doctorRegistryFactory?: () => Promise<import('../doctor/check-registry.js').CheckRegistry>;
   };
   private readonly eventBus: EventBus;
   private tierManager: TierStateManager | null = null;
@@ -140,6 +136,8 @@ export class GuiServer {
       allowedOrigins: config.allowedOrigins ?? config.corsOrigins ?? ['http://localhost:3847'],
       // Token exposure - disabled by default for security (only loopback)
       exposeTokenRemotely: config.exposeTokenRemotely ?? false,
+      // Optional doctor registry factory for testing
+      doctorRegistryFactory: config.doctorRegistryFactory,
     };
     this.eventBus = eventBus;
     this.app = express();
@@ -757,7 +755,7 @@ export class GuiServer {
     this.app.use('/api', createMetricsRoutes(this.config.baseDirectory));
 
     // Doctor routes
-    this.app.use('/api', createDoctorRoutes());
+    this.app.use('/api', createDoctorRoutes(this.config.doctorRegistryFactory));
 
     // Platform routes
     this.app.use('/api', createPlatformRoutes(this.config.baseDirectory));

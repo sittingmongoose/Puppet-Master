@@ -27,9 +27,11 @@ import { getCursorCommandCandidates, resolvePlatformCommand } from './constants.
 async function executeCommand(
   command: string,
   args: string[],
-  timeoutMs: number = 10_000
+  timeoutMs: number = 10_000,
+  testMode: boolean = false
 ): Promise<{ ok: true; output: string } | { ok: false; error: string; errorCode?: string }> {
   return new Promise((resolve) => {
+    const effectiveTimeout = testMode ? Math.min(timeoutMs, 500) : timeoutMs;
     const proc = spawn(command, args, {
       stdio: ['ignore', 'pipe', 'pipe'],
     });
@@ -39,8 +41,8 @@ async function executeCommand(
 
     const timer = setTimeout(() => {
       proc.kill('SIGKILL');
-      resolve({ ok: false, error: `Command timed out after ${timeoutMs}ms` });
-    }, timeoutMs);
+      resolve({ ok: false, error: `Command timed out after ${effectiveTimeout}ms` });
+    }, effectiveTimeout);
 
     proc.stdout.on('data', (data) => {
       stdout += data.toString();
@@ -191,10 +193,11 @@ export async function detectCursorConfig(): Promise<CursorConfigDetectionResult>
  */
 export async function probeCursorMCP(
   command: string = 'agent',
-  timeoutMs: number = 5000
+  timeoutMs: number = 5000,
+  testMode: boolean = false
 ): Promise<MCPDetectionResult> {
   try {
-    const result = await executeCommand(command, ['mcp', 'list'], timeoutMs);
+    const result = await executeCommand(command, ['mcp', 'list'], timeoutMs, testMode);
     
     if (!result.ok) {
       return {
@@ -268,7 +271,7 @@ function parseCapabilities(helpOutput: string): PlatformCapabilities {
  * Test Gemini-specific capabilities via smoke tests.
  * Non-blocking: failures don't prevent capability discovery.
  */
-async function testGeminiCapabilities(command: string): Promise<{
+async function testGeminiCapabilities(command: string, testMode: boolean = false): Promise<{
   sandbox: boolean;
   multiDirectory: boolean;
   streaming: boolean;
@@ -281,9 +284,11 @@ async function testGeminiCapabilities(command: string): Promise<{
     modelDiscovery: false,
   };
 
+  const timeout = testMode ? 500 : 3000;
+
   // Test sandbox support (non-blocking)
   try {
-    const sandboxTest = await executeCommand(command, ['-p', 'test', '--sandbox', '--output-format', 'json'], 3000);
+    const sandboxTest = await executeCommand(command, ['-p', 'test', '--sandbox', '--output-format', 'json'], timeout, testMode);
     results.sandbox = sandboxTest.ok || sandboxTest.error?.includes('sandbox') !== false;
   } catch {
     // Ignore failures
@@ -291,7 +296,7 @@ async function testGeminiCapabilities(command: string): Promise<{
 
   // Test multi-directory support (non-blocking)
   try {
-    const multiDirTest = await executeCommand(command, ['-p', 'test', '--include-directories', '/tmp', '--output-format', 'json'], 3000);
+    const multiDirTest = await executeCommand(command, ['-p', 'test', '--include-directories', '/tmp', '--output-format', 'json'], timeout, testMode);
     results.multiDirectory = multiDirTest.ok || multiDirTest.error?.includes('include-directories') !== false;
   } catch {
     // Ignore failures
@@ -299,7 +304,7 @@ async function testGeminiCapabilities(command: string): Promise<{
 
   // Test streaming support (non-blocking)
   try {
-    const streamTest = await executeCommand(command, ['-p', 'test', '--output-format', 'stream-json'], 3000);
+    const streamTest = await executeCommand(command, ['-p', 'test', '--output-format', 'stream-json'], timeout, testMode);
     results.streaming = streamTest.ok || streamTest.error?.includes('stream-json') !== false;
   } catch {
     // Ignore failures
@@ -307,7 +312,7 @@ async function testGeminiCapabilities(command: string): Promise<{
 
   // Test model discovery command (non-blocking)
   try {
-    const modelsTest = await executeCommand(command, ['models'], 3000);
+    const modelsTest = await executeCommand(command, ['models'], timeout, testMode);
     results.modelDiscovery = modelsTest.ok;
   } catch {
     // Ignore failures
@@ -396,15 +401,18 @@ export class CapabilityDiscoveryService {
   private readonly cliPaths: Partial<CliPathsConfig> | null;
   /** Default staleness threshold in hours */
   private readonly stalenessThresholdHours: number;
+  private readonly testMode: boolean;
 
   constructor(
     cacheDir: string = '.puppet-master/capabilities',
     cliPaths?: Partial<CliPathsConfig> | null,
-    stalenessThresholdHours: number = 24
+    stalenessThresholdHours: number = 24,
+    testMode: boolean = false
   ) {
     this.cacheDir = cacheDir;
     this.cliPaths = cliPaths ?? null;
     this.stalenessThresholdHours = stalenessThresholdHours;
+    this.testMode = testMode;
   }
 
   /**
@@ -452,8 +460,8 @@ export class CapabilityDiscoveryService {
 
     // Probe candidates until one can actually run.
     for (const candidate of candidates) {
-      const versionResult = await executeCommand(candidate, ['--version'], 5_000);
-      const helpResult = await executeCommand(candidate, ['--help'], 5_000);
+      const versionResult = await executeCommand(candidate, ['--version'], 5_000, this.testMode);
+      const helpResult = await executeCommand(candidate, ['--help'], 5_000, this.testMode);
 
       if (versionResult.ok || helpResult.ok) {
         command = candidate;
@@ -473,7 +481,7 @@ export class CapabilityDiscoveryService {
     // Enhanced capability detection for Gemini
     if (platform === 'gemini' && runnable && command) {
       try {
-        const geminiTests = await testGeminiCapabilities(command);
+        const geminiTests = await testGeminiCapabilities(command, this.testMode);
         // Update capabilities based on test results
         capabilities.streaming = geminiTests.streaming || capabilities.streaming;
         // Note: sandbox, multiDirectory, and modelDiscovery are Gemini-specific
