@@ -169,24 +169,49 @@ export class NodeVersionCheck implements DoctorCheck {
 }
 
 /**
- * Check for npm availability
+ * Check for npm availability and configuration
  */
 export class NpmAvailableCheck implements DoctorCheck {
   readonly name = 'npm-available';
   readonly category = 'runtime' as const;
-  readonly description = 'Checks if npm is available and reports version';
+  readonly description = 'Checks if npm is available, reports version, and validates configuration';
 
   async run(): Promise<CheckResult> {
     try {
       const output = await runCommand('npm', ['--version']);
       const version = output.trim();
 
+      // Check npm prefix configuration
+      let prefixWarning = '';
+      let prefixDetails = '';
+      try {
+        const prefix = await runCommand('npm', ['config', 'get', 'prefix'], 3000);
+        const prefixPath = prefix.trim();
+        
+        // Check if prefix points to system directory (requires sudo for -g installs)
+        const isSystemPrefix = prefixPath.startsWith('/usr/local') || 
+                               prefixPath.startsWith('/opt/') || 
+                               prefixPath === '/usr';
+        
+        if (isSystemPrefix) {
+          prefixWarning = ' WARNING: npm prefix is set to a system directory, which may cause EACCES errors during global installations.';
+          prefixDetails = `\n\nCurrent prefix: ${prefixPath}\nRecommended: Set to user-writable directory like ~/.npm-global\nFix: Run 'npm config set prefix ~/.npm-global' and add ~/.npm-global/bin to your PATH`;
+        } else {
+          prefixDetails = `\n\nCurrent prefix: ${prefixPath} (user-writable ✓)`;
+        }
+      } catch (error) {
+        prefixWarning = ' (could not check npm prefix configuration)';
+      }
+
       return {
         name: this.name,
         category: this.category,
-        passed: true,
-        message: `npm is available (version ${version})`,
-        details: `Found version: ${version}`,
+        passed: !prefixWarning.includes('WARNING'),
+        message: `npm is available (version ${version})${prefixWarning}`,
+        details: `Found version: ${version}${prefixDetails}`,
+        fixSuggestion: prefixWarning.includes('WARNING') 
+          ? 'Run: npm config set prefix ~/.npm-global\nThen add to PATH: export PATH=~/.npm-global/bin:$PATH'
+          : undefined,
         durationMs: 0,
       };
     } catch (error) {
@@ -197,7 +222,7 @@ export class NpmAvailableCheck implements DoctorCheck {
         passed: false,
         message: `npm not found: ${errorMessage}`,
         details: error instanceof Error ? error.stack : undefined,
-        fixSuggestion: 'Install npm (usually comes with Node.js)',
+        fixSuggestion: 'Install npm (usually comes with Node.js from https://nodejs.org)',
         durationMs: 0,
       };
     }
@@ -312,6 +337,95 @@ export class PythonVersionCheck implements DoctorCheck {
         message: `Unable to parse Python version: ${errorMessage}`,
         details: `Output: ${output}`,
         fixSuggestion: 'Install Python 3.8+ from https://www.python.org (optional)',
+        durationMs: 0,
+      };
+    }
+  }
+}
+
+/**
+ * Check for npm/node version compatibility
+ */
+export class NpmNodeCompatibilityCheck implements DoctorCheck {
+  readonly name = 'npm-node-compatibility';
+  readonly category = 'runtime' as const;
+  readonly description = 'Checks that npm and Node.js versions are compatible';
+
+  async run(): Promise<CheckResult> {
+    try {
+      // Get Node version
+      const nodeOutput = await runCommand('node', ['--version']);
+      const nodeVersion = nodeOutput.trim();
+      
+      // Get npm version
+      const npmOutput = await runCommand('npm', ['--version']);
+      const npmVersion = npmOutput.trim();
+
+      // Parse versions
+      const nodeMatch = nodeVersion.match(/v?(\d+)\.(\d+)\.(\d+)/);
+      const npmMatch = npmVersion.match(/(\d+)\.(\d+)\.(\d+)/);
+
+      if (!nodeMatch || !npmMatch) {
+        return {
+          name: this.name,
+          category: this.category,
+          passed: false,
+          message: 'Unable to parse node or npm version',
+          details: `Node: ${nodeVersion}, npm: ${npmVersion}`,
+          durationMs: 0,
+        };
+      }
+
+      const nodeMajor = parseInt(nodeMatch[1], 10);
+      const nodeMinor = parseInt(nodeMatch[2], 10);
+      const npmMajor = parseInt(npmMatch[1], 10);
+      const npmMinor = parseInt(npmMatch[2], 10);
+
+      // Compatibility matrix:
+      // Node 18.x requires npm 8.x+
+      // Node 20.x requires npm 9.x+
+      // Node 22.x requires npm 10.x+
+      let requiredNpmMajor = 8;
+      let passed = true;
+      let warning = '';
+
+      if (nodeMajor >= 22) {
+        requiredNpmMajor = 10;
+      } else if (nodeMajor >= 20) {
+        requiredNpmMajor = 9;
+      } else if (nodeMajor >= 18) {
+        requiredNpmMajor = 8;
+      }
+
+      if (npmMajor < requiredNpmMajor) {
+        passed = false;
+        warning = ` (requires npm ${requiredNpmMajor}.x+)`;
+      } else if (npmMajor === requiredNpmMajor && npmMinor < 0) {
+        // Warn if using exact minimum version
+        warning = ' (consider updating npm)';
+      }
+
+      const message = passed
+        ? `npm ${npmVersion} is compatible with Node.js ${nodeVersion}`
+        : `npm ${npmVersion} is not compatible with Node.js ${nodeVersion}${warning}`;
+
+      return {
+        name: this.name,
+        category: this.category,
+        passed,
+        message,
+        details: `Node.js: ${nodeVersion} (requires npm ${requiredNpmMajor}.x+)\nnpm: ${npmVersion}${passed ? ' ✓' : ' ✗'}`,
+        fixSuggestion: passed ? undefined : `Update npm: npm install -g npm@latest\n\nThis will update npm to the latest version compatible with your Node.js version.`,
+        durationMs: 0,
+      };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      return {
+        name: this.name,
+        category: this.category,
+        passed: false,
+        message: `Could not check npm/node compatibility: ${errorMessage}`,
+        details: error instanceof Error ? error.stack : undefined,
         durationMs: 0,
       };
     }

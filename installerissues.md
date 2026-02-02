@@ -248,3 +248,9 @@ SSH validation on sitti@192.168.50.253 (JaredGamingPC):
 - **CI Workflow**: "Build installers" triggered on push
 - **Status**: In progress (builds on windows-latest, macos-14, ubuntu-latest)
 - **URL**: https://github.com/sittingmongoose/RWM-Puppet-Master/actions
+
+### 2026-02-02 CI Run 48
+- **Commit**: `34a1cd5`
+- **Status**: FAIL
+- **Failure**: `npm run build` → `src/gui/routes/doctor.ts(35,3): error TS2305: Module '../../doctor/checks/runtime-check.js' has no exported member 'NpmNodeCompatibilityCheck'.`
+- **Fix**: Export `NpmNodeCompatibilityCheck` from runtime checks (pending push).
