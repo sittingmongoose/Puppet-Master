@@ -10,8 +10,7 @@ import { spawn, type ChildProcess } from 'node:child_process';
 import { homedir } from 'node:os';
 import path from 'node:path';
 import * as readline from 'node:readline';
-import { existsSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import { existsSync, readFileSync } from 'node:fs';
 
 /**
  * Platform type for installation commands
@@ -75,20 +74,34 @@ export class InstallationManager {
 
   /**
    * Find the Puppet Master installation root (where package.json with dependencies is).
-   * Walks up from current file location to find package.json.
+   * Walks up from process.cwd() to find package.json with @github/copilot-sdk dependency.
    */
   private findPuppetMasterRoot(): string {
-    // Start from this file's directory
-    const currentFile = fileURLToPath(import.meta.url);
-    let dir = path.dirname(currentFile);
+    // Start from current working directory and walk up to find package.json
+    let dir = process.cwd();
     
-    // Walk up to find package.json
-    while (dir !== path.dirname(dir)) {
+    // Walk up to find package.json (max 10 levels to avoid infinite loops)
+    for (let i = 0; i < 10; i++) {
       const packageJsonPath = path.join(dir, 'package.json');
       if (existsSync(packageJsonPath)) {
-        return dir;
+        // Verify this is the Puppet Master root by checking for @github/copilot-sdk in dependencies
+        try {
+          const packageJsonContent = readFileSync(packageJsonPath, 'utf-8');
+          const packageJson = JSON.parse(packageJsonContent);
+          if (packageJson.dependencies?.['@github/copilot-sdk'] || packageJson.name === 'puppet-master') {
+            return dir;
+          }
+        } catch {
+          // If we can't read/parse package.json, assume this is the root
+          return dir;
+        }
       }
-      dir = path.dirname(dir);
+      const parentDir = path.dirname(dir);
+      if (parentDir === dir) {
+        // Reached filesystem root
+        break;
+      }
+      dir = parentDir;
     }
     
     // Fallback to process.cwd() if we can't find it
