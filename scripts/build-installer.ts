@@ -133,11 +133,11 @@ async function buildTauriApp(repoRoot: string, platform: InstallerPlatform): Pro
     }
 
     // Add --verbose for better error diagnostics
-    // Use --bundles none to skip Tauri bundling (we create our own installers)
+    // Use --no-bundle to skip Tauri bundling (we create our own installers)
     // This avoids macOS DMG creation issues and speeds up the build
     // Windows requires shell for .cmd executables; macOS/Linux can run directly
     const useShell = platform === 'win32';
-    await run('npx', ['tauri', 'build', '--verbose', '--bundles', 'none'], { cwd: repoRoot, env, shell: useShell });
+    await run('npx', ['tauri', 'build', '--verbose', '--no-bundle'], { cwd: repoRoot, env, shell: useShell });
 
     // Stage the runnable binary (simplest integration with our existing installers)
     const targetDir = path.join(repoRoot, 'src-tauri', 'target', 'release');
