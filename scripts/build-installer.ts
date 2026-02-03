@@ -132,7 +132,10 @@ async function buildTauriApp(repoRoot: string, platform: InstallerPlatform): Pro
       return null;
     }
 
-    await run('npx', ['tauri', 'build'], { cwd: repoRoot, env });
+    // Add --verbose for better error diagnostics
+    // Windows requires shell for .cmd executables; macOS/Linux can run directly
+    const useShell = platform === 'win32';
+    await run('npx', ['tauri', 'build', '--verbose'], { cwd: repoRoot, env, shell: useShell });
 
     // Stage the runnable binary (simplest integration with our existing installers)
     const targetDir = path.join(repoRoot, 'src-tauri', 'target', 'release');
