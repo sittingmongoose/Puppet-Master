@@ -119,10 +119,14 @@ echo "Puppet Master installed. Open from Applications or run 'puppet-master gui'
 echo "On first launch, a setup wizard will help install AI platform CLIs."
 echo ""
 
-# Auto-launch the GUI after installation (run as the actual user, not root)
-CURRENT_USER=$(stat -f "%Su" /dev/console 2>/dev/null || echo "")
-if [ -n "$CURRENT_USER" ] && [ "$CURRENT_USER" != "root" ]; then
-  sudo -u "$CURRENT_USER" open "/Applications/Puppet Master.app" &
+# Auto-launch the GUI after installation only when interactive (not in CI/headless).
+# In CI or headless environments, `open` fails and would cause the installer to report failure.
+# Subshell + exit 0 ensures a failing open never makes postinstall exit non-zero.
+if [ -z "${CI:-}" ] && [ -z "${GITHUB_ACTIONS:-}" ]; then
+  CURRENT_USER=$(stat -f "%Su" /dev/console 2>/dev/null || echo "")
+  if [ -n "$CURRENT_USER" ] && [ "$CURRENT_USER" != "root" ]; then
+    ( sudo -u "$CURRENT_USER" open "/Applications/Puppet Master.app" 2>/dev/null; exit 0 ) &
+  fi
 fi
 
 exit 0

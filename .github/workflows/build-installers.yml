@@ -143,9 +143,9 @@ jobs:
           # CLI is inside the app bundle
           pm_cli="/Applications/Puppet Master.app/Contents/Resources/puppet-master/bin/puppet-master"
           if [ ! -x "$pm_cli" ]; then
-            echo "::warning::CLI not found at $pm_cli (smoke test non-blocking)"
+            echo "::error::CLI not found at $pm_cli"
             ls -la "/Applications/Puppet Master.app/Contents/Resources/" 2>/dev/null || true
-            exit 0
+            exit 1
           fi
           "$pm_cli" --version || true
           "$pm_cli" doctor --category runtime --json 2>/dev/null || echo "Doctor check skipped (expected in CI)"
