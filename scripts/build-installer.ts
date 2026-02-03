@@ -151,23 +151,43 @@ async function buildTauriApp(repoRoot: string, platform: InstallerPlatform): Pro
       console.log(`  Could not list ${targetDir}`);
     }
 
-    const expectedBinary = platform === 'win32'
-      ? path.join(targetDir, 'puppet-master.exe')
-      : path.join(targetDir, 'puppet-master');
+    // Check multiple possible binary paths (handles different Tauri versions/configs)
+    const possiblePaths = platform === 'win32'
+      ? [path.join(targetDir, 'puppet-master.exe')]
+      : [
+          path.join(targetDir, 'puppet-master'),
+          // macOS ARM might use different names
+          path.join(targetDir, 'Puppet Master'),
+          path.join(targetDir, 'puppet_master'),
+        ];
 
-    // Verify the binary exists before returning
-    if (!existsSync(expectedBinary)) {
-      console.error(`⚠️  Expected Tauri binary not found at: ${expectedBinary}`);
-      // List what's in the target directory
-      try {
-        const entries = await readdir(targetDir);
-        console.error('   Files in target/release:', entries.slice(0, 15).join(', '));
-      } catch {
-        console.error('   Could not list target directory');
+    let foundBinary: string | null = null;
+    for (const p of possiblePaths) {
+      if (existsSync(p)) {
+        foundBinary = p;
+        console.log(`  ✓ Found Tauri binary at: ${p}`);
+        break;
       }
     }
 
-    return expectedBinary;
+    // Verify the binary exists before returning
+    if (!foundBinary) {
+      console.error(`⚠️  Tauri binary not found at any expected path:`);
+      for (const p of possiblePaths) {
+        console.error(`     - ${p}`);
+      }
+      // List what's in the target directory
+      try {
+        const entries = await readdir(targetDir);
+        console.error('   Actual files in target/release:', entries.slice(0, 20).join(', '));
+      } catch {
+        console.error('   Could not list target directory');
+      }
+      // Still return the first expected path (let the caller handle the missing file)
+      return possiblePaths[0];
+    }
+
+    return foundBinary;
   } catch (error) {
     console.error('❌ Tauri build failed:', error instanceof Error ? error.message : String(error));
     // Print more details for debugging
@@ -1142,15 +1162,25 @@ async function main(): Promise<void> {
     }
   }
 
-  if (args.platform === 'win32') {
-    const artifact = await buildWindowsNsis(args, repoRoot, stageRoot, outDir, version);
-    console.log(`\n✅ Built: ${artifact}\n`);
-  } else if (args.platform === 'darwin') {
-    const artifact = await buildMacPkgAndDmg(args, repoRoot, stageRoot, outDir, version);
-    console.log(`\n✅ Built: ${artifact}\n`);
-  } else {
-    const artifacts = await buildLinuxPackages(args, repoRoot, stageRoot, outDir, version);
-    console.log(`\n✅ Built: ${artifacts.join(', ')}\n`);
+  console.log(`\n📦 Building platform installer for ${args.platform}...`);
+  try {
+    if (args.platform === 'win32') {
+      const artifact = await buildWindowsNsis(args, repoRoot, stageRoot, outDir, version);
+      console.log(`\n✅ Built: ${artifact}\n`);
+    } else if (args.platform === 'darwin') {
+      const artifact = await buildMacPkgAndDmg(args, repoRoot, stageRoot, outDir, version);
+      console.log(`\n✅ Built: ${artifact}\n`);
+    } else {
+      const artifacts = await buildLinuxPackages(args, repoRoot, stageRoot, outDir, version);
+      console.log(`\n✅ Built: ${artifacts.join(', ')}\n`);
+    }
+  } catch (error) {
+    console.error(`\n❌ Failed to build ${args.platform} installer:`);
+    console.error(`   Error: ${error instanceof Error ? error.message : String(error)}`);
+    if (error instanceof Error && error.stack) {
+      console.error(`   Stack: ${error.stack.split('\n').slice(1, 4).join('\n          ')}`);
+    }
+    throw error;
   }
 }
 
