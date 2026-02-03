@@ -265,7 +265,7 @@ export function createLoginRoutes(): Router {
   router.post('/login/*', async (req: Request, res: Response) => {
     try {
       const platform = (req.params[0] ?? '').split('/')[0];
-      const normalizedPlatform = platform.toLowerCase() as Platform;
+      const normalizedPlatform = platform.toLowerCase() as Platform | 'github';
 
       if (!LOGIN_PLATFORMS.includes(normalizedPlatform)) {
         res.status(400).json({
@@ -332,7 +332,7 @@ export function createLoginRoutes(): Router {
 
       // Validate CLI command is available BEFORE spawning
       if (!isCommandAvailable(loginCmd.cmd, enrichedPath)) {
-        const config = PLATFORM_AUTH_CONFIG[normalizedPlatform as Platform];
+        const config = normalizedPlatform !== 'github' ? PLATFORM_AUTH_CONFIG[normalizedPlatform as Platform] : undefined;
         const message = normalizedPlatform === 'github'
           ? 'GitHub CLI (gh) is not installed or not in PATH. Install it from https://cli.github.com/'
           : `The ${normalizedPlatform} CLI is not installed or not in PATH.`;
@@ -402,7 +402,7 @@ export function createLoginRoutes(): Router {
       }
 
       // Get the config URL for this platform (github is not in PLATFORM_AUTH_CONFIG)
-      const config = PLATFORM_AUTH_CONFIG[normalizedPlatform as Platform];
+      const config = normalizedPlatform !== 'github' ? PLATFORM_AUTH_CONFIG[normalizedPlatform as Platform] : undefined;
 
       res.json({
         success: true,
