@@ -137,12 +137,39 @@ async function buildTauriApp(repoRoot: string, platform: InstallerPlatform): Pro
     // Stage the runnable binary (simplest integration with our existing installers)
     const targetDir = path.join(repoRoot, 'src-tauri', 'target', 'release');
 
-    if (platform === 'win32') {
-      return path.join(targetDir, 'puppet-master.exe');
+    // Diagnostic: list what Tauri produced (helps debug CI failures)
+    console.log(`\n📋 Tauri build output (${platform}):`);
+    try {
+      const entries = await readdir(targetDir);
+      const relevantFiles = entries.filter(f => f.startsWith('puppet') || f.endsWith('.exe') || f.endsWith('.app'));
+      console.log(`  Files in ${targetDir}: ${relevantFiles.length > 0 ? relevantFiles.join(', ') : '(none matching puppet*)'}`);
+    } catch {
+      console.log(`  Could not list ${targetDir}`);
     }
-    return path.join(targetDir, 'puppet-master');
+
+    const expectedBinary = platform === 'win32'
+      ? path.join(targetDir, 'puppet-master.exe')
+      : path.join(targetDir, 'puppet-master');
+
+    // Verify the binary exists before returning
+    if (!existsSync(expectedBinary)) {
+      console.error(`⚠️  Expected Tauri binary not found at: ${expectedBinary}`);
+      // List what's in the target directory
+      try {
+        const entries = await readdir(targetDir);
+        console.error('   Files in target/release:', entries.slice(0, 15).join(', '));
+      } catch {
+        console.error('   Could not list target directory');
+      }
+    }
+
+    return expectedBinary;
   } catch (error) {
-    console.error('❌ Tauri build failed:', error);
+    console.error('❌ Tauri build failed:', error instanceof Error ? error.message : String(error));
+    // Print more details for debugging
+    if (error instanceof Error && error.stack) {
+      console.error('   Stack:', error.stack.split('\n').slice(0, 5).join('\n'));
+    }
     return null;
   }
 }
@@ -1086,6 +1113,21 @@ async function main(): Promise<void> {
       await stageTauriApp(tauriPath, payloadRoot, args.platform);
       console.log('\n✅ Tauri app staged successfully\n');
     } else {
+      // Diagnostic: show what files exist in target/release to help debug
+      const targetDir = path.join(repoRoot, 'src-tauri', 'target', 'release');
+      console.error(`\n❌ Tauri binary not found at expected path: ${tauriPath || '(null)'}`);
+      try {
+        const entries = await readdir(targetDir);
+        console.error(`   Files in ${targetDir}:`);
+        for (const entry of entries.slice(0, 20)) {
+          console.error(`     - ${entry}`);
+        }
+        if (entries.length > 20) {
+          console.error(`     ... and ${entries.length - 20} more`);
+        }
+      } catch {
+        console.error(`   Could not list ${targetDir}`);
+      }
       // When --with-tauri is explicitly requested, fail the build instead of continuing
       // This ensures CI catches Tauri build failures rather than silently building without it
       throw new Error(
