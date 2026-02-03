@@ -86,7 +86,14 @@ function parseArgs(argv: string[]): Args {
 // TODO: TAURI - Detect if Rust/Cargo is available
 async function detectTauriAvailable(): Promise<boolean> {
   try {
-    await run('cargo', ['--version'], {});
+    // Ensure ~/.cargo/bin is in PATH for detection (GitHub Actions installs Rust there)
+    const homeDir = process.env.HOME || process.env.USERPROFILE || '';
+    const cargoPath = path.join(homeDir, '.cargo', 'bin');
+    const pathSep = process.platform === 'win32' ? ';' : ':';
+    const currentPath = process.env.PATH || '';
+    const enhancedPath = currentPath.includes(cargoPath) ? currentPath : `${cargoPath}${pathSep}${currentPath}`;
+
+    await run('cargo', ['--version'], { env: { PATH: enhancedPath } });
     return true;
   } catch {
     return false;
@@ -207,7 +214,11 @@ function run(cmd: string, args: string[], options: { cwd?: string; env?: NodeJS.
       cwd: options.cwd,
       env: { ...process.env, ...options.env },
       stdio: 'inherit',
-      shell: process.platform === 'win32', // makes `npm`/`npx` resolution easier on Windows
+      // Use shell on all platforms to ensure PATH is searched correctly.
+      // Without shell:true on Linux, spawn() may fail to find executables
+      // like 'cargo' or 'npx' even when PATH is set in the env option,
+      // because the shell is what expands PATH lookups.
+      shell: true,
     });
     proc.on('error', reject);
     proc.on('close', (code) => {
