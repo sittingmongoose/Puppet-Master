@@ -57,7 +57,7 @@ jobs:
 
       - name: Build GUI
         run: |
-          npm --prefix src/gui/react install
+          npm --prefix src/gui/react ci
           npm run gui:build
 
       - name: Install WebView2 SDK (Windows for Tauri)

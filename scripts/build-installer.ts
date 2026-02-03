@@ -150,9 +150,29 @@ async function ensureDir(dir: string): Promise<void> {
   await mkdir(dir, { recursive: true });
 }
 
+/** Max retries for directory removal (handles ENOTEMPTY / busy filesystems in CI) */
+const EMPTY_DIR_RETRIES = 3;
+const EMPTY_DIR_RETRY_DELAY_MS = 2000;
+
 async function emptyDir(dir: string): Promise<void> {
-  if (existsSync(dir)) {
-    await rm(dir, { recursive: true, force: true });
+  if (!existsSync(dir)) {
+    await mkdir(dir, { recursive: true });
+    return;
+  }
+  let lastErr: Error | null = null;
+  for (let attempt = 1; attempt <= EMPTY_DIR_RETRIES; attempt++) {
+    try {
+      await rm(dir, { recursive: true, force: true });
+      break;
+    } catch (err) {
+      lastErr = err instanceof Error ? err : new Error(String(err));
+      if (attempt < EMPTY_DIR_RETRIES) {
+        console.warn(`⚠️  emptyDir attempt ${attempt}/${EMPTY_DIR_RETRIES} failed, retrying in ${EMPTY_DIR_RETRY_DELAY_MS}ms...`);
+        await new Promise((r) => setTimeout(r, EMPTY_DIR_RETRY_DELAY_MS));
+      } else {
+        throw lastErr;
+      }
+    }
   }
   await mkdir(dir, { recursive: true });
 }
