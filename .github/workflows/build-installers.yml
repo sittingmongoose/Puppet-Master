@@ -107,6 +107,12 @@ jobs:
           echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
           nfpm --version
 
+      - name: Diagnose (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          echo "uname -m: $(uname -m)"
+          node -e "console.log('Node process.arch:', process.arch); console.log('Expected installer dir: dist/installers/darwin-' + (process.arch === 'x64' ? 'x64' : 'arm64'))"
+
       - name: Build installer
         run: npm run ${{ matrix.build_script }}
 
@@ -129,21 +135,37 @@ jobs:
       - name: Smoke test (macOS)
         if: runner.os == 'macOS'
         continue-on-error: true
+        env:
+          CI: "true"
+          GITHUB_ACTIONS: "true"
         shell: bash
         run: |
           set -euo pipefail
-          dmg="$(ls -1 dist/installers/darwin-arm64/*.dmg | head -n 1)"
+          OUT_DIR="dist/installers/darwin-arm64"
+          dmg="$(find "$OUT_DIR" -maxdepth 1 -name '*.dmg' 2>/dev/null | head -n 1)"
+          if [ -z "$dmg" ] || [ ! -f "$dmg" ]; then
+            echo "::error::No DMG found in $OUT_DIR (Build installer should produce one)"
+            ls -la "$OUT_DIR" 2>/dev/null || true
+            exit 1
+          fi
           echo "Mounting DMG: $dmg"
           mount_dir="$(mktemp -d)"
           hdiutil attach "$dmg" -mountpoint "$mount_dir" -nobrowse
-          pkg="$(ls -1 "$mount_dir"/*.pkg | head -n 1)"
+          pkg="$(find "$mount_dir" -maxdepth 1 -name '*.pkg' 2>/dev/null | head -n 1)"
+          if [ -z "$pkg" ] || [ ! -f "$pkg" ]; then
+            hdiutil detach "$mount_dir" 2>/dev/null || true
+            echo "::error::No PKG found inside DMG"
+            exit 1
+          fi
           echo "Installing PKG: $pkg"
+          # Signal postinstall to skip heavy steps (npm rebuild) to avoid OOM (exit 137) on runners
+          touch /tmp/.puppet-master-ci-install
           sudo installer -pkg "$pkg" -target /
+          rm -f /tmp/.puppet-master-ci-install
           hdiutil detach "$mount_dir"
-          # CLI is inside the app bundle
           pm_cli="/Applications/Puppet Master.app/Contents/Resources/puppet-master/bin/puppet-master"
           if [ ! -x "$pm_cli" ]; then
-            echo "::error::CLI not found at $pm_cli"
+            echo "::error::CLI not found at $pm_cli (app bundle structure may be wrong)"
             ls -la "/Applications/Puppet Master.app/Contents/Resources/" 2>/dev/null || true
             exit 1
           fi

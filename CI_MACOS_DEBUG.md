@@ -9,9 +9,11 @@
 Without the exact log, we can’t confirm root cause. To get it:
 
 1. Open **Actions** → **Build installers** → latest run.
-2. Open the **Build (macOS)** job (failed).
-3. Find the **first failed step** (often **Build installer** or **Build TypeScript** / **Build GUI**).
+2. Open the **Build (macos-14)** job (failed or with failed steps).
+3. Find the **first failed step** (often **Build installer** or **Smoke test (macOS)**).
 4. Expand that step and copy the **last 50–100 lines** (error message and stack/command output).
+
+**If you're still seeing macOS errors, paste that output here or in an issue** so we can fix the root cause.
 
 **Where failures usually appear:**
 
@@ -43,13 +45,19 @@ From codebase review:
 - **Cause:** Paths with spaces passed via shell and split incorrectly.
 - **Status:** Script already uses `run(..., { shell: false })` for both commands in `scripts/build-installer.ts`, so args are passed as an array. If the failure persists, the log will show the exact command and error.
 
-### C. Staging / npm / Playwright (medium)
+### C. Exit 137 (OOM) during `installer -pkg` (fixed)
+
+- **Symptom:** `sudo installer -pkg "$pkg" -target /` is killed: "Killed: 9", exit code 137.
+- **Cause:** Exit 137 = SIGKILL. Postinstall runs `npm rebuild`, which is memory-heavy and triggers OOM on GitHub-hosted runners.
+- **Fix:** Workflow creates `/tmp/.puppet-master-ci-install` before the installer. Postinstall skips native-module rebuild (and auto-launch) when this file exists.
+
+### D. Staging / npm / Playwright (medium)
 
 - **Symptom:** Failure during “Staging …”, “npm ci”, “Rebuilding native modules”, or “Installing Playwright”.
 - **Cause:** Network, lockfile, or disk in CI.
 - **Action:** Check the exact command and error in the log; retries are already in place for native rebuild and copy.
 
-### D. Xcode / license (lower on GitHub-hosted)
+### E. Xcode / license (lower on GitHub-hosted)
 
 - **Symptom:** Error about Xcode license or `xcodebuild`.
 - **Cause:** Runner not accepting license.
