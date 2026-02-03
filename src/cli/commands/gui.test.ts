@@ -382,7 +382,7 @@ describe('guiAction', () => {
     };
 
     mockHttpRequest = {
-      on: vi.fn((event: string, _callback: (...args: unknown[]) => void) => {
+      on: vi.fn((_event: string, _callback: (...args: unknown[]) => void) => {
         // Don't trigger error or timeout - simulate successful request
         return mockHttpRequest;
       }),

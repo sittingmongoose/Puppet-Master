@@ -126,8 +126,30 @@ fn wait_for_server(url: &Url) -> bool {
     const INTERVAL_MS: u64 = 500;
     const CONNECT_TIMEOUT_MS: u64 = 500;
     let timeout = Duration::from_millis(CONNECT_TIMEOUT_MS);
+
+    // Resolve the socket address once (connect_timeout requires SocketAddr, not ToSocketAddrs)
+    let addr = match format!("{}:{}", host, port).parse::<std::net::SocketAddr>() {
+        Ok(a) => a,
+        Err(_) => {
+            // Fallback: try to resolve hostname via DNS lookup
+            match std::net::ToSocketAddrs::to_socket_addrs(&(host.as_str(), port)) {
+                Ok(mut addrs) => match addrs.next() {
+                    Some(a) => a,
+                    None => {
+                        log::warn!("No addresses resolved for {}:{}", host, port);
+                        return false;
+                    }
+                },
+                Err(e) => {
+                    log::warn!("Failed to resolve {}:{}: {}", host, port, e);
+                    return false;
+                }
+            }
+        }
+    };
+
     for attempt in 1..=MAX_ATTEMPTS {
-        if TcpStream::connect_timeout(&(host.as_str(), port), timeout).is_ok() {
+        if TcpStream::connect_timeout(&addr, timeout).is_ok() {
             log::info!("GUI server ready after {} attempt(s)", attempt);
             return true;
         }

@@ -292,7 +292,7 @@ export class InstallationManager {
 
     const home = homedir();
     const npmGlobalPrefix = home ? path.join(home, '.npm-global') : '';
-    const npmGlobalPrefixArg = npmGlobalPrefix ? `\"${npmGlobalPrefix}\"` : '"$HOME/.npm-global"';
+    const npmGlobalPrefixArg = npmGlobalPrefix ? `"${npmGlobalPrefix}"` : '"$HOME/.npm-global"';
 
     // Codex CLI installation
     // Note: Puppet Master uses @openai/codex-sdk which requires both:
@@ -520,38 +520,36 @@ export class InstallationManager {
     command: string,
     timeout: number = 300000
   ): Promise<InstallResult> {
-    return new Promise(async (resolve) => {
-      // Validate node/npm versions before npm install commands
-      if (command.includes('npm install')) {
-        const validation = await this.validateNodeNpmVersions();
-        if (!validation.compatible) {
-          resolve({
-            success: false,
-            error: validation.error || 'Node/npm version incompatibility',
-            command,
-            output: validation.details,
-          });
-          return;
-        }
-        
-        // Special check for Copilot CLI: requires Node.js 22+ when installing via npm
-        if (command.includes('@github/copilot') && command.includes('npm install -g')) {
-          const nodeVersion = await this.getNodeVersion();
-          if (nodeVersion) {
-            const nodeMajor = parseInt(nodeVersion.split('.')[0]?.replace('v', '') || '0', 10);
-            if (nodeMajor < 22) {
-              resolve({
-                success: false,
-                error: 'GitHub Copilot CLI requires Node.js 22+ when installing via npm',
-                command,
-                output: `Current Node.js version: ${nodeVersion}. GitHub Copilot CLI requires Node.js 22 or later when installing via npm.\n\nAlternative installation methods:\n- Windows: winget install GitHub.Copilot\n- macOS/Linux: brew install copilot-cli\n- macOS/Linux: curl -fsSL https://gh.io/copilot-install | bash`,
-              });
-              return;
-            }
+    // Validate node/npm versions before npm install commands (extracted from Promise executor)
+    if (command.includes('npm install')) {
+      const validation = await this.validateNodeNpmVersions();
+      if (!validation.compatible) {
+        return {
+          success: false,
+          error: validation.error || 'Node/npm version incompatibility',
+          command,
+          output: validation.details,
+        };
+      }
+
+      // Special check for Copilot CLI: requires Node.js 22+ when installing via npm
+      if (command.includes('@github/copilot') && command.includes('npm install -g')) {
+        const nodeVersion = await this.getNodeVersion();
+        if (nodeVersion) {
+          const nodeMajor = parseInt(nodeVersion.split('.')[0]?.replace('v', '') || '0', 10);
+          if (nodeMajor < 22) {
+            return {
+              success: false,
+              error: 'GitHub Copilot CLI requires Node.js 22+ when installing via npm',
+              command,
+              output: `Current Node.js version: ${nodeVersion}. GitHub Copilot CLI requires Node.js 22 or later when installing via npm.\n\nAlternative installation methods:\n- Windows: winget install GitHub.Copilot\n- macOS/Linux: brew install copilot-cli\n- macOS/Linux: curl -fsSL https://gh.io/copilot-install | bash`,
+            };
           }
         }
       }
+    }
 
+    return new Promise((resolve) => {
       const home = homedir();
       const npmGlobalPrefix = home ? path.join(home, '.npm-global') : '';
       const npmGlobalBin = npmGlobalPrefix

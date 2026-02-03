@@ -48,6 +48,7 @@ describe('reverse-proxy hardening', () => {
       await server.initializeAuth();
       await server.start();
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const app = (server as any).app;
       const res = await request(app).get('/api/auth/status').expect(200);
 
@@ -72,8 +73,9 @@ describe('reverse-proxy hardening', () => {
       await server.initializeAuth();
       await server.start();
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const app = (server as any).app;
-      
+
       // Simulate request from non-loopback IP via proxy
       const res = await request(app)
         .get('/api/auth/status')
@@ -100,8 +102,9 @@ describe('reverse-proxy hardening', () => {
       await server.initializeAuth();
       await server.start();
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const app = (server as any).app;
-      
+
       // Simulate request from non-loopback IP
       const res = await request(app)
         .get('/api/auth/status')
@@ -130,6 +133,7 @@ describe('reverse-proxy hardening', () => {
       await server.initializeAuth();
       await server.start();
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const app = (server as any).app;
       expect(app.get('trust proxy')).toBe(true);
     });
@@ -149,6 +153,7 @@ describe('reverse-proxy hardening', () => {
       await server.initializeAuth();
       await server.start();
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const app = (server as any).app;
       expect(app.get('trust proxy')).toBe(false);
     });
@@ -172,6 +177,7 @@ describe('reverse-proxy hardening', () => {
       await server.start();
 
       // Verify config is set correctly
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const config = (server as any).config;
       expect(config.allowedOrigins).toEqual(allowedOrigins);
     });
@@ -192,6 +198,7 @@ describe('reverse-proxy hardening', () => {
       await server.initializeAuth();
       await server.start();
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const config = (server as any).config;
       expect(config.allowedOrigins).toEqual(corsOrigins);
     });

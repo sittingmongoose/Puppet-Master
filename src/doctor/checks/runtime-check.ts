@@ -415,7 +415,7 @@ export class NpmNodeCompatibilityCheck implements DoctorCheck {
       }
 
       const nodeMajor = parseInt(nodeMatch[1], 10);
-      const nodeMinor = parseInt(nodeMatch[2], 10);
+      const _nodeMinor = parseInt(nodeMatch[2], 10);
       const npmMajor = parseInt(npmMatch[1], 10);
       const npmMinor = parseInt(npmMatch[2], 10);
 
