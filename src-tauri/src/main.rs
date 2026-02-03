@@ -2,9 +2,11 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::env;
+use std::net::TcpStream;
 use std::path::Path;
 use std::process::Command;
 use std::sync::atomic::{AtomicBool, Ordering};
+use std::time::Duration;
 use tauri::{
     image::Image,
     menu::{MenuBuilder, MenuItemBuilder},
@@ -106,6 +108,38 @@ fn relaunch_app() {
 
         let _ = Command::new(exe).spawn();
     }
+}
+
+/// Wait for the GUI server to be listening before navigating.
+/// Polls host:port with TcpStream connect; retries with backoff up to ~20s.
+/// Returns true if server became ready, false on timeout (caller may still navigate).
+fn wait_for_server(url: &Url) -> bool {
+    let host = match url.host_str() {
+        Some(h) => h.to_string(),
+        None => {
+            log::warn!("Server URL has no host, skipping wait");
+            return false;
+        }
+    };
+    let port = url.port().unwrap_or(3847);
+    const MAX_ATTEMPTS: u32 = 40;
+    const INTERVAL_MS: u64 = 500;
+    const CONNECT_TIMEOUT_MS: u64 = 500;
+    let timeout = Duration::from_millis(CONNECT_TIMEOUT_MS);
+    for attempt in 1..=MAX_ATTEMPTS {
+        if TcpStream::connect_timeout(&(host.as_str(), port), timeout).is_ok() {
+            log::info!("GUI server ready after {} attempt(s)", attempt);
+            return true;
+        }
+        if attempt < MAX_ATTEMPTS {
+            std::thread::sleep(Duration::from_millis(INTERVAL_MS));
+        }
+    }
+    log::warn!(
+        "GUI server not ready after {}s, navigating anyway",
+        (MAX_ATTEMPTS as u64) * INTERVAL_MS / 1000
+    );
+    false
 }
 
 fn main() {
@@ -298,7 +332,7 @@ fn main() {
                     ))
                 })?;
 
-            // If server URL is provided, navigate to it; otherwise use bundled frontend
+            // If server URL is provided, wait for server then navigate; otherwise use bundled frontend
             if let Some(url_str) = server_url {
                 log::info!("Loading GUI from external server: {}", url_str);
                 let url = Url::parse(&url_str).map_err(|e| {
@@ -307,6 +341,7 @@ fn main() {
                         format!("Invalid server URL '{}': {}", url_str, e),
                     ))
                 })?;
+                wait_for_server(&url);
                 window.navigate(url)?;
             } else {
                 log::info!("Using bundled frontend");

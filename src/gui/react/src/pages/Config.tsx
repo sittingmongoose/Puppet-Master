@@ -385,6 +385,7 @@ export default function ConfigPage() {
             onInstallPlatform={handleInstallPlatform}
             onRefreshModels={async () => {
               try {
+                setModelsError(null);
                 const data = await api.getModels(true) as unknown as Record<string, Array<{ id: string; label: string; reasoningLevels?: string[] }>>;
                 const ensureModels = (platformModels: Array<{ id: string; label: string; reasoningLevels?: string[] }> | undefined) => {
                   if (!Array.isArray(platformModels) || platformModels.length === 0) {
@@ -405,6 +406,9 @@ export default function ConfigPage() {
                 });
               } catch (err) {
                 console.error('[Config] Failed to refresh models:', err);
+                const message = err instanceof Error ? err.message : 'Failed to refresh models. Check server logs or try again.';
+                setModelsError(message);
+                setTimeout(() => setModelsError(null), 8000);
               }
             }}
           />
@@ -488,6 +492,7 @@ export default function ConfigPage() {
             leftIcon={<RefreshIcon />}
             onClick={async () => {
               try {
+                setModelsError(null);
                 const data = await api.getModels(true) as unknown as Record<string, unknown>;
                 // Ensure we have valid arrays for each platform
                 // Note: "auto" is ONLY for Cursor - it's added in the dropdown options, not here
@@ -504,6 +509,9 @@ export default function ConfigPage() {
                 });
               } catch (err) {
                 console.error('[Config] Failed to refresh models:', err);
+                const message = err instanceof Error ? err.message : 'Failed to refresh models. Check server logs or try again.';
+                setModelsError(message);
+                setTimeout(() => setModelsError(null), 8000);
               }
             }}
             title="Refresh model lists from platform discovery"
@@ -528,6 +536,13 @@ export default function ConfigPage() {
       {error && (
         <Panel showInnerBorder={false}>
           <div className="text-hot-magenta">{error}</div>
+        </Panel>
+      )}
+
+      {/* Models load/refresh error (e.g. timeout or server error) */}
+      {modelsError && (
+        <Panel showInnerBorder={false}>
+          <div className="text-hot-magenta">{modelsError}</div>
         </Panel>
       )}
 

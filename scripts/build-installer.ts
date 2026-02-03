@@ -706,7 +706,7 @@ async function buildMacAppBundle(
   }
   await cp(iconSrc, path.join(resourcesPath, 'puppet-master.icns'));
 
-  // Create MacOS executable that runs puppet-master gui with pre-flight and failure alert
+  // Create MacOS executable: if Tauri binary present, start server in background, wait for health, then launch Tauri; else run Node GUI only
   const macosExecutable = path.join(macosPath, 'Puppet Master');
   const macosScript = `#!/usr/bin/env sh
 set -eu
@@ -715,8 +715,10 @@ RESOURCES_DIR="$APP_ROOT/Contents/Resources"
 ROOT_DIR="$RESOURCES_DIR/puppet-master"
 NODE_BIN="$ROOT_DIR/node/bin/node"
 APP_ENTRY="$ROOT_DIR/app/dist/cli/index.js"
+TAURI_BIN="$ROOT_DIR/bin/puppet-master-gui"
 LAUNCH_LOG="\${HOME:-/tmp}/.puppet-master/logs/launch.log"
 LOG_DIR="\${HOME:-/tmp}/.puppet-master/logs"
+LOG_FILE="$LOG_DIR/gui.log"
 
 export PATH="$ROOT_DIR/node/bin:$PATH"
 export PLAYWRIGHT_BROWSERS_PATH="$ROOT_DIR/playwright-browsers"
@@ -736,12 +738,34 @@ fail_msg() {
 
 GUI_CWD="\${HOME:-/tmp}"
 cd "$GUI_CWD"
+mkdir -p "$LOG_DIR"
 
+# If Tauri desktop binary is present: start server in background, wait for health, then launch Tauri with PUPPET_MASTER_URL
+if [ -x "$TAURI_BIN" ]; then
+  "$NODE_BIN" "$APP_ENTRY" gui >> "$LOG_FILE" 2>&1 &
+  SERVER_PID=$!
+  BASE_URL="http://127.0.0.1:3847"
+  MAX_WAIT=30
+  WAITED=0
+  while [ $WAITED -lt $MAX_WAIT ]; do
+    if curl -sf -o /dev/null "$BASE_URL/health" 2>/dev/null; then
+      break
+    fi
+    sleep 1
+    WAITED=$((WAITED + 1))
+  done
+  if [ $WAITED -ge $MAX_WAIT ]; then
+    kill $SERVER_PID 2>/dev/null || true
+    fail_msg "GUI server did not become ready in ${MAX_WAIT}s. See $LOG_FILE"
+  fi
+  export PUPPET_MASTER_URL="$BASE_URL"
+  exec "$TAURI_BIN"
+fi
+
+# No Tauri: run Node GUI only (foreground or background depending on tty)
 if [ -t 1 ]; then
   "$NODE_BIN" "$APP_ENTRY" gui || fail_msg "GUI exited with error."
 else
-  LOG_FILE="$LOG_DIR/gui.log"
-  mkdir -p "$LOG_DIR"
   if ! "$NODE_BIN" "$APP_ENTRY" gui >> "$LOG_FILE" 2>&1; then
     fail_msg "GUI exited with error. See $LOG_FILE"
   fi

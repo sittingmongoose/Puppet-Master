@@ -7,8 +7,38 @@
  */
 
 import { spawn } from 'child_process';
+import { homedir } from 'node:os';
+import { delimiter, join } from 'node:path';
 import semver from 'semver';
 import type { DoctorCheck, CheckResult } from '../check-registry.js';
+
+/**
+ * Build env with enriched PATH so node/npm are found when GUI or CLI runs with minimal PATH
+ * (e.g. systemd, packaged app). Matches pattern used in cli-tools.ts and login routes.
+ */
+function getEnrichedEnv(): NodeJS.ProcessEnv {
+  const home = homedir();
+  const npmGlobalPrefix = home ? join(home, '.npm-global') : '';
+  const npmGlobalBin = npmGlobalPrefix
+    ? (process.platform === 'win32' ? npmGlobalPrefix : join(npmGlobalPrefix, 'bin'))
+    : '';
+  const extraPaths = [
+    npmGlobalBin,
+    join(home, '.local', 'bin'),
+    '/usr/local/bin',
+    '/opt/homebrew/bin',
+    '/opt/homebrew/sbin',
+  ].filter(Boolean);
+  const currentPath = process.env.PATH || '';
+  const enrichedPath = [...extraPaths, currentPath].filter(Boolean).join(delimiter);
+  const env: NodeJS.ProcessEnv = { ...process.env, PATH: enrichedPath };
+  if (npmGlobalPrefix) {
+    env.HOME = home;
+    env.npm_config_prefix = npmGlobalPrefix;
+    env.NPM_CONFIG_PREFIX = npmGlobalPrefix;
+  }
+  return env;
+}
 
 /**
  * Parsed version information
@@ -21,21 +51,24 @@ interface ParsedVersion {
 
 /**
  * Executes a command and returns stdout output.
- * 
+ *
  * @param command - Command to execute
  * @param args - Command arguments
  * @param timeout - Timeout in milliseconds (default: 5000)
+ * @param env - Optional env (e.g. getEnrichedEnv()) so command is found when PATH is minimal
  * @returns Promise resolving to stdout output
  */
 async function runCommand(
   command: string,
   args: string[],
-  timeout = 5000
+  timeout = 5000,
+  env?: NodeJS.ProcessEnv
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     const proc = spawn(command, args, {
       stdio: ['ignore', 'pipe', 'pipe'],
       shell: true,
+      env: env ?? process.env,
     });
 
     let stdout = '';
@@ -128,8 +161,9 @@ export class NodeVersionCheck implements DoctorCheck {
   private readonly minimumVersion = '18.0.0';
 
   async run(): Promise<CheckResult> {
+    const env = getEnrichedEnv();
     try {
-      const output = await runCommand('node', ['--version']);
+      const output = await runCommand('node', ['--version'], 5000, env);
       const version = output.trim();
 
       // Use semver for proper comparison
@@ -177,15 +211,16 @@ export class NpmAvailableCheck implements DoctorCheck {
   readonly description = 'Checks if npm is available, reports version, and validates configuration';
 
   async run(): Promise<CheckResult> {
+    const env = getEnrichedEnv();
     try {
-      const output = await runCommand('npm', ['--version']);
+      const output = await runCommand('npm', ['--version'], 5000, env);
       const version = output.trim();
 
       // Check npm prefix configuration
       let prefixWarning = '';
       let prefixDetails = '';
       try {
-        const prefix = await runCommand('npm', ['config', 'get', 'prefix'], 3000);
+        const prefix = await runCommand('npm', ['config', 'get', 'prefix'], 3000, env);
         const prefixPath = prefix.trim();
         
         // Check if prefix points to system directory (requires sudo for -g installs)
@@ -238,8 +273,9 @@ export class YarnAvailableCheck implements DoctorCheck {
   readonly description = 'Checks if yarn is available (optional, warns if not found)';
 
   async run(): Promise<CheckResult> {
+    const env = getEnrichedEnv();
     try {
-      const output = await runCommand('yarn', ['--version']);
+      const output = await runCommand('yarn', ['--version'], 5000, env);
       const version = output.trim();
 
       return {
@@ -277,16 +313,17 @@ export class PythonVersionCheck implements DoctorCheck {
   private readonly minimumVersion: ParsedVersion = { major: 3, minor: 8, patch: 0 };
 
   async run(): Promise<CheckResult> {
+    const env = getEnrichedEnv();
     // Try python3 first, then python
     let output: string;
     let command: string;
 
     try {
-      output = await runCommand('python3', ['--version']);
+      output = await runCommand('python3', ['--version'], 5000, env);
       command = 'python3';
     } catch {
       try {
-        output = await runCommand('python', ['--version']);
+        output = await runCommand('python', ['--version'], 5000, env);
         command = 'python';
       } catch (error) {
         // Python is optional, so we warn but don't fail
@@ -352,13 +389,14 @@ export class NpmNodeCompatibilityCheck implements DoctorCheck {
   readonly description = 'Checks that npm and Node.js versions are compatible';
 
   async run(): Promise<CheckResult> {
+    const env = getEnrichedEnv();
     try {
       // Get Node version
-      const nodeOutput = await runCommand('node', ['--version']);
+      const nodeOutput = await runCommand('node', ['--version'], 5000, env);
       const nodeVersion = nodeOutput.trim();
       
       // Get npm version
-      const npmOutput = await runCommand('npm', ['--version']);
+      const npmOutput = await runCommand('npm', ['--version'], 5000, env);
       const npmVersion = npmOutput.trim();
 
       // Parse versions

@@ -240,6 +240,14 @@ SSH validation on sitti@192.168.50.253 (JaredGamingPC):
 - Prevents CI absolute symlinks from shipping in app bundle
 - Ensures React GUI is built and staged in payload (builds if missing)
 
+### 19. Windows installer: crash after clicking Install (2026-02-03)
+**File: `installer/win/puppet-master.nsi`**
+- **Root cause:** CopyFiles for better_sqlite3.node used `${STAGE_DIR}` (build-machine path) at install time; that path does not exist on the user's PC, so the copy always failed, then npm rebuild failed (missing .node), causing the installer to abort/crash.
+- **Fix (Option A):** Removed exclusion of better_sqlite3.node from the main `File /r` so it is embedded and extracted with the rest of the payload. Removed the entire CopyFiles + retry + Rename block that referenced STAGE_DIR at install time.
+- **Process cleanup:** Replaced deprecated `wmic` with PowerShell `Get-CimInstance Win32_Process` + `Stop-Process` in both Install and Uninstall sections.
+- **npm rebuild:** Added `ClearErrors` after the rebuild step so a rebuild failure does not abort the installer (non-fatal).
+- **Verification:** Rebuild the Windows installer and run it on sitti@192.168.50.253 (or any Windows host); install should complete without crash. Cleanup: `.test-cache` and `.test-quota` removed when done (none were present in workspace).
+
 ---
 
 ## Linux .deb Build Investigation

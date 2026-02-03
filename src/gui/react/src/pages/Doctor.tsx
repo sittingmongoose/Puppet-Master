@@ -118,9 +118,9 @@ export default function DoctorPage() {
       // Trigger capabilities refresh so tier page picks up new installs
       try { await api.getModels(true); } catch { /* best-effort */ }
 
-      // Refresh platform status so summary/details stay aligned
+      // Refresh platform status so summary/details stay aligned (bypass cache)
       try {
-        const status = await api.getPlatformStatus();
+        const status = await api.getPlatformStatus(true);
         setPlatformStatus(status.platforms);
       } catch {
         // best-effort
@@ -178,9 +178,9 @@ export default function DoctorPage() {
       // Trigger capabilities refresh so tier page picks up new installs
       try { await api.getModels(true); } catch { /* best-effort */ }
 
-      // Refresh platform status so summary/details stay aligned
+      // Refresh platform status so summary/details stay aligned (bypass cache)
       try {
-        const status = await api.getPlatformStatus();
+        const status = await api.getPlatformStatus(true);
         setPlatformStatus(status.platforms);
       } catch {
         // best-effort

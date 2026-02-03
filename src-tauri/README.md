@@ -53,7 +53,7 @@ xcode-select --install
    npm run tauri:dev
    ```
 
-The Tauri window will open and connect to your running GUI server.
+The Tauri window will open and connect to your running GUI server. When using an external server URL, the app waits for the server to be ready (up to ~20s) before loading the page, so the first window may appear after a short delay if the server is still starting.
 
 ### Custom Server URL
 

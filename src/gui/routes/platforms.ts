@@ -56,22 +56,26 @@ interface SelectPlatformsRequest {
 
 /**
  * Create platform routes
- * 
+ *
+ * @param baseDirectory - Optional project root; when set, config is loaded from it (fixes Config page when server cwd differs from project).
  * @returns Express Router with platform management endpoints
  */
 export function createPlatformRoutes(baseDirectory?: string): Router {
   const router = createRouter();
+  const configPath = baseDirectory ? join(baseDirectory, '.puppet-master', 'config.yaml') : undefined;
 
   /**
    * GET /api/platforms/status
-   * Returns installation status for all platforms
+   * Returns installation status for all platforms.
+   * Query: refresh=true to bypass detector cache.
    */
-  router.get('/platforms/status', async (_req: Request, res: Response) => {
+  router.get('/platforms/status', async (req: Request, res: Response) => {
     try {
-      const configManager = new ConfigManager();
+      const forceRefresh = req.query.refresh === 'true';
+      const configManager = new ConfigManager(configPath);
       const config = await configManager.load();
       const detector = new PlatformDetector(config.cliPaths);
-      const result = await detector.detectInstalledPlatforms();
+      const result = await detector.detectInstalledPlatforms(forceRefresh);
 
       res.json({
         platforms: result.platforms,
@@ -80,6 +84,7 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
       } as PlatformStatusResponse);
     } catch (error) {
       const err = error as Error;
+      if (baseDirectory) console.warn('[platforms] GET /platforms/status failed (baseDirectory:', baseDirectory, '):', err.message);
       res.status(500).json({
         error: err.message || 'Failed to detect platforms',
         code: 'DETECTION_ERROR',
@@ -93,7 +98,7 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
    */
   router.get('/platforms/installed', async (_req: Request, res: Response) => {
     try {
-      const configManager = new ConfigManager();
+      const configManager = new ConfigManager(configPath);
       const config = await configManager.load();
       const detector = new PlatformDetector(config.cliPaths);
       const installed = await detector.getInstalledPlatforms();
@@ -101,6 +106,7 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
       res.json({ platforms: installed });
     } catch (error) {
       const err = error as Error;
+      if (baseDirectory) console.warn('[platforms] GET /platforms/installed failed (baseDirectory:', baseDirectory, '):', err.message);
       res.status(500).json({
         error: err.message || 'Failed to get installed platforms',
         code: 'DETECTION_ERROR',
@@ -114,9 +120,9 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
    */
   router.get('/platforms/first-boot', async (_req: Request, res: Response) => {
     try {
-      const configManager = new ConfigManager();
-      const configPath = configManager.getConfigPath();
-      const configExists = existsSync(configPath);
+      const configManager = new ConfigManager(configPath);
+      const pathToCheck = configManager.getConfigPath();
+      const configExists = existsSync(pathToCheck);
 
       // Check for capabilities directory with actual platform files (claude.json, codex.json, etc.)
       const baseDir = baseDirectory || process.cwd();
@@ -241,7 +247,7 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
         const npmBasedPlatforms: Platform[] = ['copilot', 'codex'];
         if (npmBasedPlatforms.includes(platform)) {
           try {
-            const configManager = new ConfigManager();
+            const configManager = new ConfigManager(configPath);
             const config = await configManager.load();
             const detector = new PlatformDetector(config.cliPaths ?? {});
             const status = await detector.getPlatformStatus(platform, true);
@@ -316,7 +322,7 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
         return;
       }
 
-      const configManager = new ConfigManager();
+      const configManager = new ConfigManager(configPath);
       const config = await configManager.load();
 
       // Update config to use only selected platforms

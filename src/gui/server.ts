@@ -287,7 +287,7 @@ export class GuiServer {
         if (
           req.path.startsWith('/api/auth/') ||
           req.path.startsWith('/api/login/') ||
-          req.path === '/api/platforms/first-boot' ||
+          req.path.startsWith('/api/platforms/') ||
           req.path === '/api/ledger' ||
           req.path.startsWith('/api/ledger/') ||
           req.path === '/ledger' ||
@@ -747,8 +747,8 @@ export class GuiServer {
     this.wizardRouter = createWizardRoutes(this.config.baseDirectory);
     this.app.use('/api', this.wizardRouter);
 
-    // Config routes
-    this.app.use('/api', createConfigRoutes());
+    // Config routes (use baseDirectory so config/models use project root regardless of cwd)
+    this.app.use('/api', createConfigRoutes(this.config.baseDirectory));
 
     // Settings routes
     this.app.use('/api', createSettingsRoutes());

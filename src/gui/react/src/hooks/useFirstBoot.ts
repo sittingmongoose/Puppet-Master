@@ -1,12 +1,16 @@
 /**
  * First Boot Detection Hook
- * 
+ *
  * Checks if this is the first time the GUI is being used.
  * Shows setup wizard if config or capabilities are missing.
+ * Retries on failure so the wizard can show even when the server is not ready yet.
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { api } from '@/lib';
+
+const MAX_RETRIES = 3;
+const RETRY_DELAY_MS = 1500;
 
 /**
  * First boot status
@@ -22,15 +26,19 @@ export interface FirstBootResult {
   isLoading: boolean;
   /** Error message if check failed */
   error: string | null;
+  /** Re-run the first-boot check (e.g. after "Retry" in wizard) */
+  retry: () => void;
 }
 
 /**
  * Hook to detect first boot status
- * 
+ *
  * @returns First boot status object
  */
+type FirstBootState = Omit<FirstBootResult, 'retry'>;
+
 export function useFirstBoot(): FirstBootResult {
-  const [status, setStatus] = useState<FirstBootResult>({
+  const [status, setStatus] = useState<FirstBootState>({
     isFirstBoot: false,
     missingConfig: false,
     missingCapabilities: false,
@@ -38,41 +46,45 @@ export function useFirstBoot(): FirstBootResult {
     error: null,
   });
 
-  useEffect(() => {
-    let cancelled = false;
+  const checkFirstBoot = useCallback(async () => {
+    setStatus((prev) => (prev.isLoading ? prev : { ...prev, isLoading: true, error: null }));
+    let lastError: string | null = null;
 
-    const checkFirstBoot = async () => {
+    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
       try {
         const data = await api.getFirstBootStatus();
 
-        if (!cancelled) {
-          setStatus({
-            isFirstBoot: data.isFirstBoot,
-            missingConfig: data.missingConfig,
-            missingCapabilities: data.missingCapabilities,
-            isLoading: false,
-            error: null,
-          });
-        }
+        setStatus({
+          isFirstBoot: data.isFirstBoot,
+          missingConfig: data.missingConfig,
+          missingCapabilities: data.missingCapabilities,
+          isLoading: false,
+          error: null,
+        });
+        return;
       } catch (err) {
-        if (!cancelled) {
-          setStatus({
-            isFirstBoot: false,
-            missingConfig: false,
-            missingCapabilities: false,
-            isLoading: false,
-            error: err instanceof Error ? err.message : 'Failed to check first boot status',
-          });
+        lastError = err instanceof Error ? err.message : 'Failed to check first boot status';
+        if (attempt < MAX_RETRIES) {
+          await new Promise((r) => setTimeout(r, RETRY_DELAY_MS));
         }
       }
-    };
+    }
 
-    checkFirstBoot();
-
-    return () => {
-      cancelled = true;
-    };
+    setStatus({
+      isFirstBoot: true,
+      missingConfig: true,
+      missingCapabilities: false,
+      isLoading: false,
+      error: lastError,
+    });
   }, []);
 
-  return status;
+  useEffect(() => {
+    checkFirstBoot();
+  }, [checkFirstBoot]);
+
+  return {
+    ...status,
+    retry: checkFirstBoot,
+  };
 }

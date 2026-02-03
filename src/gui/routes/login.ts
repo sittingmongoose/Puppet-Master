@@ -69,6 +69,13 @@ const PLATFORMS: Platform[] = ['cursor', 'codex', 'claude', 'gemini', 'copilot']
 /** Platforms that can trigger login (includes 'github' for Git config, not in PLATFORMS) */
 const LOGIN_PLATFORMS: string[] = [...PLATFORMS, 'github'];
 
+/** Platforms that support CLI logout: command + args (e.g. gh auth logout, codex logout) */
+const LOGOUT_COMMANDS: Record<string, { cmd: string; args: string[] }> = {
+  github:  { cmd: 'gh',   args: ['auth', 'logout'] },
+  copilot: { cmd: 'gh',   args: ['auth', 'logout'] },
+  codex:   { cmd: 'codex', args: ['logout'] },
+};
+
 /**
  * Check if a CLI command is available in PATH.
  * Uses 'which' on Unix-like systems, 'where' on Windows.
@@ -146,23 +153,47 @@ export function createLoginRoutes(): Router {
   /**
    * GET /api/login/status/:platform
    * Get authentication status for a specific platform.
+   * Uses LOGIN_PLATFORMS so 'github' is valid (Git auth via gh).
    */
   router.get('/login/status/*', async (req: Request, res: Response) => {
     try {
       const platform = (req.params[0] ?? '').split('/')[0];
-      const normalizedPlatform = platform.toLowerCase() as Platform;
+      const normalizedPlatform = platform.toLowerCase() as Platform | 'github';
 
-      if (!PLATFORMS.includes(normalizedPlatform)) {
+      if (!LOGIN_PLATFORMS.includes(normalizedPlatform)) {
+        console.debug('[login] GET /login/status/* rejected platform', { method: req.method, path: req.path, platform: normalizedPlatform });
         res.status(400).json({
           error: `Invalid platform: ${platform}`,
           code: 'INVALID_PLATFORM',
-          validPlatforms: PLATFORMS,
+          validPlatforms: LOGIN_PLATFORMS,
         } as ErrorResponse & { validPlatforms: string[] });
         return;
       }
 
-      const authStatus = getPlatformAuthStatus(normalizedPlatform);
-      const config = PLATFORM_AUTH_CONFIG[normalizedPlatform];
+      if (normalizedPlatform === 'github') {
+        // Synthetic status for GitHub (Git auth via gh) – not in PLATFORM_AUTH_CONFIG
+        let status: PlatformAuthStatus = 'not_authenticated';
+        let details = 'Git auth via GitHub CLI (gh). Use Login to GitHub to authenticate.';
+        try {
+          execSync('gh auth status', { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8' });
+          status = 'authenticated';
+          details = 'GitHub CLI (gh) is authenticated for Git operations.';
+        } catch {
+          // gh not installed or not logged in
+        }
+        res.json({
+          platform: 'github',
+          status,
+          details,
+          fixSuggestion: status === 'not_authenticated' ? 'Run Login to GitHub or: gh auth login --web' : undefined,
+          getUrl: 'https://cli.github.com/',
+          description: 'Git authentication via GitHub CLI for push/pull.',
+        });
+        return;
+      }
+
+      const authStatus = getPlatformAuthStatus(normalizedPlatform as Platform);
+      const config = PLATFORM_AUTH_CONFIG[normalizedPlatform as Platform];
 
       res.json({
         platform: normalizedPlatform,
@@ -185,21 +216,39 @@ export function createLoginRoutes(): Router {
   /**
    * GET /api/login/instructions/:platform
    * Get authentication instructions for a specific platform.
+   * Uses LOGIN_PLATFORMS so 'github' is valid.
    */
   router.get('/login/instructions/*', async (req: Request, res: Response) => {
     try {
       const platform = (req.params[0] ?? '').split('/')[0];
-      const normalizedPlatform = platform.toLowerCase() as Platform;
+      const normalizedPlatform = platform.toLowerCase() as Platform | 'github';
 
-      if (!PLATFORMS.includes(normalizedPlatform)) {
+      if (!LOGIN_PLATFORMS.includes(normalizedPlatform)) {
         res.status(400).json({
           error: `Invalid platform: ${platform}`,
           code: 'INVALID_PLATFORM',
-        } as ErrorResponse);
+          validPlatforms: LOGIN_PLATFORMS,
+        } as ErrorResponse & { validPlatforms: string[] });
         return;
       }
 
-      const config = PLATFORM_AUTH_CONFIG[normalizedPlatform];
+      if (normalizedPlatform === 'github') {
+        res.json({
+          platform: 'github',
+          description: 'Git authentication via GitHub CLI for push/pull.',
+          envVar: 'N/A (CLI-based auth)',
+          getUrl: 'https://cli.github.com/',
+          instructions: [
+            '1. Install GitHub CLI from https://cli.github.com/',
+            '2. Run: gh auth login --web',
+            '3. Complete authentication in the browser',
+            '4. Or use the Login page "LOGIN TO GITHUB" button',
+          ],
+        });
+        return;
+      }
+
+      const config = PLATFORM_AUTH_CONFIG[normalizedPlatform as Platform];
 
       // Platform-specific instructions
       const instructions: Record<Platform, string[]> = {
@@ -257,6 +306,7 @@ export function createLoginRoutes(): Router {
   /**
    * POST /api/login/:platform
    * Trigger CLI-based login for a platform (fire-and-forget).
+   * Validation uses LOGIN_PLATFORMS (includes 'github'); 400 responses return validPlatforms: LOGIN_PLATFORMS.
    *
    * Spawns the platform's native login command which typically opens a browser.
    * The response is returned immediately — the caller should poll /api/login/status
@@ -264,10 +314,77 @@ export function createLoginRoutes(): Router {
    */
   router.post('/login/*', async (req: Request, res: Response) => {
     try {
-      const platform = (req.params[0] ?? '').split('/')[0];
-      const normalizedPlatform = platform.toLowerCase() as Platform | 'github';
+      const pathSegments = (req.params[0] ?? '').split('/').filter(Boolean);
+      const platformSegment = pathSegments[0] ?? '';
+      const action = pathSegments[1]?.toLowerCase();
+      const normalizedPlatform = platformSegment.toLowerCase() as Platform | 'github';
 
+      // POST /api/login/:platform/logout — run CLI logout where supported
+      if (action === 'logout') {
+        if (!LOGIN_PLATFORMS.includes(normalizedPlatform)) {
+          res.status(400).json({
+            success: false,
+            error: `Invalid platform: ${platformSegment}`,
+            code: 'INVALID_PLATFORM',
+            validPlatforms: LOGIN_PLATFORMS,
+          });
+          return;
+        }
+        const logoutCmd = LOGOUT_COMMANDS[normalizedPlatform];
+        if (!logoutCmd) {
+          res.status(400).json({
+            success: false,
+            error: `Logout not supported for ${normalizedPlatform}. Supported: ${Object.keys(LOGOUT_COMMANDS).join(', ')}.`,
+            code: 'LOGOUT_NOT_SUPPORTED',
+          });
+          return;
+        }
+        const home = homedir();
+        const npmGlobalPrefix = home ? path.join(home, '.npm-global') : '';
+        const npmGlobalBin = npmGlobalPrefix
+          ? (process.platform === 'win32' ? npmGlobalPrefix : path.join(npmGlobalPrefix, 'bin'))
+          : '';
+        const extraPaths = [
+          npmGlobalBin,
+          '/usr/local/bin',
+          '/opt/homebrew/bin',
+          '/opt/homebrew/sbin',
+          join(home, '.local', 'bin'),
+        ];
+        const currentPath = process.env.PATH || '/usr/bin:/bin';
+        const enrichedPath = [currentPath, ...extraPaths].filter(Boolean).join(path.delimiter);
+        const env: NodeJS.ProcessEnv = { ...process.env, PATH: enrichedPath };
+        if (npmGlobalPrefix) {
+          env.HOME = home;
+          env.NPM_CONFIG_PREFIX = npmGlobalPrefix;
+          if (npmGlobalBin) {
+            env.PATH = [npmGlobalBin, env.PATH].filter(Boolean).join(path.delimiter);
+          }
+        }
+        if (!isCommandAvailable(logoutCmd.cmd, enrichedPath)) {
+          res.status(400).json({
+            success: false,
+            error: `CLI '${logoutCmd.cmd}' not found. Install it to log out.`,
+            code: 'CLI_NOT_FOUND',
+          });
+          return;
+        }
+        await new Promise<void>((resolve, reject) => {
+          const child = spawn(logoutCmd.cmd, logoutCmd.args, {
+            stdio: ['ignore', 'pipe', 'pipe'],
+            env,
+          });
+          child.on('close', () => resolve()); // Idempotent: already logged out is still success
+          child.on('error', reject);
+        });
+        res.json({ success: true, message: `Logged out from ${normalizedPlatform}.` });
+        return;
+      }
+
+      // Login flow below
+      const platform = platformSegment;
       if (!LOGIN_PLATFORMS.includes(normalizedPlatform)) {
+        console.debug('[login] POST /login/* rejected platform', { method: req.method, path: req.path, platform: normalizedPlatform });
         res.status(400).json({
           success: false,
           error: `Invalid platform: ${platform}`,
@@ -390,7 +507,9 @@ export function createLoginRoutes(): Router {
         return false;
       };
 
-      if (!launchInTerminal()) {
+      const terminalLaunched = launchInTerminal();
+      if (!terminalLaunched) {
+        console.debug('[login] Terminal launch failed for', normalizedPlatform, '- using fallback spawn (no visible window may open)');
         // Fallback: fire-and-forget spawn (may fail without TTY)
         const child = spawn(loginCmd.cmd, loginCmd.args, {
           shell: true,
@@ -401,8 +520,9 @@ export function createLoginRoutes(): Router {
         child.unref();
       }
 
-      // Get the config URL for this platform (github is not in PLATFORM_AUTH_CONFIG)
+      // Always include authUrl so user can open manually if terminal/browser did not open
       const config = normalizedPlatform !== 'github' ? PLATFORM_AUTH_CONFIG[normalizedPlatform as Platform] : undefined;
+      const authUrl = config?.getUrl ?? (normalizedPlatform === 'github' ? 'https://github.com' : undefined);
 
       res.json({
         success: true,
@@ -410,7 +530,8 @@ export function createLoginRoutes(): Router {
           ? 'GitHub login initiated. A browser window should open to complete authentication for Git.'
           : `Login initiated for ${normalizedPlatform}. A browser window should open shortly to complete authentication.`,
         note: 'Poll /api/login/status to detect when authentication completes.',
-        authUrl: config?.getUrl ?? (normalizedPlatform === 'github' ? 'https://github.com' : undefined),
+        authUrl: authUrl ?? undefined,
+        terminalLaunched,
         command: `${loginCmd.cmd} ${loginCmd.args.join(' ')}`,
       });
     } catch (error) {

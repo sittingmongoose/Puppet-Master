@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Panel } from '@/components/layout';
 import { Button, HelpText } from '@/components/ui';
 import { StatusBadge } from '@/components/shared';
@@ -13,7 +14,7 @@ import {
   LightbulbIcon,
 } from '@/components/icons';
 import { helpContent } from '@/lib/help-content.js';
-import { api, getErrorMessage } from '@/lib';
+import { api, getErrorMessage, LOGOUT_SUPPORTED_PLATFORMS } from '@/lib';
 import type { StatusType } from '@/types';
 
 interface PlatformAuthInfo {
@@ -47,20 +48,24 @@ interface GitInfo {
  * Feature parity with CLI `puppet-master login` command
  */
 export default function LoginPage() {
+  const navigate = useNavigate();
   const [platforms, setPlatforms] = useState<PlatformAuthInfo[]>([]);
   const [summary, setSummary] = useState<AuthSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [loggingIn, setLoggingIn] = useState<Record<string, boolean>>({});
+  const [loggingOut, setLoggingOut] = useState<Record<string, boolean>>({});
   const [loginMessages, setLoginMessages] = useState<Record<string, string>>({});
+  const [loginAuthUrls, setLoginAuthUrls] = useState<Record<string, string>>({});
   const [gitInfo, setGitInfo] = useState<GitInfo | null>(null);
+  const [githubAuthStatus, setGithubAuthStatus] = useState<'authenticated' | 'not_authenticated' | null>(null);
 
   // Fetch auth status on mount
   useEffect(() => {
     fetchAuthStatus();
   }, []);
 
-  // Fetch git info on mount
+  // Fetch git info and GitHub auth status on mount
   useEffect(() => {
     const fetchGitInfo = async () => {
       try {
@@ -70,7 +75,16 @@ export default function LoginPage() {
         console.error('[Login] Failed to fetch git info:', err);
       }
     };
+    const fetchGithubStatus = async () => {
+      try {
+        const data = await api.getLoginStatusForPlatform('github');
+        setGithubAuthStatus(data.status === 'authenticated' ? 'authenticated' : 'not_authenticated');
+      } catch {
+        setGithubAuthStatus('not_authenticated');
+      }
+    };
     fetchGitInfo();
+    fetchGithubStatus();
   }, []);
 
   const fetchAuthStatus = async () => {
@@ -89,6 +103,31 @@ export default function LoginPage() {
     }
   };
 
+  const handleLogout = useCallback(async (platform: string) => {
+    if (!LOGOUT_SUPPORTED_PLATFORMS.includes(platform as typeof LOGOUT_SUPPORTED_PLATFORMS[number])) return;
+    try {
+      setLoggingOut((prev) => ({ ...prev, [platform]: true }));
+      setLoginMessages((prev) => ({ ...prev, [platform]: '' }));
+      const result = await api.logoutPlatform(platform);
+      if (result.success) {
+        setLoginMessages((prev) => ({ ...prev, [platform]: 'Logged out.' }));
+        if (platform === 'github') setGithubAuthStatus('not_authenticated');
+      } else {
+        setLoginMessages((prev) => ({ ...prev, [platform]: `Error: ${result.error ?? 'Logout failed'}` }));
+      }
+      await fetchAuthStatus();
+      if (platform === 'github') {
+        const data = await api.getLoginStatusForPlatform('github');
+        setGithubAuthStatus(data.status === 'authenticated' ? 'authenticated' : 'not_authenticated');
+      }
+    } catch (err) {
+      setLoginMessages((prev) => ({ ...prev, [platform]: getErrorMessage(err, 'Logout failed') }));
+      await fetchAuthStatus();
+    } finally {
+      setLoggingOut((prev) => ({ ...prev, [platform]: false }));
+    }
+  }, []);
+
   const handleLogin = useCallback(async (platform: string) => {
     try {
       setLoggingIn((prev) => ({ ...prev, [platform]: true }));
@@ -98,14 +137,23 @@ export default function LoginPage() {
 
       if (data.success) {
         let message = data.message || 'Login initiated';
-        // If authUrl is provided, append it to the message
         if (data.authUrl) {
-          message += ` If the browser doesn't open automatically, visit: ${data.authUrl}`;
+          message += data.terminalLaunched === false
+            ? ' No terminal opened — open the link below in your browser.'
+            : ' If the browser doesn\'t open automatically, use the link below.';
         }
         setLoginMessages((prev) => ({ ...prev, [platform]: message }));
-        
+        if (data.authUrl) {
+          setLoginAuthUrls((prev) => ({ ...prev, [platform]: data.authUrl! }));
+        }
         // Auto-refresh status after 5 seconds to check if login succeeded
-        setTimeout(() => fetchAuthStatus(), 5000);
+        setTimeout(async () => {
+          await fetchAuthStatus();
+          if (platform === 'github') {
+            const data = await api.getLoginStatusForPlatform('github');
+            setGithubAuthStatus(data.status === 'authenticated' ? 'authenticated' : 'not_authenticated');
+          }
+        }, 5000);
       } else {
         let errorMsg = `Error: ${data.error || 'Login failed'}`;
         // If CLI not found and authUrl is available, provide manual login option
@@ -156,9 +204,17 @@ export default function LoginPage() {
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-md">
         <h1 className="font-display text-2xl">Platform Authentication</h1>
-        <Button variant="ghost" onClick={fetchAuthStatus}>
-          REFRESH
-        </Button>
+        <div className="flex gap-sm">
+          <Button
+            variant="primary"
+            onClick={() => navigate('/?platformSetup=1')}
+          >
+            PLATFORM SETUP
+          </Button>
+          <Button variant="ghost" onClick={fetchAuthStatus}>
+            REFRESH
+          </Button>
+        </div>
       </div>
 
       {/* Summary */}
@@ -203,8 +259,11 @@ export default function LoginPage() {
               platform={platform}
               statusType={mapStatusToType(platform.status)}
               isLoggingIn={!!loggingIn[platform.platform]}
+              isLoggingOut={!!loggingOut[platform.platform]}
               loginMessage={loginMessages[platform.platform] || ''}
+              loginAuthUrl={loginAuthUrls[platform.platform]}
               onLogin={() => handleLogin(platform.platform)}
+              onLogout={() => handleLogout(platform.platform)}
               onRefresh={fetchAuthStatus}
             />
           ))}
@@ -267,19 +326,51 @@ export default function LoginPage() {
                 Sign in with GitHub via <span className="font-mono">gh auth login</span> to enable Git operations and push/pull.
               </p>
               {loginMessages['github'] && (
-                <div className={`text-xs mt-xs ${loginMessages['github'].startsWith('Error') ? 'text-hot-magenta' : 'text-neon-green'}`}>
-                  {loginMessages['github']}
+                <div className={`text-xs mt-xs space-y-xs ${loginMessages['github'].startsWith('Error') ? 'text-hot-magenta' : 'text-neon-green'}`}>
+                  <div>{loginMessages['github']}</div>
+                  {loginAuthUrls['github'] && (
+                    <div className="flex flex-wrap items-center gap-xs">
+                      <a
+                        href={loginAuthUrls['github']}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-electric-blue underline hover:no-underline"
+                      >
+                        Open in browser
+                      </a>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => navigator.clipboard.writeText(loginAuthUrls['github'])}
+                      >
+                        Copy link
+                      </Button>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => handleLogin('github')}
-              disabled={!!loggingIn['github']}
-            >
-              {loggingIn['github'] ? 'LOGGING IN...' : 'LOGIN TO GITHUB'}
-            </Button>
+            <div className="flex gap-xs flex-wrap">
+              {githubAuthStatus === 'authenticated' ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleLogout('github')}
+                  disabled={!!loggingOut['github']}
+                >
+                  {loggingOut['github'] ? 'LOGGING OUT...' : 'LOG OUT'}
+                </Button>
+              ) : (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleLogin('github')}
+                  disabled={!!loggingIn['github']}
+                >
+                  {loggingIn['github'] ? 'LOGGING IN...' : 'LOGIN TO GITHUB'}
+                </Button>
+              )}
+            </div>
           </div>
 
           {gitInfo ? (
@@ -327,12 +418,15 @@ interface PlatformCardProps {
   platform: PlatformAuthInfo;
   statusType: StatusType;
   isLoggingIn: boolean;
+  isLoggingOut: boolean;
   loginMessage: string;
+  loginAuthUrl?: string;
   onLogin: () => void;
+  onLogout: () => void;
   onRefresh: () => void;
 }
 
-function PlatformCard({ platform, statusType, isLoggingIn, loginMessage, onLogin, onRefresh }: PlatformCardProps) {
+function PlatformCard({ platform, statusType, isLoggingIn, isLoggingOut, loginMessage, loginAuthUrl, onLogin, onLogout, onRefresh }: PlatformCardProps) {
   // Platform icons
   const platformIcons: Record<string, ReactNode> = {
     cursor: <CursorIcon size="1.5em" />,
@@ -344,6 +438,7 @@ function PlatformCard({ platform, statusType, isLoggingIn, loginMessage, onLogin
 
   const icon = platformIcons[platform.platform] || <PackageIcon size="1.5em" />;
   const isCursor = platform.platform === 'cursor';
+  const canLogout = platform.status === 'authenticated' && LOGOUT_SUPPORTED_PLATFORMS.includes(platform.platform as typeof LOGOUT_SUPPORTED_PLATFORMS[number]);
 
   return (
     <div
@@ -375,12 +470,31 @@ function PlatformCard({ platform, statusType, isLoggingIn, loginMessage, onLogin
         </div>
       )}
       {loginMessage && !isLoggingIn && (
-        <div className={`text-xs mb-md ${loginMessage.startsWith('Error') ? 'text-hot-magenta' : 'text-neon-green'}`}>
-          {loginMessage}
+        <div className={`text-xs mb-md space-y-xs ${loginMessage.startsWith('Error') ? 'text-hot-magenta' : 'text-neon-green'}`}>
+          <div>{loginMessage}</div>
+          {loginAuthUrl && (
+            <div className="flex flex-wrap items-center gap-xs">
+              <a
+                href={loginAuthUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-electric-blue underline hover:no-underline"
+              >
+                Open in browser
+              </a>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigator.clipboard.writeText(loginAuthUrl)}
+              >
+                Copy link
+              </Button>
+            </div>
+          )}
         </div>
       )}
 
-      <div className="flex gap-xs">
+      <div className="flex gap-xs flex-wrap">
         {platform.status !== 'authenticated' && (
           <Button
             variant="ghost"
@@ -393,6 +507,16 @@ function PlatformCard({ platform, statusType, isLoggingIn, loginMessage, onLogin
               : isCursor
                 ? 'OPEN CURSOR APP'
                 : 'LOGIN'}
+          </Button>
+        )}
+        {canLogout && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onLogout}
+            disabled={isLoggingOut}
+          >
+            {isLoggingOut ? 'LOGGING OUT...' : 'LOG OUT'}
           </Button>
         )}
         <Button variant="ghost" size="sm" onClick={onRefresh}>

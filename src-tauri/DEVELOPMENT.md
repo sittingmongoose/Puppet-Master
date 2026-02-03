@@ -30,6 +30,8 @@ The Tauri wrapper uses `.navigate()` to load an external URL (http://127.0.0.1:3
 - ❌ Two-process architecture (Tauri + Node.js)
 - ❌ Can't use Tauri's bundled asset serving
 
+When loading from an external server URL, the app waits for the server to be ready (TCP connect to host:port, up to ~20s) before navigating, so the first window may appear after a short delay if the server is still starting.
+
 **Alternative Considered:** Full Tauri-native with embedded Node.js runtime
 - Would require significant refactoring
 - Complex build process

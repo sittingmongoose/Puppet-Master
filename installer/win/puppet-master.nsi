@@ -49,8 +49,8 @@ Section "Install"
   DetailPrint "Stopping running Puppet Master processes..."
   nsExec::ExecToLog 'taskkill /f /im puppet-master-gui.exe'
   nsExec::ExecToLog 'taskkill /f /im puppet-master.exe'
-  ; Kill node.exe running from the install directory (Express server holds file locks)
-  nsExec::ExecToLog 'wmic process where "ExecutablePath like ''%Puppet Master%''" call terminate'
+  ; Kill processes running from install dir (Express server holds file locks); use PowerShell (wmic deprecated)
+  nsExec::ExecToLog 'powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -like ''*Puppet Master*'' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }"'
   ; Additional process cleanup: kill by window title
   nsExec::ExecToLog 'taskkill /f /fi "WINDOWTITLE eq Puppet Master*"'
   ; Wait for processes to fully exit and release file handles
@@ -58,46 +58,16 @@ Section "Install"
 
   SetOutPath "$INSTDIR"
 
-  ; Copy payload (exclude better-sqlite3 .node binaries to prevent write errors)
+  ; Copy payload (include better_sqlite3.node; taskkill above reduces file-in-use on upgrade)
   ; Note: Use * (not *.*) to match all files including those without extensions
-  File /r /x "better_sqlite3.node" "${STAGE_DIR}\\puppet-master\\*"
+  File /r "${STAGE_DIR}\\puppet-master\\*"
   ; Ensure bin/ is included (Start Menu launcher expects bin\puppet-master.cmd)
   File /r "${STAGE_DIR}\\puppet-master\\bin\\*"
   
-  ; Copy better-sqlite3 .node binaries separately with enhanced retry logic
-  ; Try up to 5 times with increasing delays to handle file-in-use scenarios
-  DetailPrint "Copying better-sqlite3 native module..."
-  ClearErrors
-  CopyFiles /SILENT "${STAGE_DIR}\\puppet-master\\app\\node_modules\\better-sqlite3\\build\\Release\\better_sqlite3.node" "$INSTDIR\\app\\node_modules\\better-sqlite3\\build\\Release\\better_sqlite3.node"
-  ${If} ${Errors}
-    DetailPrint "Retry 1/4 (waiting 2s)..."
-    Sleep 2000
-    ClearErrors
-    CopyFiles /SILENT "${STAGE_DIR}\\puppet-master\\app\\node_modules\\better-sqlite3\\build\\Release\\better_sqlite3.node" "$INSTDIR\\app\\node_modules\\better-sqlite3\\build\\Release\\better_sqlite3.node"
-    ${If} ${Errors}
-      DetailPrint "Retry 2/4 (waiting 4s)..."
-      Sleep 4000
-      ClearErrors
-      CopyFiles /SILENT "${STAGE_DIR}\\puppet-master\\app\\node_modules\\better-sqlite3\\build\\Release\\better_sqlite3.node" "$INSTDIR\\app\\node_modules\\better-sqlite3\\build\\Release\\better_sqlite3.node"
-      ${If} ${Errors}
-        DetailPrint "Retry 3/4 (waiting 6s)..."
-        Sleep 6000
-        ClearErrors
-        CopyFiles /SILENT "${STAGE_DIR}\\puppet-master\\app\\node_modules\\better-sqlite3\\build\\Release\\better_sqlite3.node" "$INSTDIR\\app\\node_modules\\better-sqlite3\\build\\Release\\better_sqlite3.node"
-        ${If} ${Errors}
-          DetailPrint "Retry 4/4 - using MoveFileEx delayed rename..."
-          Sleep 8000
-          ClearErrors
-          ; Last resort: use Windows delayed file replacement (applied on next reboot if still locked)
-          Rename /REBOOTOK "${STAGE_DIR}\\puppet-master\\app\\node_modules\\better-sqlite3\\build\\Release\\better_sqlite3.node" "$INSTDIR\\app\\node_modules\\better-sqlite3\\build\\Release\\better_sqlite3.node"
-        ${EndIf}
-      ${EndIf}
-    ${EndIf}
-  ${EndIf}
-  
-  ; Rebuild native modules with bundled Node to ensure ABI compatibility
+  ; Rebuild native modules with bundled Node to ensure ABI compatibility (non-fatal)
   DetailPrint "Rebuilding native modules for bundled Node..."
   nsExec::ExecToLog '"$INSTDIR\\node\\node.exe" "$INSTDIR\\node\\node_modules\\npm\\bin\\npm-cli.js" rebuild --prefix "$INSTDIR\\app"'
+  ClearErrors
   
   ; Copy GUI launchers (VBS runs without console; BAT for CLI/script; Debug BAT keeps console open)
   SetOutPath "$INSTDIR"
@@ -151,7 +121,7 @@ Section "Uninstall"
   DetailPrint "Stopping running Puppet Master processes..."
   nsExec::ExecToLog 'taskkill /f /im puppet-master-gui.exe'
   nsExec::ExecToLog 'taskkill /f /im puppet-master.exe'
-  nsExec::ExecToLog 'wmic process where "ExecutablePath like ''%Puppet Master%''" call terminate'
+  nsExec::ExecToLog 'powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -like ''*Puppet Master*'' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }"'
   nsExec::ExecToLog 'taskkill /f /fi "WINDOWTITLE eq Puppet Master*"'
   Sleep 3000
 

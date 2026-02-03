@@ -433,9 +433,11 @@ describe('Platform Integration Tests', () => {
       const cursorRunner = new CursorRunner(capabilityService, config.cliPaths.cursor);
       registry.register('cursor', cursorRunner);
 
-      // Step 3: Mock spawn for execution - use pattern from existing tests
+      // Step 3: Mock spawn for execution. CursorRunner runs approval --help probe once (approvalFlagSupport === null), then execute.
+      // So first queue item goes to --help, second to the actual run.
       const mockOutput = 'Processing request...\nSession ID: PM-2026-01-10-14-30-00-001\ntokens: 1234\nOutput: Task completed successfully\n<ralph>COMPLETE</ralph>';
-      spawnOutputQueue = [mockOutput];
+      const dummyHelp = '--mode=plan\n--approval-mode\n';
+      spawnOutputQueue = [dummyHelp, mockOutput];
 
       const request: ExecutionRequest = {
         prompt: 'Test prompt',

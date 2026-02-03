@@ -3,27 +3,25 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { writeFile, rm, mkdir, readFile } from 'fs/promises';
+import { writeFile, rm, mkdir, readFile, mkdtemp } from 'fs/promises';
 import { join } from 'path';
+import { tmpdir } from 'os';
 import { ArchiveManager } from './archive-manager.js';
 
 describe('ArchiveManager', () => {
-  const testDir = join(process.cwd(), '.test-archive-manager');
-  const archiveDir = join(testDir, 'archives', 'agents');
-  const testFile = join(testDir, 'AGENTS.md');
+  let testDir: string;
+  let archiveDir: string;
+  let testFile: string;
 
   beforeEach(async () => {
-    // Create test directory
-    try {
-      await mkdir(testDir, { recursive: true });
-      await writeFile(testFile, '# Test AGENTS.md\n\nInitial content', 'utf-8');
-    } catch {
-      // Directory might already exist
-    }
+    testDir = await mkdtemp(join(tmpdir(), 'archive-manager-'));
+    archiveDir = join(testDir, 'archives', 'agents');
+    testFile = join(testDir, 'AGENTS.md');
+    await mkdir(archiveDir, { recursive: true });
+    await writeFile(testFile, '# Test AGENTS.md\n\nInitial content', 'utf-8');
   });
 
   afterEach(async () => {
-    // Clean up test directory
     try {
       await rm(testDir, { recursive: true, force: true });
     } catch {

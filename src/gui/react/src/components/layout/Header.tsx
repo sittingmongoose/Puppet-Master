@@ -1,4 +1,5 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { logoutGuiSession } from '@/lib/api.js';
 
 interface NavItem {
   label: string;
@@ -42,6 +43,13 @@ export function Header({
   onThemeToggle,
 }: HeaderProps) {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logoutGuiSession();
+    navigate('/login', { replace: true });
+    window.location.reload();
+  };
 
   return (
     <header
@@ -129,7 +137,23 @@ export function Header({
             </button>
           )}
 
-          <div className="flex gap-sm">
+          <div className="flex gap-sm items-center">
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="
+                font-semibold text-[0.85em] uppercase tracking-wide
+                px-sm py-xs border-medium
+                border-ink-black dark:border-ink-light
+                bg-paper-cream dark:bg-paper-dark
+                text-ink-black dark:text-ink-light
+                cursor-pointer transition-all duration-200
+                hover:bg-ink-black hover:text-paper-cream
+                dark:hover:bg-ink-light dark:hover:text-paper-dark
+              "
+            >
+              Log out
+            </button>
             <button
               type="button"
               onClick={onThemeToggle}

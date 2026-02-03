@@ -49,12 +49,22 @@ interface PlatformSetupWizardProps {
   onComplete: () => void;
   /** Callback when wizard is skipped */
   onSkip: () => void;
+  /** Connection error from first-boot check (e.g. server not ready); show message and Retry */
+  connectionError?: string | null;
+  /** Callback to retry first-boot check (e.g. after server becomes ready) */
+  onRetryConnection?: () => void;
 }
 
 /**
  * Platform Setup Wizard
  */
-export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetupWizardProps) {
+export function PlatformSetupWizard({
+  isOpen,
+  onComplete,
+  onSkip,
+  connectionError,
+  onRetryConnection,
+}: PlatformSetupWizardProps) {
   const [step, setStep] = useState<WizardStep>('install');
   const [platforms, setPlatforms] = useState<Record<string, PlatformStatusType>>({});
   const [selectedPlatforms, setSelectedPlatforms] = useState<Platform[]>([]);
@@ -77,11 +87,11 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
     }
   }, [isOpen]);
 
-  const loadPlatformStatus = async () => {
+  const loadPlatformStatus = async (forceRefresh = false) => {
     try {
       setLoading(true);
       setError(null);
-      const status = await api.getPlatformStatus();
+      const status = await api.getPlatformStatus(forceRefresh);
       setPlatforms(status.platforms);
 
       // Pre-select installed platforms
@@ -128,8 +138,6 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
       const result = await api.installPlatform(platform);
 
       if (result.success) {
-        // Reload platform status after installation
-        await loadPlatformStatus();
         // Auto-select the newly installed platform
         if (!selectedPlatforms.includes(platform)) {
           setSelectedPlatforms((prev) => [...prev, platform]);
@@ -140,6 +148,8 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
     } catch (err) {
       setError(getErrorMessage(err, `Failed to install ${PLATFORM_NAMES[platform]}`));
     } finally {
+      // Always refresh status so badges reflect current state (success or failure)
+      await loadPlatformStatus(true);
       setInstalling(null);
     }
   };
@@ -165,8 +175,8 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
       setInstalling(null);
     }
 
-    // Reload status after all installs
-    await loadPlatformStatus();
+    // Reload status after all installs so badges reflect current state
+    await loadPlatformStatus(true);
     setInstallingAll(false);
 
     if (errors.length > 0) {
@@ -333,6 +343,17 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
           Select which AI platforms you want to use with Puppet Master. You can install missing platforms now or skip and install them later.
         </p>
       </div>
+
+      {connectionError && (
+        <div className="p-md bg-hot-magenta/10 border-medium border-hot-magenta text-hot-magenta flex flex-col gap-sm">
+          <span style={{ whiteSpace: 'pre-line' }}>{connectionError}</span>
+          {onRetryConnection && (
+            <Button variant="primary" onClick={onRetryConnection}>
+              Retry
+            </Button>
+          )}
+        </div>
+      )}
 
       {error && (
         <div className="p-md bg-hot-magenta/10 border-medium border-hot-magenta text-hot-magenta" style={{ whiteSpace: 'pre-line' }}>

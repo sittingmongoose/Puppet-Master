@@ -8,6 +8,7 @@
 import type { Router, Request, Response } from 'express';
 import { Router as createRouter } from 'express';
 import { execSync } from 'node:child_process';
+import { join } from 'node:path';
 import { ConfigManager } from '../../config/config-manager.js';
 import type { PuppetMasterConfig } from '../../types/config.js';
 import {
@@ -55,11 +56,13 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
 
 /**
  * Create config routes.
- * 
- * Returns Express Router with configuration management endpoints.
+ *
+ * @param baseDirectory - Optional project root; when set, config and capabilities paths are resolved from it (fixes Config page when server cwd differs from project).
+ * @returns Express Router with configuration management endpoints.
  */
-export function createConfigRoutes(): Router {
+export function createConfigRoutes(baseDirectory?: string): Router {
   const router = createRouter();
+  const configPath = baseDirectory ? join(baseDirectory, '.puppet-master', 'config.yaml') : undefined;
 
   /**
    * GET /api/config
@@ -68,7 +71,7 @@ export function createConfigRoutes(): Router {
    */
   router.get('/config', async (req: Request, res: Response) => {
     try {
-      const configManager = new ConfigManager();
+      const configManager = new ConfigManager(configPath);
       const config = await configManager.load();
 
       // Add cache control header to hint to frontend about caching
@@ -82,6 +85,7 @@ export function createConfigRoutes(): Router {
       res.json({ config });
     } catch (error) {
       const err = error as Error;
+      if (baseDirectory) console.warn('[Config] GET /config failed (baseDirectory:', baseDirectory, '):', err.message);
       res.status(500).json({
         error: err.message || 'Failed to load configuration',
         code: 'LOAD_ERROR',
@@ -106,8 +110,8 @@ export function createConfigRoutes(): Router {
         return;
       }
 
-      // Validate configuration
-      const configManager = new ConfigManager();
+      // Validate and save using project config path
+      const configManager = new ConfigManager(configPath);
       try {
         configManager.validate(config);
       } catch (validationError) {
@@ -162,8 +166,8 @@ export function createConfigRoutes(): Router {
         return;
       }
 
-      // Validate configuration
-      const configManager = new ConfigManager();
+      // Validate configuration (path only needed for consistency; validate does not read file)
+      const configManager = new ConfigManager(configPath);
       try {
         configManager.validate(config);
         res.json({ valid: true, errors: [] });
@@ -287,9 +291,11 @@ export function createConfigRoutes(): Router {
       if (!forceRefresh && modelCache && (now - modelCache.timestamp) < MODEL_CACHE_TTL_MS) {
         return res.json(modelCache.models);
       }
-      
-      // Load config to get CLI paths
-      const configManager = new ConfigManager();
+
+      const capabilitiesDir = baseDirectory ? join(baseDirectory, '.puppet-master', 'capabilities') : '.puppet-master/capabilities';
+
+      // Load config to get CLI paths (use project root so discovery works when cwd differs)
+      const configManager = new ConfigManager(configPath);
       let config: PuppetMasterConfig;
       try {
         config = await configManager.load();
@@ -298,10 +304,10 @@ export function createConfigRoutes(): Router {
         const { getDefaultConfig } = await import('../../config/default-config.js');
         config = getDefaultConfig();
       }
-      
-      // Initialize discovery service with config CLI paths
+
+      // Initialize discovery service with config CLI paths and project capabilities dir
       const discoveryService = new CapabilityDiscoveryService(
-        '.puppet-master/capabilities',
+        capabilitiesDir,
         config.cliPaths || undefined,
         24
       );
@@ -458,6 +464,7 @@ export function createConfigRoutes(): Router {
     } catch (error) {
       clearTimeout(requestTimeout);
       const err = error as Error;
+      if (baseDirectory) console.warn('[Config] GET /config/models failed (baseDirectory:', baseDirectory, '):', err.message);
       res.status(500).json({
         error: err.message || 'Failed to fetch model catalogs',
         code: 'MODELS_ERROR',

@@ -86,6 +86,18 @@ async function getAuthToken(): Promise<string | null> {
 }
 
 /**
+ * Clear GUI session (logout). Clears in-memory token and localStorage.
+ * Call this when the user clicks "Log out"; then navigate to /login and optionally reload.
+ */
+export function logoutGuiSession(): void {
+  authToken = null;
+  authTokenPromise = null;
+  if (typeof localStorage !== 'undefined') {
+    localStorage.removeItem('rwm-auth-token');
+  }
+}
+
+/**
  * Base fetch wrapper with error handling and automatic auth token injection
  */
 async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
@@ -134,7 +146,18 @@ async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
         headers,
       });
       if (!retryResponse.ok) {
-        const message = await retryResponse.text().catch(() => retryResponse.statusText);
+        const raw = await retryResponse.text().catch(() => retryResponse.statusText);
+        let message = raw;
+        if (retryResponse.status >= 400 && retryResponse.status < 500 && raw) {
+          try {
+            const body = JSON.parse(raw) as { error?: string; code?: string };
+            if (typeof body.error === 'string' && body.error.trim()) {
+              message = body.error + (body.code ? ` (${body.code})` : '');
+            }
+          } catch {
+            /* keep raw */
+          }
+        }
         throw new APIError(message, retryResponse.status, retryResponse.statusText);
       }
       return retryResponse.json();
@@ -142,7 +165,22 @@ async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
   }
 
   if (!response.ok) {
-    const message = await response.text().catch(() => response.statusText);
+    const raw = await response.text().catch(() => response.statusText);
+    let message = raw;
+    if (response.status >= 400 && raw) {
+      try {
+        const body = JSON.parse(raw) as { error?: string; code?: string; validPlatforms?: string[] };
+        if (typeof body.error === 'string' && body.error.trim()) {
+          message = body.error;
+          if (body.code) message += ` (${body.code})`;
+          if (Array.isArray(body.validPlatforms) && body.validPlatforms.length > 0) {
+            message += ` — valid: ${body.validPlatforms.join(', ')}`;
+          }
+        }
+      } catch {
+        // keep raw message
+      }
+    }
     throw new APIError(message, response.status, response.statusText);
   }
 
@@ -645,8 +683,9 @@ export interface PlatformStatusResponse {
 /**
  * Get platform installation status
  */
-export async function getPlatformStatus(): Promise<PlatformStatusResponse> {
-  return fetchJSON<PlatformStatusResponse>('/api/platforms/status');
+export async function getPlatformStatus(refresh = false): Promise<PlatformStatusResponse> {
+  const url = refresh ? '/api/platforms/status?refresh=true' : '/api/platforms/status';
+  return fetchJSON<PlatformStatusResponse>(url);
 }
 
 /**
@@ -770,12 +809,20 @@ export async function getLoginStatus(): Promise<LoginStatusResponse> {
 }
 
 /**
+ * Get login/auth status for a single platform (e.g. 'github').
+ */
+export async function getLoginStatusForPlatform(platform: string): Promise<PlatformAuthInfo & { description?: string }> {
+  return fetchJSON<PlatformAuthInfo & { description?: string }>(`/api/login/status/${platform}`);
+}
+
+/**
  * Trigger CLI login for a specific platform
  */
 export async function loginPlatform(platform: string): Promise<{ 
   success: boolean; 
   message?: string; 
   authUrl?: string;
+  terminalLaunched?: boolean;
   command?: string;
   error?: string;
   code?: string;
@@ -784,6 +831,21 @@ export async function loginPlatform(platform: string): Promise<{
   return fetchJSON(`/api/login/${platform}`, {
     method: 'POST',
   });
+}
+
+/** Platforms that support logout via CLI (github, copilot, codex) */
+export const LOGOUT_SUPPORTED_PLATFORMS = ['github', 'copilot', 'codex'] as const;
+
+/**
+ * Trigger CLI logout for a specific platform (where supported).
+ */
+export async function logoutPlatform(platform: string): Promise<{ success: boolean; error?: string; code?: string }> {
+  const res = await fetch(`/api/login/${platform}/logout`, { method: 'POST' });
+  const data = await res.json().catch(() => ({})) as { success?: boolean; error?: string; code?: string };
+  if (!res.ok) {
+    return { success: false, error: data.error ?? res.statusText, code: data.code };
+  }
+  return { success: data.success ?? true };
 }
 
 // ============================================
@@ -909,7 +971,10 @@ export const api = {
   uninstallSystem,
   // Login
   getLoginStatus,
+  getLoginStatusForPlatform,
   loginPlatform,
+  logoutPlatform,
+  LOGOUT_SUPPORTED_PLATFORMS,
   // Ledger
   getLedgerStats,
   getLedgerEvents,
