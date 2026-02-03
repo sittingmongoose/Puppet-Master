@@ -1,4 +1,5 @@
 name: Build installers
+# Build and test installers for all platforms
 
 on:
   workflow_dispatch:
