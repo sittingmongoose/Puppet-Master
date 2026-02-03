@@ -638,13 +638,14 @@ function resolveMakensisCommand(): string {
   }
   const explicit = process.env.MAKENSIS_PATH;
   if (explicit && existsSync(explicit)) {
-    return explicit;
+    // Quote path so shell does not split on spaces (e.g. "C:\Program Files (x86)\NSIS\makensis.exe")
+    return explicit.includes(' ') ? `"${explicit}"` : explicit;
   }
   const dir = process.env.NSISDIR;
   if (dir) {
     const joined = path.join(dir, 'makensis.exe');
     if (existsSync(joined)) {
-      return joined;
+      return joined.includes(' ') ? `"${joined}"` : joined;
     }
   }
   return 'makensis';

@@ -1,6 +1,17 @@
 # Check command – status (GUI / Tauri / launcher)
 
-**Date:** 2026-02-01
+**Date:** 2026-02-03
+
+## SSH Cross-Platform Build (2026-02-03)
+
+- **Status:** COMPLETE (Linux PASS; Windows PASS after fixes; macOS FAIL – host npm cache EACCES)
+- **Purpose:** Replicate GitHub Action “Build installers” via SSH to Linux, macOS, Windows (GitHub Action experiencing outage).
+- **Output:** [SSH_BUILD_2026-02-03.md](../../SSH_BUILD_2026-02-03.md)
+- **Results:**
+  - **Linux** (sittingmongoose@192.168.50.72): **PASS** – `dist/installers/linux-x64/rwm-puppet-master-0.1.0-linux-x64.deb`, `rwm-puppet-master-0.1.0-linux-x64.rpm`. Tauri deps installed via `SUDO_PASS_LINUX`; cleanup `.test-cache`/`.test-quota` in remote script.
+  - **Windows** (sitti@192.168.50.253): **PASS** (after fixes) – NSIS installer builds; Tauri binary and custom NSIS step succeed. Fixes: `tauri::Error::Setup` → `tauri::Error::Io` (SetupError not public); `scripts/build-installer.ts` quote `MAKENSIS_PATH` when path contains spaces.
+  - **macOS** (jaredsmacbookair@192.168.50.115): **FAIL** – `npm ci` fails with EACCES on `~/.npm/_cacache` (permission denied). Rust installed successfully; Node/npm in PATH. Host fix: fix npm cache dir permissions or run `npm cache clean --force` and ensure write access to `~/.npm`.
+- **Cleanup:** `.test-cache` and `.test-quota` removed in remote build scripts on each host; none present in workspace.
 
 ## SSH Cross-Platform Log Collection (2026-02-01)
 

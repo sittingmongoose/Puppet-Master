@@ -288,16 +288,24 @@ fn main() {
                 }
             }
 
-            // Get the main window
+            // Get the main window (use Io variant; SetupError is not public in tauri)
             let window = app
                 .get_webview_window("main")
-                .ok_or_else(|| tauri::Error::Setup("Failed to get main window".to_string()))?;
+                .ok_or_else(|| {
+                    tauri::Error::Io(std::io::Error::new(
+                        std::io::ErrorKind::NotFound,
+                        "Failed to get main window",
+                    ))
+                })?;
 
             // If server URL is provided, navigate to it; otherwise use bundled frontend
             if let Some(url_str) = server_url {
                 log::info!("Loading GUI from external server: {}", url_str);
                 let url = Url::parse(&url_str).map_err(|e| {
-                    tauri::Error::Setup(format!("Invalid server URL '{}': {}", url_str, e))
+                    tauri::Error::Io(std::io::Error::new(
+                        std::io::ErrorKind::InvalidInput,
+                        format!("Invalid server URL '{}': {}", url_str, e),
+                    ))
                 })?;
                 window.navigate(url)?;
             } else {
