@@ -98,9 +98,33 @@ async function buildTauriApp(repoRoot: string, platform: InstallerPlatform): Pro
 
   try {
     await ensureReactGuiBuild(repoRoot);
+
+    // Ensure Cargo/Rust is in PATH (GitHub Actions installs to ~/.cargo/bin)
+    const homeDir = process.env.HOME || process.env.USERPROFILE || '';
+    const cargoPath = path.join(homeDir, '.cargo', 'bin');
+    const pathSep = platform === 'win32' ? ';' : ':';
+    const currentPath = process.env.PATH || '';
+    const enhancedPath = currentPath.includes(cargoPath) ? currentPath : `${cargoPath}${pathSep}${currentPath}`;
+
     // Build the Tauri app (bundles + release binary).
     // Tauri CLI expects CI to be "true" or "false"; GitHub Actions sets CI=1, so normalize it.
-    const env = { ...process.env, CI: process.env.CI ? 'true' : 'false' };
+    const env = {
+      ...process.env,
+      CI: process.env.CI ? 'true' : 'false',
+      PATH: enhancedPath,
+    };
+
+    // Verify cargo is available
+    console.log('  Checking for Cargo...');
+    try {
+      await run('cargo', ['--version'], { env });
+      console.log('  ✓ Cargo found');
+    } catch {
+      console.error('  ✗ Cargo not found in PATH. Install Rust: https://rustup.rs');
+      console.error('  Current PATH:', enhancedPath);
+      return null;
+    }
+
     await run('npx', ['tauri', 'build'], { cwd: repoRoot, env });
 
     // Stage the runnable binary (simplest integration with our existing installers)
