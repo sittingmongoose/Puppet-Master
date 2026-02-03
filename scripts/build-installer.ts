@@ -25,7 +25,7 @@
 
 import { spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
-import { chmod, mkdir, readdir, rm, writeFile, cp } from 'node:fs/promises';
+import { chmod, mkdir, readdir, rm, rmdir, writeFile, cp, lstat, rename } from 'node:fs/promises';
 import * as path from 'node:path';
 
 import { getNodeDistribution, type NodeArch, type NodePlatform } from '../src/installers/node-distribution.js';
@@ -182,8 +182,55 @@ async function ensureDir(dir: string): Promise<void> {
 }
 
 /** Max retries for directory removal (handles ENOTEMPTY / busy filesystems in CI) */
-const EMPTY_DIR_RETRIES = 3;
+const EMPTY_DIR_RETRIES = 5;
 const EMPTY_DIR_RETRY_DELAY_MS = 2000;
+
+/**
+ * Recursively remove directory contents then the directory.
+ * Used as fallback when rm(recursive) throws ENOTEMPTY (e.g. CI filesystem quirks).
+ * Handles symlinks and entries that report as files but are dirs (EISDIR).
+ */
+async function removeDirRecursive(dir: string): Promise<void> {
+  const entries = await readdir(dir, { withFileTypes: true });
+  for (const e of entries) {
+    const full = path.join(dir, e.name);
+    try {
+      if (e.isDirectory() && !e.isSymbolicLink()) {
+        await removeDirRecursive(full);
+      } else {
+        await rm(full, { force: true });
+      }
+    } catch (err) {
+      const code = (err as NodeJS.ErrnoException)?.code;
+      if (code === 'EISDIR' || (err as Error)?.message?.includes('is a directory')) {
+        await removeDirRecursive(full);
+      } else {
+        throw err;
+      }
+    }
+  }
+  if (existsSync(dir)) {
+    try {
+      await rmdir(dir);
+    } catch (err) {
+      const code = (err as NodeJS.ErrnoException)?.code;
+      if (code === 'ENOENT') return;
+      if (code === 'ENOTEMPTY') {
+        try {
+          await rm(dir, { recursive: true, force: true });
+        } catch {
+          if (process.platform !== 'win32') {
+            await run('rm', ['-rf', dir], { shell: false });
+          } else {
+            throw err;
+          }
+        }
+        return;
+      }
+      throw err;
+    }
+  }
+}
 
 async function emptyDir(dir: string): Promise<void> {
   if (!existsSync(dir)) {
@@ -197,6 +244,18 @@ async function emptyDir(dir: string): Promise<void> {
       break;
     } catch (err) {
       lastErr = err instanceof Error ? err : new Error(String(err));
+      const isENOTEMPTY =
+        (lastErr as NodeJS.ErrnoException).code === 'ENOTEMPTY' ||
+        lastErr.message.includes('ENOTEMPTY') ||
+        lastErr.message.includes('directory not empty');
+      if (isENOTEMPTY) {
+        try {
+          await removeDirRecursive(dir);
+          break;
+        } catch (fallbackErr) {
+          lastErr = fallbackErr instanceof Error ? fallbackErr : new Error(String(fallbackErr));
+        }
+      }
       if (attempt < EMPTY_DIR_RETRIES) {
         console.warn(`⚠️  emptyDir attempt ${attempt}/${EMPTY_DIR_RETRIES} failed, retrying in ${EMPTY_DIR_RETRY_DELAY_MS}ms...`);
         await new Promise((r) => setTimeout(r, EMPTY_DIR_RETRY_DELAY_MS));
@@ -318,8 +377,8 @@ async function downloadNodeRuntime(args: Args, repoRoot: string, downloadDir: st
   const archivePath = path.join(downloadDir, dist.filename);
   if (!existsSync(archivePath)) {
     console.log(`\n⬇️  Downloading Node runtime: ${dist.url}\n`);
-    // Use curl if available; otherwise fall back to node https in future.
-    await run('curl', ['-fL', dist.url, '-o', archivePath], { cwd: repoRoot });
+    // Use curl if available; shell: false so paths with spaces (e.g. "RWM Puppet Master") are not split.
+    await run('curl', ['-fL', dist.url, '-o', archivePath], { cwd: repoRoot, shell: false });
   } else {
     console.log(`\nℹ️  Using cached Node archive: ${archivePath}\n`);
   }
@@ -331,11 +390,11 @@ async function downloadNodeRuntime(args: Args, repoRoot: string, downloadDir: st
   // Use tar (available on GitHub runners; also common locally). bsdtar can extract .zip.
   // Linux tar.xz requires -J; tar on mac and GNU tar on linux support it; bsdtar too.
   if (dist.filename.endsWith('.zip')) {
-    await run('tar', ['-xf', archivePath, '-C', extractDir], { cwd: repoRoot });
+    await run('tar', ['-xf', archivePath, '-C', extractDir], { cwd: repoRoot, shell: false });
   } else if (dist.filename.endsWith('.tar.gz')) {
-    await run('tar', ['-xzf', archivePath, '-C', extractDir], { cwd: repoRoot });
+    await run('tar', ['-xzf', archivePath, '-C', extractDir], { cwd: repoRoot, shell: false });
   } else if (dist.filename.endsWith('.tar.xz')) {
-    await run('tar', ['-xJf', archivePath, '-C', extractDir], { cwd: repoRoot });
+    await run('tar', ['-xJf', archivePath, '-C', extractDir], { cwd: repoRoot, shell: false });
   } else {
     throw new Error(`Unknown Node archive extension: ${dist.filename}`);
   }
@@ -368,6 +427,43 @@ async function fixNodeSymlinks(nodeDir: string, platform: InstallerPlatform): Pr
     return;
   }
   
+  // If node/bin is a symlink (e.g. fs.cp converted relative to absolute), replace with real dir
+  // so we can write launcher scripts into the payload
+  if (existsSync(nodeBin)) {
+    try {
+      const stat = await lstat(nodeBin);
+      if (stat.isSymbolicLink()) {
+        const tmpBin = path.join(nodeDir, 'bin.fix.' + Date.now());
+        await mkdir(tmpBin, { recursive: true });
+        const entries = await readdir(nodeBin, { withFileTypes: true });
+        for (const e of entries) {
+          const src = path.join(nodeBin, e.name);
+          const dst = path.join(tmpBin, e.name);
+          if (e.isDirectory()) {
+            await cp(src, dst, { recursive: true });
+          } else {
+            await cp(src, dst);
+          }
+        }
+        await rm(nodeBin, { force: true });
+        await mkdir(nodeBin, { recursive: true });
+        const tmpEntries = await readdir(tmpBin, { withFileTypes: true });
+        for (const e of tmpEntries) {
+          const src = path.join(tmpBin, e.name);
+          const dst = path.join(nodeBin, e.name);
+          if (e.isDirectory()) {
+            await cp(src, dst, { recursive: true });
+          } else {
+            await cp(src, dst);
+          }
+        }
+        await rm(tmpBin, { recursive: true, force: true });
+      }
+    } catch (err) {
+      console.warn('⚠️  Could not replace node/bin symlink:', (err as Error).message);
+    }
+  }
+  await ensureDir(nodeBin);
   // Verify Node binary exists
   if (!existsSync(nodeExe)) {
     console.warn(`⚠️  Node binary not found at ${nodeExe}, skipping symlink fix`);
@@ -397,16 +493,16 @@ async function fixNodeSymlinks(nodeDir: string, platform: InstallerPlatform): Pr
     if (existsSync(launcherPath)) {
       await rm(launcherPath, { force: true });
     }
-    
-    // Create a script launcher that uses relative paths
+    // Create a script launcher that uses relative paths (write to temp then rename to avoid ENOENT via symlinks)
     const script = `#!/bin/sh
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 NODE_EXE="$SCRIPT_DIR/node"
 CLI="$SCRIPT_DIR/${launcher.cliPath}"
 exec "$NODE_EXE" "$CLI" "$@"
 `;
-    
-    await writeFile(launcherPath, script, { encoding: 'utf8', mode: 0o755 });
+    const tmpPath = path.join(nodeDir, '.tmp.' + launcher.name + '.' + Date.now());
+    await writeFile(tmpPath, script, { encoding: 'utf8', mode: 0o755 });
+    await rename(tmpPath, launcherPath);
     fixedCount++;
   }
   
