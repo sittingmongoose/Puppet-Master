@@ -8,3 +8,5 @@ export type { Project } from './projectStore.js';
 
 export { useBudgetStore, useUIStore } from './uiStore.js';
 export type { BudgetInfo } from './uiStore.js';
+
+export { useDoctorStore } from './doctorStore.js';

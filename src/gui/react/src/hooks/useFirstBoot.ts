@@ -6,11 +6,12 @@
  */
 
 import { useState, useEffect } from 'react';
+import { api } from '@/lib';
 
 /**
  * First boot status
  */
-export interface FirstBootStatus {
+export interface FirstBootResult {
   /** Whether this is first boot */
   isFirstBoot: boolean;
   /** Whether config file is missing */
@@ -28,8 +29,8 @@ export interface FirstBootStatus {
  * 
  * @returns First boot status object
  */
-export function useFirstBoot(): FirstBootStatus {
-  const [status, setStatus] = useState<FirstBootStatus>({
+export function useFirstBoot(): FirstBootResult {
+  const [status, setStatus] = useState<FirstBootResult>({
     isFirstBoot: false,
     missingConfig: false,
     missingCapabilities: false,
@@ -42,16 +43,7 @@ export function useFirstBoot(): FirstBootStatus {
 
     const checkFirstBoot = async () => {
       try {
-        const response = await fetch('/api/platforms/first-boot');
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
-
-        const data = await response.json() as {
-          isFirstBoot: boolean;
-          missingConfig: boolean;
-          missingCapabilities: boolean;
-        };
+        const data = await api.getFirstBootStatus();
 
         if (!cancelled) {
           setStatus({

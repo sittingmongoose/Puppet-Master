@@ -10,7 +10,7 @@ import { spawn, type ChildProcess } from 'node:child_process';
 import { access, readFile } from 'node:fs/promises';
 import { existsSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
-import { join, resolve } from 'node:path';
+import { delimiter, join, resolve } from 'node:path';
 import type { CheckResult, DoctorCheck } from '../check-registry.js';
 import type { CliPathsConfig } from '../../types/config.js';
 import { getPlatformAuthStatus } from '../../platforms/auth-status.js';
@@ -39,6 +39,38 @@ function formatInvocation(invocation: CliInvocation): string {
   return `${invocation.command}${prefix}`;
 }
 
+function getEnrichedEnv(): NodeJS.ProcessEnv {
+  const home = homedir();
+  const npmGlobalPrefix = home ? join(home, '.npm-global') : '';
+  const npmGlobalBin = npmGlobalPrefix
+    ? (process.platform === 'win32' ? npmGlobalPrefix : join(npmGlobalPrefix, 'bin'))
+    : '';
+
+  const extraPaths = [
+    npmGlobalBin,
+    join(home, '.local', 'bin'),
+    '/usr/local/bin',
+    '/opt/homebrew/bin',
+    '/opt/homebrew/sbin',
+  ].filter(Boolean);
+
+  const currentPath = process.env.PATH || '';
+  const enrichedPath = [...extraPaths, currentPath].filter(Boolean).join(delimiter);
+
+  const env: NodeJS.ProcessEnv = {
+    ...process.env,
+    PATH: enrichedPath,
+  };
+
+  if (npmGlobalPrefix) {
+    env.HOME = home;
+    env.npm_config_prefix = npmGlobalPrefix;
+    env.NPM_CONFIG_PREFIX = npmGlobalPrefix;
+  }
+
+  return env;
+}
+
 /**
  * Checks if a CLI command is available and can run a version flag.
  * 
@@ -56,6 +88,7 @@ async function checkCliAvailable(
     const proc: ChildProcess = spawn(invocation.command, [...(invocation.argsPrefix ?? []), ...args], {
       shell: process.platform === 'win32',
       stdio: ['ignore', 'pipe', 'pipe'],
+      env: getEnrichedEnv(),
     });
 
     let stdout = '';
@@ -116,6 +149,7 @@ async function runClaudeDoctor(
     const proc = spawn(invocation.command, [...(invocation.argsPrefix ?? []), 'doctor'], {
       shell: process.platform === 'win32',
       stdio: ['ignore', 'pipe', 'pipe'],
+      env: getEnrichedEnv(),
     });
 
     let stdout = '';
@@ -398,7 +432,7 @@ export class CodexCliCheck implements DoctorCheck {
     } else {
       // CLI not found - provide comprehensive fix suggestion
       const fixParts = [
-        'Install Codex CLI: npm install -g @openai/codex',
+        'Install Codex CLI: npm install -g --prefix ~/.npm-global @openai/codex',
         'Install SDK package: npm install @openai/codex-sdk',
         '',
         'After installation:',
@@ -720,7 +754,7 @@ export class CopilotCliCheck implements DoctorCheck {
         message: `Copilot CLI not found (checked: ${candidates.map(formatInvocation).join(', ')})`,
         details: lastError,
         // P0-G19: Updated to correct install command
-        fixSuggestion: 'Install with: npm install -g @github/copilot',
+        fixSuggestion: 'Install with: npm install -g --prefix ~/.npm-global @github/copilot',
         durationMs: 0, // Will be set by CheckRegistry
       };
     }

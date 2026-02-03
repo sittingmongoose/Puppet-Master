@@ -523,7 +523,7 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
                           size="sm"
                           onClick={() => handleLogin(platform)}
                           loading={isLoggingIn}
-                          disabled={isLoggingIn || loggingIn !== null}
+                          disabled={isLoggingIn}
                         >
                           {isCursor ? 'OPEN CURSOR APP' : 'LOGIN'}
                         </Button>
@@ -568,7 +568,7 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
                     size="sm"
                     onClick={() => handleLogin('copilot')}
                     loading={loggingIn === 'copilot'}
-                    disabled={loggingIn !== null}
+                    disabled={loggingIn === 'copilot'}
                   >
                     LOGIN
                   </Button>
@@ -591,7 +591,9 @@ export function PlatformSetupWizard({ isOpen, onComplete, onSkip }: PlatformSetu
       closeOnEscape={false}
       footer={renderFooter()}
     >
-      {step === 'install' ? renderInstallStep() : renderAuthStep()}
+      <div className="overflow-y-auto max-h-[70vh] min-h-0 pr-sm">
+        {step === 'install' ? renderInstallStep() : renderAuthStep()}
+      </div>
     </Modal>
   );
 }

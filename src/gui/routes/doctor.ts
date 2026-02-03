@@ -17,7 +17,7 @@ import { CursorCliCheck } from '../../doctor/checks/cli-tools.js';
 import { CodexCliCheck } from '../../doctor/checks/cli-tools.js';
 import { ClaudeCliCheck } from '../../doctor/checks/cli-tools.js';
 import { GeminiCliCheck } from '../../doctor/checks/cli-tools.js';
-import { CopilotCliCheck } from '../../doctor/checks/cli-tools.js';
+import { CopilotCliCheck, CopilotSdkCheck } from '../../doctor/checks/cli-tools.js';
 import { PlaywrightBrowsersCheck } from '../../doctor/checks/playwright-check.js';
 
 // Git checks
@@ -94,6 +94,7 @@ async function createCheckRegistry(): Promise<CheckRegistry> {
   registry.register(new ClaudeCliCheck(config.cliPaths));
   registry.register(new GeminiCliCheck(config.cliPaths));
   registry.register(new CopilotCliCheck(config.cliPaths));
+  registry.register(new CopilotSdkCheck());
 
   // Register Git checks
   registry.register(new GitAvailableCheck());

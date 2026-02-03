@@ -150,7 +150,7 @@ describe('InstallationManager', () => {
       const cmd = manager.getInstallCommand('codex-cli');
       expect(cmd).not.toBeNull();
       expect(cmd?.check).toBe('codex-cli');
-      expect(cmd?.command).toContain('npm install -g @openai/codex');
+      expect(cmd?.command).toContain('@openai/codex');
     });
 
     it('should register claude-cli command', () => {

@@ -41,7 +41,17 @@ interface ModelCacheEntry {
 }
 
 const MODEL_CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+const PLATFORM_DISCOVERY_TIMEOUT_MS = 3500;
 let modelCache: ModelCacheEntry | null = null;
+
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) => {
+      setTimeout(() => reject(new Error(`Timeout after ${timeoutMs}ms`)), timeoutMs);
+    }),
+  ]);
+}
 
 /**
  * Create config routes.
@@ -260,6 +270,15 @@ export function createConfigRoutes(): Router {
    * - refresh: Set to 'true' to bypass cache and force refresh
    */
   router.get('/config/models', async (req: Request, res: Response) => {
+    const requestTimeout = setTimeout(() => {
+      if (!res.headersSent) {
+        res.status(504).json({
+          error: 'Model discovery timed out',
+          code: 'MODELS_TIMEOUT',
+        } as ErrorResponse);
+      }
+    }, 10_000);
+
     try {
       const forceRefresh = req.query.refresh === 'true';
       const now = Date.now();
@@ -293,7 +312,7 @@ export function createConfigRoutes(): Router {
         (async () => {
           try {
             const cliPath = resolvePlatformCommand('cursor', config.cliPaths);
-            const models = await getCursorModelsWithDiscovery(cliPath, true);
+            const models = await withTimeout(getCursorModelsWithDiscovery(cliPath, true), PLATFORM_DISCOVERY_TIMEOUT_MS);
             if (Array.isArray(models) && models.length > 0) {
               return models.map(m => ({ id: m.id, label: m.label || m.id, provider: m.provider }));
             }
@@ -324,7 +343,7 @@ export function createConfigRoutes(): Router {
         // Claude: Try dynamic discovery, fallback to static
         (async () => {
           try {
-            const discovered = await discoveryService.discoverModels('claude');
+            const discovered = await withTimeout(discoveryService.discoverModels('claude'), PLATFORM_DISCOVERY_TIMEOUT_MS);
             if (Array.isArray(discovered) && discovered.length > 0) {
               // Map discovered IDs to full model info
               const staticModels = getClaudeModels();
@@ -351,7 +370,7 @@ export function createConfigRoutes(): Router {
         // Gemini: Use dynamic discovery with fallback to static
         (async () => {
           try {
-            const discovered = await discoveryService.discoverModels('gemini');
+            const discovered = await withTimeout(discoveryService.discoverModels('gemini'), PLATFORM_DISCOVERY_TIMEOUT_MS);
             if (Array.isArray(discovered) && discovered.length > 0) {
               const staticModels = getGeminiModels();
               const mapped = discovered.map(id => {
@@ -377,7 +396,7 @@ export function createConfigRoutes(): Router {
         // Copilot: Use dynamic discovery with fallback to static
         (async () => {
           try {
-            const discovered = await discoveryService.discoverModels('copilot');
+            const discovered = await withTimeout(discoveryService.discoverModels('copilot'), PLATFORM_DISCOVERY_TIMEOUT_MS);
             if (Array.isArray(discovered) && discovered.length > 0) {
               const staticModels = getCopilotModels();
               const mapped = discovered.map(rawId => {
@@ -434,8 +453,10 @@ export function createConfigRoutes(): Router {
         timestamp: now,
       };
       
+      clearTimeout(requestTimeout);
       res.json(models);
     } catch (error) {
+      clearTimeout(requestTimeout);
       const err = error as Error;
       res.status(500).json({
         error: err.message || 'Failed to fetch model catalogs',

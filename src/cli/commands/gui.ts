@@ -297,34 +297,39 @@ function resolveTauriGuiBinary(installRoot: string | undefined): string | undefi
   return undefined;
 }
 
-function launchTauriGui(tauriBin: string, serverUrl: string, verbose: boolean | undefined): boolean {
+/** Return type: child process when Tauri was launched (so caller can exit when it exits), or null. */
+function launchTauriGui(
+  tauriBin: string,
+  serverUrl: string,
+  verbose: boolean | undefined
+): ReturnType<typeof spawn> | null {
   // On Linux, Tauri (GTK) aborts with SIGABRT if no display server is available.
   // Skip the native GUI and fall back to the browser when DISPLAY/WAYLAND_DISPLAY are unset.
   if (process.platform === 'linux' && !process.env.DISPLAY && !process.env.WAYLAND_DISPLAY) {
     if (verbose) {
       console.log('  No DISPLAY or WAYLAND_DISPLAY set — skipping Tauri GUI');
     }
-    return false;
+    return null;
   }
 
   try {
+    // Do NOT use detached: true — keep Tauri as child so when user quits Tauri, we can exit Node
+    // and avoid leaving the GUI server running in the background.
     const child = spawn(tauriBin, ['--server-url', serverUrl], {
-      detached: true,
       stdio: 'ignore',
       windowsHide: true,
       env: { ...process.env },
     });
-    child.unref();
     if (verbose) {
       console.log(`  Launched Tauri GUI: ${tauriBin} --server-url ${serverUrl}`);
     }
-    return true;
+    return child;
   } catch (error) {
     console.warn('  Could not launch Tauri GUI, falling back to browser.');
     if (verbose) {
       console.warn(`  Error: ${error instanceof Error ? error.message : String(error)}`);
     }
-    return false;
+    return null;
   }
 }
 
@@ -655,7 +660,23 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       const installRoot = resolveInstallRoot();
       const tauriBin = resolveTauriGuiBinary(installRoot);
 
-      const launched = tauriBin ? launchTauriGui(tauriBin, uiUrl, options.verbose) : false;
+      const tauriChild = tauriBin ? launchTauriGui(tauriBin, uiUrl, options.verbose) : null;
+      const launched = tauriChild !== null;
+
+      // When user quits Tauri, exit this Node process so the server does not keep running in the background.
+      if (tauriChild) {
+        tauriChild.on('exit', (code, signal) => {
+          const reason = signal ? `Tauri exited (${signal})` : `Tauri exited (code ${code})`;
+          console.log(`\n${reason}, shutting down server...`);
+          shutdownServer(guiServer, orchestratorInstance).catch((err) => {
+            console.error('Shutdown error:', err);
+            process.exit(1);
+          });
+        });
+        tauriChild.on('error', (err) => {
+          console.warn('Tauri process error:', err.message);
+        });
+      }
 
       if (!launched) {
         try {
@@ -723,32 +744,40 @@ export async function guiAction(options: GuiOptions): Promise<void> {
 }
 
 /**
+ * Stop server and orchestrator, then exit. Used by signal handlers and when Tauri exits.
+ */
+async function shutdownServer(
+  guiServer: GuiServer,
+  orchestrator: Orchestrator
+): Promise<void> {
+  try {
+    if (orchestrator && typeof orchestrator.stop === 'function') {
+      await orchestrator.stop();
+    }
+    await guiServer.stop();
+    console.log('Shutdown complete');
+    process.exit(0);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error('Error during shutdown:', errorMessage);
+    process.exit(1);
+  }
+}
+
+/**
  * Setup signal handlers for graceful shutdown
  */
 function setupSignalHandlers(guiServer: GuiServer, orchestrator: Orchestrator): void {
-  const shutdown = async (signal: string) => {
+  const onSignal = (signal: string) => {
     console.log(`\n${signal} received, shutting down gracefully...`);
-
-    try {
-      // Stop orchestrator if running
-      if (orchestrator && typeof orchestrator.stop === 'function') {
-        await orchestrator.stop();
-      }
-
-      // Stop GUI server
-      await guiServer.stop();
-
-      console.log('Shutdown complete');
-      process.exit(0);
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      console.error('Error during shutdown:', errorMessage);
+    shutdownServer(guiServer, orchestrator).catch((err) => {
+      console.error('Shutdown error:', err);
       process.exit(1);
-    }
+    });
   };
 
-  process.on('SIGINT', () => shutdown('SIGINT'));
-  process.on('SIGTERM', () => shutdown('SIGTERM'));
+  process.on('SIGINT', () => onSignal('SIGINT'));
+  process.on('SIGTERM', () => onSignal('SIGTERM'));
 }
 
 /**

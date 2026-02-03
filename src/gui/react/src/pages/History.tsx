@@ -127,9 +127,9 @@ export default function HistoryPage() {
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       return (
-        session.name.toLowerCase().includes(query) ||
-        session.id.toLowerCase().includes(query) ||
-        session.projectName.toLowerCase().includes(query)
+        (session.name ?? '').toLowerCase().includes(query) ||
+        (session.id ?? '').toLowerCase().includes(query) ||
+        (session.projectName ?? '').toLowerCase().includes(query)
       );
     }
     return true;

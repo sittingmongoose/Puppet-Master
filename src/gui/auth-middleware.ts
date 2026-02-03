@@ -107,7 +107,7 @@ export function createAuthMiddleware(config: AuthConfig): RequestHandler {
         req.path.startsWith('/api/login/') || 
         req.path.startsWith('/api/config/') ||
         req.path.startsWith('/api/platforms/') ||
-        req.path === '/api/ledger' ||
+        (req.path === '/api/ledger' || req.path.startsWith('/api/ledger/') || req.path === '/ledger' || req.path.startsWith('/ledger/')) ||
         req.path === '/api/system/uninstall') {
       next();
       return;

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { ReactNode } from 'react';
+import { useDoctorStore } from '@/stores/doctorStore';
 import { Panel } from '@/components/layout';
 import { Button, Checkbox } from '@/components/ui';
 import { StatusBadge } from '@/components/shared';
@@ -24,60 +25,68 @@ const CATEGORIES: Array<{ id: string; label: string; icon: ReactNode }> = [
   { id: 'project', label: 'Project Setup', icon: <FolderIcon size="1em" /> },
 ];
 
-// Module-level cache so Doctor results persist across navigation
-let cachedChecks: DoctorCheck[] | null = null;
-let cachedPlatformStatus: Record<string, PlatformStatusType> | null = null;
-let cachedSelectedPlatforms: Platform[] | null = null;
-
 /**
  * Doctor page - dependency checker
  */
 export default function DoctorPage() {
-  const [checks, setChecks] = useState<DoctorCheck[]>(cachedChecks ?? []);
-  const [loading, setLoading] = useState(cachedChecks === null);
+  const {
+    checks,
+    platformStatus,
+    selectedPlatforms,
+    _hasHydrated,
+    setChecks,
+    setPlatformStatus,
+    setSelectedPlatforms,
+  } = useDoctorStore();
+
+  const [loading, setLoading] = useState(checks.length === 0);
   const [running, setRunning] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [fixing, setFixing] = useState<string | null>(null);
   const [installingAll, setInstallingAll] = useState(false);
   const [installAllProgress, setInstallAllProgress] = useState<string | null>(null);
-  const [platformStatus, setPlatformStatus] = useState<Record<string, PlatformStatusType>>(cachedPlatformStatus ?? {});
-  const [selectedPlatforms, setSelectedPlatforms] = useState<Platform[]>(cachedSelectedPlatforms ?? []);
   const [showPlatformSelection, setShowPlatformSelection] = useState(false);
 
-  // Fetch platform status on mount (refresh in background if cached)
+  // Wait for persisted state to rehydrate before fetching, so navigation away/back keeps state
+  const ready = _hasHydrated === true;
+
+  // Fetch platform status on mount after hydration (refresh in background if empty)
   useEffect(() => {
+    if (!ready) return;
     const fetchPlatformStatus = async () => {
       try {
         const status = await api.getPlatformStatus();
         setPlatformStatus(status.platforms);
-        cachedPlatformStatus = status.platforms;
-        setSelectedPlatforms(status.installedPlatforms as Platform[]);
-        cachedSelectedPlatforms = status.installedPlatforms as Platform[];
+
+        const installed = status.installedPlatforms as Platform[];
+        if (!selectedPlatforms || selectedPlatforms.length === 0) {
+          setSelectedPlatforms(installed);
+        }
       } catch (err) {
         console.error('[Doctor] Failed to fetch platform status:', err);
       }
     };
-    fetchPlatformStatus();
-  }, []);
+    if (!platformStatus || Object.keys(platformStatus).length === 0) fetchPlatformStatus();
+  }, [ready, platformStatus, selectedPlatforms, setPlatformStatus, setSelectedPlatforms]);
 
-  // Fetch checks on mount (refresh in background if cached)
+  // Fetch checks on mount after hydration (refresh in background if empty)
   useEffect(() => {
+    if (!ready) return;
     const fetchChecks = async () => {
       try {
-        if (!cachedChecks) setLoading(true);
+        if (!checks || checks.length === 0) setLoading(true);
         const data = await api.getDoctorChecks();
         const newChecks = Array.isArray(data.checks) ? data.checks : [];
         setChecks(newChecks);
-        cachedChecks = newChecks;
       } catch (err) {
         console.error('[Doctor] Failed to fetch checks:', err);
-        if (!cachedChecks) setError(getErrorMessage(err, 'Failed to load checks'));
+        if (!checks || checks.length === 0) setError(getErrorMessage(err, 'Failed to load checks'));
       } finally {
         setLoading(false);
       }
     };
-    fetchChecks();
-  }, []);
+    if (!checks || checks.length === 0) fetchChecks();
+  }, [ready, checks, setChecks]);
 
   // Run all checks
   const runChecks = useCallback(async () => {
@@ -89,7 +98,6 @@ export default function DoctorPage() {
       });
       const newChecks = Array.isArray(data.checks) ? data.checks : [];
       setChecks(newChecks);
-      cachedChecks = newChecks;
     } catch (err) {
       console.error('[Doctor] Failed to run checks:', err);
       setError(getErrorMessage(err, 'Failed to run checks'));
@@ -97,19 +105,6 @@ export default function DoctorPage() {
       setRunning(false);
     }
   }, [selectedPlatforms]);
-
-  // Reset cache - useful for debugging or forcing fresh data
-  const resetCache = useCallback(() => {
-    cachedChecks = null;
-    cachedPlatformStatus = null;
-    cachedSelectedPlatforms = null;
-    setChecks([]);
-    setPlatformStatus({});
-    setSelectedPlatforms([]);
-    setLoading(true);
-    // Trigger re-fetch by running checks
-    runChecks();
-  }, [runChecks]);
 
   // Fix a check
   const fixCheck = useCallback(async (checkName: string) => {
@@ -120,9 +115,16 @@ export default function DoctorPage() {
       const data = await api.runDoctorChecks();
       const nextChecks = Array.isArray(data.checks) ? data.checks : [];
       setChecks(nextChecks);
-      cachedChecks = nextChecks;
       // Trigger capabilities refresh so tier page picks up new installs
-      try { await fetch('/api/config/models?refresh=true'); } catch { /* best-effort */ }
+      try { await api.getModels(true); } catch { /* best-effort */ }
+
+      // Refresh platform status so summary/details stay aligned
+      try {
+        const status = await api.getPlatformStatus();
+        setPlatformStatus(status.platforms);
+      } catch {
+        // best-effort
+      }
     } catch (err) {
       console.error('[Doctor] Failed to fix check:', err);
       setError(getErrorMessage(err, 'Failed to fix check'));
@@ -170,9 +172,19 @@ export default function DoctorPage() {
       const data = await api.runDoctorChecks({
         platforms: selectedPlatforms.length > 0 ? selectedPlatforms : undefined,
       });
-      setChecks(Array.isArray(data.checks) ? data.checks : []);
+      const nextChecks = Array.isArray(data.checks) ? data.checks : [];
+      setChecks(nextChecks);
+
       // Trigger capabilities refresh so tier page picks up new installs
-      try { await fetch('/api/config/models?refresh=true'); } catch { /* best-effort */ }
+      try { await api.getModels(true); } catch { /* best-effort */ }
+
+      // Refresh platform status so summary/details stay aligned
+      try {
+        const status = await api.getPlatformStatus();
+        setPlatformStatus(status.platforms);
+      } catch {
+        // best-effort
+      }
     } catch (err) {
       console.error('[Doctor] Install all failed:', err);
       setError(getErrorMessage(err, 'Install all failed'));
@@ -197,22 +209,20 @@ export default function DoctorPage() {
     return 'pending';
   };
 
-  if (loading) {
+  if (!ready || loading) {
     return (
       <div className="text-center py-xl">
-        <p className="text-ink-faded">Loading checks...</p>
+        <p className="text-ink-faded">{!ready ? 'Loading...' : 'Loading checks...'}</p>
       </div>
     );
   }
 
   const handlePlatformToggle = (platform: Platform) => {
-    setSelectedPlatforms((prev) => {
-      if (prev.includes(platform)) {
-        return prev.filter((p) => p !== platform);
-      } else {
-        return [...prev, platform];
-      }
-    });
+    setSelectedPlatforms(
+      selectedPlatforms.includes(platform)
+        ? selectedPlatforms.filter((p) => p !== platform)
+        : [...selectedPlatforms, platform]
+    );
   };
 
   const allPlatforms: Platform[] = ['cursor', 'codex', 'claude', 'gemini', 'copilot'];
@@ -252,7 +262,7 @@ export default function DoctorPage() {
         </div>
       </div>
 
-      {/* Platform Selection */}
+      {/* Platform Selection — align "installed" with doctor check results so summary matches details */}
       {showPlatformSelection && (
         <Panel title="Select Platforms to Check">
           <p className="text-ink-faded mb-md">
@@ -261,7 +271,10 @@ export default function DoctorPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-md">
             {allPlatforms.map((platform) => {
               const status = platformStatus[platform];
-              const isInstalled = status?.installed ?? false;
+              const cliCheckPassed = checksList.some(
+                (c) => c.name === `${platform}-cli` && c.status === 'pass'
+              );
+              const isInstalled = status?.installed === true || cliCheckPassed;
               const isSelected = selectedPlatforms.includes(platform);
 
               return (
@@ -276,7 +289,7 @@ export default function DoctorPage() {
                     id={`doctor-platform-${platform}`}
                     checked={isSelected}
                     onChange={() => handlePlatformToggle(platform)}
-                    label={platform ? platform.charAt(0).toUpperCase() + platform.slice(1) : 'Unknown'}
+                    label={typeof platform === 'string' && platform ? platform.charAt(0).toUpperCase() + platform.slice(1) : 'Unknown'}
                   />
                   <div className="mt-xs">
                     <StatusBadge
@@ -293,7 +306,7 @@ export default function DoctorPage() {
           {selectedPlatforms.length > 0 && (
             <div className="mt-md p-sm bg-electric-blue/10 border-medium border-electric-blue rounded">
               <p className="text-sm">
-                Selected: {selectedPlatforms.map((p) => p ? p.charAt(0).toUpperCase() + p.slice(1) : 'Unknown').join(', ')}
+                Selected: {selectedPlatforms.map((p) => (typeof p === 'string' && p ? p.charAt(0).toUpperCase() + p.slice(1) : 'Unknown')).join(', ')}
               </p>
             </div>
           )}
@@ -404,7 +417,14 @@ function CategoryPanel({ title, checks, onFix, fixing }: CategoryPanelProps) {
   const total = list.length;
   
   return (
-    <Panel title={`${title} (${passed}/${total})`}>
+    <Panel
+      title={
+        <span className="flex items-center gap-xs">
+          {title}
+          <span className="text-ink-faded">({passed}/{total})</span>
+        </span>
+      }
+    >
       <div className="space-y-sm">
         {list.map((check) => (
           <CheckRow

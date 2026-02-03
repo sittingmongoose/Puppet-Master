@@ -6,6 +6,8 @@
  */
 
 import { spawn, type ChildProcess } from 'node:child_process';
+import { homedir } from 'node:os';
+import { delimiter, join } from 'node:path';
 import type { Platform } from '../types/config.js';
 import type { CliPathsConfig } from '../types/config.js';
 import { getCursorCommandCandidates, resolvePlatformCommand } from './constants.js';
@@ -34,12 +36,14 @@ interface CliAvailabilityResult {
 async function checkCliAvailable(
   invocation: CliInvocation,
   args: string[] = ['--version'],
-  timeout: number = 10000
+  timeout: number = 10000,
+  env?: NodeJS.ProcessEnv
 ): Promise<CliAvailabilityResult> {
   return new Promise((resolve) => {
     const proc: ChildProcess = spawn(invocation.command, [...(invocation.argsPrefix ?? []), ...args], {
       shell: process.platform === 'win32',
       stdio: ['ignore', 'pipe', 'pipe'],
+      env: env ?? process.env,
     });
 
     let stdout = '';
@@ -225,12 +229,13 @@ export class PlatformDetector {
    * Detect Cursor CLI installation
    */
   private async detectCursor(): Promise<PlatformStatus> {
+    const env = this.getEnrichedEnv();
     const candidates: CliInvocation[] = getCursorCommandCandidates(this.cliPaths).map((c) => ({
       command: c,
     }));
 
     for (const candidate of candidates) {
-      const result = await checkCliAvailable(candidate, ['--version']);
+      const result = await checkCliAvailable(candidate, ['--version'], 10_000, env);
       if (result.available) {
         const auth = getPlatformAuthStatus('cursor');
         return {
@@ -254,6 +259,7 @@ export class PlatformDetector {
    * Detect Codex CLI installation
    */
   private async detectCodex(): Promise<PlatformStatus> {
+    const env = this.getEnrichedEnv();
     const candidates: CliInvocation[] = [];
     const configured = resolvePlatformCommand('codex', this.cliPaths);
     if (this.cliPaths.codex && this.cliPaths.codex.trim() !== '') {
@@ -264,7 +270,7 @@ export class PlatformDetector {
     }
 
     for (const candidate of candidates) {
-      const result = await checkCliAvailable(candidate, ['--version'], 15_000);
+      const result = await checkCliAvailable(candidate, ['--version'], 15_000, env);
       if (result.available) {
         const auth = getPlatformAuthStatus('codex');
         return {
@@ -288,6 +294,7 @@ export class PlatformDetector {
    * Detect Claude CLI installation
    */
   private async detectClaude(): Promise<PlatformStatus> {
+    const env = this.getEnrichedEnv();
     const candidates: CliInvocation[] = [];
     const configured = resolvePlatformCommand('claude', this.cliPaths);
     if (this.cliPaths.claude && this.cliPaths.claude.trim() !== '') {
@@ -298,7 +305,7 @@ export class PlatformDetector {
     }
 
     for (const candidate of candidates) {
-      const result = await checkCliAvailable(candidate, ['--version'], 15_000);
+      const result = await checkCliAvailable(candidate, ['--version'], 15_000, env);
       if (result.available) {
         const auth = getPlatformAuthStatus('claude');
         return {
@@ -322,6 +329,7 @@ export class PlatformDetector {
    * Detect Gemini CLI installation
    */
   private async detectGemini(): Promise<PlatformStatus> {
+    const env = this.getEnrichedEnv();
     const candidates: CliInvocation[] = [];
     const configured = resolvePlatformCommand('gemini', this.cliPaths);
     if (this.cliPaths.gemini && this.cliPaths.gemini.trim() !== '') {
@@ -332,7 +340,7 @@ export class PlatformDetector {
     }
 
     for (const candidate of candidates) {
-      const result = await checkCliAvailable(candidate, ['--version'], 15_000);
+      const result = await checkCliAvailable(candidate, ['--version'], 15_000, env);
       if (result.available) {
         const auth = getPlatformAuthStatus('gemini');
         return {
@@ -358,28 +366,68 @@ export class PlatformDetector {
    * Note: Copilot uses SDK, not CLI, so we check for the SDK package
    */
   private async detectCopilot(): Promise<PlatformStatus> {
-    // Copilot uses SDK, check if @github/copilot-sdk is available
-    // For now, we'll check if the SDK runner can be instantiated
-    // This is a simplified check - in production, we'd check for the actual SDK package
-    
-    // Check for GitHub token which is required for Copilot
-    const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
-    if (token) {
-      // Assume SDK is available if token is present
-      // In a real implementation, we'd check for the actual SDK package
-      return {
-        platform: 'copilot',
-        installed: true,
-        authenticated: true,
-        command: 'sdk',
-      };
+    const env = this.getEnrichedEnv();
+    const candidates: CliInvocation[] = [];
+    const configured = resolvePlatformCommand('copilot', this.cliPaths);
+    candidates.push({ command: configured });
+
+    for (const candidate of candidates) {
+      const result = await checkCliAvailable(candidate, ['--version'], 15_000, env);
+      if (result.available) {
+        const auth = getPlatformAuthStatus('copilot');
+        return {
+          platform: 'copilot',
+          installed: true,
+          version: result.version,
+          authenticated: auth.status !== 'not_authenticated',
+          command: candidate.command,
+        };
+      }
     }
 
     return {
       platform: 'copilot',
       installed: false,
-      error: 'Copilot SDK not available (requires GITHUB_TOKEN or GH_TOKEN)',
+      error: 'Copilot CLI not found',
     };
+  }
+
+  private getEnrichedEnv(): NodeJS.ProcessEnv {
+    const home = homedir();
+    const npmGlobalPrefix = home ? join(home, '.npm-global') : '';
+    const npmGlobalBin = npmGlobalPrefix
+      ? (process.platform === 'win32' ? npmGlobalPrefix : join(npmGlobalPrefix, 'bin'))
+      : '';
+
+    // Windows: npm default global bin is %APPDATA%\npm (used when user runs npm -g without prefix)
+    const windowsNpmBin = process.platform === 'win32' && process.env.APPDATA
+      ? join(process.env.APPDATA, 'npm')
+      : '';
+
+    const extraPaths = [
+      npmGlobalBin,
+      windowsNpmBin,
+      home ? join(home, '.local', 'bin') : '',
+      '/usr/local/bin',
+      '/opt/homebrew/bin',
+      '/opt/homebrew/sbin',
+    ].filter(Boolean);
+
+    const currentPath = process.env.PATH || '';
+    const enrichedPath = [...extraPaths, currentPath].filter(Boolean).join(delimiter);
+
+    const env: NodeJS.ProcessEnv = {
+      ...process.env,
+      PATH: enrichedPath,
+    };
+
+    if (npmGlobalPrefix) {
+      env.HOME = home;
+      env.npm_config_prefix = npmGlobalPrefix;
+      env.NPM_CONFIG_PREFIX = npmGlobalPrefix;
+    }
+
+    return env;
   }
 
   /**

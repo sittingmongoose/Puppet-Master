@@ -279,13 +279,14 @@ export function createStateRoutes(
   });
 
   /**
-   * GET /api/agents/:path
+   * GET /api/agents/*
    * Returns AGENTS.md content for a specific file (per GUI_SPEC.md Section 9.1).
    */
-  router.get('/agents/:path(*)', async (req: Request, res: Response) => {
+  router.get('/agents/*', async (req: Request, res: Response) => {
     try {
       const agentsManager = dependencies.getAgentsManager();
-      const filePath = req.params.path;
+      const wildcard = (req.params as unknown as Record<string, string>)[0] || '';
+      const filePath = wildcard.replace(/^\/+/, '');
       
       if (!agentsManager) {
         res.status(404).json({

@@ -61,8 +61,8 @@ export async function evidenceListAction(options: EvidenceListOptions): Promise<
       const searchTierId = options.tier.toUpperCase();
       evidence = evidence.filter(
         (e) =>
-          e.itemId.toUpperCase().includes(searchTierId) ||
-          e.path.toUpperCase().includes(searchTierId)
+          (e.itemId ?? '').toUpperCase().includes(searchTierId) ||
+          (e.path ?? '').toUpperCase().includes(searchTierId)
       );
     }
 
@@ -219,7 +219,7 @@ export async function evidenceExportAction(options: EvidenceExportOptions): Prom
     }
     if (options.tier) {
       const searchTierId = options.tier.toUpperCase();
-      evidence = evidence.filter((e) => e.itemId.toUpperCase().includes(searchTierId));
+      evidence = evidence.filter((e) => (e.itemId ?? '').toUpperCase().includes(searchTierId));
     }
 
     // Create output directory

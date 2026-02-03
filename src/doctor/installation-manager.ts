@@ -10,6 +10,8 @@ import { spawn, type ChildProcess } from 'node:child_process';
 import { homedir } from 'node:os';
 import path from 'node:path';
 import * as readline from 'node:readline';
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 /**
  * Platform type for installation commands
@@ -64,9 +66,33 @@ export interface InstallResult {
  */
 export class InstallationManager {
   private readonly commands = new Map<string, InstallCommand>();
+  private readonly puppetMasterRoot: string;
 
   constructor() {
+    this.puppetMasterRoot = this.findPuppetMasterRoot();
     this.registerDefaultCommands();
+  }
+
+  /**
+   * Find the Puppet Master installation root (where package.json with dependencies is).
+   * Walks up from current file location to find package.json.
+   */
+  private findPuppetMasterRoot(): string {
+    // Start from this file's directory
+    const currentFile = fileURLToPath(import.meta.url);
+    let dir = path.dirname(currentFile);
+    
+    // Walk up to find package.json
+    while (dir !== path.dirname(dir)) {
+      const packageJsonPath = path.join(dir, 'package.json');
+      if (existsSync(packageJsonPath)) {
+        return dir;
+      }
+      dir = path.dirname(dir);
+    }
+    
+    // Fallback to process.cwd() if we can't find it
+    return process.cwd();
   }
 
   /**
@@ -238,10 +264,10 @@ export class InstallationManager {
    */
   private registerDefaultCommands(): void {
     // Cursor CLI installation
-    // Unix: curl installer; Windows: winget
+    // Unix: curl installer; Windows: winget (try --name first for flexibility, then known IDs)
     const cursorCommand =
       this.getCurrentPlatform() === 'win32'
-        ? 'winget install Cursor.Cursor --accept-package-agreements --accept-source-agreements'
+        ? 'winget install --name Cursor --accept-package-agreements --accept-source-agreements || winget install --id Anysphere.Cursor --accept-package-agreements --accept-source-agreements || winget install --id Cursor.Cursor --accept-package-agreements --accept-source-agreements'
         : 'curl https://cursor.com/install -fsSL | bash';
     this.registerCommand({
       check: 'cursor-cli',
@@ -251,14 +277,18 @@ export class InstallationManager {
       platforms: ['darwin', 'linux', 'win32'],
     });
 
+    const home = homedir();
+    const npmGlobalPrefix = home ? path.join(home, '.npm-global') : '';
+    const npmGlobalPrefixArg = npmGlobalPrefix ? `\"${npmGlobalPrefix}\"` : '"$HOME/.npm-global"';
+
     // Codex CLI installation
     // Note: Puppet Master uses @openai/codex-sdk which requires both:
     // 1. Global CLI: npm install -g @openai/codex
     // 2. SDK package: npm install @openai/codex-sdk (handled as project dependency)
     this.registerCommand({
       check: 'codex-cli',
-      command: 'npm install -g @openai/codex && npm install @openai/codex-sdk',
-      description: 'Install Codex CLI and SDK package',
+      command: `npm install -g --prefix ${npmGlobalPrefixArg} @openai/codex`,
+      description: 'Install Codex CLI',
       requiresSudo: false,
       platforms: ['darwin', 'linux', 'win32'],
     });
@@ -296,19 +326,27 @@ export class InstallationManager {
     });
 
     // GitHub Copilot SDK installation
+    // SDK must be installed in Puppet Master project root (where package.json is), not globally
     this.registerCommand({
       check: 'copilot-sdk',
-      command: 'npm install @github/copilot-sdk',
+      command: `npm install @github/copilot-sdk`,
       description: 'Install GitHub Copilot SDK (and ensure Copilot CLI is available)',
       requiresSudo: false,
       platforms: ['darwin', 'linux', 'win32'],
     });
 
     // GitHub Copilot CLI installation (used by SDK)
-    // P0-G19: Corrected package name from @github/copilot-cli to @github/copilot
+    // Platform-specific methods per official docs: winget (Windows), brew (macOS), npm/script (Linux)
+    // Fallback to npm -g so install works when winget/brew unavailable. Package: @github/copilot (Node 22+ for npm).
+    const copilotCommand =
+      this.getCurrentPlatform() === 'win32'
+        ? `winget install --id GitHub.Copilot --accept-package-agreements --accept-source-agreements || npm install -g --prefix ${npmGlobalPrefixArg} @github/copilot`
+        : this.getCurrentPlatform() === 'darwin'
+          ? `brew install copilot-cli || npm install -g --prefix ${npmGlobalPrefixArg} @github/copilot`
+          : `npm install -g --prefix ${npmGlobalPrefixArg} @github/copilot`;
     this.registerCommand({
       check: 'copilot-cli',
-      command: 'npm install -g @github/copilot',
+      command: copilotCommand,
       description: 'Install GitHub Copilot CLI',
       requiresSudo: false,
       platforms: ['darwin', 'linux', 'win32'],
@@ -319,8 +357,8 @@ export class InstallationManager {
     const platform = this.getCurrentPlatform();
     const geminiCommand =
       platform === 'darwin'
-        ? 'brew install gemini-cli || npm install -g @google/gemini-cli'
-        : 'npm install -g @google/gemini-cli';
+        ? `brew install gemini-cli || npm install -g --prefix ${npmGlobalPrefixArg} @google/gemini-cli`
+        : `npm install -g --prefix ${npmGlobalPrefixArg} @google/gemini-cli`;
     this.registerCommand({
       check: 'gemini-cli',
       command: geminiCommand,
@@ -358,16 +396,11 @@ export class InstallationManager {
   }
 
   /**
-   * Validates that node and npm versions are compatible for installation
-   * 
-   * @returns Object with compatible flag and error message if incompatible
+   * Get Node.js version string
    */
-  private async validateNodeNpmVersions(): Promise<{ compatible: boolean; error?: string; details?: string }> {
+  private async getNodeVersion(): Promise<string | null> {
     try {
-      const { spawn } = await import('node:child_process');
-      
-      // Get node version
-      const nodeVersion = await new Promise<string>((resolve, reject) => {
+      return await new Promise<string>((resolve, reject) => {
         const proc = spawn('node', ['--version'], { stdio: ['ignore', 'pipe', 'pipe'] });
         let stdout = '';
         proc.stdout?.on('data', (data: Buffer) => { stdout += data.toString(); });
@@ -378,6 +411,29 @@ export class InstallationManager {
         proc.on('error', reject);
         setTimeout(() => { proc.kill(); reject(new Error('Timeout')); }, 5000);
       });
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Validates that node and npm versions are compatible for installation
+   * 
+   * @returns Object with compatible flag and error message if incompatible
+   */
+  private async validateNodeNpmVersions(): Promise<{ compatible: boolean; error?: string; details?: string }> {
+    try {
+      const { spawn } = await import('node:child_process');
+      
+      // Get node version using helper method
+      const nodeVersion = await this.getNodeVersion();
+      if (!nodeVersion) {
+        return {
+          compatible: false,
+          error: 'Could not determine Node.js version',
+          details: 'Node.js may not be installed or not in PATH',
+        };
+      }
 
       // Get npm version
       const npmVersion = await new Promise<string>((resolve, reject) => {
@@ -405,10 +461,24 @@ export class InstallationManager {
       }
 
       const nodeMajor = parseInt(nodeMatch[1], 10);
+      const nodeMinor = parseInt(nodeMatch[2], 10);
       const npmMajor = parseInt(npmMatch[1], 10);
 
-      // Node 18+ requires npm 8+, Node 20+ requires npm 9+
+      // Basic compatibility checks (keep minimal; avoid deep semver).
+      // Node 18+ requires npm 8+, Node 20+ requires npm 9+.
       const requiredNpmVersion = nodeMajor >= 20 ? 9 : 8;
+
+      // npm 11 requires Node.js ^20.17.0 || >=22.9.0 (common failure in our Linux installer).
+      if (npmMajor >= 11) {
+        const ok = (nodeMajor === 20 && nodeMinor >= 17) || (nodeMajor > 22) || (nodeMajor === 22 && nodeMinor >= 9);
+        if (!ok) {
+          return {
+            compatible: false,
+            error: `npm version ${npmVersion} is not compatible with Node.js ${nodeVersion}`,
+            details: `npm ${npmVersion} requires Node.js ^20.17.0 or >=22.9.0. Current Node: ${nodeVersion}. ACTION: upgrade Node.js, or use an older npm (e.g. npm@10) for installs.`,
+          };
+        }
+      }
 
       if (npmMajor < requiredNpmVersion) {
         return {
@@ -450,6 +520,23 @@ export class InstallationManager {
           });
           return;
         }
+        
+        // Special check for Copilot CLI: requires Node.js 22+ when installing via npm
+        if (command.includes('@github/copilot') && command.includes('npm install -g')) {
+          const nodeVersion = await this.getNodeVersion();
+          if (nodeVersion) {
+            const nodeMajor = parseInt(nodeVersion.split('.')[0]?.replace('v', '') || '0', 10);
+            if (nodeMajor < 22) {
+              resolve({
+                success: false,
+                error: 'GitHub Copilot CLI requires Node.js 22+ when installing via npm',
+                command,
+                output: `Current Node.js version: ${nodeVersion}. GitHub Copilot CLI requires Node.js 22 or later when installing via npm.\n\nAlternative installation methods:\n- Windows: winget install GitHub.Copilot\n- macOS/Linux: brew install copilot-cli\n- macOS/Linux: curl -fsSL https://gh.io/copilot-install | bash`,
+              });
+              return;
+            }
+          }
+        }
       }
 
       const home = homedir();
@@ -462,33 +549,51 @@ export class InstallationManager {
       // Build PATH that includes common tool locations (npm, brew, etc.)
       // When launched from a desktop shortcut (Tauri/Finder), the PATH may not
       // include /usr/local/bin, /opt/homebrew/bin, or ~/.local/bin.
+      const bundledNodeBin = path.dirname(process.execPath || '');
+
       const extraPaths = [
+        // Prefer the bundled node/npm pairing when Puppet Master is packaged with its own runtime.
+        ...(command.includes('npm ') && bundledNodeBin ? [bundledNodeBin] : []),
         npmGlobalBin,
+        path.join(home, '.local', 'bin'),
         '/usr/local/bin',
         '/opt/homebrew/bin',
         '/opt/homebrew/sbin',
-        `${process.env.HOME}/.local/bin`,
-        `${process.env.HOME}/.nvm/versions/node/*/bin`,
-        '/usr/local/lib/puppet-master/node/bin',
-        '/opt/puppet-master/node/bin',
+        `${home}/.nvm/versions/node/*/bin`,
+        // Avoid bundled install paths for global npm installs (they are typically root-owned and can cause EACCES).
+        ...(needsNpmGlobalPrefix ? [] : ['/usr/local/lib/puppet-master/node/bin', '/opt/puppet-master/node/bin']),
       ].filter(Boolean);
       const currentPath = process.env.PATH || '/usr/bin:/bin';
-      const enrichedPath = [...extraPaths, currentPath].join(':');
+      const enrichedPath = [...extraPaths, currentPath].filter(Boolean).join(path.delimiter);
       const env: NodeJS.ProcessEnv = { ...process.env, PATH: enrichedPath };
       
-      // CRITICAL FIX: Always use user-writable prefix for npm -g installs
-      // This prevents EACCES errors when system node is in /opt or /usr/local
+      // CRITICAL FIX: Always use user-writable prefix for npm -g installs (Codex, Copilot, etc.).
+      // This prevents EACCES on Linux when app node is in /opt/puppet-master (root-owned).
       if (needsNpmGlobalPrefix && npmGlobalPrefix) {
+        env.HOME = home ?? env.HOME;
         env.npm_config_prefix = npmGlobalPrefix;
+        env.NPM_CONFIG_PREFIX = npmGlobalPrefix;
+        // Use a user-writable cache to avoid EACCES during install
+        if (home && process.platform !== 'win32') {
+          env.npm_config_cache = path.join(home, '.npm', '_cacache');
+        }
         if (npmGlobalBin) {
           env.PATH = [npmGlobalBin, env.PATH].filter(Boolean).join(path.delimiter);
         }
+      }
+
+      // Determine working directory: SDK installs need Puppet Master root, others use current dir
+      let cwd: string | undefined;
+      if (command.includes('copilot-sdk') && command.includes('npm install @github/copilot-sdk')) {
+        // SDK must be installed in Puppet Master root where package.json is
+        cwd = this.puppetMasterRoot;
       }
 
       const proc: ChildProcess = spawn(command, [], {
         shell: true,
         stdio: ['ignore', 'pipe', 'pipe'],
         env,
+        cwd,
       });
 
       let stdout = '';

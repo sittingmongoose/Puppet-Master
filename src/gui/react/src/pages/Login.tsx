@@ -13,7 +13,7 @@ import {
   LightbulbIcon,
 } from '@/components/icons';
 import { helpContent } from '@/lib/help-content.js';
-import { getErrorMessage } from '@/lib';
+import { api, getErrorMessage } from '@/lib';
 import type { StatusType } from '@/types';
 
 interface PlatformAuthInfo {
@@ -64,11 +64,8 @@ export default function LoginPage() {
   useEffect(() => {
     const fetchGitInfo = async () => {
       try {
-        const response = await fetch('/api/config/git-info');
-        if (response.ok) {
-          const data = await response.json();
-          setGitInfo(data);
-        }
+        const data = await api.getGitInfo();
+        setGitInfo(data);
       } catch (err) {
         console.error('[Login] Failed to fetch git info:', err);
       }
@@ -81,13 +78,7 @@ export default function LoginPage() {
       setLoading(true);
       setError(null);
 
-      const response = await fetch('/api/login/status');
-      if (!response.ok) {
-        const errData = await response.json();
-        throw new Error(errData.error || 'Failed to fetch auth status');
-      }
-
-      const data = await response.json();
+      const data = await api.getLoginStatus();
       setPlatforms(data.platforms || []);
       setSummary(data.summary || null);
     } catch (err) {
@@ -103,11 +94,7 @@ export default function LoginPage() {
       setLoggingIn((prev) => ({ ...prev, [platform]: true }));
       setLoginMessages((prev) => ({ ...prev, [platform]: '' }));
 
-      const response = await fetch(`/api/login/${encodeURIComponent(platform)}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      });
-      const data = await response.json();
+      const data = await api.loginPlatform(platform);
 
       if (data.success) {
         let message = data.message || 'Login initiated';
@@ -247,7 +234,7 @@ export default function LoginPage() {
             </div>
             <div>
               <div className="text-ink-faded"># GitHub Copilot (via gh CLI)</div>
-              <div className="text-electric-blue">gh auth login --web -p https</div>
+              <div className="text-electric-blue">gh auth login --web</div>
             </div>
             <div>
               <div className="text-ink-faded"># Cursor (open the app and sign in)</div>
@@ -271,6 +258,29 @@ export default function LoginPage() {
           <p className="text-sm text-ink-faded">
             Git identity and remote configuration for this repository.
           </p>
+
+          {/* GitHub (Git) login - for Git config, not Copilot */}
+          <div className="p-md border-medium border-ink-faded rounded flex flex-wrap items-center justify-between gap-md">
+            <div>
+              <div className="font-semibold text-sm">GitHub (Git)</div>
+              <p className="text-xs text-ink-faded mt-xs">
+                Sign in with GitHub via <span className="font-mono">gh auth login</span> to enable Git operations and push/pull.
+              </p>
+              {loginMessages['github'] && (
+                <div className={`text-xs mt-xs ${loginMessages['github'].startsWith('Error') ? 'text-hot-magenta' : 'text-neon-green'}`}>
+                  {loginMessages['github']}
+                </div>
+              )}
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => handleLogin('github')}
+              disabled={!!loggingIn['github']}
+            >
+              {loggingIn['github'] ? 'LOGGING IN...' : 'LOGIN TO GITHUB'}
+            </Button>
+          </div>
 
           {gitInfo ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-md">

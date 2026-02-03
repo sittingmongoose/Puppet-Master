@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Panel } from '@/components/layout';
 import { Button, Input, HelpText } from '@/components/ui';
+import { api, getErrorMessage } from '@/lib';
 import { helpContent } from '@/lib/help-content.js';
 
 interface LedgerEvent {
@@ -50,9 +51,7 @@ export default function LedgerPage() {
 
   const fetchStats = async () => {
     try {
-      const response = await fetch('/api/ledger/stats');
-      if (!response.ok) throw new Error('Failed to fetch ledger stats');
-      const data = await response.json();
+      const data = await api.getLedgerStats();
       setStats(data);
     } catch (err) {
       console.error('[Ledger] Failed to fetch stats:', err);
@@ -63,24 +62,17 @@ export default function LedgerPage() {
     try {
       setLoading(true);
       setError(null);
-      
-      const params = new URLSearchParams();
-      if (filterType) params.set('type', filterType);
-      if (filterTier) params.set('tierId', filterTier);
-      if (filterSession) params.set('sessionId', filterSession);
-      params.set('limit', String(limit));
-      
-      const response = await fetch(`/api/ledger?${params}`);
-      if (!response.ok) {
-        const errData = await response.json();
-        throw new Error(errData.error || 'Failed to fetch ledger events');
-      }
-      
-      const data = await response.json();
+
+      const data = await api.getLedgerEvents({
+        type: filterType || undefined,
+        tierId: filterTier || undefined,
+        sessionId: filterSession || undefined,
+        limit,
+      });
       setEvents(data.events || []);
     } catch (err) {
       console.error('[Ledger] Failed to fetch events:', err);
-      setError(err instanceof Error ? err.message : 'Unknown error');
+      setError(getErrorMessage(err, 'Failed to fetch ledger events'));
     } finally {
       setLoading(false);
     }

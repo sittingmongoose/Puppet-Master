@@ -9,9 +9,9 @@
     "preview": "vite preview --port 3848",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test": "node ./node_modules/vitest/vitest.mjs run",
+    "test:watch": "node ./node_modules/vitest/vitest.mjs",
+    "test:coverage": "node ./node_modules/vitest/vitest.mjs run --coverage"
   },
   "dependencies": {
     "react": "^18.3.1",

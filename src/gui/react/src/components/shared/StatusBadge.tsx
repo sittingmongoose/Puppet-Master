@@ -53,8 +53,14 @@ export function StatusBadge({
     idle: 'bg-status-idle text-paper-cream',
   };
 
-  const resolvedStatus = status ?? 'idle';
-  const displayLabel = label ?? (resolvedStatus ? String(resolvedStatus).toUpperCase() : 'IDLE');
+  const validStatuses: StatusType[] = ['running', 'paused', 'error', 'complete', 'pending', 'idle'];
+  const resolvedStatus: StatusType =
+    status && typeof status === 'string' && (validStatuses as string[]).includes(status)
+      ? status
+      : 'idle';
+  const rawLabel = label ?? resolvedStatus ?? 'idle';
+  const displayLabel =
+    typeof rawLabel === 'string' && rawLabel.length > 0 ? rawLabel.toUpperCase() : 'IDLE';
 
   if (variant === 'badge') {
     // Badge style (.status-badge)

@@ -67,10 +67,10 @@ export function createEvidenceRoutes(): Router {
       }
 
       if (tierId && typeof tierId === 'string') {
-        const searchTierId = tierId.toUpperCase();
-        evidence = evidence.filter((e) => 
-          e.itemId.toUpperCase().includes(searchTierId) ||
-          e.path.toUpperCase().includes(searchTierId)
+        const searchTierId = (tierId || '').toUpperCase();
+        evidence = evidence.filter((e) =>
+          (e.itemId || '').toUpperCase().includes(searchTierId) ||
+          (e.path || '').toUpperCase().includes(searchTierId)
         );
       }
 

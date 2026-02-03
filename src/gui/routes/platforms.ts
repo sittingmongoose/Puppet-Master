@@ -220,10 +220,55 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
         dryRun,
       });
 
-      if (result.success) {
+      // For Copilot: also install SDK after CLI (SDK requires CLI to be available)
+      if (result.success && !dryRun && platform === 'copilot') {
+        const sdkCommand = installationManager.getInstallCommand('copilot-sdk');
+        if (sdkCommand) {
+          const sdkResult = await installationManager.installWithResult('copilot-sdk', {
+            skipConfirmation: true,
+            dryRun: false,
+          });
+          if (!sdkResult.success) {
+            console.warn('[platforms] Copilot CLI installed but SDK install failed:', sdkResult.error);
+            // Continue - CLI is installed, SDK can be installed separately
+          }
+        }
+      }
+
+      if (result.success && !dryRun) {
+        // Post-install verification for npm-based CLIs: ensure the binary is runnable.
+        // Fixes "install succeeds but platform not detected" (e.g. GitHub Copilot on Windows).
+        const npmBasedPlatforms: Platform[] = ['copilot', 'codex'];
+        if (npmBasedPlatforms.includes(platform)) {
+          try {
+            const configManager = new ConfigManager();
+            const config = await configManager.load();
+            const detector = new PlatformDetector(config.cliPaths ?? {});
+            const status = await detector.getPlatformStatus(platform, true);
+            if (!status.installed) {
+              res.status(500).json({
+                success: false,
+                error: `Install completed but ${platform} CLI is not runnable. Add the install directory to PATH (e.g. ~/.npm-global/bin) and try again.`,
+                output: result.output,
+                command: result.command,
+                code: 'INSTALL_VERIFY_FAILED',
+              });
+              return;
+            }
+          } catch (verifyErr) {
+            // Non-fatal: still report install success but add a note
+            console.warn('[platforms] Post-install verification failed:', verifyErr);
+          }
+        }
         res.json({
           success: true,
           output: result.output || `Successfully installed: ${platform}`,
+          command: result.command,
+        });
+      } else if (result.success && dryRun) {
+        res.json({
+          success: true,
+          output: result.output || `Dry run: would execute: ${result.command}`,
           command: result.command,
         });
       } else {

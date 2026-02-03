@@ -12,6 +12,7 @@ export type {
   PlatformStatus,
   PlatformStatusType,
   PlatformStatusResponse,
+  FirstBootStatus,
 } from './api.js';
 
 // SSE client

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { Panel } from '@/components/layout';
 import { Button, Input, Select, HelpText, Checkbox, Radio } from '@/components/ui';
 import { StatusBadge } from '@/components/shared';
@@ -194,12 +194,17 @@ export default function ConfigPage() {
     gemini: [],
     copilot: [],
   });
+  const [modelsLoading, setModelsLoading] = useState(false);
+  const [modelsError, setModelsError] = useState<string | null>(null);
   const [platformStatus, setPlatformStatus] = useState<Record<string, PlatformStatusType>>({});
   const [installedPlatforms, setInstalledPlatforms] = useState<Platform[]>([]);
   const [installing, setInstalling] = useState<string | null>(null);
   const [gitInfo, setGitInfo] = useState<GitInfo | null>(null);
   const [uninstalling, setUninstalling] = useState(false);
   const [uninstallMessage, setUninstallMessage] = useState<string | null>(null);
+
+  // Ref to prevent duplicate initial load (e.g. React Strict Mode double-mount)
+  const initialLoadStarted = useRef(false);
 
   // C6: Detect Linux platform (navigator.platform or userAgent)
   const isLinux = useMemo(() => {
@@ -220,8 +225,7 @@ export default function ConfigPage() {
     try {
       setUninstalling(true);
       setUninstallMessage(null);
-      const response = await fetch('/api/system/uninstall', { method: 'POST' });
-      const data = await response.json() as { success: boolean; message?: string; error?: string };
+      const data = await api.uninstallSystem();
       if (data.success) {
         setUninstallMessage(data.message || 'Uninstall initiated. The application will close shortly.');
       } else {
@@ -234,14 +238,32 @@ export default function ConfigPage() {
     }
   }, []);
 
-  // Fetch config on mount (refresh in background if cached)
+  // Single initial load: config, capabilities, platform status, models, git info (deduplicated, one batch)
   useEffect(() => {
-    const fetchConfig = async () => {
+    if (initialLoadStarted.current) return;
+    initialLoadStarted.current = true;
+
+    const ensureModelsArray = (platformModels: unknown): Array<{ id: string; label: string; reasoningLevels?: string[] }> => {
+      if (!Array.isArray(platformModels)) return [];
+      return platformModels.filter((m) => m && typeof m === 'object' && typeof (m as { id?: unknown }).id === 'string') as Array<{ id: string; label: string; reasoningLevels?: string[] }>;
+    };
+
+    const load = async () => {
+      if (!cachedConfig) setLoading(true);
+      setModelsLoading(true);
+      setModelsError(null);
+
       try {
-        if (!cachedConfig) setLoading(true);
-        const data = await api.getConfig(false);
-        if (data) {
-          const cfg = data as unknown as Config;
+        const [configRes, capsRes, statusRes, modelsRes, gitRes] = await Promise.all([
+          api.getConfig(false),
+          api.getCursorCapabilities().catch(() => null),
+          api.getPlatformStatus().catch(() => ({ platforms: {}, installedPlatforms: [] })),
+          api.getModels(false).catch(() => null),
+          api.getGitInfo().catch(() => null),
+        ]);
+
+        if (configRes) {
+          const cfg = configRes as unknown as Config;
           const logging = (cfg as unknown as { logging?: { level?: string; intensive?: boolean } }).logging;
           if (logging) {
             cfg.advanced = {
@@ -252,133 +274,44 @@ export default function ConfigPage() {
           }
           setConfig(cfg);
           cachedConfig = cfg;
+        } else if (!cachedConfig) {
+          setError('Failed to load config');
         }
-      } catch (err) {
-        console.error('[Config] Failed to fetch config:', err);
-        if (!cachedConfig) setError(getErrorMessage(err, 'Failed to load config'));
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchConfig();
-  }, []);
 
-  // Manual refresh function to bypass cache
-  const refreshConfig = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const data = await api.getConfig(true);
-      if (data) {
-        const cfg = data as unknown as Config;
-        const logging = (cfg as unknown as { logging?: { level?: string; intensive?: boolean } }).logging;
-        if (logging) {
-          cfg.advanced = {
-            ...cfg.advanced,
-            logLevel: logging.level ?? cfg.advanced.logLevel,
-            intensiveLogging: logging.intensive ?? cfg.advanced.intensiveLogging,
-          };
+        if (capsRes) setCapabilities(capsRes);
+
+        if (statusRes && typeof statusRes === 'object') {
+          setPlatformStatus((statusRes as { platforms?: Record<string, PlatformStatusType> }).platforms ?? {});
+          setInstalledPlatforms((statusRes as { installedPlatforms?: Platform[] }).installedPlatforms ?? []);
         }
-        setConfig(cfg);
-        cachedConfig = cfg;
-        setIsDirty(false);
-      }
-    } catch (err) {
-      console.error('[Config] Failed to refresh config:', err);
-      setError(getErrorMessage(err, 'Failed to refresh config'));
-    } finally {
-      setLoading(false);
-    }
-  }, []);
 
-  // CU-P1-T09: Fetch Cursor capabilities on mount
-  useEffect(() => {
-    const fetchCapabilities = async () => {
-      try {
-        const caps = await api.getCursorCapabilities();
-        setCapabilities(caps);
-      } catch (err) {
-        console.error('[Config] Failed to fetch capabilities:', err);
-        // Non-fatal, just don't show capabilities
-      }
-    };
-    fetchCapabilities();
-  }, []);
-
-  // Fetch platform status on mount
-  useEffect(() => {
-    const fetchPlatformStatus = async () => {
-      try {
-        const status = await api.getPlatformStatus();
-        setPlatformStatus(status.platforms);
-        setInstalledPlatforms(status.installedPlatforms as Platform[]);
-      } catch (err) {
-        console.error('[Config] Failed to fetch platform status:', err);
-      }
-    };
-    fetchPlatformStatus();
-  }, []);
-
-  // P1: Fetch models for all platforms on mount
-  useEffect(() => {
-    const fetchModels = async () => {
-      try {
-        const response = await fetch('/api/config/models');
-        if (response.ok) {
-          const data = await response.json();
-          // Ensure we have valid arrays for each platform
-          // Note: "auto" is ONLY for Cursor - it's added in the dropdown options, not in the models state
-          const ensureArray = (platformModels: unknown): Array<{ id: string; label: string; reasoningLevels?: string[] }> => {
-            if (!Array.isArray(platformModels)) return [];
-            return platformModels.filter(m => m && typeof m === 'object' && typeof m.id === 'string');
-          };
-          
+        if (modelsRes && typeof modelsRes === 'object') {
+          const record = modelsRes as Record<string, unknown>;
           setModels({
-            cursor: ensureArray(data.cursor),
-            codex: ensureArray(data.codex),
-            claude: ensureArray(data.claude),
-            gemini: ensureArray(data.gemini),
-            copilot: ensureArray(data.copilot),
+            cursor: ensureModelsArray(record.cursor),
+            codex: ensureModelsArray(record.codex),
+            claude: ensureModelsArray(record.claude),
+            gemini: ensureModelsArray(record.gemini),
+            copilot: ensureModelsArray(record.copilot),
           });
         } else {
-          console.warn('[Config] Model API returned error, using empty lists');
-          setModels({
-            cursor: [],
-            codex: [],
-            claude: [],
-            gemini: [],
-            copilot: [],
-          });
+          setModelsError('Failed to load models (server error).');
+          setModels({ cursor: [], codex: [], claude: [], gemini: [], copilot: [] });
         }
-      } catch (err) {
-        console.error('[Config] Failed to fetch models:', err);
-        // Non-fatal, use empty lists
-        setModels({
-          cursor: [],
-          codex: [],
-          claude: [],
-          gemini: [],
-          copilot: [],
-        });
-      }
-    };
-    fetchModels();
-  }, []);
 
-  // Fetch git info on mount
-  useEffect(() => {
-    const fetchGitInfo = async () => {
-      try {
-        const response = await fetch('/api/config/git-info');
-        if (response.ok) {
-          const data = await response.json();
-          setGitInfo(data);
-        }
+        if (gitRes) setGitInfo(gitRes);
       } catch (err) {
-        console.error('[Config] Failed to fetch git info:', err);
+        console.error('[Config] Initial load failed:', err);
+        if (!cachedConfig) setError(getErrorMessage(err, 'Failed to load config'));
+        setModelsError('Failed to load models (network error).');
+        setModels({ cursor: [], codex: [], claude: [], gemini: [], copilot: [] });
+      } finally {
+        setLoading(false);
+        setModelsLoading(false);
       }
     };
-    fetchGitInfo();
+
+    load();
   }, []);
 
   // Handle platform installation
@@ -452,27 +385,24 @@ export default function ConfigPage() {
             onInstallPlatform={handleInstallPlatform}
             onRefreshModels={async () => {
               try {
-                const response = await fetch('/api/config/models?refresh=true');
-                if (response.ok) {
-                  const data = await response.json();
-                  const ensureModels = (platformModels: Array<{ id: string; label: string }> | undefined) => {
-                    if (!Array.isArray(platformModels) || platformModels.length === 0) {
-                      return [{ id: 'auto', label: 'Auto (recommended)' }];
-                    }
-                    const hasAuto = platformModels.some(m => m.id === 'auto');
-                    if (!hasAuto) {
-                      return [{ id: 'auto', label: 'Auto (recommended)' }, ...platformModels];
-                    }
-                    return platformModels;
-                  };
-                  setModels({
-                    cursor: ensureModels(data.cursor),
-                    codex: ensureModels(data.codex),
-                    claude: ensureModels(data.claude),
-                    gemini: ensureModels(data.gemini),
-                    copilot: ensureModels(data.copilot),
-                  });
-                }
+                const data = await api.getModels(true) as unknown as Record<string, Array<{ id: string; label: string; reasoningLevels?: string[] }>>;
+                const ensureModels = (platformModels: Array<{ id: string; label: string; reasoningLevels?: string[] }> | undefined) => {
+                  if (!Array.isArray(platformModels) || platformModels.length === 0) {
+                    return [{ id: 'auto', label: 'Auto (recommended)' }];
+                  }
+                  const hasAuto = platformModels.some(m => m.id === 'auto');
+                  if (!hasAuto) {
+                    return [{ id: 'auto', label: 'Auto (recommended)' }, ...platformModels];
+                  }
+                  return platformModels;
+                };
+                setModels({
+                  cursor: ensureModels(data.cursor),
+                  codex: ensureModels(data.codex),
+                  claude: ensureModels(data.claude),
+                  gemini: ensureModels(data.gemini),
+                  copilot: ensureModels(data.copilot),
+                });
               } catch (err) {
                 console.error('[Config] Failed to refresh models:', err);
               }
@@ -558,23 +488,20 @@ export default function ConfigPage() {
             leftIcon={<RefreshIcon />}
             onClick={async () => {
               try {
-                const response = await fetch('/api/config/models?refresh=true');
-                if (response.ok) {
-                  const data = await response.json();
-                  // Ensure we have valid arrays for each platform
-                  // Note: "auto" is ONLY for Cursor - it's added in the dropdown options, not here
-                  const ensureArray = (platformModels: unknown): Array<{ id: string; label: string; reasoningLevels?: string[] }> => {
-                    if (!Array.isArray(platformModels)) return [];
-                    return platformModels.filter(m => m && typeof m === 'object' && typeof m.id === 'string');
-                  };
-                  setModels({
-                    cursor: ensureArray(data.cursor),
-                    codex: ensureArray(data.codex),
-                    claude: ensureArray(data.claude),
-                    gemini: ensureArray(data.gemini),
-                    copilot: ensureArray(data.copilot),
-                  });
-                }
+                const data = await api.getModels(true) as unknown as Record<string, unknown>;
+                // Ensure we have valid arrays for each platform
+                // Note: "auto" is ONLY for Cursor - it's added in the dropdown options, not here
+                const ensureArray = (platformModels: unknown): Array<{ id: string; label: string; reasoningLevels?: string[] }> => {
+                  if (!Array.isArray(platformModels)) return [];
+                  return platformModels.filter(m => m && typeof m === 'object' && typeof (m as any).id === 'string') as Array<{ id: string; label: string; reasoningLevels?: string[] }>;
+                };
+                setModels({
+                  cursor: ensureArray(data.cursor),
+                  codex: ensureArray(data.codex),
+                  claude: ensureArray(data.claude),
+                  gemini: ensureArray(data.gemini),
+                  copilot: ensureArray(data.copilot),
+                });
               } catch (err) {
                 console.error('[Config] Failed to refresh models:', err);
               }
@@ -733,7 +660,7 @@ function TiersTab({
                         options={installedPlatforms.length > 0 
                           ? installedPlatforms.map((platform) => ({
                               value: platform,
-                              label: platform ? platform.charAt(0).toUpperCase() + platform.slice(1) : 'Unknown',
+                              label: typeof platform === 'string' && platform ? platform.charAt(0).toUpperCase() + platform.slice(1) : 'Unknown',
                             }))
                           : [
                               { value: 'cursor', label: 'Cursor (not installed)' },
@@ -763,7 +690,7 @@ function TiersTab({
                     <div className="mt-xs p-sm bg-safety-orange/10 border-medium border-safety-orange rounded">
                       <p className="text-sm text-safety-orange">
                         <WarningIcon size="1em" className="inline mr-xs" />
-                        {currentPlatform ? currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1) : 'Platform'} is not installed. 
+                        {typeof currentPlatform === 'string' && currentPlatform ? currentPlatform.charAt(0).toUpperCase() + currentPlatform.slice(1) : 'Platform'} is not installed. 
                         {installedPlatforms.length > 0 
                           ? ' Please install it to use this platform, or select an installed platform.'
                           : ' Please run the platform setup wizard to install platforms.'}
@@ -1384,7 +1311,7 @@ function AdvancedTab({
           {(['cursor', 'codex', 'claude', 'gemini', 'copilot'] as const).map((platform) => (
             <Input
               key={platform}
-              label={platform.charAt(0).toUpperCase() + platform.slice(1)}
+              label={typeof platform === 'string' && platform ? platform.charAt(0).toUpperCase() + platform.slice(1) : 'Unknown'}
               value={safeCliPaths[platform]}
               onChange={(e) => onCliPathsChange({ ...safeCliPaths, [platform]: e.target.value })}
             />

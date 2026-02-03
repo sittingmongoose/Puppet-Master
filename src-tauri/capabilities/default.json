@@ -6,10 +6,11 @@
   "permissions": [
     "core:default",
     "log:default",
-    "tray:allow-new",
-    "tray:allow-set-icon",
-    "tray:allow-set-menu",
-    "tray:allow-set-tooltip",
-    "tray:default"
+    "core:menu:default",
+    "core:tray:allow-new",
+    "core:tray:allow-set-icon",
+    "core:tray:allow-set-menu",
+    "core:tray:allow-set-tooltip",
+    "core:tray:default"
   ]
 }

@@ -269,7 +269,7 @@ describe('CLI Tools Checks', () => {
 
       expect(result.passed).toBe(false);
       expect(result.message).toContain('not found');
-      expect(result.fixSuggestion).toContain('npm install -g @openai/codex');
+      expect(result.fixSuggestion).toContain('npm install -g --prefix ~/.npm-global @openai/codex');
       expect(result.fixSuggestion).toContain('@openai/codex-sdk');
     });
 

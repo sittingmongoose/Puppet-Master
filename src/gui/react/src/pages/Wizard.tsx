@@ -385,12 +385,10 @@ function UploadStep({
             required
           />
           <div className="space-y-xs">
-            <label className="block text-sm font-medium">
-              Project Path <span className="text-hot-magenta">*</span>
-            </label>
             <div className="flex gap-xs items-end">
               <div className="flex-1">
                 <Input
+                  label="Project Path"
                   value={projectPath}
                   onChange={(e) => onChange({ projectPath: e.target.value })}
                   placeholder="/path/to/project"
@@ -504,12 +502,9 @@ function GenerateStep({
     const fetchModels = async () => {
       setModelsLoading(true);
       try {
-        const response = await fetch('/api/config/models');
-        if (response.ok) {
-          const data = await response.json();
-          const platformModels = data[prdPlatform] || [];
-          setModels(platformModels);
-        }
+        const data = await api.getModels(false);
+        const platformModels = (data as any)[prdPlatform] || [];
+        setModels(platformModels);
       } catch (err) {
         console.error('Failed to fetch models:', err);
       } finally {
@@ -678,11 +673,8 @@ function ConfigureStep({ config, onChange, onNext, onBack }: ConfigureStepProps)
     setModelsError(null);
     
     try {
-      const url = forceRefresh ? `/api/config/models?refresh=true` : '/api/config/models';
-      const response = await fetch(url);
-      if (!response.ok) throw new Error('Failed to fetch models');
-      const data = await response.json();
-      setModels(data);
+      const data = await api.getModels(forceRefresh);
+      setModels(data as Record<string, Array<{ id: string; label: string; reasoningLevels?: string[] }>>);
     } catch (error) {
       console.error('Failed to fetch models:', error);
       setModelsError(error instanceof Error ? error.message : 'Failed to fetch models');

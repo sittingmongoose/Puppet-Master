@@ -264,7 +264,7 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
         status: 'not_authenticated',
         details: 'Not authenticated with GitHub.',
         fixSuggestion:
-          'Run `gh auth login --web -p https` or set GH_TOKEN / GITHUB_TOKEN with Copilot permission.',
+          'Run `gh auth login --web` (or `gh auth login --web --hostname github.com`) or set GH_TOKEN / GITHUB_TOKEN with Copilot permission.',
       };
     }
 

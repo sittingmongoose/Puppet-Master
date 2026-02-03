@@ -61,6 +61,8 @@ Section "Install"
   ; Copy payload (exclude better-sqlite3 .node binaries to prevent write errors)
   ; Note: Use * (not *.*) to match all files including those without extensions
   File /r /x "better_sqlite3.node" "${STAGE_DIR}\\puppet-master\\*"
+  ; Ensure bin/ is included (Start Menu launcher expects bin\puppet-master.cmd)
+  File /r "${STAGE_DIR}\\puppet-master\\bin\\*"
   
   ; Copy better-sqlite3 .node binaries separately with enhanced retry logic
   ; Try up to 5 times with increasing delays to handle file-in-use scenarios

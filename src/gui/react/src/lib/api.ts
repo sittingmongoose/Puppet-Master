@@ -94,7 +94,9 @@ async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
     !url.startsWith('/api/auth/') && 
     !url.startsWith('/api/login/') &&
     !url.startsWith('/api/config/') &&
-    !url.startsWith('/api/platforms/');
+    !url.startsWith('/api/platforms/') &&
+    !url.startsWith('/api/system/uninstall') &&
+    !url.startsWith('/api/ledger');
   
   // Get auth token if needed
   let headers: HeadersInit = {
@@ -355,6 +357,41 @@ export async function getConfig(refresh = false): Promise<Config> {
   return response.config;
 }
 
+let modelsCache: Record<string, unknown> | null = null;
+let modelsPromise: Promise<Record<string, unknown>> | null = null;
+
+/**
+ * Fetch model lists for all platforms.
+ * Uses a small module-level cache to avoid slow double-loads across pages.
+ */
+export async function getModels(refresh = false): Promise<Record<string, unknown>> {
+  if (!refresh && modelsCache) return modelsCache;
+  if (!refresh && modelsPromise) return modelsPromise;
+
+  if (refresh) {
+    modelsCache = null;
+    modelsPromise = null;
+  }
+
+  const url = refresh ? '/api/config/models?refresh=true' : '/api/config/models';
+  const currentPromise = fetchJSON<Record<string, unknown>>(url);
+  modelsPromise = currentPromise;
+
+  try {
+    const data = await currentPromise;
+    if (modelsPromise === currentPromise) {
+      modelsCache = data;
+      modelsPromise = null;
+    }
+    return data;
+  } catch (err) {
+    if (modelsPromise === currentPromise) {
+      modelsPromise = null;
+    }
+    throw err;
+  }
+}
+
 /**
  * Update config
  */
@@ -408,6 +445,19 @@ export interface CursorCapabilities {
 
 export async function getCursorCapabilities(): Promise<CursorCapabilities> {
   return fetchJSON<CursorCapabilities>('/api/config/capabilities');
+}
+
+export interface GitInfo {
+  isGitRepo: boolean;
+  branch: string | null;
+  remotes: string[];
+  userName: string;
+  userEmail: string;
+  currentBranch: string;
+}
+
+export async function getGitInfo(): Promise<GitInfo> {
+  return fetchJSON<GitInfo>('/api/config/git-info');
 }
 
 // ============================================
@@ -626,6 +676,20 @@ export async function selectPlatforms(platforms: string[]): Promise<{ success: b
   });
 }
 
+export interface FirstBootStatus {
+  isFirstBoot: boolean;
+  missingConfig: boolean;
+  missingCapabilities: boolean;
+}
+
+export async function getFirstBootStatus(): Promise<FirstBootStatus> {
+  return fetchJSON<FirstBootStatus>('/api/platforms/first-boot');
+}
+
+export async function uninstallSystem(): Promise<{ success: boolean; message?: string; error?: string }> {
+  return fetchJSON('/api/system/uninstall', { method: 'POST' });
+}
+
 /**
  * Validate PRD
  */
@@ -717,9 +781,57 @@ export async function loginPlatform(platform: string): Promise<{
   code?: string;
   getUrl?: string;
 }> {
-  return fetchJSON('/api/login/' + encodeURIComponent(platform), {
+  return fetchJSON(`/api/login/${platform}`, {
     method: 'POST',
   });
+}
+
+// ============================================
+// Ledger API
+// ============================================
+
+export interface LedgerEvent {
+  id: number;
+  type: string;
+  timestamp: string;
+  tierId?: string;
+  sessionId?: string;
+  data: Record<string, unknown>;
+}
+
+export interface LedgerStats {
+  totalEvents: number;
+  eventsByType: Record<string, number>;
+  sessionCount: number;
+  dateRange: {
+    earliest: string | null;
+    latest: string | null;
+  };
+}
+
+export async function getLedgerStats(): Promise<LedgerStats> {
+  return fetchJSON<LedgerStats>('/api/ledger/stats');
+}
+
+export async function getLedgerEvents(options: {
+  type?: string;
+  tierId?: string;
+  sessionId?: string;
+  fromTimestamp?: string;
+  toTimestamp?: string;
+  order?: 'asc' | 'desc';
+  limit?: number;
+}): Promise<{ dbPath?: string; count?: number; events: LedgerEvent[] }> {
+  const params = new URLSearchParams();
+  if (options.type) params.set('type', options.type);
+  if (options.tierId) params.set('tierId', options.tierId);
+  if (options.sessionId) params.set('sessionId', options.sessionId);
+  if (options.fromTimestamp) params.set('fromTimestamp', options.fromTimestamp);
+  if (options.toTimestamp) params.set('toTimestamp', options.toTimestamp);
+  if (options.order) params.set('order', options.order);
+  if (options.limit != null) params.set('limit', String(options.limit));
+
+  return fetchJSON(`/api/ledger?${params}`);
 }
 
 // ============================================
@@ -763,11 +875,14 @@ export const api = {
   openProject,
   // Config
   getConfig,
+  getModels,
   updateConfig,
   validateConfig,
   getCursorCapabilities,
   // Tiers
   getTiers,
+  // Git
+  getGitInfo,
   // Doctor
   getDoctorChecks,
   runDoctorChecks,
@@ -789,9 +904,15 @@ export const api = {
   wizardSave,
   // Platforms
   getPlatformHealth,
+  getFirstBootStatus,
+  // System
+  uninstallSystem,
   // Login
   getLoginStatus,
   loginPlatform,
+  // Ledger
+  getLedgerStats,
+  getLedgerEvents,
 };
 
 export default api;

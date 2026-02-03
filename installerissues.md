@@ -198,6 +198,23 @@ SSH validation on sitti@192.168.50.253 (JaredGamingPC):
 - Use ~/.npm-global prefix and PATH when running global npm installs
 
 ### 15. Tauri: Tray/menu bar status + actions
+
+### 16. GUI: eliminate remaining raw fetch() calls
+**Files: `src/gui/react/src/lib/api.ts`, `src/gui/react/src/pages/Config.tsx`, `src/gui/react/src/pages/Wizard.tsx`, `src/gui/react/src/hooks/useFirstBoot.ts`**
+- Added API helpers: `getFirstBootStatus()` and `uninstallSystem()`
+- Replaced remaining `fetch('/api/...')` calls (models refresh, first-boot check, uninstall) with the shared API wrapper to prevent invalid relative URL behavior and reduce duplicate/delayed loads.
+**Follow-up hotfixes (2026-02-02):**
+- Fixed Express wildcard route for AGENTS to avoid path-to-regexp pattern failures ("The string did not match the expected pattern") by switching `/api/agents/:path(*)` → `/api/agents/*`.
+- Linux tray "Open CLI" now uses an explicit `read` prompt instead of `exec bash` to reliably keep terminal windows open.
+- Tray launcher: removed unsupported `gnome-terminal --hold` flag and switched konsole to `--noclose` to avoid immediate failures when launching the CLI from tray.
+- Login flow: Gemini now uses `gemini auth login` (matches UI docs), and terminal keep-open uses `read` prompt for Linux/macOS.
+- PlatformDetector: Copilot "installed" is now based on runnable `copilot --version` (with enriched PATH for ~/.npm-global/bin), not env token presence; aligns Doctor summary vs details.
+- **Doctor state persistence:** persisted Doctor store (checks/platform status/selection) to sessionStorage so it survives navigation without rerunning.
+- **Windows Cursor install:** updated winget fallback to use `--name Cursor` (instead of `-e Cursor`) to reduce "No package found" errors.
+- **Linux Codex/Copilot install:** installation runs now prefer bundled Node/NPM pairing (via PATH ordering) while forcing user-writable `~/.npm-global` prefix for `npm install -g`, preventing npm@11 + embedded Node mismatches and reducing EACCES under `/opt/puppet-master`.
+- **Config models loading:** `api.getModels(true)` now clears the frontend module cache so Refresh Models actually refetches, and backend per-platform discovery timeout was reduced (3s → 1.5s) to improve perceived speed.
+- **Login page:** migrated Login.tsx off raw `fetch('/api/login/*')` to API wrapper to avoid invalid relative URL errors.
+
 **Files: `src-tauri/src/main.rs`, `src-tauri/Cargo.toml`**
 - Added TrayIconBuilder menu (Open GUI, Open CLI, Restart App, Quit)
 - Left-click tray icon focuses the GUI
@@ -249,8 +266,96 @@ SSH validation on sitti@192.168.50.253 (JaredGamingPC):
 - **Status**: In progress (builds on windows-latest, macos-14, ubuntu-latest)
 - **URL**: https://github.com/sittingmongoose/RWM-Puppet-Master/actions
 
+### 2026-02-03 Progress Update (local changes; re-validate on packaged builds)
+
+#### What was done (since last log update)
+
+##### Files touched (working tree / not yet committed)
+- `installer/win/puppet-master.nsi`
+- `installerissues.md`
+- `package.json`
+- `src-tauri/Cargo.lock`
+- `src-tauri/Cargo.toml`
+- `src-tauri/capabilities/default.json`
+- `src-tauri/src/main.rs`
+- `src-tauri/tauri.conf.json`
+- `src/cli/commands/evidence.ts`
+- `src/doctor/checks/cli-tools.test.ts`
+- `src/doctor/checks/cli-tools.ts`
+- `src/doctor/installation-manager.test.ts`
+- `src/doctor/installation-manager.ts`
+- `src/gui/auth-middleware.ts`
+- `src/gui/react/package.json`
+- `src/gui/react/src/components/layout/Panel.tsx`
+- `src/gui/react/src/components/shared/StatusBadge.tsx`
+- `src/gui/react/src/components/ui/Modal.tsx`
+- `src/gui/react/src/components/wizard/PlatformSetupWizard.tsx`
+- `src/gui/react/src/hooks/index.ts`
+- `src/gui/react/src/hooks/useFirstBoot.ts`
+- `src/gui/react/src/lib/api.ts`
+- `src/gui/react/src/lib/index.ts`
+- `src/gui/react/src/pages/Config.tsx`
+- `src/gui/react/src/pages/Doctor.tsx`
+- `src/gui/react/src/pages/History.tsx`
+- `src/gui/react/src/pages/Ledger.tsx`
+- `src/gui/react/src/pages/Login.tsx`
+- `src/gui/react/src/pages/Wizard.tsx`
+- `src/gui/react/src/stores/index.ts`
+- `src/gui/react/src/test/setup.ts`
+- `src/gui/react/vitest.config.ts`
+- `src/gui/routes/config.ts`
+- `src/gui/routes/doctor.ts`
+- `src/gui/routes/evidence.ts`
+- `src/gui/routes/login.ts`
+- `src/gui/routes/state.ts`
+- `src/gui/server.ts`
+- `src/platforms/platform-detector.ts`
+- `src/gui/react/src/stores/doctorStore.ts` (new)
+
+- **Doctor API: fix Copilot install-status contradictions**
+  - **File:** `src/gui/routes/doctor.ts`
+  - Registered `CopilotSdkCheck` in addition to `CopilotCliCheck` so Doctor “installed” state is based on *runnable binaries* and the SDK probe is visible as its own check.
+  - Goal: remove the confusing situation where the top UI summary says “not installed” but the deeper check list says “installed”.
+
+- **Linux Codex/Copilot installs: reduce EACCES + Node/npm mismatch failures**
+  - **File:** `src/doctor/installation-manager.ts`
+  - Global npm installs now consistently use a **user-writable prefix** (`~/.npm-global`) and set `npm_config_prefix`/`NPM_CONFIG_PREFIX` when running `npm install -g`.
+  - PATH ordering now **prefers the bundled Node runtime** (when present) for `npm ...` commands, while still using the user prefix for global installs.
+
+- **Tray icon lifetime: verified implementation matches Tauri v2 docs**
+  - **File:** `src-tauri/src/main.rs`
+  - Tray handle is stored with `app.manage(tray)` (required so it doesn’t get dropped).
+  - Per Tauri v2 system-tray docs (Context7), this is the correct pattern; if tray is still missing in builds, the cause is likely **icon format/assets, build config, or runtime errors** rather than the Rust handle being dropped.
+
+#### What still needs to be done / problems remaining (and how to address)
+1. **macOS blank screen + runtime JS error:** `undefined is not an object (evaluating 'a.toUpperCase')`
+   - **Likely impact:** can cause a completely blank GUI (React crash before render).
+   - **Next steps:**
+     - Search for remaining unsafe `.toUpperCase()` callsites in the GUI (there are a few in `Doctor.tsx`/`Config.tsx` and `StatusBadge.tsx`).
+     - Make the relevant label formatting fully defensive (treat unknown/undefined values as empty strings) and rebuild.
+     - Validate on macOS build (Finder launch path), then re-check for blank screen.
+
+2. **Tray icon still reported missing on macOS/Windows builds (despite correct code)**
+   - **Next steps:**
+     - Check Tauri logs for either `Tray icon created successfully` or `Failed to create tray icon: ...`.
+     - If tray creation fails:
+       - Verify the bundled icon fallback (`include_bytes!("../icons/32x32.png")`) exists in the final app bundle.
+       - Consider switching to a platform-appropriate tray icon (macOS template monochrome, Windows .ico) and/or explicit icon asset selection.
+
+3. **Linux: Codex + Copilot install reliability**
+   - Even with `~/.npm-global` prefix, installs can still fail if the **wrong npm binary** is invoked.
+   - **Next steps:** if installs still fail in packaged app, make installs call the bundled npm explicitly (not just PATH ordering), or use the Copilot install script (`https://gh.io/copilot-install`) as an alternative flow.
+
+4. **Windows: Cursor install via winget can still fail (“No package found…”)**
+   - Current install command has fallbacks; if still failing, the robust fix is to **detect the correct winget ID** via `winget search cursor` and use that exact ID for the user’s environment/source.
+
+5. **CI/build verification needs to be re-run**
+   - Previously logged CI failure mentioned `NpmNodeCompatibilityCheck` export; re-run `npm run typecheck` and the installer workflow after the latest changes to confirm it’s resolved.
+
+---
+
 ### 2026-02-02 CI Run 48
 - **Commit**: `34a1cd5`
 - **Status**: FAIL
 - **Failure**: `npm run build` → `src/gui/routes/doctor.ts(35,3): error TS2305: Module '../../doctor/checks/runtime-check.js' has no exported member 'NpmNodeCompatibilityCheck'.`
-- **Fix**: Export `NpmNodeCompatibilityCheck` from runtime checks (pending push).
+- **Fix**: Export `NpmNodeCompatibilityCheck` from runtime checks and re-run CI.

@@ -158,6 +158,7 @@ describe('guiAction', () => {
   };
   let mockSpawnChild: {
     unref: ReturnType<typeof vi.fn>;
+    on: ReturnType<typeof vi.fn>;
   };
   let mockHttpRequest: {
     on: ReturnType<typeof vi.fn>;
@@ -362,6 +363,7 @@ describe('guiAction', () => {
 
     mockSpawnChild = {
       unref: vi.fn(),
+      on: vi.fn().mockReturnThis(),
     };
 
     // Mock HTTP request/response for server readiness check
@@ -547,17 +549,17 @@ describe('guiAction', () => {
 
       await new Promise((resolve) => setTimeout(resolve, 200));
 
-      // Should spawn Tauri GUI
+      // Should spawn Tauri GUI (not detached so Node exits when Tauri quits)
       expect(spawn).toHaveBeenCalledWith(
         expect.stringContaining('puppet-master-gui'),
         ['--server-url', 'http://localhost:3847'],
         expect.objectContaining({
-          detached: true,
           stdio: 'ignore',
           windowsHide: true,
         })
       );
-      expect(mockSpawnChild.unref).toHaveBeenCalled();
+      // Child must have exit handler so server shuts down when Tauri quits
+      expect(mockSpawnChild.on).toHaveBeenCalledWith('exit', expect.any(Function));
       // Should NOT open browser
       expect(open).not.toHaveBeenCalled();
     }, 10000);

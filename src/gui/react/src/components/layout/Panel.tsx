@@ -4,7 +4,7 @@ export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
   /** Panel content */
   children: ReactNode;
   /** Panel title */
-  title?: string;
+  title?: ReactNode;
   /** Whether to show the dashed inner border */
   showInnerBorder?: boolean;
   /** Additional header actions */
