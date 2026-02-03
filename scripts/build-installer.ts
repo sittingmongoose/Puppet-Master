@@ -208,17 +208,20 @@ async function emptyDir(dir: string): Promise<void> {
   await mkdir(dir, { recursive: true });
 }
 
-function run(cmd: string, args: string[], options: { cwd?: string; env?: NodeJS.ProcessEnv } = {}): Promise<void> {
+function run(
+  cmd: string,
+  args: string[],
+  options: { cwd?: string; env?: NodeJS.ProcessEnv; shell?: boolean } = {}
+): Promise<void> {
+  const useShell = options.shell !== false;
   return new Promise((resolve, reject) => {
     const proc = spawn(cmd, args, {
       cwd: options.cwd,
       env: { ...process.env, ...options.env },
       stdio: 'inherit',
-      // Use shell on all platforms to ensure PATH is searched correctly.
-      // Without shell:true on Linux, spawn() may fail to find executables
-      // like 'cargo' or 'npx' even when PATH is set in the env option,
-      // because the shell is what expands PATH lookups.
-      shell: true,
+      // Use shell by default so PATH is searched (cargo, npx, etc.). Disable for
+      // macOS pkgbuild/hdiutil so args with spaces (e.g. "Puppet Master") are not split.
+      shell: useShell,
     });
     proc.on('error', reject);
     proc.on('close', (code) => {
@@ -804,22 +807,30 @@ async function buildMacPkgAndDmg(args: Args, repoRoot: string, stageRoot: string
   const pkgOut = path.join(dmgStage, pkgBasename);
 
   console.log('\n🧱 Building macOS pkg (inside DMG)...\n');
-  await run('pkgbuild', [
-    '--root',
-    appBundleDir,
-    '--install-location',
-    '/Applications',
-    '--identifier',
-    'com.rwm.puppet-master',
-    '--version',
-    version,
-    '--scripts',
-    scriptsDir,
-    pkgOut,
-  ]);
+  await run(
+    'pkgbuild',
+    [
+      '--root',
+      appBundleDir,
+      '--install-location',
+      '/Applications',
+      '--identifier',
+      'com.rwm.puppet-master',
+      '--version',
+      version,
+      '--scripts',
+      scriptsDir,
+      pkgOut,
+    ],
+    { shell: false }
+  );
 
   console.log('\n🧱 Building macOS dmg (containing the pkg)...\n');
-  await run('hdiutil', ['create', '-volname', 'Puppet Master', '-srcfolder', dmgStage, '-ov', '-format', 'UDZO', dmgOut]);
+  await run(
+    'hdiutil',
+    ['create', '-volname', 'Puppet Master', '-srcfolder', dmgStage, '-ov', '-format', 'UDZO', dmgOut],
+    { shell: false }
+  );
 
   return dmgOut;
 }
