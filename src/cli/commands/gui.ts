@@ -226,14 +226,22 @@ async function checkExistingInstance(port: number, host: string): Promise<string
 
 /**
  * Wait for the local server to respond on /health, confirming it is ready to serve requests.
- * Retries up to maxAttempts times with a short delay between attempts.
+ * Retries up to maxAttempts times with a delay between attempts.
+ * Increased wait time to prevent launching GUI before server is fully ready.
  */
-async function waitForServerReady(port: number, maxAttempts = 10, delayMs = 200): Promise<boolean> {
+async function waitForServerReady(port: number, maxAttempts = 30, delayMs = 500): Promise<boolean> {
   for (let i = 0; i < maxAttempts; i++) {
     const result = await checkExistingInstance(port, '127.0.0.1');
-    if (result) return true;
+    if (result) {
+      console.log(`  ✓ Server ready after ${(i * delayMs / 1000).toFixed(1)}s`);
+      return true;
+    }
+    if (i > 0 && i % 5 === 0) {
+      console.log(`  ⏳ Waiting for server... (attempt ${i + 1}/${maxAttempts})`);
+    }
     await new Promise((r) => setTimeout(r, delayMs));
   }
+  console.error(`  ✗ Server failed to respond after ${(maxAttempts * delayMs / 1000).toFixed(1)}s`);
   return false;
 }
 
@@ -651,19 +659,28 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     }
     console.log('');
 
-    // C3 fix: Verify the server is actually responding before launching Tauri/browser.
-    // Even though await guiServer.start() resolved, on macOS the listen callback can fire
-    // before the server is fully ready to handle HTTP requests. This prevents a blank page.
+    // Block until server is fully ready: verify /health responds before launching Tauri/browser.
+    // Even though await guiServer.start() resolved, the server may not be ready to handle HTTP requests.
+    // This prevents blank pages and race conditions. Wait up to 15 seconds.
+    console.log('  🔍 Verifying server readiness...');
     const serverReady = await waitForServerReady(port);
     if (!serverReady) {
-      console.warn('  Warning: Server may not be fully ready. Launching GUI anyway.');
-    } else if (options.verbose) {
-      console.log('  Server readiness confirmed via /health endpoint');
+      console.error('  ❌ Server failed to become ready - /health endpoint not responding');
+      console.error('  Please check server logs for errors. Not launching GUI.');
+      console.error('  Server is running but may not be accepting connections yet.');
+      console.error('  You can manually open: ' + uiUrl);
+    } else {
+      console.log('  ✓ Server is ready and accepting connections');
     }
 
     // Launch desktop GUI if enabled (default: true, unless --no-open or PUPPET_MASTER_NO_OPEN)
     const skipOpen = process.env.PUPPET_MASTER_NO_OPEN === '1' || process.env.PUPPET_MASTER_NO_OPEN === 'true';
     if (options.open !== false && !skipOpen) {
+      // Only launch if server is ready to prevent blank pages
+      if (!serverReady) {
+        console.warn('  ⚠️  Skipping GUI launch due to server readiness check failure');
+        console.log('  Server is still running - you can manually open: ' + uiUrl);
+      } else {
       const installRoot = resolveInstallRoot();
       const tauriBin = resolveTauriGuiBinary(installRoot);
 
@@ -713,6 +730,7 @@ export async function guiAction(options: GuiOptions): Promise<void> {
             }
           }
         }
+      }
       }
     }
 

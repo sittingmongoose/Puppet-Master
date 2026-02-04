@@ -131,6 +131,7 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
   /**
    * GET /api/platforms/first-boot
    * Returns first boot status (whether setup wizard should be shown)
+   * Auto-creates default config.yaml if missing or corrupt
    */
   router.get('/platforms/first-boot', async (_req: Request, res: Response) => {
     try {
@@ -152,28 +153,34 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
       }
 
       // Check if config has any platforms configured
+      // Auto-create config if missing or corrupt
       let hasPlatformsConfigured = false;
-      if (configExists) {
-        try {
-          const config = await configManager.load();
-          // Check if any tier has a platform configured
-          hasPlatformsConfigured = !!(
-            config.tiers?.phase?.platform ||
-            config.tiers?.task?.platform ||
-            config.tiers?.subtask?.platform ||
-            config.tiers?.iteration?.platform
-          );
-        } catch {
-          // Config exists but invalid - treat as first boot
-          hasPlatformsConfigured = false;
-        }
+      let actualConfigExists = configExists;
+      
+      try {
+        // Load with autoCreate=true to create default config if missing/corrupt
+        const config = await configManager.load(true);
+        // Check if any tier has a platform configured
+        hasPlatformsConfigured = !!(
+          config.tiers?.phase?.platform ||
+          config.tiers?.task?.platform ||
+          config.tiers?.subtask?.platform ||
+          config.tiers?.iteration?.platform
+        );
+        // Config now exists (either was there or auto-created)
+        actualConfigExists = true;
+      } catch (error) {
+        // Config load failed even with autoCreate - treat as first boot
+        console.warn('[platforms] Failed to load/create config during first-boot check:', error);
+        hasPlatformsConfigured = false;
+        actualConfigExists = configExists; // Keep original status
       }
 
-      const isFirstBoot = !configExists || !capabilitiesExists || !hasPlatformsConfigured;
+      const isFirstBoot = !actualConfigExists || !capabilitiesExists || !hasPlatformsConfigured;
 
       res.json({
         isFirstBoot,
-        missingConfig: !configExists,
+        missingConfig: !actualConfigExists,
         missingCapabilities: !capabilitiesExists,
       } as FirstBootStatusResponse);
     } catch (error) {

@@ -144,7 +144,7 @@ export function PlatformSetupWizard({
   const handleInstall = async (platform: Platform) => {
     try {
       setInstalling(platform);
-      setError(null);
+      setError(null); // Clear previous errors
       const result = await api.installPlatform(platform);
 
       if (result.success) {
@@ -153,10 +153,14 @@ export function PlatformSetupWizard({
           setSelectedPlatforms((prev) => [...prev, platform]);
         }
       } else {
-        setError(formatInstallError(result, PLATFORM_NAMES[platform]));
+        const errorMsg = formatInstallError(result, PLATFORM_NAMES[platform]);
+        // Only show error if different from current error (prevent duplicates)
+        setError((prevError) => prevError === errorMsg ? prevError : errorMsg);
       }
     } catch (err) {
-      setError(getErrorMessage(err, `Failed to install ${PLATFORM_NAMES[platform]}`));
+      const errorMsg = getErrorMessage(err, `Failed to install ${PLATFORM_NAMES[platform]}`);
+      // Only show error if different from current error (prevent duplicates)
+      setError((prevError) => prevError === errorMsg ? prevError : errorMsg);
     } finally {
       // Always refresh status so badges reflect current state (success or failure)
       await loadPlatformStatus(true);
@@ -169,7 +173,7 @@ export function PlatformSetupWizard({
     if (missing.length === 0) return;
 
     setInstallingAll(true);
-    setError(null);
+    setError(null); // Clear previous errors
     const errors: string[] = [];
 
     for (const platform of missing) {
@@ -177,10 +181,18 @@ export function PlatformSetupWizard({
       try {
         const result = await api.installPlatform(platform);
         if (!result.success) {
-          errors.push(`${PLATFORM_NAMES[platform]}: ${formatInstallError(result, PLATFORM_NAMES[platform])}`);
+          const errorMsg = formatInstallError(result, PLATFORM_NAMES[platform]);
+          // Only add unique errors
+          if (!errors.some(e => e.includes(errorMsg))) {
+            errors.push(`${PLATFORM_NAMES[platform]}: ${errorMsg}`);
+          }
         }
       } catch (err) {
-        errors.push(`${PLATFORM_NAMES[platform]}: ${getErrorMessage(err, 'failed')}`);
+        const errorMsg = getErrorMessage(err, 'failed');
+        // Only add unique errors
+        if (!errors.some(e => e.includes(errorMsg))) {
+          errors.push(`${PLATFORM_NAMES[platform]}: ${errorMsg}`);
+        }
       }
       setInstalling(null);
     }
@@ -212,7 +224,7 @@ export function PlatformSetupWizard({
   const handleLogin = async (platform: Platform) => {
     try {
       setLoggingIn(platform);
-      setError(null);
+      setError(null); // Clear previous errors
       const result = await api.loginPlatform(platform);
       if (result.success) {
         // Show success message with URL if provided
@@ -228,10 +240,14 @@ export function PlatformSetupWizard({
           loadAuthStatus();
         }, 5000);
       } else {
-        setError(result.message || `Login failed for ${PLATFORM_NAMES[platform]}`);
+        const errorMsg = result.message || `Login failed for ${PLATFORM_NAMES[platform]}`;
+        // Only show error if different from current error (prevent duplicates)
+        setError((prevError) => prevError === errorMsg ? prevError : errorMsg);
       }
     } catch (err) {
-      setError(getErrorMessage(err, `Login failed for ${PLATFORM_NAMES[platform]}`));
+      const errorMsg = getErrorMessage(err, `Login failed for ${PLATFORM_NAMES[platform]}`);
+      // Only show error if different from current error (prevent duplicates)
+      setError((prevError) => prevError === errorMsg ? prevError : errorMsg);
     } finally {
       setLoggingIn(null);
     }

@@ -63,6 +63,7 @@ This phase consolidates outstanding issues and risks discovered by multiple revi
 | PH11-T18 | ⏳ PENDING | | Add/record screenshot parity evidence (required by GUI phase) |
 | PH11-T19 | ✅ PASS | 2026-02-02 | Added deterministic doctor registry + fast capability probing to prevent GUI/E2E test timeouts |
 | PH11-T20 | ⏳ PENDING | | Reconcile BUILD_QUEUE_GAPS.md summary vs per-issue sections |
+| PH11-T21 | ✅ PASS | 2026-02-04 | Fix Windows native module rebuild validation, block GUI launch until ready, auto-create config on first boot, dedupe wizard errors |
 | GUI e.map hardening | ✅ PASS | 2026-01-27 | Fixed `e.map is not a function`: hardened API (`getTiers`, `listProjects`, `getDoctorChecks`, `runDoctorChecks`) and all GUI pages (Projects, Tiers, Doctor, History, Evidence, Coverage, Metrics, Dashboard). `.map`/`Object.entries` guarded with `Array.isArray` / array fallbacks. Deleted `.test-cache`/`.test-quota` (none found). `npm run gui:typecheck` and React GUI unit tests pass. |
 | GUI e.map hardening round 2 | ✅ PASS | 2026-01-27 | Projects: `projectsToShow` + `safeList` guards; malformed `listProjects` unit tests (null, undefined, `{}`, `{ projects: null }`). UsageChart: `safeData` guard, empty handling. API `listProjects` JSDoc. Audited Doctor, Tiers, Evidence, Coverage, Metrics, Dashboard — already guarded. Root `npm run typecheck` PASS. `.test-cache`/`.test-quota` not present. |
 
@@ -82,6 +83,28 @@ Commands run + results:
 - npm test -- --run src/gui/gui.integration.test.ts: PASS  
 - npm run typecheck: PASS  
 - npm run gui:build: PASS  
+If FAIL: N/A  
+
+---
+
+### Task status log (PH11-T21)
+Status: PASS  
+Date: 2026-02-04  
+Summary of changes: Hardened Windows installer native module rebuild with retries and hard failure when better-sqlite3 is missing; blocked GUI launch until /health is ready to prevent first-launch blank screens; auto-created default config.yaml on first boot or corrupt config; deduped wizard error messages on retry.  
+Files changed:  
+- installer/win/puppet-master.nsi  
+- scripts/build-installer.ts  
+- src/cli/commands/gui.ts  
+- src/config/config-manager.ts  
+- src/config/config-manager.test.ts  
+- src/gui/routes/config.ts  
+- src/gui/routes/platforms.ts  
+- src/gui/react/src/components/wizard/PlatformSetupWizard.tsx  
+Commands run + results:  
+- npm test -- --run src/config/config-manager.test.ts: PASS  
+- npm run lint: PASS  
+- npm run typecheck: PASS  
+- npm run build: PASS  
 If FAIL: N/A  
 
 ---

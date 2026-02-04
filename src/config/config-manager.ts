@@ -39,10 +39,11 @@ export class ConfigManager {
 
   /**
    * Load configuration from file or return defaults
+   * @param autoCreate - If true, automatically create default config.yaml when missing or corrupt (default: false)
    * @returns Loaded and validated configuration
    * @throws ConfigValidationError if config is invalid
    */
-  async load(): Promise<PuppetMasterConfig> {
+  async load(autoCreate = false): Promise<PuppetMasterConfig> {
     // P2-T12: Load secrets from env vars and optional local `.env` file.
     // Non-fatal when `.env` is missing.
     new SecretsManager().loadSecrets();
@@ -53,38 +54,99 @@ export class ConfigManager {
       await access(this.configPath);
       fileExists = true;
     } catch {
-      // File doesn't exist, return defaults adjusted for installed platforms
-      const defaultConfig = getDefaultConfig();
-      try {
-        const detector = new PlatformDetector(defaultConfig.cliPaths);
-        const installed = await detector.getInstalledPlatforms();
-        return adjustConfigForInstalledPlatforms(defaultConfig, installed);
-      } catch {
-        // If detection fails, return default config as-is
-        return defaultConfig;
-      }
+      // File doesn't exist
+      fileExists = false;
     }
 
+    // If file doesn't exist and autoCreate is enabled, create default config
     if (!fileExists) {
       const defaultConfig = getDefaultConfig();
       try {
         const detector = new PlatformDetector(defaultConfig.cliPaths);
         const installed = await detector.getInstalledPlatforms();
-        return adjustConfigForInstalledPlatforms(defaultConfig, installed);
+        const adjustedConfig = adjustConfigForInstalledPlatforms(defaultConfig, installed);
+        
+        // Auto-create config file if requested
+        if (autoCreate) {
+          try {
+            await this.save(adjustedConfig);
+            console.log(`[ConfigManager] Auto-created default config at ${this.configPath}`);
+          } catch (saveError) {
+            console.warn(`[ConfigManager] Failed to auto-create config: ${saveError instanceof Error ? saveError.message : String(saveError)}`);
+            // Continue with in-memory config even if save fails
+          }
+        }
+        
+        return adjustedConfig;
       } catch {
+        // If detection fails, return default config as-is
+        if (autoCreate) {
+          try {
+            await this.save(defaultConfig);
+            console.log(`[ConfigManager] Auto-created default config at ${this.configPath} (platform detection failed)`);
+          } catch (saveError) {
+            console.warn(`[ConfigManager] Failed to auto-create config: ${saveError instanceof Error ? saveError.message : String(saveError)}`);
+          }
+        }
         return defaultConfig;
       }
     }
 
-    // Load YAML file
-    const yamlContent = await loadYamlFile(this.configPath);
+    // Load and parse YAML file
+    let yamlContent: unknown;
+    try {
+      yamlContent = await loadYamlFile(this.configPath);
+    } catch (error) {
+      // Config file exists but is corrupt - auto-create if requested
+      if (autoCreate) {
+        console.warn(`[ConfigManager] Config file is corrupt: ${error instanceof Error ? error.message : String(error)}`);
+        const defaultConfig = getDefaultConfig();
+        try {
+          const detector = new PlatformDetector(defaultConfig.cliPaths);
+          const installed = await detector.getInstalledPlatforms();
+          const adjustedConfig = adjustConfigForInstalledPlatforms(defaultConfig, installed);
+          await this.save(adjustedConfig);
+          console.log(`[ConfigManager] Replaced corrupt config with defaults at ${this.configPath}`);
+          return adjustedConfig;
+        } catch {
+          await this.save(defaultConfig);
+          console.log(`[ConfigManager] Replaced corrupt config with defaults at ${this.configPath} (platform detection failed)`);
+          return defaultConfig;
+        }
+      }
+      // Re-throw error if not auto-creating
+      throw error;
+    }
     
     // Convert snake_case to camelCase
     const converted = convertSnakeCaseToCamelCase(yamlContent);
     applyLegacyTaskFailureStyle(converted);
     
     // Validate
-    validateConfig(converted);
+    try {
+      validateConfig(converted);
+    } catch (validationError) {
+      // Config file exists but is invalid - auto-create if requested
+      if (autoCreate) {
+        console.warn(`[ConfigManager] Config validation failed: ${validationError instanceof Error ? validationError.message : String(validationError)}`);
+        const defaultConfig = getDefaultConfig();
+        try {
+          const detector = new PlatformDetector(defaultConfig.cliPaths);
+          const installed = await detector.getInstalledPlatforms();
+          const adjustedConfig = adjustConfigForInstalledPlatforms(defaultConfig, installed);
+          await this.save(adjustedConfig);
+          console.log(`[ConfigManager] Replaced invalid config with defaults at ${this.configPath}`);
+          return adjustedConfig;
+        } catch {
+          await this.save(defaultConfig);
+          console.log(`[ConfigManager] Replaced invalid config with defaults at ${this.configPath} (platform detection failed)`);
+          return defaultConfig;
+        }
+      }
+      // Re-throw error if not auto-creating
+      throw validationError;
+    }
+    
     const config = converted as PuppetMasterConfig;
     
     // Adjust config to use only installed platforms

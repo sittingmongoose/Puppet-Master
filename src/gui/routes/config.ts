@@ -67,12 +67,14 @@ export function createConfigRoutes(baseDirectory?: string): Router {
   /**
    * GET /api/config
    * Returns current configuration loaded from file or defaults.
+   * Auto-creates default config if missing or corrupt.
    * Query parameter: ?refresh=true to bypass cache (for frontend cache invalidation)
    */
   router.get('/config', async (req: Request, res: Response) => {
     try {
       const configManager = new ConfigManager(configPath);
-      const config = await configManager.load();
+      // Auto-create config if missing or corrupt
+      const config = await configManager.load(true);
 
       // Add cache control header to hint to frontend about caching
       const refresh = req.query.refresh === 'true';

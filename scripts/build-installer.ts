@@ -684,10 +684,23 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
         console.warn(`⚠️  Native module rebuild attempt ${attempt}/${maxRetries} failed, retrying in 3 seconds...`);
         await new Promise(resolve => setTimeout(resolve, 3000));
       } else {
-        console.warn('⚠️  Native module rebuild failed after', maxRetries, 'attempts (may succeed during postinstall):', errorMsg);
-        // Non-fatal: NSIS/pkg postinstall can retry
+        console.error('❌ Native module rebuild failed after', maxRetries, 'attempts:', errorMsg);
+        // Fatal on Windows: installer postinstall validation depends on this
+        if (args.platform === 'win32') {
+          throw new Error(`Failed to rebuild native modules after ${maxRetries} attempts. better-sqlite3 ABI mismatch cannot be resolved.`);
+        }
+        console.warn('⚠️  Continuing build; installer postinstall will retry rebuild.');
       }
     }
+  }
+  
+  // Validate better_sqlite3.node exists after rebuild (Windows-critical)
+  if (rebuildSuccess && args.platform === 'win32') {
+    const betterSqlitePath = path.join(appDir, 'node_modules', 'better-sqlite3', 'build', 'Release', 'better_sqlite3.node');
+    if (!existsSync(betterSqlitePath)) {
+      throw new Error(`Critical: better_sqlite3.node not found at ${betterSqlitePath} after rebuild. Cannot proceed with Windows installer.`);
+    }
+    console.log('  ✓ Validated better_sqlite3.node exists');
   }
 
   // 6) Install Playwright Chromium into payload/playwright-browsers

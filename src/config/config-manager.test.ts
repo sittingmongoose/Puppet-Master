@@ -431,6 +431,88 @@ project:
       const manager = new ConfigManager(testConfigPath);
       await expect(manager.load()).rejects.toThrow(ConfigValidationError);
     });
+
+    it('should auto-create config when missing and autoCreate is true', async () => {
+      const autoConfigPath = join(testDir, 'auto-create', 'config.yaml');
+      const manager = new ConfigManager(autoConfigPath);
+      
+      // Load with autoCreate=true
+      const config = await manager.load(true);
+      
+      // Config should have default values
+      expect(config.project.name).toBe('Untitled');
+      expect(config.tiers.phase.platform).toBeDefined();
+      
+      // Config file should now exist
+      const loadedConfig = await manager.load();
+      expect(loadedConfig.project.name).toBe('Untitled');
+    });
+
+    it('should NOT auto-create config when missing and autoCreate is false', async () => {
+      const noAutoPath = join(testDir, 'no-auto-create', 'config.yaml');
+      const manager = new ConfigManager(noAutoPath);
+      
+      // Load with autoCreate=false (default)
+      const config = await manager.load(false);
+      
+      // Config should have default values
+      expect(config.project.name).toBe('Untitled');
+      
+      // But file should NOT exist
+      const { access } = await import('fs/promises');
+      await expect(access(noAutoPath)).rejects.toThrow();
+    });
+
+    it('should replace corrupt config when autoCreate is true', async () => {
+      const corruptPath = join(testDir, 'corrupt-config.yaml');
+      
+      // Write invalid YAML
+      await writeFile(corruptPath, 'invalid: yaml: [[[', 'utf-8');
+      
+      const manager = new ConfigManager(corruptPath);
+      
+      // Load with autoCreate=true should replace corrupt file
+      const config = await manager.load(true);
+      
+      // Should return defaults
+      expect(config.project.name).toBe('Untitled');
+      
+      // File should now be valid
+      const reloadedConfig = await manager.load();
+      expect(reloadedConfig.project.name).toBe('Untitled');
+    });
+
+    it('should throw on corrupt config when autoCreate is false', async () => {
+      const corruptPath = join(testDir, 'corrupt-no-auto.yaml');
+      
+      // Write invalid YAML
+      await writeFile(corruptPath, 'invalid: yaml: [[[', 'utf-8');
+      
+      const manager = new ConfigManager(corruptPath);
+      
+      // Load with autoCreate=false should throw
+      await expect(manager.load(false)).rejects.toThrow();
+    });
+
+    it('should replace invalid config when autoCreate is true', async () => {
+      const invalidPath = join(testDir, 'invalid-config.yaml');
+      
+      // Write syntactically valid YAML but invalid config
+      await writeFile(invalidPath, 'project:\n  name: 123\n', 'utf-8');
+      
+      const manager = new ConfigManager(invalidPath);
+      
+      // Load with autoCreate=true should replace invalid config
+      const config = await manager.load(true);
+      
+      // Should return defaults
+      expect(config.project.name).toBe('Untitled');
+      expect(typeof config.project.name).toBe('string');
+      
+      // File should now be valid
+      const reloadedConfig = await manager.load();
+      expect(reloadedConfig.project.name).toBe('Untitled');
+    });
   });
 
   describe('ConfigManager.validate', () => {

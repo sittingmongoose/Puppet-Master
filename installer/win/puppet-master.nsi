@@ -71,9 +71,42 @@ Section "Install"
   ; Ensure bin/ is included (Start Menu launcher expects bin\puppet-master.cmd)
   File /r "${STAGE_DIR}\\puppet-master\\bin\\*"
   
-  ; Rebuild native modules with bundled Node to ensure ABI compatibility (non-fatal)
+  ; Rebuild native modules with bundled Node to ensure ABI compatibility
   DetailPrint "Rebuilding native modules for bundled Node..."
-  nsExec::ExecToLog '"$INSTDIR\\node\\node.exe" "$INSTDIR\\node\\node_modules\\npm\\bin\\npm-cli.js" rebuild --prefix "$INSTDIR\\app"'
+  
+  ; Retry rebuild up to 3 times with 2 second delays
+  StrCpy $R0 "1"
+  retry_rebuild:
+    nsExec::ExecToStack '"$INSTDIR\\node\\node.exe" "$INSTDIR\\node\\node_modules\\npm\\bin\\npm-cli.js" rebuild --prefix "$INSTDIR\\app"'
+    Pop $0 ; exit code
+    Pop $1 ; output
+    ${If} $0 == 0
+      DetailPrint "  Native modules rebuilt successfully"
+      Goto rebuild_success
+    ${EndIf}
+    
+    DetailPrint "  Rebuild attempt $R0 failed (exit code $0), retrying..."
+    Sleep 2000
+    IntOp $R0 $R0 + 1
+    ${If} $R0 <= 3
+      Goto retry_rebuild
+    ${EndIf}
+    
+    ; All retries failed
+    MessageBox MB_OK|MB_ICONEXCLAMATION "Failed to rebuild native modules after 3 attempts.$\r$\n$\r$\nThis may cause runtime errors with better-sqlite3.$\r$\n$\r$\nExit code: $0$\r$\n$\r$\nPlease report this issue."
+    Abort "Native module rebuild failed after 3 attempts. Installation aborted."
+  
+  rebuild_success:
+  
+  ; Validate better_sqlite3.node exists (critical for database functionality)
+  DetailPrint "Validating better-sqlite3.node..."
+  ${If} ${FileExists} "$INSTDIR\\app\\node_modules\\better-sqlite3\\build\\Release\\better_sqlite3.node"
+    DetailPrint "  ✓ better-sqlite3.node found"
+  ${Else}
+    MessageBox MB_OK|MB_ICONERROR "Critical native module missing: better-sqlite3.node$\r$\n$\r$\nThe database driver failed to build correctly.$\r$\n$\r$\nInstallation cannot continue."
+    Abort "Missing better_sqlite3.node - installation aborted."
+  ${EndIf}
+  
   ClearErrors
   
   ; Copy GUI launchers (VBS runs without console; BAT for CLI/script; Debug BAT keeps console open)
