@@ -121,6 +121,24 @@ export function createAuthMiddleware(config: AuthConfig): RequestHandler {
     
     // Check for Authorization header
     const authHeader = req.headers.authorization;
+
+    // EventSource/SSE requests cannot set custom headers; allow token via query param.
+    if (!authHeader && req.method === 'GET' && req.path.startsWith('/api/events/')) {
+      const raw = req.query.token;
+      const queryToken = Array.isArray(raw) ? raw[0] : raw;
+      if (typeof queryToken === 'string' && queryToken.trim() !== '') {
+        if (queryToken === config.token) {
+          next();
+          return;
+        }
+        res.status(401).json({
+          error: 'Invalid authentication token',
+          code: 'INVALID_TOKEN',
+        });
+        return;
+      }
+    }
+
     if (!authHeader) {
       res.status(401).json({
         error: 'Authentication required',

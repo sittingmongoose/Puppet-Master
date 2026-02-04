@@ -47,12 +47,16 @@ VIAddVersionKey "CompanyName" "RWM"
 Section "Install"
   ; Kill any running Puppet Master processes to unlock files for overwrite
   DetailPrint "Stopping running Puppet Master processes..."
-  nsExec::ExecToLog 'taskkill /f /im puppet-master-gui.exe'
-  nsExec::ExecToLog 'taskkill /f /im puppet-master.exe'
+  nsExec::ExecToStack 'taskkill /f /im puppet-master-gui.exe'
+  Pop $0
+  nsExec::ExecToStack 'taskkill /f /im puppet-master.exe'
+  Pop $0
   ; Kill processes running from install dir (Express server holds file locks); use PowerShell (wmic deprecated)
-  nsExec::ExecToLog 'powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -like ''*Puppet Master*'' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }"'
+  nsExec::ExecToStack 'powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -like ''*Puppet Master*'' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }"'
+  Pop $0
   ; Additional process cleanup: kill by window title
-  nsExec::ExecToLog 'taskkill /f /fi "WINDOWTITLE eq Puppet Master*"'
+  nsExec::ExecToStack 'taskkill /f /fi "WINDOWTITLE eq Puppet Master*"'
+  Pop $0
   ; Wait for processes to fully exit and release file handles
   Sleep 3000
 
@@ -119,10 +123,14 @@ SectionEnd
 Section "Uninstall"
   ; Kill any running Puppet Master processes before uninstalling
   DetailPrint "Stopping running Puppet Master processes..."
-  nsExec::ExecToLog 'taskkill /f /im puppet-master-gui.exe'
-  nsExec::ExecToLog 'taskkill /f /im puppet-master.exe'
-  nsExec::ExecToLog 'powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -like ''*Puppet Master*'' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }"'
-  nsExec::ExecToLog 'taskkill /f /fi "WINDOWTITLE eq Puppet Master*"'
+  nsExec::ExecToStack 'taskkill /f /im puppet-master-gui.exe'
+  Pop $0
+  nsExec::ExecToStack 'taskkill /f /im puppet-master.exe'
+  Pop $0
+  nsExec::ExecToStack 'powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -like ''*Puppet Master*'' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }"'
+  Pop $0
+  nsExec::ExecToStack 'taskkill /f /fi "WINDOWTITLE eq Puppet Master*"'
+  Pop $0
   Sleep 3000
 
   ; Remove shortcuts

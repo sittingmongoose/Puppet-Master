@@ -1,6 +1,7 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { useOrchestratorStore, useProjectStore, useBudgetStore } from '@/stores';
 import type { StatusType, Platform } from '@/types';
+import { getGuiAuthToken } from './api.js';
 
 /**
  * Known SSE event types from the server
@@ -78,7 +79,7 @@ class SSEClient {
   start(): void {
     if (this.started) return;
     this.started = true;
-    this.connect();
+    void this.connect();
   }
 
   /**
@@ -136,7 +137,7 @@ class SSEClient {
     this.statusListeners.delete(handler);
   }
 
-  private connect(): void {
+  private async connect(): Promise<void> {
     if (!this.started) return;
     if (typeof EventSource === 'undefined') {
       console.warn('[SSE] EventSource not available');
@@ -146,7 +147,10 @@ class SSEClient {
     this.clearReconnectTimer();
     this.closeEventSource();
 
-    const es = new EventSource('/api/events/stream');
+    const token = await getGuiAuthToken().catch(() => null);
+    const url = token ? `/api/events/stream?token=${encodeURIComponent(token)}` : '/api/events/stream';
+
+    const es = new EventSource(url);
     this.eventSource = es;
 
     es.onopen = () => {
@@ -259,7 +263,7 @@ class SSEClient {
 
     this.clearReconnectTimer();
     this.reconnectTimerId = setTimeout(() => {
-      this.connect();
+      void this.connect();
     }, delayMs);
   }
 }

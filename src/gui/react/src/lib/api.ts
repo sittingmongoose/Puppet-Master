@@ -86,6 +86,14 @@ async function getAuthToken(): Promise<string | null> {
 }
 
 /**
+ * Get (and refresh if needed) the current GUI auth token.
+ * Useful for APIs like EventSource that cannot attach custom headers.
+ */
+export async function getGuiAuthToken(): Promise<string | null> {
+  return authToken || await getAuthToken();
+}
+
+/**
  * Clear GUI session (logout). Clears in-memory token and localStorage.
  * Call this when the user clicks "Log out"; then navigate to /login and optionally reload.
  */

@@ -182,6 +182,30 @@ describe('auth-middleware', () => {
       });
     });
 
+    it('allows /api/events/* with token query param (EventSource compatibility)', async () => {
+      const app = express();
+      app.use(createAuthMiddleware({ enabled: true, token: 't' }));
+      app.get('/api/events/stream', (_req, res) => res.json({ ok: true }));
+
+      await request(app)
+        .get('/api/events/stream?token=t')
+        .expect(200, { ok: true });
+    });
+
+    it('rejects /api/events/* with invalid token query param', async () => {
+      const app = express();
+      app.use(createAuthMiddleware({ enabled: true, token: 't' }));
+      app.get('/api/events/stream', (_req, res) => res.json({ ok: true }));
+
+      const res = await request(app)
+        .get('/api/events/stream?token=wrong')
+        .expect(401);
+
+      expect(res.body).toMatchObject({
+        code: 'INVALID_TOKEN',
+      });
+    });
+
     it('rejects invalid Authorization header format', async () => {
       const app = express();
       app.use(createAuthMiddleware({ enabled: true, token: 't' }));
