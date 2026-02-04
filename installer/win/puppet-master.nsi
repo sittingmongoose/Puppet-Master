@@ -103,7 +103,7 @@ Section "Install"
   ${If} ${FileExists} "$INSTDIR\\app\\node_modules\\better-sqlite3\\build\\Release\\better_sqlite3.node"
     DetailPrint "  ✓ better-sqlite3.node found"
   ${Else}
-    MessageBox MB_OK|MB_ICONERROR "Critical native module missing: better-sqlite3.node$\r$\n$\r$\nThe database driver failed to build correctly.$\r$\n$\r$\nInstallation cannot continue."
+    MessageBox MB_OK|MB_ICONSTOP "Critical native module missing: better-sqlite3.node$\r$\n$\r$\nThe database driver failed to build correctly.$\r$\n$\r$\nInstallation cannot continue."
     Abort "Missing better_sqlite3.node - installation aborted."
   ${EndIf}
   
