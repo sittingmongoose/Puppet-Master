@@ -903,7 +903,7 @@ if [ -x "$TAURI_BIN" ]; then
   done
   if [ $WAITED -ge $MAX_WAIT ]; then
     kill $SERVER_PID 2>/dev/null || true
-    fail_msg "GUI server did not become ready in ${MAX_WAIT}s. See $LOG_FILE"
+    fail_msg "GUI server did not become ready in \${MAX_WAIT}s. See $LOG_FILE"
   fi
   export PUPPET_MASTER_URL="$BASE_URL"
   exec "$TAURI_BIN"
