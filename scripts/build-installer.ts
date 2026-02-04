@@ -887,7 +887,7 @@ GUI_CWD="\${HOME:-/tmp}"
 cd "$GUI_CWD"
 mkdir -p "$LOG_DIR"
 
-# If Tauri desktop binary is present: delegate to `puppet-master gui` so it starts the
+# If Tauri desktop binary is present: delegate to \`puppet-master gui\` so it starts the
 # server, launches Tauri exactly once, and shuts down the server when Tauri exits.
 if [ -x "$TAURI_BIN" ]; then
   exec "$NODE_BIN" "$APP_ENTRY" gui
