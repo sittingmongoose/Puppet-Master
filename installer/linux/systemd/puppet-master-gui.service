@@ -31,7 +31,7 @@ WorkingDirectory=/opt/puppet-master
 Environment=NODE_ENV=production
 # Default port and host
 Environment=PM_GUI_PORT=3847
-Environment=PM_GUI_HOST=localhost
+Environment=PM_GUI_HOST=127.0.0.1
 
 # The main command
 ExecStart=/usr/bin/puppet-master gui --no-open --port $PM_GUI_PORT --host $PM_GUI_HOST

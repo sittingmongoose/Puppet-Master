@@ -853,7 +853,7 @@ async function buildMacAppBundle(
   }
   await cp(iconSrc, path.join(resourcesPath, 'puppet-master.icns'));
 
-  // Create MacOS executable: if Tauri binary present, start server in background, wait for health, then launch Tauri; else run Node GUI only
+  // Create MacOS executable: if Tauri binary present, delegate to `puppet-master gui` (single-instance); else run Node GUI only
   const macosExecutable = path.join(macosPath, 'Puppet Master');
   const macosScript = `#!/usr/bin/env sh
 set -eu
@@ -887,26 +887,10 @@ GUI_CWD="\${HOME:-/tmp}"
 cd "$GUI_CWD"
 mkdir -p "$LOG_DIR"
 
-# If Tauri desktop binary is present: start server in background, wait for health, then launch Tauri with PUPPET_MASTER_URL
+# If Tauri desktop binary is present: delegate to `puppet-master gui` so it starts the
+# server, launches Tauri exactly once, and shuts down the server when Tauri exits.
 if [ -x "$TAURI_BIN" ]; then
-  "$NODE_BIN" "$APP_ENTRY" gui >> "$LOG_FILE" 2>&1 &
-  SERVER_PID=$!
-  BASE_URL="http://127.0.0.1:3847"
-  MAX_WAIT=30
-  WAITED=0
-  while [ $WAITED -lt $MAX_WAIT ]; do
-    if curl -sf -o /dev/null "$BASE_URL/health" 2>/dev/null; then
-      break
-    fi
-    sleep 1
-    WAITED=$((WAITED + 1))
-  done
-  if [ $WAITED -ge $MAX_WAIT ]; then
-    kill $SERVER_PID 2>/dev/null || true
-    fail_msg "GUI server did not become ready in \${MAX_WAIT}s. See $LOG_FILE"
-  fi
-  export PUPPET_MASTER_URL="$BASE_URL"
-  exec "$TAURI_BIN"
+  exec "$NODE_BIN" "$APP_ENTRY" gui
 fi
 
 # No Tauri: run Node GUI only (foreground or background depending on tty)

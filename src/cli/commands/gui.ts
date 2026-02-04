@@ -195,7 +195,8 @@ function installCrashHandlers(): void {
  * Returns the server URL if a valid instance is found, undefined otherwise.
  */
 async function checkExistingInstance(port: number, host: string): Promise<string | undefined> {
-  const url = `http://127.0.0.1:${port}/health`;
+  const checkHost = host === 'localhost' ? '127.0.0.1' : host;
+  const url = `http://${checkHost}:${port}/health`;
   return new Promise((resolve) => {
     const req = http.get(url, { timeout: 2000 }, (res) => {
       let data = '';
@@ -205,7 +206,8 @@ async function checkExistingInstance(port: number, host: string): Promise<string
           const json = JSON.parse(data) as { status?: string };
           if (res.statusCode === 200 && json.status === 'ok') {
             // This is a running Puppet Master instance
-            resolve(`http://${host === '0.0.0.0' ? '127.0.0.1' : host}:${port}`);
+            const resolvedHost = checkHost === '0.0.0.0' ? '127.0.0.1' : checkHost;
+            resolve(`http://${resolvedHost}:${port}`);
           } else {
             resolve(undefined);
           }

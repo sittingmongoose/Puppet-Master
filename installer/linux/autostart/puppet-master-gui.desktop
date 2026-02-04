@@ -2,7 +2,7 @@
 Type=Application
 Name=Puppet Master GUI
 Comment=Launch Puppet Master GUI on login
-Exec=puppet-master gui
+Exec=puppet-master gui --host 127.0.0.1
 Terminal=false
 Icon=/opt/puppet-master/puppet-master.png
 Categories=Utility;Development;

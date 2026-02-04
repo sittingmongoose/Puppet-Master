@@ -966,7 +966,8 @@ export class GuiServer {
         this.server = http.createServer(this.app);
         this.setupWebSocket();
 
-        this.server.listen(this.config.port, this.config.host, () => {
+        const bindHost = this.config.host === 'localhost' ? '127.0.0.1' : this.config.host;
+        this.server.listen(this.config.port, bindHost, () => {
           resolve();
         });
 
@@ -1049,8 +1050,12 @@ export class GuiServer {
 
   /**
    * Get the server URL.
+   *
+   * Note: when host is "localhost" we bind to 127.0.0.1 to avoid IPv6 ::1 resolution
+   * issues in embedded webviews (can manifest as "Load Failed" on first launch).
    */
   getUrl(): string {
-    return `http://${this.config.host}:${this.config.port}`;
+    const host = this.config.host === 'localhost' ? '127.0.0.1' : this.config.host;
+    return `http://${host}:${this.config.port}`;
   }
 }

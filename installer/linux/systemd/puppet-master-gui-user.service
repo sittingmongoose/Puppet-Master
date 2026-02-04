@@ -26,7 +26,7 @@ WorkingDirectory=%h
 Environment=NODE_ENV=production
 # Default port and host
 Environment=PM_GUI_PORT=3847
-Environment=PM_GUI_HOST=localhost
+Environment=PM_GUI_HOST=127.0.0.1
 
 # The main command
 # Note: puppet-master should be in PATH, or use full path

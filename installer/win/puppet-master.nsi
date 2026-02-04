@@ -55,13 +55,8 @@ Section "Install"
   Pop $0
   Pop $1
   ClearErrors
-  ; Kill processes running from install dir (Express server holds file locks); use PowerShell (wmic deprecated)
-  nsExec::ExecToStack 'powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -like ''*Puppet Master*'' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }"'
-  Pop $0
-  Pop $1
-  ClearErrors
-  ; Additional process cleanup: kill by window title
-  nsExec::ExecToStack 'taskkill /f /fi "WINDOWTITLE eq Puppet Master*"'
+  ; Kill processes by explicit name only (avoid matching/killing the installer itself)
+  nsExec::ExecToStack 'powershell -NoProfile -ExecutionPolicy Bypass -Command "Stop-Process -Name puppet-master-gui -Force -ErrorAction SilentlyContinue; Stop-Process -Name puppet-master -Force -ErrorAction SilentlyContinue"'
   Pop $0
   Pop $1
   ClearErrors
@@ -139,11 +134,7 @@ Section "Uninstall"
   Pop $0
   Pop $1
   ClearErrors
-  nsExec::ExecToStack 'powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -like ''*Puppet Master*'' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }"'
-  Pop $0
-  Pop $1
-  ClearErrors
-  nsExec::ExecToStack 'taskkill /f /fi "WINDOWTITLE eq Puppet Master*"'
+  nsExec::ExecToStack 'powershell -NoProfile -ExecutionPolicy Bypass -Command "Stop-Process -Name puppet-master-gui -Force -ErrorAction SilentlyContinue; Stop-Process -Name puppet-master -Force -ErrorAction SilentlyContinue"'
   Pop $0
   Pop $1
   ClearErrors
