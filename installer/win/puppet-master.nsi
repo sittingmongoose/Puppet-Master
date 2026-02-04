@@ -47,16 +47,24 @@ VIAddVersionKey "CompanyName" "RWM"
 Section "Install"
   ; Kill any running Puppet Master processes to unlock files for overwrite
   DetailPrint "Stopping running Puppet Master processes..."
-  nsExec::ExecToStack 'taskkill /f /im puppet-master-gui.exe'
+  nsExec::ExecToStack 'taskkill /f /im "puppet-master-gui.exe"'
+  Pop $0 ; exit code (ignored)
+  Pop $1 ; output
+  ClearErrors
+  nsExec::ExecToStack 'taskkill /f /im "puppet-master.exe"'
   Pop $0
-  nsExec::ExecToStack 'taskkill /f /im puppet-master.exe'
-  Pop $0
+  Pop $1
+  ClearErrors
   ; Kill processes running from install dir (Express server holds file locks); use PowerShell (wmic deprecated)
   nsExec::ExecToStack 'powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -like ''*Puppet Master*'' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }"'
   Pop $0
+  Pop $1
+  ClearErrors
   ; Additional process cleanup: kill by window title
   nsExec::ExecToStack 'taskkill /f /fi "WINDOWTITLE eq Puppet Master*"'
   Pop $0
+  Pop $1
+  ClearErrors
   ; Wait for processes to fully exit and release file handles
   Sleep 3000
 
@@ -123,14 +131,22 @@ SectionEnd
 Section "Uninstall"
   ; Kill any running Puppet Master processes before uninstalling
   DetailPrint "Stopping running Puppet Master processes..."
-  nsExec::ExecToStack 'taskkill /f /im puppet-master-gui.exe'
+  nsExec::ExecToStack 'taskkill /f /im "puppet-master-gui.exe"'
+  Pop $0 ; exit code (ignored)
+  Pop $1 ; output
+  ClearErrors
+  nsExec::ExecToStack 'taskkill /f /im "puppet-master.exe"'
   Pop $0
-  nsExec::ExecToStack 'taskkill /f /im puppet-master.exe'
-  Pop $0
+  Pop $1
+  ClearErrors
   nsExec::ExecToStack 'powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -like ''*Puppet Master*'' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }"'
   Pop $0
+  Pop $1
+  ClearErrors
   nsExec::ExecToStack 'taskkill /f /fi "WINDOWTITLE eq Puppet Master*"'
   Pop $0
+  Pop $1
+  ClearErrors
   Sleep 3000
 
   ; Remove shortcuts

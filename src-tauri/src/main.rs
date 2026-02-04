@@ -4,6 +4,7 @@
 use std::env;
 use std::net::TcpStream;
 use std::path::Path;
+use std::io::{Read, Write};
 use std::process::Command;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::Duration;
@@ -110,8 +111,8 @@ fn relaunch_app() {
     }
 }
 
-/// Wait for the GUI server to be listening before navigating.
-/// Polls host:port with TcpStream connect; retries with backoff up to ~20s.
+/// Wait for the GUI server to be ready before navigating.
+/// Prefer HTTP /health readiness (more accurate than a TCP connect) with a bounded timeout.
 /// Returns true if server became ready, false on timeout (caller may still navigate).
 fn wait_for_server(url: &Url) -> bool {
     let host = match url.host_str() {
@@ -122,41 +123,74 @@ fn wait_for_server(url: &Url) -> bool {
         }
     };
     let port = url.port().unwrap_or(3847);
-    const MAX_ATTEMPTS: u32 = 40;
+    const MAX_ATTEMPTS: u32 = 180;
     const INTERVAL_MS: u64 = 500;
     const CONNECT_TIMEOUT_MS: u64 = 500;
     let timeout = Duration::from_millis(CONNECT_TIMEOUT_MS);
 
-    // Resolve the socket address once (connect_timeout requires SocketAddr, not ToSocketAddrs)
     let addr = match format!("{}:{}", host, port).parse::<std::net::SocketAddr>() {
         Ok(a) => a,
-        Err(_) => {
-            // Fallback: try to resolve hostname via DNS lookup
-            match std::net::ToSocketAddrs::to_socket_addrs(&(host.as_str(), port)) {
-                Ok(mut addrs) => match addrs.next() {
-                    Some(a) => a,
-                    None => {
-                        log::warn!("No addresses resolved for {}:{}", host, port);
-                        return false;
-                    }
-                },
-                Err(e) => {
-                    log::warn!("Failed to resolve {}:{}: {}", host, port, e);
+        Err(_) => match std::net::ToSocketAddrs::to_socket_addrs(&(host.as_str(), port)) {
+            Ok(mut addrs) => match addrs.next() {
+                Some(a) => a,
+                None => {
+                    log::warn!("No addresses resolved for {}:{}", host, port);
                     return false;
                 }
+            },
+            Err(e) => {
+                log::warn!("Failed to resolve {}:{}: {}", host, port, e);
+                return false;
             }
-        }
+        },
     };
 
     for attempt in 1..=MAX_ATTEMPTS {
+        // First gate: TCP listening
         if TcpStream::connect_timeout(&addr, timeout).is_ok() {
-            log::info!("GUI server ready after {} attempt(s)", attempt);
-            return true;
+            // Second gate: HTTP /health responds (server is actually serving)
+            if url.scheme() == "http" {
+                let mut stream = match TcpStream::connect_timeout(&addr, Duration::from_millis(1000)) {
+                    Ok(s) => s,
+                    Err(_) => {
+                        // TCP ok above, but retry for HTTP probe
+                        if attempt < MAX_ATTEMPTS {
+                            std::thread::sleep(Duration::from_millis(INTERVAL_MS));
+                        }
+                        continue;
+                    }
+                };
+
+                let _ = stream.set_read_timeout(Some(Duration::from_millis(1000)));
+                let _ = stream.set_write_timeout(Some(Duration::from_millis(1000)));
+
+                let req = format!(
+                    "GET /health HTTP/1.1\r\nHost: {}:{}\r\nConnection: close\r\n\r\n",
+                    host, port
+                );
+                if stream.write_all(req.as_bytes()).is_ok() {
+                    let mut buf = [0u8; 256];
+                    if let Ok(n) = stream.read(&mut buf) {
+                        if n > 0 {
+                            let head = String::from_utf8_lossy(&buf[..n]);
+                            if head.starts_with("HTTP/1.1 200") || head.starts_with("HTTP/1.0 200") {
+                                log::info!("GUI server ready (/health) after {} attempt(s)", attempt);
+                                return true;
+                            }
+                        }
+                    }
+                }
+            } else {
+                log::info!("GUI server ready (TCP) after {} attempt(s)", attempt);
+                return true;
+            }
         }
+
         if attempt < MAX_ATTEMPTS {
             std::thread::sleep(Duration::from_millis(INTERVAL_MS));
         }
     }
+
     log::warn!(
         "GUI server not ready after {}s, navigating anyway",
         (MAX_ATTEMPTS as u64) * INTERVAL_MS / 1000
@@ -363,7 +397,9 @@ fn main() {
                         format!("Invalid server URL '{}': {}", url_str, e),
                     ))
                 })?;
-                wait_for_server(&url);
+                if !wait_for_server(&url) {
+                    log::warn!("Server not ready; navigating anyway");
+                }
                 window.navigate(url)?;
             } else {
                 log::info!("Using bundled frontend");

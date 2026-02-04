@@ -44,6 +44,16 @@ export function getErrorMessage(error: unknown, fallback: string): string {
 }
 
 /**
+ * Resolve API base URL for both browser and Tauri (where window.location.origin may be tauri://...)
+ */
+export function getApiBaseUrl(): string {
+  if (typeof window === 'undefined') return '';
+  const origin = window.location.origin;
+  if (origin.startsWith('http://') || origin.startsWith('https://')) return origin;
+  return 'http://127.0.0.1:3847';
+}
+
+/**
  * Get auth token from localStorage or fetch from server
  */
 let authToken: string | null = null;
@@ -65,7 +75,7 @@ async function getAuthToken(): Promise<string | null> {
   // Fetch auth status to get token
   authTokenPromise = (async () => {
     try {
-      const response = await fetch('/api/auth/status');
+      const response = await fetch(`${getApiBaseUrl()}/api/auth/status`);
       if (response.ok) {
         const data = await response.json();
         if (data.enabled && data.token) {
@@ -109,21 +119,24 @@ export function logoutGuiSession(): void {
  * Base fetch wrapper with error handling and automatic auth token injection
  */
 async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
+  const isApiPath = url.startsWith('/api/');
+  const fetchUrl = isApiPath ? `${getApiBaseUrl()}${url}` : url;
+
   // Skip auth for auth endpoints, login endpoints (platform auth, not GUI auth), and config endpoints (needed during onboarding)
-  const needsAuth = url.startsWith('/api/') && 
-    !url.startsWith('/api/auth/') && 
+  const needsAuth = isApiPath &&
+    !url.startsWith('/api/auth/') &&
     !url.startsWith('/api/login/') &&
     !url.startsWith('/api/config/') &&
     !url.startsWith('/api/platforms/') &&
     !url.startsWith('/api/system/uninstall') &&
     !url.startsWith('/api/ledger');
-  
+
   // Get auth token if needed
   let headers: HeadersInit = {
     'Content-Type': 'application/json',
     ...options?.headers,
   };
-  
+
   if (needsAuth) {
     const token = authToken || await getAuthToken();
     if (token) {
@@ -133,8 +146,8 @@ async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
       };
     }
   }
-  
-  const response = await fetch(url, {
+
+  const response = await fetch(fetchUrl, {
     ...options,
     headers,
   });
@@ -149,7 +162,7 @@ async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
         ...headers,
         'Authorization': `Bearer ${token}`,
       };
-      const retryResponse = await fetch(url, {
+      const retryResponse = await fetch(fetchUrl, {
         ...options,
         headers,
       });
@@ -848,7 +861,7 @@ export const LOGOUT_SUPPORTED_PLATFORMS = ['github', 'copilot', 'codex'] as cons
  * Trigger CLI logout for a specific platform (where supported).
  */
 export async function logoutPlatform(platform: string): Promise<{ success: boolean; error?: string; code?: string }> {
-  const res = await fetch(`/api/login/${platform}/logout`, { method: 'POST' });
+  const res = await fetch(`${getApiBaseUrl()}/api/login/${platform}/logout`, { method: 'POST' });
   const data = await res.json().catch(() => ({})) as { success?: boolean; error?: string; code?: string };
   if (!res.ok) {
     return { success: false, error: data.error ?? res.statusText, code: data.code };

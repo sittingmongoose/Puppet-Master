@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { useOrchestratorStore, useProjectStore, useBudgetStore } from '@/stores';
 import type { StatusType, Platform } from '@/types';
-import { getGuiAuthToken } from './api.js';
+import { getApiBaseUrl, getGuiAuthToken } from './api.js';
 
 /**
  * Known SSE event types from the server
@@ -147,10 +147,25 @@ class SSEClient {
     this.clearReconnectTimer();
     this.closeEventSource();
 
-    const token = await getGuiAuthToken().catch(() => null);
-    const url = token ? `/api/events/stream?token=${encodeURIComponent(token)}` : '/api/events/stream';
+    // During first-run platform setup, SSE is non-essential and can trigger WebKit URL parse errors.
+    // We defer until the wizard completes (it reloads into the normal app flow).
+    if (window.location.search.includes('platformSetup=1')) {
+      return;
+    }
 
-    const es = new EventSource(url);
+    const token = await getGuiAuthToken().catch(() => null);
+    const urlPath = token ? `/api/events/stream?token=${encodeURIComponent(token)}` : '/api/events/stream';
+    const url = `${getApiBaseUrl()}${urlPath}`;
+
+    let es: EventSource;
+    try {
+      es = new EventSource(url);
+    } catch (err) {
+      console.warn('[SSE] Failed to create EventSource:', err);
+      this.scheduleReconnect();
+      return;
+    }
+
     this.eventSource = es;
 
     es.onopen = () => {
