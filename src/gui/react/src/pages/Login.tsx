@@ -43,6 +43,15 @@ interface GitInfo {
   currentBranch: string;
 }
 
+/** Display names for platform cards (e.g. Copilot → "GitHub Copilot") */
+const PLATFORM_DISPLAY_NAMES: Record<string, string> = {
+  cursor: 'Cursor',
+  codex: 'Codex',
+  claude: 'Claude Code',
+  gemini: 'Gemini',
+  copilot: 'GitHub Copilot',
+};
+
 /**
  * Login page - Platform authentication status and CLI-based login
  * Feature parity with CLI `puppet-master login` command
@@ -325,6 +334,12 @@ export default function LoginPage() {
               <p className="text-xs text-ink-faded mt-xs">
                 Sign in with GitHub via <span className="font-mono">gh auth login</span> to enable Git operations and push/pull.
               </p>
+              {githubAuthStatus === 'not_authenticated' && (
+                <p className="text-xs text-ink-faded mt-xs">
+                  If Login fails, ensure GitHub CLI is installed and in your PATH. Install from{' '}
+                  <a href="https://cli.github.com/" target="_blank" rel="noopener noreferrer" className="text-electric-blue underline hover:no-underline">cli.github.com</a> then try again.
+                </p>
+              )}
               {loginMessages['github'] && (
                 <div className={`text-xs mt-xs space-y-xs ${loginMessages['github'].startsWith('Error') ? 'text-hot-magenta' : 'text-neon-green'}`}>
                   <div>{loginMessages['github']}</div>
@@ -372,6 +387,10 @@ export default function LoginPage() {
               )}
             </div>
           </div>
+
+          <p className="text-xs text-ink-faded mt-xs">
+            The same GitHub account is used for GitHub Copilot; ensure your token has <strong>Copilot Requests</strong> scope if you use Copilot.
+          </p>
 
           {gitInfo ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
@@ -447,7 +466,9 @@ function PlatformCard({ platform, statusType, isLoggingIn, isLoggingOut, loginMe
       <div className="flex items-center justify-between mb-md">
         <div className="flex items-center gap-sm">
           <span className="flex items-center">{icon}</span>
-          <span className="font-semibold uppercase">{platform.platform}</span>
+          <span className="font-semibold">
+            {PLATFORM_DISPLAY_NAMES[platform.platform] ?? platform.platform}
+          </span>
         </div>
         <StatusBadge status={statusType} size="sm" />
       </div>

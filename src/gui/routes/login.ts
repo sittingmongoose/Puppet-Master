@@ -77,6 +77,43 @@ const LOGOUT_COMMANDS: Record<string, { cmd: string; args: string[] }> = {
 };
 
 /**
+ * Build OS-appropriate extra PATH directories for finding CLI tools (e.g. gh).
+ * Includes common install locations on Linux, macOS, and Windows so login/logout
+ * work when the process has a minimal PATH (e.g. launched from desktop shortcut).
+ */
+function getExtraPathDirectories(home: string, npmGlobalBin: string): string[] {
+  const isWin = process.platform === 'win32';
+  const base = [
+    npmGlobalBin,
+    home ? join(home, 'bin') : '',
+  ].filter(Boolean);
+
+  if (isWin) {
+    const programFiles = process.env['ProgramFiles'] || process.env['PROGRAMFILES'] || 'C:\\Program Files';
+    const localAppData = process.env['LOCALAPPDATA'] || (home ? join(home, 'AppData', 'Local') : '');
+    const programData = process.env['ProgramData'] || process.env['PROGRAMDATA'] || 'C:\\ProgramData';
+    return [
+      ...base,
+      join(programFiles, 'GitHub CLI'),
+      localAppData ? join(localAppData, 'GitHub CLI') : '',
+      join(programData, 'chocolatey', 'bin'),
+      home ? join(home, 'scoop', 'shims') : '',
+    ].filter(Boolean);
+  }
+
+  // Linux and macOS
+  const unixPaths = [
+    '/usr/local/bin',
+    '/opt/homebrew/bin',
+    '/opt/homebrew/sbin',
+    home ? join(home, '.local', 'bin') : '',
+    '/snap/bin',
+    ...base,
+  ];
+  return unixPaths.filter(Boolean);
+}
+
+/**
  * Check if a CLI command is available in PATH.
  * Uses 'which' on Unix-like systems, 'where' on Windows.
  * @param command - Command name to check
@@ -344,14 +381,9 @@ export function createLoginRoutes(): Router {
         const npmGlobalBin = npmGlobalPrefix
           ? (process.platform === 'win32' ? npmGlobalPrefix : path.join(npmGlobalPrefix, 'bin'))
           : '';
-        const extraPaths = [
-          npmGlobalBin,
-          '/usr/local/bin',
-          '/opt/homebrew/bin',
-          '/opt/homebrew/sbin',
-          join(home, '.local', 'bin'),
-        ];
-        const currentPath = process.env.PATH || '/usr/bin:/bin';
+        const extraPaths = getExtraPathDirectories(home || '', npmGlobalBin);
+        const defaultPath = process.platform === 'win32' ? 'C:\\Windows\\System32' : '/usr/bin:/bin';
+        const currentPath = process.env.PATH || process.env.Path || defaultPath;
         const enrichedPath = [currentPath, ...extraPaths].filter(Boolean).join(path.delimiter);
         const env: NodeJS.ProcessEnv = { ...process.env, PATH: enrichedPath };
         if (npmGlobalPrefix) {
@@ -422,20 +454,15 @@ export function createLoginRoutes(): Router {
         return;
       }
 
-      // Build enriched PATH (same pattern as installation-manager.ts)
+      // Build enriched PATH (same pattern as installation-manager.ts); OS-specific for Linux, macOS, Windows.
       const home = homedir();
       const npmGlobalPrefix = home ? path.join(home, '.npm-global') : '';
       const npmGlobalBin = npmGlobalPrefix
         ? (process.platform === 'win32' ? npmGlobalPrefix : path.join(npmGlobalPrefix, 'bin'))
         : '';
-      const extraPaths = [
-        npmGlobalBin,
-        '/usr/local/bin',
-        '/opt/homebrew/bin',
-        '/opt/homebrew/sbin',
-        join(home, '.local', 'bin'),
-      ];
-      const currentPath = process.env.PATH || '/usr/bin:/bin';
+      const extraPaths = getExtraPathDirectories(home || '', npmGlobalBin);
+      const defaultPath = process.platform === 'win32' ? 'C:\\Windows\\System32' : '/usr/bin:/bin';
+      const currentPath = process.env.PATH || process.env.Path || defaultPath;
       const enrichedPath = [currentPath, ...extraPaths].filter(Boolean).join(path.delimiter);
       const env: NodeJS.ProcessEnv = { ...process.env, PATH: enrichedPath };
       if (npmGlobalPrefix) {

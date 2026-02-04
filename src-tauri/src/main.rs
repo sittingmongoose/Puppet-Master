@@ -400,6 +400,18 @@ fn main() {
                 if !wait_for_server(&url) {
                     log::warn!("Server not ready; navigating anyway");
                 }
+                // Linux/Windows: extra delay so backend async setup (DI, platform routes) can finish.
+                // Retry loop with cap (4 x 200ms) instead of one 800ms block for better behavior on slow machines.
+                #[cfg(any(target_os = "linux", target_os = "windows"))]
+                {
+                    const INTERVAL_MS: u64 = 200;
+                    const MAX_WAIT_MS: u64 = 800;
+                    let mut waited = 0u64;
+                    while waited < MAX_WAIT_MS {
+                        std::thread::sleep(Duration::from_millis(INTERVAL_MS));
+                        waited += INTERVAL_MS;
+                    }
+                }
                 window.navigate(url)?;
             } else {
                 log::info!("Using bundled frontend");

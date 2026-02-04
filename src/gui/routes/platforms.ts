@@ -8,10 +8,24 @@ import type { Router, Request, Response } from 'express';
 import { Router as createRouter } from 'express';
 import { existsSync, readdirSync } from 'fs';
 import { join } from 'path';
+import { platform as osPlatform } from 'node:os';
 import { PlatformDetector, type PlatformStatus } from '../../platforms/platform-detector.js';
 import { InstallationManager } from '../../doctor/installation-manager.js';
 import { ConfigManager } from '../../config/config-manager.js';
 import type { Platform } from '../../types/config.js';
+
+/** Platform-specific PATH hint when install succeeds but CLI is not runnable (for Linux, Windows, macOS). */
+function getPathHintForInstallVerify(): string {
+  switch (osPlatform()) {
+    case 'win32':
+      return 'Add the install directory to PATH (e.g. %USERPROFILE%\\.npm-global if you used npm, or the winget install location).';
+    case 'darwin':
+      return 'Add the install directory to PATH (e.g. ~/.local/bin if you used the install script, ~/.npm-global/bin if you used npm, or ensure /opt/homebrew/bin is in PATH if you used brew).';
+    case 'linux':
+    default:
+      return 'Add the install directory to PATH (e.g. ~/.local/bin if you used the install script, or ~/.npm-global/bin if you used npm).';
+  }
+}
 
 /**
  * Error response interface
@@ -254,7 +268,7 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
             if (!status.installed) {
               res.status(500).json({
                 success: false,
-                error: `Install completed but ${platform} CLI is not runnable. Add the install directory to PATH (e.g. ~/.npm-global/bin) and try again.`,
+                error: `Install completed but ${platform} CLI is not runnable. ${getPathHintForInstallVerify()}`,
                 output: result.output,
                 command: result.command,
                 code: 'INSTALL_VERIFY_FAILED',

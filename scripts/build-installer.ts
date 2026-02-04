@@ -653,7 +653,8 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
   }
 
   // 5b) Rebuild native modules with bundled Node so ABI matches (e.g. better-sqlite3)
-  const nodeBin = path.join(nodeDir, 'bin');
+  // Windows: node.exe is in node root; Unix: node is in node/bin
+  const nodeBin = args.platform === 'win32' ? nodeDir : path.join(nodeDir, 'bin');
   const pathEnv = `${nodeBin}${path.delimiter}${process.env.PATH ?? ''}`;
   console.log('\n🔨 Rebuilding native modules for bundled Node...\n');
   // Windows: Ensure better-sqlite3 is rebuilt properly for the bundled Node version

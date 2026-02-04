@@ -325,7 +325,10 @@ export default function ConfigPage() {
         setPlatformStatus(status.platforms);
         setInstalledPlatforms(status.installedPlatforms as Platform[]);
       } else {
-        setError(result.error || `Failed to install ${platform}`);
+        const parts = [result.error ?? `Failed to install ${platform}`];
+        if (result.code) parts.push(`(${result.code})`);
+        if (result.output?.trim()) parts.push(result.output.trim());
+        setError(parts.join(' '));
       }
     } catch (err) {
       setError(getErrorMessage(err, `Failed to install ${platform}`));

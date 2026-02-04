@@ -717,13 +717,54 @@ export async function getInstalledPlatforms(): Promise<{ platforms: string[] }> 
 }
 
 /**
- * Install a platform
+ * Install platform response (success or failure with server error/output for wizard display)
  */
-export async function installPlatform(platform: string, dryRun = false): Promise<{ success: boolean; output?: string; error?: string; command?: string }> {
-  return fetchJSON('/api/platforms/install', {
+export interface InstallPlatformResult {
+  success: boolean;
+  output?: string;
+  error?: string;
+  command?: string;
+  code?: string;
+}
+
+/** Parsed JSON body from install endpoint (success or error response). */
+interface InstallPlatformResponseBody {
+  success?: boolean;
+  error?: string;
+  output?: string;
+  command?: string;
+  code?: string;
+}
+
+/**
+ * Install a platform.
+ * On 4xx/5xx returns the response body (success: false, error, output, code) instead of throwing
+ * so the wizard can surface server error and install output to the user.
+ */
+export async function installPlatform(platform: string, dryRun = false): Promise<InstallPlatformResult> {
+  const url = `${getApiBaseUrl()}/api/platforms/install`;
+  const response = await fetch(url, {
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ platform, dryRun }),
   });
+  const body: InstallPlatformResponseBody = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    return {
+      success: false,
+      error: body.error ?? response.statusText,
+      output: body.output,
+      code: body.code,
+      command: body.command,
+    };
+  }
+  return {
+    success: body.success ?? true,
+    output: body.output,
+    error: body.error,
+    command: body.command,
+    code: body.code,
+  };
 }
 
 /**

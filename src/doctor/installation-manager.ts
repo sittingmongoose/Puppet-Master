@@ -349,14 +349,14 @@ export class InstallationManager {
     });
 
     // GitHub Copilot CLI installation (used by SDK)
-    // Platform-specific methods per official docs: winget (Windows), brew (macOS), npm/script (Linux)
-    // Fallback to npm -g so install works when winget/brew unavailable. Package: @github/copilot (Node 22+ for npm).
+    // Windows: winget then npm fallback. macOS: brew then official script then npm. Linux: official script then npm.
+    // Official script (curl -fsSL https://gh.io/copilot-install | bash) installs binary to ~/.local/bin, no Node required.
     const copilotCommand =
       this.getCurrentPlatform() === 'win32'
         ? `winget install --id GitHub.Copilot --accept-package-agreements --accept-source-agreements || npm install -g --prefix ${npmGlobalPrefixArg} @github/copilot`
         : this.getCurrentPlatform() === 'darwin'
-          ? `brew install copilot-cli || npm install -g --prefix ${npmGlobalPrefixArg} @github/copilot`
-          : `npm install -g --prefix ${npmGlobalPrefixArg} @github/copilot`;
+          ? `brew install copilot-cli || (curl -fsSL https://gh.io/copilot-install | bash) || npm install -g --prefix ${npmGlobalPrefixArg} @github/copilot`
+          : `(curl -fsSL https://gh.io/copilot-install | bash) || npm install -g --prefix ${npmGlobalPrefixArg} @github/copilot`;
     this.registerCommand({
       check: 'copilot-cli',
       command: copilotCommand,

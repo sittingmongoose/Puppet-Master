@@ -15,7 +15,15 @@ import { Checkbox } from '@/components/ui';
 import { StatusBadge } from '@/components/shared';
 import { api, getErrorMessage, type PlatformStatusType } from '@/lib';
 import type { Platform } from '@/types';
-import type { PlatformAuthInfo } from '@/lib/api';
+import type { PlatformAuthInfo, InstallPlatformResult } from '@/lib/api';
+
+/** Build user-visible message from install API failure (error, output, code). */
+function formatInstallError(result: InstallPlatformResult, platformName: string): string {
+  const parts: string[] = [result.error ?? `Failed to install ${platformName}`];
+  if (result.code) parts.push(`(${result.code})`);
+  if (result.output?.trim()) parts.push('\n' + result.output.trim());
+  return parts.join(' ');
+}
 
 /**
  * Platform display names
@@ -143,7 +151,7 @@ export function PlatformSetupWizard({
           setSelectedPlatforms((prev) => [...prev, platform]);
         }
       } else {
-        setError(result.error || `Failed to install ${PLATFORM_NAMES[platform]}`);
+        setError(formatInstallError(result, PLATFORM_NAMES[platform]));
       }
     } catch (err) {
       setError(getErrorMessage(err, `Failed to install ${PLATFORM_NAMES[platform]}`));
@@ -167,7 +175,7 @@ export function PlatformSetupWizard({
       try {
         const result = await api.installPlatform(platform);
         if (!result.success) {
-          errors.push(`${PLATFORM_NAMES[platform]}: ${result.error || 'failed'}`);
+          errors.push(`${PLATFORM_NAMES[platform]}: ${formatInstallError(result, PLATFORM_NAMES[platform])}`);
         }
       } catch (err) {
         errors.push(`${PLATFORM_NAMES[platform]}: ${getErrorMessage(err, 'failed')}`);
@@ -566,7 +574,7 @@ export function PlatformSetupWizard({
               <div className="flex items-start justify-between gap-md">
                 <div className="flex-1">
                   <div className="flex items-center gap-sm mb-xs">
-                    <span className="font-bold text-lg">GitHub Login</span>
+                    <span className="font-bold text-lg">GitHub Copilot</span>
                     {(() => {
                       const badge = getAuthBadgeProps('copilot');
                       return (
@@ -580,7 +588,7 @@ export function PlatformSetupWizard({
                     })()}
                   </div>
                   <p className="text-sm text-ink-faded mt-xs">
-                    Sign in with GitHub (via <span className="font-mono">gh auth login</span>) to enable Git operations.
+                    Sign in with GitHub (via <span className="font-mono">gh auth login</span>) to use the GitHub Copilot CLI. The same account is used for Git operations; ensure your token has Copilot scope if you use Copilot.
                   </p>
                 </div>
                 <div className="flex items-center gap-sm">
@@ -612,7 +620,7 @@ export function PlatformSetupWizard({
       closeOnEscape={false}
       footer={renderFooter()}
     >
-      <div className="overflow-y-auto max-h-[70vh] min-h-0 pr-sm">
+      <div className="pr-sm">
         {step === 'install' ? renderInstallStep() : renderAuthStep()}
       </div>
     </Modal>

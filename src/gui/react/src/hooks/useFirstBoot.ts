@@ -9,7 +9,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { api } from '@/lib';
 
-const MAX_RETRIES = 3;
+const MAX_RETRIES = 5;
 const RETRY_DELAY_MS = 1500;
 
 /**
@@ -79,8 +79,31 @@ export function useFirstBoot(): FirstBootResult {
     });
   }, []);
 
+  // Defer API calls until document ready (helps Linux WebView first paint)
   useEffect(() => {
-    checkFirstBoot();
+    const DOC_READY_FALLBACK_MS = 2000;
+    let done = false;
+
+    const run = () => {
+      if (done) return;
+      done = true;
+      checkFirstBoot();
+    };
+
+    if (typeof document !== 'undefined' && document.readyState === 'complete') {
+      run();
+      return;
+    }
+
+    const fallback = setTimeout(run, DOC_READY_FALLBACK_MS);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('load', run);
+      return () => {
+        window.removeEventListener('load', run);
+        clearTimeout(fallback);
+      };
+    }
+    clearTimeout(fallback);
   }, [checkFirstBoot]);
 
   return {

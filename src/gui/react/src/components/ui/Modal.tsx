@@ -91,7 +91,7 @@ export function Modal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto py-lg"
+      className="fixed inset-0 z-50 flex items-center justify-center p-md overflow-y-auto"
       onClick={handleBackdropClick}
     >
       {/* Backdrop */}
@@ -100,7 +100,7 @@ export function Modal({
         aria-hidden="true"
       />
       
-      {/* Modal panel */}
+      {/* Modal panel: constrained height so it fits in viewport; single scroll in content */}
       <div
         ref={modalRef}
         role="dialog"
@@ -108,19 +108,21 @@ export function Modal({
         aria-labelledby={title ? 'modal-title' : undefined}
         tabIndex={-1}
         className={`
-          relative
+          relative flex flex-col
           w-full ${sizeClasses[size]}
-          mx-md
+          max-h-[90vh]
+          my-auto
           bg-paper-cream dark:bg-paper-dark
           border-thick border-ink-black dark:border-ink-light
           shadow-panel dark:shadow-panel-dark
           focus:outline-none
-          animate-in fade-in zoom-in-95 duration-200
+          opacity-100
+          motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95 motion-safe:duration-200
         `}
       >
-        {/* Header */}
+        {/* Header - shrink to fit */}
         {title && (
-          <div className="flex items-center justify-between px-lg py-md border-b-medium border-ink-black dark:border-ink-light">
+          <div className="flex shrink-0 items-center justify-between px-lg py-md border-b-medium border-ink-black dark:border-ink-light">
             <h2
               id="modal-title"
               className="font-display font-bold text-xl uppercase tracking-wider text-ink-black dark:text-ink-light"
@@ -140,14 +142,14 @@ export function Modal({
           </div>
         )}
 
-        {/* Content */}
-        <div className="px-lg py-md max-h-[calc(90vh-120px)] overflow-y-auto">
+        {/* Content - single scroll area, can scroll to top */}
+        <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-lg py-md">
           {children}
         </div>
 
-        {/* Footer */}
+        {/* Footer - shrink to fit */}
         {footer && (
-          <div className="flex justify-end gap-sm px-lg py-md border-t-medium border-ink-black dark:border-ink-light">
+          <div className="flex shrink-0 justify-end gap-sm px-lg py-md border-t-medium border-ink-black dark:border-ink-light">
             {footer}
           </div>
         )}
