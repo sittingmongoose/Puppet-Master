@@ -198,6 +198,57 @@ fn wait_for_server(url: &Url) -> bool {
     false
 }
 
+/// Wait for platform routes (first-boot, etc.) to be ready. Call after wait_for_server.
+/// Returns true if /api/platforms/first-boot responds 200, false on timeout.
+fn wait_for_platform_routes(url: &Url) -> bool {
+    let host = match url.host_str() {
+        Some(h) => h.to_string(),
+        None => return false,
+    };
+    let port = url.port().unwrap_or(3847);
+    const MAX_ATTEMPTS: u32 = 20;
+    const INTERVAL_MS: u64 = 500;
+
+    let addr = match format!("{}:{}", host, port).parse::<std::net::SocketAddr>() {
+        Ok(a) => a,
+        Err(_) => return false,
+    };
+
+    for attempt in 1..=MAX_ATTEMPTS {
+        if let Ok(mut stream) = TcpStream::connect_timeout(&addr, Duration::from_millis(1000)) {
+            let _ = stream.set_read_timeout(Some(Duration::from_millis(2000)));
+            let _ = stream.set_write_timeout(Some(Duration::from_millis(1000)));
+            let req = format!(
+                "GET /api/platforms/first-boot HTTP/1.1\r\nHost: {}:{}\r\nConnection: close\r\n\r\n",
+                host, port
+            );
+            if stream.write_all(req.as_bytes()).is_ok() {
+                let mut buf = [0u8; 512];
+                if let Ok(n) = stream.read(&mut buf) {
+                    if n > 0 {
+                        let head = String::from_utf8_lossy(&buf[..n.min(64)]);
+                        if head.starts_with("HTTP/1.1 200") || head.starts_with("HTTP/1.0 200") {
+                            log::info!(
+                                "Platform routes ready (/api/platforms/first-boot) after {} attempt(s)",
+                                attempt
+                            );
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        if attempt < MAX_ATTEMPTS {
+            std::thread::sleep(Duration::from_millis(INTERVAL_MS));
+        }
+    }
+    log::warn!(
+        "Platform routes not ready after {}s, navigating anyway",
+        (MAX_ATTEMPTS as u64) * INTERVAL_MS / 1000
+    );
+    false
+}
+
 fn main() {
     IS_QUITTING.store(false, Ordering::Relaxed);
 
@@ -400,6 +451,8 @@ fn main() {
                 if !wait_for_server(&url) {
                     log::warn!("Server not ready; navigating anyway");
                 }
+                // Wait for platform routes so wizard won't show "load failed"
+                wait_for_platform_routes(&url);
                 // Linux/Windows: extra delay so backend async setup (DI, platform routes) can finish.
                 // Retry loop with cap (4 x 200ms) instead of one 800ms block for better behavior on slow machines.
                 #[cfg(any(target_os = "linux", target_os = "windows"))]

@@ -653,19 +653,28 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
   }
 
   // 5b) Rebuild native modules with bundled Node so ABI matches (e.g. better-sqlite3)
-  // Windows: node.exe is in node root; Unix: node is in node/bin
-  const nodeBin = args.platform === 'win32' ? nodeDir : path.join(nodeDir, 'bin');
-  const pathEnv = `${nodeBin}${path.delimiter}${process.env.PATH ?? ''}`;
+  // Windows: invoke bundled node.exe directly (bypass PATH) so node-gyp uses correct Node ABI
+  // Unix: use PATH with nodeDir/bin so npm/rebuild uses bundled Node
   console.log('\n🔨 Rebuilding native modules for bundled Node...\n');
-  // Windows: Ensure better-sqlite3 is rebuilt properly for the bundled Node version
-  // This prevents "Error opening file for writing" during NSIS install
   // Try multiple times with delays to handle transient file locks
   let rebuildSuccess = false;
   const maxRetries = 3;
   
+  const runRebuild = async (): Promise<void> => {
+    if (args.platform === 'win32') {
+      const nodeExe = path.join(nodeDir, 'node.exe');
+      const npmCli = path.join(nodeDir, 'node_modules', 'npm', 'bin', 'npm-cli.js');
+      await run(nodeExe, [npmCli, 'rebuild'], { cwd: appDir, shell: false });
+    } else {
+      const nodeBin = path.join(nodeDir, 'bin');
+      const pathEnv = `${nodeBin}${path.delimiter}${process.env.PATH ?? ''}`;
+      await run('npm', ['rebuild'], { cwd: appDir, env: { ...process.env, PATH: pathEnv } });
+    }
+  };
+
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      await run('npm', ['rebuild'], { cwd: appDir, env: { ...process.env, PATH: pathEnv } });
+      await runRebuild();
       rebuildSuccess = true;
       console.log('  ✓ Native modules rebuilt successfully');
       break;

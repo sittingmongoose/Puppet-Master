@@ -50,6 +50,31 @@ function AppContent() {
     }
   };
 
+  // Defer mounting main app (and thus protected API calls like Dashboard getState) until
+  // first-boot check is done and wizard is not shown. Avoids 401 "Authentication required"
+  // on first boot when the wizard is open.
+  if (firstBoot.isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-ink-faded">
+        <p>Starting...</p>
+      </div>
+    );
+  }
+
+  if (showWizard) {
+    return (
+      <div className="min-h-screen">
+        <PlatformSetupWizard
+          isOpen
+          onComplete={handleWizardComplete}
+          onSkip={handleWizardSkip}
+          connectionError={firstBoot.error}
+          onRetryConnection={firstBoot.retry}
+        />
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="min-h-screen">
@@ -62,7 +87,7 @@ function AppContent() {
         </main>
       </div>
       <PlatformSetupWizard
-        isOpen={showWizard}
+        isOpen={false}
         onComplete={handleWizardComplete}
         onSkip={handleWizardSkip}
         connectionError={firstBoot.error}

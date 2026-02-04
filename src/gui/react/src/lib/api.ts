@@ -59,19 +59,40 @@ export function getApiBaseUrl(): string {
 let authToken: string | null = null;
 let authTokenPromise: Promise<string | null> | null = null;
 
+/**
+ * Validate stored token against server (e.g. after restart server has new token).
+ * Fetches /api/auth/status and updates in-memory and localStorage if server token differs.
+ * Non-blocking: does not delay getAuthToken() return.
+ */
+function validateStoredTokenInBackground(stored: string): void {
+  fetch(`${getApiBaseUrl()}/api/auth/status`)
+    .then((res) => (res.ok ? res.json() : null))
+    .then((data: { enabled?: boolean; token?: string } | null) => {
+      if (data?.enabled && typeof data.token === 'string' && data.token !== stored) {
+        authToken = data.token;
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('rwm-auth-token', data.token);
+        }
+      }
+    })
+    .catch(() => { /* ignore */ });
+}
+
 async function getAuthToken(): Promise<string | null> {
   // Check localStorage first
   const stored = localStorage.getItem('rwm-auth-token');
   if (stored) {
     authToken = stored;
+    // Optional: validate against server in background so we pick up new token after restart
+    validateStoredTokenInBackground(stored);
     return stored;
   }
-  
+
   // If already fetching, wait for that
   if (authTokenPromise) {
     return authTokenPromise;
   }
-  
+
   // Fetch auth status to get token
   authTokenPromise = (async () => {
     try {
@@ -89,7 +110,7 @@ async function getAuthToken(): Promise<string | null> {
     }
     return null;
   })();
-  
+
   const token = await authTokenPromise;
   authTokenPromise = null;
   return token;

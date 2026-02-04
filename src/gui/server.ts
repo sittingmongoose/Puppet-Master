@@ -284,9 +284,11 @@ export class GuiServer {
       this.app.use((req, res, next) => {
         // Allow auth-related endpoints without authentication
         // P0-G07: Also allow /api/login/* routes (platform auth status, not GUI auth)
+        // Allow /api/config/* and /api/platforms/* for onboarding wizard (no token required)
         if (
           req.path.startsWith('/api/auth/') ||
           req.path.startsWith('/api/login/') ||
+          req.path.startsWith('/api/config/') ||
           req.path.startsWith('/api/platforms/') ||
           req.path === '/api/ledger' ||
           req.path.startsWith('/api/ledger/') ||

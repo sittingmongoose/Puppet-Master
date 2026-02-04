@@ -91,7 +91,7 @@ export function Modal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-md overflow-y-auto"
+      className="fixed inset-0 z-50 flex flex-col"
       onClick={handleBackdropClick}
     >
       {/* Backdrop */}
@@ -99,27 +99,27 @@ export function Modal({
         className="absolute inset-0 bg-ink-black/70 dark:bg-ink-black/80"
         aria-hidden="true"
       />
-      
-      {/* Modal panel: constrained height so it fits in viewport; single scroll in content */}
-      <div
-        ref={modalRef}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={title ? 'modal-title' : undefined}
-        tabIndex={-1}
-        className={`
-          relative flex flex-col
-          w-full ${sizeClasses[size]}
-          max-h-[90vh]
-          my-auto
-          bg-paper-cream dark:bg-paper-dark
-          border-thick border-ink-black dark:border-ink-light
-          shadow-panel dark:shadow-panel-dark
-          focus:outline-none
-          opacity-100
-          motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95 motion-safe:duration-200
-        `}
-      >
+      {/* Scroll container: align modal to top so scrolling to top shows the header */}
+      <div className="relative flex-1 min-h-0 overflow-y-auto overflow-x-hidden flex justify-center items-start pt-lg pb-lg px-md">
+        {/* Modal panel: max height so it fits; no vertical margin so top stays visible when overlay scroll is 0 */}
+        <div
+          ref={modalRef}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby={title ? 'modal-title' : undefined}
+          tabIndex={-1}
+          className={`
+            relative flex flex-col flex-shrink-0
+            w-full ${sizeClasses[size]}
+            max-h-[82vh]
+            bg-paper-cream dark:bg-paper-dark
+            border-thick border-ink-black dark:border-ink-light
+            shadow-panel dark:shadow-panel-dark
+            focus:outline-none
+            opacity-100
+            motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95 motion-safe:duration-200
+          `}
+        >
         {/* Header - shrink to fit */}
         {title && (
           <div className="flex shrink-0 items-center justify-between px-lg py-md border-b-medium border-ink-black dark:border-ink-light">
@@ -153,6 +153,7 @@ export function Modal({
             {footer}
           </div>
         )}
+        </div>
       </div>
     </div>,
     document.body

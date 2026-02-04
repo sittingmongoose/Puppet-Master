@@ -315,12 +315,17 @@ function launchTauriGui(
   }
 
   try {
+    // Linux: WEBKIT_DISABLE_COMPOSITING_MODE=1 fixes blank screen with some WMs (bspwm, i3, etc.)
+    const spawnEnv =
+      process.platform === 'linux'
+        ? { ...process.env, WEBKIT_DISABLE_COMPOSITING_MODE: '1' }
+        : { ...process.env };
     // Do NOT use detached: true — keep Tauri as child so when user quits Tauri, we can exit Node
     // and avoid leaving the GUI server running in the background.
     const child = spawn(tauriBin, ['--server-url', serverUrl], {
       stdio: 'ignore',
       windowsHide: true,
-      env: { ...process.env },
+      env: spawnEnv,
     });
     if (verbose) {
       console.log(`  Launched Tauri GUI: ${tauriBin} --server-url ${serverUrl}`);

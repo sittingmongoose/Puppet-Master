@@ -2,7 +2,7 @@
 Type=Application
 Name=Puppet Master
 Comment=CLI orchestrator for AI development workflows
-Exec=puppet-master gui --host 127.0.0.1
+Exec=env WEBKIT_DISABLE_COMPOSITING_MODE=1 puppet-master gui --host 127.0.0.1
 Terminal=false
 Icon=/opt/puppet-master/puppet-master.png
 Categories=Utility;Development;

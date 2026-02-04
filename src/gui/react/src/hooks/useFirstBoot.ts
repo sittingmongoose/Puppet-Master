@@ -64,6 +64,13 @@ export function useFirstBoot(): FirstBootResult {
         return;
       } catch (err) {
         lastError = err instanceof Error ? err.message : 'Failed to check first boot status';
+        const code = err && typeof err === 'object' ? (err as { code?: string }).code : undefined;
+        if (
+          lastError === 'Authentication not initialized' ||
+          code === 'AUTH_NOT_INITIALIZED'
+        ) {
+          lastError = 'Server is starting, please wait...';
+        }
         if (attempt < MAX_RETRIES) {
           await new Promise((r) => setTimeout(r, RETRY_DELAY_MS));
         }

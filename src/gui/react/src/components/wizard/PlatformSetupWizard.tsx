@@ -106,7 +106,8 @@ export function PlatformSetupWizard({
       const installed = status.installedPlatforms as Platform[];
       setSelectedPlatforms(installed);
     } catch (err) {
-      setError(getErrorMessage(err, 'Failed to load platform status'));
+      const detail = getErrorMessage(err, 'Unknown error');
+      setError(detail.startsWith('Failed to load') ? detail : `Failed to load platform status: ${detail}`);
     } finally {
       setLoading(false);
     }
@@ -123,7 +124,8 @@ export function PlatformSetupWizard({
       }
       setAuthStatuses(statusMap);
     } catch (err) {
-      setError(getErrorMessage(err, 'Failed to load auth status'));
+      const detail = getErrorMessage(err, 'Unknown error');
+      setError(detail.startsWith('Failed to load') ? detail : `Failed to load auth status: ${detail}`);
     } finally {
       setAuthLoading(false);
     }
@@ -364,8 +366,11 @@ export function PlatformSetupWizard({
       )}
 
       {error && (
-        <div className="p-md bg-hot-magenta/10 border-medium border-hot-magenta text-hot-magenta" style={{ whiteSpace: 'pre-line' }}>
-          {error}
+        <div className="p-md bg-hot-magenta/10 border-medium border-hot-magenta text-hot-magenta flex flex-col gap-sm">
+          <span style={{ whiteSpace: 'pre-line' }}>{error}</span>
+          <Button variant="primary" onClick={() => { setError(null); void loadPlatformStatus(true); }}>
+            Retry
+          </Button>
         </div>
       )}
 
@@ -480,8 +485,11 @@ export function PlatformSetupWizard({
       </div>
 
       {error && (
-        <div className="p-md bg-hot-magenta/10 border-medium border-hot-magenta text-hot-magenta" style={{ whiteSpace: 'pre-line' }}>
-          {error}
+        <div className="p-md bg-hot-magenta/10 border-medium border-hot-magenta text-hot-magenta flex flex-col gap-sm">
+          <span style={{ whiteSpace: 'pre-line' }}>{error}</span>
+          <Button variant="primary" onClick={() => { setError(null); void loadAuthStatus(); }}>
+            Retry
+          </Button>
         </div>
       )}
 

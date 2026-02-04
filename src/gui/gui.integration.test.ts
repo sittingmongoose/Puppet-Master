@@ -976,6 +976,37 @@ describe('GUI Integration Tests', () => {
         await server.stop();
       }
     });
+
+    it('allows unauthenticated GET /api/platforms/first-boot when auth is enabled (onboarding)', async () => {
+      const eventBus = new EventBus();
+      const port = 30000 + Math.floor(Math.random() * 10000);
+      const server = new GuiServer(
+        {
+          port,
+          host: 'localhost',
+          corsOrigins: [`http://localhost:${port}`],
+          authEnabled: true,
+          useReactGui: true,
+        },
+        eventBus
+      );
+
+      await server.initializeAuth();
+      await server.start();
+      const baseUrl = server.getUrl();
+
+      try {
+        const response = await request(baseUrl)
+          .get('/api/platforms/first-boot')
+          .expect(200);
+
+        expect(response.body).toHaveProperty('isFirstBoot');
+        expect(response.body).toHaveProperty('missingConfig');
+        expect(response.body).toHaveProperty('missingCapabilities');
+      } finally {
+        await server.stop();
+      }
+    });
   });
 
   describe('CORS Policy', () => {
