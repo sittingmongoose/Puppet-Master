@@ -717,7 +717,11 @@ process.exit(0);
     } else {
       const nodeBin = path.join(nodeDir, 'bin');
       const pathEnv = `${nodeBin}${path.delimiter}${process.env.PATH ?? ''}`;
-      await run(path.join(nodeBin, 'node'), ['-e', betterSqliteLoadTest], { cwd: appDir, env: { ...process.env, PATH: pathEnv } });
+      await run(path.join(nodeBin, 'node'), ['-e', betterSqliteLoadTest], {
+        cwd: appDir,
+        env: { ...process.env, PATH: pathEnv },
+        shell: false,
+      });
     }
     console.log('  ✓ better-sqlite3 ABI compatibility verified');
   } catch (error) {
