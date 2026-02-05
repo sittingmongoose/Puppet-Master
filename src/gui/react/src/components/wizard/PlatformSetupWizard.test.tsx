@@ -16,6 +16,7 @@ vi.mock('@/lib', () => ({
     getPlatformStatus: vi.fn(),
     installPlatform: vi.fn(),
     selectPlatforms: vi.fn(),
+    getLoginStatus: vi.fn(),
   },
 }));
 
@@ -23,6 +24,7 @@ const mockApi = lib.api as unknown as {
   getPlatformStatus: ReturnType<typeof vi.fn>;
   installPlatform: ReturnType<typeof vi.fn>;
   selectPlatforms: ReturnType<typeof vi.fn>;
+  getLoginStatus: ReturnType<typeof vi.fn>;
 };
 
 describe('PlatformSetupWizard', () => {
@@ -82,8 +84,9 @@ describe('PlatformSetupWizard', () => {
       expect(screen.getByText('Codex')).toBeInTheDocument();
     });
 
-    // Check that installed platforms show as installed
-    expect(screen.getByText('Installed')).toBeInTheDocument();
+    // Check that installed platforms show as installed (StatusBadge upper-cases labels)
+    const installedBadges = screen.getAllByText('INSTALLED');
+    expect(installedBadges.length).toBeGreaterThan(0);
   });
 
   it('should allow selecting platforms', async () => {
@@ -187,7 +190,7 @@ describe('PlatformSetupWizard', () => {
       await user.click(codexInstallButton);
       
       await waitFor(() => {
-        expect(mockApi.installPlatform).toHaveBeenCalledWith('codex', false);
+        expect(mockApi.installPlatform).toHaveBeenCalledWith('codex');
       });
     }
   });
@@ -205,6 +208,13 @@ describe('PlatformSetupWizard', () => {
       uninstalledPlatforms: ['claude', 'gemini', 'copilot'],
     });
 
+    mockApi.getLoginStatus.mockResolvedValue({
+      platforms: [
+        { platform: 'cursor', status: 'authenticated' },
+        { platform: 'codex', status: 'authenticated' },
+      ],
+    });
+
     mockApi.selectPlatforms.mockResolvedValue({
       success: true,
       message: 'Platforms selected',
@@ -219,6 +229,15 @@ describe('PlatformSetupWizard', () => {
       />
     );
 
+    await waitFor(() => {
+      expect(screen.getByText('NEXT: LOGIN')).toBeInTheDocument();
+    });
+
+    // Click NEXT: LOGIN to navigate to auth step
+    const nextButton = screen.getByText('NEXT: LOGIN');
+    await user.click(nextButton);
+
+    // Wait for auth step to load
     await waitFor(() => {
       expect(screen.getByText('CONTINUE')).toBeInTheDocument();
     });
@@ -277,6 +296,13 @@ describe('PlatformSetupWizard', () => {
       uninstalledPlatforms: ['claude', 'gemini', 'copilot'],
     });
 
+    mockApi.getLoginStatus.mockResolvedValue({
+      platforms: [
+        { platform: 'cursor', status: 'not_authenticated' },
+        { platform: 'codex', status: 'not_authenticated' },
+      ],
+    });
+
     const user = userEvent.setup();
     render(
       <PlatformSetupWizard
@@ -287,16 +313,19 @@ describe('PlatformSetupWizard', () => {
     );
 
     await waitFor(() => {
+      expect(screen.getByText('NEXT: LOGIN')).toBeInTheDocument();
+    });
+
+    // Click NEXT: LOGIN to navigate to auth step
+    const nextButton = screen.getByText('NEXT: LOGIN');
+    await user.click(nextButton);
+
+    // Wait for auth step to load
+    await waitFor(() => {
       expect(screen.getByText('CONTINUE')).toBeInTheDocument();
     });
 
-    // Uncheck all platforms
-    const cursorCheckbox = screen.getByLabelText(/cursor/i);
-    const codexCheckbox = screen.getByLabelText(/codex/i);
-    
-    await user.click(cursorCheckbox);
-    await user.click(codexCheckbox);
-
+    // CONTINUE button should be disabled because no platforms are authenticated or skipped
     const continueButton = screen.getByText('CONTINUE');
     expect(continueButton).toBeDisabled();
   });

@@ -350,8 +350,18 @@ export class Orchestrator {
     await this.healthMonitor.startMonitoring(deps.platformRegistry.getAvailable());
 
     // Initialize SQLite event ledger (P2-T03)
+    // NOTE: better-sqlite3 is a native addon; in packaged apps the binary can be ABI-mismatched.
+    // The orchestrator should remain usable even if persistence is unavailable.
     const ledgerPath = join(this.projectRoot, '.puppet-master', 'events.db');
-    (this as unknown as { eventLedger: EventLedger | null }).eventLedger = new EventLedger(ledgerPath);
+    try {
+      (this as unknown as { eventLedger: EventLedger | null }).eventLedger = new EventLedger(ledgerPath);
+    } catch (error) {
+      (this as unknown as { eventLedger: EventLedger | null }).eventLedger = null;
+      console.error(
+        '[Orchestrator] Failed to initialize SQLite event ledger; continuing without event persistence:',
+        error instanceof Error ? error.message : String(error)
+      );
+    }
 
     // Initialize tier state manager
     (this as unknown as { tierStateManager: TierStateManager }).tierStateManager = new TierStateManager(deps.prdManager);

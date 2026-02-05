@@ -105,12 +105,20 @@ export class ConfigManager {
           const detector = new PlatformDetector(defaultConfig.cliPaths);
           const installed = await detector.getInstalledPlatforms();
           const adjustedConfig = adjustConfigForInstalledPlatforms(defaultConfig, installed);
-          await this.save(adjustedConfig);
-          console.log(`[ConfigManager] Replaced corrupt config with defaults at ${this.configPath}`);
+          try {
+            await this.save(adjustedConfig);
+            console.log(`[ConfigManager] Replaced corrupt config with defaults at ${this.configPath}`);
+          } catch (saveError) {
+            console.warn(`[ConfigManager] Failed to save replaced config: ${saveError instanceof Error ? saveError.message : String(saveError)}`);
+          }
           return adjustedConfig;
         } catch {
-          await this.save(defaultConfig);
-          console.log(`[ConfigManager] Replaced corrupt config with defaults at ${this.configPath} (platform detection failed)`);
+          try {
+            await this.save(defaultConfig);
+            console.log(`[ConfigManager] Replaced corrupt config with defaults at ${this.configPath} (platform detection failed)`);
+          } catch (saveError) {
+            console.warn(`[ConfigManager] Failed to save fallback config: ${saveError instanceof Error ? saveError.message : String(saveError)}`);
+          }
           return defaultConfig;
         }
       }
@@ -134,12 +142,20 @@ export class ConfigManager {
           const detector = new PlatformDetector(defaultConfig.cliPaths);
           const installed = await detector.getInstalledPlatforms();
           const adjustedConfig = adjustConfigForInstalledPlatforms(defaultConfig, installed);
-          await this.save(adjustedConfig);
-          console.log(`[ConfigManager] Replaced invalid config with defaults at ${this.configPath}`);
+          try {
+            await this.save(adjustedConfig);
+            console.log(`[ConfigManager] Replaced invalid config with defaults at ${this.configPath}`);
+          } catch (saveError) {
+            console.warn(`[ConfigManager] Failed to save replaced config: ${saveError instanceof Error ? saveError.message : String(saveError)}`);
+          }
           return adjustedConfig;
         } catch {
-          await this.save(defaultConfig);
-          console.log(`[ConfigManager] Replaced invalid config with defaults at ${this.configPath} (platform detection failed)`);
+          try {
+            await this.save(defaultConfig);
+            console.log(`[ConfigManager] Replaced invalid config with defaults at ${this.configPath} (platform detection failed)`);
+          } catch (saveError) {
+            console.warn(`[ConfigManager] Failed to save fallback config: ${saveError instanceof Error ? saveError.message : String(saveError)}`);
+          }
           return defaultConfig;
         }
       }

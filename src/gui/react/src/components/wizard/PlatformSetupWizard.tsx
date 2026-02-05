@@ -88,12 +88,13 @@ export function PlatformSetupWizard({
   const [loggingIn, setLoggingIn] = useState<string | null>(null);
   const [skippedAuths, setSkippedAuths] = useState<Set<string>>(new Set());
 
-  // Load platform status on mount
+  // Load platform status when opened and the server is reachable.
+  // If the first-boot check reports a connection error, wait until it clears.
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && !connectionError) {
       loadPlatformStatus();
     }
-  }, [isOpen]);
+  }, [isOpen, connectionError]);
 
   const loadPlatformStatus = async (forceRefresh = false) => {
     try {
@@ -381,7 +382,7 @@ export function PlatformSetupWizard({
         </div>
       )}
 
-      {error && (
+      {error && !connectionError && (
         <div className="p-md bg-hot-magenta/10 border-medium border-hot-magenta text-hot-magenta flex flex-col gap-sm">
           <span style={{ whiteSpace: 'pre-line' }}>{error}</span>
           <Button variant="primary" onClick={() => { setError(null); void loadPlatformStatus(true); }}>
@@ -500,7 +501,7 @@ export function PlatformSetupWizard({
         </p>
       </div>
 
-      {error && (
+      {error && !connectionError && (
         <div className="p-md bg-hot-magenta/10 border-medium border-hot-magenta text-hot-magenta flex flex-col gap-sm">
           <span style={{ whiteSpace: 'pre-line' }}>{error}</span>
           <Button variant="primary" onClick={() => { setError(null); void loadAuthStatus(); }}>

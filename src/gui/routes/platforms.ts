@@ -87,7 +87,7 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
     try {
       const forceRefresh = req.query.refresh === 'true';
       const configManager = new ConfigManager(configPath);
-      const config = await configManager.load();
+      const config = await configManager.load(true);
       const detector = new PlatformDetector(config.cliPaths);
       const result = await detector.detectInstalledPlatforms(forceRefresh);
 
@@ -99,10 +99,21 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
     } catch (error) {
       const err = error as Error;
       if (baseDirectory) console.warn('[platforms] GET /platforms/status failed (baseDirectory:', baseDirectory, '):', err.message);
-      res.status(500).json({
-        error: err.message || 'Failed to detect platforms',
-        code: 'DETECTION_ERROR',
-      } as ErrorResponse);
+
+      // Return a safe default payload so the wizard can still render and guide installation.
+      const platforms: Record<Platform, PlatformStatus> = {
+        cursor: { platform: 'cursor', installed: false, error: err.message || 'Detection failed' },
+        codex: { platform: 'codex', installed: false, error: err.message || 'Detection failed' },
+        claude: { platform: 'claude', installed: false, error: err.message || 'Detection failed' },
+        gemini: { platform: 'gemini', installed: false, error: err.message || 'Detection failed' },
+        copilot: { platform: 'copilot', installed: false, error: err.message || 'Detection failed' },
+      };
+
+      res.json({
+        platforms,
+        installedPlatforms: [],
+        uninstalledPlatforms: ['cursor', 'codex', 'claude', 'gemini', 'copilot'],
+      } as PlatformStatusResponse);
     }
   });
 
@@ -113,7 +124,7 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
   router.get('/platforms/installed', async (_req: Request, res: Response) => {
     try {
       const configManager = new ConfigManager(configPath);
-      const config = await configManager.load();
+      const config = await configManager.load(true);
       const detector = new PlatformDetector(config.cliPaths);
       const installed = await detector.getInstalledPlatforms();
 
@@ -121,10 +132,7 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
     } catch (error) {
       const err = error as Error;
       if (baseDirectory) console.warn('[platforms] GET /platforms/installed failed (baseDirectory:', baseDirectory, '):', err.message);
-      res.status(500).json({
-        error: err.message || 'Failed to get installed platforms',
-        code: 'DETECTION_ERROR',
-      } as ErrorResponse);
+      res.json({ platforms: [] });
     }
   });
 

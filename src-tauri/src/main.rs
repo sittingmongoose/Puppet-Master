@@ -128,18 +128,25 @@ fn wait_for_server(url: &Url) -> bool {
     const CONNECT_TIMEOUT_MS: u64 = 500;
     let timeout = Duration::from_millis(CONNECT_TIMEOUT_MS);
 
-    let addr = match format!("{}:{}", host, port).parse::<std::net::SocketAddr>() {
+    // Prefer IPv4 loopback for localhost to avoid ::1 vs 127.0.0.1 mismatches on first launch.
+    let resolved_host = if host == "localhost" {
+        "127.0.0.1".to_string()
+    } else {
+        host.clone()
+    };
+
+    let addr = match format!("{}:{}", resolved_host, port).parse::<std::net::SocketAddr>() {
         Ok(a) => a,
-        Err(_) => match std::net::ToSocketAddrs::to_socket_addrs(&(host.as_str(), port)) {
+        Err(_) => match std::net::ToSocketAddrs::to_socket_addrs(&(resolved_host.as_str(), port)) {
             Ok(mut addrs) => match addrs.next() {
                 Some(a) => a,
                 None => {
-                    log::warn!("No addresses resolved for {}:{}", host, port);
+                    log::warn!("No addresses resolved for {}:{}", resolved_host, port);
                     return false;
                 }
             },
             Err(e) => {
-                log::warn!("Failed to resolve {}:{}: {}", host, port, e);
+                log::warn!("Failed to resolve {}:{}: {}", resolved_host, port, e);
                 return false;
             }
         },
@@ -192,7 +199,7 @@ fn wait_for_server(url: &Url) -> bool {
     }
 
     log::warn!(
-        "GUI server not ready after {}s, navigating anyway",
+        "GUI server not ready after {}s",
         (MAX_ATTEMPTS as u64) * INTERVAL_MS / 1000
     );
     false
@@ -206,12 +213,25 @@ fn wait_for_platform_routes(url: &Url) -> bool {
         None => return false,
     };
     let port = url.port().unwrap_or(3847);
-    const MAX_ATTEMPTS: u32 = 20;
+    const MAX_ATTEMPTS: u32 = 40;
     const INTERVAL_MS: u64 = 500;
 
-    let addr = match format!("{}:{}", host, port).parse::<std::net::SocketAddr>() {
+    // Prefer IPv4 loopback for localhost to avoid ::1 vs 127.0.0.1 mismatches on first launch.
+    let resolved_host = if host == "localhost" {
+        "127.0.0.1".to_string()
+    } else {
+        host.clone()
+    };
+
+    let addr = match format!("{}:{}", resolved_host, port).parse::<std::net::SocketAddr>() {
         Ok(a) => a,
-        Err(_) => return false,
+        Err(_) => match std::net::ToSocketAddrs::to_socket_addrs(&(resolved_host.as_str(), port)) {
+            Ok(mut addrs) => match addrs.next() {
+                Some(a) => a,
+                None => return false,
+            },
+            Err(_) => return false,
+        },
     };
 
     for attempt in 1..=MAX_ATTEMPTS {
@@ -243,7 +263,7 @@ fn wait_for_platform_routes(url: &Url) -> bool {
         }
     }
     log::warn!(
-        "Platform routes not ready after {}s, navigating anyway",
+        "Platform routes not ready after {}s",
         (MAX_ATTEMPTS as u64) * INTERVAL_MS / 1000
     );
     false
@@ -448,24 +468,25 @@ fn main() {
                         format!("Invalid server URL '{}': {}", url_str, e),
                     ))
                 })?;
-                if !wait_for_server(&url) {
-                    log::warn!("Server not ready; navigating anyway");
-                }
-                // Wait for platform routes so wizard won't show "load failed"
-                wait_for_platform_routes(&url);
-                // Linux/Windows: extra delay so backend async setup (DI, platform routes) can finish.
-                // Retry loop with cap (4 x 200ms) instead of one 800ms block for better behavior on slow machines.
-                #[cfg(any(target_os = "linux", target_os = "windows"))]
-                {
-                    const INTERVAL_MS: u64 = 200;
-                    const MAX_WAIT_MS: u64 = 800;
-                    let mut waited = 0u64;
-                    while waited < MAX_WAIT_MS {
-                        std::thread::sleep(Duration::from_millis(INTERVAL_MS));
-                        waited += INTERVAL_MS;
+                if wait_for_server(&url) {
+                    // Wait for platform routes so wizard won't show "load failed"
+                    wait_for_platform_routes(&url);
+                    // Extra delay so backend async setup (DI, platform routes) can finish.
+                    // Retry loop with cap instead of one block for better behavior on slow machines.
+                    #[cfg(any(target_os = "linux", target_os = "windows", target_os = "macos"))]
+                    {
+                        const INTERVAL_MS: u64 = 200;
+                        const MAX_WAIT_MS: u64 = 2000;
+                        let mut waited = 0u64;
+                        while waited < MAX_WAIT_MS {
+                            std::thread::sleep(Duration::from_millis(INTERVAL_MS));
+                            waited += INTERVAL_MS;
+                        }
                     }
+                    window.navigate(url)?;
+                } else {
+                    log::warn!("Server not ready; staying on bundled frontend");
                 }
-                window.navigate(url)?;
             } else {
                 log::info!("Using bundled frontend");
                 // The window will automatically load from frontendDist configured in tauri.conf.json

@@ -664,11 +664,11 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
     if (args.platform === 'win32') {
       const nodeExe = path.join(nodeDir, 'node.exe');
       const npmCli = path.join(nodeDir, 'node_modules', 'npm', 'bin', 'npm-cli.js');
-      await run(nodeExe, [npmCli, 'rebuild'], { cwd: appDir, shell: false });
+      await run(nodeExe, [npmCli, 'rebuild', '--verbose'], { cwd: appDir, shell: false });
     } else {
       const nodeBin = path.join(nodeDir, 'bin');
       const pathEnv = `${nodeBin}${path.delimiter}${process.env.PATH ?? ''}`;
-      await run('npm', ['rebuild'], { cwd: appDir, env: { ...process.env, PATH: pathEnv } });
+      await run('npm', ['rebuild', '--verbose'], { cwd: appDir, env: { ...process.env, PATH: pathEnv } });
     }
   };
 
@@ -685,22 +685,45 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
         await new Promise(resolve => setTimeout(resolve, 3000));
       } else {
         console.error('❌ Native module rebuild failed after', maxRetries, 'attempts:', errorMsg);
-        // Fatal on Windows: installer postinstall validation depends on this
-        if (args.platform === 'win32') {
-          throw new Error(`Failed to rebuild native modules after ${maxRetries} attempts. better-sqlite3 ABI mismatch cannot be resolved.`);
-        }
-        console.warn('⚠️  Continuing build; installer postinstall will retry rebuild.');
+        // Fatal on all platforms: load test will verify ABI compatibility before packaging
+        throw new Error(`Failed to rebuild native modules after ${maxRetries} attempts. better-sqlite3 ABI mismatch cannot be resolved.`);
       }
     }
   }
   
-  // Validate better_sqlite3.node exists after rebuild (Windows-critical)
-  if (rebuildSuccess && args.platform === 'win32') {
+  // Validate better_sqlite3.node exists after rebuild (critical for all platforms)
+  if (rebuildSuccess) {
     const betterSqlitePath = path.join(appDir, 'node_modules', 'better-sqlite3', 'build', 'Release', 'better_sqlite3.node');
     if (!existsSync(betterSqlitePath)) {
-      throw new Error(`Critical: better_sqlite3.node not found at ${betterSqlitePath} after rebuild. Cannot proceed with Windows installer.`);
+      throw new Error(`Critical: better_sqlite3.node not found at ${betterSqlitePath} after rebuild. Cannot proceed with installer.`);
     }
     console.log('  ✓ Validated better_sqlite3.node exists');
+  }
+
+  // Load test: Verify better-sqlite3 is ABI-compatible with bundled Node
+  // This catches mismatch errors before packaging (when still fixable) vs at runtime (when too late)
+  console.log('\n✅ Testing better-sqlite3 ABI compatibility with bundled Node...\n');
+  const betterSqliteLoadTest = `
+const db = require('better-sqlite3');
+const { version } = process.versions;
+console.log('✓ better-sqlite3 loaded successfully with Node', version);
+process.exit(0);
+`;
+
+  try {
+    if (args.platform === 'win32') {
+      const nodeExe = path.join(nodeDir, 'node.exe');
+      await run(nodeExe, ['-e', betterSqliteLoadTest], { cwd: appDir, shell: false });
+    } else {
+      const nodeBin = path.join(nodeDir, 'bin');
+      const pathEnv = `${nodeBin}${path.delimiter}${process.env.PATH ?? ''}`;
+      await run(path.join(nodeBin, 'node'), ['-e', betterSqliteLoadTest], { cwd: appDir, env: { ...process.env, PATH: pathEnv } });
+    }
+    console.log('  ✓ better-sqlite3 ABI compatibility verified');
+  } catch (error) {
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    console.error('❌ better-sqlite3 failed to load:', errorMsg);
+    throw new Error(`better-sqlite3 ABI mismatch detected with bundled Node. Rebuild produced incompatible binary. Error: ${errorMsg}`);
   }
 
   // 6) Install Playwright Chromium into payload/playwright-browsers

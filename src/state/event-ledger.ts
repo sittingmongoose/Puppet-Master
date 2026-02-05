@@ -9,14 +9,55 @@
  * NOTE:
  * - Uses better-sqlite3 synchronous API for reliability and simplicity.
  * - Enables WAL mode for improved read/write concurrency (per Context7 docs).
+ *
+ * IMPORTANT:
+ * - better-sqlite3 is a native addon. In packaged apps (especially Windows), the
+ *   .node binary can be ABI-mismatched with the shipped Node runtime, causing a
+ *   hard crash on import. To keep the app usable, we lazy-load it at runtime.
  */
- 
-import Database from 'better-sqlite3';
+
+import { createRequire } from 'node:module';
 import { mkdirSync } from 'fs';
-import { dirname } from 'path';
 import { randomUUID } from 'crypto';
+import { dirname } from 'path';
 import type { OrchestratorContext, OrchestratorState } from '../types/state.js';
 import type { TierContext } from '../core/tier-state-machine.js';
+
+type BetterSqliteStatement = {
+  run(params: Record<string, unknown>): unknown;
+  all(params?: Record<string, unknown>): unknown;
+  get(params?: Record<string, unknown>): unknown;
+};
+
+type BetterSqliteDatabase = {
+  prepare(sql: string): BetterSqliteStatement;
+  exec(sql: string): void;
+  pragma(sql: string, options?: { simple?: boolean }): unknown;
+  close(): void;
+};
+
+type BetterSqliteDatabaseConstructor = new (path: string) => BetterSqliteDatabase;
+
+const require = createRequire(import.meta.url);
+let cachedDatabaseCtor: BetterSqliteDatabaseConstructor | null = null;
+
+function loadBetterSqlite3(): BetterSqliteDatabaseConstructor {
+  if (cachedDatabaseCtor) return cachedDatabaseCtor;
+
+  // better-sqlite3 is CJS; require() returns the ctor function directly.
+  const mod: unknown = require('better-sqlite3');
+  const ctor =
+    typeof mod === 'function'
+      ? mod
+      : (mod && typeof mod === 'object' && 'default' in mod ? (mod as { default: unknown }).default : null);
+
+  if (typeof ctor !== 'function') {
+    throw new Error('better-sqlite3 did not export a Database constructor');
+  }
+
+  cachedDatabaseCtor = ctor as BetterSqliteDatabaseConstructor;
+  return cachedDatabaseCtor;
+}
  
 export type LedgerEventOrder = 'asc' | 'desc';
  
@@ -62,10 +103,11 @@ type EventRow = {
 };
  
 export class EventLedger {
-  private readonly db: InstanceType<typeof Database>;
-  private readonly insertStmt: ReturnType<InstanceType<typeof Database>['prepare']>;
- 
+  private readonly db: BetterSqliteDatabase;
+  private readonly insertStmt: BetterSqliteStatement;
+
   constructor(dbPath: string) {
+    const Database = loadBetterSqlite3();
     mkdirSync(dirname(dbPath), { recursive: true });
     this.db = new Database(dbPath);
  
@@ -164,7 +206,7 @@ export class EventLedger {
       params.limit = limit;
     }
  
-    const rows = this.db.prepare(sql).all(params) as EventRow[];
+    const rows = this.db.prepare(sql).all(params) as unknown as EventRow[];
     return rows.map((row) => this.rowToEvent(row));
   }
  
@@ -173,7 +215,7 @@ export class EventLedger {
     const stmt = this.db.prepare(
       `SELECT id, timestamp, type, tier_id, session_id, data FROM events ${where} ORDER BY timestamp DESC LIMIT 1`
     );
-    const row = (type ? stmt.get({ type }) : stmt.get()) as EventRow | undefined;
+    const row = (type ? stmt.get({ type }) : stmt.get()) as unknown as EventRow | undefined;
     return row ? this.rowToEvent(row) : null;
   }
  
