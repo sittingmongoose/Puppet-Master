@@ -1039,6 +1039,34 @@ describe('GUI Integration Tests', () => {
       }
     });
 
+    it('allows tauri.localhost origins for bundled desktop frontend', async () => {
+      const eventBus = new EventBus();
+      const port = 30000 + Math.floor(Math.random() * 10000);
+      const server = new GuiServer(
+        {
+          port,
+          host: 'localhost',
+          corsOrigins: [`http://localhost:${port}`],
+          authEnabled: false,
+        },
+        eventBus
+      );
+
+      await server.start();
+      const baseUrl = server.getUrl();
+
+      try {
+        const response = await request(baseUrl)
+          .get('/api/status')
+          .set('Origin', 'http://tauri.localhost')
+          .expect(200);
+
+        expect(response.body).toHaveProperty('state');
+      } finally {
+        await server.stop();
+      }
+    });
+
     it('rejects non-localhost origins by default', async () => {
       const eventBus = new EventBus();
       const port = 30000 + Math.floor(Math.random() * 10000);

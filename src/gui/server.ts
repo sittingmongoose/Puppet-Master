@@ -334,7 +334,13 @@ export class GuiServer {
           callback(null, true);
           return;
         }
-        
+
+        // Allow Tauri bundled-webview origins (Tauri v2 serves bundled assets on tauri.localhost).
+        if (origin === 'http://tauri.localhost' || origin === 'https://tauri.localhost' || origin === 'tauri://localhost') {
+          callback(null, true);
+          return;
+        }
+
         // Check if origin is in configured allowlist (allowedOrigins takes precedence)
         if (this.config.allowedOrigins.includes(origin)) {
           callback(null, true);
@@ -852,6 +858,12 @@ export class GuiServer {
     this.wss = new WebSocketServer({
       server: this.server,
       path: '/events',
+    });
+
+    // Prevent unhandled 'error' events from terminating the process during bind failures
+    // (for example EADDRINUSE bubbling through the underlying HTTP server).
+    this.wss.on('error', (error) => {
+      console.error('[WebSocket] Server error:', error);
     });
 
     // P1-G17: Extended WebSocket type for heartbeat tracking

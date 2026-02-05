@@ -487,6 +487,18 @@ describe('guiAction', () => {
       expect(net.createServer).toHaveBeenCalled();
     }, 10000);
 
+    it('normalizes localhost to 127.0.0.1 for port bind checks', async () => {
+      void guiAction({ port: 3847, host: 'localhost' }).catch(() => {});
+
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
+      expect(mockNetServer.listen).toHaveBeenCalledWith(
+        3847,
+        '127.0.0.1',
+        expect.any(Function)
+      );
+    }, 10000);
+
     it('should exit with error if port is unavailable', async () => {
       // Mock port as unavailable - server.listen should trigger error
       mockNetServer.listen = vi.fn((_port: number, _host: string, _callback: () => void) => {

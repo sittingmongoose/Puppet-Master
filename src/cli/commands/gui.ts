@@ -225,6 +225,14 @@ async function checkExistingInstance(port: number, host: string): Promise<string
 }
 
 /**
+ * Normalize host for loopback checks so probing matches the actual bind host.
+ * On some systems localhost resolves to ::1 while the server binds 127.0.0.1.
+ */
+function normalizeBindHost(host: string): string {
+  return host === 'localhost' ? '127.0.0.1' : host;
+}
+
+/**
  * Wait for the local server to respond on /health, confirming it is ready to serve requests.
  * Retries up to maxAttempts times with a delay between attempts.
  * Increased wait time to prevent launching GUI before server is fully ready.
@@ -249,9 +257,10 @@ async function waitForServerReady(port: number, maxAttempts = 30, delayMs = 500)
  * Check if a port is available for binding
  */
 async function checkPortAvailable(port: number, host: string): Promise<boolean> {
+  const bindHost = normalizeBindHost(host);
   return new Promise((resolve) => {
     const server = net.createServer();
-    server.listen(port, host, () => {
+    server.listen(port, bindHost, () => {
       server.close(() => resolve(true));
     });
     server.on('error', () => resolve(false));
@@ -394,6 +403,7 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     // Determine port and host
     const requestedPort = options.port || 3847;
     const host = options.host || 'localhost';
+    const bindHost = normalizeBindHost(host);
 
     // C4 fix: Before starting a new server, check if an existing Puppet Master
     // instance is already running on the requested port. If so, just open the
@@ -402,11 +412,11 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       console.log(`Checking if port ${requestedPort} is available...`);
     }
     let port = requestedPort;
-    let portAvailable = await checkPortAvailable(port, host);
+    let portAvailable = await checkPortAvailable(port, bindHost);
 
     if (!portAvailable) {
       // Port is in use -- check if it's an existing Puppet Master instance
-      const existingUrl = await checkExistingInstance(port, host);
+      const existingUrl = await checkExistingInstance(port, bindHost);
       if (existingUrl) {
         console.log(`Puppet Master is already running at ${existingUrl}`);
         console.log('Opening existing instance...');
@@ -434,7 +444,7 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       const maxRetries = 10;
       for (let i = 1; i <= maxRetries && !portAvailable; i++) {
         port = requestedPort + i;
-        portAvailable = await checkPortAvailable(port, host);
+        portAvailable = await checkPortAvailable(port, bindHost);
       }
       if (portAvailable) {
         console.log(`Default port ${requestedPort} is in use, using port ${port} instead.`);

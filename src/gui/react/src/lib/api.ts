@@ -48,9 +48,169 @@ export function getErrorMessage(error: unknown, fallback: string): string {
  */
 export function getApiBaseUrl(): string {
   if (typeof window === 'undefined') return '';
+
+  if (resolvedApiBaseUrl) {
+    return resolvedApiBaseUrl;
+  }
+
   const origin = window.location.origin;
-  if (origin.startsWith('http://') || origin.startsWith('https://')) return origin;
-  return 'http://127.0.0.1:3847';
+  if (isDirectBackendOrigin(origin)) {
+    return origin;
+  }
+
+  const stored = getLocalStorageItem(API_BASE_STORAGE_KEY);
+  if (stored) {
+    return stored;
+  }
+
+  return DEFAULT_API_BASE_URL;
+}
+
+const DEFAULT_API_BASE_URL = 'http://127.0.0.1:3847';
+const API_BASE_STORAGE_KEY = 'rwm-api-base-url';
+const API_BASE_PORT_CANDIDATES = [3847, 3848, 3849, 3850, 3851, 3852, 3853, 3854, 3855, 3856, 3857];
+let resolvedApiBaseUrl: string | null = null;
+let resolvingApiBaseUrlPromise: Promise<string> | null = null;
+
+function getLocalStorageItem(key: string): string | null {
+  if (typeof localStorage === 'undefined') return null;
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function setLocalStorageItem(key: string, value: string): void {
+  if (typeof localStorage === 'undefined') return;
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    // Ignore storage failures (private mode / blocked storage)
+  }
+}
+
+function removeLocalStorageItem(key: string): void {
+  if (typeof localStorage === 'undefined') return;
+  try {
+    localStorage.removeItem(key);
+  } catch {
+    // Ignore storage failures
+  }
+}
+
+/**
+ * Tauri bundled windows can run from tauri.localhost or tauri://localhost.
+ * Those origins are frontend asset origins, not the Node API origin.
+ */
+function isTauriBundledOrigin(origin: string): boolean {
+  if (origin.startsWith('tauri://')) {
+    return true;
+  }
+
+  try {
+    const parsed = new URL(origin);
+    const host = parsed.hostname.toLowerCase();
+    return host === 'tauri.localhost' || host.endsWith('.tauri.localhost');
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Direct backend origin means the frontend is already loaded from the GUI server.
+ * In that case API calls should stay same-origin.
+ */
+function isDirectBackendOrigin(origin: string): boolean {
+  if (isTauriBundledOrigin(origin)) {
+    return false;
+  }
+  return origin.startsWith('http://') || origin.startsWith('https://');
+}
+
+async function probeApiBase(baseUrl: string): Promise<boolean> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 800);
+
+  try {
+    const response = await fetch(`${baseUrl}/health`, {
+      method: 'GET',
+      signal: controller.signal,
+    });
+
+    if (!response.ok) {
+      return false;
+    }
+
+    const body = await response.json().catch(() => null) as { status?: string } | null;
+    return body?.status === 'ok';
+  } catch {
+    return false;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+function buildLoopbackCandidates(): string[] {
+  const candidates: string[] = [];
+  const stored = getLocalStorageItem(API_BASE_STORAGE_KEY);
+
+  if (stored && stored.startsWith('http://')) {
+    candidates.push(stored);
+  }
+
+  for (const port of API_BASE_PORT_CANDIDATES) {
+    candidates.push(`http://127.0.0.1:${port}`);
+  }
+
+  return Array.from(new Set(candidates));
+}
+
+async function resolveApiBaseUrl(): Promise<string> {
+  if (typeof window === 'undefined') return '';
+
+  if (resolvedApiBaseUrl) {
+    return resolvedApiBaseUrl;
+  }
+
+  const origin = window.location.origin;
+  if (isDirectBackendOrigin(origin)) {
+    resolvedApiBaseUrl = origin;
+    return origin;
+  }
+
+  if (resolvingApiBaseUrlPromise) {
+    return resolvingApiBaseUrlPromise;
+  }
+
+  const currentPromise = (async () => {
+    const candidates = buildLoopbackCandidates();
+    const probeResults = await Promise.all(
+      candidates.map(async (candidate) => ({
+        candidate,
+        ok: await probeApiBase(candidate),
+      }))
+    );
+    const reachable = probeResults.find((result) => result.ok === true);
+    if (reachable) {
+      resolvedApiBaseUrl = reachable.candidate;
+      setLocalStorageItem(API_BASE_STORAGE_KEY, reachable.candidate);
+      return reachable.candidate;
+    }
+
+    // Last resort so the UI still has a deterministic endpoint.
+    resolvedApiBaseUrl = DEFAULT_API_BASE_URL;
+    return DEFAULT_API_BASE_URL;
+  })();
+
+  resolvingApiBaseUrlPromise = currentPromise;
+  try {
+    return await currentPromise;
+  } finally {
+    if (resolvingApiBaseUrlPromise === currentPromise) {
+      resolvingApiBaseUrlPromise = null;
+    }
+  }
 }
 
 /**
@@ -65,14 +225,13 @@ let authTokenPromise: Promise<string | null> | null = null;
  * Non-blocking: does not delay getAuthToken() return.
  */
 function validateStoredTokenInBackground(stored: string): void {
-  fetch(`${getApiBaseUrl()}/api/auth/status`)
+  resolveApiBaseUrl()
+    .then((baseUrl) => fetch(`${baseUrl}/api/auth/status`))
     .then((res) => (res.ok ? res.json() : null))
     .then((data: { enabled?: boolean; token?: string } | null) => {
       if (data?.enabled && typeof data.token === 'string' && data.token !== stored) {
         authToken = data.token;
-        if (typeof localStorage !== 'undefined') {
-          localStorage.setItem('rwm-auth-token', data.token);
-        }
+        setLocalStorageItem('rwm-auth-token', data.token);
       }
     })
     .catch(() => { /* ignore */ });
@@ -80,7 +239,7 @@ function validateStoredTokenInBackground(stored: string): void {
 
 async function getAuthToken(): Promise<string | null> {
   // Check localStorage first
-  const stored = localStorage.getItem('rwm-auth-token');
+  const stored = getLocalStorageItem('rwm-auth-token');
   if (stored) {
     authToken = stored;
     // Optional: validate against server in background so we pick up new token after restart
@@ -96,12 +255,13 @@ async function getAuthToken(): Promise<string | null> {
   // Fetch auth status to get token
   authTokenPromise = (async () => {
     try {
-      const response = await fetch(`${getApiBaseUrl()}/api/auth/status`);
+      const baseUrl = await resolveApiBaseUrl();
+      const response = await fetch(`${baseUrl}/api/auth/status`);
       if (response.ok) {
         const data = await response.json();
         if (data.enabled && data.token) {
           authToken = data.token;
-          localStorage.setItem('rwm-auth-token', data.token);
+          setLocalStorageItem('rwm-auth-token', data.token);
           return data.token;
         }
       }
@@ -131,9 +291,7 @@ export async function getGuiAuthToken(): Promise<string | null> {
 export function logoutGuiSession(): void {
   authToken = null;
   authTokenPromise = null;
-  if (typeof localStorage !== 'undefined') {
-    localStorage.removeItem('rwm-auth-token');
-  }
+  removeLocalStorageItem('rwm-auth-token');
 }
 
 /**
@@ -141,7 +299,8 @@ export function logoutGuiSession(): void {
  */
 async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
   const isApiPath = url.startsWith('/api/');
-  const fetchUrl = isApiPath ? `${getApiBaseUrl()}${url}` : url;
+  const apiBaseUrl = isApiPath ? await resolveApiBaseUrl() : '';
+  const fetchUrl = isApiPath ? `${apiBaseUrl}${url}` : url;
 
   // Skip auth for auth endpoints, login endpoints (platform auth, not GUI auth), and config endpoints (needed during onboarding)
   const needsAuth = isApiPath &&
@@ -175,7 +334,7 @@ async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
 
   // If we get 401, try refreshing token and retry once
   if (response.status === 401 && needsAuth && !authTokenPromise) {
-    localStorage.removeItem('rwm-auth-token');
+    removeLocalStorageItem('rwm-auth-token');
     authToken = null;
     const token = await getAuthToken();
     if (token) {
@@ -763,7 +922,8 @@ interface InstallPlatformResponseBody {
  * so the wizard can surface server error and install output to the user.
  */
 export async function installPlatform(platform: string, dryRun = false): Promise<InstallPlatformResult> {
-  const url = `${getApiBaseUrl()}/api/platforms/install`;
+  const baseUrl = await resolveApiBaseUrl();
+  const url = `${baseUrl}/api/platforms/install`;
   const response = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -923,7 +1083,8 @@ export const LOGOUT_SUPPORTED_PLATFORMS = ['github', 'copilot', 'codex'] as cons
  * Trigger CLI logout for a specific platform (where supported).
  */
 export async function logoutPlatform(platform: string): Promise<{ success: boolean; error?: string; code?: string }> {
-  const res = await fetch(`${getApiBaseUrl()}/api/login/${platform}/logout`, { method: 'POST' });
+  const baseUrl = await resolveApiBaseUrl();
+  const res = await fetch(`${baseUrl}/api/login/${platform}/logout`, { method: 'POST' });
   const data = await res.json().catch(() => ({})) as { success?: boolean; error?: string; code?: string };
   if (!res.ok) {
     return { success: false, error: data.error ?? res.statusText, code: data.code };
