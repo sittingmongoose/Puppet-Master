@@ -105,7 +105,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             name={name}
             value={value}
             checked={checked}
-            onChange={(e) => onChange(e.target.checked)}
+            onChange={(e) => { if (!disabled) onChange(e.target.checked); }}
             disabled={disabled}
             aria-invalid={error ? 'true' : undefined}
             aria-describedby={

@@ -9,7 +9,13 @@ vi.mock('@/lib', () => ({
     getConfig: vi.fn(),
     updateConfig: vi.fn(),
     getCursorCapabilities: vi.fn(),
+    getPlatformStatus: vi.fn().mockResolvedValue({ platforms: {} }),
+    getModels: vi.fn().mockResolvedValue({ models: {} }),
+    getGitInfo: vi.fn().mockResolvedValue({}),
+    installPlatform: vi.fn().mockResolvedValue({}),
+    uninstallSystem: vi.fn().mockResolvedValue({}),
   },
+  getErrorMessage: vi.fn().mockImplementation((_error: unknown, fallback: string) => fallback),
 }));
 
 const mockApi = lib.api as unknown as {

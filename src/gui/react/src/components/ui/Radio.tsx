@@ -105,7 +105,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
             name={name}
             value={value}
             checked={checked}
-            onChange={() => onChange(value)}
+            onChange={() => { if (!disabled) onChange(value); }}
             disabled={disabled}
             aria-invalid={error ? 'true' : undefined}
             aria-describedby={

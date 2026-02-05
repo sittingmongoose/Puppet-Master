@@ -10,7 +10,13 @@ vi.mock('@/lib', () => ({
     getConfig: vi.fn(),
     updateConfig: vi.fn(),
     getCursorCapabilities: vi.fn(),
+    getPlatformStatus: vi.fn().mockResolvedValue({ platforms: {} }),
+    getModels: vi.fn().mockResolvedValue({ models: {} }),
+    getGitInfo: vi.fn().mockResolvedValue({}),
+    installPlatform: vi.fn().mockResolvedValue({}),
+    uninstallSystem: vi.fn().mockResolvedValue({}),
   },
+  getErrorMessage: vi.fn().mockImplementation((_error: unknown, fallback: string) => fallback),
 }));
 
 const mockApi = lib.api as unknown as {
@@ -65,6 +71,14 @@ describe('ConfigPage', () => {
         claude: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 500 },
         codex: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 500 },
         cursor: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 500 },
+        gemini: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 500 },
+        copilot: { maxCallsPerRun: 100, maxCallsPerHour: 50, maxCallsPerDay: 500 },
+      },
+      advanced: {
+        logLevel: 'info',
+        processTimeout: 300000,
+        parallelIterations: 1,
+        intensiveLogging: false,
       },
     });
     mockApi.updateConfig.mockResolvedValue({ success: true });
@@ -168,11 +182,16 @@ describe('ConfigPage', () => {
     expect(screen.getByText(/Caution/)).toBeInTheDocument();
   });
 
-  it('shows loading state initially', () => {
-    // Make API hang
-    mockApi.getConfig.mockImplementation(() => new Promise(() => {}));
+  it('shows loading state initially', async () => {
+    // Reset modules so cachedConfig (module-level) is null again
+    vi.resetModules();
+    const { default: FreshConfigPage } = await import('./Config.js');
+    // Re-apply mocks after module reset
+    const freshLib = await import('@/lib');
+    const freshApi = freshLib.api as unknown as { getConfig: ReturnType<typeof vi.fn> };
+    freshApi.getConfig.mockImplementation(() => new Promise(() => {}));
     
-    render(<ConfigPage />);
+    render(<FreshConfigPage />);
     
     expect(screen.getByText('Loading configuration...')).toBeInTheDocument();
   });
@@ -268,7 +287,7 @@ describe('ConfigPage', () => {
     
     await waitFor(() => {
       expect(screen.getByText('Cursor CLI Capabilities')).toBeInTheDocument();
-      expect(screen.getByText(/agent/)).toBeInTheDocument();
+      expect(screen.getByText(/Binary:/)).toBeInTheDocument();
       expect(screen.getByText(/Models:/)).toBeInTheDocument();
     });
   });

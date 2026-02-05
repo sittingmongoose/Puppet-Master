@@ -13,6 +13,7 @@ vi.mock('@/stores', () => ({
 // Mock the lib
 vi.mock('@/lib', () => ({
   api: {
+    wizardUpload: vi.fn(),
     wizardGenerate: vi.fn(),
     wizardSave: vi.fn(),
     start: vi.fn(),
@@ -31,6 +32,7 @@ vi.mock('react-router-dom', async () => {
 
 const mockUseProjectStore = stores.useProjectStore as unknown as ReturnType<typeof vi.fn>;
 const mockApi = lib.api as unknown as {
+  wizardUpload: ReturnType<typeof vi.fn>;
   wizardGenerate: ReturnType<typeof vi.fn>;
   wizardSave: ReturnType<typeof vi.fn>;
   start: ReturnType<typeof vi.fn>;
@@ -62,7 +64,8 @@ describe('WizardPage', () => {
     });
 
     // Default API responses
-    mockApi.wizardGenerate.mockResolvedValue({ prd: 'Generated PRD content' });
+    mockApi.wizardUpload.mockResolvedValue({ parsed: { text: 'Build a REST API', format: 'text' } });
+    mockApi.wizardGenerate.mockResolvedValue({ prd: 'Generated PRD content', usedAI: true });
     mockApi.wizardSave.mockResolvedValue({ success: true });
     mockApi.start.mockResolvedValue({ success: true });
   });
@@ -225,8 +228,17 @@ describe('WizardPage', () => {
     fireEvent.click(screen.getByRole('button', { name: /GENERATE PRD/i }));
     
     await waitFor(() => {
+      expect(mockApi.wizardUpload).toHaveBeenCalledWith({
+        text: 'Build a REST API',
+        format: 'text',
+      });
       expect(mockApi.wizardGenerate).toHaveBeenCalledWith({
-        requirements: 'Build a REST API',
+        parsed: { text: 'Build a REST API', format: 'text' },
+        projectName: 'Test Project',
+        projectPath: '/path/to/project',
+        platform: 'cursor',
+        model: 'auto',
+        useAI: true,
       });
     });
   });

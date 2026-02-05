@@ -3,13 +3,40 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import DoctorPage from './Doctor.js';
 import * as lib from '@/lib';
 
+// Stateful mock store — setChecks actually updates component state via React
+vi.mock('@/stores/doctorStore', () => {
+  const { useState: _useState } = require('react');
+  return {
+    useDoctorStore: () => {
+      const [checks, setChecksState] = _useState([] as unknown[]);
+      const [platformStatus, setPlatformStatusState] = _useState({} as Record<string, unknown>);
+      const [selectedPlatforms, setSelectedPlatformsState] = _useState([] as string[]);
+      return {
+        checks,
+        platformStatus,
+        selectedPlatforms,
+        _hasHydrated: true,
+        setChecks: setChecksState,
+        setPlatformStatus: setPlatformStatusState,
+        setSelectedPlatforms: setSelectedPlatformsState,
+        setHasHydrated: () => {},
+        reset: () => { setChecksState([]); setPlatformStatusState({}); setSelectedPlatformsState([]); },
+      };
+    },
+  };
+});
+
 // Mock the lib
 vi.mock('@/lib', () => ({
   api: {
     getDoctorChecks: vi.fn(),
     runDoctorChecks: vi.fn(),
     fixDoctorCheck: vi.fn(),
+    getPlatformStatus: vi.fn().mockResolvedValue({ platforms: {}, installedPlatforms: [] }),
+    getModels: vi.fn().mockResolvedValue([]),
   },
+  APIError: class APIError extends Error { status: number; constructor(m: string, s: number) { super(m); this.status = s; } },
+  getErrorMessage: vi.fn((err: unknown, fallback: string) => err instanceof Error ? err.message : fallback),
 }));
 
 const mockApi = lib.api as unknown as {

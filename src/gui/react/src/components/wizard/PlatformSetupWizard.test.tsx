@@ -84,8 +84,8 @@ describe('PlatformSetupWizard', () => {
       expect(screen.getByText('Codex')).toBeInTheDocument();
     });
 
-    // Check that installed platforms show as installed (StatusBadge upper-cases labels)
-    const installedBadges = screen.getAllByText('INSTALLED');
+    // Check that installed platforms show as installed
+    const installedBadges = screen.getAllByText('Installed');
     expect(installedBadges.length).toBeGreaterThan(0);
   });
 

@@ -60,7 +60,9 @@ export function StatusBadge({
       : 'idle';
   const rawLabel = label ?? resolvedStatus ?? 'idle';
   const displayLabel =
-    typeof rawLabel === 'string' && rawLabel.length > 0 ? rawLabel.toUpperCase() : 'IDLE';
+    typeof rawLabel === 'string' && rawLabel.length > 0
+      ? (label != null ? rawLabel : rawLabel.toUpperCase())
+      : 'IDLE';
 
   if (variant === 'badge') {
     // Badge style (.status-badge)

@@ -130,7 +130,7 @@ function isDirectBackendOrigin(origin: string): boolean {
 
 async function probeApiBase(baseUrl: string): Promise<boolean> {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 800);
+  const timeout = setTimeout(() => controller.abort(), 400);
 
   try {
     const response = await fetch(`${baseUrl}/health`, {

@@ -9,8 +9,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { api } from '@/lib';
 
-const MAX_RETRIES = 12;
-const RETRY_DELAY_MS = 2000;
+const MAX_RETRIES = 8;
+const INITIAL_RETRY_DELAY_MS = 500;
 
 /**
  * First boot status
@@ -77,7 +77,9 @@ export function useFirstBoot(): FirstBootResult {
           lastError = 'Server is starting, please wait...';
         }
         if (attempt < MAX_RETRIES) {
-          await new Promise((r) => setTimeout(r, RETRY_DELAY_MS));
+          // Exponential backoff: 500, 1000, 2000, 2000, 2000, ...
+          const delay = Math.min(INITIAL_RETRY_DELAY_MS * Math.pow(2, attempt - 1), 2000);
+          await new Promise((r) => setTimeout(r, delay));
         }
       }
     }
@@ -91,12 +93,32 @@ export function useFirstBoot(): FirstBootResult {
     });
   }, []);
 
-  // Start first-boot check immediately. The retry loop handles the case where
-  // the server is not yet ready (common on first launch when Tauri navigates
-  // to the server URL after waiting). Previous code deferred for 2 seconds
-  // which added unnecessary latency on subsequent launches.
+  // Defer first-boot check until document is ready (helps Linux/macOS WebView first paint).
+  // Falls back to a short timeout so we don't wait indefinitely.
   useEffect(() => {
-    checkFirstBoot();
+    const DEFER_FALLBACK_MS = 300;
+    let done = false;
+
+    const run = () => {
+      if (done) return;
+      done = true;
+      checkFirstBoot();
+    };
+
+    if (typeof document !== 'undefined' && document.readyState === 'complete') {
+      run();
+      return;
+    }
+
+    const fallback = setTimeout(run, DEFER_FALLBACK_MS);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('load', run);
+      return () => {
+        window.removeEventListener('load', run);
+        clearTimeout(fallback);
+      };
+    }
+    return () => clearTimeout(fallback);
   }, [checkFirstBoot]);
 
   return {
