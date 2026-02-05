@@ -23,7 +23,10 @@ interface ErrorResponse {
  * Returns Express Router with history query endpoints.
  * SessionTracker is optional and can be null for initial implementation.
  */
-export function createHistoryRoutes(sessionTracker: SessionTracker | null): Router {
+export function createHistoryRoutes(trackerOrGetter: SessionTracker | null | (() => SessionTracker | null)): Router {
+  const getSessionTracker = typeof trackerOrGetter === 'function'
+    ? trackerOrGetter
+    : () => trackerOrGetter;
   const router = createRouter();
 
   /**
@@ -35,6 +38,7 @@ export function createHistoryRoutes(sessionTracker: SessionTracker | null): Rout
    */
   router.get('/history', async (req: Request, res: Response) => {
     try {
+      const sessionTracker = getSessionTracker();
       if (!sessionTracker) {
         return res.status(503).json({
           error: 'SessionTracker not available',
@@ -79,6 +83,7 @@ export function createHistoryRoutes(sessionTracker: SessionTracker | null): Rout
    */
   router.get('/history/:sessionId', async (req: Request, res: Response) => {
     try {
+      const sessionTracker = getSessionTracker();
       if (!sessionTracker) {
         return res.status(503).json({
           error: 'SessionTracker not available',

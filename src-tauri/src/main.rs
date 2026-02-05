@@ -459,34 +459,35 @@ fn main() {
                     ))
                 })?;
 
-            // If server URL is provided, wait for server then navigate; otherwise use bundled frontend
+            // If server URL is provided, wait for server in a background thread so the
+            // UI event loop is not blocked.  The window initially shows the bundled
+            // frontend (or a blank page); once the server is ready we navigate to it.
+            // This prevents the "not responding" freeze on Windows and the blank/slow
+            // first paint on macOS/Linux.
             if let Some(url_str) = server_url {
-                log::info!("Loading GUI from external server: {}", url_str);
+                log::info!("Will connect to external server: {}", url_str);
                 let url = Url::parse(&url_str).map_err(|e| {
                     tauri::Error::Io(std::io::Error::new(
                         std::io::ErrorKind::InvalidInput,
                         format!("Invalid server URL '{}': {}", url_str, e),
                     ))
                 })?;
-                if wait_for_server(&url) {
-                    // Wait for platform routes so wizard won't show "load failed"
-                    wait_for_platform_routes(&url);
-                    // Extra delay so backend async setup (DI, platform routes) can finish.
-                    // Retry loop with cap instead of one block for better behavior on slow machines.
-                    #[cfg(any(target_os = "linux", target_os = "windows", target_os = "macos"))]
-                    {
-                        const INTERVAL_MS: u64 = 200;
-                        const MAX_WAIT_MS: u64 = 2000;
-                        let mut waited = 0u64;
-                        while waited < MAX_WAIT_MS {
-                            std::thread::sleep(Duration::from_millis(INTERVAL_MS));
-                            waited += INTERVAL_MS;
+
+                let window_for_nav = window.clone();
+                std::thread::spawn(move || {
+                    if wait_for_server(&url) {
+                        // Wait for platform routes so wizard won't show "load failed"
+                        wait_for_platform_routes(&url);
+                        // Small extra settle time for backend async setup
+                        std::thread::sleep(Duration::from_millis(500));
+                        match window_for_nav.navigate(url) {
+                            Ok(_) => log::info!("Navigated to server URL"),
+                            Err(e) => log::error!("Failed to navigate to server URL: {}", e),
                         }
+                    } else {
+                        log::warn!("Server not ready after timeout; staying on bundled frontend");
                     }
-                    window.navigate(url)?;
-                } else {
-                    log::warn!("Server not ready; staying on bundled frontend");
-                }
+                });
             } else {
                 log::info!("Using bundled frontend");
                 // The window will automatically load from frontendDist configured in tauri.conf.json

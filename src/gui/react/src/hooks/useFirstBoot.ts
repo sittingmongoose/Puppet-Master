@@ -9,8 +9,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { api } from '@/lib';
 
-const MAX_RETRIES = 5;
-const RETRY_DELAY_MS = 1500;
+const MAX_RETRIES = 12;
+const RETRY_DELAY_MS = 2000;
 
 /**
  * First boot status
@@ -65,10 +65,15 @@ export function useFirstBoot(): FirstBootResult {
       } catch (err) {
         lastError = err instanceof Error ? err.message : 'Failed to check first boot status';
         const code = err && typeof err === 'object' ? (err as { code?: string }).code : undefined;
-        if (
+        // Treat "Load failed", network errors, and AUTH_NOT_INITIALIZED as transient
+        const isTransient =
           lastError === 'Authentication not initialized' ||
-          code === 'AUTH_NOT_INITIALIZED'
-        ) {
+          code === 'AUTH_NOT_INITIALIZED' ||
+          lastError === 'Load failed' ||
+          lastError === 'Failed to fetch' ||
+          lastError.includes('NetworkError') ||
+          lastError.includes('ECONNREFUSED');
+        if (isTransient) {
           lastError = 'Server is starting, please wait...';
         }
         if (attempt < MAX_RETRIES) {
@@ -86,31 +91,12 @@ export function useFirstBoot(): FirstBootResult {
     });
   }, []);
 
-  // Defer API calls until document ready (helps Linux WebView first paint)
+  // Start first-boot check immediately. The retry loop handles the case where
+  // the server is not yet ready (common on first launch when Tauri navigates
+  // to the server URL after waiting). Previous code deferred for 2 seconds
+  // which added unnecessary latency on subsequent launches.
   useEffect(() => {
-    const DOC_READY_FALLBACK_MS = 2000;
-    let done = false;
-
-    const run = () => {
-      if (done) return;
-      done = true;
-      checkFirstBoot();
-    };
-
-    if (typeof document !== 'undefined' && document.readyState === 'complete') {
-      run();
-      return;
-    }
-
-    const fallback = setTimeout(run, DOC_READY_FALLBACK_MS);
-    if (typeof window !== 'undefined') {
-      window.addEventListener('load', run);
-      return () => {
-        window.removeEventListener('load', run);
-        clearTimeout(fallback);
-      };
-    }
-    clearTimeout(fallback);
+    checkFirstBoot();
   }, [checkFirstBoot]);
 
   return {

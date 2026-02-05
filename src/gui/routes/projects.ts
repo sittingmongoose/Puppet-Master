@@ -86,7 +86,10 @@ export interface Project {
  * @param orchestrator - Optional Orchestrator instance for loading projects
  * @param baseDirectory - Base directory for project discovery
  */
-export function createProjectsRoutes(orchestrator?: Orchestrator | null, baseDirectory?: string): Router {
+export function createProjectsRoutes(orchestratorOrGetter?: Orchestrator | null | (() => Orchestrator | null), baseDirectory?: string): Router {
+  const getOrchestrator = typeof orchestratorOrGetter === 'function'
+    ? orchestratorOrGetter
+    : () => orchestratorOrGetter ?? null;
   const router = createRouter();
   const projectBaseDir = baseDirectory ? resolve(baseDirectory) : process.cwd();
 
@@ -285,6 +288,7 @@ export function createProjectsRoutes(orchestrator?: Orchestrator | null, baseDir
       }
 
       // Load project into orchestrator if available
+      const orchestrator = getOrchestrator();
       if (orchestrator) {
         try {
           // Determine which PRD path to use

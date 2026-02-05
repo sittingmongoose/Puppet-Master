@@ -111,6 +111,7 @@ export class GuiServer {
   private wizardRouter: ReturnType<typeof createWizardRoutes> | null = null;
   // P0-G07: Authentication configuration
   private authConfig: AuthConfig | null = null;
+  private cachedAuthMiddleware: import('express').RequestHandler | null = null;
   // P1-G17: Heartbeat interval for stale connection detection
   private heartbeatInterval: ReturnType<typeof setInterval> | null = null;
   private static readonly HEARTBEAT_INTERVAL_MS = 30000; // 30 seconds
@@ -214,8 +215,8 @@ export class GuiServer {
       // The route handlers will use the updated this.tierManager reference
     }
     
-    this.app.use('/api', createControlsRoutes(this.orchestratorInstance));
-    this.app.use('/api', createProjectsRoutes(this.orchestratorInstance, this.config.baseDirectory));
+    // Orchestrator dependencies are resolved at request time via getters registered
+    // in setupRoutesSync(), so no re-registration is needed here.
   }
 
   /**
@@ -254,8 +255,7 @@ export class GuiServer {
   registerSessionTracker(sessionTracker: SessionTracker): void {
     this.sessionTracker = sessionTracker;
 
-    // Re-register history routes with SessionTracker
-    this.app.use('/api', createHistoryRoutes(this.sessionTracker));
+    // SessionTracker is resolved at request time via getter registered in setupRoutesSync().
   }
 
   /**
@@ -313,11 +313,12 @@ export class GuiServer {
           });
           return;
         }
-        
-        // Use the actual auth middleware logic
-        // createAuthMiddleware returns a handler that uses config.token
-        const authMiddleware = createAuthMiddleware(this.authConfig);
-        return authMiddleware(req, res, next);
+
+        // Use cached auth middleware (created once in initializeAuth)
+        if (!this.cachedAuthMiddleware) {
+          this.cachedAuthMiddleware = createAuthMiddleware(this.authConfig);
+        }
+        return this.cachedAuthMiddleware(req, res, next);
       });
     }
     
@@ -683,22 +684,25 @@ export class GuiServer {
       }
     });
 
-    // P1-G08: Logs endpoint - returns iteration logs
+    // P1-G08: Logs endpoint - returns iteration logs (async I/O to avoid blocking event loop)
     this.app.get('/api/logs', async (req, res) => {
       try {
         const { iterationId, sessionId, limit = '50' } = req.query;
         const logsDir = path.join(this.config.baseDirectory, '.puppet-master', 'logs', 'iterations');
-        
+
+        const fsPromises = (await import('fs/promises'));
+        const { existsSync } = await import('fs');
+
         // Check if logs directory exists
-        const { existsSync, readdirSync, readFileSync } = await import('fs');
         if (!existsSync(logsDir)) {
           res.json({ logs: [] });
           return;
         }
-        
-        // Get log files
-        let logFiles = readdirSync(logsDir).filter(f => f.endsWith('.log'));
-        
+
+        // Get log files (async)
+        const allFiles = await fsPromises.readdir(logsDir);
+        let logFiles = allFiles.filter(f => f.endsWith('.log'));
+
         // Filter by iterationId or sessionId if provided
         if (iterationId) {
           logFiles = logFiles.filter(f => f.includes(String(iterationId)));
@@ -706,24 +710,24 @@ export class GuiServer {
         if (sessionId) {
           logFiles = logFiles.filter(f => f.includes(String(sessionId)));
         }
-        
+
         // Sort by name (which includes timestamp) descending
         logFiles.sort().reverse();
-        
+
         // Limit results
         const limitNum = Math.min(parseInt(String(limit), 10) || 50, 100);
         logFiles = logFiles.slice(0, limitNum);
-        
-        // Read log contents
-        const logs = logFiles.map(file => {
-          const content = readFileSync(path.join(logsDir, file), 'utf-8');
+
+        // Read log contents (async, in parallel)
+        const logs = await Promise.all(logFiles.map(async (file) => {
+          const content = await fsPromises.readFile(path.join(logsDir, file), 'utf-8');
           return {
             filename: file,
             content: content.slice(0, 10000), // Limit content size
             truncated: content.length > 10000,
           };
-        });
-        
+        }));
+
         res.json({ logs });
       } catch (error) {
         res.status(500).json({
@@ -743,12 +747,11 @@ export class GuiServer {
       getUsageTracker: () => this.usageTracker,
     }));
 
-    // Control endpoints will be registered via registerOrchestratorInstance()
-    // If no orchestrator instance is registered, controls routes will return 503
-    this.app.use('/api', createControlsRoutes(null));
+    // Control endpoints - orchestrator resolved at request time via getter
+    this.app.use('/api', createControlsRoutes(() => this.orchestratorInstance));
 
-    // Projects routes (will be updated when orchestrator is registered)
-    this.app.use('/api', createProjectsRoutes(null, this.config.baseDirectory));
+    // Projects routes - orchestrator resolved at request time via getter
+    this.app.use('/api', createProjectsRoutes(() => this.orchestratorInstance, this.config.baseDirectory));
 
     // Wizard routes - using mutable dependency holder pattern
     // Dependencies will be injected via registerStartChainDependencies()
@@ -776,8 +779,8 @@ export class GuiServer {
     // Platform routes
     this.app.use('/api', createPlatformRoutes(this.config.baseDirectory));
 
-    // History routes (will be updated when SessionTracker is registered)
-    this.app.use('/api', createHistoryRoutes(null));
+    // History routes - session tracker resolved at request time via getter
+    this.app.use('/api', createHistoryRoutes(() => this.sessionTracker));
 
     // SSE event stream routes (P2-T10)
     this.app.use('/api', createEventsRoutes(this.eventBus));
@@ -973,20 +976,59 @@ export class GuiServer {
 
   /**
    * Start the HTTP and WebSocket servers.
+   * Retries on EADDRINUSE up to maxRetries times with alternate ports to
+   * eliminate TOCTOU race conditions (especially on Windows where port release
+   * after close() can be delayed).
    */
-  async start(): Promise<void> {
+  async start(maxRetries = 10): Promise<void> {
+    const bindHost = this.config.host === 'localhost' ? '127.0.0.1' : this.config.host;
+    let lastError: Error | null = null;
+
+    for (let attempt = 0; attempt <= maxRetries; attempt++) {
+      const port = attempt === 0 ? this.config.port : this.config.port + attempt;
+
+      try {
+        await this.tryListen(port, bindHost);
+        // Update config.port if we shifted to an alternate port
+        if (port !== this.config.port) {
+          console.log(`  Port ${this.config.port} was in use, bound to port ${port} instead.`);
+          (this.config as { port: number }).port = port;
+        }
+        return;
+      } catch (error) {
+        const err = error as NodeJS.ErrnoException;
+        lastError = err;
+        // Clean up failed server/wss before retrying
+        if (this.wss) { try { this.wss.close(); } catch { /* ignore */ } this.wss = null; }
+        if (this.server) { try { this.server.close(); } catch { /* ignore */ } this.server = null; }
+        if (err.code !== 'EADDRINUSE' || attempt === maxRetries) {
+          throw error;
+        }
+        // On first retry, log once
+        if (attempt === 0) {
+          console.warn(`  Port ${port} is in use, trying alternate ports...`);
+        }
+      }
+    }
+
+    throw lastError || new Error('Failed to start server');
+  }
+
+  /**
+   * Attempt to listen on a specific port. Rejects on any server error (e.g. EADDRINUSE).
+   */
+  private tryListen(port: number, bindHost: string): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
         this.server = http.createServer(this.app);
-        this.setupWebSocket();
-
-        const bindHost = this.config.host === 'localhost' ? '127.0.0.1' : this.config.host;
-        this.server.listen(this.config.port, bindHost, () => {
-          resolve();
-        });
-
+        // Register HTTP server error handler BEFORE setupWebSocket and listen
+        // so that EADDRINUSE is caught and the promise rejects cleanly.
         this.server.on('error', (error) => {
           reject(error);
+        });
+        this.setupWebSocket();
+        this.server.listen(port, bindHost, () => {
+          resolve();
         });
       } catch (error) {
         reject(error);
@@ -1071,5 +1113,13 @@ export class GuiServer {
   getUrl(): string {
     const host = this.config.host === 'localhost' ? '127.0.0.1' : this.config.host;
     return `http://${host}:${this.config.port}`;
+  }
+
+  /**
+   * Get the port the server is actually listening on.
+   * May differ from the originally requested port if EADDRINUSE retry shifted it.
+   */
+  getPort(): number {
+    return this.config.port;
   }
 }

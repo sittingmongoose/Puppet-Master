@@ -166,16 +166,22 @@ function createMockAgentsManager(): AgentsManager {
 /**
  * Create mock Orchestrator
  */
-function createMockOrchestrator(): Orchestrator {
+function createMockOrchestrator(stateOverride?: OrchestratorState): Orchestrator {
   const tierManager = createMockTierManager();
   return {
-    getState: vi.fn().mockReturnValue('idle' as OrchestratorState),
+    getState: vi.fn().mockReturnValue(stateOverride ?? ('idle' as OrchestratorState)),
     getTierStateManager: vi.fn().mockReturnValue(tierManager),
     start: vi.fn().mockResolvedValue(undefined),
     pause: vi.fn().mockResolvedValue(undefined),
     resume: vi.fn().mockResolvedValue(undefined),
     stop: vi.fn().mockResolvedValue(undefined),
     reset: vi.fn().mockResolvedValue(undefined),
+    // Pre-flight checks required by controls/start
+    getCurrentProject: vi.fn().mockReturnValue({ name: 'test-project', workingDirectory: process.cwd() }),
+    validatePRD: vi.fn().mockResolvedValue({ valid: true }),
+    validateConfig: vi.fn().mockResolvedValue({ valid: true }),
+    checkRequiredCLIs: vi.fn().mockResolvedValue({ allAvailable: true, missing: [] }),
+    checkGitRepo: vi.fn().mockResolvedValue({ valid: true }),
   } as unknown as Orchestrator;
 }
 
@@ -666,10 +672,6 @@ describe('GUI Integration Tests', () => {
     });
 
     it('POST /api/controls/start starts execution when orchestrator is registered', async () => {
-      // Note: Due to Express route registration order, controls routes are registered
-      // with null first, then with orchestrator. The null routes may match first.
-      // This test verifies the orchestrator registration works, but the actual
-      // behavior depends on route matching order in Express.
       const orchestrator = createMockOrchestrator();
       testContext!.server.registerOrchestratorInstance(orchestrator);
 
@@ -678,14 +680,9 @@ describe('GUI Integration Tests', () => {
         .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .send({});
 
-      // Accept either 200 (orchestrator route matched) or 503 (null route matched first)
-      // This documents current behavior - in production, orchestrator should be
-      // registered before server starts to avoid this issue
-      expect([200, 503]).toContain(response.status);
-      if (response.status === 200) {
-        expect(response.body).toHaveProperty('success');
-        expect(response.body).toHaveProperty('sessionId');
-      }
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty('success');
+      expect(response.body).toHaveProperty('sessionId');
     });
 
     it('POST /api/controls/pause returns 503 when orchestrator not registered', async () => {
@@ -699,18 +696,16 @@ describe('GUI Integration Tests', () => {
     });
 
     it('POST /api/controls/pause pauses execution when orchestrator is registered', async () => {
-      // See note in start test about route registration order
-      const orchestrator = createMockOrchestrator();
+      // Pause requires state 'executing'
+      const orchestrator = createMockOrchestrator('executing');
       testContext!.server.registerOrchestratorInstance(orchestrator);
 
       const response = await request(testContext!.baseUrl)
         .post('/api/controls/pause')
         .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '');
 
-      expect([200, 503]).toContain(response.status);
-      if (response.status === 200) {
-        expect(response.body).toHaveProperty('success');
-      }
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty('success');
     });
 
     it('POST /api/controls/stop returns 503 when orchestrator not registered', async () => {
@@ -725,8 +720,8 @@ describe('GUI Integration Tests', () => {
     });
 
     it('POST /api/controls/stop stops execution when orchestrator is registered', async () => {
-      // See note in start test about route registration order
-      const orchestrator = createMockOrchestrator();
+      // Stop requires state 'executing' or 'paused'
+      const orchestrator = createMockOrchestrator('executing');
       testContext!.server.registerOrchestratorInstance(orchestrator);
 
       const response = await request(testContext!.baseUrl)
@@ -734,10 +729,8 @@ describe('GUI Integration Tests', () => {
         .set('Authorization', testContext!.authToken ? `Bearer ${testContext!.authToken}` : '')
         .send({});
 
-      expect([200, 503]).toContain(response.status);
-      if (response.status === 200) {
-        expect(response.body).toHaveProperty('success');
-      }
+      expect(response.status).toBe(200);
+      expect(response.body).toHaveProperty('success');
     });
   });
 

@@ -254,16 +254,28 @@ async function waitForServerReady(port: number, maxAttempts = 30, delayMs = 500)
 }
 
 /**
- * Check if a port is available for binding
+ * Check if a port is available by attempting to connect to it.
+ * Uses connect-based probing instead of bind-based probing to avoid
+ * TOCTOU race conditions on Windows where the OS may not release the
+ * port immediately after server.close().
  */
 async function checkPortAvailable(port: number, host: string): Promise<boolean> {
   const bindHost = normalizeBindHost(host);
   return new Promise((resolve) => {
-    const server = net.createServer();
-    server.listen(port, bindHost, () => {
-      server.close(() => resolve(true));
+    const socket = new net.Socket();
+    socket.setTimeout(800);
+    socket.once('connect', () => {
+      socket.destroy();
+      resolve(false); // Something is listening — port in use
     });
-    server.on('error', () => resolve(false));
+    socket.once('error', () => {
+      resolve(true); // Connection refused — port is free
+    });
+    socket.once('timeout', () => {
+      socket.destroy();
+      resolve(true); // No response — port is likely free
+    });
+    socket.connect(port, bindHost);
   });
 }
 
@@ -643,7 +655,8 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     await guiServer.start();
 
     const url = guiServer.getUrl();
-    const localUrl = `http://127.0.0.1:${port}`;
+    const actualPort = guiServer.getPort();
+    const localUrl = `http://127.0.0.1:${actualPort}`;
     const uiUrl = host === 'localhost' || host === '127.0.0.1' || host === '::1' ? url : localUrl;
 
     console.log('');
@@ -673,7 +686,7 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     // Even though await guiServer.start() resolved, the server may not be ready to handle HTTP requests.
     // This prevents blank pages and race conditions. Wait up to 15 seconds.
     console.log('  🔍 Verifying server readiness...');
-    const serverReady = await waitForServerReady(port);
+    const serverReady = await waitForServerReady(actualPort);
     if (!serverReady) {
       console.error('  ❌ Server failed to become ready - /health endpoint not responding');
       console.error('  Please check server logs for errors. Not launching GUI.');

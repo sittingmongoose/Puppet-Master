@@ -33,11 +33,16 @@ interface StopRequest {
 
 /**
  * Create controls routes.
- * 
+ *
  * Returns Express Router with control endpoints.
- * Requires Orchestrator instance to execute control commands.
+ * Accepts either a direct Orchestrator instance or a getter function.
+ * When a getter is used, the orchestrator is resolved at request time, allowing
+ * late binding after the server has fully initialized.
  */
-export function createControlsRoutes(orchestrator: Orchestrator | null): Router {
+export function createControlsRoutes(orchestratorOrGetter: Orchestrator | null | (() => Orchestrator | null)): Router {
+  const getOrchestrator = typeof orchestratorOrGetter === 'function'
+    ? orchestratorOrGetter
+    : () => orchestratorOrGetter;
   const router = createRouter();
 
   /**
@@ -46,6 +51,7 @@ export function createControlsRoutes(orchestrator: Orchestrator | null): Router 
    */
   router.post('/controls/start', async (req: Request<unknown, unknown, StartRequest>, res: Response) => {
     try {
+      const orchestrator = getOrchestrator();
       if (!orchestrator) {
         res.status(503).json({
           error: 'Orchestrator not available',
@@ -156,6 +162,7 @@ export function createControlsRoutes(orchestrator: Orchestrator | null): Router 
    */
   router.post('/controls/pause', async (_req: Request, res: Response) => {
     try {
+      const orchestrator = getOrchestrator();
       if (!orchestrator) {
         res.status(503).json({
           error: 'Orchestrator not available',
@@ -195,6 +202,7 @@ export function createControlsRoutes(orchestrator: Orchestrator | null): Router 
    */
   router.post('/controls/resume', async (_req: Request, res: Response) => {
     try {
+      const orchestrator = getOrchestrator();
       if (!orchestrator) {
         res.status(503).json({
           error: 'Orchestrator not available',
@@ -234,6 +242,7 @@ export function createControlsRoutes(orchestrator: Orchestrator | null): Router 
    */
   router.post('/controls/stop', async (req: Request<unknown, unknown, StopRequest>, res: Response) => {
     try {
+      const orchestrator = getOrchestrator();
       if (!orchestrator) {
         res.status(503).json({
           error: 'Orchestrator not available',
@@ -276,6 +285,7 @@ export function createControlsRoutes(orchestrator: Orchestrator | null): Router 
    */
   router.post('/controls/reset', async (_req: Request, res: Response) => {
     try {
+      const orchestrator = getOrchestrator();
       if (!orchestrator) {
         res.status(503).json({
           error: 'Orchestrator not available',
@@ -313,6 +323,7 @@ export function createControlsRoutes(orchestrator: Orchestrator | null): Router 
    */
   router.post('/controls/retry', async (_req: Request, res: Response) => {
     try {
+      const orchestrator = getOrchestrator();
       if (!orchestrator) {
         res.status(503).json({
           error: 'Orchestrator not available',
@@ -343,6 +354,7 @@ export function createControlsRoutes(orchestrator: Orchestrator | null): Router 
    */
   router.post('/controls/replan', async (req: Request, res: Response) => {
     try {
+      const orchestrator = getOrchestrator();
       if (!orchestrator) {
         res.status(503).json({
           error: 'Orchestrator not available',
@@ -393,6 +405,7 @@ export function createControlsRoutes(orchestrator: Orchestrator | null): Router 
    */
   router.post('/controls/reopen', async (req: Request, res: Response) => {
     try {
+      const orchestrator = getOrchestrator();
       if (!orchestrator) {
         res.status(503).json({
           error: 'Orchestrator not available',
@@ -442,6 +455,7 @@ export function createControlsRoutes(orchestrator: Orchestrator | null): Router 
    */
   router.post('/controls/kill-spawn', async (_req: Request, res: Response) => {
     try {
+      const orchestrator = getOrchestrator();
       if (!orchestrator) {
         res.status(503).json({
           error: 'Orchestrator not available',
