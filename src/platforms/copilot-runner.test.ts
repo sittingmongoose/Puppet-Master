@@ -175,7 +175,7 @@ describe('CopilotRunner', () => {
       expect(args).toContain('--silent');
     });
 
-    it('should not include --model flag (not supported by Copilot CLI)', () => {
+    it('should include --model flag when provided', () => {
       const request: ExecutionRequest = {
         prompt: 'Test prompt',
         workingDirectory: '/tmp',
@@ -184,8 +184,8 @@ describe('CopilotRunner', () => {
       };
 
       const args = runner['buildArgs'](request);
-      expect(args).not.toContain('--model');
-      expect(args).not.toContain('gpt-4');
+      expect(args).toContain('--model');
+      expect(args).toContain('gpt-4');
     });
 
     it('should build correct args for full request', () => {

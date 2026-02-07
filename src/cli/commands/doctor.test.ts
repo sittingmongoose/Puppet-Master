@@ -141,6 +141,20 @@ vi.mock('../../doctor/checks/cli-tools.js', () => ({
       }),
     };
   }),
+  CopilotSdkCheck: vi.fn().mockImplementation(function () {
+    return {
+      name: 'copilot-sdk',
+      category: 'cli' as const,
+      description: 'Check if GitHub Copilot SDK is available and authenticated',
+      run: vi.fn().mockResolvedValue({
+        name: 'copilot-sdk',
+        category: 'cli' as const,
+        passed: true,
+        message: 'Copilot SDK is available',
+        durationMs: 10,
+      }),
+    };
+  }),
 }));
 
 vi.mock('../../doctor/checks/git-check.js', () => ({

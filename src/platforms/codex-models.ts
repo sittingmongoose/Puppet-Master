@@ -18,6 +18,10 @@
  * - https://developers.openai.com/codex/cli/reference
  */
 
+import { homedir } from 'node:os';
+import { join } from 'node:path';
+import { readFile } from 'node:fs/promises';
+
 /**
  * Codex model interface for catalog entries.
  */
@@ -136,6 +140,86 @@ export const CODEX_MODELS: CodexModel[] = [
  */
 export function getCodexModels(): CodexModel[] {
   return CODEX_MODELS;
+}
+
+type CodexModelsCache = {
+  models?: Array<{
+    slug?: string;
+    display_name?: string;
+    description?: string;
+    supported_reasoning_levels?: Array<{ effort?: string }>;
+  }>;
+};
+
+type ReasoningLevel = NonNullable<CodexModel['reasoningLevels']>[number];
+
+function mapReasoningEffort(effort: string): ReasoningLevel | null {
+  switch (effort) {
+    case 'low':
+      return 'Low';
+    case 'medium':
+      return 'Medium';
+    case 'high':
+      return 'High';
+    // Codex cache uses "xhigh" (matches our "Extra high" label).
+    case 'xhigh':
+      return 'Extra high';
+    default:
+      return null;
+  }
+}
+
+/**
+ * Best-effort local discovery of Codex models from the Codex CLI cache.
+ *
+ * This is intentionally local-only (no network calls, no CLI subprocess).
+ * When the Codex CLI has logged in at least once, it often writes:
+ *   ~/.codex/models_cache.json
+ *
+ * If that file exists and parses, we can present the user's *actual*
+ * available models instead of a potentially stale curated list.
+ */
+export async function discoverCodexModelsFromCache(): Promise<CodexModel[] | null> {
+  try {
+    const cachePath = join(homedir(), '.codex', 'models_cache.json');
+    const raw = await readFile(cachePath, 'utf8');
+    const parsed = JSON.parse(raw) as CodexModelsCache;
+    const entries = Array.isArray(parsed.models) ? parsed.models : [];
+    const models: CodexModel[] = [];
+
+    for (const m of entries) {
+      const id = typeof m.slug === 'string' ? m.slug.trim() : '';
+      if (!id) continue;
+      const label = typeof m.display_name === 'string' && m.display_name.trim() ? m.display_name.trim() : id;
+      const description = typeof m.description === 'string' && m.description.trim() ? m.description.trim() : undefined;
+      const reasoningLevels = Array.isArray(m.supported_reasoning_levels)
+        ? (m.supported_reasoning_levels
+          .map((r) => (typeof r.effort === 'string' ? mapReasoningEffort(r.effort) : null))
+          .filter((v): v is NonNullable<typeof v> => v !== null))
+        : undefined;
+
+      models.push({
+        id,
+        label,
+        description,
+        optimizedForCode: id.includes('codex'),
+        reasoningLevels: reasoningLevels && reasoningLevels.length > 0 ? Array.from(new Set(reasoningLevels)) : undefined,
+      });
+    }
+
+    return models.length > 0 ? models : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Return Codex models, preferring the local Codex cache when present.
+ */
+export async function getCodexModelsWithCache(): Promise<CodexModel[]> {
+  const cached = await discoverCodexModelsFromCache();
+  if (cached && cached.length > 0) return cached;
+  return getCodexModels();
 }
 
 /**

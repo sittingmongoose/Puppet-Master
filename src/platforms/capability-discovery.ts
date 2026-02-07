@@ -8,7 +8,7 @@
 
 import { spawn } from 'child_process';
 import { promises as fs } from 'fs';
-import { join } from 'path';
+import { dirname, join } from 'path';
 import { homedir } from 'os';
 import * as yaml from 'js-yaml';
 import type { CliPathsConfig, Platform } from '../types/config.js';
@@ -28,12 +28,21 @@ async function executeCommand(
   command: string,
   args: string[],
   timeoutMs: number = 10_000,
-  testMode: boolean = false
+  testMode: boolean = false,
+  env?: NodeJS.ProcessEnv
 ): Promise<{ ok: true; output: string } | { ok: false; error: string; errorCode?: string }> {
   return new Promise((resolve) => {
     const effectiveTimeout = testMode ? Math.min(timeoutMs, 500) : timeoutMs;
+    const inferredPreferredDirs: string[] = [];
+    if (command.includes('/') || command.includes('\\')) {
+      inferredPreferredDirs.push(dirname(command));
+    }
+    const procEnv = env ?? buildEnrichedEnv(inferredPreferredDirs);
     const proc = spawn(command, args, {
       stdio: ['ignore', 'pipe', 'pipe'],
+      shell: process.platform === 'win32',
+      windowsHide: true,
+      env: procEnv,
     });
 
     let stdout = '';
@@ -74,6 +83,63 @@ async function executeCommand(
       });
     });
   });
+}
+
+function buildEnrichedPath(preferredDirs: string[] = []): string {
+  const home = homedir();
+  const npmGlobalPrefix = home ? join(home, '.npm-global') : '';
+  const npmGlobalBin = npmGlobalPrefix
+    ? (process.platform === 'win32' ? npmGlobalPrefix : join(npmGlobalPrefix, 'bin'))
+    : '';
+  const windowsNpmBin = process.platform === 'win32' && process.env.APPDATA
+    ? join(process.env.APPDATA, 'npm')
+    : '';
+  // PATH ordering matters. Prefer user shims and OS package-manager locations over npm-global
+  // so we don't accidentally pick older duplicates (common on macOS).
+  const extra = (process.platform === 'win32'
+    ? [
+        windowsNpmBin,
+        npmGlobalBin,
+        home ? join(home, 'scoop', 'shims') : '',
+      ]
+    : [
+        home ? join(home, '.local', 'bin') : '',
+        home ? join(home, '.volta', 'bin') : '',
+        home ? join(home, '.asdf', 'shims') : '',
+        '/opt/homebrew/bin',
+        '/opt/homebrew/sbin',
+        '/usr/local/bin',
+        npmGlobalBin,
+        '/snap/bin',
+      ]
+  ).filter(Boolean);
+  const current = process.env.PATH || '';
+  return [...preferredDirs, ...extra, current].filter(Boolean).join(process.platform === 'win32' ? ';' : ':');
+}
+
+function buildEnrichedEnv(preferredDirs: string[] = []): NodeJS.ProcessEnv {
+  const home = homedir();
+  const npmGlobalPrefix = home ? join(home, '.npm-global') : '';
+  const npmGlobalBin = npmGlobalPrefix
+    ? (process.platform === 'win32' ? npmGlobalPrefix : join(npmGlobalPrefix, 'bin'))
+    : '';
+  const enriched = buildEnrichedPath(preferredDirs);
+
+  const nextEnv: NodeJS.ProcessEnv = {
+    ...process.env,
+    PATH: enriched,
+  };
+
+  // Helps globally-installed Node CLIs resolve their own node_modules correctly.
+  if (npmGlobalPrefix) {
+    nextEnv.HOME = home;
+    nextEnv.npm_config_prefix = npmGlobalPrefix;
+    nextEnv.NPM_CONFIG_PREFIX = npmGlobalPrefix;
+    // NOTE: Do not force-prepend npmGlobalBin here; buildEnrichedPath() already includes it in a
+    // deliberate ordering to avoid accidentally preferring older duplicate installs on macOS.
+  }
+
+  return nextEnv;
 }
 
 /**
@@ -267,58 +333,27 @@ function parseCapabilities(helpOutput: string): PlatformCapabilities {
   };
 }
 
-/**
- * Test Gemini-specific capabilities via smoke tests.
- * Non-blocking: failures don't prevent capability discovery.
- */
-async function testGeminiCapabilities(command: string, testMode: boolean = false): Promise<{
-  sandbox: boolean;
-  multiDirectory: boolean;
-  streaming: boolean;
-  modelDiscovery: boolean;
-}> {
-  const results = {
-    sandbox: false,
-    multiDirectory: false,
-    streaming: false,
-    modelDiscovery: false,
-  };
+// NOTE: Do not run Gemini smoke tests.
+//
+// The Gemini CLI is frequently interactive (auth prompts) and has no stable,
+// non-billable, non-interactive "models" listing. Even short timeouts can cause
+// slow GUI startup and spurious "Load failed" behavior when probes repeatedly
+// spawn interactive commands.
+//
+// Capability discovery for Gemini is derived from `--help` parsing and the
+// curated static model list in gemini-models.ts.
 
-  const timeout = testMode ? 500 : 3000;
-
-  // Test sandbox support (non-blocking)
-  try {
-    const sandboxTest = await executeCommand(command, ['-p', 'test', '--sandbox', '--output-format', 'json'], timeout, testMode);
-    results.sandbox = sandboxTest.ok || sandboxTest.error?.includes('sandbox') !== false;
-  } catch {
-    // Ignore failures
-  }
-
-  // Test multi-directory support (non-blocking)
-  try {
-    const multiDirTest = await executeCommand(command, ['-p', 'test', '--include-directories', '/tmp', '--output-format', 'json'], timeout, testMode);
-    results.multiDirectory = multiDirTest.ok || multiDirTest.error?.includes('include-directories') !== false;
-  } catch {
-    // Ignore failures
-  }
-
-  // Test streaming support (non-blocking)
-  try {
-    const streamTest = await executeCommand(command, ['-p', 'test', '--output-format', 'stream-json'], timeout, testMode);
-    results.streaming = streamTest.ok || streamTest.error?.includes('stream-json') !== false;
-  } catch {
-    // Ignore failures
-  }
-
-  // Test model discovery command (non-blocking)
-  try {
-    const modelsTest = await executeCommand(command, ['models'], timeout, testMode);
-    results.modelDiscovery = modelsTest.ok;
-  } catch {
-    // Ignore failures
-  }
-
-  return results;
+function parseCopilotModelsFromHelp(helpText: string): string[] {
+  // Extract from: --model <model> ... (choices: "a", "b", ...)
+  const idx = helpText.indexOf('--model');
+  const slice = idx >= 0 ? helpText.slice(idx) : helpText;
+  const choicesIdx = slice.indexOf('(choices:');
+  if (choicesIdx < 0) return [];
+  const after = slice.slice(choicesIdx);
+  const endParen = after.indexOf(')');
+  const block = endParen >= 0 ? after.slice(0, endParen) : after;
+  const matches = Array.from(block.matchAll(/"([^"]+)"/g)).map((m) => m[1]);
+  return Array.from(new Set(matches.map((s) => s.trim()).filter(Boolean)));
 }
 
 /**
@@ -478,18 +513,7 @@ export class CapabilityDiscoveryService {
 
     const authStatus = getPlatformAuthStatus(platform).status;
 
-    // Enhanced capability detection for Gemini
-    if (platform === 'gemini' && runnable && command) {
-      try {
-        const geminiTests = await testGeminiCapabilities(command, this.testMode);
-        // Update capabilities based on test results
-        capabilities.streaming = geminiTests.streaming || capabilities.streaming;
-        // Note: sandbox, multiDirectory, and modelDiscovery are Gemini-specific
-        // and could be stored in a platform-specific extension if needed
-      } catch {
-        // Gemini-specific tests failed, use defaults from help parsing
-      }
-    }
+    // Gemini capabilities are derived from `--help` parsing only (see note above).
 
     const result: CapabilityProbeResult = {
       platform,
@@ -563,62 +587,35 @@ export class CapabilityDiscoveryService {
   async discoverModels(platform: Platform): Promise<string[]> {
     try {
       if (platform === 'copilot') {
-        // Try to use SDK for dynamic model discovery
-        try {
-          const { CopilotClient: SdkClient } = await import('@github/copilot-sdk');
-          const client = new SdkClient() as unknown as { start(): Promise<void>; listModels(): Promise<Array<string | { id?: string; name?: string }>>; stop(): Promise<void> };
-          await client.start();
-          const models = await client.listModels();
-          await client.stop();
-          // SDK may return model objects or strings - extract IDs only
-          return models.map(m => {
-            if (typeof m === 'string') return m;
-            if (typeof m === 'object' && m !== null) {
-              return m.id || m.name || String(m);
-            }
-            return String(m);
-          });
-        } catch (sdkError) {
-          // SDK not available, fall back to known models
-          console.warn('[CapabilityDiscovery] Copilot SDK not available for model discovery, using static list');
-          const { KNOWN_COPILOT_MODELS } = await import('./copilot-models.js');
-          return [...KNOWN_COPILOT_MODELS];
+        // Prefer parsing `copilot --help` which is fast and non-billable.
+        // This reflects the user's actual CLI build and available model choices.
+        const configured = resolvePlatformCommand('copilot', this.cliPaths);
+        const help = await executeCommand(configured, ['--help'], 5_000, this.testMode);
+        if (help.ok) {
+          const parsed = parseCopilotModelsFromHelp(help.output);
+          if (parsed.length > 0) {
+            return parsed;
+          }
         }
+        const { KNOWN_COPILOT_MODELS } = await import('./copilot-models.js');
+        return [...KNOWN_COPILOT_MODELS];
       }
 
       // For other platforms, return static model lists
       switch (platform) {
         case 'claude': {
-          // Try dynamic discovery via Claude API if API key is available
-          const apiKey = process.env.ANTHROPIC_API_KEY;
-          if (apiKey) {
-            try {
-              const response = await fetch('https://api.anthropic.com/v1/models', {
-                headers: {
-                  'x-api-key': apiKey,
-                  'anthropic-version': '2023-06-01',
-                },
-              });
-              if (response.ok) {
-                const data = await response.json() as { data: Array<{ id: string; display_name?: string }> };
-                // Extract model IDs, prioritizing aliases
-                const discoveredModels = data.data
-                  .map(m => m.id)
-                  .filter(id => id.startsWith('claude-') || ['sonnet', 'opus', 'haiku'].includes(id));
-                if (discoveredModels.length > 0) {
-                  return discoveredModels;
-                }
-              }
-            } catch (apiError) {
-              console.warn('[CapabilityDiscovery] Claude API discovery failed, using static list:', apiError instanceof Error ? apiError.message : String(apiError));
-            }
-          }
-          // Fallback to static list
+          // NOTE: Puppet Master is CLI-only. Avoid API calls here.
           const { KNOWN_CLAUDE_MODELS } = await import('./claude-models.js');
           return [...KNOWN_CLAUDE_MODELS];
         }
         case 'codex': {
-          const { KNOWN_CODEX_MODELS } = await import('./codex-models.js');
+          // Prefer the Codex CLI's local models cache when available.
+          // This avoids network calls and reflects the user's true available models.
+          const { discoverCodexModelsFromCache, KNOWN_CODEX_MODELS } = await import('./codex-models.js');
+          const cached = await discoverCodexModelsFromCache();
+          if (cached && cached.length > 0) {
+            return cached.map(m => m.id);
+          }
           return [...KNOWN_CODEX_MODELS];
         }
         case 'cursor': {
@@ -626,17 +623,10 @@ export class CapabilityDiscoveryService {
           return [...KNOWN_CURSOR_MODELS];
         }
         case 'gemini': {
-          // Try dynamic discovery with fallback to static list
-          try {
-            const { getGeminiModelsWithDiscovery } = await import('./gemini-models.js');
-            const cliPath = this.cliPaths?.gemini || resolvePlatformCommand('gemini', this.cliPaths);
-            const models = await getGeminiModelsWithDiscovery(cliPath, true);
-            return models.map(m => m.id);
-          } catch {
-            // Fallback to static list
-            const { KNOWN_GEMINI_MODELS } = await import('./gemini-models.js');
-            return [...KNOWN_GEMINI_MODELS];
-          }
+          // Gemini CLI does not expose a stable non-interactive model listing
+          // without triggering API calls/quota usage. Use curated static IDs.
+          const { KNOWN_GEMINI_MODELS } = await import('./gemini-models.js');
+          return [...KNOWN_GEMINI_MODELS];
         }
         default:
           return [];

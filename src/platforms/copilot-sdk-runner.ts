@@ -18,6 +18,7 @@
 import { EventEmitter } from 'events';
 import { PassThrough } from 'stream';
 import path from 'path';
+import { homedir } from 'node:os';
 import type {
   Platform,
   ExecutionRequest,
@@ -39,10 +40,10 @@ import { PermissionAuditLogger } from './permission-audit-logger.js';
 // For now, define minimal interfaces for type safety
 interface CopilotClient {
   start(): Promise<void>;
-  stop(): Promise<void>;
-  getStatus(): Promise<{ version: string; cliVersion?: string }>;
-  getAuthStatus(): Promise<{ authenticated: boolean; authType?: string }>;
-  listModels(): Promise<string[]>;
+  stop(): Promise<unknown>;
+  getStatus(): Promise<{ version: string; protocolVersion?: number }>;
+  getAuthStatus(): Promise<{ isAuthenticated: boolean; authType?: string; login?: string; statusMessage?: string }>;
+  listModels(): Promise<Array<string | { id?: string; name?: string }>>;
   createSession(config: SessionConfig): Promise<CopilotSession>;
   resumeSession?(state: unknown): Promise<CopilotSession>;
 }
@@ -51,22 +52,24 @@ interface SessionConfig {
   model?: string;
   tools?: CopilotTool[];
   onPermissionRequest?: (
-    request: { kind: string; path?: string; command?: string; url?: string },
+    request: { kind: 'shell' | 'write' | 'mcp' | 'read' | 'url'; path?: string; command?: string; url?: string },
     context: { sessionId: string }
-  ) => Promise<{ kind: string; rules?: Array<{ reason: string }> }>;
+  ) => Promise<{ kind: 'approved' | 'denied-by-rules' | string; rules?: Array<{ reason: string }> }>;
 }
 
 interface CopilotSession {
-  send(options: { prompt: string }): Promise<CopilotResponse>;
-  export?(): Promise<unknown>;
+  send(options: { prompt: string }): Promise<string>;
+  sendAndWait?(
+    options: { prompt: string },
+    timeout?: number
+  ): Promise<{ type: 'assistant.message'; data: { content: string } } | undefined>;
+  getMessages?(): Promise<unknown[]>;
   destroy(): Promise<void>;
 }
 
-interface CopilotResponse {
-  status: 'completed' | 'error' | 'tool_use';
+interface CopilotCompletion {
+  status: 'completed' | 'error';
   content: string;
-  tokensUsed?: number;
-  toolCalls?: Array<{ name: string; result: unknown }>;
 }
 
 interface CopilotTool {
@@ -98,6 +101,8 @@ export interface CopilotSdkPermissionConfig {
 export interface CopilotSdkRunnerConfig {
   /** Default model to use (default: claude-sonnet-4.5) */
   defaultModel?: string;
+  /** Explicit path to Copilot CLI executable (recommended for GUI/desktop launches with minimal PATH) */
+  cliPath?: string;
   /** Enable session persistence across iterations (default: false) */
   sessionPersistence?: boolean;
   /** Custom tools to expose to Copilot */
@@ -165,6 +170,7 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
     this.capabilityService = capabilityService;
     this.config = {
       defaultModel: config.defaultModel ?? 'claude-sonnet-4.5',
+      cliPath: typeof config.cliPath === 'string' && config.cliPath.trim() ? config.cliPath.trim() : undefined,
       sessionPersistence: config.sessionPersistence ?? false,
       customTools: config.customTools ?? [],
       permissionConfig: config.permissionConfig ?? { policy: 'allow-all' },
@@ -219,7 +225,14 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
         new PassThrough() as unknown as NodeJS.WritableStream;
       try {
         const { CopilotClient: SdkClient } = await import('@github/copilot-sdk');
-        this.client = new SdkClient() as unknown as CopilotClient;
+        const envPath = this.buildEnrichedPath();
+        const configuredCliPath = this.config.cliPath?.trim() ? this.config.cliPath.trim() : undefined;
+        // Always pass an explicit env with enriched PATH. Desktop launches often lack the user's shell PATH.
+        this.client = new SdkClient({
+          cliPath: configuredCliPath,
+          env: { ...process.env, PATH: envPath },
+          autoStart: false,
+        }) as unknown as CopilotClient;
         await this.client.start();
         this.sdkAvailable = true;
       } finally {
@@ -243,6 +256,30 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
       // (no TTY, or streams destroyed), any write can throw ERR_STREAM_DESTROYED and
       // crash the process. Callers (execute, getClientStatus) will surface the reason.
     }
+  }
+
+  private buildEnrichedPath(): string {
+    const home = homedir();
+    const npmGlobalPrefix = home ? path.join(home, '.npm-global') : '';
+    const npmGlobalBin = npmGlobalPrefix
+      ? (process.platform === 'win32' ? npmGlobalPrefix : path.join(npmGlobalPrefix, 'bin'))
+      : '';
+    const windowsNpmBin = process.platform === 'win32' && process.env.APPDATA
+      ? path.join(process.env.APPDATA, 'npm')
+      : '';
+    const extra = [
+      npmGlobalBin,
+      windowsNpmBin,
+      home ? path.join(home, '.local', 'bin') : '',
+      home ? path.join(home, '.volta', 'bin') : '',
+      home ? path.join(home, '.asdf', 'shims') : '',
+      '/usr/local/bin',
+      '/opt/homebrew/bin',
+      '/opt/homebrew/sbin',
+      '/snap/bin',
+    ].filter(Boolean);
+    const current = process.env.PATH || '';
+    return [...extra, current].filter(Boolean).join(process.platform === 'win32' ? ';' : ':');
   }
 
   /**
@@ -427,9 +464,9 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
    */
   async getClientStatus(): Promise<{
     version: string;
-    cliVersion?: string;
     authenticated: boolean;
     authType?: string;
+    login?: string;
     models: string[];
   }> {
     await this.initialize();
@@ -457,12 +494,16 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
       this.client.listModels(),
     ]);
 
+    const modelIds = (models ?? [])
+      .map((m) => (typeof m === 'string' ? m : (m && typeof m === 'object' ? String(m.id ?? m.name ?? '') : '')))
+      .filter(Boolean);
+
     return {
       version: status.version,
-      cliVersion: status.cliVersion,
-      authenticated: authStatus.authenticated,
+      authenticated: authStatus.isAuthenticated,
       authType: authStatus.authType,
-      models,
+      login: authStatus.login,
+      models: modelIds,
     };
   }
 
@@ -647,48 +688,53 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
       const runningProcess = await this.spawnFreshProcess(request);
       const virtualProcess = this.virtualProcesses.get(runningProcess.pid)!;
 
-      // P0: Execute via SDK with evidence collection support
-      const response = await this.session.send({
-        prompt: request.prompt,
-      });
+      // Execute and wait for completion. Prefer sendAndWait when available (SDK v0.1+).
+      let content = '';
+      if (typeof this.session.sendAndWait === 'function') {
+        const timeoutMs = request.timeout ?? 60_000;
+        const msg = await this.session.sendAndWait({ prompt: request.prompt }, timeoutMs);
+        content = msg?.data?.content ?? '';
+      } else {
+        // Fallback for older SDKs: send and rely on message history (best-effort).
+        await this.session.send({ prompt: request.prompt });
+        if (typeof this.session.getMessages === 'function') {
+          const events = await this.session.getMessages();
+          const lastAssistant = [...events].reverse().find((e) => {
+            if (!e || typeof e !== 'object') return false;
+            return (e as { type?: unknown }).type === 'assistant.message';
+          }) as { data?: { content?: unknown } } | undefined;
+          content = typeof lastAssistant?.data?.content === 'string' ? lastAssistant.data.content : '';
+        }
+      }
 
       // P0: Evidence collection - export session transcript if requested
-      if (request.shareTranscript && this.session.export) {
+      if (request.shareTranscript && typeof this.session.getMessages === 'function') {
         try {
-          const transcript = await this.session.export();
-          // Write transcript to file (synchronous for simplicity)
           const fs = await import('fs/promises');
-          // SDK export() returns unknown, convert to string
-          const transcriptStr = typeof transcript === 'string' ? transcript : JSON.stringify(transcript);
-          await fs.writeFile(request.shareTranscript, transcriptStr, 'utf-8');
+          const transcript = await this.session.getMessages();
+          await fs.writeFile(request.shareTranscript, JSON.stringify(transcript, null, 2), 'utf-8');
         } catch (error) {
           console.warn(`[CopilotSdkRunner] Failed to export transcript: ${error instanceof Error ? error.message : String(error)}`);
         }
       }
 
       // P0: Evidence collection - export to GitHub gist if requested
-      if (request.shareGist && this.session.export) {
-        try {
-          // Note: SDK export() may support gist export, but format is undocumented
-          // For now, we'll attempt export and let SDK handle gist creation
-          await this.session.export();
-          console.info(`[CopilotSdkRunner] Session exported (gist support may require manual upload)`);
-        } catch (error) {
-          console.warn(`[CopilotSdkRunner] Failed to export to gist: ${error instanceof Error ? error.message : String(error)}`);
-        }
+      if (request.shareGist) {
+        console.warn(`[CopilotSdkRunner] shareGist requested but is not supported via SDK. Use Copilot CLI /share or export transcript and upload manually.`);
       }
 
       // Store output
-      virtualProcess.output = response.content;
+      virtualProcess.output = content;
       virtualProcess.completed = true;
 
       // Write to virtual stdout for compatibility
-      virtualProcess.stdout.write(response.content);
+      virtualProcess.stdout.write(content);
       virtualProcess.stdout.end();
 
       // Parse result
       const duration = Date.now() - startTime;
-      const result = this.parseResponse(response, runningProcess.pid, duration);
+      const completion: CopilotCompletion = { status: 'completed', content };
+      const result = this.parseResponse(completion, runningProcess.pid, duration);
 
       // Emit complete event
       this.emit('complete', {
@@ -704,7 +750,7 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
         this.rateLimiter.recordCall(this.platform);
       }
       if (this.quotaManager) {
-        const tokens = response.tokensUsed ?? Math.max(100, Math.floor(duration / 10));
+        const tokens = Math.max(100, Math.floor(duration / 10));
         // P0: Pass model to recordUsage for Cursor Auto mode unlimited detection
         await this.quotaManager.recordUsage(this.platform, tokens, duration, request.model);
       }
@@ -731,24 +777,13 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
    * Parses SDK response into ExecutionResult.
    */
   private parseResponse(
-    response: CopilotResponse,
+    response: CopilotCompletion,
     processId: number,
     duration: number
   ): ExecutionResult {
     // Check for completion signals in tool calls
     let success = response.status === 'completed';
     let error: string | undefined;
-
-    if (response.toolCalls) {
-      for (const toolCall of response.toolCalls) {
-        if (toolCall.name === 'mark_complete') {
-          success = true;
-        } else if (toolCall.name === 'mark_stuck') {
-          success = false;
-          error = 'Agent signaled stuck via mark_stuck tool';
-        }
-      }
-    }
 
     // Fallback: check for legacy text signals
     if (response.content.includes('<ralph>GUTTER</ralph>')) {
@@ -761,7 +796,6 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
       output: response.content,
       exitCode: success ? 0 : 1,
       duration,
-      tokensUsed: response.tokensUsed,
       processId,
       error,
     };

@@ -400,10 +400,27 @@ export async function guiAction(options: GuiOptions): Promise<void> {
   const isAppBundle = process.platform === 'darwin' && !!process.env.PUPPET_MASTER_APP_ROOT;
 
   try {
+    const homeDir = process.env.HOME || process.env.USERPROFILE;
+    const desktopDefaultConfigPath = homeDir ? path.join(homeDir, '.puppet-master', 'config.yaml') : undefined;
+
+    // Desktop launches (no TTY, app bundles) should never default to writing state/config
+    // relative to an arbitrary cwd (often read-only). Use $HOME/.puppet-master/config.yaml.
+    const effectiveConfigPath =
+      options.config ??
+      ((enableCrashLogging || isAppBundle) && desktopDefaultConfigPath ? desktopDefaultConfigPath : undefined);
+
     // Load configuration
-    const configManager = new ConfigManager(options.config);
-    const config = await configManager.load();
+    const configManager = new ConfigManager(effectiveConfigPath);
     const configPath = configManager.getConfigPath();
+    const shouldAutoCreateConfig =
+      options.config === undefined &&
+      enableCrashLogging &&
+      !process.env.CI &&
+      desktopDefaultConfigPath !== undefined &&
+      path.resolve(configPath) === path.resolve(desktopDefaultConfigPath);
+
+    // Desktop GUI boot path must stay fast. Avoid platform detection during config load.
+    const config = await configManager.load(shouldAutoCreateConfig, { adjustForInstalledPlatforms: false });
     const projectRoot = deriveProjectRootFromConfigPath(configPath);
 
     if (options.verbose) {
@@ -476,9 +493,9 @@ export async function guiAction(options: GuiOptions): Promise<void> {
 
     // When running from .app bundle or without TTY (desktop launch), use writable auth token path
     const useHomeForAuth = isAppBundle || enableCrashLogging;
-    const homeDir = process.env.HOME || process.env.USERPROFILE;
-    const authTokenPath = useHomeForAuth && homeDir
-      ? path.join(homeDir, '.puppet-master', 'gui-token.txt')
+    const authHomeDir = process.env.HOME || process.env.USERPROFILE;
+    const authTokenPath = useHomeForAuth && authHomeDir
+      ? path.join(authHomeDir, '.puppet-master', 'gui-token.txt')
       : undefined; // server default: .puppet-master/gui-token.txt relative to cwd
 
     // Create GUI server
@@ -501,6 +518,8 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       ...(authTokenPath !== undefined && { authTokenPath }),
     };
     const guiServer = new GuiServer(guiConfig, eventBus);
+    let orchestratorInstance: Orchestrator | null = null;
+    let orchestratorReady = false;
 
     // Register state dependencies
     const tierManager = container.resolve<TierStateManager>('tierStateManager');
@@ -515,13 +534,6 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       agentsManager
     );
 
-    // Create Orchestrator instance for controls
-    const orchestratorInstance = new Orchestrator({
-      config,
-      projectPath: projectRoot,
-      eventBus, // Pass EventBus for real-time updates
-    });
-
     // Initialize platform registry with runners if needed
     const platformRegistry = container.resolve<PlatformRegistry>('platformRegistry');
     if (platformRegistry.getAvailable().length === 0) {
@@ -535,37 +547,8 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       }
     }
 
-    // Create platform router
-    const platformRouter = new PlatformRouter(config, platformRegistry);
-
-    // Initialize orchestrator with dependencies from container
-    await orchestratorInstance.initialize({
-      configManager: container.resolve('configManager'),
-      prdManager: container.resolve('prdManager'),
-      progressManager: container.resolve('progressManager'),
-      agentsManager: container.resolve('agentsManager'),
-      evidenceStore: container.resolve('evidenceStore'),
-      usageTracker: container.resolve('usageTracker'),
-      gitManager: container.resolve('gitManager'),
-      branchStrategy: container.resolve('branchStrategy'),
-      commitFormatter: container.resolve('commitFormatter'),
-      prManager: container.resolve('prManager'),
-      platformRegistry,
-      platformRouter,
-      verificationIntegration: container.resolve('verificationIntegration'),
-      // Memory auto-promotion dependencies
-      promotionEngine: container.resolve('promotionEngine'),
-      multiLevelLoader: container.resolve('multiLevelLoader'),
-    });
-
-    // Register orchestrator instance (this will now use orchestrator's TierStateManager)
-    guiServer.registerOrchestratorInstance(orchestratorInstance);
-
-    if (options.verbose) {
-      console.log('Orchestrator instance registered with GUI server');
-    }
-
-    // Register start chain dependencies for wizard routes
+    // Register start chain dependencies for wizard routes.
+    // This does NOT require a running orchestrator; it's used for onboarding and wizard generation.
     const usageTracker = container.resolve<UsageTracker>('usageTracker');
     const quotaManager = new QuotaManager(usageTracker, config.budgets, config.budgetEnforcement);
     
@@ -578,15 +561,6 @@ export async function guiAction(options: GuiOptions): Promise<void> {
 
     if (options.verbose) {
       console.log('Start chain dependencies registered with GUI server');
-    }
-
-    // Create and register SessionTracker for history tracking
-    const sessionTracker = new SessionTracker(eventBus, projectRoot);
-    sessionTracker.start();
-    guiServer.registerSessionTracker(sessionTracker);
-
-    if (options.verbose) {
-      console.log('SessionTracker registered with GUI server');
     }
 
     // P0-G07: Initialize authentication before starting server
@@ -648,7 +622,7 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     }
 
     // Setup signal handlers for graceful shutdown
-    setupSignalHandlers(guiServer, orchestratorInstance);
+    setupSignalHandlers(guiServer, () => (orchestratorReady ? orchestratorInstance : null));
 
     // Start GUI server
     console.log('Starting GUI server...');
@@ -715,7 +689,7 @@ export async function guiAction(options: GuiOptions): Promise<void> {
         tauriChild.on('exit', (code, signal) => {
           const reason = signal ? `Tauri exited (${signal})` : `Tauri exited (code ${code})`;
           console.log(`\n${reason}, shutting down server...`);
-          shutdownServer(guiServer, orchestratorInstance).catch((err) => {
+          shutdownServer(guiServer, orchestratorReady ? orchestratorInstance : null).catch((err) => {
             console.error('Shutdown error:', err);
             process.exit(1);
           });
@@ -757,6 +731,52 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       }
     }
 
+    // Initialize the orchestrator AFTER the GUI is up.
+    // This avoids long "blank screen" first boots and lets /health respond immediately.
+    orchestratorInstance = new Orchestrator({
+      config,
+      projectPath: projectRoot,
+      eventBus,
+    });
+
+    // Create platform router for orchestrator routing decisions.
+    const platformRouter = new PlatformRouter(config, platformRegistry);
+
+    // Initialize orchestrator with dependencies from container (async; does not block HTTP).
+    await orchestratorInstance.initialize({
+      configManager: container.resolve('configManager'),
+      prdManager: container.resolve('prdManager'),
+      progressManager: container.resolve('progressManager'),
+      agentsManager: container.resolve('agentsManager'),
+      evidenceStore: container.resolve('evidenceStore'),
+      usageTracker: container.resolve('usageTracker'),
+      gitManager: container.resolve('gitManager'),
+      branchStrategy: container.resolve('branchStrategy'),
+      commitFormatter: container.resolve('commitFormatter'),
+      prManager: container.resolve('prManager'),
+      platformRegistry,
+      platformRouter,
+      verificationIntegration: container.resolve('verificationIntegration'),
+      // Memory auto-promotion dependencies
+      promotionEngine: container.resolve('promotionEngine'),
+      multiLevelLoader: container.resolve('multiLevelLoader'),
+    });
+    orchestratorReady = true;
+
+    // Register orchestrator instance (this will now use orchestrator's TierStateManager)
+    guiServer.registerOrchestratorInstance(orchestratorInstance);
+    if (options.verbose) {
+      console.log('Orchestrator instance registered with GUI server');
+    }
+
+    // Create and register SessionTracker for history tracking (uses orchestrator event bus only).
+    const sessionTracker = new SessionTracker(eventBus, projectRoot);
+    sessionTracker.start();
+    guiServer.registerSessionTracker(sessionTracker);
+    if (options.verbose) {
+      console.log('SessionTracker registered with GUI server');
+    }
+
     console.log('  Press Ctrl+C to stop the server');
     console.log('');
 
@@ -796,7 +816,7 @@ export async function guiAction(options: GuiOptions): Promise<void> {
  */
 async function shutdownServer(
   guiServer: GuiServer,
-  orchestrator: Orchestrator
+  orchestrator: Orchestrator | null
 ): Promise<void> {
   try {
     if (orchestrator && typeof orchestrator.stop === 'function') {
@@ -815,10 +835,10 @@ async function shutdownServer(
 /**
  * Setup signal handlers for graceful shutdown
  */
-function setupSignalHandlers(guiServer: GuiServer, orchestrator: Orchestrator): void {
+function setupSignalHandlers(guiServer: GuiServer, getOrchestrator: () => Orchestrator | null): void {
   const onSignal = (signal: string) => {
     console.log(`\n${signal} received, shutting down gracefully...`);
-    shutdownServer(guiServer, orchestrator).catch((err) => {
+    shutdownServer(guiServer, getOrchestrator()).catch((err) => {
       console.error('Shutdown error:', err);
       process.exit(1);
     });

@@ -29,8 +29,9 @@
 
 import { spawn, type ChildProcess } from 'node:child_process';
 import { mkdir, writeFile, copyFile, access, rm } from 'node:fs/promises';
-import { join, dirname, basename } from 'node:path';
+import { join, dirname, basename, delimiter } from 'node:path';
 import { constants } from 'node:fs';
+import { homedir } from 'node:os';
 import type { Platform } from '../types/index.js';
 import { resolvePlatformCommand } from '../platforms/constants.js';
 
@@ -330,44 +331,101 @@ export class FreshSpawner {
   }
 
   private setEnvironment(iterationId: string): Record<string, string> {
-    // Filter out sensitive environment variables per REQUIREMENTS.md 26.3
-    // (no sensitive data in environment)
-    const sensitivePatterns = [
-      /^.*PASSWORD.*$/i,
-      /^.*SECRET.*$/i,
-      /^.*KEY.*$/i,
-      /^.*TOKEN.*$/i,
-      /^.*CREDENTIAL.*$/i,
-      /^.*AUTH.*$/i,
-      /^AWS_.*$/,
-      /^GCP_.*$/,
-      /^AZURE_.*$/,
-      /^.*API_KEY.*$/i,
-    ];
+    // IMPORTANT:
+    // RWM Puppet Master integrates multiple third-party CLIs which often rely on
+    // env-based auth (e.g., OPENAI_API_KEY, CURSOR_API_KEY, GH_TOKEN). Filtering
+    // "secrets" out of the environment breaks login and model execution.
+    //
+    // We do NOT log env var values anywhere (audits record only explicit keys from
+    // config.environmentVars), so passing through env vars is acceptable here.
+    const env: Record<string, string> = {};
 
-    const filteredEnv: Record<string, string> = {};
-    
-    // Copy safe environment variables
     for (const [key, value] of Object.entries(process.env)) {
-      if (value === undefined) {
-        continue;
-      }
-      
-      // Skip sensitive variables
-      const isSensitive = sensitivePatterns.some((pattern) => pattern.test(key));
-      if (!isSensitive) {
-        filteredEnv[key] = value;
+      if (typeof value === 'string') {
+        env[key] = value;
       }
     }
 
-    // Add configured environment variables (these are explicitly allowed)
-    Object.assign(filteredEnv, this.config.environmentVars);
+    // Desktop launches (especially on Windows) can provide a stripped environment where
+    // common "home" vars are missing. Many CLIs (copilot, gemini, etc.) rely on these
+    // to locate credential stores/config directories.
+    const inferredHome =
+      process.platform === 'win32'
+        ? (env.USERPROFILE || env.HOME || homedir())
+        : (env.HOME || homedir());
+    if (process.platform === 'win32') {
+      if (!env.USERPROFILE && inferredHome) {
+        env.USERPROFILE = inferredHome;
+      }
+      if (!env.HOME && inferredHome) {
+        // Some cross-platform CLIs use HOME even on Windows.
+        env.HOME = inferredHome;
+      }
+      if (!env.APPDATA && inferredHome) {
+        env.APPDATA = join(inferredHome, 'AppData', 'Roaming');
+      }
+      if (!env.LOCALAPPDATA && inferredHome) {
+        env.LOCALAPPDATA = join(inferredHome, 'AppData', 'Local');
+      }
+    } else {
+      if (!env.HOME && inferredHome) {
+        env.HOME = inferredHome;
+      }
+    }
+
+    // Desktop app launches often have a minimal PATH (missing ~/.local/bin, ~/.npm-global/bin, etc.).
+    // Always enrich PATH so platform CLIs are discoverable in GUI launches.
+    const home = inferredHome || homedir();
+    const npmGlobalPrefix = home ? join(home, '.npm-global') : '';
+    const npmGlobalBin = npmGlobalPrefix
+      ? (process.platform === 'win32' ? npmGlobalPrefix : join(npmGlobalPrefix, 'bin'))
+      : '';
+    const windowsNpmBin = process.platform === 'win32' && env.APPDATA
+      ? join(env.APPDATA, 'npm')
+      : '';
+    // PATH ordering matters.
+    // - Prefer user shims and OS package-manager locations over npm-global so we don't accidentally
+    //   pick older duplicates (e.g. /usr/local/bin/gemini over ~/.npm-global/bin/gemini).
+    // - Still include npm-global as a fallback for CLIs installed only there.
+    const extraPaths = (process.platform === 'win32'
+      ? [
+          windowsNpmBin,
+          npmGlobalBin,
+          // Common Windows user-level tool shims (best-effort)
+          home ? join(home, 'scoop', 'shims') : '',
+        ]
+      : [
+          home ? join(home, '.local', 'bin') : '',
+          home ? join(home, '.volta', 'bin') : '',
+          home ? join(home, '.asdf', 'shims') : '',
+          '/opt/homebrew/bin',
+          '/opt/homebrew/sbin',
+          '/usr/local/bin',
+          npmGlobalBin,
+          '/snap/bin',
+        ]
+    ).filter(Boolean);
+    const currentPath =
+      env.PATH ||
+      env.Path ||
+      (process.platform === 'win32' ? 'C:\\Windows\\System32' : '/usr/bin:/bin');
+    env.PATH = [...extraPaths, currentPath].filter(Boolean).join(delimiter);
+
+    // Helps npm-installed global CLIs (e.g., codex, gemini) resolve their install prefix.
+    if (npmGlobalPrefix) {
+      env.HOME = home;
+      env.npm_config_prefix = npmGlobalPrefix;
+      env.NPM_CONFIG_PREFIX = npmGlobalPrefix;
+    }
+
+    // Add configured environment variables (explicit overrides)
+    Object.assign(env, this.config.environmentVars);
 
     // Add required Puppet Master variables
-    filteredEnv.PUPPET_MASTER_ITERATION = iterationId;
-    filteredEnv.NODE_ENV = 'production';
+    env.PUPPET_MASTER_ITERATION = iterationId;
+    env.NODE_ENV = 'production';
 
-    return filteredEnv;
+    return env;
   }
 
   private async verifyCleanState(): Promise<boolean> {
@@ -612,4 +670,3 @@ export class FreshSpawner {
     }
   }
 }
-

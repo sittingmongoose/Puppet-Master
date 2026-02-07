@@ -46,12 +46,20 @@ function getEnrichedEnv(): NodeJS.ProcessEnv {
     ? (process.platform === 'win32' ? npmGlobalPrefix : join(npmGlobalPrefix, 'bin'))
     : '';
 
+  const windowsNpmBin = process.platform === 'win32' && process.env.APPDATA
+    ? join(process.env.APPDATA, 'npm')
+    : '';
+
   const extraPaths = [
     npmGlobalBin,
     join(home, '.local', 'bin'),
+    windowsNpmBin,
+    join(home, '.volta', 'bin'),
+    join(home, '.asdf', 'shims'),
     '/usr/local/bin',
     '/opt/homebrew/bin',
     '/opt/homebrew/sbin',
+    '/snap/bin',
   ].filter(Boolean);
 
   const currentPath = process.env.PATH || '';
@@ -782,18 +790,22 @@ export class CopilotSdkCheck implements DoctorCheck {
       // Dynamic import to avoid errors if SDK not installed
       const { CopilotClient } = await import('@github/copilot-sdk');
 
-      const client = new CopilotClient();
+      // GUI/desktop launches often have a minimal PATH, so pass an enriched env explicitly.
+      const client = new CopilotClient({
+        env: getEnrichedEnv() as Record<string, string | undefined>,
+        autoStart: false,
+      });
       await client.start();
 
       const [status, authStatus, models] = await Promise.all([
         client.getStatus(),
         client.getAuthStatus(),
-        client.listModels().catch(() => [] as string[]),
+        client.listModels().catch(() => []),
       ]);
 
       await client.stop();
 
-      const authenticated = authStatus.authenticated;
+      const authenticated = authStatus.isAuthenticated;
       const modelCount = models.length;
 
       return {
@@ -803,8 +815,8 @@ export class CopilotSdkCheck implements DoctorCheck {
         message: authenticated
           ? `Copilot SDK is working and authenticated`
           : `Copilot SDK is working but not authenticated`,
-        details: `SDK: yes. CLI: v${status.cliVersion ?? status.version ?? 'unknown'}. Auth: ${authenticated ? authStatus.authType ?? 'authenticated' : 'not authenticated'}. Models available: ${modelCount}.`,
-        fixSuggestion: authenticated ? undefined : 'Run `copilot /login` to authenticate',
+        details: `SDK: yes. CLI: v${status.version ?? 'unknown'}. Auth: ${authenticated ? authStatus.authType ?? 'authenticated' : 'not authenticated'}. User: ${authStatus.login ?? 'unknown'}. Models available: ${modelCount}.`,
+        fixSuggestion: authenticated ? undefined : 'Run `copilot login` to authenticate',
         durationMs: 0,
       };
     } catch (error) {

@@ -11,6 +11,19 @@ export interface ServiceWorkerRegistrationResult {
   error?: Error;
 }
 
+function isTauriBundledOrigin(): boolean {
+  if (typeof window === 'undefined') return false;
+  const origin = window.location.origin;
+  if (origin.startsWith('tauri://')) return true;
+  try {
+    const parsed = new URL(origin);
+    const host = parsed.hostname.toLowerCase();
+    return host === 'tauri.localhost' || host.endsWith('.tauri.localhost');
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Register service worker with safety checks
  * @returns Registration result
@@ -19,6 +32,18 @@ export async function registerServiceWorker(): Promise<ServiceWorkerRegistration
   // Only register in production
   if (import.meta.env.DEV) {
     console.log('[PWA] Service worker registration skipped in development mode');
+    return { registered: false };
+  }
+
+  // Desktop app runs in a bundled webview. Service workers can cache stale shells
+  // across backend restarts/ports and cause "Load failed" behavior. Disable SW there.
+  if (isTauriBundledOrigin()) {
+    try {
+      await unregisterServiceWorker();
+    } catch {
+      // best-effort cleanup
+    }
+    console.log('[PWA] Service worker disabled for bundled desktop webview');
     return { registered: false };
   }
 

@@ -5,13 +5,15 @@
  * This intentionally avoids network calls (no billable requests).
  *
  * Detection priority:
- *   1. CLI credential files / directories (fast, no subprocess)
- *   2. CLI auth status commands (execSync with short timeout)
- *   3. Environment variable fallback (legacy / CI usage)
+ *   1. Environment variables (headless/CI usage)
+ *   2. Credential files / directories (fast, no subprocess)
+ *
+ * IMPORTANT: Do NOT run CLI auth/status commands here.
+ * Even time-bounded synchronous subprocess calls (execSync/spawnSync) can block
+ * the Node event loop and cause severe GUI slowdowns and apparent "freezes".
  */
 
 import { existsSync, readdirSync } from 'node:fs';
-import { execSync } from 'node:child_process';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import type { Platform } from '../types/config.js';
@@ -43,36 +45,6 @@ function dirHasFiles(dirPath: string): boolean {
   }
 }
 
-/** Build an enriched PATH so CLI tools installed in common locations are found. */
-function enrichedPath(): string {
-  const home = homedir();
-  const extra = [
-    '/usr/local/bin',
-    '/opt/homebrew/bin',
-    '/opt/homebrew/sbin',
-    join(home, '.local', 'bin'),
-    join(home, '.nvm', 'versions', 'node'),  // glob won't work here but covers many layouts
-    '/usr/local/lib/puppet-master/node/bin',
-    '/opt/puppet-master/node/bin',
-  ];
-  const current = process.env.PATH || '/usr/bin:/bin';
-  return [...extra, current].join(':');
-}
-
-/** Run a command with a short timeout; return true if exit code is 0. */
-function cliAuthOk(command: string): boolean {
-  try {
-    execSync(command, {
-      timeout: 5_000,
-      stdio: 'pipe',
-      env: { ...process.env, PATH: enrichedPath() },
-    });
-    return true;
-  } catch {
-    return false;
-  }
-}
-
 /* ------------------------------------------------------------------ */
 /*  Public API                                                         */
 /* ------------------------------------------------------------------ */
@@ -83,21 +55,7 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
   switch (platform) {
     /* -------------------------------------------------------------- */
     case 'cursor': {
-      // 1. Check for local Cursor auth directories
-      const cursorPaths = [
-        join(home, '.cursor-server'),
-        join(home, '.cursor'),
-      ];
-      for (const p of cursorPaths) {
-        if (dirHasFiles(p)) {
-          return {
-            status: 'authenticated',
-            details: `Cursor credentials found (${p}).`,
-          };
-        }
-      }
-
-      // 2. Env-var fallback (headless / CI)
+      // 1. Env-var fallback (headless / CI)
       const hasApiKey =
         typeof process.env.CURSOR_API_KEY === 'string' &&
         process.env.CURSOR_API_KEY.trim() !== '';
@@ -106,6 +64,20 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
           status: 'authenticated',
           details: 'CURSOR_API_KEY is set (headless/CI mode).',
         };
+      }
+
+      // 2. Best-effort: if credential directories exist, treat as unknown (not authenticated).
+      // NOTE: The presence of ~/.cursor* is NOT a reliable auth signal.
+      const cursorPaths = [join(home, '.cursor-server'), join(home, '.cursor')];
+      for (const p of cursorPaths) {
+        if (dirHasFiles(p)) {
+          return {
+            status: 'unknown',
+            details: `Cursor credential directories exist (${p}), but authentication cannot be confirmed without running the CLI.`,
+            fixSuggestion:
+              'Open Cursor IDE and sign in, or set CURSOR_API_KEY for headless/CI usage.',
+          };
+        }
       }
 
       return {
@@ -182,27 +154,13 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
       return {
         status: 'not_authenticated',
         details: 'No Claude credentials found.',
-        fixSuggestion: 'Run `claude login` or set ANTHROPIC_API_KEY in your environment.',
+        fixSuggestion: 'Run `claude setup-token` (subscription) or set ANTHROPIC_API_KEY in your environment.',
       };
     }
 
     /* -------------------------------------------------------------- */
     case 'gemini': {
-      // 1. Check CLI credential directories
-      const geminiPaths = [
-        join(home, '.config', 'gemini'),
-        join(home, '.config', 'google-cloud'),
-      ];
-      for (const p of geminiPaths) {
-        if (dirHasFiles(p)) {
-          return {
-            status: 'authenticated',
-            details: `Gemini / Google credentials found (${p}).`,
-          };
-        }
-      }
-
-      // 2. Env-var fallback
+      // 1. Env-var auth (headless / CI)
       const hasGeminiKey =
         typeof process.env.GEMINI_API_KEY === 'string' &&
         process.env.GEMINI_API_KEY.trim() !== '';
@@ -222,25 +180,43 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
         return { status: 'authenticated', details: 'GOOGLE_APPLICATION_CREDENTIALS is set (Vertex AI).' };
       }
 
+      // 2. Check local settings/config files (heuristic; do not execute the CLI).
+      // Recent Gemini CLI versions use ~/.gemini/settings.json for auth method config.
+      const settingsPath = join(home, '.gemini', 'settings.json');
+      if (existsSync(settingsPath)) {
+        return {
+          status: 'unknown',
+          details: `Gemini settings file exists (${settingsPath}), but auth cannot be confirmed without running the CLI.`,
+          fixSuggestion: 'Run `gemini` in a terminal to configure auth, or set GEMINI_API_KEY.',
+        };
+      }
+
+      // Legacy/alternate locations (keep as weak signals)
+      const geminiPaths = [
+        join(home, '.config', 'gemini'),
+        join(home, '.config', 'google-cloud'),
+      ];
+      for (const p of geminiPaths) {
+        if (dirHasFiles(p)) {
+          return {
+            status: 'unknown',
+            details: `Gemini / Google credential directory exists (${p}).`,
+            fixSuggestion: 'Run `gemini` in a terminal to configure auth, or set GEMINI_API_KEY.',
+          };
+        }
+      }
+
       return {
         status: 'not_authenticated',
         details: 'No Gemini / Google credentials found.',
         fixSuggestion:
-          'Run `gemini auth login`, or set GEMINI_API_KEY / GOOGLE_API_KEY in your environment.',
+          'Set GEMINI_API_KEY / GOOGLE_API_KEY, or configure GOOGLE_APPLICATION_CREDENTIALS (Vertex AI). If your setup uses interactive auth, run `gemini` in a terminal to complete any prompts.',
       };
     }
 
     /* -------------------------------------------------------------- */
     case 'copilot': {
-      // 1. Try `gh auth status` (fast local check, returns 0 when logged in)
-      if (cliAuthOk('gh auth status')) {
-        return {
-          status: 'authenticated',
-          details: 'GitHub CLI is authenticated (gh auth status).',
-        };
-      }
-
-      // 2. Env-var fallback
+      // 1. Env-var fallback
       const hasGhToken =
         typeof process.env.GH_TOKEN === 'string' &&
         process.env.GH_TOKEN.trim() !== '';
@@ -260,11 +236,31 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
         };
       }
 
+      // 2. Heuristic: GitHub CLI auth file exists (commonly used by Copilot CLI)
+      const ghHosts = join(home, '.config', 'gh', 'hosts.yml');
+      if (existsSync(ghHosts)) {
+        return {
+          status: 'unknown',
+          details: `GitHub CLI auth file exists (${ghHosts}).`,
+          fixSuggestion: 'If Copilot still fails, run `copilot login` in a terminal.',
+        };
+      }
+
+      // 3. Heuristic: Copilot CLI config exists
+      const copilotConfig = join(home, '.copilot', 'config.json');
+      if (existsSync(copilotConfig)) {
+        return {
+          status: 'unknown',
+          details: `Copilot CLI config exists (${copilotConfig}).`,
+          fixSuggestion: 'Run `copilot login` in a terminal to confirm authentication.',
+        };
+      }
+
       return {
         status: 'not_authenticated',
         details: 'Not authenticated with GitHub.',
         fixSuggestion:
-          'Run `gh auth login --web` (or `gh auth login --web --hostname github.com`) or set GH_TOKEN / GITHUB_TOKEN with Copilot permission.',
+          'Run `copilot login` (preferred) or `gh auth login --web`, or set GH_TOKEN / GITHUB_TOKEN with Copilot permission.',
       };
     }
 
@@ -449,4 +445,3 @@ async function doVerifyApiKey(platform: Platform): Promise<{ valid: boolean; err
 export function clearVerificationCache(): void {
   verificationCache.clear();
 }
-

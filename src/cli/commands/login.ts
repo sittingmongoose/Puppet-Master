@@ -37,12 +37,12 @@ interface PlatformAuthConfig {
  */
 const PLATFORM_AUTH_CONFIG: Record<Platform, PlatformAuthConfig> = {
   cursor: {
-    envVar: '',
-    description: 'Cursor authentication is managed through the Cursor IDE.',
-    getUrl: 'https://cursor.sh',
-    format: '',
+    envVar: 'CURSOR_API_KEY',
+    description: 'Cursor Agent supports interactive login (`agent login`) or CURSOR_API_KEY for headless usage.',
+    getUrl: 'https://cursor.com',
+    format: '(varies)',
     needsCli: true,
-    cliAuthCommand: 'Open Cursor IDE and sign in with your account.',
+    cliAuthCommand: 'agent login',
   },
   codex: {
     envVar: 'OPENAI_API_KEY',
@@ -59,8 +59,8 @@ const PLATFORM_AUTH_CONFIG: Record<Platform, PlatformAuthConfig> = {
   gemini: {
     envVar: 'GEMINI_API_KEY',
     altEnvVar: 'GOOGLE_API_KEY',
-    description: 'Google API key for Gemini CLI.',
-    getUrl: 'https://aistudio.google.com/app/apikey',
+    description: 'Gemini CLI credentials (API keys or Google credentials depending on setup).',
+    getUrl: 'https://github.com/google-gemini/gemini-cli',
     format: 'AIza...',
   },
   copilot: {
@@ -70,7 +70,7 @@ const PLATFORM_AUTH_CONFIG: Record<Platform, PlatformAuthConfig> = {
     getUrl: 'https://github.com/settings/tokens',
     format: 'ghp_... or gho_...',
     needsCli: true,
-    cliAuthCommand: 'copilot /login',
+    cliAuthCommand: 'copilot login',
   },
 };
 

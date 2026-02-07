@@ -12,7 +12,6 @@
  * - Preview models may not be available on all account types.
  *
  * Model Selection:
- * - `auto` (recommended) - Automatic model selection based on task complexity
  * - Pro models (gemini-2.5-pro, gemini-3-pro-preview) - Best for complex reasoning
  * - Flash models (gemini-2.5-flash, gemini-2.5-flash-lite, gemini-3-flash-preview) - Fast, efficient
  *
@@ -39,9 +38,16 @@ export interface GeminiModel {
  */
 export const GEMINI_MODELS: GeminiModel[] = [
   {
-    id: 'auto',
-    label: 'Auto (Recommended)',
-    description: 'Automatic model selection based on task complexity',
+    id: 'gemini-3-pro-preview',
+    label: 'Gemini 3 Pro (Preview)',
+    description: 'Preview model (may require preview features enabled)',
+    preview: true,
+  },
+  {
+    id: 'gemini-3-flash-preview',
+    label: 'Gemini 3 Flash (Preview)',
+    description: 'Preview flash variant (may require preview features enabled)',
+    preview: true,
   },
   {
     id: 'gemini-2.5-pro',
@@ -57,18 +63,6 @@ export const GEMINI_MODELS: GeminiModel[] = [
     id: 'gemini-2.5-flash-lite',
     label: 'Gemini 2.5 Flash Lite',
     description: 'Lightweight model for simple tasks with minimal latency',
-  },
-  {
-    id: 'gemini-3-pro-preview',
-    label: 'Gemini 3 Pro (Preview)',
-    description: 'Next-generation model with enhanced capabilities (requires preview features enabled)',
-    preview: true,
-  },
-  {
-    id: 'gemini-3-flash-preview',
-    label: 'Gemini 3 Flash (Preview)',
-    description: 'Preview flash variant with improved performance',
-    preview: true,
   },
 ];
 
@@ -116,58 +110,24 @@ export interface DiscoveredGeminiModel extends GeminiModel {
 }
 
 /**
- * Discover Gemini models using `gemini models` command.
- * 
- * @param command - Gemini CLI command (default: 'gemini')
- * @param timeoutMs - Timeout in milliseconds (default: 5000)
- * @returns Discovered models or null if discovery fails
+ * Discover Gemini models.
+ *
+ * IMPORTANT:
+ * Gemini CLI does not currently expose a stable, non-interactive "list models"
+ * subcommand/flag across versions. In Gemini CLI v0.26.x, `gemini models` is
+ * treated as a prompt ("models") and can trigger API calls, slowdowns, and
+ * quota errors.
+ *
+ * Puppet Master intentionally avoids billable/slow model discovery here and
+ * relies on curated static model IDs + manual entry.
+ *
+ * @returns Always null (safe discovery not supported)
  */
 export async function discoverGeminiModels(
-  command: string = 'gemini',
-  timeoutMs: number = 5000
+  _command: string = 'gemini',
+  _timeoutMs: number = 5000
 ): Promise<DiscoveredGeminiModel[] | null> {
-  const { spawn } = await import('child_process');
-  
-  return new Promise((resolve) => {
-    const proc = spawn(command, ['models'], {
-      stdio: ['ignore', 'pipe', 'pipe'],
-    });
-
-    let stdout = '';
-    let stderr = '';
-
-    const timer = setTimeout(() => {
-      proc.kill('SIGKILL');
-      resolve(null); // Timeout = discovery failed, return null for fallback
-    }, timeoutMs);
-
-    proc.stdout?.on('data', (data: Buffer) => {
-      stdout += data.toString();
-    });
-
-    proc.stderr?.on('data', (data: Buffer) => {
-      stderr += data.toString();
-    });
-
-    proc.on('close', (code) => {
-      clearTimeout(timer);
-      if (code === 0) {
-        const models = parseGeminiModelList(stdout || stderr);
-        if (models.length > 0) {
-          resolve(models.map(m => ({ ...m, source: 'discovered' as const })));
-        } else {
-          resolve(null);
-        }
-      } else {
-        resolve(null); // Command failed, return null for fallback
-      }
-    });
-
-    proc.on('error', () => {
-      clearTimeout(timer);
-      resolve(null); // Error = discovery failed, return null for fallback
-    });
-  });
+  return null;
 }
 
 /**
@@ -258,24 +218,9 @@ export async function getGeminiModelsWithDiscovery(
     return cachedDiscoveredModels;
   }
 
-  // Try discovery
-  const discovered = await discoverGeminiModels(command, 5000);
-  
-  if (discovered && discovered.length > 0) {
-    // Merge discovered with static (discovered takes precedence)
-    const staticModels = GEMINI_MODELS.map(m => ({ ...m, source: 'static' as const }));
-    const discoveredIds = new Set(discovered.map(m => m.id));
-    const merged = [
-      ...discovered,
-      ...staticModels.filter(m => !discoveredIds.has(m.id)),
-    ];
-    
-    cachedDiscoveredModels = merged;
-    cacheTimestamp = Date.now();
-    return merged;
-  }
-
-  // Fallback to static list
+  // Discovery is intentionally disabled (see discoverGeminiModels docstring).
+  // Always return static list.
+  void command;
   const staticModels = GEMINI_MODELS.map(m => ({ ...m, source: 'static' as const }));
   cachedDiscoveredModels = staticModels;
   cacheTimestamp = Date.now();

@@ -8,6 +8,7 @@
 import type { Router, Request, Response } from 'express';
 import { Router as createRouter } from 'express';
 import { execSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { ConfigManager } from '../../config/config-manager.js';
 import type { PuppetMasterConfig } from '../../types/config.js';
@@ -16,7 +17,7 @@ import {
   getCopilotModels,
 } from '../../platforms/index.js';
 import { getCursorModels } from '../../platforms/cursor-models.js';
-import { getCodexModels } from '../../platforms/codex-models.js';
+import { getCodexModels, getCodexModelsWithCache } from '../../platforms/codex-models.js';
 import { getClaudeModels } from '../../platforms/claude-models.js';
 import { getCursorCommandCandidates, resolvePlatformCommand } from '../../platforms/constants.js';
 import { getPlatformAuthStatus } from '../../platforms/auth-status.js';
@@ -54,6 +55,61 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
   ]);
 }
 
+function ensureAutoOption(platformModels: Array<{ id: string; label: string; reasoningLevels?: string[] }>) {
+  const hasAuto = platformModels.some((m) => m.id === 'auto');
+  if (!hasAuto) {
+    return [{ id: 'auto', label: 'Auto (recommended)' }, ...platformModels];
+  }
+  const autoIndex = platformModels.findIndex((m) => m.id === 'auto');
+  if (autoIndex > 0) {
+    const auto = platformModels[autoIndex];
+    const others = platformModels.filter((_, i) => i !== autoIndex);
+    return [{ ...auto, label: 'Auto (recommended)' }, ...others];
+  }
+  return platformModels.map((m) => (m.id === 'auto' ? { ...m, label: 'Auto (recommended)' } : m));
+}
+
+function removeAuto(platformModels: Array<{ id: string; label: string; reasoningLevels?: string[] }>) {
+  return platformModels.filter((m) => m.id !== 'auto');
+}
+
+function buildStaticModelCatalog(): Record<Platform, Array<{ id: string; label: string; reasoningLevels?: string[] }>> {
+  const cursorStatic = getCursorModels();
+  const codexStatic = getCodexModels();
+  const claudeStatic = getClaudeModels();
+  const geminiStatic = getGeminiModels();
+  const copilotStatic = getCopilotModels();
+
+  return {
+    // NOTE: "auto" is a Puppet Master model option only for Cursor.
+    cursor: ensureAutoOption(
+      Array.isArray(cursorStatic) && cursorStatic.length > 0
+        ? cursorStatic.map((m) => ({ id: m.id, label: m.label || m.id }))
+        : [{ id: 'auto', label: 'Auto (recommended)' }]
+    ),
+    codex: removeAuto(
+      Array.isArray(codexStatic) && codexStatic.length > 0
+        ? codexStatic.map((m) => ({ id: m.id, label: m.label || m.id, reasoningLevels: m.reasoningLevels }))
+        : []
+    ),
+    claude: removeAuto(
+      Array.isArray(claudeStatic) && claudeStatic.length > 0
+        ? claudeStatic.map((m) => ({ id: m.id, label: m.label || m.id }))
+        : []
+    ),
+    gemini: removeAuto(
+      Array.isArray(geminiStatic) && geminiStatic.length > 0
+        ? geminiStatic.map((m) => ({ id: m.id, label: m.label || m.id }))
+        : []
+    ),
+    copilot: removeAuto(
+      Array.isArray(copilotStatic) && copilotStatic.length > 0
+        ? copilotStatic.map((m) => ({ id: m.id, label: m.label || m.id }))
+        : []
+    ),
+  };
+}
+
 /**
  * Create config routes.
  *
@@ -73,8 +129,8 @@ export function createConfigRoutes(baseDirectory?: string): Router {
   router.get('/config', async (req: Request, res: Response) => {
     try {
       const configManager = new ConfigManager(configPath);
-      // Auto-create config if missing or corrupt
-      const config = await configManager.load(true);
+      // Auto-create config if missing or corrupt, but do not run slow platform detection here.
+      const config = await configManager.load(true, { adjustForInstalledPlatforms: false });
 
       // Add cache control header to hint to frontend about caching
       const refresh = req.query.refresh === 'true';
@@ -193,13 +249,16 @@ export function createConfigRoutes(baseDirectory?: string): Router {
    * CU-P1-T09: GET /api/config/capabilities
    * Returns Cursor capabilities (binary, modes, output formats, auth, models, MCP).
    */
-  router.get('/config/capabilities', async (_req: Request, res: Response) => {
+  router.get('/config/capabilities', async (req: Request, res: Response) => {
     try {
       const command = resolvePlatformCommand('cursor');
       const candidates = getCursorCommandCandidates();
       const selectedBinary = candidates[0] || command;
       
       const auth = getPlatformAuthStatus('cursor');
+
+      // Default: keep this endpoint fast for the Config page. Only do live discovery when requested.
+      const forceDiscover = req.query.refresh === 'true' || req.query.discover === 'true';
       
       // Probe MCP (non-blocking)
       let mcpResult;
@@ -220,9 +279,14 @@ export function createConfigRoutes(baseDirectory?: string): Router {
       // Get models with discovery
       let models: DiscoveredCursorModel[] = [];
       try {
-        models = await getCursorModelsWithDiscovery(selectedBinary, true);
+        if (forceDiscover) {
+          models = await withTimeout(getCursorModelsWithDiscovery(selectedBinary, true), 3000);
+        } else {
+          // Static list is immediate and avoids CLI calls that can be slow when the user is not logged in.
+          models = getCursorModels().map((m) => ({ ...m, source: 'static' as const }));
+        }
       } catch {
-        models = [];
+        models = getCursorModels().map((m) => ({ ...m, source: 'static' as const }));
       }
       
       // Ensure models is always an array
@@ -294,6 +358,20 @@ export function createConfigRoutes(baseDirectory?: string): Router {
         return res.json(modelCache.models);
       }
 
+      // Fast path for normal UI loads:
+      // return static model lists immediately and avoid expensive live discovery.
+      // Discovery remains available on explicit refresh=true requests.
+      if (!forceRefresh) {
+        const staticModels = buildStaticModelCatalog();
+        modelCache = {
+          models: staticModels,
+          timestamp: now,
+        };
+        clearTimeout(requestTimeout);
+        res.json(staticModels);
+        return;
+      }
+
       const capabilitiesDir = baseDirectory ? join(baseDirectory, '.puppet-master', 'capabilities') : '.puppet-master/capabilities';
 
       // Load config to get CLI paths (use project root so discovery works when cwd differs)
@@ -335,12 +413,12 @@ export function createConfigRoutes(baseDirectory?: string): Router {
           }
           return staticModels.map(m => ({ id: m.id, label: m.label || m.id, provider: m.provider }));
         })(),
-        // Codex: Static list with reasoning levels (always available)
-        (() => {
-          const models = getCodexModels();
+        // Codex: Prefer local Codex cache (no subprocess / no network), fallback to curated static list.
+        (async () => {
+          const models = await getCodexModelsWithCache();
           if (!Array.isArray(models) || models.length === 0) {
             console.warn('[Config] Codex models list is empty, using fallback');
-            return [{ id: 'auto', label: 'Auto (recommended)' }];
+            return [];
           }
           return models.map(m => ({ 
             id: m.id, 
@@ -371,7 +449,7 @@ export function createConfigRoutes(baseDirectory?: string): Router {
           const staticModels = getClaudeModels();
           if (!Array.isArray(staticModels) || staticModels.length === 0) {
             console.warn('[Config] Claude static models list is empty');
-            return [{ id: 'auto', label: 'Auto (recommended)' }];
+            return [];
           }
           return staticModels.map(m => ({ id: m.id, label: m.label || m.id }));
         })(),
@@ -397,7 +475,7 @@ export function createConfigRoutes(baseDirectory?: string): Router {
           const staticModels = getGeminiModels();
           if (!Array.isArray(staticModels) || staticModels.length === 0) {
             console.warn('[Config] Gemini static models list is empty');
-            return [{ id: 'auto', label: 'Auto (recommended)' }];
+            return [];
           }
           return staticModels.map(m => ({ id: m.id, label: m.label || m.id }));
         })(),
@@ -425,34 +503,18 @@ export function createConfigRoutes(baseDirectory?: string): Router {
           const staticModels = getCopilotModels();
           if (!Array.isArray(staticModels) || staticModels.length === 0) {
             console.warn('[Config] Copilot static models list is empty');
-            return [{ id: 'auto', label: 'Auto (recommended)' }];
+            return [];
           }
           return staticModels.map(m => ({ id: m.id, label: m.label || m.id }));
         })(),
       ]);
       
-      // Ensure "auto" is always included as first option for each platform
-      const ensureAutoOption = (platformModels: Array<{ id: string; label: string }>) => {
-        const hasAuto = platformModels.some(m => m.id === 'auto');
-        if (!hasAuto) {
-          return [{ id: 'auto', label: 'Auto (recommended)' }, ...platformModels];
-        }
-        // Move auto to front if it exists
-        const autoIndex = platformModels.findIndex(m => m.id === 'auto');
-        if (autoIndex > 0) {
-          const auto = platformModels[autoIndex];
-          const others = platformModels.filter((_, i) => i !== autoIndex);
-          return [{ ...auto, label: 'Auto (recommended)' }, ...others];
-        }
-        return platformModels.map(m => m.id === 'auto' ? { ...m, label: 'Auto (recommended)' } : m);
-      };
-
       const models = {
         cursor: ensureAutoOption(cursorModels),
-        codex: ensureAutoOption(codexModels),
-        claude: ensureAutoOption(claudeModels),
-        gemini: ensureAutoOption(geminiModels),
-        copilot: ensureAutoOption(copilotModels),
+        codex: removeAuto(codexModels),
+        claude: removeAuto(claudeModels),
+        gemini: removeAuto(geminiModels),
+        copilot: removeAuto(copilotModels),
       };
       
       // Update cache
@@ -488,6 +550,22 @@ export function createConfigRoutes(baseDirectory?: string): Router {
         return '';
       }
     };
+
+    // Fast path: most desktop launches are not inside a Git repo. Avoid spawning
+    // multiple synchronous git commands that can each block the event loop up to
+    // the timeout when not in a worktree.
+    const root = baseDirectory ?? process.cwd();
+    if (!existsSync(join(root, '.git'))) {
+      res.json({
+        branches: [],
+        remoteName: '',
+        remoteUrl: '',
+        userName: '',
+        userEmail: '',
+        currentBranch: '',
+      });
+      return;
+    }
 
     const branchesRaw = runGit("git branch -a --format='%(refname:short)'");
     const branches = branchesRaw

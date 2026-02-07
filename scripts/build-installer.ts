@@ -311,7 +311,22 @@ async function emptyDir(dir: string): Promise<void> {
         console.warn(`⚠️  emptyDir attempt ${attempt}/${EMPTY_DIR_RETRIES} failed, retrying in ${EMPTY_DIR_RETRY_DELAY_MS}ms...`);
         await new Promise((r) => setTimeout(r, EMPTY_DIR_RETRY_DELAY_MS));
       } else {
-        throw lastErr;
+        // Last-resort: rename the directory out of the way so the build can proceed.
+        // We've observed rare filesystem states where recursive removal fails with
+        // "Directory not empty" even when the directory appears empty.
+        try {
+          const moved = `${dir}.old-${Date.now()}`;
+          await rename(dir, moved);
+          // Best-effort cleanup of the moved directory.
+          try {
+            await rm(moved, { recursive: true, force: true });
+          } catch {
+            // Ignore
+          }
+        } catch {
+          // If rename fails, surface the original error.
+          throw lastErr;
+        }
       }
     }
   }
@@ -323,14 +338,14 @@ function run(
   args: string[],
   options: { cwd?: string; env?: NodeJS.ProcessEnv; shell?: boolean } = {}
 ): Promise<void> {
-  const useShell = options.shell !== false;
+  // Default: shell on Windows (so .cmd/.bat resolve), no shell on Unix.
+  const useShell = options.shell ?? (process.platform === 'win32');
   return new Promise((resolve, reject) => {
     const proc = spawn(cmd, args, {
       cwd: options.cwd,
       env: { ...process.env, ...options.env },
       stdio: 'inherit',
-      // Use shell by default so PATH is searched (cargo, npx, etc.). Disable for
-      // macOS pkgbuild/hdiutil so args with spaces (e.g. "Puppet Master") are not split.
+      // Avoid shells on Unix so paths with spaces are passed correctly.
       shell: useShell,
     });
     proc.on('error', reject);
@@ -565,9 +580,6 @@ exec "$NODE_EXE" "$CLI" "$@"
 async function ensureReactGuiBuild(repoRoot: string): Promise<void> {
   const reactRoot = path.join(repoRoot, 'src', 'gui', 'react');
   const reactDistSrc = path.join(reactRoot, 'dist');
-  if (existsSync(reactDistSrc)) {
-    return;
-  }
   const reactNodeModules = path.join(reactRoot, 'node_modules');
   if (!existsSync(reactNodeModules)) {
     console.log('\n📦 Installing React GUI dependencies...\n');
@@ -575,6 +587,9 @@ async function ensureReactGuiBuild(repoRoot: string): Promise<void> {
   }
   console.log('\n🧱 Building React GUI...\n');
   await run('npm', ['--prefix', reactRoot, 'run', 'build'], { cwd: repoRoot });
+  if (!existsSync(reactDistSrc)) {
+    throw new Error('React GUI build did not produce dist/; check build logs above.');
+  }
 }
 
 async function stageApp(args: Args, repoRoot: string, stageRoot: string, version: string): Promise<void> {
@@ -587,11 +602,9 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
   await emptyDir(payloadRoot);
   await ensureDir(binDir);
 
-  // 1) Ensure dist exists
-  if (!existsSync(path.join(repoRoot, 'dist'))) {
-    console.log('\n🛠  Building TypeScript (tsc)...\n');
-    await run('npm', ['run', 'build'], { cwd: repoRoot });
-  }
+  // 1) Always build TypeScript (tsc) so installers contain the latest changes.
+  console.log('\n🛠  Building TypeScript (tsc)...\n');
+  await run('npm', ['run', 'build'], { cwd: repoRoot });
 
   // 2) Copy compiled output
   console.log('\n📁 Staging compiled output...\n');

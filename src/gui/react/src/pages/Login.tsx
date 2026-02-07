@@ -290,7 +290,7 @@ export default function LoginPage() {
           <div className="p-md bg-paper-lined font-mono text-sm space-y-sm">
             <div>
               <div className="text-ink-faded"># Claude Code</div>
-              <div className="text-electric-blue">claude login</div>
+              <div className="text-electric-blue">claude setup-token</div>
             </div>
             <div>
               <div className="text-ink-faded"># Codex CLI</div>
@@ -298,10 +298,14 @@ export default function LoginPage() {
             </div>
             <div>
               <div className="text-ink-faded"># Gemini CLI</div>
-              <div className="text-electric-blue">gemini auth login</div>
+              <div className="text-electric-blue">gemini</div>
             </div>
             <div>
-              <div className="text-ink-faded"># GitHub Copilot (via gh CLI)</div>
+              <div className="text-ink-faded"># GitHub Copilot</div>
+              <div className="text-electric-blue">copilot login</div>
+            </div>
+            <div>
+              <div className="text-ink-faded"># GitHub CLI (Git operations)</div>
               <div className="text-electric-blue">gh auth login --web</div>
             </div>
             <div>
@@ -356,7 +360,10 @@ export default function LoginPage() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => navigator.clipboard.writeText(loginAuthUrls['github'])}
+                        onClick={() => {
+                          const url = loginAuthUrls['github'];
+                          if (url) void navigator.clipboard.writeText(url);
+                        }}
                       >
                         Copy link
                       </Button>

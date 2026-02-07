@@ -51,7 +51,8 @@ describe('AIVerifier', () => {
   });
 
   afterEach(async () => {
-    await rm(testDir, { recursive: true, force: true });
+    // Under heavy IO load, recursive deletion can briefly fail with ENOTEMPTY on some FS.
+    await rm(testDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
     vi.clearAllMocks();
   });
 

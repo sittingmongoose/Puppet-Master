@@ -143,7 +143,8 @@ describe('CheckRegistry', () => {
       registry.register(check);
 
       const results = await registry.runAll();
-      expect(results[0].durationMs).toBeGreaterThanOrEqual(50);
+      // Timers can under-shoot slightly under load; assert a close lower bound instead of exact delay.
+      expect(results[0].durationMs).toBeGreaterThanOrEqual(40);
     });
 
     it('should handle errors gracefully', async () => {

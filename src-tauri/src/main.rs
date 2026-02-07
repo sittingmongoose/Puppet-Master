@@ -3,7 +3,7 @@
 
 use std::env;
 use std::net::TcpStream;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::io::{Read, Write};
 use std::process::Command;
 use std::sync::atomic::{AtomicBool, Ordering};
@@ -19,6 +19,147 @@ use tauri_plugin_log::{Target, TargetKind};
 use url::Url;
 
 static IS_QUITTING: AtomicBool = AtomicBool::new(false);
+
+fn enrich_path_env(extra_paths: &[PathBuf]) {
+    let current = env::var_os("PATH").unwrap_or_default();
+    let mut parts: Vec<PathBuf> = Vec::new();
+    for p in extra_paths {
+        if !p.as_os_str().is_empty() {
+            parts.push(p.clone());
+        }
+    }
+
+    // Append current PATH entries (preserve order).
+    for p in env::split_paths(&current) {
+        parts.push(p);
+    }
+
+    // De-duplicate while preserving first occurrence.
+    let mut seen: std::collections::HashSet<std::ffi::OsString> = std::collections::HashSet::new();
+    let mut uniq: Vec<PathBuf> = Vec::new();
+    for p in parts {
+        let key = p.as_os_str().to_os_string();
+        if seen.insert(key) {
+            uniq.push(p);
+        }
+    }
+
+    if let Ok(joined) = env::join_paths(uniq) {
+        env::set_var("PATH", joined);
+    }
+}
+
+fn set_desktop_env_hints() {
+    // Linux: fixes first-paint blank screens on some WMs/Wayland setups.
+    #[cfg(target_os = "linux")]
+    {
+        env::set_var("WEBKIT_DISABLE_COMPOSITING_MODE", "1");
+    }
+}
+
+fn common_extra_paths(home: Option<&Path>) -> Vec<PathBuf> {
+    let mut extra: Vec<PathBuf> = Vec::new();
+
+    if let Some(h) = home {
+        #[cfg(not(target_os = "windows"))]
+        {
+            extra.push(h.join(".local").join("bin"));
+            extra.push(h.join(".npm-global").join("bin"));
+            extra.push(h.join("bin"));
+            extra.push(h.join(".volta").join("bin"));
+            extra.push(h.join(".asdf").join("shims"));
+        }
+
+        #[cfg(target_os = "windows")]
+        {
+            extra.push(h.join(".npm-global"));
+            extra.push(h.join("scoop").join("shims"));
+        }
+    }
+
+    #[cfg(not(target_os = "windows"))]
+    {
+        extra.push(PathBuf::from("/usr/local/bin"));
+        extra.push(PathBuf::from("/opt/homebrew/bin"));
+        extra.push(PathBuf::from("/opt/homebrew/sbin"));
+        extra.push(PathBuf::from("/snap/bin"));
+    }
+    extra
+}
+
+fn is_loopback_url(url: &Url) -> bool {
+    match url.host_str() {
+        Some("127.0.0.1") | Some("localhost") | Some("::1") | Some("0.0.0.0") => true,
+        _ => false,
+    }
+}
+
+fn resolve_puppet_master_cli_fallback(resource_dir: Option<PathBuf>, current_exe: Option<PathBuf>) -> Option<PathBuf> {
+    // macOS installer layout: <App>.app/Contents/Resources/puppet-master/bin/puppet-master
+    if let Some(res) = resource_dir {
+        let candidate = res.join("puppet-master").join("bin").join("puppet-master");
+        if candidate.is_file() {
+            return Some(candidate);
+        }
+    }
+
+    // Linux/windows installer layout: sibling to GUI binary (e.g. /opt/puppet-master/bin/puppet-master-gui + /opt/puppet-master/bin/puppet-master)
+    if let Some(exe) = current_exe {
+        if let Some(dir) = exe.parent() {
+            let candidate = dir.join("puppet-master");
+            if candidate.is_file() && candidate != exe {
+                return Some(candidate);
+            }
+            let candidate_exe = dir.join("puppet-master.exe");
+            if candidate_exe.is_file() && candidate_exe != exe {
+                return Some(candidate_exe);
+            }
+        }
+    }
+
+    None
+}
+
+fn try_spawn_gui_server(url: &Url, resource_dir: Option<PathBuf>) -> bool {
+    let port = url.port().unwrap_or(3847).to_string();
+    let host = "127.0.0.1";
+    let home_dir = env::var_os("HOME")
+        .or_else(|| env::var_os("USERPROFILE"))
+        .map(PathBuf::from);
+
+    // Prefer PATH resolution (e.g. /usr/local/bin/puppet-master on macOS).
+    let mut cmd = Command::new("puppet-master");
+    cmd.args(["gui", "--no-open", "--port", &port, "--host", host])
+        // Keep child behavior deterministic for desktop launches.
+        .env("PUPPET_MASTER_NO_OPEN", "1")
+        .env("NO_OPEN_BROWSER", "1");
+    if let Some(h) = &home_dir {
+        cmd.current_dir(h);
+    }
+    let spawn_attempt = cmd
+        .spawn();
+    if spawn_attempt.is_ok() {
+        return true;
+    }
+
+    // Fallback to known install layouts.
+    let exe = env::current_exe().ok();
+    if let Some(cli) = resolve_puppet_master_cli_fallback(resource_dir, exe) {
+        let mut fallback = Command::new(cli);
+        fallback
+            .args(["gui", "--no-open", "--port", &port, "--host", host])
+            .env("PUPPET_MASTER_NO_OPEN", "1")
+            .env("NO_OPEN_BROWSER", "1");
+        if let Some(h) = &home_dir {
+            fallback.current_dir(h);
+        }
+        let _ = fallback
+            .spawn();
+        return true;
+    }
+
+    false
+}
 
 fn launch_cli() {
     #[cfg(target_os = "windows")]
@@ -271,6 +412,7 @@ fn wait_for_platform_routes(url: &Url) -> bool {
 
 fn main() {
     IS_QUITTING.store(false, Ordering::Relaxed);
+    set_desktop_env_hints();
 
     // Read server URL from args/env (args win; supports macOS `open ... --args`)
     let mut server_url_arg: Option<String> = None;
@@ -282,7 +424,9 @@ fn main() {
         }
     }
 
-    let server_url = server_url_arg.or_else(|| env::var("PUPPET_MASTER_URL").ok());
+    let server_url = server_url_arg
+        .or_else(|| env::var("PUPPET_MASTER_URL").ok())
+        .or_else(|| Some("http://127.0.0.1:3847".to_string()));
 
     tauri::Builder::default()
         .on_window_event(|window, event| {
@@ -307,6 +451,12 @@ fn main() {
                 .build(),
         )
         .setup(move |app| {
+            // Desktop apps do not inherit the user's shell PATH. Ensure common CLI install
+            // locations are present so `puppet-master` and platform CLIs can be found.
+            let home = env::var("HOME").ok().map(PathBuf::from);
+            let extra = common_extra_paths(home.as_deref());
+            enrich_path_env(&extra);
+
             let status = MenuItemBuilder::with_id("status", "Server: Running")
                 .enabled(false)
                 .build(app)?;
@@ -459,13 +609,14 @@ fn main() {
                     ))
                 })?;
 
-            // If server URL is provided, wait for server in a background thread so the
+            // Always connect to a GUI server URL (default: http://127.0.0.1:3847).
+            // We wait for server in a background thread so the UI event loop is not blocked. The
             // UI event loop is not blocked.  The window initially shows the bundled
             // frontend (or a blank page); once the server is ready we navigate to it.
             // This prevents the "not responding" freeze on Windows and the blank/slow
             // first paint on macOS/Linux.
             if let Some(url_str) = server_url {
-                log::info!("Will connect to external server: {}", url_str);
+                log::info!("Will connect to GUI server: {}", url_str);
                 let url = Url::parse(&url_str).map_err(|e| {
                     tauri::Error::Io(std::io::Error::new(
                         std::io::ErrorKind::InvalidInput,
@@ -474,7 +625,15 @@ fn main() {
                 })?;
 
                 let window_for_nav = window.clone();
+                let res_dir = app.path().resource_dir().ok();
                 std::thread::spawn(move || {
+                    // If this is a local URL, try to start the GUI server if it isn't already running.
+                    if is_loopback_url(&url) {
+                        let started = try_spawn_gui_server(&url, res_dir);
+                        if !started {
+                            log::warn!("Failed to start GUI server (puppet-master not found)");
+                        }
+                    }
                     if wait_for_server(&url) {
                         // Wait for platform routes so wizard won't show "load failed"
                         wait_for_platform_routes(&url);
@@ -488,9 +647,6 @@ fn main() {
                         log::warn!("Server not ready after timeout; staying on bundled frontend");
                     }
                 });
-            } else {
-                log::info!("Using bundled frontend");
-                // The window will automatically load from frontendDist configured in tauri.conf.json
             }
 
             Ok(())

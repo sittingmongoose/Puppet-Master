@@ -375,7 +375,8 @@ export function createWizardRoutes(
       if (existsSync(configPath)) {
         try {
           const configManager = new ConfigManager(configPath);
-          loadedConfig = await configManager.load();
+          // Wizard render should not block on platform detection.
+          loadedConfig = await configManager.load(false, { adjustForInstalledPlatforms: false });
         } catch {
           // Ignore config load errors, use provided config or undefined
         }
@@ -542,7 +543,8 @@ export function createWizardRoutes(
       if (existsSync(configPath)) {
         try {
           const configManager = new ConfigManager(configPath);
-          loadedConfig = await configManager.load();
+          // Wizard render should not block on platform detection.
+          loadedConfig = await configManager.load(false, { adjustForInstalledPlatforms: false });
         } catch {
           // Ignore config load errors
         }

@@ -14,7 +14,7 @@ import { CursorRunner } from './cursor-runner.js';
 import { CodexRunner } from './codex-runner.js';
 import { ClaudeRunner } from './claude-runner.js';
 import { GeminiRunner } from './gemini-runner.js';
-import { CopilotSdkRunner } from './copilot-sdk-runner.js';
+import { CopilotRunner } from './copilot-runner.js';
 import { resolveUnderProjectRoot } from '../utils/project-paths.js';
 import { FreshSpawner } from '../core/fresh-spawn.js';
 
@@ -122,23 +122,17 @@ export class PlatformRegistry {
     );
     registry.register('gemini', geminiRunner);
 
-    // Register Copilot SDK runner (replaces CLI-based CopilotRunner)
-    // Uses official GitHub Copilot SDK for structured communication
-    // Note: SDK runner implements PlatformRunnerContract but doesn't extend BasePlatformRunner
-    // since it uses a fundamentally different execution model (JSON-RPC vs process spawning)
-    // 
-    // P0-G01: Copilot SDK is optional - runner will handle unavailability gracefully during initialize()
-    // If SDK is not available (e.g., in CI builds without bundled SDK), execute() will fail with clear error
-    const copilotSdkRunner = new CopilotSdkRunner(
+    // Register Copilot CLI runner.
+    // The SDK exists, but the CLI runner is the most robust default for desktop launches
+    // and matches the project's "CLI-only" constraint.
+    const copilotRunner = new CopilotRunner(
       capabilityService,
-      {
-        defaultModel: 'claude-sonnet-4.5',
-        sessionPersistence: false, // Fresh context per iteration by default
-      },
+      config.cliPaths.copilot,
       300_000,
-      1_800_000
+      1_800_000,
+      freshSpawner
     );
-    registry.register('copilot', copilotSdkRunner as unknown as BasePlatformRunner);
+    registry.register('copilot', copilotRunner);
 
     // NOTE: Antigravity runner removed - GUI-only, not suitable for automation
     // See plan: /root/.claude/plans/snoopy-wondering-mountain.md

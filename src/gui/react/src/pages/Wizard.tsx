@@ -207,16 +207,20 @@ export default function WizardPage() {
         );
       case 'generate':
         return (
-          <GenerateStep
-            requirements={state.requirements}
-            prdPlatform={state.prdPlatform}
-            prdModel={state.prdModel}
-            loading={state.loading}
-            onPlatformChange={(platform) => setState((s) => ({ ...s, prdPlatform: platform }))}
-            onModelChange={(model) => setState((s) => ({ ...s, prdModel: model }))}
-            onGenerate={generatePRD}
-            onBack={prevStep}
-          />
+            <GenerateStep
+              requirements={state.requirements}
+              prdPlatform={state.prdPlatform}
+              prdModel={state.prdModel}
+              loading={state.loading}
+              onPlatformChange={(platform) => setState((s) => ({
+                ...s,
+                prdPlatform: platform,
+                prdModel: platform === 'cursor' ? 'auto' : '',
+              }))}
+              onModelChange={(model) => setState((s) => ({ ...s, prdModel: model }))}
+              onGenerate={generatePRD}
+              onBack={prevStep}
+            />
         );
       case 'review':
         return (
@@ -505,6 +509,12 @@ function GenerateStep({
         const data = await api.getModels(false);
         const platformModels = (data as any)[prdPlatform] || [];
         setModels(platformModels);
+        // If the platform changed away from Cursor and a stale "auto" model is selected,
+        // reset to the first available model (or empty string to use CLI defaults).
+        if (prdPlatform !== 'cursor' && (prdModel === 'auto' || prdModel === '')) {
+          const first = platformModels?.[0]?.id;
+          onModelChange(typeof first === 'string' ? first : '');
+        }
       } catch (err) {
         console.error('Failed to fetch models:', err);
       } finally {
@@ -512,22 +522,23 @@ function GenerateStep({
       }
     };
     fetchModels();
-  }, [prdPlatform]);
+  }, [prdPlatform, prdModel, onModelChange]);
 
   const getModelOptions = (): Array<{ value: string; label: string }> => {
     const options: Array<{ value: string; label: string }> = [];
     
-    // Add "auto" option for cursor and gemini
-    if (['cursor', 'gemini'].includes(prdPlatform)) {
-      options.push({ value: 'auto', label: 'Auto (Recommended)' });
-    }
-    
     // Add discovered models
-    models.forEach(model => {
+    const filteredModels = prdPlatform === 'cursor'
+      ? models
+      : models.filter(m => m.id !== 'auto');
+    filteredModels.forEach(model => {
       options.push({ value: model.id, label: model.label || model.id });
     });
     
-    return options.length > 0 ? options : [{ value: 'auto', label: 'Auto' }];
+    if (options.length > 0) return options;
+    return prdPlatform === 'cursor'
+      ? [{ value: 'auto', label: 'Auto (Recommended)' }]
+      : [{ value: '', label: 'Default' }];
   };
 
   return (
@@ -700,18 +711,25 @@ function ConfigureStep({ config, onChange, onNext, onBack }: ConfigureStepProps)
   }, [tierConfigs, models, modelsLoading, fetchModels]);
 
   const updateTier = (tier: string, field: keyof TierConfig, value: string | boolean) => {
+    const nextPlatform = field === 'platform' && typeof value === 'string' ? value : undefined;
+    const resetModel =
+      nextPlatform !== undefined
+        ? (nextPlatform === 'cursor' ? 'auto' : '')
+        : undefined;
+
     const updatedTiers = {
       ...tierConfigs,
       [tier]: {
         ...tierConfigs[tier],
         [field]: value,
+        ...(resetModel !== undefined ? { model: resetModel } : {}),
       },
     };
     onChange({ ...config, tiers: updatedTiers });
     
     // If platform changed, fetch models for new platform
-    if (field === 'platform' && typeof value === 'string') {
-      fetchModels(value);
+    if (nextPlatform !== undefined) {
+      fetchModels(nextPlatform);
     }
   };
   
@@ -720,17 +738,18 @@ function ConfigureStep({ config, onChange, onNext, onBack }: ConfigureStepProps)
     const platformModels = models[platform] || [];
     const options: Array<{ value: string; label: string }> = [];
     
-    // Add "auto" option if platform supports it
-    if (['cursor', 'gemini'].includes(platform)) {
-      options.push({ value: 'auto', label: 'Auto (Recommended)' });
-    }
-    
     // Add discovered models
-    platformModels.forEach(model => {
+    const filtered = platform === 'cursor'
+      ? platformModels
+      : platformModels.filter(m => m.id !== 'auto');
+    filtered.forEach(model => {
       options.push({ value: model.id, label: model.label || model.id });
     });
     
-    return options.length > 0 ? options : [{ value: 'auto', label: 'Auto' }];
+    if (options.length > 0) return options;
+    return platform === 'cursor'
+      ? [{ value: 'auto', label: 'Auto (Recommended)' }]
+      : [{ value: '', label: 'Default' }];
   };
   
   // Get reasoning levels for a Codex model
@@ -777,9 +796,9 @@ function ConfigureStep({ config, onChange, onNext, onBack }: ConfigureStepProps)
                     <label className="block text-sm font-medium">Model</label>
                     <Input
                       label="Model"
-                      value={tierConfigs[tier]?.model || 'auto'}
+                      value={tierConfigs[tier]?.model || (tierConfigs[tier]?.platform === 'cursor' ? 'auto' : '')}
                       onChange={(e) => updateTier(tier, 'model', e.target.value)}
-                      placeholder="Model name or auto"
+                      placeholder="Model name"
                     />
                     <div className="text-xs text-ink-faded">Using manual input (discovery failed)</div>
                   </div>

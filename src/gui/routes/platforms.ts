@@ -51,6 +51,8 @@ interface FirstBootStatusResponse {
   isFirstBoot: boolean;
   missingConfig: boolean;
   missingCapabilities: boolean;
+  installedPlatforms?: Platform[];
+  installedDetectionTimedOut?: boolean;
 }
 
 /**
@@ -77,6 +79,7 @@ interface SelectPlatformsRequest {
 export function createPlatformRoutes(baseDirectory?: string): Router {
   const router = createRouter();
   const configPath = baseDirectory ? join(baseDirectory, '.puppet-master', 'config.yaml') : undefined;
+  let lastKnownStatus: PlatformStatusResponse | null = null;
 
   /**
    * GET /api/platforms/status
@@ -87,33 +90,37 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
     try {
       const forceRefresh = req.query.refresh === 'true';
       const configManager = new ConfigManager(configPath);
-      const config = await configManager.load(true);
+      // This endpoint does platform detection itself; keep config load fast.
+      const config = await configManager.load(true, { adjustForInstalledPlatforms: false });
       const detector = new PlatformDetector(config.cliPaths);
       const result = await detector.detectInstalledPlatforms(forceRefresh);
-
-      res.json({
+      const payload = {
         platforms: result.platforms,
         installedPlatforms: result.installedPlatforms,
         uninstalledPlatforms: result.uninstalledPlatforms,
-      } as PlatformStatusResponse);
+      } as PlatformStatusResponse;
+
+      lastKnownStatus = payload;
+      res.json(payload);
     } catch (error) {
       const err = error as Error;
       if (baseDirectory) console.warn('[platforms] GET /platforms/status failed (baseDirectory:', baseDirectory, '):', err.message);
 
-      // Return a safe default payload so the wizard can still render and guide installation.
-      const platforms: Record<Platform, PlatformStatus> = {
-        cursor: { platform: 'cursor', installed: false, error: err.message || 'Detection failed' },
-        codex: { platform: 'codex', installed: false, error: err.message || 'Detection failed' },
-        claude: { platform: 'claude', installed: false, error: err.message || 'Detection failed' },
-        gemini: { platform: 'gemini', installed: false, error: err.message || 'Detection failed' },
-        copilot: { platform: 'copilot', installed: false, error: err.message || 'Detection failed' },
-      };
+      // Serve last-known-good results to prevent UI flapping from transient detection errors.
+      if (lastKnownStatus) {
+        res.json({
+          ...lastKnownStatus,
+          stale: true,
+          warning: err.message || 'Returning cached platform status due to detection error',
+        });
+        return;
+      }
 
-      res.json({
-        platforms,
-        installedPlatforms: [],
-        uninstalledPlatforms: ['cursor', 'codex', 'claude', 'gemini', 'copilot'],
-      } as PlatformStatusResponse);
+      // First load failed and no cache exists yet: return explicit error so clients can retry.
+      res.status(503).json({
+        error: err.message || 'Failed to detect platform status',
+        code: 'PLATFORM_STATUS_UNAVAILABLE',
+      } as ErrorResponse);
     }
   });
 
@@ -124,7 +131,8 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
   router.get('/platforms/installed', async (_req: Request, res: Response) => {
     try {
       const configManager = new ConfigManager(configPath);
-      const config = await configManager.load(true);
+      // This endpoint does platform detection itself; keep config load fast.
+      const config = await configManager.load(true, { adjustForInstalledPlatforms: false });
       const detector = new PlatformDetector(config.cliPaths);
       const installed = await detector.getInstalledPlatforms();
 
@@ -160,36 +168,42 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
         }
       }
 
-      // Check if config has any platforms configured
-      // Auto-create config if missing or corrupt
-      let hasPlatformsConfigured = false;
-      let actualConfigExists = configExists;
-      
-      try {
-        // Load with autoCreate=true to create default config if missing/corrupt
-        const config = await configManager.load(true);
-        // Check if any tier has a platform configured
-        hasPlatformsConfigured = !!(
-          config.tiers?.phase?.platform ||
-          config.tiers?.task?.platform ||
-          config.tiers?.subtask?.platform ||
-          config.tiers?.iteration?.platform
-        );
-        // Config now exists (either was there or auto-created)
-        actualConfigExists = true;
-      } catch (error) {
-        // Config load failed even with autoCreate - treat as first boot
-        console.warn('[platforms] Failed to load/create config during first-boot check:', error);
-        hasPlatformsConfigured = false;
-        actualConfigExists = configExists; // Keep original status
+      // Auto-create a default config if missing so other endpoints have something sane to read,
+      // but keep the original existence flag for onboarding decisions.
+      //
+      // IMPORTANT: Do NOT call ConfigManager.load(true) here.
+      // load(true) triggers platform detection via PlatformDetector.getInstalledPlatforms(), which
+      // can be slow on first launch (especially in embedded webviews) and can block /first-boot,
+      // causing the wizard to get stuck on "Server is starting...".
+      if (!configExists) {
+        try {
+          const { getDefaultConfig } = await import('../../config/default-config.js');
+          await configManager.save(getDefaultConfig());
+          console.log(`[platforms] Auto-created default config at ${pathToCheck}`);
+        } catch (error) {
+          console.warn('[platforms] Failed to auto-create default config during first-boot check:', error);
+        }
       }
 
-      const isFirstBoot = !actualConfigExists || !capabilitiesExists || !hasPlatformsConfigured;
+      const missingConfig = !configExists;
+      const missingCapabilities = !capabilitiesExists;
+      const installedPlatforms = lastKnownStatus?.installedPlatforms;
+      const installedDetectionTimedOut = installedPlatforms === undefined;
+
+      // If we don't yet have platform status cached, prefer showing the wizard rather than
+      // hiding it incorrectly. The wizard itself will fetch /api/platforms/status.
+      const isFirstBoot =
+        missingConfig ||
+        missingCapabilities ||
+        installedPlatforms === undefined ||
+        installedPlatforms.length === 0;
 
       res.json({
         isFirstBoot,
-        missingConfig: !actualConfigExists,
-        missingCapabilities: !capabilitiesExists,
+        missingConfig,
+        missingCapabilities,
+        installedPlatforms,
+        installedDetectionTimedOut,
       } as FirstBootStatusResponse);
     } catch (error) {
       const err = error as Error;

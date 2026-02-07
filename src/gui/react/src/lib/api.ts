@@ -55,6 +55,9 @@ export function getApiBaseUrl(): string {
 
   const origin = window.location.origin;
   if (isDirectBackendOrigin(origin)) {
+    resolvedApiBaseUrl = origin;
+    // Persist direct backend origin so bundled desktop fallback can reconnect to the same port.
+    setLocalStorageItem(API_BASE_STORAGE_KEY, origin);
     return origin;
   }
 
@@ -176,7 +179,20 @@ async function resolveApiBaseUrl(): Promise<string> {
   const origin = window.location.origin;
   if (isDirectBackendOrigin(origin)) {
     resolvedApiBaseUrl = origin;
+    setLocalStorageItem(API_BASE_STORAGE_KEY, origin);
     return origin;
+  }
+
+  // Desktop bundled origin (tauri.localhost / tauri://) should NOT scan many loopback ports.
+  // Scanning can attach to a different stale server instance and cause inconsistent UI state.
+  if (isTauriBundledOrigin(origin)) {
+    const stored = getLocalStorageItem(API_BASE_STORAGE_KEY);
+    if (stored && stored.startsWith('http://')) {
+      resolvedApiBaseUrl = stored;
+      return stored;
+    }
+    resolvedApiBaseUrl = DEFAULT_API_BASE_URL;
+    return DEFAULT_API_BASE_URL;
   }
 
   if (resolvingApiBaseUrlPromise) {
@@ -687,9 +703,9 @@ export async function getCursorCapabilities(): Promise<CursorCapabilities> {
 }
 
 export interface GitInfo {
-  isGitRepo: boolean;
-  branch: string | null;
-  remotes: string[];
+  branches: string[];
+  remoteName: string;
+  remoteUrl: string;
   userName: string;
   userEmail: string;
   currentBranch: string;

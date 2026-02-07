@@ -11,7 +11,6 @@ import { delimiter, join } from 'node:path';
 import type { Platform } from '../types/config.js';
 import type { CliPathsConfig } from '../types/config.js';
 import { getCursorCommandCandidates, resolvePlatformCommand } from './constants.js';
-import { getPlatformAuthStatus } from './auth-status.js';
 
 /**
  * CLI invocation structure
@@ -145,13 +144,17 @@ export class PlatformDetector {
       return this.buildResult(this.cache);
     }
 
-    const platforms: Record<Platform, PlatformStatus> = {
-      cursor: await this.detectCursor(),
-      codex: await this.detectCodex(),
-      claude: await this.detectClaude(),
-      gemini: await this.detectGemini(),
-      copilot: await this.detectCopilot(),
-    };
+    // Run checks concurrently. Sequential checks can take 60s+ when CLIs are missing
+    // (each probe times out), which causes severe GUI slowdowns and onboarding hangs.
+    const [cursor, codex, claude, gemini, copilot] = await Promise.all([
+      this.detectCursor(),
+      this.detectCodex(),
+      this.detectClaude(),
+      this.detectGemini(),
+      this.detectCopilot(),
+    ]);
+
+    const platforms: Record<Platform, PlatformStatus> = { cursor, codex, claude, gemini, copilot };
 
     // Update cache
     this.cache = new Map(Object.entries(platforms) as [Platform, PlatformStatus][]);
@@ -237,12 +240,10 @@ export class PlatformDetector {
     for (const candidate of candidates) {
       const result = await checkCliAvailable(candidate, ['--version'], 10_000, env);
       if (result.available) {
-        const auth = getPlatformAuthStatus('cursor');
         return {
           platform: 'cursor',
           installed: true,
           version: result.version,
-          authenticated: auth.status !== 'not_authenticated',
           command: candidate.command,
         };
       }
@@ -272,12 +273,10 @@ export class PlatformDetector {
     for (const candidate of candidates) {
       const result = await checkCliAvailable(candidate, ['--version'], 15_000, env);
       if (result.available) {
-        const auth = getPlatformAuthStatus('codex');
         return {
           platform: 'codex',
           installed: true,
           version: result.version,
-          authenticated: auth.status !== 'not_authenticated',
           command: candidate.command,
         };
       }
@@ -307,12 +306,10 @@ export class PlatformDetector {
     for (const candidate of candidates) {
       const result = await checkCliAvailable(candidate, ['--version'], 15_000, env);
       if (result.available) {
-        const auth = getPlatformAuthStatus('claude');
         return {
           platform: 'claude',
           installed: true,
           version: result.version,
-          authenticated: auth.status !== 'not_authenticated',
           command: candidate.command,
         };
       }
@@ -342,12 +339,10 @@ export class PlatformDetector {
     for (const candidate of candidates) {
       const result = await checkCliAvailable(candidate, ['--version'], 15_000, env);
       if (result.available) {
-        const auth = getPlatformAuthStatus('gemini');
         return {
           platform: 'gemini',
           installed: true,
           version: result.version,
-          authenticated: auth.status !== 'not_authenticated',
           command: candidate.command,
         };
       }
@@ -361,9 +356,7 @@ export class PlatformDetector {
   }
 
   /**
-   * Detect Copilot SDK installation
-   * 
-   * Note: Copilot uses SDK, not CLI, so we check for the SDK package
+   * Detect Copilot CLI installation
    */
   private async detectCopilot(): Promise<PlatformStatus> {
     const env = this.getEnrichedEnv();
@@ -374,12 +367,10 @@ export class PlatformDetector {
     for (const candidate of candidates) {
       const result = await checkCliAvailable(candidate, ['--version'], 15_000, env);
       if (result.available) {
-        const auth = getPlatformAuthStatus('copilot');
         return {
           platform: 'copilot',
           installed: true,
           version: result.version,
-          authenticated: auth.status !== 'not_authenticated',
           command: candidate.command,
         };
       }
@@ -408,9 +399,12 @@ export class PlatformDetector {
       npmGlobalBin,
       windowsNpmBin,
       home ? join(home, '.local', 'bin') : '',
+      home ? join(home, '.volta', 'bin') : '',
+      home ? join(home, '.asdf', 'shims') : '',
       '/usr/local/bin',
       '/opt/homebrew/bin',
       '/opt/homebrew/sbin',
+      '/snap/bin',
     ].filter(Boolean);
 
     const currentPath = process.env.PATH || '';

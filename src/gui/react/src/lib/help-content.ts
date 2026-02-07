@@ -37,10 +37,10 @@ Choose based on your task complexity, quota availability, and required capabilit
       example: 'For rapid iteration: Cursor\nFor complex reasoning: Codex\nFor planning: Claude',
     },
     model: {
-      short: 'Select the AI model. Use "auto" for automatic selection, or choose a specific model for fine-grained control.',
+      short: 'Select the AI model. Use "auto" only on Cursor (automatic selection), or choose a specific model for fine-grained control.',
       detailed: `Model selection affects performance, cost, and capabilities:
 
-**"auto" (recommended)**: Automatically selects the best model based on task complexity and platform defaults. Simplifies configuration.
+**"auto" (Cursor only)**: Cursor automatically selects the best model for each task. Other platforms should use an explicit model ID (or their CLI default).
 
 **Specific models**: Choose when you need:
 - Consistent model behavior across runs

@@ -122,6 +122,8 @@
  */
 
 import { spawn, type ChildProcess } from 'child_process';
+import { homedir } from 'node:os';
+import { delimiter, join } from 'node:path';
 import { BasePlatformRunner } from './base-runner.js';
 import { CapabilityDiscoveryService } from './capability-discovery.js';
 import { CopilotOutputParser } from './output-parsers/index.js';
@@ -132,6 +134,45 @@ import type {
 } from '../types/platforms.js';
 import type { FreshSpawner } from '../core/fresh-spawn.js';
 import { PLATFORM_COMMANDS } from './constants.js';
+
+function getEnrichedEnv(): NodeJS.ProcessEnv {
+  const home = homedir();
+  const npmGlobalPrefix = home ? join(home, '.npm-global') : '';
+  const npmGlobalBin = npmGlobalPrefix
+    ? (process.platform === 'win32' ? npmGlobalPrefix : join(npmGlobalPrefix, 'bin'))
+    : '';
+  const windowsNpmBin = process.platform === 'win32' && process.env.APPDATA
+    ? join(process.env.APPDATA, 'npm')
+    : '';
+
+  const extraPaths = [
+    npmGlobalBin,
+    windowsNpmBin,
+    home ? join(home, '.local', 'bin') : '',
+    home ? join(home, '.volta', 'bin') : '',
+    home ? join(home, '.asdf', 'shims') : '',
+    '/usr/local/bin',
+    '/opt/homebrew/bin',
+    '/opt/homebrew/sbin',
+    '/snap/bin',
+  ].filter(Boolean);
+
+  const currentPath = process.env.PATH || '';
+  const enrichedPath = [...extraPaths, currentPath].filter(Boolean).join(delimiter);
+
+  const env: NodeJS.ProcessEnv = {
+    ...process.env,
+    PATH: enrichedPath,
+  };
+
+  if (npmGlobalPrefix) {
+    env.HOME = home;
+    env.npm_config_prefix = npmGlobalPrefix;
+    env.NPM_CONFIG_PREFIX = npmGlobalPrefix;
+  }
+
+  return env;
+}
 
 export class CopilotRunner extends BasePlatformRunner {
   readonly platform: Platform = 'copilot';
@@ -180,7 +221,7 @@ export class CopilotRunner extends BasePlatformRunner {
       cwd: request.workingDirectory,
       stdio: ['pipe', 'pipe', 'pipe'],
       env: {
-        ...process.env,
+        ...getEnrichedEnv(),
       },
     });
 
@@ -212,23 +253,13 @@ export class CopilotRunner extends BasePlatformRunner {
    * - Tool specification syntax supports shell commands, write operations, and MCP servers
    *
    * Model selection:
-   * - Model selection is NOT supported via CLI flags
-   * - The `/model` command is interactive only
+   * - Prefer `--model <id>` in non-interactive mode when supported by your Copilot CLI build
+   * - The `/model` command is also available in interactive mode
    * - Default model is Claude Sonnet 4.5 (subject to change by GitHub)
    * - Model availability depends on subscription tier and region
    */
   protected buildArgs(request: ExecutionRequest): string[] {
     const args: string[] = [];
-
-    // P0-G16: Warn if model is configured but will be ignored
-    // Copilot CLI does NOT support --model flag; model selection is interactive only
-    if (request.model) {
-      console.warn(
-        `[CopilotRunner] Model '${request.model}' specified but Copilot CLI does not support ` +
-        `programmatic model selection. Default model (Claude Sonnet 4.5) will be used. ` +
-        `Use CopilotSdkRunner for model selection support, or use /model command in interactive mode.`
-      );
-    }
 
     // Non-interactive mode with prompt
     if (request.nonInteractive) {
@@ -247,6 +278,10 @@ export class CopilotRunner extends BasePlatformRunner {
     // Approval flags to prevent interactive prompts
     args.push('--allow-all-tools');
     args.push('--allow-all-paths');
+
+    if (request.model && request.model.trim() !== '') {
+      args.push('--model', request.model.trim());
+    }
 
     // Scripting-friendly output
     args.push('--silent');
@@ -273,9 +308,6 @@ export class CopilotRunner extends BasePlatformRunner {
     if (request.agent) {
       args.push('--agent', request.agent);
     }
-
-    // Note: Model selection via --model is not documented.
-    // Users should configure model inside Copilot or via config files.
 
     return args;
   }

@@ -194,7 +194,6 @@ export default function ConfigPage() {
     gemini: [],
     copilot: [],
   });
-  const [modelsLoading, setModelsLoading] = useState(false);
   const [modelsError, setModelsError] = useState<string | null>(null);
   const [platformStatus, setPlatformStatus] = useState<Record<string, PlatformStatusType>>({});
   const [installedPlatforms, setInstalledPlatforms] = useState<Platform[]>([]);
@@ -250,7 +249,6 @@ export default function ConfigPage() {
 
     const load = async () => {
       if (!cachedConfig) setLoading(true);
-      setModelsLoading(true);
       setModelsError(null);
 
       try {
@@ -307,7 +305,6 @@ export default function ConfigPage() {
         setModels({ cursor: [], codex: [], claude: [], gemini: [], copilot: [] });
       } finally {
         setLoading(false);
-        setModelsLoading(false);
       }
     };
 
@@ -642,13 +639,14 @@ function TiersTab({
           const currentModel = config[tier].model;
           const reasoningLevels = getReasoningLevels(currentPlatform, currentModel);
           
-          // Build model options - only Cursor gets "auto" option
-          const modelOptions = currentPlatform === 'cursor'
-            ? [
-                { value: 'auto', label: 'Auto (default)' },
-                ...(models[currentPlatform] || []).map(m => ({ value: m.id, label: m.label || m.id })),
-              ]
-            : (models[currentPlatform] || []).map(m => ({ value: m.id, label: m.label || m.id }));
+          // Build model options.
+          // - Cursor supports "auto"
+          // - Other platforms should never show "auto" (even if backend data is stale)
+          const platformModelsRaw = models[currentPlatform] || [];
+          const platformModels = currentPlatform === 'cursor'
+            ? platformModelsRaw
+            : platformModelsRaw.filter(m => m.id !== 'auto');
+          const modelOptions = platformModels.map(m => ({ value: m.id, label: m.label || m.id }));
           
           return (
             <div key={tier} className="p-md border-medium border-ink-faded min-w-0 break-words">

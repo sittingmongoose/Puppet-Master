@@ -18,6 +18,9 @@
  * - https://cursor.com/changelog
  */
 
+import { homedir } from 'node:os';
+import { delimiter, join } from 'node:path';
+
 /**
  * Cursor model interface for catalog entries.
  */
@@ -194,6 +197,33 @@ export interface DiscoveredCursorModel extends CursorModel {
   source: 'discovered' | 'static';
 }
 
+function buildEnrichedPath(): string {
+  const home = homedir();
+  const npmGlobalPrefix = home ? join(home, '.npm-global') : '';
+  const npmGlobalBin = npmGlobalPrefix
+    ? (process.platform === 'win32' ? npmGlobalPrefix : join(npmGlobalPrefix, 'bin'))
+    : '';
+
+  const windowsNpmBin = process.platform === 'win32' && process.env.APPDATA
+    ? join(process.env.APPDATA, 'npm')
+    : '';
+
+  const extra = [
+    npmGlobalBin,
+    windowsNpmBin,
+    home ? join(home, '.local', 'bin') : '',
+    home ? join(home, '.volta', 'bin') : '',
+    home ? join(home, '.asdf', 'shims') : '',
+    '/usr/local/bin',
+    '/opt/homebrew/bin',
+    '/opt/homebrew/sbin',
+    '/snap/bin',
+  ].filter(Boolean);
+
+  const current = process.env.PATH || (process.platform === 'win32' ? 'C:\\Windows\\System32' : '/usr/bin:/bin');
+  return [...extra, current].filter(Boolean).join(delimiter);
+}
+
 /**
  * CU-P0-T06: Discover Cursor models using `agent models` or `--list-models`.
  * 
@@ -211,7 +241,7 @@ export async function discoverCursorModels(
     // Try `agent models` first, then `agent --list-models`
     const proc = spawn(command, ['models'], {
       stdio: ['ignore', 'pipe', 'pipe'],
-      env: { ...process.env, CURSOR_NON_INTERACTIVE: '1' },
+      env: { ...process.env, CURSOR_NON_INTERACTIVE: '1', PATH: buildEnrichedPath() },
     });
 
     let stdout = '';

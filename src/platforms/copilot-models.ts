@@ -10,8 +10,9 @@
  *
  * Default Model:
  * - Default model: Claude Sonnet 4.5 (GitHub reserves the right to change this)
- * - Change model: `/model` slash command in interactive mode only
- * - Model selection is NOT supported programmatically via `--model` flag
+ * - Change model:
+ *   - `--model <id>` in non-interactive mode (when supported by your Copilot CLI build)
+ *   - `/model` slash command in interactive mode
  *
  * Premium Requests:
  * - Each prompt reduces monthly quota of Copilot premium requests
@@ -26,8 +27,10 @@
  * - GitHub Copilot Enterprise: Enterprise-level subscription with advanced features
  * - Model availability and premium request quotas vary by tier
  *
- * Copilot CLI does NOT support the `--model` flag for programmatic model selection.
- * Users must select models interactively via `/model` command.
+ * IMPORTANT:
+ * Copilot CLI model availability changes frequently. Puppet Master treats this file as
+ * a conservative fallback only. When Copilot CLI is installed, Puppet Master will
+ * prefer parsing `copilot --help` for the authoritative `--model` choices.
  *
  * Sources:
  * - https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli - Official documentation
@@ -58,30 +61,74 @@ export const COPILOT_MODELS: CopilotModel[] = [
     description: 'Default model for GitHub Copilot CLI (GitHub reserves right to change)',
   },
   {
-    id: 'gpt-4o',
-    label: 'GPT-4o',
-    description: 'Latest OpenAI model (if available on your subscription tier)',
+    id: 'claude-haiku-4.5',
+    label: 'Claude Haiku 4.5',
+    description: 'Fast, lower-cost Claude variant (if available on your tier)',
   },
   {
-    id: 'gpt-4-turbo',
-    label: 'GPT-4 Turbo',
-    description: 'High-capability model for complex reasoning',
+    id: 'claude-opus-4.6',
+    label: 'Claude Opus 4.6',
+    description: 'Highest-capability Claude variant (if available on your tier)',
   },
   {
-    id: 'gpt-4',
-    label: 'GPT-4',
-    description: 'Stable, general-purpose model',
+    id: 'claude-opus-4.5',
+    label: 'Claude Opus 4.5',
+    description: 'High-capability Claude variant (if available on your tier)',
   },
   {
-    id: 'claude-3.5-sonnet',
-    label: 'Claude 3.5 Sonnet',
-    description: 'Anthropic Claude model (if available)',
-    suggestedOnly: true,
+    id: 'claude-sonnet-4',
+    label: 'Claude Sonnet 4',
+    description: 'Prior Sonnet generation (if available on your tier)',
   },
   {
-    id: 'claude-opus',
-    label: 'Claude Opus',
-    description: 'High-capability Claude variant (if available)',
+    id: 'gemini-3-pro-preview',
+    label: 'Gemini 3 Pro (Preview)',
+    description: 'Gemini preview model (availability varies by tier/region)',
+  },
+  {
+    id: 'gpt-5.2-codex',
+    label: 'GPT-5.2 Codex',
+    description: 'OpenAI Codex-specialized model (if available on your tier)',
+  },
+  {
+    id: 'gpt-5.2',
+    label: 'GPT-5.2',
+    description: 'OpenAI general-purpose model (if available on your tier)',
+  },
+  {
+    id: 'gpt-5.1-codex-max',
+    label: 'GPT-5.1 Codex Max',
+    description: 'Higher budget Codex variant (if available)',
+  },
+  {
+    id: 'gpt-5.1-codex',
+    label: 'GPT-5.1 Codex',
+    description: 'Codex coding model (if available)',
+  },
+  {
+    id: 'gpt-5.1',
+    label: 'GPT-5.1',
+    description: 'OpenAI general-purpose model (if available)',
+  },
+  {
+    id: 'gpt-5',
+    label: 'GPT-5',
+    description: 'OpenAI general-purpose model (if available)',
+  },
+  {
+    id: 'gpt-5.1-codex-mini',
+    label: 'GPT-5.1 Codex Mini',
+    description: 'Smaller Codex variant (if available)',
+  },
+  {
+    id: 'gpt-5-mini',
+    label: 'GPT-5 Mini',
+    description: 'Smaller OpenAI model (if available)',
+  },
+  {
+    id: 'gpt-4.1',
+    label: 'GPT-4.1',
+    description: 'Older OpenAI model (if available)',
     suggestedOnly: true,
   },
 ];
@@ -130,8 +177,8 @@ export const KNOWN_COPILOT_MODELS: readonly string[] = COPILOT_MODELS.map(m => m
  */
 export function getCopilotModelSelectionNote(): string {
   return (
-    'Note: Copilot CLI does not support the --model flag. ' +
-    'Use the `/model` command inside Copilot to change models. ' +
+    'Note: Prefer configuring models via `--model <id>` (non-interactive) when supported, ' +
+    'or use the `/model` command inside Copilot. ' +
     'Available models depend on your subscription tier and region.'
   );
 }

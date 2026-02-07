@@ -8,6 +8,7 @@
 import type { Router, Request, Response } from 'express';
 import { Router as createRouter } from 'express';
 import { spawn, execSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import { homedir } from 'node:os';
 import path from 'node:path';
 import { join } from 'node:path';
@@ -34,14 +35,19 @@ interface PlatformAuthInfo {
   getUrl?: string;
 }
 
+interface LoginCommand {
+  cmd: string;
+  args: string[];
+}
+
 /**
  * Platform authentication configuration
  */
 const PLATFORM_AUTH_CONFIG: Record<Platform, { envVar: string; getUrl: string; description: string }> = {
   cursor: {
-    envVar: '',
-    getUrl: 'https://cursor.sh',
-    description: 'Cursor authentication is managed through the Cursor IDE.',
+    envVar: 'CURSOR_API_KEY',
+    getUrl: 'https://cursor.com',
+    description: 'Cursor Agent supports interactive login (`agent login`) or CURSOR_API_KEY for headless usage.',
   },
   codex: {
     envVar: 'OPENAI_API_KEY',
@@ -51,17 +57,17 @@ const PLATFORM_AUTH_CONFIG: Record<Platform, { envVar: string; getUrl: string; d
   claude: {
     envVar: 'ANTHROPIC_API_KEY',
     getUrl: 'https://console.anthropic.com/settings/keys',
-    description: 'Anthropic API key for Claude Code.',
+    description: 'Claude Code supports subscription login (setup-token) or API keys.',
   },
   gemini: {
     envVar: 'GEMINI_API_KEY',
-    getUrl: 'https://aistudio.google.com/app/apikey',
-    description: 'Google API key for Gemini CLI.',
+    getUrl: 'https://github.com/google-gemini/gemini-cli',
+    description: 'Gemini CLI supports interactive OAuth login (recommended) or API keys.',
   },
   copilot: {
     envVar: 'GH_TOKEN',
-    getUrl: 'https://github.com/settings/tokens',
-    description: 'GitHub token with Copilot permission.',
+    getUrl: 'https://docs.github.com/copilot/how-tos/set-up/installing-github-copilot-in-the-cli',
+    description: 'GitHub Copilot CLI authentication (interactive login recommended).',
   },
 };
 
@@ -73,6 +79,7 @@ const LOGIN_PLATFORMS: string[] = [...PLATFORMS, 'github'];
 const LOGOUT_COMMANDS: Record<string, { cmd: string; args: string[] }> = {
   github:  { cmd: 'gh',   args: ['auth', 'logout'] },
   copilot: { cmd: 'gh',   args: ['auth', 'logout'] },
+  cursor:  { cmd: 'agent', args: ['logout'] },
   codex:   { cmd: 'codex', args: ['logout'] },
 };
 
@@ -91,9 +98,12 @@ function getExtraPathDirectories(home: string, npmGlobalBin: string): string[] {
   if (isWin) {
     const programFiles = process.env['ProgramFiles'] || process.env['PROGRAMFILES'] || 'C:\\Program Files';
     const localAppData = process.env['LOCALAPPDATA'] || (home ? join(home, 'AppData', 'Local') : '');
+    const appData = process.env['APPDATA'] || (home ? join(home, 'AppData', 'Roaming') : '');
     const programData = process.env['ProgramData'] || process.env['PROGRAMDATA'] || 'C:\\ProgramData';
     return [
       ...base,
+      // npm default global bin on Windows
+      appData ? join(appData, 'npm') : '',
       join(programFiles, 'GitHub CLI'),
       localAppData ? join(localAppData, 'GitHub CLI') : '',
       join(programData, 'chocolatey', 'bin'),
@@ -107,6 +117,8 @@ function getExtraPathDirectories(home: string, npmGlobalBin: string): string[] {
     '/opt/homebrew/bin',
     '/opt/homebrew/sbin',
     home ? join(home, '.local', 'bin') : '',
+    home ? join(home, '.volta', 'bin') : '',
+    home ? join(home, '.asdf', 'shims') : '',
     '/snap/bin',
     ...base,
   ];
@@ -132,6 +144,15 @@ function isCommandAvailable(command: string, enrichedPath?: string): boolean {
   } catch {
     return false;
   }
+}
+
+function getGhHostsPath(home: string): string | null {
+  if (process.platform === 'win32') {
+    const appData = process.env.APPDATA || (home ? join(home, 'AppData', 'Roaming') : '');
+    if (!appData) return null;
+    return join(appData, 'GitHub CLI', 'hosts.yml');
+  }
+  return home ? join(home, '.config', 'gh', 'hosts.yml') : null;
 }
 
 /**
@@ -211,12 +232,26 @@ export function createLoginRoutes(): Router {
         // Synthetic status for GitHub (Git auth via gh) – not in PLATFORM_AUTH_CONFIG
         let status: PlatformAuthStatus = 'not_authenticated';
         let details = 'Git auth via GitHub CLI (gh). Use Login to GitHub to authenticate.';
-        try {
-          execSync('gh auth status', { stdio: ['ignore', 'pipe', 'pipe'], encoding: 'utf-8' });
-          status = 'authenticated';
-          details = 'GitHub CLI (gh) is authenticated for Git operations.';
-        } catch {
-          // gh not installed or not logged in
+        const home = homedir();
+        const npmGlobalPrefix = home ? path.join(home, '.npm-global') : '';
+        const npmGlobalBin = npmGlobalPrefix
+          ? (process.platform === 'win32' ? npmGlobalPrefix : path.join(npmGlobalPrefix, 'bin'))
+          : '';
+        const extraPaths = getExtraPathDirectories(home || '', npmGlobalBin);
+        const defaultPath = process.platform === 'win32' ? 'C:\\Windows\\System32' : '/usr/bin:/bin';
+        const currentPath = process.env.PATH || process.env.Path || defaultPath;
+        const enrichedPath = [currentPath, ...extraPaths].filter(Boolean).join(path.delimiter);
+        if (isCommandAvailable('gh', enrichedPath)) {
+          const hostsPath = getGhHostsPath(home || '');
+          if (hostsPath && existsSync(hostsPath)) {
+            status = 'authenticated';
+            details = 'GitHub CLI (gh) appears authenticated (hosts.yml present).';
+          } else {
+            status = 'not_authenticated';
+            details = 'GitHub CLI (gh) is installed, but not authenticated.';
+          }
+        } else {
+          details = 'GitHub CLI (gh) is not installed or not in PATH.';
         }
         res.json({
           platform: 'github',
@@ -290,33 +325,31 @@ export function createLoginRoutes(): Router {
       // Platform-specific instructions
       const instructions: Record<Platform, string[]> = {
         cursor: [
-          '1. Open Cursor IDE',
-          '2. Sign in with your account (Settings → Account)',
-          '3. Cursor CLI will automatically use your IDE authentication',
+          '1. Run: agent login',
+          '2. Complete the browser/device authentication flow',
+          '3. Verify with: agent status',
+          '4. Optional fallback: set CURSOR_API_KEY for headless/CI usage',
         ],
         codex: [
-          '1. Visit https://platform.openai.com/api-keys',
-          '2. Create a new API key',
-          '3. Set OPENAI_API_KEY environment variable:',
-          '   export OPENAI_API_KEY="sk-..."',
-          '4. Or use `puppet-master login codex` to save to .env',
+          '1. Run: codex login',
+          '2. Complete the browser/device authentication flow',
+          '3. Verify with: codex --help',
+          '4. Optional fallback: set OPENAI_API_KEY in your environment',
         ],
         claude: [
-          '1. Visit https://console.anthropic.com/settings/keys',
-          '2. Create a new API key',
-          '3. Set ANTHROPIC_API_KEY environment variable:',
-          '   export ANTHROPIC_API_KEY="sk-ant-..."',
-          '4. Or use `puppet-master login claude` to save to .env',
+          '1. Run: claude setup-token',
+          '2. Complete the subscription authentication flow (browser/device)',
+          '3. Verify with: claude --version',
+          '4. Optional fallback: set ANTHROPIC_API_KEY (API key auth)',
         ],
         gemini: [
-          '1. Visit https://aistudio.google.com/app/apikey',
-          '2. Create a new API key',
-          '3. Set GEMINI_API_KEY environment variable:',
-          '   export GEMINI_API_KEY="AIza..."',
-          '4. Or use `puppet-master login gemini` to save to .env',
+          '1. Run: gemini',
+          '2. Choose "Login with Google" and complete OAuth in your browser',
+          '3. Verify with: gemini --help',
+          '4. Optional fallback: set GEMINI_API_KEY or GOOGLE_API_KEY',
         ],
         copilot: [
-          '1. Run `copilot /login` in your terminal',
+          '1. Run `copilot login` in your terminal',
           '2. Follow the browser authentication flow',
           '3. Alternatively, set GH_TOKEN with Copilot permissions:',
           '   export GH_TOKEN="ghp_..."',
@@ -389,9 +422,8 @@ export function createLoginRoutes(): Router {
         if (npmGlobalPrefix) {
           env.HOME = home;
           env.NPM_CONFIG_PREFIX = npmGlobalPrefix;
-          if (npmGlobalBin) {
-            env.PATH = [npmGlobalBin, env.PATH].filter(Boolean).join(path.delimiter);
-          }
+          // Do not force-prepend npmGlobalBin: ordering matters when duplicate CLIs exist
+          // (e.g. /usr/local/bin/gemini newer than ~/.npm-global/bin/gemini on macOS).
         }
         if (!isCommandAvailable(logoutCmd.cmd, enrichedPath)) {
           res.status(400).json({
@@ -427,25 +459,33 @@ export function createLoginRoutes(): Router {
       }
 
       // Cursor has no CLI login — advise user to open the app
-      if (normalizedPlatform === 'cursor') {
-        res.json({
-          success: true,
-          message: 'Cursor uses app-based authentication. Open the Cursor IDE and sign in through Settings > Account.',
-        });
-        return;
-      }
-
-      // Map platform to CLI login command + args (github = Git config via gh, not Copilot)
-      const loginCommands: Record<string, { cmd: string; args: string[] }> = {
-        claude:  { cmd: 'claude',  args: ['login'] },
-        codex:   { cmd: 'codex',   args: ['login'] },
-        gemini:  { cmd: 'gemini',  args: ['auth', 'login'] },
-        copilot: { cmd: 'gh',      args: ['auth', 'login', '--web'] },
-        github:  { cmd: 'gh',      args: ['auth', 'login', '--web'] },
+      // Preferred login command candidates per platform (first available command wins).
+      const loginCommands: Record<string, LoginCommand[]> = {
+        cursor: [
+          { cmd: 'agent', args: ['login'] },
+          { cmd: 'cursor-agent', args: ['login'] },
+        ],
+        // Claude Code uses `setup-token` for subscription-based login.
+        // Some environments may still rely on ANTHROPIC_API_KEY (no CLI "login" subcommand).
+        claude: [{ cmd: 'claude', args: ['setup-token'] }],
+        codex: [
+          { cmd: 'codex', args: ['login'] },
+          { cmd: 'codex', args: ['login', '--device-auth'] },
+        ],
+        gemini: [
+          { cmd: 'gemini', args: [] },
+        ],
+        copilot: [
+          // Preferred: Copilot CLI-native login flow.
+          { cmd: 'copilot', args: ['login'] },
+          // Fallback: authenticate via GitHub CLI if available.
+          { cmd: 'gh', args: ['auth', 'login', '--web'] },
+        ],
+        github: [{ cmd: 'gh', args: ['auth', 'login', '--web'] }],
       };
 
-      const loginCmd = loginCommands[normalizedPlatform];
-      if (!loginCmd) {
+      const loginCandidates = loginCommands[normalizedPlatform];
+      if (!loginCandidates || loginCandidates.length === 0) {
         res.status(400).json({
           success: false,
           error: `No CLI login command available for ${normalizedPlatform}.`,
@@ -469,21 +509,24 @@ export function createLoginRoutes(): Router {
         env.HOME = home;
         env.npm_config_prefix = npmGlobalPrefix;
         env.NPM_CONFIG_PREFIX = npmGlobalPrefix;
-        if (npmGlobalBin) {
-          env.PATH = [npmGlobalBin, env.PATH].filter(Boolean).join(path.delimiter);
-        }
+        // Do not force-prepend npmGlobalBin: ordering matters when duplicate CLIs exist.
       }
 
-      // Validate CLI command is available BEFORE spawning
-      if (!isCommandAvailable(loginCmd.cmd, enrichedPath)) {
+      const loginCmd = loginCandidates.find((candidate) =>
+        isCommandAvailable(candidate.cmd, enrichedPath)
+      );
+
+      // Validate that at least one compatible command is available before spawning.
+      if (!loginCmd) {
         const config = normalizedPlatform !== 'github' ? PLATFORM_AUTH_CONFIG[normalizedPlatform as Platform] : undefined;
         const message = normalizedPlatform === 'github'
           ? 'GitHub CLI (gh) is not installed or not in PATH. Install it from https://cli.github.com/'
-          : `The ${normalizedPlatform} CLI is not installed or not in PATH.`;
+          : `No compatible ${normalizedPlatform} login CLI was found in PATH.`;
         res.status(400).json({
           success: false,
-          error: `CLI command '${loginCmd.cmd}' not found in PATH`,
+          error: `No login CLI command found in PATH for ${normalizedPlatform}`,
           code: 'CLI_NOT_FOUND',
+          checkedCommands: loginCandidates.map((candidate) => candidate.cmd),
           details: message,
           fixSuggestion: config ? `Install the ${normalizedPlatform} CLI first, or set ${config.envVar || 'the API key'} directly.` : 'Install gh from https://cli.github.com/',
           envVar: config?.envVar || undefined,

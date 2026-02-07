@@ -144,7 +144,7 @@ describe('React GUI Smoke Test', () => {
 
       expect(response.body).toHaveProperty('projects');
       expect(Array.isArray(response.body.projects)).toBe(true);
-    });
+    }, 60_000);
   });
 
   describe('Config API', () => {

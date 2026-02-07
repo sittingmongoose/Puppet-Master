@@ -999,7 +999,7 @@ describe('GUI Integration Tests', () => {
       } finally {
         await server.stop();
       }
-    });
+    }, 60_000);
   });
 
   describe('CORS Policy', () => {

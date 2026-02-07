@@ -13,7 +13,7 @@ import {
   FolderIcon,
   ClipboardIcon,
 } from '@/components/icons';
-import { api, APIError, getErrorMessage, type DoctorCheck, type PlatformStatusType } from '@/lib';
+import { api, APIError, getErrorMessage, type DoctorCheck } from '@/lib';
 import type { StatusType, Platform } from '@/types';
 
 const CATEGORIES: Array<{ id: string; label: string; icon: ReactNode }> = [

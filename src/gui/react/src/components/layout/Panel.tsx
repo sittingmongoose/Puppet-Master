@@ -1,6 +1,6 @@
 import type { ReactNode, HTMLAttributes } from 'react';
 
-export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
+export interface PanelProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   /** Panel content */
   children: ReactNode;
   /** Panel title */

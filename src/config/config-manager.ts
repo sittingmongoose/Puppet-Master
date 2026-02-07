@@ -40,13 +40,23 @@ export class ConfigManager {
   /**
    * Load configuration from file or return defaults
    * @param autoCreate - If true, automatically create default config.yaml when missing or corrupt (default: false)
+   * @param options - Optional behavior flags
+   *   - adjustForInstalledPlatforms: If true, probe installed platforms and adjust tiers accordingly (default: true).
+   *     This can be slow and is not appropriate for GUI/desktop boot paths.
    * @returns Loaded and validated configuration
    * @throws ConfigValidationError if config is invalid
    */
-  async load(autoCreate = false): Promise<PuppetMasterConfig> {
+  async load(
+    autoCreate = false,
+    options?: {
+      adjustForInstalledPlatforms?: boolean;
+    }
+  ): Promise<PuppetMasterConfig> {
     // P2-T12: Load secrets from env vars and optional local `.env` file.
     // Non-fatal when `.env` is missing.
     new SecretsManager().loadSecrets();
+
+    const adjustForInstalledPlatforms = options?.adjustForInstalledPlatforms ?? true;
 
     // Check if config file exists
     let fileExists = false;
@@ -61,6 +71,19 @@ export class ConfigManager {
     // If file doesn't exist and autoCreate is enabled, create default config
     if (!fileExists) {
       const defaultConfig = getDefaultConfig();
+      if (!adjustForInstalledPlatforms) {
+        if (autoCreate) {
+          try {
+            await this.save(defaultConfig);
+            console.log(`[ConfigManager] Auto-created default config at ${this.configPath}`);
+          } catch (saveError) {
+            console.warn(
+              `[ConfigManager] Failed to auto-create config: ${saveError instanceof Error ? saveError.message : String(saveError)}`
+            );
+          }
+        }
+        return defaultConfig;
+      }
       try {
         const detector = new PlatformDetector(defaultConfig.cliPaths);
         const installed = await detector.getInstalledPlatforms();
@@ -101,6 +124,17 @@ export class ConfigManager {
       if (autoCreate) {
         console.warn(`[ConfigManager] Config file is corrupt: ${error instanceof Error ? error.message : String(error)}`);
         const defaultConfig = getDefaultConfig();
+        if (!adjustForInstalledPlatforms) {
+          try {
+            await this.save(defaultConfig);
+            console.log(`[ConfigManager] Replaced corrupt config with defaults at ${this.configPath}`);
+          } catch (saveError) {
+            console.warn(
+              `[ConfigManager] Failed to save fallback config: ${saveError instanceof Error ? saveError.message : String(saveError)}`
+            );
+          }
+          return defaultConfig;
+        }
         try {
           const detector = new PlatformDetector(defaultConfig.cliPaths);
           const installed = await detector.getInstalledPlatforms();
@@ -138,6 +172,17 @@ export class ConfigManager {
       if (autoCreate) {
         console.warn(`[ConfigManager] Config validation failed: ${validationError instanceof Error ? validationError.message : String(validationError)}`);
         const defaultConfig = getDefaultConfig();
+        if (!adjustForInstalledPlatforms) {
+          try {
+            await this.save(defaultConfig);
+            console.log(`[ConfigManager] Replaced invalid config with defaults at ${this.configPath}`);
+          } catch (saveError) {
+            console.warn(
+              `[ConfigManager] Failed to save fallback config: ${saveError instanceof Error ? saveError.message : String(saveError)}`
+            );
+          }
+          return defaultConfig;
+        }
         try {
           const detector = new PlatformDetector(defaultConfig.cliPaths);
           const installed = await detector.getInstalledPlatforms();
@@ -165,6 +210,10 @@ export class ConfigManager {
     
     const config = converted as PuppetMasterConfig;
     
+    if (!adjustForInstalledPlatforms) {
+      return config;
+    }
+
     // Adjust config to use only installed platforms
     try {
       const detector = new PlatformDetector(config.cliPaths);

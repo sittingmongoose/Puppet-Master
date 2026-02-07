@@ -40,6 +40,38 @@ program
   .description('RWM Puppet Master - CLI orchestrator for AI development workflows')
   .version(VERSION);
 
+function installCliStreamGuards(): void {
+  const ignoreCodes = new Set(['ERR_STREAM_DESTROYED', 'EPIPE', 'ERR_STREAM_WRITE_AFTER_END']);
+
+  const onStreamError = (error: unknown): void => {
+    const errno = error as NodeJS.ErrnoException | undefined;
+    if (errno?.code && ignoreCodes.has(errno.code)) {
+      // Common when piping output to `head`, or when launched from contexts where
+      // stdout/stderr are closed. Exit cleanly.
+      process.exit(0);
+    }
+  };
+
+  // When a downstream pipe closes early, stdout/stderr writes can error.
+  process.stdout.on('error', onStreamError);
+  process.stderr.on('error', onStreamError);
+
+  // Some libraries (notably vscode-jsonrpc) may throw uncaught stream errors.
+  process.on('uncaughtException', (error: Error) => {
+    const errno = error as NodeJS.ErrnoException;
+    if (errno.code && ignoreCodes.has(errno.code)) {
+      process.exit(0);
+    }
+    try {
+      // Best-effort; may fail if stderr is already closed.
+      console.error(error);
+    } catch {
+      // Ignore
+    }
+    process.exit(1);
+  });
+}
+
 // Register commands
 program
   .command('check')
@@ -130,6 +162,7 @@ configCommand.register(program);
  * @param argv - Command line arguments (defaults to process.argv)
  */
 export function run(argv: string[] = process.argv): void {
+  installCliStreamGuards();
   program.parse(argv);
 }
 

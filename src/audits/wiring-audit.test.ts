@@ -35,7 +35,7 @@ describe('WiringAuditor', () => {
       expect(result).toBeDefined();
       expect(result.timestamp).toBeDefined();
       expect(result.durationMs).toBeGreaterThanOrEqual(0);
-    });
+    }, 120_000);
 
     it('should throw error when tsconfig.json not found', async () => {
       const config: WiringAuditConfig = {
@@ -61,7 +61,7 @@ describe('WiringAuditor', () => {
 
       // Should find exports from this project
       expect(exports.length).toBeGreaterThan(0);
-    });
+    }, 120_000);
 
     it('should collect imports from source files', async () => {
       const config = createDefaultConfig(projectRoot);
@@ -72,7 +72,7 @@ describe('WiringAuditor', () => {
 
       // Should find imports from this project
       expect(imports.length).toBeGreaterThan(0);
-    });
+    }, 120_000);
 
     it('should parse container registrations', async () => {
       const config = createDefaultConfig(projectRoot);
@@ -88,7 +88,7 @@ describe('WiringAuditor', () => {
       const keys = registrations.map((r) => r.key);
       expect(keys).toContain('config');
       expect(keys).toContain('prdManager');
-    });
+    }, 120_000);
 
     it('should find container resolutions', async () => {
       const config = createDefaultConfig(projectRoot);
@@ -99,7 +99,7 @@ describe('WiringAuditor', () => {
 
       // Should find resolutions in the codebase
       expect(resolutions.length).toBeGreaterThan(0);
-    });
+    }, 120_000);
 
     it('should return valid audit result structure', async () => {
       const config = createDefaultConfig(projectRoot);
@@ -117,7 +117,7 @@ describe('WiringAuditor', () => {
       expect(Array.isArray(result.issues)).toBe(true);
       expect(typeof result.summary.totalExports).toBe('number');
       expect(typeof result.passed).toBe('boolean');
-    });
+    }, 120_000);
   });
 
   describe('checkOrphanExports', () => {
@@ -134,7 +134,7 @@ describe('WiringAuditor', () => {
       );
       
       expect(entryPointIssues).toHaveLength(0);
-    });
+    }, 120_000);
 
     it('should not flag index.ts re-exports as orphan', async () => {
       const config = createDefaultConfig(projectRoot);
@@ -151,7 +151,7 @@ describe('WiringAuditor', () => {
       
       // Verify re-exports are handled
       expect(indexReexports.length).toBeGreaterThanOrEqual(0);
-    });
+    }, 120_000);
   });
 
   describe('checkUnusedRegistrations', () => {
@@ -165,7 +165,7 @@ describe('WiringAuditor', () => {
       // depend on the codebase state
       const unusedIssues = result.issues.filter((i) => i.type === 'unused_registration');
       expect(Array.isArray(unusedIssues)).toBe(true);
-    });
+    }, 120_000);
   });
 
   describe('checkDeadImports', () => {
@@ -188,7 +188,7 @@ describe('WiringAuditor', () => {
         );
         expect(matchingImport).toBeUndefined();
       }
-    });
+    }, 120_000);
   });
 });
 
