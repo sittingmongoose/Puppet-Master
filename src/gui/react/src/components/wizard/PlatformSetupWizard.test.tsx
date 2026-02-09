@@ -17,6 +17,7 @@ vi.mock('@/lib', () => ({
     installPlatform: vi.fn(),
     selectPlatforms: vi.fn(),
     getLoginStatus: vi.fn(),
+    loginPlatform: vi.fn(),
   },
 }));
 
@@ -25,6 +26,7 @@ const mockApi = lib.api as unknown as {
   installPlatform: ReturnType<typeof vi.fn>;
   selectPlatforms: ReturnType<typeof vi.fn>;
   getLoginStatus: ReturnType<typeof vi.fn>;
+  loginPlatform: ReturnType<typeof vi.fn>;
 };
 
 describe('PlatformSetupWizard', () => {

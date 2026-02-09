@@ -195,6 +195,7 @@ export default function ConfigPage() {
     copilot: [],
   });
   const [modelsError, setModelsError] = useState<string | null>(null);
+  const [refreshingModels, setRefreshingModels] = useState(false);
   const [platformStatus, setPlatformStatus] = useState<Record<string, PlatformStatusType>>({});
   const [installedPlatforms, setInstalledPlatforms] = useState<Platform[]>([]);
   const [installing, setInstalling] = useState<string | null>(null);
@@ -490,8 +491,11 @@ export default function ConfigPage() {
           <Button
             variant="ghost"
             leftIcon={<RefreshIcon />}
+            loading={refreshingModels}
+            disabled={refreshingModels}
             onClick={async () => {
               try {
+                setRefreshingModels(true);
                 setModelsError(null);
                 const data = await api.getModels(true) as unknown as Record<string, unknown>;
                 // Ensure we have valid arrays for each platform
@@ -512,6 +516,8 @@ export default function ConfigPage() {
                 const message = err instanceof Error ? err.message : 'Failed to refresh models. Check server logs or try again.';
                 setModelsError(message);
                 setTimeout(() => setModelsError(null), 8000);
+              } finally {
+                setRefreshingModels(false);
               }
             }}
             title="Refresh model lists from platform discovery"

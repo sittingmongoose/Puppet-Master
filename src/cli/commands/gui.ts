@@ -43,6 +43,8 @@ export interface GuiOptions {
   host?: string;
   open?: boolean;
   verbose?: boolean;
+  /** Base directory for GUI project discovery + wizard-created projects (defaults vary by launch context) */
+  baseDirectory?: string;
   /** P0-G07: Disable authentication (development only) */
   auth?: boolean;
   /** P0-G07: Relax CORS policy for development (allows dev ports and LAN IPs) */
@@ -77,6 +79,21 @@ function getCrashLogPath(): string | undefined {
  */
 function shouldEnableCrashLogging(): boolean {
   return !process.stdout.isTTY;
+}
+
+function deriveDefaultGuiProjectsBaseDirectory(configPath: string, homeDir?: string): string | undefined {
+  if (!homeDir) return undefined;
+
+  // Desktop launches default to $HOME/.puppet-master/config.yaml. In that scenario, using
+  // $HOME as the project discovery base is noisy (and can be huge, e.g. $HOME/Cursor).
+  // Prefer a dedicated projects directory under $HOME.
+  const resolvedConfig = path.resolve(configPath);
+  const homeConfigYaml = path.resolve(path.join(homeDir, '.puppet-master', 'config.yaml'));
+  const homeConfigYml = path.resolve(path.join(homeDir, '.puppet-master', 'config.yml'));
+  const isHomeConfig = resolvedConfig === homeConfigYaml || resolvedConfig === homeConfigYml;
+  if (!isHomeConfig) return undefined;
+
+  return path.join(homeDir, 'puppet-master-projects');
 }
 
 /**
@@ -422,6 +439,15 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     // Desktop GUI boot path must stay fast. Avoid platform detection during config load.
     const config = await configManager.load(shouldAutoCreateConfig, { adjustForInstalledPlatforms: false });
     const projectRoot = deriveProjectRootFromConfigPath(configPath);
+    const defaultProjectsBaseDirectory = deriveDefaultGuiProjectsBaseDirectory(configPath, homeDir);
+    const projectsBaseDirectory = options.baseDirectory ?? defaultProjectsBaseDirectory ?? projectRoot;
+
+    // Ensure the discovery directory exists (best-effort). This is not the active project root.
+    try {
+      mkdirSync(projectsBaseDirectory, { recursive: true });
+    } catch {
+      // ignore - non-fatal; routes will fail gracefully if base directory is unusable
+    }
 
     if (options.verbose) {
       console.log('Configuration loaded successfully');
@@ -499,15 +525,18 @@ export async function guiAction(options: GuiOptions): Promise<void> {
       : undefined; // server default: .puppet-master/gui-token.txt relative to cwd
 
     // Create GUI server
-    const guiConfig = {
-      port,
-      host,
-      baseDirectory: projectRoot,
-      // P0-G07: Support --no-auth and --relaxed-cors flags
-      authEnabled: options.auth !== false,
-      corsRelaxed: options.relaxedCors === true,
-      useReactGui: options.classic !== true,
-      // Reverse proxy support
+	    const guiConfig = {
+	      port,
+	      host,
+	      // Active project root (per-project API routes)
+	      baseDirectory: projectRoot,
+	      // Project discovery base for Projects + Wizard
+	      projectsBaseDirectory,
+	      // P0-G07: Support --no-auth and --relaxed-cors flags
+	      authEnabled: options.auth !== false,
+	      corsRelaxed: options.relaxedCors === true,
+	      useReactGui: options.classic !== true,
+	      // Reverse proxy support
       trustProxy: options.trustProxy === true,
       // CORS allowed origins (parse from comma-separated string)
       ...(options.allowedOrigins && { 
@@ -862,6 +891,7 @@ export class GuiCommand implements CommandModule {
       .option('-c, --config <path>', 'Path to config file')
       .option('-p, --port <number>', 'Port to listen on (default: 3847)', (value) => parseInt(value, 10))
       .option('-h, --host <host>', 'Host to bind to (default: localhost)', 'localhost')
+      .option('--base-directory <path>', 'Base directory for project discovery/wizard projects (default: project root; desktop: ~/puppet-master-projects)')
       .option('--no-open', 'Prevent browser from opening automatically')
       .option('-v, --verbose', 'Enable verbose output')
       .option('--no-auth', 'Disable authentication (development only - NOT recommended for production)')

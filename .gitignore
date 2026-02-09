@@ -29,6 +29,27 @@ installer-work/
 .test-quota-*
 .test-init-*
 .test-cache/
+.test-*/
+
+# Evidence screenshots are large/noisy; keep other evidence (logs, reports, traces) tracked.
+.puppet-master/evidence/screenshots/*.png
+.puppet-master/evidence/screenshots/*.jpg
+.puppet-master/evidence/screenshots/*.jpeg
+.puppet-master/evidence/screenshots/*.webp
+
+# Project-local runtime state that should not be committed (volatile / machine-specific).
+.puppet-master/gui-token.txt
+.puppet-master/events.db
+.puppet-master/events.db-shm
+.puppet-master/events.db-wal
+.puppet-master/checkpoints/
+.puppet-master/capabilities/
+.puppet-master/usage/usage.jsonl
+.puppet-master/prd.json.backup*
+.puppet-master/prd.json.tmp.*
+
+# Local dev server logs (not evidence)
+gui.log
 
 # Secrets (local-only; never commit)
 .env

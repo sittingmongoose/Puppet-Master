@@ -39,28 +39,28 @@ export const CLAUDE_MODELS: ClaudeModel[] = [
   // Aliases (recommended for most users)
   {
     id: 'sonnet',
-    label: 'Sonnet (Recommended)',
+    label: 'Sonnet (Recommended, v4.5 alias)',
     description: 'Latest Claude Sonnet - fast, accurate, balanced cost',
     alias: true,
     contextWindow: '200K',
   },
   {
     id: 'opus',
-    label: 'Opus',
+    label: 'Opus (v4.5 alias)',
     description: 'Latest Claude Opus - highest capability for complex reasoning',
     alias: true,
     contextWindow: '200K',
   },
   {
     id: 'haiku',
-    label: 'Haiku',
+    label: 'Haiku (v4.5 alias)',
     description: 'Fastest, most affordable model for simple tasks',
     alias: true,
     contextWindow: '200K',
   },
   {
     id: 'opusplan',
-    label: 'Opus Plan',
+    label: 'Opus Plan (Opus v4.5 + Sonnet v4.5)',
     description: 'Hybrid mode: Opus for planning, Sonnet for execution',
     alias: true,
     contextWindow: '200K',

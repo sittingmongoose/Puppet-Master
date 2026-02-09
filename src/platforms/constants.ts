@@ -27,10 +27,14 @@ import { join } from 'node:path';
  * Cursor January 2026 updates. Installer provides both `agent` and `cursor-agent`.
  */
 export const PLATFORM_COMMANDS: Readonly<Record<Platform, string>> = {
-  cursor: process.platform === 'win32' ? 'agent.exe' : 'agent',
+  // Windows installs commonly provide `agent.cmd` / `agent.ps1` shims, not `agent.exe`.
+  // Using the bare command allows PATH + PATHEXT resolution to find the correct shim.
+  cursor: 'agent',
   codex: process.platform === 'win32' ? 'codex.exe' : 'codex',
   claude: process.platform === 'win32' ? 'claude.exe' : 'claude',
-  gemini: process.platform === 'win32' ? 'gemini.exe' : 'gemini',
+  // Gemini CLI is commonly installed via npm, which provides `gemini.cmd` (PATHEXT-resolved).
+  // Prefer the bare command name so it works in desktop-launched environments with shell resolution.
+  gemini: 'gemini',
   copilot: process.platform === 'win32' ? 'copilot.exe' : 'copilot',
   // NOTE: antigravity removed - GUI-only, not suitable for automation
 } as const;
@@ -72,6 +76,9 @@ const CURSOR_KNOWN_PATHS: readonly string[] = [
  * CU-P0-T01: Updated to check for `agent.exe` first, then `cursor-agent.exe` for compatibility.
  */
 const CURSOR_KNOWN_PATHS_WIN32: readonly string[] = [
+  // Cursor agent shim install (Cursor Jan 2026 installer)
+  process.env.LOCALAPPDATA ? join(process.env.LOCALAPPDATA, 'cursor-agent', 'agent.cmd') : '',
+  process.env.LOCALAPPDATA ? join(process.env.LOCALAPPDATA, 'cursor-agent', 'cursor-agent.cmd') : '',
   // Windows - User install (most common) - prefer agent, then cursor-agent
   process.env.LOCALAPPDATA ? join(process.env.LOCALAPPDATA, 'Programs', 'cursor', 'resources', 'app', 'bin', 'agent.exe') : '',
   process.env.LOCALAPPDATA ? join(process.env.LOCALAPPDATA, 'Programs', 'cursor', 'resources', 'app', 'bin', 'cursor-agent.exe') : '',
@@ -130,7 +137,8 @@ export function getCursorCommandCandidates(
   
   // 3. Alternate command names (for PATH) - prefer agent, then cursor-agent, then cursor
   if (process.platform === 'win32') {
-    candidates.push('agent.exe', 'cursor-agent.exe', 'cursor.exe');
+    // Prefer bare commands and .cmd shims (most common), then .exe if present.
+    candidates.push('agent', 'agent.cmd', 'cursor-agent', 'cursor-agent.cmd', 'cursor', 'cursor.cmd', 'agent.exe', 'cursor-agent.exe', 'cursor.exe');
   } else {
     candidates.push('agent', 'cursor-agent', 'cursor');
   }

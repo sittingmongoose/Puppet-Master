@@ -519,10 +519,19 @@ Update our docs/doctor guidance to match Cursor’s new MCP workflows.
 
 ## Task Status Log (fill in when implementing)
 
-- **Status:** [PASS | FAIL]
-- **Date:** 2026-01-26
-- **Summary:** Recreated CursorUpdate6 as implementation plan + gap analysis for Cursor CLI January updates.
+- **Status:** PASS
+- **Date:** 2026-02-09
+- **Summary:** Fixed Cursor model discovery + labeling regressions: Cursor command resolution now prefers `agent` (incl. Windows `.cmd` shims); `agent models` parsing ignores `Tip:` lines; `/api/config/models` performs best-effort Cursor discovery even on non-refresh loads (short timeout + cache); capability discovery returns discovered Cursor model IDs when available; curated Cursor model catalog updated to match current `agent models` patterns; Claude Code alias labels now include version context.
 - **Files changed:**
-  - `CursorUpdate6.md`
+  - `src/platforms/constants.ts`
+  - `src/platforms/cursor-models.ts`
+  - `src/platforms/capability-discovery.ts`
+  - `src/gui/routes/config.ts`
+  - `src/platforms/claude-models.ts`
+  - `src/gui/react/src/pages/Config.tsx`
+  - `src/platforms/cursor-models.test.ts`
+  - `src/platforms/claude-models.test.ts`
+  - `src/gui/routes/config.test.ts`
 - **Commands run:**
-  - (none)
+  - `npm run typecheck`: PASS
+  - `npm test`: PASS

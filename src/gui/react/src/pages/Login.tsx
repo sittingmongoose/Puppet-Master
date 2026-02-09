@@ -19,7 +19,7 @@ import type { StatusType } from '@/types';
 
 interface PlatformAuthInfo {
   platform: string;
-  status: 'authenticated' | 'not_authenticated' | 'failed' | 'skipped';
+  status: 'authenticated' | 'not_authenticated' | 'failed' | 'skipped' | 'unknown';
   details: string;
   fixSuggestion?: string;
   envVar?: string;

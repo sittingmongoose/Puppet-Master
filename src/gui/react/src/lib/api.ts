@@ -1042,7 +1042,7 @@ export async function wizardSave(data: {
 
 export interface PlatformAuthInfo {
   platform: string;
-  status: 'authenticated' | 'not_authenticated' | 'failed' | 'skipped';
+  status: 'authenticated' | 'not_authenticated' | 'failed' | 'skipped' | 'unknown';
   details: string;
   fixSuggestion?: string;
 }

@@ -3,15 +3,20 @@ set -eu
 
 APP_BUNDLE="/Applications/Puppet Master.app"
 
-# Stop any running Puppet Master processes to avoid file-in-use issues
+# Stop any running Puppet Master processes to avoid file-in-use issues.
+#
+# IMPORTANT: Do NOT use broad pattern-based kills (e.g. `pkill -f puppet-master`).
+# They can match and terminate the running installer itself, causing the install to
+# fail at the very end. Only attempt safe, exact-name termination.
 echo "Checking for running Puppet Master processes..."
-# Kill by process name
-pkill -9 -f "Puppet Master" 2>/dev/null || true
-pkill -9 -f "puppet-master" 2>/dev/null || true
-# Kill node processes running from the app bundle
-pkill -9 -f "${APP_BUNDLE}" 2>/dev/null || true
-# Wait for processes to fully exit
-sleep 2
+pkill -TERM -x "Puppet Master" 2>/dev/null || true
+pkill -TERM -x "puppet-master-gui" 2>/dev/null || true
+pkill -TERM -x "puppet-master" 2>/dev/null || true
+sleep 1
+pkill -KILL -x "Puppet Master" 2>/dev/null || true
+pkill -KILL -x "puppet-master-gui" 2>/dev/null || true
+pkill -KILL -x "puppet-master" 2>/dev/null || true
+sleep 1
 
 # Verify .app bundle was installed
 if [ ! -d "${APP_BUNDLE}" ]; then
@@ -73,34 +78,6 @@ COREPACK_CLI="$SCRIPT_DIR/../lib/node_modules/corepack/dist/corepack.js"
 exec "$NODE_EXE" "$COREPACK_CLI" "$@"
 COREPACKEOF
     chmod +x "${NODE_BIN}/corepack" 2>/dev/null || true
-  fi
-fi
-
-# Rebuild native modules (e.g. better-sqlite3) with bundled Node to ensure ABI compatibility.
-# Skip in CI: installer runs postinstall in a restricted context and "npm rebuild" is
-# memory-heavy, causing OOM (exit 137) on GitHub-hosted runners. Sentinel file set by workflow.
-APP_DIR="${INSTALL_ROOT}/app"
-RUN_REBUILD=1
-if [ -f /tmp/.puppet-master-ci-install ]; then
-  RUN_REBUILD=0
-fi
-if [ "$RUN_REBUILD" = 1 ] && [ -x "${NODE_EXE}" ] && [ -f "${APP_DIR}/package.json" ]; then
-  echo "Rebuilding native modules for bundled Node..."
-  REBUILD_SUCCESS=0
-  for i in 1 2 3; do
-    if PATH="${NODE_BIN}:$PATH" "${NODE_EXE}" "${NPM_CLI}" rebuild --prefix "${APP_DIR}" 2>/dev/null; then
-      REBUILD_SUCCESS=1
-      break
-    else
-      if [ $i -lt 3 ]; then
-        echo "Rebuild attempt $i failed, retrying in 2 seconds..."
-        sleep 2
-      fi
-    fi
-  done
-  
-  if [ $REBUILD_SUCCESS -eq 0 ]; then
-    echo "Warning: Native module rebuild failed after 3 attempts. App may still work." >&2
   fi
 fi
 

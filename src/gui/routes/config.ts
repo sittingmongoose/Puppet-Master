@@ -42,9 +42,11 @@ interface ModelCacheEntry {
   timestamp: number;
 }
 
-const MODEL_CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+const MODEL_CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours (static catalogs)
+const CURSOR_CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour (Cursor CLI discovery can change more frequently)
 const PLATFORM_DISCOVERY_TIMEOUT_MS = 3500;
 let modelCache: ModelCacheEntry | null = null;
+let cursorDiscoveredCache: { models: Array<{ id: string; label: string }>; timestamp: number } | null = null;
 
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
   return Promise.race([
@@ -359,10 +361,30 @@ export function createConfigRoutes(baseDirectory?: string): Router {
       }
 
       // Fast path for normal UI loads:
-      // return static model lists immediately and avoid expensive live discovery.
-      // Discovery remains available on explicit refresh=true requests.
+      // return static model lists quickly, but attempt a fast Cursor CLI model discovery
+      // (short timeout + cache) so the Config dropdown reflects the user's actual Cursor build.
       if (!forceRefresh) {
         const staticModels = buildStaticModelCatalog();
+
+        // Cursor only: best-effort discovery (fast, non-billable). Cache separately.
+        try {
+          const nowCursor = Date.now();
+          if (!cursorDiscoveredCache || (nowCursor - cursorDiscoveredCache.timestamp) > CURSOR_CACHE_TTL_MS) {
+            const cliPath = resolvePlatformCommand('cursor');
+            const discovered = await withTimeout(getCursorModelsWithDiscovery(cliPath, true), 2000);
+            if (Array.isArray(discovered) && discovered.length > 0) {
+              const models = discovered.map((m) => ({ id: m.id, label: m.label || m.id }));
+              cursorDiscoveredCache = { models, timestamp: nowCursor };
+            }
+          }
+        } catch {
+          // Ignore and keep static cursor list.
+        }
+
+        if (cursorDiscoveredCache && cursorDiscoveredCache.models.length > 0) {
+          staticModels.cursor = ensureAutoOption(cursorDiscoveredCache.models);
+        }
+
         modelCache = {
           models: staticModels,
           timestamp: now,

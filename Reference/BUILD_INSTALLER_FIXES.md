@@ -2,9 +2,12 @@
 
 ## Status
 
-**PASS** — 2026-01-30
+**PASS** — 2026-02-09  
+Previous: **PASS** — 2026-01-30
 
 ## Summary
+
+**Cross-platform installer + first-boot regressions (2026-02-09):** Fixed macOS PKG `postinstall` logic that could kill the running installer by removing broad `pkill -f`/`-9` usage; added a Linux `tar.gz` bundle to preserve executable bits for `install.sh`; updated Windows NSIS to create Start Menu/Desktop shortcuts for all users; removed Tauri runtime navigation to the backend URL to prevent Windows first-boot blank GUI; and improved model lists (Cursor auto-discovery by default, Claude aliases version-labeled). See Phase 10 below.
 
 **Linux DEB installer + cross-platform crash logging (2026-01-30):** Linux .deb now shows desktop notification on successful install; React GUI staged for Linux/Windows; Build GUI runs for all platforms in CI; crash logging extended to Linux and Windows when launched without TTY. See Phase 9 below.
 
@@ -97,6 +100,40 @@ Fixed macOS installer build failure (cp EINVAL recursion), pkgbuild check error,
 - **scripts/build-installer.ts**: Stage React GUI for linux and win32 (not just darwin); chmod postinstall 0o755 before nfpm.
 - **.github/workflows/build-installers.yml**: Run Build GUI for all platforms (remove macOS-only condition).
 - **src/cli/commands/gui.ts**: Extend crash logging to Linux and Windows when `!process.stdout.isTTY`; use `shouldEnableCrashLogging()`; auth token path uses home dir when crash logging enabled.
+
+### Phase 10: Fix Installer + Model List Regressions (2026-02-09)
+
+- **macOS PKG postinstall safety**: Removed broad pattern process kills (`pkill -f`, `-9`) that could match and terminate the installer process itself; replaced with safe, exact-name, best-effort termination and ensured install continues.
+- **Linux permission-preserving bundle**: Linux packaging now emits `rwm-puppet-master-<version>-linux-<arch>-bundle.tar.gz` containing `.deb`, `.rpm`, and `install.sh` so executable bits survive download/extraction paths.
+- **Windows “normal install” shortcuts**: NSIS now creates Start Menu and Desktop shortcuts in the all-users context (`SetShellVarContext all`, `$COMMONPROGRAMS`, `$COMMONDESKTOPDIRECTORY`) so installs done elevated still appear for the normal user.
+- **Windows blank GUI on first boot**: Tauri no longer navigates the webview to `http://127.0.0.1:3847`; the bundled frontend stays loaded and talks to the backend via API base URL + CORS.
+- **Models**:
+  - Cursor models are discovered (short timeout + cache) even on normal `refresh=false` Config loads.
+  - Claude Code alias labels now include version context (e.g. `v4.5 alias`).
+
+**Task status log (Phase 10)**  
+Status: PASS  
+Date: 2026-02-09  
+Summary of changes: macOS PKG postinstall no longer kills the installer; Linux builds produce a tar.gz bundle that preserves `install.sh` executable permissions; Windows installer shortcuts are created for all users; Tauri no longer navigates to the backend URL at runtime; Cursor model lists auto-discover on normal Config loads and Claude aliases are version-labeled.  
+Files changed:  
+- installer/mac/scripts/postinstall  
+- scripts/build-installer.ts  
+- installer/win/puppet-master.nsi  
+- src-tauri/src/main.rs  
+- src/gui/routes/config.ts  
+- src/platforms/capability-discovery.ts  
+- src/platforms/constants.ts  
+- src/platforms/cursor-models.ts  
+- src/platforms/claude-models.ts  
+- src/installers/macos-postinstall.test.ts  
+- src/platforms/cursor-models.test.ts  
+- src/platforms/claude-models.test.ts  
+- src/gui/routes/config.test.ts  
+Commands run + results:  
+- npm run typecheck: PASS  
+- npm test: PASS  
+- cargo check (with CARGO_TARGET_DIR=/tmp/...): PASS  
+If FAIL: N/A  
 
 ## Linux DEB troubleshooting
 

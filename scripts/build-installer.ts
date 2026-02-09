@@ -25,8 +25,11 @@
 
 import { spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
-import { chmod, mkdir, readdir, rm, rmdir, writeFile, cp, lstat, rename } from 'node:fs/promises';
+import { chmod, mkdir, readdir, rm, rmdir, writeFile, cp, copyFile, lstat, rename } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import * as path from 'node:path';
+import { createReadStream, createWriteStream } from 'node:fs';
+import { pipeline } from 'node:stream/promises';
 
 import { getNodeDistribution, type NodeArch, type NodePlatform } from '../src/installers/node-distribution.js';
 
@@ -113,12 +116,19 @@ async function buildTauriApp(repoRoot: string, platform: InstallerPlatform): Pro
     const currentPath = process.env.PATH || '';
     const enhancedPath = currentPath.includes(cargoPath) ? currentPath : `${cargoPath}${pathSep}${currentPath}`;
 
+    // IMPORTANT: Some environments mount the repo directory with "noexec" (common on CIFS/SMB shares).
+    // Cargo executes build scripts from the target dir. If that dir is non-executable, builds fail with:
+    //   "could not execute ... build-script-build (never executed) ... Invalid argument (os error 22)"
+    // Force Cargo to use a target dir under the OS temp directory (typically executable).
+    const cargoTargetDir = path.join(tmpdir(), 'puppet-master-cargo-target', `${platform}-${Date.now()}`);
+
     // Build the Tauri app (bundles + release binary).
     // Tauri CLI expects CI to be "true" or "false"; GitHub Actions sets CI=1, so normalize it.
     const env = {
       ...process.env,
       CI: process.env.CI ? 'true' : 'false',
       PATH: enhancedPath,
+      CARGO_TARGET_DIR: cargoTargetDir,
     };
 
     // Verify cargo is available
@@ -139,7 +149,7 @@ async function buildTauriApp(repoRoot: string, platform: InstallerPlatform): Pro
     await run('npx', ['tauri', 'build', '--verbose', '--no-bundle'], { cwd: repoRoot, env });
 
     // Stage the runnable binary (simplest integration with our existing installers)
-    const targetDir = path.join(repoRoot, 'src-tauri', 'target', 'release');
+    const targetDir = path.join(cargoTargetDir, 'release');
 
     // Diagnostic: list what Tauri produced (helps debug CI failures)
     console.log(`\n📋 Tauri build output (${platform}):`);
@@ -206,14 +216,14 @@ async function stageTauriApp(tauriPath: string, payloadRoot: string, platform: I
     // Copy .exe (and any adjacent .dlls, if present) to app directory
     const appDir = path.join(payloadRoot, 'app');
     await ensureDir(appDir);
-    await cp(tauriPath, path.join(appDir, 'puppet-master-gui.exe'));
+    await copyFilePortable(tauriPath, path.join(appDir, 'puppet-master-gui.exe'));
 
     try {
       const releaseDir = path.dirname(tauriPath);
       const entries = await readdir(releaseDir);
       const dlls = entries.filter((e) => e.toLowerCase().endsWith('.dll'));
       for (const dll of dlls) {
-        await cp(path.join(releaseDir, dll), path.join(appDir, dll));
+        await copyFilePortable(path.join(releaseDir, dll), path.join(appDir, dll));
       }
     } catch {
       // Best-effort
@@ -223,13 +233,74 @@ async function stageTauriApp(tauriPath: string, payloadRoot: string, platform: I
     // Copy binary to bin directory
     const binDir = path.join(payloadRoot, 'bin');
     await ensureDir(binDir);
-    await cp(tauriPath, path.join(binDir, 'puppet-master-gui'));
+    await copyFilePortable(tauriPath, path.join(binDir, 'puppet-master-gui'));
     await chmod(path.join(binDir, 'puppet-master-gui'), 0o755);
   }
 }
 
 async function ensureDir(dir: string): Promise<void> {
   await mkdir(dir, { recursive: true });
+}
+
+async function copyFilePortable(src: string, dst: string): Promise<void> {
+  const MAX_ATTEMPTS = 5;
+
+  const isRetryable = (e: unknown): boolean => {
+    const code = (e as NodeJS.ErrnoException)?.code;
+    const msg = e instanceof Error ? e.message : String(e);
+    // CI/packaging filesystems sometimes transiently return EINVAL/EBUSY/ETXTBSY.
+    return (
+      code === 'EINVAL' ||
+      code === 'EBUSY' ||
+      code === 'ETXTBSY' ||
+      code === 'EACCES' ||
+      msg.includes('Invalid argument')
+    );
+  };
+
+  const debug = process.env.PM_DEBUG_COPY === '1';
+  const log = (...args: unknown[]) => {
+    if (debug) console.log('[copyFilePortable]', ...args);
+  };
+
+  const tryCopyFile = async (): Promise<void> => {
+    log('strategy=copyFile', src, '->', dst);
+    await copyFile(src, dst);
+  };
+
+  const tryStreamCopy = async (): Promise<void> => {
+    log('strategy=stream', src, '->', dst);
+    await pipeline(createReadStream(src), createWriteStream(dst));
+  };
+
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    try {
+      // Prefer Node copy first; we've seen `cp` fail with EINVAL in some environments.
+      await tryCopyFile();
+      return;
+    } catch (err) {
+      const code = (err as NodeJS.ErrnoException)?.code;
+      log('copyFile failed', { attempt, code, err: err instanceof Error ? err.message : String(err) });
+
+      // Portable fallback for copyfile limitations / odd filesystem behavior.
+      if (code === 'ENOTSUP' || code === 'EXDEV' || code === 'EINVAL') {
+        try {
+          await tryStreamCopy();
+          return;
+        } catch (err2) {
+          log('stream failed', { attempt, code: (err2 as NodeJS.ErrnoException)?.code, err: err2 instanceof Error ? err2.message : String(err2) });
+          // Fall through to retry / cp.
+        }
+      }
+
+      if (attempt < MAX_ATTEMPTS && isRetryable(err)) {
+        await new Promise((r) => setTimeout(r, 250 * attempt));
+        continue;
+      }
+
+      throw err;
+    }
+  }
 }
 
 /** Max retries for directory removal (handles ENOTEMPTY / busy filesystems in CI) */
@@ -650,8 +721,6 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
     );
   }
 
-  await run('npm', ['ci', '--omit=dev'], { cwd: appDir, env: { npm_config_update_notifier: 'false' } });
-
   // 5) Download Node runtime into payload/node
   console.log('\n🧩 Staging embedded Node runtime...\n');
   // Keep downloads outside the per-platform stageRoot so repeated runs can reuse archives.
@@ -665,6 +734,24 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
     await fixNodeSymlinks(nodeDir, args.platform);
   }
 
+  // 4b) Install production dependencies with bundled Node, without running install scripts.
+  // This prevents native addons (better-sqlite3) from being built against the *system* Node version
+  // during packaging (common Windows failure: NODE_MODULE_VERSION 127 vs 115 at runtime).
+  console.log('\n📦 Installing production dependencies (ignore scripts) using bundled Node...\n');
+  const nodeExe =
+    args.platform === 'win32'
+      ? path.join(nodeDir, 'node.exe')
+      : path.join(nodeDir, 'bin', 'node');
+  const npmCli =
+    args.platform === 'win32'
+      ? path.join(nodeDir, 'node_modules', 'npm', 'bin', 'npm-cli.js')
+      : path.join(nodeDir, 'lib', 'node_modules', 'npm', 'bin', 'npm-cli.js');
+  await run(nodeExe, [npmCli, 'ci', '--omit=dev', '--ignore-scripts', '--no-audit'], {
+    cwd: appDir,
+    shell: false,
+    env: { ...process.env, npm_config_update_notifier: 'false' },
+  });
+
   // 5b) Rebuild native modules with bundled Node so ABI matches (e.g. better-sqlite3)
   // Windows: invoke bundled node.exe directly (bypass PATH) so node-gyp uses correct Node ABI
   // Unix: use PATH with nodeDir/bin so npm/rebuild uses bundled Node
@@ -674,15 +761,7 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
   const maxRetries = 3;
   
   const runRebuild = async (): Promise<void> => {
-    if (args.platform === 'win32') {
-      const nodeExe = path.join(nodeDir, 'node.exe');
-      const npmCli = path.join(nodeDir, 'node_modules', 'npm', 'bin', 'npm-cli.js');
-      await run(nodeExe, [npmCli, 'rebuild', '--verbose'], { cwd: appDir, shell: false });
-    } else {
-      const nodeBin = path.join(nodeDir, 'bin');
-      const pathEnv = `${nodeBin}${path.delimiter}${process.env.PATH ?? ''}`;
-      await run('npm', ['rebuild', '--verbose'], { cwd: appDir, env: { ...process.env, PATH: pathEnv } });
-    }
+    await run(nodeExe, [npmCli, 'rebuild', '--verbose'], { cwd: appDir, shell: false });
   };
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
@@ -716,26 +795,26 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
   // Load test: Verify better-sqlite3 is ABI-compatible with bundled Node
   // This catches mismatch errors before packaging (when still fixable) vs at runtime (when too late)
   console.log('\n✅ Testing better-sqlite3 ABI compatibility with bundled Node...\n');
+  const bundledNodeMajor = parseInt((args.nodeVersion.split('.')[0] ?? '0').replace(/^v/, ''), 10);
+  const expectedNodeModules =
+    bundledNodeMajor === 20 ? '115' :
+    bundledNodeMajor === 22 ? '127' :
+    bundledNodeMajor === 18 ? '108' :
+    null;
   const betterSqliteLoadTest = `
 const db = require('better-sqlite3');
-const { version } = process.versions;
-console.log('✓ better-sqlite3 loaded successfully with Node', version);
+console.log('✓ better-sqlite3 loaded successfully');
+console.log('node', process.versions.node);
+console.log('modules', process.versions.modules);
+${expectedNodeModules ? `if (String(process.versions.modules) !== '${expectedNodeModules}') {
+  console.error('ERROR: Unexpected Node ABI. Expected ${expectedNodeModules} for Node ${bundledNodeMajor}.x, got', process.versions.modules);
+  process.exit(2);
+}` : ''}
 process.exit(0);
 `;
 
   try {
-    if (args.platform === 'win32') {
-      const nodeExe = path.join(nodeDir, 'node.exe');
-      await run(nodeExe, ['-e', betterSqliteLoadTest], { cwd: appDir, shell: false });
-    } else {
-      const nodeBin = path.join(nodeDir, 'bin');
-      const pathEnv = `${nodeBin}${path.delimiter}${process.env.PATH ?? ''}`;
-      await run(path.join(nodeBin, 'node'), ['-e', betterSqliteLoadTest], {
-        cwd: appDir,
-        env: { ...process.env, PATH: pathEnv },
-        shell: false,
-      });
-    }
+    await run(nodeExe, ['-e', betterSqliteLoadTest], { cwd: appDir, shell: false });
     console.log('  ✓ better-sqlite3 ABI compatibility verified');
   } catch (error) {
     const errorMsg = error instanceof Error ? error.message : String(error);
@@ -851,15 +930,24 @@ function resolveMakensisCommand(): string {
   }
   const explicit = process.env.MAKENSIS_PATH;
   if (explicit && existsSync(explicit)) {
-    // Quote path so shell does not split on spaces (e.g. "C:\Program Files (x86)\NSIS\makensis.exe")
-    return explicit.includes(' ') ? `"${explicit}"` : explicit;
+    return explicit;
   }
   const dir = process.env.NSISDIR;
   if (dir) {
     const joined = path.join(dir, 'makensis.exe');
     if (existsSync(joined)) {
-      return joined.includes(' ') ? `"${joined}"` : joined;
+      return joined;
     }
+  }
+  // Common NSIS install locations (Winget/MSI installs often do not set NSISDIR or PATH).
+  const pf86 = process.env['ProgramFiles(x86)'] ?? 'C:\\\\Program Files (x86)';
+  const pf = process.env.ProgramFiles ?? 'C:\\\\Program Files';
+  const candidates = [
+    path.join(pf86, 'NSIS', 'makensis.exe'),
+    path.join(pf, 'NSIS', 'makensis.exe'),
+  ];
+  for (const c of candidates) {
+    if (existsSync(c)) return c;
   }
   return 'makensis';
 }
@@ -880,7 +968,7 @@ async function buildWindowsNsis(args: Args, repoRoot: string, stageRoot: string,
     `/DOUTFILE=${artifact}`,
     `/DSTAGE_DIR=${path.join(stageRoot, 'payload')}`,
     nsiPath,
-  ], { cwd: repoRoot });
+  ], { cwd: repoRoot, shell: false });
 
   return artifact;
 }
@@ -1088,10 +1176,13 @@ exec "$TARGET" "$@"
   // GUI launcher: run puppet-master gui and keep terminal open on exit so user can see errors
   const guiLauncher = `#!/usr/bin/env sh
 set -eu
+TAURI="/opt/puppet-master/bin/puppet-master-gui"
+if [ -x "$TAURI" ]; then
+  exec "$TAURI" "$@"
+fi
+
+# Fallback to the web UI (opens in browser) if the Tauri app is not present.
 puppet-master gui "$@" || true
-echo ""
-echo "Press Enter to close this window."
-read x
 `;
   await writeFile(path.join(usrBinDir, 'puppet-master-gui'), guiLauncher, { encoding: 'utf8', mode: 0o755 });
 
@@ -1131,6 +1222,26 @@ read x
     await (await import('node:fs/promises')).copyFile(installSh, installShDest);
     await chmod(installShDest, 0o755);
     console.log(`  Copied install.sh → ${installShDest}`);
+  }
+
+  // Create a tar.gz bundle that preserves executable bits (ZIP artifacts often lose mode bits).
+  // Bundle includes: .deb, .rpm, install.sh (if present).
+  try {
+    const bundleName = `rwm-puppet-master-${version}-linux-${args.arch}-bundle.tar.gz`;
+    const bundleOut = path.join(outDir, bundleName);
+    const files: string[] = [];
+
+    if (existsSync(debOut)) files.push(path.basename(debOut));
+    if (existsSync(rpmOut)) files.push(path.basename(rpmOut));
+    if (existsSync(path.join(outDir, 'install.sh'))) files.push('install.sh');
+
+    if (files.length > 0) {
+      console.log(`\n📦 Creating Linux bundle tarball: ${bundleOut}\n`);
+      // Use tar from the OS (present in CI and most distros). Run from outDir so entries are clean.
+      await run('tar', ['-czf', bundleOut, ...files], { cwd: outDir, shell: false });
+    }
+  } catch (e) {
+    console.warn('[Linux] Failed to create tar.gz bundle (continuing):', e instanceof Error ? e.message : String(e));
   }
 
   return [debOut, rpmOut];

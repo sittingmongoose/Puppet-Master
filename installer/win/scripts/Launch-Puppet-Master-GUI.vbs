@@ -12,7 +12,12 @@ installDir = fso.GetParentFolderName(scriptPath)
 ' Set CWD to user's home directory (writable), NOT Program Files (read-only)
 WshShell.CurrentDirectory = WshShell.ExpandEnvironmentStrings("%USERPROFILE%")
 
-' Run puppet-master gui with hidden window (0), don't wait for exit (False)
-' cmd /c ensures PATH and env from cmd; "bin\puppet-master.cmd" gui is the command
-cmd = "cmd /c """ & fso.BuildPath(installDir, "bin\puppet-master.cmd") & """ gui"
-WshShell.Run cmd, 0, False
+' Prefer the native desktop app if bundled (Tauri).
+guiExe = fso.BuildPath(fso.BuildPath(installDir, "app"), "puppet-master-gui.exe")
+If fso.FileExists(guiExe) Then
+  WshShell.Run """" & guiExe & """", 0, False
+Else
+  ' Fallback: start the web UI via CLI.
+  cmd = "cmd /c """ & fso.BuildPath(installDir, "bin\puppet-master.cmd") & """ gui"
+  WshShell.Run cmd, 0, False
+End If

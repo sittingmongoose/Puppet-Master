@@ -45,6 +45,15 @@ function dirHasFiles(dirPath: string): boolean {
   }
 }
 
+function getGhHostsPath(home: string): string | null {
+  if (!home) return null;
+  if (process.platform === 'win32') {
+    const appData = process.env.APPDATA || join(home, 'AppData', 'Roaming');
+    return appData ? join(appData, 'GitHub CLI', 'hosts.yml') : null;
+  }
+  return join(home, '.config', 'gh', 'hosts.yml');
+}
+
 /* ------------------------------------------------------------------ */
 /*  Public API                                                         */
 /* ------------------------------------------------------------------ */
@@ -66,16 +75,44 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
         };
       }
 
-      // 2. Best-effort: if credential directories exist, treat as unknown (not authenticated).
-      // NOTE: The presence of ~/.cursor* is NOT a reliable auth signal.
-      const cursorPaths = [join(home, '.cursor-server'), join(home, '.cursor')];
-      for (const p of cursorPaths) {
+      // 2. Auth file heuristics (local-only).
+      // Observed locations (Feb 2026):
+      // - Linux:   ~/.config/cursor/auth.json
+      // - Windows: %APPDATA%\\Cursor\\auth.json (case varies)
+      // - macOS:   typically uses ~/.cursor plus a CLI config; treat auth.json when present.
+      const cursorAuthCandidates: string[] = [];
+      if (process.platform === 'win32') {
+        const appData = process.env.APPDATA || join(home, 'AppData', 'Roaming');
+        cursorAuthCandidates.push(join(appData, 'Cursor', 'auth.json'));
+        cursorAuthCandidates.push(join(appData, 'cursor', 'auth.json'));
+      } else {
+        cursorAuthCandidates.push(join(home, '.config', 'cursor', 'auth.json'));
+      }
+      for (const p of cursorAuthCandidates) {
+        if (existsSync(p)) {
+          return {
+            status: 'authenticated',
+            details: `Cursor auth file found (${p}).`,
+            fixSuggestion: 'If Cursor still fails, open Cursor IDE and ensure you are signed in, or set CURSOR_API_KEY for headless/CI usage.',
+          };
+        }
+      }
+
+      // 3. Best-effort: if credential directories exist, treat as unknown.
+      // NOTE: The presence of ~/.cursor* is not a reliable auth signal, but it should
+      // flip the wizard away from "Not Authenticated" after a successful login flow.
+      const cursorDirs = [
+        join(home, '.cursor-server'),
+        join(home, '.cursor'),
+        join(home, '.config', 'cursor'),
+      ];
+      for (const p of cursorDirs) {
         if (dirHasFiles(p)) {
           return {
             status: 'unknown',
             details: `Cursor credential directories exist (${p}), but authentication cannot be confirmed without running the CLI.`,
             fixSuggestion:
-              'Open Cursor IDE and sign in, or set CURSOR_API_KEY for headless/CI usage.',
+              'If you just completed login, wait a few seconds and click Retry. Otherwise, open Cursor IDE and sign in, or set CURSOR_API_KEY for headless/CI usage.',
           };
         }
       }
@@ -185,9 +222,11 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
       const settingsPath = join(home, '.gemini', 'settings.json');
       if (existsSync(settingsPath)) {
         return {
-          status: 'unknown',
-          details: `Gemini settings file exists (${settingsPath}), but auth cannot be confirmed without running the CLI.`,
-          fixSuggestion: 'Run `gemini` in a terminal to configure auth, or set GEMINI_API_KEY.',
+          // Treat the presence of settings.json as "configured" for onboarding UX.
+          // In practice this is created during interactive setup, and users expect the wizard to update.
+          status: 'authenticated',
+          details: `Gemini settings file exists (${settingsPath}).`,
+          fixSuggestion: 'If Gemini still fails, run `gemini` in a terminal to confirm authentication.',
         };
       }
 
@@ -236,11 +275,12 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
         };
       }
 
-      // 2. Heuristic: GitHub CLI auth file exists (commonly used by Copilot CLI)
-      const ghHosts = join(home, '.config', 'gh', 'hosts.yml');
-      if (existsSync(ghHosts)) {
+      // 2. Heuristic: GitHub CLI auth file exists (commonly used by Copilot CLI).
+      // For onboarding UX, treat this as authenticated (the common case after `gh auth login`).
+      const ghHosts = getGhHostsPath(home);
+      if (ghHosts && existsSync(ghHosts)) {
         return {
-          status: 'unknown',
+          status: 'authenticated',
           details: `GitHub CLI auth file exists (${ghHosts}).`,
           fixSuggestion: 'If Copilot still fails, run `copilot login` in a terminal.',
         };
@@ -250,7 +290,7 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
       const copilotConfig = join(home, '.copilot', 'config.json');
       if (existsSync(copilotConfig)) {
         return {
-          status: 'unknown',
+          status: 'authenticated',
           details: `Copilot CLI config exists (${copilotConfig}).`,
           fixSuggestion: 'Run `copilot login` in a terminal to confirm authentication.',
         };

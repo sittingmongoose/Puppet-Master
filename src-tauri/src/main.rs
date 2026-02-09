@@ -6,6 +6,7 @@ use std::net::TcpStream;
 use std::path::{Path, PathBuf};
 use std::io::{Read, Write};
 use std::process::Command;
+use std::process::Stdio;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::Duration;
 use tauri::{
@@ -17,6 +18,9 @@ use tauri::{
 };
 use tauri_plugin_log::{Target, TargetKind};
 use url::Url;
+
+#[cfg(target_os = "windows")]
+use std::os::windows::process::CommandExt;
 
 static IS_QUITTING: AtomicBool = AtomicBool::new(false);
 
@@ -94,6 +98,18 @@ fn is_loopback_url(url: &Url) -> bool {
     }
 }
 
+fn derive_install_root_from_exe(current_exe: &Path) -> Option<PathBuf> {
+    // Windows installer layout: <InstallRoot>\app\puppet-master-gui.exe
+    // Linux installer layout:   <InstallRoot>/bin/puppet-master-gui
+    // For both: derive InstallRoot from parent dir name "app" or "bin".
+    let dir = current_exe.parent()?;
+    let name = dir.file_name()?.to_string_lossy().to_lowercase();
+    if name == "app" || name == "bin" {
+        return dir.parent().map(|p| p.to_path_buf());
+    }
+    None
+}
+
 fn resolve_puppet_master_cli_fallback(resource_dir: Option<PathBuf>, current_exe: Option<PathBuf>) -> Option<PathBuf> {
     // macOS installer layout: <App>.app/Contents/Resources/puppet-master/bin/puppet-master
     if let Some(res) = resource_dir {
@@ -103,7 +119,7 @@ fn resolve_puppet_master_cli_fallback(resource_dir: Option<PathBuf>, current_exe
         }
     }
 
-    // Linux/windows installer layout: sibling to GUI binary (e.g. /opt/puppet-master/bin/puppet-master-gui + /opt/puppet-master/bin/puppet-master)
+    // Linux installer layout: sibling to GUI binary (e.g. /opt/puppet-master/bin/puppet-master-gui + /opt/puppet-master/bin/puppet-master)
     if let Some(exe) = current_exe {
         if let Some(dir) = exe.parent() {
             let candidate = dir.join("puppet-master");
@@ -114,6 +130,70 @@ fn resolve_puppet_master_cli_fallback(resource_dir: Option<PathBuf>, current_exe
             if candidate_exe.is_file() && candidate_exe != exe {
                 return Some(candidate_exe);
             }
+            // Windows: the installed CLI entrypoint is typically a .cmd shim in <InstallRoot>\bin\puppet-master.cmd,
+            // and std::process::Command does not resolve PATHEXT like cmd.exe does.
+            let candidate_cmd = dir.join("puppet-master.cmd");
+            if candidate_cmd.is_file() {
+                return Some(candidate_cmd);
+            }
+
+            // Windows installer layout: GUI lives in <InstallRoot>\app, CLI shims live in <InstallRoot>\bin.
+            if let Some(root) = derive_install_root_from_exe(&exe) {
+                let bin = root.join("bin");
+                let cmd = bin.join("puppet-master.cmd");
+                if cmd.is_file() {
+                    return Some(cmd);
+                }
+                let exe_bin = bin.join("puppet-master.exe");
+                if exe_bin.is_file() {
+                    return Some(exe_bin);
+                }
+                let unix = bin.join("puppet-master");
+                if unix.is_file() {
+                    return Some(unix);
+                }
+            }
+        }
+    }
+
+    None
+}
+
+fn resolve_embedded_node_and_entry(resource_dir: Option<PathBuf>, current_exe: Option<PathBuf>) -> Option<(PathBuf, PathBuf, PathBuf, PathBuf)> {
+    // Returns (install_root, node_exe, node_bin_dir, app_entry)
+    // Windows/Linux installers: <InstallRoot>\app\puppet-master-gui.exe or <InstallRoot>/bin/puppet-master-gui
+    // macOS bundle: <App>.app/Contents/Resources/puppet-master/...
+    if let Some(exe) = current_exe.as_deref() {
+        if let Some(root) = derive_install_root_from_exe(exe) {
+            #[cfg(target_os = "windows")]
+            {
+                let node_exe = root.join("node").join("node.exe");
+                let node_bin = root.join("node");
+                let app_entry = root.join("app").join("dist").join("cli").join("index.js");
+                if node_exe.is_file() && app_entry.is_file() {
+                    return Some((root, node_exe, node_bin, app_entry));
+                }
+            }
+            #[cfg(not(target_os = "windows"))]
+            {
+                let node_exe = root.join("node").join("bin").join("node");
+                let node_bin = root.join("node").join("bin");
+                let app_entry = root.join("app").join("dist").join("cli").join("index.js");
+                if node_exe.is_file() && app_entry.is_file() {
+                    return Some((root, node_exe, node_bin, app_entry));
+                }
+            }
+        }
+    }
+
+    // macOS app bundle resources
+    if let Some(res) = resource_dir {
+        let root = res.join("puppet-master");
+        let node_exe = root.join("node").join("bin").join("node");
+        let node_bin = root.join("node").join("bin");
+        let app_entry = root.join("app").join("dist").join("cli").join("index.js");
+        if node_exe.is_file() && app_entry.is_file() {
+            return Some((root, node_exe, node_bin, app_entry));
         }
     }
 
@@ -126,35 +206,186 @@ fn try_spawn_gui_server(url: &Url, resource_dir: Option<PathBuf>) -> bool {
     let home_dir = env::var_os("HOME")
         .or_else(|| env::var_os("USERPROFILE"))
         .map(PathBuf::from);
+    let current_exe = env::current_exe().ok();
+    let install_root = current_exe
+        .as_deref()
+        .and_then(derive_install_root_from_exe);
+
+    // If the server is already listening, don't spawn another process (prevents duplicate terminals/processes).
+    if let Some(host_str) = url.host_str() {
+        let resolved = if host_str == "localhost" { "127.0.0.1" } else { host_str };
+        if let Ok(addr) = format!("{}:{}", resolved, url.port().unwrap_or(3847)).parse::<std::net::SocketAddr>() {
+            if TcpStream::connect_timeout(&addr, Duration::from_millis(150)).is_ok() {
+                return true;
+            }
+        }
+    }
+
+    // Prefer spawning the embedded Node runtime directly, so we do not open terminal windows on Windows
+    // and we are not dependent on PATH/PATHEXT resolution during first launch.
+    if let Some((root, node_exe, node_bin_dir, app_entry)) =
+        resolve_embedded_node_and_entry(resource_dir.clone(), current_exe.clone())
+    {
+        let mut cmd = Command::new(node_exe);
+        cmd.arg(app_entry)
+            .arg("gui")
+            .arg("--no-open")
+            .arg("--port")
+            .arg(&port)
+            .arg("--host")
+            .arg(host)
+            .env("PUPPET_MASTER_NO_OPEN", "1")
+            .env("NO_OPEN_BROWSER", "1")
+            .env("PUPPET_MASTER_INSTALL_ROOT", &root)
+            .env("PUPPET_MASTER_APP_ROOT", &root)
+            .env("PLAYWRIGHT_BROWSERS_PATH", root.join("playwright-browsers"))
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null());
+
+        // Ensure /usr/bin/env node wrappers (e.g. GitHub Copilot installed via npm) can find Node.
+        // When the app is launched from a desktop shortcut, PATH can be minimal.
+        let mut path_parts: Vec<PathBuf> = vec![node_bin_dir.clone()];
+        if let Some(cur) = env::var_os("PATH") {
+            path_parts.extend(env::split_paths(&cur));
+        }
+        if let Ok(joined) = env::join_paths(path_parts) {
+            cmd.env("PATH", joined);
+        }
+
+        if let Some(h) = &home_dir {
+            cmd.current_dir(h);
+        }
+
+        #[cfg(target_os = "windows")]
+        {
+            // CREATE_NO_WINDOW
+            cmd.creation_flags(0x08000000);
+        }
+
+        if cmd.spawn().is_ok() {
+            return true;
+        }
+    }
 
     // Prefer PATH resolution (e.g. /usr/local/bin/puppet-master on macOS).
-    let mut cmd = Command::new("puppet-master");
-    cmd.args(["gui", "--no-open", "--port", &port, "--host", host])
-        // Keep child behavior deterministic for desktop launches.
-        .env("PUPPET_MASTER_NO_OPEN", "1")
-        .env("NO_OPEN_BROWSER", "1");
-    if let Some(h) = &home_dir {
-        cmd.current_dir(h);
+    #[cfg(target_os = "windows")]
+    {
+        // On Windows, the installed entrypoint is commonly `puppet-master.cmd` (PATHEXT),
+        // which CreateProcess won't resolve. Use cmd.exe for PATH + PATHEXT resolution.
+        let mut cmd = Command::new("cmd");
+        // Use `call` so .cmd shims execute correctly.
+        cmd.args([
+            "/C",
+            "call",
+            "puppet-master",
+            "gui",
+            "--no-open",
+            "--port",
+            &port,
+            "--host",
+            host,
+        ])
+            .env("PUPPET_MASTER_NO_OPEN", "1")
+            .env("NO_OPEN_BROWSER", "1");
+        if let Some(root) = &install_root {
+            cmd.env("PUPPET_MASTER_INSTALL_ROOT", root);
+            cmd.env("PUPPET_MASTER_APP_ROOT", root);
+            cmd.env(
+                "PLAYWRIGHT_BROWSERS_PATH",
+                root.join("playwright-browsers"),
+            );
+        }
+        if let Some(h) = &home_dir {
+            cmd.current_dir(h);
+        }
+        cmd.stdin(Stdio::null()).stdout(Stdio::null()).stderr(Stdio::null());
+        // Hide console window for cmd.exe.
+        cmd.creation_flags(0x08000000);
+        if cmd.spawn().is_ok() {
+            return true;
+        }
     }
-    let spawn_attempt = cmd
-        .spawn();
-    if spawn_attempt.is_ok() {
-        return true;
+
+    #[cfg(not(target_os = "windows"))]
+    {
+        let mut cmd = Command::new("puppet-master");
+        cmd.args(["gui", "--no-open", "--port", &port, "--host", host])
+            .env("PUPPET_MASTER_NO_OPEN", "1")
+            .env("NO_OPEN_BROWSER", "1");
+        if let Some(root) = &install_root {
+            cmd.env("PUPPET_MASTER_INSTALL_ROOT", root);
+            cmd.env("PUPPET_MASTER_APP_ROOT", root);
+            cmd.env(
+                "PLAYWRIGHT_BROWSERS_PATH",
+                root.join("playwright-browsers"),
+            );
+        }
+        if let Some(h) = &home_dir {
+            cmd.current_dir(h);
+        }
+        cmd.stdin(Stdio::null()).stdout(Stdio::null()).stderr(Stdio::null());
+        let spawn_attempt = cmd.spawn();
+        if spawn_attempt.is_ok() {
+            return true;
+        }
     }
 
     // Fallback to known install layouts.
-    let exe = env::current_exe().ok();
-    if let Some(cli) = resolve_puppet_master_cli_fallback(resource_dir, exe) {
+    if let Some(cli) = resolve_puppet_master_cli_fallback(resource_dir, current_exe.clone()) {
+        #[cfg(target_os = "windows")]
+        {
+            // If the fallback is a .cmd, it must be invoked via cmd.exe.
+            if cli.extension().map(|e| e.to_string_lossy().to_lowercase()) == Some("cmd".to_string()) {
+                let mut fallback = Command::new("cmd");
+                fallback
+                    .arg("/C")
+                    .arg("call")
+                    .arg(&cli)
+                    .arg("gui")
+                    .arg("--no-open")
+                    .arg("--port")
+                    .arg(&port)
+                    .arg("--host")
+                    .arg(host)
+                    .env("PUPPET_MASTER_NO_OPEN", "1")
+                    .env("NO_OPEN_BROWSER", "1");
+                if let Some(root) = &install_root {
+                    fallback.env("PUPPET_MASTER_INSTALL_ROOT", root);
+                    fallback.env("PUPPET_MASTER_APP_ROOT", root);
+                    fallback.env(
+                        "PLAYWRIGHT_BROWSERS_PATH",
+                        root.join("playwright-browsers"),
+                    );
+                }
+                if let Some(h) = &home_dir {
+                    fallback.current_dir(h);
+                }
+                fallback.stdin(Stdio::null()).stdout(Stdio::null()).stderr(Stdio::null());
+                fallback.creation_flags(0x08000000);
+                let _ = fallback.spawn();
+                return true;
+            }
+        }
+
         let mut fallback = Command::new(cli);
         fallback
             .args(["gui", "--no-open", "--port", &port, "--host", host])
             .env("PUPPET_MASTER_NO_OPEN", "1")
             .env("NO_OPEN_BROWSER", "1");
+        if let Some(root) = &install_root {
+            fallback.env("PUPPET_MASTER_INSTALL_ROOT", root);
+            fallback.env("PUPPET_MASTER_APP_ROOT", root);
+            fallback.env(
+                "PLAYWRIGHT_BROWSERS_PATH",
+                root.join("playwright-browsers"),
+            );
+        }
         if let Some(h) = &home_dir {
             fallback.current_dir(h);
         }
-        let _ = fallback
-            .spawn();
+        fallback.stdin(Stdio::null()).stdout(Stdio::null()).stderr(Stdio::null());
+        let _ = fallback.spawn();
         return true;
     }
 
@@ -429,6 +660,14 @@ fn main() {
         .or_else(|| Some("http://127.0.0.1:3847".to_string()));
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_single_instance::init(|app, _argv, _cwd| {
+            // A second instance was launched. Focus the existing window instead.
+            if let Some(window) = app.get_webview_window("main") {
+                let _ = window.unminimize();
+                let _ = window.show();
+                let _ = window.set_focus();
+            }
+        }))
         .on_window_event(|window, event| {
             if let WindowEvent::CloseRequested { api, .. } = event {
                 if IS_QUITTING.load(Ordering::Relaxed) {
@@ -545,6 +784,9 @@ fn main() {
                     _ => (),
                 })
                 .on_tray_icon_event(|tray, event| {
+                    // On macOS the left-click handler below is cfg-gated out, which would otherwise
+                    // make `tray` unused and trigger a warning in release builds.
+                    let _ = tray.app_handle();
                     // Handle tray icon click events cross-platform
                     match event {
                         TrayIconEvent::Click {
@@ -600,7 +842,7 @@ fn main() {
             }
 
             // Get the main window (use Io variant; SetupError is not public in tauri)
-            let window = app
+            let _window = app
                 .get_webview_window("main")
                 .ok_or_else(|| {
                     tauri::Error::Io(std::io::Error::new(
@@ -609,12 +851,12 @@ fn main() {
                     ))
                 })?;
 
-            // Always connect to a GUI server URL (default: http://127.0.0.1:3847).
-            // We wait for server in a background thread so the UI event loop is not blocked. The
-            // UI event loop is not blocked.  The window initially shows the bundled
-            // frontend (or a blank page); once the server is ready we navigate to it.
-            // This prevents the "not responding" freeze on Windows and the blank/slow
-            // first paint on macOS/Linux.
+            // Always start/ensure the GUI server is running (default: http://127.0.0.1:3847).
+            // We do this in a background thread so the UI event loop is not blocked.
+            //
+            // IMPORTANT: Do NOT navigate the webview to the backend URL at runtime. Keep the
+            // bundled frontend loaded and let it call the backend via its API base URL + CORS.
+            // This avoids first-boot navigation flakiness (notably on Windows).
             if let Some(url_str) = server_url {
                 log::info!("Will connect to GUI server: {}", url_str);
                 let url = Url::parse(&url_str).map_err(|e| {
@@ -624,7 +866,6 @@ fn main() {
                     ))
                 })?;
 
-                let window_for_nav = window.clone();
                 let res_dir = app.path().resource_dir().ok();
                 std::thread::spawn(move || {
                     // If this is a local URL, try to start the GUI server if it isn't already running.
@@ -639,10 +880,13 @@ fn main() {
                         wait_for_platform_routes(&url);
                         // Small extra settle time for backend async setup
                         std::thread::sleep(Duration::from_millis(500));
-                        match window_for_nav.navigate(url) {
-                            Ok(_) => log::info!("Navigated to server URL"),
-                            Err(e) => log::error!("Failed to navigate to server URL: {}", e),
-                        }
+                        // Intentionally do NOT navigate the webview to the backend URL.
+                        //
+                        // Rationale: On Windows, first-boot navigation to http://127.0.0.1 can be flaky
+                        // (timing/caching/WebView quirks) and has produced "blank UI until tray restart".
+                        // The bundled frontend can talk to the backend via absolute API base URL + CORS,
+                        // so staying on the bundled origin is more reliable.
+                        log::info!("GUI server ready; staying on bundled frontend (no runtime navigation)");
                     } else {
                         log::warn!("Server not ready after timeout; staying on bundled frontend");
                     }

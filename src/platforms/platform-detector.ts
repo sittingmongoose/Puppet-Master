@@ -6,6 +6,7 @@
  */
 
 import { spawn, type ChildProcess } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { delimiter, join } from 'node:path';
 import type { Platform } from '../types/config.js';
@@ -364,22 +365,62 @@ export class PlatformDetector {
     const configured = resolvePlatformCommand('copilot', this.cliPaths);
     candidates.push({ command: configured });
 
+    // GitHub CLI Copilot subcommand (common alternative installation):
+    // `gh extension install github/gh-copilot` exposes `gh copilot ...` (no standalone `copilot` binary).
+    // Treat this as installed for onboarding UX.
+    candidates.push({ command: 'gh', argsPrefix: ['copilot'] });
+
+    // If a plain command name is configured, also probe common absolute install locations.
+    // This helps when PATH is minimal or when the process PATH ordering breaks /usr/bin/env node resolution.
+    if (configured === 'copilot' && process.platform !== 'win32') {
+      const home = homedir();
+      const common = [
+        home ? join(home, '.local', 'bin', 'copilot') : '',
+        '/usr/local/bin/copilot',
+        '/opt/homebrew/bin/copilot',
+      ].filter(Boolean);
+      for (const p of common) {
+        try {
+          if (existsSync(p)) {
+            candidates.push({ command: p });
+          }
+        } catch {
+          // ignore
+        }
+      }
+    }
+
+    const errors: string[] = [];
+
+    // Copilot CLI has had multiple version flags across releases; try a few fast probes.
+    const probes: string[][] = [
+      ['--version'],
+      ['-v'],
+      ['version'],
+      ['--help'],
+    ];
+
     for (const candidate of candidates) {
-      const result = await checkCliAvailable(candidate, ['--version'], 15_000, env);
-      if (result.available) {
-        return {
-          platform: 'copilot',
-          installed: true,
-          version: result.version,
-          command: candidate.command,
-        };
+      for (const args of probes) {
+        const result = await checkCliAvailable(candidate, args, 15_000, env);
+        if (result.available) {
+          return {
+            platform: 'copilot',
+            installed: true,
+            version: result.version,
+            command: [candidate.command, ...(candidate.argsPrefix ?? []), ...args].join(' '),
+          };
+        }
+        if (result.error) {
+          errors.push(`${[candidate.command, ...(candidate.argsPrefix ?? []), ...args].join(' ')} → ${result.error}`);
+        }
       }
     }
 
     return {
       platform: 'copilot',
       installed: false,
-      error: 'Copilot CLI not found',
+      error: errors.length > 0 ? `Copilot CLI not found (last errors: ${errors.slice(0, 2).join(' | ')})` : 'Copilot CLI not found',
     };
   }
 

@@ -94,11 +94,15 @@ function buildEnrichedPath(preferredDirs: string[] = []): string {
   const windowsNpmBin = process.platform === 'win32' && process.env.APPDATA
     ? join(process.env.APPDATA, 'npm')
     : '';
+  const windowsCursorAgentBin = process.platform === 'win32' && process.env.LOCALAPPDATA
+    ? join(process.env.LOCALAPPDATA, 'cursor-agent')
+    : '';
   // PATH ordering matters. Prefer user shims and OS package-manager locations over npm-global
   // so we don't accidentally pick older duplicates (common on macOS).
   const extra = (process.platform === 'win32'
     ? [
         windowsNpmBin,
+        windowsCursorAgentBin,
         npmGlobalBin,
         home ? join(home, 'scoop', 'shims') : '',
       ]
@@ -619,7 +623,17 @@ export class CapabilityDiscoveryService {
           return [...KNOWN_CODEX_MODELS];
         }
         case 'cursor': {
-          const { KNOWN_CURSOR_MODELS } = await import('./cursor-models.js');
+          // Prefer Cursor CLI's `agent models` output (fast, non-billable).
+          const { getCursorModelsWithDiscovery, KNOWN_CURSOR_MODELS } = await import('./cursor-models.js');
+          try {
+            const command = resolvePlatformCommand('cursor', this.cliPaths);
+            const discovered = await getCursorModelsWithDiscovery(command, true);
+            if (Array.isArray(discovered) && discovered.length > 0) {
+              return discovered.map((m) => m.id).filter((id): id is string => typeof id === 'string' && id.trim().length > 0);
+            }
+          } catch {
+            // fall back
+          }
           return [...KNOWN_CURSOR_MODELS];
         }
         case 'gemini': {

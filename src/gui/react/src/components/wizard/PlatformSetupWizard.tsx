@@ -8,7 +8,7 @@
  * - Login / authenticate to selected platforms
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Modal } from '@/components/ui';
 import { Button } from '@/components/ui';
 import { Checkbox } from '@/components/ui';
@@ -87,6 +87,18 @@ export function PlatformSetupWizard({
   const [authLoading, setAuthLoading] = useState(false);
   const [loggingIn, setLoggingIn] = useState<string | null>(null);
   const [skippedAuths, setSkippedAuths] = useState<Set<string>>(new Set());
+  const authPollersRef = useRef<Record<string, ReturnType<typeof setInterval> | null>>({});
+
+  useEffect(() => {
+    return () => {
+      // Cleanup polling timers when wizard unmounts.
+      for (const key of Object.keys(authPollersRef.current)) {
+        const t = authPollersRef.current[key];
+        if (t) clearInterval(t);
+      }
+      authPollersRef.current = {};
+    };
+  }, []);
 
   // Load platform status when opened and the server is reachable.
   // If the first-boot check reports a connection error, wait until it clears.
@@ -124,12 +136,14 @@ export function PlatformSetupWizard({
         statusMap[info.platform] = info;
       }
       setAuthStatuses(statusMap);
+      return statusMap;
     } catch (err) {
       const detail = getErrorMessage(err, 'Unknown error');
       setError(detail.startsWith('Failed to load') ? detail : `Failed to load auth status: ${detail}`);
     } finally {
       setAuthLoading(false);
     }
+    return null;
   }, []);
 
   const handlePlatformToggle = (platform: Platform) => {
@@ -236,10 +250,34 @@ export function PlatformSetupWizard({
         }
         setError(null); // Clear any previous errors
         
-        // Refresh auth status after 5 seconds to check if login succeeded
-        setTimeout(() => {
-          loadAuthStatus();
-        }, 5000);
+        // Poll auth status (login is async and may require browser completion).
+        // Stop once status becomes authenticated/unknown, or after timeout.
+        const AUTH_POLL_INTERVAL_MS = 2000;
+        const AUTH_POLL_TIMEOUT_MS = 90_000;
+
+        const existing = authPollersRef.current[platform];
+        if (existing) clearInterval(existing);
+
+        const startedAt = Date.now();
+        const pollOnce = async () => {
+          const map = await loadAuthStatus();
+          const status = map?.[platform]?.status;
+          if (status === 'authenticated' || status === 'unknown') {
+            const t = authPollersRef.current[platform];
+            if (t) clearInterval(t);
+            authPollersRef.current[platform] = null;
+            return;
+          }
+          if (Date.now() - startedAt > AUTH_POLL_TIMEOUT_MS) {
+            const t = authPollersRef.current[platform];
+            if (t) clearInterval(t);
+            authPollersRef.current[platform] = null;
+          }
+        };
+
+        // Kick immediately, then interval.
+        void pollOnce();
+        authPollersRef.current[platform] = setInterval(() => { void pollOnce(); }, AUTH_POLL_INTERVAL_MS);
       } else {
         const errorMsg = result.message || `Login failed for ${PLATFORM_NAMES[platform]}`;
         // Only show error if different from current error (prevent duplicates)
@@ -307,15 +345,21 @@ export function PlatformSetupWizard({
         return { status: 'error', label: 'Failed' };
       case 'skipped':
         return { status: 'idle', label: 'Skipped' };
+      case 'unknown':
+        // Heuristic status: credentials/config detected but cannot be verified without running the CLI.
+        return { status: 'pending', label: 'Detected' };
       default:
         return { status: 'pending', label: 'Unknown' };
     }
   };
 
-  // Determine if at least one selected platform is authenticated or skipped (for CONTINUE enablement)
-  const hasAtLeastOneReady = selectedPlatforms.some((platform) => {
+  // Enable CONTINUE only when all selected platforms are either authenticated, heuristically detected,
+  // or explicitly skipped. This prevents users from getting stuck when a platform cannot be verified
+  // (e.g. Cursor app login) while still encouraging completing login where possible.
+  const allSelectedReady = selectedPlatforms.length > 0 && selectedPlatforms.every((platform) => {
     if (skippedAuths.has(platform)) return true;
-    return authStatuses[platform]?.status === 'authenticated';
+    const s = authStatuses[platform]?.status;
+    return s === 'authenticated' || s === 'unknown';
   });
 
   // ==========================================
@@ -352,7 +396,7 @@ export function PlatformSetupWizard({
           variant="primary"
           onClick={handleSaveAndComplete}
           loading={saving}
-          disabled={!hasAtLeastOneReady}
+          disabled={!allSelectedReady}
         >
           CONTINUE
         </Button>

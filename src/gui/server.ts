@@ -62,8 +62,10 @@ export interface ServerConfig {
   host?: string;
   /** CORS allowed origins */
   corsOrigins?: string[];
-  /** Base directory for project discovery (projects + wizard fallbacks) */
+  /** Active project root (used for config/prd/evidence/ledger routes) */
   baseDirectory?: string;
+  /** Base directory for project discovery + new-project creation defaults (projects + wizard) */
+  projectsBaseDirectory?: string;
   /** P0-G07: Whether to require authentication (default: true) */
   authEnabled?: boolean;
   /** P0-G07: Path to auth token file (default: .puppet-master/gui-token.txt) */
@@ -122,8 +124,10 @@ export class GuiServer {
       port: config.port ?? 3847,
       host: config.host ?? 'localhost',
       corsOrigins: config.corsOrigins ?? ['http://localhost:3847'],
-      // NOTE: This is a discovery/default base directory, not an implicit “current project”.
+      // Active project root for all per-project routes.
       baseDirectory: config.baseDirectory ?? process.cwd(),
+      // Base directory for project discovery/wizard. Defaults to active project root for backward compatibility.
+      projectsBaseDirectory: config.projectsBaseDirectory ?? config.baseDirectory ?? process.cwd(),
       // P0-G07: Auth defaults - enabled by default for security
       authEnabled: config.authEnabled ?? true,
       authTokenPath: config.authTokenPath ?? '.puppet-master/gui-token.txt',
@@ -749,11 +753,11 @@ export class GuiServer {
     this.app.use('/api', createControlsRoutes(() => this.orchestratorInstance));
 
     // Projects routes - orchestrator resolved at request time via getter
-    this.app.use('/api', createProjectsRoutes(() => this.orchestratorInstance, this.config.baseDirectory));
+    this.app.use('/api', createProjectsRoutes(() => this.orchestratorInstance, this.config.projectsBaseDirectory));
 
     // Wizard routes - using mutable dependency holder pattern
     // Dependencies will be injected via registerStartChainDependencies()
-    this.wizardRouter = createWizardRoutes(this.config.baseDirectory);
+    this.wizardRouter = createWizardRoutes(this.config.projectsBaseDirectory);
     this.app.use('/api', this.wizardRouter);
 
     // Config routes (use baseDirectory so config/models use project root regardless of cwd)
@@ -814,6 +818,7 @@ export class GuiServer {
     if (this.config.useReactGui) {
       // React SPA mode - serve from react/dist
       const reactPath = this.getReactBuildPath();
+      const reactIndex = path.join(reactPath, 'index.html');
       
       // Serve static assets from React build
       this.app.use(express.static(reactPath));
@@ -825,7 +830,34 @@ export class GuiServer {
         if (req.path.startsWith('/api')) {
           return next();
         }
-        res.sendFile(path.join(reactPath, 'index.html'));
+        // If the React build output doesn't exist (common in dev checkouts when gui:build
+        // hasn't run), don't 500. Serve a minimal page so routes like /wizard still exist.
+        if (!existsSync(reactIndex)) {
+          res
+            .status(200)
+            .type('html')
+            .send(
+              [
+                '<!doctype html>',
+                '<html lang="en">',
+                '<head>',
+                '  <meta charset="utf-8" />',
+                '  <meta name="viewport" content="width=device-width, initial-scale=1" />',
+                '  <title>Puppet Master GUI</title>',
+                '</head>',
+                '<body style="font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 24px;">',
+                '  <h1>Puppet Master GUI is not built</h1>',
+                `  <p>Missing: <code>${reactIndex}</code></p>`,
+                '  <p>In a dev checkout, run:</p>',
+                '  <pre><code>npm run gui:build</code></pre>',
+                '  <p>Then restart the server.</p>',
+                '</body>',
+                '</html>',
+              ].join('\n')
+            );
+          return;
+        }
+        res.sendFile(reactIndex);
       });
     } else {
       // Vanilla HTML mode (legacy - old HTML files removed, React GUI is default)

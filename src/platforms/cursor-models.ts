@@ -50,41 +50,77 @@ export const CURSOR_MODELS: CursorModel[] = [
     provider: 'cursor',
   },
 
-  // Anthropic (Claude) models
+  // Cursor "composer" models (as shown by `agent models`)
   {
-    id: 'claude-4.5-opus',
-    label: 'Claude 4.5 Opus',
-    description: 'Highest capability Claude model for complex codebases',
+    id: 'composer-1',
+    label: 'Composer 1',
+    description: 'Cursor composer model',
+    provider: 'cursor',
+  },
+
+  // Anthropic (Claude) models (Cursor aliases/IDs)
+  {
+    id: 'opus-4.6-thinking',
+    label: 'Claude 4.6 Opus (Thinking)',
+    description: 'Highest capability Claude model (thinking variant)',
     provider: 'anthropic',
     contextWindow: '200K',
   },
   {
-    id: 'claude-4-sonnet',
-    label: 'Claude 4 Sonnet',
+    id: 'opus-4.6',
+    label: 'Claude 4.6 Opus',
+    description: 'Highest capability Claude model',
+    provider: 'anthropic',
+    contextWindow: '200K',
+  },
+  {
+    id: 'opus-4.5',
+    label: 'Claude 4.5 Opus',
+    description: 'High capability Claude model',
+    provider: 'anthropic',
+    contextWindow: '200K',
+  },
+  {
+    id: 'opus-4.5-thinking',
+    label: 'Claude 4.5 Opus (Thinking)',
+    description: 'High capability Claude model (thinking variant)',
+    provider: 'anthropic',
+    contextWindow: '200K',
+  },
+  {
+    id: 'sonnet-4.5',
+    label: 'Claude 4.5 Sonnet',
     description: 'Fast, accurate Claude model for day-to-day work',
     provider: 'anthropic',
     contextWindow: '200K',
   },
   {
-    id: 'claude-3.5-sonnet',
-    label: 'Claude 3.5 Sonnet',
-    description: 'Good balance of cost and quality',
-    provider: 'anthropic',
-    contextWindow: '200K',
-  },
-  {
-    id: 'claude-haiku',
-    label: 'Claude Haiku',
-    description: 'Fast and affordable for simple tasks',
+    id: 'sonnet-4.5-thinking',
+    label: 'Claude 4.5 Sonnet (Thinking)',
+    description: 'Sonnet model (thinking variant)',
     provider: 'anthropic',
     contextWindow: '200K',
   },
 
-  // OpenAI (GPT) models
+  // OpenAI (GPT) models (Cursor aliases/IDs)
   {
-    id: 'gpt-5',
-    label: 'GPT-5',
-    description: 'Cutting edge for general reasoning',
+    id: 'gpt-5.2',
+    label: 'GPT-5.2',
+    description: 'General-purpose model',
+    provider: 'openai',
+    contextWindow: '128K',
+  },
+  {
+    id: 'gpt-5.2-high',
+    label: 'GPT-5.2 High',
+    description: 'Higher reasoning effort variant',
+    provider: 'openai',
+    contextWindow: '128K',
+  },
+  {
+    id: 'gpt-5.1-high',
+    label: 'GPT-5.1 High',
+    description: 'Previous generation high-effort variant',
     provider: 'openai',
     contextWindow: '128K',
   },
@@ -96,21 +132,70 @@ export const CURSOR_MODELS: CursorModel[] = [
     contextWindow: '128K',
   },
   {
-    id: 'gpt-4o',
-    label: 'GPT-4o',
-    description: 'Multimodal model with vision support',
+    id: 'gpt-5.2-codex-high',
+    label: 'GPT-5.2 Codex High',
+    description: 'Code model (high effort)',
     provider: 'openai',
     contextWindow: '128K',
   },
   {
-    id: 'gpt-4.1',
-    label: 'GPT-4.1',
-    description: 'Cost-effective high-context model',
+    id: 'gpt-5.2-codex-low',
+    label: 'GPT-5.2 Codex Low',
+    description: 'Code model (low effort)',
+    provider: 'openai',
+    contextWindow: '128K',
+  },
+  {
+    id: 'gpt-5.2-codex-xhigh',
+    label: 'GPT-5.2 Codex Extra High',
+    description: 'Code model (extra high effort)',
+    provider: 'openai',
+    contextWindow: '128K',
+  },
+  {
+    id: 'gpt-5.2-codex-fast',
+    label: 'GPT-5.2 Codex Fast',
+    description: 'Code model (fast variant)',
+    provider: 'openai',
+    contextWindow: '128K',
+  },
+  {
+    id: 'gpt-5.2-codex-high-fast',
+    label: 'GPT-5.2 Codex High Fast',
+    description: 'Code model (high effort, fast)',
+    provider: 'openai',
+    contextWindow: '128K',
+  },
+  {
+    id: 'gpt-5.2-codex-low-fast',
+    label: 'GPT-5.2 Codex Low Fast',
+    description: 'Code model (low effort, fast)',
+    provider: 'openai',
+    contextWindow: '128K',
+  },
+  {
+    id: 'gpt-5.2-codex-xhigh-fast',
+    label: 'GPT-5.2 Codex Extra High Fast',
+    description: 'Code model (extra high effort, fast)',
+    provider: 'openai',
+    contextWindow: '128K',
+  },
+  {
+    id: 'gpt-5.1-codex-max',
+    label: 'GPT-5.1 Codex Max',
+    description: 'Previous generation code model',
+    provider: 'openai',
+    contextWindow: '128K',
+  },
+  {
+    id: 'gpt-5.1-codex-max-high',
+    label: 'GPT-5.1 Codex Max High',
+    description: 'Previous generation code model (high effort)',
     provider: 'openai',
     contextWindow: '128K',
   },
 
-  // Google (Gemini) models
+  // Google (Gemini) models (Cursor aliases/IDs)
   {
     id: 'gemini-3-pro',
     label: 'Gemini 3 Pro',
@@ -119,32 +204,19 @@ export const CURSOR_MODELS: CursorModel[] = [
     contextWindow: '2M',
   },
   {
-    id: 'gemini-2.5-pro',
-    label: 'Gemini 2.5 Pro',
-    description: 'Large context for multi-file reasoning',
-    provider: 'google',
-    contextWindow: '1M',
-  },
-  {
-    id: 'gemini-flash',
-    label: 'Gemini Flash',
-    description: 'Fast and lightweight for quick tasks',
+    id: 'gemini-3-flash',
+    label: 'Gemini 3 Flash',
+    description: 'Fast model for quick tasks',
     provider: 'google',
     contextWindow: '1M',
   },
 
   // Other providers
   {
-    id: 'grok-code',
-    label: 'Grok Code',
-    description: 'xAI coding model',
+    id: 'grok',
+    label: 'Grok',
+    description: 'xAI model',
     provider: 'xai',
-  },
-  {
-    id: 'deepseek-r1',
-    label: 'DeepSeek R1',
-    description: 'DeepSeek reasoning model',
-    provider: 'other',
   },
 ];
 
@@ -204,6 +276,11 @@ function buildEnrichedPath(): string {
     ? (process.platform === 'win32' ? npmGlobalPrefix : join(npmGlobalPrefix, 'bin'))
     : '';
 
+  // Cursor Jan 2026 installer on Windows commonly drops shims into %LOCALAPPDATA%\cursor-agent
+  const windowsCursorAgentBin = process.platform === 'win32' && process.env.LOCALAPPDATA
+    ? join(process.env.LOCALAPPDATA, 'cursor-agent')
+    : '';
+
   const windowsNpmBin = process.platform === 'win32' && process.env.APPDATA
     ? join(process.env.APPDATA, 'npm')
     : '';
@@ -211,6 +288,7 @@ function buildEnrichedPath(): string {
   const extra = [
     npmGlobalBin,
     windowsNpmBin,
+    windowsCursorAgentBin,
     home ? join(home, '.local', 'bin') : '',
     home ? join(home, '.volta', 'bin') : '',
     home ? join(home, '.asdf', 'shims') : '',
@@ -317,7 +395,13 @@ function parseModelList(output: string): CursorModel[] {
   // Parse text/table format
   for (const line of lines) {
     const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith('Available') || trimmed.startsWith('Model') || trimmed.startsWith('Loading')) {
+    if (
+      !trimmed ||
+      trimmed.startsWith('Available') ||
+      trimmed.startsWith('Model') ||
+      trimmed.startsWith('Loading') ||
+      trimmed.startsWith('Tip:')
+    ) {
       continue;
     }
 

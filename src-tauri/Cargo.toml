@@ -1,6 +1,6 @@
 [package]
 name = "puppet-master"
-version = "0.1.0"
+version = "0.1.1"
 description = "RWM Puppet Master - AI Development Orchestrator"
 authors = ["RWM"]
 license = ""
@@ -13,6 +13,7 @@ tauri-build = { version = "2", features = [] }
 [dependencies]
 tauri = { version = "2", features = ["tray-icon", "image-png", "image-ico"] }
 tauri-plugin-log = { version = "2", features = ["colored"] }
+tauri-plugin-single-instance = "2.0.0"
 log = "0.4"
 url = "2"
 serde = { version = "1", features = ["derive"] }

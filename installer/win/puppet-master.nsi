@@ -45,6 +45,10 @@ VIAddVersionKey "CompanyName" "RWM"
 !insertmacro MUI_LANGUAGE "English"
 
 Section "Install"
+  ; Ensure shortcuts are created for all users (not just the elevated installer user).
+  ; Without this, installs performed as admin can create shortcuts only in that user's profile.
+  SetShellVarContext all
+
   ; Kill any running Puppet Master processes to unlock files for overwrite
   DetailPrint "Stopping running Puppet Master processes..."
   nsExec::ExecToStack 'taskkill /f /im "puppet-master-gui.exe"'
@@ -98,13 +102,13 @@ Section "Install"
   WriteUninstaller "$INSTDIR\\Uninstall.exe"
   
   ; Start Menu and Desktop shortcuts use VBS so GUI launches without a console window
-  CreateDirectory "$SMPROGRAMS\Puppet Master"
-  CreateShortcut "$SMPROGRAMS\Puppet Master\Puppet Master.lnk" "$INSTDIR\Launch-Puppet-Master-GUI.vbs" "" "$INSTDIR\puppet-master.ico" 0
+  CreateDirectory "$COMMONPROGRAMS\Puppet Master"
+  CreateShortcut "$COMMONPROGRAMS\Puppet Master\Puppet Master.lnk" "$INSTDIR\Launch-Puppet-Master-GUI.vbs" "" "$INSTDIR\puppet-master.ico" 0
   ; Debug shortcut: runs with visible console so you can see errors if "nothing happens"
-  CreateShortcut "$SMPROGRAMS\Puppet Master\Puppet Master (Debug).lnk" "$INSTDIR\Launch-Puppet-Master-GUI-Debug.bat" "" "$INSTDIR\puppet-master.ico" 0
+  CreateShortcut "$COMMONPROGRAMS\Puppet Master\Puppet Master (Debug).lnk" "$INSTDIR\Launch-Puppet-Master-GUI-Debug.bat" "" "$INSTDIR\puppet-master.ico" 0
 
   ; Create Desktop shortcut (optional)
-  CreateShortcut "$DESKTOP\Puppet Master.lnk" "$INSTDIR\Launch-Puppet-Master-GUI.vbs" "" "$INSTDIR\puppet-master.ico" 0
+  CreateShortcut "$COMMONDESKTOPDIRECTORY\Puppet Master.lnk" "$INSTDIR\Launch-Puppet-Master-GUI.vbs" "" "$INSTDIR\puppet-master.ico" 0
 
   WriteRegStr HKLM "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Puppet Master" "DisplayName" "Puppet Master"
   WriteRegStr HKLM "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Puppet Master" "UninstallString" "$INSTDIR\\Uninstall.exe"
@@ -134,6 +138,9 @@ Section "Install"
 SectionEnd
 
 Section "Uninstall"
+  ; Ensure uninstall removes the all-users shortcuts created at install time.
+  SetShellVarContext all
+
   ; Kill any running Puppet Master processes before uninstalling
   DetailPrint "Stopping running Puppet Master processes..."
   nsExec::ExecToStack 'taskkill /f /im "puppet-master-gui.exe"'
@@ -151,10 +158,10 @@ Section "Uninstall"
   Sleep 3000
 
   ; Remove shortcuts
-  Delete "$SMPROGRAMS\Puppet Master\Puppet Master.lnk"
-  Delete "$SMPROGRAMS\Puppet Master\Puppet Master (Debug).lnk"
-  RMDir "$SMPROGRAMS\Puppet Master"
-  Delete "$DESKTOP\Puppet Master.lnk"
+  Delete "$COMMONPROGRAMS\Puppet Master\Puppet Master.lnk"
+  Delete "$COMMONPROGRAMS\Puppet Master\Puppet Master (Debug).lnk"
+  RMDir "$COMMONPROGRAMS\Puppet Master"
+  Delete "$COMMONDESKTOPDIRECTORY\Puppet Master.lnk"
   DeleteRegKey HKLM "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Puppet Master"
   
   ; Remove installed files

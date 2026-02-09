@@ -120,6 +120,8 @@ export class GeminiRunner extends BasePlatformRunner {
 
     const proc = spawn(this.command, args, {
       cwd: request.workingDirectory,
+      // Windows npm installs typically provide .cmd/.ps1 shims which require shell resolution.
+      shell: process.platform === 'win32',
       stdio: ['pipe', 'pipe', 'pipe'],
       env: {
         ...process.env,
