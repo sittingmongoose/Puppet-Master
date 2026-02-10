@@ -58,12 +58,20 @@ export function getErrorMessage(error: unknown, fallback: string): string {
 
 /**
  * Resolve API base URL for both browser and Tauri (where window.location.origin may be tauri://...)
+ * Prefers server-injected value when present (single source of truth).
  */
 export function getApiBaseUrl(): string {
   if (typeof window === 'undefined') return '';
 
   if (resolvedApiBaseUrl) {
     return resolvedApiBaseUrl;
+  }
+
+  const injected = getInjectedApiBase();
+  if (injected) {
+    resolvedApiBaseUrl = injected;
+    setLocalStorageItem(API_BASE_STORAGE_KEY, injected);
+    return injected;
   }
 
   const origin = window.location.origin;
@@ -86,8 +94,27 @@ const DEFAULT_API_BASE_URL = 'http://127.0.0.1:3847';
 const API_BASE_STORAGE_KEY = 'rwm-api-base-url';
 const API_BASE_PORT_CANDIDATES = [3847, 3848, 3849, 3850, 3851, 3852, 3853, 3854, 3855, 3856, 3857];
 const PUPPET_MASTER_APP_ID = 'rwm-puppet-master';
+const INJECTED_BASE_KEY = '__RWM_PUPPET_MASTER_API_BASE__';
 let resolvedApiBaseUrl: string | null = null;
 let resolvingApiBaseUrlPromise: Promise<string> | null = null;
+
+/**
+ * Get server-injected API base URL if present.
+ * The server injects this when serving index.html so the client always uses the correct base.
+ */
+function getInjectedApiBase(): string | null {
+  if (typeof window === 'undefined') return null;
+  const win = window as unknown as { [key: string]: string | undefined };
+  const v = win[INJECTED_BASE_KEY];
+  if (typeof v !== 'string' || !v.trim()) return null;
+  if (!v.startsWith('http://') && !v.startsWith('https://')) return null;
+  try {
+    new URL(v);
+    return v;
+  } catch {
+    return null;
+  }
+}
 
 function getLocalStorageItem(key: string): string | null {
   if (typeof localStorage === 'undefined') return null;
@@ -302,6 +329,13 @@ async function resolveApiBaseUrl(): Promise<string> {
 
   if (resolvedApiBaseUrl) {
     return resolvedApiBaseUrl;
+  }
+
+  const injected = getInjectedApiBase();
+  if (injected) {
+    resolvedApiBaseUrl = injected;
+    setLocalStorageItem(API_BASE_STORAGE_KEY, injected);
+    return injected;
   }
 
   const origin = window.location.origin;

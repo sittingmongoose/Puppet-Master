@@ -106,7 +106,7 @@ function buildStaticModelCatalog(): Record<Platform, Array<{ id: string; label: 
     ),
     copilot: removeAuto(
       Array.isArray(copilotStatic) && copilotStatic.length > 0
-        ? copilotStatic.map((m) => ({ id: m.id, label: m.label || m.id }))
+        ? copilotStatic.map((m) => ({ id: m.id, label: m.label || m.id, reasoningLevels: m.reasoningLevels }))
         : []
     ),
   };
@@ -515,6 +515,7 @@ export function createConfigRoutes(baseDirectory?: string): Router {
                 return {
                   id,
                   label: staticModel?.label || id,
+                  reasoningLevels: staticModel?.reasoningLevels,
                 };
               });
               if (mapped.length > 0) return mapped;
@@ -528,7 +529,7 @@ export function createConfigRoutes(baseDirectory?: string): Router {
             console.warn('[Config] Copilot static models list is empty');
             return [];
           }
-          return staticModels.map(m => ({ id: m.id, label: m.label || m.id }));
+          return staticModels.map(m => ({ id: m.id, label: m.label || m.id, reasoningLevels: m.reasoningLevels }));
         })(),
       ]);
       

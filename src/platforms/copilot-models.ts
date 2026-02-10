@@ -39,12 +39,15 @@
 
 /**
  * Copilot model interface for catalog entries.
+ * reasoningLevels: Models that support reasoning effort (GPT-5, Claude Opus 4.6, etc.)
+ * use SDK SessionConfig.reasoningEffort values: low | medium | high | xhigh
  */
 export interface CopilotModel {
   id: string; // Model identifier (e.g., "gpt-4o")
   label: string; // Display name
   description?: string; // Brief description
   suggestedOnly?: boolean; // True if not officially documented but likely available
+  reasoningLevels?: ('Low' | 'Medium' | 'High' | 'Extra high')[];
 }
 
 /**
@@ -69,6 +72,7 @@ export const COPILOT_MODELS: CopilotModel[] = [
     id: 'claude-opus-4.6',
     label: 'Claude Opus 4.6',
     description: 'Highest-capability Claude variant (if available on your tier)',
+    reasoningLevels: ['Low', 'Medium', 'High'],
   },
   {
     id: 'claude-opus-4.5',
@@ -89,41 +93,49 @@ export const COPILOT_MODELS: CopilotModel[] = [
     id: 'gpt-5.2-codex',
     label: 'GPT-5.2 Codex',
     description: 'OpenAI Codex-specialized model (if available on your tier)',
+    reasoningLevels: ['Low', 'Medium', 'High', 'Extra high'],
   },
   {
     id: 'gpt-5.2',
     label: 'GPT-5.2',
     description: 'OpenAI general-purpose model (if available on your tier)',
+    reasoningLevels: ['Low', 'Medium', 'High', 'Extra high'],
   },
   {
     id: 'gpt-5.1-codex-max',
     label: 'GPT-5.1 Codex Max',
     description: 'Higher budget Codex variant (if available)',
+    reasoningLevels: ['Low', 'Medium', 'High', 'Extra high'],
   },
   {
     id: 'gpt-5.1-codex',
     label: 'GPT-5.1 Codex',
     description: 'Codex coding model (if available)',
+    reasoningLevels: ['Low', 'Medium', 'High', 'Extra high'],
   },
   {
     id: 'gpt-5.1',
     label: 'GPT-5.1',
     description: 'OpenAI general-purpose model (if available)',
+    reasoningLevels: ['Low', 'Medium', 'High', 'Extra high'],
   },
   {
     id: 'gpt-5',
     label: 'GPT-5',
     description: 'OpenAI general-purpose model (if available)',
+    reasoningLevels: ['Low', 'Medium', 'High', 'Extra high'],
   },
   {
     id: 'gpt-5.1-codex-mini',
     label: 'GPT-5.1 Codex Mini',
     description: 'Smaller Codex variant (if available)',
+    reasoningLevels: ['Low', 'Medium', 'High', 'Extra high'],
   },
   {
     id: 'gpt-5-mini',
     label: 'GPT-5 Mini',
     description: 'Smaller OpenAI model (if available)',
+    reasoningLevels: ['Low', 'Medium', 'High', 'Extra high'],
   },
   {
     id: 'gpt-4.1',

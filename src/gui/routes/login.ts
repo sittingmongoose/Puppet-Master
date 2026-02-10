@@ -14,6 +14,7 @@ import path from 'node:path';
 import { join } from 'node:path';
 import type { Platform } from '../../types/config.js';
 import { getPlatformAuthStatus, type PlatformAuthStatus } from '../../platforms/auth-status.js';
+import { getCursorCommandCandidates } from '../../platforms/constants.js';
 
 /**
  * Error response interface.
@@ -75,13 +76,84 @@ const PLATFORMS: Platform[] = ['cursor', 'codex', 'claude', 'gemini', 'copilot']
 /** Platforms that can trigger login (includes 'github' for Git config, not in PLATFORMS) */
 const LOGIN_PLATFORMS: string[] = [...PLATFORMS, 'github'];
 
-/** Platforms that support CLI logout: command + args (e.g. gh auth logout, codex logout) */
+/** Platforms that support CLI logout: command + args. --hostname github.com makes gh non-interactive. */
 const LOGOUT_COMMANDS: Record<string, { cmd: string; args: string[] }> = {
-  github:  { cmd: 'gh',   args: ['auth', 'logout'] },
-  copilot: { cmd: 'gh',   args: ['auth', 'logout'] },
+  github:  { cmd: 'gh',   args: ['auth', 'logout', '--hostname', 'github.com'] },
+  copilot: { cmd: 'gh',   args: ['auth', 'logout', '--hostname', 'github.com'] },
   cursor:  { cmd: 'agent', args: ['logout'] },
   codex:   { cmd: 'codex', args: ['logout'] },
 };
+
+/**
+ * Resolve logout executable to absolute path when possible.
+ * Fixes spawn ENOENT when backend has minimal PATH (e.g. Tauri desktop launch).
+ * @returns { cmd, args } with absolute path if found, null to fall back to LOGOUT_COMMANDS + PATH
+ */
+function resolveLogoutExecutable(
+  platform: string,
+  home: string
+): { cmd: string; args: string[] } | null {
+  const normalized = platform.toLowerCase();
+
+  if (normalized === 'cursor') {
+    const candidates = getCursorCommandCandidates(null);
+    for (const p of candidates) {
+      if (path.isAbsolute(p) && existsSync(p)) {
+        return { cmd: p, args: ['logout'] };
+      }
+    }
+    return null;
+  }
+
+  if (normalized === 'codex') {
+    const isWin = process.platform === 'win32';
+    const appData = process.env.APPDATA || (home ? join(home, 'AppData', 'Roaming') : '');
+    const localAppData = process.env.LOCALAPPDATA || (home ? join(home, 'AppData', 'Local') : '');
+    const candidates = isWin
+      ? [
+          appData && join(appData, 'npm', 'codex.cmd'),
+          appData && join(appData, 'npm', 'codex'),
+          localAppData && join(localAppData, 'Programs', 'cursor-agent', 'codex.cmd'),
+        ].filter((p): p is string => !!p)
+      : [
+          '/usr/bin/codex',
+          '/usr/local/bin/codex',
+          join(home, '.local', 'bin', 'codex'),
+          join(home, '.npm-global', 'bin', 'codex'),
+        ];
+    for (const p of candidates) {
+      if (existsSync(p)) {
+        return { cmd: p, args: ['logout'] };
+      }
+    }
+    return null;
+  }
+
+  if (normalized === 'github' || normalized === 'copilot') {
+    const isWin = process.platform === 'win32';
+    const programFiles = process.env['ProgramFiles'] || process.env['PROGRAMFILES'] || 'C:\\Program Files';
+    const localAppData = process.env.LOCALAPPDATA || (home ? join(home, 'AppData', 'Local') : '');
+    const candidates = isWin
+      ? [
+          join(programFiles, 'GitHub CLI', 'gh.exe'),
+          localAppData ? join(localAppData, 'GitHub CLI', 'gh.exe') : '',
+        ].filter((p): p is string => !!p)
+      : [
+          '/opt/homebrew/bin/gh',
+          '/usr/local/bin/gh',
+          '/usr/bin/gh',
+          join(home, '.local', 'bin', 'gh'),
+        ];
+    for (const p of candidates) {
+      if (existsSync(p)) {
+        return { cmd: p, args: ['auth', 'logout', '--hostname', 'github.com'] };
+      }
+    }
+    return null;
+  }
+
+  return null;
+}
 
 /**
  * Build OS-appropriate extra PATH directories for finding CLI tools (e.g. gh).
@@ -429,10 +501,16 @@ export function createLoginRoutes(): Router {
         if (npmGlobalPrefix) {
           env.HOME = home;
           env.NPM_CONFIG_PREFIX = npmGlobalPrefix;
-          // Do not force-prepend npmGlobalBin: ordering matters when duplicate CLIs exist
-          // (e.g. /usr/local/bin/gemini newer than ~/.npm-global/bin/gemini on macOS).
         }
-        if (!isCommandAvailable(logoutCmd.cmd, enrichedPath)) {
+
+        // Prefer absolute path when available (fixes spawn ENOENT on Windows/Tauri)
+        const resolved = resolveLogoutExecutable(normalizedPlatform, home || '');
+        const toRun = resolved ?? logoutCmd;
+
+        const cmdExists = path.isAbsolute(toRun.cmd)
+          ? existsSync(toRun.cmd)
+          : isCommandAvailable(toRun.cmd, enrichedPath);
+        if (!cmdExists) {
           res.status(400).json({
             success: false,
             error: `CLI '${logoutCmd.cmd}' not found. Install it to log out.`,
@@ -440,16 +518,17 @@ export function createLoginRoutes(): Router {
           });
           return;
         }
+
         await new Promise<void>((resolve, reject) => {
-          // On Windows, use shell so agent.cmd and codex.cmd resolve via PATHEXT
           const spawnOpts: Parameters<typeof spawn>[2] = {
             stdio: ['ignore', 'pipe', 'pipe'],
             env,
           };
+          // On Windows: .cmd files and PATH resolution need shell
           if (process.platform === 'win32') {
             spawnOpts.shell = true;
           }
-          const child = spawn(logoutCmd.cmd, logoutCmd.args, spawnOpts);
+          const child = spawn(toRun.cmd, toRun.args, spawnOpts);
           child.on('close', () => resolve()); // Idempotent: already logged out is still success
           child.on('error', reject);
         });
@@ -603,9 +682,12 @@ export function createLoginRoutes(): Router {
         child.unref();
       }
 
-      // Always include authUrl so user can open manually if terminal/browser did not open
+      // Include authUrl so user can open manually if terminal/browser did not open.
+      // Omit for Cursor: device-code URL is shown in terminal, not a generic homepage.
       const config = normalizedPlatform !== 'github' ? PLATFORM_AUTH_CONFIG[normalizedPlatform as Platform] : undefined;
-      const authUrl = config?.getUrl ?? (normalizedPlatform === 'github' ? 'https://github.com' : undefined);
+      const authUrl = normalizedPlatform === 'cursor'
+        ? undefined
+        : (config?.getUrl ?? (normalizedPlatform === 'github' ? 'https://github.com' : undefined));
 
       res.json({
         success: true,

@@ -236,6 +236,28 @@ describe('api base URL resolution', () => {
   });
 });
 
+describe('server-injected API base', () => {
+  beforeEach(() => {
+    vi.resetModules();
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it('prefers __RWM_PUPPET_MASTER_API_BASE__ when set', async () => {
+    vi.stubGlobal('window', {
+      location: { origin: 'http://localhost:3847' },
+      __RWM_PUPPET_MASTER_API_BASE__: 'http://localhost:3849',
+    } as unknown as Window & typeof globalThis);
+    vi.stubGlobal('localStorage', createMockStorage());
+
+    const mod = await import('./api.js');
+    const base = mod.getApiBaseUrl();
+    expect(base).toBe('http://localhost:3849');
+  });
+});
+
 describe('getErrorMessage', () => {
   it('returns actionable message for Failed to fetch', async () => {
     const mod = await import('./api.js');

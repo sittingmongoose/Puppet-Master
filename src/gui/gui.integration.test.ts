@@ -255,6 +255,10 @@ describeNet('GUI Integration Tests', () => {
         expect(response.text).toContain('RWM Puppet Master');
       }
       expect(response.headers['content-type']).toMatch(/text\/html/);
+
+      // Server injects API base URL so client never guesses wrong
+      expect(response.text).toContain('__RWM_PUPPET_MASTER_API_BASE__');
+      expect(response.text).toContain(testContext!.baseUrl);
     });
 
     it('serves CSS files', async ({ skip }) => {

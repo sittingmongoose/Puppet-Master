@@ -124,6 +124,8 @@ export default function LoginPage() {
       const result = await api.logoutPlatform(platform);
       if (result.success) {
         if (platform === 'github') setGithubAuthStatus('not_authenticated');
+        // Brief delay so CLI can finish (e.g. remove hosts.yml) before we refresh status
+        await new Promise((r) => setTimeout(r, 300));
       } else {
         setLoginMessages((prev) => ({ ...prev, [platform]: `Error: ${result.error ?? 'Logout failed'}` }));
       }

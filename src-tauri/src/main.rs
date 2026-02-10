@@ -353,6 +353,13 @@ fn try_spawn_gui_server(port: u16, resource_dir: Option<PathBuf>) -> bool {
             #[cfg(target_os = "windows")]
             {
                 cmd.env("USERPROFILE", h);
+                // Backend needs LOCALAPPDATA/APPDATA for Cursor/Codex logout path resolution
+                if let Some(l) = env::var_os("LOCALAPPDATA") {
+                    cmd.env("LOCALAPPDATA", l);
+                }
+                if let Some(a) = env::var_os("APPDATA") {
+                    cmd.env("APPDATA", a);
+                }
             }
         }
 
@@ -400,6 +407,12 @@ fn try_spawn_gui_server(port: u16, resource_dir: Option<PathBuf>) -> bool {
             cmd.current_dir(h);
             cmd.env("USERPROFILE", h);
             cmd.env("HOME", h);
+        }
+        if let Some(l) = env::var_os("LOCALAPPDATA") {
+            cmd.env("LOCALAPPDATA", l);
+        }
+        if let Some(a) = env::var_os("APPDATA") {
+            cmd.env("APPDATA", a);
         }
         cmd.stdin(Stdio::null()).stdout(Stdio::null()).stderr(Stdio::null());
         // Hide console window for cmd.exe.

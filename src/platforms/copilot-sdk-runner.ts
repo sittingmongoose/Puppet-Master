@@ -50,11 +50,27 @@ interface CopilotClient {
 
 interface SessionConfig {
   model?: string;
+  /** Reasoning effort for models that support it (low | medium | high | xhigh) */
+  reasoningEffort?: 'low' | 'medium' | 'high' | 'xhigh';
   tools?: CopilotTool[];
   onPermissionRequest?: (
     request: { kind: 'shell' | 'write' | 'mcp' | 'read' | 'url'; path?: string; command?: string; url?: string },
     context: { sessionId: string }
   ) => Promise<{ kind: 'approved' | 'denied-by-rules' | string; rules?: Array<{ reason: string }> }>;
+}
+
+/** Map ExecutionRequest.reasoningEffort (display) to SDK SessionConfig.reasoningEffort values. */
+function mapReasoningEffortToSdk(
+  effort: 'Low' | 'Medium' | 'High' | 'Extra high' | undefined
+): SessionConfig['reasoningEffort'] | undefined {
+  if (!effort) return undefined;
+  const map: Record<string, SessionConfig['reasoningEffort']> = {
+    'Low': 'low',
+    'Medium': 'medium',
+    'High': 'high',
+    'Extra high': 'xhigh',
+  };
+  return map[effort];
 }
 
 interface CopilotSession {
@@ -670,10 +686,12 @@ export class CopilotSdkRunner extends EventEmitter implements PlatformRunnerCont
 
       // Create or reuse session
       if (!this.session || !this.config.sessionPersistence) {
-        // P0: Build session config with model selection, tool configuration, and permission handler
+        // P0: Build session config with model selection, reasoning effort, tool configuration, and permission handler
         const sessionConfig: SessionConfig = {
           // P0: Model selection (if supported by SDK)
           model: request.model ?? this.config.defaultModel,
+          // Reasoning effort for models that support it (GPT-5, Claude Opus 4.6, etc.)
+          reasoningEffort: mapReasoningEffortToSdk(request.reasoningEffort),
           // P0: Tool configuration (if available-tools specified)
           tools: request.allowedToolsList
             ? this.buildCopilotTools(request.allowedToolsList)

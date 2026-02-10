@@ -278,6 +278,26 @@ export class GuiServer {
   }
 
   /**
+   * Build the canonical API base URL for the current request.
+   * Used when injecting into index.html so the client always uses the correct base.
+   * Respects trust proxy (X-Forwarded-Proto, X-Forwarded-Host) when enabled.
+   */
+  private getRequestBaseUrl(req: Request): string {
+    const protocol = req.protocol || 'http';
+    const host = req.get('host') || `localhost:${this.config.port}`;
+    return `${protocol}://${host}`;
+  }
+
+  /**
+   * Inject API base URL script into HTML for client-side resolution.
+   */
+  private injectApiBaseIntoHtml(html: string, baseUrl: string): string {
+    const escaped = baseUrl.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/</g, '\\u003c');
+    const script = `<script>window.__RWM_PUPPET_MASTER_API_BASE__="${escaped}";</script>`;
+    return html.replace('<head>', `<head>\n    ${script}`);
+  }
+
+  /**
    * Setup Express middleware.
    */
   private setupMiddleware(): void {
@@ -833,8 +853,8 @@ export class GuiServer {
       const reactPath = this.getReactBuildPath();
       const reactIndex = path.join(reactPath, 'index.html');
       
-      // Serve static assets from React build
-      this.app.use(express.static(reactPath));
+      // Serve static assets from React build (index: false so SPA route can inject API base)
+      this.app.use(express.static(reactPath, { index: false }));
       
       // SPA fallback: all non-API routes serve index.html
       // React Router handles client-side routing
@@ -843,34 +863,32 @@ export class GuiServer {
         if (req.path.startsWith('/api')) {
           return next();
         }
+        const baseUrl = this.getRequestBaseUrl(req);
         // If the React build output doesn't exist (common in dev checkouts when gui:build
         // hasn't run), don't 500. Serve a minimal page so routes like /wizard still exist.
         if (!existsSync(reactIndex)) {
-          res
-            .status(200)
-            .type('html')
-            .send(
-              [
-                '<!doctype html>',
-                '<html lang="en">',
-                '<head>',
-                '  <meta charset="utf-8" />',
-                '  <meta name="viewport" content="width=device-width, initial-scale=1" />',
-                '  <title>Puppet Master GUI</title>',
-                '</head>',
-                '<body style="font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 24px;">',
-                '  <h1>Puppet Master GUI is not built</h1>',
-                `  <p>Missing: <code>${reactIndex}</code></p>`,
-                '  <p>In a dev checkout, run:</p>',
-                '  <pre><code>npm run gui:build</code></pre>',
-                '  <p>Then restart the server.</p>',
-                '</body>',
-                '</html>',
-              ].join('\n')
-            );
+          const minimalHtml = [
+            '<!doctype html>',
+            '<html lang="en">',
+            '<head>',
+            '  <meta charset="utf-8" />',
+            '  <meta name="viewport" content="width=device-width, initial-scale=1" />',
+            '  <title>Puppet Master GUI</title>',
+            '</head>',
+            '<body style="font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; padding: 24px;">',
+            '  <h1>Puppet Master GUI is not built</h1>',
+            `  <p>Missing: <code>${reactIndex}</code></p>`,
+            '  <p>In a dev checkout, run:</p>',
+            '  <pre><code>npm run gui:build</code></pre>',
+            '  <p>Then restart the server.</p>',
+            '</body>',
+            '</html>',
+          ].join('\n');
+          res.status(200).type('html').send(this.injectApiBaseIntoHtml(minimalHtml, baseUrl));
           return;
         }
-        res.sendFile(reactIndex);
+        const rawHtml = readFileSync(reactIndex, 'utf-8');
+        res.status(200).type('html').send(this.injectApiBaseIntoHtml(rawHtml, baseUrl));
       });
     } else {
       // Vanilla HTML mode (legacy - old HTML files removed, React GUI is default)
