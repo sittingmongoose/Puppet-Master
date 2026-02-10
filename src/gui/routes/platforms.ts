@@ -294,10 +294,10 @@ export function createPlatformRoutes(baseDirectory?: string): Router {
             const config = await configManager.load();
             const detector = new PlatformDetector(config.cliPaths ?? {});
             const status = await detector.getPlatformStatus(platform, true);
-            if (!status.installed) {
+            if (!status.runnable) {
               res.status(500).json({
                 success: false,
-                error: `Install completed but ${platform} CLI is not runnable. ${getPathHintForInstallVerify()}`,
+                error: `Install completed but ${platform} CLI is not runnable. ${status.error ? `Details: ${status.error} ` : ''}${getPathHintForInstallVerify()}`,
                 output: result.output,
                 command: result.command,
                 code: 'INSTALL_VERIFY_FAILED',

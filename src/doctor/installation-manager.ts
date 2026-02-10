@@ -532,17 +532,17 @@ export class InstallationManager {
         };
       }
 
-      // Special check for Copilot CLI: requires Node.js 22+ when installing via npm
+      // Special check for Copilot CLI: requires Node.js 24+ when installing via npm
       if (command.includes('@github/copilot') && command.includes('npm install -g')) {
         const nodeVersion = await this.getNodeVersion();
         if (nodeVersion) {
           const nodeMajor = parseInt(nodeVersion.split('.')[0]?.replace('v', '') || '0', 10);
-          if (nodeMajor < 22) {
+          if (nodeMajor < 24) {
             return {
               success: false,
-              error: 'GitHub Copilot CLI requires Node.js 22+ when installing via npm',
+              error: 'GitHub Copilot CLI requires Node.js 24+ when installing via npm',
               command,
-              output: `Current Node.js version: ${nodeVersion}. GitHub Copilot CLI requires Node.js 22 or later when installing via npm.\n\nAlternative installation methods:\n- Windows: winget install GitHub.Copilot\n- macOS/Linux: brew install copilot-cli\n- macOS/Linux: curl -fsSL https://gh.io/copilot-install | bash`,
+              output: `Current Node.js version: ${nodeVersion}. GitHub Copilot CLI requires Node.js 24 or later when installing via npm.\n\nNotes:\n- Desktop builds bundle Node.js v24.1.0, so Copilot CLI can run inside the app.\n- CLI-only installs must upgrade system Node.js to >=24.\n\nAlternative installation methods:\n- Windows: winget install GitHub.Copilot\n- macOS/Linux: brew install copilot-cli\n- macOS/Linux: curl -fsSL https://gh.io/copilot-install | bash`,
             };
           }
         }

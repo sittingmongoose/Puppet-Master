@@ -153,6 +153,21 @@ export interface TierConfig {
    */
   allowedTools?: string;
   /**
+   * Claude Code CLI: --mcp-config <path>. YAML: mcp_config.
+   * Only applied when platform is claude.
+   */
+  mcpConfig?: string;
+  /**
+   * Claude Code CLI: --strict-mcp-config. YAML: strict_mcp_config.
+   * Only applied when platform is claude.
+   */
+  strictMcpConfig?: boolean;
+  /**
+   * Claude Code CLI: --plugin-dir <path>. YAML: plugin_dir.
+   * Only applied when platform is claude.
+   */
+  pluginDir?: string;
+  /**
    * Output format for headless runs: text | json | stream-json.
    * YAML: output_format. Used by Cursor and Claude runners.
    */
@@ -162,6 +177,16 @@ export interface TierConfig {
    * YAML: ask_mode. Maps to --mode=ask for Cursor CLI.
    */
   askMode?: boolean;
+  /**
+   * Input format for headless runs: text | stream-json.
+   * YAML: input_format. Used by Cursor and Claude runners.
+   */
+  inputFormat?: 'text' | 'stream-json';
+  /**
+   * Structured JSON output validation schema (JSON text).
+   * YAML: json_schema. Used by Cursor and Claude runners.
+   */
+  jsonSchema?: string;
 }
 
 /**

@@ -14,6 +14,10 @@ import { GuiServer } from '../server.js';
 import type { TierStateManager } from '../../core/tier-state-manager.js';
 import type { OrchestratorStateMachine } from '../../core/orchestrator-state-machine.js';
 import type { ProgressManager, AgentsManager } from '../../memory/index.js';
+import { canListenOnLoopback } from '../../test-helpers/net-availability.js';
+
+const NET_OK = await canListenOnLoopback();
+const describeNet = NET_OK ? describe : describe.skip;
 
 /**
  * Create mock dependencies for testing
@@ -80,7 +84,7 @@ function createMockAgentsManager(): AgentsManager {
   } as unknown as AgentsManager;
 }
 
-describe('React GUI Smoke Test', () => {
+describeNet('React GUI Smoke Test', () => {
   let server: GuiServer | null = null;
   let baseUrl: string;
   let authToken: string | undefined;

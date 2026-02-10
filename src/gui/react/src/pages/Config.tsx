@@ -286,13 +286,30 @@ export default function ConfigPage() {
 
         if (modelsRes && typeof modelsRes === 'object') {
           const record = modelsRes as Record<string, unknown>;
-          setModels({
+          const initialModels = {
             cursor: ensureModelsArray(record.cursor),
             codex: ensureModelsArray(record.codex),
             claude: ensureModelsArray(record.claude),
             gemini: ensureModelsArray(record.gemini),
             copilot: ensureModelsArray(record.copilot),
-          });
+          };
+          setModels(initialModels);
+
+          // Two-stage model load: fast cached/static models, then automatic background refresh.
+          void api.getModels(true)
+            .then((fresh) => {
+              if (!fresh || typeof fresh !== 'object') return;
+              const rec = fresh as Record<string, unknown>;
+              const refreshed = {
+                cursor: ensureModelsArray(rec.cursor),
+                codex: ensureModelsArray(rec.codex),
+                claude: ensureModelsArray(rec.claude),
+                gemini: ensureModelsArray(rec.gemini),
+                copilot: ensureModelsArray(rec.copilot),
+              };
+              setModels((prev) => (JSON.stringify(prev) === JSON.stringify(refreshed) ? prev : refreshed));
+            })
+            .catch(() => { /* ignore */ });
         } else {
           setModelsError('Failed to load models (server error).');
           setModels({ cursor: [], codex: [], claude: [], gemini: [], copilot: [] });

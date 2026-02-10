@@ -25,7 +25,7 @@
  *
  * API Contract:
  * - Binary: copilot (configurable via cliPaths.copilot)
- * - Headless Mode: -p "..." --allow-all-tools --allow-all-paths --silent --stream off
+ * - Headless Mode: -p "..." --allow-all-tools [--allow-all-paths] [--allow-all-urls]
  * - Output Format: Text-based (no JSON)
  * - Signal Detection: <ralph>COMPLETE</ralph> / <ralph>GUTTER</ralph> in output
  * - Model Selection: /model command is interactive; treated as hint-only
@@ -59,10 +59,6 @@
  * - `--resume` - Cycle through and resume local and remote interactive sessions
  * - `--continue` - Quickly resume the most recently closed local session
  * - `--agent=<agent-name>` - Specify custom agent to use (e.g., `--agent=refactor-agent`)
- * 
- * Undocumented flags (used in our implementation but not in official docs):
- * - `--silent` - May reduce output verbosity for scripting
- * - `--stream off` - May disable token streaming
  *
  * Security Considerations:
  * - Trusted directories: Configured in `trusted_folders` array in `~/.copilot/config.json`
@@ -240,9 +236,8 @@ export class CopilotRunner extends BasePlatformRunner {
    * Constructs arguments based on request:
    * - `-p` flag for non-interactive/prompt mode (alternative: `--prompt`)
    * - `--allow-all-tools` to prevent interactive approval prompts
-   * - `--allow-all-paths` to disable path verification (undocumented flag)
-   * - `--silent` for scripting-friendly output (undocumented flag)
-   * - `--stream off` to disable token streaming (undocumented flag)
+   * - `--allow-all-paths` to disable path verification (documented flag)
+   * - `--allow-all-urls` to disable URL verification (documented flag)
    *
    * Note: Large prompts (>30KB) are passed via stdin instead of command-line argument
    * to avoid shell argument length limits.
@@ -253,8 +248,7 @@ export class CopilotRunner extends BasePlatformRunner {
    * - Tool specification syntax supports shell commands, write operations, and MCP servers
    *
    * Model selection:
-   * - Prefer `--model <id>` in non-interactive mode when supported by your Copilot CLI build
-   * - The `/model` command is also available in interactive mode
+   * - The `/model` command is available in interactive mode
    * - Default model is Claude Sonnet 4.5 (subject to change by GitHub)
    * - Model availability depends on subscription tier and region
    */
@@ -277,15 +271,15 @@ export class CopilotRunner extends BasePlatformRunner {
 
     // Approval flags to prevent interactive prompts
     args.push('--allow-all-tools');
-    args.push('--allow-all-paths');
 
-    if (request.model && request.model.trim() !== '') {
-      args.push('--model', request.model.trim());
+    // Default to current behavior (broad automation permissions) unless explicitly disabled.
+    if (request.allowAllPaths !== false) {
+      args.push('--allow-all-paths');
     }
 
-    // Scripting-friendly output
-    args.push('--silent');
-    args.push('--stream', 'off');
+    if (request.allowAllUrls === true) {
+      args.push('--allow-all-urls');
+    }
 
     // P0: Evidence collection - export session transcript to markdown file
     if (request.shareTranscript) {

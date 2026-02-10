@@ -284,9 +284,25 @@ function validateTierConfig(value: unknown, path: string[]): asserts value is Ti
   if ('allowedTools' in v && v.allowedTools != null && typeof v.allowedTools !== 'string') {
     throw new ConfigValidationError('tier.allowedTools must be a string', [...path, 'allowedTools']);
   }
+  if ('mcpConfig' in v && v.mcpConfig != null && typeof v.mcpConfig !== 'string') {
+    throw new ConfigValidationError('tier.mcpConfig must be a string', [...path, 'mcpConfig']);
+  }
+  if ('strictMcpConfig' in v && v.strictMcpConfig != null && typeof v.strictMcpConfig !== 'boolean') {
+    throw new ConfigValidationError('tier.strictMcpConfig must be a boolean', [...path, 'strictMcpConfig']);
+  }
+  if ('pluginDir' in v && v.pluginDir != null && typeof v.pluginDir !== 'string') {
+    throw new ConfigValidationError('tier.pluginDir must be a string', [...path, 'pluginDir']);
+  }
   const outputFormats = ['text', 'json', 'stream-json'];
   if ('outputFormat' in v && v.outputFormat != null && !outputFormats.includes(v.outputFormat as string)) {
     throw new ConfigValidationError(`tier.outputFormat must be one of: ${outputFormats.join(', ')}`, [...path, 'outputFormat']);
+  }
+  const inputFormats = ['text', 'stream-json'];
+  if ('inputFormat' in v && v.inputFormat != null && !inputFormats.includes(v.inputFormat as string)) {
+    throw new ConfigValidationError(`tier.inputFormat must be one of: ${inputFormats.join(', ')}`, [...path, 'inputFormat']);
+  }
+  if ('jsonSchema' in v && v.jsonSchema != null && typeof v.jsonSchema !== 'string') {
+    throw new ConfigValidationError('tier.jsonSchema must be a string', [...path, 'jsonSchema']);
   }
 }
 

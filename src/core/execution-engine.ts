@@ -30,8 +30,13 @@ export interface IterationContext {
   planMode?: boolean;
   reasoningEffort?: 'Low' | 'Medium' | 'High' | 'Extra high';
   outputFormat?: 'text' | 'json' | 'stream-json';
+  inputFormat?: 'text' | 'stream-json';
+  jsonSchema?: string;
   permissionMode?: 'default' | 'acceptEdits' | 'plan' | 'dontAsk' | 'bypassPermissions';
   allowedTools?: string;
+  mcpConfig?: string;
+  strictMcpConfig?: boolean;
+  pluginDir?: string;
   progressEntries: ProgressEntry[];
   agentsContent: AgentsContent[];
   subtaskPlan: TierPlan;
@@ -202,8 +207,13 @@ export class ExecutionEngine {
       planMode: context.planMode,
       reasoningEffort: context.reasoningEffort,
       outputFormat: context.outputFormat,
+      inputFormat: context.inputFormat,
+      jsonSchema: context.jsonSchema,
       permissionMode: context.permissionMode,
       allowedTools: context.allowedTools,
+      mcpConfig: context.mcpConfig,
+      strictMcpConfig: context.strictMcpConfig,
+      pluginDir: context.pluginDir,
       workingDirectory: context.projectPath,
       nonInteractive: true,
       timeout: this.config.defaultTimeout,

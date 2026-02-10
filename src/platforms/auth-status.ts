@@ -79,12 +79,16 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
       // Observed locations (Feb 2026):
       // - Linux:   ~/.config/cursor/auth.json
       // - Windows: %APPDATA%\\Cursor\\auth.json (case varies)
-      // - macOS:   typically uses ~/.cursor plus a CLI config; treat auth.json when present.
+      // - macOS:   Cursor app stores data under ~/Library/Application Support/Cursor/...
       const cursorAuthCandidates: string[] = [];
       if (process.platform === 'win32') {
         const appData = process.env.APPDATA || join(home, 'AppData', 'Roaming');
         cursorAuthCandidates.push(join(appData, 'Cursor', 'auth.json'));
         cursorAuthCandidates.push(join(appData, 'cursor', 'auth.json'));
+      } else if (process.platform === 'darwin') {
+        cursorAuthCandidates.push(join(home, 'Library', 'Application Support', 'Cursor', 'auth.json'));
+        cursorAuthCandidates.push(join(home, 'Library', 'Application Support', 'cursor', 'auth.json'));
+        cursorAuthCandidates.push(join(home, '.config', 'cursor', 'auth.json'));
       } else {
         cursorAuthCandidates.push(join(home, '.config', 'cursor', 'auth.json'));
       }
@@ -105,6 +109,9 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
         join(home, '.cursor-server'),
         join(home, '.cursor'),
         join(home, '.config', 'cursor'),
+        ...(process.platform === 'darwin'
+          ? [join(home, 'Library', 'Application Support', 'Cursor', 'User', 'globalStorage')]
+          : []),
       ];
       for (const p of cursorDirs) {
         if (dirHasFiles(p)) {

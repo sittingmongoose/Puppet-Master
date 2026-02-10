@@ -12,7 +12,7 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import { tmpdir } from 'os';
-import { execSync } from 'child_process';
+import { spawn } from 'node:child_process';
 
 import { GitManager } from '../../src/git/git-manager.js';
 import {
@@ -28,18 +28,47 @@ describe('Git Integration Tests', () => {
   let tempDir: string;
   let gitManager: GitManager;
 
+  async function runGit(args: string[], opts: { cwd: string }): Promise<{ stdout: string; stderr: string }> {
+    return new Promise((resolve, reject) => {
+      const proc = spawn('git', args, { cwd: opts.cwd, stdio: ['ignore', 'pipe', 'pipe'] });
+
+      let stdout = '';
+      let stderr = '';
+
+      proc.stdout?.on('data', (data: Buffer) => {
+        stdout += data.toString();
+      });
+
+      proc.stderr?.on('data', (data: Buffer) => {
+        stderr += data.toString();
+      });
+
+      proc.on('error', (err) => {
+        reject(err);
+      });
+
+      proc.on('close', (code) => {
+        if (code === 0) {
+          resolve({ stdout: stdout.trim(), stderr: stderr.trim() });
+          return;
+        }
+        reject(new Error(`git ${args.join(' ')} failed (${code ?? -1}): ${stderr.trim()}`));
+      });
+    });
+  }
+
   /**
    * Initialize a real git repository for testing
    */
   async function initGitRepo(): Promise<void> {
-    execSync('git init', { cwd: tempDir, stdio: 'pipe' });
-    execSync('git config user.email "test@example.com"', { cwd: tempDir, stdio: 'pipe' });
-    execSync('git config user.name "Test User"', { cwd: tempDir, stdio: 'pipe' });
+    await runGit(['init'], { cwd: tempDir });
+    await runGit(['config', 'user.email', 'test@example.com'], { cwd: tempDir });
+    await runGit(['config', 'user.name', 'Test User'], { cwd: tempDir });
     
     // Create initial commit
     await fs.writeFile(join(tempDir, 'README.md'), '# Test Project');
-    execSync('git add .', { cwd: tempDir, stdio: 'pipe' });
-    execSync('git commit -m "Initial commit"', { cwd: tempDir, stdio: 'pipe' });
+    await runGit(['add', '.'], { cwd: tempDir });
+    await runGit(['commit', '-m', 'Initial commit'], { cwd: tempDir });
   }
 
   beforeEach(async () => {
@@ -85,7 +114,7 @@ describe('Git Integration Tests', () => {
       await fs.writeFile(join(tempDir, 'file2.ts'), 'export const b = 2;');
       
       // Stage files manually
-      execSync('git add .', { cwd: tempDir, stdio: 'pipe' });
+      await runGit(['add', '.'], { cwd: tempDir });
       
       // Commit without specifying files
       const result = await gitManager.commit({
@@ -104,7 +133,7 @@ describe('Git Integration Tests', () => {
       });
 
       // Get initial commit count
-      const beforeLog = execSync('git log --oneline', { cwd: tempDir, encoding: 'utf-8' });
+      const { stdout: beforeLog } = await runGit(['log', '--oneline'], { cwd: tempDir });
       const beforeCount = beforeLog.trim().split('\n').length;
 
       // Add more changes and amend
@@ -118,7 +147,7 @@ describe('Git Integration Tests', () => {
       expect(result.success).toBe(true);
 
       // Commit count should be same (amended, not new commit)
-      const afterLog = execSync('git log --oneline', { cwd: tempDir, encoding: 'utf-8' });
+      const { stdout: afterLog } = await runGit(['log', '--oneline'], { cwd: tempDir });
       const afterCount = afterLog.trim().split('\n').length;
       expect(afterCount).toBe(beforeCount);
     });
@@ -161,7 +190,7 @@ describe('Git Integration Tests', () => {
     it('getStatus returns correct branch and file states', async () => {
       // Create staged file
       await fs.writeFile(join(tempDir, 'staged.ts'), 'staged content');
-      execSync('git add staged.ts', { cwd: tempDir, stdio: 'pipe' });
+      await runGit(['add', 'staged.ts'], { cwd: tempDir });
       
       // Create untracked file
       await fs.writeFile(join(tempDir, 'untracked.ts'), 'untracked content');
@@ -178,7 +207,7 @@ describe('Git Integration Tests', () => {
     it('getDiffFiles returns union of changed files', async () => {
       // Create various file states
       await fs.writeFile(join(tempDir, 'new-staged.ts'), 'staged');
-      execSync('git add new-staged.ts', { cwd: tempDir, stdio: 'pipe' });
+      await runGit(['add', 'new-staged.ts'], { cwd: tempDir });
       
       await fs.writeFile(join(tempDir, 'README.md'), '# Modified README');
       await fs.writeFile(join(tempDir, 'untracked.ts'), 'untracked');

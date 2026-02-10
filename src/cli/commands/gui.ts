@@ -43,6 +43,17 @@ export interface GuiOptions {
   host?: string;
   open?: boolean;
   verbose?: boolean;
+  /**
+   * Disable internal EADDRINUSE retries when binding the HTTP server.
+   *
+   * - Desktop/Tauri launches: default true (deterministic port selection)
+   * - CLI/browser launches: default false (convenient auto-port-shift)
+   *
+   * You can override the default with:
+   * - `--strict-port` (force on)
+   * - `--strict-port=false` (force off)
+   */
+  strictPort?: boolean | string;
   /** Base directory for GUI project discovery + wizard-created projects (defaults vary by launch context) */
   baseDirectory?: string;
   /** P0-G07: Disable authentication (development only) */
@@ -94,6 +105,19 @@ function deriveDefaultGuiProjectsBaseDirectory(configPath: string, homeDir?: str
   if (!isHomeConfig) return undefined;
 
   return path.join(homeDir, 'puppet-master-projects');
+}
+
+function parseTriStateBoolean(value: unknown, defaultValue: boolean): boolean {
+  if (value === undefined) return defaultValue;
+  if (value === true) return true;
+  if (value === false) return false;
+
+  const raw = String(value).trim().toLowerCase();
+  if (raw === '') return true;
+  if (raw === '1' || raw === 'true' || raw === 'yes' || raw === 'on') return true;
+  if (raw === '0' || raw === 'false' || raw === 'no' || raw === 'off') return false;
+
+  throw new Error(`Invalid value for --strict-port: "${raw}". Use true/false (e.g. --strict-port or --strict-port=false).`);
 }
 
 /**
@@ -459,6 +483,8 @@ export async function guiAction(options: GuiOptions): Promise<void> {
     const requestedPort = options.port || 3847;
     const host = options.host || 'localhost';
     const bindHost = normalizeBindHost(host);
+    const strictPortDefault = !!(process.env.PUPPET_MASTER_INSTALL_ROOT || process.env.PUPPET_MASTER_APP_ROOT);
+    const strictPort = parseTriStateBoolean(options.strictPort, strictPortDefault);
 
     // C4 fix: Before starting a new server, check if an existing Puppet Master
     // instance is already running on the requested port. If so, just open the
@@ -655,7 +681,11 @@ export async function guiAction(options: GuiOptions): Promise<void> {
 
     // Start GUI server
     console.log('Starting GUI server...');
-    await guiServer.start();
+    if (strictPort) {
+      await guiServer.start(0);
+    } else {
+      await guiServer.start();
+    }
 
     const url = guiServer.getUrl();
     const actualPort = guiServer.getPort();
@@ -898,6 +928,7 @@ export class GuiCommand implements CommandModule {
       .option('--relaxed-cors', 'Relax CORS policy for development (allows dev ports 3000-9999 and LAN IPs)')
       .option('--classic', 'Use classic vanilla HTML GUI instead of React')
       .option('--trust-proxy', 'Trust proxy headers (X-Forwarded-For, etc.) for reverse proxy setups')
+      .option('--strict-port [mode]', 'Disable EADDRINUSE port retries when binding (desktop default). Override with --strict-port=false')
       .option('--allowed-origins <origins>', 'Comma-separated list of allowed CORS origins (e.g., "https://app.example.com,https://mobile.example.com")')
       .option('--expose-token-remotely', 'Allow /api/auth/status to expose token for non-loopback requests (security risk - use with caution)')
       .action(async (options: GuiOptions) => {

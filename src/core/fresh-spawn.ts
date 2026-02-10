@@ -514,7 +514,7 @@ export class FreshSpawner {
       case 'copilot':
         return {
           command: resolvePlatformCommand('copilot', null),
-          args: ['-p', request.prompt, '--allow-all-tools', '--allow-all-paths', '--silent', '--stream', 'off', ...baseArgs],
+          args: ['-p', request.prompt, '--allow-all-tools', '--allow-all-paths'],
         };
       default: {
         const exhaustive: never = request.platform;

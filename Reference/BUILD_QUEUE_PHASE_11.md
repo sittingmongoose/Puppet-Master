@@ -64,6 +64,7 @@ This phase consolidates outstanding issues and risks discovered by multiple revi
 | PH11-T19 | ✅ PASS | 2026-02-02 | Added deterministic doctor registry + fast capability probing to prevent GUI/E2E test timeouts |
 | PH11-T20 | ⏳ PENDING | | Reconcile BUILD_QUEUE_GAPS.md summary vs per-issue sections |
 | PH11-T21 | ✅ PASS | 2026-02-04 | Fix Windows native module rebuild validation, block GUI launch until ready, auto-create config on first boot, dedupe wizard errors |
+| PH11-T22 | ✅ PASS | 2026-02-10 | Plan 3: Desktop GUI connectivity (port selection + injection + repair), wizard/platform install+auth UX, models/history, JPEG evidence, macOS .pkg output, bundled Node v24.1.0 default |
 | GUI e.map hardening | ✅ PASS | 2026-01-27 | Fixed `e.map is not a function`: hardened API (`getTiers`, `listProjects`, `getDoctorChecks`, `runDoctorChecks`) and all GUI pages (Projects, Tiers, Doctor, History, Evidence, Coverage, Metrics, Dashboard). `.map`/`Object.entries` guarded with `Array.isArray` / array fallbacks. Deleted `.test-cache`/`.test-quota` (none found). `npm run gui:typecheck` and React GUI unit tests pass. |
 | GUI e.map hardening round 2 | ✅ PASS | 2026-01-27 | Projects: `projectsToShow` + `safeList` guards; malformed `listProjects` unit tests (null, undefined, `{}`, `{ projects: null }`). UsageChart: `safeData` guard, empty handling. API `listProjects` JSDoc. Audited Doctor, Tiers, Evidence, Coverage, Metrics, Dashboard — already guarded. Root `npm run typecheck` PASS. `.test-cache`/`.test-quota` not present. |
 
@@ -108,6 +109,83 @@ Commands run + results:
 If FAIL: N/A  
 
 ---
+
+### Task status log (PH11-T22)
+Status: PASS  
+Date: 2026-02-10  
+Summary of changes: Implemented Plan 3 stability fixes across desktop GUI connectivity (deterministic backend port selection 3847..3857, localStorage injection + frontend wait/repair scan), expanded `/health` and corrected version reporting, added `--strict-port` behavior for desktop launches, improved platform wizard statuses (installed vs runnable + Copilot Node requirement parsing + visible install/repair output), improved Cursor/Copilot auth status heuristics, fixed Login page status clarity (GitHub card + text wrap) and enabled Cursor logout, corrected models first-load via background refresh (including Claude `default` + Opus 4.6 updates + Codex model list update), removed mock History sessions and wired History to backend, switched browser verifier screenshots to JPEG (`.jpg`) for Codex compatibility, emitted standalone macOS `.pkg` alongside `.dmg`, and bumped bundled Node default to `24.1.0` with a safer ABI guard. Also completed Step 10 (latest CLI contracts, no resume): bumped `@openai/codex-sdk` to `^0.98.0`, expanded Claude Code runner support for documented flags (`--input-format`, `--mcp-config`, `--strict-mcp-config`, `--plugin-dir`, `--json-schema`) while preserving print-mode/no-session-persistence, and aligned Copilot CLI headless args to documented approval/permission flags (removed `--silent`/`--stream off` usage from our automation paths).  
+Follow-up: Resolved `npm audit` high-severity vulnerability in `@modelcontextprotocol/sdk` (transitive via `@upstash/context7-mcp`) by pinning `@modelcontextprotocol/sdk@1.26.0` via `package.json#overrides` (0 vulnerabilities after).  
+Files changed:  
+- package.json  
+- package-lock.json  
+- scripts/build-installer.ts  
+- src-tauri/src/main.rs  
+- src/cli/commands/gui.ts  
+- src/config/config-schema.ts  
+- src/core/execution-engine.ts  
+- src/core/fresh-spawn.ts  
+- src/core/orchestrator.ts  
+- src/core/platform-router.ts  
+- src/doctor/installation-manager.ts  
+- src/gui/auth-middleware.test.ts  
+- src/gui/gui.integration.test.ts  
+- src/gui/react/react-gui.integration.test.ts  
+- src/gui/react/src/components/wizard/PlatformSetupWizard.test.tsx  
+- src/gui/react/src/components/wizard/PlatformSetupWizard.tsx  
+- src/gui/react/src/lib/api.test.ts  
+- src/gui/react/src/lib/api.ts  
+- src/gui/react/src/lib/index.ts  
+- src/gui/react/src/pages/Config.tsx  
+- src/gui/react/src/pages/Evidence.test.tsx  
+- src/gui/react/src/pages/Evidence.tsx  
+- src/gui/react/src/pages/EvidenceDetail.tsx  
+- src/gui/react/src/pages/History.test.tsx  
+- src/gui/react/src/pages/History.tsx  
+- src/gui/react/src/pages/Login.tsx  
+- src/gui/reverse-proxy-hardening.test.ts  
+- src/gui/routes/config.test.ts  
+- src/gui/routes/login.test.ts  
+- src/gui/routes/platforms.ts  
+- src/gui/server.ts  
+- src/memory/evidence-store.test.ts  
+- src/memory/evidence-store.ts  
+- src/platforms/auth-status.ts  
+- src/platforms/capability-discovery.ts  
+- src/platforms/claude-models.test.ts  
+- src/platforms/claude-models.ts  
+- src/platforms/claude-runner.test.ts  
+- src/platforms/claude-runner.ts  
+- src/platforms/codex-models.ts  
+- src/platforms/gemini-models.ts  
+- src/platforms/copilot-runner.test.ts  
+- src/platforms/copilot-runner.ts  
+- src/platforms/platform-detector.test.ts  
+- src/platforms/platform-detector.ts  
+- src/types/config.ts  
+- src/types/platforms.ts  
+- src/verification/verifiers/browser-verifier.test.ts  
+- src/verification/verifiers/browser-verifier.ts  
+- src/test-helpers/net-availability.ts  
+- tests/integration/browser-verifier.integration.test.ts  
+- tests/integration/dashboard.integration.test.ts  
+- tests/integration/git.integration.test.ts  
+- tests/integration/projects.integration.test.ts  
+- tests/integration/wizard.integration.test.ts  
+Commands run + results:  
+- npm install @openai/codex-sdk@^0.98.0: PASS  
+- npm audit: PASS (0 vulnerabilities)  
+- npm install: PASS (applied `@modelcontextprotocol/sdk@1.26.0` override)  
+- npm run typecheck: PASS  
+- npm run lint: PASS  
+- npm test: PASS  
+- npm test -- src/platforms/copilot-runner.test.ts: PASS  
+- npm run gui:typecheck: PASS  
+- npm run gui:test: PASS  
+- npm run gui:build: PASS  
+- npm run build: PASS  
+- CARGO_TARGET_DIR=/tmp/tauri-target cargo check (src-tauri): PASS (requires React GUI dist present)  
+If FAIL: N/A  
+
 
 ## Group A — GUI Security (Auth + CORS)
 

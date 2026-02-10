@@ -6,7 +6,6 @@ export type {
   StateResponse,
   Config,
   DoctorCheck,
-  Session,
   PlatformHealth,
   CursorCapabilities,
   PlatformStatus,

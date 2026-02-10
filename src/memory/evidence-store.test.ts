@@ -96,7 +96,7 @@ describe('EvidenceStore', () => {
 
       const path = await store.saveScreenshot(itemId, data, scenarioName);
 
-      expect(path).toBe(join(testDir, 'screenshots', `${itemId}-${scenarioName}.png`));
+      expect(path).toBe(join(testDir, 'screenshots', `${itemId}-${scenarioName}.jpg`));
       
       const savedData = await readFile(path);
       expect(savedData).toEqual(data);

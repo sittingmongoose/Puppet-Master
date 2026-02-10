@@ -37,11 +37,11 @@ describe('PlatformSetupWizard', () => {
     vi.clearAllMocks();
     mockApi.getPlatformStatus.mockResolvedValue({
       platforms: {
-        cursor: { platform: 'cursor', installed: true, version: '1.0.0' },
-        codex: { platform: 'codex', installed: false },
-        claude: { platform: 'claude', installed: true, version: '2.0.0' },
-        gemini: { platform: 'gemini', installed: false },
-        copilot: { platform: 'copilot', installed: false },
+        cursor: { platform: 'cursor', installed: true, runnable: true, version: '1.0.0' },
+        codex: { platform: 'codex', installed: false, runnable: false },
+        claude: { platform: 'claude', installed: true, runnable: true, version: '2.0.0' },
+        gemini: { platform: 'gemini', installed: false, runnable: false },
+        copilot: { platform: 'copilot', installed: false, runnable: false },
       },
       installedPlatforms: ['cursor', 'claude'],
       uninstalledPlatforms: ['codex', 'gemini', 'copilot'],
@@ -86,19 +86,19 @@ describe('PlatformSetupWizard', () => {
       expect(screen.getByText('Codex')).toBeInTheDocument();
     });
 
-    // Check that installed platforms show as installed
-    const installedBadges = screen.getAllByText('Installed');
-    expect(installedBadges.length).toBeGreaterThan(0);
+    // Check that runnable platforms show as ready
+    const readyBadges = screen.getAllByText('Ready');
+    expect(readyBadges.length).toBeGreaterThan(0);
   });
 
   it('should allow selecting platforms', async () => {
     mockApi.getPlatformStatus.mockResolvedValue({
       platforms: {
-        cursor: { platform: 'cursor', installed: true },
-        codex: { platform: 'codex', installed: true },
-        claude: { platform: 'claude', installed: false },
-        gemini: { platform: 'gemini', installed: false },
-        copilot: { platform: 'copilot', installed: false },
+        cursor: { platform: 'cursor', installed: true, runnable: true },
+        codex: { platform: 'codex', installed: true, runnable: true },
+        claude: { platform: 'claude', installed: false, runnable: false },
+        gemini: { platform: 'gemini', installed: false, runnable: false },
+        copilot: { platform: 'copilot', installed: false, runnable: false },
       },
       installedPlatforms: ['cursor', 'codex'],
       uninstalledPlatforms: ['claude', 'gemini', 'copilot'],
@@ -129,11 +129,11 @@ describe('PlatformSetupWizard', () => {
   it('should install platform when install button is clicked', async () => {
     mockApi.getPlatformStatus.mockResolvedValue({
       platforms: {
-        cursor: { platform: 'cursor', installed: true },
-        codex: { platform: 'codex', installed: false },
-        claude: { platform: 'claude', installed: false },
-        gemini: { platform: 'gemini', installed: false },
-        copilot: { platform: 'copilot', installed: false },
+        cursor: { platform: 'cursor', installed: true, runnable: true },
+        codex: { platform: 'codex', installed: false, runnable: false },
+        claude: { platform: 'claude', installed: false, runnable: false },
+        gemini: { platform: 'gemini', installed: false, runnable: false },
+        copilot: { platform: 'copilot', installed: false, runnable: false },
       },
       installedPlatforms: ['cursor'],
       uninstalledPlatforms: ['codex', 'claude', 'gemini', 'copilot'],
@@ -148,22 +148,22 @@ describe('PlatformSetupWizard', () => {
     mockApi.getPlatformStatus
       .mockResolvedValueOnce({
         platforms: {
-          cursor: { platform: 'cursor', installed: true },
-          codex: { platform: 'codex', installed: false },
-          claude: { platform: 'claude', installed: false },
-          gemini: { platform: 'gemini', installed: false },
-          copilot: { platform: 'copilot', installed: false },
+          cursor: { platform: 'cursor', installed: true, runnable: true },
+          codex: { platform: 'codex', installed: false, runnable: false },
+          claude: { platform: 'claude', installed: false, runnable: false },
+          gemini: { platform: 'gemini', installed: false, runnable: false },
+          copilot: { platform: 'copilot', installed: false, runnable: false },
         },
         installedPlatforms: ['cursor'],
         uninstalledPlatforms: ['codex', 'claude', 'gemini', 'copilot'],
       })
       .mockResolvedValueOnce({
         platforms: {
-          cursor: { platform: 'cursor', installed: true },
-          codex: { platform: 'codex', installed: true },
-          claude: { platform: 'claude', installed: false },
-          gemini: { platform: 'gemini', installed: false },
-          copilot: { platform: 'copilot', installed: false },
+          cursor: { platform: 'cursor', installed: true, runnable: true },
+          codex: { platform: 'codex', installed: true, runnable: true },
+          claude: { platform: 'claude', installed: false, runnable: false },
+          gemini: { platform: 'gemini', installed: false, runnable: false },
+          copilot: { platform: 'copilot', installed: false, runnable: false },
         },
         installedPlatforms: ['cursor', 'codex'],
         uninstalledPlatforms: ['claude', 'gemini', 'copilot'],
@@ -200,11 +200,11 @@ describe('PlatformSetupWizard', () => {
   it('should call onComplete when continue is clicked with selected platforms', async () => {
     mockApi.getPlatformStatus.mockResolvedValue({
       platforms: {
-        cursor: { platform: 'cursor', installed: true },
-        codex: { platform: 'codex', installed: true },
-        claude: { platform: 'claude', installed: false },
-        gemini: { platform: 'gemini', installed: false },
-        copilot: { platform: 'copilot', installed: false },
+        cursor: { platform: 'cursor', installed: true, runnable: true },
+        codex: { platform: 'codex', installed: true, runnable: true },
+        claude: { platform: 'claude', installed: false, runnable: false },
+        gemini: { platform: 'gemini', installed: false, runnable: false },
+        copilot: { platform: 'copilot', installed: false, runnable: false },
       },
       installedPlatforms: ['cursor', 'codex'],
       uninstalledPlatforms: ['claude', 'gemini', 'copilot'],
@@ -256,11 +256,11 @@ describe('PlatformSetupWizard', () => {
   it('should call onSkip when skip is clicked', async () => {
     mockApi.getPlatformStatus.mockResolvedValue({
       platforms: {
-        cursor: { platform: 'cursor', installed: true },
-        codex: { platform: 'codex', installed: false },
-        claude: { platform: 'claude', installed: false },
-        gemini: { platform: 'gemini', installed: false },
-        copilot: { platform: 'copilot', installed: false },
+        cursor: { platform: 'cursor', installed: true, runnable: true },
+        codex: { platform: 'codex', installed: false, runnable: false },
+        claude: { platform: 'claude', installed: false, runnable: false },
+        gemini: { platform: 'gemini', installed: false, runnable: false },
+        copilot: { platform: 'copilot', installed: false, runnable: false },
       },
       installedPlatforms: ['cursor'],
       uninstalledPlatforms: ['codex', 'claude', 'gemini', 'copilot'],
@@ -288,11 +288,11 @@ describe('PlatformSetupWizard', () => {
   it('should disable continue button when no platforms are selected', async () => {
     mockApi.getPlatformStatus.mockResolvedValue({
       platforms: {
-        cursor: { platform: 'cursor', installed: true },
-        codex: { platform: 'codex', installed: true },
-        claude: { platform: 'claude', installed: false },
-        gemini: { platform: 'gemini', installed: false },
-        copilot: { platform: 'copilot', installed: false },
+        cursor: { platform: 'cursor', installed: true, runnable: true },
+        codex: { platform: 'codex', installed: true, runnable: true },
+        claude: { platform: 'claude', installed: false, runnable: false },
+        gemini: { platform: 'gemini', installed: false, runnable: false },
+        copilot: { platform: 'copilot', installed: false, runnable: false },
       },
       installedPlatforms: ['cursor', 'codex'],
       uninstalledPlatforms: ['claude', 'gemini', 'copilot'],

@@ -72,6 +72,7 @@ export function getApiBaseUrl(): string {
 const DEFAULT_API_BASE_URL = 'http://127.0.0.1:3847';
 const API_BASE_STORAGE_KEY = 'rwm-api-base-url';
 const API_BASE_PORT_CANDIDATES = [3847, 3848, 3849, 3850, 3851, 3852, 3853, 3854, 3855, 3856, 3857];
+const PUPPET_MASTER_APP_ID = 'rwm-puppet-master';
 let resolvedApiBaseUrl: string | null = null;
 let resolvingApiBaseUrlPromise: Promise<string> | null = null;
 
@@ -145,8 +146,11 @@ async function probeApiBase(baseUrl: string): Promise<boolean> {
       return false;
     }
 
-    const body = await response.json().catch(() => null) as { status?: string } | null;
-    return body?.status === 'ok';
+    const body = await response.json().catch(() => null) as { status?: string; appId?: string } | null;
+    if (body?.status !== 'ok') return false;
+
+    // Backward-compatible: older servers may not send appId.
+    return !body?.appId || body.appId === PUPPET_MASTER_APP_ID;
   } catch {
     return false;
   } finally {
@@ -169,6 +173,117 @@ function buildLoopbackCandidates(): string[] {
   return Array.from(new Set(candidates));
 }
 
+type HealthResponse = {
+  appId?: string;
+  status?: string;
+  startedAt?: string;
+};
+
+async function probePuppetMasterCandidate(baseUrl: string): Promise<{ baseUrl: string; startedAt: string }> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 450);
+
+  try {
+    const response = await fetch(`${baseUrl}/health`, {
+      method: 'GET',
+      signal: controller.signal,
+    });
+    if (!response.ok) {
+      throw new Error('not_ok');
+    }
+    const body = await response.json().catch(() => null) as HealthResponse | null;
+    if (!body || body.status !== 'ok' || body.appId !== PUPPET_MASTER_APP_ID) {
+      throw new Error('not_puppet_master');
+    }
+    return { baseUrl, startedAt: body.startedAt ?? '' };
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+function isNetworkError(error: unknown): boolean {
+  // Browsers vary (Chrome: "Failed to fetch", Firefox: "NetworkError...").
+  if (!(error instanceof Error)) return false;
+  const msg = error.message.toLowerCase();
+  return msg.includes('failed to fetch') || msg.includes('networkerror') || msg.includes('load failed');
+}
+
+async function waitForInjectedApiBaseUrl(timeoutMs: number): Promise<string | null> {
+  if (typeof window === 'undefined') return null;
+  const origin = window.location.origin;
+  if (!isTauriBundledOrigin(origin)) return null;
+
+  const initial = getLocalStorageItem(API_BASE_STORAGE_KEY);
+  if (initial && initial.startsWith('http://')) return initial;
+
+  return new Promise((resolve) => {
+    const startedAt = Date.now();
+    let done = false;
+    let interval: ReturnType<typeof setInterval> | null = null;
+
+    const cleanup = () => {
+      if (done) return;
+      done = true;
+      if (interval) clearInterval(interval);
+      try {
+        window.removeEventListener('rwm-api-base-url-ready', onReady);
+      } catch {
+        // ignore
+      }
+    };
+
+    const onReady = () => {
+      const v = getLocalStorageItem(API_BASE_STORAGE_KEY);
+      if (v && v.startsWith('http://')) {
+        cleanup();
+        resolve(v);
+      }
+    };
+
+    try {
+      window.addEventListener('rwm-api-base-url-ready', onReady);
+    } catch {
+      // ignore
+    }
+
+    interval = setInterval(() => {
+      const v = getLocalStorageItem(API_BASE_STORAGE_KEY);
+      if (v && v.startsWith('http://')) {
+        cleanup();
+        resolve(v);
+        return;
+      }
+      if (Date.now() - startedAt >= timeoutMs) {
+        cleanup();
+        resolve(null);
+      }
+    }, 50);
+  });
+}
+
+async function repairApiBaseUrlFromHealthScan(): Promise<string | null> {
+  const candidates = API_BASE_PORT_CANDIDATES.map((p) => `http://127.0.0.1:${p}`);
+  const results = await Promise.all(
+    candidates.map(async (candidate) => {
+      try {
+        return await probePuppetMasterCandidate(candidate);
+      } catch {
+        return null;
+      }
+    })
+  );
+  const valid = results.filter((r): r is { baseUrl: string; startedAt: string } => r !== null);
+  if (valid.length === 0) {
+    return null;
+  }
+
+  // Choose the newest startedAt (ISO strings are lexicographically sortable).
+  const newest = valid.reduce((best, cur) => (cur.startedAt > best.startedAt ? cur : best));
+  setLocalStorageItem(API_BASE_STORAGE_KEY, newest.baseUrl);
+  resolvedApiBaseUrl = newest.baseUrl;
+  return newest.baseUrl;
+}
+
 async function resolveApiBaseUrl(): Promise<string> {
   if (typeof window === 'undefined') return '';
 
@@ -183,15 +298,23 @@ async function resolveApiBaseUrl(): Promise<string> {
     return origin;
   }
 
-  // Desktop bundled origin (tauri.localhost / tauri://) should NOT scan many loopback ports.
-  // Scanning can attach to a different stale server instance and cause inconsistent UI state.
+  // Desktop bundled origin (tauri.localhost / tauri://) should NOT scan loopback ports by default.
+  // Instead, wait briefly for Tauri to inject localStorage["rwm-api-base-url"].
   if (isTauriBundledOrigin(origin)) {
     const stored = getLocalStorageItem(API_BASE_STORAGE_KEY);
     if (stored && stored.startsWith('http://')) {
       resolvedApiBaseUrl = stored;
       return stored;
     }
-    resolvedApiBaseUrl = DEFAULT_API_BASE_URL;
+
+    const injected = await waitForInjectedApiBaseUrl(2000);
+    if (injected && injected.startsWith('http://')) {
+      resolvedApiBaseUrl = injected;
+      return injected;
+    }
+
+    // Last resort: fall back, but do NOT permanently cache the default.
+    // If injection arrives late, subsequent calls can still pick it up.
     return DEFAULT_API_BASE_URL;
   }
 
@@ -343,10 +466,30 @@ async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
     }
   }
 
-  const response = await fetch(fetchUrl, {
-    ...options,
-    headers,
-  });
+  let response: Response;
+  try {
+    response = await fetch(fetchUrl, {
+      ...options,
+      headers,
+    });
+  } catch (err) {
+    // Desktop (Tauri) may start with an incorrect/stale base URL (port mismatch).
+    // When we see a network error, attempt a bounded repair scan and retry once.
+    if (isApiPath && typeof window !== 'undefined' && isTauriBundledOrigin(window.location.origin) && isNetworkError(err)) {
+      const repaired = await repairApiBaseUrlFromHealthScan();
+      if (repaired && repaired !== apiBaseUrl) {
+        const retryUrl = `${repaired}${url}`;
+        response = await fetch(retryUrl, {
+          ...options,
+          headers,
+        });
+      } else {
+        throw err;
+      }
+    } else {
+      throw err;
+    }
+  }
 
   // If we get 401, try refreshing token and retry once
   if (response.status === 401 && needsAuth && !authTokenPromise) {
@@ -801,22 +944,37 @@ export async function fixDoctorCheck(checkName: string): Promise<{ success: bool
 // History API
 // ============================================
 
-export interface Session {
-  id: string;
-  startTime: Date;
-  endTime?: Date;
-  status: StatusType;
+export interface HistorySession {
+  sessionId: string;
+  startTime: string;
+  endTime?: string;
+  status: 'running' | 'completed' | 'stopped' | 'failed';
+  outcome?: 'success' | 'partial' | 'failed' | 'stopped';
+  iterationsRun?: number;
+  projectPath?: string;
   projectName?: string;
-  phases: number;
-  tasks: number;
-  outcome?: 'success' | 'failure' | 'partial';
+  phasesCompleted?: number;
+  tasksCompleted?: number;
+  subtasksCompleted?: number;
+  processPids?: number[];
+}
+
+export interface HistoryResponse {
+  sessions: HistorySession[];
+  total: number;
+  limit: number;
+  offset: number;
 }
 
 /**
  * Get execution history
  */
-export async function getHistory(): Promise<Session[]> {
-  return fetchJSON<Session[]>('/api/history');
+export async function getHistory(params?: { limit?: number; offset?: number }): Promise<HistoryResponse> {
+  const qs = new URLSearchParams();
+  if (params?.limit != null) qs.set('limit', String(params.limit));
+  if (params?.offset != null) qs.set('offset', String(params.offset));
+  const suffix = qs.toString() ? `?${qs.toString()}` : '';
+  return fetchJSON<HistoryResponse>(`/api/history${suffix}`);
 }
 
 // ============================================
@@ -883,8 +1041,10 @@ export async function wizardGenerate(data: {
 export interface PlatformStatus {
   platform: string;
   installed: boolean;
+  runnable: boolean;
   version?: string;
   error?: string;
+  requirements?: Array<{ kind: 'node'; requiredMajor: number; currentMajor?: number }>;
   authenticated?: boolean;
   command?: string;
 }
@@ -1093,7 +1253,7 @@ export async function loginPlatform(platform: string): Promise<{
 }
 
 /** Platforms that support logout via CLI (github, copilot, codex) */
-export const LOGOUT_SUPPORTED_PLATFORMS = ['github', 'copilot', 'codex'] as const;
+export const LOGOUT_SUPPORTED_PLATFORMS = ['github', 'copilot', 'codex', 'cursor'] as const;
 
 /**
  * Trigger CLI logout for a specific platform (where supported).

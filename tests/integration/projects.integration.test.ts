@@ -19,8 +19,12 @@ import { existsSync } from 'fs';
 import express from 'express';
 import request from 'supertest';
 import { createProjectsRoutes, type Project } from '../../src/gui/routes/projects.js';
+import { canListenOnLoopback } from '../../src/test-helpers/net-availability.js';
 
-describe('Project Switching Integration Tests', () => {
+const NET_OK = await canListenOnLoopback();
+const describeNet = NET_OK ? describe : describe.skip;
+
+describeNet('Project Switching Integration Tests', () => {
   let tempDir: string;
   let app: express.Express;
 

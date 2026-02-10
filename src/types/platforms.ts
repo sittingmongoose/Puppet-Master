@@ -46,6 +46,21 @@ export interface ExecutionRequest {
    */
   allowedTools?: string;
   /**
+   * Claude Code CLI: --mcp-config <path>.
+   * Only applied when platform is claude.
+   */
+  mcpConfig?: string;
+  /**
+   * Claude Code CLI: --strict-mcp-config.
+   * Only applied when platform is claude.
+   */
+  strictMcpConfig?: boolean;
+  /**
+   * Claude Code CLI: --plugin-dir <path>.
+   * Only applied when platform is claude.
+   */
+  pluginDir?: string;
+  /**
    * Enable sandbox execution environment (Gemini CLI: --sandbox or -s).
    * Provides security isolation for tool execution.
    */
@@ -68,8 +83,12 @@ export interface ExecutionRequest {
   systemPrompt?: string;
   nonInteractive: boolean;
   /**
-   * Structured JSON output validation schema path.
+   * Structured JSON output validation schema.
    * Supported by: Cursor (--json-schema), Codex (--output-schema), Claude (--json-schema)
+   *
+   * Notes:
+   * - Claude's `--json-schema` expects JSON text (not a filesystem path).
+   * - Codex `--output-schema` is a path for the CLI; our runner may also accept JSON text depending on SDK support.
    */
   jsonSchema?: string;
   /**
@@ -162,6 +181,16 @@ export interface ExecutionRequest {
    * Supported by: Copilot (--allow-url <domain>)
    */
   allowedUrls?: string[];
+  /**
+   * Pre-approve all filesystem paths for Copilot.
+   * Supported by: Copilot (--allow-all-paths)
+   */
+  allowAllPaths?: boolean;
+  /**
+   * Pre-approve all URLs for Copilot.
+   * Supported by: Copilot (--allow-all-urls)
+   */
+  allowAllUrls?: boolean;
   /**
    * Custom agent selection.
    * Supported by: Copilot (--agent=<agent-name>)

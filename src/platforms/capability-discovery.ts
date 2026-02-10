@@ -124,9 +124,6 @@ function buildEnrichedPath(preferredDirs: string[] = []): string {
 function buildEnrichedEnv(preferredDirs: string[] = []): NodeJS.ProcessEnv {
   const home = homedir();
   const npmGlobalPrefix = home ? join(home, '.npm-global') : '';
-  const npmGlobalBin = npmGlobalPrefix
-    ? (process.platform === 'win32' ? npmGlobalPrefix : join(npmGlobalPrefix, 'bin'))
-    : '';
   const enriched = buildEnrichedPath(preferredDirs);
 
   const nextEnv: NodeJS.ProcessEnv = {

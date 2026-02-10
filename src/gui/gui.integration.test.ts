@@ -25,6 +25,10 @@ import type { ProgressManager } from '../memory/progress-manager.js';
 import type { AgentsManager } from '../memory/agents-manager.js';
 import type { OrchestratorState } from '../types/state.js';
 import { createMockCheckRegistry } from './test-helpers/mock-doctor-registry.js';
+import { canListenOnLoopback } from '../test-helpers/net-availability.js';
+
+const NET_OK = await canListenOnLoopback();
+const describeNet = NET_OK ? describe : describe.skip;
 
 /**
  * Test server instance and dependencies
@@ -185,7 +189,7 @@ function createMockOrchestrator(stateOverride?: OrchestratorState): Orchestrator
   } as unknown as Orchestrator;
 }
 
-describe('GUI Integration Tests', () => {
+describeNet('GUI Integration Tests', () => {
   let testContext: TestServerContext | null = null;
 
   beforeEach(async () => {
@@ -213,10 +217,16 @@ describe('GUI Integration Tests', () => {
         .get('/health')
         .expect(200);
 
-      expect(response.body).toEqual({
+      expect(response.body).toMatchObject({
+        appId: 'rwm-puppet-master',
         status: 'ok',
-        version: '0.1.0',
+        version: '0.1.1',
+        port: testContext!.server.getPort(),
       });
+      expect(typeof response.body.instanceId).toBe('string');
+      expect(typeof response.body.startedAt).toBe('string');
+      expect(typeof response.body.pid).toBe('number');
+      expect(typeof response.body.baseDirectory).toBe('string');
     });
 
     it('server provides status endpoint', async () => {

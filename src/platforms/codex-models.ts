@@ -40,9 +40,17 @@ export interface CodexModel {
 export const CODEX_MODELS: CodexModel[] = [
   // Codex-optimized models (recommended for coding)
   {
-    id: 'gpt-5.2-codex',
-    label: 'GPT-5.2 Codex (Recommended)',
+    id: 'gpt-5.3-codex',
+    label: 'GPT-5.3 Codex (Recommended)',
     description: 'Latest agentic coding model, excellent for complex engineering tasks',
+    optimizedForCode: true,
+    costTier: 'high',
+    reasoningLevels: ['Low', 'Medium', 'High', 'Extra high'],
+  },
+  {
+    id: 'gpt-5.2-codex',
+    label: 'GPT-5.2 Codex',
+    description: 'Previous stable agentic coding model',
     optimizedForCode: true,
     costTier: 'high',
     reasoningLevels: ['Low', 'Medium', 'High', 'Extra high'],
@@ -251,5 +259,5 @@ export const KNOWN_CODEX_MODELS: readonly string[] = CODEX_MODELS.map(m => m.id)
  * @returns Default model ID
  */
 export function getDefaultCodexModel(): string {
-  return 'gpt-5.2-codex';
+  return 'gpt-5.3-codex';
 }

@@ -16,7 +16,6 @@
  */
 
 import { describe, it, expect, beforeAll, afterAll, beforeEach } from 'vitest';
-import { createServer, Server } from 'http';
 import { BrowserVerifier } from '../../src/verification/verifiers/browser-verifier.js';
 import type { BrowserCriterion } from '../../src/verification/verifiers/browser-verifier.js';
 import { EvidenceStore } from '../../src/memory/evidence-store.js';
@@ -26,9 +25,6 @@ import { tmpdir } from 'os';
 import { existsSync } from 'fs';
 
 describe('Browser Verification Integration Tests', () => {
-  let server: Server;
-  let serverPort: number;
-  let baseUrl: string;
   let evidenceStore: EvidenceStore;
   let evidenceDir: string;
   let browserAvailable = true;
@@ -80,36 +76,14 @@ describe('Browser Verification Integration Tests', () => {
     `,
   };
 
+  const toDataUrl = (html: string) => `data:text/html;charset=utf-8,${encodeURIComponent(html)}`;
+  const pageUrls = {
+    simple: toDataUrl(testPages.simple),
+    form: toDataUrl(testPages.form),
+    dynamic: toDataUrl(testPages.dynamic),
+  };
+
   beforeAll(async () => {
-    // Create test HTTP server
-    server = createServer((req, res) => {
-      const path = req.url || '/';
-      
-      if (path === '/' || path === '/simple') {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(testPages.simple);
-      } else if (path === '/form') {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(testPages.form);
-      } else if (path === '/dynamic') {
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(testPages.dynamic);
-      } else {
-        res.writeHead(404);
-        res.end('Not Found');
-      }
-    });
-
-    // Start server on random available port
-    await new Promise<void>((resolve) => {
-      server.listen(0, '127.0.0.1', () => {
-        const addr = server.address();
-        serverPort = typeof addr === 'object' && addr ? addr.port : 0;
-        baseUrl = `http://127.0.0.1:${serverPort}`;
-        resolve();
-      });
-    });
-
     // Create temp evidence directory
     evidenceDir = join(tmpdir(), `pm-browser-evidence-${Date.now()}`);
     await fs.mkdir(evidenceDir, { recursive: true });
@@ -122,7 +96,7 @@ describe('Browser Verification Integration Tests', () => {
         id: 'browser-check',
         type: 'browser_verify',
         description: 'Check if browser works',
-        target: `${baseUrl}/simple`,
+        target: pageUrls.simple,
       });
       
       // If the error contains system library issues, browser is not available
@@ -140,11 +114,6 @@ describe('Browser Verification Integration Tests', () => {
   });
 
   afterAll(async () => {
-    // Close server
-    await new Promise<void>((resolve) => {
-      server.close(() => resolve());
-    });
-
     // Cleanup evidence directory
     if (evidenceDir && existsSync(evidenceDir)) {
       await fs.rm(evidenceDir, { recursive: true, force: true });
@@ -168,7 +137,7 @@ describe('Browser Verification Integration Tests', () => {
         id: 'CRIT-001',
         type: 'browser_verify',
         description: 'Verify simple page loads',
-        target: `${baseUrl}/simple`,
+        target: pageUrls.simple,
       };
 
       const result = await verifier.verify(criterion);
@@ -187,7 +156,7 @@ describe('Browser Verification Integration Tests', () => {
         id: 'CRIT-002',
         type: 'browser_verify',
         description: 'Verify heading exists',
-        target: `${baseUrl}/simple`,
+        target: pageUrls.simple,
         options: {
           selector: '#heading',
         },
@@ -209,7 +178,7 @@ describe('Browser Verification Integration Tests', () => {
         id: 'CRIT-003',
         type: 'browser_verify',
         description: 'Verify heading text',
-        target: `${baseUrl}/simple`,
+        target: pageUrls.simple,
         options: {
           selector: '#heading',
           text: 'Hello World',
@@ -232,7 +201,7 @@ describe('Browser Verification Integration Tests', () => {
         id: 'CRIT-004',
         type: 'browser_verify',
         description: 'Verify wrong text',
-        target: `${baseUrl}/simple`,
+        target: pageUrls.simple,
         options: {
           selector: '#heading',
           text: 'Wrong Text',
@@ -253,7 +222,7 @@ describe('Browser Verification Integration Tests', () => {
         id: 'CRIT-005',
         type: 'browser_verify',
         description: 'Verify button is visible',
-        target: `${baseUrl}/simple`,
+        target: pageUrls.simple,
         options: {
           selector: '#submit-btn',
           visible: true,
@@ -279,7 +248,7 @@ describe('Browser Verification Integration Tests', () => {
         id: 'CRIT-006',
         type: 'browser_verify',
         description: 'Should capture screenshot',
-        target: `${baseUrl}/simple`,
+        target: pageUrls.simple,
         options: {
           screenshot: true,
         },
@@ -300,7 +269,7 @@ describe('Browser Verification Integration Tests', () => {
         id: 'CRIT-007',
         type: 'browser_verify',
         description: 'Non-existent element',
-        target: `${baseUrl}/simple`,
+        target: pageUrls.simple,
         options: {
           selector: '#non-existent-element',
         },
@@ -321,7 +290,7 @@ describe('Browser Verification Integration Tests', () => {
         id: 'CRIT-FORM-001',
         type: 'browser_verify',
         description: 'Verify form input exists',
-        target: `${baseUrl}/form`,
+        target: pageUrls.form,
         options: {
           selector: '#username',
         },
@@ -375,7 +344,7 @@ describe('Browser Verification Integration Tests', () => {
         id: 'CRIT-ERR-001',
         type: 'browser_verify',
         description: 'Navigate to bad URL',
-        target: `${baseUrl}/non-existent-page`,
+        target: 'http://127.0.0.1:0/non-existent-page',
       };
 
       // Should not throw, should return result
@@ -386,4 +355,3 @@ describe('Browser Verification Integration Tests', () => {
     });
   });
 });
-

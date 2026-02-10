@@ -4,7 +4,7 @@
  *
  * Outputs:
  * - Windows: NSIS .exe
- * - macOS: .pkg wrapped in .dmg
+ * - macOS: standalone .pkg alongside a .dmg (DMG contains the PKG)
  * - Linux: .deb and .rpm (via nfpm)
  *
  * This script is designed to be executed on the target OS in CI, because:
@@ -63,7 +63,7 @@ function parseArgs(argv: string[]): Args {
 
   const platform = (map.get('platform') ?? process.platform) as InstallerPlatform;
   const arch = (map.get('arch') ?? (process.arch === 'x64' ? 'x64' : 'arm64')) as InstallerArch;
-  const nodeVersion = map.get('node-version') ?? process.env.PUPPET_MASTER_NODE_VERSION ?? '20.11.1';
+  const nodeVersion = map.get('node-version') ?? process.env.PUPPET_MASTER_NODE_VERSION ?? '24.1.0';
   const outDir = map.get('out-dir') ?? path.resolve(process.cwd(), 'dist', 'installers');
   const workDir = map.get('work-dir') ?? path.resolve(process.cwd(), 'installer-work');
   const withTauri = map.has('with-tauri');
@@ -796,20 +796,17 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
   // This catches mismatch errors before packaging (when still fixable) vs at runtime (when too late)
   console.log('\n✅ Testing better-sqlite3 ABI compatibility with bundled Node...\n');
   const bundledNodeMajor = parseInt((args.nodeVersion.split('.')[0] ?? '0').replace(/^v/, ''), 10);
-  const expectedNodeModules =
-    bundledNodeMajor === 20 ? '115' :
-    bundledNodeMajor === 22 ? '127' :
-    bundledNodeMajor === 18 ? '108' :
-    null;
   const betterSqliteLoadTest = `
+const expectedMajor = ${Number.isFinite(bundledNodeMajor) ? bundledNodeMajor : 0};
+const major = parseInt(String(process.versions.node).split('.')[0] || '0', 10);
+if (expectedMajor && major !== expectedMajor) {
+  console.error('ERROR: Unexpected Node major. Expected', expectedMajor, 'got', process.versions.node);
+  process.exit(2);
+}
 const db = require('better-sqlite3');
 console.log('✓ better-sqlite3 loaded successfully');
 console.log('node', process.versions.node);
 console.log('modules', process.versions.modules);
-${expectedNodeModules ? `if (String(process.versions.modules) !== '${expectedNodeModules}') {
-  console.error('ERROR: Unexpected Node ABI. Expected ${expectedNodeModules} for Node ${bundledNodeMajor}.x, got', process.versions.modules);
-  process.exit(2);
-}` : ''}
 process.exit(0);
 `;
 
@@ -1091,6 +1088,7 @@ async function buildMacPkgAndDmg(args: Args, repoRoot: string, stageRoot: string
 
   const pkgBasename = `puppet-master-${version}-mac-${args.arch}.pkg`;
   const dmgOut = path.join(outDir, `puppet-master-${version}-mac-${args.arch}.dmg`);
+  const pkgStandaloneOut = path.join(outDir, pkgBasename);
 
   // Build .app bundle
   console.log('\n🍎 Building macOS .app bundle...\n');
@@ -1107,12 +1105,18 @@ async function buildMacPkgAndDmg(args: Args, repoRoot: string, stageRoot: string
     await chmod(postinstallPath, 0o755);
   }
 
-  // Build pkg only inside DMG staging (no standalone .pkg in outDir)
+  // Build standalone pkg (recommended install path), then wrap it inside a DMG for optional drag-to-install UX.
   const dmgStage = path.join(stageRoot, 'dmg');
   await emptyDir(dmgStage);
-  const pkgOut = path.join(dmgStage, pkgBasename);
+  const pkgInDmg = path.join(dmgStage, pkgBasename);
 
-  console.log('\n🧱 Building macOS pkg (inside DMG)...\n');
+  try {
+    await rm(pkgStandaloneOut, { force: true });
+  } catch {
+    // ignore
+  }
+
+  console.log(`\n🧱 Building macOS pkg (standalone): ${pkgStandaloneOut}\n`);
   await run(
     'pkgbuild',
     [
@@ -1126,10 +1130,13 @@ async function buildMacPkgAndDmg(args: Args, repoRoot: string, stageRoot: string
       version,
       '--scripts',
       scriptsDir,
-      pkgOut,
+      pkgStandaloneOut,
     ],
     { shell: false }
   );
+
+  // Copy the same pkg into the DMG staging folder so the DMG contains the installer.
+  await copyFile(pkgStandaloneOut, pkgInDmg);
 
   console.log('\n🧱 Building macOS dmg (containing the pkg)...\n');
   await run(

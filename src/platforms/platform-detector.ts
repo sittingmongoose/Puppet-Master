@@ -22,24 +22,38 @@ interface CliInvocation {
 }
 
 /**
- * Result of checking CLI availability
+ * Result of probing a CLI invocation.
  */
-interface CliAvailabilityResult {
-  available: boolean;
+interface CliProbeResult {
+  /** True when the command could be spawned (i.e. not ENOENT). */
+  installed: boolean;
+  /** True when the probe exited 0. */
+  runnable: boolean;
   version?: string;
+  stdout?: string;
+  stderr?: string;
   error?: string;
 }
 
 /**
- * Check if a CLI command is available and can run a version flag
+ * Probe a CLI command:
+ * - installed: command is present/spawnable (ENOENT => false)
+ * - runnable: probe exited successfully (exit code 0)
  */
 async function checkCliAvailable(
   invocation: CliInvocation,
   args: string[] = ['--version'],
   timeout: number = 10000,
   env?: NodeJS.ProcessEnv
-): Promise<CliAvailabilityResult> {
+): Promise<CliProbeResult> {
   return new Promise((resolve) => {
+    let settled = false;
+    const settle = (result: CliProbeResult) => {
+      if (settled) return;
+      settled = true;
+      resolve(result);
+    };
+
     const proc: ChildProcess = spawn(invocation.command, [...(invocation.argsPrefix ?? []), ...args], {
       shell: process.platform === 'win32',
       stdio: ['ignore', 'pipe', 'pipe'],
@@ -51,8 +65,11 @@ async function checkCliAvailable(
 
     const timer = setTimeout(() => {
       proc.kill('SIGKILL');
-      resolve({
-        available: false,
+      settle({
+        installed: true,
+        runnable: false,
+        stdout,
+        stderr,
         error: `Command timed out after ${timeout}ms`,
       });
     }, timeout);
@@ -68,23 +85,36 @@ async function checkCliAvailable(
     proc.on('close', (code) => {
       clearTimeout(timer);
       if (code === 0) {
-        const version = stdout.trim().split('\n')[0].trim();
-        resolve({
-          available: true,
+        const out = stdout.trim();
+        const version = out.split('\n')[0]?.trim();
+        settle({
+          installed: true,
+          runnable: true,
           version: version || 'unknown',
+          stdout,
+          stderr,
         });
-      } else {
-        resolve({
-          available: false,
-          error: `Command exited with code ${code}${stderr ? `: ${stderr.trim()}` : ''}`,
-        });
+        return;
       }
+
+      settle({
+        installed: true,
+        runnable: false,
+        stdout,
+        stderr,
+        error: `Command exited with code ${code ?? 'unknown'}${stderr ? `: ${stderr.trim()}` : ''}`,
+      });
     });
 
     proc.on('error', (error) => {
       clearTimeout(timer);
-      resolve({
-        available: false,
+      const errno = error as NodeJS.ErrnoException;
+      const installed = errno.code !== 'ENOENT';
+      settle({
+        installed,
+        runnable: false,
+        stdout,
+        stderr,
         error: error.message,
       });
     });
@@ -94,15 +124,25 @@ async function checkCliAvailable(
 /**
  * Platform installation status
  */
+export interface PlatformRequirement {
+  kind: 'node';
+  requiredMajor: number;
+  currentMajor?: number;
+}
+
 export interface PlatformStatus {
   /** Platform identifier */
   platform: Platform;
-  /** Whether the platform CLI is installed and available */
+  /** Whether the platform CLI is installed (spawnable). */
   installed: boolean;
+  /** Whether the platform CLI probe succeeded (exit 0). */
+  runnable: boolean;
   /** Version string if available */
   version?: string;
   /** Error message if not installed */
   error?: string;
+  /** Runtime/tooling requirements which block runnable=true (e.g. Node major mismatch). */
+  requirements?: PlatformRequirement[];
   /** Whether platform is authenticated (for platforms that require auth) */
   authenticated?: boolean;
   /** Command that was used to detect the platform */
@@ -115,7 +155,7 @@ export interface PlatformStatus {
 export interface PlatformDetectionResult {
   /** Status for each platform */
   platforms: Record<Platform, PlatformStatus>;
-  /** List of installed platforms */
+  /** List of runnable (ready-to-use) platforms */
   installedPlatforms: Platform[];
   /** List of uninstalled platforms */
   uninstalledPlatforms: Platform[];
@@ -215,9 +255,11 @@ export class PlatformDetector {
     const uninstalledPlatforms: Platform[] = [];
 
     for (const [platform, status] of statusMap.entries()) {
-      if (status.installed) {
+      // "installedPlatforms" is semantically "runnable platforms" for GUI onboarding UX.
+      if (status.runnable) {
         installedPlatforms.push(platform);
-      } else {
+      }
+      if (!status.installed) {
         uninstalledPlatforms.push(platform);
       }
     }
@@ -238,21 +280,38 @@ export class PlatformDetector {
       command: c,
     }));
 
+    let installedButNotRunnable: PlatformStatus | null = null;
     for (const candidate of candidates) {
       const result = await checkCliAvailable(candidate, ['--version'], 10_000, env);
-      if (result.available) {
+      if (result.runnable) {
         return {
           platform: 'cursor',
           installed: true,
+          runnable: true,
           version: result.version,
           command: candidate.command,
         };
       }
+
+      if (result.installed && !installedButNotRunnable) {
+        installedButNotRunnable = {
+          platform: 'cursor',
+          installed: true,
+          runnable: false,
+          error: result.error || 'Cursor CLI installed but not runnable',
+          command: [candidate.command, ...(candidate.argsPrefix ?? []), '--version'].join(' '),
+        };
+      }
+    }
+
+    if (installedButNotRunnable) {
+      return installedButNotRunnable;
     }
 
     return {
       platform: 'cursor',
       installed: false,
+      runnable: false,
       error: 'Cursor CLI not found',
     };
   }
@@ -271,21 +330,43 @@ export class PlatformDetector {
       candidates.push({ command: 'npx', argsPrefix: ['--no-install', 'codex'] });
     }
 
+    let installedButNotRunnable: PlatformStatus | null = null;
     for (const candidate of candidates) {
       const result = await checkCliAvailable(candidate, ['--version'], 15_000, env);
-      if (result.available) {
+      if (result.runnable) {
         return {
           platform: 'codex',
           installed: true,
+          runnable: true,
           version: result.version,
           command: candidate.command,
         };
       }
+
+      // For npx fallbacks, only treat as installed when runnable (otherwise npx may exist but codex does not).
+      if (candidate.command === 'npx') {
+        continue;
+      }
+
+      if (result.installed && !installedButNotRunnable) {
+        installedButNotRunnable = {
+          platform: 'codex',
+          installed: true,
+          runnable: false,
+          error: result.error || 'Codex CLI installed but not runnable',
+          command: [candidate.command, ...(candidate.argsPrefix ?? []), '--version'].join(' '),
+        };
+      }
+    }
+
+    if (installedButNotRunnable) {
+      return installedButNotRunnable;
     }
 
     return {
       platform: 'codex',
       installed: false,
+      runnable: false,
       error: 'Codex CLI not found',
     };
   }
@@ -304,21 +385,42 @@ export class PlatformDetector {
       candidates.push({ command: 'npx', argsPrefix: ['--no-install', '@anthropic-ai/claude'] });
     }
 
+    let installedButNotRunnable: PlatformStatus | null = null;
     for (const candidate of candidates) {
       const result = await checkCliAvailable(candidate, ['--version'], 15_000, env);
-      if (result.available) {
+      if (result.runnable) {
         return {
           platform: 'claude',
           installed: true,
+          runnable: true,
           version: result.version,
           command: candidate.command,
         };
       }
+
+      if (candidate.command === 'npx') {
+        continue;
+      }
+
+      if (result.installed && !installedButNotRunnable) {
+        installedButNotRunnable = {
+          platform: 'claude',
+          installed: true,
+          runnable: false,
+          error: result.error || 'Claude CLI installed but not runnable',
+          command: [candidate.command, ...(candidate.argsPrefix ?? []), '--version'].join(' '),
+        };
+      }
+    }
+
+    if (installedButNotRunnable) {
+      return installedButNotRunnable;
     }
 
     return {
       platform: 'claude',
       installed: false,
+      runnable: false,
       error: 'Claude CLI not found',
     };
   }
@@ -337,21 +439,42 @@ export class PlatformDetector {
       candidates.push({ command: 'npx', argsPrefix: ['--no-install', '@google/gemini-cli'] });
     }
 
+    let installedButNotRunnable: PlatformStatus | null = null;
     for (const candidate of candidates) {
       const result = await checkCliAvailable(candidate, ['--version'], 15_000, env);
-      if (result.available) {
+      if (result.runnable) {
         return {
           platform: 'gemini',
           installed: true,
+          runnable: true,
           version: result.version,
           command: candidate.command,
         };
       }
+
+      if (candidate.command === 'npx') {
+        continue;
+      }
+
+      if (result.installed && !installedButNotRunnable) {
+        installedButNotRunnable = {
+          platform: 'gemini',
+          installed: true,
+          runnable: false,
+          error: result.error || 'Gemini CLI installed but not runnable',
+          command: [candidate.command, ...(candidate.argsPrefix ?? []), '--version'].join(' '),
+        };
+      }
+    }
+
+    if (installedButNotRunnable) {
+      return installedButNotRunnable;
     }
 
     return {
       platform: 'gemini',
       installed: false,
+      runnable: false,
       error: 'Gemini CLI not found',
     };
   }
@@ -391,6 +514,7 @@ export class PlatformDetector {
     }
 
     const errors: string[] = [];
+    let installedButNotRunnable: PlatformStatus | null = null;
 
     // Copilot CLI has had multiple version flags across releases; try a few fast probes.
     const probes: string[][] = [
@@ -403,24 +527,74 @@ export class PlatformDetector {
     for (const candidate of candidates) {
       for (const args of probes) {
         const result = await checkCliAvailable(candidate, args, 15_000, env);
-        if (result.available) {
+        const invocationString = [candidate.command, ...(candidate.argsPrefix ?? []), ...args].join(' ');
+
+        if (result.runnable) {
           return {
             platform: 'copilot',
             installed: true,
+            runnable: true,
             version: result.version,
-            command: [candidate.command, ...(candidate.argsPrefix ?? []), ...args].join(' '),
+            command: invocationString,
           };
         }
+
+        if (result.installed && !installedButNotRunnable) {
+          const requirements: PlatformRequirement[] = [];
+          const combined = `${result.stderr ?? ''}\n${result.stdout ?? ''}`.trim();
+          const nodeReq = this.parseNodeMajorRequirement(combined);
+          if (nodeReq) requirements.push(nodeReq);
+
+          installedButNotRunnable = {
+            platform: 'copilot',
+            installed: true,
+            runnable: false,
+            error: result.error || 'Copilot CLI installed but not runnable',
+            requirements: requirements.length > 0 ? requirements : undefined,
+            command: invocationString,
+          };
+        }
+
         if (result.error) {
-          errors.push(`${[candidate.command, ...(candidate.argsPrefix ?? []), ...args].join(' ')} → ${result.error}`);
+          errors.push(`${invocationString} → ${result.error}`);
         }
       }
+    }
+
+    if (installedButNotRunnable) {
+      return installedButNotRunnable;
     }
 
     return {
       platform: 'copilot',
       installed: false,
+      runnable: false,
       error: errors.length > 0 ? `Copilot CLI not found (last errors: ${errors.slice(0, 2).join(' | ')})` : 'Copilot CLI not found',
+    };
+  }
+
+  private parseNodeMajorRequirement(stderrOrStdout: string): PlatformRequirement | null {
+    if (!stderrOrStdout) return null;
+    const text = stderrOrStdout.replace(/\r/g, '\n');
+
+    // Common Copilot error patterns:
+    // - "requires Node.js v24 or higher"
+    // - "requires Node.js v24+"
+    // - "... requires Node v24"
+    const requiredMatch = text.match(/requires\s+node(?:\.js)?\s+v?(\d+)(?:\+|\b)/i);
+    if (!requiredMatch) return null;
+    const requiredMajor = parseInt(requiredMatch[1] ?? '0', 10);
+    if (!Number.isFinite(requiredMajor) || requiredMajor <= 0) return null;
+
+    // Try to parse current version if present in the error output.
+    const currentMatch = text.match(/current\s+node(?:\.js)?\s+version:\s*v?(\d+)\./i)
+      ?? text.match(/\byou\s+are\s+running\s+node\s+v?(\d+)\./i)
+      ?? text.match(/\bnode\s+v?(\d+)\.\d+\.\d+\b/i);
+    const currentMajor = currentMatch ? parseInt(currentMatch[1] ?? '0', 10) : undefined;
+    return {
+      kind: 'node',
+      requiredMajor,
+      currentMajor: currentMajor && Number.isFinite(currentMajor) && currentMajor > 0 ? currentMajor : undefined,
     };
   }
 

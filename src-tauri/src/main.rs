@@ -2,13 +2,14 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::env;
-use std::net::TcpStream;
+use std::net::{TcpListener, TcpStream};
 use std::path::{Path, PathBuf};
 use std::io::{Read, Write};
 use std::process::Command;
 use std::process::Stdio;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::Duration;
+use serde::Deserialize;
 use tauri::{
     image::Image,
     menu::{MenuBuilder, MenuItemBuilder},
@@ -96,6 +97,107 @@ fn is_loopback_url(url: &Url) -> bool {
         Some("127.0.0.1") | Some("localhost") | Some("::1") | Some("0.0.0.0") => true,
         _ => false,
     }
+}
+
+const PORT_CANDIDATES: [u16; 11] = [3847, 3848, 3849, 3850, 3851, 3852, 3853, 3854, 3855, 3856, 3857];
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct HealthResponse {
+    #[serde(default)]
+    app_id: Option<String>,
+    #[serde(default)]
+    status: Option<String>,
+    #[serde(default)]
+    started_at: Option<String>,
+    #[serde(default)]
+    port: Option<u16>,
+    #[serde(default)]
+    instance_id: Option<String>,
+    #[serde(default)]
+    version: Option<String>,
+}
+
+fn parse_http_json_response(raw: &str) -> Option<(u16, String)> {
+    // Returns (status_code, body)
+    let mut lines = raw.split("\r\n");
+    let status_line = lines.next()?;
+    let code = status_line
+        .split_whitespace()
+        .nth(1)
+        .and_then(|s| s.parse::<u16>().ok())?;
+
+    // Find header/body separator
+    let sep = raw.find("\r\n\r\n")?;
+    let body = raw.get(sep + 4..)?.to_string();
+    Some((code, body))
+}
+
+fn probe_health(port: u16) -> Option<HealthResponse> {
+    let addr = format!("127.0.0.1:{}", port).parse::<std::net::SocketAddr>().ok()?;
+    let mut stream = TcpStream::connect_timeout(&addr, Duration::from_millis(350)).ok()?;
+    let _ = stream.set_read_timeout(Some(Duration::from_millis(600)));
+    let _ = stream.set_write_timeout(Some(Duration::from_millis(600)));
+
+    let req = format!(
+        "GET /health HTTP/1.1\r\nHost: 127.0.0.1:{}\r\nConnection: close\r\n\r\n",
+        port
+    );
+    stream.write_all(req.as_bytes()).ok()?;
+
+    let mut buf: Vec<u8> = Vec::new();
+    let mut chunk = [0u8; 1024];
+    while let Ok(n) = stream.read(&mut chunk) {
+        if n == 0 {
+            break;
+        }
+        buf.extend_from_slice(&chunk[..n]);
+        if buf.len() > 64 * 1024 {
+            // Cap response size; /health should be tiny.
+            break;
+        }
+    }
+
+    let raw = String::from_utf8_lossy(&buf).to_string();
+    let (code, body) = parse_http_json_response(&raw)?;
+    if code != 200 {
+        return None;
+    }
+    serde_json::from_str::<HealthResponse>(&body).ok()
+}
+
+fn select_existing_server_port() -> Option<u16> {
+    let mut best: Option<(String, u16)> = None;
+    for port in PORT_CANDIDATES {
+        if let Some(health) = probe_health(port) {
+            let is_ours =
+                health.app_id.as_deref() == Some("rwm-puppet-master") &&
+                health.status.as_deref() == Some("ok");
+            if !is_ours {
+                continue;
+            }
+            let started = health.started_at.clone().unwrap_or_default();
+            let reported_port = health.port.unwrap_or(port);
+            match &best {
+                None => best = Some((started, reported_port)),
+                Some((best_started, _best_port)) => {
+                    if started > *best_started {
+                        best = Some((started, reported_port));
+                    }
+                }
+            }
+        }
+    }
+    best.map(|(_started, port)| port)
+}
+
+fn select_free_port() -> Option<u16> {
+    for port in PORT_CANDIDATES {
+        if TcpListener::bind(("127.0.0.1", port)).is_ok() {
+            return Some(port);
+        }
+    }
+    None
 }
 
 fn derive_install_root_from_exe(current_exe: &Path) -> Option<PathBuf> {
@@ -200,8 +302,8 @@ fn resolve_embedded_node_and_entry(resource_dir: Option<PathBuf>, current_exe: O
     None
 }
 
-fn try_spawn_gui_server(url: &Url, resource_dir: Option<PathBuf>) -> bool {
-    let port = url.port().unwrap_or(3847).to_string();
+fn try_spawn_gui_server(port: u16, resource_dir: Option<PathBuf>) -> bool {
+    let port = port.to_string();
     let host = "127.0.0.1";
     let home_dir = env::var_os("HOME")
         .or_else(|| env::var_os("USERPROFILE"))
@@ -210,16 +312,6 @@ fn try_spawn_gui_server(url: &Url, resource_dir: Option<PathBuf>) -> bool {
     let install_root = current_exe
         .as_deref()
         .and_then(derive_install_root_from_exe);
-
-    // If the server is already listening, don't spawn another process (prevents duplicate terminals/processes).
-    if let Some(host_str) = url.host_str() {
-        let resolved = if host_str == "localhost" { "127.0.0.1" } else { host_str };
-        if let Ok(addr) = format!("{}:{}", resolved, url.port().unwrap_or(3847)).parse::<std::net::SocketAddr>() {
-            if TcpStream::connect_timeout(&addr, Duration::from_millis(150)).is_ok() {
-                return true;
-            }
-        }
-    }
 
     // Prefer spawning the embedded Node runtime directly, so we do not open terminal windows on Windows
     // and we are not dependent on PATH/PATHEXT resolution during first launch.
@@ -234,6 +326,7 @@ fn try_spawn_gui_server(url: &Url, resource_dir: Option<PathBuf>) -> bool {
             .arg(&port)
             .arg("--host")
             .arg(host)
+            .arg("--strict-port")
             .env("PUPPET_MASTER_NO_OPEN", "1")
             .env("NO_OPEN_BROWSER", "1")
             .env("PUPPET_MASTER_INSTALL_ROOT", &root)
@@ -285,6 +378,7 @@ fn try_spawn_gui_server(url: &Url, resource_dir: Option<PathBuf>) -> bool {
             &port,
             "--host",
             host,
+            "--strict-port",
         ])
             .env("PUPPET_MASTER_NO_OPEN", "1")
             .env("NO_OPEN_BROWSER", "1");
@@ -310,7 +404,7 @@ fn try_spawn_gui_server(url: &Url, resource_dir: Option<PathBuf>) -> bool {
     #[cfg(not(target_os = "windows"))]
     {
         let mut cmd = Command::new("puppet-master");
-        cmd.args(["gui", "--no-open", "--port", &port, "--host", host])
+        cmd.args(["gui", "--no-open", "--port", &port, "--host", host, "--strict-port"])
             .env("PUPPET_MASTER_NO_OPEN", "1")
             .env("NO_OPEN_BROWSER", "1");
         if let Some(root) = &install_root {
@@ -348,6 +442,7 @@ fn try_spawn_gui_server(url: &Url, resource_dir: Option<PathBuf>) -> bool {
                     .arg(&port)
                     .arg("--host")
                     .arg(host)
+                    .arg("--strict-port")
                     .env("PUPPET_MASTER_NO_OPEN", "1")
                     .env("NO_OPEN_BROWSER", "1");
                 if let Some(root) = &install_root {
@@ -370,7 +465,7 @@ fn try_spawn_gui_server(url: &Url, resource_dir: Option<PathBuf>) -> bool {
 
         let mut fallback = Command::new(cli);
         fallback
-            .args(["gui", "--no-open", "--port", &port, "--host", host])
+            .args(["gui", "--no-open", "--port", &port, "--host", host, "--strict-port"])
             .env("PUPPET_MASTER_NO_OPEN", "1")
             .env("NO_OPEN_BROWSER", "1");
         if let Some(root) = &install_root {
@@ -842,7 +937,7 @@ fn main() {
             }
 
             // Get the main window (use Io variant; SetupError is not public in tauri)
-            let _window = app
+            let window = app
                 .get_webview_window("main")
                 .ok_or_else(|| {
                     tauri::Error::Io(std::io::Error::new(
@@ -851,7 +946,7 @@ fn main() {
                     ))
                 })?;
 
-            // Always start/ensure the GUI server is running (default: http://127.0.0.1:3847).
+            // Always start/ensure the GUI server is running.
             // We do this in a background thread so the UI event loop is not blocked.
             //
             // IMPORTANT: Do NOT navigate the webview to the backend URL at runtime. Keep the
@@ -867,25 +962,86 @@ fn main() {
                 })?;
 
                 let res_dir = app.path().resource_dir().ok();
+                let app_handle = app.handle().clone();
+                let window_label = window.label().to_string();
                 std::thread::spawn(move || {
-                    // If this is a local URL, try to start the GUI server if it isn't already running.
-                    if is_loopback_url(&url) {
-                        let started = try_spawn_gui_server(&url, res_dir);
-                        if !started {
-                            log::warn!("Failed to start GUI server (puppet-master not found)");
+                    // Desktop app uses deterministic port selection within 3847..3857.
+                    // 1) Reuse an existing Puppet Master server if one is already running.
+                    // 2) Otherwise select the first free port and spawn the backend with --strict-port.
+                    let selected_port = if is_loopback_url(&url) {
+                        if let Some(existing) = select_existing_server_port() {
+                            log::info!("Found existing Puppet Master server on port {}", existing);
+                            existing
+                        } else {
+                            match select_free_port() {
+                                Some(p) => {
+                                    log::info!("Selected free port {}", p);
+                                    let started = try_spawn_gui_server(p, res_dir);
+                                    if !started {
+                                        log::warn!("Failed to start GUI server (puppet-master not found)");
+                                    }
+                                    p
+                                }
+                                None => {
+                                    log::warn!("No free port available in 3847..3857; falling back to 3847");
+                                    let _ = try_spawn_gui_server(3847, res_dir);
+                                    3847
+                                }
+                            }
+                        }
+                    } else {
+                        // Non-loopback URL: do not auto-spawn (could be remote).
+                        url.port().unwrap_or(3847)
+                    };
+
+                    let api_base = if is_loopback_url(&url) {
+                        format!("http://127.0.0.1:{}", selected_port)
+                    } else {
+                        // Best-effort: preserve scheme/host from provided URL.
+                        match url.host_str() {
+                            Some(host) => format!("{}://{}:{}", url.scheme(), host, selected_port),
+                            None => format!("http://127.0.0.1:{}", selected_port),
+                        }
+                    };
+                    // Persist the API base into the bundled frontend and notify listeners.
+                    // Retry briefly in case the webview is not ready to eval yet.
+                    let api_base_js = serde_json::to_string(&api_base).unwrap_or_else(|_| "\"\"".to_string());
+                    let script = format!(
+                        "try {{ localStorage.setItem('rwm-api-base-url', {base}); }} catch (e) {{}}\n\
+                         try {{ window.dispatchEvent(new CustomEvent('rwm-api-base-url-ready', {{ detail: {{ baseUrl: {base} }} }})); }} catch (e) {{}}",
+                        base = api_base_js
+                    );
+                    for attempt in 1..=20 {
+                        let maybe_window = app_handle.get_webview_window(window_label.as_str());
+                        match maybe_window {
+                            Some(w) => match w.eval(script.as_str()) {
+                                Ok(_) => break,
+                                Err(e) => {
+                                    if attempt == 1 {
+                                        log::info!("API base injection eval not ready yet; retrying...");
+                                    }
+                                    if attempt == 20 {
+                                        log::warn!("Failed to inject API base URL into webview: {}", e);
+                                    } else {
+                                        std::thread::sleep(Duration::from_millis(100));
+                                    }
+                                }
+                            },
+                            None => {
+                                if attempt == 20 {
+                                    log::warn!("Failed to inject API base URL: webview window not found");
+                                } else {
+                                    std::thread::sleep(Duration::from_millis(100));
+                                }
+                            }
                         }
                     }
-                    if wait_for_server(&url) {
-                        // Wait for platform routes so wizard won't show "load failed"
-                        wait_for_platform_routes(&url);
-                        // Small extra settle time for backend async setup
+
+                    // Wait for the selected server to be ready before the UI starts firing API calls.
+                    let ready_url = Url::parse(&api_base).unwrap_or(url.clone());
+                    if wait_for_server(&ready_url) {
+                        wait_for_platform_routes(&ready_url);
                         std::thread::sleep(Duration::from_millis(500));
-                        // Intentionally do NOT navigate the webview to the backend URL.
-                        //
-                        // Rationale: On Windows, first-boot navigation to http://127.0.0.1 can be flaky
-                        // (timing/caching/WebView quirks) and has produced "blank UI until tray restart".
-                        // The bundled frontend can talk to the backend via absolute API base URL + CORS,
-                        // so staying on the bundled origin is more reliable.
                         log::info!("GUI server ready; staying on bundled frontend (no runtime navigation)");
                     } else {
                         log::warn!("Server not ready after timeout; staying on bundled frontend");

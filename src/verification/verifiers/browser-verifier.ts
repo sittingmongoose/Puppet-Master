@@ -535,12 +535,13 @@ export class BrowserVerifier {
     page: Page,
     itemId: string
   ): Promise<string> {
-    const screenshotBuffer = await page.screenshot({ fullPage: true });
+    const screenshotBuffer = await page.screenshot({ fullPage: true, type: 'jpeg', quality: 80 });
     const scenarioName = `browser-verify-${Date.now()}`;
     return this.evidenceStore.saveScreenshot(
       itemId,
       screenshotBuffer,
-      scenarioName
+      scenarioName,
+      { extension: 'jpg' }
     );
   }
 

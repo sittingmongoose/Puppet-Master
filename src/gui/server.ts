@@ -11,10 +11,11 @@ import type { Server as HTTPServer } from 'http';
 import http from 'http';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { existsSync } from 'fs';
+import { existsSync, readFileSync } from 'fs';
 import express, { type Express, type Request, type Response, type NextFunction } from 'express';
 import cors from 'cors';
 import { WebSocketServer, WebSocket } from 'ws';
+import { randomBytes, randomUUID } from 'node:crypto';
 import type { EventBus, PuppetMasterEvent } from '../logging/index.js';
 import type { OrchestratorState } from '../types/state.js';
 import type { TierStateManager } from '../core/tier-state-manager.js';
@@ -118,6 +119,9 @@ export class GuiServer {
   private heartbeatInterval: ReturnType<typeof setInterval> | null = null;
   private static readonly HEARTBEAT_INTERVAL_MS = 30000; // 30 seconds
   private static readonly HEARTBEAT_TIMEOUT_MS = 10000; // 10 seconds to respond
+  private readonly startedAtIso: string;
+  private readonly instanceId: string;
+  private readonly appVersion: string;
 
   constructor(config: ServerConfig, eventBus: EventBus) {
     this.config = {
@@ -146,6 +150,9 @@ export class GuiServer {
     };
     this.eventBus = eventBus;
     this.app = express();
+    this.startedAtIso = new Date().toISOString();
+    this.instanceId = GuiServer.generateInstanceId();
+    this.appVersion = GuiServer.readAppVersion();
 
     this.setupMiddleware();
     // setupRoutes is now async, but we can't await in constructor
@@ -455,8 +462,14 @@ export class GuiServer {
     // Health check endpoint
     this.app.get('/health', (_req, res) => {
       res.json({
+        appId: 'rwm-puppet-master',
+        instanceId: this.instanceId,
         status: 'ok',
-        version: '0.1.0',
+        version: this.appVersion,
+        pid: process.pid,
+        startedAt: this.startedAtIso,
+        port: this.config.port,
+        baseDirectory: this.config.baseDirectory,
       });
     });
 
@@ -466,7 +479,7 @@ export class GuiServer {
         const progress = this.orchestratorInstance.getProgress();
         res.json({
           state: progress.state,
-          version: '0.1.0',
+          version: this.appVersion,
           currentPhase: progress.currentPhase,
           currentTask: progress.currentTask,
           currentSubtask: progress.currentSubtask,
@@ -477,7 +490,7 @@ export class GuiServer {
       } else {
         res.json({
           state: 'idle' as OrchestratorState,
-          version: '0.1.0',
+          version: this.appVersion,
           currentPhase: null,
           currentTask: null,
           currentSubtask: null,
@@ -1151,5 +1164,55 @@ export class GuiServer {
    */
   getPort(): number {
     return this.config.port;
+  }
+
+  private static generateInstanceId(): string {
+    try {
+      // Node 16.7+ supports randomUUID().
+      return randomUUID();
+    } catch {
+      return randomBytes(16).toString('hex');
+    }
+  }
+
+  private static readAppVersion(): string {
+    const tryRead = (packageJsonPath: string): string | null => {
+      try {
+        if (!existsSync(packageJsonPath)) return null;
+        const raw = readFileSync(packageJsonPath, 'utf8');
+        const parsed = JSON.parse(raw) as { version?: unknown };
+        return typeof parsed.version === 'string' && parsed.version.trim() ? parsed.version.trim() : null;
+      } catch {
+        return null;
+      }
+    };
+
+    // Prefer installed payload root when available (desktop/Tauri launches).
+    // Install root layouts include an app/package.json (copied during installer build).
+    const installRoot = process.env.PUPPET_MASTER_INSTALL_ROOT || process.env.PUPPET_MASTER_APP_ROOT;
+    if (installRoot) {
+      const v = tryRead(path.join(installRoot, 'app', 'package.json'));
+      if (v) return v;
+    }
+
+    // Development: try current working directory.
+    const cwdVersion = tryRead(path.join(process.cwd(), 'package.json'));
+    if (cwdVersion) return cwdVersion;
+
+    // Fallback: walk up from this module directory looking for package.json.
+    try {
+      let dir = path.dirname(fileURLToPath(import.meta.url));
+      for (let i = 0; i < 8; i++) {
+        const v = tryRead(path.join(dir, 'package.json'));
+        if (v) return v;
+        const next = path.dirname(dir);
+        if (next === dir) break;
+        dir = next;
+      }
+    } catch {
+      // ignore
+    }
+
+    return '0.0.0';
   }
 }

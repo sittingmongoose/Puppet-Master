@@ -434,7 +434,7 @@ describe('BrowserVerifier', () => {
 
       const saveScreenshotSpy = vi
         .spyOn(evidenceStore, 'saveScreenshot')
-        .mockResolvedValue('.puppet-master/evidence/screenshots/TEST-012-screenshot.png');
+        .mockResolvedValue('.puppet-master/evidence/screenshots/TEST-012-screenshot.jpg');
 
       const criterion: BrowserCriterion = {
         id: 'TEST-012',
@@ -456,7 +456,7 @@ describe('BrowserVerifier', () => {
     it('should capture screenshot when explicitly requested', async () => {
       const saveScreenshotSpy = vi
         .spyOn(evidenceStore, 'saveScreenshot')
-        .mockResolvedValue('.puppet-master/evidence/screenshots/TEST-013-screenshot.png');
+        .mockResolvedValue('.puppet-master/evidence/screenshots/TEST-013-screenshot.jpg');
 
       const criterion: BrowserCriterion = {
         id: 'TEST-013',

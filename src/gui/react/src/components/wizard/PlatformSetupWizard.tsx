@@ -78,6 +78,7 @@ export function PlatformSetupWizard({
   const [selectedPlatforms, setSelectedPlatforms] = useState<Platform[]>([]);
   const [installing, setInstalling] = useState<string | null>(null);
   const [installingAll, setInstallingAll] = useState(false);
+  const [installResults, setInstallResults] = useState<Record<string, InstallPlatformResult>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -161,6 +162,7 @@ export function PlatformSetupWizard({
       setInstalling(platform);
       setError(null); // Clear previous errors
       const result = await api.installPlatform(platform);
+      setInstallResults((prev) => ({ ...prev, [platform]: result }));
 
       if (result.success) {
         // Auto-select the newly installed platform
@@ -195,6 +197,7 @@ export function PlatformSetupWizard({
       setInstalling(platform);
       try {
         const result = await api.installPlatform(platform);
+        setInstallResults((prev) => ({ ...prev, [platform]: result }));
         if (!result.success) {
           const errorMsg = formatInstallError(result, PLATFORM_NAMES[platform]);
           // Only add unique errors
@@ -458,8 +461,11 @@ export function PlatformSetupWizard({
             {allPlatforms.map((platform) => {
               const status = platforms[platform];
               const isInstalled = status?.installed ?? false;
+              const isRunnable = status?.runnable ?? false;
               const isSelected = selectedPlatforms.includes(platform);
               const isInstalling = installing === platform;
+              const last = installResults[platform];
+              const nodeReq = status?.requirements?.find((r) => r.kind === 'node');
 
               return (
                 <div
@@ -484,10 +490,14 @@ export function PlatformSetupWizard({
                           {PLATFORM_NAMES[platform]}
                         </label>
                         <StatusBadge
-                          status={isInstalled ? 'complete' : 'error'}
+                          status={isInstalled && isRunnable ? 'complete' : (isInstalled ? 'error' : 'error')}
                           size="sm"
                           showLabel
-                          label={isInstalled ? 'Installed' : 'Not Installed'}
+                          label={
+                            !isInstalled
+                              ? 'Not Installed'
+                              : (isRunnable ? 'Ready' : 'Installed (Not runnable)')
+                          }
                         />
                         {status?.version && (
                           <span className="text-sm text-ink-faded">v{status.version}</span>
@@ -496,13 +506,33 @@ export function PlatformSetupWizard({
                       <p className="text-sm text-ink-faded ml-lg">
                         {PLATFORM_DESCRIPTIONS[platform]}
                       </p>
-                      {status?.error && !isInstalled && (
-                        <p className="text-sm text-hot-magenta ml-lg mt-xs">
+                      {status?.error && (
+                        <p className="text-sm text-hot-magenta ml-lg mt-xs" style={{ whiteSpace: 'pre-line' }}>
                           {status.error}
                         </p>
                       )}
+                      {nodeReq && (
+                        <p className="text-xs text-hot-magenta ml-lg mt-xs">
+                          Requires Node.js v{nodeReq.requiredMajor}+{nodeReq.currentMajor ? ` (current: v${nodeReq.currentMajor})` : ''}.{' '}
+                          Desktop builds bundle Node.js v24.1.0; CLI-only installs must upgrade system Node to {'>='} {nodeReq.requiredMajor}.
+                        </p>
+                      )}
+                      {last && (last.command || last.output || last.error) && (
+                        <div className="ml-lg mt-sm p-sm bg-paper-lined border-medium border-ink-faded">
+                          {last.command && (
+                            <div className="text-xs text-ink-faded">
+                              <span className="font-semibold">Command:</span> <span className="font-mono">{last.command}</span>
+                            </div>
+                          )}
+                          {(last.output || last.error) && (
+                            <pre className="text-xs mt-xs whitespace-pre-wrap break-words">
+                              {last.output?.trim() || last.error?.trim()}
+                            </pre>
+                          )}
+                        </div>
+                      )}
                     </div>
-                    {!isInstalled && (
+                    {(!isInstalled || (isInstalled && !isRunnable)) && (
                       <Button
                         variant="info"
                         size="sm"
@@ -510,7 +540,7 @@ export function PlatformSetupWizard({
                         loading={isInstalling}
                         disabled={isInstalling || installing !== null}
                       >
-                        INSTALL
+                        {isInstalled && !isRunnable ? 'REPAIR' : 'INSTALL'}
                       </Button>
                     )}
                   </div>

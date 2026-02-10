@@ -257,6 +257,24 @@ describe('ClaudeRunner', () => {
       expect(args).toContain('--append-system-prompt');
       expect(args).toContain('Always use TypeScript.');
     });
+
+    it('should include MCP and plugin flags when configured', () => {
+      const request: ExecutionRequest = {
+        prompt: 'Test',
+        workingDirectory: '/tmp',
+        nonInteractive: true,
+        mcpConfig: '/tmp/mcp.json',
+        strictMcpConfig: true,
+        pluginDir: '/tmp/plugins',
+      };
+
+      const args = runner['buildArgs'](request);
+      expect(args).toContain('--mcp-config');
+      expect(args).toContain('/tmp/mcp.json');
+      expect(args).toContain('--strict-mcp-config');
+      expect(args).toContain('--plugin-dir');
+      expect(args).toContain('/tmp/plugins');
+    });
   });
 
   describe('parseOutput', () => {

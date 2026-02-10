@@ -134,69 +134,8 @@ export async function discoverGeminiModels(
  * Parse model list from Gemini CLI output.
  * Handles various output formats (JSON, plain text, table).
  */
-function parseGeminiModelList(output: string): GeminiModel[] {
-  const models: GeminiModel[] = [];
-  const lines = output.trim().split('\n');
-
-  // Try JSON format first
-  try {
-    const json = JSON.parse(output);
-    if (Array.isArray(json)) {
-      for (const item of json) {
-        if (typeof item === 'object' && item !== null && 'id' in item) {
-          models.push({
-            id: String(item.id),
-            label: String(item.label || item.name || item.id),
-            description: typeof item.description === 'string' ? item.description : undefined,
-            preview: typeof item.preview === 'boolean' ? item.preview : undefined,
-          });
-        }
-      }
-      return models;
-    }
-    // Single object with models array
-    if (typeof json === 'object' && 'models' in json && Array.isArray(json.models)) {
-      for (const item of json.models) {
-        if (typeof item === 'object' && item !== null && 'id' in item) {
-          models.push({
-            id: String(item.id),
-            label: String(item.label || item.name || item.id),
-            description: typeof item.description === 'string' ? item.description : undefined,
-            preview: typeof item.preview === 'boolean' ? item.preview : undefined,
-          });
-        }
-      }
-      return models;
-    }
-  } catch {
-    // Not JSON, try text parsing
-  }
-
-  // Parse text/table format
-  for (const line of lines) {
-    if (!line.trim() || line.startsWith('Available') || line.startsWith('Model') || line.startsWith('ID')) {
-      continue;
-    }
-
-    // Try to extract model ID (first word or column)
-    const parts = line.trim().split(/\s+/);
-    if (parts.length > 0) {
-      const id = parts[0];
-      // Skip headers and separators
-      if (id && !id.includes('─') && !id.includes('═') && !id.includes('─') && id !== 'ID') {
-        const isPreview = id.includes('preview') || id.includes('Preview') || line.toLowerCase().includes('preview');
-        models.push({
-          id,
-          label: id,
-          description: parts.slice(1).join(' ') || undefined,
-          preview: isPreview,
-        });
-      }
-    }
-  }
-
-  return models;
-}
+// NOTE: We intentionally do not attempt dynamic model listing via `gemini models` in this project.
+// See discoverGeminiModels() docstring for rationale.
 
 /**
  * Get Gemini models with discovery fallback.

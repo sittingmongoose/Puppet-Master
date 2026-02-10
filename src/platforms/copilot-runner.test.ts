@@ -110,29 +110,28 @@ describe('CopilotRunner', () => {
       expect(args).toContain('--allow-all-paths');
     });
 
-    it('should always include --silent', () => {
+    it('should omit --allow-all-paths when allowAllPaths=false', () => {
       const request: ExecutionRequest = {
         prompt: 'Test prompt',
         workingDirectory: '/tmp',
         nonInteractive: true,
+        allowAllPaths: false,
       };
 
       const args = runner['buildArgs'](request);
-      expect(args).toContain('--silent');
+      expect(args).not.toContain('--allow-all-paths');
     });
 
-    it('should always include --stream off', () => {
+    it('should include --allow-all-urls when allowAllUrls=true', () => {
       const request: ExecutionRequest = {
         prompt: 'Test prompt',
         workingDirectory: '/tmp',
         nonInteractive: true,
+        allowAllUrls: true,
       };
 
       const args = runner['buildArgs'](request);
-      expect(args).toContain('--stream');
-      expect(args).toContain('off');
-      const streamIndex = args.indexOf('--stream');
-      expect(args[streamIndex + 1]).toBe('off');
+      expect(args).toContain('--allow-all-urls');
     });
 
     it('should omit prompt argument for large prompts and rely on stdin', () => {
@@ -172,20 +171,6 @@ describe('CopilotRunner', () => {
       expect(args).not.toContain('-p');
       expect(args).toContain('--allow-all-tools');
       expect(args).toContain('--allow-all-paths');
-      expect(args).toContain('--silent');
-    });
-
-    it('should include --model flag when provided', () => {
-      const request: ExecutionRequest = {
-        prompt: 'Test prompt',
-        workingDirectory: '/tmp',
-        model: 'gpt-4',
-        nonInteractive: true,
-      };
-
-      const args = runner['buildArgs'](request);
-      expect(args).toContain('--model');
-      expect(args).toContain('gpt-4');
     });
 
     it('should build correct args for full request', () => {
@@ -201,9 +186,6 @@ describe('CopilotRunner', () => {
         'Test prompt',
         '--allow-all-tools',
         '--allow-all-paths',
-        '--silent',
-        '--stream',
-        'off',
       ]);
     });
   });
@@ -315,7 +297,7 @@ describe('CopilotRunner', () => {
 
       expect(spawn).toHaveBeenCalledWith(
         'copilot',
-        expect.arrayContaining(['-p', 'Test prompt', '--allow-all-tools', '--allow-all-paths', '--silent', '--stream', 'off']),
+        expect.arrayContaining(['-p', 'Test prompt', '--allow-all-tools', '--allow-all-paths']),
         expect.objectContaining({
           cwd: '/tmp/test',
           stdio: ['pipe', 'pipe', 'pipe'],

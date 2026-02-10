@@ -3,81 +3,43 @@ import { Link } from 'react-router-dom';
 import { Panel } from '@/components/layout';
 import { Button, Input } from '@/components/ui';
 import { StatusBadge } from '@/components/shared';
-import { FolderIcon, MonitorIcon, ClockIcon } from '@/components/icons';
+import { FolderIcon, ClockIcon } from '@/components/icons';
+import { api, getErrorMessage } from '@/lib';
 import type { StatusType } from '@/types';
 
 interface Session {
   id: string;
-  name: string;
   projectName: string;
+  projectPath?: string;
   startedAt: Date;
   endedAt: Date | null;
   status: StatusType;
-  completedItems: number;
-  totalItems: number;
-  platform: string;
+  outcome?: string;
+  iterationsRun: number;
+  phasesCompleted?: number;
+  tasksCompleted?: number;
+  subtasksCompleted?: number;
 }
 
-// Mock data for demonstration
-const MOCK_SESSIONS: Session[] = [
-  {
-    id: 'PM-2026-01-25-10-30-00-001',
-    name: 'Phase 1 Implementation',
-    projectName: 'RWM Puppet Master',
-    startedAt: new Date('2026-01-25T10:30:00'),
-    endedAt: new Date('2026-01-25T12:45:00'),
-    status: 'complete',
-    completedItems: 12,
-    totalItems: 12,
-    platform: 'cursor',
-  },
-  {
-    id: 'PM-2026-01-24-14-20-00-001',
-    name: 'Phase 0 Setup',
-    projectName: 'RWM Puppet Master',
-    startedAt: new Date('2026-01-24T14:20:00'),
-    endedAt: new Date('2026-01-24T16:00:00'),
-    status: 'complete',
-    completedItems: 5,
-    totalItems: 5,
-    platform: 'codex',
-  },
-  {
-    id: 'PM-2026-01-24-09-00-00-001',
-    name: 'Initial Planning',
-    projectName: 'RWM Puppet Master',
-    startedAt: new Date('2026-01-24T09:00:00'),
-    endedAt: null,
-    status: 'error',
-    completedItems: 3,
-    totalItems: 8,
-    platform: 'claude',
-  },
-  {
-    id: 'PM-2026-01-23-15-30-00-001',
-    name: 'Feature Sprint',
-    projectName: 'Other Project',
-    startedAt: new Date('2026-01-23T15:30:00'),
-    endedAt: new Date('2026-01-23T18:00:00'),
-    status: 'complete',
-    completedItems: 7,
-    totalItems: 7,
-    platform: 'cursor',
-  },
-  {
-    id: 'PM-2026-01-23-10-00-00-001',
-    name: 'Bug Fixes',
-    projectName: 'Other Project',
-    startedAt: new Date('2026-01-23T10:00:00'),
-    endedAt: null,
-    status: 'paused',
-    completedItems: 2,
-    totalItems: 4,
-    platform: 'codex',
-  },
-];
-
 type FilterStatus = 'all' | StatusType;
+
+type BackendHistoryResponse = Awaited<ReturnType<typeof api.getHistory>>;
+type BackendHistorySession = BackendHistoryResponse['sessions'][number];
+
+function mapBackendStatusToUi(status: BackendHistorySession['status']): StatusType {
+  switch (status) {
+    case 'running':
+      return 'running';
+    case 'completed':
+      return 'complete';
+    case 'failed':
+      return 'error';
+    case 'stopped':
+      return 'paused';
+    default:
+      return 'pending';
+  }
+}
 
 /**
  * History page - session tracking
@@ -85,6 +47,7 @@ type FilterStatus = 'all' | StatusType;
 export default function HistoryPage() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [filterStatus, setFilterStatus] = useState<FilterStatus>('all');
   const [filterProject, setFilterProject] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -94,15 +57,38 @@ export default function HistoryPage() {
     const fetchSessions = async () => {
       try {
         setLoading(true);
-        // In production, this would call the API
-        // const data = await api.getHistory();
-        // setSessions(data);
-        
-        // Using mock data for now
-        await new Promise((r) => setTimeout(r, 300));
-        setSessions(Array.isArray(MOCK_SESSIONS) ? MOCK_SESSIONS : []);
+        setError(null);
+
+        const data = await api.getHistory().catch((e: unknown) => {
+          throw new Error(getErrorMessage(e, 'Failed to load history'));
+        });
+
+        const raw = Array.isArray(data?.sessions) ? data.sessions : [];
+        const mapped = raw.map((s): Session => {
+          const projectName = s.projectName?.trim()
+            || (s.projectPath ? s.projectPath.split(/[/\\]/).filter(Boolean).pop() ?? 'Unknown Project' : 'Unknown Project');
+          const startedAt = new Date(s.startTime);
+          const endedAt = s.endTime ? new Date(s.endTime) : null;
+          return {
+            id: s.sessionId,
+            projectName,
+            projectPath: s.projectPath,
+            startedAt,
+            endedAt,
+            status: mapBackendStatusToUi(s.status),
+            outcome: s.outcome,
+            iterationsRun: s.iterationsRun ?? 0,
+            phasesCompleted: s.phasesCompleted,
+            tasksCompleted: s.tasksCompleted,
+            subtasksCompleted: s.subtasksCompleted,
+          };
+        });
+
+        setSessions(mapped);
       } catch (err) {
         console.error('[History] Failed to fetch sessions:', err);
+        setError(getErrorMessage(err, 'Failed to load history'));
+        setSessions([]);
       } finally {
         setLoading(false);
       }
@@ -127,9 +113,9 @@ export default function HistoryPage() {
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       return (
-        (session.name ?? '').toLowerCase().includes(query) ||
         (session.id ?? '').toLowerCase().includes(query) ||
-        (session.projectName ?? '').toLowerCase().includes(query)
+        (session.projectName ?? '').toLowerCase().includes(query) ||
+        (session.projectPath ?? '').toLowerCase().includes(query)
       );
     }
     return true;
@@ -160,10 +146,53 @@ export default function HistoryPage() {
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-md">
         <h1 className="font-display text-2xl">History</h1>
-        <Button variant="ghost">
+        <Button
+          variant="ghost"
+          onClick={() => {
+            // Trigger reload by re-running effect logic inline.
+            setLoading(true);
+            setError(null);
+            api.getHistory()
+              .then((data) => {
+                const raw = Array.isArray(data?.sessions) ? data.sessions : [];
+                const mapped = raw.map((s): Session => {
+                  const projectName = s.projectName?.trim()
+                    || (s.projectPath ? s.projectPath.split(/[/\\]/).filter(Boolean).pop() ?? 'Unknown Project' : 'Unknown Project');
+                  const startedAt = new Date(s.startTime);
+                  const endedAt = s.endTime ? new Date(s.endTime) : null;
+                  return {
+                    id: s.sessionId,
+                    projectName,
+                    projectPath: s.projectPath,
+                    startedAt,
+                    endedAt,
+                    status: mapBackendStatusToUi(s.status),
+                    outcome: s.outcome,
+                    iterationsRun: s.iterationsRun ?? 0,
+                    phasesCompleted: s.phasesCompleted,
+                    tasksCompleted: s.tasksCompleted,
+                    subtasksCompleted: s.subtasksCompleted,
+                  };
+                });
+                setSessions(mapped);
+              })
+              .catch((err) => {
+                console.error('[History] Failed to fetch sessions:', err);
+                setError(getErrorMessage(err, 'Failed to refresh history'));
+                setSessions([]);
+              })
+              .finally(() => setLoading(false));
+          }}
+        >
           REFRESH
         </Button>
       </div>
+
+      {error && (
+        <Panel title="Error">
+          <p className="text-hot-magenta break-words">{error}</p>
+        </Panel>
+      )}
 
       {/* Filters */}
       <Panel title="Filters">
@@ -226,7 +255,11 @@ export default function HistoryPage() {
 
       {/* Sessions list */}
       <Panel title={`Sessions (${filteredSessions.length})`}>
-        {filteredSessions.length === 0 ? (
+        {sessionsList.length === 0 ? (
+          <p className="text-ink-faded text-center py-lg">
+            No sessions yet
+          </p>
+        ) : filteredSessions.length === 0 ? (
           <p className="text-ink-faded text-center py-lg">
             No sessions match your filters
           </p>
@@ -256,15 +289,20 @@ interface SessionCardProps {
 }
 
 function SessionCard({ session, formatDuration }: SessionCardProps) {
-  const progress = Math.round((session.completedItems / session.totalItems) * 100);
-  
+  const counts = [
+    session.phasesCompleted != null ? `Phases: ${session.phasesCompleted}` : null,
+    session.tasksCompleted != null ? `Tasks: ${session.tasksCompleted}` : null,
+    session.subtasksCompleted != null ? `Subtasks: ${session.subtasksCompleted}` : null,
+    `Iterations: ${session.iterationsRun}`,
+  ].filter(Boolean).join(' • ');
+
   return (
     <div className="p-md border-medium border-ink-faded hover:border-electric-blue transition-colors">
       <div className="flex flex-wrap items-start justify-between gap-md">
         {/* Session info */}
         <div className="flex-1 min-w-0 break-words">
           <div className="flex items-center gap-sm mb-xs flex-wrap">
-            <h3 className="font-semibold break-words min-w-0">{session.name}</h3>
+            <h3 className="font-semibold break-words min-w-0">{session.projectName}</h3>
             <StatusBadge status={session.status} size="sm" />
           </div>
           <div className="text-sm text-ink-faded space-y-xs min-w-0">
@@ -272,17 +310,14 @@ function SessionCard({ session, formatDuration }: SessionCardProps) {
             <div className="flex flex-wrap items-center gap-md">
               <span className="flex items-center gap-xs break-words">
                 <FolderIcon size="1em" className="flex-shrink-0" />
-                <span className="break-words">{session.projectName}</span>
-              </span>
-              <span className="flex items-center gap-xs">
-                <MonitorIcon size="1em" className="flex-shrink-0" />
-                {session.platform}
+                <span className="break-words">{session.projectPath ?? 'Project path unavailable'}</span>
               </span>
               <span className="flex items-center gap-xs">
                 <ClockIcon size="1em" className="flex-shrink-0" />
                 {formatDuration(session.startedAt, session.endedAt)}
               </span>
             </div>
+            {counts && <div className="text-xs">{counts}</div>}
             <div className="flex items-center gap-sm">
               <span className="text-xs">
                 {session.startedAt.toLocaleDateString()} {session.startedAt.toLocaleTimeString()}
@@ -299,26 +334,6 @@ function SessionCard({ session, formatDuration }: SessionCardProps) {
 
         {/* Progress and actions */}
         <div className="flex flex-col items-end gap-sm">
-          <div className="text-sm text-right">
-            <span className="font-semibold">{session.completedItems}</span>
-            <span className="text-ink-faded">/{session.totalItems}</span>
-            <span className="text-ink-faded ml-sm">({progress}%)</span>
-          </div>
-          
-          {/* Progress bar */}
-          <div className="w-32 h-2 bg-paper-lined overflow-hidden">
-            <div
-              className={`h-full transition-all ${
-                session.status === 'complete'
-                  ? 'bg-neon-green'
-                  : session.status === 'error'
-                  ? 'bg-hot-magenta'
-                  : 'bg-electric-blue'
-              }`}
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-          
           {/* Actions */}
           <div className="flex gap-xs">
             <Link to={`/tiers?session=${session.id}`}>

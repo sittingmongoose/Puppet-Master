@@ -88,7 +88,7 @@ describe('EvidencePage', () => {
     renderEvidence();
     
     await waitFor(() => {
-      expect(screen.getByText('dashboard-screenshot.png')).toBeInTheDocument();
+      expect(screen.getByText('dashboard-screenshot.jpg')).toBeInTheDocument();
       expect(screen.getByText('test-output.log')).toBeInTheDocument();
     });
   });
@@ -97,7 +97,7 @@ describe('EvidencePage', () => {
     renderEvidence();
     
     await waitFor(() => {
-      expect(screen.getByText('dashboard-screenshot.png')).toBeInTheDocument();
+      expect(screen.getByText('dashboard-screenshot.jpg')).toBeInTheDocument();
     });
 
     // Click on Logs category
@@ -105,7 +105,7 @@ describe('EvidencePage', () => {
     
     // Only log files should be visible
     await waitFor(() => {
-      expect(screen.queryByText('dashboard-screenshot.png')).not.toBeInTheDocument();
+      expect(screen.queryByText('dashboard-screenshot.jpg')).not.toBeInTheDocument();
       expect(screen.getByText('test-output.log')).toBeInTheDocument();
     });
   });
@@ -114,11 +114,11 @@ describe('EvidencePage', () => {
     renderEvidence();
     
     await waitFor(() => {
-      expect(screen.getByText('dashboard-screenshot.png')).toBeInTheDocument();
+      expect(screen.getByText('dashboard-screenshot.jpg')).toBeInTheDocument();
     });
 
     // Click on a file
-    fireEvent.click(screen.getByText('dashboard-screenshot.png'));
+    fireEvent.click(screen.getByText('dashboard-screenshot.jpg'));
     
     // Preview should show file details
     expect(screen.getByText('Name:')).toBeInTheDocument();
@@ -130,11 +130,11 @@ describe('EvidencePage', () => {
     renderEvidence();
     
     await waitFor(() => {
-      expect(screen.getByText('dashboard-screenshot.png')).toBeInTheDocument();
+      expect(screen.getByText('dashboard-screenshot.jpg')).toBeInTheDocument();
     });
 
     // Select a file
-    fireEvent.click(screen.getByText('dashboard-screenshot.png'));
+    fireEvent.click(screen.getByText('dashboard-screenshot.jpg'));
     
     expect(screen.getByRole('button', { name: /DOWNLOAD/i })).toBeInTheDocument();
   });
@@ -143,7 +143,7 @@ describe('EvidencePage', () => {
     renderEvidence();
     
     await waitFor(() => {
-      expect(screen.getByText('dashboard-screenshot.png')).toBeInTheDocument();
+      expect(screen.getByText('dashboard-screenshot.jpg')).toBeInTheDocument();
     });
 
     // Files with status should have badges

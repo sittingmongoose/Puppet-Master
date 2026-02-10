@@ -42,7 +42,7 @@ const CATEGORIES: EvidenceCategory[] = [
 
 // Mock data for demonstration
 const MOCK_FILES: EvidenceFile[] = [
-  { id: '1', name: 'dashboard-screenshot.png', type: 'screenshot', size: 245000, createdAt: new Date('2026-01-25T10:30:00'), tierId: 'T01-S01', status: 'complete' },
+  { id: '1', name: 'dashboard-screenshot.jpg', type: 'screenshot', size: 245000, createdAt: new Date('2026-01-25T10:30:00'), tierId: 'T01-S01', status: 'complete' },
   { id: '2', name: 'test-output.log', type: 'log', size: 12500, createdAt: new Date('2026-01-25T10:31:00'), tierId: 'T01-S01', status: 'complete' },
   { id: '3', name: 'gate-report-T01.json', type: 'report', size: 5200, createdAt: new Date('2026-01-25T10:32:00'), tierId: 'T01', status: 'complete' },
   { id: '4', name: 'browser-trace.zip', type: 'trace', size: 1250000, createdAt: new Date('2026-01-25T10:33:00'), tierId: 'T01-S02', status: 'error' },

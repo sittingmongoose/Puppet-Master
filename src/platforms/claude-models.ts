@@ -5,9 +5,10 @@
  *
  * Model Aliases:
  * - Claude Code supports friendly aliases that point to the latest stable version
+ * - "default" -> Claude Sonnet 4.5 (recommended default)
  * - "sonnet" -> Claude Sonnet 4.5 (latest)
- * - "opus" -> Claude Opus 4.5 (latest)
- * - "haiku" -> Claude Haiku 4.5 (latest)
+ * - "opus" -> Claude Opus 4.6 (latest)
+ * - "haiku" -> Claude Haiku (latest)
  * - Suffix [1m] for 1 million token context window
  * - "opusplan" for hybrid planning (Opus for planning, Sonnet for execution)
  *
@@ -38,29 +39,36 @@ export interface ClaudeModel {
 export const CLAUDE_MODELS: ClaudeModel[] = [
   // Aliases (recommended for most users)
   {
+    id: 'default',
+    label: 'Default (Recommended, Sonnet v4.5 alias)',
+    description: 'Claude Code default model alias (currently Sonnet 4.5)',
+    alias: true,
+    contextWindow: '200K',
+  },
+  {
     id: 'sonnet',
-    label: 'Sonnet (Recommended, v4.5 alias)',
+    label: 'Sonnet (v4.5 alias)',
     description: 'Latest Claude Sonnet - fast, accurate, balanced cost',
     alias: true,
     contextWindow: '200K',
   },
   {
     id: 'opus',
-    label: 'Opus (v4.5 alias)',
+    label: 'Opus (v4.6 alias)',
     description: 'Latest Claude Opus - highest capability for complex reasoning',
     alias: true,
     contextWindow: '200K',
   },
   {
     id: 'haiku',
-    label: 'Haiku (v4.5 alias)',
+    label: 'Haiku (alias)',
     description: 'Fastest, most affordable model for simple tasks',
     alias: true,
     contextWindow: '200K',
   },
   {
     id: 'opusplan',
-    label: 'Opus Plan (Opus v4.5 + Sonnet v4.5)',
+    label: 'Opus Plan (Opus v4.6 + Sonnet v4.5)',
     description: 'Hybrid mode: Opus for planning, Sonnet for execution',
     alias: true,
     contextWindow: '200K',
@@ -84,21 +92,21 @@ export const CLAUDE_MODELS: ClaudeModel[] = [
 
   // Specific model versions (for reproducibility)
   {
-    id: 'claude-sonnet-4-5-20250929',
-    label: 'Claude Sonnet 4.5',
-    description: 'Specific Sonnet 4.5 version (claude-sonnet-4-5-20250929)',
+    id: 'claude-sonnet-4-5',
+    label: 'Claude Sonnet 4.5 (Pinned)',
+    description: 'Pinned Sonnet 4.5 model ID (claude-sonnet-4-5)',
     contextWindow: '200K',
   },
   {
-    id: 'claude-opus-4-5-20251101',
-    label: 'Claude Opus 4.5',
-    description: 'Specific Opus 4.5 version (claude-opus-4-5-20251101)',
+    id: 'claude-opus-4-6',
+    label: 'Claude Opus 4.6 (Pinned)',
+    description: 'Pinned Opus 4.6 model ID (claude-opus-4-6)',
     contextWindow: '200K',
   },
   {
-    id: 'claude-haiku-4-5-20251001',
-    label: 'Claude Haiku 4.5',
-    description: 'Specific Haiku 4.5 version (claude-haiku-4-5-20251001)',
+    id: 'claude-haiku-4-5',
+    label: 'Claude Haiku 4.5 (Pinned)',
+    description: 'Pinned Haiku 4.5 model ID (claude-haiku-4-5)',
     contextWindow: '200K',
   },
 
@@ -149,5 +157,5 @@ export const KNOWN_CLAUDE_MODELS: readonly string[] = CLAUDE_MODELS.map(m => m.i
  * @returns Default model ID
  */
 export function getDefaultClaudeModel(): string {
-  return 'sonnet';
+  return 'default';
 }

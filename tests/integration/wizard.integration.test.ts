@@ -21,6 +21,10 @@ import * as os from 'node:os';
 import request from 'supertest';
 import { EventBus } from '../../src/logging/event-bus.js';
 import { GuiServer } from '../../src/gui/server.js';
+import { canListenOnLoopback } from '../../src/test-helpers/net-availability.js';
+
+const NET_OK = await canListenOnLoopback();
+const describeNet = NET_OK ? describe : describe.skip;
 
 /**
  * Test context for wizard integration tests.
@@ -73,7 +77,7 @@ async function cleanupTestContext(ctx: WizardTestContext): Promise<void> {
   }
 }
 
-describe('Wizard Integration Tests', () => {
+describeNet('Wizard Integration Tests', () => {
   let ctx: WizardTestContext;
 
   beforeEach(async () => {

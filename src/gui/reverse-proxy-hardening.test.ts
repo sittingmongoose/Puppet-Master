@@ -14,8 +14,12 @@ import { tmpdir } from 'node:os';
 import request from 'supertest';
 import { GuiServer } from './server.js';
 import { EventBus } from '../logging/event-bus.js';
+import { canListenOnLoopback } from '../test-helpers/net-availability.js';
 
-describe('reverse-proxy hardening', () => {
+const NET_OK = await canListenOnLoopback();
+const describeNet = NET_OK ? describe : describe.skip;
+
+describeNet('reverse-proxy hardening', () => {
   let testDir: string;
   let server: GuiServer;
   let eventBus: EventBus;

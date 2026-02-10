@@ -50,6 +50,7 @@ const PLATFORM_DISPLAY_NAMES: Record<string, string> = {
   claude: 'Claude Code',
   gemini: 'Gemini',
   copilot: 'GitHub Copilot',
+  github: 'GitHub (gh)',
 };
 
 /**
@@ -68,6 +69,7 @@ export default function LoginPage() {
   const [loginAuthUrls, setLoginAuthUrls] = useState<Record<string, string>>({});
   const [gitInfo, setGitInfo] = useState<GitInfo | null>(null);
   const [githubAuthStatus, setGithubAuthStatus] = useState<'authenticated' | 'not_authenticated' | null>(null);
+  const [githubInfo, setGithubInfo] = useState<PlatformAuthInfo | null>(null);
 
   // Fetch auth status on mount
   useEffect(() => {
@@ -87,8 +89,10 @@ export default function LoginPage() {
     const fetchGithubStatus = async () => {
       try {
         const data = await api.getLoginStatusForPlatform('github');
+        setGithubInfo(data as unknown as PlatformAuthInfo);
         setGithubAuthStatus(data.status === 'authenticated' ? 'authenticated' : 'not_authenticated');
       } catch {
+        setGithubInfo(null);
         setGithubAuthStatus('not_authenticated');
       }
     };
@@ -262,7 +266,7 @@ export default function LoginPage() {
       <Panel title="Platforms">
         <HelpText {...helpContent.login.platformStatus} />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md mt-md">
-          {platforms.map((platform) => (
+          {(githubInfo ? [githubInfo, ...platforms] : platforms).map((platform) => (
             <PlatformCard
               key={platform.platform}
               platform={platform}
@@ -460,6 +464,7 @@ function PlatformCard({ platform, statusType, isLoggingIn, isLoggingOut, loginMe
     claude: <BrainIcon size="1.5em" />,
     gemini: <SparkleIcon size="1.5em" />,
     copilot: <ArmIcon size="1.5em" />,
+    github: <PackageIcon size="1.5em" />,
   };
 
   const icon = platformIcons[platform.platform] || <PackageIcon size="1.5em" />;
@@ -480,7 +485,7 @@ function PlatformCard({ platform, statusType, isLoggingIn, isLoggingOut, loginMe
         <StatusBadge status={statusType} size="sm" />
       </div>
 
-      <p className="text-sm text-ink-faded mb-md line-clamp-2">
+      <p className="text-sm text-ink-faded mb-md" style={{ whiteSpace: 'pre-line' }}>
         {platform.details}
       </p>
 

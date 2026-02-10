@@ -27,7 +27,12 @@ export interface PlatformConfig {
   escalation: 'phase' | 'task' | 'subtask' | null;
   permissionMode?: 'default' | 'acceptEdits' | 'plan' | 'dontAsk' | 'bypassPermissions';
   allowedTools?: string;
+  mcpConfig?: string;
+  strictMcpConfig?: boolean;
+  pluginDir?: string;
   outputFormat?: 'text' | 'json' | 'stream-json';
+  inputFormat?: 'text' | 'stream-json';
+  jsonSchema?: string;
 }
 
 /**
@@ -331,7 +336,12 @@ export class PlatformRouter {
           escalation: template.escalation,
           permissionMode: template.permissionMode,
           allowedTools: template.allowedTools,
+          mcpConfig: template.mcpConfig,
+          strictMcpConfig: template.strictMcpConfig,
+          pluginDir: template.pluginDir,
           outputFormat: template.outputFormat,
+          inputFormat: template.inputFormat,
+          jsonSchema: template.jsonSchema,
       },
       reason: `complexity_routing_fallback(${complexity}/${taskType}->${modelLevel})`,
     };
@@ -357,7 +367,12 @@ export class PlatformRouter {
       escalation: tierConfig.escalation,
       permissionMode: tierConfig.permissionMode,
       allowedTools: tierConfig.allowedTools,
+      mcpConfig: tierConfig.mcpConfig,
+      strictMcpConfig: tierConfig.strictMcpConfig,
+      pluginDir: tierConfig.pluginDir,
       outputFormat: tierConfig.outputFormat,
+      inputFormat: tierConfig.inputFormat,
+      jsonSchema: tierConfig.jsonSchema,
     };
   }
 
@@ -378,7 +393,12 @@ export class PlatformRouter {
       escalation: tierConfig.escalation,
       permissionMode: tierConfig.permissionMode,
       allowedTools: tierConfig.allowedTools,
+      mcpConfig: tierConfig.mcpConfig,
+      strictMcpConfig: tierConfig.strictMcpConfig,
+      pluginDir: tierConfig.pluginDir,
       outputFormat: tierConfig.outputFormat,
+      inputFormat: tierConfig.inputFormat,
+      jsonSchema: tierConfig.jsonSchema,
     };
   }
 

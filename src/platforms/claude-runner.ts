@@ -99,6 +99,7 @@ export class ClaudeRunner extends BasePlatformRunner {
    * - --output-format: text | json | stream-json when specified
    * - --model, --max-turns
    * - --permission-mode, --allowedTools when provided (explicit config only)
+   * - --mcp-config, --strict-mcp-config, --plugin-dir when provided (explicit config only)
    */
   protected buildArgs(request: ExecutionRequest): string[] {
     const args: string[] = [];
@@ -143,6 +144,11 @@ export class ClaudeRunner extends BasePlatformRunner {
       args.push('--output-format', request.outputFormat);
     }
 
+    // Input format (text | stream-json). Only set when stream-json is requested.
+    if (request.nonInteractive && request.inputFormat === 'stream-json') {
+      args.push('--input-format', 'stream-json');
+    }
+
     // Permission mode - use plan mode when planMode is requested
     // Verified: Claude Code CLI supports --permission-mode plan flag
     // Documentation: https://code.claude.com/docs/en/cli-reference
@@ -161,6 +167,20 @@ export class ClaudeRunner extends BasePlatformRunner {
     // Allowed tools (comma-separated; only when explicitly configured)
     if (request.allowedTools && request.allowedTools.trim()) {
       args.push('--allowedTools', request.allowedTools.trim());
+    }
+
+    // MCP config and plugins (only when explicitly configured)
+    if (request.mcpConfig && request.mcpConfig.trim()) {
+      args.push('--mcp-config', request.mcpConfig.trim());
+      if (request.strictMcpConfig === true) {
+        args.push('--strict-mcp-config');
+      }
+    } else if (request.strictMcpConfig === true) {
+      // Strict mode without config path is meaningless; ignore.
+    }
+
+    if (request.pluginDir && request.pluginDir.trim()) {
+      args.push('--plugin-dir', request.pluginDir.trim());
     }
 
     // Optional system prompt append (CLI reference: --append-system-prompt)
@@ -186,11 +206,6 @@ export class ClaudeRunner extends BasePlatformRunner {
     // P0: Include partial streaming events (requires stream-json and print mode)
     if (request.includePartialMessages && request.outputFormat === 'stream-json' && request.nonInteractive) {
       args.push('--include-partial-messages');
-    }
-
-    // P0: Input format for agent chaining (print mode only)
-    if (request.inputFormat && request.inputFormat === 'stream-json' && request.nonInteractive) {
-      args.push('--input-format', 'stream-json');
     }
 
     // P0: System prompt file (replaces entire prompt, print mode only)

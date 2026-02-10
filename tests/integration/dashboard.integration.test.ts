@@ -23,6 +23,10 @@ import { WebSocket } from 'ws';
 import { EventBus } from '../../src/logging/event-bus.js';
 import { GuiServer } from '../../src/gui/server.js';
 import type { PuppetMasterEvent } from '../../src/logging/index.js';
+import { canListenOnLoopback } from '../../src/test-helpers/net-availability.js';
+
+const NET_OK = await canListenOnLoopback();
+const describeNet = NET_OK ? describe : describe.skip;
 
 /**
  * Test context for dashboard integration tests.
@@ -74,7 +78,7 @@ async function cleanupTestContext(ctx: DashboardTestContext): Promise<void> {
   }
 }
 
-describe('Dashboard Integration Tests', () => {
+describeNet('Dashboard Integration Tests', () => {
   let ctx: DashboardTestContext;
 
   beforeEach(async () => {

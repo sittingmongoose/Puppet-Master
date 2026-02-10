@@ -73,14 +73,18 @@ export class EvidenceStore {
    * @param itemId - Item ID
    * @param data - Screenshot data as Buffer
    * @param scenarioName - Scenario name (e.g., 'login-success')
+   * @param options - Optional options (e.g. extension)
    * @returns Path to the saved screenshot
    */
   async saveScreenshot(
     itemId: string,
     data: Buffer,
-    scenarioName: string
+    scenarioName: string,
+    options?: { extension?: 'jpg' | 'jpeg' | 'png' }
   ): Promise<string> {
-    const path = this.generatePath('screenshot', itemId, `${scenarioName}.png`);
+    const requestedExt = options?.extension ?? 'jpg';
+    const ext = requestedExt === 'jpeg' ? 'jpg' : requestedExt;
+    const path = this.generatePath('screenshot', itemId, `${scenarioName}.${ext}`);
     await this.ensureDirectories();
     await fs.writeFile(path, data);
     return path;
