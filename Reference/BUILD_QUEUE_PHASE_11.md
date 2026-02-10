@@ -69,6 +69,7 @@ This phase consolidates outstanding issues and risks discovered by multiple revi
 | GUI e.map hardening round 2 | ✅ PASS | 2026-01-27 | Projects: `projectsToShow` + `safeList` guards; malformed `listProjects` unit tests (null, undefined, `{}`, `{ projects: null }`). UsageChart: `safeData` guard, empty handling. API `listProjects` JSDoc. Audited Doctor, Tiers, Evidence, Coverage, Metrics, Dashboard — already guarded. Root `npm run typecheck` PASS. `.test-cache`/`.test-quota` not present. |
 | Platform Wizard Cursor Login UI update | ✅ PASS | 2026-02-10 | Fixed wizard not updating to show "Authenticated" after Cursor CLI login. Added `quiet` param to loadAuthStatus for polling (no UI flash); added CHECK STATUS button for manual refresh; added ~/.cursor/auth.json to Cursor auth paths. SSH verified: ~/.config/cursor/auth.json present on Linux, API returns authenticated. Deleted `.test-cache`/`.test-quota` (none found). |
 | Platform Wizard Cursor Login follow-up | ✅ PASS | 2026-02-10 | CHECK STATUS flashed screen and did not update status. Fix: use loadAuthStatus(true) for CHECK STATUS (no flash); pass HOME/USERPROFILE explicitly when Tauri spawns backend so auth-status.ts sees ~/.config/cursor/auth.json in desktop-launch context. |
+| better-sqlite3 Ledger ABI fix | ✅ PASS | 2026-02-10 | Fixed Ledger page better-sqlite3 NODE_MODULE_VERSION mismatch (115 vs 137) on Windows/macOS/Linux. Isolated PATH for npm ci/rebuild, forced build-from-source, delete stale build dir before rebuild, use bundled Node for Playwright install. SSH verified on all three platforms. |
 
 ### Task status log (PH11-T19)
 Status: PASS  
@@ -204,6 +205,25 @@ Commands run + results:
 - npm test: PASS (181 files, 3119 tests)  
 - npm run gui:test: PASS  
 - rm -rf .test-cache .test-quota .test-quota-*: No such files (none present)  
+If FAIL: N/A  
+
+---
+
+### Task status log (better-sqlite3 Ledger ABI fix)
+Status: PASS  
+Date: 2026-02-10  
+Summary of changes: Fixed Ledger page better-sqlite3 NODE_MODULE_VERSION mismatch (115 vs 137) on Windows/macOS/Linux. Root cause: prebuild-install downloaded wrong-ABI prebuilts; PATH pollution allowed system Node to leak into node-gyp. Fix: isolated PATH to put bundled Node first for npm ci/rebuild; set npm_config_build_from_source=true to force node-gyp; delete node_modules/better-sqlite3/build before rebuild; use bundled node + npx for Playwright install instead of system npx.  
+Files changed:  
+- scripts/build-installer.ts  
+- Reference/BUILD_QUEUE_PHASE_11.md  
+Commands run + results:  
+- npm run typecheck: PASS  
+- npm test -- src/state/event-ledger.test.ts: PASS  
+- npm run build:linux: PASS (better-sqlite3 ABI verified: modules 137, Node 24.1.0)  
+- SSH Linux (192.168.50.72): better-sqlite3 OK  
+- SSH macOS (192.168.50.115): better-sqlite3 OK  
+- SSH Windows (192.168.50.253): better-sqlite3 OK (bundled node)  
+- .test-cache/.test-quota: none found (deleted per plan)  
 If FAIL: N/A  
 
 

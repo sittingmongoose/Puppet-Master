@@ -102,12 +102,17 @@ function getExtraPathDirectories(home: string, npmGlobalBin: string): string[] {
     const programData = process.env['ProgramData'] || process.env['PROGRAMDATA'] || 'C:\\ProgramData';
     return [
       ...base,
-      // npm default global bin on Windows
+      // npm default global bin on Windows (Codex, Gemini, etc.)
       appData ? join(appData, 'npm') : '',
       join(programFiles, 'GitHub CLI'),
       localAppData ? join(localAppData, 'GitHub CLI') : '',
       join(programData, 'chocolatey', 'bin'),
       home ? join(home, 'scoop', 'shims') : '',
+      // Cursor agent CLI locations (spawn ENOENT fix)
+      localAppData ? join(localAppData, 'cursor-agent') : '',
+      localAppData ? join(localAppData, 'Programs', 'cursor', 'resources', 'app', 'bin') : '',
+      localAppData ? join(localAppData, 'Programs', 'Cursor', 'resources', 'app', 'bin') : '',
+      join(programFiles, 'Cursor', 'resources', 'app', 'bin'),
     ].filter(Boolean);
   }
 
@@ -240,7 +245,8 @@ export function createLoginRoutes(): Router {
         const extraPaths = getExtraPathDirectories(home || '', npmGlobalBin);
         const defaultPath = process.platform === 'win32' ? 'C:\\Windows\\System32' : '/usr/bin:/bin';
         const currentPath = process.env.PATH || process.env.Path || defaultPath;
-        const enrichedPath = [currentPath, ...extraPaths].filter(Boolean).join(path.delimiter);
+        // Prepend extra paths so Homebrew/local/npm bins are found when Desktop has minimal PATH
+        const enrichedPath = [...extraPaths, currentPath].filter(Boolean).join(path.delimiter);
         if (isCommandAvailable('gh', enrichedPath)) {
           const hostsPath = getGhHostsPath(home || '');
           if (hostsPath && existsSync(hostsPath)) {
@@ -417,7 +423,8 @@ export function createLoginRoutes(): Router {
         const extraPaths = getExtraPathDirectories(home || '', npmGlobalBin);
         const defaultPath = process.platform === 'win32' ? 'C:\\Windows\\System32' : '/usr/bin:/bin';
         const currentPath = process.env.PATH || process.env.Path || defaultPath;
-        const enrichedPath = [currentPath, ...extraPaths].filter(Boolean).join(path.delimiter);
+        // Prepend extra paths so Homebrew/local/npm bins are found when Desktop has minimal PATH
+        const enrichedPath = [...extraPaths, currentPath].filter(Boolean).join(path.delimiter);
         const env: NodeJS.ProcessEnv = { ...process.env, PATH: enrichedPath };
         if (npmGlobalPrefix) {
           env.HOME = home;
@@ -434,10 +441,15 @@ export function createLoginRoutes(): Router {
           return;
         }
         await new Promise<void>((resolve, reject) => {
-          const child = spawn(logoutCmd.cmd, logoutCmd.args, {
+          // On Windows, use shell so agent.cmd and codex.cmd resolve via PATHEXT
+          const spawnOpts: Parameters<typeof spawn>[2] = {
             stdio: ['ignore', 'pipe', 'pipe'],
             env,
-          });
+          };
+          if (process.platform === 'win32') {
+            spawnOpts.shell = true;
+          }
+          const child = spawn(logoutCmd.cmd, logoutCmd.args, spawnOpts);
           child.on('close', () => resolve()); // Idempotent: already logged out is still success
           child.on('error', reject);
         });
@@ -503,7 +515,8 @@ export function createLoginRoutes(): Router {
       const extraPaths = getExtraPathDirectories(home || '', npmGlobalBin);
       const defaultPath = process.platform === 'win32' ? 'C:\\Windows\\System32' : '/usr/bin:/bin';
       const currentPath = process.env.PATH || process.env.Path || defaultPath;
-      const enrichedPath = [currentPath, ...extraPaths].filter(Boolean).join(path.delimiter);
+      // Prepend extra paths so Homebrew/local/npm bins are found when Desktop has minimal PATH
+      const enrichedPath = [...extraPaths, currentPath].filter(Boolean).join(path.delimiter);
       const env: NodeJS.ProcessEnv = { ...process.env, PATH: enrichedPath };
       if (npmGlobalPrefix) {
         env.HOME = home;

@@ -7,8 +7,8 @@
  * Preview Models:
  * - Models marked with `preview: true` (gemini-3-pro-preview, gemini-3-flash-preview)
  *   require preview features to be enabled in Gemini CLI settings.
- * - Enable preview features via: `general.previewFeatures: true` in `~/.gemini/settings.json`
- *   or use `/settings` command in interactive mode.
+ * - Enable via: Settings → Preview Features in the Gemini CLI, or
+ *   `general.previewFeatures: true` in `~/.gemini/settings.json`.
  * - Preview models may not be available on all account types.
  *
  * Model Selection:

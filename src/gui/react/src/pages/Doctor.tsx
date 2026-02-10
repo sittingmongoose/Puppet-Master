@@ -14,6 +14,7 @@ import {
   ClipboardIcon,
 } from '@/components/icons';
 import { api, APIError, getErrorMessage, type DoctorCheck } from '@/lib';
+import { fetchWithRetry } from '@/hooks/index.js';
 import type { StatusType, Platform } from '@/types';
 
 const CATEGORIES: Array<{ id: string; label: string; icon: ReactNode }> = [
@@ -55,7 +56,7 @@ export default function DoctorPage() {
     if (!ready) return;
     const fetchPlatformStatus = async () => {
       try {
-        const status = await api.getPlatformStatus();
+        const status = await fetchWithRetry(() => api.getPlatformStatus());
         setPlatformStatus(status.platforms);
 
         const installed = status.installedPlatforms as Platform[];
@@ -75,7 +76,7 @@ export default function DoctorPage() {
     const fetchChecks = async () => {
       try {
         if (!checks || checks.length === 0) setLoading(true);
-        const data = await api.getDoctorChecks();
+        const data = await fetchWithRetry(() => api.getDoctorChecks());
         const newChecks = Array.isArray(data.checks) ? data.checks : [];
         setChecks(newChecks);
       } catch (err) {

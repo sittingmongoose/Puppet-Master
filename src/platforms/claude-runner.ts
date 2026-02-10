@@ -69,12 +69,24 @@ export class ClaudeRunner extends BasePlatformRunner {
     const args = this.buildArgs(request);
     const prompt = this.buildPrompt(request);
 
+    const env = { ...process.env };
+    // Opus 4.6 effort level: CLAUDE_CODE_EFFORT_LEVEL=low|medium|high (model-config docs)
+    if (request.reasoningEffort && this.isOpus46Model(request.model)) {
+      const effortMap: Record<string, string> = {
+        Low: 'low',
+        Medium: 'medium',
+        High: 'high',
+      };
+      const level = effortMap[request.reasoningEffort];
+      if (level) {
+        env.CLAUDE_CODE_EFFORT_LEVEL = level;
+      }
+    }
+
     const proc = spawn(this.command, args, {
       cwd: request.workingDirectory,
       stdio: ['pipe', 'pipe', 'pipe'],
-      env: {
-        ...process.env,
-      },
+      env,
     });
 
     // Write prompt to stdin if provided and not already passed via -p flag
@@ -249,6 +261,15 @@ export class ClaudeRunner extends BasePlatformRunner {
     }
 
     return args;
+  }
+
+  /**
+   * Returns true if the model is Opus 4.6 (which supports effort levels).
+   */
+  private isOpus46Model(model?: string): boolean {
+    if (!model) return false;
+    const m = model.toLowerCase();
+    return m === 'opus' || m === 'claude-opus-4-6' || m.startsWith('opus[1m]');
   }
 
   /**

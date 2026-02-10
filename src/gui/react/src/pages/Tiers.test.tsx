@@ -8,6 +8,14 @@ vi.mock('@/lib', () => ({
   api: {
     getTiers: vi.fn(),
   },
+  getErrorMessage: vi.fn((err: unknown, fallback: string) =>
+    err instanceof Error ? err.message : fallback
+  ),
+}));
+
+// Mock fetchWithRetry to avoid retry delays in tests
+vi.mock('@/hooks/index.js', () => ({
+  fetchWithRetry: (fn: () => Promise<unknown>) => fn(),
 }));
 
 const mockApi = lib.api as unknown as {

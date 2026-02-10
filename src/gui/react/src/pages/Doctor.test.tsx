@@ -39,6 +39,10 @@ vi.mock('@/lib', () => ({
   getErrorMessage: vi.fn((err: unknown, fallback: string) => err instanceof Error ? err.message : fallback),
 }));
 
+vi.mock('@/hooks/index.js', () => ({
+  fetchWithRetry: (fn: () => Promise<unknown>) => fn(),
+}));
+
 const mockApi = lib.api as unknown as {
   getDoctorChecks: ReturnType<typeof vi.fn>;
   runDoctorChecks: ReturnType<typeof vi.fn>;

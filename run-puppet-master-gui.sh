@@ -41,6 +41,7 @@ fi
 
 if [ "${1:-}" = "--no-open" ]; then
   echo "Starting server only. Open http://localhost:3847 in your browser."
+  echo "For LAN access: use --host 0.0.0.0 and --relaxed-cors (or GUI_CORS_RELAXED=true)"
   exec node dist/cli/index.js gui --no-open
 fi
 

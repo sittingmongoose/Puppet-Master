@@ -105,13 +105,15 @@ export interface TierConfig {
   platform: Platform;
   model: string;
   /**
-   * Codex-only: Reasoning effort level for models that support it.
+   * Reasoning effort level for models that support it.
    *
    * YAML: reasoning_effort
    * Values: 'Low' | 'Medium' | 'High' | 'Extra high'
    * Notes:
-   * - Only meaningful for Codex CLI with supported models (e.g., gpt-5.2-codex).
-   * - Ignored by other platforms.
+   * - Codex: --reasoning-effort (most models). Extra high supported.
+   * - Claude: CLAUDE_CODE_EFFORT_LEVEL env (Opus 4.6 only). Low, Medium, High.
+   * - Cursor: Effort baked into model ID (e.g., gpt-5.2-codex-high); no separate setting.
+   * - Ignored by Gemini (no reasoning effort).
    */
   reasoningEffort?: 'Low' | 'Medium' | 'High' | 'Extra high';
   /**

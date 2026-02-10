@@ -23,24 +23,37 @@ export class APIError extends Error {
 
 /**
  * Normalize unknown error values into a readable message.
+ * Provides actionable hints for common network errors (e.g. "Failed to fetch").
  */
 export function getErrorMessage(error: unknown, fallback: string): string {
-  if (error instanceof Error && error.message) {
-    return error.message;
-  }
-  if (typeof error === 'string' && error.trim() !== '') {
-    return error;
-  }
-  if (error && typeof error === 'object') {
-    const maybeError = error as { error?: string; message?: string };
-    if (typeof maybeError.error === 'string' && maybeError.error.trim() !== '') {
-      return maybeError.error;
+  const getMsg = (): string => {
+    if (error instanceof Error && error.message) {
+      const msg = error.message;
+      // Provide actionable message for network errors
+      if (
+        msg.toLowerCase().includes('failed to fetch') ||
+        msg.toLowerCase().includes('networkerror') ||
+        msg.toLowerCase().includes('load failed')
+      ) {
+        return 'Backend not reachable. Ensure puppet-master gui is running on port 3847.';
+      }
+      return msg;
     }
-    if (typeof maybeError.message === 'string' && maybeError.message.trim() !== '') {
-      return maybeError.message;
+    if (typeof error === 'string' && error.trim() !== '') {
+      return error;
     }
-  }
-  return fallback;
+    if (error && typeof error === 'object') {
+      const maybeError = error as { error?: string; message?: string };
+      if (typeof maybeError.error === 'string' && maybeError.error.trim() !== '') {
+        return maybeError.error;
+      }
+      if (typeof maybeError.message === 'string' && maybeError.message.trim() !== '') {
+        return maybeError.message;
+      }
+    }
+    return fallback;
+  };
+  return getMsg();
 }
 
 /**
@@ -293,6 +306,18 @@ async function resolveApiBaseUrl(): Promise<string> {
 
   const origin = window.location.origin;
   if (isDirectBackendOrigin(origin)) {
+    // Clear stale localStorage when origin is LAN IP but stored points to loopback
+    const stored = getLocalStorageItem(API_BASE_STORAGE_KEY);
+    if (stored && stored.includes('127.0.0.1')) {
+      try {
+        const originHost = new URL(origin).hostname;
+        if (originHost !== '127.0.0.1' && originHost !== 'localhost') {
+          removeLocalStorageItem(API_BASE_STORAGE_KEY);
+        }
+      } catch {
+        /* ignore parse errors */
+      }
+    }
     resolvedApiBaseUrl = origin;
     setLocalStorageItem(API_BASE_STORAGE_KEY, origin);
     return origin;
@@ -473,9 +498,9 @@ async function fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
       headers,
     });
   } catch (err) {
-    // Desktop (Tauri) may start with an incorrect/stale base URL (port mismatch).
-    // When we see a network error, attempt a bounded repair scan and retry once.
-    if (isApiPath && typeof window !== 'undefined' && isTauriBundledOrigin(window.location.origin) && isNetworkError(err)) {
+    // Network errors (e.g. "Failed to fetch"): attempt repair scan and retry once.
+    // Applies to both browser and Tauri (port mismatch, backend starting, etc.).
+    if (isApiPath && typeof window !== 'undefined' && isNetworkError(err)) {
       const repaired = await repairApiBaseUrlFromHealthScan();
       if (repaired && repaired !== apiBaseUrl) {
         const retryUrl = `${repaired}${url}`;

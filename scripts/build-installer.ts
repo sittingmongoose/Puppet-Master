@@ -746,22 +746,39 @@ async function stageApp(args: Args, repoRoot: string, stageRoot: string, version
     args.platform === 'win32'
       ? path.join(nodeDir, 'node_modules', 'npm', 'bin', 'npm-cli.js')
       : path.join(nodeDir, 'lib', 'node_modules', 'npm', 'bin', 'npm-cli.js');
+  const npxCli =
+    args.platform === 'win32'
+      ? path.join(nodeDir, 'node_modules', 'npm', 'bin', 'npx-cli.js')
+      : path.join(nodeDir, 'lib', 'node_modules', 'npm', 'bin', 'npx-cli.js');
+  // Isolate PATH so bundled Node is used; forces node-gyp to use correct ABI
+  const nodeBinDir = args.platform === 'win32' ? nodeDir : path.join(nodeDir, 'bin');
+  const isolatedEnv = {
+    ...process.env,
+    PATH: `${nodeBinDir}${path.delimiter}${process.env.PATH || ''}`,
+    npm_config_build_from_source: 'true',
+    npm_config_update_notifier: 'false',
+  };
   await run(nodeExe, [npmCli, 'ci', '--omit=dev', '--ignore-scripts', '--no-audit'], {
     cwd: appDir,
     shell: false,
-    env: { ...process.env, npm_config_update_notifier: 'false' },
+    env: isolatedEnv,
   });
 
   // 5b) Rebuild native modules with bundled Node so ABI matches (e.g. better-sqlite3)
-  // Windows: invoke bundled node.exe directly (bypass PATH) so node-gyp uses correct Node ABI
-  // Unix: use PATH with nodeDir/bin so npm/rebuild uses bundled Node
+  // Force build-from-source so prebuild-install skips wrong-ABI prebuilts; use isolated PATH
   console.log('\n🔨 Rebuilding native modules for bundled Node...\n');
+  // Remove stale build output to force clean compile
+  const betterSqliteBuildDir = path.join(appDir, 'node_modules', 'better-sqlite3', 'build');
+  if (existsSync(betterSqliteBuildDir)) {
+    await rm(betterSqliteBuildDir, { recursive: true, force: true });
+    console.log('  ✓ Removed stale better-sqlite3/build for clean rebuild');
+  }
   // Try multiple times with delays to handle transient file locks
   let rebuildSuccess = false;
   const maxRetries = 3;
   
   const runRebuild = async (): Promise<void> => {
-    await run(nodeExe, [npmCli, 'rebuild', '--verbose'], { cwd: appDir, shell: false });
+    await run(nodeExe, [npmCli, 'rebuild', '--verbose'], { cwd: appDir, shell: false, env: isolatedEnv });
   };
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
@@ -820,11 +837,14 @@ process.exit(0);
   }
 
   // 6) Install Playwright Chromium into payload/playwright-browsers
+  // Use bundled node + npx (not system npx) for consistency
   console.log('\n🌐 Installing Playwright Chromium into staged payload...\n');
   await ensureDir(browsersDir);
-  await run('npx', ['playwright', 'install', 'chromium'], {
+  await run(nodeExe, [npxCli, 'playwright', 'install', 'chromium'], {
     cwd: appDir,
+    shell: false,
     env: {
+      ...isolatedEnv,
       PLAYWRIGHT_BROWSERS_PATH: browsersDir,
     },
   });
@@ -959,13 +979,14 @@ async function buildWindowsNsis(args: Args, repoRoot: string, stageRoot: string,
   const artifact = path.join(outDir, `puppet-master-${version}-win-${args.arch}.exe`);
 
   const makensisCmd = resolveMakensisCommand();
+  const nsiDir = path.dirname(nsiPath);
   console.log('\n🧱 Building Windows NSIS installer...\n');
   await run(makensisCmd, [
     `/DVERSION=${version}`,
     `/DOUTFILE=${artifact}`,
     `/DSTAGE_DIR=${path.join(stageRoot, 'payload')}`,
-    nsiPath,
-  ], { cwd: repoRoot, shell: false });
+    path.basename(nsiPath),
+  ], { cwd: nsiDir, shell: false });
 
   return artifact;
 }

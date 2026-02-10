@@ -69,6 +69,7 @@
 | P2-G12 | ℹ️ N/A | Dry-run already exists in CLI commands (start, plan, install) |
 | P2-G13 | ✅ FIXED | Added /api/capabilities/:platform endpoint with detailed probe data |
 | P2-G14 | ✅ FIXED | All GUI issues addressed during React migration - see BUILD_QUEUE_PHASE_GUI.md |
+| Model Discovery & Reasoning Effort | ✅ FIXED | 2026-02-10: Claude trimmed model list + reasoningLevels for Opus 4.6; Codex expanded static list + cache merge; Cursor Windows spawn shell fix; Gemini preview help; reasoning effort UI for Codex + Claude |
 
 ---
 

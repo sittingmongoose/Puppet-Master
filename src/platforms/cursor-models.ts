@@ -320,6 +320,7 @@ export async function discoverCursorModels(
     const proc = spawn(command, ['models'], {
       stdio: ['ignore', 'pipe', 'pipe'],
       env: { ...process.env, CURSOR_NON_INTERACTIVE: '1', PATH: buildEnrichedPath() },
+      shell: process.platform === 'win32',
     });
 
     let stdout = '';

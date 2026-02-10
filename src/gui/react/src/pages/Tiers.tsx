@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { Panel } from '@/components/layout';
 import { Button } from '@/components/ui';
 import { StatusBadge } from '@/components/shared';
-import { api } from '@/lib';
+import { api, getErrorMessage } from '@/lib';
+import { fetchWithRetry } from '@/hooks/index.js';
 import type { StatusType } from '@/types';
 
 interface TierItem {
@@ -31,7 +32,8 @@ export default function TiersPage() {
     const fetchTiers = async () => {
       try {
         setLoading(true);
-        const data = await api.getTiers();
+        setError(null);
+        const data = await fetchWithRetry(() => api.getTiers());
         const list = Array.isArray(data) ? data : [];
         setTiers(list as TierItem[]);
         if (list.length > 0) {
@@ -39,7 +41,8 @@ export default function TiersPage() {
         }
       } catch (err) {
         console.error('[Tiers] Failed to fetch tiers:', err);
-        setError(err instanceof Error ? err.message : 'Failed to load tiers');
+        setError(getErrorMessage(err, 'Failed to load tiers'));
+        setTiers([]);
       } finally {
         setLoading(false);
       }

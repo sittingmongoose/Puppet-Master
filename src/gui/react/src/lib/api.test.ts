@@ -235,3 +235,23 @@ describe('api base URL resolution', () => {
     expect(calledUrls).toEqual(['http://127.0.0.1:3849/api/platforms/first-boot']);
   });
 });
+
+describe('getErrorMessage', () => {
+  it('returns actionable message for Failed to fetch', async () => {
+    const mod = await import('./api.js');
+    const result = mod.getErrorMessage(new Error('Failed to fetch'), 'fallback');
+    expect(result).toBe('Backend not reachable. Ensure puppet-master gui is running on port 3847.');
+  });
+
+  it('returns actionable message for NetworkError', async () => {
+    const mod = await import('./api.js');
+    const result = mod.getErrorMessage(new Error('NetworkError when attempting to fetch resource'), 'fallback');
+    expect(result).toBe('Backend not reachable. Ensure puppet-master gui is running on port 3847.');
+  });
+
+  it('returns original message for other errors', async () => {
+    const mod = await import('./api.js');
+    const result = mod.getErrorMessage(new Error('Something else'), 'fallback');
+    expect(result).toBe('Something else');
+  });
+});

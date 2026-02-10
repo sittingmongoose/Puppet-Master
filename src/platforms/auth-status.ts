@@ -88,6 +88,7 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
       } else if (process.platform === 'darwin') {
         cursorAuthCandidates.push(join(home, 'Library', 'Application Support', 'Cursor', 'auth.json'));
         cursorAuthCandidates.push(join(home, 'Library', 'Application Support', 'cursor', 'auth.json'));
+        cursorAuthCandidates.push(join(home, 'Library', 'Application Support', 'cursor-agent', 'auth.json'));
         cursorAuthCandidates.push(join(home, '.config', 'cursor', 'auth.json'));
         cursorAuthCandidates.push(join(home, '.cursor', 'auth.json'));
       } else {
@@ -112,7 +113,10 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
         join(home, '.cursor'),
         join(home, '.config', 'cursor'),
         ...(process.platform === 'darwin'
-          ? [join(home, 'Library', 'Application Support', 'Cursor', 'User', 'globalStorage')]
+          ? [
+              join(home, 'Library', 'Application Support', 'Cursor', 'User', 'globalStorage'),
+              join(home, 'Library', 'Application Support', 'cursor-agent'),
+            ]
           : []),
       ];
       for (const p of cursorDirs) {

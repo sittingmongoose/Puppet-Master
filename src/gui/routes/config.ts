@@ -96,7 +96,7 @@ function buildStaticModelCatalog(): Record<Platform, Array<{ id: string; label: 
     ),
     claude: removeAuto(
       Array.isArray(claudeStatic) && claudeStatic.length > 0
-        ? claudeStatic.map((m) => ({ id: m.id, label: m.label || m.id }))
+        ? claudeStatic.map((m) => ({ id: m.id, label: m.label || m.id, reasoningLevels: m.reasoningLevels }))
         : []
     ),
     gemini: removeAuto(
@@ -460,6 +460,7 @@ export function createConfigRoutes(baseDirectory?: string): Router {
                 return {
                   id,
                   label: staticModel?.label || id,
+                  reasoningLevels: staticModel?.reasoningLevels,
                 };
               });
               if (mapped.length > 0) return mapped;
@@ -473,7 +474,7 @@ export function createConfigRoutes(baseDirectory?: string): Router {
             console.warn('[Config] Claude static models list is empty');
             return [];
           }
-          return staticModels.map(m => ({ id: m.id, label: m.label || m.id }));
+          return staticModels.map(m => ({ id: m.id, label: m.label || m.id, reasoningLevels: m.reasoningLevels }));
         })(),
         // Gemini: Use dynamic discovery with fallback to static
         (async () => {

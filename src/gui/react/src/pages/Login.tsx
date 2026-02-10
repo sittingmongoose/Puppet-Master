@@ -123,7 +123,6 @@ export default function LoginPage() {
       setLoginMessages((prev) => ({ ...prev, [platform]: '' }));
       const result = await api.logoutPlatform(platform);
       if (result.success) {
-        setLoginMessages((prev) => ({ ...prev, [platform]: 'Logged out.' }));
         if (platform === 'github') setGithubAuthStatus('not_authenticated');
       } else {
         setLoginMessages((prev) => ({ ...prev, [platform]: `Error: ${result.error ?? 'Logout failed'}` }));
@@ -132,7 +131,19 @@ export default function LoginPage() {
       if (platform === 'github') {
         const data = await api.getLoginStatusForPlatform('github');
         setGithubAuthStatus(data.status === 'authenticated' ? 'authenticated' : 'not_authenticated');
+        setGithubInfo(data as unknown as PlatformAuthInfo);
       }
+      // Clear urls/messages so badge and button reflect refreshed state
+      setLoginAuthUrls((prev) => {
+        const next = { ...prev };
+        delete next[platform];
+        return next;
+      });
+      setLoginMessages((prev) => {
+        const next = { ...prev };
+        delete next[platform];
+        return next;
+      });
     } catch (err) {
       setLoginMessages((prev) => ({ ...prev, [platform]: getErrorMessage(err, 'Logout failed') }));
       await fetchAuthStatus();
@@ -161,10 +172,30 @@ export default function LoginPage() {
         }
         // Auto-refresh status after 5 seconds to check if login succeeded
         setTimeout(async () => {
-          await fetchAuthStatus();
+          const data = await api.getLoginStatus();
+          setPlatforms(data.platforms || []);
+          setSummary(data.summary || null);
+          let platStatus: string | undefined;
           if (platform === 'github') {
-            const data = await api.getLoginStatusForPlatform('github');
-            setGithubAuthStatus(data.status === 'authenticated' ? 'authenticated' : 'not_authenticated');
+            const ghData = await api.getLoginStatusForPlatform('github');
+            platStatus = ghData.status;
+            setGithubAuthStatus(ghData.status === 'authenticated' ? 'authenticated' : 'not_authenticated');
+            setGithubInfo(ghData as unknown as PlatformAuthInfo);
+          } else {
+            platStatus = data.platforms?.find((p) => p.platform === platform)?.status;
+          }
+          // Clear login UI when now authenticated so copy-link disappears
+          if (platStatus === 'authenticated') {
+            setLoginAuthUrls((prev) => {
+              const next = { ...prev };
+              delete next[platform];
+              return next;
+            });
+            setLoginMessages((prev) => {
+              const next = { ...prev };
+              delete next[platform];
+              return next;
+            });
           }
         }, 5000);
       } else {
@@ -470,6 +501,8 @@ function PlatformCard({ platform, statusType, isLoggingIn, isLoggingOut, loginMe
   const icon = platformIcons[platform.platform] || <PackageIcon size="1.5em" />;
   const isCursor = platform.platform === 'cursor';
   const canLogout = platform.status === 'authenticated' && LOGOUT_SUPPORTED_PLATFORMS.includes(platform.platform as typeof LOGOUT_SUPPORTED_PLATFORMS[number]);
+  const isClaudeOrGemini = platform.platform === 'claude' || platform.platform === 'gemini';
+  const showNoLogoutInfo = isClaudeOrGemini && platform.status === 'authenticated';
 
   return (
     <div
@@ -496,6 +529,12 @@ function PlatformCard({ platform, statusType, isLoggingIn, isLoggingOut, loginMe
         </p>
       )}
 
+      {showNoLogoutInfo && (
+        <p className="text-xs text-ink-faded mb-md">
+          Claude Code and Gemini do not provide CLI logout. To sign out, manage tokens at the platform console or remove credential files manually.
+        </p>
+      )}
+
       {/* Login message / spinner */}
       {isLoggingIn && (
         <div className="text-sm text-electric-blue mb-md animate-pulse">
@@ -505,7 +544,7 @@ function PlatformCard({ platform, statusType, isLoggingIn, isLoggingOut, loginMe
       {loginMessage && !isLoggingIn && (
         <div className={`text-xs mb-md space-y-xs ${loginMessage.startsWith('Error') ? 'text-hot-magenta' : 'text-neon-green'}`}>
           <div>{loginMessage}</div>
-          {loginAuthUrl && (
+          {loginAuthUrl && !isCursor && (
             <div className="flex flex-wrap items-center gap-xs">
               <a
                 href={loginAuthUrl}
@@ -523,6 +562,11 @@ function PlatformCard({ platform, statusType, isLoggingIn, isLoggingOut, loginMe
                 Copy link
               </Button>
             </div>
+          )}
+          {loginAuthUrl && isCursor && (
+            <p className="text-ink-faded italic">
+              The login link is displayed in the terminal. Copy it from there if the browser did not open.
+            </p>
           )}
         </div>
       )}

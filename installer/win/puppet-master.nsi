@@ -103,12 +103,16 @@ Section "Install"
   
   ; Start Menu and Desktop shortcuts use VBS so GUI launches without a console window
   CreateDirectory "$COMMONPROGRAMS\Puppet Master"
-  CreateShortcut "$COMMONPROGRAMS\Puppet Master\Puppet Master.lnk" "$INSTDIR\Launch-Puppet-Master-GUI.vbs" "" "$INSTDIR\puppet-master.ico" 0
+  CreateShortcut "$COMMONPROGRAMS\Puppet Master\Puppet Master.lnk" "$INSTDIR\Launch-Puppet-Master-GUI.vbs" "$INSTDIR\puppet-master.ico" 0
   ; Debug shortcut: runs with visible console so you can see errors if "nothing happens"
-  CreateShortcut "$COMMONPROGRAMS\Puppet Master\Puppet Master (Debug).lnk" "$INSTDIR\Launch-Puppet-Master-GUI-Debug.bat" "" "$INSTDIR\puppet-master.ico" 0
+  CreateShortcut "$COMMONPROGRAMS\Puppet Master\Puppet Master (Debug).lnk" "$INSTDIR\Launch-Puppet-Master-GUI-Debug.bat" "$INSTDIR\puppet-master.ico" 0
 
   ; Create Desktop shortcut (optional)
-  CreateShortcut "$COMMONDESKTOPDIRECTORY\Puppet Master.lnk" "$INSTDIR\Launch-Puppet-Master-GUI.vbs" "" "$INSTDIR\puppet-master.ico" 0
+  CreateShortcut "$COMMONDESKTOPDIRECTORY\Puppet Master.lnk" "$INSTDIR\Launch-Puppet-Master-GUI.vbs" "$INSTDIR\puppet-master.ico" 0
+
+  ; Notify Windows shell to refresh Start Menu and Desktop so shortcuts appear immediately
+  ; SHCNE_ASSOCCHANGED (0x08000000) triggers a general shell refresh
+  System::Call 'shell32::SHChangeNotify(i 0x08000000, i 0, i 0, i 0) v'
 
   WriteRegStr HKLM "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Puppet Master" "DisplayName" "Puppet Master"
   WriteRegStr HKLM "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Puppet Master" "UninstallString" "$INSTDIR\\Uninstall.exe"
@@ -163,6 +167,9 @@ Section "Uninstall"
   RMDir "$COMMONPROGRAMS\Puppet Master"
   Delete "$COMMONDESKTOPDIRECTORY\Puppet Master.lnk"
   DeleteRegKey HKLM "Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Puppet Master"
+
+  ; Notify Windows shell to refresh Start Menu and Desktop
+  System::Call 'shell32::SHChangeNotify(i 0x08000000, i 0, i 0, i 0) v'
   
   ; Remove installed files
   RMDir /r "$INSTDIR"

@@ -31,6 +31,8 @@ export interface ClaudeModel {
   description?: string; // Brief description
   alias?: boolean; // True if this is an alias (auto-updates)
   contextWindow?: string; // Context window size
+  /** Effort levels for Opus 4.6 only. Per model-config: low, medium, high */
+  reasoningLevels?: ('Low' | 'Medium' | 'High')[];
 }
 
 /**
@@ -58,6 +60,7 @@ export const CLAUDE_MODELS: ClaudeModel[] = [
     description: 'Latest Claude Opus - highest capability for complex reasoning',
     alias: true,
     contextWindow: '200K',
+    reasoningLevels: ['Low', 'Medium', 'High'],
   },
   {
     id: 'haiku',
@@ -88,6 +91,7 @@ export const CLAUDE_MODELS: ClaudeModel[] = [
     description: 'Opus with 1 million token context window',
     alias: true,
     contextWindow: '1M',
+    reasoningLevels: ['Low', 'Medium', 'High'],
   },
 
   // Specific model versions (for reproducibility)
@@ -102,6 +106,7 @@ export const CLAUDE_MODELS: ClaudeModel[] = [
     label: 'Claude Opus 4.6 (Pinned)',
     description: 'Pinned Opus 4.6 model ID (claude-opus-4-6)',
     contextWindow: '200K',
+    reasoningLevels: ['Low', 'Medium', 'High'],
   },
   {
     id: 'claude-haiku-4-5',
@@ -110,13 +115,6 @@ export const CLAUDE_MODELS: ClaudeModel[] = [
     contextWindow: '200K',
   },
 
-  // Legacy models
-  {
-    id: 'claude-3-5-sonnet',
-    label: 'Claude 3.5 Sonnet (Legacy)',
-    description: 'Previous generation Sonnet model',
-    contextWindow: '200K',
-  },
 ];
 
 /**

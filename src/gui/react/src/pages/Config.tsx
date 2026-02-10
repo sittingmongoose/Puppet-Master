@@ -642,9 +642,8 @@ function TiersTab({
     onChange(newConfig);
   };
 
-  // Get reasoning levels for the selected model (Codex only)
+  // Get reasoning levels for the selected model (Codex, Claude Opus 4.6, etc.)
   const getReasoningLevels = (platform: Platform, modelId: string): string[] | undefined => {
-    if (platform !== 'codex') return undefined;
     const platformModels = models[platform] || [];
     const model = platformModels.find(m => m.id === modelId);
     return model?.reasoningLevels;
@@ -761,8 +760,8 @@ function TiersTab({
                   />
                   <HelpText {...helpContent.tiers.model} />
                 </div>
-                {/* Codex-only: Reasoning Effort dropdown */}
-                {currentPlatform === 'codex' && reasoningLevels && reasoningLevels.length > 0 && (
+                {/* Reasoning Effort dropdown (Codex, Claude Opus 4.6, etc.) */}
+                {reasoningLevels && reasoningLevels.length > 0 && (
                   <Select
                     label="Reasoning Effort"
                     value={config[tier].reasoningEffort || ''}

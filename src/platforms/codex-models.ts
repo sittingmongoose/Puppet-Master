@@ -69,6 +69,7 @@ export const CODEX_MODELS: CodexModel[] = [
     description: 'Solid coding model for most tasks',
     optimizedForCode: true,
     costTier: 'medium',
+    reasoningLevels: ['Low', 'Medium', 'High', 'Extra high'],
   },
   {
     id: 'gpt-5.1-codex-mini',
@@ -84,6 +85,14 @@ export const CODEX_MODELS: CodexModel[] = [
     description: 'Previous generation code-optimized model',
     optimizedForCode: true,
     costTier: 'medium',
+    reasoningLevels: ['Low', 'Medium', 'High', 'Extra high'],
+  },
+  {
+    id: 'gpt-5-codex-mini',
+    label: 'GPT-5 Codex Mini',
+    description: 'Smaller, cost-effective version of GPT-5-Codex',
+    optimizedForCode: true,
+    costTier: 'low',
   },
 
   // General-purpose models
@@ -101,6 +110,7 @@ export const CODEX_MODELS: CodexModel[] = [
     description: 'General-purpose agentic model',
     optimizedForCode: false,
     costTier: 'medium',
+    reasoningLevels: ['Low', 'Medium', 'High', 'Extra high'],
   },
   {
     id: 'gpt-5',
@@ -108,6 +118,7 @@ export const CODEX_MODELS: CodexModel[] = [
     description: 'Standard GPT-5 model',
     optimizedForCode: false,
     costTier: 'medium',
+    reasoningLevels: ['Low', 'Medium', 'High', 'Extra high'],
   },
   {
     id: 'gpt-4.1',
@@ -223,10 +234,20 @@ export async function discoverCodexModelsFromCache(): Promise<CodexModel[] | nul
 
 /**
  * Return Codex models, preferring the local Codex cache when present.
+ * When cache exists, merge with static list so cache ids take precedence
+ * but any static-only models (e.g. newly documented) are still available.
  */
 export async function getCodexModelsWithCache(): Promise<CodexModel[]> {
   const cached = await discoverCodexModelsFromCache();
-  if (cached && cached.length > 0) return cached;
+  if (cached && cached.length > 0) {
+    const staticModels = getCodexModels();
+    const cachedIds = new Set(cached.map(m => m.id));
+    const merged = [
+      ...cached,
+      ...staticModels.filter(m => !cachedIds.has(m.id)),
+    ];
+    return merged;
+  }
   return getCodexModels();
 }
 

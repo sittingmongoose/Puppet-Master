@@ -55,7 +55,9 @@ Choose based on your task complexity, quota availability, and required capabilit
 - **Gemini Pro**: Multi-modal, good for complex analysis
 - **Gemini Flash**: Fast and efficient
 
-Cost/performance tradeoff: More capable models cost more but provide better results. Use simpler models for routine tasks, powerful models for critical work.`,
+Cost/performance tradeoff: More capable models cost more but provide better results. Use simpler models for routine tasks, powerful models for critical work.
+
+**Gemini preview models**: To access gemini-3-pro-preview and gemini-3-flash-preview, enable preview features in ~/.gemini/settings.json: \`general.previewFeatures: true\`. Or use Settings → Preview Features in the Gemini CLI.`,
       example: 'auto - Automatic selection\nopus - Maximum capability\nhaiku - Fast and efficient',
     },
     planMode: {

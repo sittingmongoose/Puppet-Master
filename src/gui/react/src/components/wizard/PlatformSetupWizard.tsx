@@ -86,6 +86,7 @@ export function PlatformSetupWizard({
   // Auth step state
   const [authStatuses, setAuthStatuses] = useState<Record<string, PlatformAuthInfo>>({});
   const [authLoading, setAuthLoading] = useState(false);
+  const [checkingStatusFor, setCheckingStatusFor] = useState<string | null>(null);
   const [loggingIn, setLoggingIn] = useState<string | null>(null);
   const [skippedAuths, setSkippedAuths] = useState<Set<string>>(new Set());
   const authPollersRef = useRef<Record<string, ReturnType<typeof setInterval> | null>>({});
@@ -309,6 +310,15 @@ export function PlatformSetupWizard({
       return next;
     });
   };
+
+  const handleCheckStatus = useCallback(async (platform: string) => {
+    setCheckingStatusFor(platform);
+    try {
+      await loadAuthStatus(true);
+    } finally {
+      setCheckingStatusFor(null);
+    }
+  }, [loadAuthStatus]);
 
   const handleSkipAllAuth = async () => {
     // Skip all and save platforms
@@ -656,7 +666,8 @@ export function PlatformSetupWizard({
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => void loadAuthStatus(true)}
+                          onClick={() => void handleCheckStatus(platform)}
+                          loading={checkingStatusFor === platform}
                           disabled={isLoggingIn}
                         >
                           CHECK STATUS
@@ -709,7 +720,8 @@ export function PlatformSetupWizard({
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => void loadAuthStatus(true)}
+                    onClick={() => void handleCheckStatus('copilot')}
+                    loading={checkingStatusFor === 'copilot'}
                     disabled={loggingIn === 'copilot'}
                   >
                     CHECK STATUS

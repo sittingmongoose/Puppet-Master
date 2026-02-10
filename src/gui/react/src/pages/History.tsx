@@ -5,6 +5,7 @@ import { Button, Input } from '@/components/ui';
 import { StatusBadge } from '@/components/shared';
 import { FolderIcon, ClockIcon } from '@/components/icons';
 import { api, getErrorMessage } from '@/lib';
+import { fetchWithRetry } from '@/hooks/index.js';
 import type { StatusType } from '@/types';
 
 interface Session {
@@ -59,7 +60,7 @@ export default function HistoryPage() {
         setLoading(true);
         setError(null);
 
-        const data = await api.getHistory().catch((e: unknown) => {
+        const data = await fetchWithRetry(() => api.getHistory()).catch((e: unknown) => {
           throw new Error(getErrorMessage(e, 'Failed to load history'));
         });
 
@@ -152,7 +153,7 @@ export default function HistoryPage() {
             // Trigger reload by re-running effect logic inline.
             setLoading(true);
             setError(null);
-            api.getHistory()
+            fetchWithRetry(() => api.getHistory())
               .then((data) => {
                 const raw = Array.isArray(data?.sessions) ? data.sessions : [];
                 const mapped = raw.map((s): Session => {

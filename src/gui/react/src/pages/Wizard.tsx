@@ -650,7 +650,7 @@ interface TierConfig {
   planMode?: boolean;
   askMode?: boolean;
   outputFormat?: 'text' | 'json' | 'stream-json';
-  reasoningLevel?: string; // For Codex models
+  reasoningEffort?: string; // For Codex, Claude Opus 4.6, etc.
 }
 
 interface ConfigureStepProps {
@@ -752,10 +752,10 @@ function ConfigureStep({ config, onChange, onNext, onBack }: ConfigureStepProps)
       : [{ value: '', label: 'Default' }];
   };
   
-  // Get reasoning levels for a Codex model
+  // Get reasoning levels for the selected model (Codex, Claude Opus 4.6, etc.)
   const getReasoningLevels = (platform: string, modelId: string): string[] => {
-    if (platform !== 'codex') return [];
-    const model = models.codex?.find(m => m.id === modelId);
+    const platformModels = models[platform] || [];
+    const model = platformModels.find(m => m.id === modelId);
     return model?.reasoningLevels || [];
   };
 
@@ -810,17 +810,19 @@ function ConfigureStep({ config, onChange, onNext, onBack }: ConfigureStepProps)
                     options={getModelsForPlatform(tierConfigs[tier]?.platform || 'cursor')}
                   />
                 )}
-                {/* Task 4.3: Reasoning level selector for Codex models */}
-                {tierConfigs[tier]?.platform === 'codex' && 
-                 getReasoningLevels('codex', tierConfigs[tier]?.model || '').length > 0 && (
+                {/* Reasoning Effort selector (Codex, Claude Opus 4.6, etc.) */}
+                {getReasoningLevels(tierConfigs[tier]?.platform || '', tierConfigs[tier]?.model || '').length > 0 && (
                   <Select
-                    label="Reasoning Level"
-                    value={(tierConfigs[tier] as any)?.reasoningLevel || 'Medium'}
-                    onChange={(e) => updateTier(tier, 'reasoningLevel' as any, e.target.value)}
-                    options={getReasoningLevels('codex', tierConfigs[tier]?.model || '').map(level => ({
-                      value: level,
-                      label: level,
-                    }))}
+                    label="Reasoning Effort"
+                    value={(tierConfigs[tier] as TierConfig)?.reasoningEffort || ''}
+                    onChange={(e) => updateTier(tier, 'reasoningEffort', e.target.value)}
+                    options={[
+                      { value: '', label: 'Default' },
+                      ...getReasoningLevels(tierConfigs[tier]?.platform || '', tierConfigs[tier]?.model || '').map(level => ({
+                        value: level,
+                        label: level,
+                      })),
+                    ]}
                   />
                 )}
                 {/* P1: Plan Mode toggle */}
