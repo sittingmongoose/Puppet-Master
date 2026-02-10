@@ -348,6 +348,12 @@ fn try_spawn_gui_server(port: u16, resource_dir: Option<PathBuf>) -> bool {
 
         if let Some(h) = &home_dir {
             cmd.current_dir(h);
+            // Ensure backend sees user home for auth detection (~/.config/cursor/auth.json etc.)
+            cmd.env("HOME", h);
+            #[cfg(target_os = "windows")]
+            {
+                cmd.env("USERPROFILE", h);
+            }
         }
 
         #[cfg(target_os = "windows")]
@@ -392,6 +398,8 @@ fn try_spawn_gui_server(port: u16, resource_dir: Option<PathBuf>) -> bool {
         }
         if let Some(h) = &home_dir {
             cmd.current_dir(h);
+            cmd.env("USERPROFILE", h);
+            cmd.env("HOME", h);
         }
         cmd.stdin(Stdio::null()).stdout(Stdio::null()).stderr(Stdio::null());
         // Hide console window for cmd.exe.
@@ -417,6 +425,7 @@ fn try_spawn_gui_server(port: u16, resource_dir: Option<PathBuf>) -> bool {
         }
         if let Some(h) = &home_dir {
             cmd.current_dir(h);
+            cmd.env("HOME", h);
         }
         cmd.stdin(Stdio::null()).stdout(Stdio::null()).stderr(Stdio::null());
         let spawn_attempt = cmd.spawn();
@@ -455,6 +464,8 @@ fn try_spawn_gui_server(port: u16, resource_dir: Option<PathBuf>) -> bool {
                 }
                 if let Some(h) = &home_dir {
                     fallback.current_dir(h);
+                    fallback.env("HOME", h);
+                    fallback.env("USERPROFILE", h);
                 }
                 fallback.stdin(Stdio::null()).stdout(Stdio::null()).stderr(Stdio::null());
                 fallback.creation_flags(0x08000000);
@@ -478,6 +489,11 @@ fn try_spawn_gui_server(port: u16, resource_dir: Option<PathBuf>) -> bool {
         }
         if let Some(h) = &home_dir {
             fallback.current_dir(h);
+            fallback.env("HOME", h);
+            #[cfg(target_os = "windows")]
+            {
+                fallback.env("USERPROFILE", h);
+            }
         }
         fallback.stdin(Stdio::null()).stdout(Stdio::null()).stderr(Stdio::null());
         let _ = fallback.spawn();

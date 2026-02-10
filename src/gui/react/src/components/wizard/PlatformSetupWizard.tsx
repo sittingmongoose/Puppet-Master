@@ -656,7 +656,7 @@ export function PlatformSetupWizard({
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => void loadAuthStatus()}
+                          onClick={() => void loadAuthStatus(true)}
                           disabled={isLoggingIn}
                         >
                           CHECK STATUS
@@ -709,7 +709,7 @@ export function PlatformSetupWizard({
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => void loadAuthStatus()}
+                    onClick={() => void loadAuthStatus(true)}
                     disabled={loggingIn === 'copilot'}
                   >
                     CHECK STATUS
