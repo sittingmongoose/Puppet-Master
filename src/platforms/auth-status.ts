@@ -77,7 +77,7 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
 
       // 2. Auth file heuristics (local-only).
       // Observed locations (Feb 2026):
-      // - Linux:   ~/.config/cursor/auth.json
+      // - Linux:   ~/.config/cursor/auth.json (agent login), ~/.cursor/auth.json (some versions)
       // - Windows: %APPDATA%\\Cursor\\auth.json (case varies)
       // - macOS:   Cursor app stores data under ~/Library/Application Support/Cursor/...
       const cursorAuthCandidates: string[] = [];
@@ -89,8 +89,10 @@ export function getPlatformAuthStatus(platform: Platform): PlatformAuthCheckResu
         cursorAuthCandidates.push(join(home, 'Library', 'Application Support', 'Cursor', 'auth.json'));
         cursorAuthCandidates.push(join(home, 'Library', 'Application Support', 'cursor', 'auth.json'));
         cursorAuthCandidates.push(join(home, '.config', 'cursor', 'auth.json'));
+        cursorAuthCandidates.push(join(home, '.cursor', 'auth.json'));
       } else {
         cursorAuthCandidates.push(join(home, '.config', 'cursor', 'auth.json'));
+        cursorAuthCandidates.push(join(home, '.cursor', 'auth.json'));
       }
       for (const p of cursorAuthCandidates) {
         if (existsSync(p)) {

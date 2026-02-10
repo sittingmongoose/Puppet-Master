@@ -127,10 +127,12 @@ export function PlatformSetupWizard({
     }
   };
 
-  const loadAuthStatus = useCallback(async () => {
+  const loadAuthStatus = useCallback(async (quiet = false) => {
     try {
-      setAuthLoading(true);
-      setError(null);
+      if (!quiet) {
+        setAuthLoading(true);
+        setError(null);
+      }
       const result = await api.getLoginStatus();
       const statusMap: Record<string, PlatformAuthInfo> = {};
       for (const info of result.platforms) {
@@ -139,10 +141,14 @@ export function PlatformSetupWizard({
       setAuthStatuses(statusMap);
       return statusMap;
     } catch (err) {
-      const detail = getErrorMessage(err, 'Unknown error');
-      setError(detail.startsWith('Failed to load') ? detail : `Failed to load auth status: ${detail}`);
+      if (!quiet) {
+        const detail = getErrorMessage(err, 'Unknown error');
+        setError(detail.startsWith('Failed to load') ? detail : `Failed to load auth status: ${detail}`);
+      }
     } finally {
-      setAuthLoading(false);
+      if (!quiet) {
+        setAuthLoading(false);
+      }
     }
     return null;
   }, []);
@@ -263,7 +269,8 @@ export function PlatformSetupWizard({
 
         const startedAt = Date.now();
         const pollOnce = async () => {
-          const map = await loadAuthStatus();
+          // Use quiet=true to avoid flashing "Checking authentication status..." every poll
+          const map = await loadAuthStatus(true);
           const status = map?.[platform]?.status;
           if (status === 'authenticated' || status === 'unknown') {
             const t = authPollersRef.current[platform];
@@ -647,6 +654,14 @@ export function PlatformSetupWizard({
                           SKIP
                         </Button>
                         <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => void loadAuthStatus()}
+                          disabled={isLoggingIn}
+                        >
+                          CHECK STATUS
+                        </Button>
+                        <Button
                           variant="info"
                           size="sm"
                           onClick={() => handleLogin(platform)}
@@ -691,6 +706,14 @@ export function PlatformSetupWizard({
                   </p>
                 </div>
                 <div className="flex items-center gap-sm">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => void loadAuthStatus()}
+                    disabled={loggingIn === 'copilot'}
+                  >
+                    CHECK STATUS
+                  </Button>
                   <Button
                     variant="info"
                     size="sm"

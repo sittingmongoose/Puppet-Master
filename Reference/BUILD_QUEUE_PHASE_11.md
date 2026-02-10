@@ -67,6 +67,7 @@ This phase consolidates outstanding issues and risks discovered by multiple revi
 | PH11-T22 | ✅ PASS | 2026-02-10 | Plan 3: Desktop GUI connectivity (port selection + injection + repair), wizard/platform install+auth UX, models/history, JPEG evidence, macOS .pkg output, bundled Node v24.1.0 default |
 | GUI e.map hardening | ✅ PASS | 2026-01-27 | Fixed `e.map is not a function`: hardened API (`getTiers`, `listProjects`, `getDoctorChecks`, `runDoctorChecks`) and all GUI pages (Projects, Tiers, Doctor, History, Evidence, Coverage, Metrics, Dashboard). `.map`/`Object.entries` guarded with `Array.isArray` / array fallbacks. Deleted `.test-cache`/`.test-quota` (none found). `npm run gui:typecheck` and React GUI unit tests pass. |
 | GUI e.map hardening round 2 | ✅ PASS | 2026-01-27 | Projects: `projectsToShow` + `safeList` guards; malformed `listProjects` unit tests (null, undefined, `{}`, `{ projects: null }`). UsageChart: `safeData` guard, empty handling. API `listProjects` JSDoc. Audited Doctor, Tiers, Evidence, Coverage, Metrics, Dashboard — already guarded. Root `npm run typecheck` PASS. `.test-cache`/`.test-quota` not present. |
+| Platform Wizard Cursor Login UI update | ✅ PASS | 2026-02-10 | Fixed wizard not updating to show "Authenticated" after Cursor CLI login. Added `quiet` param to loadAuthStatus for polling (no UI flash); added CHECK STATUS button for manual refresh; added ~/.cursor/auth.json to Cursor auth paths. SSH verified: ~/.config/cursor/auth.json present on Linux, API returns authenticated. Deleted `.test-cache`/`.test-quota` (none found). |
 
 ### Task status log (PH11-T19)
 Status: PASS  
@@ -184,6 +185,24 @@ Commands run + results:
 - npm run gui:build: PASS  
 - npm run build: PASS  
 - CARGO_TARGET_DIR=/tmp/tauri-target cargo check (src-tauri): PASS (requires React GUI dist present)  
+If FAIL: N/A  
+
+---
+
+### Task status log (Platform Wizard Cursor Login UI update)
+Status: PASS  
+Date: 2026-02-10  
+Summary of changes: Fixed Platform Setup Wizard not updating to show "Authenticated" after user completes Cursor CLI login. Root cause: polling used loadAuthStatus which set authLoading=true, causing UI to flash "Checking authentication status..." and potentially blocking state updates. Added loadAuthStatus(quiet) param for polling; added CHECK STATUS button for manual refresh when polling misses transition; added ~/.cursor/auth.json to Cursor auth path candidates (Linux/macOS). SSH verified on Linux (192.168.50.72): ~/.config/cursor/auth.json exists, API returns authenticated.  
+Files changed:  
+- src/platforms/auth-status.ts  
+- src/gui/react/src/components/wizard/PlatformSetupWizard.tsx  
+- src/gui/react/src/components/wizard/PlatformSetupWizard.test.tsx  
+- Reference/BUILD_QUEUE_PHASE_11.md  
+Commands run + results:  
+- npm run typecheck: PASS  
+- npm test: PASS (181 files, 3119 tests)  
+- npm run gui:test: PASS  
+- rm -rf .test-cache .test-quota .test-quota-*: No such files (none present)  
 If FAIL: N/A  
 
 

@@ -331,4 +331,38 @@ describe('PlatformSetupWizard', () => {
     const continueButton = screen.getByText('CONTINUE');
     expect(continueButton).toBeDisabled();
   });
+
+  it('should show CHECK STATUS button when platform is not authenticated', async () => {
+    mockApi.getLoginStatus.mockResolvedValue({
+      platforms: [
+        { platform: 'cursor', status: 'not_authenticated' },
+        { platform: 'claude', status: 'not_authenticated' },
+      ],
+      summary: { total: 2, authenticated: 0, notAuthenticated: 2, skipped: 0 },
+    });
+
+    const user = userEvent.setup();
+    render(
+      <PlatformSetupWizard
+        isOpen={true}
+        onComplete={mockOnComplete}
+        onSkip={mockOnSkip}
+      />
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('NEXT: LOGIN')).toBeInTheDocument();
+    });
+
+    const nextButton = screen.getByText('NEXT: LOGIN');
+    await user.click(nextButton);
+
+    // Wait for auth step to load (CONTINUE in footer) then CHECK STATUS in platform cards
+    await waitFor(() => {
+      expect(screen.getByText('CONTINUE')).toBeInTheDocument();
+    });
+
+    const checkStatusButtons = await screen.findAllByText('CHECK STATUS');
+    expect(checkStatusButtons.length).toBeGreaterThan(0);
+  });
 });
