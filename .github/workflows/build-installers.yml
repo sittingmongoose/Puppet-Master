@@ -125,7 +125,7 @@ jobs:
           curl -fL "https://download.gnome.org/sources/gtk/3.24/gtk-${GTK_VERSION}.tar.xz" -o "/tmp/gtk-${GTK_VERSION}.tar.xz"
           tar -xJf "/tmp/gtk-${GTK_VERSION}.tar.xz" -C /tmp
           pushd "/tmp/gtk-${GTK_VERSION}"
-          meson setup build --prefix="${LINUX_DEPS}/gtk-${GTK_VERSION}" -Dintrospection=disabled
+          meson setup build --prefix="${LINUX_DEPS}/gtk-${GTK_VERSION}" -Dintrospection=false
           meson compile -C build
           meson install -C build
           popd

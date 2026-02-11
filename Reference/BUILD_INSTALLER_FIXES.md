@@ -344,3 +344,17 @@ Commands run + results:
 - npm test: PASS  
 - npm run typecheck: PASS  
 If FAIL: N/A  
+
+---
+
+**Task status log (CI GTK meson option fix)**  
+Status: PASS  
+Date: 2026-02-11  
+Summary of changes: Fixed GTK Meson option syntax by using boolean `-Dintrospection=false` (previous `disabled` value caused a build error).  
+Files changed:  
+- .github/workflows/build-installers.yml  
+- Reference/BUILD_INSTALLER_FIXES.md  
+Commands run + results:  
+- npm test: PASS  
+- npm run typecheck: PASS  
+If FAIL: N/A  
