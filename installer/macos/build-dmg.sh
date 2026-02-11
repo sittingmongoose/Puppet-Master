@@ -6,20 +6,29 @@ VERSION="${1:-0.1.1}"
 APP_NAME="RWM Puppet Master"
 BUNDLE_NAME="RWM Puppet Master.app"
 DMG_NAME="RWM-Puppet-Master-${VERSION}.dmg"
+UNIVERSAL="${PM_MAC_UNIVERSAL:-1}"
 
-# Build the release binary (universal binary for Intel + Apple Silicon)
+# Build the release binary (universal or arm64-only)
 cd ../../puppet-master-rs
 
-# Build for both architectures
-cargo build --release --target aarch64-apple-darwin
-cargo build --release --target x86_64-apple-darwin
+if [ "${UNIVERSAL}" = "1" ]; then
+    # Build for both architectures (universal)
+    cargo build --release --target aarch64-apple-darwin
+    cargo build --release --target x86_64-apple-darwin
 
-# Create universal binary
-mkdir -p target/universal-release
-lipo -create \
-    target/aarch64-apple-darwin/release/puppet-master \
-    target/x86_64-apple-darwin/release/puppet-master \
-    -output target/universal-release/puppet-master
+    # Create universal binary
+    mkdir -p target/universal-release
+    lipo -create \
+        target/aarch64-apple-darwin/release/puppet-master \
+        target/x86_64-apple-darwin/release/puppet-master \
+        -output target/universal-release/puppet-master
+
+    BIN_PATH="target/universal-release/puppet-master"
+else
+    # Arm64-only build (CI default on macos-14)
+    cargo build --release --target aarch64-apple-darwin
+    BIN_PATH="target/aarch64-apple-darwin/release/puppet-master"
+fi
 
 cd ../installer/macos
 
@@ -30,7 +39,7 @@ mkdir -p "${BUNDLE_DIR}/Contents/MacOS"
 mkdir -p "${BUNDLE_DIR}/Contents/Resources"
 
 # Copy binary
-cp ../../puppet-master-rs/target/universal-release/puppet-master "${BUNDLE_DIR}/Contents/MacOS/"
+cp "../../puppet-master-rs/${BIN_PATH}" "${BUNDLE_DIR}/Contents/MacOS/"
 
 # Copy Info.plist
 cp Info.plist "${BUNDLE_DIR}/Contents/"

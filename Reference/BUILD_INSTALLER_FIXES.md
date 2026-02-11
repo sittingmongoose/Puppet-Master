@@ -300,3 +300,19 @@ Commands run + results:
 - npm test: PASS  
 - npm run typecheck: PASS  
 If FAIL: N/A  
+
+---
+
+**Task status log (CI build fixes)**  
+Status: PASS  
+Date: 2026-02-11  
+Summary of changes: Fixed Windows version extraction for PowerShell, disabled GTK introspection to avoid g-ir-scanner requirement, and made macOS installer build arm64-only in CI via PM_MAC_UNIVERSAL=0 with explicit target install.  
+Files changed:  
+- .github/workflows/build-installers.yml  
+- installer/macos/build-dmg.sh  
+- FinishRustRewrite.md  
+- Reference/BUILD_INSTALLER_FIXES.md  
+Commands run + results:  
+- npm test: PASS  
+- npm run typecheck: PASS  
+If FAIL: N/A  

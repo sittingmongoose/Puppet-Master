@@ -124,7 +124,7 @@ jobs:
           curl -fL "https://download.gnome.org/sources/gtk/3.24/gtk-${GTK_VERSION}.tar.xz" -o "/tmp/gtk-${GTK_VERSION}.tar.xz"
           tar -xJf "/tmp/gtk-${GTK_VERSION}.tar.xz" -C /tmp
           pushd "/tmp/gtk-${GTK_VERSION}"
-          meson setup build --prefix="${LINUX_DEPS}/gtk-${GTK_VERSION}"
+          meson setup build --prefix="${LINUX_DEPS}/gtk-${GTK_VERSION}" -Dintrospection=disabled
           meson compile -C build
           meson install -C build
           popd
@@ -152,12 +152,25 @@ jobs:
           distro: 'official'
           arch: 'x86'
 
-      - name: Get version
+      - name: Get version (Unix)
+        if: runner.os != 'Windows'
         id: version
+        shell: bash
         run: |
           VERSION=$(grep '^version' puppet-master-rs/Cargo.toml | head -1 | cut -d'"' -f2)
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "Using version: $VERSION"
+
+      - name: Get version (Windows)
+        if: runner.os == 'Windows'
+        id: version
+        shell: pwsh
+        run: |
+          $line = Get-Content puppet-master-rs/Cargo.toml | Where-Object { $_ -match '^version\\s*=' } | Select-Object -First 1
+          if (-not $line) { throw "version not found in Cargo.toml" }
+          $version = ($line -split '"')[1]
+          "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          Write-Host "Using version: $version"
 
       - name: Build installer (Windows)
         if: runner.os == 'Windows'
@@ -173,7 +186,10 @@ jobs:
       - name: Build installer (macOS)
         if: runner.os == 'macOS'
         shell: bash
+        env:
+          PM_MAC_UNIVERSAL: "0"
         run: |
+          rustup target add aarch64-apple-darwin
           cd installer/macos
           ./build-dmg.sh "${{ steps.version.outputs.version }}"
           mkdir -p ../../dist/installers/darwin-arm64

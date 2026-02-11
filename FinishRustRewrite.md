@@ -531,7 +531,7 @@ Create a first-boot onboarding wizard (separate from the start-chain PRD wizard)
 **Priority:** P1
 **Depends on:** `iced-upgrade`
 
-**Status (2026-02-11):** Implemented — build-installers.yml now builds Rust/Iced installers (not Tauri). Linux installs upstream musl 1.2.5, GTK 3.24.48, and rpm 6.0.1 to a cached user prefix with 14-day cache bucket rotation; outputs to dist/installers/<platform-arch>/.
+**Status (2026-02-11):** Implemented — build-installers.yml now builds Rust/Iced installers (not Tauri). Linux installs upstream musl 1.2.5, GTK 3.24.48 (introspection disabled), and rpm 6.0.1 to a cached user prefix with 14-day cache bucket rotation; macOS CI builds arm64-only; outputs to dist/installers/<platform-arch>/.
 
 **Previous issues in `.github/workflows/build-installers.yml` (now addressed):**
 
