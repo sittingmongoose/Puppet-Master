@@ -152,25 +152,13 @@ jobs:
           distro: 'official'
           arch: 'x86'
 
-      - name: Get version (Unix)
-        if: runner.os != 'Windows'
+      - name: Get version
         id: version
         shell: bash
         run: |
           VERSION=$(grep '^version' puppet-master-rs/Cargo.toml | head -1 | cut -d'"' -f2)
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "Using version: $VERSION"
-
-      - name: Get version (Windows)
-        if: runner.os == 'Windows'
-        id: version
-        shell: pwsh
-        run: |
-          $line = Get-Content puppet-master-rs/Cargo.toml | Where-Object { $_ -match '^version\\s*=' } | Select-Object -First 1
-          if (-not $line) { throw "version not found in Cargo.toml" }
-          $version = ($line -split '"')[1]
-          "version=$version" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
-          Write-Host "Using version: $version"
 
       - name: Build installer (Windows)
         if: runner.os == 'Windows'

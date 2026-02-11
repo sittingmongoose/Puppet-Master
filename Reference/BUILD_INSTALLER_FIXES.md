@@ -316,3 +316,17 @@ Commands run + results:
 - npm test: PASS  
 - npm run typecheck: PASS  
 If FAIL: N/A  
+
+---
+
+**Task status log (CI workflow YAML fix)**  
+Status: PASS  
+Date: 2026-02-11  
+Summary of changes: Fixed workflow file validation by consolidating the version step into a single bash step (avoids duplicate step id).  
+Files changed:  
+- .github/workflows/build-installers.yml  
+- Reference/BUILD_INSTALLER_FIXES.md  
+Commands run + results:  
+- npm test: PASS  
+- npm run typecheck: PASS  
+If FAIL: N/A  
