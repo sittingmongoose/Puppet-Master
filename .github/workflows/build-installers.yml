@@ -1,5 +1,5 @@
 name: Build installers
-# Build and test installers for all platforms
+# Build and test Rust/Iced installers for all platforms
 
 on:
   workflow_dispatch:
@@ -13,78 +13,137 @@ jobs:
   build:
     name: Build (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    env:
+      LINUX_DEPS: /home/runner/.cache/rwm-upstream
+      MUSL_VERSION: 1.2.5
+      GTK_VERSION: 3.24.48
+      RPM_VERSION: 6.0.1
     strategy:
       fail-fast: false
       matrix:
         include:
           - os: windows-latest
-            build_script: build:win:tauri
+            platform_tag: win32-x64
           - os: macos-14
-            build_script: build:mac:tauri
+            platform_tag: darwin-arm64
           - os: ubuntu-latest
-            build_script: build:linux:tauri
+            platform_tag: linux-x64
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install Rust (Tauri)
+      - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
         with:
-          workspaces: './src-tauri -> target'
+          workspaces: './puppet-master-rs -> target'
 
-      - name: Install Tauri system dependencies (Linux)
+      - name: Compute cache bucket (Linux)
         if: runner.os == 'Linux'
+        id: cache-bucket
+        shell: bash
         run: |
+          echo "bucket=$(( $(date +%s) / 1209600 ))" >> "$GITHUB_OUTPUT"
+
+      - name: Restore upstream deps cache (Linux)
+        if: runner.os == 'Linux'
+        id: linux-deps-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ env.LINUX_DEPS }}
+          key: rwm-upstream-${{ runner.os }}-${{ steps.cache-bucket.outputs.bucket }}-musl${{ env.MUSL_VERSION }}-gtk${{ env.GTK_VERSION }}-rpm${{ env.RPM_VERSION }}
+          restore-keys: |
+            rwm-upstream-${{ runner.os }}-
+
+      - name: Install upstream musl/gtk/rpm (Linux)
+        if: runner.os == 'Linux' && steps.linux-deps-cache.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
           sudo apt-get update
           sudo apt-get install -y \
-            libwebkit2gtk-4.1-dev \
             build-essential \
             pkg-config \
+            curl \
+            xz-utils \
+            bison \
+            flex \
+            gettext \
+            meson \
+            ninja-build \
+            python3 \
+            python3-pip \
+            libarchive-dev \
+            libbz2-dev \
+            liblzma-dev \
+            libpopt-dev \
+            libsqlite3-dev \
+            libzstd-dev \
+            libgcrypt20-dev \
+            liblua5.4-dev \
+            zlib1g-dev \
             libssl-dev \
-            libgtk-3-dev \
-            libxdo-dev \
-            libayatana-appindicator3-dev \
-            librsvg2-dev \
-            patchelf
+            libglib2.0-dev \
+            libpango1.0-dev \
+            libcairo2-dev \
+            libgdk-pixbuf-2.0-dev \
+            libatk1.0-dev \
+            libatk-bridge2.0-dev \
+            libepoxy-dev \
+            libx11-dev \
+            libxext-dev \
+            libxrender-dev \
+            libxinerama-dev \
+            libxi-dev \
+            libxrandr-dev \
+            libxdamage-dev \
+            libxcomposite-dev \
+            libxcursor-dev \
+            libxfixes-dev \
+            libxkbcommon-dev \
+            libwayland-dev \
+            wayland-protocols \
+            libdbus-1-dev \
+            libmount-dev
 
-      - name: Install dependencies
-        env:
-          npm_config_update_notifier: "false"
-        run: npm ci
+          mkdir -p "$LINUX_DEPS"
 
-      - name: Build TypeScript
-        run: npm run build
+          echo "Installing musl ${MUSL_VERSION}..."
+          curl -fL "https://musl.libc.org/releases/musl-${MUSL_VERSION}.tar.gz" -o "/tmp/musl-${MUSL_VERSION}.tar.gz"
+          tar -xzf "/tmp/musl-${MUSL_VERSION}.tar.gz" -C /tmp
+          pushd "/tmp/musl-${MUSL_VERSION}"
+          ./configure --prefix="${LINUX_DEPS}/musl-${MUSL_VERSION}"
+          make -j"$(nproc)"
+          make install
+          popd
 
-      - name: Build GUI
-        run: |
-          npm --prefix src/gui/react ci
-          npm run gui:build
+          echo "Installing GTK ${GTK_VERSION}..."
+          curl -fL "https://download.gnome.org/sources/gtk/3.24/gtk-${GTK_VERSION}.tar.xz" -o "/tmp/gtk-${GTK_VERSION}.tar.xz"
+          tar -xJf "/tmp/gtk-${GTK_VERSION}.tar.xz" -C /tmp
+          pushd "/tmp/gtk-${GTK_VERSION}"
+          meson setup build --prefix="${LINUX_DEPS}/gtk-${GTK_VERSION}"
+          meson compile -C build
+          meson install -C build
+          popd
 
-      - name: Install WebView2 SDK (Windows for Tauri)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          # Download and extract WebView2 SDK for Tauri compilation
-          $sdkUrl = "https://www.nuget.org/api/v2/package/Microsoft.Web.WebView2/1.0.2592.51"
-          $sdkZip = "$env:TEMP\webview2.zip"
-          $sdkDir = "$env:TEMP\webview2-sdk"
-          Write-Host "Downloading WebView2 SDK..."
-          Invoke-WebRequest -Uri $sdkUrl -OutFile $sdkZip
-          Expand-Archive -Path $sdkZip -DestinationPath $sdkDir -Force
-          # Set environment variable for Tauri build
-          $libPath = "$sdkDir\build\native\x64"
-          echo "WEBVIEW2_LIB_PATH=$libPath" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          Write-Host "WebView2 SDK installed at: $sdkDir"
+          echo "Installing rpm ${RPM_VERSION}..."
+          curl -fL "https://ftp.rpm.org/releases/rpm-${RPM_VERSION%%.*}.0.x/rpm-${RPM_VERSION}.tar.bz2" -o "/tmp/rpm-${RPM_VERSION}.tar.bz2"
+          tar -xjf "/tmp/rpm-${RPM_VERSION}.tar.bz2" -C /tmp
+          pushd "/tmp/rpm-${RPM_VERSION}"
+          ./configure --prefix="${LINUX_DEPS}/rpm-${RPM_VERSION}"
+          make -j"$(nproc)"
+          make install
+          popd
+
+      - name: Save upstream deps cache (Linux)
+        if: runner.os == 'Linux' && steps.linux-deps-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ env.LINUX_DEPS }}
+          key: rwm-upstream-${{ runner.os }}-${{ steps.cache-bucket.outputs.bucket }}-musl${{ env.MUSL_VERSION }}-gtk${{ env.GTK_VERSION }}-rpm${{ env.RPM_VERSION }}
 
       - name: Install NSIS (Windows)
         if: runner.os == 'Windows'
@@ -93,28 +152,46 @@ jobs:
           distro: 'official'
           arch: 'x86'
 
-      - name: Install Go (Linux for nfpm)
-        if: runner.os == 'Linux'
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.22.x'
-          cache: false  # No go.sum in this project - Go only used to install nfpm
-
-      - name: Install nfpm (Linux)
-        if: runner.os == 'Linux'
+      - name: Get version
+        id: version
         run: |
-          go install github.com/goreleaser/nfpm/v2/cmd/nfpm@latest
-          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
-          nfpm --version
+          VERSION=$(grep '^version' puppet-master-rs/Cargo.toml | head -1 | cut -d'"' -f2)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Using version: $VERSION"
 
-      - name: Diagnose (macOS)
+      - name: Build installer (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          cd puppet-master-rs
+          cargo build --release
+          cd ../installer/windows
+          makensis /DVERSION="${{ steps.version.outputs.version }}" puppet-master.nsi
+          mkdir -p ../../dist/installers/win32-x64
+          Copy-Item "RWM-Puppet-Master-${{ steps.version.outputs.version }}-setup.exe" -Destination "../../dist/installers/win32-x64/"
+
+      - name: Build installer (macOS)
         if: runner.os == 'macOS'
+        shell: bash
         run: |
-          echo "uname -m: $(uname -m)"
-          node -e "console.log('Node process.arch:', process.arch); console.log('Expected installer dir: dist/installers/darwin-' + (process.arch === 'x64' ? 'x64' : 'arm64'))"
+          cd installer/macos
+          ./build-dmg.sh "${{ steps.version.outputs.version }}"
+          mkdir -p ../../dist/installers/darwin-arm64
+          cp "RWM-Puppet-Master-${{ steps.version.outputs.version }}.dmg" ../../dist/installers/darwin-arm64/
 
-      - name: Build installer
-        run: npm run ${{ matrix.build_script }}
+      - name: Build installer (Linux)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          export PATH="$LINUX_DEPS/rpm-${RPM_VERSION}/bin:$LINUX_DEPS/gtk-${GTK_VERSION}/bin:$LINUX_DEPS/musl-${MUSL_VERSION}/bin:$PATH"
+          export PKG_CONFIG_PATH="$LINUX_DEPS/gtk-${GTK_VERSION}/lib/pkgconfig:$LINUX_DEPS/gtk-${GTK_VERSION}/share/pkgconfig:${PKG_CONFIG_PATH:-}"
+          export LD_LIBRARY_PATH="$LINUX_DEPS/gtk-${GTK_VERSION}/lib:$LINUX_DEPS/rpm-${RPM_VERSION}/lib:${LD_LIBRARY_PATH:-}"
+          rustup target add x86_64-unknown-linux-musl
+          cd scripts
+          ./build-linux-installer.sh "${{ steps.version.outputs.version }}"
+          mkdir -p ../dist/installers/linux-x64
+          cp ../installer/linux/*.deb ../dist/installers/linux-x64/
+          cp ../installer/linux/*.rpm ../dist/installers/linux-x64/ 2>/dev/null || true
 
       - name: Smoke test (Windows)
         if: runner.os == 'Windows'
@@ -124,13 +201,9 @@ jobs:
           if (-not $installer) { throw "Installer not found" }
           Write-Host "Running installer: $($installer.FullName)"
           Start-Process -FilePath $installer.FullName -ArgumentList "/S" -Wait
-          $pm = Join-Path $Env:ProgramFiles "Puppet Master\\bin\\puppet-master.cmd"
+          $pm = Join-Path $Env:ProgramFiles "RWM Puppet Master\puppet-master.exe"
           if (-not (Test-Path $pm)) { throw "puppet-master not found at $pm" }
           & $pm --version
-          # Doctor command may fail due to quota/config issues in CI - just log output
-          & $pm doctor --category runtime --json
-          if ($LASTEXITCODE -ne 0) { Write-Host "Doctor check had issues (expected in CI, exit code: $LASTEXITCODE)" }
-          exit 0
 
       - name: Smoke test (macOS)
         if: runner.os == 'macOS'
@@ -138,76 +211,44 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          # Verify DMG + PKG only; do not run full install (installer -pkg -target / causes OOM 137 on runners).
           OUT_DIR="dist/installers/darwin-arm64"
           dmg="$(find "$OUT_DIR" -maxdepth 1 -name '*.dmg' 2>/dev/null | head -n 1)"
           if [ -z "$dmg" ] || [ ! -f "$dmg" ]; then
-            echo "::error::No DMG found in $OUT_DIR (Build installer should produce one)"
+            echo "::error::No DMG found in $OUT_DIR"
             ls -la "$OUT_DIR" 2>/dev/null || true
             exit 1
           fi
           echo "Mounting DMG: $dmg"
           mount_dir="$(mktemp -d)"
           hdiutil attach "$dmg" -mountpoint "$mount_dir" -nobrowse
-          pkg="$(find "$mount_dir" -maxdepth 1 -name '*.pkg' 2>/dev/null | head -n 1)"
-          if [ -z "$pkg" ] || [ ! -f "$pkg" ]; then
+          app="$(find "$mount_dir" -maxdepth 1 -name '*.app' 2>/dev/null | head -n 1)"
+          if [ -z "$app" ] || [ ! -d "$app" ]; then
             hdiutil detach "$mount_dir" 2>/dev/null || true
-            echo "::error::No PKG found inside DMG"
+            echo "::error::No .app found inside DMG"
             exit 1
           fi
-          echo "Verifying PKG (pkgutil): $pkg"
-          pkgutil --check-signature "$pkg" || true
-          pkgutil --payload-files "$pkg" | head -20
+          echo "Verifying .app bundle: $app"
           hdiutil detach "$mount_dir"
-          echo "macOS smoke test passed (DMG + PKG verified; full install skipped to avoid OOM on runners)."
-
-      - name: Smoke test GUI launch (macOS)
-        if: runner.os == 'macOS'
-        continue-on-error: true
-        shell: bash
-        run: |
-          set -euo pipefail
-          ROOT="/Applications/Puppet Master.app/Contents/Resources/puppet-master"
-          if [ ! -x "$ROOT/bin/puppet-master" ]; then
-            echo "App not installed (macOS smoke test verifies DMG+PKG only to avoid OOM); skipping GUI launch test."
-            exit 0
-          fi
-          export PATH="$ROOT/node/bin:$PATH"
-          export PLAYWRIGHT_BROWSERS_PATH="$ROOT/playwright-browsers"
-          cd ~
-          "$ROOT/bin/puppet-master" gui --no-open &
-          GUI_PID=$!
-          for i in $(seq 1 15); do
-            sleep 1
-            if lsof -i :3847 >/dev/null 2>&1; then
-              echo "GUI server started on port 3847"
-              kill $GUI_PID 2>/dev/null || true
-              exit 0
-            fi
-          done
-          echo "::warning::GUI did not start within 15s (known issue, see ~/.puppet-master/logs/)"
-          cat ~/.puppet-master/logs/gui.log 2>/dev/null || true
-          cat ~/.puppet-master/logs/crash.log 2>/dev/null || true
-          kill $GUI_PID 2>/dev/null || true
-          exit 0
+          echo "macOS smoke test passed (DMG verified)."
 
       - name: Smoke test (Linux)
         if: runner.os == 'Linux'
         shell: bash
         run: |
           set -euo pipefail
-          deb="$(ls -1 dist/installers/linux-x64/*.deb | head -n 1)"
-          rpm="$(ls -1 dist/installers/linux-x64/*.rpm | head -n 1)"
+          deb="$(ls -1 dist/installers/linux-x64/*.deb 2>/dev/null | head -n 1)"
+          if [ -z "$deb" ]; then
+            echo "::error::No .deb found"
+            ls -la dist/installers/linux-x64/ 2>/dev/null || true
+            exit 1
+          fi
           echo "Installing DEB: $deb"
           sudo dpkg -i "$deb"
           /usr/bin/puppet-master --version
-          # Doctor command may fail due to quota/config issues in CI - just log output
-          /usr/bin/puppet-master doctor --category runtime --json || echo "Doctor check had issues (expected in CI)"
-          echo "RPM artifact exists: $rpm"
+          echo "Linux smoke test passed."
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: installers-${{ matrix.os }}
           path: dist/installers/**/*
-

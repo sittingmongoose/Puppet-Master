@@ -270,3 +270,33 @@ You can build, install, and use Puppet Master on your own Mac without code signi
 - **macOS:** Update `buildMacAppBundle()` in `scripts/build-installer.ts` to run Node.js directly (remove osascript/Terminal). See `Reference/APP_LAUNCHER_NO_TERMINAL_PROMPT.md` for tasks and acceptance criteria.
 
 **User requirements:** OK with unsigned app (Gatekeeper warning acceptable). App in Applications / Start Menu / app menu and launching GUI on open. No code signing or notarization required.
+
+---
+
+**Task status log (CI workflow updater)**  
+Status: PASS  
+Date: 2026-02-11  
+Summary of changes: Updated GitHub Actions installer workflow to build Rust/Iced installers and install upstream musl 1.2.5, GTK 3.24.48, and rpm 6.0.1 from source on Linux; removed EnVar dependency from the Rust NSIS installer; added Rust/Iced installer build scripts to package.json.  
+Files changed:  
+- .github/workflows/build-installers.yml  
+- installer/windows/puppet-master.nsi  
+- package.json  
+- FinishRustRewrite.md  
+- Reference/BUILD_INSTALLER_FIXES.md  
+Commands run + results:  
+- npm test: PASS  
+If FAIL: N/A  
+
+---
+
+**Task status log (CI deps cache 14d)**  
+Status: PASS  
+Date: 2026-02-11  
+Summary of changes: Added a 14-day cache bucket for upstream musl/GTK/rpm builds using actions/cache; installs now target a user cache prefix and the Linux build step uses that prefix via PATH/PKG_CONFIG_PATH/LD_LIBRARY_PATH.  
+Files changed:  
+- .github/workflows/build-installers.yml  
+- FinishRustRewrite.md  
+Commands run + results:  
+- npm test: PASS  
+- npm run typecheck: PASS  
+If FAIL: N/A  

@@ -6,9 +6,9 @@ OutFile "RWM-Puppet-Master-${VERSION}-setup.exe"
 InstallDir "$PROGRAMFILES64\RWM Puppet Master"
 RequestExecutionLevel admin
 
-; MUI Settings
-!define MUI_ICON "..\..\puppet-master-rs\icons\icon.ico"
-!define MUI_UNICON "..\..\puppet-master-rs\icons\icon.ico"
+; MUI Settings (icon from shared installer assets)
+!define MUI_ICON "..\assets\puppet-master.ico"
+!define MUI_UNICON "..\assets\puppet-master.ico"
 
 ; Pages
 !insertmacro MUI_PAGE_WELCOME
@@ -33,9 +33,6 @@ Section "Install"
     CreateShortcut "$SMPROGRAMS\RWM Puppet Master\RWM Puppet Master.lnk" "$INSTDIR\puppet-master.exe"
     CreateShortcut "$SMPROGRAMS\RWM Puppet Master\Uninstall.lnk" "$INSTDIR\uninstall.exe"
     
-    ; Add to PATH
-    EnVar::AddValue "PATH" "$INSTDIR"
-    
     ; Write uninstaller
     WriteUninstaller "$INSTDIR\uninstall.exe"
     
@@ -51,7 +48,6 @@ Section "Uninstall"
     Delete "$INSTDIR\uninstall.exe"
     Delete "$DESKTOP\RWM Puppet Master.lnk"
     RMDir /r "$SMPROGRAMS\RWM Puppet Master"
-    EnVar::DeleteValue "PATH" "$INSTDIR"
     RMDir "$INSTDIR"
     DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RWMPuppetMaster"
 SectionEnd
