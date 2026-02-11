@@ -13,7 +13,7 @@ pub struct GateEnforcer {
 
 /// A gate enforcement rule
 #[derive(Debug, Clone)]
-struct Rule {
+pub struct Rule {
     name: String,
     description: String,
     severity: ViolationSeverity,
@@ -32,7 +32,7 @@ enum RuleCheck {
     /// Check if a specific section exists
     SectionExists(String),
     /// Check if entry matches a regex pattern
-    RegexMatch(String),
+    _RegexMatch(String),
 }
 
 /// Result of enforcement
@@ -244,7 +244,7 @@ impl GateEnforcer {
                     }
                 }
 
-                RuleCheck::RegexMatch(pattern) => {
+                RuleCheck::_RegexMatch(pattern) => {
                     if let Ok(regex) = regex::Regex::new(pattern) {
                         if !regex.is_match(agents_content) {
                             violations.push(Violation::new(

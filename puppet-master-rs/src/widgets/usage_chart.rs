@@ -18,8 +18,8 @@ pub struct UsageData {
 #[derive(Debug)]
 pub struct UsageChart {
     data: Vec<UsageData>,
-    width: f32,
-    height: f32,
+    _width: f32,
+    _height: f32,
     cache: Cache,
 }
 
@@ -28,8 +28,8 @@ impl UsageChart {
     pub fn new(data: Vec<UsageData>, width: f32, height: f32) -> Self {
         Self {
             data,
-            width,
-            height,
+            _width: width,
+            _height: height,
             cache: Cache::new(),
         }
     }

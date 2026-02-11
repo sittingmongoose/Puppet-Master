@@ -320,7 +320,7 @@ impl ProcessDropGuard {
     }
 
     /// Explicitly disarm the guard without killing the process
-    pub fn disarm(mut self) {
+    pub fn disarm(self) {
         // Just unregister and drop without killing
         self.registry.unregister(self.pid);
         // Prevent drop from running by forgetting

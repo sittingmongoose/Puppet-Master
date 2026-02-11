@@ -8,7 +8,6 @@
 //! - Previous iteration feedback
 
 use crate::core::tier_node::TierTree;
-use crate::types::*;
 use anyhow::{anyhow, Result};
 use std::fs;
 

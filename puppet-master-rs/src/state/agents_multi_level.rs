@@ -11,7 +11,7 @@ use std::path::PathBuf;
 
 /// Multi-level AGENTS.md loader
 pub struct MultiLevelLoader {
-    root_path: PathBuf,
+    _root_path: PathBuf,
     manager: AgentsManager,
 }
 
@@ -113,7 +113,7 @@ impl MultiLevelLoader {
     pub fn new(root_path: PathBuf) -> Self {
         let manager = AgentsManager::new(&root_path);
         Self {
-            root_path,
+            _root_path: root_path,
             manager,
         }
     }
@@ -183,7 +183,7 @@ impl MultiLevelLoader {
     }
 
     /// Load AGENTS.md for a single tier
-    fn load_tier(&self, tier_id: &str, priority: u32) -> Result<AgentsDoc> {
+    fn load_tier(&self, tier_id: &str, _priority: u32) -> Result<AgentsDoc> {
         let tier_to_load = if tier_id == "root" { "" } else { tier_id };
 
         self.manager

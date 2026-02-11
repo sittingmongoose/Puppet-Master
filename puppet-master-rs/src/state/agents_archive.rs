@@ -137,7 +137,7 @@ impl ArchiveManager {
         let timestamp = DateTime::from_timestamp_millis(millis)?;
 
         // Reconstruct tier_id from remaining parts (they were in reverse order)
-        let mut tier_parts: Vec<&str> = parts[2].split('_').collect();
+        let tier_parts: Vec<&str> = parts[2].split('_').collect();
         let tier_id = tier_parts.join(".");
 
         // Read content lazily when needed

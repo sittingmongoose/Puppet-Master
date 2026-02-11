@@ -9,6 +9,7 @@ use tokio::fs::OpenOptions;
 use tokio::io::AsyncWriteExt;
 
 /// Git manager handles all git operations via CLI
+#[derive(Clone)]
 pub struct GitManager {
     repo_path: PathBuf,
     log_path: PathBuf,

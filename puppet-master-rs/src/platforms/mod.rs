@@ -44,8 +44,8 @@ pub use codex::CodexRunner;
 pub use claude::ClaudeRunner;
 pub use gemini::GeminiRunner;
 pub use copilot::CopilotRunner;
-pub use quota_manager::QuotaConfig;
-pub use rate_limiter::RateLimiterConfig;
+pub use quota_manager::{QuotaConfig, QuotaManager};
+pub use rate_limiter::{RateLimiter, RateLimiterConfig};
 pub use capability::CapabilityInfo;
 pub use output_parser::{
     CompletionSignal, ErrorCategory, OutputParser, ParsedOutput, PlatformError, TokenUsage,
@@ -153,6 +153,28 @@ pub async fn is_platform_available(platform: Platform) -> bool {
 pub async fn discover_platform_models(platform: Platform) -> Result<Vec<String>> {
     let runner = create_runner(platform);
     runner.discover_models().await
+}
+
+/// Detect all installed platforms on the system
+///
+/// # Returns
+///
+/// Returns a list of detected platform information
+pub async fn detect_installed_platforms() -> Vec<DetectedPlatform> {
+    PlatformDetector::detect_installed().await
+}
+
+/// Detect a specific platform
+///
+/// # Arguments
+///
+/// * `platform` - The platform to detect
+///
+/// # Returns
+///
+/// Returns platform detection information if found
+pub async fn detect_platform(platform: Platform) -> Option<DetectedPlatform> {
+    PlatformDetector::detect_platform(platform).await
 }
 
 #[cfg(test)]

@@ -227,8 +227,8 @@ impl WorktreeManager {
             .context("Failed to merge worktree branch")?;
 
         let success = merge_output.status.success();
-        let stdout = String::from_utf8_lossy(&merge_output.stdout);
-        let stderr = String::from_utf8_lossy(&merge_output.stderr);
+        let _stdout = String::from_utf8_lossy(&merge_output.stdout);
+        let _stderr = String::from_utf8_lossy(&merge_output.stderr);
 
         // Check for conflicts
         let mut conflicts = Vec::new();

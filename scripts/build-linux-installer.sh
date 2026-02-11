@@ -8,16 +8,14 @@ PKG_NAME="puppet-master"
 
 cd "$(dirname "$0")/../puppet-master-rs"
 
-# Build static musl binary
-echo "Building static musl binary..."
-CARGO_TARGET_DIR=/tmp/puppet-master-build cargo build --release --target x86_64-unknown-linux-musl
+# Build release binary (glibc — required for GTK/tray-icon support)
+echo "Building release binary..."
+cargo build --release
 
-BINARY="/tmp/puppet-master-build/x86_64-unknown-linux-musl/release/puppet-master"
+BINARY="target/release/puppet-master"
 
-# Verify static linking
-echo "Verifying static binary..."
+echo "Binary info:"
 file "$BINARY"
-ldd "$BINARY" 2>&1 && echo "WARNING: Not fully static!" || echo "✅ Fully static binary"
 
 # === DEB Package ===
 echo "Building .deb package..."
@@ -39,6 +37,7 @@ Version: ${VERSION}
 Section: devel
 Priority: optional
 Architecture: ${ARCH}
+Depends: libgtk-3-0, libglib2.0-0, libcairo2, libpango-1.0-0
 Maintainer: RWM <rwm@example.com>
 Description: RWM Puppet Master - AI-assisted development orchestrator
  A GUI orchestrator implementing the Ralph Wiggum Method for
@@ -73,6 +72,10 @@ RPM_DIR="/tmp/puppet-master-rpm"
 rm -rf "$RPM_DIR"
 mkdir -p "$RPM_DIR"/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 
+# Use absolute path for RPM spec
+ABS_BINARY="$(pwd)/$BINARY"
+ABS_DESKTOP="$DEB_DIR/usr/share/applications/puppet-master.desktop"
+
 cat > "$RPM_DIR/SPECS/puppet-master.spec" << EOF
 Name: puppet-master
 Version: ${VERSION}
@@ -80,6 +83,7 @@ Release: 1
 Summary: RWM Puppet Master - AI-assisted development orchestrator
 License: MIT
 Group: Development/Tools
+Requires: gtk3, glib2, cairo, pango
 
 %description
 A GUI orchestrator implementing the Ralph Wiggum Method for
@@ -87,10 +91,10 @@ AI-assisted development.
 
 %install
 mkdir -p %{buildroot}/usr/bin
-cp ${BINARY} %{buildroot}/usr/bin/puppet-master
+cp ${ABS_BINARY} %{buildroot}/usr/bin/puppet-master
 chmod 755 %{buildroot}/usr/bin/puppet-master
 mkdir -p %{buildroot}/usr/share/applications
-cp ${DEB_DIR}/usr/share/applications/puppet-master.desktop %{buildroot}/usr/share/applications/
+cp ${ABS_DESKTOP} %{buildroot}/usr/share/applications/
 
 %files
 /usr/bin/puppet-master

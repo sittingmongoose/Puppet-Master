@@ -3,11 +3,10 @@
 //! Generates verification criteria for each subtask and creates comprehensive
 //! test suites to validate implementation.
 
-use crate::types::{ParsedRequirements, PRD, Phase, Task, Subtask, Priority};
-use anyhow::{Context, Result};
+use crate::types::{ParsedRequirements, PRD, Phase, Subtask, Priority};
+use anyhow::Result;
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 
 /// Generates test plans from requirements and PRD.
 pub struct TestPlanGenerator;

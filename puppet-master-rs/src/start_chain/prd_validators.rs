@@ -378,7 +378,7 @@ struct AiGapReport {
     #[serde(default)]
     gaps: Vec<AiGap>,
     #[serde(default)]
-    confidence: Option<f64>,
+    _confidence: Option<f64>,
 }
 
 #[derive(Debug, Clone, Deserialize)]

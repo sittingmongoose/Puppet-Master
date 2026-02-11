@@ -6,7 +6,7 @@
 //! - Configurable thresholds
 //! - Pattern-based cycle detection
 
-use anyhow::{anyhow, Result};
+
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, VecDeque};
 

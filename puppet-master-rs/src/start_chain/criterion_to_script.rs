@@ -108,7 +108,7 @@ pub struct CriterionToScriptConverter {
     /// Output directory for scripts
     output_dir: PathBuf,
     /// Preferred script type
-    preferred_type: ScriptType,
+    _preferred_type: ScriptType,
 }
 
 impl CriterionToScriptConverter {
@@ -116,7 +116,7 @@ impl CriterionToScriptConverter {
     pub fn new(output_dir: PathBuf, preferred_type: ScriptType) -> Self {
         Self {
             output_dir,
-            preferred_type,
+            _preferred_type: preferred_type,
         }
     }
 

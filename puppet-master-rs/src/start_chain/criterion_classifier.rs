@@ -3,7 +3,7 @@
 //! Determines what type of verification each requirement needs
 //! and whether it can be automated.
 
-use crate::types::{ParsedRequirements, RequirementsSection, PRD, Phase, Task, Subtask, Priority};
+use crate::types::{ParsedRequirements, RequirementsSection, PRD, Subtask, Priority};
 use anyhow::Result;
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
@@ -347,7 +347,7 @@ impl CriterionClassifier {
     }
 
     /// Suggest expected result based on verification type.
-    fn suggest_expected_result(text: &str, vtype: VerificationType) -> Option<String> {
+    fn suggest_expected_result(_text: &str, vtype: VerificationType) -> Option<String> {
         match vtype {
             VerificationType::Build => Some("Build succeeds with no errors".to_string()),
             VerificationType::Lint => Some("No lint warnings or errors".to_string()),

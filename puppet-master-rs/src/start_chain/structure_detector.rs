@@ -3,8 +3,8 @@
 //! Identifies headers, sections, lists, code blocks, and other
 //! structural elements in requirements documents.
 
-use anyhow::{Context, Result};
-use log::{debug, info};
+use anyhow::Result;
+use log::info;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -133,7 +133,6 @@ impl StructureDetector {
         info!("Detecting markdown structure");
 
         let lines: Vec<&str> = content.lines().collect();
-        let mut sections = Vec::new();
         let mut metadata = HashMap::new();
         
         let mut current_section: Option<SectionBuilder> = None;
@@ -229,7 +228,7 @@ impl StructureDetector {
             Self::add_section_to_stack(&mut section_stack, section);
         }
 
-        sections = Self::build_hierarchy(section_stack);
+        let sections = Self::build_hierarchy(section_stack);
 
         let statistics = Self::calculate_statistics(&sections);
 
@@ -246,7 +245,7 @@ impl StructureDetector {
 
         let lines: Vec<&str> = content.lines().collect();
         let mut sections = Vec::new();
-        let mut metadata = HashMap::new();
+        let metadata = HashMap::new();
         
         let mut current_section: Option<SectionBuilder> = None;
         let mut paragraph_buffer = String::new();
@@ -460,7 +459,7 @@ impl StructureDetector {
         let mut stack: Vec<SectionBuilder> = Vec::new();
 
         for section in sections {
-            while let Some(mut top) = stack.pop() {
+            while let Some(top) = stack.pop() {
                 if top.level < section.level {
                     stack.push(top);
                     break;

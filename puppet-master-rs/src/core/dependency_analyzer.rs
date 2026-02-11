@@ -158,7 +158,7 @@ impl DependencyAnalyzer {
     /// * `completed` - Set of completed task IDs
     pub fn is_ready_to_execute(
         &self,
-        task_id: &str,
+        _task_id: &str,
         dependencies: &[String],
         completed: &HashSet<String>,
     ) -> bool {

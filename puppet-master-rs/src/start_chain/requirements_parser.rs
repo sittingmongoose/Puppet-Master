@@ -282,7 +282,7 @@ impl RequirementsParser {
         let mut stack: Vec<InternalSection> = Vec::new();
 
         for section in sections {
-            while let Some(mut top) = stack.pop() {
+            while let Some(top) = stack.pop() {
                 if top.level < section.level {
                     stack.push(top);
                     break;

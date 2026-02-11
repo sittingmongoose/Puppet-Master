@@ -11,11 +11,11 @@
 //! - Automatic filtering of unavailable platforms
 
 use crate::platforms::{
-    create_runner, AuthStatusChecker, HealthMonitor, PlatformRunner,
+    create_runner, AuthStatusChecker, HealthMonitor, PlatformRunner, ModelCatalogManager,
 };
 use crate::types::Platform;
 use anyhow::{Context, Result};
-use log::{debug, info, warn};
+use log::{debug, info};
 use std::collections::HashMap;
 use std::sync::Arc;
 use tokio::sync::RwLock;
@@ -38,6 +38,8 @@ pub struct PlatformRegistry {
     health_monitor: Arc<HealthMonitor>,
     /// Auth status checker
     auth_checker: Arc<AuthStatusChecker>,
+    /// Model catalog manager
+    model_catalog: Arc<ModelCatalogManager>,
 }
 
 impl PlatformRegistry {
@@ -47,6 +49,7 @@ impl PlatformRegistry {
             runners: Arc::new(RwLock::new(HashMap::new())),
             health_monitor: Arc::new(HealthMonitor::new()),
             auth_checker: Arc::new(AuthStatusChecker::new()),
+            model_catalog: Arc::new(ModelCatalogManager::new()),
         }
     }
 
@@ -63,7 +66,30 @@ impl PlatformRegistry {
         }
 
         info!("Platform registry initialized with {} runners", Platform::all().len());
+        
+        // Initialize model catalogs
+        info!("Initializing model catalogs for all platforms");
+        for platform in Platform::all() {
+            if let Some(catalog) = self.model_catalog.get_catalog(*platform) {
+                debug!("Loaded {} models for {}", catalog.get_models().len(), platform);
+            }
+        }
+        
         Ok(())
+    }
+    
+    /// Get the model catalog manager
+    pub fn model_catalog(&self) -> Arc<ModelCatalogManager> {
+        Arc::clone(&self.model_catalog)
+    }
+    
+    /// Get available models for a platform
+    pub fn get_platform_models(&self, platform: Platform) -> Vec<String> {
+        if let Some(catalog) = self.model_catalog.get_catalog(platform) {
+            catalog.get_models().iter().map(|m| m.id.clone()).collect()
+        } else {
+            Vec::new()
+        }
     }
 
     /// Register a platform runner
@@ -309,6 +335,7 @@ pub async fn global_registry() -> Result<Arc<PlatformRegistry>> {
                 runners: Arc::clone(&r.runners),
                 health_monitor: Arc::clone(&r.health_monitor),
                 auth_checker: Arc::clone(&r.auth_checker),
+                model_catalog: Arc::clone(&r.model_catalog),
             }))
         }
         None => anyhow::bail!("Registry not initialized"),

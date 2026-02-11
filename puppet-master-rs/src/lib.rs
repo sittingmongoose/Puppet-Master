@@ -12,3 +12,10 @@ pub mod start_chain;
 pub mod logging;
 pub mod utils;
 pub mod types;
+
+// GUI and application modules
+pub mod app;
+pub mod theme;
+pub mod views;
+pub mod widgets;
+pub mod tray;

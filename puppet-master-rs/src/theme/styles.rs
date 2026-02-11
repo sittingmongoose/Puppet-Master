@@ -1,6 +1,6 @@
 use crate::theme::{AppTheme, colors};
 use iced::{Border, Color, Shadow, Vector};
-use iced::widget::{button, text_input, container, progress_bar, scrollable, checkbox, pick_list};
+use iced::widget::{button, text_input, container, progress_bar};
 
 // ── Spacing Constants ────────────────────────────────────────────────
 pub const SPACING_XS: f32 = 4.0;

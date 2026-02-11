@@ -2,7 +2,6 @@ use crate::theme::AppTheme;
 use crate::types::PuppetMasterEvent;
 use crate::widgets::Page;
 use crate::tray::TrayAction;
-use crate::widgets;
 use anyhow::Result;
 use chrono::{DateTime, Utc};
 use iced::{
@@ -1117,7 +1116,7 @@ impl App {
                 Task::perform(
                     async {
                         use crate::doctor::InstallationManager;
-                        use crate::types::Platform;
+                        
                         
                         let manager = InstallationManager::new();
                         let results = manager.check_all_platforms();
@@ -1199,7 +1198,7 @@ impl App {
             // ================================================================
             // Evidence
             // ================================================================
-            Message::SelectEvidence(id) => {
+            Message::SelectEvidence(_id) => {
                 // Navigate to evidence page
                 self.current_page = Page::Evidence;
                 Task::none()
@@ -1485,7 +1484,7 @@ impl App {
     }
 
     /// Render the application UI
-    pub fn view(&self) -> Element<Message> {
+    pub fn view(&self) -> Element<'_, Message> {
         use crate::views;
         use iced::widget::{column, container};
 
@@ -1729,7 +1728,7 @@ impl App {
                     overall_percent: *overall_progress as f32,
                 };
             }
-            PuppetMasterEvent::Output { line, source: _, line_type, timestamp } => {
+            PuppetMasterEvent::Output { line, source: _, line_type: _, timestamp } => {
                 self.output_lines.push(OutputLine {
                     timestamp: *timestamp,
                     line_type: OutputType::Stdout,
@@ -1791,7 +1790,7 @@ impl App {
     }
 
     /// Render the header bar
-    fn render_header(&self) -> Element<Message> {
+    fn render_header(&self) -> Element<'_, Message> {
         use iced::widget::{button, container, row, text};
 
         let nav_buttons = row![
@@ -1829,7 +1828,7 @@ impl App {
     fn nav_button<'a>(&self, label: &'a str, page: Page) -> Element<'a, Message> {
         use iced::widget::{button, text};
 
-        let is_active = self.current_page == page;
+        let _is_active = self.current_page == page;
         let btn = button(text(label))
             .on_press(Message::NavigateTo(page));
 

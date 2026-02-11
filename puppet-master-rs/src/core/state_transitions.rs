@@ -29,9 +29,9 @@ pub struct TierTransition {
 /// State transition tables
 pub struct StateTransitions {
     /// Valid orchestrator transitions
-    orchestrator_transitions: Vec<OrchestratorTransition>,
+    _orchestrator_transitions: Vec<OrchestratorTransition>,
     /// Valid tier transitions
-    tier_transitions: Vec<TierTransition>,
+    _tier_transitions: Vec<TierTransition>,
     /// Cached lookup for orchestrator transitions
     orchestrator_lookup: HashMap<OrchestratorState, Vec<OrchestratorState>>,
     /// Cached lookup for tier transitions
@@ -63,8 +63,8 @@ impl StateTransitions {
         }
 
         Self {
-            orchestrator_transitions,
-            tier_transitions,
+            _orchestrator_transitions: orchestrator_transitions,
+            _tier_transitions: tier_transitions,
             orchestrator_lookup,
             tier_lookup,
         }

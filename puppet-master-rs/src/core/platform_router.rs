@@ -12,7 +12,7 @@ use anyhow::{anyhow, Result};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-use super::complexity_classifier::{ClassificationResult, ModelLevel, Complexity, TaskType};
+use super::complexity_classifier::{ClassificationResult, ModelLevel};
 
 /// Platform capabilities
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -136,7 +136,7 @@ impl PlatformRouter {
         &self,
         preferred_platform: Option<Platform>,
         classification: &ClassificationResult,
-        tier_type: TierType,
+        _tier_type: TierType,
     ) -> Result<RoutingDecision> {
         let required_level = classification.model_level;
 

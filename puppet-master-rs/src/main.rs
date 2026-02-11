@@ -1,23 +1,6 @@
 // RWM Puppet Master - Rust + Iced Rewrite
 // Main entry point
 
-mod app;
-mod theme;
-mod views;
-mod widgets;
-mod core;
-mod platforms;
-mod verification;
-mod git;
-mod config;
-mod state;
-mod doctor;
-mod start_chain;
-mod logging;
-mod utils;
-mod types;
-mod tray;
-
 use anyhow::Result;
 use log::info;
 use std::sync::atomic::{AtomicBool, Ordering};
@@ -47,7 +30,7 @@ fn main() -> Result<()> {
     ctrlc_handler(shutdown_clone);
 
     // Launch the Iced application with tray icon
-    app::run(shutdown_flag)?;
+    puppet_master::app::run(shutdown_flag)?;
 
     info!("RWM Puppet Master shutdown complete.");
     Ok(())

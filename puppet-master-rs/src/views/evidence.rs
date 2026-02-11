@@ -54,7 +54,7 @@ impl EvidenceItemType {
         }
     }
 
-    fn all() -> Vec<Self> {
+    fn _all() -> Vec<Self> {
         vec![
             Self::TestLog,
             Self::Screenshot,

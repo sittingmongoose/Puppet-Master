@@ -555,7 +555,7 @@ fn parse_script_output(stdout: &str) -> Result<BrowserScriptResult> {
 }
 
 async fn run_with_timeout(mut cmd: Command, timeout: Duration) -> Result<std::process::Output> {
-    let mut child = cmd.spawn().context("Failed to spawn Playwright node process")?;
+    let child = cmd.spawn().context("Failed to spawn Playwright node process")?;
     let pid = child.id();
 
     let output = tokio::time::timeout(timeout, child.wait_with_output()).await;

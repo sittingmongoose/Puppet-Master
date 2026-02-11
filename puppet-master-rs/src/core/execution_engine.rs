@@ -362,7 +362,7 @@ pub struct IterationResult {
 }
 
 /// Extract reason from completion signal line
-fn extract_reason(line: &str) -> String {
+fn _extract_reason(line: &str) -> String {
     // Try to extract text after common separators
     for sep in &[":", "-", "|"] {
         if let Some(pos) = line.find(sep) {

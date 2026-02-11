@@ -7,7 +7,7 @@ use async_trait::async_trait;
 use chrono::Utc;
 use log::{debug, warn};
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 /// Checks runtime environment (disk space, memory, permissions, etc.)
 pub struct RuntimeCheck {
@@ -22,7 +22,7 @@ impl RuntimeCheck {
     }
 
     /// Create with a specific working directory
-    pub fn with_working_dir(working_dir: PathBuf) -> Self {
+    pub fn _with_working_dir(working_dir: PathBuf) -> Self {
         Self { working_dir }
     }
 
@@ -150,7 +150,7 @@ impl RuntimeCheck {
             match fs::metadata(&self.working_dir) {
                 Ok(metadata) => {
                     // Get filesystem stats
-                    let dev = metadata.dev();
+                    let _dev = metadata.dev();
                     
                     // Try to use statvfs to get actual free space
                     // This is a simplified check - just verify we can read metadata

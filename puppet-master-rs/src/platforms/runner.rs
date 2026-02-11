@@ -9,7 +9,8 @@
 //! - Completion signal detection
 //! - Stall detection
 
-use crate::types::{CompletionSignal, ExecutionRequest, ExecutionResult, OutputLine, OutputLineType};
+use crate::platforms::{HealthMonitor, RateLimiter, QuotaManager, PermissionAudit, PermissionEvent, PermissionAction};
+use crate::types::{CompletionSignal, ExecutionRequest, ExecutionResult, OutputLine, OutputLineType, Platform};
 use anyhow::{anyhow, Context, Result};
 use chrono::Utc;
 use log::{debug, info, warn};
@@ -150,17 +151,38 @@ pub struct BaseRunner {
     pub stall_timeout: u64,
     /// Process registry
     pub registry: &'static ProcessRegistry,
+    /// Platform for this runner (needed for health/quota tracking)
+    pub platform: Platform,
+    /// Health monitor (shared global instance)
+    pub health_monitor: Arc<HealthMonitor>,
+    /// Rate limiter (shared global instance)
+    pub rate_limiter: Arc<RateLimiter>,
+    /// Quota manager (shared global instance)
+    pub quota_manager: Arc<QuotaManager>,
+    /// Permission audit logger (optional, shared global instance)
+    pub permission_audit: Option<Arc<PermissionAudit>>,
 }
 
 impl BaseRunner {
     /// Create a new base runner
-    pub fn new(command: String) -> Self {
+    pub fn new(command: String, platform: Platform) -> Self {
+        // Use global singletons for health monitor, rate limiter, and quota manager
+        // Try to create permission audit logger (optional, may fail)
+        let permission_audit = PermissionAudit::default_location()
+            .map(Arc::new)
+            .ok();
+        
         Self {
             command,
             circuit_breaker: CircuitBreaker::new(5),
             default_timeout: 3600, // 1 hour
             stall_timeout: 120,    // 2 minutes
             registry: &PROCESS_REGISTRY,
+            platform,
+            health_monitor: Arc::new(HealthMonitor::new()),
+            rate_limiter: Arc::new(RateLimiter::new()),
+            quota_manager: Arc::new(QuotaManager::new()),
+            permission_audit,
         }
     }
 
@@ -187,6 +209,28 @@ impl BaseRunner {
                 "Circuit breaker is open for command: {}",
                 self.command
             ));
+        }
+
+        // Check quota before execution
+        if let Err(e) = self.quota_manager.enforce_quota(self.platform) {
+            warn!("Quota enforcement failed: {}", e);
+            self.health_monitor.record_failure(self.platform, format!("Quota exhausted: {}", e)).await;
+            return Err(e);
+        }
+
+        // Acquire rate limit permission (blocks if necessary)
+        self.rate_limiter.acquire(self.platform).await?;
+
+        // Log API access permission event
+        if let Some(ref audit) = self.permission_audit {
+            let event = PermissionEvent::new(self.platform, PermissionAction::ApiAccess, true)
+                .with_details(format!("Executing: {} with {} args", self.command, args.len()));
+            if let Some(session_id) = &request.session_id {
+                let event = event.with_session_id(session_id);
+                let _ = audit.log(event).await; // Ignore audit errors
+            } else {
+                let _ = audit.log(event).await;
+            }
         }
 
         let start_time = Instant::now();
@@ -365,7 +409,7 @@ impl BaseRunner {
             files_changed: Vec::new(),
             learnings: Vec::new(),
             completion_signal,
-            error_message,
+            error_message: error_message.clone(),
             started_at: Some(started_at),
             completed_at: Some(completed_at),
             session_id: request.session_id.clone(),
@@ -374,12 +418,19 @@ impl BaseRunner {
             tokens_used: None,
         };
 
-        // Update circuit breaker
+        // Record health status
         if result.success {
+            self.health_monitor.record_success(self.platform).await;
             self.circuit_breaker.record_success();
         } else {
+            let error_msg = error_message.unwrap_or_else(|| "Unknown error".to_string());
+            self.health_monitor.record_failure(self.platform, error_msg).await;
             self.circuit_breaker.record_failure();
         }
+
+        // Record quota usage (use tokens from result if available, otherwise estimate)
+        let tokens = result.tokens_used.unwrap_or(0);
+        self.quota_manager.record_usage(self.platform, tokens, duration_secs);
 
         Ok(result)
     }

@@ -60,17 +60,17 @@ impl CursorRunner {
     /// Create a new Cursor runner
     pub fn new() -> Self {
         Self {
-            base: Arc::new(BaseRunner::new("agent".to_string())),
+            base: Arc::new(BaseRunner::new("agent".to_string(), Platform::Cursor)),
             command: "agent".to_string(),
         }
     }
 
     /// Initialize the runner (find available command)
-    async fn init(&mut self) {
+    async fn _init(&mut self) {
         if let Some(cmd) = BaseRunner::find_available_command(&["agent", "cursor-agent"]).await {
             info!("Using Cursor command: {}", cmd);
             self.command = cmd.clone();
-            self.base = Arc::new(BaseRunner::new(cmd));
+            self.base = Arc::new(BaseRunner::new(cmd, Platform::Cursor));
         }
     }
 
@@ -112,6 +112,10 @@ impl PlatformRunner for CursorRunner {
     }
 
     async fn execute(&self, request: &ExecutionRequest) -> Result<ExecutionResult> {
+        use crate::platforms::create_parser;
+        use crate::types::CompletionSignal as TypesCompletionSignal;
+        use crate::platforms::CompletionSignal as ParserCompletionSignal;
+        
         // Build arguments
         let args = self.build_args(request);
 
@@ -126,7 +130,44 @@ impl PlatformRunner for CursorRunner {
         };
 
         // Execute via base runner
-        self.base.execute_command(request, args, stdin_input).await
+        let mut result = self.base.execute_command(request, args, stdin_input).await?;
+        
+        // Parse output using platform-specific parser
+        if let Some(output) = &result.output {
+            let parser = create_parser(Platform::Cursor);
+            let parsed = parser.parse(output, ""); // stderr is already merged in output
+            
+            // Populate result with parsed data  
+            result.files_changed = parsed.files_changed.into_iter().map(|s| s.into()).collect();
+            result.learnings = parsed.learnings;
+            
+            // Update token usage if available
+            if let Some(token_usage) = parsed.token_usage {
+                result.tokens_used = token_usage.total_tokens;
+            }
+            
+            // If parsed output detected a more specific completion signal, use it
+            if let Some(signal) = parsed.completion_signal {
+                result.completion_signal = match signal {
+                    ParserCompletionSignal::Complete => TypesCompletionSignal::Complete,
+                    ParserCompletionSignal::Gutter => TypesCompletionSignal::Gutter,
+                };
+            }
+            
+            // If errors were detected, include them in error_message
+            if !parsed.errors.is_empty() {
+                let error_msgs: Vec<String> = parsed.errors.iter()
+                    .map(|e| e.message.clone())
+                    .collect();
+                if let Some(existing_error) = &result.error_message {
+                    result.error_message = Some(format!("{}\nParsed errors: {}", existing_error, error_msgs.join("; ")));
+                } else {
+                    result.error_message = Some(format!("Parsed errors: {}", error_msgs.join("; ")));
+                }
+            }
+        }
+        
+        Ok(result)
     }
 
     async fn is_available(&self) -> bool {

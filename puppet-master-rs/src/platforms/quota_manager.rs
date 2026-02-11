@@ -141,7 +141,7 @@ impl QuotaConfig {
 pub struct QuotaManager {
     configs: Arc<Mutex<HashMap<Platform, QuotaConfig>>>,
     stats: Arc<Mutex<HashMap<Platform, QuotaUsageStats>>>,
-    run_start_time: DateTime<Utc>,
+    _run_start_time: DateTime<Utc>,
 }
 
 impl QuotaManager {
@@ -159,7 +159,7 @@ impl QuotaManager {
         Self {
             configs: Arc::new(Mutex::new(configs)),
             stats: Arc::new(Mutex::new(stats)),
-            run_start_time: Utc::now(),
+            _run_start_time: Utc::now(),
         }
     }
 

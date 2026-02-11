@@ -38,7 +38,7 @@ impl EventBus {
         let inner = self.inner.lock().unwrap();
 
         // Send to all subscribers
-        for receiver in &inner.subscribers {
+        for _receiver in &inner.subscribers {
             // Clone the event for each subscriber
             if let Err(e) = inner.sender.send(event.clone()) {
                 log::warn!("Failed to send event to subscriber: {}", e);
@@ -52,7 +52,7 @@ impl EventBus {
     pub fn subscribe(&self) -> Receiver<PuppetMasterEvent> {
         let mut inner = self.inner.lock().unwrap();
 
-        let (tx, rx) = unbounded();
+        let (_tx, rx) = unbounded();
 
         // Store the sender in our list
         // We need to recreate the architecture to properly support multiple subscribers
@@ -124,12 +124,12 @@ impl BroadcastEventBus {
     /// Clean up disconnected subscribers
     pub fn cleanup(&self) {
         let mut senders = self.senders.lock().unwrap();
-        let before = senders.len();
+        let _before = senders.len();
         // Try sending a probe to detect disconnected senders
         // crossbeam Sender doesn't have is_disconnected, so we check by trying to send
         // For simplicity, just remove senders where the receiver has been dropped
         // This is done lazily - disconnected senders will fail on next real emit
-        senders.retain(|s| {
+        senders.retain(|_s| {
             // A sender is disconnected if its receiver has been dropped
             // We can detect this by checking if send would fail
             // But we don't want to send real events, so we just keep all for now

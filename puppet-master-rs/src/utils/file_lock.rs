@@ -69,8 +69,6 @@ impl FileLock {
 
         #[cfg(unix)]
         {
-            use std::os::unix::fs::OpenOptionsExt;
-            
             // Try to acquire exclusive lock (non-blocking)
             let fd = file.as_raw_fd();
             let result = unsafe { libc::flock(fd, libc::LOCK_EX | libc::LOCK_NB) };

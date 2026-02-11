@@ -41,7 +41,7 @@ use anyhow::{Context, Result};
 use crossbeam_channel::{bounded, Receiver, Sender};
 use image::{ImageBuffer, Rgba};
 use log::{debug, warn};
-use muda::{Menu, MenuEvent, MenuItem, PredefinedMenuItem, Submenu};
+use muda::{Menu, MenuEvent, MenuItem, PredefinedMenuItem};
 use std::sync::{Arc, Mutex};
 use tray_icon::{
     menu::MenuId, Icon, MouseButton, MouseButtonState, TrayIcon, TrayIconBuilder, TrayIconEvent,
@@ -70,11 +70,11 @@ pub struct TrayManager {
     #[allow(dead_code)]
     tray: TrayIcon,
     /// Context menu
-    menu: Arc<Mutex<Menu>>,
+    _menu: Arc<Mutex<Menu>>,
     /// Status menu item for dynamic updates
     status_item: Arc<Mutex<MenuItem>>,
     /// Channel sender for tray actions
-    action_tx: Sender<TrayAction>,
+    _action_tx: Sender<TrayAction>,
     /// Menu event receiver (stored to keep events flowing)
     #[allow(dead_code)]
     menu_rx: Receiver<MenuEvent>,
@@ -187,9 +187,9 @@ impl TrayManager {
 
         let manager = Self {
             tray,
-            menu: menu_arc,
+            _menu: menu_arc,
             status_item: status_item_arc,
-            action_tx,
+            _action_tx: action_tx,
             menu_rx,
             tray_rx,
         };

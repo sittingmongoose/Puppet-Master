@@ -99,16 +99,16 @@ pub enum UsageStatus {
     /// Usage is high (> 80%)
     Warning,
     /// Usage is critical (> 95%)
-    Critical,
+    _Critical,
     /// Unable to determine usage
     Unknown,
 }
 
 impl UsageStatus {
     /// Determine status from usage percentage
-    pub fn from_percent(percent: f64) -> Self {
+    pub fn _from_percent(percent: f64) -> Self {
         if percent >= 95.0 {
-            Self::Critical
+            Self::_Critical
         } else if percent >= 80.0 {
             Self::Warning
         } else {
@@ -117,8 +117,8 @@ impl UsageStatus {
     }
 
     /// Check if this status indicates a problem
-    pub fn is_problem(&self) -> bool {
-        matches!(self, Self::Warning | Self::Critical)
+    pub fn _is_problem(&self) -> bool {
+        matches!(self, Self::Warning | Self::_Critical)
     }
 }
 
@@ -145,7 +145,7 @@ impl DoctorCheck for UsageCheck {
 
         for result in &results {
             match result.status {
-                UsageStatus::Critical => {
+                UsageStatus::_Critical => {
                     has_critical = true;
                     warn!(
                         "Critical usage for {}: {}",

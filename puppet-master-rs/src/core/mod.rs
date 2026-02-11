@@ -28,7 +28,6 @@ pub mod loop_guard;
 pub mod orchestrator;
 pub mod parallel_executor;
 pub mod platform_router;
-pub mod process_registry;
 pub mod prompt_builder;
 pub mod session_tracker;
 pub mod state_machine;
@@ -36,6 +35,10 @@ pub mod state_persistence;
 pub mod state_transitions;
 pub mod tier_node;
 pub mod worker_reviewer;
+
+// Re-export ProcessRegistry from utils to avoid duplication
+// Note: src/core/process_registry.rs is a duplicate and should be removed
+pub use crate::utils::process::ProcessRegistry;
 
 // Re-export key types for convenience
 pub use auto_advancement::AdvancementEngine;
@@ -53,7 +56,6 @@ pub use parallel_executor::{
     ParallelExecutionResult, ParallelExecutor, ParallelExecutorConfig, SubtaskResult,
 };
 pub use platform_router::{PlatformCapabilities, PlatformRouter, PlatformRouterConfig, RoutingDecision};
-pub use process_registry::{ProcessRecord, ProcessRegistry, ProcessStatus, SessionRegistry, SessionStatus};
 pub use prompt_builder::PromptBuilder;
 pub use session_tracker::SessionTracker;
 pub use state_machine::{OrchestratorStateMachine, TierStateMachine};

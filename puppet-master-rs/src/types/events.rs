@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
 use super::platform::Platform;
-use super::prd::{GateReport, ItemStatus};
+use super::prd::GateReport;
 use super::state::{OrchestratorState, TierState, TierType};
 
 /// Events emitted by the Puppet Master orchestrator.

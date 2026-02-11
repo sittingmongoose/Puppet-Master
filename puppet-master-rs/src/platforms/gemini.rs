@@ -62,7 +62,7 @@ impl GeminiRunner {
     /// Create a new Gemini runner
     pub fn new() -> Self {
         Self {
-            base: Arc::new(BaseRunner::new("gemini".to_string())),
+            base: Arc::new(BaseRunner::new("gemini".to_string(), Platform::Gemini)),
         }
     }
 
@@ -104,8 +104,45 @@ impl PlatformRunner for GeminiRunner {
     }
 
     async fn execute(&self, request: &ExecutionRequest) -> Result<ExecutionResult> {
+        use crate::platforms::create_parser;
+        use crate::types::CompletionSignal as TypesCompletionSignal;
+        use crate::platforms::CompletionSignal as ParserCompletionSignal;
+        
         let args = self.build_args(request);
-        self.base.execute_command(request, args, None).await
+        let mut result = self.base.execute_command(request, args, None).await?;
+        
+        // Parse output using platform-specific parser
+        if let Some(output) = &result.output {
+            let parser = create_parser(Platform::Gemini);
+            let parsed = parser.parse(output, "");
+            
+            result.files_changed = parsed.files_changed.into_iter().map(|s| s.into()).collect();
+            result.learnings = parsed.learnings;
+            
+            if let Some(token_usage) = parsed.token_usage {
+                result.tokens_used = token_usage.total_tokens;
+            }
+            
+            if let Some(signal) = parsed.completion_signal {
+                result.completion_signal = match signal {
+                    ParserCompletionSignal::Complete => TypesCompletionSignal::Complete,
+                    ParserCompletionSignal::Gutter => TypesCompletionSignal::Gutter,
+                };
+            }
+            
+            if !parsed.errors.is_empty() {
+                let error_msgs: Vec<String> = parsed.errors.iter()
+                    .map(|e| e.message.clone())
+                    .collect();
+                if let Some(existing_error) = &result.error_message {
+                    result.error_message = Some(format!("{}\nParsed errors: {}", existing_error, error_msgs.join("; ")));
+                } else {
+                    result.error_message = Some(format!("Parsed errors: {}", error_msgs.join("; ")));
+                }
+            }
+        }
+        
+        Ok(result)
     }
 
     async fn is_available(&self) -> bool {

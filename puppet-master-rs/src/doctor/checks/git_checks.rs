@@ -3,7 +3,6 @@
 use crate::types::{CheckCategory, CheckResult, DoctorCheck, FixResult};
 use async_trait::async_trait;
 use chrono::Utc;
-use std::path::PathBuf;
 use which::which;
 
 /// Check if git is installed

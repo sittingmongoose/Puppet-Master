@@ -13,11 +13,6 @@ jobs:
   build:
     name: Build (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    env:
-      LINUX_DEPS: /home/runner/.cache/rwm-upstream
-      MUSL_VERSION: 1.2.5
-      GTK_VERSION: 3.24.48
-      RPM_VERSION: 6.0.1
     strategy:
       fail-fast: false
       matrix:
@@ -41,59 +36,22 @@ jobs:
         with:
           workspaces: './puppet-master-rs -> target'
 
-      - name: Compute cache bucket (Linux)
+      - name: Install system dependencies (Linux)
         if: runner.os == 'Linux'
-        id: cache-bucket
         shell: bash
         run: |
-          echo "bucket=$(( $(date +%s) / 1209600 ))" >> "$GITHUB_OUTPUT"
-
-      - name: Restore upstream deps cache (Linux)
-        if: runner.os == 'Linux'
-        id: linux-deps-cache
-        uses: actions/cache/restore@v4
-        with:
-          path: ${{ env.LINUX_DEPS }}
-          key: rwm-upstream-${{ runner.os }}-${{ steps.cache-bucket.outputs.bucket }}-musl${{ env.MUSL_VERSION }}-gtk${{ env.GTK_VERSION }}-rpm${{ env.RPM_VERSION }}
-          restore-keys: |
-            rwm-upstream-${{ runner.os }}-
-
-      - name: Install upstream musl/gtk/rpm (Linux)
-        if: runner.os == 'Linux' && steps.linux-deps-cache.outputs.cache-hit != 'true'
-        shell: bash
-        run: |
-          set -euo pipefail
           sudo apt-get update
           sudo apt-get install -y \
             build-essential \
             pkg-config \
-            curl \
-            xz-utils \
-            bison \
-            flex \
-            gettext \
-            meson \
-            ninja-build \
-            python3 \
-            python3-pip \
-            libarchive-dev \
-            libbz2-dev \
-            liblzma-dev \
-            libpopt-dev \
-            libsqlite3-dev \
-            libzstd-dev \
-            libgcrypt20-dev \
-            liblua5.4-dev \
-            zlib1g-dev \
-            libssl-dev \
+            libgtk-3-dev \
             libglib2.0-dev \
             libpango1.0-dev \
             libcairo2-dev \
             libgdk-pixbuf-2.0-dev \
             libatk1.0-dev \
             libatk-bridge2.0-dev \
-            libepoxy-dev \
-            gobject-introspection \
+            libappindicator3-dev \
             libx11-dev \
             libxext-dev \
             libxrender-dev \
@@ -108,43 +66,9 @@ jobs:
             libwayland-dev \
             wayland-protocols \
             libdbus-1-dev \
-            libmount-dev
-
-          mkdir -p "$LINUX_DEPS"
-
-          echo "Installing musl ${MUSL_VERSION}..."
-          curl -fL "https://musl.libc.org/releases/musl-${MUSL_VERSION}.tar.gz" -o "/tmp/musl-${MUSL_VERSION}.tar.gz"
-          tar -xzf "/tmp/musl-${MUSL_VERSION}.tar.gz" -C /tmp
-          pushd "/tmp/musl-${MUSL_VERSION}"
-          ./configure --prefix="${LINUX_DEPS}/musl-${MUSL_VERSION}"
-          make -j"$(nproc)"
-          make install
-          popd
-
-          echo "Installing GTK ${GTK_VERSION}..."
-          curl -fL "https://download.gnome.org/sources/gtk/3.24/gtk-${GTK_VERSION}.tar.xz" -o "/tmp/gtk-${GTK_VERSION}.tar.xz"
-          tar -xJf "/tmp/gtk-${GTK_VERSION}.tar.xz" -C /tmp
-          pushd "/tmp/gtk-${GTK_VERSION}"
-          meson setup build --prefix="${LINUX_DEPS}/gtk-${GTK_VERSION}" -Dintrospection=false
-          meson compile -C build
-          meson install -C build
-          popd
-
-          echo "Installing rpm ${RPM_VERSION}..."
-          curl -fL "https://ftp.rpm.org/releases/rpm-${RPM_VERSION%%.*}.0.x/rpm-${RPM_VERSION}.tar.bz2" -o "/tmp/rpm-${RPM_VERSION}.tar.bz2"
-          tar -xjf "/tmp/rpm-${RPM_VERSION}.tar.bz2" -C /tmp
-          pushd "/tmp/rpm-${RPM_VERSION}"
-          ./configure --prefix="${LINUX_DEPS}/rpm-${RPM_VERSION}"
-          make -j"$(nproc)"
-          make install
-          popd
-
-      - name: Save upstream deps cache (Linux)
-        if: runner.os == 'Linux' && steps.linux-deps-cache.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v4
-        with:
-          path: ${{ env.LINUX_DEPS }}
-          key: rwm-upstream-${{ runner.os }}-${{ steps.cache-bucket.outputs.bucket }}-musl${{ env.MUSL_VERSION }}-gtk${{ env.GTK_VERSION }}-rpm${{ env.RPM_VERSION }}
+            libssl-dev \
+            dpkg \
+            rpm
 
       - name: Install NSIS (Windows)
         if: runner.os == 'Windows'
@@ -188,10 +112,6 @@ jobs:
         if: runner.os == 'Linux'
         shell: bash
         run: |
-          export PATH="$LINUX_DEPS/rpm-${RPM_VERSION}/bin:$LINUX_DEPS/gtk-${GTK_VERSION}/bin:$LINUX_DEPS/musl-${MUSL_VERSION}/bin:$PATH"
-          export PKG_CONFIG_PATH="$LINUX_DEPS/gtk-${GTK_VERSION}/lib/pkgconfig:$LINUX_DEPS/gtk-${GTK_VERSION}/share/pkgconfig:${PKG_CONFIG_PATH:-}"
-          export LD_LIBRARY_PATH="$LINUX_DEPS/gtk-${GTK_VERSION}/lib:$LINUX_DEPS/rpm-${RPM_VERSION}/lib:${LD_LIBRARY_PATH:-}"
-          rustup target add x86_64-unknown-linux-musl
           cd scripts
           ./build-linux-installer.sh "${{ steps.version.outputs.version }}"
           mkdir -p ../dist/installers/linux-x64

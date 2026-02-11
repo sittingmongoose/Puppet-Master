@@ -3,7 +3,7 @@
 //! Checks for completeness, consistency, and feasibility
 //! of the PRD to ensure it's ready for execution.
 
-use crate::types::{PRD, Phase, Task, Subtask};
+use crate::types::PRD;
 use anyhow::Result;
 use log::{debug, info, warn};
 use serde::{Deserialize, Serialize};
@@ -401,7 +401,7 @@ impl ValidationGate {
     fn check_dependencies(
         prd: &PRD,
         errors: &mut Vec<ValidationError>,
-        warnings: &mut Vec<ValidationWarning>,
+        _warnings: &mut Vec<ValidationWarning>,
         checks: &mut Vec<CheckResult>,
     ) {
         debug!("Checking dependencies");
@@ -477,7 +477,7 @@ impl ValidationGate {
     /// Check completeness.
     fn check_completeness(
         prd: &PRD,
-        errors: &mut Vec<ValidationError>,
+        _errors: &mut Vec<ValidationError>,
         warnings: &mut Vec<ValidationWarning>,
         checks: &mut Vec<CheckResult>,
     ) {

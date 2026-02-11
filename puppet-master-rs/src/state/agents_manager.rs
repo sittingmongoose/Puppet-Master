@@ -218,6 +218,17 @@ impl AgentsManager {
 
         Ok(hierarchy)
     }
+    
+    /// Validate AGENTS.md with gate enforcer
+    pub fn validate_with_enforcer(&self, tier_id: &str) -> Result<crate::state::agents_gate_enforcer::EnforcementResult> {
+        use crate::state::agents_gate_enforcer::GateEnforcer;
+        
+        let doc = self.load(tier_id)?;
+        let content = self.format_agents_doc(&doc);
+        let enforcer = GateEnforcer::new();
+        
+        enforcer.enforce(&content, &doc)
+    }
 
     /// Merge all learnings from hierarchy
     pub fn merge_hierarchy(&self, tier_id: &str) -> Result<AgentsDoc> {

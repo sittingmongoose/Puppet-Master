@@ -113,8 +113,6 @@ impl LogRetentionManager {
         let max_age = Duration::days(self.config.max_age_days as i64);
         let cutoff_time = now - max_age;
 
-        let mut total_size = 0u64;
-
         // First pass: remove files older than max age
         for file in &mut files {
             if file.protected {
@@ -128,7 +126,7 @@ impl LogRetentionManager {
         }
 
         // Calculate current total size
-        total_size = files.iter().filter(|f| f.size > 0).map(|f| f.size).sum();
+        let mut total_size: u64 = files.iter().filter(|f| f.size > 0).map(|f| f.size).sum();
 
         // Second pass: remove oldest files if total size exceeds limit
         let max_size_bytes = self.config.max_total_size_mb * 1024 * 1024;

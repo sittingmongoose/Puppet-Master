@@ -38,7 +38,7 @@ impl BudgetSize {
 pub struct BudgetDonut {
     used: f32,
     limit: f32,
-    platform_name: String,
+    _platform_name: String,
     size: BudgetSize,
     cache: Cache,
 }
@@ -49,7 +49,7 @@ impl BudgetDonut {
         Self {
             used,
             limit,
-            platform_name: platform_name.into(),
+            _platform_name: platform_name.into(),
             size,
             cache: Cache::new(),
         }

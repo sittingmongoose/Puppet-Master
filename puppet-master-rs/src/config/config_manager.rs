@@ -7,6 +7,7 @@
 
 use crate::config::default_config::default_config;
 use crate::config::config_schema::validate_config;
+use crate::config::config_override::{ConfigOverride, apply_overrides};
 use crate::types::PuppetMasterConfig;
 use anyhow::{Context, Result};
 use std::path::{Path, PathBuf};
@@ -196,6 +197,20 @@ impl ConfigManager {
         inner.config = other;
 
         log::debug!("Configuration merged");
+        Ok(())
+    }
+    
+    /// Apply configuration overrides to the current configuration
+    ///
+    /// This modifies the configuration in-place with the specified overrides.
+    /// Overrides allow runtime modifications without changing the base config file.
+    pub fn apply_overrides(&self, overrides: &ConfigOverride) -> Result<()> {
+        let mut inner = self.inner.lock().unwrap();
+        
+        // Apply overrides to the configuration
+        apply_overrides(&mut inner.config, overrides);
+        
+        log::info!("Applied configuration overrides");
         Ok(())
     }
 }

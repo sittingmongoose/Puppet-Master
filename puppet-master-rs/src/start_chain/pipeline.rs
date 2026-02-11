@@ -3,19 +3,17 @@
 use crate::platforms::{PlatformRegistry, UsageTracker};
 use crate::start_chain::{
     AiGapValidatorConfig, CompositeValidator, PrdGenerator, RequirementsParser,
-    ArchitectureGenerator, TierPlanGenerator, TestPlanGenerator, RequirementsInterviewer,
-    RequirementsInventory,
 };
 use crate::state::EvidenceStore;
 use crate::types::{
-    config::PuppetMasterConfig, events::PuppetMasterEvent, Evidence,
+    config::PuppetMasterConfig, events::PuppetMasterEvent,
     EvidenceType, ParsedRequirements, PRD,
 };
 use anyhow::{anyhow, Context, Result};
 use chrono::Utc;
 use log::{info, warn};
 use std::collections::HashMap;
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 use std::sync::Arc;
 use tokio::sync::mpsc;
 

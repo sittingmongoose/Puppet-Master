@@ -88,7 +88,7 @@ impl SecretsCheck {
         SecretCheckResult {
             platform,
             env_vars,
-            overall_status,
+            _overall_status: overall_status,
         }
     }
 
@@ -118,7 +118,7 @@ impl Default for SecretsCheck {
 pub struct SecretCheckResult {
     pub platform: Platform,
     pub env_vars: Vec<EnvVarStatus>,
-    pub overall_status: SecretStatus,
+    pub _overall_status: SecretStatus,
 }
 
 /// Status of an environment variable
@@ -143,7 +143,7 @@ pub enum SecretStatus {
 
 impl SecretStatus {
     /// Check if this status indicates a problem
-    pub fn is_problem(&self) -> bool {
+    pub fn _is_problem(&self) -> bool {
         matches!(self, Self::RequiredMissing)
     }
 }
