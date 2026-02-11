@@ -192,7 +192,7 @@ impl InstallationManager {
                 r#"Install Cursor CLI on macOS:
 
  1. Install via the official script:
-   curl -fsSL https://cursor.com/install | bash
+   curl https://cursor.com/install -fsS | bash
 
  2. Restart your terminal
 
@@ -208,7 +208,7 @@ impl InstallationManager {
                 r#"Install Cursor CLI on Linux:
 
  1. Install via the official script:
-   curl -fsSL https://cursor.com/install | bash
+   curl https://cursor.com/install -fsS | bash
 
  2. Restart your terminal
 
@@ -218,9 +218,9 @@ impl InstallationManager {
  "#
             }
             OperatingSystem::Windows => {
-                r#"Install Cursor CLI on Windows:
+                r#"Install Cursor CLI on Windows PowerShell:
 
- 1. Install via the official script (PowerShell):
+ 1. Install via the official script:
    irm 'https://cursor.com/install?win32=true' | iex
 
  2. Restart your terminal
@@ -393,7 +393,7 @@ Verify installation:
         match self.os {
             OperatingSystem::MacOS | OperatingSystem::Linux => {
                 let status = Command::new("sh")
-                    .args(["-c", "curl -fsSL https://cursor.com/install | bash"])
+                    .args(["-c", "curl https://cursor.com/install -fsS | bash"])
                     .stdin(Stdio::inherit())
                     .stdout(Stdio::inherit())
                     .stderr(Stdio::inherit())

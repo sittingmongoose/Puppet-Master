@@ -347,16 +347,19 @@ impl InstallationStatus {
         
         match platform {
             Platform::Cursor => {
-                recommendations.push("Install Cursor IDE from https://cursor.sh".to_string());
+                recommendations.push(
+                    "Install Cursor CLI: curl https://cursor.com/install -fsS | bash (macOS/Linux/WSL) or PowerShell: irm 'https://cursor.com/install?win32=true' | iex"
+                        .to_string(),
+                );
             }
             Platform::Codex => {
-                recommendations.push("Install Codex CLI: npm install -g @anthropic-ai/codex".to_string());
+                recommendations.push("Install Codex CLI: npm install -g @openai/codex".to_string());
             }
             Platform::Claude => {
-                recommendations.push("Install Claude CLI: npm install -g @anthropic-ai/claude-cli".to_string());
+                recommendations.push("Install Claude Code CLI: curl -fsSL https://claude.ai/install.sh | bash".to_string());
             }
             Platform::Gemini => {
-                recommendations.push("Install Google Cloud SDK with Gemini support".to_string());
+                recommendations.push("Install Gemini CLI: npm install -g @google/gemini-cli".to_string());
             }
             Platform::Copilot => {
                 recommendations.push("Install GitHub CLI: https://cli.github.com".to_string());

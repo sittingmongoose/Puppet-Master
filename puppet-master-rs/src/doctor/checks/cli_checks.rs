@@ -52,7 +52,7 @@ impl CursorCheck {
         Self(CliCheck::new(
             "Cursor",
             "agent",
-            "Install Cursor from https://cursor.sh/ and ensure agent (or cursor-agent) is in PATH",
+            "Install Cursor CLI via https://cursor.com/install and ensure agent (or cursor-agent) is in PATH",
             Platform::Cursor,
         ))
     }
@@ -78,7 +78,12 @@ impl DoctorCheck for CursorCheck {
 
     async fn fix(&self, dry_run: bool) -> Option<FixResult> {
         if dry_run {
-            return Some(FixResult::success("Would run: curl -fsSL https://cursor.com/install | bash"));
+            let cmd = if cfg!(target_os = "windows") {
+                "Would run: irm 'https://cursor.com/install?win32=true' | iex"
+            } else {
+                "Would run: curl https://cursor.com/install -fsS | bash"
+            };
+            return Some(FixResult::success(cmd));
         }
         let manager = InstallationManager::new();
         match manager.execute_install(self.0.platform) {
