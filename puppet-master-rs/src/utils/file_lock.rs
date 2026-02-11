@@ -83,7 +83,7 @@ impl FileLock {
             use std::os::windows::io::AsRawHandle;
             use winapi::um::fileapi::LockFile;
             
-            let handle = file.as_raw_handle();
+            let handle = file.as_raw_handle() as *mut winapi::ctypes::c_void;
             let result = unsafe { LockFile(handle, 0, 0, 1, 0) };
             
             if result == 0 {
@@ -123,7 +123,7 @@ impl Drop for FileLock {
             use std::os::windows::io::AsRawHandle;
             use winapi::um::fileapi::UnlockFile;
             
-            let handle = self.lock_file.as_raw_handle();
+            let handle = self.lock_file.as_raw_handle() as *mut winapi::ctypes::c_void;
             unsafe {
                 UnlockFile(handle, 0, 0, 1, 0);
             }
