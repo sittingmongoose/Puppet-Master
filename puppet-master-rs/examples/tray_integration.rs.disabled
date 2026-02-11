@@ -1,0 +1,123 @@
+//! Example: Integrating the tray module with Iced GUI
+//!
+//! This example demonstrates how to integrate the system tray with an Iced
+//! application using subscriptions for event handling.
+
+use iced::widget::{button, column, container, text};
+use iced::{Element, Subscription, Task};
+use puppet_master::tray::{create_tray_icon, poll_tray_events, TrayAction, TrayManager};
+use std::sync::Arc;
+
+fn main() -> iced::Result {
+    iced::application("RWM Puppet Master - Tray Example", App::update, App::view)
+        .subscription(App::subscription)
+        .run_with(App::new)
+}
+
+#[derive(Debug, Clone)]
+enum Message {
+    TrayAction(TrayAction),
+    UpdateStatus,
+    None,
+}
+
+struct App {
+    tray: Arc<TrayManager>,
+    status: String,
+    counter: usize,
+}
+
+impl App {
+    fn new() -> (Self, Task<Message>) {
+        // Initialize tray on startup
+        let (tray, _rx) = create_tray_icon().expect("Failed to create system tray");
+
+        let app = Self {
+            tray: Arc::new(tray),
+            status: "Ready".to_string(),
+            counter: 0,
+        };
+
+        // Update initial status
+        app.tray.update_status(&app.status);
+
+        (app, Task::none())
+    }
+
+    fn update(&mut self, message: Message) -> Task<Message> {
+        match message {
+            Message::TrayAction(action) => {
+                match action {
+                    TrayAction::OpenGui => {
+                        println!("Opening GUI window...");
+                        self.status = "GUI Opened".to_string();
+                        self.tray.update_status(&self.status);
+                    }
+                    TrayAction::RestartApp => {
+                        println!("Restarting application...");
+                        self.status = "Restarting...".to_string();
+                        self.tray.update_status(&self.status);
+                        // In a real app, you would trigger a restart here
+                    }
+                    TrayAction::Quit => {
+                        println!("Quitting application...");
+                        self.status = "Shutting down...".to_string();
+                        self.tray.update_status(&self.status);
+                        std::process::exit(0);
+                    }
+                }
+                Task::none()
+            }
+            Message::UpdateStatus => {
+                self.counter += 1;
+                self.status = format!("Running - {} updates", self.counter);
+                self.tray.update_status(&self.status);
+                Task::none()
+            }
+            Message::None => Task::none(),
+        }
+    }
+
+    fn view(&self) -> Element<Message> {
+        let content = column![
+            text("RWM Puppet Master").size(32),
+            text(format!("Status: {}", self.status)).size(16),
+            text("The system tray icon is active.").size(14),
+            text("Try clicking it or right-clicking for the menu!").size(14),
+            button("Update Status").on_press(Message::UpdateStatus),
+        ]
+        .spacing(20)
+        .padding(40);
+
+        container(content)
+            .width(iced::Length::Fill)
+            .height(iced::Length::Fill)
+            .center_x(800)
+            .center_y(600)
+            .into()
+    }
+
+    fn subscription(&self) -> Subscription<Message> {
+        // Create a subscription that polls tray events
+        struct TraySubscription;
+
+        iced::subscription::channel(
+            std::any::TypeId::of::<TraySubscription>(),
+            100,
+            move |mut output| async move {
+                // Create the tray receiver
+                let (_tray_manager, rx) = create_tray_icon().expect("Failed to create tray");
+
+                loop {
+                    // Poll for tray events
+                    if let Some(action) = poll_tray_events(&rx) {
+                        let _ = output.send(Message::TrayAction(action)).await;
+                    }
+
+                    // Small delay to avoid busy-waiting
+                    tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
+                }
+            },
+        )
+    }
+}

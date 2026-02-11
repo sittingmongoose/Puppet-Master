@@ -1,0 +1,9 @@
+# Cross-compilation and linker configuration
+
+# musl static linking for Linux (produces fully static binary)
+[target.x86_64-unknown-linux-musl]
+rustflags = ["-C", "target-feature=+crt-static"]
+
+# Default target for CI Linux builds (uncomment to default to musl)
+# [build]
+# target = "x86_64-unknown-linux-musl"

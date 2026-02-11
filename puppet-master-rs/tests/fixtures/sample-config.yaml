@@ -1,0 +1,20 @@
+project:
+  name: "test-project"
+  workingDirectory: "/tmp/test-project"
+tiers:
+  phase:
+    platform: cursor
+    model: "gpt-5"
+    maxIterations: 3
+  task:
+    platform: claude
+    model: "claude-sonnet-4-5"
+    maxIterations: 5
+  subtask:
+    platform: codex
+    model: "gpt-5.2-codex"
+    maxIterations: 10
+  iteration:
+    platform: gemini
+    model: "gemini-2.5-pro"
+    maxIterations: 1

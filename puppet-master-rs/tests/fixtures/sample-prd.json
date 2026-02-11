@@ -1,0 +1,27 @@
+{
+  "id": "test-prd",
+  "name": "Test Project",
+  "description": "A test PRD",
+  "phases": [
+    {
+      "id": "PH0",
+      "name": "Setup",
+      "status": "pending",
+      "tasks": [
+        {
+          "id": "PH0-T01",
+          "name": "Initialize",
+          "status": "pending",
+          "subtasks": [
+            {
+              "id": "PH0-T01-ST01",
+              "name": "Create project",
+              "status": "pending",
+              "criteria": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
