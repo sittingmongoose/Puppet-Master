@@ -65,6 +65,12 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, _theme: &'a AppTheme) -> Element<
                 table_column(text("Platform"), |r: PlatformMetrics| {
                     text(format!("{:?}", r.platform))
                 }),
+                table_column(text("Model"), |r: PlatformMetrics| {
+                    text(r.last_model.unwrap_or_default())
+                }),
+                table_column(text("Effort"), |r: PlatformMetrics| {
+                    text(r.last_reasoning_effort.unwrap_or_default())
+                }),
                 table_column(text("Iters"), |r: PlatformMetrics| text(r.iterations.to_string())),
                 table_column(text("Success"), |r: PlatformMetrics| {
                     text(format!("{:.1}%", r.success_rate() * 100.0))
@@ -104,6 +110,12 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, _theme: &'a AppTheme) -> Element<
                         .last_platform
                         .map(|p| format!("{:?}", p))
                         .unwrap_or_default())
+                }),
+                table_column(text("Model"), |r: SubtaskMetrics| {
+                    text(r.last_model.unwrap_or_default())
+                }),
+                table_column(text("Effort"), |r: SubtaskMetrics| {
+                    text(r.last_reasoning_effort.unwrap_or_default())
                 }),
                 table_column(text("Iters"), |r: SubtaskMetrics| text(r.iterations.to_string())),
                 table_column(text("Success"), |r: SubtaskMetrics| {

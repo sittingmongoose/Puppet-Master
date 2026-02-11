@@ -23,6 +23,13 @@ use std::sync::{Arc, Mutex};
 #[serde(rename_all = "camelCase")]
 pub struct PlatformMetrics {
     pub platform: Platform,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub last_model: Option<String>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub last_reasoning_effort: Option<String>,
+
     pub iterations: u64,
     pub successes: u64,
     pub failures: u64,
@@ -41,6 +48,8 @@ impl PlatformMetrics {
     pub fn new(platform: Platform) -> Self {
         Self {
             platform,
+            last_model: None,
+            last_reasoning_effort: None,
             iterations: 0,
             successes: 0,
             failures: 0,
@@ -88,6 +97,12 @@ pub struct SubtaskMetrics {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub last_platform: Option<Platform>,
 
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub last_model: Option<String>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub last_reasoning_effort: Option<String>,
+
     pub iterations: u64,
     pub successes: u64,
     pub failures: u64,
@@ -109,6 +124,8 @@ impl SubtaskMetrics {
         Self {
             subtask_id,
             last_platform: None,
+            last_model: None,
+            last_reasoning_effort: None,
             iterations: 0,
             successes: 0,
             failures: 0,
@@ -301,6 +318,8 @@ impl MetricsCollector {
             PuppetMasterEvent::IterationStart {
                 item_id,
                 platform,
+                model,
+                reasoning_effort,
                 ..
             } => {
                 inner.last_platform_by_item.insert(item_id.clone(), *platform);
@@ -310,6 +329,15 @@ impl MetricsCollector {
                     .entry(item_id.clone())
                     .or_insert_with(|| SubtaskAgg::new(item_id.clone()));
                 entry.metrics.last_platform = Some(*platform);
+                entry.metrics.last_model = Some(model.clone());
+                entry.metrics.last_reasoning_effort = reasoning_effort.clone();
+
+                let plat = inner
+                    .platforms
+                    .entry(*platform)
+                    .or_insert_with(|| PlatformAgg::new(*platform));
+                plat.metrics.last_model = Some(model.clone());
+                plat.metrics.last_reasoning_effort = reasoning_effort.clone();
             }
 
             PuppetMasterEvent::IterationComplete {
@@ -543,7 +571,7 @@ impl MetricsCollector {
 
         writeln!(
             file,
-            "kind,id,platform,iterations,successes,failures,successRate,avgLatencyMs,p95LatencyMs,escalations,escalationRate,retries,timeouts,estimatedTokens,estimatedCostUsd"
+            "kind,id,platform,iterations,successes,failures,successRate,avgLatencyMs,p95LatencyMs,escalations,escalationRate,retries,timeouts,estimatedTokens,estimatedCostUsd,lastModel,lastReasoningEffort"
         )
         .context("Failed to write CSV header")?;
 
@@ -564,6 +592,8 @@ impl MetricsCollector {
                 p.timeouts.to_string(),
                 p.estimated_tokens.to_string(),
                 format!("{:.6}", p.estimated_cost_usd),
+                p.last_model.clone().unwrap_or_default(),
+                p.last_reasoning_effort.clone().unwrap_or_default(),
             ];
             writeln!(file, "{}", to_csv_row(&row)).context("Failed to write CSV row")?;
         }
@@ -590,6 +620,8 @@ impl MetricsCollector {
                 s.timeouts.to_string(),
                 s.estimated_tokens.to_string(),
                 format!("{:.6}", s.estimated_cost_usd),
+                s.last_model.clone().unwrap_or_default(),
+                s.last_reasoning_effort.clone().unwrap_or_default(),
             ];
             writeln!(file, "{}", to_csv_row(&row)).context("Failed to write CSV row")?;
         }

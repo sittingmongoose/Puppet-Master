@@ -20,6 +20,9 @@ pub struct SessionInfo {
     pub items_total: usize,
     pub expanded: bool,
     pub phases: Vec<String>,
+    pub platform: Option<String>,
+    pub model: Option<String>,
+    pub reasoning_effort: Option<String>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -121,6 +124,12 @@ pub fn view<'a>(
                     text(&session.id).size(16),
                     text(format!("Started: {}", 
                         session.start_time.format("%Y-%m-%d %H:%M:%S")
+                    )).size(12),
+                    text(format!(
+                        "Platform: {} | Model: {} | Effort: {}",
+                        session.platform.as_deref().unwrap_or("—"),
+                        session.model.as_deref().unwrap_or("—"),
+                        session.reasoning_effort.as_deref().unwrap_or("—"),
                     )).size(12),
                 ].spacing(5),
                 Space::new().width(Length::Fill),

@@ -189,6 +189,7 @@ pub struct App {
     // History
     pub history_sessions: Vec<SessionInfo>,
     pub history_page: usize,
+    history_active_by_item: HashMap<String, Vec<String>>,
 
     // Metrics
     pub metrics: MetricsSnapshot,
@@ -413,6 +414,7 @@ impl App {
             // History
             history_sessions: Vec::new(),
             history_page: 0,
+            history_active_by_item: HashMap::new(),
 
             // Metrics
             metrics: MetricsSnapshot::default(),
@@ -1636,7 +1638,42 @@ impl App {
             PuppetMasterEvent::StateChanged { from: _, to, .. } => {
                 self.orchestrator_status = format!("{:?}", to);
             }
-            PuppetMasterEvent::IterationStart { item_id, platform, model, reasoning_effort, .. } => {
+            PuppetMasterEvent::IterationStart { item_id, platform, model, reasoning_effort, session_id, timestamp, .. } => {
+                self.history_active_by_item
+                    .entry(item_id.clone())
+                    .or_default()
+                    .push(session_id.clone());
+
+                if let Some(existing) = self.history_sessions.iter_mut().find(|s| s.id == *session_id) {
+                    existing.start_time = *timestamp;
+                    existing.end_time = None;
+                    existing.status = crate::views::history::SessionStatus::Running;
+                    existing.platform = Some(format!("{:?}", platform));
+                    existing.model = Some(model.clone());
+                    existing.reasoning_effort = reasoning_effort.clone();
+                } else {
+                    self.history_sessions.insert(
+                        0,
+                        SessionInfo {
+                            id: session_id.clone(),
+                            start_time: *timestamp,
+                            end_time: None,
+                            status: crate::views::history::SessionStatus::Running,
+                            items_completed: 0,
+                            items_total: 1,
+                            expanded: false,
+                            phases: vec![format!("Item: {}", item_id)],
+                            platform: Some(format!("{:?}", platform)),
+                            model: Some(model.clone()),
+                            reasoning_effort: reasoning_effort.clone(),
+                        },
+                    );
+
+                    if self.history_sessions.len() > 200 {
+                        self.history_sessions.truncate(200);
+                    }
+                }
+
                 self.current_item = Some(CurrentItem {
                     phase_id: item_id.clone(),
                     phase_name: "Iteration".to_string(),
@@ -1651,10 +1688,33 @@ impl App {
                     reasoning_effort: reasoning_effort.clone(),
                 });
             }
-            PuppetMasterEvent::IterationComplete { item_id, .. } => {
+            PuppetMasterEvent::IterationComplete { item_id, success, timestamp, .. } => {
                 if let Some(ref item) = self.current_item {
                     if item.phase_id == *item_id {
                         self.current_item = None;
+                    }
+                }
+
+                let session_id = if let Some(stack) = self.history_active_by_item.get_mut(item_id) {
+                    let sid = stack.pop();
+                    if stack.is_empty() {
+                        self.history_active_by_item.remove(item_id);
+                    }
+                    sid
+                } else {
+                    None
+                };
+
+                if let Some(sid) = session_id {
+                    if let Some(session) = self.history_sessions.iter_mut().find(|s| s.id == sid) {
+                        session.end_time = Some(*timestamp);
+                        session.status = if *success {
+                            crate::views::history::SessionStatus::Completed
+                        } else {
+                            crate::views::history::SessionStatus::Failed
+                        };
+                        session.items_total = 1;
+                        session.items_completed = if *success { 1 } else { 0 };
                     }
                 }
             }
