@@ -59,9 +59,37 @@ Keywords=ai;development;orchestrator;
 EOF
 
 # Copy icon if exists
-if [ -f "../puppet-master-rs/icons/icon.png" ]; then
-    cp ../puppet-master-rs/icons/icon.png "$DEB_DIR/usr/share/icons/hicolor/256x256/apps/puppet-master.png"
+if [ -f "icons/icon.png" ]; then
+    cp icons/icon.png "$DEB_DIR/usr/share/icons/hicolor/256x256/apps/puppet-master.png"
+else
+    echo "Warning: icon.png not found at icons/icon.png"
 fi
+
+# Create postinstall script
+cat > "$DEB_DIR/DEBIAN/postinst" << 'EOF'
+#!/bin/sh
+set -e
+
+# Update desktop database
+if command -v update-desktop-database >/dev/null 2>&1; then
+  update-desktop-database /usr/share/applications 2>/dev/null || true
+fi
+
+# Update icon cache
+if command -v gtk-update-icon-cache >/dev/null 2>&1; then
+  gtk-update-icon-cache -f /usr/share/icons/hicolor 2>/dev/null || true
+fi
+
+echo "RWM Puppet Master installed successfully!"
+echo "Launch from your application menu or run: puppet-master"
+echo ""
+echo "Data will be stored in: ~/.local/share/RWM Puppet Master"
+echo "on first run."
+
+exit 0
+EOF
+
+chmod 755 "$DEB_DIR/DEBIAN/postinst"
 
 dpkg-deb --build "$DEB_DIR" "../installer/linux/puppet-master_${VERSION}_${ARCH}.deb"
 echo "✅ Created puppet-master_${VERSION}_${ARCH}.deb"

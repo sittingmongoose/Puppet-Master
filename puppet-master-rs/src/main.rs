@@ -1,6 +1,8 @@
 // RWM Puppet Master - Rust + Iced Rewrite
 // Main entry point
 
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
 use anyhow::Result;
 use log::info;
 use std::sync::atomic::{AtomicBool, Ordering};

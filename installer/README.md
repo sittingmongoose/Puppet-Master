@@ -84,24 +84,69 @@ The Linux binary is statically linked using musl, requiring no external dependen
 ## Installation
 
 ### Windows
-- Double-click the `.exe` installer
-- Adds to PATH and creates shortcuts
-- Uninstall via Control Panel
+1. Download and run the `.exe` installer
+2. Follow the installation wizard
+3. The app will be installed to `C:\Program Files\RWM Puppet Master`
+4. Data and logs are stored in `%LOCALAPPDATA%\RWM Puppet Master` (user-writable location)
+5. Launch from Start Menu or Desktop shortcut
+6. Uninstall via Control Panel → Programs and Features
+
+**Note:** The GUI app runs without a console window in release mode. For debugging, use the debug build.
 
 ### macOS
-- Open the `.dmg` file
-- Drag "RWM Puppet Master.app" to Applications
-- Launch from Applications or Spotlight
+
+**⚠️ IMPORTANT: Gatekeeper Security Notice**
+
+GitHub Actions builds are **not code-signed or notarized**, so macOS Gatekeeper will block them with "damaged" error.
+
+**Option 1: Remove Quarantine Attribute (Recommended)**
+```bash
+xattr -cr "/path/to/RWM Puppet Master.app"
+```
+Or from the DMG directly:
+```bash
+# Mount the DMG first, then:
+xattr -cr "/Volumes/RWM Puppet Master/RWM Puppet Master.app"
+```
+
+**Option 2: Right-Click Override**
+1. Right-click (or Control+click) on the app
+2. Select "Open"
+3. Click "Open" in the warning dialog (only appears first time)
+
+**For Production Builds:**
+- Requires Apple Developer account
+- Must be code-signed with valid certificate
+- Must be notarized via `xcrun notarytool`
+- See: https://developer.apple.com/documentation/security/notarizing_macos_software_before_distribution
+
+**Installation Steps:**
+1. Download the `.dmg` file
+2. Apply one of the Gatekeeper workarounds above
+3. Open the DMG
+4. Drag "RWM Puppet Master.app" to Applications folder
+5. Launch from Applications or Spotlight
 
 ### Linux (Debian/Ubuntu)
 ```bash
 sudo dpkg -i puppet-master_0.1.1_amd64.deb
 ```
 
+**If installation fails:**
+```bash
+# Check dependencies
+sudo apt-get install -f
+
+# Or install dependencies manually
+sudo apt-get install libgtk-3-0 libglib2.0-0 libcairo2 libpango-1.0-0
+```
+
 ### Linux (RHEL/Fedora/CentOS)
 ```bash
 sudo rpm -i puppet-master-0.1.1-1.x86_64.rpm
 ```
+
+**Note:** Ubuntu users should use the `.deb` package. RPM is for Red Hat-based distros only.
 
 ## Verification
 

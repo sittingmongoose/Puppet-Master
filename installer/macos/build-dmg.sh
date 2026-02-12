@@ -1,5 +1,12 @@
 #!/bin/bash
 # Build macOS DMG installer for RWM Puppet Master
+#
+# NOTE: This script creates an UNSIGNED DMG that will be blocked by Gatekeeper.
+# Users must bypass with: xattr -cr "RWM Puppet Master.app"
+# For production, add code signing:
+#   codesign --deep --force --sign "Developer ID Application: Your Name" "${BUNDLE_DIR}"
+#   xcrun notarytool submit "${DMG_NAME}" --wait --apple-id "you@example.com" --team-id "TEAMID"
+#
 set -euo pipefail
 
 VERSION="${1:-0.1.1}"

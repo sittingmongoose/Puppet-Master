@@ -6,12 +6,51 @@ use crate::types::*;
 use std::collections::HashMap;
 use std::path::PathBuf;
 
+/// Get the default workspace directory for the current platform
+fn get_default_workspace() -> PathBuf {
+    // When installed system-wide (Program Files on Windows, /usr/bin on Linux),
+    // use user's local data directory to avoid permission issues.
+    // On macOS and when running from source, use current directory.
+
+    if cfg!(windows) {
+        // Windows: Use %LOCALAPPDATA%\RWM Puppet Master
+        if let Some(proj_dirs) = directories::ProjectDirs::from("com", "RWM", "Puppet Master") {
+            proj_dirs.data_local_dir().to_path_buf()
+        } else if let Some(base_dirs) = directories::BaseDirs::new() {
+            base_dirs.data_local_dir().join("RWM Puppet Master")
+        } else {
+            std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
+        }
+    } else if cfg!(target_os = "linux") {
+        // Linux: Check if we're running from a system install (/usr/bin)
+        // If so, use ~/.local/share/RWM Puppet Master instead
+        if let Ok(exe_path) = std::env::current_exe() {
+            if exe_path.starts_with("/usr/bin") || exe_path.starts_with("/usr/local/bin") {
+                // System-wide install, use user data directory
+                if let Some(proj_dirs) = directories::ProjectDirs::from("com", "RWM", "Puppet Master") {
+                    return proj_dirs.data_local_dir().to_path_buf();
+                } else if let Some(base_dirs) = directories::BaseDirs::new() {
+                    return base_dirs.data_local_dir().join("RWM Puppet Master");
+                }
+            }
+        }
+        // Running from source or local install, use current directory
+        std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
+    } else {
+        // macOS and others: use current directory
+        std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
+    }
+}
+
 /// Create a default configuration
 pub fn default_config() -> PuppetMasterConfig {
+    // Use platform-appropriate working directory
+    let working_directory = get_default_workspace();
+
     PuppetMasterConfig {
         project: ProjectConfig {
             name: "default".to_string(),
-            working_directory: std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")),
+            working_directory: working_directory.clone(),
             description: None,
             version: "1.0.0".to_string(),
         },
@@ -212,7 +251,7 @@ fn default_tiers() -> TierConfigs {
 }
 
 fn default_paths() -> PathConfig {
-    let workspace = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
+    let workspace = get_default_workspace();
 
     PathConfig {
         workspace: workspace.clone(),

@@ -16,9 +16,38 @@ pub struct RuntimeCheck {
 
 impl RuntimeCheck {
     pub fn new() -> Self {
-        Self {
-            working_dir: std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")),
-        }
+        // Use the same workspace logic as default_paths() to avoid permission issues
+        let working_dir = if cfg!(windows) {
+            // Windows: Use %LOCALAPPDATA%\RWM Puppet Master
+            if let Some(proj_dirs) = directories::ProjectDirs::from("com", "RWM", "Puppet Master") {
+                proj_dirs.data_local_dir().to_path_buf()
+            } else if let Some(base_dirs) = directories::BaseDirs::new() {
+                base_dirs.data_local_dir().join("RWM Puppet Master")
+            } else {
+                std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
+            }
+        } else if cfg!(target_os = "linux") {
+            // Linux: Check if running from system install
+            if let Ok(exe_path) = std::env::current_exe() {
+                if exe_path.starts_with("/usr/bin") || exe_path.starts_with("/usr/local/bin") {
+                    if let Some(proj_dirs) = directories::ProjectDirs::from("com", "RWM", "Puppet Master") {
+                        proj_dirs.data_local_dir().to_path_buf()
+                    } else if let Some(base_dirs) = directories::BaseDirs::new() {
+                        base_dirs.data_local_dir().join("RWM Puppet Master")
+                    } else {
+                        std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
+                    }
+                } else {
+                    std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
+                }
+            } else {
+                std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
+            }
+        } else {
+            std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
+        };
+
+        Self { working_dir }
     }
 
     /// Create with a specific working directory
