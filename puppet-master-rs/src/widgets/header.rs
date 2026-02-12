@@ -1,8 +1,10 @@
 //! Navigation header widget
 
-use iced::widget::{container, button, text, row, pick_list};
-use iced::{Element, Length, Padding, Border, Shadow};
-use crate::theme::{AppTheme, colors, styles};
+use iced::widget::{container, button, text, row, Space};
+use iced::{Element, Length, Padding, Border, Shadow, Vector, Background, Color};
+use crate::theme::{AppTheme, colors};
+use crate::theme::fonts::{FONT_DISPLAY_BOLD, FONT_UI, FONT_UI_BOLD};
+use crate::theme::tokens::{spacing, borders, shadows};
 
 /// Application page enum
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -27,21 +29,21 @@ pub enum Page {
 impl Page {
     pub fn label(&self) -> &'static str {
         match self {
-            Page::Dashboard => "Dashboard",
-            Page::Projects => "Projects",
-            Page::Wizard => "Wizard",
-            Page::Config => "Config",
-            Page::Doctor => "Doctor",
-            Page::Tiers => "Tiers",
-            Page::Evidence => "Evidence",
-            Page::Metrics => "Metrics",
-            Page::History => "History",
-            Page::Coverage => "Coverage",
-            Page::Memory => "Memory",
-            Page::Ledger => "Ledger",
-            Page::Login => "Login",
-            Page::Settings => "Settings",
-            Page::Setup => "Setup",
+            Page::Dashboard => "DASHBOARD",
+            Page::Projects => "PROJECTS",
+            Page::Wizard => "WIZARD",
+            Page::Config => "CONFIG",
+            Page::Doctor => "DOCTOR",
+            Page::Tiers => "TIERS",
+            Page::Evidence => "EVIDENCE",
+            Page::Metrics => "METRICS",
+            Page::History => "HISTORY",
+            Page::Coverage => "COVERAGE",
+            Page::Memory => "MEMORY",
+            Page::Ledger => "LEDGER",
+            Page::Login => "LOGIN",
+            Page::Settings => "SETTINGS",
+            Page::Setup => "SETUP",
         }
     }
     
@@ -72,7 +74,7 @@ impl std::fmt::Display for Page {
     }
 }
 
-/// Create navigation header
+/// Create navigation header with logo and styled navigation
 ///
 /// # Arguments
 /// * `current_page` - Currently active page
@@ -104,18 +106,16 @@ pub fn header<'a, Message>(
 where
     Message: Clone + 'a,
 {
-    let theme_copy = *theme;
+    let _theme_copy = *theme;
+    let paper_color = theme.paper();
+    let ink_color = theme.ink();
     
-    // Logo
+    // Logo - "RWM" with Orbitron font, 40px (2.5em), bold, with text shadow effect
     let logo = text("RWM")
-        .size(28)
-        .font(iced::Font {
-            weight: iced::font::Weight::Bold,
-            ..iced::Font::DEFAULT
-        })
-        .color(colors::ELECTRIC_BLUE);
+        .size(40)
+        .font(FONT_DISPLAY_BOLD);
     
-    // Navigation buttons
+    // Navigation pages to display in the header
     let nav_pages = vec![
         Page::Dashboard,
         Page::Projects,
@@ -124,121 +124,287 @@ where
         Page::Doctor,
         Page::Tiers,
         Page::Evidence,
+        Page::Metrics,
         Page::History,
         Page::Ledger,
         Page::Login,
+        Page::Settings,
     ];
     
-    let mut nav_row = row![logo]
-        .spacing(styles::SPACING_SM)
-        .align_y(iced::Alignment::Center);
+    // Build navigation buttons row
+    let mut nav_buttons = row![].spacing(4).align_y(iced::Alignment::Center);
     
-    // Add navigation buttons
     for page in nav_pages {
         let is_active = page == current_page;
         let page_label = page.label();
         
-        let btn = button(text(page_label).size(14))
-            .on_press(on_navigate(page))
-            .padding(Padding::from([styles::SPACING_XS as u16, styles::SPACING_SM as u16]))
-            .style(move |_theme: &iced::Theme, _status| {
-                if is_active {
-                    button::Style {
-                        background: Some(iced::Background::Color(theme_copy.ink())),
-                        text_color: theme_copy.paper(),
-                        border: Border {
-                            color: theme_copy.ink(),
-                            width: 2.0,
-                            radius: 0.0.into(),
-                        },
-                        ..button::Style::default()
+        let btn = if is_active {
+            // Active page: inverted colors (ink background, cream text, bold)
+            button(text(page_label).font(FONT_UI_BOLD).size(13))
+                .on_press(on_navigate(page))
+                .padding(Padding::from([6, 12]))
+                .style(move |_theme: &iced::Theme, status| {
+                    match status {
+                        button::Status::Active | button::Status::Hovered | button::Status::Pressed => {
+                            button::Style {
+                                background: Some(Background::Color(ink_color)),
+                                text_color: paper_color,
+                                border: Border { 
+                                    width: borders::MEDIUM, 
+                                    color: ink_color, 
+                                    radius: 0.0.into() 
+                                },
+                                shadow: Shadow { 
+                                    color: ink_color, 
+                                    offset: Vector::new(2.0, 2.0), 
+                                    blur_radius: 0.0 
+                                },
+                                snap: button::Style::default().snap,
+                            }
+                        }
+                        button::Status::Disabled => {
+                            button::Style {
+                                background: Some(Background::Color(Color::from_rgba(ink_color.r, ink_color.g, ink_color.b, 0.5))),
+                                text_color: Color::from_rgba(paper_color.r, paper_color.g, paper_color.b, 0.5),
+                                border: Border { 
+                                    width: borders::MEDIUM, 
+                                    color: Color::from_rgba(ink_color.r, ink_color.g, ink_color.b, 0.5), 
+                                    radius: 0.0.into() 
+                                },
+                                shadow: shadows::none(),
+                                snap: button::Style::default().snap,
+                            }
+                        }
                     }
-                } else {
-                    button::Style {
-                        background: Some(iced::Background::Color(theme_copy.paper())),
-                        text_color: theme_copy.ink(),
-                        border: Border {
-                            color: theme_copy.ink(),
-                            width: 2.0,
-                            radius: 0.0.into(),
-                        },
-                        ..button::Style::default()
+                })
+        } else {
+            // Inactive page: transparent bg, ink text, ink border on hover
+            button(text(page_label).font(FONT_UI).size(13))
+                .on_press(on_navigate(page))
+                .padding(Padding::from([6, 12]))
+                .style(move |_theme: &iced::Theme, status| {
+                    match status {
+                        button::Status::Active => {
+                            button::Style {
+                                background: Some(Background::Color(Color::TRANSPARENT)),
+                                text_color: ink_color,
+                                border: Border { 
+                                    width: borders::MEDIUM, 
+                                    color: Color::TRANSPARENT, 
+                                    radius: 0.0.into() 
+                                },
+                                shadow: shadows::none(),
+                                snap: button::Style::default().snap,
+                            }
+                        }
+                        button::Status::Hovered => {
+                            button::Style {
+                                background: Some(Background::Color(Color::TRANSPARENT)),
+                                text_color: ink_color,
+                                border: Border { 
+                                    width: borders::MEDIUM, 
+                                    color: ink_color, 
+                                    radius: 0.0.into() 
+                                },
+                                shadow: shadows::none(),
+                                snap: button::Style::default().snap,
+                            }
+                        }
+                        button::Status::Pressed => {
+                            button::Style {
+                                background: Some(Background::Color(Color::from_rgba(ink_color.r, ink_color.g, ink_color.b, 0.1))),
+                                text_color: ink_color,
+                                border: Border { 
+                                    width: borders::MEDIUM, 
+                                    color: ink_color, 
+                                    radius: 0.0.into() 
+                                },
+                                shadow: shadows::none(),
+                                snap: button::Style::default().snap,
+                            }
+                        }
+                        button::Status::Disabled => {
+                            button::Style {
+                                background: Some(Background::Color(Color::TRANSPARENT)),
+                                text_color: Color::from_rgba(ink_color.r, ink_color.g, ink_color.b, 0.5),
+                                border: Border { 
+                                    width: borders::MEDIUM, 
+                                    color: Color::TRANSPARENT, 
+                                    radius: 0.0.into() 
+                                },
+                                shadow: shadows::none(),
+                                snap: button::Style::default().snap,
+                            }
+                        }
                     }
-                }
-            });
+                })
+        };
         
-        nav_row = nav_row.push(btn);
+        nav_buttons = nav_buttons.push(btn);
     }
     
-    // Spacer
-    nav_row = nav_row.push(iced::widget::Space::new().width(Length::Fill));
+    // Build the full header row
+    let mut header_row = row![]
+        .spacing(spacing::MD)
+        .align_y(iced::Alignment::Center);
+    
+    // Left: Logo
+    header_row = header_row.push(logo);
+    
+    // Center: Navigation buttons
+    header_row = header_row.push(nav_buttons);
+    
+    // Flexible spacer to push right section to the end
+    header_row = header_row.push(Space::new().width(Length::Fill));
+    
+    // Right section: Project name and theme toggle
     
     // Project selector (if callback provided)
-    if let Some(project_callback) = on_project_select {
-        let project_list = vec![
-            "Project 1".to_string(),
-            "Project 2".to_string(),
-            "Project 3".to_string(),
-        ];
-        
-        let selected = project_name.unwrap_or_else(|| "Select Project".to_string());
-        
-        let picker = pick_list(
-            project_list,
-            Some(selected.clone()),
-            project_callback,
-        )
-        .padding(Padding::from([styles::SPACING_XS as u16, styles::SPACING_SM as u16]))
-        .style(move |_theme: &iced::Theme, _status| pick_list::Style {
-            text_color: theme_copy.ink(),
-            placeholder_color: theme_copy.ink_faded(),
-            handle_color: theme_copy.ink(),
-            background: iced::Background::Color(theme_copy.paper()),
-            border: Border {
-                color: theme_copy.ink(),
-                width: 2.0,
-                radius: 0.0.into(),
-            },
-        });
-        
-        nav_row = nav_row.push(picker);
+    if let Some(_project_callback) = on_project_select {
+        if let Some(proj_name) = project_name {
+            let project_btn = button(text(proj_name).font(FONT_UI_BOLD).size(13))
+                .padding(Padding::from([6, 12]))
+                .style(move |_theme: &iced::Theme, status| {
+                    match status {
+                        button::Status::Active => {
+                            button::Style {
+                                background: Some(Background::Color(paper_color)),
+                                text_color: ink_color,
+                                border: Border { 
+                                    width: borders::MEDIUM, 
+                                    color: ink_color, 
+                                    radius: 0.0.into() 
+                                },
+                                shadow: shadows::none(),
+                                snap: button::Style::default().snap,
+                            }
+                        }
+                        button::Status::Hovered => {
+                            button::Style {
+                                background: Some(Background::Color(Color::from_rgba(ink_color.r, ink_color.g, ink_color.b, 0.1))),
+                                text_color: ink_color,
+                                border: Border { 
+                                    width: borders::MEDIUM, 
+                                    color: ink_color, 
+                                    radius: 0.0.into() 
+                                },
+                                shadow: shadows::none(),
+                                snap: button::Style::default().snap,
+                            }
+                        }
+                        button::Status::Pressed | button::Status::Disabled => {
+                            button::Style {
+                                background: Some(Background::Color(paper_color)),
+                                text_color: ink_color,
+                                border: Border { 
+                                    width: borders::MEDIUM, 
+                                    color: ink_color, 
+                                    radius: 0.0.into() 
+                                },
+                                shadow: shadows::none(),
+                                snap: button::Style::default().snap,
+                            }
+                        }
+                    }
+                });
+            
+            header_row = header_row.push(project_btn);
+        }
     }
     
-    // Theme toggle button
-    let theme_icon = if theme.is_dark() { "☀" } else { "☾" };
-    let theme_btn = button(text(theme_icon).size(18))
+    // Theme toggle button - plain text "Light" or "Dark" (NO emoji)
+    let theme_label = if theme.is_dark() { "Light" } else { "Dark" };
+    let theme_btn = button(text(theme_label).font(FONT_UI_BOLD).size(13))
         .on_press(on_theme_toggle)
-        .padding(Padding::from([styles::SPACING_XS as u16, styles::SPACING_SM as u16]))
-        .style(move |_theme: &iced::Theme, _status| button::Style {
-            background: Some(iced::Background::Color(colors::SAFETY_ORANGE)),
-            text_color: colors::PAPER_CREAM,
-            border: Border {
-                color: colors::INK_BLACK,
-                width: 2.0,
-                radius: 0.0.into(),
-            },
-            ..button::Style::default()
+        .padding(Padding::from([6, 12]))
+        .style(move |_theme: &iced::Theme, status| {
+            match status {
+                button::Status::Active => {
+                    button::Style {
+                        background: Some(Background::Color(colors::SAFETY_ORANGE)),
+                        text_color: colors::PAPER_CREAM,
+                        border: Border { 
+                            width: borders::MEDIUM, 
+                            color: colors::INK_BLACK, 
+                            radius: 0.0.into() 
+                        },
+                        shadow: Shadow { 
+                            color: colors::INK_BLACK, 
+                            offset: Vector::new(2.0, 2.0), 
+                            blur_radius: 0.0 
+                        },
+                        snap: button::Style::default().snap,
+                    }
+                }
+                button::Status::Hovered => {
+                    button::Style {
+                        background: Some(Background::Color(Color::from_rgb(0.9, 0.45, 0.14))),
+                        text_color: colors::PAPER_CREAM,
+                        border: Border { 
+                            width: borders::MEDIUM, 
+                            color: colors::INK_BLACK, 
+                            radius: 0.0.into() 
+                        },
+                        shadow: Shadow { 
+                            color: colors::INK_BLACK, 
+                            offset: Vector::new(3.0, 3.0), 
+                            blur_radius: 0.0 
+                        },
+                        snap: button::Style::default().snap,
+                    }
+                }
+                button::Status::Pressed => {
+                    button::Style {
+                        background: Some(Background::Color(colors::SAFETY_ORANGE)),
+                        text_color: colors::PAPER_CREAM,
+                        border: Border { 
+                            width: borders::MEDIUM, 
+                            color: colors::INK_BLACK, 
+                            radius: 0.0.into() 
+                        },
+                        shadow: Shadow { 
+                            color: colors::INK_BLACK, 
+                            offset: Vector::new(1.0, 1.0), 
+                            blur_radius: 0.0 
+                        },
+                        snap: button::Style::default().snap,
+                    }
+                }
+                button::Status::Disabled => {
+                    button::Style {
+                        background: Some(Background::Color(Color::from_rgba(1.0, 0.498, 0.153, 0.5))),
+                        text_color: Color::from_rgba(0.98, 0.965, 0.945, 0.5),
+                        border: Border { 
+                            width: borders::MEDIUM, 
+                            color: Color::from_rgba(0.102, 0.102, 0.102, 0.5), 
+                            radius: 0.0.into() 
+                        },
+                        shadow: shadows::none(),
+                        snap: button::Style::default().snap,
+                    }
+                }
+            }
         });
     
-    nav_row = nav_row.push(theme_btn);
+    header_row = header_row.push(theme_btn);
     
-    // Wrap in container with header style
-    container(nav_row)
-        .padding(styles::SPACING_MD)
+    // Wrap in container with header style: sticky top, paper cream bg, 3px bottom border, cross-hatch shadow
+    container(header_row)
+        .padding(Padding::from([12, 24])) // vertical, horizontal padding
         .width(Length::Fill)
         .style(move |_theme: &iced::Theme| container::Style {
-            background: Some(iced::Background::Color(theme_copy.paper())),
+            background: Some(Background::Color(paper_color)),
             border: Border {
-                color: theme_copy.ink(),
-                width: styles::BORDER_THICK,
+                color: ink_color,
+                width: borders::THICK,
                 radius: 0.0.into(),
             },
             shadow: Shadow {
-                color: theme_copy.shadow(),
-                offset: iced::Vector::new(0.0, 2.0),
+                color: ink_color,
+                offset: Vector::new(0.0, 4.0),
                 blur_radius: 0.0,
             },
-            text_color: Some(theme_copy.ink()),
+            text_color: Some(ink_color),
             snap: container::Style::default().snap,
         })
         .into()

@@ -2,10 +2,10 @@
 //!
 //! Displays health check results with fix suggestions and run all functionality.
 
-use iced::widget::{column, row, text, button, container, scrollable, Space};
+use iced::widget::{column, row, text, container, scrollable, Space};
 use iced::{Element, Length};
 use crate::app::Message;
-use crate::theme::AppTheme;
+use crate::theme::{AppTheme, tokens};
 use crate::widgets::*;
 use std::collections::HashSet;
 
@@ -40,6 +40,7 @@ impl CheckCategory {
         }
     }
 
+    #[allow(dead_code)]
     fn color(&self) -> iced::Color {
         match self {
             CheckCategory::Cli => iced::Color::from_rgb(0.7, 1.0, 0.0),
@@ -56,56 +57,39 @@ pub fn view<'a>(
     results: &'a [DoctorCheckResult],
     running: bool,
     fixing: &'a HashSet<String>,
-    _theme: &'a AppTheme,
+    theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(20).padding(20);
+    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
-    // Header with run button
-    content = content.push(
-        row![
-            text("System Health Checks").size(24),
-            Space::new().width(Length::Fill),
-            if running {
-                button("Running...")
+    // Header with title, summary, and run button
+    let passed = results.iter().filter(|r| r.passed).count();
+    let total = results.len();
+    
+    let header = row![
+        column![
+            text("System Health Checks")
+                .size(tokens::font_size::XL),
+            if !results.is_empty() {
+                text(format!("{}/{} checks passed", passed, total))
+                    .size(tokens::font_size::SM)
             } else {
-                button("Run All Checks")
-                    .on_press(Message::RunAllChecks)
-            },
-            if running {
-                button("Refresh")
-            } else {
-                button("Refresh")
-                    .on_press(Message::RefreshDoctor)
+                text("No checks run yet")
+                    .size(tokens::font_size::SM)
             },
         ]
-        .spacing(20)
-        .align_y(iced::Alignment::Center)
-    );
+        .spacing(tokens::spacing::XS),
+        Space::new().width(Length::Fill),
+        if running {
+            styled_button(theme, "Running...", ButtonVariant::Primary)
+        } else {
+            styled_button(theme, "Run All", ButtonVariant::Primary)
+                .on_press(Message::RunAllChecks)
+        },
+    ]
+    .spacing(tokens::spacing::MD)
+    .align_y(iced::Alignment::Center);
 
-    // Summary
-    if !results.is_empty() {
-        let passed = results.iter().filter(|r| r.passed).count();
-        let total = results.len();
-        let failed = total - passed;
-
-        let summary = row![
-            status_badge(
-                if failed == 0 { Status::Complete } else { Status::Error },
-                format!("{}/{} Passed", passed, total),
-            ),
-            if failed > 0 {
-                text(format!("{} checks failed", failed)).size(16)
-            } else {
-                text("All checks passed!").size(16)
-            },
-        ]
-        .spacing(15)
-        .align_y(iced::Alignment::Center);
-
-        content = content.push(
-            panel(container(summary).padding(15))
-        );
-    }
+    content = content.push(header);
 
     // Group by category
     let categories = [
@@ -126,75 +110,82 @@ pub fn view<'a>(
             continue;
         }
 
-        let mut category_col = column![
-            text(format!("{} Checks", category.as_str())).size(18),
-        ].spacing(10);
+        // Category section
+        let mut category_content = column![
+            text(format!("{} Checks", category.as_str()))
+                .size(tokens::font_size::LG),
+        ].spacing(tokens::spacing::MD);
 
         for check in category_results {
             let check_row = row![
-                // Category badge
+                // Status text (PASS or FAIL)
                 container(
-                    text(category.as_str().chars().next().unwrap_or('?'))
-                        .size(14)
+                    text(if check.passed { "PASS" } else { "FAIL" })
+                        .size(tokens::font_size::SM)
                 )
-                .padding(8)
+                .padding(tokens::spacing::SM)
+                .width(Length::Fixed(60.0))
                 .style(move |_theme: &iced::Theme| {
                     iced::widget::container::Style {
-                        background: Some(iced::Background::Color(category.color())),
+                        background: Some(iced::Background::Color(
+                            if check.passed {
+                                crate::theme::colors::ACID_LIME
+                            } else {
+                                crate::theme::colors::HOT_MAGENTA
+                            }
+                        )),
                         border: iced::Border {
-                            color: iced::Color::BLACK,
-                            width: 2.0,
-                            radius: 4.0.into(),
+                            color: crate::theme::colors::INK_BLACK,
+                            width: tokens::borders::MEDIUM,
+                            radius: tokens::radii::NONE.into(),
                         },
                         ..Default::default()
                     }
                 }),
-                // Status indicator
-                if check.passed {
-                    status_dot(Status::Complete)
-                } else {
-                    status_dot(Status::Error)
-                },
                 // Check name and message
                 column![
-                    text(&check.name).size(16),
-                    text(&check.message).size(12),
-                ].spacing(5),
+                    text(&check.name).size(tokens::font_size::BASE),
+                    text(&check.message).size(tokens::font_size::SM),
+                ].spacing(tokens::spacing::XXS),
                 Space::new().width(Length::Fill),
                 // Fix button if available
                 if !check.passed && check.fix_available {
                     if fixing.contains(&check.name) {
-                        button("Fixing...")
+                        Element::from(styled_button(theme, "Fixing...", ButtonVariant::Info))
                     } else {
-                        button("Fix")
-                            .on_press(Message::FixCheck(check.name.clone(), false))
+                        Element::from(styled_button(theme, "Fix", ButtonVariant::Info)
+                            .on_press(Message::FixCheck(check.name.clone(), false)))
                     }
                 } else {
-                    button("")
+                    Element::from(Space::new().width(Length::Fixed(0.0)))
                 },
             ]
-            .spacing(15)
+            .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center);
 
-            category_col = category_col.push(
-                container(check_row).padding(10)
+            category_content = category_content.push(
+                container(check_row).padding(tokens::spacing::SM)
             );
         }
 
         content = content.push(
-            panel(container(category_col).padding(15))
+            themed_panel(
+                container(category_content).padding(tokens::spacing::MD),
+                theme
+            )
         );
     }
 
     if results.is_empty() && !running {
         content = content.push(
-            panel(
+            themed_panel(
                 container(
                     column![
-                        text("No checks run yet").size(16),
-                        text("Click 'Run All Checks' to verify your system").size(14),
-                    ].spacing(10)
-                ).padding(30)
+                        text("No checks run yet").size(tokens::font_size::MD),
+                        text("Click 'Run All' to verify your system").size(tokens::font_size::SM),
+                    ].spacing(tokens::spacing::SM)
+                ).padding(tokens::spacing::XL),
+                theme
             )
         );
     }

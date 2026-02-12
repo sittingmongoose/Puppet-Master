@@ -2,10 +2,10 @@
 //!
 //! Lists available projects, allows creating new projects, and switching between them.
 
-use iced::widget::{column, row, text, button, container, Space};
+use iced::widget::{column, row, text, container, scrollable, Space};
 use iced::{Element, Length};
 use crate::app::Message;
-use crate::theme::AppTheme;
+use crate::theme::{AppTheme, tokens};
 use crate::widgets::*;
 use std::path::PathBuf;
 
@@ -31,89 +31,157 @@ pub fn view<'a>(
     _new_project_name: &'a str,
     _new_project_path: &'a str,
     _show_new_form: bool,
-    _theme: &'a AppTheme,
+    theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(20).padding(20);
+    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
-    // Header
-    content = content.push(
-        row![
-            text("Projects").size(24),
-            Space::new().width(Length::Fill),
-            button("+ New Project")
-                .on_press(Message::NavigateTo(Page::Projects)),
-        ]
-        .spacing(20)
-        .align_y(iced::Alignment::Center)
-    );
+    // Header with buttons
+    let header = row![
+        text("Projects").size(tokens::font_size::XL),
+        Space::new().width(Length::Fill),
+        styled_button(theme, "New Project", ButtonVariant::Primary)
+            .on_press(Message::NavigateTo(Page::Projects)),
+        styled_button(theme, "Open Existing", ButtonVariant::Secondary)
+            .on_press(Message::OpenProjectFolderPicker),
+    ]
+    .spacing(tokens::spacing::MD)
+    .align_y(iced::Alignment::Center);
 
-    // Project list
+    content = content.push(header);
+
+    // Current project panel (if loaded)
+    if let Some(current_project) = current {
+        let current_panel = column![
+            text("Current Project").size(tokens::font_size::LG),
+            row![
+                column![
+                    text(&current_project.name).size(tokens::font_size::MD),
+                    text(current_project.path.display().to_string()).size(tokens::font_size::SM),
+                ].spacing(tokens::spacing::XS),
+                Space::new().width(Length::Fill),
+                styled_button(theme, "Switch", ButtonVariant::Secondary)
+                    .on_press(Message::NavigateTo(Page::Projects)),
+                styled_button(theme, "View Tiers", ButtonVariant::Info)
+                    .on_press(Message::NavigateTo(Page::Tiers)),
+                styled_button(theme, "Config", ButtonVariant::Info)
+                    .on_press(Message::NavigateTo(Page::Config)),
+            ]
+            .spacing(tokens::spacing::SM)
+            .align_y(iced::Alignment::Center),
+        ].spacing(tokens::spacing::MD);
+
+        content = content.push(
+            themed_panel(
+                container(current_panel).padding(tokens::spacing::MD),
+                theme
+            )
+        );
+    }
+
+    // Recent projects list
     if projects.is_empty() {
         content = content.push(
-            panel(
+            themed_panel(
                 container(
                     column![
-                        text("No projects found").size(16),
-                        text("Create a new project to get started").size(14),
-                    ].spacing(10)
-                ).padding(30)
+                        text("No projects found").size(tokens::font_size::MD),
+                        text("Create a new project to get started").size(tokens::font_size::SM),
+                    ].spacing(tokens::spacing::SM)
+                ).padding(tokens::spacing::XL),
+                theme
             )
         );
     } else {
+        let mut projects_content = column![
+            text("Recent Projects").size(tokens::font_size::LG),
+        ].spacing(tokens::spacing::MD);
+
         for project in projects {
             let is_current = current
                 .as_ref()
                 .map(|c| c.name == project.name)
                 .unwrap_or(false);
 
-            let status_indicator = match project.status {
-                ProjectStatus::Active => status_dot(Status::Complete),
-                ProjectStatus::Inactive => status_dot(Status::Pending),
-                ProjectStatus::Error => status_dot(Status::Error),
+            let status_text = match project.status {
+                ProjectStatus::Active => "Active",
+                ProjectStatus::Inactive => "Inactive",
+                ProjectStatus::Error => "Error",
             };
 
             let project_row = row![
-                status_indicator,
+                // Status badge
+                container(
+                    text(status_text)
+                        .size(tokens::font_size::SM)
+                )
+                .padding(tokens::spacing::SM)
+                .width(Length::Fixed(80.0))
+                .style(move |_theme: &iced::Theme| {
+                    iced::widget::container::Style {
+                        background: Some(iced::Background::Color(
+                            match project.status {
+                                ProjectStatus::Active => crate::theme::colors::ACID_LIME,
+                                ProjectStatus::Inactive => crate::theme::colors::PAPER_CREAM,
+                                ProjectStatus::Error => crate::theme::colors::HOT_MAGENTA,
+                            }
+                        )),
+                        border: iced::Border {
+                            color: crate::theme::colors::INK_BLACK,
+                            width: tokens::borders::MEDIUM,
+                            radius: tokens::radii::NONE.into(),
+                        },
+                        ..Default::default()
+                    }
+                }),
+                // Project info
                 column![
-                    text(&project.name).size(16),
-                    text(project.path.display().to_string()).size(12),
-                ].spacing(5),
+                    text(&project.name).size(tokens::font_size::BASE),
+                    text(project.path.display().to_string()).size(tokens::font_size::SM),
+                ].spacing(tokens::spacing::XXS),
                 Space::new().width(Length::Fill),
+                // Open button
                 if is_current {
-                    button("Current")
+                    styled_button(theme, "Current", ButtonVariant::Secondary)
                 } else {
-                    button("Open")
+                    styled_button(theme, "Open", ButtonVariant::Info)
                         .on_press(Message::OpenProject(project.name.clone()))
                 },
             ]
-            .spacing(15)
+            .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center);
 
-            let project_panel = if is_current {
-                container(project_row)
-                    .padding(15)
-                    .style(|_theme: &iced::Theme| {
+            let project_container = container(project_row)
+                .padding(tokens::spacing::MD)
+                .style(move |_theme: &iced::Theme| {
+                    if is_current {
                         iced::widget::container::Style {
                             background: Some(iced::Background::Color(
-                                iced::Color::from_rgb(0.9, 1.0, 0.9)
+                                iced::Color { a: 0.1, ..crate::theme::colors::ACID_LIME }
                             )),
                             border: iced::Border {
-                                color: iced::Color::from_rgb(0.7, 1.0, 0.0),
-                                width: 3.0,
-                                radius: 4.0.into(),
+                                color: crate::theme::colors::ACID_LIME,
+                                width: tokens::borders::THICK,
+                                radius: tokens::radii::NONE.into(),
                             },
                             ..Default::default()
                         }
-                    })
-            } else {
-                container(project_row).padding(15)
-            };
+                    } else {
+                        iced::widget::container::Style::default()
+                    }
+                });
 
-            content = content.push(panel(project_panel));
+            projects_content = projects_content.push(project_container);
         }
+
+        content = content.push(
+            themed_panel(
+                container(projects_content).padding(tokens::spacing::MD),
+                theme
+            )
+        );
     }
 
-    container(content)
+    scrollable(content)
         .width(Length::Fill)
         .height(Length::Fill)
         .into()

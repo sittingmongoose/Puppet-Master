@@ -27,10 +27,10 @@ description: |
   RWM Puppet Master - CLI orchestrator for AI development workflows.
   (Not related to Puppetlabs Puppet configuration management)
 
-depends:
-  - libwebkit2gtk-4.1-0
-  - libjavascriptcoregtk-4.1-0
-  - libgtk-3-0t64 | libgtk-3-0
+# Dependencies removed - binary uses Iced (pure Rust GUI) with minimal system deps
+# The binary is dynamically linked with glibc but GTK/WebKit are NOT used
+# Only basic system libraries needed (glibc, X11, etc) which are always present
+depends: []
 
 conflicts:
   - puppet-master

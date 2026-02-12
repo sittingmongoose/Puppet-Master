@@ -256,6 +256,7 @@ impl PlatformRouter {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::core::complexity_classifier::{Complexity, TaskType};
 
     fn create_classification(level: ModelLevel) -> ClassificationResult {
         ClassificationResult {

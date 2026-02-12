@@ -1,12 +1,19 @@
 //! Dashboard view - Main orchestration control and monitoring
 //!
 //! Displays real-time orchestration status, controls, progress, budgets, and output.
+//! Redesigned to match the Tauri React GUI's polished retro-futuristic design.
 
-use iced::widget::{column, row, text, button, container, scrollable, Space};
-use iced::{Element, Length};
+use iced::widget::{column, row, text, container, scrollable, Space};
+use iced::{Element, Length, Border};
 use crate::app::Message;
-use crate::theme::AppTheme;
-use crate::widgets::*;
+use crate::theme::{AppTheme, tokens, fonts, colors};
+use crate::widgets::{
+    themed_panel,
+    styled_button::{styled_button, ButtonVariant},
+    progress_bar::{styled_progress_bar, ProgressVariant, ProgressSize},
+    status_badge::{status_dot_typed, Status},
+    budget_donut::{budget_donut, BudgetSize},
+};
 use chrono::{DateTime, Utc};
 use std::collections::HashMap;
 
@@ -85,221 +92,469 @@ pub fn view<'a>(
     start_time: &'a Option<DateTime<Utc>>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(20).padding(20);
+    let mut content = column![]
+        .spacing(tokens::spacing::LG)
+        .padding(tokens::spacing::LG);
 
-    // Header with status and elapsed time
+    // ══ ERROR DISPLAY (if present) ════════════════════════════════════
+    if let Some(err) = error {
+        let error_panel = themed_panel(
+            column![
+                text("ERROR")
+                    .size(tokens::font_size::LG)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(colors::HOT_MAGENTA),
+                text(err)
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI)
+                    .color(theme.ink()),
+            ]
+            .spacing(tokens::spacing::SM),
+            theme
+        );
+        content = content.push(error_panel);
+    }
+
+    // ══ STATUS ROW ════════════════════════════════════════════════════
     let elapsed = if let Some(start) = start_time {
         let duration = Utc::now().signed_duration_since(*start);
-        format!("{}h {}m {}s", 
-            duration.num_hours(), 
+        format!("{:02}:{:02}:{:02}",
+            duration.num_hours(),
             duration.num_minutes() % 60,
             duration.num_seconds() % 60
         )
     } else {
-        "Not started".to_string()
+        "--:--:--".to_string()
     };
 
+    let status_enum = status_from_str(status);
     let status_row = row![
-        status_badge(
-            status_from_str(status),
-            status.to_uppercase(),
-        ),
+        status_dot_typed(theme, status_enum),
+        text(format!("STATUS: {}", status.to_uppercase()))
+            .size(tokens::font_size::BASE)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
         Space::new().width(Length::Fill),
         text(format!("Elapsed: {}", elapsed))
-            .size(16)
+            .size(tokens::font_size::BASE)
+            .font(fonts::FONT_MONO)
+            .color(theme.ink()),
     ]
-    .spacing(20)
+    .spacing(tokens::spacing::SM)
     .align_y(iced::Alignment::Center);
 
-    content = content.push(panel(container(status_row).padding(15)));
+    content = content.push(themed_panel(status_row, theme));
 
-    // Control buttons
-    let controls = match status {
-        "idle" => row![
-            button("Start").on_press(Message::StartOrchestrator),
-        ].spacing(10),
-        "running" => row![
-            button("Pause").on_press(Message::PauseOrchestrator),
-            button("Stop").on_press(Message::StopOrchestrator),
-        ].spacing(10),
-        "paused" => row![
-            button("Resume").on_press(Message::ResumeOrchestrator),
-            button("Stop").on_press(Message::StopOrchestrator),
-        ].spacing(10),
-        "completed" | "failed" => row![
-            button("Reset").on_press(Message::ResetOrchestrator),
-        ].spacing(10),
-        _ => row![].spacing(10),
-    };
+    // ══ 2-COLUMN GRID: CURRENT ITEM + RUN CONTROLS ═══════════════════
+    let current_item_panel = build_current_item_panel(current_item, theme);
+    let controls_panel = build_controls_panel(status, theme);
 
-    content = content.push(panel(container(controls).padding(15)));
+    let grid = row![
+        current_item_panel,
+        controls_panel,
+    ]
+    .spacing(tokens::spacing::LG);
 
-    // Current item
-    if let Some(item) = current_item {
-        let mut item_content = column![
-            text("Current Item").size(18),
-        ].spacing(10);
+    content = content.push(grid);
 
-        item_content = item_content.push(
-            text(format!("Phase: {} ({})", item.phase_name, item.phase_id)).size(14)
-        );
+    // ══ PROGRESS SECTION ══════════════════════════════════════════════
+    content = content.push(build_progress_panel(progress, theme));
 
-        if let Some(task_name) = &item.task_name {
-            item_content = item_content.push(
-                text(format!("Task: {}", task_name)).size(14)
-            );
-        }
-
-        if let Some(subtask_name) = &item.subtask_name {
-            item_content = item_content.push(
-                text(format!("Subtask: {}", subtask_name)).size(14)
-            );
-        }
-
-        if let Some(platform) = &item.platform {
-            item_content = item_content.push(text(format!("Platform: {}", platform)).size(14));
-        }
-
-        if let Some(model) = &item.model {
-            item_content = item_content.push(text(format!("Model: {}", model)).size(14));
-        }
-
-        if let Some(effort) = &item.reasoning_effort {
-            item_content = item_content.push(text(format!("Reasoning effort: {}", effort)).size(12));
-        }
-
-        item_content = item_content.push(
-            text(format!("Iteration: {} | Status: {}", item.iteration, item.status)).size(12)
-        );
-
-        content = content.push(panel(container(item_content).padding(15)));
-    }
-
-    // Progress bars
-    let mut progress_col = column![
-        text("Progress").size(18),
-    ].spacing(10);
-
-    progress_col = progress_col.push(
-        column![
-            text(format!("Phase: {}/{}", progress.phase_current, progress.phase_total)).size(14),
-            styled_progress_bar(
-                progress.phase_current as f32,
-                progress.phase_total.max(1) as f32,
-                ProgressVariant::Default,
-                ProgressSize::Medium
-            ),
-        ].spacing(5)
-    );
-
-    progress_col = progress_col.push(
-        column![
-            text(format!("Task: {}/{}", progress.task_current, progress.task_total)).size(14),
-            styled_progress_bar(
-                progress.task_current as f32,
-                progress.task_total.max(1) as f32,
-                ProgressVariant::Default,
-                ProgressSize::Medium
-            ),
-        ].spacing(5)
-    );
-
-    progress_col = progress_col.push(
-        column![
-            text(format!("Subtask: {}/{}", progress.subtask_current, progress.subtask_total)).size(14),
-            styled_progress_bar(
-                progress.subtask_current as f32,
-                progress.subtask_total.max(1) as f32,
-                ProgressVariant::Success,
-                ProgressSize::Medium
-            ),
-        ].spacing(5)
-    );
-
-    progress_col = progress_col.push(
-        column![
-            text(format!("Overall: {:.0}%", progress.overall_percent * 100.0)).size(14),
-            styled_progress_bar(
-                progress.overall_percent,
-                1.0,
-                ProgressVariant::Warning,
-                ProgressSize::Large
-            ),
-        ].spacing(5)
-    );
-
-    content = content.push(panel(container(progress_col).padding(15)));
-
-    // Budget section
+    // ══ BUDGET SECTION ════════════════════════════════════════════════
     if !budgets.is_empty() {
-        let mut budget_row = row![].spacing(15);
-        for (_, budget_info) in budgets.iter() {
-            budget_row = budget_row.push(
-                column![
-                    budget_donut(
-                        budget_info.used as f32,
-                        budget_info.total as f32,
-                        &budget_info.platform,
-                        BudgetSize::Medium
-                    ),
-                    text(&budget_info.platform).size(12),
-                ].spacing(5)
-                .align_x(iced::Alignment::Center)
-            );
-        }
-        content = content.push(panel(container(budget_row).padding(15)));
+        content = content.push(build_budget_panel(budgets, theme));
     }
 
-    // Error display
-    if let Some(err) = error {
-        content = content.push(
-            panel(
-                container(
-                    column![
-                        text("Error").size(18),
-                        text(err).size(14),
-                    ].spacing(10)
-                ).padding(15)
-            )
-        );
-    }
-
-    // Output log
-    let mut output_col = column![].spacing(5);
-    for line in output.iter().take(100) {
-        let color = match line.line_type {
-            OutputType::Stdout => theme.ink(),
-            OutputType::Stderr => iced::Color::from_rgb(1.0, 0.0, 1.0),
-            OutputType::Info => iced::Color::from_rgb(0.0, 0.7, 1.0),
-        };
-        output_col = output_col.push(
-            text(format!("[{}] {}", 
-                line.timestamp.format("%H:%M:%S"),
-                line.text
-            ))
-            .size(12)
-            .style(move |_theme: &iced::Theme| {
-                iced::widget::text::Style { color: Some(color) }
-            })
-        );
-    }
-
-    let output_scroll = scrollable(output_col)
-        .height(Length::Fixed(300.0));
-
-    content = content.push(
-        panel(
-            container(
-                column![
-                    text("Output").size(18),
-                    output_scroll,
-                ].spacing(10)
-            ).padding(15)
-        )
-    );
+    // ══ OUTPUT LOG ════════════════════════════════════════════════════
+    content = content.push(build_output_log_panel(output, theme));
 
     container(content)
         .width(Length::Fill)
         .height(Length::Fill)
         .into()
+}
+
+// ══════════════════════════════════════════════════════════════════════
+// Helper Functions
+// ══════════════════════════════════════════════════════════════════════
+
+/// Build the Current Item panel
+fn build_current_item_panel<'a>(
+    current_item: &'a Option<CurrentItem>,
+    theme: &'a AppTheme,
+) -> Element<'a, Message> {
+    let mut content = column![
+        text("CURRENT ITEM")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+    ]
+    .spacing(tokens::spacing::MD);
+
+    if let Some(item) = current_item {
+        // Phase
+        content = content.push(
+            row![
+                text("Phase:")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_MEDIUM)
+                    .color(theme.ink())
+                    .width(Length::Fixed(80.0)),
+                text(format!("{} - {}", item.phase_id, item.phase_name))
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI)
+                    .color(theme.ink()),
+            ]
+            .spacing(tokens::spacing::SM)
+        );
+
+        // Task
+        if let Some(task_id) = &item.task_id {
+            let task_label = if let Some(task_name) = &item.task_name {
+                format!("{} - {}", task_id, task_name)
+            } else {
+                task_id.clone()
+            };
+            content = content.push(
+                row![
+                    text("Task:")
+                        .size(tokens::font_size::BASE)
+                        .font(fonts::FONT_UI_MEDIUM)
+                        .color(theme.ink())
+                        .width(Length::Fixed(80.0)),
+                    text(task_label)
+                        .size(tokens::font_size::BASE)
+                        .font(fonts::FONT_UI)
+                        .color(theme.ink()),
+                ]
+                .spacing(tokens::spacing::SM)
+            );
+        }
+
+        // Subtask
+        if let Some(subtask_id) = &item.subtask_id {
+            let subtask_label = if let Some(subtask_name) = &item.subtask_name {
+                format!("{} - {}", subtask_id, subtask_name)
+            } else {
+                subtask_id.clone()
+            };
+            content = content.push(
+                row![
+                    text("Subtask:")
+                        .size(tokens::font_size::BASE)
+                        .font(fonts::FONT_UI_MEDIUM)
+                        .color(theme.ink())
+                        .width(Length::Fixed(80.0)),
+                    text(subtask_label)
+                        .size(tokens::font_size::BASE)
+                        .font(fonts::FONT_UI)
+                        .color(theme.ink()),
+                ]
+                .spacing(tokens::spacing::SM)
+            );
+        }
+
+        // Platform
+        if let Some(platform) = &item.platform {
+            content = content.push(
+                row![
+                    text("Platform:")
+                        .size(tokens::font_size::BASE)
+                        .font(fonts::FONT_UI_MEDIUM)
+                        .color(theme.ink())
+                        .width(Length::Fixed(80.0)),
+                    text(platform)
+                        .size(tokens::font_size::BASE)
+                        .font(fonts::FONT_UI)
+                        .color(theme.ink()),
+                ]
+                .spacing(tokens::spacing::SM)
+            );
+        }
+
+        // Model
+        if let Some(model) = &item.model {
+            content = content.push(
+                row![
+                    text("Model:")
+                        .size(tokens::font_size::BASE)
+                        .font(fonts::FONT_UI_MEDIUM)
+                        .color(theme.ink())
+                        .width(Length::Fixed(80.0)),
+                    text(model)
+                        .size(tokens::font_size::BASE)
+                        .font(fonts::FONT_UI)
+                        .color(theme.ink()),
+                ]
+                .spacing(tokens::spacing::SM)
+            );
+        }
+    } else {
+        content = content.push(
+            text("No active item")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI)
+                .color(colors::INK_FADED)
+        );
+    }
+
+    themed_panel(content, theme).into()
+}
+
+/// Build the Run Controls panel
+fn build_controls_panel<'a>(
+    status: &'a str,
+    theme: &'a AppTheme,
+) -> Element<'a, Message> {
+    let mut content = column![
+        text("RUN CONTROLS")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+    ]
+    .spacing(tokens::spacing::MD);
+
+    let controls = match status {
+        "idle" => {
+            row![
+                styled_button(theme, "Start", ButtonVariant::Primary)
+                    .on_press(Message::StartOrchestrator),
+            ]
+            .spacing(tokens::spacing::SM)
+        }
+        "running" => {
+            row![
+                styled_button(theme, "Pause", ButtonVariant::Warning)
+                    .on_press(Message::PauseOrchestrator),
+                styled_button(theme, "Stop", ButtonVariant::Danger)
+                    .on_press(Message::StopOrchestrator),
+            ]
+            .spacing(tokens::spacing::SM)
+        }
+        "paused" => {
+            row![
+                styled_button(theme, "Resume", ButtonVariant::Info)
+                    .on_press(Message::ResumeOrchestrator),
+                styled_button(theme, "Stop", ButtonVariant::Danger)
+                    .on_press(Message::StopOrchestrator),
+            ]
+            .spacing(tokens::spacing::SM)
+        }
+        "completed" | "failed" => {
+            row![
+                styled_button(theme, "Reset", ButtonVariant::Secondary)
+                    .on_press(Message::ResetOrchestrator),
+            ]
+            .spacing(tokens::spacing::SM)
+        }
+        _ => row![].spacing(tokens::spacing::SM),
+    };
+
+    content = content.push(controls);
+
+    themed_panel(content, theme).into()
+}
+
+/// Build the Progress panel with 4 progress bars
+fn build_progress_panel<'a>(
+    progress: &'a ProgressState,
+    theme: &'a AppTheme,
+) -> Element<'a, Message> {
+    let mut content = column![
+        text("PROGRESS")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+    ]
+    .spacing(tokens::spacing::MD);
+
+    // Phase progress
+    let phase_progress = progress.phase_current as f32 / progress.phase_total.max(1) as f32;
+    let phase_percent = (phase_progress * 100.0) as u32;
+    content = content.push(
+        row![
+            text("Phase:")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_MEDIUM)
+                .color(theme.ink())
+                .width(Length::Fixed(80.0)),
+            styled_progress_bar(theme, phase_progress, ProgressVariant::Default, ProgressSize::Medium),
+            text(format!("{}/{} {}%", progress.phase_current, progress.phase_total, phase_percent))
+                .size(tokens::font_size::SM)
+                .font(fonts::FONT_MONO)
+                .color(theme.ink())
+                .width(Length::Fixed(100.0)),
+        ]
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center)
+    );
+
+    // Task progress
+    let task_progress = progress.task_current as f32 / progress.task_total.max(1) as f32;
+    let task_percent = (task_progress * 100.0) as u32;
+    content = content.push(
+        row![
+            text("Task:")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_MEDIUM)
+                .color(theme.ink())
+                .width(Length::Fixed(80.0)),
+            styled_progress_bar(theme, task_progress, ProgressVariant::Default, ProgressSize::Medium),
+            text(format!("{}/{} {}%", progress.task_current, progress.task_total, task_percent))
+                .size(tokens::font_size::SM)
+                .font(fonts::FONT_MONO)
+                .color(theme.ink())
+                .width(Length::Fixed(100.0)),
+        ]
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center)
+    );
+
+    // Subtask progress
+    let subtask_progress = progress.subtask_current as f32 / progress.subtask_total.max(1) as f32;
+    let subtask_percent = (subtask_progress * 100.0) as u32;
+    content = content.push(
+        row![
+            text("Subtask:")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_MEDIUM)
+                .color(theme.ink())
+                .width(Length::Fixed(80.0)),
+            styled_progress_bar(theme, subtask_progress, ProgressVariant::Success, ProgressSize::Medium),
+            text(format!("{}/{} {}%", progress.subtask_current, progress.subtask_total, subtask_percent))
+                .size(tokens::font_size::SM)
+                .font(fonts::FONT_MONO)
+                .color(theme.ink())
+                .width(Length::Fixed(100.0)),
+        ]
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center)
+    );
+
+    // Overall progress
+    let overall_percent = (progress.overall_percent * 100.0) as u32;
+    content = content.push(
+        row![
+            text("Overall:")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_MEDIUM)
+                .color(theme.ink())
+                .width(Length::Fixed(80.0)),
+            styled_progress_bar(theme, progress.overall_percent, ProgressVariant::Warning, ProgressSize::Large),
+            text(format!("{}%", overall_percent))
+                .size(tokens::font_size::SM)
+                .font(fonts::FONT_MONO)
+                .color(theme.ink())
+                .width(Length::Fixed(100.0)),
+        ]
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center)
+    );
+
+    themed_panel(content, theme).into()
+}
+
+/// Build the Budget panel with donut charts
+fn build_budget_panel<'a>(
+    budgets: &'a HashMap<String, BudgetDisplayInfo>,
+    theme: &'a AppTheme,
+) -> Element<'a, Message> {
+    let mut content = column![
+        text("BUDGET")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+    ]
+    .spacing(tokens::spacing::MD);
+
+    let mut budget_row = row![].spacing(tokens::spacing::LG);
+    for (_, budget_info) in budgets.iter() {
+        budget_row = budget_row.push(
+            column![
+                budget_donut(
+                    budget_info.used as f32,
+                    budget_info.total as f32,
+                    &budget_info.platform,
+                    BudgetSize::Medium
+                ),
+                text(format!("{}: {}/{}", budget_info.platform, budget_info.used, budget_info.total))
+                    .size(tokens::font_size::SM)
+                    .font(fonts::FONT_UI)
+                    .color(theme.ink()),
+            ]
+            .spacing(tokens::spacing::SM)
+            .align_x(iced::Alignment::Center)
+        );
+    }
+    content = content.push(budget_row);
+
+    themed_panel(content, theme).into()
+}
+
+/// Build the Output Log panel with terminal-style display
+fn build_output_log_panel<'a>(
+    output: &'a [OutputLine],
+    theme: &'a AppTheme,
+) -> Element<'a, Message> {
+    let theme_copy = *theme;
+    
+    let mut log_content = column![].spacing(tokens::spacing::XXS);
+    
+    // Show last 100 lines
+    for line in output.iter().rev().take(100).rev() {
+        let (color, prefix) = match line.line_type {
+            OutputType::Stdout => (colors::ACID_LIME, "stdout"),
+            OutputType::Stderr => (colors::HOT_MAGENTA, "stderr"),
+            OutputType::Info => (colors::SAFETY_ORANGE, "system"),
+        };
+        
+        let timestamp = line.timestamp.format("%H:%M:%S");
+        
+        log_content = log_content.push(
+            row![
+                text(format!("> {}", timestamp))
+                    .size(tokens::font_size::SM)
+                    .font(fonts::FONT_MONO)
+                    .color(colors::INK_FADED),
+                text(format!("[{}]", prefix))
+                    .size(tokens::font_size::SM)
+                    .font(fonts::FONT_MONO)
+                    .color(color),
+                text(&line.text)
+                    .size(tokens::font_size::SM)
+                    .font(fonts::FONT_MONO)
+                    .color(color),
+            ]
+            .spacing(tokens::spacing::XS)
+        );
+    }
+
+    let scrollable_log = scrollable(log_content)
+        .height(Length::Fixed(300.0));
+
+    let log_container = container(scrollable_log)
+        .padding(tokens::spacing::MD)
+        .width(Length::Fill)
+        .height(Length::Fixed(300.0))
+        .style(move |_iced_theme: &iced::Theme| container::Style {
+            background: Some(iced::Background::Color(colors::PAPER_DARK)),
+            border: Border {
+                color: theme_copy.ink(),
+                width: tokens::borders::THICK,
+                radius: tokens::radii::NONE.into(),
+            },
+            text_color: Some(colors::ACID_LIME),
+            ..container::Style::default()
+        });
+
+    let panel_content = column![
+        text("OUTPUT LOG")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        log_container,
+    ]
+    .spacing(tokens::spacing::MD);
+
+    themed_panel(panel_content, theme).into()
 }

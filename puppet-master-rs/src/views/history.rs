@@ -2,10 +2,10 @@
 //!
 //! Displays past orchestration sessions with pagination and details.
 
-use iced::widget::{column, row, text, button, container, scrollable, Space};
+use iced::widget::{column, row, text, container, scrollable, Space};
 use iced::{Element, Length};
 use crate::app::Message;
-use crate::theme::AppTheme;
+use crate::theme::{AppTheme, tokens};
 use crate::widgets::*;
 use chrono::{DateTime, Utc};
 
@@ -43,6 +43,7 @@ impl SessionStatus {
         }
     }
 
+    #[allow(dead_code)]
     fn to_status(&self) -> Status {
         match self {
             SessionStatus::Running => Status::Running,
@@ -58,50 +59,51 @@ pub fn view<'a>(
     sessions: &'a [SessionInfo],
     page: usize,
     total_pages: usize,
-    _theme: &'a AppTheme,
+    theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(20).padding(20);
+    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
     // Header with pagination
     content = content.push(
         row![
-            text("Execution History").size(24),
+            text("Execution History").size(tokens::font_size::XL),
             Space::new().width(Length::Fill),
             row![
-                button("Refresh")
+                styled_button(theme, "Refresh", ButtonVariant::Secondary)
                     .on_press(Message::LoadHistory),
-                button("← Previous")
+                styled_button(theme, "< Previous", ButtonVariant::Ghost)
                     .on_press(if page > 0 {
                         Message::HistoryPageChanged(page.saturating_sub(1))
                     } else {
                         Message::None
                     }),
-                text(format!("Page {} of {}", page + 1, total_pages.max(1))).size(14),
-                button("Next →")
+                text(format!("Page {} of {}", page + 1, total_pages.max(1))).size(tokens::font_size::BASE),
+                styled_button(theme, "Next >", ButtonVariant::Ghost)
                     .on_press(if page < total_pages.saturating_sub(1) {
                         Message::HistoryPageChanged(page + 1)
                     } else {
                         Message::None
                     }),
-            ].spacing(10).align_y(iced::Alignment::Center),
+            ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
         ]
-        .spacing(20)
+        .spacing(tokens::spacing::LG)
         .align_y(iced::Alignment::Center)
     );
 
     if sessions.is_empty() {
         content = content.push(
-            panel(
+            themed_panel(
                 container(
                     column![
-                        text("No execution history").size(16),
-                        text("History will appear after orchestration runs").size(14),
-                    ].spacing(10)
-                ).padding(30)
+                        text("No execution history").size(tokens::font_size::MD),
+                        text("History will appear after orchestration runs").size(tokens::font_size::SM),
+                    ].spacing(tokens::spacing::SM)
+                ).padding(tokens::spacing::XL),
+                theme
             )
         );
     } else {
-        let mut sessions_col = column![].spacing(15);
+        let mut sessions_col = column![].spacing(tokens::spacing::MD);
 
         for session in sessions {
             let duration = if let Some(end) = session.end_time {
@@ -115,66 +117,89 @@ pub fn view<'a>(
                 "In progress".to_string()
             };
 
+            let status_text = session.status.as_str();
             let session_header = row![
-                status_badge(
-                    session.status.to_status(),
-                    session.status.as_str().to_string(),
-                ),
+                container(
+                    text(status_text)
+                        .size(tokens::font_size::SM)
+                )
+                .padding(tokens::spacing::SM)
+                .width(Length::Fixed(100.0))
+                .style(move |_theme: &iced::Theme| {
+                    let bg_color = match session.status {
+                        SessionStatus::Running => crate::theme::colors::ELECTRIC_BLUE,
+                        SessionStatus::Completed => crate::theme::colors::ACID_LIME,
+                        SessionStatus::Failed => crate::theme::colors::HOT_MAGENTA,
+                        SessionStatus::Cancelled => crate::theme::colors::SAFETY_ORANGE,
+                    };
+                    iced::widget::container::Style {
+                        background: Some(iced::Background::Color(bg_color)),
+                        border: iced::Border {
+                            color: crate::theme::colors::INK_BLACK,
+                            width: tokens::borders::MEDIUM,
+                            radius: tokens::radii::NONE.into(),
+                        },
+                        ..Default::default()
+                    }
+                }),
                 column![
-                    text(&session.id).size(16),
+                    text(&session.id).size(tokens::font_size::MD),
                     text(format!("Started: {}", 
                         session.start_time.format("%Y-%m-%d %H:%M:%S")
-                    )).size(12),
+                    )).size(tokens::font_size::SM),
                     text(format!(
                         "Platform: {} | Model: {} | Effort: {}",
                         session.platform.as_deref().unwrap_or("—"),
                         session.model.as_deref().unwrap_or("—"),
                         session.reasoning_effort.as_deref().unwrap_or("—"),
-                    )).size(12),
-                ].spacing(5),
+                    )).size(tokens::font_size::SM),
+                ].spacing(tokens::spacing::XS),
                 Space::new().width(Length::Fill),
                 column![
                     text(format!("{}/{} items", 
                         session.items_completed, 
                         session.items_total
-                    )).size(14),
-                    text(duration.clone()).size(12),
-                ].spacing(5).align_x(iced::Alignment::End),
-                button(if session.expanded { "▼" } else { "▶" })
+                    )).size(tokens::font_size::BASE),
+                    text(duration.clone()).size(tokens::font_size::SM),
+                ].spacing(tokens::spacing::XS).align_x(iced::Alignment::End),
+                styled_button_sized(theme, if session.expanded { "v" } else { ">" }, ButtonVariant::Ghost, ButtonSize::Small)
                     .on_press(Message::SelectSession(session.id.clone())),
             ]
-            .spacing(15)
+            .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center);
 
             let mut session_content = column![
                 session_header,
-            ].spacing(10);
+            ].spacing(tokens::spacing::SM);
 
             // Show details if expanded
             if session.expanded {
                 let mut details = column![
-                    text("Phases:").size(14),
-                ].spacing(5);
+                    text("Phases:").size(tokens::font_size::BASE),
+                ].spacing(tokens::spacing::XS);
 
                 for phase in &session.phases {
                     details = details.push(
-                        text(format!("• {}", phase)).size(12)
+                        text(format!("- {}", phase)).size(tokens::font_size::SM)
                     );
                 }
 
                 if let Some(end) = session.end_time {
                     details = details.push(
-                        text(format!("Ended: {}", end.format("%Y-%m-%d %H:%M:%S"))).size(12)
+                        text(format!("Ended: {}", end.format("%Y-%m-%d %H:%M:%S"))).size(tokens::font_size::SM)
                     );
                 }
 
                 session_content = session_content.push(
-                    container(details).padding(15)
+                    container(details).padding(tokens::spacing::MD)
                 );
             }
 
             sessions_col = sessions_col.push(
-                panel(container(session_content).padding(15))
+                themed_panel(
+                    container(session_content).padding(tokens::spacing::MD),
+                    theme
+                )
             );
         }
 

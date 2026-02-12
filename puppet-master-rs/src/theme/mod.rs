@@ -1,7 +1,11 @@
 pub mod colors;
 pub mod styles;
+pub mod fonts;
+pub mod tokens;
+pub mod palette;
 
 use iced::Color;
+use palette::Palette;
 
 /// Application theme - Light or Dark mode
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -12,6 +16,14 @@ pub enum AppTheme {
 }
 
 impl AppTheme {
+    /// Get the semantic color palette for this theme
+    pub fn palette(&self) -> Palette {
+        match self {
+            AppTheme::Light => Palette::light(),
+            AppTheme::Dark => Palette::dark(),
+        }
+    }
+
     pub fn toggle(&self) -> Self {
         match self {
             AppTheme::Light => AppTheme::Dark,
@@ -19,32 +31,22 @@ impl AppTheme {
         }
     }
 
+    // ── Legacy accessors (kept for backward compatibility) ──────────
+    
     pub fn paper(&self) -> Color {
-        match self {
-            AppTheme::Light => colors::PAPER_CREAM,
-            AppTheme::Dark => colors::PAPER_DARK,
-        }
+        self.palette().background
     }
 
     pub fn ink(&self) -> Color {
-        match self {
-            AppTheme::Light => colors::INK_BLACK,
-            AppTheme::Dark => colors::INK_LIGHT,
-        }
+        self.palette().text_primary
     }
 
     pub fn ink_faded(&self) -> Color {
-        match self {
-            AppTheme::Light => colors::INK_FADED,
-            AppTheme::Dark => colors::INK_FADED_DARK,
-        }
+        self.palette().text_secondary
     }
 
     pub fn shadow(&self) -> Color {
-        match self {
-            AppTheme::Light => colors::INK_BLACK,
-            AppTheme::Dark => colors::INK_LIGHT,
-        }
+        self.palette().shadow
     }
 
     pub fn is_dark(&self) -> bool {

@@ -5,7 +5,7 @@
 use iced::widget::{column, row, text, container, scrollable, Space};
 use iced::{Element, Length};
 use crate::app::Message;
-use crate::theme::AppTheme;
+use crate::theme::{AppTheme, tokens};
 use crate::widgets::*;
 
 /// Requirement coverage information
@@ -22,24 +22,24 @@ pub struct RequirementCoverage {
 pub fn view<'a>(
     overall_percent: f32,
     requirements: &'a [RequirementCoverage],
-    _theme: &'a AppTheme,
+    theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(20).padding(20);
+    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
     // Header
     content = content.push(
-        text("Coverage Analysis").size(24)
+        text("Coverage Analysis").size(tokens::font_size::XL)
     );
 
     // Overall coverage
-    let overall_panel = panel(
+    let overall_panel = themed_panel(
         container(
             column![
-                text("Overall Coverage").size(18),
-                text(format!("{:.1}%", overall_percent * 100.0)).size(48),
-                styled_progress_bar(
+                text("Overall Coverage").size(tokens::font_size::MD),
+                text(format!("{:.1}%", overall_percent * 100.0)).size(tokens::font_size::DISPLAY),
+                crate::widgets::progress_bar::styled_progress_bar(
+                    theme,
                     overall_percent,
-                    1.0,
                     if overall_percent >= 0.8 {
                         ProgressVariant::Success
                     } else if overall_percent >= 0.5 {
@@ -49,9 +49,10 @@ pub fn view<'a>(
                     },
                     ProgressSize::Large
                 ),
-            ].spacing(15)
+            ].spacing(tokens::spacing::MD)
             .align_x(iced::Alignment::Center)
-        ).padding(30)
+        ).padding(tokens::spacing::XL),
+        theme,
     );
 
     content = content.push(overall_panel);
@@ -59,13 +60,14 @@ pub fn view<'a>(
     // Per-requirement breakdown
     if requirements.is_empty() {
         content = content.push(
-            panel(
+            themed_panel(
                 container(
                     column![
-                        text("No requirements defined").size(16),
-                        text("Define requirements in the wizard to see coverage").size(14),
-                    ].spacing(10)
-                ).padding(30)
+                        text("No requirements defined").size(tokens::font_size::BASE),
+                        text("Define requirements in the wizard to see coverage").size(tokens::font_size::SM),
+                    ].spacing(tokens::spacing::SM)
+                ).padding(tokens::spacing::XL),
+                theme,
             )
         );
     } else {
@@ -73,7 +75,7 @@ pub fn view<'a>(
         let total_count = requirements.len();
 
         let summary = row![
-            text(format!("{} of {} requirements covered", covered_count, total_count)).size(16),
+            text(format!("{} of {} requirements covered", covered_count, total_count)).size(tokens::font_size::BASE),
             Space::new().width(Length::Fill),
             status_badge(
                 if covered_count == total_count {
@@ -86,28 +88,28 @@ pub fn view<'a>(
                 format!("{}/{}", covered_count, total_count),
             ),
         ]
-        .spacing(15)
+        .spacing(tokens::spacing::MD)
         .align_y(iced::Alignment::Center);
 
         content = content.push(
-            panel(container(summary).padding(15))
+            themed_panel(container(summary).padding(tokens::spacing::MD), theme)
         );
 
         // Requirement table
         let mut table = column![
             // Table header
             row![
-                container(text("Status").size(14)).width(Length::Fixed(80.0)),
-                container(text("ID").size(14)).width(Length::FillPortion(1)),
-                container(text("Description").size(14)).width(Length::FillPortion(3)),
-                container(text("Evidence").size(14)).width(Length::Fixed(100.0)),
-                container(text("Tiers").size(14)).width(Length::Fixed(80.0)),
+                container(text("Status").size(tokens::font_size::SM)).width(Length::Fixed(80.0)),
+                container(text("ID").size(tokens::font_size::SM)).width(Length::FillPortion(1)),
+                container(text("Description").size(tokens::font_size::SM)).width(Length::FillPortion(3)),
+                container(text("Evidence").size(tokens::font_size::SM)).width(Length::Fixed(100.0)),
+                container(text("Tiers").size(tokens::font_size::SM)).width(Length::Fixed(80.0)),
             ]
-            .spacing(10)
-            .padding(10),
-        ].spacing(5);
+            .spacing(tokens::spacing::SM)
+            .padding(tokens::spacing::SM),
+        ].spacing(tokens::spacing::XS);
 
-        let mut rows_col = column![].spacing(5);
+        let mut rows_col = column![].spacing(tokens::spacing::XS);
 
         for req in requirements {
             let row_widget = row![
@@ -118,15 +120,15 @@ pub fn view<'a>(
                         status_dot(Status::Error)
                     }
                 ).width(Length::Fixed(80.0)),
-                container(text(&req.id).size(12)).width(Length::FillPortion(1)),
-                container(text(&req.description).size(12)).width(Length::FillPortion(3)),
-                container(text(format!("{}", req.evidence_count)).size(12))
+                container(text(&req.id).size(tokens::font_size::XS)).width(Length::FillPortion(1)),
+                container(text(&req.description).size(tokens::font_size::XS)).width(Length::FillPortion(3)),
+                container(text(format!("{}", req.evidence_count)).size(tokens::font_size::XS))
                     .width(Length::Fixed(100.0)),
-                container(text(format!("{}", req.tier_ids.len())).size(12))
+                container(text(format!("{}", req.tier_ids.len())).size(tokens::font_size::XS))
                     .width(Length::Fixed(80.0)),
             ]
-            .spacing(10)
-            .padding(10);
+            .spacing(tokens::spacing::SM)
+            .padding(tokens::spacing::SM);
 
             rows_col = rows_col.push(
                 container(row_widget)
@@ -148,11 +150,12 @@ pub fn view<'a>(
         table = table.push(rows_col);
 
         content = content.push(
-            panel(
+            themed_panel(
                 container(
                     scrollable(table)
                         .height(Length::Fill)
-                ).padding(15)
+                ).padding(tokens::spacing::MD),
+                theme,
             )
         );
     }

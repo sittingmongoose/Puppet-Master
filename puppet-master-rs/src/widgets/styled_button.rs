@@ -1,0 +1,304 @@
+//! Styled button widget with retro-futuristic design
+//!
+//! Provides button variants matching the Tauri React GUI design:
+//! - Primary: Acid Lime - for START/SAVE actions
+//! - Secondary: Paper Cream - for default actions
+//! - Danger: Hot Magenta - for STOP/DELETE actions
+//! - Warning: Safety Orange - for PAUSE actions
+//! - Info: Electric Blue - for RESUME/RETRY actions
+//! - Ghost: Transparent - inverts on hover
+
+use iced::widget::{button, text, Button};
+use iced::{Background, Border, Color, Shadow, Vector};
+use crate::theme::{AppTheme, colors, tokens, fonts};
+
+/// Button color variant
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ButtonVariant {
+    /// Acid Lime background, black text — for START/SAVE actions
+    Primary,
+    /// Paper background, ink text — default actions
+    Secondary,
+    /// Hot Magenta background, cream text — STOP/DELETE actions
+    Danger,
+    /// Safety Orange background, black text — PAUSE actions
+    Warning,
+    /// Electric Blue background, cream text — RESUME/RETRY actions
+    Info,
+    /// Transparent background, ink text — inverts on hover
+    Ghost,
+}
+
+/// Button size variant
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ButtonSize {
+    /// Small: 8px horizontal, 4px vertical padding, 13px text
+    Small,
+    /// Medium: 24px horizontal, 16px vertical padding, 15px text
+    Medium,
+    /// Large: 32px horizontal, 16px vertical padding, 20px text
+    Large,
+}
+
+impl ButtonSize {
+    /// Get horizontal padding for this size
+    pub fn padding_x(&self) -> u16 {
+        match self {
+            ButtonSize::Small => 8,
+            ButtonSize::Medium => 24,
+            ButtonSize::Large => 32,
+        }
+    }
+
+    /// Get vertical padding for this size
+    pub fn padding_y(&self) -> u16 {
+        match self {
+            ButtonSize::Small => 4,
+            ButtonSize::Medium => 16,
+            ButtonSize::Large => 16,
+        }
+    }
+
+    /// Get font size for this button size
+    pub fn font_size(&self) -> f32 {
+        match self {
+            ButtonSize::Small => tokens::font_size::SM,
+            ButtonSize::Medium => tokens::font_size::BASE,
+            ButtonSize::Large => tokens::font_size::LG,
+        }
+    }
+}
+
+impl ButtonVariant {
+    /// Get background color for this variant in the given state
+    fn background_color(&self, theme: &AppTheme, status: &button::Status) -> Color {
+        let base = match self {
+            ButtonVariant::Primary => colors::ACID_LIME,
+            ButtonVariant::Secondary => theme.paper(),
+            ButtonVariant::Danger => colors::HOT_MAGENTA,
+            ButtonVariant::Warning => colors::SAFETY_ORANGE,
+            ButtonVariant::Info => colors::ELECTRIC_BLUE,
+            ButtonVariant::Ghost => colors::TRANSPARENT,
+        };
+
+        match status {
+            button::Status::Active | button::Status::Pressed => base,
+            button::Status::Hovered => {
+                // Ghost inverts to ink on hover
+                if matches!(self, ButtonVariant::Ghost) {
+                    theme.ink()
+                } else {
+                    // Slight lightening on hover
+                    lighten_color(base, 0.1)
+                }
+            }
+            button::Status::Disabled => {
+                // 50% opacity
+                Color { a: 0.5, ..base }
+            }
+        }
+    }
+
+    /// Get text color for this variant in the given state
+    fn text_color(&self, theme: &AppTheme, status: &button::Status) -> Color {
+        let base = match self {
+            ButtonVariant::Primary | ButtonVariant::Warning => colors::INK_BLACK,
+            ButtonVariant::Secondary | ButtonVariant::Ghost => theme.ink(),
+            ButtonVariant::Danger | ButtonVariant::Info => colors::PAPER_CREAM,
+        };
+
+        match status {
+            button::Status::Hovered if matches!(self, ButtonVariant::Ghost) => {
+                // Ghost text inverts on hover
+                colors::PAPER_CREAM
+            }
+            button::Status::Disabled => Color { a: 0.5, ..base },
+            _ => base,
+        }
+    }
+
+    /// Get border color for this variant
+    fn border_color(&self, theme: &AppTheme) -> Color {
+        match self {
+            ButtonVariant::Ghost => theme.ink(),
+            _ => colors::INK_BLACK,
+        }
+    }
+
+    /// Get shadow for this variant in the given state
+    fn shadow(&self, theme: &AppTheme, status: &button::Status) -> Shadow {
+        match status {
+            button::Status::Active => tokens::shadows::button_shadow(theme.ink()),
+            button::Status::Hovered => Shadow {
+                color: theme.ink(),
+                offset: Vector::new(2.0, 2.0),
+                blur_radius: 0.0,
+            },
+            button::Status::Pressed => tokens::shadows::button_shadow_pressed(theme.ink()),
+            button::Status::Disabled => tokens::shadows::none(),
+        }
+    }
+}
+
+/// Create a styled button with custom variant
+///
+/// # Arguments
+/// * `theme` - Application theme
+/// * `label` - Button text label
+/// * `variant` - Button color variant
+///
+/// # Example
+/// ```ignore
+/// let btn = styled_button(&theme, "Start", ButtonVariant::Primary)
+///     .on_press(Message::StartTask);
+/// ```
+pub fn styled_button<'a, Message: Clone + 'a>(
+    theme: &AppTheme,
+    label: &str,
+    variant: ButtonVariant,
+) -> Button<'a, Message> {
+    styled_button_sized(theme, label, variant, ButtonSize::Medium)
+}
+
+/// Create a styled button with custom variant and size
+///
+/// # Arguments
+/// * `theme` - Application theme
+/// * `label` - Button text label
+/// * `variant` - Button color variant
+/// * `size` - Button size variant
+///
+/// # Example
+/// ```ignore
+/// let btn = styled_button_sized(&theme, "Delete", ButtonVariant::Danger, ButtonSize::Large)
+///     .on_press(Message::Delete);
+/// ```
+pub fn styled_button_sized<'a, Message: Clone + 'a>(
+    theme: &AppTheme,
+    label: &str,
+    variant: ButtonVariant,
+    size: ButtonSize,
+) -> Button<'a, Message> {
+    let theme_copy = *theme;
+    let label_string = label.to_uppercase(); // Uppercase for retro aesthetic
+    let font_size = size.font_size();
+    let padding_x = size.padding_x();
+    let padding_y = size.padding_y();
+
+    button(
+        text(label_string)
+            .size(font_size)
+            .font(fonts::FONT_UI_BOLD)
+    )
+    .padding([padding_y, padding_x])
+    .style(move |_iced_theme: &iced::Theme, status: button::Status| {
+        let bg_color = variant.background_color(&theme_copy, &status);
+        let text_color = variant.text_color(&theme_copy, &status);
+        let border_color = variant.border_color(&theme_copy);
+        let shadow = variant.shadow(&theme_copy, &status);
+
+        button::Style {
+            background: Some(Background::Color(bg_color)),
+            text_color,
+            border: Border {
+                color: border_color,
+                width: tokens::borders::THICK,
+                radius: tokens::radii::NONE.into(),
+            },
+            shadow,
+            snap: true, // Snap to pixel boundaries for crisp rendering
+        }
+    })
+}
+
+/// Helper function to lighten a color
+fn lighten_color(color: Color, amount: f32) -> Color {
+    Color {
+        r: (color.r + amount).min(1.0),
+        g: (color.g + amount).min(1.0),
+        b: (color.b + amount).min(1.0),
+        a: color.a,
+    }
+}
+
+// ── Convenience functions for common button types ────────────────────────
+
+/// Create a primary button (Acid Lime)
+pub fn primary_button<'a, Message: Clone + 'a>(
+    theme: &AppTheme,
+    label: &str,
+) -> Button<'a, Message> {
+    styled_button(theme, label, ButtonVariant::Primary)
+}
+
+/// Create a secondary button (Paper)
+pub fn secondary_button<'a, Message: Clone + 'a>(
+    theme: &AppTheme,
+    label: &str,
+) -> Button<'a, Message> {
+    styled_button(theme, label, ButtonVariant::Secondary)
+}
+
+/// Create a danger button (Hot Magenta)
+pub fn danger_button<'a, Message: Clone + 'a>(
+    theme: &AppTheme,
+    label: &str,
+) -> Button<'a, Message> {
+    styled_button(theme, label, ButtonVariant::Danger)
+}
+
+/// Create a warning button (Safety Orange)
+pub fn warning_button<'a, Message: Clone + 'a>(
+    theme: &AppTheme,
+    label: &str,
+) -> Button<'a, Message> {
+    styled_button(theme, label, ButtonVariant::Warning)
+}
+
+/// Create an info button (Electric Blue)
+pub fn info_button<'a, Message: Clone + 'a>(
+    theme: &AppTheme,
+    label: &str,
+) -> Button<'a, Message> {
+    styled_button(theme, label, ButtonVariant::Info)
+}
+
+/// Create a ghost button (Transparent)
+pub fn ghost_button<'a, Message: Clone + 'a>(
+    theme: &AppTheme,
+    label: &str,
+) -> Button<'a, Message> {
+    styled_button(theme, label, ButtonVariant::Ghost)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_button_sizes() {
+        assert_eq!(ButtonSize::Small.padding_x(), 8);
+        assert_eq!(ButtonSize::Medium.padding_x(), 24);
+        assert_eq!(ButtonSize::Large.padding_x(), 32);
+        
+        assert_eq!(ButtonSize::Small.font_size(), tokens::font_size::SM);
+        assert_eq!(ButtonSize::Medium.font_size(), tokens::font_size::BASE);
+        assert_eq!(ButtonSize::Large.font_size(), tokens::font_size::LG);
+    }
+
+    #[test]
+    fn test_lighten_color() {
+        let black = Color::from_rgb(0.0, 0.0, 0.0);
+        let lightened = lighten_color(black, 0.5);
+        assert_eq!(lightened.r, 0.5);
+        assert_eq!(lightened.g, 0.5);
+        assert_eq!(lightened.b, 0.5);
+
+        // Should not exceed 1.0
+        let white = Color::from_rgb(1.0, 1.0, 1.0);
+        let over_lightened = lighten_color(white, 0.5);
+        assert_eq!(over_lightened.r, 1.0);
+        assert_eq!(over_lightened.g, 1.0);
+        assert_eq!(over_lightened.b, 1.0);
+    }
+}

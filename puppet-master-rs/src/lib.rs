@@ -19,3 +19,4 @@ pub mod theme;
 pub mod views;
 pub mod widgets;
 pub mod tray;
+pub mod shaders;

@@ -205,8 +205,45 @@ impl Orchestrator {
 
         let gate_runner: Arc<dyn GateExecutor> = Arc::new(GateRunner::new(GateRunConfig::default()));
 
-        // Initialize logging service
+        // Ensure workspace directory exists and is writable
+        if !config.paths.workspace.exists() {
+            std::fs::create_dir_all(&config.paths.workspace)
+                .with_context(|| format!(
+                    "Failed to create workspace directory: {}. Please ensure the path is writable.",
+                    config.paths.workspace.display()
+                ))?;
+        }
+        
+        // Verify workspace is writable
+        let test_file = config.paths.workspace.join(".puppet-master-write-test");
+        std::fs::write(&test_file, "test")
+            .with_context(|| format!(
+                "Workspace directory is not writable: {}. Please check permissions.",
+                config.paths.workspace.display()
+            ))?;
+        std::fs::remove_file(&test_file).ok();
+
+        // Initialize .puppet-master directory structure
         let puppet_master_dir = config.paths.workspace.join(".puppet-master");
+        std::fs::create_dir_all(&puppet_master_dir)
+            .with_context(|| format!(
+                "Failed to create .puppet-master directory: {}",
+                puppet_master_dir.display()
+            ))?;
+        
+        // Create subdirectories
+        let subdirs = ["logs", "evidence", "checkpoints", "capabilities", "usage"];
+        for subdir in &subdirs {
+            let path = puppet_master_dir.join(subdir);
+            std::fs::create_dir_all(&path)
+                .with_context(|| format!(
+                    "Failed to create {} directory: {}",
+                    subdir,
+                    path.display()
+                ))?;
+        }
+        
+        // Initialize logging service
         let logger_service = LoggerService::new(puppet_master_dir.clone(), false);
         
         // Log startup activity
@@ -1257,6 +1294,7 @@ impl Orchestrator {
 mod tests {
     use super::*;
     use crate::config::default_config::default_config;
+    use crate::git::CommitFormatter;
     use chrono::Utc;
     use std::collections::VecDeque;
     use std::sync::atomic::{AtomicUsize, Ordering};
@@ -1453,11 +1491,16 @@ mod tests {
         let config = default_config();
         let (event_sender, event_receiver) = crossbeam_channel::unbounded();
 
-        // Initialize test-only services
-        let logger_service = LoggerService::new(std::path::PathBuf::from("/tmp/.puppet-master"), false);
-        let progress_manager = ProgressManager::new(&std::path::PathBuf::from("/tmp/progress.txt")).unwrap();
-        let usage_tracker = UsageTracker::new(&std::path::PathBuf::from("/tmp/usage.jsonl")).unwrap();
-        let git_manager = GitManager::new(std::path::PathBuf::from("/tmp"));
+        // Initialize test-only services with temporary directory
+        let temp_dir = std::env::temp_dir().join(format!("puppet-master-test-{}", std::process::id()));
+        let _ = std::fs::create_dir_all(&temp_dir);
+        let puppet_master_dir = temp_dir.join(".puppet-master");
+        let _ = std::fs::create_dir_all(&puppet_master_dir);
+        
+        let logger_service = LoggerService::new(puppet_master_dir.clone(), false);
+        let progress_manager = ProgressManager::new(&temp_dir.join("progress.txt")).unwrap();
+        let usage_tracker = UsageTracker::new(&puppet_master_dir.join("usage.jsonl")).unwrap();
+        let git_manager = GitManager::new(temp_dir.clone());
         let branch_strategy = BranchStrategy::Feature;
         let commit_formatter = CommitFormatter;
 

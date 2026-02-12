@@ -2,10 +2,10 @@
 //!
 //! Browse and filter evidence items with type and tier filtering.
 
-use iced::widget::{column, row, text, button, container, scrollable, Space};
+use iced::widget::{column, row, text, container, scrollable, Space};
 use iced::{Element, Length};
 use crate::app::Message;
-use crate::theme::AppTheme;
+use crate::theme::{AppTheme, tokens};
 use crate::widgets::*;
 use chrono::{DateTime, Utc};
 use std::path::PathBuf;
@@ -45,12 +45,12 @@ impl EvidenceItemType {
 
     pub fn icon(&self) -> &str {
         match self {
-            EvidenceItemType::TestLog => "📝",
-            EvidenceItemType::Screenshot => "📸",
-            EvidenceItemType::BrowserTrace => "🌐",
-            EvidenceItemType::FileSnapshot => "📁",
-            EvidenceItemType::Metrics => "📊",
-            EvidenceItemType::GateReport => "✓",
+            EvidenceItemType::TestLog => "LOG",
+            EvidenceItemType::Screenshot => "IMG",
+            EvidenceItemType::BrowserTrace => "WEB",
+            EvidenceItemType::FileSnapshot => "FILE",
+            EvidenceItemType::Metrics => "DATA",
+            EvidenceItemType::GateReport => "RPT",
         }
     }
 
@@ -84,28 +84,31 @@ pub fn view<'a>(
     items: &'a [EvidenceItem],
     filter: &'a EvidenceFilter,
     _available_tiers: &'a [String],
-    _theme: &'a AppTheme,
+    theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(20).padding(20);
+    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
     // Header
     content = content.push(
-        text("Evidence Browser").size(24)
+        text("Evidence Browser").size(tokens::font_size::XL)
     );
 
     // Filter bar
     let filter_row = row![
-        text("Filter:").size(14),
-        button("Clear Filters")
+        text("Filter:").size(tokens::font_size::BASE),
+        styled_button(theme, "Clear Filters", ButtonVariant::Secondary)
             .on_press(Message::FilterEvidence(crate::app::EvidenceFilter::default())),
-        button("Refresh")
+        styled_button(theme, "Refresh", ButtonVariant::Info)
             .on_press(Message::LoadEvidence),
     ]
-    .spacing(10)
+    .spacing(tokens::spacing::SM)
     .align_y(iced::Alignment::Center);
 
     content = content.push(
-        panel(container(filter_row).padding(15))
+        themed_panel(
+            container(filter_row).padding(tokens::spacing::MD),
+            theme
+        )
     );
 
     // Evidence list
@@ -125,51 +128,69 @@ pub fn view<'a>(
 
     if filtered_items.is_empty() {
         content = content.push(
-            panel(
+            themed_panel(
                 container(
                     column![
-                        text("No evidence found").size(16),
-                        text("Try adjusting your filters").size(14),
-                    ].spacing(10)
-                ).padding(30)
+                        text("No evidence found").size(tokens::font_size::MD),
+                        text("Try adjusting your filters").size(tokens::font_size::SM),
+                    ].spacing(tokens::spacing::SM)
+                ).padding(tokens::spacing::XL),
+                theme
             )
         );
     } else {
-        let mut items_col = column![].spacing(10);
+        let mut items_col = column![].spacing(tokens::spacing::SM);
 
         for item in filtered_items {
             let item_row = row![
-                // Type icon
-                text(item.evidence_type.icon()).size(24),
+                // Type icon badge
+                container(
+                    text(item.evidence_type.icon())
+                        .size(tokens::font_size::BASE)
+                )
+                .padding(tokens::spacing::MD)
+                .width(Length::Fixed(80.0))
+                .style(|_theme: &iced::Theme| {
+                    iced::widget::container::Style {
+                        background: Some(iced::Background::Color(crate::theme::colors::ELECTRIC_BLUE)),
+                        border: iced::Border {
+                            color: crate::theme::colors::INK_BLACK,
+                            width: tokens::borders::MEDIUM,
+                            radius: tokens::radii::NONE.into(),
+                        },
+                        ..Default::default()
+                    }
+                }),
                 // Details
                 column![
                     row![
-                        text(item.evidence_type.as_str()).size(14),
-                        Space::new().width(Length::Fixed(20.0)),
-                        text(format!("Tier: {}", item.tier_id)).size(12),
-                    ].spacing(10),
-                    text(&item.summary).size(12),
-                    text(item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string()).size(10),
-                ].spacing(5),
+                        text(item.evidence_type.as_str()).size(tokens::font_size::BASE),
+                        Space::new().width(Length::Fixed(tokens::spacing::LG)),
+                        text(format!("Tier: {}", item.tier_id)).size(tokens::font_size::SM),
+                    ].spacing(tokens::spacing::SM),
+                    text(&item.summary).size(tokens::font_size::SM),
+                    text(item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string()).size(tokens::font_size::XS),
+                ].spacing(tokens::spacing::XS),
                 Space::new().width(Length::Fill),
                 // View button
-                button("View")
+                styled_button(theme, "View", ButtonVariant::Info)
                     .on_press(Message::SelectEvidence(item.id.clone())),
             ]
-            .spacing(15)
+            .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center);
 
             items_col = items_col.push(
-                container(item_row).padding(12)
+                container(item_row).padding(tokens::spacing::MD)
             );
         }
 
         content = content.push(
-            panel(
+            themed_panel(
                 container(
                     scrollable(items_col)
                         .height(Length::Fill)
-                ).padding(15)
+                ).padding(tokens::spacing::MD),
+                theme
             )
         );
     }

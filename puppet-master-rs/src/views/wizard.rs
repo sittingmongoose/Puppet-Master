@@ -2,152 +2,290 @@
 //!
 //! Guides users through uploading requirements, reviewing, generating PRD, and saving.
 
-use iced::widget::{column, row, text, button, container, text_input, scrollable, Space};
-use iced::{Element, Length};
+use iced::widget::{column, row, text, container, scrollable, Space};
+use iced::{Element, Length, Border};
 use crate::app::Message;
-use crate::theme::AppTheme;
-use crate::widgets::*;
+use crate::theme::{AppTheme, colors, tokens, fonts};
+use crate::widgets::{
+    Page,
+    styled_button::{styled_button, ButtonVariant},
+    styled_input::{styled_text_input_with_variant, InputVariant, InputSize},
+};
 
 /// Requirements wizard view - multi-step process
 pub fn view<'a>(
     step: usize,
     requirements_text: &'a str,
     prd_preview: &'a Option<String>,
-    _theme: &'a AppTheme,
+    theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(20).padding(20);
+    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
-    // Step indicator
+    // Step indicator with circles and connecting lines
     let step_indicator = row![
-        step_badge(1, step),
-        text("→").size(20),
-        step_badge(2, step),
-        text("→").size(20),
-        step_badge(3, step),
-        text("→").size(20),
-        step_badge(4, step),
+        step_circle(1, step, theme),
+        connecting_line(1, step, theme),
+        step_circle(2, step, theme),
+        connecting_line(2, step, theme),
+        step_circle(3, step, theme),
+        connecting_line(3, step, theme),
+        step_circle(4, step, theme),
     ]
-    .spacing(10)
+    .spacing(tokens::spacing::XXXS)
     .align_y(iced::Alignment::Center);
 
     content = content.push(
-        panel(container(step_indicator).padding(15))
+        container(step_indicator)
+            .padding(tokens::spacing::MD)
+            .width(Length::Fill)
+            .align_x(iced::alignment::Horizontal::Center)
+            .style(|_: &iced::Theme| container::Style {
+                background: Some(iced::Background::Color(theme.paper())),
+                border: Border {
+                    color: theme.ink(),
+                    width: tokens::borders::THICK,
+                    radius: tokens::radii::NONE.into(),
+                },
+                shadow: tokens::shadows::panel_shadow(theme.ink()),
+                text_color: Some(theme.ink()),
+                ..Default::default()
+            })
     );
 
     // Step content
     match step {
         1 => {
             // Step 1: Upload/paste requirements
-            content = content.push(
-                panel(
-                    container(
-                        column![
-                            text("Step 1: Requirements Input").size(20),
-                            text("Paste your requirements below or upload a file").size(14),
-                            text_input(
-                                "Enter your project requirements here...",
-                                requirements_text
-                            )
-                            .on_input(Message::WizardRequirementsChanged)
-                            .padding(10),
-                            row![
-                                button("Upload File")
-                                    .on_press(Message::WizardFileSelected(None)),
-                                Space::new().width(Length::Fill),
-                                button("Next →")
-                                    .on_press(Message::WizardNextStep),
-                            ].spacing(10),
-                        ].spacing(15)
-                    ).padding(15)
+            let step_content = column![
+                text("Step 1: Enter Requirements")
+                    .size(tokens::font_size::XL)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                text("Paste your project requirements below or upload a file")
+                    .size(tokens::font_size::BASE)
+                    .color(theme.ink_faded()),
+                Space::new().height(Length::Fixed(tokens::spacing::SM)),
+                styled_text_input_with_variant(
+                    theme,
+                    "Enter your project requirements here...",
+                    requirements_text,
+                    InputVariant::Default,
+                    InputSize::Large
                 )
+                .on_input(Message::WizardRequirementsChanged),
+                Space::new().height(Length::Fixed(tokens::spacing::MD)),
+                row![
+                    styled_button(theme, "Upload File", ButtonVariant::Secondary)
+                        .on_press(Message::WizardFileSelected(None)),
+                    Space::new().width(Length::Fill),
+                    styled_button(theme, "Next", ButtonVariant::Primary)
+                        .on_press(Message::WizardNextStep),
+                ].spacing(tokens::spacing::MD),
+            ].spacing(tokens::spacing::MD);
+
+            content = content.push(
+                container(step_content)
+                    .padding(tokens::spacing::LG)
+                    .width(Length::Fill)
+                    .style(move |_: &iced::Theme| container::Style {
+                        background: Some(iced::Background::Color(theme.paper())),
+                        border: Border {
+                            color: theme.ink(),
+                            width: tokens::borders::THICK,
+                            radius: tokens::radii::NONE.into(),
+                        },
+                        shadow: tokens::shadows::panel_shadow(theme.ink()),
+                        text_color: Some(theme.ink()),
+                        ..Default::default()
+                    })
             );
         }
         2 => {
             // Step 2: Review parsed requirements
-            content = content.push(
-                panel(
+            let step_content = column![
+                text("Step 2: Review Requirements")
+                    .size(tokens::font_size::XL)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                text("Review the parsed requirements below")
+                    .size(tokens::font_size::BASE)
+                    .color(theme.ink_faded()),
+                Space::new().height(Length::Fixed(tokens::spacing::SM)),
+                scrollable(
                     container(
-                        column![
-                            text("Step 2: Review Requirements").size(20),
-                            text("Review the parsed requirements below").size(14),
-                            scrollable(
-                                container(
-                                    text(requirements_text).size(14)
-                                ).padding(10)
-                            ).height(Length::Fixed(300.0)),
-                            row![
-                                button("← Back")
-                                    .on_press(Message::WizardPrevStep),
-                                Space::new().width(Length::Fill),
-                                button("Generate PRD →")
-                                    .on_press(Message::WizardGenerate),
-                            ].spacing(10),
-                        ].spacing(15)
-                    ).padding(15)
-                )
+                        text(requirements_text)
+                            .size(tokens::font_size::BASE)
+                            .font(fonts::FONT_UI)
+                            .color(theme.ink())
+                    ).padding(tokens::spacing::MD)
+                        .width(Length::Fill)
+                        .style(move |_: &iced::Theme| container::Style {
+                            background: Some(iced::Background::Color(theme.paper())),
+                            border: Border {
+                                color: theme.ink(),
+                                width: tokens::borders::MEDIUM,
+                                radius: tokens::radii::SM.into(),
+                            },
+                            ..Default::default()
+                        })
+                ).height(Length::Fixed(400.0)),
+                Space::new().height(Length::Fixed(tokens::spacing::MD)),
+                row![
+                    styled_button(theme, "Back", ButtonVariant::Secondary)
+                        .on_press(Message::WizardPrevStep),
+                    Space::new().width(Length::Fill),
+                    styled_button(theme, "Generate PRD", ButtonVariant::Primary)
+                        .on_press(Message::WizardGenerate),
+                ].spacing(tokens::spacing::MD),
+            ].spacing(tokens::spacing::MD);
+
+            content = content.push(
+                container(step_content)
+                    .padding(tokens::spacing::LG)
+                    .width(Length::Fill)
+                    .style(move |_: &iced::Theme| container::Style {
+                        background: Some(iced::Background::Color(theme.paper())),
+                        border: Border {
+                            color: theme.ink(),
+                            width: tokens::borders::THICK,
+                            radius: tokens::radii::NONE.into(),
+                        },
+                        shadow: tokens::shadows::panel_shadow(theme.ink()),
+                        text_color: Some(theme.ink()),
+                        ..Default::default()
+                    })
             );
         }
         3 => {
             // Step 3: PRD preview
             let prd_text = prd_preview.as_ref().map(|s| s.as_str()).unwrap_or("Generating PRD...");
+            let has_prd = prd_preview.is_some();
             
-            content = content.push(
-                panel(
+            let step_content = column![
+                text("Step 3: PRD Preview")
+                    .size(tokens::font_size::XL)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                text("Review the generated Product Requirements Document")
+                    .size(tokens::font_size::BASE)
+                    .color(theme.ink_faded()),
+                Space::new().height(Length::Fixed(tokens::spacing::SM)),
+                scrollable(
                     container(
-                        column![
-                            text("Step 3: PRD Preview").size(20),
-                            text("Review the generated Product Requirements Document").size(14),
-                            scrollable(
-                                container(
-                                    text(prd_text).size(12)
-                                ).padding(10)
-                            ).height(Length::Fixed(400.0)),
-                            row![
-                                button("← Back")
-                                    .on_press(Message::WizardPrevStep),
-                                Space::new().width(Length::Fill),
-                                if prd_preview.is_some() {
-                                    button("Save & Continue →")
-                                        .on_press(Message::WizardSave)
-                                } else {
-                                    button("Waiting...")
-                                },
-                            ].spacing(10),
-                        ].spacing(15)
-                    ).padding(15)
-                )
+                        text(prd_text)
+                            .size(tokens::font_size::SM)
+                            .font(fonts::FONT_MONO)
+                            .color(theme.ink())
+                    ).padding(tokens::spacing::MD)
+                        .width(Length::Fill)
+                        .style(move |_: &iced::Theme| container::Style {
+                            background: Some(iced::Background::Color(theme.paper())),
+                            border: Border {
+                                color: theme.ink(),
+                                width: tokens::borders::MEDIUM,
+                                radius: tokens::radii::SM.into(),
+                            },
+                            ..Default::default()
+                        })
+                ).height(Length::Fixed(400.0)),
+                Space::new().height(Length::Fixed(tokens::spacing::MD)),
+                row![
+                    styled_button(theme, "Back", ButtonVariant::Secondary)
+                        .on_press(Message::WizardPrevStep),
+                    Space::new().width(Length::Fill),
+                    if has_prd {
+                        styled_button(theme, "Save & Continue", ButtonVariant::Primary)
+                            .on_press(Message::WizardSave)
+                    } else {
+                        styled_button(theme, "Waiting...", ButtonVariant::Secondary)
+                    },
+                ].spacing(tokens::spacing::MD),
+            ].spacing(tokens::spacing::MD);
+
+            content = content.push(
+                container(step_content)
+                    .padding(tokens::spacing::LG)
+                    .width(Length::Fill)
+                    .style(move |_: &iced::Theme| container::Style {
+                        background: Some(iced::Background::Color(theme.paper())),
+                        border: Border {
+                            color: theme.ink(),
+                            width: tokens::borders::THICK,
+                            radius: tokens::radii::NONE.into(),
+                        },
+                        shadow: tokens::shadows::panel_shadow(theme.ink()),
+                        text_color: Some(theme.ink()),
+                        ..Default::default()
+                    })
             );
         }
         4 => {
-            // Step 4: Save & confirm
+            // Step 4: Completion confirmation
+            let step_content = column![
+                text("Step 4: Complete")
+                    .size(tokens::font_size::XL)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                text("PRD has been saved successfully!")
+                    .size(tokens::font_size::BASE)
+                    .color(colors::ACID_LIME),
+                Space::new().height(Length::Fixed(tokens::spacing::LG)),
+                container(
+                    column![
+                        completion_item("Requirements parsed", theme),
+                        completion_item("PRD generated", theme),
+                        completion_item("Configuration saved", theme),
+                    ].spacing(tokens::spacing::MD)
+                ).padding(tokens::spacing::LG)
+                    .width(Length::Fill)
+                    .align_x(iced::alignment::Horizontal::Center)
+                    .style(move |_: &iced::Theme| container::Style {
+                        background: Some(iced::Background::Color(theme.paper())),
+                        border: Border {
+                            color: colors::ACID_LIME,
+                            width: tokens::borders::MEDIUM,
+                            radius: tokens::radii::SM.into(),
+                        },
+                        ..Default::default()
+                    }),
+                Space::new().height(Length::Fixed(tokens::spacing::LG)),
+                text("You can now start the orchestration from the Dashboard.")
+                    .size(tokens::font_size::BASE)
+                    .color(theme.ink_faded()),
+                Space::new().height(Length::Fixed(tokens::spacing::MD)),
+                row![
+                    styled_button(theme, "Back to Projects", ButtonVariant::Secondary)
+                        .on_press(Message::NavigateTo(Page::Projects)),
+                    Space::new().width(Length::Fill),
+                    styled_button(theme, "Go to Dashboard", ButtonVariant::Primary)
+                        .on_press(Message::NavigateTo(Page::Dashboard)),
+                ].spacing(tokens::spacing::MD),
+            ].spacing(tokens::spacing::MD);
+
             content = content.push(
-                panel(
-                    container(
-                        column![
-                            text("Step 4: Save & Confirm").size(20),
-                            text("PRD has been saved successfully!").size(14),
-                            container(
-                                column![
-                                    text("✓ Requirements parsed").size(16),
-                                    text("✓ PRD generated").size(16),
-                                    text("✓ Configuration saved").size(16),
-                                ].spacing(10)
-                            ).padding(20),
-                            text("You can now start the orchestration from the Dashboard.").size(14),
-                            row![
-                                button("← Back to Projects")
-                                    .on_press(Message::NavigateTo(Page::Projects)),
-                                Space::new().width(Length::Fill),
-                                button("Go to Dashboard →")
-                                    .on_press(Message::NavigateTo(Page::Dashboard)),
-                            ].spacing(10),
-                        ].spacing(15)
-                    ).padding(15)
-                )
+                container(step_content)
+                    .padding(tokens::spacing::LG)
+                    .width(Length::Fill)
+                    .style(move |_: &iced::Theme| container::Style {
+                        background: Some(iced::Background::Color(theme.paper())),
+                        border: Border {
+                            color: theme.ink(),
+                            width: tokens::borders::THICK,
+                            radius: tokens::radii::NONE.into(),
+                        },
+                        shadow: tokens::shadows::panel_shadow(theme.ink()),
+                        text_color: Some(theme.ink()),
+                        ..Default::default()
+                    })
             );
         }
         _ => {
-            content = content.push(text("Invalid step"));
+            // Fallback for invalid step (should not happen with step defaulting to 1)
+            content = content.push(
+                text("Invalid step")
+                    .size(tokens::font_size::XL)
+                    .color(colors::HOT_MAGENTA)
+            );
         }
     }
 
@@ -157,31 +295,104 @@ pub fn view<'a>(
         .into()
 }
 
-fn step_badge<'a>(step_num: usize, current_step: usize) -> Element<'a, Message> {
-    let (bg_color, text_color) = if step_num <= current_step {
-        (iced::Color::from_rgb(0.7, 1.0, 0.0), iced::Color::BLACK)
+/// Create a step circle indicator
+fn step_circle<'a>(step_num: usize, current_step: usize, theme: &'a AppTheme) -> Element<'a, Message> {
+    let is_complete = step_num < current_step;
+    let is_active = step_num == current_step;
+    
+    let label = if is_complete {
+        "OK".to_string()
     } else {
-        (iced::Color::from_rgb(0.7, 0.7, 0.7), iced::Color::WHITE)
+        step_num.to_string()
+    };
+    
+    let (bg_color, text_color, border_color) = if is_complete {
+        (colors::ACID_LIME, colors::INK_BLACK, colors::ACID_LIME)
+    } else if is_active {
+        (colors::ELECTRIC_BLUE, colors::PAPER_CREAM, colors::ELECTRIC_BLUE)
+    } else {
+        (theme.paper(), theme.ink_faded(), theme.ink_faded())
     };
 
     container(
-        text(format!("{}", step_num))
-            .size(16)
+        text(label)
+            .size(tokens::font_size::BASE)
+            .font(fonts::FONT_UI_BOLD)
             .style(move |_theme: &iced::Theme| {
                 iced::widget::text::Style { color: Some(text_color) }
             })
     )
-    .padding(10)
+    .padding(tokens::spacing::MD)
+    .width(Length::Fixed(44.0))
+    .height(Length::Fixed(44.0))
+    .align_x(iced::alignment::Horizontal::Center)
+    .align_y(iced::alignment::Vertical::Center)
     .style(move |_theme: &iced::Theme| {
         iced::widget::container::Style {
             background: Some(iced::Background::Color(bg_color)),
-            border: iced::Border {
-                color: iced::Color::BLACK,
-                width: 2.0,
-                radius: 20.0.into(),
+            border: Border {
+                color: border_color,
+                width: tokens::borders::THICK,
+                radius: tokens::radii::PILL.into(),
             },
             ..Default::default()
         }
     })
+    .into()
+}
+
+/// Create a connecting line between step circles
+fn connecting_line<'a>(step_num: usize, current_step: usize, theme: &'a AppTheme) -> Element<'a, Message> {
+    let is_complete = step_num < current_step;
+    let line_color = if is_complete {
+        colors::ACID_LIME
+    } else {
+        theme.ink_faded()
+    };
+
+    container(
+        Space::new()
+    )
+    .width(Length::Fixed(60.0))
+    .height(Length::Fixed(3.0))
+    .style(move |_theme: &iced::Theme| {
+        iced::widget::container::Style {
+            background: Some(iced::Background::Color(line_color)),
+            ..Default::default()
+        }
+    })
+    .into()
+}
+
+/// Create a completion checklist item
+fn completion_item<'a>(label: &'a str, theme: &'a AppTheme) -> Element<'a, Message> {
+    row![
+        container(
+            text("[x]")
+                .size(tokens::font_size::MD)
+                .font(fonts::FONT_UI_BOLD)
+                .color(colors::PAPER_CREAM)
+        )
+        .padding(tokens::spacing::XS)
+        .width(Length::Fixed(28.0))
+        .height(Length::Fixed(28.0))
+        .align_x(iced::alignment::Horizontal::Center)
+        .align_y(iced::alignment::Vertical::Center)
+        .style(|_: &iced::Theme| container::Style {
+            background: Some(iced::Background::Color(colors::ACID_LIME)),
+            border: Border {
+                color: colors::INK_BLACK,
+                width: tokens::borders::MEDIUM,
+                radius: tokens::radii::SM.into(),
+            },
+            ..Default::default()
+        }),
+        Space::new().width(Length::Fixed(tokens::spacing::MD)),
+        text(label)
+            .size(tokens::font_size::MD)
+            .font(fonts::FONT_UI)
+            .color(theme.ink()),
+    ]
+    .align_y(iced::Alignment::Center)
     .into()
 }

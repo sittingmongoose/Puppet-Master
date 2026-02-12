@@ -66,9 +66,21 @@ codesign --verify --verbose "${BUNDLE_DIR}" || {
     echo "Warning: Code signing verification failed"
 }
 
-# Create DMG
+# Create DMG staging with Applications symlink for drag-to-install
+echo "Creating DMG staging area..."
+DMG_STAGING="build/dmg-staging"
+rm -rf "${DMG_STAGING}"
+mkdir -p "${DMG_STAGING}"
+
+# Copy app bundle to staging
+cp -R "${BUNDLE_DIR}" "${DMG_STAGING}/"
+
+# Create Applications symlink (enables drag-to-install UX)
+ln -s /Applications "${DMG_STAGING}/Applications"
+
+# Create DMG from staging area
 echo "Creating DMG..."
-hdiutil create -volname "${APP_NAME}" -srcfolder build -ov -format UDZO "${DMG_NAME}"
+hdiutil create -volname "${APP_NAME}" -srcfolder "${DMG_STAGING}" -ov -format UDZO "${DMG_NAME}"
 
 # Sign the DMG itself
 echo "Signing DMG..."

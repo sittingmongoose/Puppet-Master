@@ -2,10 +2,10 @@
 //!
 //! Displays the AGENTS.md content with section navigation.
 
-use iced::widget::{column, row, text, button, container, scrollable, Space};
+use iced::widget::{column, row, text, container, scrollable, Space};
 use iced::{Element, Length};
 use crate::app::Message;
-use crate::theme::AppTheme;
+use crate::theme::{AppTheme, tokens};
 use crate::widgets::*;
 
 /// Memory section for navigation
@@ -47,77 +47,68 @@ impl MemorySection {
 pub fn view<'a>(
     agents_content: &'a str,
     current_section: &'a MemorySection,
-    _theme: &'a AppTheme,
+    theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(20).padding(20);
+    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
     // Header
     content = content.push(
-        text("Memory System (AGENTS.md)").size(24)
+        text("Memory System (AGENTS.md)").size(tokens::font_size::XL)
     );
 
     // Section navigation
-    let mut nav_row = row![].spacing(10);
+    let mut nav_row = row![].spacing(tokens::spacing::SM);
     for section in MemorySection::all() {
         let is_selected = section == *current_section;
         nav_row = nav_row.push(
-            button(text(section.as_str().to_string()).size(14))
-                .on_press(Message::NavigateTo(Page::Memory))
-                .style(if is_selected {
-                    |_theme: &iced::Theme, _status: iced::widget::button::Status| {
-                        iced::widget::button::Style {
-                            background: Some(iced::Background::Color(
-                                iced::Color::from_rgb(0.7, 1.0, 0.0)
-                            )),
-                            border: iced::Border {
-                                color: iced::Color::BLACK,
-                                width: 2.0,
-                                radius: 4.0.into(),
-                            },
-                            text_color: iced::Color::BLACK,
-                            ..Default::default()
-                        }
-                    }
+            styled_button(
+                theme,
+                section.as_str(),
+                if is_selected {
+                    ButtonVariant::Primary
                 } else {
-                    iced::widget::button::primary
-                })
+                    ButtonVariant::Secondary
+                }
+            )
+            .on_press(Message::NavigateTo(Page::Memory))
         );
     }
 
     content = content.push(
-        panel(container(nav_row).padding(15))
+        themed_panel(container(nav_row).padding(tokens::spacing::MD), theme)
     );
 
     // Content display
     let display_content = filter_content(agents_content, current_section);
 
-    let content_panel = panel(
+    let content_panel = themed_panel(
         container(
             scrollable(
                 container(
-                    text(display_content).size(12)
-                ).padding(15)
+                    text(display_content).size(tokens::font_size::XS)
+                ).padding(tokens::spacing::MD)
             ).height(Length::Fill)
-        ).padding(15)
+        ).padding(tokens::spacing::MD),
+        theme,
     );
 
     content = content.push(content_panel);
 
     // Action buttons
     let actions = row![
-        button("Refresh")
+        styled_button(theme, "Refresh", ButtonVariant::Secondary)
             .on_press(Message::NavigateTo(Page::Memory)),
-        button("Edit in External Editor")
+        styled_button(theme, "Edit in External Editor", ButtonVariant::Secondary)
             .on_press(Message::NavigateTo(Page::Memory)),
         Space::new().width(Length::Fill),
-        button("Export")
+        styled_button(theme, "Export", ButtonVariant::Secondary)
             .on_press(Message::NavigateTo(Page::Memory)),
     ]
-    .spacing(10)
+    .spacing(tokens::spacing::SM)
     .align_y(iced::Alignment::Center);
 
     content = content.push(
-        panel(container(actions).padding(15))
+        themed_panel(container(actions).padding(tokens::spacing::MD), theme)
     );
 
     // Help text

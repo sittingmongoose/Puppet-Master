@@ -99,16 +99,17 @@ pub enum UsageStatus {
     /// Usage is high (> 80%)
     Warning,
     /// Usage is critical (> 95%)
-    _Critical,
+    Critical,
     /// Unable to determine usage
     Unknown,
 }
 
 impl UsageStatus {
     /// Determine status from usage percentage
-    pub fn _from_percent(percent: f64) -> Self {
+        #[allow(dead_code)]
+    pub fn from_percent(percent: f64) -> Self {
         if percent >= 95.0 {
-            Self::_Critical
+            Self::Critical
         } else if percent >= 80.0 {
             Self::Warning
         } else {
@@ -117,8 +118,9 @@ impl UsageStatus {
     }
 
     /// Check if this status indicates a problem
-    pub fn _is_problem(&self) -> bool {
-        matches!(self, Self::Warning | Self::_Critical)
+        #[allow(dead_code)]
+    pub fn is_problem(&self) -> bool {
+        matches!(self, Self::Warning | Self::Critical)
     }
 }
 
@@ -145,21 +147,21 @@ impl DoctorCheck for UsageCheck {
 
         for result in &results {
             match result.status {
-                UsageStatus::_Critical => {
+                UsageStatus::Critical => {
                     has_critical = true;
                     warn!(
                         "Critical usage for {}: {}",
                         result.platform, result.message
                     );
-                    messages.push(format!("⚠️  {}: {}", result.platform, result.message));
+                    messages.push(format!("[WARN]  {}: {}", result.platform, result.message));
                 }
                 UsageStatus::Warning => {
                     has_warning = true;
-                    messages.push(format!("⚡ {}: {}", result.platform, result.message));
+                    messages.push(format!("[!] {}: {}", result.platform, result.message));
                 }
                 UsageStatus::Ok => {
                     if let Some(percent) = result.usage_percent {
-                        messages.push(format!("✓ {}: {:.1}% used", result.platform, percent));
+                        messages.push(format!("[OK] {}: {:.1}% used", result.platform, percent));
                     }
                 }
                 UsageStatus::Unknown => {

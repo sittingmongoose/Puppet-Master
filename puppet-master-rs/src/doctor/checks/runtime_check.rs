@@ -51,7 +51,8 @@ impl RuntimeCheck {
     }
 
     /// Create with a specific working directory
-    pub fn _with_working_dir(working_dir: PathBuf) -> Self {
+        #[allow(dead_code)]
+    pub fn with_working_dir(working_dir: PathBuf) -> Self {
         Self { working_dir }
     }
 
@@ -313,10 +314,10 @@ impl DoctorCheck for RuntimeCheck {
 
         for item in &result.checks {
             if item.status {
-                messages.push(format!("✓ {}: {}", item.name, item.message));
+                messages.push(format!("[OK] {}: {}", item.name, item.message));
             } else {
                 failed_count += 1;
-                messages.push(format!("❌ {}: {}", item.name, item.message));
+                messages.push(format!("[X] {}: {}", item.name, item.message));
                 if let Some(fix) = &item.fix_suggestion {
                     messages.push(format!("   Fix: {}", fix));
                 }

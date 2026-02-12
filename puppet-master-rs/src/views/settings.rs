@@ -2,10 +2,10 @@
 //!
 //! General settings including theme, log level, and other preferences.
 
-use iced::widget::{column, row, text, button, container, Space};
+use iced::widget::{column, row, text, container, Space};
 use iced::{Element, Length};
 use crate::app::Message;
-use crate::theme::AppTheme;
+use crate::theme::{AppTheme, tokens};
 use crate::widgets::*;
 
 /// Log level options
@@ -80,157 +80,164 @@ pub fn view<'a>(
     show_timestamps: bool,
     minimize_to_tray: bool,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(20).padding(20);
+    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
     // Header
     content = content.push(
-        text("Settings").size(24)
+        text("Settings").size(tokens::font_size::XL)
     );
 
     // Theme settings
-    let theme_panel = panel(
-        container(
-            column![
-                text("Appearance").size(18),
-                row![
-                    text("Theme:").size(14),
-                    Space::new().width(Length::Fixed(20.0)),
-                    button(
-                        row![
-                            if matches!(theme, AppTheme::Light) {
-                                text("● Light")
-                            } else {
-                                text("○ Light")
-                            },
-                        ].spacing(10)
-                    )
-                    .on_press(Message::ToggleTheme),
-                    button(
-                        row![
-                            if matches!(theme, AppTheme::Dark) {
-                                text("● Dark")
-                            } else {
-                                text("○ Dark")
-                            },
-                        ].spacing(10)
-                    )
-                    .on_press(Message::ToggleTheme),
-                ].spacing(10).align_y(iced::Alignment::Center),
-            ].spacing(15)
-        ).padding(15)
-    );
+    let theme_content = column![
+        text("Appearance").size(tokens::font_size::LG),
+        row![
+            text("Theme:").size(tokens::font_size::BASE),
+            Space::new().width(Length::Fixed(tokens::spacing::LG)),
+            styled_button(
+                theme,
+                if matches!(theme, AppTheme::Light) { "Light (Active)" } else { "Light" },
+                if matches!(theme, AppTheme::Light) { ButtonVariant::Primary } else { ButtonVariant::Secondary }
+            )
+            .on_press(Message::ToggleTheme),
+            styled_button(
+                theme,
+                if matches!(theme, AppTheme::Dark) { "Dark (Active)" } else { "Dark" },
+                if matches!(theme, AppTheme::Dark) { ButtonVariant::Primary } else { ButtonVariant::Secondary }
+            )
+            .on_press(Message::ToggleTheme),
+        ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
+    ].spacing(tokens::spacing::MD);
 
-    content = content.push(theme_panel);
+    content = content.push(
+        themed_panel(
+            container(theme_content).padding(tokens::spacing::MD),
+            theme
+        )
+    );
 
     // Logging settings
-    let logging_panel = panel(
-        container(
-            column![
-                text("Logging").size(18),
-                row![
-                    text("Log Level:").size(14),
-                    Space::new().width(Length::Fixed(20.0)),
-                    text("Info").size(14),
-                ].spacing(10).align_y(iced::Alignment::Center),
-                row![
-                    text("Show Timestamps:").size(14),
-                    Space::new().width(Length::Fixed(20.0)),
-                    button(if show_timestamps { "Enabled" } else { "Disabled" })
-                        .on_press(Message::ToggleTheme),
-                ].spacing(10).align_y(iced::Alignment::Center),
-            ].spacing(15)
-        ).padding(15)
-    );
+    let logging_content = column![
+        text("Logging").size(tokens::font_size::LG),
+        row![
+            text("Log Level:").size(tokens::font_size::BASE),
+            Space::new().width(Length::Fixed(tokens::spacing::LG)),
+            text("Info").size(tokens::font_size::BASE),
+        ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
+        row![
+            text("Show Timestamps:").size(tokens::font_size::BASE),
+            Space::new().width(Length::Fixed(tokens::spacing::LG)),
+            styled_button(
+                theme,
+                if show_timestamps { "Enabled" } else { "Disabled" },
+                if show_timestamps { ButtonVariant::Primary } else { ButtonVariant::Secondary }
+            )
+            .on_press(Message::ToggleTheme),
+        ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
+    ].spacing(tokens::spacing::MD);
 
-    content = content.push(logging_panel);
+    content = content.push(
+        themed_panel(
+            container(logging_content).padding(tokens::spacing::MD),
+            theme
+        )
+    );
 
     // Output settings
-    let output_panel = panel(
-        container(
-            column![
-                text("Output").size(18),
-                row![
-                    text("Auto-scroll:").size(14),
-                    Space::new().width(Length::Fixed(20.0)),
-                    text("Enabled").size(14),
-                ].spacing(10).align_y(iced::Alignment::Center),
-            ].spacing(15)
-        ).padding(15)
-    );
+    let output_content = column![
+        text("Output").size(tokens::font_size::LG),
+        row![
+            text("Auto-scroll:").size(tokens::font_size::BASE),
+            Space::new().width(Length::Fixed(tokens::spacing::LG)),
+            text("Enabled").size(tokens::font_size::BASE),
+        ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
+    ].spacing(tokens::spacing::MD);
 
-    content = content.push(output_panel);
+    content = content.push(
+        themed_panel(
+            container(output_content).padding(tokens::spacing::MD),
+            theme
+        )
+    );
 
     // System Tray settings
-    let tray_panel = panel(
-        container(
-            column![
-                text("System Tray").size(18),
-                row![
-                    button(if minimize_to_tray { "☑ Minimize to System Tray" } else { "☐ Minimize to System Tray" })
-                        .on_press(Message::ToggleMinimizeToTray),
-                    text("When enabled, closing the window minimizes to the system tray instead of exiting").size(12),
-                ].spacing(15).align_y(iced::Alignment::Center),
-            ].spacing(15)
-        ).padding(15)
-    );
+    let tray_content = column![
+        text("System Tray").size(tokens::font_size::LG),
+        row![
+            styled_button(
+                theme,
+                if minimize_to_tray { "Minimize to Tray: ON" } else { "Minimize to Tray: OFF" },
+                if minimize_to_tray { ButtonVariant::Primary } else { ButtonVariant::Secondary }
+            )
+            .on_press(Message::ToggleMinimizeToTray),
+            text("When enabled, closing the window minimizes to the system tray instead of exiting").size(tokens::font_size::SM),
+        ].spacing(tokens::spacing::MD).align_y(iced::Alignment::Center),
+    ].spacing(tokens::spacing::MD);
 
-    content = content.push(tray_panel);
+    content = content.push(
+        themed_panel(
+            container(tray_content).padding(tokens::spacing::MD),
+            theme
+        )
+    );
 
     // Advanced settings
-    let advanced_panel = panel(
-        container(
-            column![
-                text("Advanced").size(18),
-                row![
-                    button("Clear All Data")
-                        .on_press(Message::NavigateTo(Page::Settings)),
-                    text("Remove all evidence, logs, and state").size(12),
-                ].spacing(15).align_y(iced::Alignment::Center),
-                row![
-                    button("Reset to Defaults")
-                        .on_press(Message::NavigateTo(Page::Settings)),
-                    text("Reset all settings to default values").size(12),
-                ].spacing(15).align_y(iced::Alignment::Center),
-                row![
-                    button("Open Data Directory")
-                        .on_press(Message::NavigateTo(Page::Settings)),
-                    text("Open the application data folder").size(12),
-                ].spacing(15).align_y(iced::Alignment::Center),
-            ].spacing(15)
-        ).padding(15)
-    );
+    let advanced_content = column![
+        text("Advanced").size(tokens::font_size::LG),
+        row![
+            styled_button(theme, "Clear All Data", ButtonVariant::Danger)
+                .on_press(Message::NavigateTo(Page::Settings)),
+            text("Remove all evidence, logs, and state").size(tokens::font_size::SM),
+        ].spacing(tokens::spacing::MD).align_y(iced::Alignment::Center),
+        row![
+            styled_button(theme, "Reset to Defaults", ButtonVariant::Warning)
+                .on_press(Message::NavigateTo(Page::Settings)),
+            text("Reset all settings to default values").size(tokens::font_size::SM),
+        ].spacing(tokens::spacing::MD).align_y(iced::Alignment::Center),
+        row![
+            styled_button(theme, "Open Data Directory", ButtonVariant::Info)
+                .on_press(Message::NavigateTo(Page::Settings)),
+            text("Open the application data folder").size(tokens::font_size::SM),
+        ].spacing(tokens::spacing::MD).align_y(iced::Alignment::Center),
+    ].spacing(tokens::spacing::MD);
 
-    content = content.push(advanced_panel);
+    content = content.push(
+        themed_panel(
+            container(advanced_content).padding(tokens::spacing::MD),
+            theme
+        )
+    );
 
     // About section
-    let about_panel = panel(
-        container(
-            column![
-                text("About").size(18),
-                text(format!("RWM Puppet Master v{}", env!("CARGO_PKG_VERSION"))).size(14),
-                text("Autonomous LLM orchestration system").size(12),
-                row![
-                    button("Documentation")
-                        .on_press(Message::NavigateTo(Page::Settings)),
-                    button("GitHub")
-                        .on_press(Message::NavigateTo(Page::Settings)),
-                ].spacing(10),
-            ].spacing(10)
-        ).padding(15)
-    );
+    let about_content = column![
+        text("About").size(tokens::font_size::LG),
+        text(format!("RWM Puppet Master v{}", env!("CARGO_PKG_VERSION"))).size(tokens::font_size::BASE),
+        text("Autonomous LLM orchestration system").size(tokens::font_size::SM),
+        row![
+            styled_button(theme, "Documentation", ButtonVariant::Info)
+                .on_press(Message::NavigateTo(Page::Settings)),
+            styled_button(theme, "GitHub", ButtonVariant::Info)
+                .on_press(Message::NavigateTo(Page::Settings)),
+        ].spacing(tokens::spacing::SM),
+    ].spacing(tokens::spacing::SM);
 
-    content = content.push(about_panel);
+    content = content.push(
+        themed_panel(
+            container(about_content).padding(tokens::spacing::MD),
+            theme
+        )
+    );
 
     // Save button
     content = content.push(
-        panel(
+        themed_panel(
             container(
                 row![
                     Space::new().width(Length::Fill),
-                    button("Save Settings")
+                    styled_button(theme, "Save Settings", ButtonVariant::Primary)
                         .on_press(Message::SaveConfig),
-                ].spacing(10)
-            ).padding(15)
+                ].spacing(tokens::spacing::SM)
+            ).padding(tokens::spacing::MD),
+            theme
         )
     );
 

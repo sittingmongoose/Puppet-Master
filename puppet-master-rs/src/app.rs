@@ -12,7 +12,6 @@ use std::hash::{Hash, Hasher};
 use std::path::PathBuf;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
-use std::time::Instant;
 
 // ============================================================================
 // Subscriptions
@@ -76,21 +75,8 @@ fn tray_action_stream(
 // Helper Types (only types not already defined in view modules)
 // ============================================================================
 
-#[derive(Debug, Clone)]
-pub struct Toast {
-    pub id: usize,
-    pub toast_type: ToastType,
-    pub message: String,
-    pub created: Instant,
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum ToastType {
-    Success,
-    Error,
-    Warning,
-    Info,
-}
+// Re-use Toast types from widgets module
+pub use crate::widgets::{Toast, ToastType, ToastManager};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum AuthActionKind {
@@ -216,6 +202,18 @@ pub struct App {
     pub toasts: Vec<Toast>,
     pub show_modal: Option<ModalContent>,
     next_toast_id: usize,
+    
+    // Page transitions
+    pub page_transition: crate::widgets::TransitionState,
+    pub previous_page: Option<Page>,
+    
+    // Animation time
+    pub animation_time: f32,
+    last_tick_time: Option<DateTime<Utc>>,
+    
+    // Window size
+    pub window_width: f32,
+    pub window_height: f32,
 
     // Settings
     pub minimize_to_tray: bool,
@@ -272,6 +270,8 @@ pub enum Message {
     SelectProject(String),
     CreateProject(String, String), // name, path
     OpenProject(String),
+    OpenProjectFolderPicker,
+    ProjectFolderSelected(Option<PathBuf>),
 
     // Config
     ConfigTextChanged(String),
@@ -350,6 +350,7 @@ pub enum Message {
 
     // Window events
     WindowCloseRequested(window::Id),
+    WindowResized(f32, f32),
 
     // No-op
     None,
@@ -429,7 +430,7 @@ impl App {
             setup_installing: None,
 
             // Wizard
-            wizard_step: 0,
+            wizard_step: 1,
             wizard_requirements_text: String::new(),
             wizard_prd_preview: None,
 
@@ -441,6 +442,18 @@ impl App {
             toasts: Vec::new(),
             show_modal: None,
             next_toast_id: 0,
+            
+            // Page transitions
+            page_transition: crate::widgets::TransitionState::default(),
+            previous_page: None,
+            
+            // Animation time
+            animation_time: 0.0,
+            last_tick_time: None,
+            
+            // Window size (default desktop size)
+            window_width: 1280.0,
+            window_height: 720.0,
 
             // Settings
             minimize_to_tray: true,
@@ -461,10 +474,12 @@ impl App {
             _memory_section: crate::views::memory::MemorySection::Overview,
         };
 
-        // Initial tasks: load projects, load config, etc.
-        let task = Task::batch(vec![
-            // Could add tasks here to load initial data
-        ]);
+        // Initial tasks: load fonts, load projects, load config, etc.
+        let font_tasks: Vec<iced::Task<Message>> = crate::theme::fonts::load_fonts()
+            .into_iter()
+            .map(|task| task.map(|_| Message::None))
+            .collect();
+        let task = Task::batch(font_tasks);
 
         (app, task)
     }
@@ -476,7 +491,66 @@ impl App {
             // Navigation
             // ================================================================
             Message::NavigateTo(page) => {
+                // Start page transition
+                self.previous_page = Some(self.current_page);
+                self.page_transition = crate::widgets::TransitionState::start();
                 self.current_page = page;
+                
+                // Auto-load data when navigating to certain pages
+                match page {
+                    Page::Login => {
+                        // Load auth status
+                        return Task::perform(
+                            async {
+                                let checker = crate::platforms::AuthStatusChecker::new();
+                                let mut map: HashMap<String, AuthStatus> = HashMap::new();
+                                for platform in crate::types::Platform::all() {
+                                    let result = checker.check_platform(*platform).await;
+                                    let name = format!("{:?}", platform);
+                                    map.insert(name.clone(), AuthStatus {
+                                        platform: name,
+                                        authenticated: result.authenticated,
+                                        method: if result.message.contains("environment variable") {
+                                            crate::views::login::AuthMethod::EnvVar
+                                        } else {
+                                            crate::views::login::AuthMethod::CliLogin
+                                        },
+                                        hint: result.message.clone(),
+                                    });
+                                }
+                                let gh = checker.check_github().await;
+                                map.insert("GitHub".to_string(), AuthStatus {
+                                    platform: "GitHub".to_string(),
+                                    authenticated: gh.authenticated,
+                                    method: crate::views::login::AuthMethod::CliLogin,
+                                    hint: gh.message.clone(),
+                                });
+                                map
+                            },
+                            Message::AuthStatusReceived,
+                        );
+                    }
+                    Page::Doctor => {
+                        // Auto-run checks if no results yet
+                        if self.doctor_results.is_empty() && !self.doctor_running {
+                            return self.update(Message::RunAllChecks);
+                        }
+                    }
+                    Page::Setup => {
+                        // Auto-run detection if no results yet
+                        if self.setup_platform_statuses.is_empty() && !self.setup_is_checking {
+                            return self.update(Message::SetupRunDetection);
+                        }
+                    }
+                    Page::Config => {
+                        // Auto-reload config
+                        if self.config_text.is_empty() {
+                            return self.update(Message::ReloadConfig);
+                        }
+                    }
+                    _ => {}
+                }
+                
                 Task::none()
             }
 
@@ -741,11 +815,58 @@ impl App {
                 Task::none()
             }
 
+            Message::OpenProjectFolderPicker => {
+                // Open folder picker dialog
+                Task::perform(
+                    async {
+                        let result = rfd::AsyncFileDialog::new()
+                            .set_title("Select Project Directory")
+                            .pick_folder()
+                            .await;
+                        
+                        result.map(|folder| folder.path().to_path_buf())
+                    },
+                    Message::ProjectFolderSelected,
+                )
+            }
+
+            Message::ProjectFolderSelected(path_opt) => {
+                if let Some(path) = path_opt {
+                    // Open the selected project folder
+                    let path_str = path.display().to_string();
+                    self.update(Message::OpenProject(path_str))
+                } else {
+                    Task::none()
+                }
+            }
+
             // ================================================================
             // Config
             // ================================================================
             Message::ConfigTextChanged(text) => {
                 self.config_text = text;
+                // Auto-validate on text change
+                match serde_yaml::from_str::<crate::types::PuppetMasterConfig>(&self.config_text) {
+                    Ok(config) => {
+                        let errors = crate::config::validate_config(&config);
+                        if errors.is_empty() {
+                            self.config_valid = true;
+                            self.config_error = None;
+                        } else {
+                            self.config_valid = false;
+                            let msg = errors
+                                .iter()
+                                .map(|e| e.to_string())
+                                .collect::<Vec<_>>()
+                                .join("\n");
+                            self.config_error = Some(msg);
+                        }
+                    }
+                    Err(e) => {
+                        self.config_valid = false;
+                        self.config_error = Some(e.to_string());
+                    }
+                }
                 Task::none()
             }
 
@@ -996,12 +1117,16 @@ impl App {
             // Wizard
             // ================================================================
             Message::WizardNextStep => {
-                self.wizard_step += 1;
+                // Advance to next step (max step is 4)
+                if self.wizard_step < 4 {
+                    self.wizard_step += 1;
+                }
                 Task::none()
             }
 
             Message::WizardPrevStep => {
-                if self.wizard_step > 0 {
+                // Go back to previous step (min step is 1)
+                if self.wizard_step > 1 {
                     self.wizard_step -= 1;
                 }
                 Task::none()
@@ -1454,10 +1579,27 @@ impl App {
             // ================================================================
             // Tick
             // ================================================================
-            Message::Tick(_now) => {
-                // Clean up old toasts (older than 5 seconds)
-                let cutoff = Instant::now() - std::time::Duration::from_secs(5);
-                self.toasts.retain(|t| t.created > cutoff);
+            Message::Tick(now) => {
+                // Calculate delta time
+                let delta = if let Some(last_tick) = self.last_tick_time {
+                    let duration = now.signed_duration_since(last_tick);
+                    duration.num_milliseconds() as f32 / 1000.0
+                } else {
+                    0.016 // Default to ~60fps
+                };
+                self.last_tick_time = Some(now);
+                
+                // Update animation time (loops every ~1000 seconds)
+                self.animation_time = (self.animation_time + delta) % 1000.0;
+                
+                // Update page transition
+                if self.page_transition.update(delta) {
+                    // Transition complete
+                    self.previous_page = None;
+                }
+                
+                // Clean up expired toasts (older than 5 seconds)
+                self.toasts.retain(|t| !t.is_expired());
                 Task::none()
             }
 
@@ -1474,6 +1616,12 @@ impl App {
                     self.send_command(AppCommand::Stop);
                     iced::exit()
                 }
+            }
+            
+            Message::WindowResized(width, height) => {
+                self.window_width = width;
+                self.window_height = height;
+                Task::none()
             }
 
             // ================================================================
@@ -1503,9 +1651,13 @@ impl App {
             Page::Projects => views::projects::view(
                 &self.projects, &self.current_project, "", "", false, &self.theme,
             ),
-            Page::Wizard => views::wizard::view(
-                self.wizard_step, &self.wizard_requirements_text, &self.wizard_prd_preview, &self.theme,
-            ),
+            Page::Wizard => {
+                // Clamp wizard step to valid range (1-4)
+                let wizard_step = self.wizard_step.max(1).min(4);
+                views::wizard::view(
+                    wizard_step, &self.wizard_requirements_text, &self.wizard_prd_preview, &self.theme,
+                )
+            }
             Page::Config => views::config::view(
                 &self.config_text, self.config_valid, &self.config_error, &self.theme,
             ),
@@ -1568,9 +1720,14 @@ impl App {
 
         let mut subscriptions = vec![];
 
-        // Timer tick every second
+        // Timer tick - faster during transitions for smooth animations
+        let tick_duration = if self.page_transition.active {
+            std::time::Duration::from_millis(16) // ~60fps during transitions
+        } else {
+            std::time::Duration::from_secs(1) // 1fps otherwise
+        };
         subscriptions.push(
-            time::every(std::time::Duration::from_secs(1))
+            time::every(tick_duration)
                 .map(|_| Message::Tick(Utc::now()))
         );
 
@@ -1600,13 +1757,17 @@ impl App {
             );
         }
 
-        // Window close events
+        // Window events (close and resize)
         subscriptions.push(
             iced::event::listen_with(|event, _status, id| {
-                if let iced::Event::Window(window::Event::CloseRequested) = event {
-                    Some(Message::WindowCloseRequested(id))
-                } else {
-                    None
+                match event {
+                    iced::Event::Window(window::Event::CloseRequested) => {
+                        Some(Message::WindowCloseRequested(id))
+                    }
+                    iced::Event::Window(window::Event::Resized(size)) => {
+                        Some(Message::WindowResized(size.width, size.height))
+                    }
+                    _ => None,
                 }
             })
         );
@@ -1781,99 +1942,41 @@ impl App {
         let id = self.next_toast_id;
         self.next_toast_id += 1;
 
-        self.toasts.push(Toast {
-            id,
-            toast_type,
-            message,
-            created: Instant::now(),
-        });
+        self.toasts.push(Toast::new(id, toast_type, message));
     }
 
     /// Render the header bar
     fn render_header(&self) -> Element<'_, Message> {
-        use iced::widget::{button, container, row, text};
-
-        let nav_buttons = row![
-            self.nav_button("Dashboard", Page::Dashboard),
-            self.nav_button("Projects", Page::Projects),
-            self.nav_button("Wizard", Page::Wizard),
-            self.nav_button("Config", Page::Config),
-            self.nav_button("Doctor", Page::Doctor),
-            self.nav_button("Tiers", Page::Tiers),
-            self.nav_button("Evidence", Page::Evidence),
-            self.nav_button("Metrics", Page::Metrics),
-            self.nav_button("History", Page::History),
-            self.nav_button("Ledger", Page::Ledger),
-            self.nav_button("Login", Page::Login),
-            self.nav_button("Settings", Page::Settings),
-        ]
-        .spacing(4);
-
-        let theme_button = button(text("🌓"))
-            .on_press(Message::ToggleTheme);
-
-        let header = row![
-            nav_buttons,
-            theme_button,
-        ]
-        .spacing(16)
-        .padding(8);
-
-        container(header)
-            .width(iced::Length::Fill)
-            .into()
-    }
-
-    /// Create a navigation button
-    fn nav_button<'a>(&self, label: &'a str, page: Page) -> Element<'a, Message> {
-        use iced::widget::{button, text};
-
-        let _is_active = self.current_page == page;
-        let btn = button(text(label))
-            .on_press(Message::NavigateTo(page));
-
-        // TODO: Apply different styling for active button
-        btn.into()
+        crate::widgets::header::simple_header(
+            self.current_page,
+            &self.theme,
+            Message::NavigateTo,
+            Message::ToggleTheme,
+        )
     }
 
     /// Render toast notifications overlay
     fn render_toasts_overlay<'a>(&'a self, base: Element<'a, Message>) -> Element<'a, Message> {
-        use iced::widget::{column, container, stack};
-
-        if self.toasts.is_empty() {
-            return base;
-        }
-
-        let toasts_column = column(
-            self.toasts.iter().map(|toast| {
-                self.render_toast(toast)
-            })
-        )
-        .spacing(8)
-        .padding(16);
-
-        let toasts_container = container(toasts_column)
-            .width(iced::Length::Shrink)
-            .height(iced::Length::Shrink);
-
-        stack![base, toasts_container].into()
+        // Use the new toast_overlay function from the widgets module
+        crate::widgets::toast_overlay(base, &self.toasts, |id| Message::DismissToast(id))
     }
 
-    /// Render a single toast
+    /// Render a single toast (no longer needed - handled by widget module)
+    #[allow(dead_code)]
     fn render_toast<'a>(&self, toast: &'a Toast) -> Element<'a, Message> {
         use iced::widget::{button, container, row, text};
 
         let icon = match toast.toast_type {
-            ToastType::Success => "✓",
-            ToastType::Error => "✗",
-            ToastType::Warning => "⚠",
-            ToastType::Info => "ℹ",
+            ToastType::Success => "OK",
+            ToastType::Error => "ERR",
+            ToastType::Warning => "WARN",
+            ToastType::Info => "INFO",
         };
 
         let content = row![
             text(icon),
             text(&toast.message),
-            button(text("✕")).on_press(Message::DismissToast(toast.id)),
+            button(text("X")).on_press(Message::DismissToast(toast.id)),
         ]
         .spacing(8)
         .padding(8);
@@ -1883,35 +1986,44 @@ impl App {
 
     /// Render modal overlay
     fn render_modal_overlay<'a>(&self, base: Element<'a, Message>, modal: &'a ModalContent) -> Element<'a, Message> {
-        use iced::widget::{button, column, container, stack, text};
-
-        let modal_content = match modal {
+        use crate::widgets::{modal_overlay, ModalData, ModalSize};
+        
+        match modal {
             ModalContent::Confirm { title, message, on_confirm } => {
-                column![
-                    text(title),
-                    text(message),
-                    button(text("Confirm")).on_press((**on_confirm).clone()),
-                    button(text("Cancel")).on_press(Message::CloseModal),
-                ]
-                .spacing(8)
-                .padding(16)
+                let modal_data = ModalData {
+                    title: title.clone(),
+                    body: message.clone(),
+                    size: ModalSize::Small,
+                    confirm_label: Some("Confirm".to_string()),
+                    cancel_label: Some("Cancel".to_string()),
+                };
+                
+                modal_overlay(
+                    base,
+                    Some(modal_data),
+                    &self.theme,
+                    Message::CloseModal,
+                    Some((**on_confirm).clone()),
+                )
             }
             ModalContent::Error { title, details } => {
-                column![
-                    text(title),
-                    text(details),
-                    button(text("Close")).on_press(Message::CloseModal),
-                ]
-                .spacing(8)
-                .padding(16)
+                let modal_data = ModalData {
+                    title: title.clone(),
+                    body: details.clone(),
+                    size: ModalSize::Medium,
+                    confirm_label: None,
+                    cancel_label: Some("Close".to_string()),
+                };
+                
+                modal_overlay(
+                    base,
+                    Some(modal_data),
+                    &self.theme,
+                    Message::CloseModal,
+                    None,
+                )
             }
-        };
-
-        let modal_container = container(modal_content)
-            .width(iced::Length::Shrink)
-            .height(iced::Length::Shrink);
-
-        stack![base, modal_container].into()
+        }
     }
 }
 

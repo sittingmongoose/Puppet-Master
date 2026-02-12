@@ -718,8 +718,8 @@ impl RequirementsInterviewer {
 
             for (idx, question) in questions.iter().enumerate() {
                 let importance_marker = match question.importance {
-                    Importance::Critical => "🔴 CRITICAL",
-                    Importance::Important => "🟡 IMPORTANT",
+                    Importance::Critical => "[CRITICAL]",
+                    Importance::Important => "[IMPORTANT]",
                     Importance::NiceToHave => "🟢 NICE TO HAVE",
                 };
 

@@ -98,14 +98,14 @@ impl DoctorCheck for WiringCheck {
             ("orchestrator calls run_gate", file_contains(&orchestrator_path, ".run_gate(").await),
         ] {
             match ok {
-                Ok(true) => details.push(format!("✓ {label}")),
+                Ok(true) => details.push(format!("[OK] {label}")),
                 Ok(false) => {
                     source_ok = false;
-                    details.push(format!("✗ {label}"));
+                    details.push(format!("[FAIL] {label}"));
                 }
                 Err(e) => {
                     source_ok = false;
-                    details.push(format!("✗ {label}: {e}"));
+                    details.push(format!("[FAIL] {label}: {e}"));
                 }
             }
         }
@@ -116,17 +116,17 @@ impl DoctorCheck for WiringCheck {
             .run_gate("task", "doctor-wiring", &[], None)
             .await;
         if gate_report.passed {
-            details.push("✓ GateRunner can execute an empty gate".to_string());
+            details.push("[OK] GateRunner can execute an empty gate".to_string());
         } else {
             source_ok = false;
-            details.push("✗ GateRunner failed to execute an empty gate".to_string());
+            details.push("[FAIL] GateRunner failed to execute an empty gate".to_string());
         }
 
         match Orchestrator::new(default_config()) {
-            Ok(_) => details.push("✓ Orchestrator::new constructed successfully".to_string()),
+            Ok(_) => details.push("[OK] Orchestrator::new constructed successfully".to_string()),
             Err(e) => {
                 source_ok = false;
-                details.push(format!("✗ Orchestrator::new failed: {e}"));
+                details.push(format!("[FAIL] Orchestrator::new failed: {e}"));
             }
         }
 

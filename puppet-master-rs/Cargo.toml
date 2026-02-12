@@ -87,6 +87,9 @@ pdf-extract = "0.7"
 # Additional dependencies
 once_cell = "1"
 
+# Shader support (for uniform buffer data)
+bytemuck = { version = "1", features = ["derive"] }
+
 # File dialogs
 rfd = "0.15"
 

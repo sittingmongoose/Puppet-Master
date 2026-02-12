@@ -155,10 +155,10 @@ fi
 
 PATTERN='{}'
 if grep -qE "$PATTERN" "$TARGET_FILE"; then
-    echo "✓ Pattern matched in $TARGET_FILE"
+    echo "[OK] Pattern matched in $TARGET_FILE"
     exit 0
 else
-    echo "✗ Pattern not found in $TARGET_FILE"
+    echo "[FAIL] Pattern not found in $TARGET_FILE"
     exit 1
 fi
 "#,
@@ -186,10 +186,10 @@ set -e
 
 echo "Running verification command..."
 if {}; then
-    echo "✓ Command succeeded"
+    echo "[OK] Command succeeded"
     exit 0
 else
-    echo "✗ Command failed"
+    echo "[FAIL] Command failed"
     exit 1
 fi
 "#,
@@ -217,10 +217,10 @@ set -e
 
 TARGET_FILE="{}"
 if [ -e "$TARGET_FILE" ]; then
-    echo "✓ File exists: $TARGET_FILE"
+    echo "[OK] File exists: $TARGET_FILE"
     exit 0
 else
-    echo "✗ File not found: $TARGET_FILE"
+    echo "[FAIL] File not found: $TARGET_FILE"
     exit 1
 fi
 "#,
@@ -254,10 +254,10 @@ echo "Checking API endpoint: $ENDPOINT"
 STATUS=$(curl -s -o /dev/null -w "%{{http_code}}" "$ENDPOINT")
 
 if [ "$STATUS" -eq "$EXPECTED_STATUS" ]; then
-    echo "✓ API returned expected status: $STATUS"
+    echo "[OK] API returned expected status: $STATUS"
     exit 0
 else
-    echo "✗ API returned $STATUS, expected $EXPECTED_STATUS"
+    echo "[FAIL] API returned $STATUS, expected $EXPECTED_STATUS"
     exit 1
 fi
 "#,
@@ -298,14 +298,14 @@ def check_browser():
             page = browser.new_page()
             page.goto(url, timeout=30000)
             title = page.title()
-            print(f"✓ Page loaded: {{title}}")
+            print(f"[OK] Page loaded: {{title}}")
             browser.close()
             return True
     except ImportError:
-        print("⚠ Playwright not installed. Install with: pip install playwright && playwright install")
+        print("[WARN] Playwright not installed. Install with: pip install playwright && playwright install")
         return False
     except Exception as e:
-        print(f"✗ Browser check failed: {{e}}")
+        print(f"[FAIL] Browser check failed: {{e}}")
         return False
 
 if __name__ == "__main__":
@@ -362,15 +362,15 @@ set -e
 # Verify target exists/runs
 TARGET="{}"
 if [ -f "$TARGET" ]; then
-    echo "✓ Target file exists: $TARGET"
+    echo "[OK] Target file exists: $TARGET"
 elif command -v "$TARGET" >/dev/null 2>&1; then
-    echo "✓ Target command found: $TARGET"
+    echo "[OK] Target command found: $TARGET"
     $TARGET
 else
-    echo "✗ Target not found: $TARGET"
+    echo "[FAIL] Target not found: $TARGET"
     exit 1
 fi
-echo "✓ Custom verification passed"
+echo "[OK] Custom verification passed"
 exit 0
 "#,
             ScriptType::Shell.shebang(),

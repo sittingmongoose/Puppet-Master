@@ -87,7 +87,8 @@ impl BranchStrategyManager {
     }
 
     /// Extract phase ID from tier ID (e.g., TK-001-002 -> PH-001)
-    fn _extract_phase_id(tier_id: &str) -> String {
+        #[allow(dead_code)]
+    fn extract_phase_id(tier_id: &str) -> String {
         let parts: Vec<&str> = tier_id.split('-').collect();
         if parts.len() >= 2 {
             format!("PH-{}", parts[1])

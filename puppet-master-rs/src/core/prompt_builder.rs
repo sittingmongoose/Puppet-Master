@@ -293,6 +293,7 @@ fn extract_section(content: &str, header: &str) -> Option<String> {
 mod tests {
     use super::*;
     use crate::core::tier_node::TierTree;
+    use crate::types::TierType;
     use std::io::Write;
     use tempfile::NamedTempFile;
 

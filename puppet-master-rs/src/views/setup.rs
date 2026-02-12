@@ -2,10 +2,10 @@
 //!
 //! Guides users through platform CLI detection and provides installation/authentication guidance.
 
-use iced::widget::{column, row, text, button, container, scrollable, Space};
+use iced::widget::{column, row, text, container, scrollable, Space};
 use iced::{Element, Length};
 use crate::app::{AuthActionKind, Message};
-use crate::theme::AppTheme;
+use crate::theme::{AppTheme, tokens};
 use crate::widgets::*;
 use crate::types::Platform;
 use crate::doctor::InstallationStatus;
@@ -26,58 +26,59 @@ pub fn view<'a>(
     is_checking: bool,
     setup_installing: Option<Platform>,
     login_in_progress: &'a HashMap<AuthTarget, AuthActionKind>,
-    _theme: &'a AppTheme,
+    theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(20).padding(20);
+    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
     // Title
     content = content.push(
         container(
             column![
-                text("Welcome to RWM Puppet Master").size(28),
-                text("First-time setup wizard").size(16),
+                text("Welcome to RWM Puppet Master").size(tokens::font_size::XXL),
+                text("First-time setup wizard").size(tokens::font_size::MD),
             ]
-            .spacing(5)
+            .spacing(tokens::spacing::XS)
         )
-        .padding(20)
+        .padding(tokens::spacing::LG)
     );
 
     // Description
     content = content.push(
-        panel(
+        themed_panel(
             container(
                 column![
-                    text("Platform Detection").size(20),
-                    text("This wizard will help you verify that platform CLI tools are installed and configured.").size(14),
-                    text("Click 'Run Detection' to scan your system for installed platforms.").size(14),
+                    text("Platform Detection").size(tokens::font_size::LG),
+                    text("This wizard will help you verify that platform CLI tools are installed and configured.").size(tokens::font_size::BASE),
+                    text("Click 'Run Detection' to scan your system for installed platforms.").size(tokens::font_size::BASE),
                 ]
-                .spacing(10)
+                .spacing(tokens::spacing::SM)
             )
-            .padding(15)
+            .padding(tokens::spacing::MD),
+            theme
         )
     );
 
     // Detection button
     let detect_btn = if is_checking {
-        button(text("Detecting...").size(14))
+        styled_button(theme, "Detecting...", ButtonVariant::Primary)
     } else {
-        button(text("Run Detection").size(14))
+        styled_button(theme, "Run Detection", ButtonVariant::Primary)
             .on_press(Message::SetupRunDetection)
     };
     let refresh_btn = if is_checking {
-        button(text("Detecting...").size(14))
+        styled_button(theme, "Detecting...", ButtonVariant::Secondary)
     } else {
-        button(text("Refresh").size(14))
+        styled_button(theme, "Refresh", ButtonVariant::Secondary)
             .on_press(Message::RefreshSetup)
     };
     
     content = content.push(
-        container(row![detect_btn, refresh_btn].spacing(10)).padding(10)
+        container(row![detect_btn, refresh_btn].spacing(tokens::spacing::SM)).padding(tokens::spacing::SM)
     );
 
     // Platform status results
     if !platform_statuses.is_empty() {
-        let mut status_content = column![].spacing(15);
+        let mut status_content = column![].spacing(tokens::spacing::MD);
 
         for platform_status in platform_statuses {
             let status_color = match &platform_status.status {
@@ -87,9 +88,9 @@ pub fn view<'a>(
             };
 
             let status_icon = match &platform_status.status {
-                InstallationStatus::Installed(_) => "✓",
-                InstallationStatus::NotInstalled => "✗",
-                InstallationStatus::Outdated { .. } => "⚠",
+                InstallationStatus::Installed(_) => "Installed",
+                InstallationStatus::NotInstalled => "Not Installed",
+                InstallationStatus::Outdated { .. } => "Outdated",
             };
 
             let is_installed = matches!(&platform_status.status, InstallationStatus::Installed(_));
@@ -101,54 +102,71 @@ pub fn view<'a>(
             let install_btn = if is_installed {
                 if let Some(kind) = auth_action {
                     match kind {
-                        AuthActionKind::Login => button(text("Logging in...").size(12)),
-                        AuthActionKind::Logout => button(text("Logging out...").size(12)),
+                        AuthActionKind::Login => styled_button(theme, "Logging in...", ButtonVariant::Info),
+                        AuthActionKind::Logout => styled_button(theme, "Logging out...", ButtonVariant::Danger),
                     }
                 } else {
-                    button(text("Login").size(12))
+                    styled_button(theme, "Login", ButtonVariant::Info)
                         .on_press(Message::PlatformLogin(auth_target))
                 }
             } else if is_installing {
-                button(text("Installing...").size(12))
+                styled_button(theme, "Installing...", ButtonVariant::Primary)
             } else {
-                button(text("Install").size(12))
+                styled_button(theme, "Install", ButtonVariant::Primary)
                     .on_press(Message::SetupInstall(platform_status.platform))
             };
 
             let mut platform_row = row![
-                text(status_icon).size(20).color(status_color),
-                text(format!("{}", platform_status.platform)).size(18),
+                container(
+                    text(status_icon)
+                        .size(tokens::font_size::BASE)
+                )
+                .padding(tokens::spacing::SM)
+                .width(Length::Fixed(120.0))
+                .style(move |_theme: &iced::Theme| {
+                    iced::widget::container::Style {
+                        background: Some(iced::Background::Color(status_color)),
+                        border: iced::Border {
+                            color: crate::theme::colors::INK_BLACK,
+                            width: tokens::borders::MEDIUM,
+                            radius: tokens::radii::NONE.into(),
+                        },
+                        ..Default::default()
+                    }
+                }),
+                text(format!("{}", platform_status.platform)).size(tokens::font_size::LG),
                 Space::new().width(Length::Fill),
-                text(format!("{}", platform_status.status)).size(14),
+                text(format!("{}", platform_status.status)).size(tokens::font_size::BASE),
                 install_btn,
             ]
-            .spacing(10)
+            .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center);
 
             if is_installed && !auth_in_progress {
                 platform_row = platform_row.push(
-                    button(text("Logout").size(12))
+                    styled_button(theme, "Logout", ButtonVariant::Danger)
                         .on_press(Message::PlatformLogout(auth_target)),
                 );
             }
 
-            let mut platform_col = column![platform_row].spacing(10);
+            let mut platform_col = column![platform_row].spacing(tokens::spacing::SM);
 
             if !is_installed {
                 platform_col = platform_col.push(
                     container(
                         scrollable(
-                            text(&platform_status.instructions).size(12)
+                            text(&platform_status.instructions).size(tokens::font_size::SM)
                         )
                         .height(Length::Fixed(150.0))
                     )
-                    .padding(10)
+                    .padding(tokens::spacing::SM)
                 );
             }
 
             status_content = status_content.push(
-                panel(
-                    container(platform_col).padding(15)
+                themed_panel(
+                    container(platform_col).padding(tokens::spacing::MD),
+                    theme
                 )
             );
         }
@@ -161,26 +179,27 @@ pub fn view<'a>(
         content = content.push(
             container(
                 text("No detection results yet. Click 'Run Detection' to begin.")
-                    .size(14)
+                    .size(tokens::font_size::SM)
             )
-            .padding(20)
+            .padding(tokens::spacing::LG)
         );
     }
 
     // Complete setup button
     content = content.push(
-        panel(
+        themed_panel(
             container(
                 row![
-                    text("Ready to start?").size(16),
+                    text("Ready to start?").size(tokens::font_size::MD),
                     Space::new().width(Length::Fill),
-                    button(text("Complete Setup").size(14))
+                    styled_button(theme, "Complete Setup", ButtonVariant::Primary)
                         .on_press(Message::SetupComplete),
                 ]
-                .spacing(15)
+                .spacing(tokens::spacing::MD)
                 .align_y(iced::Alignment::Center)
             )
-            .padding(15)
+            .padding(tokens::spacing::MD),
+            theme
         )
     );
 

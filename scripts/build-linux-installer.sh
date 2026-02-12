@@ -63,7 +63,9 @@ Version: ${VERSION}
 Section: devel
 Priority: optional
 Architecture: ${ARCH}
-Depends: libgtk-3-0, libglib2.0-0, libcairo2, libpango-1.0-0, libgdk-pixbuf-2.0-0
+# Binary uses Iced (pure Rust GUI), not GTK/WebKit - no runtime deps needed beyond glibc
+# X11 libs are implicitly required but always present on any Linux desktop
+Depends:
 Maintainer: RWM <rwm@example.com>
 Description: RWM Puppet Master - AI-assisted development orchestrator
  A GUI orchestrator implementing the Ralph Wiggum Method for
@@ -197,7 +199,8 @@ Release: 1
 Summary: RWM Puppet Master - AI-assisted development orchestrator
 License: MIT
 Group: Development/Tools
-Requires: gtk3, glib2, cairo, pango
+# Binary uses Iced (pure Rust GUI) - no GTK/WebKit runtime deps needed
+Requires:
 
 %description
 A GUI orchestrator implementing the Ralph Wiggum Method for

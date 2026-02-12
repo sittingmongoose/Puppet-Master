@@ -563,7 +563,7 @@ impl ValidationGate {
     pub fn format_report(result: &ValidationResult) -> String {
         let mut report = String::from("# PRD Validation Report\n\n");
 
-        report.push_str(&format!("**Status:** {}\n", if result.passed { "✅ PASSED" } else { "❌ FAILED" }));
+        report.push_str(&format!("**Status:** {}\n", if result.passed { "[OK] PASSED" } else { "[FAIL] FAILED" }));
         report.push_str(&format!("**Score:** {:.1}/100.0\n\n", result.score));
 
         if !result.errors.is_empty() {
@@ -593,7 +593,7 @@ impl ValidationGate {
 
         report.push_str("## Validation Checks\n\n");
         for check in &result.checks {
-            let status = if check.passed { "✅" } else { "⚠️" };
+            let status = if check.passed { "[OK]" } else { "[WARN]" };
             report.push_str(&format!(
                 "- {} **{}**: {:.1}/100.0\n",
                 status, check.name, check.score
@@ -610,7 +610,7 @@ impl ValidationGate {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::{PRDMetadata, ItemStatus};
+    use crate::types::{PRDMetadata, ItemStatus, Phase, Task, Subtask};
 
     #[test]
     fn test_validate_empty_prd() {

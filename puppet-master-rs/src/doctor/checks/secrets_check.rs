@@ -143,7 +143,8 @@ pub enum SecretStatus {
 
 impl SecretStatus {
     /// Check if this status indicates a problem
-    pub fn _is_problem(&self) -> bool {
+        #[allow(dead_code)]
+    pub fn is_problem(&self) -> bool {
         matches!(self, Self::RequiredMissing)
     }
 }
@@ -175,12 +176,12 @@ impl DoctorCheck for SecretsCheck {
             for var in &result.env_vars {
                 if var.required && !var.set {
                     has_required_missing = true;
-                    platform_messages.push(format!("  ❌ {} (required): {}", var.name, var.description));
+                    platform_messages.push(format!("  [X] {} (required): {}", var.name, var.description));
                 } else if !var.set {
                     has_optional_missing = true;
-                    platform_messages.push(format!("  ⚠️  {} (optional): {}", var.name, var.description));
+                    platform_messages.push(format!("  [WARN]  {} (optional): {}", var.name, var.description));
                 } else {
-                    platform_messages.push(format!("  ✓ {} is set", var.name));
+                    platform_messages.push(format!("  [OK] {} is set", var.name));
                 }
             }
 

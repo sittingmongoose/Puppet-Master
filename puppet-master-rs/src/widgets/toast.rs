@@ -1,11 +1,14 @@
 //! Toast notification system
+//!
+//! Redesigned toast overlay with bottom-right positioning, colored backgrounds,
+//! and cross-hatch shadows matching the GUI styling.
 
-use iced::widget::{container, button, text, column, row};
-use iced::{Element, Length, Padding, Border, Color, Shadow, Vector};
-use crate::theme::{colors, styles};
+use iced::widget::{container, button, text, column, row, stack};
+use iced::{Element, Length, Padding, Border, Color, Shadow, Vector, Alignment};
+use crate::theme::colors;
 use std::time::{Duration, Instant};
 
-/// Toast notification type
+/// Toast notification type with associated colors
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ToastType {
     Success,  // Acid lime
@@ -15,7 +18,8 @@ pub enum ToastType {
 }
 
 impl ToastType {
-    pub fn color(&self) -> Color {
+    /// Get the background color for this toast type
+    pub fn bg_color(&self) -> Color {
         match self {
             ToastType::Success => colors::ACID_LIME,
             ToastType::Error => colors::HOT_MAGENTA,
@@ -24,12 +28,23 @@ impl ToastType {
         }
     }
     
-    pub fn icon(&self) -> &'static str {
+    /// Get the text color for this toast type
+    pub fn text_color(&self) -> Color {
         match self {
-            ToastType::Success => "✓",
-            ToastType::Error => "✕",
-            ToastType::Warning => "⚠",
-            ToastType::Info => "ℹ",
+            ToastType::Success => colors::INK_BLACK,
+            ToastType::Error => colors::PAPER_CREAM,
+            ToastType::Warning => colors::INK_BLACK,
+            ToastType::Info => colors::PAPER_CREAM,
+        }
+    }
+    
+    /// Get the label text for this toast type
+    pub fn label(&self) -> &'static str {
+        match self {
+            ToastType::Success => "OK",
+            ToastType::Error => "ERR",
+            ToastType::Warning => "WARN",
+            ToastType::Info => "INFO",
         }
     }
 }
@@ -140,6 +155,11 @@ impl ToastManager {
 }
 
 /// Render a single toast notification
+/// 
+/// Layout: [TYPE_LABEL] message text [X close button]
+/// Width: 380px
+/// Border: 2px thick, same color as background
+/// Shadow: panel-style cross-hatch (3px offset)
 fn render_toast<'a, Message>(
     toast: &Toast,
     on_dismiss: impl Fn(usize) -> Message + 'a,
@@ -147,98 +167,135 @@ fn render_toast<'a, Message>(
 where
     Message: Clone + 'a,
 {
-    let color = toast.toast_type.color();
-    let icon = toast.toast_type.icon();
+    let bg_color = toast.toast_type.bg_color();
+    let text_color = toast.toast_type.text_color();
+    let label = toast.toast_type.label();
     let message = toast.message.clone();
     let toast_id = toast.id;
     
-    container(
-        row![
-            text(icon)
-                .size(20)
-                .color(colors::PAPER_CREAM),
-            text(message)
+    let content = row![
+        // Type label
+        text(label)
+            .size(14)
+            .font(iced::Font {
+                weight: iced::font::Weight::Bold,
+                ..iced::Font::DEFAULT
+            })
+            .color(text_color),
+        // Message text
+        text(message)
+            .size(14)
+            .color(text_color),
+        // Spacer
+        iced::widget::Space::new().width(Length::Fill),
+        // Close button
+        button(
+            text("X")
                 .size(14)
-                .color(colors::PAPER_CREAM),
-            iced::widget::Space::new().width(Length::Fill),
-            button(text("✕").size(14).color(colors::PAPER_CREAM))
-                .on_press(on_dismiss(toast_id))
-                .padding(Padding::from([2u16, 6u16]))
-                .style(move |_theme: &iced::Theme, _status| button::Style {
-                    background: Some(iced::Background::Color(Color {
-                        a: 0.3,
-                        ..color
-                    })),
-                    text_color: colors::PAPER_CREAM,
-                    border: Border {
-                        color: colors::PAPER_CREAM,
-                        width: 1.0,
-                        radius: 0.0.into(),
-                    },
-                    ..button::Style::default()
-                }),
-        ]
-        .spacing(styles::SPACING_SM)
-        .align_y(iced::Alignment::Center)
-    )
-    .padding(styles::SPACING_SM)
-    .width(320)
-    .style(move |_theme: &iced::Theme| container::Style {
-        background: Some(iced::Background::Color(color)),
-        border: Border {
-            color: colors::INK_BLACK,
-            width: styles::BORDER_THICK,
-            radius: 0.0.into(),
-        },
-        shadow: Shadow {
-            color: colors::INK_BLACK,
-            offset: Vector::new(3.0, 3.0),
-            blur_radius: 0.0,
-        },
-        text_color: Some(colors::PAPER_CREAM),
-        snap: container::Style::default().snap,
-    })
-    .into()
+                .color(text_color)
+        )
+        .on_press(on_dismiss(toast_id))
+        .padding(Padding::from([2u16, 8u16]))
+        .style(move |_theme: &iced::Theme, status| {
+            let (button_bg, button_border) = match status {
+                iced::widget::button::Status::Hovered => {
+                    // Slightly transparent on hover
+                    (Color { a: 0.2, ..bg_color }, text_color)
+                }
+                iced::widget::button::Status::Pressed => {
+                    (Color { a: 0.3, ..bg_color }, text_color)
+                }
+                _ => (colors::TRANSPARENT, text_color)
+            };
+            
+            button::Style {
+                background: Some(iced::Background::Color(button_bg)),
+                text_color,
+                border: Border {
+                    color: button_border,
+                    width: 1.0,
+                    radius: 0.0.into(),
+                },
+                ..button::Style::default()
+            }
+        }),
+    ]
+    .spacing(8)
+    .padding(12)
+    .align_y(Alignment::Center);
+    
+    container(content)
+        .width(Length::Fixed(380.0))
+        .style(move |_theme: &iced::Theme| container::Style {
+            background: Some(iced::Background::Color(bg_color)),
+            border: Border {
+                color: bg_color,  // Same color as background
+                width: 2.0,
+                radius: 0.0.into(),
+            },
+            shadow: Shadow {
+                color: colors::INK_BLACK,
+                offset: Vector::new(3.0, 3.0),
+                blur_radius: 0.0,
+            },
+            text_color: Some(text_color),
+            snap: container::Style::default().snap,
+        })
+        .into()
 }
 
 /// Create a toast overlay showing all active toasts
 ///
-/// Toasts are stacked at the top-right corner
+/// Toasts are stacked at the bottom-right corner with 8px vertical spacing.
+/// This function layers toasts on top of the base content using `stack`.
+///
+/// # Arguments
+/// * `content` - The base content element to layer toasts over
+/// * `toasts` - Slice of active toast notifications
+/// * `on_dismiss` - Callback function to dismiss a toast by ID
 ///
 /// # Example
 /// ```
-/// let toasts = toast_overlay(&toast_manager, |id| Message::DismissToast(id));
+/// let with_toasts = toast_overlay(
+///     base_content,
+///     manager.toasts(),
+///     |id| Message::DismissToast(id)
+/// );
 /// ```
 pub fn toast_overlay<'a, Message>(
-    manager: &ToastManager,
+    content: Element<'a, Message>,
+    toasts: &[Toast],
     on_dismiss: impl Fn(usize) -> Message + 'a + Clone,
 ) -> Element<'a, Message>
 where
     Message: Clone + 'a,
 {
-    if manager.toasts().is_empty() {
-        return container(iced::widget::Space::new())
-            .width(0)
-            .height(0)
-            .into();
+    if toasts.is_empty() {
+        return content;
     }
     
-    let mut toast_stack = column![].spacing(styles::SPACING_SM);
+    // Build vertical stack of toasts
+    let mut toast_column = column![].spacing(8);
     
-    for toast in manager.toasts() {
-        toast_stack = toast_stack.push(render_toast(toast, on_dismiss.clone()));
+    for toast in toasts {
+        toast_column = toast_column.push(render_toast(toast, on_dismiss.clone()));
     }
     
-    // Position at top-right
-    container(
-        container(toast_stack)
-            .padding(styles::SPACING_MD)
-            .width(Length::Shrink)
-            .align_right(Length::Fill)
-    )
-    .width(Length::Fill)
-    .align_top(Length::Fill)
-    .into()
+    // Position toasts in bottom-right corner
+    let toast_container = container(toast_column)
+        .width(Length::Shrink)
+        .height(Length::Shrink)
+        .padding(16); // Padding all around
+    
+    // Align to bottom-right
+    let positioned_toasts = container(toast_container)
+        .width(Length::Fill)
+        .height(Length::Fill)
+        .align_right(Length::Fill)
+        .align_bottom(Length::Fill);
+    
+    // Layer toasts on top of content
+    stack![content, positioned_toasts].into()
 }
 
 /// Helper to create a toast manager message handler

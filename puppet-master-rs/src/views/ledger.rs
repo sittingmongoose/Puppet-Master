@@ -2,10 +2,10 @@
 //!
 //! Displays event log with filtering by type, tier, and limit.
 
-use iced::widget::{column, row, text, button, container, scrollable, Space};
+use iced::widget::{column, row, text, container, scrollable, Space};
 use iced::{Element, Length};
 use crate::app::Message;
-use crate::theme::AppTheme;
+use crate::theme::{AppTheme, tokens};
 use crate::widgets::*;
 use chrono::{DateTime, Utc};
 
@@ -110,34 +110,34 @@ pub fn view<'a>(
     entries: &'a [LedgerEntry],
     filter: &'a LedgerFilter,
     _available_tiers: &'a [String],
-    _theme: &'a AppTheme,
+    theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(20).padding(20);
+    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
     // Header
     content = content.push(
         row![
-            text("Event Ledger").size(24),
+            text("Event Ledger").size(tokens::font_size::XL),
             Space::new().width(Length::Fill),
-            text(format!("{} events", entries.len())).size(14),
+            text(format!("{} events", entries.len())).size(tokens::font_size::SM),
         ]
-        .spacing(20)
+        .spacing(tokens::spacing::LG)
         .align_y(iced::Alignment::Center)
     );
 
     // Filter bar
     let filter_row = row![
-        text("Filter:").size(14),
-        button("Clear Filters")
+        text("Filter:").size(tokens::font_size::SM),
+        styled_button(theme, "Clear Filters", ButtonVariant::Secondary)
             .on_press(Message::FilterLedger(crate::app::LedgerFilter::default())),
-        button("Refresh")
+        styled_button(theme, "Refresh", ButtonVariant::Secondary)
             .on_press(Message::LoadLedger),
     ]
-    .spacing(10)
+    .spacing(tokens::spacing::SM)
     .align_y(iced::Alignment::Center);
 
     content = content.push(
-        panel(container(filter_row).padding(15))
+        themed_panel(container(filter_row).padding(tokens::spacing::MD), theme)
     );
 
     // Event list
@@ -159,30 +159,31 @@ pub fn view<'a>(
 
     if filtered_entries.is_empty() {
         content = content.push(
-            panel(
+            themed_panel(
                 container(
                     column![
-                        text("No events found").size(16),
-                        text("Try adjusting your filters").size(14),
-                    ].spacing(10)
-                ).padding(30)
+                        text("No events found").size(tokens::font_size::BASE),
+                        text("Try adjusting your filters").size(tokens::font_size::SM),
+                    ].spacing(tokens::spacing::SM)
+                ).padding(tokens::spacing::XL),
+                theme,
             )
         );
     } else {
-        let mut events_col = column![].spacing(5);
+        let mut events_col = column![].spacing(tokens::spacing::XS);
 
         for entry in filtered_entries {
             let event_row = row![
                 // Timestamp
                 container(
-                    text(entry.timestamp.format("%H:%M:%S").to_string()).size(12)
+                    text(entry.timestamp.format("%H:%M:%S").to_string()).size(tokens::font_size::XS)
                 ).width(Length::Fixed(80.0)),
                 // Event type badge
                 container(
                     text(entry.event_type.as_str())
-                        .size(12)
+                        .size(tokens::font_size::XS)
                 )
-                .padding(5)
+                .padding(tokens::spacing::XS)
                 .style(move |_theme: &iced::Theme| {
                     iced::widget::container::Style {
                         background: Some(iced::Background::Color(entry.event_type.color())),
@@ -198,43 +199,45 @@ pub fn view<'a>(
                 .width(Length::Fixed(200.0)),
                 // Tier ID
                 container(
-                    text(entry.tier_id.as_deref().unwrap_or("N/A")).size(12)
+                    text(entry.tier_id.as_deref().unwrap_or("N/A")).size(tokens::font_size::XS)
                 ).width(Length::Fixed(120.0)),
                 // Data preview (truncated)
                 container(
-                    text(truncate(&entry.data, 80)).size(12)
+                    text(truncate(&entry.data, 80)).size(tokens::font_size::XS)
                 ).width(Length::Fill),
             ]
-            .spacing(10)
+            .spacing(tokens::spacing::SM)
             .align_y(iced::Alignment::Center);
 
             events_col = events_col.push(
-                container(event_row).padding(8)
+                container(event_row).padding(tokens::spacing::SM)
             );
         }
 
         content = content.push(
-            panel(
+            themed_panel(
                 container(
                     scrollable(events_col)
                         .height(Length::Fill)
-                ).padding(15)
+                ).padding(tokens::spacing::MD),
+                theme,
             )
         );
     }
 
     // Export button
     content = content.push(
-        panel(
+        themed_panel(
             container(
                 row![
-                    button("Export Ledger")
+                    styled_button(theme, "Export Ledger", ButtonVariant::Secondary)
                         .on_press(Message::NavigateTo(Page::Ledger)),
                     Space::new().width(Length::Fill),
-                    button("Clear Ledger")
+                    styled_button(theme, "Clear Ledger", ButtonVariant::Danger)
                         .on_press(Message::NavigateTo(Page::Ledger)),
-                ].spacing(10)
-            ).padding(15)
+                ].spacing(tokens::spacing::SM)
+            ).padding(tokens::spacing::MD),
+            theme,
         )
     );
 

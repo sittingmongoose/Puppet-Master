@@ -2,10 +2,10 @@
 //!
 //! Displays authentication status for all platforms with Login/Logout buttons.
 
-use iced::widget::{column, row, text, button, container, scrollable, Space};
+use iced::widget::{column, row, text, container, scrollable, Space};
 use iced::{Element, Length};
 use crate::app::{AuthActionKind, Message};
-use crate::theme::AppTheme;
+use crate::theme::{AppTheme, tokens};
 use crate::platforms::AuthTarget;
 use crate::types::Platform;
 use crate::widgets::*;
@@ -43,118 +43,148 @@ impl AuthMethod {
 pub fn view<'a>(
     auth_status: &'a HashMap<String, AuthStatus>,
     login_in_progress: &'a HashMap<AuthTarget, AuthActionKind>,
-    _theme: &'a AppTheme,
+    theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(20).padding(20);
+    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
     // Header
-    content = content.push(
-        row![
-            text("Platform Authentication").size(24),
-            Space::new().width(Length::Fill),
-            button("Refresh Status")
-                .on_press(Message::LoadLogin),
-        ]
-        .spacing(20)
-        .align_y(iced::Alignment::Center)
-    );
+    let header = row![
+        text("Platform Authentication").size(tokens::font_size::XL),
+        Space::new().width(Length::Fill),
+        styled_button(theme, "Refresh Status", ButtonVariant::Secondary)
+            .on_press(Message::LoadLogin),
+    ]
+    .spacing(tokens::spacing::MD)
+    .align_y(iced::Alignment::Center);
+
+    content = content.push(header);
 
     // Summary
     let authenticated_count = auth_status.values().filter(|s| s.authenticated).count();
     let total_count = auth_status.len();
 
-    let summary = row![
-        status_badge(
-            if authenticated_count == total_count {
-                Status::Complete
-            } else if authenticated_count > 0 {
-                Status::Paused
-            } else {
-                Status::Error
-            },
-            format!("{}/{} Authenticated", authenticated_count, total_count),
-        ),
-    ]
-    .spacing(15)
-    .align_y(iced::Alignment::Center);
+    let summary = text(format!(
+        "{}/{} platforms authenticated",
+        authenticated_count, total_count
+    ))
+    .size(tokens::font_size::BASE);
 
     content = content.push(
-        panel(container(summary).padding(15))
+        themed_panel(
+            container(summary).padding(tokens::spacing::MD),
+            theme
+        )
     );
 
-    // Platform list including GitHub
-    let platform_defs: Vec<(&str, AuthTarget)> = vec![
-        ("Cursor", AuthTarget::Platform(Platform::Cursor)),
-        ("Codex", AuthTarget::Platform(Platform::Codex)),
-        ("Claude", AuthTarget::Platform(Platform::Claude)),
-        ("Gemini", AuthTarget::Platform(Platform::Gemini)),
-        ("Copilot", AuthTarget::Platform(Platform::Copilot)),
-        ("GitHub", AuthTarget::GitHub),
+    // Platform grid
+    let platform_defs: Vec<(&str, &str, AuthTarget)> = vec![
+        ("Cursor", "CUR", AuthTarget::Platform(Platform::Cursor)),
+        ("Codex", "CDX", AuthTarget::Platform(Platform::Codex)),
+        ("Claude", "CLD", AuthTarget::Platform(Platform::Claude)),
+        ("Gemini", "GEM", AuthTarget::Platform(Platform::Gemini)),
+        ("Copilot", "COP", AuthTarget::Platform(Platform::Copilot)),
+        ("GitHub", "GH", AuthTarget::GitHub),
     ];
 
-    for (platform_name, auth_target) in platform_defs {
+    for (platform_name, platform_abbr, auth_target) in platform_defs {
         let status = auth_status.get(platform_name);
         let in_progress = login_in_progress.get(&auth_target).copied();
 
         let platform_panel = if let Some(status) = status {
-            let status_indicator = if status.authenticated {
-                status_dot(Status::Complete)
+            let status_text = if status.authenticated {
+                "Authenticated"
             } else {
-                status_dot(Status::Error)
+                "Not Authenticated"
             };
 
             let login_logout_btn = if let Some(kind) = in_progress {
                 match kind {
-                    AuthActionKind::Login => button(text("Logging in...").size(14)),
-                    AuthActionKind::Logout => button(text("Logging out...").size(14)),
+                    AuthActionKind::Login => styled_button(theme, "Logging in...", ButtonVariant::Info),
+                    AuthActionKind::Logout => styled_button(theme, "Logging out...", ButtonVariant::Danger),
                 }
             } else if status.authenticated {
-                button(text("Logout").size(14))
+                styled_button(theme, "Logout", ButtonVariant::Danger)
                     .on_press(Message::PlatformLogout(auth_target))
             } else {
-                button(text("Login").size(14))
+                styled_button(theme, "Login", ButtonVariant::Info)
                     .on_press(Message::PlatformLogin(auth_target))
             };
 
             let mut platform_content = column![
                 row![
-                    text(get_platform_icon(platform_name)).size(32),
+                    // Platform abbreviation
+                    container(
+                        text(platform_abbr)
+                            .size(tokens::font_size::XL)
+                    )
+                    .width(Length::Fixed(60.0))
+                    .padding(tokens::spacing::MD)
+                    .style(|_theme: &iced::Theme| {
+                        iced::widget::container::Style {
+                            background: Some(iced::Background::Color(
+                                crate::theme::colors::ELECTRIC_BLUE
+                            )),
+                            border: iced::Border {
+                                color: crate::theme::colors::INK_BLACK,
+                                width: tokens::borders::THICK,
+                                radius: tokens::radii::NONE.into(),
+                            },
+                            ..Default::default()
+                        }
+                    }),
                     column![
-                        text(platform_name).size(18),
-                        text(status.method.as_str()).size(12),
-                    ].spacing(5),
+                        text(platform_name).size(tokens::font_size::LG),
+                        text(status.method.as_str()).size(tokens::font_size::SM),
+                    ].spacing(tokens::spacing::XXS),
                     Space::new().width(Length::Fill),
-                    status_indicator,
-                    if status.authenticated {
-                        text("Authenticated").size(14)
-                    } else {
-                        text("Not Authenticated").size(14)
-                    },
+                    // Status badge
+                    container(
+                        text(status_text)
+                            .size(tokens::font_size::SM)
+                    )
+                    .padding(tokens::spacing::SM)
+                    .style(move |_theme: &iced::Theme| {
+                        iced::widget::container::Style {
+                            background: Some(iced::Background::Color(
+                                if status.authenticated {
+                                    crate::theme::colors::ACID_LIME
+                                } else {
+                                    crate::theme::colors::HOT_MAGENTA
+                                }
+                            )),
+                            border: iced::Border {
+                                color: crate::theme::colors::INK_BLACK,
+                                width: tokens::borders::MEDIUM,
+                                radius: tokens::radii::NONE.into(),
+                            },
+                            ..Default::default()
+                        }
+                    }),
                     login_logout_btn,
-                ].spacing(15).align_y(iced::Alignment::Center),
-            ].spacing(10);
+                ].spacing(tokens::spacing::MD).align_y(iced::Alignment::Center),
+            ].spacing(tokens::spacing::SM);
 
             // Show hint if not authenticated
             if !status.authenticated {
                 platform_content = platform_content.push(
                     container(
                         column![
-                            text("Fix:").size(14),
-                            text(&status.hint).size(12),
-                            button("Setup")
+                            text("Setup Required:").size(tokens::font_size::SM),
+                            text(&status.hint).size(tokens::font_size::SM),
+                            styled_button(theme, "Setup Guide", ButtonVariant::Info)
                                 .on_press(Message::NavigateTo(Page::Setup)),
-                        ].spacing(10)
+                        ].spacing(tokens::spacing::SM)
                     )
-                    .padding(10)
+                    .padding(tokens::spacing::MD)
                     .style(|_theme: &iced::Theme| {
                         iced::widget::container::Style {
                             background: Some(iced::Background::Color(
-                                iced::Color::from_rgb(1.0, 0.95, 0.9)
+                                iced::Color { a: 0.2, ..crate::theme::colors::SAFETY_ORANGE }
                             )),
                             border: iced::Border {
-                                color: iced::Color::from_rgb(1.0, 0.5, 0.0),
-                                width: 1.0,
-                                radius: 4.0.into(),
+                                color: crate::theme::colors::SAFETY_ORANGE,
+                                width: tokens::borders::THIN,
+                                radius: tokens::radii::NONE.into(),
                             },
                             ..Default::default()
                         }
@@ -162,17 +192,21 @@ pub fn view<'a>(
                 );
             }
 
-            panel(container(platform_content).padding(15))
+            themed_panel(
+                container(platform_content).padding(tokens::spacing::MD),
+                theme
+            )
         } else {
-            panel(
+            themed_panel(
                 container(
                     row![
-                        text(get_platform_icon(platform_name)).size(32),
-                        text(platform_name).size(18),
+                        text(platform_abbr).size(tokens::font_size::XL),
+                        text(platform_name).size(tokens::font_size::LG),
                         Space::new().width(Length::Fill),
-                        text("Status Unknown").size(14),
-                    ].spacing(15).align_y(iced::Alignment::Center)
-                ).padding(15)
+                        text("Status Unknown").size(tokens::font_size::SM),
+                    ].spacing(tokens::spacing::MD).align_y(iced::Alignment::Center)
+                ).padding(tokens::spacing::MD),
+                theme
             )
         };
 
@@ -196,14 +230,15 @@ pub fn view<'a>(
         .into()
 }
 
+#[allow(dead_code)]
 fn get_platform_icon(platform: &str) -> &str {
     match platform {
-        "Cursor" => "🖱️",
-        "Codex" => "💻",
-        "Claude" => "🤖",
-        "Gemini" => "💎",
-        "Copilot" => "✈️",
-        "GitHub" => "🐙",
-        _ => "❓",
+        "Cursor" => "CUR",
+        "Codex" => "CDX",
+        "Claude" => "CLD",
+        "Gemini" => "GEM",
+        "Copilot" => "COP",
+        "GitHub" => "GH",
+        _ => "?",
     }
 }

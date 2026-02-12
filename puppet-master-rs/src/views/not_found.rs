@@ -3,50 +3,47 @@
 //! Displays a friendly error message when navigating to an invalid route.
 //! Matches the retro-futuristic theme of the application.
 
-use iced::widget::{button, column, container, row, text, Space};
+use iced::widget::{column, container, row, text, Space};
 use iced::{Alignment, Element, Length};
 
 use crate::app::Message;
-use crate::theme::AppTheme;
-use crate::widgets::{panel, header::Page};
+use crate::theme::{AppTheme, tokens};
+use crate::widgets::{themed_panel, styled_button, ButtonVariant, header::Page};
 
 /// Render the not found view
 pub fn view<'a>(theme: &'a AppTheme) -> Element<'a, Message> {
-    let _ = theme;
 
-    let mut content = column![].spacing(20).padding(20);
+    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
     // Large 404 header
     content = content.push(
-        panel(container(
+        themed_panel(container(
             column![
-                text("404").size(80),
-                text("Page Not Found").size(28),
-                text("The page you're looking for doesn't exist or has been moved.").size(16),
+                text("404").size(tokens::font_size::DISPLAY),
+                text("Page Not Found").size(tokens::font_size::XL),
+                text("The page you're looking for doesn't exist or has been moved.").size(tokens::font_size::BASE),
             ]
-            .spacing(10)
+            .spacing(tokens::spacing::SM)
             .align_x(Alignment::Center)
-        ).padding(30))
+        ).padding(tokens::spacing::XL), theme)
     );
 
     // Navigation buttons
     let nav_buttons = row![
-        button(text("← Back to Dashboard").size(16))
-            .on_press(Message::NavigateTo(Page::Dashboard))
-            .padding(12),
-        Space::new().width(Length::Fixed(16.0)),
-        button(text("View Projects").size(16))
-            .on_press(Message::NavigateTo(Page::Projects))
-            .padding(12),
+        styled_button(theme, "Back to Dashboard", ButtonVariant::Primary)
+            .on_press(Message::NavigateTo(Page::Dashboard)),
+        Space::new().width(Length::Fixed(tokens::spacing::MD as f32)),
+        styled_button(theme, "View Projects", ButtonVariant::Secondary)
+            .on_press(Message::NavigateTo(Page::Projects)),
     ]
-    .spacing(16)
+    .spacing(tokens::spacing::MD)
     .align_y(Alignment::Center);
 
-    content = content.push(panel(container(nav_buttons).padding(15)));
+    content = content.push(themed_panel(container(nav_buttons).padding(tokens::spacing::MD), theme));
 
     // ASCII art decoration
     content = content.push(
-        panel(container(text(ASCII_ART_404).size(10)).padding(15))
+        themed_panel(container(text(ASCII_ART_404).size(tokens::font_size::XS)).padding(tokens::spacing::MD), theme)
     );
 
     scrollable_content(content)
@@ -66,13 +63,15 @@ fn scrollable_content(content: iced::widget::Column<'_, Message>) -> Element<'_,
 const ASCII_ART_404: &str = r#"
     ╔═══════════════════════════════════════════════════════╗
     ║                                                       ║
-    ║   ░░░░░░░  ░░░░░░░  ░░░░░░░  ░░░░░░░  ░░░░░░░       ║
-    ║   ░░   ░░  ░░   ░░  ░░       ░░       ░░   ░░       ║
-    ║   ░░░░░░░  ░░░░░░░  ░░  ░░░  ░░  ░░░  ░░░░░░░       ║
-    ║   ░░       ░░   ░░  ░░   ░░  ░░   ░░  ░░   ░░       ║
-    ║   ░░       ░░   ░░  ░░░░░░░  ░░░░░░░  ░░   ░░       ║
+    ║               ERROR 404 - NOT FOUND                   ║
     ║                                                       ║
-    ║              PUPPET MASTER NAVIGATION ERROR          ║
+    ║      ##   ##  #####  ##   ##                          ║
+    ║      ##   ##  ##  ## ##   ##                          ║
+    ║      #######  ##  ## #######                          ║
+    ║           ##  ##  ##      ##                          ║
+    ║           ##  #####       ##                          ║
+    ║                                                       ║
+    ║                  PAGE NOT FOUND                       ║
     ║                                                       ║
     ╚═══════════════════════════════════════════════════════╝
 "#;

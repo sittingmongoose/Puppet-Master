@@ -36,11 +36,11 @@ impl DoctorReporter {
                 output.push_str(&format!("--- {:?} Checks ---\n", category));
                 for check in checks {
                     let status = if check.result.passed {
-                        "✓"
+                        "[PASS]"
                     } else if check.result.can_fix {
-                        "⚠"
+                        "[FIX]"
                     } else {
-                        "✗"
+                        "[FAIL]"
                     };
 
                     output.push_str(&format!(
@@ -57,17 +57,17 @@ impl DoctorReporter {
         }
 
         if report.all_passed() {
-            output.push_str("✓ All checks passed!\n");
+            output.push_str("All checks passed!\n");
         } else if report.warnings > 0 {
             output.push_str(&format!(
-                "⚠ {} check(s) have fixable issues. Run with --fix to attempt repairs.\n",
+                "[WARN] {} check(s) have fixable issues. Run with --fix to attempt repairs.\n",
                 report.warnings
             ));
         }
 
         if report.failed > 0 {
             output.push_str(&format!(
-                "✗ {} check(s) failed and require manual intervention.\n",
+                "[FAIL] {} check(s) failed and require manual intervention.\n",
                 report.failed
             ));
         }
@@ -104,7 +104,7 @@ impl DoctorReporter {
 
         output.push_str("# Puppet Master Health Check\n\n");
         output.push_str(&format!(
-            "**Summary:** {} total | ✓ {} passed | ✗ {} failed | ⚠ {} warnings\n\n",
+            "**Summary:** {} total | {} passed | {} failed | {} warnings\n\n",
             report.checks.len(),
             report.passed,
             report.failed,
@@ -127,11 +127,11 @@ impl DoctorReporter {
 
                 for check in checks {
                     let status_icon = if check.result.passed {
-                        "✓"
+                        "[PASS]"
                     } else if check.result.can_fix {
-                        "⚠"
+                        "[FIX]"
                     } else {
-                        "✗"
+                        "[FAIL]"
                     };
 
                     output.push_str(&format!("### {} {}\n\n", status_icon, check.name));
@@ -146,7 +146,7 @@ impl DoctorReporter {
         }
 
         if report.all_passed() {
-            output.push_str("\n---\n\n✓ **All checks passed!**\n");
+            output.push_str("\n---\n\n**All checks passed!**\n");
         }
 
         output

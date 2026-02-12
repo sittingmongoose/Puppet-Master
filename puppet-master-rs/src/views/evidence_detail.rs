@@ -2,10 +2,10 @@
 //!
 //! Displays detailed information about a specific evidence item.
 
-use iced::widget::{column, row, text, button, container, scrollable, Space};
+use iced::widget::{column, row, text, container, scrollable, Space};
 use iced::{Element, Length};
 use crate::app::Message;
-use crate::theme::AppTheme;
+use crate::theme::{AppTheme, tokens};
 use crate::widgets::*;
 use crate::views::evidence::{EvidenceItem, EvidenceItemType};
 
@@ -13,78 +13,96 @@ use crate::views::evidence::{EvidenceItem, EvidenceItemType};
 pub fn view<'a>(
     item: &'a EvidenceItem,
     content_preview: &'a Option<String>,
-    _theme: &'a AppTheme,
+    theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(20).padding(20);
+    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
     // Header with back button
     content = content.push(
         row![
-            button("← Back")
+            styled_button(theme, "< Back", ButtonVariant::Ghost)
                 .on_press(Message::NavigateTo(Page::Evidence)),
             Space::new().width(Length::Fill),
-            text("Evidence Detail").size(24),
+            text("Evidence Detail").size(tokens::font_size::XL),
         ]
-        .spacing(20)
+        .spacing(tokens::spacing::MD)
         .align_y(iced::Alignment::Center)
     );
 
     // Metadata panel
-    let metadata = panel(
-        container(
-            column![
-                row![
-                    text(item.evidence_type.icon()).size(32),
-                    text(item.evidence_type.as_str()).size(20),
-                ].spacing(15).align_y(iced::Alignment::Center),
-                column![
-                    text("ID:").size(12),
-                    text(&item.id).size(14),
-                ].spacing(5),
-                column![
-                    text("Tier ID:").size(12),
-                    text(&item.tier_id).size(14),
-                ].spacing(5),
-                column![
-                    text("Timestamp:").size(12),
-                    text(item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string()).size(14),
-                ].spacing(5),
-                column![
-                    text("Path:").size(12),
-                    text(item.path.display().to_string()).size(12),
-                ].spacing(5),
-                column![
-                    text("Summary:").size(12),
-                    text(&item.summary).size(14),
-                ].spacing(5),
-            ].spacing(15)
-        ).padding(15)
-    );
+    let metadata = column![
+        row![
+            container(
+                text(item.evidence_type.icon())
+                    .size(tokens::font_size::XXL)
+            )
+            .padding(tokens::spacing::MD)
+            .style(|_theme: &iced::Theme| {
+                iced::widget::container::Style {
+                    background: Some(iced::Background::Color(crate::theme::colors::ELECTRIC_BLUE)),
+                    border: iced::Border {
+                        color: crate::theme::colors::INK_BLACK,
+                        width: tokens::borders::THICK,
+                        radius: tokens::radii::NONE.into(),
+                    },
+                    ..Default::default()
+                }
+            }),
+            text(item.evidence_type.as_str()).size(tokens::font_size::LG),
+        ].spacing(tokens::spacing::MD).align_y(iced::Alignment::Center),
+        column![
+            text("ID:").size(tokens::font_size::SM),
+            text(&item.id).size(tokens::font_size::BASE),
+        ].spacing(tokens::spacing::XS),
+        column![
+            text("Tier ID:").size(tokens::font_size::SM),
+            text(&item.tier_id).size(tokens::font_size::BASE),
+        ].spacing(tokens::spacing::XS),
+        column![
+            text("Timestamp:").size(tokens::font_size::SM),
+            text(item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string()).size(tokens::font_size::BASE),
+        ].spacing(tokens::spacing::XS),
+        column![
+            text("Path:").size(tokens::font_size::SM),
+            text(item.path.display().to_string()).size(tokens::font_size::SM),
+        ].spacing(tokens::spacing::XS),
+        column![
+            text("Summary:").size(tokens::font_size::SM),
+            text(&item.summary).size(tokens::font_size::BASE),
+        ].spacing(tokens::spacing::XS),
+    ].spacing(tokens::spacing::MD);
 
-    content = content.push(metadata);
+    content = content.push(
+        themed_panel(
+            container(metadata).padding(tokens::spacing::MD),
+            theme
+        )
+    );
 
     // Content preview
     let preview_panel = if let Some(preview) = content_preview {
-        panel(
+        themed_panel(
             container(
                 column![
-                    text("Content Preview").size(18),
+                    text("Content Preview").size(tokens::font_size::LG),
                     scrollable(
                         container(
-                            text(preview).size(12)
-                        ).padding(10)
+                            text(preview).size(tokens::font_size::SM)
+                        ).padding(tokens::spacing::SM)
                     ).height(Length::Fixed(400.0)),
-                ].spacing(10)
-            ).padding(15)
+                ].spacing(tokens::spacing::SM)
+            ).padding(tokens::spacing::MD),
+            theme
         )
     } else {
-        panel(
+        themed_panel(
             container(
                 column![
-                    text("Content Preview").size(18),
-                    text("Loading preview...").size(14),
-                ].spacing(10)
-            ).padding(15)
+                    text("Content Preview").size(tokens::font_size::LG),
+                    text("Loading preview...").size(tokens::font_size::BASE),
+                ].spacing(tokens::spacing::SM)
+            ).padding(tokens::spacing::MD),
+            theme
         )
     };
 
@@ -92,15 +110,18 @@ pub fn view<'a>(
 
     // Action buttons
     let actions = row![
-        button("Open in External Viewer")
+        styled_button(theme, "Open in External Viewer", ButtonVariant::Info)
             .on_press(Message::SelectEvidence(item.id.clone())),
-        button("Export")
+        styled_button(theme, "Export", ButtonVariant::Secondary)
             .on_press(Message::SelectEvidence(item.id.clone())),
     ]
-    .spacing(10);
+    .spacing(tokens::spacing::SM);
 
     content = content.push(
-        panel(container(actions).padding(15))
+        themed_panel(
+            container(actions).padding(tokens::spacing::MD),
+            theme
+        )
     );
 
     // Type-specific information
