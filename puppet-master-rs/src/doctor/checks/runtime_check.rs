@@ -177,6 +177,16 @@ impl RuntimeCheck {
         {
             use std::os::unix::fs::MetadataExt;
             
+            // Check if working directory exists first
+            if !self.working_dir.exists() {
+                return RuntimeItem {
+                    name: "Disk Space".to_string(),
+                    status: false,
+                    message: format!("Working directory does not exist: {:?}", self.working_dir),
+                    fix_suggestion: Some("Create the working directory first".to_string()),
+                };
+            }
+            
             match fs::metadata(&self.working_dir) {
                 Ok(metadata) => {
                     // Get filesystem stats

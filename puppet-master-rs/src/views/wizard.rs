@@ -1,27 +1,44 @@
 //! Wizard view - Requirements wizard (multi-step)
 //!
-//! Guides users through uploading requirements, reviewing, generating PRD, and saving.
+//! Fully functional 6-step wizard matching the Tauri React GUI.
 
-use iced::widget::{column, row, text, container, scrollable, Space};
+use iced::widget::{column, row, text, container, scrollable, Space, text_editor, pick_list, toggler};
 use iced::{Element, Length, Border};
-use crate::app::Message;
+use std::collections::HashMap;
+use crate::app::{Message, WizardTierConfig};
 use crate::theme::{AppTheme, colors, tokens, fonts};
 use crate::widgets::{
-    Page,
     styled_button::{styled_button, ButtonVariant},
     styled_input::{styled_text_input_with_variant, InputVariant, InputSize},
+    themed_panel,
 };
 
-/// Requirements wizard view - multi-step process
+// Static options for pick_lists
+const PLATFORMS: &[&str] = &["cursor", "codex", "claude", "gemini", "copilot"];
+const REASONING_EFFORTS: &[&str] = &["low", "medium", "high"];
+const OUTPUT_FORMATS: &[&str] = &["markdown", "json", "yaml"];
+
+/// Requirements wizard view - 6-step process matching Tauri GUI
 pub fn view<'a>(
     step: usize,
+    project_name: &'a str,
+    project_path: &'a str,
     requirements_text: &'a str,
-    prd_preview: &'a Option<String>,
+    prd_platform: &'a str,
+    prd_model: &'a str,
+    prd_editor_content: &'a text_editor::Content,
+    prd_text: &'a str,
+    tier_configs: &'a HashMap<String, WizardTierConfig>,
+    plan_text: &'a str,
+    generating: bool,
+    models: &'a HashMap<String, Vec<String>>,
+    requirements_preview_content: &'a text_editor::Content,
+    plan_content: &'a text_editor::Content,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
-    // Step indicator with circles and connecting lines
+    // Step indicator with circles and connecting lines (6 steps)
     let step_indicator = row![
         step_circle(1, step, theme),
         connecting_line(1, step, theme),
@@ -30,6 +47,10 @@ pub fn view<'a>(
         step_circle(3, step, theme),
         connecting_line(3, step, theme),
         step_circle(4, step, theme),
+        connecting_line(4, step, theme),
+        step_circle(5, step, theme),
+        connecting_line(5, step, theme),
+        step_circle(6, step, theme),
     ]
     .spacing(tokens::spacing::XXXS)
     .align_y(iced::Alignment::Center);
@@ -52,247 +73,757 @@ pub fn view<'a>(
             })
     );
 
-    // Step content
-    match step {
-        1 => {
-            // Step 1: Upload/paste requirements
-            let step_content = column![
-                text("Step 1: Enter Requirements")
-                    .size(tokens::font_size::XL)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                text("Paste your project requirements below or upload a file")
-                    .size(tokens::font_size::BASE)
-                    .color(theme.ink_faded()),
-                Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                styled_text_input_with_variant(
-                    theme,
-                    "Enter your project requirements here...",
-                    requirements_text,
-                    InputVariant::Default,
-                    InputSize::Large
-                )
-                .on_input(Message::WizardRequirementsChanged),
-                Space::new().height(Length::Fixed(tokens::spacing::MD)),
-                row![
-                    styled_button(theme, "Upload File", ButtonVariant::Secondary)
-                        .on_press(Message::WizardFileSelected(None)),
-                    Space::new().width(Length::Fill),
-                    styled_button(theme, "Next", ButtonVariant::Primary)
-                        .on_press(Message::WizardNextStep),
-                ].spacing(tokens::spacing::MD),
-            ].spacing(tokens::spacing::MD);
-
-            content = content.push(
-                container(step_content)
-                    .padding(tokens::spacing::LG)
-                    .width(Length::Fill)
-                    .style(move |_: &iced::Theme| container::Style {
-                        background: Some(iced::Background::Color(theme.paper())),
-                        border: Border {
-                            color: theme.ink(),
-                            width: tokens::borders::THICK,
-                            radius: tokens::radii::NONE.into(),
-                        },
-                        shadow: tokens::shadows::panel_shadow(theme.ink()),
-                        text_color: Some(theme.ink()),
-                        ..Default::default()
-                    })
-            );
-        }
-        2 => {
-            // Step 2: Review parsed requirements
-            let step_content = column![
-                text("Step 2: Review Requirements")
-                    .size(tokens::font_size::XL)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                text("Review the parsed requirements below")
-                    .size(tokens::font_size::BASE)
-                    .color(theme.ink_faded()),
-                Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                scrollable(
-                    container(
-                        text(requirements_text)
-                            .size(tokens::font_size::BASE)
-                            .font(fonts::FONT_UI)
-                            .color(theme.ink())
-                    ).padding(tokens::spacing::MD)
-                        .width(Length::Fill)
-                        .style(move |_: &iced::Theme| container::Style {
-                            background: Some(iced::Background::Color(theme.paper())),
-                            border: Border {
-                                color: theme.ink(),
-                                width: tokens::borders::MEDIUM,
-                                radius: tokens::radii::SM.into(),
-                            },
-                            ..Default::default()
-                        })
-                ).height(Length::Fixed(400.0)),
-                Space::new().height(Length::Fixed(tokens::spacing::MD)),
-                row![
-                    styled_button(theme, "Back", ButtonVariant::Secondary)
-                        .on_press(Message::WizardPrevStep),
-                    Space::new().width(Length::Fill),
-                    styled_button(theme, "Generate PRD", ButtonVariant::Primary)
-                        .on_press(Message::WizardGenerate),
-                ].spacing(tokens::spacing::MD),
-            ].spacing(tokens::spacing::MD);
-
-            content = content.push(
-                container(step_content)
-                    .padding(tokens::spacing::LG)
-                    .width(Length::Fill)
-                    .style(move |_: &iced::Theme| container::Style {
-                        background: Some(iced::Background::Color(theme.paper())),
-                        border: Border {
-                            color: theme.ink(),
-                            width: tokens::borders::THICK,
-                            radius: tokens::radii::NONE.into(),
-                        },
-                        shadow: tokens::shadows::panel_shadow(theme.ink()),
-                        text_color: Some(theme.ink()),
-                        ..Default::default()
-                    })
-            );
-        }
-        3 => {
-            // Step 3: PRD preview
-            let prd_text = prd_preview.as_ref().map(|s| s.as_str()).unwrap_or("Generating PRD...");
-            let has_prd = prd_preview.is_some();
-            
-            let step_content = column![
-                text("Step 3: PRD Preview")
-                    .size(tokens::font_size::XL)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                text("Review the generated Product Requirements Document")
-                    .size(tokens::font_size::BASE)
-                    .color(theme.ink_faded()),
-                Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                scrollable(
-                    container(
-                        text(prd_text)
-                            .size(tokens::font_size::SM)
-                            .font(fonts::FONT_MONO)
-                            .color(theme.ink())
-                    ).padding(tokens::spacing::MD)
-                        .width(Length::Fill)
-                        .style(move |_: &iced::Theme| container::Style {
-                            background: Some(iced::Background::Color(theme.paper())),
-                            border: Border {
-                                color: theme.ink(),
-                                width: tokens::borders::MEDIUM,
-                                radius: tokens::radii::SM.into(),
-                            },
-                            ..Default::default()
-                        })
-                ).height(Length::Fixed(400.0)),
-                Space::new().height(Length::Fixed(tokens::spacing::MD)),
-                row![
-                    styled_button(theme, "Back", ButtonVariant::Secondary)
-                        .on_press(Message::WizardPrevStep),
-                    Space::new().width(Length::Fill),
-                    if has_prd {
-                        styled_button(theme, "Save & Continue", ButtonVariant::Primary)
-                            .on_press(Message::WizardSave)
-                    } else {
-                        styled_button(theme, "Waiting...", ButtonVariant::Secondary)
-                    },
-                ].spacing(tokens::spacing::MD),
-            ].spacing(tokens::spacing::MD);
-
-            content = content.push(
-                container(step_content)
-                    .padding(tokens::spacing::LG)
-                    .width(Length::Fill)
-                    .style(move |_: &iced::Theme| container::Style {
-                        background: Some(iced::Background::Color(theme.paper())),
-                        border: Border {
-                            color: theme.ink(),
-                            width: tokens::borders::THICK,
-                            radius: tokens::radii::NONE.into(),
-                        },
-                        shadow: tokens::shadows::panel_shadow(theme.ink()),
-                        text_color: Some(theme.ink()),
-                        ..Default::default()
-                    })
-            );
-        }
-        4 => {
-            // Step 4: Completion confirmation
-            let step_content = column![
-                text("Step 4: Complete")
-                    .size(tokens::font_size::XL)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                text("PRD has been saved successfully!")
-                    .size(tokens::font_size::BASE)
-                    .color(colors::ACID_LIME),
-                Space::new().height(Length::Fixed(tokens::spacing::LG)),
-                container(
-                    column![
-                        completion_item("Requirements parsed", theme),
-                        completion_item("PRD generated", theme),
-                        completion_item("Configuration saved", theme),
-                    ].spacing(tokens::spacing::MD)
-                ).padding(tokens::spacing::LG)
-                    .width(Length::Fill)
-                    .align_x(iced::alignment::Horizontal::Center)
-                    .style(move |_: &iced::Theme| container::Style {
-                        background: Some(iced::Background::Color(theme.paper())),
-                        border: Border {
-                            color: colors::ACID_LIME,
-                            width: tokens::borders::MEDIUM,
-                            radius: tokens::radii::SM.into(),
-                        },
-                        ..Default::default()
-                    }),
-                Space::new().height(Length::Fixed(tokens::spacing::LG)),
-                text("You can now start the orchestration from the Dashboard.")
-                    .size(tokens::font_size::BASE)
-                    .color(theme.ink_faded()),
-                Space::new().height(Length::Fixed(tokens::spacing::MD)),
-                row![
-                    styled_button(theme, "Back to Projects", ButtonVariant::Secondary)
-                        .on_press(Message::NavigateTo(Page::Projects)),
-                    Space::new().width(Length::Fill),
-                    styled_button(theme, "Go to Dashboard", ButtonVariant::Primary)
-                        .on_press(Message::NavigateTo(Page::Dashboard)),
-                ].spacing(tokens::spacing::MD),
-            ].spacing(tokens::spacing::MD);
-
-            content = content.push(
-                container(step_content)
-                    .padding(tokens::spacing::LG)
-                    .width(Length::Fill)
-                    .style(move |_: &iced::Theme| container::Style {
-                        background: Some(iced::Background::Color(theme.paper())),
-                        border: Border {
-                            color: theme.ink(),
-                            width: tokens::borders::THICK,
-                            radius: tokens::radii::NONE.into(),
-                        },
-                        shadow: tokens::shadows::panel_shadow(theme.ink()),
-                        text_color: Some(theme.ink()),
-                        ..Default::default()
-                    })
-            );
-        }
+    // Step content - wrap each step in scrollable container to prevent cutoff
+    let step_panel = match step {
+        1 => step1_upload_requirements(project_name, project_path, requirements_text, requirements_preview_content, theme),
+        2 => step2_generate_prd(requirements_text, prd_platform, prd_model, models, generating, theme),
+        3 => step3_review_prd(prd_editor_content, prd_text, theme),
+        4 => step4_configure_tiers(tier_configs, models, theme),
+        5 => step5_generate_plan(plan_text, plan_content, generating, theme),
+        6 => step6_review_start(project_name, project_path, theme),
         _ => {
-            // Fallback for invalid step (should not happen with step defaulting to 1)
-            content = content.push(
+            container(
                 text("Invalid step")
                     .size(tokens::font_size::XL)
                     .color(colors::HOT_MAGENTA)
-            );
+            )
+            .padding(tokens::spacing::LG)
+            .width(Length::Fill)
         }
-    }
+    };
 
-    container(content)
+    content = content.push(
+        container(step_panel)
+            .width(Length::Fill)
+            .style(move |_: &iced::Theme| container::Style {
+                background: Some(iced::Background::Color(theme.paper())),
+                border: Border {
+                    color: theme.ink(),
+                    width: tokens::borders::THICK,
+                    radius: tokens::radii::NONE.into(),
+                },
+                shadow: tokens::shadows::panel_shadow(theme.ink()),
+                text_color: Some(theme.ink()),
+                ..Default::default()
+            })
+    );
+
+    scrollable(content)
         .width(Length::Fill)
         .height(Length::Fill)
         .into()
+}
+
+/// Step 1: Upload Requirements
+fn step1_upload_requirements<'a>(
+    project_name: &'a str,
+    project_path: &'a str,
+    requirements_text: &'a str,
+    requirements_preview_content: &'a text_editor::Content,
+    theme: &'a AppTheme,
+) -> container::Container<'a, Message> {
+    let char_count = requirements_text.len();
+    let can_proceed = !project_name.trim().is_empty() 
+        && !project_path.trim().is_empty() 
+        && !requirements_text.trim().is_empty();
+    
+    let step_content = column![
+        text("Step 1: Upload Requirements")
+            .size(tokens::font_size::XL)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        text("Enter project details and requirements")
+            .size(tokens::font_size::BASE)
+            .color(theme.ink_faded()),
+        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        
+        // Project Name
+        text("Project Name:")
+            .size(tokens::font_size::BASE)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        styled_text_input_with_variant(
+            theme,
+            "My Awesome Project",
+            project_name,
+            InputVariant::Default,
+            InputSize::Large
+        )
+        .on_input(Message::WizardProjectNameChanged),
+        
+        Space::new().height(Length::Fixed(tokens::spacing::SM)),
+        
+        // Project Path
+        text("Project Path:")
+            .size(tokens::font_size::BASE)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        row![
+            styled_text_input_with_variant(
+                theme,
+                "/path/to/project",
+                project_path,
+                InputVariant::Default,
+                InputSize::Large
+            )
+            .on_input(Message::WizardProjectPathChanged)
+            .width(Length::Fill),
+            styled_button(theme, "BROWSE", ButtonVariant::Secondary)
+                .on_press(Message::WizardBrowseProjectPath),
+        ].spacing(tokens::spacing::SM),
+        
+        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        
+        // Requirements Input
+        row![
+            text("Requirements:")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            Space::new().width(Length::Fill),
+            text(format!("{} characters", char_count))
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
+        ],
+        
+        // Requirements preview (read-only, selectable)
+        container(
+            text_editor(requirements_preview_content)
+                .font(fonts::FONT_UI)
+                .size(tokens::font_size::BASE)
+                .height(Length::Fixed(200.0))
+        )
+        .padding(tokens::spacing::MD)
+        .width(Length::Fill)
+        .style(move |_: &iced::Theme| container::Style {
+            background: Some(iced::Background::Color(theme.paper())),
+            border: Border {
+                color: theme.ink(),
+                width: tokens::borders::MEDIUM,
+                radius: tokens::radii::SM.into(),
+            },
+            ..Default::default()
+        }),
+        
+        styled_text_input_with_variant(
+            theme,
+            "Type or paste requirements here...",
+            "",
+            InputVariant::Default,
+            InputSize::Large
+        )
+        .on_input(Message::WizardRequirementsChanged),
+        
+        styled_button(theme, "CHOOSE FILE", ButtonVariant::Secondary)
+            .on_press(Message::WizardBrowseRequirementsFile),
+        
+        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        
+        // Navigation buttons
+        row![
+            Space::new().width(Length::Fill),
+            if can_proceed {
+                styled_button(theme, "NEXT", ButtonVariant::Primary)
+                    .on_press(Message::WizardNextStep)
+            } else {
+                styled_button(theme, "NEXT", ButtonVariant::Secondary)
+            },
+        ].spacing(tokens::spacing::MD),
+    ].spacing(tokens::spacing::MD);
+
+    container(
+        scrollable(step_content)
+            .width(Length::Fill)
+    )
+    .padding(tokens::spacing::LG)
+    .width(Length::Fill)
+    .max_width(tokens::layout::MAX_CONTENT_WIDTH)
+}
+
+/// Step 2: Generate PRD
+fn step2_generate_prd<'a>(
+    requirements_text: &'a str,
+    prd_platform: &'a str,
+    prd_model: &'a str,
+    models: &'a HashMap<String, Vec<String>>,
+    generating: bool,
+    theme: &'a AppTheme,
+) -> container::Container<'a, Message> {
+    let platform_models = models.get(prd_platform);
+    
+    let preview_text = if requirements_text.len() > 1000 {
+        format!("{}...", &requirements_text[..1000])
+    } else {
+        requirements_text.to_string()
+    };
+    
+    let step_content = column![
+        text("Step 2: Generate PRD")
+            .size(tokens::font_size::XL)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        text("Select platform and model, then generate the Product Requirements Document")
+            .size(tokens::font_size::BASE)
+            .color(theme.ink_faded()),
+        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        
+        // Platform selection
+        row![
+            text("Platform:")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink())
+                .width(Length::Fixed(120.0)),
+            pick_list(
+                PLATFORMS,
+                Some(prd_platform),
+                |s| Message::WizardPrdPlatformChanged(s.to_string())
+            )
+            .width(Length::Fixed(200.0)),
+        ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
+        
+        Space::new().height(Length::Fixed(tokens::spacing::SM)),
+        
+        // Model selection
+        row![
+            text("Model:")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink())
+                .width(Length::Fixed(120.0)),
+            {
+                let model_picker: Element<'_, Message> = if let Some(models_list) = platform_models {
+                    let selected = models_list.iter().find(|m| m.as_str() == prd_model).cloned();
+                    pick_list(
+                        models_list.as_slice(),
+                        selected,
+                        Message::WizardPrdModelChanged
+                    )
+                    .width(Length::Fixed(300.0))
+                    .into()
+                } else {
+                    text("Loading models...").size(tokens::font_size::SM).color(theme.ink_faded()).into()
+                };
+                model_picker
+            },
+        ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
+        
+        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        
+        // Requirements preview
+        text("Requirements Preview (first 1000 chars):")
+            .size(tokens::font_size::BASE)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        scrollable(
+            container(
+                text(preview_text)
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI)
+                    .color(theme.ink())
+            ).padding(tokens::spacing::MD)
+                .width(Length::Fill)
+                .style(move |_: &iced::Theme| container::Style {
+                    background: Some(iced::Background::Color(theme.paper())),
+                    border: Border {
+                        color: theme.ink(),
+                        width: tokens::borders::MEDIUM,
+                        radius: tokens::radii::SM.into(),
+                    },
+                    ..Default::default()
+                })
+        ).height(Length::Fixed(250.0)),
+        
+        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        
+        // Status indicator
+        if generating {
+            row![
+                text("Generating PRD...")
+                    .size(tokens::font_size::BASE)
+                    .color(colors::ELECTRIC_BLUE),
+            ]
+        } else {
+            row![]
+        },
+        
+        Space::new().height(Length::Fixed(tokens::spacing::SM)),
+        
+        // Navigation buttons
+        row![
+            styled_button(theme, "BACK", ButtonVariant::Secondary)
+                .on_press(Message::WizardPrevStep),
+            Space::new().width(Length::Fill),
+            if generating {
+                styled_button(theme, "Generating...", ButtonVariant::Secondary)
+            } else {
+                styled_button(theme, "GENERATE PRD", ButtonVariant::Primary)
+                    .on_press(Message::WizardGeneratePrd)
+            },
+        ].spacing(tokens::spacing::MD),
+    ].spacing(tokens::spacing::MD);
+
+    container(
+        scrollable(step_content)
+            .width(Length::Fill)
+    )
+    .padding(tokens::spacing::LG)
+    .width(Length::Fill)
+    .max_width(tokens::layout::MAX_CONTENT_WIDTH)
+}
+
+/// Step 3: Review & Edit PRD
+fn step3_review_prd<'a>(
+    prd_editor_content: &'a text_editor::Content,
+    prd_text: &'a str,
+    theme: &'a AppTheme,
+) -> container::Container<'a, Message> {
+    let has_prd = !prd_text.is_empty();
+    
+    let step_content = column![
+        text("Step 3: Review & Edit PRD")
+            .size(tokens::font_size::XL)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        text("Review and edit the generated Product Requirements Document")
+            .size(tokens::font_size::BASE)
+            .color(theme.ink_faded()),
+        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        
+        // PRD editor
+        container(
+            text_editor(prd_editor_content)
+                .on_action(Message::WizardPrdEditorAction)
+                .font(iced::Font::MONOSPACE)
+                .height(Length::Fixed(400.0))
+        )
+        .padding(tokens::spacing::MD)
+        .width(Length::Fill)
+        .style(move |_: &iced::Theme| container::Style {
+            background: Some(iced::Background::Color(theme.paper())),
+            border: Border {
+                color: theme.ink(),
+                width: tokens::borders::MEDIUM,
+                radius: tokens::radii::SM.into(),
+            },
+            ..Default::default()
+        }),
+        
+        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        
+        // Navigation buttons
+        row![
+            styled_button(theme, "BACK", ButtonVariant::Secondary)
+                .on_press(Message::WizardPrevStep),
+            Space::new().width(Length::Fill),
+            if has_prd {
+                styled_button(theme, "NEXT", ButtonVariant::Primary)
+                    .on_press(Message::WizardNextStep)
+            } else {
+                styled_button(theme, "Generating...", ButtonVariant::Secondary)
+            },
+        ].spacing(tokens::spacing::MD),
+    ].spacing(tokens::spacing::MD);
+
+    container(
+        scrollable(step_content)
+            .width(Length::Fill)
+    )
+    .padding(tokens::spacing::LG)
+    .width(Length::Fill)
+    .max_width(tokens::layout::MAX_CONTENT_WIDTH)
+}
+
+/// Step 4: Configure Tiers
+fn step4_configure_tiers<'a>(
+    tier_configs: &'a HashMap<String, WizardTierConfig>,
+    models: &'a HashMap<String, Vec<String>>,
+    theme: &'a AppTheme,
+) -> container::Container<'a, Message> {
+    let tiers = vec!["phase", "task", "subtask", "iteration"];
+    
+    let mut tier_sections = column![].spacing(tokens::spacing::MD);
+    
+    for tier in tiers {
+        if let Some(config) = tier_configs.get(tier) {
+            let platform_models = models.get(&config.platform);
+            
+            let tier_panel = themed_panel(
+                container(
+                    column![
+                        text(format!("{} Configuration", tier.to_uppercase()))
+                            .size(tokens::font_size::MD)
+                            .font(fonts::FONT_UI_BOLD)
+                            .color(theme.ink()),
+                        Space::new().height(Length::Fixed(tokens::spacing::SM)),
+                        
+                        // Platform
+                        row![
+                            text("Platform:")
+                                .size(tokens::font_size::BASE)
+                                .color(theme.ink())
+                                .width(Length::Fixed(150.0)),
+                            pick_list(
+                                PLATFORMS,
+                                Some(config.platform.as_str()),
+                                move |p| Message::WizardTierPlatformChanged(tier.to_string(), p.to_string())
+                            )
+                            .width(Length::Fixed(200.0)),
+                        ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
+                        
+                        Space::new().height(Length::Fixed(tokens::spacing::XS)),
+                        
+                        // Model
+                        row![
+                            text("Model:")
+                                .size(tokens::font_size::BASE)
+                                .color(theme.ink())
+                                .width(Length::Fixed(150.0)),
+                            {
+                                let tier_model_picker: Element<'_, Message> = if let Some(models_list) = platform_models {
+                                    let selected = models_list.iter().find(|m| m.as_str() == config.model.as_str()).cloned();
+                                    pick_list(
+                                        models_list.as_slice(),
+                                        selected,
+                                        move |m: String| Message::WizardTierModelChanged(tier.to_string(), m)
+                                    )
+                                    .width(Length::Fixed(300.0))
+                                    .into()
+                                } else {
+                                    text("auto").size(tokens::font_size::SM).color(theme.ink_faded()).into()
+                                };
+                                tier_model_picker
+                            },
+                        ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
+                        
+                        Space::new().height(Length::Fixed(tokens::spacing::XS)),
+                        
+                        // Reasoning Effort
+                        row![
+                            text("Reasoning:")
+                                .size(tokens::font_size::BASE)
+                                .color(theme.ink())
+                                .width(Length::Fixed(150.0)),
+                            pick_list(
+                                REASONING_EFFORTS,
+                                Some(config.reasoning_effort.as_str()),
+                                move |e| Message::WizardTierReasoningChanged(tier.to_string(), e.to_string())
+                            )
+                            .width(Length::Fixed(200.0)),
+                        ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
+                        
+                        Space::new().height(Length::Fixed(tokens::spacing::XS)),
+                        
+                        // Plan Mode
+                        row![
+                            text("Plan Mode:")
+                                .size(tokens::font_size::BASE)
+                                .color(theme.ink())
+                                .width(Length::Fixed(150.0)),
+                            toggler(config.plan_mode)
+                                .on_toggle(move |v| Message::WizardTierPlanModeToggled(tier.to_string(), v)),
+                        ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
+                        
+                        Space::new().height(Length::Fixed(tokens::spacing::XS)),
+                        
+                        // Ask Mode
+                        row![
+                            text("Ask Mode:")
+                                .size(tokens::font_size::BASE)
+                                .color(theme.ink())
+                                .width(Length::Fixed(150.0)),
+                            toggler(config.ask_mode)
+                                .on_toggle(move |v| Message::WizardTierAskModeToggled(tier.to_string(), v)),
+                        ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
+                        
+                        Space::new().height(Length::Fixed(tokens::spacing::XS)),
+                        
+                        // Output Format
+                        row![
+                            text("Output Format:")
+                                .size(tokens::font_size::BASE)
+                                .color(theme.ink())
+                                .width(Length::Fixed(150.0)),
+                            pick_list(
+                                OUTPUT_FORMATS,
+                                Some(config.output_format.as_str()),
+                                move |f| Message::WizardTierOutputFormatChanged(tier.to_string(), f.to_string())
+                            )
+                            .width(Length::Fixed(200.0)),
+                        ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
+                    ].spacing(tokens::spacing::SM)
+                ).padding(tokens::spacing::MD),
+                theme
+            );
+            
+            tier_sections = tier_sections.push(tier_panel);
+        }
+    }
+    
+    let step_content = column![
+        text("Step 4: Configure Tiers")
+            .size(tokens::font_size::XL)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        text("Configure platform, model, and options for each tier")
+            .size(tokens::font_size::BASE)
+            .color(theme.ink_faded()),
+        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        
+        // Refresh Models button
+        row![
+            styled_button(theme, "REFRESH MODELS", ButtonVariant::Secondary)
+                .on_press(Message::WizardRefreshModels),
+        ],
+        
+        Space::new().height(Length::Fixed(tokens::spacing::SM)),
+        
+        tier_sections,
+        
+        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        
+        // Navigation buttons
+        row![
+            styled_button(theme, "BACK", ButtonVariant::Secondary)
+                .on_press(Message::WizardPrevStep),
+            Space::new().width(Length::Fill),
+            styled_button(theme, "SKIP", ButtonVariant::Secondary)
+                .on_press(Message::WizardNextStep),
+            styled_button(theme, "NEXT", ButtonVariant::Primary)
+                .on_press(Message::WizardNextStep),
+        ].spacing(tokens::spacing::MD),
+    ].spacing(tokens::spacing::MD);
+
+    container(
+        scrollable(step_content)
+            .width(Length::Fill)
+    )
+    .padding(tokens::spacing::LG)
+    .width(Length::Fill)
+    .max_width(tokens::layout::MAX_CONTENT_WIDTH)
+}
+
+/// Step 5: Generate Tier Plan
+fn step5_generate_plan<'a>(
+    plan_text: &'a str,
+    plan_content: &'a text_editor::Content,
+    generating: bool,
+    theme: &'a AppTheme,
+) -> container::Container<'a, Message> {
+    let has_plan = !plan_text.is_empty();
+    
+    let step_content = column![
+        text("Step 5: Generate Tier Plan")
+            .size(tokens::font_size::XL)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        text("Generate execution plan based on PRD and tier configurations")
+            .size(tokens::font_size::BASE)
+            .color(theme.ink_faded()),
+        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        
+        // Plan preview (read-only, selectable)
+        {
+            let plan_content_display: Element<'_, Message> = if has_plan {
+                container(
+                    text_editor(plan_content)
+                        .font(fonts::FONT_MONO)
+                        .size(tokens::font_size::SM)
+                        .height(Length::Fixed(350.0))
+                )
+                .padding(tokens::spacing::MD)
+                .width(Length::Fill)
+                .style(move |_: &iced::Theme| container::Style {
+                    background: Some(iced::Background::Color(theme.paper())),
+                    border: Border {
+                        color: theme.ink(),
+                        width: tokens::borders::MEDIUM,
+                        radius: tokens::radii::SM.into(),
+                    },
+                    ..Default::default()
+                })
+                .into()
+            } else {
+                container(
+                    text("Click GENERATE PLAN to create execution plan")
+                        .size(tokens::font_size::BASE)
+                        .color(theme.ink_faded())
+                )
+                .padding(tokens::spacing::XL)
+                .width(Length::Fill)
+                .style(move |_: &iced::Theme| container::Style {
+                    background: Some(iced::Background::Color(theme.paper())),
+                    border: Border {
+                        color: theme.ink(),
+                        width: tokens::borders::MEDIUM,
+                        radius: tokens::radii::SM.into(),
+                    },
+                    ..Default::default()
+                })
+                .height(Length::Fixed(350.0))
+                .into()
+            };
+            plan_content_display
+        },
+        
+        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        
+        // Status indicator
+        if generating {
+            row![
+                text("Generating plan...")
+                    .size(tokens::font_size::BASE)
+                    .color(colors::ELECTRIC_BLUE),
+            ]
+        } else {
+            row![]
+        },
+        
+        Space::new().height(Length::Fixed(tokens::spacing::SM)),
+        
+        // Navigation buttons
+        row![
+            styled_button(theme, "BACK", ButtonVariant::Secondary)
+                .on_press(Message::WizardPrevStep),
+            Space::new().width(Length::Fill),
+            if generating {
+                styled_button(theme, "Generating...", ButtonVariant::Secondary)
+            } else if has_plan {
+                styled_button(theme, "REGENERATE PLAN", ButtonVariant::Secondary)
+                    .on_press(Message::WizardGeneratePlan)
+            } else {
+                styled_button(theme, "GENERATE PLAN", ButtonVariant::Primary)
+                    .on_press(Message::WizardGeneratePlan)
+            },
+            if has_plan {
+                styled_button(theme, "NEXT", ButtonVariant::Primary)
+                    .on_press(Message::WizardNextStep)
+            } else {
+                styled_button(theme, "SKIP", ButtonVariant::Secondary)
+                    .on_press(Message::WizardNextStep)
+            },
+        ].spacing(tokens::spacing::MD),
+    ].spacing(tokens::spacing::MD);
+
+    container(
+        scrollable(step_content)
+            .width(Length::Fill)
+    )
+    .padding(tokens::spacing::LG)
+    .width(Length::Fill)
+    .max_width(tokens::layout::MAX_CONTENT_WIDTH)
+}
+
+/// Step 6: Review & Start
+fn step6_review_start<'a>(
+    project_name: &'a str,
+    project_path: &'a str,
+    theme: &'a AppTheme,
+) -> container::Container<'a, Message> {
+    let step_content = column![
+        text("Step 6: Review & Start")
+            .size(tokens::font_size::XL)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        text("Everything is ready! Review and start the orchestration.")
+            .size(tokens::font_size::BASE)
+            .color(colors::ACID_LIME),
+        Space::new().height(Length::Fixed(tokens::spacing::LG)),
+        
+        // Project summary
+        themed_panel(
+            container(
+                column![
+                    text("Project Summary")
+                        .size(tokens::font_size::LG)
+                        .font(fonts::FONT_UI_BOLD)
+                        .color(theme.ink()),
+                    Space::new().height(Length::Fixed(tokens::spacing::MD)),
+                    
+                    row![
+                        text("Name:")
+                            .size(tokens::font_size::BASE)
+                            .font(fonts::FONT_UI_BOLD)
+                            .color(theme.ink())
+                            .width(Length::Fixed(120.0)),
+                        text(project_name)
+                            .size(tokens::font_size::BASE)
+                            .color(theme.ink()),
+                    ].spacing(tokens::spacing::SM),
+                    
+                    Space::new().height(Length::Fixed(tokens::spacing::SM)),
+                    
+                    row![
+                        text("Path:")
+                            .size(tokens::font_size::BASE)
+                            .font(fonts::FONT_UI_BOLD)
+                            .color(theme.ink())
+                            .width(Length::Fixed(120.0)),
+                        text(project_path)
+                            .size(tokens::font_size::BASE)
+                            .color(theme.ink()),
+                    ].spacing(tokens::spacing::SM),
+                ].spacing(tokens::spacing::SM)
+            ).padding(tokens::spacing::LG),
+            theme
+        ),
+        
+        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        
+        // Warning/ready indicator
+        themed_panel(
+            container(
+                column![
+                    text("Ready to Start")
+                        .size(tokens::font_size::MD)
+                        .font(fonts::FONT_UI_BOLD)
+                        .color(colors::ACID_LIME),
+                    Space::new().height(Length::Fixed(tokens::spacing::SM)),
+                    text("The wizard will:")
+                        .size(tokens::font_size::BASE)
+                        .color(theme.ink()),
+                    text("- Create project directory")
+                        .size(tokens::font_size::SM)
+                        .color(theme.ink_faded()),
+                    text("- Save PRD document")
+                        .size(tokens::font_size::SM)
+                        .color(theme.ink_faded()),
+                    text("- Save execution plan")
+                        .size(tokens::font_size::SM)
+                        .color(theme.ink_faded()),
+                    text("- Navigate to dashboard")
+                        .size(tokens::font_size::SM)
+                        .color(theme.ink_faded()),
+                ].spacing(tokens::spacing::XS)
+            ).padding(tokens::spacing::MD),
+            theme
+        ),
+        
+        Space::new().height(Length::Fixed(tokens::spacing::LG)),
+        
+        text("Note: You can monitor progress from the Dashboard.")
+            .size(tokens::font_size::BASE)
+            .color(theme.ink_faded()),
+        
+        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        
+        // Navigation buttons
+        row![
+            styled_button(theme, "BACK", ButtonVariant::Secondary)
+                .on_press(Message::WizardPrevStep),
+            Space::new().width(Length::Fill),
+            styled_button(theme, "START CHAIN", ButtonVariant::Primary)
+                .on_press(Message::WizardStartChain),
+        ].spacing(tokens::spacing::MD),
+    ].spacing(tokens::spacing::MD);
+
+    container(
+        scrollable(step_content)
+            .width(Length::Fill)
+    )
+    .padding(tokens::spacing::LG)
+    .width(Length::Fill)
+    .max_width(tokens::layout::MAX_CONTENT_WIDTH)
 }
 
 /// Create a step circle indicator
@@ -361,38 +892,5 @@ fn connecting_line<'a>(step_num: usize, current_step: usize, theme: &'a AppTheme
             ..Default::default()
         }
     })
-    .into()
-}
-
-/// Create a completion checklist item
-fn completion_item<'a>(label: &'a str, theme: &'a AppTheme) -> Element<'a, Message> {
-    row![
-        container(
-            text("[x]")
-                .size(tokens::font_size::MD)
-                .font(fonts::FONT_UI_BOLD)
-                .color(colors::PAPER_CREAM)
-        )
-        .padding(tokens::spacing::XS)
-        .width(Length::Fixed(28.0))
-        .height(Length::Fixed(28.0))
-        .align_x(iced::alignment::Horizontal::Center)
-        .align_y(iced::alignment::Vertical::Center)
-        .style(|_: &iced::Theme| container::Style {
-            background: Some(iced::Background::Color(colors::ACID_LIME)),
-            border: Border {
-                color: colors::INK_BLACK,
-                width: tokens::borders::MEDIUM,
-                radius: tokens::radii::SM.into(),
-            },
-            ..Default::default()
-        }),
-        Space::new().width(Length::Fixed(tokens::spacing::MD)),
-        text(label)
-            .size(tokens::font_size::MD)
-            .font(fonts::FONT_UI)
-            .color(theme.ink()),
-    ]
-    .align_y(iced::Alignment::Center)
     .into()
 }

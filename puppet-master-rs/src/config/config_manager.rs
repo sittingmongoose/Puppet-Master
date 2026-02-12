@@ -38,6 +38,12 @@ impl ConfigManager {
     /// Load configuration from a file
     pub fn load(path: impl AsRef<Path>) -> Result<Self> {
         let path = path.as_ref();
+        
+        // Check if file exists before trying to read it
+        if !path.exists() {
+            anyhow::bail!("Config file does not exist: {}", path.display());
+        }
+        
         let content = std::fs::read_to_string(path)
             .with_context(|| format!("Failed to read config from {}", path.display()))?;
 
@@ -194,6 +200,12 @@ impl ConfigManager {
     pub fn save_to(&self, path: impl AsRef<Path>) -> Result<()> {
         let mut inner = self.inner.lock().unwrap();
         let path = path.as_ref();
+
+        // Create parent directory if it doesn't exist
+        if let Some(parent) = path.parent() {
+            std::fs::create_dir_all(parent)
+                .with_context(|| format!("Failed to create directory {}", parent.display()))?;
+        }
 
         let yaml = serde_yaml::to_string(&inner.config)
             .context("Failed to serialize config to YAML")?;

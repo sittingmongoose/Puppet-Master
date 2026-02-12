@@ -7,6 +7,7 @@ pub mod config_schema;
 pub mod default_config;
 pub mod secrets_manager;
 pub mod config_override;
+pub mod gui_config;
 
 pub use config_manager::ConfigManager;
 pub use config_schema::validate_config;
@@ -17,3 +18,4 @@ pub use config_override::{
     BudgetOverride, LoggingOverride, VerificationOverride, ValidatorOverride,
     apply_overrides,
 };
+pub use gui_config::{GuiConfig, GitInfo};

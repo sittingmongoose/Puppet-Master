@@ -6,6 +6,7 @@
 
 use crate::types::Platform;
 use anyhow::{anyhow, Result};
+use log::debug;
 use serde::{Deserialize, Serialize};
 use std::process::{Command, Stdio};
 
@@ -104,16 +105,29 @@ impl InstallationManager {
 
     /// Check installation status of a platform's CLI tool
     pub fn check_installation(&self, platform: Platform) -> InstallationStatus {
-        let cli_name = platform.default_cli_name();
+        // Use fallback chains to match platform_detector.rs detection logic
+        let cli_names: Vec<&str> = match platform {
+            Platform::Cursor => vec!["agent", "cursor-agent", "cursor"],
+            Platform::Codex => vec!["codex"],
+            Platform::Claude => vec!["claude", "claude-cli"],
+            Platform::Gemini => vec!["gemini", "gemini-cli"],
+            Platform::Copilot => vec!["copilot", "gh"],
+        };
 
-        match self.get_cli_version(cli_name) {
-            Some(version) => InstallationStatus::Installed(version),
-            None => InstallationStatus::NotInstalled,
+        // Try each CLI name in order until one is found
+        for cli_name in cli_names {
+            if let Some(version) = self.get_cli_version(cli_name) {
+                return InstallationStatus::Installed(version);
+            }
         }
+
+        InstallationStatus::NotInstalled
     }
 
     /// Get version of a CLI tool
     fn get_cli_version(&self, cli_name: &str) -> Option<String> {
+        debug!("Checking version for CLI: {}", cli_name);
+        
         // Special case for copilot - check via 'copilot --version'
         // (copilot is a standalone CLI, but we also verify gh for compatibility)
         if cli_name == "copilot" {
@@ -123,9 +137,12 @@ impl InstallationManager {
                     let version_str = String::from_utf8_lossy(&output.stdout);
                     let version = self.extract_version(&version_str);
                     if !version.is_empty() {
+                        debug!("Found copilot version: {}", version);
                         return Some(version);
                     }
                 }
+            } else {
+                debug!("copilot command not found or failed to execute");
             }
             
             // Fallback: check if gh copilot extension exists
@@ -134,9 +151,12 @@ impl InstallationManager {
                     let version_str = String::from_utf8_lossy(&output.stdout);
                     let version = self.extract_version(&version_str);
                     if !version.is_empty() {
+                        debug!("Found gh copilot version: {}", version);
                         return Some(version);
                     }
                 }
+            } else {
+                debug!("gh copilot command not found or failed to execute");
             }
             
             return None;
@@ -146,17 +166,24 @@ impl InstallationManager {
         let version_flags = ["--version", "-v", "version"];
 
         for flag in &version_flags {
-            if let Ok(output) = Command::new(cli_name).arg(flag).output() {
-                if output.status.success() {
-                    let version_str = String::from_utf8_lossy(&output.stdout);
-                    let version = self.extract_version(&version_str);
-                    if !version.is_empty() {
-                        return Some(version);
+            match Command::new(cli_name).arg(flag).output() {
+                Ok(output) => {
+                    if output.status.success() {
+                        let version_str = String::from_utf8_lossy(&output.stdout);
+                        let version = self.extract_version(&version_str);
+                        if !version.is_empty() {
+                            debug!("Found {} version with flag {}: {}", cli_name, flag, version);
+                            return Some(version);
+                        }
                     }
+                }
+                Err(e) => {
+                    debug!("Failed to execute '{}' with flag '{}': {}", cli_name, flag, e);
                 }
             }
         }
 
+        debug!("No version found for CLI: {}", cli_name);
         None
     }
 

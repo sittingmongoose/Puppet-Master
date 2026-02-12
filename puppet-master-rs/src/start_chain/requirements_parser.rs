@@ -21,19 +21,24 @@ pub struct RequirementsParser;
 impl RequirementsParser {
     /// Parse a requirements file
     pub async fn parse_file(path: &Path) -> Result<ParsedRequirements> {
+        // Check if file exists before trying to read it
+        if !path.exists() {
+            anyhow::bail!("Requirements file does not exist: {}", path.display());
+        }
+        
         let extension = path.extension().and_then(|e| e.to_str()).unwrap_or("");
 
         match extension {
             "md" | "markdown" => {
                 let content = tokio::fs::read_to_string(path)
                     .await
-                    .context("Failed to read requirements file")?;
+                    .with_context(|| format!("Failed to read requirements file: {}", path.display()))?;
                 Self::parse_markdown(&content)
             }
             "txt" | "" => {
                 let content = tokio::fs::read_to_string(path)
                     .await
-                    .context("Failed to read requirements file")?;
+                    .with_context(|| format!("Failed to read requirements file: {}", path.display()))?;
                 Self::parse_text(&content)
             }
             "docx" | "pdf" => {
@@ -46,7 +51,7 @@ impl RequirementsParser {
             _ => {
                 let content = tokio::fs::read_to_string(path)
                     .await
-                    .context("Failed to read requirements file")?;
+                    .with_context(|| format!("Failed to read requirements file: {}", path.display()))?;
                 Self::parse_text(&content)
             }
         }

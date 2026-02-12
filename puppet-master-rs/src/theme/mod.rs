@@ -49,6 +49,14 @@ impl AppTheme {
         self.palette().shadow
     }
 
+    pub fn surface(&self) -> Color {
+        self.palette().surface
+    }
+
+    pub fn accent(&self) -> Color {
+        self.palette().accent_blue
+    }
+
     pub fn is_dark(&self) -> bool {
         matches!(self, AppTheme::Dark)
     }

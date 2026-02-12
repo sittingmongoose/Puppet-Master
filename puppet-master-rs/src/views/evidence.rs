@@ -1,11 +1,11 @@
-//! Evidence view - Evidence browser
+//! Evidence view - Evidence browser with category filtering
 //!
-//! Browse and filter evidence items with type and tier filtering.
+//! Browse and filter evidence items with type and tier filtering, file type icons.
 
-use iced::widget::{column, row, text, container, scrollable, Space};
-use iced::{Element, Length};
+use iced::widget::{column, row, text, container, scrollable, Space, text_editor};
+use iced::{Element, Length, Border};
 use crate::app::Message;
-use crate::theme::{AppTheme, tokens};
+use crate::theme::{AppTheme, tokens, fonts, colors};
 use crate::widgets::*;
 use chrono::{DateTime, Utc};
 use std::path::PathBuf;
@@ -54,7 +54,18 @@ impl EvidenceItemType {
         }
     }
 
-    fn _all() -> Vec<Self> {
+    pub fn color(&self) -> iced::Color {
+        match self {
+            EvidenceItemType::TestLog => colors::ELECTRIC_BLUE,
+            EvidenceItemType::Screenshot => colors::HOT_MAGENTA,
+            EvidenceItemType::BrowserTrace => colors::SAFETY_ORANGE,
+            EvidenceItemType::FileSnapshot => colors::ACID_LIME,
+            EvidenceItemType::Metrics => iced::Color::from_rgb(0.6, 0.3, 0.9),
+            EvidenceItemType::GateReport => iced::Color::from_rgb(0.2, 0.8, 0.8),
+        }
+    }
+
+    pub fn all() -> Vec<Self> {
         vec![
             Self::TestLog,
             Self::Screenshot,
@@ -79,42 +90,72 @@ pub struct EvidenceFilter {
     pub tier_id: Option<String>,
 }
 
-/// Evidence browser view
+/// Evidence browser view with 3-column layout
 pub fn view<'a>(
     items: &'a [EvidenceItem],
     filter: &'a EvidenceFilter,
     _available_tiers: &'a [String],
+    selected_item: Option<usize>,
+    preview_content: &'a text_editor::Content,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
+    // 3-column layout: Category filters (1/4) | File list (2/4) | Preview panel (1/4)
+    
+    // LEFT COLUMN: Category filters
+    let mut category_buttons = column![
+        text("Categories")
+            .size(tokens::font_size::BASE)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+    ].spacing(tokens::spacing::SM);
 
-    // Header
-    content = content.push(
-        text("Evidence Browser").size(tokens::font_size::XL)
-    );
-
-    // Filter bar
-    let filter_row = row![
-        text("Filter:").size(tokens::font_size::BASE),
-        styled_button(theme, "Clear Filters", ButtonVariant::Secondary)
-            .on_press(Message::FilterEvidence(crate::app::EvidenceFilter::default())),
-        styled_button(theme, "Refresh", ButtonVariant::Info)
-            .on_press(Message::LoadEvidence),
-    ]
-    .spacing(tokens::spacing::SM)
-    .align_y(iced::Alignment::Center);
-
-    content = content.push(
-        themed_panel(
-            container(filter_row).padding(tokens::spacing::MD),
-            theme
+    category_buttons = category_buttons.push(
+        styled_button(
+            theme,
+            "All",
+            if filter.evidence_type.is_none() {
+                ButtonVariant::Primary
+            } else {
+                ButtonVariant::Ghost
+            }
         )
+        .on_press(Message::FilterEvidence(EvidenceFilter { evidence_type: None, ..filter.clone() }))
     );
 
-    // Evidence list
+    for ev_type in EvidenceItemType::all() {
+        category_buttons = category_buttons.push(
+            styled_button(
+                theme,
+                ev_type.as_str(),
+                if filter.evidence_type == Some(ev_type) {
+                    ButtonVariant::Primary
+                } else {
+                    ButtonVariant::Ghost
+                }
+            )
+            .on_press(Message::FilterEvidence(EvidenceFilter { 
+                evidence_type: Some(ev_type), 
+                tier_id: filter.tier_id.clone() 
+            }))
+        );
+    }
+
+    category_buttons = category_buttons.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
+    category_buttons = category_buttons.push(
+        styled_button(theme, "Refresh", ButtonVariant::Info)
+            .on_press(Message::EvidenceRefresh)
+    );
+
+    let left_panel = themed_panel(
+        container(category_buttons).padding(tokens::spacing::MD),
+        theme
+    );
+
+    // CENTER COLUMN: File list with real file sizes
     let filtered_items: Vec<_> = items
         .iter()
-        .filter(|item| {
+        .enumerate()
+        .filter(|(_, item)| {
             let type_match = filter.evidence_type
                 .map(|t| t == item.evidence_type)
                 .unwrap_or(true);
@@ -126,35 +167,47 @@ pub fn view<'a>(
         })
         .collect();
 
-    if filtered_items.is_empty() {
-        content = content.push(
-            themed_panel(
-                container(
-                    column![
-                        text("No evidence found").size(tokens::font_size::MD),
-                        text("Try adjusting your filters").size(tokens::font_size::SM),
-                    ].spacing(tokens::spacing::SM)
-                ).padding(tokens::spacing::XL),
-                theme
-            )
-        );
+    let center_content = if filtered_items.is_empty() {
+        column![
+            text("No evidence found")
+                .size(tokens::font_size::MD)
+                .color(theme.ink()),
+            Space::new().height(Length::Fixed(tokens::spacing::SM)),
+            text("Try adjusting your filters")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
+        ].spacing(tokens::spacing::SM)
     } else {
         let mut items_col = column![].spacing(tokens::spacing::SM);
 
-        for item in filtered_items {
+        for (idx, item) in filtered_items {
+            // Get real file size
+            let file_size_str = if item.path.exists() {
+                match std::fs::metadata(&item.path) {
+                    Ok(metadata) => format_file_size(metadata.len()),
+                    Err(_) => "Unknown".to_string(),
+                }
+            } else {
+                "Not found".to_string()
+            };
+
+            let is_selected = selected_item == Some(idx);
+
             let item_row = row![
-                // Type icon badge
+                // Type icon badge with color
                 container(
                     text(item.evidence_type.icon())
                         .size(tokens::font_size::BASE)
+                        .font(fonts::FONT_UI_BOLD)
+                        .color(colors::INK_BLACK)
                 )
                 .padding(tokens::spacing::MD)
-                .width(Length::Fixed(80.0))
-                .style(|_theme: &iced::Theme| {
+                .width(Length::Fixed(60.0))
+                .style(move |_theme: &iced::Theme| {
                     iced::widget::container::Style {
-                        background: Some(iced::Background::Color(crate::theme::colors::ELECTRIC_BLUE)),
-                        border: iced::Border {
-                            color: crate::theme::colors::INK_BLACK,
+                        background: Some(iced::Background::Color(item.evidence_type.color())),
+                        border: Border {
+                            color: colors::INK_BLACK,
                             width: tokens::borders::MEDIUM,
                             radius: tokens::radii::NONE.into(),
                         },
@@ -163,40 +216,157 @@ pub fn view<'a>(
                 }),
                 // Details
                 column![
+                    text(item.evidence_type.as_str())
+                        .size(tokens::font_size::BASE)
+                        .font(fonts::FONT_UI_BOLD)
+                        .color(theme.ink()),
+                    text(&item.summary)
+                        .size(tokens::font_size::SM)
+                        .color(theme.ink()),
                     row![
-                        text(item.evidence_type.as_str()).size(tokens::font_size::BASE),
-                        Space::new().width(Length::Fixed(tokens::spacing::LG)),
-                        text(format!("Tier: {}", item.tier_id)).size(tokens::font_size::SM),
-                    ].spacing(tokens::spacing::SM),
-                    text(&item.summary).size(tokens::font_size::SM),
-                    text(item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string()).size(tokens::font_size::XS),
+                        text(item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string())
+                            .size(tokens::font_size::XS)
+                            .color(theme.ink_faded()),
+                        text(format!(" | {}", file_size_str))
+                            .size(tokens::font_size::XS)
+                            .color(theme.ink_faded()),
+                    ],
                 ].spacing(tokens::spacing::XS),
                 Space::new().width(Length::Fill),
-                // View button
-                styled_button(theme, "View", ButtonVariant::Info)
-                    .on_press(Message::SelectEvidence(item.id.clone())),
+                // Action buttons
+                row![
+                    styled_button(theme, "View", ButtonVariant::Info)
+                        .on_press(Message::EvidenceViewItem(idx)),
+                    styled_button(theme, "Download", ButtonVariant::Secondary)
+                        .on_press(Message::EvidenceDownloadItem(idx)),
+                ].spacing(tokens::spacing::XS)
             ]
             .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center);
 
             items_col = items_col.push(
-                container(item_row).padding(tokens::spacing::MD)
+                container(item_row)
+                    .padding(tokens::spacing::MD)
+                    .width(Length::Fill)
+                    .style(move |_: &iced::Theme| container::Style {
+                        background: Some(iced::Background::Color(
+                            if is_selected {
+                                iced::Color { a: 0.15, ..colors::ELECTRIC_BLUE }
+                            } else {
+                                theme.paper()
+                            }
+                        )),
+                        border: Border {
+                            color: if is_selected { colors::ELECTRIC_BLUE } else { theme.ink() },
+                            width: if is_selected { tokens::borders::THICK } else { tokens::borders::MEDIUM },
+                            radius: tokens::radii::SM.into(),
+                        },
+                        ..Default::default()
+                    })
             );
         }
 
-        content = content.push(
-            themed_panel(
-                container(
-                    scrollable(items_col)
-                        .height(Length::Fill)
-                ).padding(tokens::spacing::MD),
-                theme
-            )
-        );
-    }
+        items_col
+    };
 
-    container(content)
+    let center_panel = themed_panel(
+        container(
+            scrollable(center_content)
+                .height(Length::Fill)
+        ).padding(tokens::spacing::MD),
+        theme
+    );
+
+    // RIGHT COLUMN: Preview panel
+    let preview_panel_content = column![
+        text("Preview")
+            .size(tokens::font_size::BASE)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        Space::new().height(Length::Fixed(tokens::spacing::SM)),
+        if selected_item.is_some() {
+            container(
+                text_editor(preview_content)
+                    .font(iced::Font::MONOSPACE)
+                    .height(Length::Fill)
+            )
+            .padding(tokens::spacing::SM)
+            .width(Length::Fill)
+            .height(Length::Fill)
+            .style(move |_: &iced::Theme| container::Style {
+                background: Some(iced::Background::Color(
+                    iced::Color::from_rgb(0.05, 0.05, 0.05)
+                )),
+                border: Border {
+                    color: theme.ink(),
+                    width: tokens::borders::THIN,
+                    radius: tokens::radii::SM.into(),
+                },
+                ..Default::default()
+            })
+        } else {
+            container(
+                text("Select an item to preview")
+                    .size(tokens::font_size::SM)
+                    .color(theme.ink_faded())
+            )
+            .padding(tokens::spacing::XL)
+            .width(Length::Fill)
+            .height(Length::Fill)
+            .style(move |_: &iced::Theme| container::Style::default())
+        }
+    ].spacing(tokens::spacing::SM);
+
+    let right_panel = themed_panel(
+        container(preview_panel_content)
+            .padding(tokens::spacing::MD)
+            .height(Length::Fill),
+        theme
+    );
+
+    // Combine all 3 columns
+    let main_content = row![
+        container(left_panel)
+            .width(Length::FillPortion(1))
+            .height(Length::Fill),
+        container(center_panel)
+            .width(Length::FillPortion(2))
+            .height(Length::Fill),
+        container(right_panel)
+            .width(Length::FillPortion(1))
+            .height(Length::Fill),
+    ]
+    .spacing(tokens::spacing::MD);
+
+    let full_content = column![
+        text("Evidence Browser")
+            .size(tokens::font_size::XL)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        main_content,
+    ]
+    .spacing(tokens::spacing::LG)
+    .padding(tokens::spacing::LG);
+
+    container(full_content)
         .width(Length::Fill)
         .height(Length::Fill)
         .into()
+}
+
+// Helper function to format file sizes
+fn format_file_size(bytes: u64) -> String {
+    const KB: u64 = 1024;
+    const MB: u64 = KB * 1024;
+    const GB: u64 = MB * 1024;
+
+    if bytes >= GB {
+        format!("{:.2} GB", bytes as f64 / GB as f64)
+    } else if bytes >= MB {
+        format!("{:.2} MB", bytes as f64 / MB as f64)
+    } else if bytes >= KB {
+        format!("{:.2} KB", bytes as f64 / KB as f64)
+    } else {
+        format!("{} B", bytes)
+    }
 }

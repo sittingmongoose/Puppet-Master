@@ -25,9 +25,14 @@ fn find_crate_root() -> Option<PathBuf> {
 }
 
 async fn file_contains(path: &Path, needle: &str) -> Result<bool, String> {
+    // Check if file exists before trying to read it
+    if !path.exists() {
+        return Err(format!("File does not exist: {}", path.display()));
+    }
+    
     let content = tokio::fs::read_to_string(path)
         .await
-        .map_err(|e| format!("Failed to read {path:?}: {e}"))?;
+        .map_err(|e| format!("Failed to read {}: {}", path.display(), e))?;
     Ok(content.contains(needle))
 }
 

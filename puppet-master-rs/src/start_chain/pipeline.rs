@@ -354,6 +354,11 @@ impl StartChainPipeline {
         match input {
             RequirementsInput::Text(text) => Ok(text.clone()),
             RequirementsInput::File(path) => {
+                // Check if file exists before trying to read it
+                if !path.exists() {
+                    return Err(anyhow!("Requirements file does not exist: {}", path.display()));
+                }
+                
                 let ext = path
                     .extension()
                     .and_then(|s| s.to_str())
@@ -367,7 +372,7 @@ impl StartChainPipeline {
                 } else {
                     tokio::fs::read_to_string(path)
                         .await
-                        .context("Failed to read requirements file")
+                        .with_context(|| format!("Failed to read requirements file: {}", path.display()))
                 }
             }
         }

@@ -1,13 +1,14 @@
-//! Ledger view - Event ledger browser
+//! Ledger view - Event ledger browser with type filtering and summary stats
 //!
-//! Displays event log with filtering by type, tier, and limit.
+//! Displays event log with filtering by type, tier, and limit with color-coded badges.
 
-use iced::widget::{column, row, text, container, scrollable, Space};
-use iced::{Element, Length};
+use iced::widget::{column, row, text, container, scrollable, Space, pick_list, text_editor};
+use iced::{Element, Length, Border};
 use crate::app::Message;
-use crate::theme::{AppTheme, tokens};
+use crate::theme::{AppTheme, tokens, fonts, colors};
 use crate::widgets::*;
 use chrono::{DateTime, Utc};
+use std::collections::{HashSet, HashMap};
 
 /// Ledger entry
 #[derive(Debug, Clone)]
@@ -35,7 +36,7 @@ pub enum EventType {
 }
 
 impl EventType {
-    fn as_str(&self) -> &str {
+    pub fn as_str(&self) -> &str {
         match self {
             EventType::OrchestratorStarted => "Orchestrator Started",
             EventType::OrchestratorStopped => "Orchestrator Stopped",
@@ -51,20 +52,12 @@ impl EventType {
         }
     }
 
-    fn color(&self) -> iced::Color {
+    pub fn color(&self) -> iced::Color {
         match self {
-            EventType::OrchestratorStarted | EventType::TierStarted => {
-                iced::Color::from_rgb(0.0, 0.7, 1.0)
-            }
-            EventType::OrchestratorStopped | EventType::TierCompleted => {
-                iced::Color::from_rgb(0.7, 1.0, 0.0)
-            }
-            EventType::TierFailed => {
-                iced::Color::from_rgb(1.0, 0.0, 0.4)
-            }
-            EventType::PlatformRequest | EventType::PlatformResponse => {
-                iced::Color::from_rgb(1.0, 0.5, 0.0)
-            }
+            EventType::OrchestratorStarted | EventType::TierStarted => colors::ELECTRIC_BLUE,
+            EventType::OrchestratorStopped | EventType::TierCompleted => colors::ACID_LIME,
+            EventType::TierFailed => colors::HOT_MAGENTA,
+            EventType::PlatformRequest | EventType::PlatformResponse => colors::SAFETY_ORANGE,
             EventType::VerificationStarted | EventType::VerificationCompleted => {
                 iced::Color::from_rgb(0.5, 0.0, 1.0)
             }
@@ -74,7 +67,7 @@ impl EventType {
         }
     }
 
-    fn _all() -> Vec<Self> {
+    pub fn all() -> Vec<Self> {
         vec![
             Self::OrchestratorStarted,
             Self::OrchestratorStopped,
@@ -105,36 +98,151 @@ pub struct LedgerFilter {
     pub limit: usize,
 }
 
-/// Event ledger view
+/// Event ledger view with type filtering and stats
 pub fn view<'a>(
     entries: &'a [LedgerEntry],
     filter: &'a LedgerFilter,
     _available_tiers: &'a [String],
+    expanded_events: &'a HashSet<usize>,
+    ledger_expanded_contents: &'a HashMap<usize, iced::widget::text_editor::Content>,
+    filter_tier: &'a str,
+    filter_session: &'a str,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
-    // Header
+    // Header with total count
     content = content.push(
         row![
-            text("Event Ledger").size(tokens::font_size::XL),
+            text("Event Ledger")
+                .size(tokens::font_size::DISPLAY)
+                .font(crate::theme::fonts::FONT_DISPLAY)
+                .color(theme.ink()),
             Space::new().width(Length::Fill),
-            text(format!("{} events", entries.len())).size(tokens::font_size::SM),
+            text(format!("{} total events", entries.len()))
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
         ]
         .spacing(tokens::spacing::LG)
         .align_y(iced::Alignment::Center)
     );
 
-    // Filter bar
-    let filter_row = row![
-        text("Filter:").size(tokens::font_size::SM),
-        styled_button(theme, "Clear Filters", ButtonVariant::Secondary)
-            .on_press(Message::FilterLedger(crate::app::LedgerFilter::default())),
-        styled_button(theme, "Refresh", ButtonVariant::Secondary)
-            .on_press(Message::LoadLedger),
-    ]
-    .spacing(tokens::spacing::SM)
-    .align_y(iced::Alignment::Center);
+    // Summary stats - count events by type
+    let mut type_counts = std::collections::HashMap::new();
+    for entry in entries {
+        *type_counts.entry(entry.event_type.as_str()).or_insert(0) += 1;
+    }
+
+    let mut stats_row = row![
+        text("Events by Type:")
+            .size(tokens::font_size::BASE)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+    ].spacing(tokens::spacing::MD);
+
+    for (type_name, count) in type_counts.iter().take(5) {
+        stats_row = stats_row.push(
+            container(
+                text(format!("{}: {}", type_name, count))
+                    .size(tokens::font_size::XS)
+                    .color(theme.ink())
+            )
+            .padding(tokens::spacing::XS)
+            .style(move |_: &iced::Theme| container::Style {
+                background: Some(iced::Background::Color(
+                    iced::Color { a: 0.1, ..theme.ink() }
+                )),
+                border: Border {
+                    color: theme.ink(),
+                    width: tokens::borders::THIN,
+                    radius: tokens::radii::SM.into(),
+                },
+                ..Default::default()
+            })
+        );
+    }
+
+    content = content.push(
+        themed_panel(
+            container(stats_row).padding(tokens::spacing::MD),
+            theme
+        )
+    );
+
+    // Filter bar with event type, tier, session, and limit controls
+    let mut filter_row = row![
+        text("Filter:").size(tokens::font_size::SM).color(theme.ink()),
+    ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center);
+
+    // Event type pick_list
+    let event_type_options: Vec<String> = std::iter::once("All".to_string())
+        .chain(EventType::all().iter().map(|et| et.as_str().to_string()))
+        .collect();
+    
+    let selected_type = filter.event_type
+        .map(|et| et.as_str().to_string())
+        .unwrap_or_else(|| "All".to_string());
+    
+    filter_row = filter_row.push(
+        pick_list(
+            event_type_options,
+            Some(selected_type),
+            |type_str| {
+                if type_str == "All" {
+                    Message::LedgerFilterTypeChanged(None)
+                } else {
+                    Message::LedgerFilterTypeChanged(Some(type_str))
+                }
+            }
+        )
+        .width(Length::Fixed(180.0))
+    );
+
+    // Tier filter input
+    filter_row = filter_row.push(
+        styled_text_input(theme, "Tier ID", filter_tier)
+            .on_input(Message::LedgerFilterTierChanged)
+            .width(Length::Fixed(120.0))
+    );
+
+    // Session filter input
+    filter_row = filter_row.push(
+        styled_text_input(theme, "Session ID", filter_session)
+            .on_input(Message::LedgerFilterSessionChanged)
+            .width(Length::Fixed(120.0))
+    );
+
+    // Limit pick_list
+    let limit_options = vec!["50".to_string(), "100".to_string(), "250".to_string(), "500".to_string()];
+    let current_limit = if filter.limit == 0 {
+        "100".to_string()
+    } else {
+        filter.limit.to_string()
+    };
+    
+    filter_row = filter_row.push(
+        row![
+            text("Limit:").size(tokens::font_size::SM).color(theme.ink()),
+            pick_list(
+                limit_options,
+                Some(current_limit),
+                Message::LedgerFilterLimitChanged
+            )
+            .width(Length::Fixed(80.0))
+        ].spacing(tokens::spacing::XS)
+    );
+
+    // Clear and Refresh buttons
+    filter_row = filter_row.push(
+        styled_button(theme, "Clear", ButtonVariant::Ghost)
+            .on_press(Message::LedgerClearFilters)
+    );
+    
+    filter_row = filter_row.push(Space::new().width(Length::Fill));
+    filter_row = filter_row.push(
+        styled_button(theme, "Refresh", ButtonVariant::Info)
+            .on_press(Message::LedgerRefresh)
+    );
 
     content = content.push(
         themed_panel(container(filter_row).padding(tokens::spacing::MD), theme)
@@ -162,8 +270,13 @@ pub fn view<'a>(
             themed_panel(
                 container(
                     column![
-                        text("No events found").size(tokens::font_size::BASE),
-                        text("Try adjusting your filters").size(tokens::font_size::SM),
+                        text("No events found")
+                            .size(tokens::font_size::BASE)
+                            .color(theme.ink()),
+                        Space::new().height(Length::Fixed(tokens::spacing::SM)),
+                        text("Try adjusting your filters")
+                            .size(tokens::font_size::SM)
+                            .color(theme.ink_faded()),
                     ].spacing(tokens::spacing::SM)
                 ).padding(tokens::spacing::XL),
                 theme,
@@ -172,45 +285,160 @@ pub fn view<'a>(
     } else {
         let mut events_col = column![].spacing(tokens::spacing::XS);
 
-        for entry in filtered_entries {
+        for (idx, entry) in filtered_entries.into_iter().enumerate() {
+            let is_expanded = expanded_events.contains(&idx);
+            let entry_id = entry.id;
+            let event_type = entry.event_type;
+            let event_type_str = event_type.as_str().to_string();
+            let event_type_color = event_type.color();
+            let tier_id_display = entry.tier_id.as_deref().unwrap_or("—").to_string();
+            let data_preview = if is_expanded {
+                "▼ Click to collapse".to_string()
+            } else {
+                format!("▶ {}", truncate(&entry.data, 60))
+            };
+            let timestamp_str = entry.timestamp.format("%H:%M:%S").to_string();
+            let data_full = entry.data.clone();
+            
             let event_row = row![
                 // Timestamp
                 container(
-                    text(entry.timestamp.format("%H:%M:%S").to_string()).size(tokens::font_size::XS)
-                ).width(Length::Fixed(80.0)),
-                // Event type badge
-                container(
-                    text(entry.event_type.as_str())
+                    text(timestamp_str)
                         .size(tokens::font_size::XS)
+                        .color(theme.ink())
+                ).width(Length::Fixed(80.0)),
+                // Event type badge with color
+                container(
+                    text(event_type_str)
+                        .size(tokens::font_size::XS)
+                        .color(colors::INK_BLACK)
                 )
                 .padding(tokens::spacing::XS)
                 .style(move |_theme: &iced::Theme| {
                     iced::widget::container::Style {
-                        background: Some(iced::Background::Color(entry.event_type.color())),
-                        border: iced::Border {
-                            color: iced::Color::BLACK,
-                            width: 1.0,
-                            radius: 3.0.into(),
+                        background: Some(iced::Background::Color(event_type_color)),
+                        border: Border {
+                            color: colors::INK_BLACK,
+                            width: tokens::borders::THIN,
+                            radius: tokens::radii::SM.into(),
                         },
-                        text_color: Some(iced::Color::BLACK),
+                        text_color: Some(colors::INK_BLACK),
                         ..Default::default()
                     }
                 })
-                .width(Length::Fixed(200.0)),
+                .width(Length::Fixed(190.0)),
                 // Tier ID
                 container(
-                    text(entry.tier_id.as_deref().unwrap_or("N/A")).size(tokens::font_size::XS)
+                    text(tier_id_display)
+                        .size(tokens::font_size::XS)
+                        .color(theme.ink())
                 ).width(Length::Fixed(120.0)),
-                // Data preview (truncated)
+                // Data preview (truncated) or expand icon
                 container(
-                    text(truncate(&entry.data, 80)).size(tokens::font_size::XS)
+                    if is_expanded {
+                        text("▼ Click to collapse")
+                            .size(tokens::font_size::XS)
+                            .color(colors::ELECTRIC_BLUE)
+                    } else {
+                        text(data_preview)
+                            .size(tokens::font_size::XS)
+                            .color(theme.ink())
+                    }
                 ).width(Length::Fill),
             ]
             .spacing(tokens::spacing::SM)
             .align_y(iced::Alignment::Center);
 
+            let mut event_content = column![];
+            
+            // Main row - clickable
+            event_content = event_content.push(
+                iced::widget::button(event_row)
+                    .on_press(Message::LedgerToggleEvent(idx))
+                    .padding(tokens::spacing::SM)
+                    .style(move |theme: &iced::Theme, status| {
+                        let bg_color = if (entry_id % 2) == 0 {
+                            iced::Color { a: 0.05, ..theme.palette().text }
+                        } else {
+                            iced::Color::TRANSPARENT
+                        };
+                        
+                        match status {
+                            iced::widget::button::Status::Hovered => iced::widget::button::Style {
+                                background: Some(iced::Background::Color(
+                                    iced::Color { a: 0.1, ..colors::ELECTRIC_BLUE }
+                                )),
+                                border: Border::default(),
+                                text_color: theme.palette().text,
+                                ..Default::default()
+                            },
+                            _ => iced::widget::button::Style {
+                                background: Some(iced::Background::Color(bg_color)),
+                                border: Border::default(),
+                                text_color: theme.palette().text,
+                                ..Default::default()
+                            },
+                        }
+                    })
+            );
+
+            // Expanded content - full JSON data using text_editor for selectability
+            if is_expanded {
+                // Use text_editor content if available, otherwise fallback to text
+                let expanded_element: Element<'_, Message> = if let Some(editor_content) = ledger_expanded_contents.get(&idx) {
+                    container(
+                        text_editor(editor_content)
+                            .font(fonts::FONT_MONO)
+                            .size(tokens::font_size::XS)
+                            .height(Length::Fixed(150.0))
+                    )
+                    .padding(tokens::spacing::MD)
+                    .width(Length::Fill)
+                    .style(move |_: &iced::Theme| container::Style {
+                        background: Some(iced::Background::Color(
+                            iced::Color::from_rgb(0.05, 0.05, 0.05)
+                        )),
+                        border: Border {
+                            color: colors::ELECTRIC_BLUE,
+                            width: tokens::borders::THIN,
+                            radius: tokens::radii::SM.into(),
+                        },
+                        ..Default::default()
+                    })
+                    .into()
+                } else {
+                    // Fallback to text if content not in HashMap
+                    container(
+                        scrollable(
+                            text(data_full)
+                                .size(tokens::font_size::XS)
+                                .font(fonts::FONT_MONO)
+                                .color(colors::ACID_LIME)
+                        )
+                        .height(Length::Fixed(150.0))
+                    )
+                    .padding(tokens::spacing::MD)
+                    .width(Length::Fill)
+                    .style(move |_: &iced::Theme| container::Style {
+                        background: Some(iced::Background::Color(
+                            iced::Color::from_rgb(0.05, 0.05, 0.05)
+                        )),
+                        border: Border {
+                            color: colors::ELECTRIC_BLUE,
+                            width: tokens::borders::THIN,
+                            radius: tokens::radii::SM.into(),
+                        },
+                        ..Default::default()
+                    })
+                    .into()
+                };
+                
+                event_content = event_content.push(expanded_element);
+            }
+
             events_col = events_col.push(
-                container(event_row).padding(tokens::spacing::SM)
+                container(event_content)
+                    .width(Length::Fill)
             );
         }
 
@@ -225,23 +453,23 @@ pub fn view<'a>(
         );
     }
 
-    // Export button
+    // Export/clear buttons
     content = content.push(
         themed_panel(
             container(
                 row![
-                    styled_button(theme, "Export Ledger", ButtonVariant::Secondary)
-                        .on_press(Message::NavigateTo(Page::Ledger)),
+                    styled_button(theme, "Export Ledger", ButtonVariant::Info)
+                        .on_press(Message::LedgerExport),
                     Space::new().width(Length::Fill),
                     styled_button(theme, "Clear Ledger", ButtonVariant::Danger)
-                        .on_press(Message::NavigateTo(Page::Ledger)),
+                        .on_press(Message::LedgerClear),
                 ].spacing(tokens::spacing::SM)
             ).padding(tokens::spacing::MD),
             theme,
         )
     );
 
-    container(content)
+    scrollable(content)
         .width(Length::Fill)
         .height(Length::Fill)
         .into()

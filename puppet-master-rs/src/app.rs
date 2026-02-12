@@ -6,6 +6,7 @@ use anyhow::Result;
 use chrono::{DateTime, Utc};
 use iced::{
     window, Element, Subscription, Task, Theme,
+    widget::text_editor,
 };
 use std::collections::{HashMap, HashSet};
 use std::hash::{Hash, Hasher};
@@ -85,6 +86,14 @@ pub enum AuthActionKind {
 }
 
 #[derive(Debug, Clone)]
+pub struct GitInfoDisplay {
+    pub user_name: String,
+    pub user_email: String,
+    pub remote_url: String,
+    pub current_branch: String,
+}
+
+#[derive(Debug, Clone)]
 pub enum ModalContent {
     Confirm {
         title: String,
@@ -131,6 +140,38 @@ pub use crate::state::{MetricsCollector, MetricsSnapshot};
 pub use crate::views::login::AuthStatus;
 pub use crate::views::setup::PlatformStatus;
 
+// ============================================================================
+// Wizard Types
+// ============================================================================
+
+/// Configuration for a single tier in the wizard
+#[derive(Debug, Clone)]
+pub struct WizardTierConfig {
+    pub platform: String,
+    pub model: String,
+    pub reasoning_effort: String,
+    pub plan_mode: bool,
+    pub ask_mode: bool,
+    pub output_format: String,
+}
+
+impl Default for WizardTierConfig {
+    fn default() -> Self {
+        Self {
+            platform: "cursor".to_string(),
+            model: "auto".to_string(),
+            reasoning_effort: "medium".to_string(),
+            plan_mode: true,
+            ask_mode: false,
+            output_format: "markdown".to_string(),
+        }
+    }
+}
+
+// ============================================================================
+// Main App State
+// ============================================================================
+
 pub struct App {
     // Navigation
     pub current_page: Page,
@@ -143,6 +184,7 @@ pub struct App {
     pub current_item: Option<CurrentItem>,
     pub progress: ProgressState,
     pub output_lines: Vec<OutputLine>,
+    pub terminal_editor_content: text_editor::Content,
     pub last_error: Option<String>,
     pub start_time: Option<DateTime<Utc>>,
 
@@ -157,24 +199,45 @@ pub struct App {
     pub doctor_results: Vec<DoctorCheckResult>,
     pub doctor_running: bool,
     pub doctor_fixing: HashSet<String>,
+    pub doctor_platform_selector_visible: bool,
+    pub doctor_selected_platforms: Vec<crate::types::Platform>,
+    pub doctor_expanded_checks: HashSet<String>,
+    pub doctor_detail_contents: HashMap<String, text_editor::Content>,
 
     // Config
     pub config_text: String,
+    pub config_editor_content: text_editor::Content,
     pub config_valid: bool,
     pub config_error: Option<String>,
+    pub config_active_tab: usize,  // 0-6 for the 7 tabs (Tiers, Branching, Verification, Memory, Budgets, Advanced, YAML)
+    pub config_is_dirty: bool,
+    pub gui_config: crate::config::gui_config::GuiConfig,
+    pub config_models: HashMap<String, Vec<String>>,
+    pub config_git_info: Option<crate::config::gui_config::GitInfo>,
 
     // Tiers
     pub tier_tree: Vec<TierDisplayNode>,
     pub selected_tier: Option<String>,
+    pub tier_details_content: text_editor::Content,
+    pub expanded_tiers: HashSet<String>,
+    pub selected_tier_details: Option<crate::views::tiers::TierDetails>,
 
     // Evidence
     pub evidence_items: Vec<EvidenceItem>,
     pub evidence_filter: EvidenceFilter,
+    pub evidence_selected_item: Option<usize>,
+    pub evidence_preview_content: text_editor::Content,
+    pub evidence_preview_path: Option<String>,
 
     // History
     pub history_sessions: Vec<SessionInfo>,
     pub history_page: usize,
     history_active_by_item: HashMap<String, Vec<String>>,
+    pub history_filter: Option<crate::views::history::SessionStatus>,
+    pub history_search: String,
+    pub history_items_per_page: usize,
+    pub history_display_sessions: Vec<crate::views::history::SessionInfo>,
+    pub history_total_pages: usize,
 
     // Metrics
     pub metrics: MetricsSnapshot,
@@ -183,16 +246,43 @@ pub struct App {
     // Ledger
     pub ledger_entries: Vec<LedgerEntry>,
     pub ledger_filter: LedgerFilter,
+    pub ledger_expanded_entries: HashSet<usize>,
+    pub ledger_expanded_contents: HashMap<usize, text_editor::Content>,
+    pub ledger_expanded_events: HashSet<usize>,
+    pub ledger_filter_tier: String,
+    pub ledger_filter_session: String,
 
     // Login
     pub platform_auth_status: HashMap<String, AuthStatus>,
     pub login_in_progress: HashMap<crate::platforms::AuthTarget, AuthActionKind>,
+    pub login_messages: HashMap<String, String>,     // platform -> login result message
+    pub login_auth_urls: HashMap<String, String>,    // platform -> auth URL from login
+    pub git_info: Option<GitInfoDisplay>,            // git user, email, remote
+    pub github_auth_status: Option<String>,          // "authenticated" or "not_authenticated"
     pub setup_installing: Option<crate::types::Platform>,
+    pub login_cli_content: text_editor::Content,
+
+    // Projects
+    pub new_project_name: String,
+    pub new_project_path: String,
+    pub show_new_project_form: bool,
 
     // Wizard
     pub wizard_step: usize,
+    pub wizard_project_name: String,
+    pub wizard_project_path: String,
     pub wizard_requirements_text: String,
-    pub wizard_prd_preview: Option<String>,
+    pub wizard_prd_platform: String,
+    pub wizard_prd_model: String,
+    pub wizard_prd_text: String,  // generated PRD (editable in step 3)
+    pub wizard_prd_editor_content: text_editor::Content,
+    pub wizard_prd_preview: Option<String>,  // kept for compatibility
+    pub wizard_tier_configs: HashMap<String, WizardTierConfig>,  // "phase"/"task"/"subtask"/"iteration"
+    pub wizard_plan_text: String,
+    pub wizard_generating: bool,  // loading state
+    pub wizard_models: HashMap<String, Vec<String>>,  // platform -> model list
+    pub wizard_requirements_preview_content: text_editor::Content,
+    pub wizard_plan_content: text_editor::Content,
 
     // Setup
     pub setup_platform_statuses: Vec<PlatformStatus>,
@@ -214,9 +304,17 @@ pub struct App {
     // Window size
     pub window_width: f32,
     pub window_height: f32,
+    
+    // Retro overlay effects
+    pub retro_overlay: crate::widgets::RetroOverlay,
 
     // Settings
     pub minimize_to_tray: bool,
+    pub settings_log_level: String,
+    pub settings_auto_scroll: bool,
+    pub settings_show_timestamps: bool,
+    pub settings_retention_days: u32,
+    pub settings_intensive_logging: bool,
 
     // Backend channels
     pub event_receiver: Option<crossbeam_channel::Receiver<PuppetMasterEvent>>,
@@ -228,11 +326,22 @@ pub struct App {
     // Shutdown flag
     shutdown: Arc<AtomicBool>,
 
+    // Memory
+    pub memory_content: text_editor::Content,
+    pub memory_content_string: String,
+    pub memory_section: crate::views::memory::MemorySection,
+    pub memory_loading: bool,
+    
+    // Metrics  
+    pub metrics_summary_content: text_editor::Content,
+
+    // Coverage
+    pub coverage_phase_filter: String,
+
     // View helper data (constant placeholders stored as fields to avoid borrow issues)
     _empty_string_vec: Vec<String>,
     _no_tier_details: Option<crate::views::tiers::TierDetails>,
     _empty_coverage: Vec<crate::views::coverage::RequirementCoverage>,
-    _memory_section: crate::views::memory::MemorySection,
 }
 
 // ============================================================================
@@ -272,12 +381,43 @@ pub enum Message {
     OpenProject(String),
     OpenProjectFolderPicker,
     ProjectFolderSelected(Option<PathBuf>),
+    ProjectsRefresh,
+    ProjectsLoaded(Vec<ProjectInfo>),
+    BrowseNewProjectPath,
+    NewProjectPathSelected(Option<PathBuf>),
+    CreateNewProject,
+    ProjectCreated(Result<(), String>),
 
     // Config
     ConfigTextChanged(String),
+    ConfigEditorAction(text_editor::Action),
+    ConfigTabChanged(usize),
+    ConfigFieldChanged(String, String), // field_path, new_value
     SaveConfig,
     ReloadConfig,
     ValidateConfig,
+    RefreshModels,
+    // New GUI config messages
+    ConfigTierPlatformChanged(String, String), // tier_name, platform
+    ConfigTierModelChanged(String, String),
+    ConfigTierReasoningChanged(String, String),
+    ConfigTierPlanModeToggled(String),
+    ConfigTierAskModeToggled(String),
+    ConfigTierOutputFormatChanged(String, String),
+    ConfigTierMaxIterChanged(String, String),
+    ConfigTierFailureStyleChanged(String, String),
+    ConfigBranchingFieldChanged(String, String),
+    ConfigGranularityChanged(String),
+    ConfigVerificationFieldChanged(String, String),
+    ConfigVerificationScreenshotToggled,
+    ConfigMemoryFieldChanged(String, String),
+    ConfigMemoryMultiLevelToggled,
+    ConfigBudgetFieldChanged(String, String, String), // platform, field, value
+    ConfigAdvancedFieldChanged(String, String),
+    ConfigAdvancedCheckboxToggled(String),
+    LoadConfigResult(Result<crate::config::gui_config::GuiConfig, String>),
+    LoadGitInfo,
+    GitInfoLoaded(Option<crate::config::gui_config::GitInfo>),
 
     // Doctor
     RunAllChecks,
@@ -286,12 +426,39 @@ pub enum Message {
     DoctorResultsReceived(Vec<DoctorCheckResult>),
     DoctorCheckResultReceived(DoctorCheckResult),
     DoctorRunFailed(ToastType, String),
+    ToggleDoctorPlatformSelector,
+    ToggleDoctorPlatform(crate::types::Platform),
+    ToggleDoctorCheckExpand(String), // check name
+    InstallAllMissing,
 
     // Wizard
     WizardNextStep,
     WizardPrevStep,
+    WizardProjectNameChanged(String),
+    WizardProjectPathChanged(String),
     WizardRequirementsChanged(String),
-    WizardFileSelected(Option<PathBuf>),
+    WizardPrdPlatformChanged(String),
+    WizardPrdModelChanged(String),
+    WizardPrdEditorAction(text_editor::Action),
+    WizardTierPlatformChanged(String, String),  // tier, platform
+    WizardTierModelChanged(String, String),  // tier, model
+    WizardTierReasoningChanged(String, String),  // tier, effort
+    WizardTierPlanModeToggled(String, bool),  // tier, value
+    WizardTierAskModeToggled(String, bool),
+    WizardTierOutputFormatChanged(String, String),
+    WizardBrowseProjectPath,  // opens folder picker
+    WizardBrowseRequirementsFile,  // opens file picker
+    WizardProjectPathSelected(Option<PathBuf>),
+    WizardRequirementsFileSelected(Option<PathBuf>),
+    WizardGeneratePrd,
+    WizardPrdGenerated(Result<String, String>),
+    WizardGeneratePlan,
+    WizardPlanGenerated(Result<String, String>),
+    WizardStartChain,
+    WizardRefreshModels,
+    WizardModelsLoaded(HashMap<String, Vec<String>>),
+    OpenWizardFilePicker,
+    WizardFilePickerResult(Option<PathBuf>),
     WizardGenerate,
     WizardSave,
 
@@ -304,15 +471,61 @@ pub enum Message {
     SelectEvidence(String),
     FilterEvidence(EvidenceFilter),
     LoadEvidence,
+    EvidenceSelectItem(usize),
+    EvidenceViewItem(usize),
+    EvidenceDownloadItem(usize),
+    EvidenceRefresh,
+    EvidenceLoadContent(String),
+    EvidenceContentLoaded(String, String),
 
     // History
     HistoryPageChanged(usize),
     SelectSession(String),
     LoadHistory,
+    HistoryNextPage,
+    HistoryPrevPage,
+    HistoryFilterChanged(Option<crate::views::history::SessionStatus>),
+    HistorySearchChanged(String),
+    HistoryViewSession(String),
+
+    // Tiers
+    ToggleTierExpand(String),
+    SelectTier(String),
+    ExpandAllTiers,
+    CollapseAllTiers,
+
+    // Settings
+    SettingsLogLevelChanged(String),
+    SettingsAutoScrollToggled(bool),
+    SettingsShowTimestampsToggled(bool),
+    SettingsRetentionDaysChanged(String),
+    SettingsMinimizeToTrayToggled(bool),
+    SettingsIntensiveLoggingToggled(bool),
+    SettingsClearData,
+    SettingsResetDefaults,
+    SettingsOpenDataDir,
+    SaveSettings,
+
+    // Memory
+    MemorySectionChanged(crate::views::memory::MemorySection),
+    LoadMemoryContent,
+    MemoryContentLoaded(String),
+    MemoryEditExternal,
+    MemoryExport,
+    MemoryRefresh,
 
     // Ledger
     FilterLedger(LedgerFilter),
     LoadLedger,
+    LedgerFilterTypeChanged(Option<String>),
+    LedgerFilterTierChanged(String),
+    LedgerFilterSessionChanged(String),
+    LedgerFilterLimitChanged(String),
+    LedgerClearFilters,
+    LedgerRefresh,
+    LedgerExport,
+    LedgerClear,
+    LedgerToggleEvent(usize),
 
     // Config (refresh)
     LoadConfig,
@@ -324,6 +537,9 @@ pub enum Message {
     PlatformLogout(crate::platforms::AuthTarget),
     PlatformLoginComplete(crate::platforms::AuthTarget, Result<(), String>),
     PlatformLogoutComplete(crate::platforms::AuthTarget, Result<(), String>),
+    RefreshAuthStatus,
+    LoadGitInfoForLogin,
+    GitInfoForLoginLoaded(Option<GitInfoDisplay>),
 
     // Setup install
     SetupInstall(crate::types::Platform),
@@ -336,6 +552,12 @@ pub enum Message {
 
     // Setup (refresh platform status)
     RefreshSetup,
+
+    // Metrics
+    RefreshMetrics,
+
+    // Coverage
+    CoverageFilterChanged(String),
 
     // Toasts
     DismissToast(usize),
@@ -357,13 +579,93 @@ pub enum Message {
 }
 
 // ============================================================================
+// Helper Functions
+// ============================================================================
+
+/// Load git information (user, email, remote, branch)
+async fn load_git_info() -> Option<GitInfoDisplay> {
+    use tokio::process::Command;
+    
+    // Helper to run git command and get output
+    async fn git_config(key: &str) -> Option<String> {
+        let output = Command::new("git")
+            .args(["config", key])
+            .output()
+            .await
+            .ok()?;
+        
+        if output.status.success() {
+            let s = String::from_utf8_lossy(&output.stdout).trim().to_string();
+            if s.is_empty() {
+                None
+            } else {
+                Some(s)
+            }
+        } else {
+            None
+        }
+    }
+    
+    async fn git_remote_url() -> Option<String> {
+        let output = Command::new("git")
+            .args(["remote", "get-url", "origin"])
+            .output()
+            .await
+            .ok()?;
+        
+        if output.status.success() {
+            let s = String::from_utf8_lossy(&output.stdout).trim().to_string();
+            if s.is_empty() {
+                None
+            } else {
+                Some(s)
+            }
+        } else {
+            None
+        }
+    }
+    
+    async fn git_current_branch() -> Option<String> {
+        let output = Command::new("git")
+            .args(["branch", "--show-current"])
+            .output()
+            .await
+            .ok()?;
+        
+        if output.status.success() {
+            let s = String::from_utf8_lossy(&output.stdout).trim().to_string();
+            if s.is_empty() {
+                None
+            } else {
+                Some(s)
+            }
+        } else {
+            None
+        }
+    }
+    
+    // Fetch all git info
+    let user_name = git_config("user.name").await?;
+    let user_email = git_config("user.email").await?;
+    let remote_url = git_remote_url().await.unwrap_or_else(|| "No remote configured".to_string());
+    let current_branch = git_current_branch().await.unwrap_or_else(|| "No branch".to_string());
+    
+    Some(GitInfoDisplay {
+        user_name,
+        user_email,
+        remote_url,
+        current_branch,
+    })
+}
+
+// ============================================================================
 // App Implementation
 // ============================================================================
 
 impl App {
     /// Create a new App instance with initial state
     pub fn new(shutdown: Arc<AtomicBool>) -> (Self, Task<Message>) {
-        let app = Self {
+        let mut app = Self {
             // Navigation
             current_page: Page::Dashboard,
 
@@ -383,6 +685,7 @@ impl App {
                 overall_percent: 0.0,
             },
             output_lines: Vec::new(),
+            terminal_editor_content: text_editor::Content::new(),
             last_error: None,
             start_time: None,
 
@@ -397,24 +700,45 @@ impl App {
             doctor_results: Vec::new(),
             doctor_running: false,
             doctor_fixing: HashSet::new(),
+            doctor_platform_selector_visible: false,
+            doctor_selected_platforms: Vec::new(),
+            doctor_expanded_checks: HashSet::new(),
+            doctor_detail_contents: HashMap::new(),
 
             // Config
             config_text: String::new(),
+            config_editor_content: text_editor::Content::new(),
             config_valid: true,
             config_error: None,
+            config_active_tab: 0,
+            config_is_dirty: false,
+            gui_config: crate::config::gui_config::GuiConfig::default(),
+            config_models: crate::config::gui_config::build_model_map(),
+            config_git_info: None,
 
             // Tiers
             tier_tree: Vec::new(),
             selected_tier: None,
+            tier_details_content: text_editor::Content::new(),
+            expanded_tiers: HashSet::new(),
+            selected_tier_details: None,
 
             // Evidence
             evidence_items: Vec::new(),
             evidence_filter: EvidenceFilter::default(),
+            evidence_selected_item: None,
+            evidence_preview_content: text_editor::Content::new(),
+            evidence_preview_path: None,
 
             // History
             history_sessions: Vec::new(),
             history_page: 0,
             history_active_by_item: HashMap::new(),
+            history_filter: None,
+            history_search: String::new(),
+            history_items_per_page: 10,
+            history_display_sessions: Vec::new(),
+            history_total_pages: 1,
 
             // Metrics
             metrics: MetricsSnapshot::default(),
@@ -423,16 +747,50 @@ impl App {
             // Ledger
             ledger_entries: Vec::new(),
             ledger_filter: LedgerFilter::default(),
+            ledger_expanded_entries: HashSet::new(),
+            ledger_expanded_contents: HashMap::new(),
+            ledger_expanded_events: HashSet::new(),
+            ledger_filter_tier: String::new(),
+            ledger_filter_session: String::new(),
 
             // Login
             platform_auth_status: HashMap::new(),
             login_in_progress: HashMap::new(),
+            login_messages: HashMap::new(),
+            login_auth_urls: HashMap::new(),
+            git_info: None,
+            github_auth_status: None,
             setup_installing: None,
+            login_cli_content: text_editor::Content::new(),
+
+            // Projects
+            new_project_name: String::new(),
+            new_project_path: String::new(),
+            show_new_project_form: false,
 
             // Wizard
             wizard_step: 1,
+            wizard_project_name: String::new(),
+            wizard_project_path: String::new(),
             wizard_requirements_text: String::new(),
+            wizard_prd_platform: "cursor".to_string(),
+            wizard_prd_model: "auto".to_string(),
+            wizard_prd_text: String::new(),
+            wizard_prd_editor_content: text_editor::Content::new(),
             wizard_prd_preview: None,
+            wizard_tier_configs: {
+                let mut configs = HashMap::new();
+                configs.insert("phase".to_string(), WizardTierConfig::default());
+                configs.insert("task".to_string(), WizardTierConfig::default());
+                configs.insert("subtask".to_string(), WizardTierConfig::default());
+                configs.insert("iteration".to_string(), WizardTierConfig::default());
+                configs
+            },
+            wizard_plan_text: String::new(),
+            wizard_generating: false,
+            wizard_models: HashMap::new(),
+            wizard_requirements_preview_content: text_editor::Content::new(),
+            wizard_plan_content: text_editor::Content::new(),
 
             // Setup
             setup_platform_statuses: Vec::new(),
@@ -454,9 +812,32 @@ impl App {
             // Window size (default desktop size)
             window_width: 1280.0,
             window_height: 720.0,
+            
+            // Retro overlay effects
+            retro_overlay: crate::widgets::RetroOverlay::new(
+                true, // Start with dark theme
+                AppTheme::Dark.ink(),
+            ),
 
             // Settings
             minimize_to_tray: true,
+            settings_log_level: "info".to_string(),
+            settings_auto_scroll: true,
+            settings_show_timestamps: true,
+            settings_retention_days: 30,
+            settings_intensive_logging: false,
+            
+            // Memory
+            memory_content: text_editor::Content::new(),
+            memory_content_string: String::new(),
+            memory_section: crate::views::memory::MemorySection::Overview,
+            memory_loading: false,
+            
+            // Metrics
+            metrics_summary_content: text_editor::Content::new(),
+
+            // Coverage
+            coverage_phase_filter: "All".to_string(),
 
             // Backend channels (will be set up in run())
             event_receiver: None,
@@ -471,7 +852,6 @@ impl App {
             _empty_string_vec: Vec::new(),
             _no_tier_details: None,
             _empty_coverage: Vec::new(),
-            _memory_section: crate::views::memory::MemorySection::Overview,
         };
 
         // Initial tasks: load fonts, load projects, load config, etc.
@@ -480,6 +860,14 @@ impl App {
             .map(|task| task.map(|_| Message::None))
             .collect();
         let task = Task::batch(font_tasks);
+
+        // First-boot detection: check if setup has been completed
+        let cwd = std::env::current_dir().unwrap_or_default();
+        let setup_marker = cwd.join(".puppet-master").join("setup-complete");
+        if !setup_marker.exists() {
+            // No setup marker found - show setup wizard on first boot
+            app.current_page = Page::Setup;
+        }
 
         (app, task)
     }
@@ -548,6 +936,21 @@ impl App {
                             return self.update(Message::ReloadConfig);
                         }
                     }
+                    Page::Wizard => {
+                        // Auto-load models if not loaded yet
+                        if self.wizard_models.is_empty() {
+                            return self.update(Message::WizardRefreshModels);
+                        }
+                    }
+                    Page::Memory => {
+                        // Auto-load memory content if empty
+                        if self.memory_content_string.is_empty() {
+                            return self.update(Message::LoadMemoryContent);
+                        }
+                    }
+                    Page::History => {
+                        self.recompute_history_display();
+                    }
                     _ => {}
                 }
                 
@@ -562,10 +965,133 @@ impl App {
                     AppTheme::Light => AppTheme::Dark,
                     AppTheme::Dark => AppTheme::Light,
                 };
+                // Update retro overlay for new theme
+                self.retro_overlay.update(self.theme.is_dark(), self.theme.ink());
                 Task::none()
             }
             Message::ToggleMinimizeToTray => {
                 self.minimize_to_tray = !self.minimize_to_tray;
+                Task::none()
+            }
+
+            // ================================================================
+            // Settings
+            // ================================================================
+            Message::SettingsLogLevelChanged(level) => {
+                self.settings_log_level = level;
+                Task::none()
+            }
+
+            Message::SettingsAutoScrollToggled(enabled) => {
+                self.settings_auto_scroll = enabled;
+                Task::none()
+            }
+
+            Message::SettingsShowTimestampsToggled(enabled) => {
+                self.settings_show_timestamps = enabled;
+                Task::none()
+            }
+
+            Message::SettingsRetentionDaysChanged(days_str) => {
+                if let Ok(days) = days_str.parse::<u32>() {
+                    self.settings_retention_days = days;
+                }
+                Task::none()
+            }
+
+            Message::SettingsMinimizeToTrayToggled(enabled) => {
+                self.minimize_to_tray = enabled;
+                Task::none()
+            }
+
+            Message::SettingsIntensiveLoggingToggled(enabled) => {
+                self.settings_intensive_logging = enabled;
+                Task::none()
+            }
+
+            Message::SettingsClearData => {
+                self.add_toast(ToastType::Warning, "Clearing all data...".to_string());
+                let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
+                let data_dir = base.join(".puppet-master");
+                
+                if data_dir.exists() {
+                    // Clear evidence, logs, but keep settings
+                    if let Ok(_) = std::fs::remove_dir_all(data_dir.join("evidence")) {
+                        self.add_toast(ToastType::Success, "Evidence cleared".to_string());
+                    }
+                    if let Ok(_) = std::fs::remove_dir_all(data_dir.join("logs")) {
+                        self.add_toast(ToastType::Success, "Logs cleared".to_string());
+                    }
+                }
+                
+                Task::none()
+            }
+
+            Message::SettingsResetDefaults => {
+                self.settings_log_level = "info".to_string();
+                self.settings_auto_scroll = true;
+                self.settings_show_timestamps = true;
+                self.settings_retention_days = 30;
+                self.settings_intensive_logging = false;
+                self.minimize_to_tray = true;
+                self.add_toast(ToastType::Success, "Settings reset to defaults".to_string());
+                Task::none()
+            }
+
+            Message::SettingsOpenDataDir => {
+                let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
+                let data_dir = base.join(".puppet-master");
+                
+                // Try to open directory with platform-specific command
+                #[cfg(target_os = "linux")]
+                {
+                    let _ = std::process::Command::new("xdg-open")
+                        .arg(&data_dir)
+                        .spawn();
+                }
+                #[cfg(target_os = "macos")]
+                {
+                    let _ = std::process::Command::new("open")
+                        .arg(&data_dir)
+                        .spawn();
+                }
+                #[cfg(target_os = "windows")]
+                {
+                    let _ = std::process::Command::new("explorer")
+                        .arg(&data_dir)
+                        .spawn();
+                }
+                
+                self.add_toast(ToastType::Info, "Opening data directory...".to_string());
+                Task::none()
+            }
+
+            Message::SaveSettings => {
+                let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
+                let data_dir = base.join(".puppet-master");
+                let settings_file = data_dir.join("settings.json");
+                
+                // Create directory if needed
+                let _ = std::fs::create_dir_all(&data_dir);
+                
+                // Serialize settings
+                let settings = serde_json::json!({
+                    "log_level": self.settings_log_level,
+                    "auto_scroll": self.settings_auto_scroll,
+                    "show_timestamps": self.settings_show_timestamps,
+                    "retention_days": self.settings_retention_days,
+                    "intensive_logging": self.settings_intensive_logging,
+                    "minimize_to_tray": self.minimize_to_tray,
+                });
+                
+                if let Ok(json) = serde_json::to_string_pretty(&settings) {
+                    if let Ok(_) = std::fs::write(&settings_file, json) {
+                        self.add_toast(ToastType::Success, "Settings saved".to_string());
+                    } else {
+                        self.add_toast(ToastType::Error, "Failed to save settings".to_string());
+                    }
+                }
+                
                 Task::none()
             }
 
@@ -840,11 +1366,119 @@ impl App {
                 }
             }
 
+            Message::ProjectsRefresh => {
+                // Scan for projects in current directory and known locations
+                let cwd = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
+                let mut found_projects = Vec::new();
+                
+                // Check current directory
+                if cwd.join(".puppet-master").exists() || cwd.join("prd.json").exists() {
+                    found_projects.push(ProjectInfo {
+                        name: cwd.file_name()
+                            .and_then(|n| n.to_str())
+                            .unwrap_or("Current Project")
+                            .to_string(),
+                        path: cwd.clone(),
+                        status: crate::views::projects::ProjectStatus::Inactive,
+                    });
+                }
+                
+                // Scan for subdirectories with .puppet-master
+                if let Ok(entries) = std::fs::read_dir(&cwd) {
+                    for entry in entries.filter_map(Result::ok) {
+                        let path = entry.path();
+                        if path.is_dir() && path.join(".puppet-master").exists() {
+                            found_projects.push(ProjectInfo {
+                                name: path.file_name()
+                                    .and_then(|n| n.to_str())
+                                    .unwrap_or("Project")
+                                    .to_string(),
+                                path: path.clone(),
+                                status: crate::views::projects::ProjectStatus::Inactive,
+                            });
+                        }
+                    }
+                }
+                
+                self.projects = found_projects;
+                self.add_toast(ToastType::Success, format!("Found {} projects", self.projects.len()));
+                Task::none()
+            }
+
+            Message::ProjectsLoaded(projects) => {
+                self.projects = projects;
+                Task::none()
+            }
+
+            Message::BrowseNewProjectPath => {
+                Task::perform(
+                    async {
+                        let result = rfd::AsyncFileDialog::new()
+                            .set_title("Select Project Directory")
+                            .pick_folder()
+                            .await;
+                        
+                        result.map(|folder| folder.path().to_path_buf())
+                    },
+                    Message::NewProjectPathSelected,
+                )
+            }
+
+            Message::NewProjectPathSelected(path_opt) => {
+                if let Some(path) = path_opt {
+                    self.new_project_path = path.display().to_string();
+                }
+                Task::none()
+            }
+
+            Message::CreateNewProject => {
+                // Validate inputs
+                if self.new_project_name.trim().is_empty() {
+                    self.add_toast(ToastType::Warning, "Please enter a project name".to_string());
+                    return Task::none();
+                }
+                
+                if self.new_project_path.trim().is_empty() {
+                    self.add_toast(ToastType::Warning, "Please select a project path".to_string());
+                    return Task::none();
+                }
+                
+                let project_path = PathBuf::from(&self.new_project_path);
+                
+                // Check if path exists
+                if !project_path.exists() {
+                    self.add_toast(ToastType::Error, "Selected path does not exist".to_string());
+                    return Task::none();
+                }
+                
+                // Create project
+                self.update(Message::CreateProject(
+                    self.new_project_name.clone(),
+                    self.new_project_path.clone()
+                ))
+            }
+
+            Message::ProjectCreated(result) => {
+                match result {
+                    Ok(()) => {
+                        self.add_toast(ToastType::Success, "Project created successfully".to_string());
+                        self.show_new_project_form = false;
+                        self.new_project_name.clear();
+                        self.new_project_path.clear();
+                    }
+                    Err(e) => {
+                        self.add_toast(ToastType::Error, format!("Failed to create project: {}", e));
+                    }
+                }
+                Task::none()
+            }
+
             // ================================================================
             // Config
             // ================================================================
             Message::ConfigTextChanged(text) => {
                 self.config_text = text;
+                self.config_is_dirty = true;
                 // Auto-validate on text change
                 match serde_yaml::from_str::<crate::types::PuppetMasterConfig>(&self.config_text) {
                     Ok(config) => {
@@ -870,6 +1504,34 @@ impl App {
                 Task::none()
             }
 
+            Message::ConfigEditorAction(action) => {
+                self.config_editor_content.perform(action);
+                let text = self.config_editor_content.text();
+                self.update(Message::ConfigTextChanged(text))
+            }
+
+            Message::ConfigTabChanged(tab) => {
+                self.config_active_tab = tab;
+                Task::none()
+            }
+
+            Message::ConfigFieldChanged(field_path, new_value) => {
+                // TODO: Update structured config when we have that implemented
+                // For now, just mark as dirty
+                self.config_is_dirty = true;
+                self.add_toast(
+                    ToastType::Info,
+                    format!("Changed {}: {}", field_path, new_value),
+                );
+                Task::none()
+            }
+
+            Message::RefreshModels => {
+                self.config_models = crate::config::gui_config::build_model_map();
+                self.add_toast(ToastType::Success, "Models refreshed".to_string());
+                Task::none()
+            }
+
             Message::SaveConfig => {
                 let base = self
                     .current_project
@@ -879,18 +1541,49 @@ impl App {
 
                 let config_path = base.join("puppet-master.yaml");
 
-                match std::fs::write(&config_path, &self.config_text) {
-                    Ok(()) => {
-                        self.add_toast(
-                            ToastType::Success,
-                            format!("Configuration saved to {}", config_path.display()),
-                        );
+                // If on tabs 0-5, save from gui_config; if on tab 6, save from config_text
+                if self.config_active_tab < 6 {
+                    // Save from structured gui_config
+                    match crate::config::gui_config::save_config(&config_path, &self.gui_config) {
+                        Ok(()) => {
+                            // Also update config_text to match
+                            if let Ok(yaml) = serde_yaml::to_string(&self.gui_config) {
+                                self.config_text = yaml.clone();
+                                self.config_editor_content = text_editor::Content::with_text(&yaml);
+                            }
+                            self.config_is_dirty = false;
+                            self.add_toast(
+                                ToastType::Success,
+                                format!("Configuration saved to {}", config_path.display()),
+                            );
+                        }
+                        Err(e) => {
+                            self.add_toast(
+                                ToastType::Error,
+                                format!("Failed to save config: {}", e),
+                            );
+                        }
                     }
-                    Err(e) => {
-                        self.add_toast(
-                            ToastType::Error,
-                            format!("Failed to save config: {}", e),
-                        );
+                } else {
+                    // Save from YAML text
+                    match std::fs::write(&config_path, &self.config_text) {
+                        Ok(()) => {
+                            // Try to parse back into gui_config
+                            if let Ok(loaded) = crate::config::gui_config::load_config(&config_path) {
+                                self.gui_config = loaded;
+                            }
+                            self.config_is_dirty = false;
+                            self.add_toast(
+                                ToastType::Success,
+                                format!("Configuration saved to {}", config_path.display()),
+                            );
+                        }
+                        Err(e) => {
+                            self.add_toast(
+                                ToastType::Error,
+                                format!("Failed to save config: {}", e),
+                            );
+                        }
                     }
                 }
 
@@ -908,9 +1601,17 @@ impl App {
 
                 match std::fs::read_to_string(&config_path) {
                     Ok(text) => {
-                        self.config_text = text;
+                        self.config_text = text.clone();
+                        self.config_editor_content = text_editor::Content::with_text(&text);
+                        
+                        // Try to load into gui_config
+                        if let Ok(loaded) = crate::config::gui_config::load_config(&config_path) {
+                            self.gui_config = loaded;
+                        }
+                        
                         self.config_valid = true;
                         self.config_error = None;
+                        self.config_is_dirty = false;
                         self.add_toast(
                             ToastType::Info,
                             format!("Reloaded configuration from {}", config_path.display()),
@@ -953,6 +1654,338 @@ impl App {
                     }
                 }
 
+                Task::none()
+            }
+
+            // New GUI config messages
+            Message::ConfigTierPlatformChanged(tier_name, platform) => {
+                let tier = match tier_name.as_str() {
+                    "phase" => &mut self.gui_config.tiers.phase,
+                    "task" => &mut self.gui_config.tiers.task,
+                    "subtask" => &mut self.gui_config.tiers.subtask,
+                    "iteration" => &mut self.gui_config.tiers.iteration,
+                    _ => return Task::none(),
+                };
+                tier.platform = platform.clone();
+                // Reset model to first available for new platform
+                if let Some(models) = self.config_models.get(&platform) {
+                    if let Some(first_model) = models.first() {
+                        tier.model = first_model.clone();
+                    }
+                }
+                self.config_is_dirty = true;
+                Task::none()
+            }
+
+            Message::ConfigTierModelChanged(tier_name, model) => {
+                let tier = match tier_name.as_str() {
+                    "phase" => &mut self.gui_config.tiers.phase,
+                    "task" => &mut self.gui_config.tiers.task,
+                    "subtask" => &mut self.gui_config.tiers.subtask,
+                    "iteration" => &mut self.gui_config.tiers.iteration,
+                    _ => return Task::none(),
+                };
+                tier.model = model;
+                self.config_is_dirty = true;
+                Task::none()
+            }
+
+            Message::ConfigTierReasoningChanged(tier_name, reasoning) => {
+                let tier = match tier_name.as_str() {
+                    "phase" => &mut self.gui_config.tiers.phase,
+                    "task" => &mut self.gui_config.tiers.task,
+                    "subtask" => &mut self.gui_config.tiers.subtask,
+                    "iteration" => &mut self.gui_config.tiers.iteration,
+                    _ => return Task::none(),
+                };
+                tier.reasoning_effort = if reasoning == "default" {
+                    None
+                } else {
+                    Some(reasoning)
+                };
+                self.config_is_dirty = true;
+                Task::none()
+            }
+
+            Message::ConfigTierPlanModeToggled(tier_name) => {
+                let tier = match tier_name.as_str() {
+                    "phase" => &mut self.gui_config.tiers.phase,
+                    "task" => &mut self.gui_config.tiers.task,
+                    "subtask" => &mut self.gui_config.tiers.subtask,
+                    "iteration" => &mut self.gui_config.tiers.iteration,
+                    _ => return Task::none(),
+                };
+                tier.plan_mode = !tier.plan_mode;
+                self.config_is_dirty = true;
+                Task::none()
+            }
+
+            Message::ConfigTierAskModeToggled(tier_name) => {
+                let tier = match tier_name.as_str() {
+                    "phase" => &mut self.gui_config.tiers.phase,
+                    "task" => &mut self.gui_config.tiers.task,
+                    "subtask" => &mut self.gui_config.tiers.subtask,
+                    "iteration" => &mut self.gui_config.tiers.iteration,
+                    _ => return Task::none(),
+                };
+                tier.ask_mode = !tier.ask_mode;
+                self.config_is_dirty = true;
+                Task::none()
+            }
+
+            Message::ConfigTierOutputFormatChanged(tier_name, format) => {
+                let tier = match tier_name.as_str() {
+                    "phase" => &mut self.gui_config.tiers.phase,
+                    "task" => &mut self.gui_config.tiers.task,
+                    "subtask" => &mut self.gui_config.tiers.subtask,
+                    "iteration" => &mut self.gui_config.tiers.iteration,
+                    _ => return Task::none(),
+                };
+                tier.output_format = format;
+                self.config_is_dirty = true;
+                Task::none()
+            }
+
+            Message::ConfigTierMaxIterChanged(tier_name, value) => {
+                let tier = match tier_name.as_str() {
+                    "phase" => &mut self.gui_config.tiers.phase,
+                    "task" => &mut self.gui_config.tiers.task,
+                    "subtask" => &mut self.gui_config.tiers.subtask,
+                    "iteration" => &mut self.gui_config.tiers.iteration,
+                    _ => return Task::none(),
+                };
+                if let Ok(num) = value.parse::<u32>() {
+                    tier.max_iterations = num;
+                    self.config_is_dirty = true;
+                }
+                Task::none()
+            }
+
+            Message::ConfigTierFailureStyleChanged(tier_name, style) => {
+                let tier = match tier_name.as_str() {
+                    "phase" => &mut self.gui_config.tiers.phase,
+                    "task" => &mut self.gui_config.tiers.task,
+                    "subtask" => &mut self.gui_config.tiers.subtask,
+                    "iteration" => &mut self.gui_config.tiers.iteration,
+                    _ => return Task::none(),
+                };
+                tier.task_failure_style = style;
+                self.config_is_dirty = true;
+                Task::none()
+            }
+
+            Message::ConfigBranchingFieldChanged(field, value) => {
+                match field.as_str() {
+                    "base_branch" => self.gui_config.branching.base_branch = value,
+                    "naming_pattern" => self.gui_config.branching.naming_pattern = value,
+                    _ => {}
+                }
+                self.config_is_dirty = true;
+                Task::none()
+            }
+
+            Message::ConfigGranularityChanged(granularity) => {
+                self.gui_config.branching.granularity = granularity;
+                self.config_is_dirty = true;
+                Task::none()
+            }
+
+            Message::ConfigVerificationFieldChanged(field, value) => {
+                match field.as_str() {
+                    "browser_adapter" => self.gui_config.verification.browser_adapter = value,
+                    "evidence_directory" => self.gui_config.verification.evidence_directory = value,
+                    _ => {}
+                }
+                self.config_is_dirty = true;
+                Task::none()
+            }
+
+            Message::ConfigVerificationScreenshotToggled => {
+                self.gui_config.verification.screenshot_on_failure = 
+                    !self.gui_config.verification.screenshot_on_failure;
+                self.config_is_dirty = true;
+                Task::none()
+            }
+
+            Message::ConfigMemoryFieldChanged(field, value) => {
+                match field.as_str() {
+                    "progress_file" => self.gui_config.memory.progress_file = value,
+                    "agents_file" => self.gui_config.memory.agents_file = value,
+                    "prd_file" => self.gui_config.memory.prd_file = value,
+                    _ => {}
+                }
+                self.config_is_dirty = true;
+                Task::none()
+            }
+
+            Message::ConfigMemoryMultiLevelToggled => {
+                self.gui_config.memory.multi_level_agents = !self.gui_config.memory.multi_level_agents;
+                self.config_is_dirty = true;
+                Task::none()
+            }
+
+            Message::ConfigBudgetFieldChanged(platform, field, value) => {
+                let budget = match platform.as_str() {
+                    "cursor" => &mut self.gui_config.budgets.cursor,
+                    "codex" => &mut self.gui_config.budgets.codex,
+                    "claude" => &mut self.gui_config.budgets.claude,
+                    "gemini" => &mut self.gui_config.budgets.gemini,
+                    "copilot" => &mut self.gui_config.budgets.copilot,
+                    _ => return Task::none(),
+                };
+                
+                match field.as_str() {
+                    "max_calls_per_run" => {
+                        if let Ok(num) = value.parse::<u32>() {
+                            budget.max_calls_per_run = num;
+                        }
+                    }
+                    "max_calls_per_hour" => {
+                        if let Ok(num) = value.parse::<u32>() {
+                            budget.max_calls_per_hour = num;
+                        }
+                    }
+                    "max_calls_per_day" => {
+                        if let Ok(num) = value.parse::<u32>() {
+                            budget.max_calls_per_day = num;
+                        }
+                    }
+                    "unlimited_auto_mode" => {
+                        budget.unlimited_auto_mode = value == "true";
+                    }
+                    _ => {}
+                }
+                self.config_is_dirty = true;
+                Task::none()
+            }
+
+            Message::ConfigAdvancedFieldChanged(field, value) => {
+                match field.as_str() {
+                    "log_level" => self.gui_config.advanced.log_level = value,
+                    "process_timeout_ms" => {
+                        if let Ok(num) = value.parse::<u64>() {
+                            self.gui_config.advanced.process_timeout_ms = num;
+                        }
+                    }
+                    "parallel_iterations" => {
+                        if let Ok(num) = value.parse::<u32>() {
+                            self.gui_config.advanced.parallel_iterations = num;
+                        }
+                    }
+                    // CLI Paths
+                    "cli_cursor" => self.gui_config.advanced.cli_paths.cursor = value,
+                    "cli_codex" => self.gui_config.advanced.cli_paths.codex = value,
+                    "cli_claude" => self.gui_config.advanced.cli_paths.claude = value,
+                    "cli_gemini" => self.gui_config.advanced.cli_paths.gemini = value,
+                    "cli_copilot" => self.gui_config.advanced.cli_paths.copilot = value,
+                    // Execution
+                    "max_parallel_phases" => {
+                        if let Ok(num) = value.parse::<u32>() {
+                            self.gui_config.advanced.execution.max_parallel_phases = num;
+                        }
+                    }
+                    "max_parallel_tasks" => {
+                        if let Ok(num) = value.parse::<u32>() {
+                            self.gui_config.advanced.execution.max_parallel_tasks = num;
+                        }
+                    }
+                    // Checkpointing
+                    "checkpoint_interval" => {
+                        if let Ok(num) = value.parse::<u64>() {
+                            self.gui_config.advanced.checkpointing.interval_seconds = num;
+                        }
+                    }
+                    "checkpoint_max" => {
+                        if let Ok(num) = value.parse::<u32>() {
+                            self.gui_config.advanced.checkpointing.max_checkpoints = num;
+                        }
+                    }
+                    // Loop Guard
+                    "loop_max_repetitions" => {
+                        if let Ok(num) = value.parse::<u32>() {
+                            self.gui_config.advanced.loop_guard.max_repetitions = num;
+                        }
+                    }
+                    // Network
+                    "allowed_origins" => self.gui_config.advanced.network.allowed_origins = value,
+                    _ => {}
+                }
+                self.config_is_dirty = true;
+                Task::none()
+            }
+
+            Message::ConfigAdvancedCheckboxToggled(field) => {
+                match field.as_str() {
+                    "intensive_logging" => {
+                        self.gui_config.advanced.intensive_logging = !self.gui_config.advanced.intensive_logging;
+                    }
+                    "kill_on_failure" => {
+                        self.gui_config.advanced.execution.kill_on_failure = 
+                            !self.gui_config.advanced.execution.kill_on_failure;
+                    }
+                    "enable_parallel" => {
+                        self.gui_config.advanced.execution.enable_parallel = 
+                            !self.gui_config.advanced.execution.enable_parallel;
+                    }
+                    "checkpoint_enabled" => {
+                        self.gui_config.advanced.checkpointing.enabled = 
+                            !self.gui_config.advanced.checkpointing.enabled;
+                    }
+                    "checkpoint_on_subtask" => {
+                        self.gui_config.advanced.checkpointing.on_subtask_complete = 
+                            !self.gui_config.advanced.checkpointing.on_subtask_complete;
+                    }
+                    "checkpoint_on_shutdown" => {
+                        self.gui_config.advanced.checkpointing.on_shutdown = 
+                            !self.gui_config.advanced.checkpointing.on_shutdown;
+                    }
+                    "loop_enabled" => {
+                        self.gui_config.advanced.loop_guard.enabled = 
+                            !self.gui_config.advanced.loop_guard.enabled;
+                    }
+                    "loop_suppress_relay" => {
+                        self.gui_config.advanced.loop_guard.suppress_reply_relay = 
+                            !self.gui_config.advanced.loop_guard.suppress_reply_relay;
+                    }
+                    "lan_mode" => {
+                        self.gui_config.advanced.network.lan_mode = 
+                            !self.gui_config.advanced.network.lan_mode;
+                    }
+                    "trust_proxy" => {
+                        self.gui_config.advanced.network.trust_proxy = 
+                            !self.gui_config.advanced.network.trust_proxy;
+                    }
+                    _ => {}
+                }
+                self.config_is_dirty = true;
+                Task::none()
+            }
+
+            Message::LoadConfigResult(result) => {
+                match result {
+                    Ok(config) => {
+                        self.gui_config = config;
+                        self.config_is_dirty = false;
+                        self.add_toast(ToastType::Success, "Configuration loaded".to_string());
+                    }
+                    Err(e) => {
+                        self.add_toast(ToastType::Error, format!("Failed to load config: {}", e));
+                    }
+                }
+                Task::none()
+            }
+
+            Message::LoadGitInfo => {
+                Task::perform(
+                    async {
+                        crate::config::gui_config::get_git_info()
+                    },
+                    |info| Message::GitInfoLoaded(Some(info)),
+                )
+            }
+
+            Message::GitInfoLoaded(info) => {
+                self.config_git_info = info;
                 Task::none()
             }
 
@@ -1113,12 +2146,90 @@ impl App {
                 Task::none()
             }
 
+            Message::ToggleDoctorPlatformSelector => {
+                self.doctor_platform_selector_visible = !self.doctor_platform_selector_visible;
+                Task::none()
+            }
+
+            Message::ToggleDoctorPlatform(platform) => {
+                if self.doctor_selected_platforms.contains(&platform) {
+                    self.doctor_selected_platforms.retain(|p| p != &platform);
+                } else {
+                    self.doctor_selected_platforms.push(platform);
+                }
+                Task::none()
+            }
+
+            Message::ToggleDoctorCheckExpand(check_name) => {
+                if self.doctor_expanded_checks.contains(&check_name) {
+                    self.doctor_expanded_checks.remove(&check_name);
+                    self.doctor_detail_contents.remove(&check_name);
+                } else {
+                    self.doctor_expanded_checks.insert(check_name.clone());
+                    // Create text_editor::Content for the check details
+                    if let Some(check) = self.doctor_results.iter().find(|c| c.name == check_name) {
+                        if !check.message.is_empty() {
+                            self.doctor_detail_contents.insert(
+                                check_name.clone(),
+                                text_editor::Content::with_text(&check.message)
+                            );
+                        }
+                    }
+                }
+                Task::none()
+            }
+
+            Message::InstallAllMissing => {
+                // Collect all failed checks that have fixes available
+                let fixable_checks: Vec<String> = self.doctor_results
+                    .iter()
+                    .filter(|r| !r.passed && r.fix_available)
+                    .map(|r| r.name.clone())
+                    .collect();
+
+                if fixable_checks.is_empty() {
+                    self.add_toast(ToastType::Info, "No failed checks with fixes available".to_string());
+                    return Task::none();
+                }
+
+                self.add_toast(
+                    ToastType::Info,
+                    format!("Installing {} missing dependencies...", fixable_checks.len())
+                );
+
+                // Mark all as fixing
+                for check in &fixable_checks {
+                    self.doctor_fixing.insert(check.clone());
+                }
+
+                // Create tasks to fix each check sequentially
+                let tasks: Vec<Task<Message>> = fixable_checks
+                    .into_iter()
+                    .map(|check_name| {
+                        Task::perform(
+                            async move {
+                                let registry = crate::doctor::CheckRegistry::default();
+                                let result = registry.fix_check(&check_name, false).await;
+                                (check_name, result)
+                            },
+                            |(name, res)| {
+                                let fix_result = res.ok().and_then(|o| o.and_then(|(_, f)| f));
+                                Message::FixCheckComplete(name, fix_result)
+                            },
+                        )
+                    })
+                    .collect();
+
+                // Run all fix tasks
+                Task::batch(tasks)
+            }
+
             // ================================================================
             // Wizard
             // ================================================================
             Message::WizardNextStep => {
-                // Advance to next step (max step is 4)
-                if self.wizard_step < 4 {
+                // Advance to next step (max step is 6)
+                if self.wizard_step < 6 {
                     self.wizard_step += 1;
                 }
                 Task::none()
@@ -1132,33 +2243,140 @@ impl App {
                 Task::none()
             }
 
-            Message::WizardRequirementsChanged(text) => {
-                self.wizard_requirements_text = text;
+            Message::WizardProjectNameChanged(name) => {
+                self.wizard_project_name = name;
                 Task::none()
             }
 
-            Message::WizardFileSelected(path_opt) => {
-                // Open file dialog if None, otherwise load the provided path
-                if path_opt.is_none() {
-                    // Open file dialog asynchronously
-                    Task::perform(
-                        async {
-                            let result = rfd::AsyncFileDialog::new()
-                                .add_filter("Text/Markdown", &["txt", "md", "markdown"])
-                                .add_filter("All Files", &["*"])
-                                .set_title("Select Requirements File")
-                                .pick_file()
-                                .await;
-                            
-                            result.map(|file| file.path().to_path_buf())
-                        },
-                        Message::WizardFileSelected,
-                    )
-                } else if let Some(path) = path_opt {
+            Message::WizardProjectPathChanged(path) => {
+                self.wizard_project_path = path;
+                Task::none()
+            }
+
+            Message::WizardRequirementsChanged(text) => {
+                self.wizard_requirements_text = text.clone();
+                // Update the preview content
+                self.wizard_requirements_preview_content = text_editor::Content::with_text(&text);
+                Task::none()
+            }
+
+            Message::WizardPrdPlatformChanged(platform) => {
+                self.wizard_prd_platform = platform.clone();
+                // Auto-select first model for this platform
+                if let Some(models) = self.wizard_models.get(&platform) {
+                    if let Some(first_model) = models.first() {
+                        self.wizard_prd_model = first_model.clone();
+                    }
+                }
+                Task::none()
+            }
+
+            Message::WizardPrdModelChanged(model) => {
+                self.wizard_prd_model = model;
+                Task::none()
+            }
+
+            Message::WizardPrdEditorAction(action) => {
+                self.wizard_prd_editor_content.perform(action);
+                self.wizard_prd_text = self.wizard_prd_editor_content.text();
+                Task::none()
+            }
+
+            Message::WizardTierPlatformChanged(tier, platform) => {
+                if let Some(config) = self.wizard_tier_configs.get_mut(&tier) {
+                    config.platform = platform.clone();
+                    // Auto-select first model for this platform
+                    if let Some(models) = self.wizard_models.get(&platform) {
+                        if let Some(first_model) = models.first() {
+                            config.model = first_model.clone();
+                        }
+                    }
+                }
+                Task::none()
+            }
+
+            Message::WizardTierModelChanged(tier, model) => {
+                if let Some(config) = self.wizard_tier_configs.get_mut(&tier) {
+                    config.model = model;
+                }
+                Task::none()
+            }
+
+            Message::WizardTierReasoningChanged(tier, effort) => {
+                if let Some(config) = self.wizard_tier_configs.get_mut(&tier) {
+                    config.reasoning_effort = effort;
+                }
+                Task::none()
+            }
+
+            Message::WizardTierPlanModeToggled(tier, value) => {
+                if let Some(config) = self.wizard_tier_configs.get_mut(&tier) {
+                    config.plan_mode = value;
+                }
+                Task::none()
+            }
+
+            Message::WizardTierAskModeToggled(tier, value) => {
+                if let Some(config) = self.wizard_tier_configs.get_mut(&tier) {
+                    config.ask_mode = value;
+                }
+                Task::none()
+            }
+
+            Message::WizardTierOutputFormatChanged(tier, format) => {
+                if let Some(config) = self.wizard_tier_configs.get_mut(&tier) {
+                    config.output_format = format;
+                }
+                Task::none()
+            }
+
+            Message::WizardBrowseProjectPath => {
+                // Open folder picker asynchronously
+                Task::perform(
+                    async {
+                        let result = rfd::AsyncFileDialog::new()
+                            .set_title("Select Project Folder")
+                            .pick_folder()
+                            .await;
+                        
+                        result.map(|folder| folder.path().to_path_buf())
+                    },
+                    Message::WizardProjectPathSelected,
+                )
+            }
+
+            Message::WizardProjectPathSelected(path_opt) => {
+                if let Some(path) = path_opt {
+                    self.wizard_project_path = path.display().to_string();
+                }
+                Task::none()
+            }
+
+            Message::WizardBrowseRequirementsFile => {
+                // Open file picker asynchronously
+                Task::perform(
+                    async {
+                        let result = rfd::AsyncFileDialog::new()
+                            .add_filter("Text/Markdown", &["txt", "md", "markdown"])
+                            .add_filter("All Files", &["*"])
+                            .set_title("Select Requirements File")
+                            .pick_file()
+                            .await;
+                        
+                        result.map(|file| file.path().to_path_buf())
+                    },
+                    Message::WizardRequirementsFileSelected,
+                )
+            }
+
+            Message::WizardRequirementsFileSelected(path_opt) => {
+                if let Some(path) = path_opt {
                     // Load file content
                     match std::fs::read_to_string(&path) {
                         Ok(content) => {
-                            self.wizard_requirements_text = content;
+                            self.wizard_requirements_text = content.clone();
+                            // Update the preview content
+                            self.wizard_requirements_preview_content = text_editor::Content::with_text(&content);
                             self.add_toast(ToastType::Success, format!("Loaded file: {}", path.display()));
                             Task::none()
                         }
@@ -1172,63 +2390,231 @@ impl App {
                 }
             }
 
-            Message::WizardGenerate => {
-                // Kick off StartChainPipeline asynchronously
+            Message::WizardGeneratePrd => {
                 if self.wizard_requirements_text.trim().is_empty() {
                     self.add_toast(ToastType::Warning, "Please enter requirements first".to_string());
                     return Task::none();
                 }
                 
-                // Send command to backend to generate PRD
-                self.send_command(AppCommand::StartChainPipeline(self.wizard_requirements_text.clone()));
-                self.add_toast(ToastType::Info, "Generating PRD...".to_string());
+                self.wizard_generating = true;
+                let requirements = self.wizard_requirements_text.clone();
                 
-                // Advance to step 3 (preview)
-                self.wizard_step = 3;
+                // Generate placeholder PRD (real AI integration comes later)
+                Task::perform(
+                    async move {
+                        tokio::time::sleep(tokio::time::Duration::from_millis(1500)).await;
+                        
+                        let prd = format!(
+                            "# Product Requirements Document\n\n\
+                            ## Project Overview\n\n\
+                            Generated from user requirements.\n\n\
+                            ## Requirements\n\n\
+                            {}\n\n\
+                            ## Technical Specifications\n\n\
+                            - Architecture: Modular\n\
+                            - Technology Stack: TBD\n\
+                            - Deployment: Cloud-based\n\n\
+                            ## Success Criteria\n\n\
+                            - All requirements met\n\
+                            - Quality standards achieved\n\
+                            - Timeline adhered to\n\n\
+                            ## Phases\n\n\
+                            1. Planning & Design\n\
+                            2. Development\n\
+                            3. Testing & QA\n\
+                            4. Deployment\n",
+                            requirements
+                        );
+                        
+                        Ok(prd)
+                    },
+                    Message::WizardPrdGenerated,
+                )
+            }
+
+            Message::WizardPrdGenerated(result) => {
+                self.wizard_generating = false;
+                match result {
+                    Ok(prd) => {
+                        self.wizard_prd_text = prd.clone();
+                        self.wizard_prd_editor_content = text_editor::Content::with_text(&prd);
+                        self.wizard_prd_preview = Some(prd);
+                        self.wizard_step = 3;  // Move to review step
+                        self.add_toast(ToastType::Success, "PRD generated successfully".to_string());
+                    }
+                    Err(e) => {
+                        self.add_toast(ToastType::Error, format!("Failed to generate PRD: {}", e));
+                    }
+                }
+                Task::none()
+            }
+
+            Message::WizardGeneratePlan => {
+                if self.wizard_prd_text.trim().is_empty() {
+                    self.add_toast(ToastType::Warning, "No PRD available for plan generation".to_string());
+                    return Task::none();
+                }
+                
+                self.wizard_generating = true;
+                let prd = self.wizard_prd_text.clone();
+                
+                // Generate placeholder plan (real AI integration comes later)
+                Task::perform(
+                    async move {
+                        tokio::time::sleep(tokio::time::Duration::from_millis(1500)).await;
+                        
+                        let plan = format!(
+                            "# Execution Plan\n\n\
+                            ## Overview\n\
+                            Generated from PRD.\n\n\
+                            ## Phase 1: Planning & Design\n\
+                            - Task 1.1: Requirements Analysis\n\
+                            - Task 1.2: Architecture Design\n\n\
+                            ## Phase 2: Development\n\
+                            - Task 2.1: Core Implementation\n\
+                            - Task 2.2: Feature Development\n\n\
+                            ## Phase 3: Testing & QA\n\
+                            - Task 3.1: Unit Testing\n\
+                            - Task 3.2: Integration Testing\n\n\
+                            ## Phase 4: Deployment\n\
+                            - Task 4.1: Staging Deployment\n\
+                            - Task 4.2: Production Release\n\n\
+                            Based on PRD:\n{}\n",
+                            prd.chars().take(200).collect::<String>()
+                        );
+                        
+                        Ok(plan)
+                    },
+                    Message::WizardPlanGenerated,
+                )
+            }
+
+            Message::WizardPlanGenerated(result) => {
+                self.wizard_generating = false;
+                match result {
+                    Ok(plan) => {
+                        self.wizard_plan_text = plan.clone();
+                        // Update plan content for text_editor
+                        self.wizard_plan_content = text_editor::Content::with_text(&plan);
+                        self.add_toast(ToastType::Success, "Plan generated successfully".to_string());
+                    }
+                    Err(e) => {
+                        self.add_toast(ToastType::Error, format!("Failed to generate plan: {}", e));
+                    }
+                }
+                Task::none()
+            }
+
+            Message::WizardStartChain => {
+                // Validate all required fields
+                if self.wizard_project_name.trim().is_empty() {
+                    self.add_toast(ToastType::Warning, "Please enter a project name".to_string());
+                    return Task::none();
+                }
+                if self.wizard_project_path.trim().is_empty() {
+                    self.add_toast(ToastType::Warning, "Please select a project path".to_string());
+                    return Task::none();
+                }
+                if self.wizard_prd_text.trim().is_empty() {
+                    self.add_toast(ToastType::Warning, "Please generate a PRD first".to_string());
+                    return Task::none();
+                }
+                
+                // Save PRD to project folder
+                let project_path = PathBuf::from(&self.wizard_project_path);
+                let prd_path = project_path.join("prd.md");
+                
+                if let Err(e) = std::fs::create_dir_all(&project_path) {
+                    self.add_toast(ToastType::Error, format!("Failed to create project directory: {}", e));
+                    return Task::none();
+                }
+                
+                if let Err(e) = std::fs::write(&prd_path, &self.wizard_prd_text) {
+                    self.add_toast(ToastType::Error, format!("Failed to save PRD: {}", e));
+                    return Task::none();
+                }
+                
+                // Save plan if available
+                if !self.wizard_plan_text.is_empty() {
+                    let plan_path = project_path.join("plan.md");
+                    let _ = std::fs::write(&plan_path, &self.wizard_plan_text);
+                }
+                
+                // Navigate to dashboard and show success
+                self.add_toast(
+                    ToastType::Success,
+                    format!("Project '{}' created successfully!", self.wizard_project_name),
+                );
+                self.current_page = Page::Dashboard;
+                
+                // Reset wizard state for next use
+                self.wizard_step = 1;
+                self.wizard_project_name.clear();
+                self.wizard_project_path.clear();
+                self.wizard_requirements_text.clear();
+                self.wizard_prd_text.clear();
+                self.wizard_prd_editor_content = text_editor::Content::new();
+                self.wizard_plan_text.clear();
                 
                 Task::none()
             }
 
-            Message::WizardSave => {
-                // Save PRD to config.paths.prd_path
-                if self.wizard_prd_preview.is_none() {
-                    self.add_toast(ToastType::Warning, "No PRD to save yet".to_string());
-                    return Task::none();
-                }
+            Message::WizardRefreshModels => {
+                // Load hardcoded model lists
+                let mut models = HashMap::new();
+                models.insert("cursor".to_string(), vec![
+                    "auto".to_string(),
+                    "claude-sonnet-4".to_string(),
+                    "gpt-4o".to_string(),
+                    "gemini-2.5-pro".to_string(),
+                ]);
+                models.insert("codex".to_string(), vec![
+                    "gpt-5.2-codex".to_string(),
+                    "gpt-5.1-codex".to_string(),
+                    "gpt-4.1".to_string(),
+                ]);
+                models.insert("claude".to_string(), vec![
+                    "claude-sonnet-4-5".to_string(),
+                    "claude-sonnet-4".to_string(),
+                    "claude-opus-4".to_string(),
+                ]);
+                models.insert("gemini".to_string(), vec![
+                    "gemini-2.5-pro".to_string(),
+                    "gemini-2.5-flash".to_string(),
+                    "gemini-3-pro-preview".to_string(),
+                ]);
+                models.insert("copilot".to_string(), vec![
+                    "claude-sonnet-4-5".to_string(),
+                    "gpt-4o".to_string(),
+                ]);
                 
-                // Get the base path from current project or current directory
-                let base = self
-                    .current_project
-                    .as_ref()
-                    .map(|p| p.path.clone())
-                    .unwrap_or_else(|| std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")));
-                
-                let prd_path = base.join("prd.json");
-                
-                // Write PRD to file
-                if let Some(ref prd_content) = self.wizard_prd_preview {
-                    match std::fs::write(&prd_path, prd_content) {
-                        Ok(()) => {
-                            self.add_toast(
-                                ToastType::Success,
-                                format!("PRD saved to {}", prd_path.display()),
-                            );
-                            
-                            // Advance to step 4
-                            self.wizard_step = 4;
-                        }
-                        Err(e) => {
-                            self.add_toast(
-                                ToastType::Error,
-                                format!("Failed to save PRD: {}", e),
-                            );
-                        }
-                    }
-                } else {
-                    self.add_toast(ToastType::Warning, "No PRD content to save".to_string());
-                }
-                
+                Task::done(Message::WizardModelsLoaded(models))
+            }
+
+            Message::WizardModelsLoaded(models) => {
+                self.wizard_models = models;
+                self.add_toast(ToastType::Success, "Models loaded".to_string());
                 Task::none()
+            }
+
+            Message::OpenWizardFilePicker => {
+                // Alias for WizardBrowseRequirementsFile
+                self.update(Message::WizardBrowseRequirementsFile)
+            }
+
+            Message::WizardFilePickerResult(path_opt) => {
+                // Alias for WizardRequirementsFileSelected
+                self.update(Message::WizardRequirementsFileSelected(path_opt))
+            }
+
+            Message::WizardGenerate => {
+                // Alias for WizardGeneratePrd
+                self.update(Message::WizardGeneratePrd)
+            }
+
+            Message::WizardSave => {
+                // Alias for WizardStartChain  
+                self.update(Message::WizardStartChain)
             }
 
             // ================================================================
@@ -1321,6 +2707,53 @@ impl App {
             }
 
             // ================================================================
+            // Tiers
+            // ================================================================
+            Message::ToggleTierExpand(tier_id) => {
+                if self.expanded_tiers.contains(&tier_id) {
+                    self.expanded_tiers.remove(&tier_id);
+                } else {
+                    self.expanded_tiers.insert(tier_id.clone());
+                }
+                // Sync expanded state to tier_tree nodes
+                for node in &mut self.tier_tree {
+                    node.expanded = self.expanded_tiers.contains(&node.id);
+                }
+                Task::none()
+            }
+
+            Message::SelectTier(tier_id) => {
+                self.selected_tier = Some(tier_id.clone());
+                
+                // Find tier details from tier_tree
+                if let Some(tier) = self.tier_tree.iter().find(|t| t.id == tier_id) {
+                    let description = format!("Status: {}", tier.status);
+                    self.selected_tier_details = Some(crate::views::tiers::TierDetails {
+                        id: tier.id.clone(),
+                        title: tier.title.clone(),
+                        description: description.clone(),
+                        status: tier.status.clone(),
+                        dependencies: Vec::new(),
+                        platform: "Unknown".to_string(),
+                    });
+                    // Update tier_details_content with the description
+                    self.tier_details_content = text_editor::Content::with_text(&description);
+                }
+                
+                Task::none()
+            }
+
+            Message::ExpandAllTiers => {
+                self.expanded_tiers = self.tier_tree.iter().map(|t| t.id.clone()).collect();
+                Task::none()
+            }
+
+            Message::CollapseAllTiers => {
+                self.expanded_tiers.clear();
+                Task::none()
+            }
+
+            // ================================================================
             // Evidence
             // ================================================================
             Message::SelectEvidence(_id) => {
@@ -1337,6 +2770,115 @@ impl App {
             Message::LoadEvidence => {
                 // Re-navigate to trigger data refresh
                 self.update(Message::NavigateTo(Page::Evidence))
+            }
+
+            Message::EvidenceSelectItem(index) => {
+                self.evidence_selected_item = Some(index);
+                // Auto-load preview content
+                if let Some(item) = self.evidence_items.get(index) {
+                    let path_str = item.path.display().to_string();
+                    return self.update(Message::EvidenceLoadContent(path_str));
+                }
+                Task::none()
+            }
+
+            Message::EvidenceViewItem(index) => {
+                self.evidence_selected_item = Some(index);
+                if let Some(item) = self.evidence_items.get(index) {
+                    let path_str = item.path.display().to_string();
+                    return self.update(Message::EvidenceLoadContent(path_str));
+                }
+                Task::none()
+            }
+
+            Message::EvidenceDownloadItem(index) => {
+                if let Some(item) = self.evidence_items.get(index) {
+                    let source_path = item.path.clone();
+                    let default_name = source_path.file_name()
+                        .and_then(|n| n.to_str())
+                        .unwrap_or("evidence-item")
+                        .to_string();
+                    
+                    return Task::perform(
+                        async move {
+                            let file_handle = rfd::AsyncFileDialog::new()
+                                .set_title("Save Evidence")
+                                .set_file_name(&default_name)
+                                .save_file()
+                                .await;
+                            
+                            if let Some(handle) = file_handle {
+                                let dest_path = handle.path().to_path_buf();
+                                match std::fs::copy(&source_path, &dest_path) {
+                                    Ok(_) => Message::AddToast(
+                                        ToastType::Success,
+                                        format!("Saved to {}", dest_path.display())
+                                    ),
+                                    Err(e) => Message::AddToast(
+                                        ToastType::Error,
+                                        format!("Failed to save: {}", e)
+                                    ),
+                                }
+                            } else {
+                                Message::None
+                            }
+                        },
+                        |msg| msg,
+                    );
+                }
+                Task::none()
+            }
+
+            Message::EvidenceRefresh => {
+                // Re-scan evidence directory
+                let base = self.current_project
+                    .as_ref()
+                    .map(|p| p.path.clone())
+                    .unwrap_or_else(|| std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")));
+                
+                let evidence_dir = base.join(".puppet-master").join("evidence");
+                
+                if evidence_dir.exists() {
+                    // TODO: Actually scan directory and populate evidence_items
+                    self.add_toast(ToastType::Success, "Evidence refreshed".to_string());
+                } else {
+                    self.add_toast(ToastType::Info, "No evidence directory found".to_string());
+                }
+                
+                Task::none()
+            }
+
+            Message::EvidenceLoadContent(path_str) => {
+                let path = PathBuf::from(path_str.clone());
+                Task::perform(
+                    async move {
+                        match std::fs::read_to_string(&path) {
+                            Ok(content) => {
+                                // Limit preview to reasonable size
+                                let preview = if content.len() > 10000 {
+                                    format!("{}... (truncated)", &content[..10000])
+                                } else {
+                                    content
+                                };
+                                Message::EvidenceContentLoaded(path_str, preview)
+                            }
+                            Err(_) => {
+                                // Binary file or read error
+                                Message::EvidenceContentLoaded(
+                                    path_str,
+                                    "[Binary file - preview not available]".to_string()
+                                )
+                            }
+                        }
+                    },
+                    |msg| msg,
+                )
+            }
+
+            Message::EvidenceContentLoaded(path, content) => {
+                self.evidence_preview_path = Some(path);
+                self.evidence_preview_content = text_editor::Content::with_text(&content);
+                Task::none()
             }
 
             // ================================================================
@@ -1363,6 +2905,123 @@ impl App {
                 self.update(Message::NavigateTo(Page::History))
             }
 
+            Message::HistoryNextPage => {
+                let total_pages = (self.history_sessions.len() + self.history_items_per_page - 1) / self.history_items_per_page;
+                if self.history_page + 1 < total_pages {
+                    self.history_page += 1;
+                }
+                self.recompute_history_display();
+                Task::none()
+            }
+
+            Message::HistoryPrevPage => {
+                if self.history_page > 0 {
+                    self.history_page -= 1;
+                }
+                self.recompute_history_display();
+                Task::none()
+            }
+
+            Message::HistoryFilterChanged(filter) => {
+                self.history_filter = filter;
+                self.history_page = 0;
+                self.recompute_history_display();
+                Task::none()
+            }
+
+            Message::HistorySearchChanged(search) => {
+                self.history_search = search;
+                self.history_page = 0;
+                self.recompute_history_display();
+                Task::none()
+            }
+
+            Message::HistoryViewSession(session_id) => {
+                // Navigate to tiers page with the session loaded
+                self.selected_tier = Some(session_id);
+                self.update(Message::NavigateTo(Page::Tiers))
+            }
+
+            // ================================================================
+            // Memory
+            // ================================================================
+            Message::MemorySectionChanged(section) => {
+                self.memory_section = section;
+                // Update memory_content with filtered content for the new section
+                let filtered = crate::views::memory::filter_content(&self.memory_content_string, &self.memory_section);
+                self.memory_content = text_editor::Content::with_text(&filtered);
+                Task::none()
+            }
+
+            Message::LoadMemoryContent => {
+                self.memory_loading = true;
+                Task::perform(
+                    async {
+                        // Try to read AGENTS.md from current directory
+                        let paths = vec![
+                            PathBuf::from("AGENTS.md"),
+                            PathBuf::from(".puppet-master/AGENTS.md"),
+                        ];
+                        
+                        for path in paths {
+                            if let Ok(content) = std::fs::read_to_string(&path) {
+                                return Message::MemoryContentLoaded(content);
+                            }
+                        }
+                        
+                        // Return empty or default content
+                        Message::MemoryContentLoaded(String::from("# AGENTS.md\n\nNo AGENTS.md file found. This file stores learned patterns and best practices."))
+                    },
+                    |msg| msg
+                )
+            }
+
+            Message::MemoryContentLoaded(content) => {
+                self.memory_content_string = content.clone();
+                // Update text_editor content with filtered section
+                let filtered = crate::views::memory::filter_content(&content, &self.memory_section);
+                self.memory_content = text_editor::Content::with_text(&filtered);
+                self.memory_loading = false;
+                Task::none()
+            }
+
+            Message::MemoryEditExternal => {
+                let path = PathBuf::from("AGENTS.md");
+                
+                // Try to open with default editor
+                #[cfg(target_os = "linux")]
+                {
+                    let _ = std::process::Command::new("xdg-open")
+                        .arg(&path)
+                        .spawn();
+                }
+                #[cfg(target_os = "macos")]
+                {
+                    let _ = std::process::Command::new("open")
+                        .arg(&path)
+                        .spawn();
+                }
+                #[cfg(target_os = "windows")]
+                {
+                    let _ = std::process::Command::new("cmd")
+                        .args(&["/C", "start", path.to_str().unwrap_or("")])
+                        .spawn();
+                }
+                
+                self.add_toast(ToastType::Info, "Opening AGENTS.md in external editor...".to_string());
+                Task::none()
+            }
+
+            Message::MemoryExport => {
+                // For now, just show a toast. Could add file picker later
+                self.add_toast(ToastType::Info, "Export functionality coming soon".to_string());
+                Task::none()
+            }
+
+            Message::MemoryRefresh => {
+                self.update(Message::LoadMemoryContent)
+            }
+
             // ================================================================
             // Ledger
             // ================================================================
@@ -1375,6 +3034,136 @@ impl App {
                 self.update(Message::NavigateTo(Page::Ledger))
             }
 
+            Message::LedgerFilterTypeChanged(type_str_opt) => {
+                if let Some(type_str) = type_str_opt {
+                    // Parse the event type string
+                    use crate::views::ledger::EventType;
+                    let event_type = EventType::all().into_iter()
+                        .find(|et| et.as_str() == type_str);
+                    self.ledger_filter.event_type = event_type;
+                } else {
+                    self.ledger_filter.event_type = None;
+                }
+                Task::none()
+            }
+
+            Message::LedgerFilterTierChanged(tier) => {
+                self.ledger_filter_tier = tier.clone();
+                self.ledger_filter.tier_id = if tier.is_empty() { None } else { Some(tier) };
+                Task::none()
+            }
+
+            Message::LedgerFilterSessionChanged(session) => {
+                self.ledger_filter_session = session;
+                Task::none()
+            }
+
+            Message::LedgerFilterLimitChanged(limit_str) => {
+                if let Ok(limit) = limit_str.parse::<usize>() {
+                    self.ledger_filter.limit = limit;
+                }
+                Task::none()
+            }
+
+            Message::LedgerClearFilters => {
+                self.ledger_filter = LedgerFilter::default();
+                self.ledger_filter_tier.clear();
+                self.ledger_filter_session.clear();
+                Task::none()
+            }
+
+            Message::LedgerRefresh => {
+                // Re-read ledger data from disk
+                let base = self.current_project
+                    .as_ref()
+                    .map(|p| p.path.clone())
+                    .unwrap_or_else(|| std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")));
+                
+                let ledger_path = base.join(".puppet-master").join("ledger.json");
+                
+                if ledger_path.exists() {
+                    match std::fs::read_to_string(&ledger_path) {
+                        Ok(content) => {
+                            // Parse ledger entries
+                            match serde_json::from_str::<Vec<serde_json::Value>>(&content) {
+                                Ok(_) => {
+                                    self.add_toast(ToastType::Success, "Ledger refreshed".to_string());
+                                    // TODO: Actually parse and update ledger_entries when we have the real format
+                                }
+                                Err(e) => {
+                                    self.add_toast(ToastType::Error, format!("Failed to parse ledger: {}", e));
+                                }
+                            }
+                        }
+                        Err(e) => {
+                            self.add_toast(ToastType::Error, format!("Failed to read ledger: {}", e));
+                        }
+                    }
+                } else {
+                    self.add_toast(ToastType::Info, "No ledger file found".to_string());
+                }
+                
+                Task::none()
+            }
+
+            Message::LedgerExport => {
+                // Export ledger to JSON file
+                Task::perform(
+                    async {
+                        rfd::AsyncFileDialog::new()
+                            .set_title("Export Ledger")
+                            .set_file_name("ledger-export.json")
+                            .add_filter("JSON", &["json"])
+                            .save_file()
+                            .await
+                    },
+                    |file_handle_opt| {
+                        if let Some(file_handle) = file_handle_opt {
+                            let path = file_handle.path().to_path_buf();
+                            Message::AddToast(ToastType::Info, format!("Exporting to {}", path.display()))
+                        } else {
+                            Message::None
+                        }
+                    },
+                )
+            }
+
+            Message::LedgerClear => {
+                // Show confirmation modal
+                self.show_modal = Some(ModalContent::Confirm {
+                    title: "Clear Ledger".to_string(),
+                    message: "Are you sure you want to clear all ledger entries? This action cannot be undone.".to_string(),
+                    on_confirm: Box::new(Message::AddToast(ToastType::Success, "Ledger cleared".to_string())),
+                });
+                Task::none()
+            }
+
+            Message::LedgerToggleEvent(index) => {
+                if self.ledger_expanded_events.contains(&index) {
+                    self.ledger_expanded_events.remove(&index);
+                    self.ledger_expanded_contents.remove(&index);
+                } else {
+                    self.ledger_expanded_events.insert(index);
+                    // Create text_editor::Content for the event data
+                    if let Some(entry) = self.ledger_entries.get(index) {
+                        // Pretty-print JSON data
+                        let formatted_data = if entry.data.starts_with('{') || entry.data.starts_with('[') {
+                            // Attempt to format as JSON
+                            serde_json::from_str::<serde_json::Value>(&entry.data)
+                                .and_then(|v| serde_json::to_string_pretty(&v))
+                                .unwrap_or_else(|_| entry.data.clone())
+                        } else {
+                            entry.data.clone()
+                        };
+                        self.ledger_expanded_contents.insert(
+                            index,
+                            text_editor::Content::with_text(&formatted_data)
+                        );
+                    }
+                }
+                Task::none()
+            }
+
             // ================================================================
             // Config / Login / Doctor / Setup refresh
             // ================================================================
@@ -1384,7 +3173,9 @@ impl App {
 
             Message::LoadLogin => {
                 self.current_page = Page::Login;
-                Task::perform(
+                
+                // Load both auth status and git info
+                let load_auth = Task::perform(
                     async {
                         let checker = crate::platforms::AuthStatusChecker::new();
                         let mut map: HashMap<String, AuthStatus> = HashMap::new();
@@ -1412,11 +3203,43 @@ impl App {
                         map
                     },
                     Message::AuthStatusReceived,
-                )
+                );
+                
+                let load_git = Task::perform(
+                    async {
+                        load_git_info().await
+                    },
+                    Message::GitInfoForLoginLoaded,
+                );
+                
+                Task::batch(vec![load_auth, load_git])
             }
 
             Message::AuthStatusReceived(map) => {
                 self.platform_auth_status = map;
+                
+                // Update GitHub auth status from the map
+                if let Some(github_status) = self.platform_auth_status.get("GitHub") {
+                    self.github_auth_status = if github_status.authenticated {
+                        Some("authenticated".to_string())
+                    } else {
+                        Some("not_authenticated".to_string())
+                    };
+                }
+                
+                // Populate CLI content for login view
+                let cli_text = [
+                    "• Cursor: agent login",
+                    "• Codex: codex login",
+                    "• Claude: claude auth login",
+                    "• Gemini: gcloud auth login",
+                    "• DeepSeek: deepseek login",
+                    "• Mistral: mistral login",
+                    "• Grok: grok login",
+                    "• GitHub: gh auth login",
+                ].join("\n");
+                self.login_cli_content = text_editor::Content::with_text(&cli_text);
+                
                 Task::none()
             }
 
@@ -1518,6 +3341,73 @@ impl App {
                 )
             }
 
+            Message::RefreshAuthStatus => {
+                Task::perform(
+                    async {
+                        let checker = crate::platforms::AuthStatusChecker::new();
+                        let mut map: HashMap<String, AuthStatus> = HashMap::new();
+                        for platform in crate::types::Platform::all() {
+                            let result = checker.check_platform(*platform).await;
+                            let name = format!("{:?}", platform);
+                            map.insert(name.clone(), AuthStatus {
+                                platform: name,
+                                authenticated: result.authenticated,
+                                method: if result.message.contains("environment variable") {
+                                    crate::views::login::AuthMethod::EnvVar
+                                } else {
+                                    crate::views::login::AuthMethod::CliLogin
+                                },
+                                hint: result.message.clone(),
+                            });
+                        }
+                        let gh = checker.check_github().await;
+                        map.insert("GitHub".to_string(), AuthStatus {
+                            platform: "GitHub".to_string(),
+                            authenticated: gh.authenticated,
+                            method: crate::views::login::AuthMethod::CliLogin,
+                            hint: gh.message.clone(),
+                        });
+                        map
+                    },
+                    Message::AuthStatusReceived,
+                )
+            }
+
+            Message::LoadGitInfoForLogin => {
+                Task::perform(
+                    async {
+                        load_git_info().await
+                    },
+                    Message::GitInfoForLoginLoaded,
+                )
+            }
+
+            Message::GitInfoForLoginLoaded(git_info) => {
+                let has_git_info = git_info.is_some();
+                self.git_info = git_info;
+                
+                // Also check GitHub auth status
+                if has_git_info {
+                    Task::perform(
+                        async {
+                            let checker = crate::platforms::AuthStatusChecker::new();
+                            let gh = checker.check_github().await;
+                            if gh.authenticated {
+                                Some("authenticated".to_string())
+                            } else {
+                                Some("not_authenticated".to_string())
+                            }
+                        },
+                        |_status| {
+                            Message::RefreshAuthStatus
+                        },
+                    )
+                } else {
+                    self.github_auth_status = None;
+                    Task::none()
+                }
+            }
+
             Message::SetupInstall(platform) => {
                 self.setup_installing = Some(platform);
                 let platform_copy = platform;
@@ -1548,6 +3438,23 @@ impl App {
 
             Message::RefreshSetup => {
                 self.update(Message::SetupRunDetection)
+            }
+
+            // ================================================================
+            // Metrics
+            // ================================================================
+            Message::RefreshMetrics => {
+                self.metrics = self.metrics_collector.snapshot();
+                self.add_toast(ToastType::Success, "Metrics refreshed".to_string());
+                Task::none()
+            }
+
+            // ================================================================
+            // Coverage
+            // ================================================================
+            Message::CoverageFilterChanged(phase) => {
+                self.coverage_phase_filter = phase;
+                Task::none()
             }
 
             // ================================================================
@@ -1621,6 +3528,8 @@ impl App {
             Message::WindowResized(width, height) => {
                 self.window_width = width;
                 self.window_height = height;
+                // Clear canvas caches when window resizes
+                self.retro_overlay.clear_cache();
                 Task::none()
             }
 
@@ -1634,7 +3543,7 @@ impl App {
     /// Render the application UI
     pub fn view(&self) -> Element<'_, Message> {
         use crate::views;
-        use iced::widget::{column, container};
+        use iced::widget::{column, container, stack};
 
         // Build main content based on current page
         let content: Element<Message> = match self.current_page {
@@ -1643,37 +3552,125 @@ impl App {
                 &self.current_item,
                 &self.progress,
                 &self.output_lines,
+                &self.terminal_editor_content,
                 &self.budgets,
                 &self.last_error,
                 &self.start_time,
+                &self.current_project,
                 &self.theme,
             ),
             Page::Projects => views::projects::view(
-                &self.projects, &self.current_project, "", "", false, &self.theme,
+                &self.projects,
+                &self.current_project,
+                &self.new_project_name,
+                &self.new_project_path,
+                self.show_new_project_form,
+                &self.theme,
             ),
             Page::Wizard => {
-                // Clamp wizard step to valid range (1-4)
-                let wizard_step = self.wizard_step.max(1).min(4);
+                // Clamp wizard step to valid range (1-6)
+                let wizard_step = self.wizard_step.max(1).min(6);
                 views::wizard::view(
-                    wizard_step, &self.wizard_requirements_text, &self.wizard_prd_preview, &self.theme,
+                    wizard_step,
+                    &self.wizard_project_name,
+                    &self.wizard_project_path,
+                    &self.wizard_requirements_text,
+                    &self.wizard_prd_platform,
+                    &self.wizard_prd_model,
+                    &self.wizard_prd_editor_content,
+                    &self.wizard_prd_text,
+                    &self.wizard_tier_configs,
+                    &self.wizard_plan_text,
+                    self.wizard_generating,
+                    &self.wizard_models,
+                    &self.wizard_requirements_preview_content,
+                    &self.wizard_plan_content,
+                    &self.theme,
                 )
             }
             Page::Config => views::config::view(
-                &self.config_text, self.config_valid, &self.config_error, &self.theme,
+                &self.gui_config,
+                &self.config_text,
+                &self.config_editor_content,
+                self.config_valid,
+                &self.config_error,
+                self.config_active_tab,
+                self.config_is_dirty,
+                &self.config_models,
+                &self.config_git_info,
+                &self.theme,
             ),
-            Page::Doctor => views::doctor::view(&self.doctor_results, self.doctor_running, &self.doctor_fixing, &self.theme),
-            Page::Tiers => views::tiers::view(&self.tier_tree, &self.selected_tier, &self._no_tier_details, &self.theme),
-            Page::Evidence => views::evidence::view(&self.evidence_items, &self.evidence_filter, &self._empty_string_vec, &self.theme),
+            Page::Doctor => views::doctor::view(
+                &self.doctor_results,
+                self.doctor_running,
+                &self.doctor_fixing,
+                self.doctor_platform_selector_visible,
+                &self.doctor_selected_platforms,
+                &self.doctor_expanded_checks,
+                &self.doctor_detail_contents,
+                &self.theme,
+            ),
+            Page::Tiers => {
+                views::tiers::view(&self.tier_tree, &self.selected_tier, &self.selected_tier_details, &self.tier_details_content, &self.theme)
+            }
+            Page::Evidence => views::evidence::view(
+                &self.evidence_items,
+                &self.evidence_filter,
+                &self._empty_string_vec,
+                self.evidence_selected_item,
+                &self.evidence_preview_content,
+                &self.theme,
+            ),
             Page::Metrics => views::metrics::view(&self.metrics, &self.theme),
-            Page::History => views::history::view(&self.history_sessions, self.history_page, 1, &self.theme),
-            Page::Coverage => views::coverage::view(0.0, &self._empty_coverage, &self.theme),
-            Page::Memory => views::memory::view("", &self._memory_section, &self.theme),
-            Page::Ledger => views::ledger::view(&self.ledger_entries, &self.ledger_filter, &self._empty_string_vec, &self.theme),
-            Page::Login => views::login::view(&self.platform_auth_status, &self.login_in_progress, &self.theme),
-            Page::Settings => views::settings::view(
-                &self.theme, views::settings::LogLevel::Info, views::settings::AutoScroll::Enabled, true,
-                self.minimize_to_tray,
+            Page::History => {
+                views::history::view(&self.history_display_sessions, self.history_page, self.history_total_pages, self.history_filter, &self.history_search, &self.theme)
+            }
+            Page::Coverage => views::coverage::view(0.0, &[], &self._empty_coverage, &self.coverage_phase_filter, &self.theme),
+            Page::Memory => views::memory::view(&self.memory_content, &self.memory_content_string, &self.memory_section, &self.theme),
+            Page::Ledger => views::ledger::view(
+                &self.ledger_entries,
+                &self.ledger_filter,
+                &self._empty_string_vec,
+                &self.ledger_expanded_events,
+                &self.ledger_expanded_contents,
+                &self.ledger_filter_tier,
+                &self.ledger_filter_session,
+                &self.theme,
             ),
+            Page::Login => views::login::view(
+                &self.platform_auth_status,
+                &self.login_in_progress,
+                &self.login_messages,
+                &self.login_auth_urls,
+                &self.git_info,
+                &self.github_auth_status,
+                &self.login_cli_content,
+                &self.theme
+            ),
+            Page::Settings => {
+                // Convert log level string to enum
+                let log_level = match self.settings_log_level.as_str() {
+                    "error" => views::settings::LogLevel::Error,
+                    "warn" => views::settings::LogLevel::Warn,
+                    "debug" => views::settings::LogLevel::Debug,
+                    "trace" => views::settings::LogLevel::Trace,
+                    _ => views::settings::LogLevel::Info,
+                };
+                let auto_scroll = if self.settings_auto_scroll {
+                    views::settings::AutoScroll::Enabled
+                } else {
+                    views::settings::AutoScroll::Disabled
+                };
+                views::settings::view(
+                    &self.theme,
+                    log_level,
+                    auto_scroll,
+                    self.settings_show_timestamps,
+                    self.minimize_to_tray,
+                    self.settings_retention_days,
+                    self.settings_intensive_logging,
+                )
+            }
             Page::Setup => views::setup::view(
                 &self.setup_platform_statuses,
                 self.setup_is_checking,
@@ -1695,8 +3692,15 @@ impl App {
             .width(iced::Length::Fill)
             .height(iced::Length::Fill);
 
+        // Layer with retro overlay effects (pixel grid and scanlines)
+        let with_overlay = stack![
+            base,
+            crate::widgets::pixel_grid_overlay(self.retro_overlay.pixel_grid()),
+            crate::widgets::scanline_overlay(self.retro_overlay.scanlines()),
+        ];
+
         // Add toasts overlay
-        let with_toasts = self.render_toasts_overlay(base.into());
+        let with_toasts = self.render_toasts_overlay(with_overlay.into());
 
         // Add modal overlay if present
         if let Some(ref modal) = self.show_modal {
@@ -1899,6 +3903,8 @@ impl App {
                 if self.output_lines.len() > 1000 {
                     self.output_lines.remove(0);
                 }
+                // Sync terminal content for text selection
+                self.sync_terminal_content();
             }
             PuppetMasterEvent::Error { message, .. } => {
                 self.last_error = Some(message.clone());
@@ -1935,6 +3941,24 @@ impl App {
             // Ignore other events
             _ => {}
         }
+    }
+
+    /// Sync terminal output lines to text_editor::Content for selection support
+    fn sync_terminal_content(&mut self) {
+        let terminal_text = self.output_lines
+            .iter()
+            .map(|line| {
+                let timestamp = line.timestamp.format("%H:%M:%S");
+                let prefix = match line.line_type {
+                    OutputType::Stdout => "[stdout]",
+                    OutputType::Stderr => "[stderr]",
+                    OutputType::Info => "[system]",
+                };
+                format!("> {} {} {}", timestamp, prefix, line.text)
+            })
+            .collect::<Vec<_>>()
+            .join("\n");
+        self.terminal_editor_content = text_editor::Content::with_text(&terminal_text);
     }
 
     /// Add a toast notification
@@ -2024,6 +4048,35 @@ impl App {
                 )
             }
         }
+    }
+
+    fn recompute_history_display(&mut self) {
+        let filtered: Vec<_> = self.history_sessions.iter()
+            .filter(|s| {
+                if let Some(ref filter) = self.history_filter {
+                    if s.status != *filter {
+                        return false;
+                    }
+                }
+                if !self.history_search.is_empty() {
+                    let search_lower = self.history_search.to_lowercase();
+                    let matches_id = s.id.to_lowercase().contains(&search_lower);
+                    let matches_platform = s.platform.as_ref()
+                        .map(|p| p.to_lowercase().contains(&search_lower))
+                        .unwrap_or(false);
+                    if !matches_id && !matches_platform {
+                        return false;
+                    }
+                }
+                true
+            })
+            .cloned()
+            .collect();
+        
+        self.history_total_pages = if filtered.is_empty() { 1 } else { (filtered.len() + self.history_items_per_page - 1) / self.history_items_per_page };
+        let start = (self.history_page * self.history_items_per_page).min(filtered.len());
+        let end = (start + self.history_items_per_page).min(filtered.len());
+        self.history_display_sessions = filtered[start..end].to_vec();
     }
 }
 

@@ -1,11 +1,11 @@
-//! Memory view - AGENTS.md viewer and memory system
+//! Memory view - AGENTS.md viewer with section navigation
 //!
-//! Displays the AGENTS.md content with section navigation.
+//! Displays the AGENTS.md content with section navigation buttons and read-only text area.
 
-use iced::widget::{column, row, text, container, scrollable, Space};
+use iced::widget::{column, row, text, container, scrollable, Space, text_editor};
 use iced::{Element, Length};
 use crate::app::Message;
-use crate::theme::{AppTheme, tokens};
+use crate::theme::{AppTheme, tokens, fonts};
 use crate::widgets::*;
 
 /// Memory section for navigation
@@ -20,7 +20,7 @@ pub enum MemorySection {
 }
 
 impl MemorySection {
-    fn as_str(&self) -> &str {
+    pub fn as_str(&self) -> &str {
         match self {
             MemorySection::Overview => "Overview",
             MemorySection::Patterns => "Patterns",
@@ -31,7 +31,7 @@ impl MemorySection {
         }
     }
 
-    fn all() -> Vec<Self> {
+    pub fn all() -> Vec<Self> {
         vec![
             Self::Overview,
             Self::Patterns,
@@ -43,9 +43,10 @@ impl MemorySection {
     }
 }
 
-/// Memory/AGENTS.md viewer
+/// Memory/AGENTS.md viewer with section navigation
 pub fn view<'a>(
-    agents_content: &'a str,
+    memory_editor_content: &'a text_editor::Content,
+    _agents_content: &'a str,
     current_section: &'a MemorySection,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
@@ -53,10 +54,13 @@ pub fn view<'a>(
 
     // Header
     content = content.push(
-        text("Memory System (AGENTS.md)").size(tokens::font_size::XL)
+        text("Memory System (AGENTS.md)")
+            .size(tokens::font_size::DISPLAY)
+            .font(crate::theme::fonts::FONT_DISPLAY)
+            .color(theme.ink())
     );
 
-    // Section navigation
+    // Section navigation buttons
     let mut nav_row = row![].spacing(tokens::spacing::SM);
     for section in MemorySection::all() {
         let is_selected = section == *current_section;
@@ -70,7 +74,7 @@ pub fn view<'a>(
                     ButtonVariant::Secondary
                 }
             )
-            .on_press(Message::NavigateTo(Page::Memory))
+            .on_press(Message::MemorySectionChanged(section))
         );
     }
 
@@ -78,17 +82,20 @@ pub fn view<'a>(
         themed_panel(container(nav_row).padding(tokens::spacing::MD), theme)
     );
 
-    // Content display
-    let display_content = filter_content(agents_content, current_section);
-
+    // Content display - filtered by section
+    // NOTE: The text_editor content is populated when section changes, so it already contains filtered content
+    
+    // Use text_editor for selectable, read-only text
     let content_panel = themed_panel(
         container(
-            scrollable(
-                container(
-                    text(display_content).size(tokens::font_size::XS)
-                ).padding(tokens::spacing::MD)
-            ).height(Length::Fill)
-        ).padding(tokens::spacing::MD),
+            text_editor(memory_editor_content)
+                .font(fonts::FONT_MONO)
+                .size(tokens::font_size::SM)
+                .height(Length::Fill)
+        )
+        .padding(tokens::spacing::MD)
+        .width(Length::Fill)
+        .height(Length::Fill),
         theme,
     );
 
@@ -97,12 +104,12 @@ pub fn view<'a>(
     // Action buttons
     let actions = row![
         styled_button(theme, "Refresh", ButtonVariant::Secondary)
-            .on_press(Message::NavigateTo(Page::Memory)),
+            .on_press(Message::MemoryRefresh),
         styled_button(theme, "Edit in External Editor", ButtonVariant::Secondary)
-            .on_press(Message::NavigateTo(Page::Memory)),
+            .on_press(Message::MemoryEditExternal),
         Space::new().width(Length::Fill),
-        styled_button(theme, "Export", ButtonVariant::Secondary)
-            .on_press(Message::NavigateTo(Page::Memory)),
+        styled_button(theme, "Export", ButtonVariant::Info)
+            .on_press(Message::MemoryExport),
     ]
     .spacing(tokens::spacing::SM)
     .align_y(iced::Alignment::Center);
@@ -116,19 +123,19 @@ pub fn view<'a>(
         help_text(
             "About Memory System",
             &[
-                "• AGENTS.md stores learned patterns and best practices",
-                "• Updated automatically after each orchestration",
+                "AGENTS.md stores learned patterns and best practices",
+                "Updated automatically after each orchestration",
             ]
         )
     );
 
-    container(content)
+    scrollable(content)
         .width(Length::Fill)
         .height(Length::Fill)
         .into()
 }
 
-fn filter_content(content: &str, section: &MemorySection) -> String {
+pub fn filter_content(content: &str, section: &MemorySection) -> String {
     if section == &MemorySection::Full {
         return content.to_string();
     }

@@ -2,10 +2,10 @@
 //!
 //! General settings including theme, log level, and other preferences.
 
-use iced::widget::{column, row, text, container, Space};
+use iced::widget::{column, row, text, container, scrollable, Space, pick_list};
 use iced::{Element, Length};
 use crate::app::Message;
-use crate::theme::{AppTheme, tokens};
+use crate::theme::{AppTheme, tokens, fonts};
 use crate::widgets::*;
 
 /// Log level options
@@ -18,8 +18,16 @@ pub enum LogLevel {
     Trace,
 }
 
+const LOG_LEVELS: [LogLevel; 5] = [
+    LogLevel::Error,
+    LogLevel::Warn,
+    LogLevel::Info,
+    LogLevel::Debug,
+    LogLevel::Trace,
+];
+
 impl LogLevel {
-    fn as_str(&self) -> &str {
+    pub fn as_str(&self) -> &str {
         match self {
             LogLevel::Error => "Error",
             LogLevel::Warn => "Warn",
@@ -29,14 +37,8 @@ impl LogLevel {
         }
     }
 
-    fn _all() -> Vec<Self> {
-        vec![
-            Self::Error,
-            Self::Warn,
-            Self::Info,
-            Self::Debug,
-            Self::Trace,
-        ]
+    pub fn all() -> &'static [Self] {
+        &LOG_LEVELS
     }
 }
 
@@ -54,15 +56,11 @@ pub enum AutoScroll {
 }
 
 impl AutoScroll {
-    fn as_str(&self) -> &str {
+    pub fn as_str(&self) -> &str {
         match self {
             AutoScroll::Enabled => "Enabled",
             AutoScroll::Disabled => "Disabled",
         }
-    }
-
-    fn _all() -> Vec<Self> {
-        vec![Self::Enabled, Self::Disabled]
     }
 }
 
@@ -72,41 +70,52 @@ impl std::fmt::Display for AutoScroll {
     }
 }
 
-/// Settings view
+/// Settings view with multiple sections
 pub fn view<'a>(
     theme: &'a AppTheme,
-    _log_level: LogLevel,
-    _auto_scroll: AutoScroll,
+    log_level: LogLevel,
+    auto_scroll: AutoScroll,
     show_timestamps: bool,
     minimize_to_tray: bool,
+    retention_days: u32,
+    intensive_logging: bool,
 ) -> Element<'a, Message> {
     let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
     // Header
     content = content.push(
-        text("Settings").size(tokens::font_size::XL)
+        text("Settings")
+            .size(tokens::font_size::DISPLAY)
+            .font(crate::theme::fonts::FONT_DISPLAY)
+            .color(theme.ink())
     );
 
-    // Theme settings
+    // --- Appearance Section ---
     let theme_content = column![
-        text("Appearance").size(tokens::font_size::LG),
+        text("Appearance")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        Space::new().height(Length::Fixed(tokens::spacing::SM)),
         row![
-            text("Theme:").size(tokens::font_size::BASE),
-            Space::new().width(Length::Fixed(tokens::spacing::LG)),
+            text("Theme:")
+                .size(tokens::font_size::BASE)
+                .width(Length::Fixed(150.0))
+                .color(theme.ink()),
             styled_button(
                 theme,
-                if matches!(theme, AppTheme::Light) { "Light (Active)" } else { "Light" },
+                if matches!(theme, AppTheme::Light) { "Light" } else { "Light" },
                 if matches!(theme, AppTheme::Light) { ButtonVariant::Primary } else { ButtonVariant::Secondary }
             )
             .on_press(Message::ToggleTheme),
             styled_button(
                 theme,
-                if matches!(theme, AppTheme::Dark) { "Dark (Active)" } else { "Dark" },
+                if matches!(theme, AppTheme::Dark) { "Dark" } else { "Dark" },
                 if matches!(theme, AppTheme::Dark) { ButtonVariant::Primary } else { ButtonVariant::Secondary }
             )
             .on_press(Message::ToggleTheme),
         ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
-    ].spacing(tokens::spacing::MD);
+    ].spacing(tokens::spacing::SM);
 
     content = content.push(
         themed_panel(
@@ -115,25 +124,46 @@ pub fn view<'a>(
         )
     );
 
-    // Logging settings
+    // --- Logging Section ---
     let logging_content = column![
-        text("Logging").size(tokens::font_size::LG),
+        text("Logging")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        Space::new().height(Length::Fixed(tokens::spacing::SM)),
         row![
-            text("Log Level:").size(tokens::font_size::BASE),
-            Space::new().width(Length::Fixed(tokens::spacing::LG)),
-            text("Info").size(tokens::font_size::BASE),
+            text("Log Level:")
+                .size(tokens::font_size::BASE)
+                .width(Length::Fixed(150.0))
+                .color(theme.ink()),
+            pick_list(
+                LogLevel::all(),
+                Some(log_level),
+                |level| Message::SettingsLogLevelChanged(level.as_str().to_lowercase())
+            )
+            .width(Length::Fixed(150.0))
+            .padding(tokens::spacing::SM)
+            .text_size(tokens::font_size::BASE),
         ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
         row![
-            text("Show Timestamps:").size(tokens::font_size::BASE),
-            Space::new().width(Length::Fixed(tokens::spacing::LG)),
+            text("Intensive Logging:")
+                .size(tokens::font_size::BASE)
+                .width(Length::Fixed(150.0))
+                .color(theme.ink()),
             styled_button(
                 theme,
-                if show_timestamps { "Enabled" } else { "Disabled" },
-                if show_timestamps { ButtonVariant::Primary } else { ButtonVariant::Secondary }
+                "OFF",
+                if !intensive_logging { ButtonVariant::Primary } else { ButtonVariant::Secondary }
             )
-            .on_press(Message::ToggleTheme),
+            .on_press(Message::SettingsIntensiveLoggingToggled(false)),
+            styled_button(
+                theme,
+                "ON",
+                if intensive_logging { ButtonVariant::Primary } else { ButtonVariant::Secondary }
+            )
+            .on_press(Message::SettingsIntensiveLoggingToggled(true)),
         ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
-    ].spacing(tokens::spacing::MD);
+    ].spacing(tokens::spacing::SM);
 
     content = content.push(
         themed_panel(
@@ -142,26 +172,87 @@ pub fn view<'a>(
         )
     );
 
-    // Output settings
-    let output_content = column![
-        text("Output").size(tokens::font_size::LG),
+    // --- Editor Section ---
+    let editor_content = column![
+        text("Editor")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        Space::new().height(Length::Fixed(tokens::spacing::SM)),
         row![
-            text("Auto-scroll:").size(tokens::font_size::BASE),
-            Space::new().width(Length::Fixed(tokens::spacing::LG)),
-            text("Enabled").size(tokens::font_size::BASE),
+            text("Auto-scroll:")
+                .size(tokens::font_size::BASE)
+                .width(Length::Fixed(150.0))
+                .color(theme.ink()),
+            styled_button(
+                theme,
+                auto_scroll.as_str(),
+                ButtonVariant::Primary
+            )
+            .on_press(Message::SettingsAutoScrollToggled(matches!(auto_scroll, AutoScroll::Disabled))),
+            text("Terminal output will automatically scroll to show new content")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
         ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
-    ].spacing(tokens::spacing::MD);
+        row![
+            text("Show Timestamps:")
+                .size(tokens::font_size::BASE)
+                .width(Length::Fixed(150.0))
+                .color(theme.ink()),
+            styled_button(
+                theme,
+                if show_timestamps { "ON" } else { "OFF" },
+                if show_timestamps { ButtonVariant::Primary } else { ButtonVariant::Secondary }
+            )
+            .on_press(Message::SettingsShowTimestampsToggled(!show_timestamps)),
+            text("Display timestamps in log output")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
+        ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
+    ].spacing(tokens::spacing::SM);
 
     content = content.push(
         themed_panel(
-            container(output_content).padding(tokens::spacing::MD),
+            container(editor_content).padding(tokens::spacing::MD),
             theme
         )
     );
 
-    // System Tray settings
+    // --- Data Section ---
+    let data_content = column![
+        text("Data")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        Space::new().height(Length::Fixed(tokens::spacing::SM)),
+        row![
+            text("Retention Days:")
+                .size(tokens::font_size::BASE)
+                .width(Length::Fixed(150.0))
+                .color(theme.ink()),
+            styled_text_input(theme, &retention_days.to_string(), &retention_days.to_string())
+                .on_input(Message::SettingsRetentionDaysChanged)
+                .width(Length::Fixed(100.0)),
+            text("Days to keep evidence and logs")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
+        ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
+    ].spacing(tokens::spacing::SM);
+
+    content = content.push(
+        themed_panel(
+            container(data_content).padding(tokens::spacing::MD),
+            theme
+        )
+    );
+
+    // --- System Tray Section ---
     let tray_content = column![
-        text("System Tray").size(tokens::font_size::LG),
+        text("System Tray")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        Space::new().height(Length::Fixed(tokens::spacing::SM)),
         row![
             styled_button(
                 theme,
@@ -169,9 +260,11 @@ pub fn view<'a>(
                 if minimize_to_tray { ButtonVariant::Primary } else { ButtonVariant::Secondary }
             )
             .on_press(Message::ToggleMinimizeToTray),
-            text("When enabled, closing the window minimizes to the system tray instead of exiting").size(tokens::font_size::SM),
+            text("When enabled, closing minimizes to system tray instead of exiting")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
         ].spacing(tokens::spacing::MD).align_y(iced::Alignment::Center),
-    ].spacing(tokens::spacing::MD);
+    ].spacing(tokens::spacing::SM);
 
     content = content.push(
         themed_panel(
@@ -180,25 +273,35 @@ pub fn view<'a>(
         )
     );
 
-    // Advanced settings
+    // --- Advanced Section ---
     let advanced_content = column![
-        text("Advanced").size(tokens::font_size::LG),
+        text("Advanced")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        Space::new().height(Length::Fixed(tokens::spacing::SM)),
         row![
             styled_button(theme, "Clear All Data", ButtonVariant::Danger)
-                .on_press(Message::NavigateTo(Page::Settings)),
-            text("Remove all evidence, logs, and state").size(tokens::font_size::SM),
+                .on_press(Message::SettingsClearData),
+            text("Remove all evidence, logs, and state")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
         ].spacing(tokens::spacing::MD).align_y(iced::Alignment::Center),
         row![
             styled_button(theme, "Reset to Defaults", ButtonVariant::Warning)
-                .on_press(Message::NavigateTo(Page::Settings)),
-            text("Reset all settings to default values").size(tokens::font_size::SM),
+                .on_press(Message::SettingsResetDefaults),
+            text("Reset all settings to default values")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
         ].spacing(tokens::spacing::MD).align_y(iced::Alignment::Center),
         row![
             styled_button(theme, "Open Data Directory", ButtonVariant::Info)
-                .on_press(Message::NavigateTo(Page::Settings)),
-            text("Open the application data folder").size(tokens::font_size::SM),
+                .on_press(Message::SettingsOpenDataDir),
+            text("Open the application data folder")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
         ].spacing(tokens::spacing::MD).align_y(iced::Alignment::Center),
-    ].spacing(tokens::spacing::MD);
+    ].spacing(tokens::spacing::SM);
 
     content = content.push(
         themed_panel(
@@ -207,16 +310,23 @@ pub fn view<'a>(
         )
     );
 
-    // About section
+    // --- About Section ---
     let about_content = column![
-        text("About").size(tokens::font_size::LG),
-        text(format!("RWM Puppet Master v{}", env!("CARGO_PKG_VERSION"))).size(tokens::font_size::BASE),
-        text("Autonomous LLM orchestration system").size(tokens::font_size::SM),
+        text("About")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        Space::new().height(Length::Fixed(tokens::spacing::SM)),
+        text(format!("RWM Puppet Master v{}", env!("CARGO_PKG_VERSION")))
+            .size(tokens::font_size::BASE)
+            .color(theme.ink()),
+        text("Autonomous LLM orchestration system")
+            .size(tokens::font_size::SM)
+            .color(theme.ink_faded()),
+        Space::new().height(Length::Fixed(tokens::spacing::SM)),
         row![
-            styled_button(theme, "Documentation", ButtonVariant::Info)
-                .on_press(Message::NavigateTo(Page::Settings)),
-            styled_button(theme, "GitHub", ButtonVariant::Info)
-                .on_press(Message::NavigateTo(Page::Settings)),
+            styled_button(theme, "Documentation", ButtonVariant::Info),
+            styled_button(theme, "GitHub", ButtonVariant::Info),
         ].spacing(tokens::spacing::SM),
     ].spacing(tokens::spacing::SM);
 
@@ -234,14 +344,14 @@ pub fn view<'a>(
                 row![
                     Space::new().width(Length::Fill),
                     styled_button(theme, "Save Settings", ButtonVariant::Primary)
-                        .on_press(Message::SaveConfig),
+                        .on_press(Message::SaveSettings),
                 ].spacing(tokens::spacing::SM)
             ).padding(tokens::spacing::MD),
             theme
         )
     );
 
-    container(content)
+    scrollable(content)
         .width(Length::Fill)
         .height(Length::Fill)
         .into()

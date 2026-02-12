@@ -34,10 +34,15 @@ pub fn view<'a>(
     content = content.push(
         container(
             column![
-                text("Welcome to RWM Puppet Master").size(tokens::font_size::XXL),
-                text("First-time setup wizard").size(tokens::font_size::MD),
+                text("Welcome to RWM Puppet Master")
+                    .size(tokens::font_size::DISPLAY)
+                    .font(crate::theme::fonts::FONT_DISPLAY)
+                    .color(theme.ink()),
+                text("First-time setup wizard")
+                    .size(tokens::font_size::MD)
+                    .color(theme.ink_faded()),
             ]
-            .spacing(tokens::spacing::XS)
+            .spacing(tokens::spacing::SM)
         )
         .padding(tokens::spacing::LG)
     );
@@ -47,9 +52,16 @@ pub fn view<'a>(
         themed_panel(
             container(
                 column![
-                    text("Platform Detection").size(tokens::font_size::LG),
-                    text("This wizard will help you verify that platform CLI tools are installed and configured.").size(tokens::font_size::BASE),
-                    text("Click 'Run Detection' to scan your system for installed platforms.").size(tokens::font_size::BASE),
+                    text("Platform Detection")
+                        .size(tokens::font_size::LG)
+                        .font(crate::theme::fonts::FONT_UI_BOLD)
+                        .color(theme.ink()),
+                    text("This wizard will help you verify that platform CLI tools are installed and configured.")
+                        .size(tokens::font_size::BASE)
+                        .color(theme.ink()),
+                    text("Click 'Run Detection' to scan your system for installed platforms.")
+                        .size(tokens::font_size::BASE)
+                        .color(theme.ink()),
                 ]
                 .spacing(tokens::spacing::SM)
             )
@@ -203,7 +215,7 @@ pub fn view<'a>(
         )
     );
 
-    container(content)
+    container(scrollable(content))
         .width(Length::Fill)
         .height(Length::Fill)
         .into()

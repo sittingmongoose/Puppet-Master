@@ -551,12 +551,20 @@ impl MetricsCollector {
 
     /// Export a snapshot as pretty JSON.
     pub fn export_json(&self, path: impl AsRef<Path>) -> Result<()> {
+        let path = path.as_ref();
+        
+        // Create parent directory if needed
+        if let Some(parent) = path.parent() {
+            std::fs::create_dir_all(parent)
+                .with_context(|| format!("Failed to create directory {}", parent.display()))?;
+        }
+        
         let snapshot = self.snapshot();
         let json = serde_json::to_string_pretty(&snapshot).context("Failed to serialize metrics snapshot")?;
-        let mut file = File::create(&path)
-            .with_context(|| format!("Failed to create metrics JSON {}", path.as_ref().display()))?;
+        let mut file = File::create(path)
+            .with_context(|| format!("Failed to create metrics JSON {}", path.display()))?;
         file.write_all(json.as_bytes())
-            .with_context(|| format!("Failed to write metrics JSON {}", path.as_ref().display()))?;
+            .with_context(|| format!("Failed to write metrics JSON {}", path.display()))?;
         Ok(())
     }
 
@@ -564,10 +572,18 @@ impl MetricsCollector {
     ///
     /// The CSV includes both platform and subtask rows, distinguished by `kind`.
     pub fn export_csv(&self, path: impl AsRef<Path>) -> Result<()> {
+        let path = path.as_ref();
+        
+        // Create parent directory if needed
+        if let Some(parent) = path.parent() {
+            std::fs::create_dir_all(parent)
+                .with_context(|| format!("Failed to create directory {}", parent.display()))?;
+        }
+        
         let snapshot = self.snapshot();
 
-        let mut file = File::create(&path)
-            .with_context(|| format!("Failed to create metrics CSV {}", path.as_ref().display()))?;
+        let mut file = File::create(path)
+            .with_context(|| format!("Failed to create metrics CSV {}", path.display()))?;
 
         writeln!(
             file,

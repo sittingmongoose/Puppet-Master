@@ -52,6 +52,12 @@ impl UsageTracker {
     pub fn record(&self, record: UsageRecord) -> Result<()> {
         let inner = self.inner.lock().unwrap();
 
+        // Create parent directory if needed
+        if let Some(parent) = inner.path.parent() {
+            std::fs::create_dir_all(parent)
+                .with_context(|| format!("Failed to create usage directory {}", parent.display()))?;
+        }
+
         let mut file = OpenOptions::new()
             .create(true)
             .append(true)

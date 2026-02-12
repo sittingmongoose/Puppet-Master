@@ -66,6 +66,12 @@ impl ProgressManager {
     pub fn append_entry(&self, entry: &ProgressEntry) -> Result<()> {
         let inner = self.inner.lock().unwrap();
 
+        // Create parent directory if needed
+        if let Some(parent) = inner.path.parent() {
+            std::fs::create_dir_all(parent)
+                .with_context(|| format!("Failed to create progress directory {}", parent.display()))?;
+        }
+
         let mut file = OpenOptions::new()
             .create(true)
             .append(true)

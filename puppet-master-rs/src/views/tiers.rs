@@ -1,11 +1,11 @@
 //! Tiers view - Hierarchical tier tree viewer
 //!
-//! Displays the phase/task/subtask hierarchy with expand/collapse and selection.
+//! Displays the phase/task/subtask hierarchy with expand/collapse, acceptance criteria, and status colors.
 
-use iced::widget::{column, row, text, container, scrollable, Space};
-use iced::{Element, Length};
+use iced::widget::{column, row, text, container, scrollable, Space, text_editor};
+use iced::{Element, Length, Border};
 use crate::app::Message;
-use crate::theme::{AppTheme, tokens};
+use crate::theme::{AppTheme, tokens, fonts, colors};
 use crate::widgets::*;
 
 /// Tier display node for tree rendering
@@ -18,6 +18,8 @@ pub struct TierDisplayNode {
     pub depth: usize,
     pub expanded: bool,
     pub has_children: bool,
+    pub acceptance_criteria: Vec<String>,
+    pub iteration_count: usize,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -38,25 +40,47 @@ impl TierNodeType {
 
     pub fn color(&self) -> iced::Color {
         match self {
-            TierNodeType::Phase => crate::theme::colors::HOT_MAGENTA,
-            TierNodeType::Task => crate::theme::colors::ELECTRIC_BLUE,
-            TierNodeType::Subtask => crate::theme::colors::ACID_LIME,
+            TierNodeType::Phase => colors::HOT_MAGENTA,
+            TierNodeType::Task => colors::ELECTRIC_BLUE,
+            TierNodeType::Subtask => colors::ACID_LIME,
         }
     }
 }
 
-/// Tier hierarchy viewer
+fn status_to_color(status: &str) -> iced::Color {
+    match status.to_lowercase().as_str() {
+        "running" | "in_progress" => colors::ELECTRIC_BLUE,
+        "passed" | "completed" | "complete" => colors::ACID_LIME,
+        "failed" | "error" => colors::HOT_MAGENTA,
+        _ => iced::Color::from_rgb(0.6, 0.6, 0.6), // pending gray
+    }
+}
+
+/// Tier hierarchy viewer with expandable nodes
 pub fn view<'a>(
     tree: &'a [TierDisplayNode],
     selected: &'a Option<String>,
     selected_details: &'a Option<TierDetails>,
+    tier_details_content: &'a text_editor::Content,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
     // Header
     content = content.push(
-        text("Tier Hierarchy").size(tokens::font_size::XL)
+        row![
+            text("Tier Hierarchy")
+                .size(tokens::font_size::DISPLAY)
+                .font(crate::theme::fonts::FONT_DISPLAY)
+                .color(theme.ink()),
+            Space::new().width(Length::Fill),
+            styled_button(theme, "Expand All", ButtonVariant::Ghost)
+                .on_press(Message::ExpandAllTiers),
+            styled_button(theme, "Collapse All", ButtonVariant::Ghost)
+                .on_press(Message::CollapseAllTiers),
+        ]
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center)
     );
 
     // Tree view
@@ -72,58 +96,123 @@ pub fn view<'a>(
             " "
         };
 
-        let node_row = row![
-            Space::new().width(Length::Fixed(indent as f32)),
-            // Expand/collapse button
-            if node.has_children {
-                Element::from(styled_button_sized(theme, expand_icon, ButtonVariant::Ghost, ButtonSize::Small)
-                    .on_press(Message::NavigateTo(Page::Tiers)))
-            } else {
-                Element::from(Space::new().width(Length::Fixed(40.0)))
-            },
-            // Type icon badge
-            container(
-                text(node.tier_type.icon())
-                    .size(tokens::font_size::SM)
-            )
-            .padding(tokens::spacing::SM)
-            .style(move |_theme: &iced::Theme| {
-                iced::widget::container::Style {
-                    background: Some(iced::Background::Color(node.tier_type.color())),
-                    border: iced::Border {
-                        color: crate::theme::colors::INK_BLACK,
-                        width: tokens::borders::MEDIUM,
-                        radius: tokens::radii::NONE.into(),
-                    },
-                    ..Default::default()
-                }
-            }),
-            // Status text
-            container(
-                text(&node.status)
-                    .size(tokens::font_size::SM)
-            )
-            .padding(tokens::spacing::SM)
-            .width(Length::Fixed(100.0)),
-            // ID and title
-            column![
-                text(&node.id).size(tokens::font_size::SM),
-                text(&node.title).size(tokens::font_size::BASE),
-            ].spacing(tokens::spacing::XXS),
-        ]
-        .spacing(tokens::spacing::SM)
-        .align_y(iced::Alignment::Center);
+        let status_color = status_to_color(&node.status);
 
-        let node_container = container(node_row)
+        let mut node_content = column![
+            row![
+                Space::new().width(Length::Fixed(indent as f32)),
+                // Expand/collapse button
+                if node.has_children {
+                    Element::from(
+                        styled_button_sized(theme, expand_icon, ButtonVariant::Ghost, ButtonSize::Small)
+                            .on_press(Message::ToggleTierExpand(node.id.clone()))
+                    )
+                } else {
+                    Element::from(Space::new().width(Length::Fixed(32.0)))
+                },
+                // Type icon badge
+                container(
+                    text(node.tier_type.icon())
+                        .size(tokens::font_size::SM)
+                        .color(colors::INK_BLACK)
+                )
+                .padding(tokens::spacing::SM)
+                .style(move |_theme: &iced::Theme| {
+                    iced::widget::container::Style {
+                        background: Some(iced::Background::Color(node.tier_type.color())),
+                        border: Border {
+                            color: colors::INK_BLACK,
+                            width: tokens::borders::MEDIUM,
+                            radius: tokens::radii::NONE.into(),
+                        },
+                        ..Default::default()
+                    }
+                }),
+                // Status badge
+                container(
+                    text(&node.status)
+                        .size(tokens::font_size::SM)
+                        .color(colors::INK_BLACK)
+                )
+                .padding(tokens::spacing::SM)
+                .width(Length::Fixed(100.0))
+                .style(move |_theme: &iced::Theme| {
+                    iced::widget::container::Style {
+                        background: Some(iced::Background::Color(status_color)),
+                        border: Border {
+                            color: colors::INK_BLACK,
+                            width: tokens::borders::MEDIUM,
+                            radius: tokens::radii::NONE.into(),
+                        },
+                        ..Default::default()
+                    }
+                }),
+                // ID, title, and iteration count
+                column![
+                    row![
+                        text(&node.id)
+                            .size(tokens::font_size::SM)
+                            .color(theme.ink_faded()),
+                        if node.iteration_count > 0 {
+                            Element::from(
+                                text(format!(" (iter: {})", node.iteration_count))
+                                    .size(tokens::font_size::XS)
+                                    .color(colors::SAFETY_ORANGE)
+                            )
+                        } else {
+                            Element::from(Space::new().width(Length::Shrink))
+                        },
+                    ].spacing(tokens::spacing::XXS),
+                    text(&node.title)
+                        .size(tokens::font_size::BASE)
+                        .color(theme.ink()),
+                ].spacing(tokens::spacing::XXS),
+            ]
+            .spacing(tokens::spacing::SM)
+            .align_y(iced::Alignment::Center),
+        ];
+
+        // Show acceptance criteria if expanded and available
+        if node.expanded && !node.acceptance_criteria.is_empty() {
+            let mut criteria_col = column![
+                Space::new().height(Length::Fixed(tokens::spacing::XS)),
+                text("Acceptance Criteria:")
+                    .size(tokens::font_size::SM)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+            ].spacing(tokens::spacing::XXS);
+
+            for criterion in &node.acceptance_criteria {
+                criteria_col = criteria_col.push(
+                    text(format!("• {}", criterion))
+                        .size(tokens::font_size::SM)
+                        .color(theme.ink_faded())
+                );
+            }
+
+            node_content = node_content.push(
+                container(criteria_col)
+                    .padding(tokens::spacing::SM)
+                    .style(move |_: &iced::Theme| container::Style {
+                        background: Some(iced::Background::Color(
+                            iced::Color { a: 0.1, ..theme.ink() }
+                        )),
+                        ..Default::default()
+                    })
+            );
+        }
+
+        let node_container = container(node_content)
             .padding(tokens::spacing::SM)
+            .width(Length::Fill)
             .style(move |_theme: &iced::Theme| {
                 if is_selected {
                     iced::widget::container::Style {
                         background: Some(iced::Background::Color(
-                            iced::Color { a: 0.2, ..crate::theme::colors::ACID_LIME }
+                            iced::Color { a: 0.2, ..colors::ACID_LIME }
                         )),
-                        border: iced::Border {
-                            color: crate::theme::colors::ACID_LIME,
+                        border: Border {
+                            color: colors::ACID_LIME,
                             width: tokens::borders::MEDIUM,
                             radius: tokens::radii::NONE.into(),
                         },
@@ -135,20 +224,9 @@ pub fn view<'a>(
             });
 
         tree_col = tree_col.push(
-            styled_button_sized(theme, "", ButtonVariant::Ghost, ButtonSize::Small)
-                .on_press(Message::SelectProject(node.id.clone()))
-                .style(|_theme: &iced::Theme, _status: iced::widget::button::Status| {
-                    iced::widget::button::Style {
-                        background: None,
-                        text_color: crate::theme::colors::INK_BLACK,
-                        border: iced::Border::default(),
-                        shadow: iced::Shadow::default(),
-                        snap: true,
-                    }
-                })
+            iced::widget::mouse_area(node_container)
+                .on_press(Message::SelectTier(node.id.clone()))
         );
-        
-        tree_col = tree_col.push(node_container);
     }
 
     let tree_scroll = scrollable(tree_col)
@@ -159,9 +237,8 @@ pub fn view<'a>(
         row![
             container(tree_scroll)
                 .width(Length::FillPortion(2)),
-            container(render_details(details, theme))
-                .width(Length::FillPortion(1))
-                .padding(tokens::spacing::MD),
+            container(render_details(details, tier_details_content, theme))
+                .width(Length::FillPortion(1)),
         ].spacing(tokens::spacing::LG)
     } else {
         row![
@@ -177,7 +254,7 @@ pub fn view<'a>(
         )
     );
 
-    container(content)
+    scrollable(content)
         .width(Length::Fill)
         .height(Length::Fill)
         .into()
@@ -194,32 +271,61 @@ pub struct TierDetails {
     pub platform: String,
 }
 
-fn render_details<'a>(details: &'a TierDetails, theme: &'a AppTheme) -> Element<'a, Message> {
-    let mut content: iced::widget::Column<'_, Message> = column![
-        text("Details").size(tokens::font_size::LG),
+fn render_details<'a>(details: &'a TierDetails, tier_details_content: &'a text_editor::Content, theme: &'a AppTheme) -> Element<'a, Message> {
+    let content = column![
+        text("Details")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+        Space::new().height(Length::Fixed(tokens::spacing::MD)),
         column![
-            text("ID:").size(tokens::font_size::SM),
-            text(&details.id).size(tokens::font_size::BASE),
+            text("ID:")
+                .size(tokens::font_size::SM)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            text(&details.id)
+                .size(tokens::font_size::BASE)
+                .color(theme.ink_faded()),
         ].spacing(tokens::spacing::XXS),
         column![
-            text("Title:").size(tokens::font_size::SM),
-            text(&details.title).size(tokens::font_size::BASE),
+            text("Title:")
+                .size(tokens::font_size::SM)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            text(&details.title)
+                .size(tokens::font_size::BASE)
+                .color(theme.ink_faded()),
         ].spacing(tokens::spacing::XXS),
         column![
-            text("Description:").size(tokens::font_size::SM),
-            text(&details.description).size(tokens::font_size::BASE),
-        ].spacing(tokens::spacing::XXS),
-        column![
-            text("Status:").size(tokens::font_size::SM),
+            text("Description:")
+                .size(tokens::font_size::SM)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            // Use text_editor for selectable description text
             container(
-                text(&details.status).size(tokens::font_size::SM)
+                text_editor(tier_details_content)
+                    .font(fonts::FONT_UI)
+                    .size(tokens::font_size::SM)
+                    .height(Length::Fixed(150.0))
+            )
+            .width(Length::Fill)
+        ].spacing(tokens::spacing::XXS),
+        column![
+            text("Status:")
+                .size(tokens::font_size::SM)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            container(
+                text(&details.status)
+                    .size(tokens::font_size::SM)
+                    .color(colors::INK_BLACK)
             )
             .padding(tokens::spacing::SM)
-            .style(|_theme: &iced::Theme| {
+            .style(move |_theme: &iced::Theme| {
                 iced::widget::container::Style {
-                    background: Some(iced::Background::Color(crate::theme::colors::ELECTRIC_BLUE)),
-                    border: iced::Border {
-                        color: crate::theme::colors::INK_BLACK,
+                    background: Some(iced::Background::Color(status_to_color(&details.status))),
+                    border: Border {
+                        color: colors::INK_BLACK,
                         width: tokens::borders::MEDIUM,
                         radius: tokens::radii::NONE.into(),
                     },
@@ -228,22 +334,15 @@ fn render_details<'a>(details: &'a TierDetails, theme: &'a AppTheme) -> Element<
             }),
         ].spacing(tokens::spacing::XXS),
         column![
-            text("Platform:").size(tokens::font_size::SM),
-            text(&details.platform).size(tokens::font_size::BASE),
+            text("Platform:")
+                .size(tokens::font_size::SM)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            text(&details.platform)
+                .size(tokens::font_size::BASE)
+                .color(theme.ink_faded()),
         ].spacing(tokens::spacing::XXS),
     ].spacing(tokens::spacing::MD);
-
-    if !details.dependencies.is_empty() {
-        let mut deps_col = column![
-            text("Dependencies:").size(tokens::font_size::SM),
-        ].spacing(tokens::spacing::XS);
-
-        for dep in &details.dependencies {
-            deps_col = deps_col.push(text(format!("- {}", dep)).size(tokens::font_size::SM));
-        }
-
-        content = content.push(deps_col);
-    }
 
     themed_panel(scrollable(content), theme).into()
 }
@@ -252,10 +351,10 @@ fn render_details<'a>(details: &'a TierDetails, theme: &'a AppTheme) -> Element<
 fn parse_status(status: &str) -> Status {
     match status.to_lowercase().as_str() {
         "pending" => Status::Pending,
-        "in_progress" | "in-progress" => Status::Running,
-        "completed" => Status::Complete,
-        "failed" => Status::Error,
-        "blocked" => Status::Paused,
+        "in_progress" | "in-progress" | "running" => Status::Running,
+        "completed" | "passed" => Status::Complete,
+        "failed" | "error" => Status::Error,
+        "blocked" | "paused" => Status::Paused,
         "skipped" => Status::Pending,
         _ => Status::Pending,
     }

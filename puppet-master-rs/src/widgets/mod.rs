@@ -15,6 +15,7 @@ pub mod icons;  // OLD: Unicode symbol icons (to be deprecated)
 pub mod icon;   // NEW: SVG icon system
 pub mod help_text;
 pub mod paper_texture;  // NEW: Canvas-based paper grain texture
+pub mod pixel_grid;     // NEW: Pixel grid and scanline overlay effects
 pub mod responsive;     // NEW: Responsive layout helpers
 pub mod styled_button;  // NEW: Redesigned button widget
 pub mod styled_input;   // NEW: Redesigned input widget
@@ -50,6 +51,10 @@ pub use header::{header, Page};
 pub use icons::{icon, icon_with_size};  // OLD Unicode icons
 pub use help_text::help_text;
 pub use paper_texture::paper_texture;
+pub use pixel_grid::{
+    PixelGrid, ScanlineOverlay, RetroOverlay,
+    pixel_grid_overlay, scanline_overlay, retro_overlay,
+};
 pub use responsive::{responsive_columns, responsive_grid, Device, breakpoints};
 
 // Re-export new SVG icon system (use qualified names to avoid conflicts)
