@@ -63,9 +63,6 @@ Version: ${VERSION}
 Section: devel
 Priority: optional
 Architecture: ${ARCH}
-# Binary uses Iced (pure Rust GUI), not GTK/WebKit - no runtime deps needed beyond glibc
-# X11 libs are implicitly required but always present on any Linux desktop
-Depends:
 Maintainer: RWM <rwm@example.com>
 Description: RWM Puppet Master - AI-assisted development orchestrator
  A GUI orchestrator implementing the Ralph Wiggum Method for
@@ -115,11 +112,11 @@ fi
 # Success message
 cat << 'ENDMSG'
 
-✅ RWM Puppet Master installed successfully!
+RWM Puppet Master installed successfully!
 
 To launch:
-  • From application menu: Search for "RWM Puppet Master"
-  • From terminal: puppet-master
+  - From application menu: Search for "RWM Puppet Master"
+  - From terminal: puppet-master
 
 Data will be stored in: ~/.local/share/RWM Puppet Master
 
@@ -172,7 +169,7 @@ echo "=== Package Contents ==="
 dpkg-deb --contents "$DEB_FILE"
 echo ""
 
-echo "✅ Created puppet-master_${VERSION}_${ARCH}.deb"
+echo "[OK] Created puppet-master_${VERSION}_${ARCH}.deb"
 echo "Package size: $(du -h "$DEB_FILE" | cut -f1)"
 echo ""
 echo "To install:"
@@ -220,7 +217,7 @@ EOF
 
 rpmbuild --define "_topdir $RPM_DIR" -bb "$RPM_DIR/SPECS/puppet-master.spec" 2>/dev/null && \
     cp "$RPM_DIR/RPMS/x86_64/"*.rpm "../installer/linux/" && \
-    echo "✅ Created RPM package" || \
-    echo "⚠️ RPM build skipped (rpmbuild not available)"
+    echo "[OK] Created RPM package" || \
+    echo "[WARN] RPM build skipped (rpmbuild not available)"
 
 echo "Done! Installers are in installer/linux/"
