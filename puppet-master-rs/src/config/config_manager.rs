@@ -68,30 +68,42 @@ impl ConfigManager {
     /// Discover and load configuration file
     ///
     /// Searches in order:
-    /// 1. Current directory
-    /// 2. Parent directories (up to 3 levels)
-    /// 3. Home directory
+    /// 1. Default workspace directory (platform-specific user data dir)
+    /// 2. Current directory (if accessible)
+    /// 3. Parent directories (up to 3 levels)
+    /// 4. Home directory
     pub fn discover() -> Result<Self> {
         let config_names = ["pm-config.yaml", "puppet-master.yaml", ".puppet-master.yaml"];
 
-        // Try current directory
+        // Try default workspace directory first (handles Windows/Linux system installs)
+        let workspace_dir = Self::get_default_workspace();
         for name in &config_names {
-            let path = PathBuf::from(name);
+            let path = workspace_dir.join(name);
             if path.exists() {
-                log::info!("Found config file: {}", path.display());
+                log::info!("Found config file in workspace: {}", path.display());
                 return Self::load(path);
             }
         }
 
-        // Try parent directories
-        if let Ok(mut current_dir) = std::env::current_dir() {
+        // Try current directory (may fail on Windows if running from Program Files)
+        if let Ok(current_dir) = std::env::current_dir() {
+            for name in &config_names {
+                let path = current_dir.join(name);
+                if path.exists() {
+                    log::info!("Found config file: {}", path.display());
+                    return Self::load(path);
+                }
+            }
+
+            // Try parent directories
+            let mut parent_dir = current_dir;
             for _ in 0..3 {
-                if !current_dir.pop() {
+                if !parent_dir.pop() {
                     break;
                 }
 
                 for name in &config_names {
-                    let path = current_dir.join(name);
+                    let path = parent_dir.join(name);
                     if path.exists() {
                         log::info!("Found config file: {}", path.display());
                         return Self::load(path);
@@ -116,19 +128,58 @@ impl ConfigManager {
         Ok(Self::new())
     }
 
-    /// Save configuration to file
-    pub fn save(&self) -> Result<()> {
-        let inner = self.inner.lock().unwrap();
+    /// Get the default workspace directory for the current platform
+    /// This matches the logic in default_config::get_default_workspace()
+    fn get_default_workspace() -> PathBuf {
+        if cfg!(windows) {
+            // Windows: Use %LOCALAPPDATA%\RWM Puppet Master
+            if let Some(proj_dirs) = directories::ProjectDirs::from("com", "RWM", "Puppet Master") {
+                proj_dirs.data_local_dir().to_path_buf()
+            } else if let Some(base_dirs) = directories::BaseDirs::new() {
+                base_dirs.data_local_dir().join("RWM Puppet Master")
+            } else {
+                std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
+            }
+        } else if cfg!(target_os = "linux") {
+            // Linux: Check if running from system install
+            if let Ok(exe_path) = std::env::current_exe() {
+                if exe_path.starts_with("/usr/bin") || exe_path.starts_with("/usr/local/bin") {
+                    if let Some(proj_dirs) = directories::ProjectDirs::from("com", "RWM", "Puppet Master") {
+                        return proj_dirs.data_local_dir().to_path_buf();
+                    } else if let Some(base_dirs) = directories::BaseDirs::new() {
+                        return base_dirs.data_local_dir().join("RWM Puppet Master");
+                    }
+                }
+            }
+            std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
+        } else {
+            std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
+        }
+    }
 
-        let config_path = inner
-            .config_path
-            .as_ref()
-            .ok_or_else(|| anyhow::anyhow!("No config file path set"))?;
+    /// Save configuration to file
+    /// If no config path is set, saves to workspace directory
+    pub fn save(&self) -> Result<()> {
+        let mut inner = self.inner.lock().unwrap();
+
+        // If no config path is set, use default in workspace directory
+        let config_path = if let Some(ref path) = inner.config_path {
+            path.clone()
+        } else {
+            let workspace = Self::get_default_workspace();
+            // Create workspace directory if it doesn't exist
+            std::fs::create_dir_all(&workspace)
+                .context("Failed to create workspace directory")?;
+            let default_path = workspace.join("pm-config.yaml");
+            // Store this path for future saves
+            inner.config_path = Some(default_path.clone());
+            default_path
+        };
 
         let yaml = serde_yaml::to_string(&inner.config)
             .context("Failed to serialize config to YAML")?;
 
-        std::fs::write(config_path, yaml).with_context(|| {
+        std::fs::write(&config_path, yaml).with_context(|| {
             format!(
                 "Failed to write config to {}",
                 config_path.display()

@@ -95,37 +95,26 @@ The Linux binary is statically linked using musl, requiring no external dependen
 
 ### macOS
 
-**⚠️ IMPORTANT: Gatekeeper Security Notice**
+**Security Notice**
 
-GitHub Actions builds are **not code-signed or notarized**, so macOS Gatekeeper will block them with "damaged" error.
+This app is **ad-hoc code signed** to prevent "damaged app" errors. On first launch, you'll see:
+- "RWM Puppet Master cannot be opened because the developer cannot be verified"
 
-**Option 1: Remove Quarantine Attribute (Recommended)**
-```bash
-xattr -cr "/path/to/RWM Puppet Master.app"
-```
-Or from the DMG directly:
-```bash
-# Mount the DMG first, then:
-xattr -cr "/Volumes/RWM Puppet Master/RWM Puppet Master.app"
-```
+**To install:**
+1. Download and open the `.dmg` file
+2. Drag "RWM Puppet Master.app" to Applications folder
+3. **First launch**: Right-click (or Control+click) on the app → Select "Open"
+4. Click "Open" in the security dialog
+5. Future launches: Double-click normally (no special steps needed)
 
-**Option 2: Right-Click Override**
-1. Right-click (or Control+click) on the app
-2. Select "Open"
-3. Click "Open" in the warning dialog (only appears first time)
+**Why this happens:**
+- GitHub Actions builds are ad-hoc signed (not notarized with Apple)
+- Full notarization requires a paid Apple Developer account ($99/year)
+- Ad-hoc signing ensures the app isn't "damaged" while allowing user override
 
-**For Production Builds:**
-- Requires Apple Developer account
-- Must be code-signed with valid certificate
-- Must be notarized via `xcrun notarytool`
-- See: https://developer.apple.com/documentation/security/notarizing_macos_software_before_distribution
-
-**Installation Steps:**
-1. Download the `.dmg` file
-2. Apply one of the Gatekeeper workarounds above
-3. Open the DMG
-4. Drag "RWM Puppet Master.app" to Applications folder
-5. Launch from Applications or Spotlight
+**For enterprise deployment:**
+- Use MDM profiles to whitelist the app
+- Or: Set up proper Apple Developer signing + notarization in CI/CD
 
 ### Linux (Debian/Ubuntu)
 ```bash

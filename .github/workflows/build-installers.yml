@@ -109,12 +109,23 @@ jobs:
           mkdir -p ../../dist/installers/darwin-arm64
           cp "RWM-Puppet-Master-${{ steps.version.outputs.version }}.dmg" ../../dist/installers/darwin-arm64/
 
+          # Verify ad-hoc signing
+          echo "Verifying DMG signature..."
+          codesign -dvv "RWM-Puppet-Master-${{ steps.version.outputs.version }}.dmg" || echo "Warning: DMG signature check failed"
+
       - name: Build installer (Linux)
         if: runner.os == 'Linux'
         shell: bash
         run: |
           cd scripts
           ./build-linux-installer.sh "${{ steps.version.outputs.version }}"
+
+          # Verify DEB package was created
+          if [ ! -f ../installer/linux/puppet-master_${{ steps.version.outputs.version }}_amd64.deb ]; then
+            echo "Error: DEB package not found"
+            exit 1
+          fi
+
           mkdir -p ../dist/installers/linux-x64
           cp ../installer/linux/*.deb ../dist/installers/linux-x64/
           cp ../installer/linux/*.rpm ../dist/installers/linux-x64/ 2>/dev/null || true

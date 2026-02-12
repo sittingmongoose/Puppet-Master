@@ -6,16 +6,30 @@ VERSION="${1:-0.1.1}"
 ARCH="amd64"
 PKG_NAME="puppet-master"
 
-cd "$(dirname "$0")/../puppet-master-rs"
+echo "=== Building RWM Puppet Master v${VERSION} for Linux ==="
+
+cd "$(dirname "$0")/../puppet-master-rs" || {
+    echo "Error: Cannot find puppet-master-rs directory"
+    exit 1
+}
 
 # Build release binary (glibc — required for GTK/tray-icon support)
 echo "Building release binary..."
-cargo build --release
+cargo build --release || {
+    echo "Error: Cargo build failed"
+    exit 1
+}
 
 BINARY="target/release/puppet-master"
 
+if [ ! -f "$BINARY" ]; then
+    echo "Error: Binary not found at $BINARY"
+    exit 1
+fi
+
 echo "Binary info:"
 file "$BINARY"
+ldd "$BINARY" | head -10 || echo "Note: Binary may be statically linked"
 
 # === DEB Package ===
 echo "Building .deb package..."
@@ -37,13 +51,42 @@ Version: ${VERSION}
 Section: devel
 Priority: optional
 Architecture: ${ARCH}
-Depends: libgtk-3-0, libglib2.0-0, libcairo2, libpango-1.0-0
+Depends: libgtk-3-0, libglib2.0-0, libcairo2, libpango-1.0-0, libgdk-pixbuf-2.0-0
 Maintainer: RWM <rwm@example.com>
 Description: RWM Puppet Master - AI-assisted development orchestrator
  A GUI orchestrator implementing the Ralph Wiggum Method for
  AI-assisted development. Coordinates multiple AI CLI platforms
  (Cursor, Codex, Claude Code, Gemini, GitHub Copilot).
 EOF
+
+# Create preinst script to check dependencies
+cat > "$DEB_DIR/DEBIAN/preinst" << 'EOF'
+#!/bin/sh
+set -e
+
+# Check for required libraries before installation
+missing_deps=""
+
+check_lib() {
+    if ! ldconfig -p | grep -q "$1"; then
+        missing_deps="$missing_deps $1"
+    fi
+}
+
+check_lib "libgtk-3.so.0"
+check_lib "libglib-2.0.so.0"
+check_lib "libcairo.so.2"
+check_lib "libpango-1.0.so.0"
+
+if [ -n "$missing_deps" ]; then
+    echo "Warning: Missing libraries:$missing_deps"
+    echo "You may need to run: sudo apt-get install -f"
+fi
+
+exit 0
+EOF
+
+chmod 755 "$DEB_DIR/DEBIAN/preinst"
 
 # Desktop entry
 cat > "$DEB_DIR/usr/share/applications/puppet-master.desktop" << EOF
@@ -91,8 +134,45 @@ EOF
 
 chmod 755 "$DEB_DIR/DEBIAN/postinst"
 
-dpkg-deb --build "$DEB_DIR" "../installer/linux/puppet-master_${VERSION}_${ARCH}.deb"
+# Verify package structure
+echo "Verifying package structure..."
+if [ ! -f "$DEB_DIR/usr/bin/puppet-master" ]; then
+    echo "Error: Binary not found in package"
+    exit 1
+fi
+
+if [ ! -f "$DEB_DIR/usr/share/applications/puppet-master.desktop" ]; then
+    echo "Error: Desktop file not found in package"
+    exit 1
+fi
+
+if [ ! -f "$DEB_DIR/DEBIAN/control" ]; then
+    echo "Error: Control file not found"
+    exit 1
+fi
+
+# Build DEB package
+echo "Building DEB package..."
+mkdir -p "../installer/linux"
+dpkg-deb --build "$DEB_DIR" "../installer/linux/puppet-master_${VERSION}_${ARCH}.deb" || {
+    echo "Error: dpkg-deb build failed"
+    exit 1
+}
+
+DEB_FILE="../installer/linux/puppet-master_${VERSION}_${ARCH}.deb"
+
+# Verify the DEB package
+echo "Verifying DEB package..."
+if [ ! -f "$DEB_FILE" ]; then
+    echo "Error: DEB file was not created"
+    exit 1
+fi
+
+dpkg-deb --info "$DEB_FILE"
+dpkg-deb --contents "$DEB_FILE" | head -20
+
 echo "✅ Created puppet-master_${VERSION}_${ARCH}.deb"
+echo "Package size: $(du -h "$DEB_FILE" | cut -f1)"
 
 # === RPM Package ===
 echo "Building .rpm package..."

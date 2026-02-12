@@ -56,7 +56,24 @@ if [ -f "../../puppet-master-rs/icons/icon.icns" ]; then
     cp ../../puppet-master-rs/icons/icon.icns "${BUNDLE_DIR}/Contents/Resources/"
 fi
 
+# Ad-hoc code signing (removes "damaged" error, changes to security dialog)
+# This doesn't bypass Gatekeeper fully but makes it user-friendly
+echo "Signing app bundle..."
+codesign --force --deep --sign - "${BUNDLE_DIR}"
+
+# Verify signing
+codesign --verify --verbose "${BUNDLE_DIR}" || {
+    echo "Warning: Code signing verification failed"
+}
+
 # Create DMG
+echo "Creating DMG..."
 hdiutil create -volname "${APP_NAME}" -srcfolder build -ov -format UDZO "${DMG_NAME}"
 
+# Sign the DMG itself
+echo "Signing DMG..."
+codesign --force --sign - "${DMG_NAME}"
+
 echo "✅ Created ${DMG_NAME}"
+echo "Note: Ad-hoc signed. Users will see 'unidentified developer' dialog."
+echo "For full Gatekeeper approval, need Apple Developer account + notarization."
