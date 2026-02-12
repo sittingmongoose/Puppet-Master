@@ -44,6 +44,18 @@ mkdir -p "$DEB_DIR/usr/share/doc/puppet-master"
 cp "$BINARY" "$DEB_DIR/usr/bin/puppet-master"
 chmod 755 "$DEB_DIR/usr/bin/puppet-master"
 
+# Verify binary is executable
+if [ ! -x "$DEB_DIR/usr/bin/puppet-master" ]; then
+    echo "Error: Binary is not executable"
+    exit 1
+fi
+
+# Test binary can run
+"$DEB_DIR/usr/bin/puppet-master" --version || {
+    echo "Error: Binary cannot execute --version"
+    exit 1
+}
+
 # DEBIAN/control
 cat > "$DEB_DIR/DEBIAN/control" << EOF
 Package: puppet-master
@@ -59,34 +71,8 @@ Description: RWM Puppet Master - AI-assisted development orchestrator
  (Cursor, Codex, Claude Code, Gemini, GitHub Copilot).
 EOF
 
-# Create preinst script to check dependencies
-cat > "$DEB_DIR/DEBIAN/preinst" << 'EOF'
-#!/bin/sh
-set -e
-
-# Check for required libraries before installation
-missing_deps=""
-
-check_lib() {
-    if ! ldconfig -p | grep -q "$1"; then
-        missing_deps="$missing_deps $1"
-    fi
-}
-
-check_lib "libgtk-3.so.0"
-check_lib "libglib-2.0.so.0"
-check_lib "libcairo.so.2"
-check_lib "libpango-1.0.so.0"
-
-if [ -n "$missing_deps" ]; then
-    echo "Warning: Missing libraries:$missing_deps"
-    echo "You may need to run: sudo apt-get install -f"
-fi
-
-exit 0
-EOF
-
-chmod 755 "$DEB_DIR/DEBIAN/preinst"
+# Note: Removed preinst script - dpkg handles dependency checking automatically
+# If deps are missing, dpkg will fail with a clear error message
 
 # Desktop entry
 cat > "$DEB_DIR/usr/share/applications/puppet-master.desktop" << EOF
@@ -110,24 +96,32 @@ fi
 
 # Create postinstall script
 cat > "$DEB_DIR/DEBIAN/postinst" << 'EOF'
-#!/bin/sh
-set -e
+#!/bin/bash
+# Postinstall script for RWM Puppet Master
+# This script must never fail, so all commands have || true
 
-# Update desktop database
+# Update desktop database (allows launcher to find the .desktop file)
 if command -v update-desktop-database >/dev/null 2>&1; then
-  update-desktop-database /usr/share/applications 2>/dev/null || true
+  (update-desktop-database /usr/share/applications 2>/dev/null) || true
 fi
 
-# Update icon cache
+# Update icon cache (makes icon appear in launcher)
 if command -v gtk-update-icon-cache >/dev/null 2>&1; then
-  gtk-update-icon-cache -f /usr/share/icons/hicolor 2>/dev/null || true
+  (gtk-update-icon-cache -f /usr/share/icons/hicolor 2>/dev/null) || true
 fi
 
-echo "RWM Puppet Master installed successfully!"
-echo "Launch from your application menu or run: puppet-master"
-echo ""
-echo "Data will be stored in: ~/.local/share/RWM Puppet Master"
-echo "on first run."
+# Success message
+cat << 'ENDMSG'
+
+✅ RWM Puppet Master installed successfully!
+
+To launch:
+  • From application menu: Search for "RWM Puppet Master"
+  • From terminal: puppet-master
+
+Data will be stored in: ~/.local/share/RWM Puppet Master
+
+ENDMSG
 
 exit 0
 EOF
@@ -168,11 +162,23 @@ if [ ! -f "$DEB_FILE" ]; then
     exit 1
 fi
 
+echo "=== Package Info ==="
 dpkg-deb --info "$DEB_FILE"
-dpkg-deb --contents "$DEB_FILE" | head -20
+echo ""
+
+echo "=== Package Contents ==="
+dpkg-deb --contents "$DEB_FILE"
+echo ""
 
 echo "✅ Created puppet-master_${VERSION}_${ARCH}.deb"
 echo "Package size: $(du -h "$DEB_FILE" | cut -f1)"
+echo ""
+echo "To install:"
+echo "  sudo dpkg -i $(realpath "$DEB_FILE")"
+echo "  sudo apt-get install -f  # if dependencies are missing"
+echo ""
+echo "To test and diagnose issues:"
+echo "  ./scripts/test-linux-deb.sh $VERSION"
 
 # === RPM Package ===
 echo "Building .rpm package..."
