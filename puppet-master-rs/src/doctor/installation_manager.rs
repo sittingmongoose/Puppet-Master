@@ -8,7 +8,9 @@ use crate::types::Platform;
 use anyhow::{anyhow, Result};
 use log::debug;
 use serde::{Deserialize, Serialize};
+use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
+use which::which;
 
 /// Installation status for a CLI tool
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -124,15 +126,178 @@ impl InstallationManager {
         InstallationStatus::NotInstalled
     }
 
-    /// Get version of a CLI tool
+    /// Get version of a CLI tool using robust detection
     fn get_cli_version(&self, cli_name: &str) -> Option<String> {
         debug!("Checking version for CLI: {}", cli_name);
         
+        // Step 1: Try to find the executable using which::which()
+        let exe_path = match self.find_executable(cli_name) {
+            Some(path) => {
+                debug!("Found {} at: {}", cli_name, path.display());
+                path
+            }
+            None => {
+                debug!("No executable found for CLI: {}", cli_name);
+                return None;
+            }
+        };
+        
+        // Step 2: Get version from the found executable
+        self.get_version_from_path(&exe_path, cli_name)
+    }
+    
+    /// Find executable using which::which() and fallback directories
+    fn find_executable(&self, cli_name: &str) -> Option<PathBuf> {
+        // Step 1: Try which::which() first (searches PATH)
+        if let Ok(path) = which(cli_name) {
+            debug!("Found {} in PATH via which: {}", cli_name, path.display());
+            return Some(path);
+        }
+        
+        // Step 2: Check common installation directories
+        let fallback_dirs = self.get_fallback_directories();
+        
+        for dir in fallback_dirs {
+            let exe_path = dir.join(cli_name);
+            
+            // On Windows, also try with .exe extension
+            #[cfg(target_os = "windows")]
+            {
+                let exe_with_ext = dir.join(format!("{}.exe", cli_name));
+                if exe_with_ext.exists() && exe_with_ext.is_file() {
+                    debug!("Found {} in fallback directory: {}", cli_name, exe_with_ext.display());
+                    return Some(exe_with_ext);
+                }
+            }
+            
+            if exe_path.exists() && exe_path.is_file() {
+                debug!("Found {} in fallback directory: {}", cli_name, exe_path.display());
+                return Some(exe_path);
+            }
+        }
+        
+        // Step 3: Try expanding shell PATH from profiles (GUI apps often miss shell PATH)
+        if let Some(path) = self.find_in_shell_path(cli_name) {
+            return Some(path);
+        }
+        
+        None
+    }
+    
+    /// Get fallback directories to search for executables
+    fn get_fallback_directories(&self) -> Vec<PathBuf> {
+        let mut dirs = Vec::new();
+        
+        #[cfg(not(target_os = "windows"))]
+        {
+            // Unix-like systems (Linux, macOS)
+            dirs.push(PathBuf::from("/usr/local/bin"));
+            dirs.push(PathBuf::from("/usr/bin"));
+            dirs.push(PathBuf::from("/bin"));
+            
+            // macOS specific
+            #[cfg(target_os = "macos")]
+            {
+                dirs.push(PathBuf::from("/opt/homebrew/bin"));
+                dirs.push(PathBuf::from("/opt/local/bin"));
+            }
+            
+            // Linux specific
+            #[cfg(target_os = "linux")]
+            {
+                dirs.push(PathBuf::from("/home/linuxbrew/.linuxbrew/bin"));
+                dirs.push(PathBuf::from("/snap/bin"));
+            }
+            
+            // User-local directories
+            if let Some(home) = std::env::var_os("HOME") {
+                let home_path = PathBuf::from(home);
+                dirs.push(home_path.join(".cargo/bin"));
+                dirs.push(home_path.join(".local/bin"));
+                dirs.push(home_path.join("bin"));
+                dirs.push(home_path.join(".npm-global/bin"));
+                dirs.push(home_path.join(".node_modules/bin"));
+            }
+        }
+        
+        #[cfg(target_os = "windows")]
+        {
+            // Windows specific directories
+            if let Some(program_files) = std::env::var_os("ProgramFiles") {
+                dirs.push(PathBuf::from(program_files));
+            }
+            if let Some(program_files_x86) = std::env::var_os("ProgramFiles(x86)") {
+                dirs.push(PathBuf::from(program_files_x86));
+            }
+            if let Some(local_app_data) = std::env::var_os("LOCALAPPDATA") {
+                let local = PathBuf::from(local_app_data);
+                dirs.push(local.join("Programs"));
+            }
+            if let Some(app_data) = std::env::var_os("APPDATA") {
+                dirs.push(PathBuf::from(app_data));
+            }
+            if let Some(user_profile) = std::env::var_os("USERPROFILE") {
+                let user_path = PathBuf::from(user_profile);
+                dirs.push(user_path.join(".cargo\\bin"));
+                dirs.push(user_path.join("AppData\\Local\\Programs"));
+            }
+        }
+        
+        dirs
+    }
+    
+    /// Try to find executable by expanding shell PATH from profile files
+    fn find_in_shell_path(&self, cli_name: &str) -> Option<PathBuf> {
+        #[cfg(not(target_os = "windows"))]
+        {
+            // Try to source shell profiles and extract PATH
+            let home = std::env::var("HOME").ok()?;
+            let shell_profiles = vec![
+                format!("{}/.bashrc", home),
+                format!("{}/.bash_profile", home),
+                format!("{}/.zshrc", home),
+                format!("{}/.profile", home),
+            ];
+            
+            for profile in shell_profiles {
+                if let Ok(content) = std::fs::read_to_string(&profile) {
+                    // Look for PATH exports in the profile
+                    for line in content.lines() {
+                        if line.trim_start().starts_with("export PATH=") || 
+                           line.trim_start().starts_with("PATH=") {
+                            // Extract paths from the line
+                            if let Some(paths_str) = line.split('=').nth(1) {
+                                // Parse PATH entries
+                                for path_entry in paths_str.split(':') {
+                                    let path_entry = path_entry.trim().trim_matches('"').trim_matches('\'');
+                                    // Expand $HOME or ~
+                                    let expanded = path_entry
+                                        .replace("$HOME", &home)
+                                        .replace('~', &home);
+                                    
+                                    let exe_path = PathBuf::from(expanded).join(cli_name);
+                                    if exe_path.exists() && exe_path.is_file() {
+                                        debug!("Found {} in shell PATH: {}", cli_name, exe_path.display());
+                                        return Some(exe_path);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        None
+    }
+    
+    /// Get version from an executable path
+    fn get_version_from_path(&self, exe_path: &Path, cli_name: &str) -> Option<String> {
         // Special case for copilot - check via 'copilot --version'
         // (copilot is a standalone CLI, but we also verify gh for compatibility)
         if cli_name == "copilot" {
             // First try copilot directly
-            if let Ok(output) = Command::new("copilot").arg("--version").output() {
+            if let Ok(output) = Command::new(exe_path).arg("--version").output() {
                 if output.status.success() {
                     let version_str = String::from_utf8_lossy(&output.stdout);
                     let version = self.extract_version(&version_str);
@@ -141,22 +306,20 @@ impl InstallationManager {
                         return Some(version);
                     }
                 }
-            } else {
-                debug!("copilot command not found or failed to execute");
             }
             
             // Fallback: check if gh copilot extension exists
-            if let Ok(output) = Command::new("gh").arg("copilot").arg("--version").output() {
-                if output.status.success() {
-                    let version_str = String::from_utf8_lossy(&output.stdout);
-                    let version = self.extract_version(&version_str);
-                    if !version.is_empty() {
-                        debug!("Found gh copilot version: {}", version);
-                        return Some(version);
+            if let Some(gh_path) = self.find_executable("gh") {
+                if let Ok(output) = Command::new(gh_path).args(&["copilot", "--version"]).output() {
+                    if output.status.success() {
+                        let version_str = String::from_utf8_lossy(&output.stdout);
+                        let version = self.extract_version(&version_str);
+                        if !version.is_empty() {
+                            debug!("Found gh copilot version: {}", version);
+                            return Some(version);
+                        }
                     }
                 }
-            } else {
-                debug!("gh copilot command not found or failed to execute");
             }
             
             return None;
@@ -166,11 +329,13 @@ impl InstallationManager {
         let version_flags = ["--version", "-v", "version"];
 
         for flag in &version_flags {
-            match Command::new(cli_name).arg(flag).output() {
+            match Command::new(exe_path).arg(flag).output() {
                 Ok(output) => {
                     if output.status.success() {
                         let version_str = String::from_utf8_lossy(&output.stdout);
-                        let version = self.extract_version(&version_str);
+                        let stderr_str = String::from_utf8_lossy(&output.stderr);
+                        let combined = format!("{}{}", version_str, stderr_str);
+                        let version = self.extract_version(&combined);
                         if !version.is_empty() {
                             debug!("Found {} version with flag {}: {}", cli_name, flag, version);
                             return Some(version);
@@ -178,7 +343,7 @@ impl InstallationManager {
                     }
                 }
                 Err(e) => {
-                    debug!("Failed to execute '{}' with flag '{}': {}", cli_name, flag, e);
+                    debug!("Failed to execute '{}' with flag '{}': {}", exe_path.display(), flag, e);
                 }
             }
         }

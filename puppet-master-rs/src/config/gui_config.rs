@@ -527,6 +527,12 @@ pub struct GitInfo {
 
 /// Load config from a YAML file
 pub fn load_config(path: &Path) -> Result<GuiConfig> {
+    // Check if file exists, return default if not
+    if !path.exists() {
+        log::info!("Config file {} does not exist, using defaults", path.display());
+        return Ok(GuiConfig::default());
+    }
+    
     let content = std::fs::read_to_string(path)
         .with_context(|| format!("Failed to read config from {}", path.display()))?;
     
@@ -538,6 +544,13 @@ pub fn load_config(path: &Path) -> Result<GuiConfig> {
 
 /// Save config to a YAML file
 pub fn save_config(path: &Path, config: &GuiConfig) -> Result<()> {
+    // Ensure parent directory exists
+    if let Some(parent) = path.parent() {
+        std::fs::create_dir_all(parent).with_context(|| {
+            format!("Failed to create parent directory {}", parent.display())
+        })?;
+    }
+    
     let yaml = serde_yaml::to_string(config)
         .with_context(|| "Failed to serialize config to YAML")?;
     

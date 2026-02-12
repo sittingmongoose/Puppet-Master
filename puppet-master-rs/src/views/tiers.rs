@@ -69,7 +69,7 @@ pub fn view<'a>(
     // Header
     content = content.push(
         row![
-            text("Tier Hierarchy")
+            text("Tiers")
                 .size(tokens::font_size::DISPLAY)
                 .font(crate::theme::fonts::FONT_DISPLAY)
                 .color(theme.ink()),
@@ -91,7 +91,7 @@ pub fn view<'a>(
         let is_selected = selected.as_ref().map(|s| s == &node.id).unwrap_or(false);
 
         let expand_icon = if node.has_children {
-            if node.expanded { "v" } else { ">" }
+            if node.expanded { "▼" } else { "▶" }
         } else {
             " "
         };
@@ -304,6 +304,7 @@ fn render_details<'a>(details: &'a TierDetails, tier_details_content: &'a text_e
             // Use text_editor for selectable description text
             container(
                 text_editor(tier_details_content)
+                    .on_action(Message::TierDetailsAction)
                     .font(fonts::FONT_UI)
                     .size(tokens::font_size::SM)
                     .height(Length::Fixed(150.0))

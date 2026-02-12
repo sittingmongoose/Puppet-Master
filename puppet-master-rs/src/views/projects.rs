@@ -42,9 +42,9 @@ pub fn view<'a>(
             .font(crate::theme::fonts::FONT_DISPLAY)
             .color(theme.ink()),
         Space::new().width(Length::Fill),
-        styled_button(theme, "New Project", ButtonVariant::Primary)
+        styled_button(theme, "START NEW PROJECT", ButtonVariant::Primary)
             .on_press(Message::NavigateTo(Page::Projects)),
-        styled_button(theme, "Open Existing", ButtonVariant::Secondary)
+        styled_button(theme, "OPEN EXISTING", ButtonVariant::Info)
             .on_press(Message::OpenProjectFolderPicker),
     ]
     .spacing(tokens::spacing::MD)

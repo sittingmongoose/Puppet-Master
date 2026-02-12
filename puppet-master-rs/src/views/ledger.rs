@@ -111,7 +111,7 @@ pub fn view<'a>(
 ) -> Element<'a, Message> {
     let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
-    // Header with total count
+    // Header with Refresh button
     content = content.push(
         row![
             text("Event Ledger")
@@ -119,52 +119,153 @@ pub fn view<'a>(
                 .font(crate::theme::fonts::FONT_DISPLAY)
                 .color(theme.ink()),
             Space::new().width(Length::Fill),
-            text(format!("{} total events", entries.len()))
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            styled_button(theme, "REFRESH", ButtonVariant::Info)
+                .on_press(Message::LedgerRefresh),
         ]
-        .spacing(tokens::spacing::LG)
+        .spacing(tokens::spacing::MD)
         .align_y(iced::Alignment::Center)
     );
 
-    // Summary stats - count events by type
+    // Summary stats panel - count events by type
     let mut type_counts = std::collections::HashMap::new();
     for entry in entries {
         *type_counts.entry(entry.event_type.as_str()).or_insert(0) += 1;
     }
 
-    let mut stats_row = row![
-        text("Events by Type:")
-            .size(tokens::font_size::BASE)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
-    ].spacing(tokens::spacing::MD);
+    // Summary stats grid - 4 columns
+    let mut stats_grid = row![].spacing(tokens::spacing::MD);
 
-    for (type_name, count) in type_counts.iter().take(5) {
-        stats_row = stats_row.push(
-            container(
-                text(format!("{}: {}", type_name, count))
+    stats_grid = stats_grid.push(
+        container(
+            column![
+                text(entries.len().to_string())
+                    .size(tokens::font_size::XL)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                text("Total Events")
                     .size(tokens::font_size::XS)
-                    .color(theme.ink())
-            )
-            .padding(tokens::spacing::XS)
-            .style(move |_: &iced::Theme| container::Style {
-                background: Some(iced::Background::Color(
-                    iced::Color { a: 0.1, ..theme.ink() }
-                )),
-                border: Border {
-                    color: theme.ink(),
-                    width: tokens::borders::THIN,
-                    radius: tokens::radii::SM.into(),
-                },
-                ..Default::default()
-            })
-        );
-    }
+                    .color(theme.ink_faded()),
+            ]
+            .spacing(tokens::spacing::XXS)
+            .align_x(iced::Alignment::Center)
+        )
+        .padding(tokens::spacing::MD)
+        .width(Length::FillPortion(1))
+        .style(move |_: &iced::Theme| container::Style {
+            border: Border {
+                color: theme.ink(),
+                width: tokens::borders::MEDIUM,
+                radius: tokens::radii::NONE.into(),
+            },
+            ..Default::default()
+        })
+    );
+
+    stats_grid = stats_grid.push(
+        container(
+            column![
+                text(type_counts.len().to_string())
+                    .size(tokens::font_size::XL)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                text("Event Types")
+                    .size(tokens::font_size::XS)
+                    .color(theme.ink_faded()),
+            ]
+            .spacing(tokens::spacing::XXS)
+            .align_x(iced::Alignment::Center)
+        )
+        .padding(tokens::spacing::MD)
+        .width(Length::FillPortion(1))
+        .style(move |_: &iced::Theme| container::Style {
+            border: Border {
+                color: theme.ink(),
+                width: tokens::borders::MEDIUM,
+                radius: tokens::radii::NONE.into(),
+            },
+            ..Default::default()
+        })
+    );
+
+    // Count unique tier_ids
+    let unique_tiers: std::collections::HashSet<_> = entries
+        .iter()
+        .filter_map(|e| e.tier_id.as_ref())
+        .collect();
+
+    stats_grid = stats_grid.push(
+        container(
+            column![
+                text(unique_tiers.len().to_string())
+                    .size(tokens::font_size::XL)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                text("Unique Tiers")
+                    .size(tokens::font_size::XS)
+                    .color(theme.ink_faded()),
+            ]
+            .spacing(tokens::spacing::XXS)
+            .align_x(iced::Alignment::Center)
+        )
+        .padding(tokens::spacing::MD)
+        .width(Length::FillPortion(1))
+        .style(move |_: &iced::Theme| container::Style {
+            border: Border {
+                color: theme.ink(),
+                width: tokens::borders::MEDIUM,
+                radius: tokens::radii::NONE.into(),
+            },
+            ..Default::default()
+        })
+    );
+
+    // Get date range
+    let (earliest, latest) = if !entries.is_empty() {
+        let earliest = entries.iter().map(|e| e.timestamp).min();
+        let latest = entries.iter().map(|e| e.timestamp).max();
+        (earliest, latest)
+    } else {
+        (None, None)
+    };
+
+    let date_range_text = if let (Some(e), Some(l)) = (earliest, latest) {
+        format!("{} to {}", 
+            e.format("%m/%d"),
+            l.format("%m/%d")
+        )
+    } else {
+        "N/A".to_string()
+    };
+
+    stats_grid = stats_grid.push(
+        container(
+            column![
+                text(date_range_text)
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                text("Date Range")
+                    .size(tokens::font_size::XS)
+                    .color(theme.ink_faded()),
+            ]
+            .spacing(tokens::spacing::XXS)
+            .align_x(iced::Alignment::Center)
+        )
+        .padding(tokens::spacing::MD)
+        .width(Length::FillPortion(1))
+        .style(move |_: &iced::Theme| container::Style {
+            border: Border {
+                color: theme.ink(),
+                width: tokens::borders::MEDIUM,
+                radius: tokens::radii::NONE.into(),
+            },
+            ..Default::default()
+        })
+    );
 
     content = content.push(
         themed_panel(
-            container(stats_row).padding(tokens::spacing::MD),
+            container(stats_grid).padding(tokens::spacing::MD),
             theme
         )
     );
@@ -386,8 +487,10 @@ pub fn view<'a>(
             if is_expanded {
                 // Use text_editor content if available, otherwise fallback to text
                 let expanded_element: Element<'_, Message> = if let Some(editor_content) = ledger_expanded_contents.get(&idx) {
+                    let entry_id_clone = idx;
                     container(
                         text_editor(editor_content)
+                            .on_action(move |action| Message::LedgerExpandedAction(entry_id_clone, action))
                             .font(fonts::FONT_MONO)
                             .size(tokens::font_size::XS)
                             .height(Length::Fixed(150.0))

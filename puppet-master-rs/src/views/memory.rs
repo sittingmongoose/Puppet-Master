@@ -2,7 +2,7 @@
 //!
 //! Displays the AGENTS.md content with section navigation buttons and read-only text area.
 
-use iced::widget::{column, row, text, container, scrollable, Space, text_editor};
+use iced::widget::{column, row, text, container, scrollable, Space, text_editor, pick_list};
 use iced::{Element, Length};
 use crate::app::Message;
 use crate::theme::{AppTheme, tokens, fonts};
@@ -43,6 +43,12 @@ impl MemorySection {
     }
 }
 
+impl std::fmt::Display for MemorySection {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.as_str())
+    }
+}
+
 /// Memory/AGENTS.md viewer with section navigation
 pub fn view<'a>(
     memory_editor_content: &'a text_editor::Content,
@@ -52,34 +58,40 @@ pub fn view<'a>(
 ) -> Element<'a, Message> {
     let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
-    // Header
+    // Header with Refresh button
     content = content.push(
-        text("Memory System (AGENTS.md)")
-            .size(tokens::font_size::DISPLAY)
-            .font(crate::theme::fonts::FONT_DISPLAY)
-            .color(theme.ink())
+        row![
+            text("Memory (AGENTS.md)")
+                .size(tokens::font_size::DISPLAY)
+                .font(crate::theme::fonts::FONT_DISPLAY)
+                .color(theme.ink()),
+            Space::new().width(Length::Fill),
+            styled_button(theme, "REFRESH", ButtonVariant::Info)
+                .on_press(Message::MemoryRefresh),
+        ]
+        .spacing(tokens::spacing::MD)
+        .align_y(iced::Alignment::Center)
     );
 
-    // Section navigation buttons
-    let mut nav_row = row![].spacing(tokens::spacing::SM);
-    for section in MemorySection::all() {
-        let is_selected = section == *current_section;
-        nav_row = nav_row.push(
-            styled_button(
-                theme,
-                section.as_str(),
-                if is_selected {
-                    ButtonVariant::Primary
-                } else {
-                    ButtonVariant::Secondary
-                }
+    // Section navigation dropdown and filter controls
+    let nav_content = column![
+        text("Section Filter")
+            .size(tokens::font_size::SM)
+            .color(theme.ink_faded()),
+        row![
+            pick_list(
+                MemorySection::all(),
+                Some(current_section.clone()),
+                Message::MemorySectionChanged
             )
-            .on_press(Message::MemorySectionChanged(section))
-        );
-    }
+            .width(Length::Fixed(200.0))
+            .padding(tokens::spacing::SM)
+            .text_size(tokens::font_size::BASE),
+        ].spacing(tokens::spacing::SM),
+    ].spacing(tokens::spacing::XXS);
 
     content = content.push(
-        themed_panel(container(nav_row).padding(tokens::spacing::MD), theme)
+        themed_panel(container(nav_content).padding(tokens::spacing::MD), theme)
     );
 
     // Content display - filtered by section
@@ -89,6 +101,7 @@ pub fn view<'a>(
     let content_panel = themed_panel(
         container(
             text_editor(memory_editor_content)
+                .on_action(Message::MemoryContentAction)
                 .font(fonts::FONT_MONO)
                 .size(tokens::font_size::SM)
                 .height(Length::Fill)
@@ -101,30 +114,13 @@ pub fn view<'a>(
 
     content = content.push(content_panel);
 
-    // Action buttons
-    let actions = row![
-        styled_button(theme, "Refresh", ButtonVariant::Secondary)
-            .on_press(Message::MemoryRefresh),
-        styled_button(theme, "Edit in External Editor", ButtonVariant::Secondary)
-            .on_press(Message::MemoryEditExternal),
-        Space::new().width(Length::Fill),
-        styled_button(theme, "Export", ButtonVariant::Info)
-            .on_press(Message::MemoryExport),
-    ]
-    .spacing(tokens::spacing::SM)
-    .align_y(iced::Alignment::Center);
-
-    content = content.push(
-        themed_panel(container(actions).padding(tokens::spacing::MD), theme)
-    );
-
     // Help text
     content = content.push(
         help_text(
             "About Memory System",
             &[
                 "AGENTS.md stores learned patterns and best practices",
-                "Updated automatically after each orchestration",
+                "Filtered content based on selected section above",
             ]
         )
     );

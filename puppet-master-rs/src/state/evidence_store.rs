@@ -96,6 +96,10 @@ impl EvidenceStore {
         let subdir = inner.base_path.join(evidence_type.to_string());
         let file_path = subdir.join(&filename);
 
+        // Ensure subdirectory exists
+        fs::create_dir_all(&subdir)
+            .with_context(|| format!("Failed to create evidence subdirectory {}", subdir.display()))?;
+
         // Write data
         fs::write(&file_path, data)
             .with_context(|| format!("Failed to write evidence to {}", file_path.display()))?;

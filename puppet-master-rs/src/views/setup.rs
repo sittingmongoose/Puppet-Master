@@ -91,6 +91,7 @@ pub fn view<'a>(
     // Platform status results
     if !platform_statuses.is_empty() {
         let mut status_content = column![].spacing(tokens::spacing::MD);
+        let ink_color = theme.ink(); // Capture for use in closure
 
         for platform_status in platform_statuses {
             let status_color = match &platform_status.status {
@@ -167,11 +168,26 @@ pub fn view<'a>(
                 platform_col = platform_col.push(
                     container(
                         scrollable(
-                            text(&platform_status.instructions).size(tokens::font_size::SM)
+                            text(&platform_status.instructions)
+                                .size(tokens::font_size::BASE)
+                                .line_height(iced::widget::text::LineHeight::Relative(1.6))
                         )
-                        .height(Length::Fixed(150.0))
+                        .height(Length::Fixed(350.0)) // Increased from 150px to 350px for better readability
                     )
-                    .padding(tokens::spacing::SM)
+                    .padding(tokens::spacing::MD)
+                    .style(move |_theme: &iced::Theme| {
+                        iced::widget::container::Style {
+                            background: Some(iced::Background::Color(
+                                iced::Color::from_rgba(ink_color.r, ink_color.g, ink_color.b, 0.03)
+                            )),
+                            border: iced::Border {
+                                color: iced::Color::from_rgba(ink_color.r, ink_color.g, ink_color.b, 0.2),
+                                width: tokens::borders::THIN,
+                                radius: tokens::radii::SM.into(),
+                            },
+                            ..Default::default()
+                        }
+                    })
                 );
             }
 

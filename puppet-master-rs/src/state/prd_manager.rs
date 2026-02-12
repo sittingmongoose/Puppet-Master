@@ -49,6 +49,12 @@ impl PrdManager {
 
     /// Load PRD from file
     fn load_from_file(path: &Path) -> Result<PRD> {
+        // Check if file exists, return default PRD if not
+        if !path.exists() {
+            log::info!("PRD file {} does not exist, creating default PRD", path.display());
+            return Ok(PRD::new("New Project"));
+        }
+        
         let content = std::fs::read_to_string(path)
             .with_context(|| format!("Failed to read PRD from {}", path.display()))?;
 

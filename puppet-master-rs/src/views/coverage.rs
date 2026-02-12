@@ -3,7 +3,7 @@
 //! Shows overall coverage percentage and per-requirement breakdown with category stats.
 
 use iced::widget::{column, row, text, container, scrollable, Space, pick_list};
-use iced::{Element, Length};
+use iced::{Element, Length, Border};
 use crate::app::Message;
 use crate::theme::{AppTheme, tokens, fonts, colors};
 use crate::widgets::*;
@@ -47,7 +47,7 @@ pub fn view<'a>(
 
     content = content.push(
         row![
-            text("Test Coverage Analysis")
+            text("Coverage")
                 .size(tokens::font_size::DISPLAY)
                 .font(fonts::FONT_DISPLAY)
                 .color(theme.ink()),
@@ -63,45 +63,137 @@ pub fn view<'a>(
                 )
                 .width(Length::Fixed(150.0))
             ]
-            .spacing(tokens::spacing::XXS)
+            .spacing(tokens::spacing::XXS),
+            styled_button(theme, "REFRESH", ButtonVariant::Info),
         ]
         .spacing(tokens::spacing::MD)
         .align_y(iced::Alignment::Center)
     );
 
-    // Overall coverage panel
-    let overall_panel = themed_panel(
+    // Overall stats cards - 4 columns
+    let covered_count = requirements.iter().filter(|r| r.covered).count();
+    let total_count = requirements.len();
+    let total_evidence: usize = requirements.iter().map(|r| r.evidence_count).sum();
+    
+    let mut stat_cards = row![].spacing(tokens::spacing::MD);
+    
+    stat_cards = stat_cards.push(
         container(
             column![
-                text("Overall Coverage")
-                    .size(tokens::font_size::MD)
+                text(format!("{:.0}%", overall_percent * 100.0))
+                    .size(tokens::font_size::XL)
                     .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                text(format!("{:.1}%", overall_percent * 100.0))
-                    .size(tokens::font_size::DISPLAY)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                styled_progress_bar(
-                    theme,
-                    overall_percent,
-                    if overall_percent >= 0.8 {
-                        ProgressVariant::Success
+                    .color(if overall_percent >= 0.8 {
+                        colors::ACID_LIME
                     } else if overall_percent >= 0.5 {
-                        ProgressVariant::Warning
+                        colors::SAFETY_ORANGE
                     } else {
-                        ProgressVariant::Error
-                    },
-                    ProgressSize::Large
-                ),
-            ].spacing(tokens::spacing::SM)
+                        colors::HOT_MAGENTA
+                    }),
+                text("Overall Coverage")
+                    .size(tokens::font_size::XS)
+                    .color(theme.ink_faded()),
+            ]
+            .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center)
-        ).padding(tokens::spacing::XL),
-        theme,
+        )
+        .padding(tokens::spacing::MD)
+        .width(Length::FillPortion(1))
+        .style(move |_: &iced::Theme| container::Style {
+            border: Border {
+                color: theme.ink(),
+                width: tokens::borders::MEDIUM,
+                radius: tokens::radii::NONE.into(),
+            },
+            ..Default::default()
+        })
     );
-
-    content = content.push(overall_panel);
+    
+    stat_cards = stat_cards.push(
+        container(
+            column![
+                text(format!("{}/{}", covered_count, total_count))
+                    .size(tokens::font_size::XL)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                text("Features Tested")
+                    .size(tokens::font_size::XS)
+                    .color(theme.ink_faded()),
+                text(format!("{:.0}%", if total_count > 0 { (covered_count as f32 / total_count as f32) * 100.0 } else { 0.0 }))
+                    .size(tokens::font_size::XS)
+                    .color(colors::ACID_LIME),
+            ]
+            .spacing(tokens::spacing::XXS)
+            .align_x(iced::Alignment::Center)
+        )
+        .padding(tokens::spacing::MD)
+        .width(Length::FillPortion(1))
+        .style(move |_: &iced::Theme| container::Style {
+            border: Border {
+                color: theme.ink(),
+                width: tokens::borders::MEDIUM,
+                radius: tokens::radii::NONE.into(),
+            },
+            ..Default::default()
+        })
+    );
+    
+    stat_cards = stat_cards.push(
+        container(
+            column![
+                text(format!("{}/{}", covered_count, total_count))
+                    .size(tokens::font_size::XL)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                text("Features Verified")
+                    .size(tokens::font_size::XS)
+                    .color(theme.ink_faded()),
+                text(format!("{:.0}%", if total_count > 0 { (covered_count as f32 / total_count as f32) * 100.0 } else { 0.0 }))
+                    .size(tokens::font_size::XS)
+                    .color(if covered_count == total_count { colors::ACID_LIME } else { colors::SAFETY_ORANGE }),
+            ]
+            .spacing(tokens::spacing::XXS)
+            .align_x(iced::Alignment::Center)
+        )
+        .padding(tokens::spacing::MD)
+        .width(Length::FillPortion(1))
+        .style(move |_: &iced::Theme| container::Style {
+            border: Border {
+                color: theme.ink(),
+                width: tokens::borders::MEDIUM,
+                radius: tokens::radii::NONE.into(),
+            },
+            ..Default::default()
+        })
+    );
+    
+    stat_cards = stat_cards.push(
+        container(
+            column![
+                text(total_evidence.to_string())
+                    .size(tokens::font_size::XL)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(colors::ELECTRIC_BLUE),
+                text("Total Evidence")
+                    .size(tokens::font_size::XS)
+                    .color(theme.ink_faded()),
+            ]
+            .spacing(tokens::spacing::XXS)
+            .align_x(iced::Alignment::Center)
+        )
+        .padding(tokens::spacing::MD)
+        .width(Length::FillPortion(1))
+        .style(move |_: &iced::Theme| container::Style {
+            border: Border {
+                color: theme.ink(),
+                width: tokens::borders::MEDIUM,
+                radius: tokens::radii::NONE.into(),
+            },
+            ..Default::default()
+        })
+    );
+    
+    content = content.push(stat_cards);
 
     // Category breakdown
     if !categories.is_empty() {

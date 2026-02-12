@@ -144,9 +144,9 @@ pub fn view<'a>(
             .font(crate::theme::fonts::FONT_DISPLAY)
             .color(theme.ink()),
         Space::new().width(Length::Fill),
-        styled_button(theme, "Platform Setup", ButtonVariant::Secondary)
+        styled_button(theme, "PLATFORM SETUP", ButtonVariant::Primary)
             .on_press(Message::NavigateTo(Page::Setup)),
-        styled_button(theme, "Refresh All", ButtonVariant::Info)
+        styled_button(theme, "REFRESH", ButtonVariant::Ghost)
             .on_press(Message::LoadLogin),
     ]
     .spacing(tokens::spacing::MD)

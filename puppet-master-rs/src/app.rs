@@ -337,11 +337,13 @@ pub struct App {
 
     // Coverage
     pub coverage_phase_filter: String,
+    pub coverage_requirements: Vec<crate::views::coverage::RequirementCoverage>,
+    pub coverage_categories: Vec<crate::views::coverage::CategoryCoverage>,
+    pub coverage_overall: f32,
 
     // View helper data (constant placeholders stored as fields to avoid borrow issues)
     _empty_string_vec: Vec<String>,
     _no_tier_details: Option<crate::views::tiers::TierDetails>,
-    _empty_coverage: Vec<crate::views::coverage::RequirementCoverage>,
 }
 
 // ============================================================================
@@ -410,8 +412,16 @@ pub enum Message {
     ConfigGranularityChanged(String),
     ConfigVerificationFieldChanged(String, String),
     ConfigVerificationScreenshotToggled,
+    BrowseEvidenceDirectory,
+    EvidenceDirectorySelected(Option<PathBuf>),
     ConfigMemoryFieldChanged(String, String),
     ConfigMemoryMultiLevelToggled,
+    BrowseMemoryProgressFile,
+    BrowseMemoryAgentsFile,
+    BrowseMemoryPrdFile,
+    MemoryProgressFileSelected(Option<PathBuf>),
+    MemoryAgentsFileSelected(Option<PathBuf>),
+    MemoryPrdFileSelected(Option<PathBuf>),
     ConfigBudgetFieldChanged(String, String, String), // platform, field, value
     ConfigAdvancedFieldChanged(String, String),
     ConfigAdvancedCheckboxToggled(String),
@@ -440,6 +450,19 @@ pub enum Message {
     WizardPrdPlatformChanged(String),
     WizardPrdModelChanged(String),
     WizardPrdEditorAction(text_editor::Action),
+    
+    // Read-only text editor actions (for selection/copy support)
+    DashboardTerminalAction(text_editor::Action),
+    DoctorDetailAction(String, text_editor::Action), // check name, action
+    EvidencePreviewAction(text_editor::Action),
+    LedgerExpandedAction(usize, text_editor::Action), // entry id, action
+    MemoryContentAction(text_editor::Action),
+    TierDetailsAction(text_editor::Action),
+    WizardRequirementsPreviewAction(text_editor::Action),
+    WizardPlanContentAction(text_editor::Action),
+    MetricsSummaryAction(text_editor::Action),
+    LoginCliAction(text_editor::Action),
+    
     WizardTierPlatformChanged(String, String),  // tier, platform
     WizardTierModelChanged(String, String),  // tier, model
     WizardTierReasoningChanged(String, String),  // tier, effort
@@ -685,7 +708,11 @@ impl App {
                 overall_percent: 0.0,
             },
             output_lines: Vec::new(),
-            terminal_editor_content: text_editor::Content::new(),
+            terminal_editor_content: text_editor::Content::with_text(
+                "=== RWM Puppet Master Terminal ===\n\
+                 No active orchestration.\n\
+                 Start a new orchestration from the Wizard page or resume from the Dashboard.\n"
+            ),
             last_error: None,
             start_time: None,
 
@@ -838,6 +865,9 @@ impl App {
 
             // Coverage
             coverage_phase_filter: "All".to_string(),
+            coverage_requirements: Vec::new(),
+            coverage_categories: Vec::new(),
+            coverage_overall: 0.0,
 
             // Backend channels (will be set up in run())
             event_receiver: None,
@@ -851,8 +881,17 @@ impl App {
             // View helper data
             _empty_string_vec: Vec::new(),
             _no_tier_details: None,
-            _empty_coverage: Vec::new(),
         };
+
+        // Ensure .puppet-master directory exists on startup
+        if let Ok(cwd) = std::env::current_dir() {
+            let puppet_dir = cwd.join(".puppet-master");
+            let _ = std::fs::create_dir_all(&puppet_dir);
+            let _ = std::fs::create_dir_all(puppet_dir.join("evidence"));
+            let _ = std::fs::create_dir_all(puppet_dir.join("logs"));
+            let _ = std::fs::create_dir_all(puppet_dir.join("sessions"));
+            let _ = std::fs::create_dir_all(puppet_dir.join("checkpoints"));
+        }
 
         // Initial tasks: load fonts, load projects, load config, etc.
         let font_tasks: Vec<iced::Task<Message>> = crate::theme::fonts::load_fonts()
@@ -868,6 +907,9 @@ impl App {
             // No setup marker found - show setup wizard on first boot
             app.current_page = Page::Setup;
         }
+
+        // Load settings from disk if they exist
+        app.load_settings();
 
         (app, task)
     }
@@ -949,7 +991,17 @@ impl App {
                         }
                     }
                     Page::History => {
+                        // Load history from disk when navigating to the History page
+                        self.load_history_from_disk();
                         self.recompute_history_display();
+                    }
+                    Page::Ledger => {
+                        // Auto-load ledger data when navigating to Ledger page
+                        return self.update(Message::LedgerRefresh);
+                    }
+                    Page::Coverage => {
+                        // Compute coverage data from PRD and evidence
+                        self.compute_coverage();
                     }
                     _ => {}
                 }
@@ -1034,6 +1086,14 @@ impl App {
                 self.settings_retention_days = 30;
                 self.settings_intensive_logging = false;
                 self.minimize_to_tray = true;
+                
+                // Delete settings file
+                let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
+                let settings_file = base.join(".puppet-master").join("settings.json");
+                if settings_file.exists() {
+                    let _ = std::fs::remove_file(&settings_file);
+                }
+                
                 self.add_toast(ToastType::Success, "Settings reset to defaults".to_string());
                 Task::none()
             }
@@ -1071,8 +1131,10 @@ impl App {
                 let data_dir = base.join(".puppet-master");
                 let settings_file = data_dir.join("settings.json");
                 
-                // Create directory if needed
-                let _ = std::fs::create_dir_all(&data_dir);
+                // Create directory if needed (including parent directories)
+                if let Some(parent) = settings_file.parent() {
+                    let _ = std::fs::create_dir_all(parent);
+                }
                 
                 // Serialize settings
                 let settings = serde_json::json!({
@@ -1509,6 +1571,63 @@ impl App {
                 let text = self.config_editor_content.text();
                 self.update(Message::ConfigTextChanged(text))
             }
+            
+            // Read-only text editor actions - process all actions for selection/clipboard support
+            // The widgets remain effectively read-only because users can't easily trigger Edit actions
+            // without .on_action(), but we need to process all actions to support Ctrl+C copying
+            Message::DashboardTerminalAction(action) => {
+                self.terminal_editor_content.perform(action);
+                Task::none()
+            }
+            
+            Message::DoctorDetailAction(check_name, action) => {
+                if let Some(content) = self.doctor_detail_contents.get_mut(&check_name) {
+                    content.perform(action);
+                }
+                Task::none()
+            }
+            
+            Message::EvidencePreviewAction(action) => {
+                self.evidence_preview_content.perform(action);
+                Task::none()
+            }
+            
+            Message::LedgerExpandedAction(entry_id, action) => {
+                if let Some(content) = self.ledger_expanded_contents.get_mut(&entry_id) {
+                    content.perform(action);
+                }
+                Task::none()
+            }
+            
+            Message::MemoryContentAction(action) => {
+                self.memory_content.perform(action);
+                Task::none()
+            }
+            
+            Message::TierDetailsAction(action) => {
+                self.tier_details_content.perform(action);
+                Task::none()
+            }
+            
+            Message::WizardRequirementsPreviewAction(action) => {
+                self.wizard_requirements_preview_content.perform(action);
+                Task::none()
+            }
+            
+            Message::WizardPlanContentAction(action) => {
+                self.wizard_plan_content.perform(action);
+                Task::none()
+            }
+            
+            Message::MetricsSummaryAction(action) => {
+                self.metrics_summary_content.perform(action);
+                Task::none()
+            }
+            
+            Message::LoginCliAction(action) => {
+                self.login_cli_content.perform(action);
+                Task::none()
+            }
 
             Message::ConfigTabChanged(tab) => {
                 self.config_active_tab = tab;
@@ -1541,6 +1660,11 @@ impl App {
 
                 let config_path = base.join("puppet-master.yaml");
 
+                // Ensure parent directory exists
+                if let Some(parent) = config_path.parent() {
+                    let _ = std::fs::create_dir_all(parent);
+                }
+
                 // If on tabs 0-5, save from gui_config; if on tab 6, save from config_text
                 if self.config_active_tab < 6 {
                     // Save from structured gui_config
@@ -1558,10 +1682,15 @@ impl App {
                             );
                         }
                         Err(e) => {
-                            self.add_toast(
-                                ToastType::Error,
-                                format!("Failed to save config: {}", e),
-                            );
+                            let friendly_msg = if e.to_string().contains("No such file or directory") 
+                                || e.to_string().contains("cannot find the path") {
+                                "Could not save configuration. The parent directory may not exist.".to_string()
+                            } else if e.to_string().contains("Permission denied") {
+                                "Permission denied. Please check write permissions for the configuration file.".to_string()
+                            } else {
+                                format!("Failed to save configuration: {}", e)
+                            };
+                            self.add_toast(ToastType::Error, friendly_msg);
                         }
                     }
                 } else {
@@ -1579,10 +1708,15 @@ impl App {
                             );
                         }
                         Err(e) => {
-                            self.add_toast(
-                                ToastType::Error,
-                                format!("Failed to save config: {}", e),
-                            );
+                            let friendly_msg = if e.to_string().contains("No such file or directory") 
+                                || e.to_string().contains("cannot find the path") {
+                                "Could not save configuration. The parent directory may not exist.".to_string()
+                            } else if e.to_string().contains("Permission denied") {
+                                "Permission denied. Please check write permissions for the configuration file.".to_string()
+                            } else {
+                                format!("Failed to save configuration: {}", e)
+                            };
+                            self.add_toast(ToastType::Error, friendly_msg);
                         }
                     }
                 }
@@ -1618,10 +1752,15 @@ impl App {
                         );
                     }
                     Err(e) => {
-                        self.add_toast(
-                            ToastType::Error,
-                            format!("Failed to reload config: {}", e),
-                        );
+                        let friendly_msg = if e.to_string().contains("No such file or directory") 
+                            || e.to_string().contains("cannot find the path") {
+                            "No configuration file found. Create one using the Config page and click Save.".to_string()
+                        } else if e.to_string().contains("Permission denied") {
+                            "Permission denied. Please check read permissions for the configuration file.".to_string()
+                        } else {
+                            format!("Failed to load configuration. {}", e)
+                        };
+                        self.add_toast(ToastType::Error, friendly_msg);
                     }
                 }
 
@@ -1807,6 +1946,29 @@ impl App {
                 Task::none()
             }
 
+            Message::BrowseEvidenceDirectory => {
+                Task::perform(
+                    async {
+                        let result = rfd::AsyncFileDialog::new()
+                            .set_title("Select Evidence Directory")
+                            .pick_folder()
+                            .await;
+                        result.map(|h| h.path().to_path_buf())
+                    },
+                    Message::EvidenceDirectorySelected,
+                )
+            }
+
+            Message::EvidenceDirectorySelected(path_opt) => {
+                if let Some(path) = path_opt {
+                    if let Some(path_str) = path.to_str() {
+                        self.gui_config.verification.evidence_directory = path_str.to_string();
+                        self.config_is_dirty = true;
+                    }
+                }
+                Task::none()
+            }
+
             Message::ConfigMemoryFieldChanged(field, value) => {
                 match field.as_str() {
                     "progress_file" => self.gui_config.memory.progress_file = value,
@@ -1821,6 +1983,78 @@ impl App {
             Message::ConfigMemoryMultiLevelToggled => {
                 self.gui_config.memory.multi_level_agents = !self.gui_config.memory.multi_level_agents;
                 self.config_is_dirty = true;
+                Task::none()
+            }
+
+            Message::BrowseMemoryProgressFile => {
+                Task::perform(
+                    async {
+                        let result = rfd::AsyncFileDialog::new()
+                            .set_title("Select Progress File")
+                            .add_filter("Text Files", &["txt", "md", "log"])
+                            .add_filter("All Files", &["*"])
+                            .pick_file()
+                            .await;
+                        
+                        result.map(|file| file.path().to_path_buf())
+                    },
+                    Message::MemoryProgressFileSelected,
+                )
+            }
+
+            Message::BrowseMemoryAgentsFile => {
+                Task::perform(
+                    async {
+                        let result = rfd::AsyncFileDialog::new()
+                            .set_title("Select Agents File")
+                            .add_filter("JSON/Markdown", &["json", "md"])
+                            .add_filter("All Files", &["*"])
+                            .pick_file()
+                            .await;
+                        
+                        result.map(|file| file.path().to_path_buf())
+                    },
+                    Message::MemoryAgentsFileSelected,
+                )
+            }
+
+            Message::BrowseMemoryPrdFile => {
+                Task::perform(
+                    async {
+                        let result = rfd::AsyncFileDialog::new()
+                            .set_title("Select PRD File")
+                            .add_filter("JSON Files", &["json"])
+                            .add_filter("All Files", &["*"])
+                            .pick_file()
+                            .await;
+                        
+                        result.map(|file| file.path().to_path_buf())
+                    },
+                    Message::MemoryPrdFileSelected,
+                )
+            }
+
+            Message::MemoryProgressFileSelected(path) => {
+                if let Some(p) = path {
+                    self.gui_config.memory.progress_file = p.to_string_lossy().to_string();
+                    self.config_is_dirty = true;
+                }
+                Task::none()
+            }
+
+            Message::MemoryAgentsFileSelected(path) => {
+                if let Some(p) = path {
+                    self.gui_config.memory.agents_file = p.to_string_lossy().to_string();
+                    self.config_is_dirty = true;
+                }
+                Task::none()
+            }
+
+            Message::MemoryPrdFileSelected(path) => {
+                if let Some(p) = path {
+                    self.gui_config.memory.prd_file = p.to_string_lossy().to_string();
+                    self.config_is_dirty = true;
+                }
                 Task::none()
             }
 
@@ -2381,7 +2615,15 @@ impl App {
                             Task::none()
                         }
                         Err(e) => {
-                            self.add_toast(ToastType::Error, format!("Failed to read file: {}", e));
+                            let friendly_msg = if e.to_string().contains("No such file or directory") 
+                                || e.to_string().contains("cannot find the path") {
+                                format!("File not found: {}", path.display())
+                            } else if e.to_string().contains("Permission denied") {
+                                format!("Permission denied reading file: {}", path.display())
+                            } else {
+                                format!("Failed to read requirements file: {}", e)
+                            };
+                            self.add_toast(ToastType::Error, friendly_msg);
                             Task::none()
                         }
                     }
@@ -2525,12 +2767,22 @@ impl App {
                 let prd_path = project_path.join("prd.md");
                 
                 if let Err(e) = std::fs::create_dir_all(&project_path) {
-                    self.add_toast(ToastType::Error, format!("Failed to create project directory: {}", e));
+                    let friendly_msg = if e.to_string().contains("Permission denied") {
+                        "Permission denied. Please check directory permissions.".to_string()
+                    } else {
+                        format!("Failed to create project directory: {}", e)
+                    };
+                    self.add_toast(ToastType::Error, friendly_msg);
                     return Task::none();
                 }
                 
                 if let Err(e) = std::fs::write(&prd_path, &self.wizard_prd_text) {
-                    self.add_toast(ToastType::Error, format!("Failed to save PRD: {}", e));
+                    let friendly_msg = if e.to_string().contains("Permission denied") {
+                        "Permission denied. Please check write permissions for the PRD file.".to_string()
+                    } else {
+                        format!("Failed to save PRD file: {}", e)
+                    };
+                    self.add_toast(ToastType::Error, friendly_msg);
                     return Task::none();
                 }
                 
@@ -2677,10 +2929,12 @@ impl App {
                 
                 // Create directory if it doesn't exist
                 if let Err(e) = std::fs::create_dir_all(&marker_dir) {
-                    self.add_toast(
-                        ToastType::Error,
-                        format!("Failed to create .puppet-master directory: {}", e),
-                    );
+                    let friendly_msg = if e.to_string().contains("Permission denied") {
+                        "Permission denied. Please check write permissions for the project directory.".to_string()
+                    } else {
+                        format!("Failed to create .puppet-master directory: {}", e)
+                    };
+                    self.add_toast(ToastType::Error, friendly_msg);
                     return Task::none();
                 }
                 
@@ -2696,10 +2950,12 @@ impl App {
                         self.current_page = Page::Dashboard;
                     }
                     Err(e) => {
-                        self.add_toast(
-                            ToastType::Error,
-                            format!("Failed to create setup marker: {}", e),
-                        );
+                        let friendly_msg = if e.to_string().contains("Permission denied") {
+                            "Permission denied. Please check write permissions for the project directory.".to_string()
+                        } else {
+                            format!("Failed to create setup marker file: {}", e)
+                        };
+                        self.add_toast(ToastType::Error, friendly_msg);
                     }
                 }
                 
@@ -2727,14 +2983,70 @@ impl App {
                 
                 // Find tier details from tier_tree
                 if let Some(tier) = self.tier_tree.iter().find(|t| t.id == tier_id) {
-                    let description = format!("Status: {}", tier.status);
+                    // Determine tier type and get platform/model from config
+                    let (platform, model) = match tier.tier_type {
+                        crate::views::tiers::TierNodeType::Phase => {
+                            (self.gui_config.tiers.phase.platform.clone(), 
+                             self.gui_config.tiers.phase.model.clone())
+                        },
+                        crate::views::tiers::TierNodeType::Task => {
+                            (self.gui_config.tiers.task.platform.clone(), 
+                             self.gui_config.tiers.task.model.clone())
+                        },
+                        crate::views::tiers::TierNodeType::Subtask => {
+                            (self.gui_config.tiers.subtask.platform.clone(), 
+                             self.gui_config.tiers.subtask.model.clone())
+                        },
+                    };
+                    
+                    // Load dependencies from PRD if available
+                    let base = self.current_project
+                        .as_ref()
+                        .map(|p| p.path.clone())
+                        .unwrap_or_else(|| std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")));
+                    
+                    let prd_path = base.join(".puppet-master").join("prd.json");
+                    let mut dependencies = Vec::new();
+                    
+                    if prd_path.exists() {
+                        // Try to load PRD and find dependencies
+                        if let Ok(content) = std::fs::read_to_string(&prd_path) {
+                            if let Ok(prd) = serde_json::from_str::<crate::types::PRD>(&content) {
+                                // Find the tier in PRD and extract dependencies
+                                'outer: for phase in &prd.phases {
+                                    if phase.id == tier.id {
+                                        dependencies = phase.dependencies.clone();
+                                        break 'outer;
+                                    }
+                                    for task in &phase.tasks {
+                                        if task.id == tier.id {
+                                            dependencies = task.dependencies.clone();
+                                            break 'outer;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    let tier_type_str = match tier.tier_type {
+                        crate::views::tiers::TierNodeType::Phase => "Phase",
+                        crate::views::tiers::TierNodeType::Task => "Task",
+                        crate::views::tiers::TierNodeType::Subtask => "Subtask",
+                    };
+                    
+                    let description = format!(
+                        "Status: {}\nPlatform: {}\nModel: {}\nType: {}",
+                        tier.status, platform, model, tier_type_str
+                    );
+                    
                     self.selected_tier_details = Some(crate::views::tiers::TierDetails {
                         id: tier.id.clone(),
                         title: tier.title.clone(),
                         description: description.clone(),
                         status: tier.status.clone(),
-                        dependencies: Vec::new(),
-                        platform: "Unknown".to_string(),
+                        dependencies,
+                        platform,
                     });
                     // Update tier_details_content with the description
                     self.tier_details_content = text_editor::Content::with_text(&description);
@@ -2839,9 +3151,75 @@ impl App {
                 let evidence_dir = base.join(".puppet-master").join("evidence");
                 
                 if evidence_dir.exists() {
-                    // TODO: Actually scan directory and populate evidence_items
-                    self.add_toast(ToastType::Success, "Evidence refreshed".to_string());
+                    // Scan evidence directory
+                    let mut new_items = Vec::new();
+                    
+                    // Define subdirectories to scan
+                    let subdirs = vec![
+                        ("test-logs", crate::views::evidence::EvidenceItemType::TestLog),
+                        ("screenshots", crate::views::evidence::EvidenceItemType::Screenshot),
+                        ("browser-traces", crate::views::evidence::EvidenceItemType::BrowserTrace),
+                        ("file-snapshots", crate::views::evidence::EvidenceItemType::FileSnapshot),
+                        ("metrics", crate::views::evidence::EvidenceItemType::Metrics),
+                        ("gate-reports", crate::views::evidence::EvidenceItemType::GateReport),
+                    ];
+                    
+                    for (subdir_name, ev_type) in subdirs {
+                        let subdir_path = evidence_dir.join(subdir_name);
+                        if subdir_path.exists() && subdir_path.is_dir() {
+                            if let Ok(entries) = std::fs::read_dir(&subdir_path) {
+                                for entry in entries.flatten() {
+                                    if let Ok(metadata) = entry.metadata() {
+                                        if metadata.is_file() {
+                                            let path = entry.path();
+                                            let filename = path.file_name()
+                                                .and_then(|n| n.to_str())
+                                                .unwrap_or("unknown")
+                                                .to_string();
+                                            
+                                            // Skip .gitkeep files
+                                            if filename == ".gitkeep" {
+                                                continue;
+                                            }
+                                            
+                                            // Extract tier ID from filename if present (e.g., TEST-003)
+                                            let tier_id = filename.split('-')
+                                                .take(2)
+                                                .collect::<Vec<_>>()
+                                                .join("-");
+                                            
+                                            // Get file timestamp
+                                            let timestamp = metadata.modified()
+                                                .ok()
+                                                .and_then(|t| {
+                                                    use std::time::SystemTime;
+                                                    let duration = t.duration_since(SystemTime::UNIX_EPOCH).ok()?;
+                                                    chrono::DateTime::from_timestamp(duration.as_secs() as i64, 0)
+                                                })
+                                                .unwrap_or_else(|| chrono::Utc::now());
+                                            
+                                            new_items.push(EvidenceItem {
+                                                id: format!("{}-{}", tier_id, filename),
+                                                tier_id,
+                                                evidence_type: ev_type,
+                                                summary: filename.clone(),
+                                                timestamp,
+                                                path,
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Sort by timestamp descending (newest first)
+                    new_items.sort_by(|a, b| b.timestamp.cmp(&a.timestamp));
+                    
+                    self.evidence_items = new_items;
+                    self.add_toast(ToastType::Success, format!("Found {} evidence items", self.evidence_items.len()));
                 } else {
+                    self.evidence_items.clear();
                     self.add_toast(ToastType::Info, "No evidence directory found".to_string());
                 }
                 
@@ -3073,34 +3451,114 @@ impl App {
             }
 
             Message::LedgerRefresh => {
-                // Re-read ledger data from disk
+                // Re-read ledger data from disk - looking for usage.jsonl (JSONL format)
                 let base = self.current_project
                     .as_ref()
                     .map(|p| p.path.clone())
                     .unwrap_or_else(|| std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")));
                 
-                let ledger_path = base.join(".puppet-master").join("ledger.json");
+                let ledger_path = base.join(".puppet-master").join("usage").join("usage.jsonl");
                 
                 if ledger_path.exists() {
                     match std::fs::read_to_string(&ledger_path) {
                         Ok(content) => {
-                            // Parse ledger entries
-                            match serde_json::from_str::<Vec<serde_json::Value>>(&content) {
-                                Ok(_) => {
-                                    self.add_toast(ToastType::Success, "Ledger refreshed".to_string());
-                                    // TODO: Actually parse and update ledger_entries when we have the real format
+                            // Parse JSONL format (one JSON object per line)
+                            let mut entries = Vec::new();
+                            let mut entry_id = 0;
+                            
+                            for (line_no, line) in content.lines().enumerate() {
+                                if line.trim().is_empty() {
+                                    continue;
                                 }
-                                Err(e) => {
-                                    self.add_toast(ToastType::Error, format!("Failed to parse ledger: {}", e));
+                                
+                                match serde_json::from_str::<serde_json::Value>(line) {
+                                    Ok(json) => {
+                                        // Parse the JSON object into a LedgerEntry
+                                        // Expected fields: timestamp, platform, operation, tokens_in, tokens_out, cost, etc.
+                                        
+                                        let timestamp = if let Some(ts_str) = json.get("timestamp").and_then(|v| v.as_str()) {
+                                            chrono::DateTime::parse_from_rfc3339(ts_str)
+                                                .ok()
+                                                .map(|dt| dt.with_timezone(&chrono::Utc))
+                                                .unwrap_or_else(|| chrono::Utc::now())
+                                        } else {
+                                            chrono::Utc::now()
+                                        };
+                                        
+                                        // Determine event type from operation field
+                                        let event_type = if let Some(op) = json.get("operation").and_then(|v| v.as_str()) {
+                                            match op.to_lowercase().as_str() {
+                                                "request" | "platform_request" => crate::views::ledger::EventType::PlatformRequest,
+                                                "response" | "platform_response" => crate::views::ledger::EventType::PlatformResponse,
+                                                _ => crate::views::ledger::EventType::StateSnapshot,
+                                            }
+                                        } else {
+                                            crate::views::ledger::EventType::StateSnapshot
+                                        };
+                                        
+                                        let tier_id = json.get("tier_id")
+                                            .or_else(|| json.get("tier"))
+                                            .and_then(|v| v.as_str())
+                                            .map(|s| s.to_string());
+                                        
+                                        // Format the data as a readable string
+                                        let data = if let Some(platform) = json.get("platform").and_then(|v| v.as_str()) {
+                                            let tokens_in = json.get("tokens_in")
+                                                .or_else(|| json.get("input_tokens"))
+                                                .and_then(|v| v.as_u64())
+                                                .unwrap_or(0);
+                                            let tokens_out = json.get("tokens_out")
+                                                .or_else(|| json.get("output_tokens"))
+                                                .and_then(|v| v.as_u64())
+                                                .unwrap_or(0);
+                                            let cost = json.get("cost")
+                                                .and_then(|v| v.as_f64())
+                                                .unwrap_or(0.0);
+                                            
+                                            format!(
+                                                "Platform: {}, Input: {} tokens, Output: {} tokens, Cost: ${:.4}",
+                                                platform, tokens_in, tokens_out, cost
+                                            )
+                                        } else {
+                                            // Fallback to pretty JSON if we can't parse specific fields
+                                            serde_json::to_string_pretty(&json).unwrap_or_else(|_| line.to_string())
+                                        };
+                                        
+                                        entries.push(LedgerEntry {
+                                            id: entry_id,
+                                            timestamp,
+                                            event_type,
+                                            tier_id,
+                                            data,
+                                        });
+                                        
+                                        entry_id += 1;
+                                    }
+                                    Err(e) => {
+                                        log::warn!("Failed to parse ledger line {}: {} - {}", line_no + 1, e, line);
+                                    }
                                 }
                             }
+                            
+                            self.ledger_entries = entries;
+                            self.add_toast(ToastType::Success, format!("Ledger refreshed: {} entries", self.ledger_entries.len()));
                         }
                         Err(e) => {
-                            self.add_toast(ToastType::Error, format!("Failed to read ledger: {}", e));
+                            let friendly_msg = if e.to_string().contains("No such file or directory") 
+                                || e.to_string().contains("cannot find the path") {
+                                "Ledger file not found. Run an orchestration to start tracking usage.".to_string()
+                            } else if e.to_string().contains("Permission denied") {
+                                "Permission denied. Please check read permissions for the ledger file.".to_string()
+                            } else {
+                                format!("Failed to read usage ledger. {}", e)
+                            };
+                            self.add_toast(ToastType::Error, friendly_msg);
                         }
                     }
                 } else {
-                    self.add_toast(ToastType::Info, "No ledger file found".to_string());
+                    // No ledger file found - clear entries and show info
+                    self.ledger_entries.clear();
+                    self.add_toast(ToastType::Info, "No usage data yet - run an orchestration to see usage".to_string());
                 }
                 
                 Task::none()
@@ -3625,7 +4083,13 @@ impl App {
             Page::History => {
                 views::history::view(&self.history_display_sessions, self.history_page, self.history_total_pages, self.history_filter, &self.history_search, &self.theme)
             }
-            Page::Coverage => views::coverage::view(0.0, &[], &self._empty_coverage, &self.coverage_phase_filter, &self.theme),
+            Page::Coverage => views::coverage::view(
+                self.coverage_overall,
+                &self.coverage_categories,
+                &self.coverage_requirements,
+                &self.coverage_phase_filter,
+                &self.theme
+            ),
             Page::Memory => views::memory::view(&self.memory_content, &self.memory_content_string, &self.memory_section, &self.theme),
             Page::Ledger => views::ledger::view(
                 &self.ledger_entries,
@@ -3961,6 +4425,152 @@ impl App {
         self.terminal_editor_content = text_editor::Content::with_text(&terminal_text);
     }
 
+    /// Compute coverage data from PRD and evidence
+    fn compute_coverage(&mut self) {
+        use crate::views::coverage::{RequirementCoverage, CategoryCoverage};
+        
+        // Get project path
+        let base = self.current_project
+            .as_ref()
+            .map(|p| p.path.clone())
+            .unwrap_or_else(|| std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")));
+        
+        let prd_path = base.join(".puppet-master").join("prd.json");
+        let evidence_dir = base.join(".puppet-master").join("evidence").join("gate-reports");
+        
+        // Try to load PRD
+        if !prd_path.exists() {
+            self.coverage_requirements.clear();
+            self.coverage_categories.clear();
+            self.coverage_overall = 0.0;
+            return;
+        }
+        
+        let Ok(content) = std::fs::read_to_string(&prd_path) else {
+            return;
+        };
+        
+        let Ok(prd) = serde_json::from_str::<crate::types::PRD>(&content) else {
+            return;
+        };
+        
+        // Load gate reports to check verification status
+        let mut gate_reports = std::collections::HashMap::new();
+        if evidence_dir.exists() && evidence_dir.is_dir() {
+            if let Ok(entries) = std::fs::read_dir(&evidence_dir) {
+                for entry in entries.flatten() {
+                    if let Ok(gate_content) = std::fs::read_to_string(entry.path()) {
+                        // Extract tier ID from filename
+                        if let Some(filename) = entry.file_name().to_str() {
+                            gate_reports.insert(filename.to_string(), gate_content);
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Build requirements list from PRD
+        let mut requirements = Vec::new();
+        let mut category_stats = std::collections::HashMap::new();
+        
+        for phase in &prd.phases {
+            // Phase-level requirements
+            let phase_covered = phase.status == crate::types::ItemStatus::Passed;
+            let phase_evidence_count = phase.evidence.len();
+            
+            let phase_req = RequirementCoverage {
+                id: phase.id.clone(),
+                description: phase.title.clone(),
+                covered: phase_covered,
+                evidence_count: phase_evidence_count,
+                tier_ids: vec![phase.id.clone()],
+            };
+            requirements.push(phase_req);
+            
+            // Update category stats
+            let category = "Phase";
+            let entry = category_stats.entry(category.to_string()).or_insert((0, 0));
+            entry.0 += 1; // total
+            if phase_covered {
+                entry.1 += 1; // covered
+            }
+            
+            // Task-level requirements
+            for task in &phase.tasks {
+                let task_covered = task.status == crate::types::ItemStatus::Passed;
+                let task_evidence_count = task.evidence.len();
+                
+                let task_req = RequirementCoverage {
+                    id: task.id.clone(),
+                    description: task.title.clone(),
+                    covered: task_covered,
+                    evidence_count: task_evidence_count,
+                    tier_ids: vec![phase.id.clone(), task.id.clone()],
+                };
+                requirements.push(task_req);
+                
+                // Update category stats
+                let category = "Task";
+                let entry = category_stats.entry(category.to_string()).or_insert((0, 0));
+                entry.0 += 1;
+                if task_covered {
+                    entry.1 += 1;
+                }
+                
+                // Subtask-level requirements
+                for subtask in &task.subtasks {
+                    let subtask_covered = subtask.status == crate::types::ItemStatus::Passed;
+                    let subtask_evidence_count = subtask.evidence.len();
+                    
+                    let subtask_req = RequirementCoverage {
+                        id: subtask.id.clone(),
+                        description: subtask.title.clone(),
+                        covered: subtask_covered,
+                        evidence_count: subtask_evidence_count,
+                        tier_ids: vec![phase.id.clone(), task.id.clone(), subtask.id.clone()],
+                    };
+                    requirements.push(subtask_req);
+                    
+                    // Update category stats
+                    let category = "Subtask";
+                    let entry = category_stats.entry(category.to_string()).or_insert((0, 0));
+                    entry.0 += 1;
+                    if subtask_covered {
+                        entry.1 += 1;
+                    }
+                }
+            }
+        }
+        
+        // Build category coverage
+        let mut categories = Vec::new();
+        for (name, (total, covered)) in category_stats {
+            let coverage = if total > 0 {
+                covered as f32 / total as f32
+            } else {
+                0.0
+            };
+            categories.push(CategoryCoverage {
+                name,
+                coverage,
+                test_count: total,
+            });
+        }
+        
+        // Compute overall coverage
+        let total_requirements = requirements.len();
+        let covered_requirements = requirements.iter().filter(|r| r.covered).count();
+        let overall = if total_requirements > 0 {
+            covered_requirements as f32 / total_requirements as f32
+        } else {
+            0.0
+        };
+        
+        self.coverage_requirements = requirements;
+        self.coverage_categories = categories;
+        self.coverage_overall = overall;
+    }
+
     /// Add a toast notification
     fn add_toast(&mut self, toast_type: ToastType, message: String) {
         let id = self.next_toast_id;
@@ -4077,6 +4687,146 @@ impl App {
         let start = (self.history_page * self.history_items_per_page).min(filtered.len());
         let end = (start + self.history_items_per_page).min(filtered.len());
         self.history_display_sessions = filtered[start..end].to_vec();
+    }
+
+    /// Load settings from disk on startup
+    fn load_settings(&mut self) {
+        let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
+        let settings_file = base.join(".puppet-master").join("settings.json");
+        
+        if settings_file.exists() {
+            if let Ok(content) = std::fs::read_to_string(&settings_file) {
+                if let Ok(json) = serde_json::from_str::<serde_json::Value>(&content) {
+                    // Load settings from JSON
+                    if let Some(log_level) = json.get("log_level").and_then(|v| v.as_str()) {
+                        self.settings_log_level = log_level.to_string();
+                    }
+                    if let Some(auto_scroll) = json.get("auto_scroll").and_then(|v| v.as_bool()) {
+                        self.settings_auto_scroll = auto_scroll;
+                    }
+                    if let Some(show_timestamps) = json.get("show_timestamps").and_then(|v| v.as_bool()) {
+                        self.settings_show_timestamps = show_timestamps;
+                    }
+                    if let Some(retention_days) = json.get("retention_days").and_then(|v| v.as_u64()) {
+                        self.settings_retention_days = retention_days as u32;
+                    }
+                    if let Some(intensive_logging) = json.get("intensive_logging").and_then(|v| v.as_bool()) {
+                        self.settings_intensive_logging = intensive_logging;
+                    }
+                    if let Some(minimize_to_tray) = json.get("minimize_to_tray").and_then(|v| v.as_bool()) {
+                        self.minimize_to_tray = minimize_to_tray;
+                    }
+                    
+                    log::info!("Settings loaded from disk");
+                }
+            }
+        }
+    }
+
+    /// Load history from disk (sessions and logs)
+    fn load_history_from_disk(&mut self) {
+        let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
+        let data_dir = base.join(".puppet-master");
+        
+        // Clear existing history
+        self.history_sessions.clear();
+        
+        // Try to read from logs/sessions.jsonl (one session per line)
+        let sessions_file = data_dir.join("logs").join("sessions.jsonl");
+        if sessions_file.exists() {
+            if let Ok(content) = std::fs::read_to_string(&sessions_file) {
+                for line in content.lines() {
+                    if line.trim().is_empty() {
+                        continue;
+                    }
+                    
+                    if let Ok(json) = serde_json::from_str::<serde_json::Value>(line) {
+                        // Parse session info from JSON
+                        let id = json.get("id")
+                            .or_else(|| json.get("session_id"))
+                            .and_then(|v| v.as_str())
+                            .unwrap_or("unknown")
+                            .to_string();
+                        
+                        let start_time = json.get("start_time")
+                            .or_else(|| json.get("timestamp"))
+                            .and_then(|v| v.as_str())
+                            .and_then(|s| chrono::DateTime::parse_from_rfc3339(s).ok())
+                            .map(|dt| dt.with_timezone(&chrono::Utc))
+                            .unwrap_or_else(|| chrono::Utc::now());
+                        
+                        let end_time = json.get("end_time")
+                            .and_then(|v| v.as_str())
+                            .and_then(|s| chrono::DateTime::parse_from_rfc3339(s).ok())
+                            .map(|dt| dt.with_timezone(&chrono::Utc));
+                        
+                        let status = json.get("status")
+                            .and_then(|v| v.as_str())
+                            .map(|s| match s.to_lowercase().as_str() {
+                                "running" => crate::views::history::SessionStatus::Running,
+                                "completed" | "success" => crate::views::history::SessionStatus::Completed,
+                                "failed" | "error" => crate::views::history::SessionStatus::Failed,
+                                "cancelled" | "canceled" => crate::views::history::SessionStatus::Cancelled,
+                                _ => crate::views::history::SessionStatus::Completed,
+                            })
+                            .unwrap_or(crate::views::history::SessionStatus::Completed);
+                        
+                        let items_completed = json.get("items_completed")
+                            .or_else(|| json.get("completed"))
+                            .and_then(|v| v.as_u64())
+                            .unwrap_or(0) as usize;
+                        
+                        let items_total = json.get("items_total")
+                            .or_else(|| json.get("total"))
+                            .and_then(|v| v.as_u64())
+                            .unwrap_or(0) as usize;
+                        
+                        let platform = json.get("platform")
+                            .and_then(|v| v.as_str())
+                            .map(|s| s.to_string());
+                        
+                        let model = json.get("model")
+                            .and_then(|v| v.as_str())
+                            .map(|s| s.to_string());
+                        
+                        let reasoning_effort = json.get("reasoning_effort")
+                            .or_else(|| json.get("reasoning"))
+                            .and_then(|v| v.as_str())
+                            .map(|s| s.to_string());
+                        
+                        let phases = json.get("phases")
+                            .and_then(|v| v.as_array())
+                            .map(|arr| arr.iter()
+                                .filter_map(|v| v.as_str())
+                                .map(|s| s.to_string())
+                                .collect())
+                            .unwrap_or_else(Vec::new);
+                        
+                        self.history_sessions.push(SessionInfo {
+                            id,
+                            start_time,
+                            end_time,
+                            status,
+                            items_completed,
+                            items_total,
+                            expanded: false,
+                            phases,
+                            platform,
+                            model,
+                            reasoning_effort,
+                        });
+                    }
+                }
+            }
+        }
+        
+        // Sort sessions by start time (newest first)
+        self.history_sessions.sort_by(|a, b| b.start_time.cmp(&a.start_time));
+        
+        // Recompute display after loading
+        self.recompute_history_display();
+        
+        log::info!("Loaded {} history sessions from disk", self.history_sessions.len());
     }
 }
 

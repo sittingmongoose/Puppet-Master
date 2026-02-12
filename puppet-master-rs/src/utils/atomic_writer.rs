@@ -111,47 +111,47 @@ mod tests {
 
     #[test]
     fn test_atomic_write() {
-        let temp_dir = TempDir::new().unwrap();
+        let temp_dir = TempDir::new().expect("Failed to create temp dir");
         let file_path = temp_dir.path().join("test.txt");
 
         let data = b"Hello, World!";
-        AtomicWriter::write(&file_path, data).unwrap();
+        AtomicWriter::write(&file_path, data).expect("Failed to write atomically");
 
-        let read_data = fs::read(&file_path).unwrap();
+        let read_data = fs::read(&file_path).expect("Failed to read data");
         assert_eq!(read_data, data);
     }
 
     #[test]
     fn test_atomic_write_string() {
-        let temp_dir = TempDir::new().unwrap();
+        let temp_dir = TempDir::new().expect("Failed to create temp dir");
         let file_path = temp_dir.path().join("test.txt");
 
         let content = "Hello, Rust!";
-        AtomicWriter::write_string(&file_path, content).unwrap();
+        AtomicWriter::write_string(&file_path, content).expect("Failed to write string");
 
-        let read_content = fs::read_to_string(&file_path).unwrap();
+        let read_content = fs::read_to_string(&file_path).expect("Failed to read string");
         assert_eq!(read_content, content);
     }
 
     #[test]
     fn test_write_with_backup() {
-        let temp_dir = TempDir::new().unwrap();
+        let temp_dir = TempDir::new().expect("Failed to create temp dir");
         let file_path = temp_dir.path().join("test.txt");
 
         // Write initial content
-        fs::write(&file_path, b"Original").unwrap();
+        fs::write(&file_path, b"Original").expect("Failed to write initial content");
 
         // Write with backup
-        AtomicWriter::write_with_backup(&file_path, b"Updated").unwrap();
+        AtomicWriter::write_with_backup(&file_path, b"Updated").expect("Failed to write with backup");
 
         // Check new content
-        let content = fs::read_to_string(&file_path).unwrap();
+        let content = fs::read_to_string(&file_path).expect("Failed to read updated content");
         assert_eq!(content, "Updated");
 
         // Check backup exists
         let backup_path = file_path.with_extension("txt.bak");
         assert!(backup_path.exists());
-        let backup_content = fs::read_to_string(&backup_path).unwrap();
+        let backup_content = fs::read_to_string(&backup_path).expect("Failed to read backup");
         assert_eq!(backup_content, "Original");
     }
 
@@ -165,7 +165,7 @@ mod tests {
             value: i32,
         }
 
-        let temp_dir = TempDir::new().unwrap();
+        let temp_dir = TempDir::new().expect("Failed to create temp dir");
         let file_path = temp_dir.path().join("test.json");
 
         let data = TestData {
@@ -173,25 +173,25 @@ mod tests {
             value: 42,
         };
 
-        AtomicWriter::write_json(&file_path, &data).unwrap();
+        AtomicWriter::write_json(&file_path, &data).expect("Failed to write JSON");
 
-        let json = fs::read_to_string(&file_path).unwrap();
-        let loaded: TestData = serde_json::from_str(&json).unwrap();
+        let json = fs::read_to_string(&file_path).expect("Failed to read JSON file");
+        let loaded: TestData = serde_json::from_str(&json).expect("Failed to parse JSON");
         assert_eq!(loaded, data);
     }
 
     #[test]
     fn test_atomic_replace() {
-        let temp_dir = TempDir::new().unwrap();
+        let temp_dir = TempDir::new().expect("Failed to create temp dir");
         let file_path = temp_dir.path().join("test.txt");
 
         // Initial write
-        fs::write(&file_path, b"Initial").unwrap();
+        fs::write(&file_path, b"Initial").expect("Failed to write initial content");
 
         // Atomic replacement
-        AtomicWriter::write(&file_path, b"Replaced").unwrap();
+        AtomicWriter::write(&file_path, b"Replaced").expect("Failed to replace content");
 
-        let content = fs::read_to_string(&file_path).unwrap();
+        let content = fs::read_to_string(&file_path).expect("Failed to read replaced content");
         assert_eq!(content, "Replaced");
 
         // Temp file should not exist

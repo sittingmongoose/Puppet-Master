@@ -73,12 +73,19 @@ pub fn view<'a>(
 ) -> Element<'a, Message> {
     let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
-    // Header
+    // Header with Refresh button
     content = content.push(
-        text("Execution History")
-            .size(tokens::font_size::DISPLAY)
-            .font(crate::theme::fonts::FONT_DISPLAY)
-            .color(theme.ink())
+        row![
+            text("History")
+                .size(tokens::font_size::DISPLAY)
+                .font(crate::theme::fonts::FONT_DISPLAY)
+                .color(theme.ink()),
+            Space::new().width(Length::Fill),
+            styled_button(theme, "REFRESH", ButtonVariant::Info)
+                .on_press(Message::LoadHistory),
+        ]
+        .spacing(tokens::spacing::MD)
+        .align_y(iced::Alignment::Center)
     );
 
     // Search input
@@ -141,17 +148,15 @@ pub fn view<'a>(
         themed_panel(
             container(
                 row![
-                    styled_button(theme, "< Previous", ButtonVariant::Ghost)
+                    styled_button(theme, "PREVIOUS", ButtonVariant::Secondary)
                         .on_press(Message::HistoryPrevPage),
                     Space::new().width(Length::Fill),
                     text(format!("Page {} of {}", page + 1, total_pages.max(1)))
                         .size(tokens::font_size::BASE)
                         .color(theme.ink()),
                     Space::new().width(Length::Fill),
-                    styled_button(theme, "Next >", ButtonVariant::Ghost)
+                    styled_button(theme, "NEXT", ButtonVariant::Secondary)
                         .on_press(Message::HistoryNextPage),
-                    styled_button(theme, "Refresh", ButtonVariant::Info)
-                        .on_press(Message::LoadHistory),
                 ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center)
             ).padding(tokens::spacing::MD),
             theme

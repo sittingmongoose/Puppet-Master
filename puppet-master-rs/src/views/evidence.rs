@@ -287,6 +287,7 @@ pub fn view<'a>(
         if selected_item.is_some() {
             container(
                 text_editor(preview_content)
+                    .on_action(Message::EvidencePreviewAction)
                     .font(iced::Font::MONOSPACE)
                     .height(Length::Fill)
             )
@@ -339,10 +340,17 @@ pub fn view<'a>(
     .spacing(tokens::spacing::MD);
 
     let full_content = column![
-        text("Evidence Browser")
-            .size(tokens::font_size::XL)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        row![
+            text("Evidence")
+                .size(tokens::font_size::DISPLAY)
+                .font(fonts::FONT_DISPLAY)
+                .color(theme.ink()),
+            Space::new().width(Length::Fill),
+            styled_button(theme, "REFRESH", ButtonVariant::Info)
+                .on_press(Message::EvidenceRefresh),
+        ]
+        .spacing(tokens::spacing::MD)
+        .align_y(iced::Alignment::Center),
         main_content,
     ]
     .spacing(tokens::spacing::LG)

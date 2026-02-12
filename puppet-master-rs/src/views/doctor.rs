@@ -200,29 +200,29 @@ fn view_header<'a>(
 
     let mut actions = row![].spacing(tokens::spacing::SM).align_y(Alignment::Center);
 
-    // Select Platforms button
+    // SELECT PLATFORMS button (toggles visibility)
     actions = actions.push(
-        styled_button(theme, "Select Platforms", ButtonVariant::Secondary)
+        styled_button(theme, "SELECT PLATFORMS", ButtonVariant::Ghost)
             .on_press(Message::ToggleDoctorPlatformSelector)
     );
 
-    // Install All Missing button (only if there are failed fixable checks)
+    // INSTALL ALL MISSING button (only if there are failed fixable checks)
     if failed_fixable_count > 0 {
-        let install_label = format!("Install All Missing ({})", failed_fixable_count);
+        let install_label = format!("INSTALL ALL MISSING ({})", failed_fixable_count);
         actions = actions.push(
             styled_button(theme, &install_label, ButtonVariant::Info)
                 .on_press(Message::InstallAllMissing)
         );
     }
 
-    // Run All Checks button
+    // RUN ALL CHECKS button
     if running {
         actions = actions.push(
             styled_button(theme, "Running...", ButtonVariant::Primary)
         );
     } else {
         actions = actions.push(
-            styled_button(theme, "Run All Checks", ButtonVariant::Primary)
+            styled_button(theme, "RUN ALL CHECKS", ButtonVariant::Primary)
                 .on_press(Message::RunAllChecks)
         );
     }
@@ -572,8 +572,10 @@ fn view_check_row<'a>(
     // Expanded details (if expanded and has details)
     if is_expanded && check.has_details() {
         if let Some(content) = detail_contents.get(&check.name) {
+            let check_name_clone = check.name.clone();
             let details_panel = container(
                 text_editor(content)
+                    .on_action(move |action| Message::DoctorDetailAction(check_name_clone.clone(), action))
                     .font(iced::Font::MONOSPACE)
                     .height(Length::Shrink)
             )

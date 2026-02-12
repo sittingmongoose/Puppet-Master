@@ -189,6 +189,7 @@ fn step1_upload_requirements<'a>(
         // Requirements preview (read-only, selectable)
         container(
             text_editor(requirements_preview_content)
+                .on_action(Message::WizardRequirementsPreviewAction)
                 .font(fonts::FONT_UI)
                 .size(tokens::font_size::BASE)
                 .height(Length::Fixed(200.0))
@@ -372,7 +373,7 @@ fn step2_generate_prd<'a>(
     .max_width(tokens::layout::MAX_CONTENT_WIDTH)
 }
 
-/// Step 3: Review & Edit PRD
+/// Step 3: Review Architecture
 fn step3_review_prd<'a>(
     prd_editor_content: &'a text_editor::Content,
     prd_text: &'a str,
@@ -381,7 +382,7 @@ fn step3_review_prd<'a>(
     let has_prd = !prd_text.is_empty();
     
     let step_content = column![
-        text("Step 3: Review & Edit PRD")
+        text("Step 3: Review Architecture")
             .size(tokens::font_size::XL)
             .font(fonts::FONT_UI_BOLD)
             .color(theme.ink()),
@@ -603,7 +604,7 @@ fn step4_configure_tiers<'a>(
     .max_width(tokens::layout::MAX_CONTENT_WIDTH)
 }
 
-/// Step 5: Generate Tier Plan
+/// Step 5: Generate Plan
 fn step5_generate_plan<'a>(
     plan_text: &'a str,
     plan_content: &'a text_editor::Content,
@@ -613,7 +614,7 @@ fn step5_generate_plan<'a>(
     let has_plan = !plan_text.is_empty();
     
     let step_content = column![
-        text("Step 5: Generate Tier Plan")
+        text("Step 5: Generate Plan")
             .size(tokens::font_size::XL)
             .font(fonts::FONT_UI_BOLD)
             .color(theme.ink()),
@@ -627,6 +628,7 @@ fn step5_generate_plan<'a>(
             let plan_content_display: Element<'_, Message> = if has_plan {
                 container(
                     text_editor(plan_content)
+                        .on_action(Message::WizardPlanContentAction)
                         .font(fonts::FONT_MONO)
                         .size(tokens::font_size::SM)
                         .height(Length::Fixed(350.0))

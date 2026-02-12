@@ -4,11 +4,11 @@
 
 use crate::app::Message;
 use crate::state::{MetricsSnapshot, PlatformMetrics, SubtaskMetrics};
-use crate::theme::{AppTheme, tokens, fonts};
+use crate::theme::{AppTheme, tokens, fonts, colors};
 use crate::widgets::*;
 use iced::widget::{column, container, scrollable, table, text, row, Space};
 use iced::widget::table::column as table_column;
-use iced::{Element, Length, Pixels};
+use iced::{Element, Length, Pixels, Border};
 
 pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'a, Message> {
     let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
@@ -16,15 +16,15 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
     // Header with Refresh button
     content = content.push(
         row![
-            text("Platform Metrics")
+            text("Metrics")
                 .size(tokens::font_size::DISPLAY)
                 .font(fonts::FONT_DISPLAY)
                 .color(theme.ink()),
             Space::new().width(Length::Fill),
             styled_button(
                 theme,
-                "Refresh",
-                ButtonVariant::Secondary,
+                "REFRESH",
+                ButtonVariant::Info,
             )
             .on_press(Message::RefreshMetrics)
         ]
@@ -56,11 +56,121 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
             .into();
     }
 
-    // Overall summary with visual elements
+    // Session overview stat cards - 4 columns
     let overall = &snapshot.overall;
+    
+    let mut stat_cards = row![].spacing(tokens::spacing::MD);
+    
+    stat_cards = stat_cards.push(
+        container(
+            column![
+                text(overall.iterations.to_string())
+                    .size(tokens::font_size::XL)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                text("Total Iterations")
+                    .size(tokens::font_size::XS)
+                    .color(theme.ink_faded()),
+            ]
+            .spacing(tokens::spacing::XXS)
+            .align_x(iced::Alignment::Center)
+        )
+        .padding(tokens::spacing::MD)
+        .width(Length::FillPortion(1))
+        .style(move |_: &iced::Theme| container::Style {
+            border: Border {
+                color: theme.ink(),
+                width: tokens::borders::MEDIUM,
+                radius: tokens::radii::NONE.into(),
+            },
+            ..Default::default()
+        })
+    );
+    
+    stat_cards = stat_cards.push(
+        container(
+            column![
+                text(format!("{:.1}%", overall.success_rate() * 100.0))
+                    .size(tokens::font_size::XL)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(colors::ACID_LIME),
+                text("Success Rate")
+                    .size(tokens::font_size::XS)
+                    .color(theme.ink_faded()),
+            ]
+            .spacing(tokens::spacing::XXS)
+            .align_x(iced::Alignment::Center)
+        )
+        .padding(tokens::spacing::MD)
+        .width(Length::FillPortion(1))
+        .style(move |_: &iced::Theme| container::Style {
+            border: Border {
+                color: theme.ink(),
+                width: tokens::borders::MEDIUM,
+                radius: tokens::radii::NONE.into(),
+            },
+            ..Default::default()
+        })
+    );
+    
+    stat_cards = stat_cards.push(
+        container(
+            column![
+                text(format!("{:.0}ms", overall.avg_latency_ms()))
+                    .size(tokens::font_size::XL)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(colors::SAFETY_ORANGE),
+                text("Avg Latency")
+                    .size(tokens::font_size::XS)
+                    .color(theme.ink_faded()),
+            ]
+            .spacing(tokens::spacing::XXS)
+            .align_x(iced::Alignment::Center)
+        )
+        .padding(tokens::spacing::MD)
+        .width(Length::FillPortion(1))
+        .style(move |_: &iced::Theme| container::Style {
+            border: Border {
+                color: theme.ink(),
+                width: tokens::borders::MEDIUM,
+                radius: tokens::radii::NONE.into(),
+            },
+            ..Default::default()
+        })
+    );
+    
+    stat_cards = stat_cards.push(
+        container(
+            column![
+                text(overall.estimated_tokens.to_string())
+                    .size(tokens::font_size::XL)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(colors::ELECTRIC_BLUE),
+                text("Total Tokens")
+                    .size(tokens::font_size::XS)
+                    .color(theme.ink_faded()),
+            ]
+            .spacing(tokens::spacing::XXS)
+            .align_x(iced::Alignment::Center)
+        )
+        .padding(tokens::spacing::MD)
+        .width(Length::FillPortion(1))
+        .style(move |_: &iced::Theme| container::Style {
+            border: Border {
+                color: theme.ink(),
+                width: tokens::borders::MEDIUM,
+                radius: tokens::radii::NONE.into(),
+            },
+            ..Default::default()
+        })
+    );
+    
+    content = content.push(stat_cards);
+
+    // Overall summary with visual elements
     let summary = column![
         row![
-            text("Overall Stats:")
+            text("Overall Summary")
                 .size(tokens::font_size::MD)
                 .font(fonts::FONT_UI_BOLD)
                 .color(theme.ink()),
@@ -68,19 +178,10 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
         ],
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         text(format!(
-            "Iterations: {} | Success: {:.1}% | Escalations: {} ({:.1}%)",
-            overall.iterations,
-            overall.success_rate() * 100.0,
+            "Escalations: {} ({:.1}%) | P95 Latency: {}ms | Est Cost: ${:.4}",
             overall.escalations,
-            overall.escalation_rate() * 100.0
-        ))
-        .size(tokens::font_size::SM)
-        .color(theme.ink()),
-        text(format!(
-            "Avg latency: {:.0} ms | P95 latency: {} ms | Est tokens: {} | Est cost: ${:.4}",
-            overall.avg_latency_ms(),
+            overall.escalation_rate() * 100.0,
             overall.p95_latency_ms,
-            overall.estimated_tokens,
             overall.estimated_cost_usd
         ))
         .size(tokens::font_size::SM)

@@ -82,12 +82,21 @@ pub fn view<'a>(
 ) -> Element<'a, Message> {
     let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
 
-    // Header
+    // Header with action buttons
     content = content.push(
-        text("Settings")
-            .size(tokens::font_size::DISPLAY)
-            .font(crate::theme::fonts::FONT_DISPLAY)
-            .color(theme.ink())
+        row![
+            text("Settings")
+                .size(tokens::font_size::DISPLAY)
+                .font(crate::theme::fonts::FONT_DISPLAY)
+                .color(theme.ink()),
+            Space::new().width(Length::Fill),
+            styled_button(theme, "RESET TO DEFAULTS", ButtonVariant::Warning)
+                .on_press(Message::SettingsResetDefaults),
+            styled_button(theme, "SAVE CHANGES", ButtonVariant::Primary)
+                .on_press(Message::SaveSettings),
+        ]
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center)
     );
 
     // --- Appearance Section ---
@@ -333,20 +342,6 @@ pub fn view<'a>(
     content = content.push(
         themed_panel(
             container(about_content).padding(tokens::spacing::MD),
-            theme
-        )
-    );
-
-    // Save button
-    content = content.push(
-        themed_panel(
-            container(
-                row![
-                    Space::new().width(Length::Fill),
-                    styled_button(theme, "Save Settings", ButtonVariant::Primary)
-                        .on_press(Message::SaveSettings),
-                ].spacing(tokens::spacing::SM)
-            ).padding(tokens::spacing::MD),
             theme
         )
     );

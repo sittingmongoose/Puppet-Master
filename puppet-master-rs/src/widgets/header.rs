@@ -1,6 +1,6 @@
 //! Navigation header widget
 
-use iced::widget::{container, button, text, row, Space};
+use iced::widget::{container, button, text, row, column, Space};
 use iced::{Element, Length, Padding, Border, Shadow, Vector, Background, Color};
 use crate::theme::{AppTheme, colors};
 use crate::theme::fonts::{FONT_DISPLAY_BOLD, FONT_UI, FONT_UI_BOLD};
@@ -110,10 +110,17 @@ where
     let paper_color = theme.paper();
     let ink_color = theme.ink();
     
-    // Logo - "RWM" with Orbitron font, 40px (2.5em), bold, with text shadow effect
-    let logo = text("RWM")
-        .size(40)
-        .font(FONT_DISPLAY_BOLD);
+    // Logo - "RWM" large on top, "PUPPET MASTER" subtitle below
+    // Matches the retro-futuristic technical drafting aesthetic
+    let logo = column![
+        text("RWM")
+            .size(40)
+            .font(FONT_DISPLAY_BOLD),
+        text("PUPPET MASTER")
+            .size(14)
+            .font(FONT_DISPLAY_BOLD),
+    ]
+    .spacing(0); // Tight vertical spacing for subtitle
     
     // Navigation pages to display in the header
     let nav_pages = vec![
