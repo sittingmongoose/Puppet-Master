@@ -44,8 +44,10 @@ use log::{debug, warn};
 use muda::{Menu, MenuEvent, MenuItem, PredefinedMenuItem};
 use std::sync::{Arc, Mutex};
 use tray_icon::{
-    menu::MenuId, Icon, MouseButton, MouseButtonState, TrayIcon, TrayIconBuilder, TrayIconEvent,
+    menu::MenuId, Icon, TrayIcon, TrayIconBuilder, TrayIconEvent,
 };
+#[cfg(not(target_os = "macos"))]
+use tray_icon::{MouseButton, MouseButtonState};
 
 /// Embedded icon bytes - fallback if external file not found
 const ICON_BYTES: &[u8] = include_bytes!("../icons/icon.png");
@@ -316,7 +318,7 @@ impl TrayManager {
     ///
     /// On Windows/Linux, left-click opens the GUI.
     /// On macOS, all clicks show the menu (standard behavior).
-    fn handle_tray_events(rx: Receiver<TrayIconEvent>, action_tx: Sender<TrayAction>) {
+    fn handle_tray_events(rx: Receiver<TrayIconEvent>, _action_tx: Sender<TrayAction>) {
         debug!("Tray event handler started");
         loop {
             match rx.recv() {
@@ -333,7 +335,7 @@ impl TrayManager {
                         } = event
                         {
                             debug!("Left-click detected, opening GUI");
-                            if let Err(e) = action_tx.send(TrayAction::OpenGui) {
+                            if let Err(e) = _action_tx.send(TrayAction::OpenGui) {
                                 warn!("Failed to send OpenGui action: {}", e);
                             }
                         }
