@@ -3,8 +3,8 @@
 //! This module provides a type-safe icon system using embedded SVG files.
 //! All icons are 24x24 viewBox, stroke-based, and use `currentColor` for theming.
 
-use iced::widget::{svg, Svg};
 use iced::Length;
+use iced::widget::{Svg, svg};
 
 /// Icon names matching our SVG files in assets/icons/
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]

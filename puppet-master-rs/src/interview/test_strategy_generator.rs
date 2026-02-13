@@ -252,7 +252,7 @@ pub fn generate_test_strategy_json(
 
             // Determine test type based on phase and content
             let test_type = determine_test_type(&phase.definition.id, &qa.question);
-            
+
             items.push(TestItem {
                 id: item_id.clone(),
                 source_phase_id: phase.definition.id.clone(),
@@ -260,7 +260,10 @@ pub fn generate_test_strategy_json(
                 test_type: test_type.clone(),
                 test_file: generate_test_file_path(&test_type, &phase.definition.id, idx),
                 test_name: generate_test_name(&qa.question),
-                verification_command: generate_verification_command(&test_type, &phase.definition.id),
+                verification_command: generate_verification_command(
+                    &test_type,
+                    &phase.definition.id,
+                ),
             });
         }
 
@@ -270,7 +273,7 @@ pub fn generate_test_strategy_json(
             item_counter += 1;
 
             let test_type = determine_test_type(&phase.definition.id, &decision.summary);
-            
+
             items.push(TestItem {
                 id: item_id.clone(),
                 source_phase_id: phase.definition.id.clone(),
@@ -278,7 +281,10 @@ pub fn generate_test_strategy_json(
                 test_type: test_type.clone(),
                 test_file: generate_test_file_path(&test_type, &phase.definition.id, idx),
                 test_name: generate_test_name(&decision.summary),
-                verification_command: generate_verification_command(&test_type, &phase.definition.id),
+                verification_command: generate_verification_command(
+                    &test_type,
+                    &phase.definition.id,
+                ),
             });
         }
     }
@@ -294,27 +300,40 @@ pub fn generate_test_strategy_json(
 /// Determines appropriate test type based on phase and content.
 fn determine_test_type(phase_id: &str, content: &str) -> String {
     let content_lower = content.to_lowercase();
-    
+
     // GUI/UX → Playwright
-    if phase_id == "product_ux" || content_lower.contains("ui") || content_lower.contains("gui") || content_lower.contains("user interface") {
+    if phase_id == "product_ux"
+        || content_lower.contains("ui")
+        || content_lower.contains("gui")
+        || content_lower.contains("user interface")
+    {
         return "playwright".to_string();
     }
-    
+
     // Security → Security tests
-    if phase_id == "security_secrets" || content_lower.contains("security") || content_lower.contains("auth") {
+    if phase_id == "security_secrets"
+        || content_lower.contains("security")
+        || content_lower.contains("auth")
+    {
         return "security".to_string();
     }
-    
+
     // Performance → Performance tests
-    if phase_id == "performance_reliability" || content_lower.contains("performance") || content_lower.contains("load") {
+    if phase_id == "performance_reliability"
+        || content_lower.contains("performance")
+        || content_lower.contains("load")
+    {
         return "performance".to_string();
     }
-    
+
     // API/Integration keywords
-    if content_lower.contains("api") || content_lower.contains("database") || content_lower.contains("integration") {
+    if content_lower.contains("api")
+        || content_lower.contains("database")
+        || content_lower.contains("integration")
+    {
         return "integration".to_string();
     }
-    
+
     // Default to unit tests
     "unit".to_string()
 }
@@ -431,7 +450,8 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
   },
 });
-"#.to_string()
+"#
+    .to_string()
 }
 
 /// Writes the test strategy documents to disk.
@@ -464,8 +484,12 @@ pub fn write_test_strategy(
     let json_content = serde_json::to_string_pretty(&json_data)
         .context("Failed to serialize test strategy JSON")?;
     let json_path = output_dir.join("test-strategy.json");
-    fs::write(&json_path, &json_content)
-        .with_context(|| format!("Failed to write test strategy JSON to {}", json_path.display()))?;
+    fs::write(&json_path, &json_content).with_context(|| {
+        format!(
+            "Failed to write test strategy JSON to {}",
+            json_path.display()
+        )
+    })?;
     info!("Wrote test-strategy.json to {}", json_path.display());
     written_paths.push(json_path);
 
@@ -479,7 +503,10 @@ pub fn write_test_strategy(
                 playwright_path.display()
             )
         })?;
-        info!("Wrote playwright.config.ts to {}", playwright_path.display());
+        info!(
+            "Wrote playwright.config.ts to {}",
+            playwright_path.display()
+        );
         written_paths.push(playwright_path);
     }
 
@@ -535,11 +562,11 @@ mod tests {
         let phases = vec![sample_phase()];
         let config = TestStrategyConfig::default();
         let json = generate_test_strategy_json("TestProject", &phases, &config).unwrap();
-        
+
         assert_eq!(json.project, "TestProject");
         assert_eq!(json.coverage_level, "Standard");
         assert!(!json.items.is_empty());
-        
+
         // Check that items have required fields
         for item in &json.items {
             assert!(!item.id.is_empty());
@@ -575,26 +602,35 @@ mod tests {
         let phases = vec![sample_phase()];
         let config = TestStrategyConfig::default();
         let paths = write_test_strategy("TestProject", &phases, &config, dir.path()).unwrap();
-        
+
         // Should write 3 files: .md, .json, playwright.config.ts
         assert_eq!(paths.len(), 3);
-        
+
         // Check markdown file
-        let md_path = paths.iter().find(|p| p.to_str().unwrap().ends_with("test-strategy.md")).unwrap();
+        let md_path = paths
+            .iter()
+            .find(|p| p.to_str().unwrap().ends_with("test-strategy.md"))
+            .unwrap();
         assert!(md_path.exists());
         let md_content = fs::read_to_string(md_path).unwrap();
         assert!(md_content.contains("# Test Strategy"));
-        
+
         // Check JSON file
-        let json_path = paths.iter().find(|p| p.to_str().unwrap().ends_with("test-strategy.json")).unwrap();
+        let json_path = paths
+            .iter()
+            .find(|p| p.to_str().unwrap().ends_with("test-strategy.json"))
+            .unwrap();
         assert!(json_path.exists());
         let json_content = fs::read_to_string(json_path).unwrap();
         let parsed: serde_json::Value = serde_json::from_str(&json_content).unwrap();
         assert_eq!(parsed["project"], "TestProject");
         assert!(parsed["items"].is_array());
-        
+
         // Check Playwright config
-        let pw_path = paths.iter().find(|p| p.to_str().unwrap().ends_with("playwright.config.ts")).unwrap();
+        let pw_path = paths
+            .iter()
+            .find(|p| p.to_str().unwrap().ends_with("playwright.config.ts"))
+            .unwrap();
         assert!(pw_path.exists());
         let pw_content = fs::read_to_string(pw_path).unwrap();
         assert!(pw_content.contains("@playwright/test"));
@@ -609,20 +645,44 @@ mod tests {
             ..Default::default()
         };
         let paths = write_test_strategy("TestProject", &phases, &config, dir.path()).unwrap();
-        
+
         // Should write only 2 files: .md and .json (no playwright.config.ts)
         assert_eq!(paths.len(), 2);
-        assert!(paths.iter().any(|p| p.to_str().unwrap().ends_with("test-strategy.md")));
-        assert!(paths.iter().any(|p| p.to_str().unwrap().ends_with("test-strategy.json")));
-        assert!(!paths.iter().any(|p| p.to_str().unwrap().ends_with("playwright.config.ts")));
+        assert!(
+            paths
+                .iter()
+                .any(|p| p.to_str().unwrap().ends_with("test-strategy.md"))
+        );
+        assert!(
+            paths
+                .iter()
+                .any(|p| p.to_str().unwrap().ends_with("test-strategy.json"))
+        );
+        assert!(
+            !paths
+                .iter()
+                .any(|p| p.to_str().unwrap().ends_with("playwright.config.ts"))
+        );
     }
 
     #[test]
     fn test_determine_test_type() {
-        assert_eq!(determine_test_type("product_ux", "Button layout"), "playwright");
-        assert_eq!(determine_test_type("security_secrets", "Auth flow"), "security");
-        assert_eq!(determine_test_type("performance_reliability", "Load test"), "performance");
-        assert_eq!(determine_test_type("data_persistence", "Database query"), "integration");
+        assert_eq!(
+            determine_test_type("product_ux", "Button layout"),
+            "playwright"
+        );
+        assert_eq!(
+            determine_test_type("security_secrets", "Auth flow"),
+            "security"
+        );
+        assert_eq!(
+            determine_test_type("performance_reliability", "Load test"),
+            "performance"
+        );
+        assert_eq!(
+            determine_test_type("data_persistence", "Database query"),
+            "integration"
+        );
         assert_eq!(determine_test_type("scope_goals", "Core logic"), "unit");
     }
 

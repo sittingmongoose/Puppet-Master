@@ -435,13 +435,16 @@ mod tests {
         assert_eq!(prd.metadata.name, "Test Project");
         assert_eq!(prd.phases.len(), 1);
         assert_eq!(prd.phases[0].title, "Phase 1");
-        
+
         // Verify acceptance criteria were injected
         for phase in &prd.phases {
             for task in &phase.tasks {
                 for subtask in &task.subtasks {
-                    assert!(!subtask.acceptance_criteria.is_empty(),
-                        "Subtask {} should have acceptance_criteria injected", subtask.id);
+                    assert!(
+                        !subtask.acceptance_criteria.is_empty(),
+                        "Subtask {} should have acceptance_criteria injected",
+                        subtask.id
+                    );
                 }
             }
         }
@@ -460,12 +463,15 @@ mod tests {
         // Verify subtasks have prefixed acceptance criteria
         let subtask = &prd.phases[0].tasks[0].subtasks[0];
         assert!(!subtask.acceptance_criteria.is_empty());
-        
+
         // Check for prefixed format
         let has_prefixed = subtask.acceptance_criteria.iter().any(|c| {
             c.starts_with("command:") || c.starts_with("file_exists:") || c.starts_with("regex:")
         });
-        assert!(has_prefixed, "Generated PRD should have prefixed acceptance criteria");
+        assert!(
+            has_prefixed,
+            "Generated PRD should have prefixed acceptance criteria"
+        );
     }
 
     #[test]

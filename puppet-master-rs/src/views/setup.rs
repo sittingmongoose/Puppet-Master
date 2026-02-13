@@ -34,21 +34,27 @@ pub fn view<'a>(
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
 
-    // Title
-    content = content.push(
-        container(
-            column![
-                text("Welcome to RWM Puppet Master")
-                    .size(tokens::font_size::DISPLAY)
-                    .font(crate::theme::fonts::FONT_DISPLAY)
-                    .color(theme.ink()),
-                text("First-time setup wizard")
-                    .size(tokens::font_size::MD)
-                    .color(theme.ink_faded()),
-            ]
-            .spacing(tokens::spacing::SM),
+    let refresh_action: Element<'a, Message> = if is_checking {
+        styled_button(theme, "Detecting...", ButtonVariant::Secondary).into()
+    } else {
+        refresh_button(
+            theme,
+            Message::RefreshSetup,
+            RefreshStyle::TitleCase(ButtonVariant::Secondary),
         )
-        .padding(tokens::spacing::LG),
+    };
+    let header_actions = row![refresh_action]
+        .spacing(tokens::spacing::MD)
+        .align_y(iced::Alignment::Center);
+    content = content.push(page_header(
+        "Welcome to RWM Puppet Master",
+        theme,
+        header_actions,
+    ));
+    content = content.push(
+        text("First-time setup wizard")
+            .size(tokens::font_size::MD)
+            .color(theme.ink_faded()),
     );
 
     // Description
@@ -81,16 +87,7 @@ pub fn view<'a>(
         styled_button(theme, "Run Detection", ButtonVariant::Primary)
             .on_press(Message::SetupRunDetection)
     };
-    let refresh_btn = if is_checking {
-        styled_button(theme, "Detecting...", ButtonVariant::Secondary)
-    } else {
-        styled_button(theme, "Refresh", ButtonVariant::Secondary).on_press(Message::RefreshSetup)
-    };
-
-    content = content.push(
-        container(row![detect_btn, refresh_btn].spacing(tokens::spacing::SM))
-            .padding(tokens::spacing::SM),
-    );
+    content = content.push(container(row![detect_btn].spacing(tokens::spacing::SM)));
 
     // Platform status results - use 2-column grid for better horizontal spacing
     if !platform_statuses.is_empty() {
@@ -99,7 +96,7 @@ pub fn view<'a>(
 
         // Build platform cards in pairs for 2-column layout
         let mut current_row = row![].spacing(tokens::spacing::LG);
-        
+
         for (idx, platform_status) in platform_statuses.iter().enumerate() {
             let status_color = match &platform_status.status {
                 InstallationStatus::Installed(_) => iced::Color::from_rgb(0.0, 0.8, 0.0),
@@ -181,7 +178,7 @@ pub fn view<'a>(
                                     .size(tokens::font_size::BASE)
                                     .line_height(iced::widget::text::LineHeight::Relative(1.6)),
                             )
-                            .height(Length::Shrink)
+                            .height(Length::Shrink),
                         )
                         .height(Length::Shrink)
                         .max_height(350.0)
@@ -208,17 +205,14 @@ pub fn view<'a>(
                     );
             }
 
-            let card = themed_panel(
-                container(platform_col).padding(tokens::spacing::MD),
-                theme,
-            );
-            
+            let card = themed_panel(container(platform_col).padding(tokens::spacing::MD), theme);
+
             current_row = current_row.push(
                 container(card)
                     .width(Length::FillPortion(1))
-                    .height(Length::Shrink)
+                    .height(Length::Shrink),
             );
-            
+
             // Every 2 cards, push the row and start a new one
             if (idx + 1) % 2 == 0 || idx == platform_statuses.len() - 1 {
                 grid_rows = grid_rows.push(current_row);

@@ -112,14 +112,16 @@ pub fn view<'a>(
             project_name,
             project_path,
             theme,
-        ).into(),
+        )
+        .into(),
         1 => step1_interview_config(
             use_interview,
             interaction_mode,
             reasoning_level,
             generate_agents_md,
             theme,
-        ).into(),
+        )
+        .into(),
         2 => step2_upload_requirements(
             project_name,
             project_path,
@@ -186,6 +188,9 @@ fn step0_project_setup<'a>(
     project_path: &'a str,
     theme: &'a AppTheme,
 ) -> container::Container<'a, Message> {
+    // Default to Expert tooltips (interaction mode not selected yet)
+    let tooltip_variant = crate::widgets::TooltipVariant::Expert;
+
     let can_proceed = !project_name.trim().is_empty() && !project_path.trim().is_empty();
 
     let step_content = column![
@@ -198,10 +203,15 @@ fn step0_project_setup<'a>(
             .color(theme.ink_faded()),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Project Type Selection
-        text("Project Type:")
-            .size(tokens::font_size::BASE)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        row![
+            text("Project Type:")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            Space::new().width(Length::Fixed(tokens::spacing::XS)),
+            help_tooltip("wizard.project_type", tooltip_variant, theme),
+        ]
+        .align_y(Alignment::Center),
         row![
             toggler(is_new_project)
                 .on_toggle(Message::WizardIsNewProjectToggled)
@@ -217,10 +227,15 @@ fn step0_project_setup<'a>(
         .spacing(tokens::spacing::SM),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         // Project Name
-        text("Project Name:")
-            .size(tokens::font_size::BASE)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        row![
+            text("Project Name:")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            Space::new().width(Length::Fixed(tokens::spacing::XS)),
+            help_tooltip("wizard.project_name", tooltip_variant, theme),
+        ]
+        .align_y(Alignment::Center),
         styled_text_input_with_variant(
             theme,
             "my-awesome-project",
@@ -231,10 +246,15 @@ fn step0_project_setup<'a>(
         .on_input(Message::WizardProjectNameChanged),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         // Project Path
-        text("Project Path:")
-            .size(tokens::font_size::BASE)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        row![
+            text("Project Path:")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            Space::new().width(Length::Fixed(tokens::spacing::XS)),
+            help_tooltip("wizard.project_path", tooltip_variant, theme),
+        ]
+        .align_y(Alignment::Center),
         row![
             styled_text_input_with_variant(
                 theme,
@@ -251,10 +271,15 @@ fn step0_project_setup<'a>(
         .spacing(tokens::spacing::SM),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // GitHub Repository Section
-        text("GitHub Repository:")
-            .size(tokens::font_size::BASE)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        row![
+            text("GitHub Repository:")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            Space::new().width(Length::Fixed(tokens::spacing::XS)),
+            help_tooltip("wizard.github_repo", tooltip_variant, theme),
+        ]
+        .align_y(Alignment::Center),
         row![
             toggler(has_github_repo)
                 .on_toggle(Message::WizardHasGithubRepoToggled)
@@ -272,9 +297,14 @@ fn step0_project_setup<'a>(
         step_content.push(
             column![
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                text("Repository URL:")
-                    .size(tokens::font_size::BASE)
-                    .color(theme.ink()),
+                row![
+                    text("Repository URL:")
+                        .size(tokens::font_size::BASE)
+                        .color(theme.ink()),
+                    Space::new().width(Length::Fixed(tokens::spacing::XS)),
+                    help_tooltip("wizard.github_url", tooltip_variant, theme),
+                ]
+                .align_y(Alignment::Center),
                 styled_text_input_with_variant(
                     theme,
                     "https://github.com/username/repo",
@@ -310,9 +340,14 @@ fn step0_project_setup<'a>(
         step_content.push(
             column![
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                text("Repository Visibility:")
-                    .size(tokens::font_size::BASE)
-                    .color(theme.ink()),
+                row![
+                    text("Repository Visibility:")
+                        .size(tokens::font_size::BASE)
+                        .color(theme.ink()),
+                    Space::new().width(Length::Fixed(tokens::spacing::XS)),
+                    help_tooltip("wizard.github_visibility", tooltip_variant, theme),
+                ]
+                .align_y(Alignment::Center),
                 pick_list(
                     vec!["public", "private"],
                     Some(github_visibility),
@@ -383,10 +418,15 @@ fn step1_interview_config<'a>(
             .color(theme.ink_faded()),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Use Interview Toggle
-        text("Requirements Interview:")
-            .size(tokens::font_size::BASE)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        row![
+            text("Requirements Interview:")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            Space::new().width(Length::Fixed(tokens::spacing::XS)),
+            help_tooltip("wizard.use_interview", tooltip_variant, theme),
+        ]
+        .align_y(Alignment::Center),
         row![
             toggler(use_interview)
                 .on_toggle(Message::WizardUseInterviewToggled)

@@ -3,11 +3,11 @@
 //! Displays active interview session with question/answer flow, phase tracking,
 //! and interactive controls. Follows the retro-futuristic design language.
 
-use crate::app::Message;
+use crate::app::{ContextMenuTarget, Message, SelectableField};
 use crate::interview::{ReferenceMaterial, ReferenceType};
 use crate::theme::{AppTheme, fonts, tokens};
 use crate::widgets::{
-    InputVariant,
+    InputVariant, selectable_text_field,
     status_badge::{Status, status_dot_typed},
     styled_button::{ButtonSize, ButtonVariant, styled_button, styled_button_sized},
     styled_input::{InputSize, styled_text_input_with_variant},
@@ -35,8 +35,10 @@ pub fn view<'a>(
     phases_complete: &'a [String],
     answer_input: &'a str,
     reference_materials: &'a [ReferenceMaterial],
+    empty_references_text: &'a str,
     reference_link_input: &'a str,
     researching: bool,
+    active_context_menu: &'a Option<ContextMenuTarget>,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
@@ -239,15 +241,19 @@ pub fn view<'a>(
                         ..Default::default()
                     }),
             );
-            question_col = question_col.push(Space::new().height(Length::Fixed(tokens::spacing::SM as f32)));
+            question_col =
+                question_col.push(Space::new().height(Length::Fixed(tokens::spacing::SM as f32)));
         }
 
-        question_col = question_col.push(
-            text(current_question)
-                .font(fonts::FONT_BODY)
-                .size(tokens::font_size::BASE)
-                .color(theme.ink())
-        );
+        question_col = question_col.push(selectable_text_field(
+            theme,
+            current_question,
+            SelectableField::InterviewCurrentQuestion,
+            active_context_menu,
+            |value| {
+                Message::SelectableFieldChanged(SelectableField::InterviewCurrentQuestion, value)
+            },
+        ));
 
         let question_panel = themed_panel(
             question_col
@@ -339,36 +345,94 @@ pub fn view<'a>(
         .padding(tokens::spacing::SM);
 
     if reference_materials.is_empty() {
-        refs_list = refs_list.push(
-            text("No reference materials added.")
-                .font(fonts::FONT_BODY)
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
-        );
+        refs_list = refs_list.push(selectable_text_field(
+            theme,
+            empty_references_text,
+            SelectableField::InterviewEmptyReferences,
+            active_context_menu,
+            |value| {
+                Message::SelectableFieldChanged(SelectableField::InterviewEmptyReferences, value)
+            },
+        ));
     } else {
         for (index, material) in reference_materials.iter().enumerate() {
-            let label = match &material.ref_type {
-                ReferenceType::Link(url) => format!("LINK: {}", url),
-                ReferenceType::File(path) => format!("FILE: {}", path.display()),
-                ReferenceType::Image(path) => format!("IMAGE: {}", path.display()),
-                ReferenceType::Directory(path) => format!("DIR: {}", path.display()),
-            };
-
-            let remove_btn = styled_button_sized(
-                theme,
-                "REMOVE",
-                ButtonVariant::Danger,
-                ButtonSize::Small,
-            )
-            .on_press(Message::InterviewRemoveReference(index));
+            let remove_btn =
+                styled_button_sized(theme, "REMOVE", ButtonVariant::Danger, ButtonSize::Small)
+                    .on_press(Message::InterviewRemoveReference(index));
 
             refs_list = refs_list.push(
                 row![
-                    text(label)
-                        .font(fonts::FONT_MONO)
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink()),
-                    Space::new().width(Length::Fill),
+                    match &material.ref_type {
+                        ReferenceType::Link(url) => row![
+                            text("LINK:")
+                                .font(fonts::FONT_MONO)
+                                .size(tokens::font_size::SM)
+                                .color(theme.ink_faded()),
+                            selectable_text_field(
+                                theme,
+                                url,
+                                SelectableField::InterviewReferenceLink(index),
+                                active_context_menu,
+                                move |value| Message::SelectableFieldChanged(
+                                    SelectableField::InterviewReferenceLink(index),
+                                    value
+                                ),
+                            ),
+                        ]
+                        .spacing(tokens::spacing::SM),
+                        ReferenceType::File(path) => row![
+                            text("FILE:")
+                                .font(fonts::FONT_MONO)
+                                .size(tokens::font_size::SM)
+                                .color(theme.ink_faded()),
+                            selectable_text_field(
+                                theme,
+                                path.to_str().unwrap_or("<non-utf8 path>"),
+                                SelectableField::InterviewReferenceFile(index),
+                                active_context_menu,
+                                move |value| Message::SelectableFieldChanged(
+                                    SelectableField::InterviewReferenceFile(index),
+                                    value
+                                ),
+                            )
+                        ]
+                        .spacing(tokens::spacing::SM),
+                        ReferenceType::Image(path) => row![
+                            text("IMAGE:")
+                                .font(fonts::FONT_MONO)
+                                .size(tokens::font_size::SM)
+                                .color(theme.ink_faded()),
+                            selectable_text_field(
+                                theme,
+                                path.to_str().unwrap_or("<non-utf8 path>"),
+                                SelectableField::InterviewReferenceImage(index),
+                                active_context_menu,
+                                move |value| Message::SelectableFieldChanged(
+                                    SelectableField::InterviewReferenceImage(index),
+                                    value
+                                ),
+                            )
+                        ]
+                        .spacing(tokens::spacing::SM),
+                        ReferenceType::Directory(path) => row![
+                            text("DIR:")
+                                .font(fonts::FONT_MONO)
+                                .size(tokens::font_size::SM)
+                                .color(theme.ink_faded()),
+                            selectable_text_field(
+                                theme,
+                                path.to_str().unwrap_or("<non-utf8 path>"),
+                                SelectableField::InterviewReferenceDirectory(index),
+                                active_context_menu,
+                                move |value| Message::SelectableFieldChanged(
+                                    SelectableField::InterviewReferenceDirectory(index),
+                                    value
+                                ),
+                            )
+                        ]
+                        .spacing(tokens::spacing::SM),
+                    },
+                    Space::new().width(Length::Fixed(tokens::spacing::SM)),
                     remove_btn,
                 ]
                 .spacing(tokens::spacing::SM)

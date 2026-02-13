@@ -31,9 +31,9 @@ use crate::core::{
     tier_node::TierTree,
     worker_reviewer::WorkerReviewer,
 };
-use crate::git::{GitManager, PrManager};
+use crate::git::{GitManager, PrManager, WorktreeManager};
 use crate::logging::{ActivityEventType, LoggerService};
-use crate::state::{AgentsManager, ProgressManager, UsageTracker};
+use crate::state::{AgentsManager, GateEnforcer, ProgressManager, PromotionEngine, UsageTracker};
 use crate::types::BranchStrategy;
 use crate::types::*;
 use crate::verification::{GateRunConfig, GateRunner, VerificationIntegration};
@@ -42,6 +42,7 @@ use async_trait::async_trait;
 use chrono::Utc;
 use crossbeam_channel::{Receiver, Sender};
 use std::collections::HashMap;
+use std::path::Path;
 use std::sync::{Arc, Mutex};
 use std::time::Instant;
 
@@ -177,6 +178,14 @@ pub struct Orchestrator {
     checkpoint_manager: Arc<Mutex<CheckpointManager>>,
     /// Parallel executor for concurrent subtasks
     parallel_executor: ParallelExecutor,
+    /// Promotion engine for AGENTS.md learning promotion
+    promotion_engine: Arc<Mutex<PromotionEngine>>,
+    /// Gate enforcer for AGENTS.md rule enforcement
+    gate_enforcer: Arc<GateEnforcer>,
+    /// Worktree manager for parallel subtask isolation
+    worktree_manager: Arc<WorktreeManager>,
+    /// Active worktree paths for subtasks (tier_id -> worktree_path)
+    active_worktrees: Arc<Mutex<HashMap<String, std::path::PathBuf>>>,
 }
 
 impl Orchestrator {
@@ -202,11 +211,8 @@ impl Orchestrator {
         let session_tracker: Arc<dyn SessionLifecycle> =
             Arc::new(SessionTracker::new(session_log_path)?);
 
-        let iteration_executor: Arc<dyn IterationExecutor> = Arc::new(ExecutionEngine::new(
-            event_sender.clone(),
-            120,
-            10,
-        ));
+        let iteration_executor: Arc<dyn IterationExecutor> =
+            Arc::new(ExecutionEngine::new(event_sender.clone(), 120, 10));
 
         let gate_runner: Arc<dyn GateExecutor> =
             Arc::new(GateRunner::new(GateRunConfig::default()));
@@ -339,6 +345,16 @@ impl Orchestrator {
         };
         let parallel_executor = ParallelExecutor::new(parallel_executor_config);
 
+        // Initialize promotion engine for learning promotion
+        let promotion_engine = Arc::new(Mutex::new(PromotionEngine::with_defaults()));
+
+        // Initialize gate enforcer for AGENTS.md rule enforcement
+        let gate_enforcer = Arc::new(GateEnforcer::new());
+
+        // Initialize worktree manager for parallel subtask isolation
+        let worktree_manager = Arc::new(WorktreeManager::new(config.paths.workspace.clone()));
+        let active_worktrees = Arc::new(Mutex::new(HashMap::new()));
+
         Ok(Self {
             config,
             state_machine: Arc::new(Mutex::new(OrchestratorStateMachine::new())),
@@ -368,13 +384,22 @@ impl Orchestrator {
             fresh_spawn,
             checkpoint_manager,
             parallel_executor,
+            promotion_engine,
+            gate_enforcer,
+            worktree_manager,
+            active_worktrees,
         })
     }
 
     /// Load PRD and build tier tree
     pub async fn load_prd(&self, prd: &PRD) -> Result<()> {
         let mut tree = self.tier_tree.lock().unwrap();
-        *tree = TierTree::from_prd(prd, self.config.orchestrator.max_iterations)?;
+        // Pass workspace path as base_path to enable test strategy loading
+        *tree = TierTree::from_prd_with_base_path(
+            prd,
+            self.config.orchestrator.max_iterations,
+            Some(&self.config.paths.workspace),
+        )?;
         Ok(())
     }
 
@@ -413,7 +438,11 @@ impl Orchestrator {
     }
 
     /// Create git branch for tier execution (if git enabled)
-    async fn create_tier_branch(&self, tier_id: &str, tier_type: TierType) -> Result<Option<String>> {
+    async fn create_tier_branch(
+        &self,
+        tier_id: &str,
+        tier_type: TierType,
+    ) -> Result<Option<String>> {
         if !self.config.orchestrator.enable_git {
             return Ok(None);
         }
@@ -421,14 +450,12 @@ impl Orchestrator {
         // Generate branch name based on strategy
         let branch_name = match self.branch_strategy {
             BranchStrategy::MainOnly => return Ok(Some("main".to_string())),
-            BranchStrategy::Feature | BranchStrategy::Tier => {
-                match tier_type {
-                    TierType::Phase => format!("ph-{}", tier_id.to_lowercase().replace("_", "-")),
-                    TierType::Task => format!("tk-{}", tier_id.to_lowercase().replace("_", "-")),
-                    TierType::Subtask => format!("st-{}", tier_id.to_lowercase().replace("_", "-")),
-                    TierType::Iteration => format!("it-{}", tier_id.to_lowercase().replace("_", "-")),
-                }
-            }
+            BranchStrategy::Feature | BranchStrategy::Tier => match tier_type {
+                TierType::Phase => format!("ph-{}", tier_id.to_lowercase().replace("_", "-")),
+                TierType::Task => format!("tk-{}", tier_id.to_lowercase().replace("_", "-")),
+                TierType::Subtask => format!("st-{}", tier_id.to_lowercase().replace("_", "-")),
+                TierType::Iteration => format!("it-{}", tier_id.to_lowercase().replace("_", "-")),
+            },
             BranchStrategy::Release => {
                 format!("release/{}", tier_id.to_lowercase().replace("_", "-"))
             }
@@ -440,7 +467,10 @@ impl Orchestrator {
                 Ok(Some(branch_name))
             }
             Err(e) => {
-                log::warn!("Failed to create git branch: {}. Continuing without git integration.", e);
+                log::warn!(
+                    "Failed to create git branch: {}. Continuing without git integration.",
+                    e
+                );
                 Ok(None)
             }
         }
@@ -449,7 +479,7 @@ impl Orchestrator {
     /// Parse AGENTS.md updates from agent output
     fn parse_agents_updates(&self, output: &str) -> Vec<(String, String)> {
         let mut updates = Vec::new();
-        
+
         // Look for agents-update code blocks
         let mut in_block = false;
         for line in output.lines() {
@@ -461,7 +491,7 @@ impl Orchestrator {
                 in_block = false;
                 continue;
             }
-            
+
             if in_block {
                 let trimmed = line.trim();
                 if let Some(pattern) = trimmed.strip_prefix("PATTERN:") {
@@ -475,20 +505,29 @@ impl Orchestrator {
                 }
             }
         }
-        
+
         updates
     }
 
     /// Process AGENTS.md updates from iteration output
-    async fn process_agents_updates(&self, tier_id: &str, output: &str) -> Result<()> {
+    async fn process_agents_updates(
+        &self,
+        tier_id: &str,
+        output: &str,
+        success: bool,
+    ) -> Result<()> {
         let updates = self.parse_agents_updates(output);
-        
+
         if updates.is_empty() {
             return Ok(()); // No updates to process
         }
-        
-        log::debug!("Processing {} AGENTS.md updates for tier {}", updates.len(), tier_id);
-        
+
+        log::debug!(
+            "Processing {} AGENTS.md updates for tier {}",
+            updates.len(),
+            tier_id
+        );
+
         for (update_type, content) in updates {
             match update_type.as_str() {
                 "pattern" => {
@@ -496,6 +535,12 @@ impl Orchestrator {
                         log::warn!("Failed to append pattern to AGENTS.md: {}", e);
                     } else {
                         log::debug!("Added pattern: {}", content);
+
+                        // Record pattern usage for promotion evaluation
+                        let mut engine = self.promotion_engine.lock().unwrap();
+                        if let Err(e) = engine.record_usage(&content, tier_id, success) {
+                            log::warn!("Failed to record pattern usage: {}", e);
+                        }
                     }
                 }
                 "failure" => {
@@ -522,19 +567,34 @@ impl Orchestrator {
                 _ => {}
             }
         }
-        
+
         Ok(())
     }
 
     /// Commit changes after successful tier iteration
-    async fn commit_tier_progress(&self, tier_id: &str, _tier_type: TierType, iteration: u32) -> Result<()> {
+    async fn commit_tier_progress(
+        &self,
+        tier_id: &str,
+        _tier_type: TierType,
+        iteration: u32,
+    ) -> Result<()> {
         if !self.config.orchestrator.enable_git {
             return Ok(());
         }
-        
+
+        let git = if let Some(path) = self.get_tier_worktree(tier_id) {
+            GitManager::new(path)
+        } else {
+            self.git_manager.clone()
+        };
+
         let message = format!("tier: {} iteration {} complete", tier_id, iteration);
-        
-        match self.git_manager.commit(&message).await {
+
+        if let Err(e) = git.add_all().await {
+            log::warn!("Failed to stage changes for tier {}: {}", tier_id, e);
+        }
+
+        match git.commit(&message).await {
             Ok(_) => {
                 log::info!("Committed tier {} progress", tier_id);
                 Ok(())
@@ -563,20 +623,37 @@ impl Orchestrator {
             let node = tree
                 .find_by_id(tier_id)
                 .ok_or_else(|| anyhow!("Tier {} not found", tier_id))?;
-            
+
             let title = node.title.clone();
             let description = node.description.clone();
             let criteria = node.acceptance_criteria.clone();
-            
+
             (title, description, criteria)
         };
 
-        // Get current branch name
-        let head_branch = match self.git_manager.current_branch().await {
-            Ok(branch) => branch,
-            Err(e) => {
-                log::warn!("Failed to get current branch for PR: {}", e);
-                return Ok(());
+        // Determine head branch name
+        let head_branch = if self.get_tier_worktree(tier_id).is_some() {
+            match self.worktree_manager.list_worktrees().await {
+                Ok(worktrees) => worktrees
+                    .into_iter()
+                    .find(|w| w.tier_id == tier_id)
+                    .map(|w| w.branch)
+                    .unwrap_or_else(|| "".to_string()),
+                Err(_) => "".to_string(),
+            }
+        } else {
+            "".to_string()
+        };
+
+        let head_branch = if !head_branch.is_empty() {
+            head_branch
+        } else {
+            match self.git_manager.current_branch().await {
+                Ok(branch) => branch,
+                Err(e) => {
+                    log::warn!("Failed to get current branch for PR: {}", e);
+                    return Ok(());
+                }
             }
         };
 
@@ -587,18 +664,22 @@ impl Orchestrator {
             TierType::Subtask => "Subtask",
             TierType::Iteration => "Iteration",
         };
-        
+
         let pr_title = PrManager::generate_pr_title(tier_type_str, tier_id, &title);
         let pr_body = PrManager::generate_pr_body(&description, &acceptance_criteria, &[]);
 
         // Create PR
         let base_branch = &self.config.branching.base_branch;
-        match self.pr_manager.create_pr(&pr_title, &pr_body, base_branch, &head_branch).await {
+        match self
+            .pr_manager
+            .create_pr(&pr_title, &pr_body, base_branch, &head_branch)
+            .await
+        {
             Ok(result) => {
                 if result.success {
                     if let Some(url) = result.pr_url {
                         log::info!("Created PR for tier {}: {}", tier_id, url);
-                        
+
                         // Log PR creation activity
                         let _ = self.logger_service.log_activity(
                             ActivityEventType::OrchestrationCompleted,
@@ -608,28 +689,48 @@ impl Orchestrator {
                         log::info!("PR created successfully for tier {}", tier_id);
                     }
                 } else {
-                    log::warn!("Failed to create PR for tier {}: {}", tier_id, result.message);
+                    log::warn!(
+                        "Failed to create PR for tier {}: {}",
+                        tier_id,
+                        result.message
+                    );
                 }
                 Ok(())
             }
             Err(e) => {
-                log::warn!("Failed to create PR for tier {}: {}. Continuing.", tier_id, e);
+                log::warn!(
+                    "Failed to create PR for tier {}: {}. Continuing.",
+                    tier_id,
+                    e
+                );
                 Ok(())
             }
         }
     }
 
     /// Run verification gate (if verification enabled)
-    async fn run_verification_gate(&self, tier_id: &str, tier_type: TierType, criteria: &[Criterion]) -> Result<bool> {
+    async fn run_verification_gate(
+        &self,
+        tier_id: &str,
+        tier_type: TierType,
+        criteria: &[Criterion],
+    ) -> Result<bool> {
         if !self.config.orchestrator.enable_verification {
             return Ok(true); // Skip verification if disabled
         }
 
         if let Some(ref verification) = self.verification_integration {
             let gate_type = self.gate_type_for(tier_type);
-            match verification.run_gate(gate_type, tier_id, criteria, None).await {
+            match verification
+                .run_gate(gate_type, tier_id, criteria, None)
+                .await
+            {
                 report => {
-                    log::info!("Verification gate for {}: {}", tier_id, if report.passed { "PASSED" } else { "FAILED" });
+                    log::info!(
+                        "Verification gate for {}: {}",
+                        tier_id,
+                        if report.passed { "PASSED" } else { "FAILED" }
+                    );
                     Ok(report.passed)
                 }
             }
@@ -638,17 +739,261 @@ impl Orchestrator {
         }
     }
 
+    /// Enforce AGENTS.md gate rules
+    ///
+    /// Checks that AGENTS.md has been properly updated with learnings before allowing
+    /// tier completion. This ensures agents document patterns and failures.
+    async fn enforce_agents_gate(&self, tier_id: &str) -> Result<()> {
+        // Load AGENTS.md for this tier
+        let agents_doc = self
+            .agents_manager
+            .load(tier_id)
+            .context("Failed to load AGENTS.md for enforcement")?;
+
+        // Get the raw content for section checking
+        let agents_path = self.agents_manager.get_agents_path(tier_id);
+        let agents_content = if agents_path.exists() {
+            std::fs::read_to_string(&agents_path).context("Failed to read AGENTS.md content")?
+        } else {
+            String::new()
+        };
+
+        // Run enforcement
+        let result = self
+            .gate_enforcer
+            .enforce(&agents_content, &agents_doc)
+            .context("Failed to run AGENTS.md enforcement")?;
+
+        if !result.passed {
+            // Log violations
+            for violation in &result.violations {
+                log::warn!(
+                    "AGENTS.md violation [{}]: {} - {}",
+                    match violation.severity {
+                        crate::state::ViolationSeverity::Error => "ERROR",
+                        crate::state::ViolationSeverity::Warning => "WARN",
+                        crate::state::ViolationSeverity::Info => "INFO",
+                    },
+                    violation.rule,
+                    violation.description
+                );
+            }
+
+            // Build error message from violations
+            let error_msgs: Vec<String> = result
+                .violations
+                .iter()
+                .filter(|v| v.severity == crate::state::ViolationSeverity::Error)
+                .map(|v| format!("{}: {}", v.rule, v.description))
+                .collect();
+
+            if !error_msgs.is_empty() {
+                return Err(anyhow!(
+                    "AGENTS.md enforcement failed:\n  - {}",
+                    error_msgs.join("\n  - ")
+                ));
+            }
+        }
+
+        // Log warnings even if passing
+        for warning in &result.warnings {
+            log::info!("AGENTS.md gate warning: {}", warning);
+        }
+
+        log::info!("AGENTS.md gate enforcement passed for tier {}", tier_id);
+        Ok(())
+    }
+
+    /// Promote tier learnings to parent/root levels
+    ///
+    /// Evaluates patterns and learnings from completed tier and promotes high-value
+    /// entries up the hierarchy (subtask → task → phase → root).
+    async fn promote_tier_learnings(&self, tier_id: &str) -> Result<()> {
+        log::debug!("Evaluating learnings promotion for tier {}", tier_id);
+
+        // Load AGENTS.md for this tier
+        let agents_doc = self
+            .agents_manager
+            .load(tier_id)
+            .context("Failed to load AGENTS.md for promotion")?;
+
+        if agents_doc.agents.is_empty() {
+            log::debug!("No learnings to promote for tier {}", tier_id);
+            return Ok(());
+        }
+
+        // Evaluate candidates for promotion
+        let candidates = {
+            let engine = self.promotion_engine.lock().unwrap();
+            engine.evaluate(&agents_doc.agents)
+        };
+
+        if candidates.is_empty() {
+            log::debug!("No learnings meet promotion criteria for tier {}", tier_id);
+            return Ok(());
+        }
+
+        log::info!(
+            "Found {} learning(s) eligible for promotion from tier {}",
+            candidates.len(),
+            tier_id
+        );
+
+        // Promote each candidate
+        let engine = self.promotion_engine.lock().unwrap();
+        for candidate in candidates {
+            match engine.promote(&candidate, &self.agents_manager) {
+                Ok(()) => {
+                    log::info!(
+                        "✓ Promoted '{}' from {} to {} (score: {:.2})",
+                        candidate.entry_text.chars().take(60).collect::<String>(),
+                        candidate.source_tier,
+                        candidate.target_tier,
+                        candidate.score
+                    );
+                }
+                Err(e) => {
+                    log::warn!(
+                        "Failed to promote learning from {} to {}: {}",
+                        candidate.source_tier,
+                        candidate.target_tier,
+                        e
+                    );
+                }
+            }
+        }
+
+        Ok(())
+    }
+
     /// Select optimal platform using platform router (if enabled)
     fn select_platform(&self, tier_id: &str, tier_type: TierType) -> Result<Platform> {
         if !self.config.orchestrator.enable_platform_router {
             return Ok(self.tier_config_for(tier_type).platform);
         }
 
-        self.classify_and_route_task(tier_id)
-            .or_else(|e| {
-                log::warn!("Platform routing failed for {}: {}. Using default.", tier_id, e);
-                Ok(self.tier_config_for(tier_type).platform)
-            })
+        self.classify_and_route_task(tier_id).or_else(|e| {
+            log::warn!(
+                "Platform routing failed for {}: {}. Using default.",
+                tier_id,
+                e
+            );
+            Ok(self.tier_config_for(tier_type).platform)
+        })
+    }
+
+    /// Create worktree for a subtask
+    async fn create_subtask_worktree(
+        &self,
+        subtask_id: &str,
+    ) -> Result<Option<std::path::PathBuf>> {
+        if !self.config.orchestrator.enable_parallel_execution {
+            return Ok(None);
+        }
+
+        // Generate branch name for the subtask
+        let branch = format!("subtask/{}", subtask_id.replace('.', "-"));
+
+        // Create worktree
+        match self
+            .worktree_manager
+            .create_worktree(subtask_id, &branch)
+            .await
+        {
+            Ok(info) => {
+                log::info!(
+                    "Created worktree for subtask {} at {:?}",
+                    subtask_id,
+                    info.path
+                );
+
+                // Register the worktree path
+                let mut worktrees = self.active_worktrees.lock().unwrap();
+                worktrees.insert(subtask_id.to_string(), info.path.clone());
+
+                Ok(Some(info.path))
+            }
+            Err(e) => {
+                log::warn!(
+                    "Failed to create worktree for subtask {}: {}. Falling back to main repo.",
+                    subtask_id,
+                    e
+                );
+                Ok(None)
+            }
+        }
+    }
+
+    /// Get worktree path for a tier (if one exists)
+    fn get_tier_worktree(&self, tier_id: &str) -> Option<std::path::PathBuf> {
+        let worktrees = self.active_worktrees.lock().unwrap();
+        worktrees.get(tier_id).cloned()
+    }
+
+    /// Cleanup and merge worktree after subtask completion
+    async fn cleanup_subtask_worktree(&self, subtask_id: &str, success: bool) -> Result<()> {
+        if !self.config.orchestrator.enable_parallel_execution {
+            return Ok(());
+        }
+
+        // Unregister the worktree path
+        {
+            let mut worktrees = self.active_worktrees.lock().unwrap();
+            worktrees.remove(subtask_id);
+        }
+
+        // Check if worktree exists
+        if !self.worktree_manager.worktree_exists(subtask_id).await {
+            return Ok(());
+        }
+
+        if success {
+            // Merge changes back to base branch if auto_pr is disabled
+            if !self.config.branching.auto_pr {
+                let base_branch = &self.config.branching.base_branch;
+                match self
+                    .worktree_manager
+                    .merge_worktree(subtask_id, base_branch)
+                    .await
+                {
+                    Ok(result) => {
+                        if result.success {
+                            log::info!(
+                                "Merged worktree for subtask {} into {} ({} files changed)",
+                                subtask_id,
+                                base_branch,
+                                result.files_changed.len()
+                            );
+                        } else {
+                            log::warn!(
+                                "Merge conflicts detected for subtask {}: {:?}",
+                                subtask_id,
+                                result.conflicts
+                            );
+                            // Don't remove worktree if there are conflicts
+                            return Ok(());
+                        }
+                    }
+                    Err(e) => {
+                        log::warn!("Failed to merge worktree for subtask {}: {}", subtask_id, e);
+                        // Continue to cleanup anyway
+                    }
+                }
+            }
+        }
+
+        // Remove worktree
+        if let Err(e) = self.worktree_manager.remove_worktree(subtask_id).await {
+            log::warn!(
+                "Failed to remove worktree for subtask {}: {}",
+                subtask_id,
+                e
+            );
+        } else {
+            log::debug!("Removed worktree for subtask {}", subtask_id);
+        }
+
+        Ok(())
     }
 
     /// Execute subtasks in parallel (if enabled and applicable)
@@ -664,27 +1009,56 @@ impl Orchestrator {
 
         log::info!("Executing {} subtasks in parallel", subtask_ids.len());
 
-        // For now, assume no dependencies between subtasks at same level
-        // In a full implementation, we'd extract dependencies from PRD
-        let dependencies: Vec<(String, Vec<String>)> = subtask_ids
-            .iter()
-            .map(|id| (id.clone(), vec![]))
-            .collect();
+        // Build dependency list from tier nodes (if any)
+        let dependencies: Vec<(String, Vec<String>)> = {
+            let tree = self.tier_tree.lock().unwrap();
+            subtask_ids
+                .iter()
+                .map(|id| {
+                    let deps = tree
+                        .find_by_id(id)
+                        .map(|n| n.dependencies.clone())
+                        .unwrap_or_default();
+                    (id.clone(), deps)
+                })
+                .collect()
+        };
 
         // Get parallelizable groups
         let groups = self
             .dependency_analyzer
             .get_parallelizable_groups(dependencies)?;
 
-        log::debug!("Executing {} groups of parallelizable subtasks", groups.len());
+        log::debug!(
+            "Executing {} groups of parallelizable subtasks",
+            groups.len()
+        );
 
-        // Execute each group sequentially, but within each group execute in parallel
+        // Execute each group sequentially, but within each group execute subtasks concurrently.
         let mut all_results = Vec::new();
         for group in groups {
-            // For this minimal implementation, still execute sequentially
-            // A full implementation would use tokio::spawn or similar
-            for id in group {
-                all_results.push(self.execute_tier(&id).await);
+            // Create worktrees for each subtask in the group
+            for id in &group {
+                let _ = self.create_subtask_worktree(id).await?;
+            }
+
+            use futures::future::join_all;
+
+            let results = join_all(group.iter().map(|id| async {
+                let res = self.execute_tier(id).await;
+                (id.clone(), res)
+            }))
+            .await;
+
+            // Cleanup worktrees sequentially to avoid concurrent merges/checkouts in the main repo.
+            for (id, result) in results {
+                let success = result.is_ok();
+
+                if let Err(e) = self.cleanup_subtask_worktree(&id, success).await {
+                    log::warn!("Failed to cleanup worktree for subtask {}: {}", id, e);
+                }
+
+                all_results.push(result);
             }
         }
 
@@ -755,7 +1129,7 @@ impl Orchestrator {
         })
         .await
         .context("Failed to spawn checkpoint task")??;
-        
+
         let mut last = self.last_checkpoint.lock().unwrap();
         *last = Instant::now();
 
@@ -764,7 +1138,13 @@ impl Orchestrator {
     }
 
     /// Use worker/reviewer pattern for quality assurance
-    fn apply_worker_reviewer(&self, _tier_id: &str, output: &str, signal: &CompletionSignal, cycle: u32) -> Result<(bool, String)> {
+    fn apply_worker_reviewer(
+        &self,
+        _tier_id: &str,
+        output: &str,
+        signal: &CompletionSignal,
+        cycle: u32,
+    ) -> Result<(bool, String)> {
         if !self.worker_reviewer.is_enabled() {
             return Ok((true, output.to_string()));
         }
@@ -944,7 +1324,50 @@ impl Orchestrator {
             };
             log::debug!("Task {} routed to platform {:?}", tier_id, platform);
 
-            match self.execute_tier(&tier_id).await {
+            let execution_result = if self.config.orchestrator.enable_parallel_execution {
+                // Try to parallelize leaf-tier execution by running other ready subtasks under the same Task.
+                let batch_ids = {
+                    let tree = self.tier_tree.lock().unwrap();
+                    let path = tree.get_path(&tier_id);
+                    let task_id = path.get(1).cloned();
+
+                    if let Some(task_id) = task_id {
+                        tree.get_children(&task_id)
+                            .into_iter()
+                            .filter(|n| n.tier_type == TierType::Subtask)
+                            .filter(|n| n.state_machine.current_state() == TierState::Pending)
+                            .filter(|n| {
+                                n.dependencies.iter().all(|dep_id| {
+                                    tree.find_by_id(dep_id)
+                                        .map(|dep| {
+                                            dep.state_machine.current_state() == TierState::Passed
+                                        })
+                                        .unwrap_or(false)
+                                })
+                            })
+                            .map(|n| n.id.clone())
+                            .collect::<Vec<_>>()
+                    } else {
+                        Vec::new()
+                    }
+                };
+
+                if batch_ids.len() > 1 {
+                    match self.execute_subtasks_parallel(&batch_ids).await {
+                        Ok(results) => results
+                            .into_iter()
+                            .collect::<anyhow::Result<Vec<_>>>()
+                            .map(|_| ()),
+                        Err(e) => Err(e),
+                    }
+                } else {
+                    self.execute_tier(&tier_id).await
+                }
+            } else {
+                self.execute_tier(&tier_id).await
+            };
+
+            match execution_result {
                 Ok(_) => {
                     // Auto-checkpoint if interval elapsed
                     let should_checkpoint = {
@@ -1080,6 +1503,121 @@ impl Orchestrator {
             .collect()
     }
 
+    fn resolve_criteria_for_workdir(
+        &self,
+        criteria: &[Criterion],
+        working_dir: &Path,
+    ) -> Vec<Criterion> {
+        criteria
+            .iter()
+            .cloned()
+            .map(|mut c| {
+                let method = c.verification_method.as_deref().unwrap_or("command");
+                match method {
+                    "file_exists" => {
+                        if let Some(expected) = c.expected.clone() {
+                            let path = std::path::Path::new(&expected);
+                            if path.is_relative() {
+                                c.expected = Some(working_dir.join(path).display().to_string());
+                            }
+                        }
+                    }
+                    "regex" => {
+                        if let Some(expected) = c.expected.clone() {
+                            if let Some(idx) = expected.find(':') {
+                                let (file, pattern) = expected.split_at(idx);
+                                let pattern = &pattern[1..];
+                                let file_path = std::path::Path::new(file);
+                                let resolved = if file_path.is_relative() {
+                                    working_dir.join(file_path)
+                                } else {
+                                    file_path.to_path_buf()
+                                };
+                                c.expected = Some(format!("{}:{}", resolved.display(), pattern));
+                            }
+                        }
+                    }
+                    "command" => {
+                        if let Some(expected) = c.expected.clone() {
+                            let trimmed = expected.trim();
+                            if trimmed.starts_with('{') {
+                                if let Ok(mut v) =
+                                    serde_json::from_str::<serde_json::Value>(trimmed)
+                                {
+                                    if let Some(obj) = v.as_object_mut() {
+                                        if !obj.contains_key("cwd") {
+                                            obj.insert(
+                                                "cwd".to_string(),
+                                                serde_json::Value::String(
+                                                    working_dir.display().to_string(),
+                                                ),
+                                            );
+                                            c.expected = Some(v.to_string());
+                                        }
+                                    }
+                                }
+                            } else {
+                                c.expected = Some(
+                                    serde_json::json!({
+                                        "command": trimmed,
+                                        "cwd": working_dir.display().to_string()
+                                    })
+                                    .to_string(),
+                                );
+                            }
+                        }
+                    }
+                    "script" => {
+                        if let Some(expected) = c.expected.clone() {
+                            let trimmed = expected.trim();
+                            if trimmed.starts_with('{') {
+                                if let Ok(mut v) =
+                                    serde_json::from_str::<serde_json::Value>(trimmed)
+                                {
+                                    if let Some(obj) = v.as_object_mut() {
+                                        if let Some(path) = obj
+                                            .get("path")
+                                            .and_then(|p| p.as_str())
+                                            .map(std::path::PathBuf::from)
+                                        {
+                                            if path.is_relative() {
+                                                obj.insert(
+                                                    "path".to_string(),
+                                                    serde_json::Value::String(
+                                                        working_dir
+                                                            .join(path)
+                                                            .display()
+                                                            .to_string(),
+                                                    ),
+                                                );
+                                            }
+                                        }
+                                        if !obj.contains_key("cwd") {
+                                            obj.insert(
+                                                "cwd".to_string(),
+                                                serde_json::Value::String(
+                                                    working_dir.display().to_string(),
+                                                ),
+                                            );
+                                        }
+                                        c.expected = Some(v.to_string());
+                                    }
+                                }
+                            } else {
+                                let path = std::path::Path::new(trimmed);
+                                if path.is_relative() {
+                                    c.expected = Some(working_dir.join(path).display().to_string());
+                                }
+                            }
+                        }
+                    }
+                    _ => {}
+                }
+                c
+            })
+            .collect()
+    }
+
     fn context_ids(&self, tree: &TierTree, tier_id: &str) -> (String, String, String) {
         let path = tree.get_path(tier_id);
         let phase_id = path.first().cloned().unwrap_or_default();
@@ -1156,13 +1694,20 @@ impl Orchestrator {
                 }
             }
 
-            // Create git branch for tier (if git enabled)
-            let _branch = self.create_tier_branch(tier_id, tier_type).await?;
+            // Create git branch for tier (if git enabled). Skip if running in a worktree.
+            if self.get_tier_worktree(tier_id).is_none() {
+                let _branch = self.create_tier_branch(tier_id, tier_type).await?;
+            }
 
             // Use platform router to select optimal platform (if enabled)
             let selected_platform = self.select_platform(tier_id, tier_type)?;
             let tier_config = if selected_platform != tier_config.platform {
-                log::info!("Overriding platform for {}: {:?} -> {:?}", tier_id, tier_config.platform, selected_platform);
+                log::info!(
+                    "Overriding platform for {}: {:?} -> {:?}",
+                    tier_id,
+                    tier_config.platform,
+                    selected_platform
+                );
                 let mut config = tier_config.clone();
                 config.platform = selected_platform;
                 config
@@ -1190,6 +1735,12 @@ impl Orchestrator {
                 .timeout_ms
                 .map(|ms| ms.saturating_add(999) / 1000);
 
+            // Use worktree path if available for this tier
+            let working_directory = self
+                .get_tier_worktree(tier_id)
+                .unwrap_or_else(|| self.config.project.working_directory.clone());
+            let working_directory_for_gate = working_directory.clone();
+
             let context = IterationContext {
                 tier_id: tier_id.to_string(),
                 phase_id,
@@ -1200,8 +1751,8 @@ impl Orchestrator {
                 prompt,
                 model: tier_config.model.clone(),
                 platform: tier_config.platform,
-                working_directory: self.config.project.working_directory.clone(),
-                working_dir: self.config.project.working_directory.clone(),
+                working_directory: working_directory.clone(),
+                working_dir: working_directory,
                 session_id: session_id.clone(),
                 timeout_ms: tier_config.timeout_ms,
                 timeout_secs,
@@ -1237,8 +1788,11 @@ impl Orchestrator {
                 CompletionSignal::Complete => {
                     let _ = self.session_tracker.complete_session(&session_id);
 
-                    // Process AGENTS.md updates from output
-                    if let Err(e) = self.process_agents_updates(tier_id, &iteration_result.output).await {
+                    // Process AGENTS.md updates from output (success = true)
+                    if let Err(e) = self
+                        .process_agents_updates(tier_id, &iteration_result.output, true)
+                        .await
+                    {
                         log::warn!("Failed to process AGENTS.md updates: {}", e);
                     }
 
@@ -1286,6 +1840,8 @@ impl Orchestrator {
                     };
 
                     let criteria = self.build_gate_criteria(&acceptance_criteria);
+                    let criteria =
+                        self.resolve_criteria_for_workdir(&criteria, &working_directory_for_gate);
                     let gate_type = self.gate_type_for(tier_type);
                     let gate_report = self
                         .gate_runner
@@ -1294,11 +1850,25 @@ impl Orchestrator {
 
                     if gate_report.passed {
                         // Run additional verification integration if enabled
-                        let verification_passed = self.run_verification_gate(tier_id, tier_type, &criteria).await?;
-                        
+                        let verification_passed = self
+                            .run_verification_gate(tier_id, tier_type, &criteria)
+                            .await?;
+
                         if !verification_passed {
                             log::warn!("Verification integration failed for tier {}", tier_id);
                             let reason = "Verification integration failed".to_string();
+                            previous_feedback = Some(reason.clone());
+                            continue; // Retry
+                        }
+
+                        // Enforce AGENTS.md rules before allowing tier completion
+                        if let Err(e) = self.enforce_agents_gate(tier_id).await {
+                            log::warn!(
+                                "AGENTS.md gate enforcement failed for tier {}: {}",
+                                tier_id,
+                                e
+                            );
+                            let reason = format!("AGENTS.md not properly updated: {}", e);
                             previous_feedback = Some(reason.clone());
                             continue; // Retry
                         }
@@ -1311,7 +1881,9 @@ impl Orchestrator {
 
                             // Validate transition before passing
                             let current = node.state_machine.current_state();
-                            if let Err(e) = self.validate_tier_transition(current, TierState::Passed) {
+                            if let Err(e) =
+                                self.validate_tier_transition(current, TierState::Passed)
+                            {
                                 log::warn!("Tier transition validation failed: {}", e);
                             }
                             node.state_machine.send(TierEvent::GatePass)?;
@@ -1339,6 +1911,11 @@ impl Orchestrator {
                         // Create PR for tier if auto_pr is enabled
                         if let Err(e) = self.create_tier_pr(tier_id, tier_type).await {
                             log::warn!("Failed to create PR for tier {}: {}", tier_id, e);
+                        }
+
+                        // Promote learnings from this tier to parent/root levels
+                        if let Err(e) = self.promote_tier_learnings(tier_id).await {
+                            log::warn!("Failed to promote learnings for tier {}: {}", tier_id, e);
                         }
 
                         return Ok(());
@@ -2023,6 +2600,10 @@ mod tests {
             CheckpointManagerConfig::default(),
         )));
         let parallel_executor = ParallelExecutor::with_defaults();
+        let promotion_engine = Arc::new(Mutex::new(PromotionEngine::with_defaults()));
+        let gate_enforcer = Arc::new(GateEnforcer::new());
+        let worktree_manager = Arc::new(WorktreeManager::new(temp_dir.clone()));
+        let active_worktrees = Arc::new(Mutex::new(HashMap::new()));
 
         Orchestrator {
             config,
@@ -2053,6 +2634,10 @@ mod tests {
             fresh_spawn: fresh_spawn,
             checkpoint_manager,
             parallel_executor: parallel_executor,
+            promotion_engine,
+            gate_enforcer,
+            worktree_manager,
+            active_worktrees,
         }
     }
 
@@ -2196,7 +2781,7 @@ mod tests {
     fn test_parse_agents_updates() {
         let config = default_config();
         let orchestrator = Orchestrator::new(config).unwrap();
-        
+
         let output = r#"
 Some agent output here...
 <ralph>COMPLETE</ralph>
@@ -2210,9 +2795,9 @@ DONT: Mix sync and async code without proper consideration
 
 More output after...
 "#;
-        
+
         let updates = orchestrator.parse_agents_updates(output);
-        
+
         assert_eq!(updates.len(), 4);
         assert_eq!(updates[0].0, "pattern");
         assert!(updates[0].1.contains("async/await"));
@@ -2228,10 +2813,10 @@ More output after...
     fn test_parse_agents_updates_empty() {
         let config = default_config();
         let orchestrator = Orchestrator::new(config).unwrap();
-        
+
         let output = "No AGENTS updates here";
         let updates = orchestrator.parse_agents_updates(output);
-        
+
         assert_eq!(updates.len(), 0);
     }
 
@@ -2239,7 +2824,7 @@ More output after...
     fn test_parse_agents_updates_multiple_blocks() {
         let config = default_config();
         let orchestrator = Orchestrator::new(config).unwrap();
-        
+
         let output = r#"
 ```agents-update
 PATTERN: First pattern
@@ -2252,9 +2837,9 @@ PATTERN: Second pattern
 FAILURE: Some failure
 ```
 "#;
-        
+
         let updates = orchestrator.parse_agents_updates(output);
-        
+
         assert_eq!(updates.len(), 3);
         assert!(updates[0].1.contains("First pattern"));
         assert!(updates[1].1.contains("Second pattern"));
@@ -2265,48 +2850,191 @@ FAILURE: Some failure
     fn test_build_gate_criteria_with_prefixes() {
         let config = default_config();
         let orchestrator = Orchestrator::new(config).unwrap();
-        
+
         let acceptance_criteria = vec![
             "command: cargo test".to_string(),
             "file_exists: Cargo.toml".to_string(),
             "regex: README.md:puppet-master".to_string(),
         ];
-        
+
         let criteria = orchestrator.build_gate_criteria(&acceptance_criteria);
-        
+
         assert_eq!(criteria.len(), 3);
-        
+
         // Check command criterion
         assert_eq!(criteria[0].verification_method, Some("command".to_string()));
         assert_eq!(criteria[0].expected, Some("cargo test".to_string()));
-        
+
         // Check file_exists criterion
-        assert_eq!(criteria[1].verification_method, Some("file_exists".to_string()));
+        assert_eq!(
+            criteria[1].verification_method,
+            Some("file_exists".to_string())
+        );
         assert_eq!(criteria[1].expected, Some("Cargo.toml".to_string()));
-        
+
         // Check regex criterion
         assert_eq!(criteria[2].verification_method, Some("regex".to_string()));
-        assert_eq!(criteria[2].expected, Some("README.md:puppet-master".to_string()));
+        assert_eq!(
+            criteria[2].expected,
+            Some("README.md:puppet-master".to_string())
+        );
     }
 
     #[test]
     fn test_build_gate_criteria_legacy_format() {
         let config = default_config();
         let orchestrator = Orchestrator::new(config).unwrap();
-        
+
         let acceptance_criteria = vec![
             "All tests pass".to_string(),
             "Code is formatted".to_string(),
         ];
-        
+
         let criteria = orchestrator.build_gate_criteria(&acceptance_criteria);
-        
+
         assert_eq!(criteria.len(), 2);
-        
+
         // Should default to command with the original text
         assert_eq!(criteria[0].verification_method, Some("command".to_string()));
         assert_eq!(criteria[0].expected, Some("All tests pass".to_string()));
         assert_eq!(criteria[1].verification_method, Some("command".to_string()));
         assert_eq!(criteria[1].expected, Some("Code is formatted".to_string()));
+    }
+
+    #[tokio::test]
+    async fn test_enforce_agents_gate_passes_with_good_content() {
+        use tempfile::TempDir;
+
+        let temp_dir = TempDir::new().unwrap();
+        let mut config = default_config();
+        config.paths.workspace = temp_dir.path().to_path_buf();
+
+        let orchestrator = Orchestrator::new(config).unwrap();
+
+        // Create a tier directory with valid AGENTS.md
+        let tier_path = temp_dir.path().join("phase1");
+        std::fs::create_dir_all(&tier_path).unwrap();
+
+        let agents_content = r#"# Agent Learnings
+
+## Successful Patterns
+- Pattern 1: Use async/await for I/O operations
+- Pattern 2: Add proper error handling
+
+## Failure Modes
+- Failure 1: Blocking calls in async contexts
+"#;
+        std::fs::write(tier_path.join("AGENTS.md"), agents_content).unwrap();
+
+        // Should pass with valid content
+        let result = orchestrator.enforce_agents_gate("phase1").await;
+        assert!(
+            result.is_ok(),
+            "Gate enforcement should pass with valid content"
+        );
+    }
+
+    #[tokio::test]
+    async fn test_promote_tier_learnings_no_candidates() {
+        use tempfile::TempDir;
+
+        let temp_dir = TempDir::new().unwrap();
+        let mut config = default_config();
+        config.paths.workspace = temp_dir.path().to_path_buf();
+
+        let orchestrator = Orchestrator::new(config).unwrap();
+
+        // Create minimal AGENTS.md (no high-usage patterns)
+        let tier_path = temp_dir.path().join("phase1");
+        std::fs::create_dir_all(&tier_path).unwrap();
+        std::fs::write(
+            tier_path.join("AGENTS.md"),
+            "# Learnings\n\n## Patterns\n- Some pattern\n",
+        )
+        .unwrap();
+
+        // Should complete without error even if no promotions
+        let result = orchestrator.promote_tier_learnings("phase1").await;
+        assert!(
+            result.is_ok(),
+            "Promotion should succeed with no candidates"
+        );
+    }
+
+    #[test]
+    fn test_orchestrator_has_promotion_engine() {
+        let config = default_config();
+        let orchestrator = Orchestrator::new(config).unwrap();
+
+        // Verify the promotion engine is accessible
+        let engine = orchestrator.promotion_engine.lock().unwrap();
+        // Just checking it's not panicking
+        drop(engine);
+    }
+
+    #[test]
+    fn test_orchestrator_has_gate_enforcer() {
+        let config = default_config();
+        let orchestrator = Orchestrator::new(config).unwrap();
+
+        // Verify the gate enforcer is accessible
+        let enforcer = &orchestrator.gate_enforcer;
+        // Just checking it exists
+        let _ = enforcer;
+    }
+
+    #[tokio::test]
+    async fn test_process_agents_updates_records_pattern_usage() {
+        use tempfile::TempDir;
+
+        let temp_dir = TempDir::new().unwrap();
+        let mut config = default_config();
+        config.paths.workspace = temp_dir.path().to_path_buf();
+
+        let orchestrator = Orchestrator::new(config).unwrap();
+
+        // Create tier directory
+        let tier_path = temp_dir.path().join("phase1");
+        std::fs::create_dir_all(&tier_path).unwrap();
+
+        let output = r#"
+```agents-update
+PATTERN: Use Result<T, E> for error handling
+```
+"#;
+
+        // Process with success = true
+        let result = orchestrator
+            .process_agents_updates("phase1", output, true)
+            .await;
+        assert!(result.is_ok(), "Should process updates successfully");
+
+        // Verify pattern was recorded in promotion engine
+        let engine = orchestrator.promotion_engine.lock().unwrap();
+        let stats = engine.get_stats("Use Result<T, E> for error handling");
+        assert!(stats.is_some(), "Pattern usage should be tracked");
+        let (count, success_rate) = stats.unwrap();
+        assert_eq!(count, 1, "Should have recorded one usage");
+        assert_eq!(success_rate, 1.0, "Should have 100% success rate");
+    }
+
+    #[tokio::test]
+    async fn test_worktree_integration() {
+        let config = default_config();
+        let orchestrator = Orchestrator::new(config).unwrap();
+
+        let subtask_id = "test-subtask-1";
+
+        // Test get_tier_worktree returns None initially
+        assert!(orchestrator.get_tier_worktree(subtask_id).is_none());
+
+        // Note: Full worktree creation test would require a real git repo
+        // This test verifies the integration is properly wired
+        assert!(
+            orchestrator
+                .worktree_manager
+                .get_worktree_path(subtask_id)
+                .ends_with(subtask_id)
+        );
     }
 }

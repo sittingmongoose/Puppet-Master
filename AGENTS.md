@@ -130,6 +130,23 @@ class RegexVerifier implements Verifier {
 }
 ```
 
+### GUI DRY / Reuse-First (Rust/Iced)
+- Before adding new GUI code, check `puppet-master-rs/src/widgets/` and `docs/gui-widget-catalog.md`.
+- Prefer shared widgets/helpers first:
+  - `selectable_text_field`
+  - `context_menu_actions`
+  - `auth_status_chip`
+  - `page_header`
+  - `refresh_button`
+- Bespoke UI is allowed only if existing widgets cannot express the requirement.
+- Any bespoke bypass must include an inline rationale:
+```rust
+// UI-DRY-EXCEPTION: <short reason>
+```
+- Run:
+  - `scripts/generate-widget-catalog.sh` after widget changes
+  - `scripts/check-widget-reuse.sh` before handoff (warn-only, always exit 0)
+
 ---
 
 ## Tooling Rules
@@ -308,6 +325,7 @@ await withFileLock(prdPath, async () => {
 - ✅ Follow the task scope exactly
 - ✅ Update Task Status Log after completing any task
 - ✅ Use specific `.log` patterns in gitignore (not `*.log`)
+- ✅ Reuse shared widgets/helpers before creating bespoke Rust/Iced UI
 
 ---
 
@@ -326,6 +344,7 @@ await withFileLock(prdPath, async () => {
 - ❌ Ignore test failures
 - ❌ Use blanket `*.log` in gitignore (evidence logs are tracked!)
 - ❌ Ignore `.puppet-master/` directory in gitignore
+- ❌ Re-implement existing widget patterns without checking `docs/gui-widget-catalog.md`
 
 ---
 

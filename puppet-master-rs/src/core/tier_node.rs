@@ -9,9 +9,12 @@
 
 use crate::core::state_machine::TierStateMachine;
 use crate::types::*;
-use anyhow::{Result, anyhow};
+use anyhow::{Context, Result, anyhow};
+use log::warn;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, VecDeque};
+use std::fs;
+use std::path::{Path, PathBuf};
 
 /// A single tier node in the hierarchy
 #[derive(Debug, Clone)]
@@ -86,6 +89,29 @@ impl TierNode {
             TierType::Iteration => 3,
         }
     }
+}
+
+/// Test strategy item from interview-generated JSON
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct TestStrategyItem {
+    pub id: String,
+    pub source_phase_id: String,
+    pub criterion: String,
+    pub test_type: String,
+    pub test_file: String,
+    pub test_name: String,
+    pub verification_command: String,
+}
+
+/// Test strategy JSON schema
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct TestStrategyJson {
+    pub project: String,
+    pub generated_at: String,
+    pub coverage_level: String,
+    pub items: Vec<TestStrategyItem>,
 }
 
 /// Tier tree using arena-based storage
@@ -343,9 +369,126 @@ impl TierTree {
             .count()
     }
 
+    /// Load test strategy from interview-generated JSON file
+    ///
+    /// Attempts to load `.puppet-master/interview/test-strategy.json` relative to the base path.
+    /// Returns None if file doesn't exist or can't be parsed (with a warning logged).
+    fn load_test_strategy(base_path: Option<&Path>) -> Option<TestStrategyJson> {
+        let strategy_path = if let Some(base) = base_path {
+            base.join(".puppet-master/interview/test-strategy.json")
+        } else {
+            PathBuf::from(".puppet-master/interview/test-strategy.json")
+        };
+
+        if !strategy_path.exists() {
+            return None;
+        }
+
+        match fs::read_to_string(&strategy_path) {
+            Ok(content) => match serde_json::from_str::<TestStrategyJson>(&content) {
+                Ok(strategy) => {
+                    log::info!(
+                        "Loaded test strategy from {} with {} items",
+                        strategy_path.display(),
+                        strategy.items.len()
+                    );
+                    Some(strategy)
+                }
+                Err(e) => {
+                    warn!(
+                        "Failed to parse test strategy JSON at {}: {}",
+                        strategy_path.display(),
+                        e
+                    );
+                    None
+                }
+            },
+            Err(e) => {
+                warn!(
+                    "Failed to read test strategy file at {}: {}",
+                    strategy_path.display(),
+                    e
+                );
+                None
+            }
+        }
+    }
+
+    /// Map test strategy phase ID to tier ID
+    ///
+    /// Test strategy uses phase IDs like "product_ux", "security_secrets"
+    /// We need to map these to actual tier IDs in the PRD structure
+    fn map_phase_id_to_tier_id(phase_id: &str, prd: &PRD) -> Option<String> {
+        // First try exact match
+        for phase in &prd.phases {
+            if phase.id == phase_id {
+                return Some(phase.id.clone());
+            }
+        }
+
+        // Try matching by title/description (case-insensitive)
+        let phase_id_lower = phase_id.to_lowercase();
+        let phase_id_spaces = phase_id_lower.replace('_', " ").replace('-', " ");
+        for phase in &prd.phases {
+            let title_lower = phase.title.to_lowercase();
+            let description_lower = phase.description.as_ref().map(|d| d.to_lowercase());
+
+            if title_lower.contains(&phase_id_lower)
+                || title_lower.contains(&phase_id_spaces)
+                || description_lower.as_ref().map_or(false, |d| {
+                    d.contains(&phase_id_lower) || d.contains(&phase_id_spaces)
+                })
+            {
+                return Some(phase.id.clone());
+            }
+        }
+
+        None
+    }
+
     /// Build tree from PRD data
     pub fn from_prd(prd: &PRD, max_iterations: u32) -> Result<Self> {
+        Self::from_prd_with_base_path(prd, max_iterations, None)
+    }
+
+    /// Build tree from PRD data with optional base path for test strategy loading
+    pub fn from_prd_with_base_path(
+        prd: &PRD,
+        max_iterations: u32,
+        base_path: Option<&Path>,
+    ) -> Result<Self> {
         let mut tree = TierTree::new();
+
+        // Try to load test strategy JSON
+        let test_strategy = Self::load_test_strategy(base_path);
+
+        // Build a map of tier IDs to additional criteria from test strategy
+        let mut criteria_map: HashMap<String, Vec<String>> = HashMap::new();
+
+        if let Some(strategy) = &test_strategy {
+            for item in &strategy.items {
+                // Try to map the source phase ID to a tier ID
+                if let Some(tier_id) = Self::map_phase_id_to_tier_id(&item.source_phase_id, prd) {
+                    criteria_map
+                        .entry(tier_id)
+                        .or_insert_with(Vec::new)
+                        .push(item.criterion.clone());
+                } else {
+                    // If we can't map it, try using it directly as a tier ID
+                    criteria_map
+                        .entry(item.source_phase_id.clone())
+                        .or_insert_with(Vec::new)
+                        .push(item.criterion.clone());
+                }
+            }
+
+            if !criteria_map.is_empty() {
+                log::info!(
+                    "Merged test strategy criteria into {} tier(s)",
+                    criteria_map.len()
+                );
+            }
+        }
 
         // Add phases
         for phase in &prd.phases {
@@ -360,6 +503,12 @@ impl TierTree {
 
             if let Some(node) = tree.get_node_mut(phase_idx) {
                 node.dependencies = phase.dependencies.clone();
+
+                // Merge test strategy criteria for this phase
+                if let Some(additional_criteria) = criteria_map.get(&phase.id) {
+                    node.acceptance_criteria
+                        .extend(additional_criteria.iter().cloned());
+                }
             }
 
             // Add tasks
@@ -375,6 +524,12 @@ impl TierTree {
 
                 if let Some(node) = tree.get_node_mut(task_idx) {
                     node.dependencies = task.dependencies.clone();
+
+                    // Merge test strategy criteria for this task
+                    if let Some(additional_criteria) = criteria_map.get(&task.id) {
+                        node.acceptance_criteria
+                            .extend(additional_criteria.iter().cloned());
+                    }
                 }
 
                 // Add subtasks
@@ -389,7 +544,14 @@ impl TierTree {
                     )?;
 
                     if let Some(node) = tree.get_node_mut(subtask_idx) {
+                        // Start with PRD acceptance criteria
                         node.acceptance_criteria = subtask.acceptance_criteria.clone();
+
+                        // Merge test strategy criteria for this subtask
+                        if let Some(additional_criteria) = criteria_map.get(&subtask.id) {
+                            node.acceptance_criteria
+                                .extend(additional_criteria.iter().cloned());
+                        }
                     }
                 }
             }
@@ -571,5 +733,267 @@ mod tests {
         );
 
         assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_from_prd_without_test_strategy() {
+        // Test that from_prd works without a test strategy file
+        let prd = PRD {
+            metadata: PRDMetadata {
+                name: "Test Project".to_string(),
+                description: Some("Test description".to_string()),
+                version: "1.0.0".to_string(),
+                total_tasks: 1,
+                total_subtasks: 1,
+                completed_count: 0,
+                total_tests: 0,
+                passed_tests: 0,
+                created_at: None,
+                updated_at: None,
+            },
+            phases: vec![Phase {
+                id: "phase1".to_string(),
+                title: "Phase 1".to_string(),
+                goal: None,
+                description: Some("Test phase".to_string()),
+                status: ItemStatus::Pending,
+                tasks: vec![Task {
+                    id: "task1".to_string(),
+                    title: "Task 1".to_string(),
+                    description: Some("Test task".to_string()),
+                    status: ItemStatus::Pending,
+                    subtasks: vec![Subtask {
+                        id: "subtask1".to_string(),
+                        task_id: "task1".to_string(),
+                        title: "Subtask 1".to_string(),
+                        description: Some("Test subtask".to_string()),
+                        criterion: None,
+                        status: ItemStatus::Pending,
+                        iterations: 0,
+                        evidence: vec![],
+                        plan: None,
+                        acceptance_criteria: vec!["PRD criterion 1".to_string()],
+                        iteration_records: vec![],
+                    }],
+                    evidence: vec![],
+                    gate_reports: vec![],
+                    dependencies: vec![],
+                    complexity: None,
+                    task_type: None,
+                }],
+                iterations: 0,
+                evidence: vec![],
+                gate_report: None,
+                orchestrator_state: None,
+                orchestrator_context: None,
+                dependencies: vec![],
+            }],
+        };
+
+        let tree = TierTree::from_prd(&prd, 3).unwrap();
+        assert_eq!(tree.nodes.len(), 3); // phase + task + subtask
+
+        // Verify PRD criteria are preserved
+        let subtask = tree.find_by_id("subtask1").unwrap();
+        assert_eq!(subtask.acceptance_criteria.len(), 1);
+        assert_eq!(subtask.acceptance_criteria[0], "PRD criterion 1");
+    }
+
+    #[test]
+    fn test_from_prd_with_test_strategy() {
+        use tempfile::TempDir;
+
+        // Create a temporary directory with test strategy
+        let temp_dir = TempDir::new().unwrap();
+        let strategy_dir = temp_dir.path().join(".puppet-master/interview");
+        fs::create_dir_all(&strategy_dir).unwrap();
+
+        // Write test strategy JSON
+        let test_strategy = TestStrategyJson {
+            project: "Test Project".to_string(),
+            generated_at: "2024-01-01T00:00:00Z".to_string(),
+            coverage_level: "Standard".to_string(),
+            items: vec![
+                TestStrategyItem {
+                    id: "TEST-001".to_string(),
+                    source_phase_id: "phase1".to_string(),
+                    criterion: "Test strategy criterion 1".to_string(),
+                    test_type: "unit".to_string(),
+                    test_file: "tests/test1.rs".to_string(),
+                    test_name: "test_something".to_string(),
+                    verification_command: "cargo test".to_string(),
+                },
+                TestStrategyItem {
+                    id: "TEST-002".to_string(),
+                    source_phase_id: "subtask1".to_string(),
+                    criterion: "Test strategy criterion 2".to_string(),
+                    test_type: "integration".to_string(),
+                    test_file: "tests/test2.rs".to_string(),
+                    test_name: "test_integration".to_string(),
+                    verification_command: "cargo test --test integration".to_string(),
+                },
+            ],
+        };
+
+        let json_path = strategy_dir.join("test-strategy.json");
+        fs::write(
+            &json_path,
+            serde_json::to_string_pretty(&test_strategy).unwrap(),
+        )
+        .unwrap();
+
+        // Create PRD
+        let prd = PRD {
+            metadata: PRDMetadata {
+                name: "Test Project".to_string(),
+                description: Some("Test description".to_string()),
+                version: "1.0.0".to_string(),
+                total_tasks: 1,
+                total_subtasks: 1,
+                completed_count: 0,
+                total_tests: 0,
+                passed_tests: 0,
+                created_at: None,
+                updated_at: None,
+            },
+            phases: vec![Phase {
+                id: "phase1".to_string(),
+                title: "Phase 1".to_string(),
+                goal: None,
+                description: Some("Test phase".to_string()),
+                status: ItemStatus::Pending,
+                tasks: vec![Task {
+                    id: "task1".to_string(),
+                    title: "Task 1".to_string(),
+                    description: Some("Test task".to_string()),
+                    status: ItemStatus::Pending,
+                    subtasks: vec![Subtask {
+                        id: "subtask1".to_string(),
+                        task_id: "task1".to_string(),
+                        title: "Subtask 1".to_string(),
+                        description: Some("Test subtask".to_string()),
+                        criterion: None,
+                        status: ItemStatus::Pending,
+                        iterations: 0,
+                        evidence: vec![],
+                        plan: None,
+                        acceptance_criteria: vec!["PRD criterion 1".to_string()],
+                        iteration_records: vec![],
+                    }],
+                    evidence: vec![],
+                    gate_reports: vec![],
+                    dependencies: vec![],
+                    complexity: None,
+                    task_type: None,
+                }],
+                iterations: 0,
+                evidence: vec![],
+                gate_report: None,
+                orchestrator_state: None,
+                orchestrator_context: None,
+                dependencies: vec![],
+            }],
+        };
+
+        // Build tree with test strategy
+        let tree = TierTree::from_prd_with_base_path(&prd, 3, Some(temp_dir.path())).unwrap();
+
+        // Verify phase has merged criterion
+        let phase = tree.find_by_id("phase1").unwrap();
+        assert_eq!(phase.acceptance_criteria.len(), 1);
+        assert!(phase.acceptance_criteria[0].contains("Test strategy criterion 1"));
+
+        // Verify subtask has both PRD and test strategy criteria
+        let subtask = tree.find_by_id("subtask1").unwrap();
+        assert_eq!(subtask.acceptance_criteria.len(), 2);
+        assert_eq!(subtask.acceptance_criteria[0], "PRD criterion 1");
+        assert!(subtask.acceptance_criteria[1].contains("Test strategy criterion 2"));
+    }
+
+    #[test]
+    fn test_load_test_strategy_missing_file() {
+        use tempfile::TempDir;
+
+        let temp_dir = TempDir::new().unwrap();
+        let result = TierTree::load_test_strategy(Some(temp_dir.path()));
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn test_load_test_strategy_invalid_json() {
+        use tempfile::TempDir;
+
+        let temp_dir = TempDir::new().unwrap();
+        let strategy_dir = temp_dir.path().join(".puppet-master/interview");
+        fs::create_dir_all(&strategy_dir).unwrap();
+
+        let json_path = strategy_dir.join("test-strategy.json");
+        fs::write(&json_path, "{ invalid json }").unwrap();
+
+        let result = TierTree::load_test_strategy(Some(temp_dir.path()));
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn test_map_phase_id_to_tier_id() {
+        let prd = PRD {
+            metadata: PRDMetadata {
+                name: "Test Project".to_string(),
+                description: Some("Test description".to_string()),
+                version: "1.0.0".to_string(),
+                total_tasks: 0,
+                total_subtasks: 0,
+                completed_count: 0,
+                total_tests: 0,
+                passed_tests: 0,
+                created_at: None,
+                updated_at: None,
+            },
+            phases: vec![
+                Phase {
+                    id: "security_secrets".to_string(),
+                    title: "Security & Secrets".to_string(),
+                    goal: None,
+                    description: Some("Security phase".to_string()),
+                    status: ItemStatus::Pending,
+                    tasks: vec![],
+                    iterations: 0,
+                    evidence: vec![],
+                    gate_report: None,
+                    orchestrator_state: None,
+                    orchestrator_context: None,
+                    dependencies: vec![],
+                },
+                Phase {
+                    id: "phase2".to_string(),
+                    title: "Product UX".to_string(),
+                    goal: None,
+                    description: Some("UX design phase".to_string()),
+                    status: ItemStatus::Pending,
+                    tasks: vec![],
+                    iterations: 0,
+                    evidence: vec![],
+                    gate_report: None,
+                    orchestrator_state: None,
+                    orchestrator_context: None,
+                    dependencies: vec![],
+                },
+            ],
+        };
+
+        // Test exact match
+        assert_eq!(
+            TierTree::map_phase_id_to_tier_id("security_secrets", &prd),
+            Some("security_secrets".to_string())
+        );
+
+        // Test title matching
+        assert_eq!(
+            TierTree::map_phase_id_to_tier_id("product_ux", &prd),
+            Some("phase2".to_string())
+        );
+
+        // Test no match
+        assert_eq!(TierTree::map_phase_id_to_tier_id("nonexistent", &prd), None);
     }
 }

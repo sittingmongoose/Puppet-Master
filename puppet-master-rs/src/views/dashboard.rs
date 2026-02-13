@@ -3,19 +3,20 @@
 //! Displays real-time orchestration status, controls, progress, budgets, and output.
 //! Redesigned to match the Tauri React GUI's polished retro-futuristic design.
 
-use crate::app::Message;
-use crate::theme::{colors, fonts, tokens, AppTheme};
+use crate::app::{ContextMenuTarget, Message};
+use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::widgets::{
+    ContextMenuOptions, InterviewPanelData, context_menu_actions,
     interview_panel::interview_panel_compact,
-    progress_bar::{styled_progress_bar, ProgressSize, ProgressVariant},
+    progress_bar::{ProgressSize, ProgressVariant, styled_progress_bar},
     responsive::LayoutSize,
-    status_badge::{status_dot_typed, Status},
-    styled_button::{styled_button, ButtonVariant},
+    status_badge::{Status, status_dot_typed},
+    styled_button::{ButtonVariant, styled_button},
     terminal::LineType,
-    themed_panel, InterviewPanelData,
+    themed_panel,
 };
 use chrono::{DateTime, Utc};
-use iced::widget::{column, container, row, text, text_editor, Space};
+use iced::widget::{Space, column, container, mouse_area, row, text, text_editor};
 use iced::{Background, Border, Element, Length};
 use std::collections::HashMap;
 
@@ -102,6 +103,7 @@ pub fn view<'a>(
     progress: &'a ProgressState,
     _output: &'a [OutputLine],
     terminal_editor_content: &'a text_editor::Content,
+    terminal_context_menu_open: bool,
     budgets: &'a HashMap<String, BudgetDisplayInfo>,
     error: &'a Option<String>,
     _start_time: &'a Option<DateTime<Utc>>,
@@ -160,7 +162,8 @@ pub fn view<'a>(
     let current_item_panel = build_current_item_panel(current_item, theme);
     let progress_panel = build_progress_panel(progress, theme);
     let controls_panel = build_controls_panel(status, theme);
-    let output_panel = build_output_log_panel(terminal_editor_content, theme);
+    let output_panel =
+        build_output_log_panel(terminal_editor_content, terminal_context_menu_open, theme);
 
     if size.is_desktop_or_larger() {
         // Wide layout: 2x2 grid
@@ -325,10 +328,12 @@ fn build_project_panel<'a>(
 ) -> Element<'a, Message> {
     use crate::widgets::Page;
 
-    let mut content = column![text("PROJECT")
-        .size(tokens::font_size::LG)
-        .font(fonts::FONT_UI_BOLD)
-        .color(theme.ink()),]
+    let mut content = column![
+        text("PROJECT")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+    ]
     .spacing(tokens::spacing::MD);
 
     if let Some(project) = current_project {
@@ -388,10 +393,12 @@ fn build_current_item_panel<'a>(
     current_item: &'a Option<CurrentItem>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![text("CURRENT ITEM")
-        .size(tokens::font_size::LG)
-        .font(fonts::FONT_UI_BOLD)
-        .color(theme.ink()),]
+    let mut content = column![
+        text("CURRENT ITEM")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+    ]
     .spacing(tokens::spacing::MD);
 
     if let Some(item) = current_item {
@@ -506,10 +513,12 @@ fn build_current_item_panel<'a>(
 
 /// Build the Run Controls panel (matches React's ControlsPanel)
 fn build_controls_panel<'a>(status: &'a str, theme: &'a AppTheme) -> Element<'a, Message> {
-    let mut content = column![text("RUN CONTROLS")
-        .size(tokens::font_size::LG)
-        .font(fonts::FONT_UI_BOLD)
-        .color(theme.ink()),]
+    let mut content = column![
+        text("RUN CONTROLS")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+    ]
     .spacing(tokens::spacing::MD);
 
     // Button states based on orchestrator status
@@ -580,10 +589,12 @@ fn build_progress_panel<'a>(
     progress: &'a ProgressState,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![text("PROGRESS")
-        .size(tokens::font_size::LG)
-        .font(fonts::FONT_UI_BOLD)
-        .color(theme.ink()),]
+    let mut content = column![
+        text("PROGRESS")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+    ]
     .spacing(tokens::spacing::MD);
 
     // Overall progress bar (large, at top)
@@ -668,6 +679,7 @@ fn build_tier_progress_row<'a>(
 /// Build the Output Log panel (matches React's OutputPanel)
 fn build_output_log_panel<'a>(
     terminal_editor_content: &'a text_editor::Content,
+    terminal_context_menu_open: bool,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     // Terminal-like output panel with dark background and monospace font
@@ -693,22 +705,24 @@ fn build_output_log_panel<'a>(
         })
         .height(Length::Fill);
 
-    let log_container = container(terminal_editor)
-        .padding(tokens::spacing::MD)
-        .width(Length::Fill)
-        .height(Length::Fill)
-        .style(move |_iced_theme: &iced::Theme| container::Style {
-            background: Some(Background::Color(terminal_bg)),
-            border: Border {
-                color: terminal_border,
-                width: tokens::borders::THICK,
-                radius: tokens::radii::NONE.into(),
-            },
-            text_color: Some(colors::ACID_LIME),
-            ..container::Style::default()
-        });
+    let log_container = container(mouse_area(terminal_editor).on_right_press(
+        Message::OpenContextMenu(ContextMenuTarget::DashboardTerminal),
+    ))
+    .padding(tokens::spacing::MD)
+    .width(Length::Fill)
+    .height(Length::Fill)
+    .style(move |_iced_theme: &iced::Theme| container::Style {
+        background: Some(Background::Color(terminal_bg)),
+        border: Border {
+            color: terminal_border,
+            width: tokens::borders::THICK,
+            radius: tokens::radii::NONE.into(),
+        },
+        text_color: Some(colors::ACID_LIME),
+        ..container::Style::default()
+    });
 
-    let panel_content = column![
+    let mut panel_content = column![
         text("LIVE OUTPUT")
             .size(tokens::font_size::LG)
             .font(fonts::FONT_UI_BOLD)
@@ -716,6 +730,15 @@ fn build_output_log_panel<'a>(
         log_container,
     ]
     .spacing(tokens::spacing::MD);
+
+    if terminal_context_menu_open {
+        panel_content = panel_content.push(context_menu_actions(
+            theme,
+            ContextMenuOptions {
+                show_select_all: true,
+            },
+        ));
+    }
 
     themed_panel(panel_content, theme).into()
 }

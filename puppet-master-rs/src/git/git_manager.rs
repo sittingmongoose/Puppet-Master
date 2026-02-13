@@ -120,6 +120,14 @@ impl GitManager {
         Ok(result)
     }
 
+    /// Stage all changes (equivalent to `git add -A`).
+    pub async fn add_all(&self) -> Result<GitResult> {
+        debug!("Adding all changes");
+        let result = self.run_git_cmd(&["add", "-A"]).await?;
+        self.log_action("add_all", "-A", &result).await?;
+        Ok(result)
+    }
+
     /// Commit staged changes
     pub async fn commit(&self, message: &str) -> Result<GitResult> {
         info!("Committing: {}", message);

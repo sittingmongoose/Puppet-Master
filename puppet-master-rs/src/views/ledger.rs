@@ -115,19 +115,14 @@ pub fn view<'a>(
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
 
-    // Header with Refresh button
-    content = content.push(
-        row![
-            text("Event Ledger")
-                .size(tokens::font_size::DISPLAY)
-                .font(crate::theme::fonts::FONT_DISPLAY)
-                .color(theme.ink()),
-            Space::new().width(Length::Fill),
-            styled_button(theme, "REFRESH", ButtonVariant::Info).on_press(Message::LedgerRefresh),
-        ]
-        .spacing(tokens::spacing::MD)
-        .align_y(iced::Alignment::Center),
-    );
+    let header_actions = row![refresh_button(
+        theme,
+        Message::LedgerRefresh,
+        RefreshStyle::Uppercase(ButtonVariant::Info)
+    )]
+    .spacing(tokens::spacing::MD)
+    .align_y(iced::Alignment::Center);
+    content = content.push(page_header("Event Ledger", theme, header_actions));
 
     // Summary stats panel - count events by type
     let mut type_counts = std::collections::HashMap::new();

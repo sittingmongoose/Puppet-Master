@@ -2,7 +2,7 @@
 //!
 //! Redesigned modal system with dark backdrop, panel styling, and proper layering.
 
-use crate::theme::{colors, AppTheme};
+use crate::theme::{AppTheme, colors};
 use iced::widget::{button, column, container, row, scrollable, stack, text};
 use iced::{Alignment, Border, Color, Element, Length, Padding, Shadow, Vector};
 

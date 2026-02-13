@@ -245,7 +245,7 @@ pub fn view<'a>(
     // Responsive layout:
     // Wide (>= 1024px): Side-by-side (tree | details)
     // Narrow (< 1024px): Stacked (tree on top, details below)
-    let main_layout = if let Some(details) = selected_details {
+    let main_layout: Element<'a, Message> = if let Some(details) = selected_details {
         if size.is_desktop_or_larger() {
             // Wide: side-by-side row
             row![
@@ -258,9 +258,10 @@ pub fn view<'a>(
         } else {
             // Narrow: stacked column
             column![
-                container(tree_scroll).width(Length::Fill).height(Length::Fixed(300.0)),
-                container(render_details(details, tier_details_content, theme))
-                    .width(Length::Fill),
+                container(tree_scroll)
+                    .width(Length::Fill)
+                    .height(Length::Fixed(300.0)),
+                container(render_details(details, tier_details_content, theme)).width(Length::Fill),
             ]
             .spacing(tokens::spacing::LG)
             .into()

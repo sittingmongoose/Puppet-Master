@@ -139,7 +139,8 @@ impl AcceptanceCriteriaInjector {
             subtask.acceptance_criteria = converted_strings;
 
             // Also convert to Criterion objects if needed
-            let converted = self.convert_string_criteria_to_criterion(&subtask.acceptance_criteria)?;
+            let converted =
+                self.convert_string_criteria_to_criterion(&subtask.acceptance_criteria)?;
             if let Some(ref mut criterion) = subtask.criterion {
                 // If there's already a criterion, we'll keep it but may need to enhance it
                 if !self.is_machine_verifiable(criterion) {
@@ -190,7 +191,8 @@ impl AcceptanceCriteriaInjector {
             format!("file_exists: {}", text)
         } else if lower.contains("command") || lower.contains("run") || lower.contains("execute") {
             format!("command: {}", text)
-        } else if lower.contains("match") || lower.contains("pattern") || lower.contains("contain") {
+        } else if lower.contains("match") || lower.contains("pattern") || lower.contains("contain")
+        {
             format!("regex: {}", text)
         } else if lower.contains("test") || lower.contains("pass") {
             format!("command: {}", text)
@@ -245,7 +247,11 @@ impl AcceptanceCriteriaInjector {
     }
 
     /// Create a composite criterion from multiple criteria.
-    fn create_composite_criterion(&self, subtask_id: &str, criteria: &[Criterion]) -> Result<Criterion> {
+    fn create_composite_criterion(
+        &self,
+        subtask_id: &str,
+        criteria: &[Criterion],
+    ) -> Result<Criterion> {
         if criteria.is_empty() {
             return Err(anyhow!("Cannot create composite criterion from empty list"));
         }
@@ -314,7 +320,8 @@ impl AcceptanceCriteriaInjector {
             "file_exists"
         } else if lower.contains("command") || lower.contains("run") || lower.contains("execute") {
             "command"
-        } else if lower.contains("match") || lower.contains("pattern") || lower.contains("contain") {
+        } else if lower.contains("match") || lower.contains("pattern") || lower.contains("contain")
+        {
             "regex"
         } else if lower.contains("test") || lower.contains("pass") {
             "command"
@@ -365,12 +372,18 @@ impl AcceptanceCriteriaInjector {
     }
 
     /// Enhance a non-verifiable criterion to make it verifiable.
-    fn enhance_criterion(&self, criterion: &mut Criterion, title: &str, description: &Option<String>) {
+    fn enhance_criterion(
+        &self,
+        criterion: &mut Criterion,
+        title: &str,
+        description: &Option<String>,
+    ) {
         debug!("Enhancing criterion: {}", criterion.id);
 
         // If no verification method, infer one
         if criterion.verification_method.is_none() {
-            let method = self.infer_verification_method(title, description.as_deref().unwrap_or(""));
+            let method =
+                self.infer_verification_method(title, description.as_deref().unwrap_or(""));
             criterion.verification_method = Some(method);
         }
 
@@ -449,7 +462,11 @@ impl AcceptanceCriteriaInjector {
     }
 
     /// Generate a basic completion criterion.
-    fn generate_completion_criterion(&self, subtask: &Subtask, description: &str) -> Result<Criterion> {
+    fn generate_completion_criterion(
+        &self,
+        subtask: &Subtask,
+        description: &str,
+    ) -> Result<Criterion> {
         let verification_method = self.infer_verification_method(&subtask.title, description);
 
         Ok(Criterion {
@@ -463,7 +480,11 @@ impl AcceptanceCriteriaInjector {
     }
 
     /// Try to generate a file existence criterion based on content.
-    fn try_generate_file_criterion(&self, subtask: &Subtask, description: &str) -> Option<Criterion> {
+    fn try_generate_file_criterion(
+        &self,
+        subtask: &Subtask,
+        description: &str,
+    ) -> Option<Criterion> {
         let lower = description.to_lowercase();
 
         if lower.contains("file") || lower.contains("create") || lower.contains("implement") {
@@ -481,7 +502,11 @@ impl AcceptanceCriteriaInjector {
     }
 
     /// Try to generate a command execution criterion based on content.
-    fn try_generate_command_criterion(&self, subtask: &Subtask, description: &str) -> Option<Criterion> {
+    fn try_generate_command_criterion(
+        &self,
+        subtask: &Subtask,
+        description: &str,
+    ) -> Option<Criterion> {
         let lower = description.to_lowercase();
 
         if lower.contains("test") || lower.contains("verify") || lower.contains("check") {
@@ -635,7 +660,10 @@ mod tests {
         let criterion = injector
             .text_to_criterion("C1", "File must exist at path")
             .unwrap();
-        assert_eq!(criterion.verification_method, Some("file_exists".to_string()));
+        assert_eq!(
+            criterion.verification_method,
+            Some("file_exists".to_string())
+        );
 
         let criterion2 = injector
             .text_to_criterion("C2", "Run tests and verify pass")
@@ -669,12 +697,11 @@ mod tests {
     #[test]
     fn test_convert_string_criteria() {
         let injector = AcceptanceCriteriaInjector::default();
-        let strings = vec![
-            "Tests must pass".to_string(),
-            "File must exist".to_string(),
-        ];
+        let strings = vec!["Tests must pass".to_string(), "File must exist".to_string()];
 
-        let criteria = injector.convert_string_criteria_to_criterion(&strings).unwrap();
+        let criteria = injector
+            .convert_string_criteria_to_criterion(&strings)
+            .unwrap();
         assert_eq!(criteria.len(), 2);
         assert!(criteria[0].verification_method.is_some());
         assert!(criteria[1].verification_method.is_some());
@@ -696,10 +723,7 @@ mod tests {
         let mut prd = PRD::new("Test");
 
         let mut subtask = create_test_subtask("ST-001", "Feature");
-        subtask.acceptance_criteria = vec![
-            "Tests pass".to_string(),
-            "File exists".to_string(),
-        ];
+        subtask.acceptance_criteria = vec!["Tests pass".to_string(), "File exists".to_string()];
 
         let task = Task {
             id: "TK-001".to_string(),
@@ -738,7 +762,7 @@ mod tests {
         // Verify criterion was created from strings
         let subtask = &prd.phases[0].tasks[0].subtasks[0];
         assert!(subtask.criterion.is_some());
-        
+
         // Verify acceptance_criteria strings were converted to prefixed format
         assert!(!subtask.acceptance_criteria.is_empty());
         for criterion_str in &subtask.acceptance_criteria {
@@ -752,16 +776,24 @@ mod tests {
 
     #[test]
     fn test_prefixed_criterion_detection() {
-        assert!(AcceptanceCriteriaInjector::is_prefixed_criterion("command: cargo test"));
-        assert!(AcceptanceCriteriaInjector::is_prefixed_criterion("file_exists: src/main.rs"));
-        assert!(AcceptanceCriteriaInjector::is_prefixed_criterion("regex: Cargo.toml:name"));
-        assert!(!AcceptanceCriteriaInjector::is_prefixed_criterion("Tests must pass"));
+        assert!(AcceptanceCriteriaInjector::is_prefixed_criterion(
+            "command: cargo test"
+        ));
+        assert!(AcceptanceCriteriaInjector::is_prefixed_criterion(
+            "file_exists: src/main.rs"
+        ));
+        assert!(AcceptanceCriteriaInjector::is_prefixed_criterion(
+            "regex: Cargo.toml:name"
+        ));
+        assert!(!AcceptanceCriteriaInjector::is_prefixed_criterion(
+            "Tests must pass"
+        ));
     }
 
     #[test]
     fn test_text_to_prefixed_string() {
         let injector = AcceptanceCriteriaInjector::default();
-        
+
         assert_eq!(
             injector.text_to_prefixed_string("File must exist at path"),
             "file_exists: File must exist at path"
@@ -779,7 +811,7 @@ mod tests {
     #[test]
     fn test_criterion_to_prefixed_string() {
         let injector = AcceptanceCriteriaInjector::default();
-        
+
         let criterion1 = Criterion {
             id: "C1".to_string(),
             description: "Check file".to_string(),
@@ -792,7 +824,7 @@ mod tests {
             injector.criterion_to_prefixed_string(&criterion1),
             "file_exists: /path/to/file"
         );
-        
+
         let criterion2 = Criterion {
             id: "C2".to_string(),
             description: "Run command".to_string(),
@@ -810,18 +842,30 @@ mod tests {
     #[test]
     fn test_parse_prefixed_criterion() {
         let injector = AcceptanceCriteriaInjector::default();
-        
-        let criterion1 = injector.text_to_criterion("C1", "command: cargo test").unwrap();
+
+        let criterion1 = injector
+            .text_to_criterion("C1", "command: cargo test")
+            .unwrap();
         assert_eq!(criterion1.verification_method, Some("command".to_string()));
         assert_eq!(criterion1.expected, Some("cargo test".to_string()));
-        
-        let criterion2 = injector.text_to_criterion("C2", "file_exists: Cargo.toml").unwrap();
-        assert_eq!(criterion2.verification_method, Some("file_exists".to_string()));
+
+        let criterion2 = injector
+            .text_to_criterion("C2", "file_exists: Cargo.toml")
+            .unwrap();
+        assert_eq!(
+            criterion2.verification_method,
+            Some("file_exists".to_string())
+        );
         assert_eq!(criterion2.expected, Some("Cargo.toml".to_string()));
-        
-        let criterion3 = injector.text_to_criterion("C3", "regex: Cargo.toml:name.*puppet").unwrap();
+
+        let criterion3 = injector
+            .text_to_criterion("C3", "regex: Cargo.toml:name.*puppet")
+            .unwrap();
         assert_eq!(criterion3.verification_method, Some("regex".to_string()));
-        assert_eq!(criterion3.expected, Some("Cargo.toml:name.*puppet".to_string()));
+        assert_eq!(
+            criterion3.expected,
+            Some("Cargo.toml:name.*puppet".to_string())
+        );
     }
 
     #[test]
@@ -836,15 +880,22 @@ mod tests {
         for phase in &prd.phases {
             for task in &phase.tasks {
                 for subtask in &task.subtasks {
-                    assert!(!subtask.acceptance_criteria.is_empty(), 
-                        "Subtask {} should have acceptance_criteria", subtask.id);
-                    
+                    assert!(
+                        !subtask.acceptance_criteria.is_empty(),
+                        "Subtask {} should have acceptance_criteria",
+                        subtask.id
+                    );
+
                     // Verify at least one is in prefixed format
-                    let has_prefixed = subtask.acceptance_criteria.iter().any(|c| {
-                        AcceptanceCriteriaInjector::is_prefixed_criterion(c)
-                    });
-                    assert!(has_prefixed, 
-                        "Subtask {} should have at least one prefixed criterion", subtask.id);
+                    let has_prefixed = subtask
+                        .acceptance_criteria
+                        .iter()
+                        .any(|c| AcceptanceCriteriaInjector::is_prefixed_criterion(c));
+                    assert!(
+                        has_prefixed,
+                        "Subtask {} should have at least one prefixed criterion",
+                        subtask.id
+                    );
                 }
             }
         }

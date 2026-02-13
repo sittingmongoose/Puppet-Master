@@ -3,8 +3,8 @@
 //! Provides tooltip assistance throughout the application with variant support
 //! for Expert vs ELI5 (Explain Like I'm 5) modes.
 
-use crate::theme::{tokens, AppTheme};
-use crate::widgets::tooltips::{get_tooltip, TooltipVariant};
+use crate::theme::{AppTheme, tokens};
+use crate::widgets::tooltips::{TooltipVariant, get_tooltip};
 use iced::widget::{container, text, tooltip};
 use iced::{Border, Element, Padding};
 

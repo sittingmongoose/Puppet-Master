@@ -3,7 +3,7 @@
 use crate::theme::colors;
 use iced::mouse;
 use iced::widget::canvas::{Cache, Geometry, Path, Stroke};
-use iced::widget::{canvas, column, text, Canvas};
+use iced::widget::{Canvas, canvas, column, text};
 use iced::{Color, Element, Point, Rectangle};
 use std::f32::consts::PI;
 

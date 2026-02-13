@@ -3,9 +3,9 @@
 //! Provides styled panel containers that follow the retro-futuristic design language
 //! with sharp borders, hard shadows, and paper textures.
 
-use crate::theme::{colors, styles, tokens, AppTheme};
+use crate::theme::{AppTheme, colors, styles, tokens};
 use iced::font::{Font, Weight};
-use iced::widget::{column, container, row, text, Column, Container, Space};
+use iced::widget::{Column, Container, Space, column, container, row, text};
 use iced::{Alignment, Border, Element, Length, Padding, Shadow, Vector};
 
 /// Create a styled panel container with cross-hatch shadow and themed background

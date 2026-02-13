@@ -181,7 +181,9 @@ pub fn generate_system_prompt(
 
     // Additional context files / reference materials
     if let Some(ctx) = &config.context_content {
-        parts.push(format!("\n**Reference materials / additional context:**\n{ctx}"));
+        parts.push(format!(
+            "\n**Reference materials / additional context:**\n{ctx}"
+        ));
     }
 
     // Domain-specific guidance

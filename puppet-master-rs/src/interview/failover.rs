@@ -115,7 +115,10 @@ impl FailoverManager {
 /// Checks if an error message indicates quota exhaustion or rate limiting.
 pub fn is_quota_error(error: &str) -> bool {
     let category = ErrorCategory::detect(error);
-    matches!(category, ErrorCategory::QuotaExceeded | ErrorCategory::RateLimit)
+    matches!(
+        category,
+        ErrorCategory::QuotaExceeded | ErrorCategory::RateLimit
+    )
 }
 
 #[cfg(test)]

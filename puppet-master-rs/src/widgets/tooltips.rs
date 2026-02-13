@@ -136,11 +136,388 @@ static TOOLTIPS: Lazy<HashMap<&'static str, TooltipEntry>> = Lazy::new(|| {
         );
 
     // ═══════════════════════════════════════════════════════════════
-    // Future: Add tooltips for other tabs as needed
+    // Wizard Step 0: Project Setup
     // ═══════════════════════════════════════════════════════════════
-    // map.insert("tiers.tier1_provider", TooltipEntry::new(...));
-    // map.insert("branching.base_branch", TooltipEntry::new(...));
-    // etc.
+
+    map.insert(
+        "wizard.project_type",
+        TooltipEntry::new(
+            "Choose between greenfield or existing codebase",
+            "New Project: Starting fresh from scratch. Existing Project: Adding features or making changes to code that already exists."
+        )
+    );
+
+    map.insert(
+        "wizard.project_name",
+        TooltipEntry::new(
+            "Project identifier (lowercase, hyphens ok)",
+            "The name of your project. Use lowercase letters and hyphens instead of spaces, like 'my-awesome-app'. This becomes your folder name and GitHub repo name."
+        )
+    );
+
+    map.insert(
+        "wizard.project_path",
+        TooltipEntry::new(
+            "Local directory where project files will live",
+            "The folder on your computer where all your project files will be stored. The system will create this folder if it doesn't exist yet."
+        )
+    );
+
+    map.insert(
+        "wizard.github_repo",
+        TooltipEntry::new(
+            "Link to GitHub for version control and collaboration",
+            "A GitHub repository is like a shared folder in the cloud where all your code lives. It tracks every change, lets multiple people work together, and keeps backups. You can create one automatically or connect an existing one."
+        )
+    );
+
+    map.insert(
+        "wizard.github_url",
+        TooltipEntry::new(
+            "GitHub repository URL (https://github.com/user/repo)",
+            "The web address of your GitHub repository. Should look like 'https://github.com/your-username/your-repo-name'. Copy and paste this from your browser."
+        )
+    );
+
+    map.insert(
+        "wizard.github_visibility",
+        TooltipEntry::new(
+            "Public (anyone can see) or Private (invite-only)",
+            "Public: Anyone on the internet can see your code. Private: Only people you invite can see it. Most personal projects start private until ready to share."
+        )
+    );
+
+    map.insert(
+        "wizard.use_interview",
+        TooltipEntry::new(
+            "Enable interactive AI-driven requirements gathering",
+            "When enabled, an AI interviewer will ask you detailed questions to build a complete project specification. This ensures zero ambiguity and catches requirements gaps early. Recommended for all new projects. If disabled, you'll provide requirements as a text document."
+        )
+    );
+
+    // ═══════════════════════════════════════════════════════════════
+    // Wizard Tier Configuration
+    // ═══════════════════════════════════════════════════════════════
+
+    map.insert(
+        "tier.platform",
+        TooltipEntry::new(
+            "AI service provider for this tier",
+            "The AI service used at this level. Different tiers can use different AI services. Claude is best for complex reasoning, Cursor is fast for code, Copilot is good for quick iterations."
+        )
+    );
+
+    map.insert(
+        "tier.model",
+        TooltipEntry::new(
+            "Specific AI model identifier",
+            "The exact AI brain to use. Each platform offers different models with different capabilities. Larger models are smarter but slower and more expensive."
+        )
+    );
+
+    map.insert(
+        "tier.reasoning",
+        TooltipEntry::new(
+            "Inference depth: low/medium/high",
+            "How hard the AI thinks before responding. Low is fast but simple. Medium balances speed and quality. High takes longer but catches edge cases and thinks more deeply about problems."
+        )
+    );
+
+    map.insert(
+        "tier.plan_mode",
+        TooltipEntry::new(
+            "Enable multi-step planning before execution",
+            "When enabled, the AI creates a detailed plan before writing code. This prevents mistakes but adds thinking time. Recommended for complex tasks, optional for simple iterations."
+        )
+    );
+
+    map.insert(
+        "tier.ask_mode",
+        TooltipEntry::new(
+            "Allow AI to ask clarifying questions",
+            "When enabled, the AI can ask you questions if something is unclear or ambiguous. This prevents wrong assumptions but requires you to be available. Turn off for overnight autonomous runs."
+        )
+    );
+
+    map.insert(
+        "tier.output_format",
+        TooltipEntry::new(
+            "Response format: markdown/json/yaml",
+            "How the AI formats its responses. Markdown is human-readable text with formatting. JSON is structured data for machines. YAML is structured but easier to read than JSON."
+        )
+    );
+
+    // ═══════════════════════════════════════════════════════════════
+    // Budget Tab Tooltips
+    // ═══════════════════════════════════════════════════════════════
+
+    map.insert(
+        "budget.max_calls_per_run",
+        TooltipEntry::new(
+            "API call limit per orchestration session",
+            "Maximum number of times the system can call AI services in a single run. Each question to the AI is one call. Set limits to prevent runaway costs. 100 calls can cost $5-50 depending on the model."
+        )
+    );
+
+    map.insert(
+        "budget.max_calls_per_hour",
+        TooltipEntry::new(
+            "API call rate limit per hour",
+            "Maximum AI calls allowed per hour. Prevents burning through your budget too quickly. Useful for long-running autonomous builds that span multiple hours."
+        )
+    );
+
+    map.insert(
+        "budget.max_calls_per_day",
+        TooltipEntry::new(
+            "API call rate limit per day",
+            "Maximum AI calls allowed in a 24-hour period. Safety net for multi-day autonomous builds. Set this based on your monthly AI service budget divided by 30."
+        )
+    );
+
+    map.insert(
+        "budget.unlimited_auto_mode",
+        TooltipEntry::new(
+            "Disable budget limits (use with caution)",
+            "WARNING: When enabled, the system ignores all budget limits and keeps calling AI services until the task completes. Only use if you trust the AI completely and have unlimited funds. Can get very expensive."
+        )
+    );
+
+    // ═══════════════════════════════════════════════════════════════
+    // Orchestrator Tab Tooltips
+    // ═══════════════════════════════════════════════════════════════
+
+    map.insert(
+        "orchestrator.log_level",
+        TooltipEntry::new(
+            "Verbosity: error/warn/info/debug/trace",
+            "How much detail to log. Error: only failures. Warn: problems that didn't stop execution. Info: major milestones. Debug: detailed step-by-step. Trace: everything including internal plumbing."
+        )
+    );
+
+    map.insert(
+        "orchestrator.process_timeout",
+        TooltipEntry::new(
+            "Max milliseconds before killing hung processes",
+            "How long to wait before forcibly terminating a stuck AI agent or subprocess. Set higher for slow models or complex tasks. 60000ms = 1 minute."
+        )
+    );
+
+    map.insert(
+        "orchestrator.parallel_iterations",
+        TooltipEntry::new(
+            "Enable concurrent execution of independent tasks",
+            "When enabled, multiple AI agents can work on different parts of your project simultaneously. Faster but uses more resources and can be harder to debug if something goes wrong."
+        )
+    );
+
+    map.insert(
+        "orchestrator.intensive_logging",
+        TooltipEntry::new(
+            "Log all AI prompts and responses to disk",
+            "Records every single conversation with the AI to files. Essential for debugging why the AI made certain decisions, but generates massive log files quickly."
+        )
+    );
+
+    map.insert(
+        "orchestrator.kill_agent_on_failure",
+        TooltipEntry::new(
+            "Terminate stuck agents rather than retry",
+            "When enabled, failed agents are immediately killed instead of retrying. Prevents infinite loops but may abandon recoverable tasks."
+        )
+    );
+
+    map.insert(
+        "orchestrator.enable_parallel",
+        TooltipEntry::new(
+            "Allow parallel phase/task execution",
+            "Execute multiple phases or tasks at the same time when they don't depend on each other. Dramatically faster but requires more system resources."
+        )
+    );
+
+    map.insert(
+        "orchestrator.max_parallel_phases",
+        TooltipEntry::new(
+            "Maximum concurrent phases (0 = unlimited)",
+            "How many high-level project phases can run at once. Higher = faster but harder to track. Most projects run 1-3 phases in parallel."
+        )
+    );
+
+    map.insert(
+        "orchestrator.max_parallel_tasks",
+        TooltipEntry::new(
+            "Maximum concurrent tasks (0 = unlimited)",
+            "How many individual tasks can run simultaneously. Each task is one AI agent working on one problem. Higher = faster but more resource-intensive."
+        )
+    );
+
+    // ═══════════════════════════════════════════════════════════════
+    // Memory (Checkpointing) Tooltips
+    // ═══════════════════════════════════════════════════════════════
+
+    map.insert(
+        "memory.enabled",
+        TooltipEntry::new(
+            "Enable periodic state snapshots",
+            "Save progress snapshots so you can resume if the system crashes or you stop the build. Like video game save points. Strongly recommended for long builds."
+        )
+    );
+
+    map.insert(
+        "memory.interval_seconds",
+        TooltipEntry::new(
+            "Seconds between automatic checkpoints",
+            "How often to save progress. Shorter intervals mean less lost work if something crashes, but more disk writes. 300 seconds (5 minutes) is a good balance."
+        )
+    );
+
+    map.insert(
+        "memory.max_checkpoints",
+        TooltipEntry::new(
+            "Number of checkpoint files to retain",
+            "How many old snapshots to keep. Older checkpoints are deleted. 10 checkpoints at 5-minute intervals gives you a 50-minute undo history."
+        )
+    );
+
+    map.insert(
+        "memory.on_subtask_complete",
+        TooltipEntry::new(
+            "Save after each subtask finishes",
+            "Create a checkpoint every time a subtask completes successfully. More granular save points but more disk writes. Recommended for critical builds."
+        )
+    );
+
+    map.insert(
+        "memory.on_shutdown",
+        TooltipEntry::new(
+            "Save state when orchestrator stops",
+            "Always save progress when the system shuts down gracefully. Ensures you can resume even if you manually stop the build."
+        )
+    );
+
+    // ═══════════════════════════════════════════════════════════════
+    // Network Tab Tooltips
+    // ═══════════════════════════════════════════════════════════════
+
+    map.insert(
+        "network.enabled",
+        TooltipEntry::new(
+            "Enable PWA server for remote control",
+            "Turn on the web server that lets you control the build from a browser on any device. Essential for the mobile PWA and remote monitoring."
+        )
+    );
+
+    map.insert(
+        "network.max_repetitions",
+        TooltipEntry::new(
+            "Retry limit for failed requests",
+            "How many times to retry a network request before giving up. Protects against temporary internet hiccups. 3-5 is typical."
+        )
+    );
+
+    map.insert(
+        "network.suppress_reply_relay",
+        TooltipEntry::new(
+            "Skip echoing responses back to requester",
+            "Advanced: Don't send confirmation messages back after processing requests. Reduces network traffic but makes debugging harder."
+        )
+    );
+
+    map.insert(
+        "network.lan_mode",
+        TooltipEntry::new(
+            "Local network only, no internet exposure",
+            "Restricts the PWA server to your local network only. Safe for home use. Turn off if you need to access the build from outside your network (requires VPN or port forwarding)."
+        )
+    );
+
+    map.insert(
+        "network.trust_proxy",
+        TooltipEntry::new(
+            "Accept X-Forwarded-For headers from reverse proxy",
+            "Advanced: Trust proxy servers to tell us the real client IP address. Enable if you're behind Cloudflare, nginx, or similar. Leave off otherwise."
+        )
+    );
+
+    map.insert(
+        "network.allowed_origins",
+        TooltipEntry::new(
+            "CORS whitelist for browser requests",
+            "List of websites allowed to connect to your build server. Prevents random websites from controlling your build. Use '*' for public access (not recommended) or specific domains for security."
+        )
+    );
+
+    // ═══════════════════════════════════════════════════════════════
+    // Verification Tab Tooltips
+    // ═══════════════════════════════════════════════════════════════
+
+    map.insert(
+        "verification.required_checks",
+        TooltipEntry::new(
+            "Mandatory verification gates before merging",
+            "Tests and checks that MUST pass before code is accepted. Examples: unit tests, linting, type checking, security scans. Prevents broken code from being merged."
+        )
+    );
+
+    map.insert(
+        "verification.auto_fix_enabled",
+        TooltipEntry::new(
+            "Allow AI to automatically fix failed checks",
+            "When tests fail, let the AI try to fix them automatically. Fast but may introduce unexpected changes. Turn off if you want manual review of all fixes."
+        )
+    );
+
+    map.insert(
+        "verification.max_auto_fix_attempts",
+        TooltipEntry::new(
+            "Retry limit for automated fixes",
+            "How many times the AI can try to fix a failing test before giving up and asking for human help. 3-5 prevents infinite fix loops."
+        )
+    );
+
+    // ═══════════════════════════════════════════════════════════════
+    // Branching Tab Tooltips
+    // ═══════════════════════════════════════════════════════════════
+
+    map.insert(
+        "branching.strategy",
+        TooltipEntry::new(
+            "Git workflow: main-only/feature-branch/gitflow",
+            "How the system manages code branches. Main-only: everything committed directly (fast, risky). Feature-branch: each task gets its own branch (safe, organized). Gitflow: multiple long-lived branches (complex, enterprise-grade)."
+        )
+    );
+
+    map.insert(
+        "branching.base_branch",
+        TooltipEntry::new(
+            "Primary branch (usually 'main' or 'master')",
+            "The main trunk of your project. All features eventually merge back here. This is the 'production' or 'published' version of your code."
+        )
+    );
+
+    map.insert(
+        "branching.use_worktrees",
+        TooltipEntry::new(
+            "Enable parallel work via git worktrees",
+            "Let multiple AI agents work on different branches simultaneously without conflicts. Like having multiple desks instead of one. Highly recommended for parallel execution."
+        )
+    );
+
+    map.insert(
+        "branching.auto_merge_on_success",
+        TooltipEntry::new(
+            "Merge passing branches automatically",
+            "When all tests pass, merge the branch back to main without waiting for approval. Fast but removes human oversight. Only enable if you trust your verification gates completely."
+        )
+    );
+
+    map.insert(
+        "branching.delete_on_merge",
+        TooltipEntry::new(
+            "Clean up merged branches automatically",
+            "Delete feature branches after merging to keep your repo tidy. Standard practice. Turn off if you want to keep branch history forever."
+        )
+    );
 
     map
 });

@@ -132,9 +132,10 @@ impl InterviewOrchestrator {
             config.backup_platforms.clone(),
         );
 
-        let research_engine = config.research_config.as_ref().map(|rc| {
-            ResearchEngine::new(rc.clone(), &config.base_dir)
-        });
+        let research_engine = config
+            .research_config
+            .as_ref()
+            .map(|rc| ResearchEngine::new(rc.clone(), &config.base_dir));
 
         Self {
             config,
@@ -308,11 +309,15 @@ impl InterviewOrchestrator {
 
             let phase_qa = self.state.history[self.phase_qa_start_index..].to_vec();
 
+            // Phase number is 1-based and equals current index + 1
+            let phase_number = self.completed_phases.len() + 1;
+
             let doc_path = DocumentWriter::write_phase_document(
                 phase_def,
                 &phase_decisions,
                 &phase_qa,
                 &self.config.output_dir,
+                phase_number,
             )?;
 
             self.completed_phases.push(CompletedPhase {
@@ -328,7 +333,52 @@ impl InterviewOrchestrator {
         self.phase_qa_start_index = self.state.history.len();
 
         if self.phase_manager.is_complete() {
-            // All phases done.
+            // After completing all 8 standard phases, detect features for dynamic phases
+            let current_phase_count = self.phase_manager.total_phases();
+
+            // Only detect if we just finished the 8th phase (standard phases complete)
+            if current_phase_count == 8 {
+                let detected_features =
+                    super::feature_detector::detect_features_from_state(&self.state);
+
+                if !detected_features.is_empty() {
+                    log::info!(
+                        "Detected {} features for dynamic phases: {:?}",
+                        detected_features.len(),
+                        detected_features
+                            .iter()
+                            .map(|f| &f.name)
+                            .collect::<Vec<_>>()
+                    );
+
+                    // Add dynamic phases for detected features
+                    for feature in detected_features {
+                        let phase_id = format!("feature-{}", feature.id);
+                        self.phase_manager.add_dynamic_phase(
+                            &phase_id,
+                            &feature.name,
+                            &feature.description,
+                        );
+                    }
+
+                    // Reset to continue with first dynamic phase
+                    self.state.current_domain_phase = 8; // First dynamic phase
+                    self.state.ai_context.clear();
+                    self.last_completion_data = None;
+
+                    self.emit(OrchestratorEvent::PhaseChange {
+                        phase: InterviewPhase::Questioning,
+                        domain_phase: 8,
+                    });
+
+                    self.save_state()?;
+
+                    // Return fresh system prompt for the first dynamic phase
+                    return Ok(Some(self.current_system_prompt()));
+                }
+            }
+
+            // All phases done (including dynamic ones if any).
             state::update_phase(&mut self.state, InterviewPhase::Generating);
             self.emit(OrchestratorEvent::PhaseChange {
                 phase: InterviewPhase::Generating,
@@ -358,10 +408,8 @@ impl InterviewOrchestrator {
     /// Optionally generates AGENTS.md and test strategy based on configuration.
     pub fn complete(&mut self) -> Result<InterviewCompletionResult> {
         // Run completion validation
-        let validation = super::completion_validator::validate_completion(
-            &self.state,
-            &self.phase_manager,
-        );
+        let validation =
+            super::completion_validator::validate_completion(&self.state, &self.phase_manager);
 
         // Block completion if there are errors
         if !validation.is_valid {
@@ -522,7 +570,7 @@ impl InterviewOrchestrator {
     pub fn get_research_context(&self) -> Option<String> {
         let phase_index = self.phase_manager.current_index();
         let phase = self.phase_manager.current_phase()?;
-        
+
         self.research_engine
             .as_ref()
             .and_then(|engine| engine.load_latest_research(phase_index, &phase.id).ok())
@@ -717,7 +765,10 @@ mod tests {
 
         // Set context.
         orch.set_reference_context("Use Rust and Tauri".to_string());
-        assert_eq!(orch.get_reference_context(), Some(&"Use Rust and Tauri".to_string()));
+        assert_eq!(
+            orch.get_reference_context(),
+            Some(&"Use Rust and Tauri".to_string())
+        );
 
         // Verify it appears in the system prompt.
         let prompt = orch.current_system_prompt();

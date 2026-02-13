@@ -76,7 +76,7 @@ impl TechnologyExtractor {
         for phase in phases {
             // Prioritize architecture phase
             let is_arch = phase.definition.id == "architecture_technology";
-            
+
             // Extract from decisions
             for decision in &phase.decisions {
                 if let Some((cat, entries)) = self.extract_from_text(&decision.summary) {
@@ -167,10 +167,7 @@ impl Default for TechnologyExtractor {
 }
 
 /// Writes the technology matrix document to disk.
-pub fn write_technology_matrix(
-    phases: &[CompletedPhase],
-    output_dir: &Path,
-) -> Result<PathBuf> {
+pub fn write_technology_matrix(phases: &[CompletedPhase], output_dir: &Path) -> Result<PathBuf> {
     let extractor = TechnologyExtractor::new();
     let tech_by_category = extractor.extract(phases);
 
@@ -181,18 +178,24 @@ pub fn write_technology_matrix(
         chrono::Utc::now().format("%Y-%m-%d %H:%M:%S UTC")
     ));
 
-    content.push_str("This document lists all pinned technology versions identified during the interview.\n\n");
+    content.push_str(
+        "This document lists all pinned technology versions identified during the interview.\n\n",
+    );
     content.push_str("---\n\n");
 
     if tech_by_category.is_empty() {
-        content.push_str("*No specific technology versions were explicitly pinned during the interview.*\n\n");
-        content.push_str("**Note:** Ensure all production dependencies have specific versions pinned.\n");
+        content.push_str(
+            "*No specific technology versions were explicitly pinned during the interview.*\n\n",
+        );
+        content.push_str(
+            "**Note:** Ensure all production dependencies have specific versions pinned.\n",
+        );
     } else {
         for (category, entries) in &tech_by_category {
             content.push_str(&format!("## {}\n\n", category.as_str()));
             content.push_str("| Technology | Version | Notes |\n");
             content.push_str("|------------|---------|-------|\n");
-            
+
             for entry in entries {
                 let notes = if entry.notes.is_empty() {
                     "-"
@@ -370,56 +373,53 @@ mod tests {
     #[test]
     fn test_extract_from_phases() {
         let extractor = TechnologyExtractor::new();
-        let phases = vec![
-            make_test_phase(
-                "architecture_technology",
-                vec![Decision {
-                    phase: "architecture_technology".to_string(),
-                    summary: "Using Rust 1.75.0 and PostgreSQL 15.2".to_string(),
-                    reasoning: String::new(),
-                    timestamp: "2026-01-01T00:00:00Z".to_string(),
-                }],
-            ),
-        ];
+        let phases = vec![make_test_phase(
+            "architecture_technology",
+            vec![Decision {
+                phase: "architecture_technology".to_string(),
+                summary: "Using Rust 1.75.0 and PostgreSQL 15.2".to_string(),
+                reasoning: String::new(),
+                timestamp: "2026-01-01T00:00:00Z".to_string(),
+            }],
+        )];
 
         let result = extractor.extract(&phases);
         assert!(!result.is_empty());
         // Should find at least Rust
-        let has_rust = result.iter().any(|(_, entries)| {
-            entries.iter().any(|e| e.name == "Rust")
-        });
+        let has_rust = result
+            .iter()
+            .any(|(_, entries)| entries.iter().any(|e| e.name == "Rust"));
         assert!(has_rust);
     }
 
     #[test]
     fn test_deduplication() {
         let extractor = TechnologyExtractor::new();
-        let phases = vec![
-            make_test_phase(
-                "architecture_technology",
-                vec![
-                    Decision {
-                        phase: "architecture_technology".to_string(),
-                        summary: "Using Rust 1.75.0".to_string(),
-                        reasoning: String::new(),
-                        timestamp: "2026-01-01T00:00:00Z".to_string(),
-                    },
-                    Decision {
-                        phase: "architecture_technology".to_string(),
-                        summary: "Rust 1.75.0 for backend".to_string(),
-                        reasoning: String::new(),
-                        timestamp: "2026-01-01T00:00:00Z".to_string(),
-                    },
-                ],
-            ),
-        ];
+        let phases = vec![make_test_phase(
+            "architecture_technology",
+            vec![
+                Decision {
+                    phase: "architecture_technology".to_string(),
+                    summary: "Using Rust 1.75.0".to_string(),
+                    reasoning: String::new(),
+                    timestamp: "2026-01-01T00:00:00Z".to_string(),
+                },
+                Decision {
+                    phase: "architecture_technology".to_string(),
+                    summary: "Rust 1.75.0 for backend".to_string(),
+                    reasoning: String::new(),
+                    timestamp: "2026-01-01T00:00:00Z".to_string(),
+                },
+            ],
+        )];
 
         let result = extractor.extract(&phases);
-        let rust_entries: Vec<_> = result.iter()
+        let rust_entries: Vec<_> = result
+            .iter()
             .flat_map(|(_, entries)| entries.iter())
             .filter(|e| e.name == "Rust")
             .collect();
-        
+
         // Should be deduplicated to 1
         assert_eq!(rust_entries.len(), 1);
     }

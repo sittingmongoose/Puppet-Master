@@ -32,7 +32,7 @@ mod acceptance_criteria_integration_tests {
             for task in &phase.tasks {
                 for subtask in &task.subtasks {
                     println!("Checking subtask: {} - {}", subtask.id, subtask.title);
-                    
+
                     // Verify acceptance_criteria strings exist
                     assert!(
                         !subtask.acceptance_criteria.is_empty(),
@@ -49,8 +49,7 @@ mod acceptance_criteria_integration_tests {
                     assert!(
                         has_prefixed,
                         "Subtask {} should have at least one prefixed criterion. Got: {:?}",
-                        subtask.id,
-                        subtask.acceptance_criteria
+                        subtask.id, subtask.acceptance_criteria
                     );
 
                     println!("  ✓ Acceptance criteria: {:?}", subtask.acceptance_criteria);
@@ -112,7 +111,7 @@ mod acceptance_criteria_integration_tests {
         // Verify prefixed format
         let subtask = &prd.phases[0].tasks[0].subtasks[0];
         assert!(!subtask.acceptance_criteria.is_empty());
-        
+
         for criterion_str in &subtask.acceptance_criteria {
             println!("Criterion: {}", criterion_str);
             assert!(
@@ -130,9 +129,15 @@ mod acceptance_criteria_integration_tests {
         // Test the parsing logic used by orchestrator
         fn parse_criterion(desc: &str) -> (Option<String>, Option<String>) {
             if let Some(content) = desc.strip_prefix("command:") {
-                return (Some("command".to_string()), Some(content.trim().to_string()));
+                return (
+                    Some("command".to_string()),
+                    Some(content.trim().to_string()),
+                );
             } else if let Some(content) = desc.strip_prefix("file_exists:") {
-                return (Some("file_exists".to_string()), Some(content.trim().to_string()));
+                return (
+                    Some("file_exists".to_string()),
+                    Some(content.trim().to_string()),
+                );
             } else if let Some(content) = desc.strip_prefix("regex:") {
                 return (Some("regex".to_string()), Some(content.trim().to_string()));
             }

@@ -79,7 +79,10 @@ impl ResearchEngine {
     /// Creates a new research engine with the given configuration.
     pub fn new(config: ResearchConfig, base_dir: &Path) -> Self {
         let research_dir = base_dir.join(".puppet-master").join("research");
-        Self { config, research_dir }
+        Self {
+            config,
+            research_dir,
+        }
     }
 
     /// Ensures the research directory exists.
@@ -92,7 +95,12 @@ impl ResearchEngine {
     }
 
     /// Generates the filename for saving research results.
-    fn research_filename(&self, phase_index: usize, phase_id: &str, research_type: ResearchType) -> String {
+    fn research_filename(
+        &self,
+        phase_index: usize,
+        phase_id: &str,
+        research_type: ResearchType,
+    ) -> String {
         format!(
             "phase-{:02}-{}-{}.md",
             phase_index + 1,
@@ -109,10 +117,10 @@ impl ResearchEngine {
         result: &ResearchResult,
     ) -> Result<PathBuf> {
         self.ensure_research_dir()?;
-        
+
         let filename = self.research_filename(phase_index, phase_id, result.research_type);
         let path = self.research_dir.join(&filename);
-        
+
         let mut content = format!(
             "# Research: {} (Phase {}: {})\n\n",
             result.research_type,
@@ -125,10 +133,10 @@ impl ResearchEngine {
         for source in &result.sources {
             content.push_str(&format!("- {}\n", source));
         }
-        
+
         std::fs::write(&path, content)
             .with_context(|| format!("Failed to write research to {}", path.display()))?;
-        
+
         info!("Saved research to: {}", path.display());
         Ok(path)
     }
@@ -137,9 +145,9 @@ impl ResearchEngine {
     pub fn load_latest_research(&self, phase_index: usize, phase_id: &str) -> Result<String> {
         let pre_filename = self.research_filename(phase_index, phase_id, ResearchType::PreQuestion);
         let post_filename = self.research_filename(phase_index, phase_id, ResearchType::PostAnswer);
-        
+
         let mut combined = String::new();
-        
+
         // Load pre-question research if available
         let pre_path = self.research_dir.join(&pre_filename);
         if pre_path.exists() {
@@ -149,11 +157,15 @@ impl ResearchEngine {
                     combined.push_str("\n\n---\n\n");
                 }
                 Err(e) => {
-                    warn!("Failed to load pre-question research from {}: {}", pre_path.display(), e);
+                    warn!(
+                        "Failed to load pre-question research from {}: {}",
+                        pre_path.display(),
+                        e
+                    );
                 }
             }
         }
-        
+
         // Load post-answer research if available
         let post_path = self.research_dir.join(&post_filename);
         if post_path.exists() {
@@ -162,11 +174,15 @@ impl ResearchEngine {
                     combined.push_str(&content);
                 }
                 Err(e) => {
-                    warn!("Failed to load post-answer research from {}: {}", post_path.display(), e);
+                    warn!(
+                        "Failed to load post-answer research from {}: {}",
+                        post_path.display(),
+                        e
+                    );
                 }
             }
         }
-        
+
         Ok(combined)
     }
 
@@ -193,16 +209,17 @@ impl ResearchEngine {
         debug!("Research context: {} chars", context.len());
 
         let research_prompt = self.build_pre_question_prompt(topic, context);
-        
-        match self.execute_research_ai_call(&research_prompt, working_dir).await {
-            Ok(findings) => {
-                Ok(ResearchResult {
-                    research_type: ResearchType::PreQuestion,
-                    findings,
-                    sources: vec![format!("AI Research via {}", self.config.platform)],
-                    success: true,
-                })
-            }
+
+        match self
+            .execute_research_ai_call(&research_prompt, working_dir)
+            .await
+        {
+            Ok(findings) => Ok(ResearchResult {
+                research_type: ResearchType::PreQuestion,
+                findings,
+                sources: vec![format!("AI Research via {}", self.config.platform)],
+                success: true,
+            }),
             Err(e) => {
                 warn!("Pre-question research failed: {}", e);
                 Ok(ResearchResult {
@@ -240,16 +257,17 @@ impl ResearchEngine {
         debug!("Context: {} chars", context.len());
 
         let research_prompt = self.build_post_answer_prompt(question, answer, context);
-        
-        match self.execute_research_ai_call(&research_prompt, working_dir).await {
-            Ok(findings) => {
-                Ok(ResearchResult {
-                    research_type: ResearchType::PostAnswer,
-                    findings,
-                    sources: vec![format!("AI Validation via {}", self.config.platform)],
-                    success: true,
-                })
-            }
+
+        match self
+            .execute_research_ai_call(&research_prompt, working_dir)
+            .await
+        {
+            Ok(findings) => Ok(ResearchResult {
+                research_type: ResearchType::PostAnswer,
+                findings,
+                sources: vec![format!("AI Validation via {}", self.config.platform)],
+                success: true,
+            }),
             Err(e) => {
                 warn!("Post-answer research failed: {}", e);
                 Ok(ResearchResult {
@@ -337,7 +355,9 @@ Format your response as markdown with clear sections."#,
         } else {
             anyhow::bail!(
                 "Research AI call failed: {}",
-                result.error_message.unwrap_or_else(|| "Unknown error".to_string())
+                result
+                    .error_message
+                    .unwrap_or_else(|| "Unknown error".to_string())
             )
         }
     }
@@ -378,10 +398,10 @@ mod tests {
     fn test_research_filename_generation() {
         let temp_dir = env::temp_dir().join("puppet-master-research-test");
         let engine = ResearchEngine::new(ResearchConfig::default(), &temp_dir);
-        
+
         let pre_filename = engine.research_filename(0, "scope-goals", ResearchType::PreQuestion);
         assert_eq!(pre_filename, "phase-01-scope-goals-pre-question.md");
-        
+
         let post_filename = engine.research_filename(5, "testing", ResearchType::PostAnswer);
         assert_eq!(post_filename, "phase-06-testing-post-answer.md");
     }
@@ -390,28 +410,28 @@ mod tests {
     fn test_save_and_load_research() -> Result<()> {
         let temp_dir = env::temp_dir().join("puppet-master-research-test-save-load");
         std::fs::create_dir_all(&temp_dir)?;
-        
+
         let engine = ResearchEngine::new(ResearchConfig::default(), &temp_dir);
-        
+
         let result = ResearchResult {
             research_type: ResearchType::PreQuestion,
             findings: "Test research findings".to_string(),
             sources: vec!["Test source".to_string()],
             success: true,
         };
-        
+
         // Save research
         let path = engine.save_research(0, "test-phase", &result)?;
         assert!(path.exists());
-        
+
         // Load research
         let loaded = engine.load_latest_research(0, "test-phase")?;
         assert!(loaded.contains("Test research findings"));
         assert!(loaded.contains("Test source"));
-        
+
         // Clean up
         std::fs::remove_dir_all(&temp_dir)?;
-        
+
         Ok(())
     }
 
@@ -419,17 +439,14 @@ mod tests {
     fn test_prompt_building() {
         let temp_dir = env::temp_dir().join("puppet-master-research-test");
         let engine = ResearchEngine::new(ResearchConfig::default(), &temp_dir);
-        
+
         let pre_prompt = engine.build_pre_question_prompt("Testing Strategy", "Interview context");
         assert!(pre_prompt.contains("Testing Strategy"));
         assert!(pre_prompt.contains("Interview context"));
         assert!(pre_prompt.contains("Best Practices"));
-        
-        let post_prompt = engine.build_post_answer_prompt(
-            "What testing framework?",
-            "Playwright",
-            "E2E testing"
-        );
+
+        let post_prompt =
+            engine.build_post_answer_prompt("What testing framework?", "Playwright", "E2E testing");
         assert!(post_prompt.contains("What testing framework?"));
         assert!(post_prompt.contains("Playwright"));
         assert!(post_prompt.contains("E2E testing"));

@@ -348,7 +348,7 @@ pub fn view<'a>(
     );
 
     // Combine columns based on screen size
-    let main_content = if size.is_desktop_or_larger() {
+    let main_content: Element<'a, Message> = if size.is_desktop_or_larger() {
         // Wide layout: 3-column row (1-2-1)
         row![
             container(left_panel)
@@ -367,28 +367,28 @@ pub fn view<'a>(
         // Narrow layout: single column stack
         column![
             container(left_panel).width(Length::Fill),
-            container(center_panel).width(Length::Fill).height(Length::Fill),
-            container(right_panel).width(Length::Fill).height(Length::Fill),
+            container(center_panel)
+                .width(Length::Fill)
+                .height(Length::Fill),
+            container(right_panel)
+                .width(Length::Fill)
+                .height(Length::Fill),
         ]
         .spacing(tokens::spacing::MD)
         .into()
     };
 
-    let full_content = column![
-        row![
-            text("Evidence")
-                .size(tokens::font_size::DISPLAY)
-                .font(fonts::FONT_DISPLAY)
-                .color(theme.ink()),
-            Space::new().width(Length::Fill),
-            styled_button(theme, "REFRESH", ButtonVariant::Info).on_press(Message::EvidenceRefresh),
-        ]
-        .spacing(tokens::spacing::MD)
-        .align_y(iced::Alignment::Center),
-        main_content,
-    ]
-    .spacing(tokens::spacing::LG)
-    .padding(tokens::spacing::LG);
+    let header_actions = row![refresh_button(
+        theme,
+        Message::EvidenceRefresh,
+        RefreshStyle::Uppercase(ButtonVariant::Info)
+    )]
+    .spacing(tokens::spacing::MD)
+    .align_y(iced::Alignment::Center);
+
+    let full_content = column![page_header("Evidence", theme, header_actions), main_content,]
+        .spacing(tokens::spacing::LG)
+        .padding(tokens::spacing::LG);
 
     container(full_content)
         .width(Length::Fill)

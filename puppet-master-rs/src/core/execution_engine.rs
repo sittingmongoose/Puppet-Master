@@ -89,7 +89,11 @@ impl ExecutionEngine {
             let runner = match get_runner(platform).await {
                 Ok(r) => r,
                 Err(e) => {
-                    log::warn!("Failed to get runner for {}: {}. Trying next...", platform, e);
+                    log::warn!(
+                        "Failed to get runner for {}: {}. Trying next...",
+                        platform,
+                        e
+                    );
                     last_error = Some(format!("Runner unavailable: {}", e));
                     continue;
                 }
@@ -197,7 +201,6 @@ impl ExecutionEngine {
         // Default to Complete if no specific signal found and execution succeeded
         CompletionSignal::Complete
     }
-
 
     /// Parse completion signal from output line
     fn parse_completion_signal(&self, line: &str) -> Option<CompletionSignal> {

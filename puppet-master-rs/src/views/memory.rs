@@ -62,19 +62,14 @@ pub fn view<'a>(
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
 
-    // Header with Refresh button
-    content = content.push(
-        row![
-            text("Memory (AGENTS.md)")
-                .size(tokens::font_size::DISPLAY)
-                .font(crate::theme::fonts::FONT_DISPLAY)
-                .color(theme.ink()),
-            Space::new().width(Length::Fill),
-            styled_button(theme, "REFRESH", ButtonVariant::Info).on_press(Message::MemoryRefresh),
-        ]
-        .spacing(tokens::spacing::MD)
-        .align_y(iced::Alignment::Center),
-    );
+    let header_actions = row![refresh_button(
+        theme,
+        Message::MemoryRefresh,
+        RefreshStyle::Uppercase(ButtonVariant::Info)
+    )]
+    .spacing(tokens::spacing::MD)
+    .align_y(iced::Alignment::Center);
+    content = content.push(page_header("Memory (AGENTS.md)", theme, header_actions));
 
     // Section navigation dropdown and filter controls
     let nav_content = column![

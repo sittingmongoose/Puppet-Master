@@ -1,0 +1,419 @@
+# Vision Model Enhancement - Visual Architecture
+
+```
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                    INTERVIEW IMAGE REFERENCE PROCESSING                       ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  USER ADDS IMAGE REFERENCE                                                   │
+│  - UI mockup.png (2.3 MB)                                                    │
+│  - Architecture diagram.png (1.8 MB)                                         │
+│  - Screenshot.png (4.5 MB)                                                   │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  ReferenceManager::load_context()                                            │
+│  ├─ Check: File exists?                                                      │
+│  ├─ Check: File readable?                                                    │
+│  └─ Get metadata (size, extension)                                           │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                                 ▼
+╔═════════════════════════════════════════════════════════════════════════════╗
+║  TIER 1: VISION MODEL ANALYSIS (NEW)                                         ║
+║  ┌─────────────────────────────────────────────────────────────────────┐   ║
+║  │ VisionExtractor::analyze_image()                                     │   ║
+║  │                                                                       │   ║
+║  │ Safety Checks:                                                        │   ║
+║  │  ✓ Size < 5 MB?                                                      │   ║
+║  │  ✓ Enabled in config?                                                │   ║
+║  │  ✓ CLI available (codex/claude/gemini)?                              │   ║
+║  │                                                                       │   ║
+║  │ Runner Priority:                                                      │   ║
+║  │  1. Codex  (--image flag) ─────┐                                     │   ║
+║  │  2. Claude (if supported)      │                                     │   ║
+║  │  3. Gemini (if supported)      │                                     │   ║
+║  └────────────────────────────────┼───────────────────────────────────┘   ║
+║                                   │                                         ║
+║         ┌─────────────────────────┴─────────────────────────┐              ║
+║         │ Codex CLI Execution (with timeout)                 │              ║
+║         │                                                     │              ║
+║         │ $ codex exec "Describe this image..." \            │              ║
+║         │     --image /path/to/image.png \                   │              ║
+║         │     --json --color never --max-turns 1 --full-auto │              ║
+║         │                                                     │              ║
+║         │ Timeout: 45 seconds (enforced by tokio::timeout)   │              ║
+║         └─────────────┬───────────────────────────────────────              ║
+║                       │                                                     ║
+║         ┌─────────────▼──────────────┐                                     ║
+║         │ SUCCESS                    │    ┌──────────────────────┐         ║
+║         │ Parse JSONL output         │    │ FAILURE              │         ║
+║         │ Extract description        │    │ - CLI not found      │         ║
+║         │ Return rich analysis       │    │ - Timeout exceeded   │         ║
+║         └─────────────┬──────────────┘    │ - Auth expired       │         ║
+║                       │                   │ - Size limit         │         ║
+║                       │                   └──────────┬───────────┘         ║
+║                       │                              │                     ║
+║                       ▼                              ▼                     ║
+║         ┌─────────────────────────────┐   ┌─────────────────────────────┐ ║
+║         │ Vision Analysis Output:     │   │ Log failure, continue       │ ║
+║         │                             │   │ to Tier 2 (OCR)             │ ║
+║         │ **Content Type:** UI mockup │   └────────────┬────────────────┘ ║
+║         │ **Layout:** Centered form   │                │                  ║
+║         │ **Components:** 2 inputs,   │                │                  ║
+║         │   1 button, social icons    │                │                  ║
+║         │ **Colors:** Blue (#3B82F6), │                │                  ║
+║         │   Gray (#6B7280), White     │                │                  ║
+║         │ **Text:** "Welcome Back",   │                │                  ║
+║         │   "Sign in to your account" │                │                  ║
+║         │ **Context:** Authentication │                │                  ║
+║         │   flow, needs validation    │                │                  ║
+║         └─────────────┬───────────────┘                │                  ║
+║                       │                                │                  ║
+║                       ▼                                │                  ║
+║         ┌─────────────────────────────┐                │                  ║
+║         │ DONE - Return to interview  │                │                  ║
+║         │ (Skip OCR, add to context)  │                │                  ║
+║         └─────────────────────────────┘                │                  ║
+╚═════════════════════════════════════════════════════════╪══════════════════╝
+                                                          │
+                                                          ▼
+╔═════════════════════════════════════════════════════════════════════════════╗
+║  TIER 2: OCR TEXT EXTRACTION (Existing, Enhanced)                           ║
+║  ┌─────────────────────────────────────────────────────────────────────┐   ║
+║  │ ReferenceManager::extract_image_text()  [NOW ASYNC]                 │   ║
+║  │                                                                       │   ║
+║  │ Safety Checks:                                                        │   ║
+║  │  ✓ Size < 10 MB?                                                     │   ║
+║  │  ✓ Tesseract available?                                              │   ║
+║  │                                                                       │   ║
+║  │ Tesseract Execution:                                                 │   ║
+║  │  $ tesseract image.png stdout -l eng --psm 3 --oem 3                │   ║
+║  │                                                                       │   ║
+║  │  Timeout: 30 seconds (NOW ENFORCED via tokio::timeout)              │   ║
+║  └────────────────────────────────┬────────────────────────────────────┘   ║
+║                                   │                                         ║
+║         ┌─────────────────────────┴─────────────────────────┐              ║
+║         │                                                     │              ║
+║         ▼                                                     ▼              ║
+║  ┌──────────────────┐                              ┌────────────────────┐  ║
+║  │ SUCCESS          │                              │ FAILURE            │  ║
+║  │ Text extracted   │                              │ - Tesseract not    │  ║
+║  │                  │                              │   installed        │  ║
+║  │ Output:          │                              │ - Timeout exceeded │  ║
+║  │ "Welcome Back    │                              │ - Invalid image    │  ║
+║  │  Sign in to      │                              └─────────┬──────────┘  ║
+║  │  your account    │                                        │             ║
+║  │  Email address   │                                        │             ║
+║  │  Password        │                                        │             ║
+║  │  Sign In         │                                        │             ║
+║  │  Forgot Password"│                                        │             ║
+║  └────────┬─────────┘                                        │             ║
+║           │                                                  │             ║
+║           ▼                                                  ▼             ║
+║  ┌────────────────────┐                         ┌──────────────────────┐  ║
+║  │ Add to context:    │                         │ Log failure,         │  ║
+║  │ **Extracted Text** │                         │ continue to Tier 3   │  ║
+║  │ (OCR):             │                         └──────────┬───────────┘  ║
+║  │ ```                │                                    │              ║
+║  │ [text content]     │                                    │              ║
+║  │ ```                │                                    │              ║
+║  └────────┬───────────┘                                    │              ║
+║           │                                                │              ║
+║           ▼                                                │              ║
+║  ┌────────────────────┐                                    │              ║
+║  │ DONE - Return to   │                                    │              ║
+║  │ interview          │                                    │              ║
+║  └────────────────────┘                                    │              ║
+╚═════════════════════════════════════════════════════════════╪══════════════╝
+                                                              │
+                                                              ▼
+╔═════════════════════════════════════════════════════════════════════════════╗
+║  TIER 3: METADATA ONLY (Existing)                                           ║
+║  ┌─────────────────────────────────────────────────────────────────────┐   ║
+║  │ Fallback when all else fails                                         │   ║
+║  │                                                                       │   ║
+║  │ Output:                                                               │   ║
+║  │  *Image file present: 2,345,678 bytes*                               │   ║
+║  │  *Note: Image processing unavailable. Please describe manually.*     │   ║
+║  └───────────────────────────────────────────────────────────────────────   ║
+╚═════════════════════════════════════════════════════════════════════════════╝
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  COMPARISON: VISION vs OCR vs METADATA                                       │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                               │
+│  INPUT IMAGE: UI Mockup of Login Screen                                      │
+│                                                                               │
+│  ┌─────────────────────────────────────────────────────────────┐            │
+│  │ ┌─────────────────────────────────────────────────────────┐ │            │
+│  │ │                    Welcome Back                         │ │            │
+│  │ │            Sign in to your account                      │ │            │
+│  │ │                                                         │ │            │
+│  │ │  ┌───────────────────────────────────────────────────┐ │ │            │
+│  │ │  │ Email address                                     │ │ │            │
+│  │ │  └───────────────────────────────────────────────────┘ │ │            │
+│  │ │                                                         │ │            │
+│  │ │  ┌───────────────────────────────────────────────────┐ │ │            │
+│  │ │  │ ••••••••                                          │ │ │            │
+│  │ │  └───────────────────────────────────────────────────┘ │ │            │
+│  │ │                                                         │ │            │
+│  │ │            ┌─────────────────────────┐                 │ │            │
+│  │ │            │       Sign In           │                 │ │            │
+│  │ │            └─────────────────────────┘                 │ │            │
+│  │ │                                                         │ │            │
+│  │ │                 Forgot Password?                        │ │            │
+│  │ │                                                         │ │            │
+│  │ │          ─── or continue with ───                       │ │            │
+│  │ │             [G]  [GitHub icon]                          │ │            │
+│  │ └─────────────────────────────────────────────────────────┘ │            │
+│  └─────────────────────────────────────────────────────────────┘            │
+│                                                                               │
+├───────────────────────────────────────────────────────────────────────────────┤
+│                                                                               │
+│  TIER 1: VISION MODEL OUTPUT (Codex/Claude/Gemini)                           │
+│  ────────────────────────────────────────────────────                        │
+│  **Content Type:** UI Design - Authentication Interface                      │
+│                                                                               │
+│  **Visual Description:**                                                      │
+│  - Clean, minimalist login form with centered vertical layout                │
+│  - White background with subtle drop shadow on container                     │
+│  - Two input fields (email and password) with light gray borders             │
+│  - Primary action button in blue (#3B82F6) with white text                   │
+│  - "Forgot Password?" link in gray below button                              │
+│  - Social login options (Google, GitHub) at bottom with icons                │
+│                                                                               │
+│  **Text Content:**                                                            │
+│  - Title: "Welcome Back"                                                     │
+│  - Subtitle: "Sign in to your account"                                       │
+│  - Input placeholders: "Email address", "Password"                           │
+│  - Button: "Sign In"                                                         │
+│  - Link: "Forgot Password?"                                                  │
+│  - Divider: "or continue with"                                               │
+│                                                                               │
+│  **Technical Details:**                                                       │
+│  - Estimated dimensions: 400x600px                                           │
+│  - Color palette: Blue (#3B82F6), Gray (#6B7280), White (#FFFFFF)           │
+│  - Typography: Sans-serif (Inter or similar), 16px base size                 │
+│  - Spacing: 16px padding, 24px gaps between elements                         │
+│  - Border radius: ~8px on inputs/button                                      │
+│                                                                               │
+│  **Development Context:**                                                     │
+│  - Standard OAuth 2.0 authentication flow                                    │
+│  - Requires form validation (email format, password requirements)            │
+│  - Needs error state styling (red borders, error messages)                   │
+│  - Loading state for submit button                                           │
+│  - Accessibility: ARIA labels, keyboard nav, focus states                    │
+│  - Responsive design needed for mobile viewports                             │
+│                                                                               │
+│  ⏱️  Latency: 12.5 seconds | 💾 Memory: ~50 MB                               │
+│                                                                               │
+├───────────────────────────────────────────────────────────────────────────────┤
+│                                                                               │
+│  TIER 2: OCR OUTPUT (Tesseract)                                              │
+│  ────────────────────────────────                                            │
+│  Welcome Back                                                                │
+│  Sign in to your account                                                     │
+│  Email address                                                               │
+│  Password                                                                    │
+│  Sign In                                                                     │
+│  Forgot Password?                                                            │
+│  or continue with                                                            │
+│  G                                                                           │
+│                                                                               │
+│  ⏱️  Latency: 3.2 seconds | 💾 Memory: ~20 MB                                │
+│                                                                               │
+│  ❌ Missing: Layout, colors, spacing, visual hierarchy, component types      │
+│  ❌ Missing: Design patterns, accessibility concerns, implementation notes   │
+│                                                                               │
+├───────────────────────────────────────────────────────────────────────────────┤
+│                                                                               │
+│  TIER 3: METADATA ONLY                                                       │
+│  ────────────────────────                                                    │
+│  *Image file present: 2,345,678 bytes*                                       │
+│  *Note: Image processing unavailable. Please describe manually.*             │
+│                                                                               │
+│  ⏱️  Latency: <0.1 seconds | 💾 Memory: ~0 MB                                │
+│                                                                               │
+│  ❌ Missing: Everything except file size                                     │
+│                                                                               │
+└───────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  SAFETY FEATURES MATRIX                                                      │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                               │
+│  Feature              │ Vision (Tier 1)  │ OCR (Tier 2)    │ Metadata (T3) │
+│  ────────────────────┼──────────────────┼─────────────────┼───────────────│
+│  Max file size       │ 5 MB             │ 10 MB           │ No limit      │
+│  Timeout             │ 45s (enforced)   │ 30s (NEW!)      │ Instant       │
+│  CLI check           │ ✅ which::which() │ ✅ which::which()│ N/A           │
+│  Async execution     │ ✅ tokio::timeout │ ✅ tokio::timeout│ Sync          │
+│  Error handling      │ ✅ Result<String> │ ✅ Result<String>│ Always works  │
+│  Graceful degradation│ ✅ Falls to Tier 2│ ✅ Falls to Tier 3│ Final tier    │
+│  Configuration       │ ✅ TOML + env     │ ✅ TOML + env    │ N/A           │
+│  Logging             │ ✅ DEBUG/INFO/WARN│ ✅ DEBUG/INFO/WARN│ Basic         │
+│  Process cleanup     │ ✅ Tokio manages  │ ✅ Tokio manages │ N/A           │
+│                                                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  IMPLEMENTATION TIMELINE                                                     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                               │
+│  Week 1: Foundation                                                          │
+│  ├─ Create vision_extractor.rs (~500 lines)                                 │
+│  ├─ Implement VisionExtractor + VisionConfig                                │
+│  ├─ Add Codex runner integration                                            │
+│  ├─ Write unit tests (20+ tests)                                            │
+│  └─ Documentation (rustdoc comments)                                         │
+│                                                                               │
+│  Week 2: Integration                                                         │
+│  ├─ Modify reference_manager.rs (~50 lines)                                 │
+│  ├─ Add three-tier fallback logic                                           │
+│  ├─ Convert OCR to async (timeout fix)                                      │
+│  ├─ Config file support (TOML)                                              │
+│  └─ Integration tests (10+ tests)                                           │
+│                                                                               │
+│  Week 3: Testing & Refinement                                               │
+│  ├─ Manual testing (10+ scenarios)                                          │
+│  ├─ Performance benchmarks                                                  │
+│  ├─ Prompt optimization                                                     │
+│  ├─ Documentation updates                                                   │
+│  └─ Graceful degradation verification                                       │
+│                                                                               │
+│  Week 4: Optional Enhancements                                              │
+│  ├─ Claude runner support                                                   │
+│  ├─ Gemini runner support                                                   │
+│  ├─ Vision result caching                                                   │
+│  └─ GUI settings panel                                                      │
+│                                                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  DECISION TREE: When to Use Vision vs OCR                                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                               │
+│                      Image Reference Added                                   │
+│                              │                                               │
+│              ┌───────────────┴───────────────┐                              │
+│              │ Is vision enabled in config?  │                              │
+│              └───────────────┬───────────────┘                              │
+│                              │                                               │
+│                   ┌──────────┴──────────┐                                   │
+│                   │ YES                  │ NO → Skip to OCR (Tier 2)        │
+│                   │                      │                                   │
+│        ┌──────────▼──────────┐           │                                  │
+│        │ File size < 5 MB?   │           │                                  │
+│        └──────────┬──────────┘           │                                  │
+│                   │                      │                                   │
+│           ┌───────┴────────┐             │                                  │
+│           │ YES             │ NO → Skip to OCR (too large)                  │
+│           │                 │                                                │
+│  ┌────────▼─────────┐       │                                               │
+│  │ Codex available? │       │                                               │
+│  └────────┬─────────┘       │                                               │
+│           │                 │                                                │
+│     ┌─────┴────┐            │                                               │
+│     │ YES      │ NO → Try Claude/Gemini or skip                             │
+│     │          │                                                             │
+│  ┌──▼──────────────────┐                                                    │
+│  │ Run Codex analysis  │                                                    │
+│  │ (with 45s timeout)  │                                                    │
+│  └──┬──────────────────┘                                                    │
+│     │                                                                        │
+│  ┌──┴─────────┐                                                             │
+│  │ SUCCESS?   │                                                             │
+│  └──┬─────────┘                                                             │
+│     │                                                                        │
+│  ┌──┴──────┐                                                                │
+│  │ YES     │ NO → Fall back to OCR                                          │
+│  │         │                                                                 │
+│  │  ┌──────▼────────────────────┐                                          │
+│  │  │ Return vision description │                                          │
+│  │  │ (Skip OCR)                │                                          │
+│  │  └───────────────────────────┘                                          │
+│  │                                                                           │
+│  └─→ (If any failure) → Continue to OCR (Tier 2)                           │
+│                                                                               │
+│                      OCR (Tier 2)                                            │
+│                           │                                                  │
+│                   ┌───────▼──────────┐                                      │
+│                   │ File size < 10MB?│                                      │
+│                   └───────┬──────────┘                                      │
+│                           │                                                  │
+│                      ┌────┴─────┐                                           │
+│                      │ YES      │ NO → Skip to metadata                     │
+│                      │          │                                            │
+│              ┌───────▼──────────┐                                           │
+│              │ Tesseract avail? │                                           │
+│              └───────┬──────────┘                                           │
+│                      │                                                       │
+│                 ┌────┴─────┐                                                │
+│                 │ YES      │ NO → Skip to metadata                          │
+│                 │          │                                                 │
+│        ┌────────▼─────────────┐                                             │
+│        │ Run OCR (30s timeout)│                                             │
+│        └────────┬─────────────┘                                             │
+│                 │                                                            │
+│           ┌─────┴──────┐                                                    │
+│           │ SUCCESS?   │                                                    │
+│           └─────┬──────┘                                                    │
+│                 │                                                            │
+│            ┌────┴────┐                                                      │
+│            │ YES     │ NO → Fall back to metadata                           │
+│            │         │                                                       │
+│     ┌──────▼──────────┐                                                     │
+│     │ Return OCR text │                                                     │
+│     └─────────────────┘                                                     │
+│                                                                               │
+│  (If any failure) → Metadata Only (Tier 3)                                  │
+│                           │                                                  │
+│                  ┌────────▼────────────┐                                    │
+│                  │ Return file size +  │                                    │
+│                  │ "Please describe    │                                    │
+│                  │  manually" message  │                                    │
+│                  └─────────────────────┘                                    │
+│                                                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  KEY METRICS & TARGETS                                                       │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                               │
+│  Success Rate:                                                               │
+│  ┌────────────────────────────────────────┐                                 │
+│  │ Vision Analysis: >80% success          │ Target: 85%                     │
+│  │ OCR Fallback:    >90% success          │ Target: 95%                     │
+│  │ Metadata Only:   100% (always works)   │ Guaranteed                      │
+│  └────────────────────────────────────────┘                                 │
+│                                                                               │
+│  Performance:                                                                │
+│  ┌────────────────────────────────────────┐                                 │
+│  │ Vision Latency:  <45s (99th percentile)│ Enforced by timeout             │
+│  │ OCR Latency:     <30s (99th percentile)│ Enforced by timeout             │
+│  │ Metadata:        <100ms                │ Instant (fs::metadata)          │
+│  └────────────────────────────────────────┘                                 │
+│                                                                               │
+│  Memory Usage:                                                               │
+│  ┌────────────────────────────────────────┐                                 │
+│  │ Vision Process:  <100 MB peak          │ CLI subprocess                  │
+│  │ OCR Process:     <50 MB peak           │ CLI subprocess                  │
+│  │ Rust Code:       <5 MB overhead        │ Minimal allocation              │
+│  └────────────────────────────────────────┘                                 │
+│                                                                               │
+│  Fallback Rate:                                                              │
+│  ┌────────────────────────────────────────┐                                 │
+│  │ Vision → OCR:     <15%                 │ Most images processable         │
+│  │ OCR → Metadata:   <5%                  │ Rare failures                   │
+│  └────────────────────────────────────────┘                                 │
+│                                                                               │
+└─────────────────────────────────────────────────────────────────────────────┘
+```

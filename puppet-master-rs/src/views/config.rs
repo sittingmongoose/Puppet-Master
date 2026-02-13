@@ -9,7 +9,7 @@ use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::widgets::styled_button::{ButtonVariant, styled_button};
 use crate::widgets::{help_tooltip, interaction_mode_to_variant};
 use iced::widget::{
-    button, Space, column, container, pick_list, radio, row, scrollable, text, text_editor,
+    Space, button, column, container, pick_list, radio, row, scrollable, text, text_editor,
     text_input, toggler,
 };
 use iced::{Alignment, Border, Element, Length};
@@ -185,26 +185,29 @@ fn tab_button<'a>(
     let ink_faded = theme.ink_faded();
     button(container(tab_content).padding([tokens::spacing::SM, tokens::spacing::LG]))
         .on_press(Message::ConfigTabChanged(index))
-        .style(move |_theme: &iced::Theme, status: button::Status| {
-            match status {
-            button::Status::Hovered => button::Style {
-                background: Some(iced::Background::Color(iced::Color::from_rgba(
-                    ink_faded.r, ink_faded.g, ink_faded.b, 0.15,
-                ))),
-                text_color: text_color,
-                border: iced::Border::default(),
-                shadow: iced::Shadow::default(),
-                snap: button::Style::default().snap,
+        .style(
+            move |_theme: &iced::Theme, status: button::Status| match status {
+                button::Status::Hovered => button::Style {
+                    background: Some(iced::Background::Color(iced::Color::from_rgba(
+                        ink_faded.r,
+                        ink_faded.g,
+                        ink_faded.b,
+                        0.15,
+                    ))),
+                    text_color: text_color,
+                    border: iced::Border::default(),
+                    shadow: iced::Shadow::default(),
+                    snap: button::Style::default().snap,
+                },
+                _ => button::Style {
+                    background: Some(iced::Background::Color(iced::Color::TRANSPARENT)),
+                    text_color: text_color,
+                    border: iced::Border::default(),
+                    shadow: iced::Shadow::default(),
+                    snap: button::Style::default().snap,
+                },
             },
-            _ => button::Style {
-                background: Some(iced::Background::Color(iced::Color::TRANSPARENT)),
-                text_color: text_color,
-                border: iced::Border::default(),
-                shadow: iced::Shadow::default(),
-                snap: button::Style::default().snap,
-            },
-        }
-        })
+        )
         .into()
 }
 
@@ -1713,7 +1716,11 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
                     .font(fonts::FONT_UI_BOLD)
                     .color(theme.ink()),
                 Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                help_tooltip("interview.architecture_confirmation", tooltip_variant, theme),
+                help_tooltip(
+                    "interview.architecture_confirmation",
+                    tooltip_variant,
+                    theme
+                ),
             ]
             .align_y(Alignment::Center),
             text("Explicitly confirm tech stack versions, frameworks, and dependencies")

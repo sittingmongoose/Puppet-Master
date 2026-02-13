@@ -19,19 +19,14 @@ pub fn view<'a>(
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
 
-    // Header with Refresh button
-    content = content.push(
-        row![
-            text("Metrics")
-                .size(tokens::font_size::DISPLAY)
-                .font(fonts::FONT_DISPLAY)
-                .color(theme.ink()),
-            Space::new().width(Length::Fill),
-            styled_button(theme, "REFRESH", ButtonVariant::Info,).on_press(Message::RefreshMetrics)
-        ]
-        .spacing(tokens::spacing::MD)
-        .align_y(iced::Alignment::Center),
-    );
+    let header_actions = row![refresh_button(
+        theme,
+        Message::RefreshMetrics,
+        RefreshStyle::Uppercase(ButtonVariant::Info)
+    )]
+    .spacing(tokens::spacing::MD)
+    .align_y(iced::Alignment::Center);
+    content = content.push(page_header("Metrics", theme, header_actions));
 
     if snapshot.platforms.is_empty() && snapshot.subtasks.is_empty() {
         content = content.push(themed_panel(
@@ -60,7 +55,7 @@ pub fn view<'a>(
     // Session overview stat cards - responsive grid
     let overall = &snapshot.overall;
 
-    let stat_card = |value: String, label: &str, color: iced::Color| {
+    let stat_card = |value: String, label: &'a str, color: iced::Color| {
         container(
             column![
                 text(value)
@@ -86,19 +81,31 @@ pub fn view<'a>(
         })
     };
 
-    let stat_cards = vec![
-        stat_card(overall.iterations.to_string(), "Total Iterations", theme.ink()),
+    let stat_cards: Vec<Element<'a, Message>> = vec![
+        stat_card(
+            overall.iterations.to_string(),
+            "Total Iterations",
+            theme.ink(),
+        )
+        .into(),
         stat_card(
             format!("{:.1}%", overall.success_rate() * 100.0),
             "Success Rate",
             colors::ACID_LIME,
-        ),
+        )
+        .into(),
         stat_card(
             format!("{:.0}ms", overall.avg_latency_ms()),
             "Avg Latency",
             colors::SAFETY_ORANGE,
-        ),
-        stat_card(overall.estimated_tokens.to_string(), "Total Tokens", colors::ELECTRIC_BLUE),
+        )
+        .into(),
+        stat_card(
+            overall.estimated_tokens.to_string(),
+            "Total Tokens",
+            colors::ELECTRIC_BLUE,
+        )
+        .into(),
     ];
 
     // Use responsive_grid to adapt column count based on screen size

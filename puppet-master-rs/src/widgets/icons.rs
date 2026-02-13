@@ -1,8 +1,8 @@
 //! Icon definitions using Unicode symbols and text
 
 use crate::theme::colors;
-use iced::widget::{text, Text};
 use iced::Color;
+use iced::widget::{Text, text};
 
 /// Icon name enum
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

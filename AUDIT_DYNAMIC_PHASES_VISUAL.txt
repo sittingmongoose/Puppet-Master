@@ -1,0 +1,421 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                 DYNAMIC PHASES (Phase 9+) - SYSTEM AUDIT                    ║
+║                          Status: ⚠️ PARTIAL                                 ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│                           COMPONENT STATUS MAP                              │
+└────────────────────────────────────────────────────────────────────────────┘
+
+                    ┌─────────────────────────┐
+                    │   InterviewState       │
+                    │   (state.rs)           │
+                    │   ⛔ INCOMPLETE         │
+                    │   Missing:             │
+                    │   - dynamic_phases     │
+                    └───────────┬─────────────┘
+                                │
+                ┌───────────────┼───────────────┐
+                │               │               │
+                ▼               ▼               ▼
+    ┌──────────────────┐  ┌──────────────┐  ┌──────────────────┐
+    │ FeatureDetector  │  │ PhaseManager │  │  Orchestrator    │
+    │ (detector.rs)    │  │ (manager.rs) │  │ (orchestrator.rs)│
+    │ ✅ COMPLETE      │  │ ✅ COMPLETE  │  │ ✅ MOSTLY        │
+    │                  │  │              │  │                  │
+    │ • 9 tests ✓      │  │ • 6 tests ✓  │  │ • 11 tests ✓     │
+    │ • 11 features    │  │ • dynamic OK │  │ • detect @Phase8 │
+    │ • confidence     │  │ • phases()   │  │ ⚠️ no persist   │
+    └──────────────────┘  └──────────────┘  └────────┬─────────┘
+                                                      │
+                    ┌─────────────────────────────────┴──────┐
+                    │                                        │
+                    ▼                                        ▼
+        ┌────────────────────┐                   ┌──────────────────┐
+        │  DocumentWriter    │                   │   UI Views       │
+        │  (writer.rs)       │                   │   (interview.rs) │
+        │  ✅ COMPLETE       │                   │   ⛔ HARDCODED   │
+        │                    │                   │                  │
+        │  • phase-09-*.md   │                   │  • vec![8 phases]│
+        │  • 3 tests ✓       │                   │  • line 125      │
+        │  • master doc OK   │                   │  ⚠️ Can't render │
+        └────────────────────┘                   └──────┬───────────┘
+                                                         │
+                                                         ▼
+                                            ┌────────────────────────┐
+                                            │ InterviewPanelData     │
+                                            │ (interview_panel.rs)   │
+                                            │ ⛔ HARDCODED           │
+                                            │                        │
+                                            │ • match 8 phase IDs    │
+                                            │ • app.rs line 5134     │
+                                            │ ⚠️ Breaks on Phase 9+  │
+                                            └────────────────────────┘
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│                            DATA FLOW DIAGRAM                                │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  PHASE 8 COMPLETE
+        │
+        ▼
+  ┌─────────────────────────────────────────────────────────────┐
+  │ orchestrator.advance_phase()                                │
+  │   • Write Phase 8 document                                  │
+  │   • phase_manager.mark_current_complete()                   │
+  │   • Check: phase_manager.total_phases() == 8?               │
+  └─────────────────┬───────────────────────────────────────────┘
+                    │
+        ┌───────────┴───────────┐
+        │ phase_manager.is_complete() == true
+        │ AND total_phases == 8
+        ▼
+  ┌──────────────────────────────────────────────────────────────┐
+  │ detect_features_from_state(&state)                           │
+  │   • Scan decisions for keywords                              │
+  │   • Scan Q&A history for keywords                            │
+  │   • Score features (weight: decision 2.0x, answer 1.5x)      │
+  │   • Filter: >= 2 mentions                                    │
+  │   • Sort by confidence                                       │
+  │   • Limit to top 5                                           │
+  │   → Returns: Vec<DetectedFeature>                            │
+  └─────────────────┬────────────────────────────────────────────┘
+                    │
+        ┌───────────┴───────────┐
+        │ features.is_empty()?  │
+        │                       │
+        │ NO  ┌─────────────┐  YES
+        │     │ Skip, done  │
+        ▼     └─────────────┘
+  ┌──────────────────────────────────────────────────────────────┐
+  │ Add Dynamic Phases                                           │
+  │   for feature in detected_features:                          │
+  │     phase_manager.add_dynamic_phase(                         │
+  │       id: "feature-{feature.id}",                            │
+  │       name: feature.name,                                    │
+  │       description: feature.description                       │
+  │     )                                                         │
+  │                                                               │
+  │   state.current_domain_phase = 8  // First dynamic phase     │
+  │   ⛔ BUG: state.dynamic_phases NOT SET                       │
+  └─────────────────┬────────────────────────────────────────────┘
+                    │
+                    ▼
+          ┌────────────────────┐
+          │ Return system      │
+          │ prompt for Phase 9 │
+          └────────────────────┘
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│                          PERSISTENCE PROBLEM                                │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  ┌────────────────────────────────────────────────────┐
+  │ Phase 8 Complete → Detect Features → Add to       │
+  │ PhaseManager (in-memory)                           │
+  └──────────────────────┬─────────────────────────────┘
+                         │
+                         ▼
+         ┌───────────────────────────────┐
+         │ User hits PAUSE               │
+         │ orchestrator.save_state()     │
+         │   → state.yaml written        │
+         └───────┬───────────────────────┘
+                 │
+                 ▼
+    ┌─────────────────────────────────────────────────┐
+    │ state.yaml CONTENTS:                            │
+    │                                                  │
+    │ version: 1                                      │
+    │ feature: "My App"                               │
+    │ current_domain_phase: 8                         │
+    │ completed_phases:                               │
+    │   - scope_goals                                 │
+    │   - ...                                         │
+    │   - testing_verification                        │
+    │ decisions: [...]                                │
+    │ history: [...]                                  │
+    │ # ⛔ NO dynamic_phases FIELD!                   │
+    └─────────────────────────────────────────────────┘
+                 │
+                 ▼
+         ┌───────────────────────────────┐
+         │ User hits RESUME              │
+         │ orchestrator.set_state(state) │
+         │   → Creates NEW PhaseManager  │
+         │      with 8 default phases    │
+         │   ⛔ Dynamic phases LOST      │
+         └───────────────────────────────┘
+                 │
+                 ▼
+    ┌─────────────────────────────────────────────────┐
+    │ RESULT: Interview thinks it's complete!         │
+    │ • phase_manager.total_phases() = 8              │
+    │ • current_domain_phase = 8                      │
+    │ • is_complete() = true                          │
+    │ • Missing: Phase 9 (Authentication)             │
+    │ • Missing: Phase 10 (API Layer)                 │
+    └─────────────────────────────────────────────────┘
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│                            UI RENDERING ISSUE                               │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  BACKEND (Orchestrator):
+    phases: [
+      Phase 0: Scope & Goals
+      Phase 1: Architecture
+      ...
+      Phase 7: Testing
+      Phase 8: Authentication  ← DYNAMIC
+      Phase 9: API Layer       ← DYNAMIC
+    ]
+    current_index: 8
+    
+          ↓ (app has no way to query this)
+          
+  GUI (App State):
+    interview_current_phase: "feature-auth"  ← ID only
+    interview_phases_complete: ["scope_goals", ..., "testing_verification"]
+    
+          ↓ (passed to views)
+          
+  UI (interview.rs):
+    let phases = vec![
+      ("scope_goals", "Scope & Goals"),
+      ("architecture_technology", "Architecture & Technology"),
+      ...
+      ("testing_verification", "Testing & Verification"),
+    ];  // ⛔ HARDCODED 8 PHASES
+    
+    for (phase_id, phase_name) in phases {
+      let is_active = current_phase == phase_id;
+      // ⛔ "feature-auth" never matches!
+    }
+    
+  RESULT:
+    ┌─────────────────────────────────────────────┐
+    │ UI shows: [✓][✓][✓][✓][✓][✓][✓][✓]         │
+    │           All 8 phases complete!            │
+    │                                             │
+    │ Reality:  Phase 9 of 10 in progress        │
+    │           (Authentication deep-dive)        │
+    └─────────────────────────────────────────────┘
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│                          DASHBOARD PANEL ISSUE                              │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  build_interview_panel_data(
+    current_phase_id: "feature-auth",  ← From backend
+    current_question: "OAuth2 flow?",
+    phases_complete: [...]
+  ):
+    
+    let phase_index = match current_phase_id {
+      "scope_goals" => 0,
+      "architecture_technology" => 1,
+      ...
+      "testing_verification" => 7,
+      _ => return None,  // ⛔ "feature-auth" falls here!
+    };
+    
+    let total_phases = 8;  // ⛔ HARDCODED
+    
+  RESULT:
+    ┌─────────────────────────────────────────────┐
+    │ Dashboard:                                  │
+    │                                             │
+    │ [No interview panel visible]                │
+    │                                             │
+    │ (Panel only renders if Some(data) returned)│
+    └─────────────────────────────────────────────┘
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│                            FEATURE DETECTION                                │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  Keyword Map:
+  ┌──────────────┬──────────────────────────────────────────┐
+  │ Feature ID   │ Trigger Keywords                         │
+  ├──────────────┼──────────────────────────────────────────┤
+  │ auth         │ authentication, login, oauth, sso        │
+  │ api          │ api, rest api, graphql, endpoint         │
+  │ payment      │ payment, billing, stripe, subscription   │
+  │ notifications│ notification, push, email notification   │
+  │ search       │ search, full-text, elasticsearch         │
+  │ file-upload  │ upload, file upload, media storage       │
+  │ realtime     │ real-time, websocket, live update        │
+  │ chat         │ chat, messaging                          │
+  │ admin        │ admin, admin panel, dashboard            │
+  │ reporting    │ reporting                                │
+  │ analytics    │ analytics, metrics                       │
+  └──────────────┴──────────────────────────────────────────┘
+  
+  Scoring:
+    decision.summary:   keyword match → +2.0
+    decision.reasoning: keyword match → +1.5
+    answer:             keyword match → +1.5
+    question:           keyword match → +1.0
+    
+  Threshold:
+    count >= 2 mentions required
+    
+  Confidence:
+    (total_weight / 10.0).min(1.0)
+    
+  Limit:
+    Top 5 features by confidence
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│                             EXAMPLE SCENARIO                                │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  Interview State after Phase 8:
+    decisions:
+      - phase: security_secrets
+        summary: "OAuth2 authentication with Google"  → auth +2.0
+        reasoning: "Need secure login system"         → auth +1.5
+      
+      - phase: architecture_technology
+        summary: "REST API design"                    → api +2.0
+        reasoning: "API for mobile clients"           → api +1.5
+      
+      - phase: data_persistence
+        summary: "Stripe integration for payments"    → payment +2.0
+        reasoning: "Billing via Stripe API"           → payment +1.5, api +1.5
+    
+    history:
+      - Q: "What authentication?"
+        A: "OAuth2 with social login"                 → auth +1.5 (answer)
+      
+      - Q: "API design approach?"
+        A: "RESTful API with versioning"              → api +1.5 (answer)
+  
+  Feature Detection Results:
+    ┌──────────────┬───────┬────────┬────────────┐
+    │ Feature      │ Count │ Weight │ Confidence │
+    ├──────────────┼───────┼────────┼────────────┤
+    │ auth         │ 3     │ 5.0    │ 0.50       │
+    │ api          │ 4     │ 7.0    │ 0.70       │
+    │ payment      │ 2     │ 3.5    │ 0.35       │
+    └──────────────┴───────┴────────┴────────────┘
+  
+  Dynamic Phases Added:
+    Phase 9:  feature-api          (API Layer)
+    Phase 10: feature-auth         (Authentication)
+    Phase 11: feature-payment      (Payment Processing)
+  
+  Document Output:
+    phase-01-scope-goals.md
+    phase-02-architecture-technology.md
+    ...
+    phase-08-testing-verification.md
+    phase-09-feature-api.md          ← NEW
+    phase-10-feature-auth.md         ← NEW
+    phase-11-feature-payment.md      ← NEW
+    requirements-complete.md         ← Links to all 11
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│                              TEST COVERAGE                                  │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  Unit Tests: ✅ 35 tests passing
+    feature_detector.rs:  9 tests  ✓
+    phase_manager.rs:     6 tests  ✓
+    orchestrator.rs:     11 tests  ✓ (missing dynamic phase test)
+    document_writer.rs:   3 tests  ✓
+    state.rs:             6 tests  ✓
+  
+  Integration Tests: ⛔ MISSING
+    ❌ test_dynamic_phases_end_to_end
+    ❌ test_feature_detection_triggers
+    ❌ test_state_persistence_with_dynamic_phases
+    ❌ test_resume_with_dynamic_phases
+    ❌ test_document_generation_phase_9
+    ❌ test_ui_rendering_dynamic_phases
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│                            MINIMAL FIX ROADMAP                              │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  Priority 0 (Must-Have):
+    ┌─────────────────────────────────────────────────────────────┐
+    │ 1. State Persistence (2h)                                   │
+    │    • Add dynamic_phases: Vec<InterviewPhaseDefinition>      │
+    │    • Serialize/deserialize phase definitions               │
+    │    • Update set_state() to restore dynamic phases          │
+    │    • Update advance_phase() to persist dynamic phases      │
+    │    Risk: Low   Impact: Prevents data loss                  │
+    └─────────────────────────────────────────────────────────────┘
+    
+    ┌─────────────────────────────────────────────────────────────┐
+    │ 2. Integration Test (3h)                                    │
+    │    • tests/dynamic_phases_integration.rs                    │
+    │    • Test: detect → add → save → load → resume             │
+    │    Risk: Low   Impact: Catches regressions                 │
+    └─────────────────────────────────────────────────────────────┘
+  
+  Priority 1 (High):
+    ┌─────────────────────────────────────────────────────────────┐
+    │ 3. UI Phase List (4h)                                       │
+    │    • Change interview.rs to loop over all_phases           │
+    │    • Accept phases: &[InterviewPhaseDefinition] param      │
+    │    • Update app.rs callsites                               │
+    │    Risk: Medium   Impact: User can see progress            │
+    └─────────────────────────────────────────────────────────────┘
+    
+    ┌─────────────────────────────────────────────────────────────┐
+    │ 4. Dashboard Panel Fix (2h)                                 │
+    │    • Change build_interview_panel_data() to query phases   │
+    │    • Remove hardcoded match statement                      │
+    │    • Linear search by phase ID                             │
+    │    Risk: Low   Impact: Dashboard shows Phase 9+            │
+    └─────────────────────────────────────────────────────────────┘
+  
+  Total: 11 hours
+
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│                          SHIP DECISION MATRIX                               │
+└────────────────────────────────────────────────────────────────────────────┘
+
+  ┌────────────────────┬─────────┬──────────────────────────────────┐
+  │ Configuration      │ Status  │ User Experience                  │
+  ├────────────────────┼─────────┼──────────────────────────────────┤
+  │ Current (no fixes) │ ⛔ FAIL │ Data loss on resume              │
+  │                    │         │ UI shows wrong phase             │
+  │                    │         │ Dashboard panel missing          │
+  ├────────────────────┼─────────┼──────────────────────────────────┤
+  │ Fix #1 only        │ ⚠️ OK   │ Data persists ✓                 │
+  │ (persistence)      │         │ UI still broken (text-only)      │
+  │                    │         │ Dashboard panel missing          │
+  ├────────────────────┼─────────┼──────────────────────────────────┤
+  │ Fix #1 + #2        │ ⚠️ OK   │ Data persists ✓                 │
+  │ (+ test)           │         │ Tested ✓                         │
+  │                    │         │ UI still broken (text-only)      │
+  ├────────────────────┼─────────┼──────────────────────────────────┤
+  │ All 4 fixes        │ ✅ GOOD │ Data persists ✓                 │
+  │                    │         │ UI shows progress ✓              │
+  │                    │         │ Dashboard works ✓                │
+  │                    │         │ Tested ✓                         │
+  └────────────────────┴─────────┴──────────────────────────────────┘
+  
+  Recommendation: Ship with ALL 4 fixes (11 hours)
+  Minimum: Fix #1 + #2 (5 hours), defer UI to next sprint
+
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                              END OF VISUAL AUDIT                             ║
+║                                                                              ║
+║  Full details: AUDIT_DYNAMIC_PHASES_COMPREHENSIVE.md                        ║
+║  Quick ref: AUDIT_DYNAMIC_PHASES_QUICK_REF.md                               ║
+╚══════════════════════════════════════════════════════════════════════════════╝

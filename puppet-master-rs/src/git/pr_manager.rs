@@ -31,11 +31,20 @@ impl PrManager {
     ) -> Result<PrResult> {
         info!("Creating PR: {} -> {}", head, base);
 
-        // Check if gh CLI is available
-        if !self.is_gh_available().await? {
-            return Err(anyhow::anyhow!(
-                "gh CLI not found. Please install it from https://cli.github.com/"
-            ));
+        // Run preflight checks
+        match self.preflight_check().await {
+            Ok(()) => {
+                info!("Preflight checks passed for PR creation");
+            }
+            Err(e) => {
+                let message = format!("Preflight check failed: {}", e);
+                log::warn!("{}", message);
+                return Ok(PrResult {
+                    success: false,
+                    pr_url: None,
+                    message,
+                });
+            }
         }
 
         // Create PR using gh CLI
@@ -125,6 +134,67 @@ impl PrManager {
         Ok(output.status.success())
     }
 
+    /// Run preflight checks before attempting PR creation
+    ///
+    /// Verifies:
+    /// - gh CLI is installed
+    /// - gh is authenticated to GitHub
+    ///
+    /// Returns Ok(()) if all checks pass, Err with actionable message if any fail
+    pub async fn preflight_check(&self) -> Result<()> {
+        // Check if gh CLI exists
+        if !self.is_gh_available().await? {
+            return Err(anyhow::anyhow!(
+                "gh CLI not found. Install from https://cli.github.com/ and run 'gh auth login'"
+            ));
+        }
+
+        // Check if gh is authenticated
+        let auth_output = tokio::process::Command::new("gh")
+            .args(&["auth", "status"])
+            .output()
+            .await
+            .context("Failed to check gh authentication status")?;
+
+        // gh auth status returns exit code 0 if authenticated
+        if !auth_output.status.success() {
+            let stderr = String::from_utf8_lossy(&auth_output.stderr);
+            return Err(anyhow::anyhow!(
+                "gh CLI not authenticated. Run 'gh auth login' to authenticate with GitHub. Details: {}",
+                stderr.trim()
+            ));
+        }
+
+        // Additional check: parse output for authentication confirmation
+        let stdout = String::from_utf8_lossy(&auth_output.stdout);
+        let stderr = String::from_utf8_lossy(&auth_output.stderr);
+        let combined = format!("{}{}", stdout, stderr).to_lowercase();
+
+        if !combined.contains("logged in") && !combined.contains("authenticated") {
+            return Err(anyhow::anyhow!(
+                "gh CLI authentication unclear. Please verify with 'gh auth status' and run 'gh auth login' if needed"
+            ));
+        }
+
+        Ok(())
+    }
+
+    /// Build gh pr create command arguments (for testing and validation)
+    pub fn build_pr_create_args(title: &str, body: &str, base: &str, head: &str) -> Vec<String> {
+        vec![
+            "pr".to_string(),
+            "create".to_string(),
+            "--title".to_string(),
+            title.to_string(),
+            "--body".to_string(),
+            body.to_string(),
+            "--base".to_string(),
+            base.to_string(),
+            "--head".to_string(),
+            head.to_string(),
+        ]
+    }
+
     /// List open PRs
     pub async fn list_prs(&self) -> Result<Vec<PrInfo>> {
         let output = tokio::process::Command::new("gh")
@@ -201,5 +271,100 @@ mod tests {
         assert!(body.contains("Login works"));
         assert!(body.contains("## Files Changed"));
         assert!(body.contains("src/auth.rs"));
+    }
+
+    #[test]
+    fn test_build_pr_create_args() {
+        let args =
+            PrManager::build_pr_create_args("Test PR", "This is a test", "main", "feature-branch");
+
+        assert_eq!(args.len(), 10);
+        assert_eq!(args[0], "pr");
+        assert_eq!(args[1], "create");
+        assert_eq!(args[2], "--title");
+        assert_eq!(args[3], "Test PR");
+        assert_eq!(args[4], "--body");
+        assert_eq!(args[5], "This is a test");
+        assert_eq!(args[6], "--base");
+        assert_eq!(args[7], "main");
+        assert_eq!(args[8], "--head");
+        assert_eq!(args[9], "feature-branch");
+    }
+
+    #[test]
+    fn test_build_pr_create_args_with_special_chars() {
+        let args = PrManager::build_pr_create_args(
+            "[TASK] TK-001: Feature",
+            "Description with\nnewlines",
+            "main",
+            "rwm/task/tk-001",
+        );
+
+        assert_eq!(args[3], "[TASK] TK-001: Feature");
+        assert_eq!(args[5], "Description with\nnewlines");
+        assert_eq!(args[9], "rwm/task/tk-001");
+    }
+
+    #[test]
+    fn test_generate_pr_body_empty_criteria() {
+        let body = PrManager::generate_pr_body("Simple fix", &[], &[]);
+
+        assert!(body.contains("## Description"));
+        assert!(body.contains("Simple fix"));
+        assert!(!body.contains("## Acceptance Criteria"));
+        assert!(!body.contains("## Files Changed"));
+        assert!(body.contains("*Generated by RWM Puppet Master*"));
+    }
+
+    #[test]
+    fn test_generate_pr_body_with_markdown() {
+        let body = PrManager::generate_pr_body(
+            "Fix bug with **bold** text",
+            &["- [ ] Test passes".to_string()],
+            &["src/main.rs".to_string()],
+        );
+
+        assert!(body.contains("Fix bug with **bold** text"));
+        assert!(body.contains("- [ ] - [ ] Test passes")); // Note: double checkbox due to adding another
+    }
+
+    #[test]
+    fn test_pr_result_creation() {
+        let result = PrResult {
+            success: true,
+            pr_url: Some("https://github.com/owner/repo/pull/42".to_string()),
+            message: "Success".to_string(),
+        };
+
+        assert!(result.success);
+        assert_eq!(
+            result.pr_url.unwrap(),
+            "https://github.com/owner/repo/pull/42"
+        );
+    }
+
+    #[test]
+    fn test_pr_result_failure() {
+        let result = PrResult {
+            success: false,
+            pr_url: None,
+            message: "Authentication failed".to_string(),
+        };
+
+        assert!(!result.success);
+        assert!(result.pr_url.is_none());
+        assert!(result.message.contains("Authentication failed"));
+    }
+
+    #[test]
+    fn test_generate_pr_title_various_tiers() {
+        assert_eq!(
+            PrManager::generate_pr_title("phase", "P1", "Phase 1"),
+            "[PHASE] P1: Phase 1"
+        );
+        assert_eq!(
+            PrManager::generate_pr_title("subtask", "ST-001", "Fix bug"),
+            "[SUBTASK] ST-001: Fix bug"
+        );
     }
 }

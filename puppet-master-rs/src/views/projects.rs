@@ -2,10 +2,10 @@
 //!
 //! Lists available projects, allows creating new projects, and switching between them.
 
-use crate::app::Message;
-use crate::theme::{colors, fonts, tokens, AppTheme};
+use crate::app::{ContextMenuTarget, Message, SelectableField};
+use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::widgets::*;
-use iced::widget::{column, container, row, scrollable, text, Space};
+use iced::widget::{Space, column, container, row, scrollable, text};
 use iced::{Border, Element, Length};
 use std::path::PathBuf;
 
@@ -15,6 +15,7 @@ pub struct ProjectInfo {
     pub name: String,
     pub path: PathBuf,
     pub status: ProjectStatus,
+    pub pinned: bool,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -31,6 +32,7 @@ pub fn view<'a>(
     new_project_name: &'a str,
     new_project_path: &'a str,
     show_new_form: bool,
+    active_context_menu: &'a Option<ContextMenuTarget>,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
@@ -39,13 +41,14 @@ pub fn view<'a>(
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
 
-    // Header with action buttons
-    let header = row![
-        text("Projects")
-            .size(tokens::font_size::DISPLAY)
-            .font(crate::theme::fonts::FONT_DISPLAY)
-            .color(theme.ink()),
-        Space::new().width(Length::Fill),
+    let header_actions = row![
+        styled_button(theme, "CLEANUP", ButtonVariant::Ghost)
+            .on_press(Message::CleanupMissingProjects),
+        refresh_button(
+            theme,
+            Message::ProjectsRefresh,
+            RefreshStyle::Uppercase(ButtonVariant::Secondary)
+        ),
         styled_button(theme, "START NEW PROJECT", ButtonVariant::Primary)
             .on_press(Message::ShowNewProjectForm(true)),
         styled_button(theme, "OPEN EXISTING", ButtonVariant::Info)
@@ -53,6 +56,7 @@ pub fn view<'a>(
     ]
     .spacing(tokens::spacing::MD)
     .align_y(iced::Alignment::Center);
+    let header = page_header("Projects", theme, header_actions);
 
     content = content.push(header);
 
@@ -156,12 +160,18 @@ pub fn view<'a>(
                     .spacing(tokens::spacing::SM)
                     .align_y(iced::Alignment::Center),
                     Space::new().height(Length::Fixed(tokens::spacing::XXS)),
-                    selectable_text_input(
+                    selectable_text_field(
                         theme,
                         current_project.path.to_str().unwrap_or("<non-utf8 path>"),
-                        Message::None,
-                    )
-                    .width(Length::Fill),
+                        SelectableField::ProjectCurrentPath,
+                        active_context_menu,
+                        |value| {
+                            Message::SelectableFieldChanged(
+                                SelectableField::ProjectCurrentPath,
+                                value,
+                            )
+                        },
+                    ),
                 ]
                 .spacing(tokens::spacing::XXS),
                 Space::new().width(Length::Fill),
@@ -205,10 +215,12 @@ pub fn view<'a>(
             theme,
         ));
     } else {
-        let mut projects_content = column![text("Recent Projects")
-            .size(tokens::font_size::LG)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),]
+        let mut projects_content = column![
+            text("Recent Projects")
+                .size(tokens::font_size::LG)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+        ]
         .spacing(tokens::spacing::MD);
 
         for project in projects {
@@ -221,6 +233,14 @@ pub fn view<'a>(
                 ProjectStatus::Active => ("ACTIVE", colors::ACID_LIME),
                 ProjectStatus::Inactive => ("INACTIVE", theme.ink_faded()),
                 ProjectStatus::Error => ("ERROR", colors::HOT_MAGENTA),
+            };
+
+            let pin_button = if project.pinned {
+                styled_button(theme, "📌", ButtonVariant::Warning)
+                    .on_press(Message::PinProject(project.path.clone(), false))
+            } else {
+                styled_button(theme, "📍", ButtonVariant::Ghost)
+                    .on_press(Message::PinProject(project.path.clone(), true))
             };
 
             let project_row = row![
@@ -245,29 +265,52 @@ pub fn view<'a>(
                 }),
                 // Project info
                 column![
-                    text(&project.name)
-                        .size(tokens::font_size::BASE)
-                        .font(fonts::FONT_UI_BOLD)
-                        .color(theme.ink()),
-                    selectable_text_input(
+                    row![
+                        text(&project.name)
+                            .size(tokens::font_size::BASE)
+                            .font(fonts::FONT_UI_BOLD)
+                            .color(theme.ink()),
+                        if project.pinned {
+                            text(" 📌")
+                                .size(tokens::font_size::SM)
+                                .color(colors::ACID_LIME)
+                        } else {
+                            text("").size(tokens::font_size::SM)
+                        }
+                    ]
+                    .spacing(tokens::spacing::XXS)
+                    .align_y(iced::Alignment::Center),
+                    selectable_text_field(
                         theme,
                         project.path.to_str().unwrap_or("<non-utf8 path>"),
-                        Message::None,
-                    )
-                    .width(Length::Fill),
+                        SelectableField::ProjectPath(project.path.to_string_lossy().to_string()),
+                        active_context_menu,
+                        {
+                            let field = SelectableField::ProjectPath(
+                                project.path.to_string_lossy().to_string(),
+                            );
+                            move |value| Message::SelectableFieldChanged(field.clone(), value)
+                        },
+                    ),
                     text(get_last_active_time(&project.path))
                         .size(tokens::font_size::XS)
                         .color(theme.ink_faded()),
                 ]
                 .spacing(tokens::spacing::XXS),
                 Space::new().width(Length::Fill),
-                // Open button
-                if is_current {
-                    styled_button(theme, "Current", ButtonVariant::Secondary)
-                } else {
-                    styled_button(theme, "Open", ButtonVariant::Info)
-                        .on_press(Message::OpenProject(project.name.clone()))
-                },
+                // Action buttons
+                row![
+                    pin_button,
+                    styled_button(theme, "🗑", ButtonVariant::Danger)
+                        .on_press(Message::ForgetProject(project.path.clone())),
+                    if is_current {
+                        styled_button(theme, "Current", ButtonVariant::Secondary)
+                    } else {
+                        styled_button(theme, "Open", ButtonVariant::Info)
+                            .on_press(Message::OpenProject(project.name.clone()))
+                    },
+                ]
+                .spacing(tokens::spacing::SM),
             ]
             .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center);

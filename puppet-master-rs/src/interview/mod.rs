@@ -5,10 +5,11 @@
 //! and zero-gaps completion validation.
 
 pub mod agents_md_generator;
+pub mod codebase_scanner;
 pub mod completion_validator;
 pub mod document_writer;
-pub mod codebase_scanner;
 pub mod failover;
+pub mod feature_detector;
 pub mod orchestrator;
 pub mod phase_manager;
 pub mod prompt_templates;
@@ -23,6 +24,7 @@ pub use agents_md_generator::{generate_agents_md, write_agents_md};
 pub use completion_validator::{ValidationIssue, ValidationResult, ValidationSeverity};
 pub use document_writer::{CompletedPhase, DocumentWriter};
 pub use failover::{FailoverManager, PlatformModelPair};
+pub use feature_detector::{DetectedFeature, detect_features_from_state};
 pub use orchestrator::{
     InterviewCompletionResult, InterviewOrchestrator, InterviewOrchestratorConfig,
     OrchestratorEvent, TurnResult,
@@ -31,10 +33,8 @@ pub use phase_manager::{InterviewPhaseDefinition, PhaseManager};
 pub use question_parser::{
     ParsedAIResponse, PhaseCompletion, QuestionOption, STRUCTURED_MARKERS, StructuredQuestion,
 };
-pub use reference_manager::{ReferenceMaterial, ReferenceManager, ReferenceType};
+pub use reference_manager::{ReferenceManager, ReferenceMaterial, ReferenceType};
 pub use research_engine::{ResearchConfig, ResearchEngine, ResearchResult, ResearchType};
 pub use state::{Decision, InterviewPhase, InterviewQA, InterviewState};
-pub use technology_matrix::{write_technology_matrix, TechnologyEntry, TechnologyExtractor};
-pub use test_strategy_generator::{
-    write_test_strategy, CoverageLevel, TestStrategyConfig,
-};
+pub use technology_matrix::{TechnologyEntry, TechnologyExtractor, write_technology_matrix};
+pub use test_strategy_generator::{CoverageLevel, TestStrategyConfig, write_test_strategy};

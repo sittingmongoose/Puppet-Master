@@ -7,8 +7,8 @@
 //! - Optional labels and error states
 //! - Monospace font option for code inputs
 
-use crate::theme::{colors, fonts, tokens, AppTheme};
-use iced::widget::{column, text, text_input, TextInput};
+use crate::theme::{AppTheme, colors, fonts, tokens};
+use iced::widget::{TextInput, column, text, text_input};
 use iced::{Border, Color, Element};
 
 /// Input field variant

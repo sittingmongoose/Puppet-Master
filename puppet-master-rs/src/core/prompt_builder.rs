@@ -244,7 +244,7 @@ impl PromptBuilder {
         Ok(None)
     }
 
-    /// Load interview output documents (master requirements + test strategy).
+    /// Load interview output documents (master requirements + requirements-complete + test strategy).
     fn load_interview_outputs(&self) -> Result<Option<String>> {
         let Some(agents_path) = &self.agents_path else {
             return Ok(None);
@@ -257,6 +257,10 @@ impl PromptBuilder {
             .join(".puppet-master")
             .join("requirements")
             .join("master_requirements.md");
+        let requirements_complete_path = workspace
+            .join(".puppet-master")
+            .join("interview")
+            .join("requirements-complete.md");
         let test_strategy_path = workspace.join(".puppet-master").join("test-strategy.md");
 
         let read_excerpt = |path: &std::path::Path, max_chars: usize| -> Result<String> {
@@ -275,6 +279,15 @@ impl PromptBuilder {
             sections.push(format!(
                 "### Master Requirements (excerpt from `{}`)\n\n{}\n",
                 requirements_path.display(),
+                excerpt
+            ));
+        }
+
+        if requirements_complete_path.exists() {
+            let excerpt = read_excerpt(&requirements_complete_path, 6000)?;
+            sections.push(format!(
+                "### Interview Requirements Complete (excerpt from `{}`)\n\n{}\n",
+                requirements_complete_path.display(),
                 excerpt
             ));
         }
@@ -370,8 +383,6 @@ mod tests {
     use super::*;
     use crate::core::tier_node::TierTree;
     use crate::types::TierType;
-    use std::io::Write;
-    use tempfile::NamedTempFile;
 
     #[test]
     fn test_build_simple_prompt() {
@@ -486,6 +497,225 @@ Some content
 
         assert!(prompt.contains("Previous Iteration Feedback"));
         assert!(prompt.contains(feedback));
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_load_interview_outputs() -> Result<()> {
+        use std::io::Write;
+        use tempfile::TempDir;
+
+        // Create temporary directory structure
+        let temp_dir = TempDir::new()?;
+        let workspace = temp_dir.path();
+
+        // Create .puppet-master directory structure
+        let puppet_master_dir = workspace.join(".puppet-master");
+        fs::create_dir(&puppet_master_dir)?;
+
+        let requirements_dir = puppet_master_dir.join("requirements");
+        fs::create_dir(&requirements_dir)?;
+
+        let interview_dir = puppet_master_dir.join("interview");
+        fs::create_dir(&interview_dir)?;
+
+        // Create AGENTS.md in workspace
+        let agents_path = workspace.join("AGENTS.md");
+        let mut agents_file = fs::File::create(&agents_path)?;
+        agents_file.write_all(b"# Test Agents\n")?;
+
+        // Create master_requirements.md
+        let master_req_path = requirements_dir.join("master_requirements.md");
+        let mut master_req_file = fs::File::create(&master_req_path)?;
+        master_req_file
+            .write_all(b"# Master Requirements\nThis is the master requirements document.\n")?;
+
+        // Create requirements-complete.md
+        let req_complete_path = interview_dir.join("requirements-complete.md");
+        let mut req_complete_file = fs::File::create(&req_complete_path)?;
+        req_complete_file.write_all(
+            b"# Requirements Complete\nThis is the interview requirements complete document.\n",
+        )?;
+
+        // Create test-strategy.md
+        let test_strategy_path = puppet_master_dir.join("test-strategy.md");
+        let mut test_strategy_file = fs::File::create(&test_strategy_path)?;
+        test_strategy_file.write_all(b"# Test Strategy\nThis is the test strategy document.\n")?;
+
+        // Create prompt builder with agents path
+        let builder = PromptBuilder::new().with_agents_path(agents_path);
+
+        // Create a simple tree for testing
+        let mut tree = TierTree::new();
+        tree.add_node(
+            "1".to_string(),
+            TierType::Task,
+            "Test Task".to_string(),
+            "Test description".to_string(),
+            None,
+            3,
+        )?;
+
+        // Build prompt and check that all interview outputs are included
+        let prompt = builder.build_prompt(&tree, "1", 1, None)?;
+
+        // Verify all three documents are referenced
+        assert!(prompt.contains("Interview Outputs"));
+        assert!(prompt.contains("Master Requirements"));
+        assert!(prompt.contains("master requirements document"));
+        assert!(prompt.contains("Interview Requirements Complete"));
+        assert!(prompt.contains("interview requirements complete document"));
+        assert!(prompt.contains("Test Strategy"));
+        assert!(prompt.contains("test strategy document"));
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_load_interview_outputs_partial() -> Result<()> {
+        use tempfile::TempDir;
+
+        // Create temporary directory structure with only some files
+        let temp_dir = TempDir::new()?;
+        let workspace = temp_dir.path();
+
+        // Create .puppet-master directory structure
+        let puppet_master_dir = workspace.join(".puppet-master");
+        fs::create_dir(&puppet_master_dir)?;
+
+        let interview_dir = puppet_master_dir.join("interview");
+        fs::create_dir(&interview_dir)?;
+
+        // Create AGENTS.md in workspace
+        let agents_path = workspace.join("AGENTS.md");
+        fs::write(&agents_path, b"# Test Agents\n")?;
+
+        // Create only requirements-complete.md (not other files)
+        let req_complete_path = interview_dir.join("requirements-complete.md");
+        fs::write(
+            &req_complete_path,
+            b"# Requirements Complete\nPartial test.\n",
+        )?;
+
+        // Create prompt builder with agents path
+        let builder = PromptBuilder::new().with_agents_path(agents_path);
+
+        // Create a simple tree for testing
+        let mut tree = TierTree::new();
+        tree.add_node(
+            "1".to_string(),
+            TierType::Task,
+            "Test Task".to_string(),
+            "Test description".to_string(),
+            None,
+            3,
+        )?;
+
+        // Build prompt and check that only available document is included
+        let prompt = builder.build_prompt(&tree, "1", 1, None)?;
+
+        // Verify only the existing document is referenced
+        assert!(prompt.contains("Interview Outputs"));
+        assert!(prompt.contains("Interview Requirements Complete"));
+        assert!(prompt.contains("Partial test"));
+
+        // Verify missing documents are not referenced
+        assert!(!prompt.contains("Master Requirements"));
+        assert!(!prompt.contains("Test Strategy"));
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_load_interview_outputs_none() -> Result<()> {
+        use tempfile::TempDir;
+
+        // Create temporary directory structure with no interview outputs
+        let temp_dir = TempDir::new()?;
+        let workspace = temp_dir.path();
+
+        // Create AGENTS.md in workspace
+        let agents_path = workspace.join("AGENTS.md");
+        fs::write(&agents_path, b"# Test Agents\n")?;
+
+        // Create prompt builder with agents path
+        let builder = PromptBuilder::new().with_agents_path(agents_path);
+
+        // Create a simple tree for testing
+        let mut tree = TierTree::new();
+        tree.add_node(
+            "1".to_string(),
+            TierType::Task,
+            "Test Task".to_string(),
+            "Test description".to_string(),
+            None,
+            3,
+        )?;
+
+        // Build prompt - should not include Interview Outputs section
+        let prompt = builder.build_prompt(&tree, "1", 1, None)?;
+
+        // Verify Interview Outputs section is not present when no files exist
+        assert!(!prompt.contains("Interview Outputs"));
+        assert!(!prompt.contains("Master Requirements"));
+        assert!(!prompt.contains("Requirements Complete"));
+        assert!(!prompt.contains("Test Strategy"));
+
+        // But the prompt should still be valid with other sections
+        assert!(prompt.contains("Test Task"));
+        assert!(prompt.contains("Instructions"));
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_load_interview_outputs_truncation() -> Result<()> {
+        use tempfile::TempDir;
+
+        // Create temporary directory structure
+        let temp_dir = TempDir::new()?;
+        let workspace = temp_dir.path();
+
+        // Create .puppet-master directory structure
+        let puppet_master_dir = workspace.join(".puppet-master");
+        fs::create_dir(&puppet_master_dir)?;
+
+        let interview_dir = puppet_master_dir.join("interview");
+        fs::create_dir(&interview_dir)?;
+
+        // Create AGENTS.md in workspace
+        let agents_path = workspace.join("AGENTS.md");
+        fs::write(&agents_path, b"# Test Agents\n")?;
+
+        // Create requirements-complete.md with content exceeding 6000 chars
+        let req_complete_path = interview_dir.join("requirements-complete.md");
+        let long_content = "x".repeat(7000);
+        fs::write(
+            &req_complete_path,
+            format!("# Requirements Complete\n{}", long_content),
+        )?;
+
+        // Create prompt builder with agents path
+        let builder = PromptBuilder::new().with_agents_path(agents_path);
+
+        // Create a simple tree for testing
+        let mut tree = TierTree::new();
+        tree.add_node(
+            "1".to_string(),
+            TierType::Task,
+            "Test Task".to_string(),
+            "Test description".to_string(),
+            None,
+            3,
+        )?;
+
+        // Build prompt and verify truncation
+        let prompt = builder.build_prompt(&tree, "1", 1, None)?;
+
+        // Verify truncation marker is present
+        assert!(prompt.contains("...(truncated)..."));
+        assert!(prompt.contains("Interview Requirements Complete"));
 
         Ok(())
     }

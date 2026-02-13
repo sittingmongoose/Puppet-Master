@@ -28,6 +28,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: GUI widget reuse check (warn-only)
+        if: runner.os == 'Linux'
+        continue-on-error: true
+        shell: bash
+        run: |
+          chmod +x scripts/check-widget-reuse.sh
+          ./scripts/check-widget-reuse.sh
+
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
 

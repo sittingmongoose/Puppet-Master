@@ -10,12 +10,12 @@
 //! This widget can be embedded in the Dashboard or other views to provide
 //! quick visibility into in-progress interviews.
 
-use crate::theme::{tokens, AppTheme};
+use crate::theme::{AppTheme, tokens};
 use crate::widgets::{
-    panel_with_header, styled_button_sized, styled_progress_bar, ButtonSize, ButtonVariant,
-    ProgressSize, ProgressVariant,
+    ButtonSize, ButtonVariant, ProgressSize, ProgressVariant, panel_with_header,
+    styled_button_sized, styled_progress_bar,
 };
-use iced::widget::{column, row, text, Space};
+use iced::widget::{Space, column, row, text};
 use iced::{Alignment, Element, Length};
 
 /// Data required to render the interview panel
@@ -160,13 +160,15 @@ where
         progress_section,
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // "Open Full Interview" button
-        row![styled_button_sized(
-            theme,
-            "Open Full Interview",
-            ButtonVariant::Info,
-            ButtonSize::Medium,
-        )
-        .on_press(on_open)]
+        row![
+            styled_button_sized(
+                theme,
+                "Open Full Interview",
+                ButtonVariant::Info,
+                ButtonSize::Medium,
+            )
+            .on_press(on_open)
+        ]
         .align_y(Alignment::Center),
     ]
     .spacing(0)

@@ -49,30 +49,28 @@ pub fn view<'a>(
         "Polish".to_string(),
     ];
 
-    content = content.push(
-        row![
-            text("Coverage")
-                .size(tokens::font_size::DISPLAY)
-                .font(fonts::FONT_DISPLAY)
-                .color(theme.ink()),
-            Space::new().width(Length::Fill),
-            column![
-                text("Phase Filter")
-                    .size(tokens::font_size::SM)
-                    .color(theme.ink_faded()),
-                pick_list(
-                    phase_options,
-                    Some(phase_filter.to_string()),
-                    Message::CoverageFilterChanged
-                )
-                .width(Length::Fixed(150.0))
-            ]
-            .spacing(tokens::spacing::XXS),
-            styled_button(theme, "REFRESH", ButtonVariant::Info),
+    let header_actions = row![
+        column![
+            text("Phase Filter")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
+            pick_list(
+                phase_options,
+                Some(phase_filter.to_string()),
+                Message::CoverageFilterChanged
+            )
+            .width(Length::Fixed(150.0))
         ]
-        .spacing(tokens::spacing::MD)
-        .align_y(iced::Alignment::Center),
-    );
+        .spacing(tokens::spacing::XXS),
+        refresh_button(
+            theme,
+            Message::None,
+            RefreshStyle::Uppercase(ButtonVariant::Info)
+        ),
+    ]
+    .spacing(tokens::spacing::MD)
+    .align_y(iced::Alignment::Center);
+    content = content.push(page_header("Coverage", theme, header_actions));
 
     // Overall stats cards - 4 columns
     let covered_count = requirements.iter().filter(|r| r.covered).count();

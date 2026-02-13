@@ -3,7 +3,7 @@
 //! Provides utilities for creating responsive layouts that adapt to window size,
 //! following common breakpoints for mobile, tablet, and desktop layouts.
 
-use iced::widget::{row, Column, Row};
+use iced::widget::{Column, Row, row};
 use iced::{Element, Length};
 
 /// Responsive breakpoints (in pixels)

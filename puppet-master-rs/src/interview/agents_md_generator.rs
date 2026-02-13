@@ -34,7 +34,10 @@ pub fn generate_agents_md(
 
     // Overview section (from Phase 1 - Scope & Goals)
     content.push_str("## Overview\n\n");
-    if let Some(scope_phase) = completed_phases.iter().find(|p| p.definition.id == "scope_goals") {
+    if let Some(scope_phase) = completed_phases
+        .iter()
+        .find(|p| p.definition.id == "scope_goals")
+    {
         // Extract overview from scope & goals decisions
         if !scope_phase.decisions.is_empty() {
             for decision in &scope_phase.decisions {
@@ -44,7 +47,7 @@ pub fn generate_agents_md(
         } else {
             content.push_str(&format!("{}\n\n", feature_description));
         }
-        
+
         // Include relevant Q&A from scope phase
         if !scope_phase.qa_history.is_empty() {
             content.push_str("**Project goals:**\n\n");
@@ -66,11 +69,14 @@ pub fn generate_agents_md(
         if !arch_phase.decisions.is_empty() {
             content.push_str("**Tech stack (versions pinned):**\n\n");
             for decision in &arch_phase.decisions {
-                content.push_str(&format!("- **{}**: {}\n", decision.summary, decision.reasoning));
+                content.push_str(&format!(
+                    "- **{}**: {}\n",
+                    decision.summary, decision.reasoning
+                ));
             }
             content.push('\n');
         }
-        
+
         // Extract platform targets, build system details from Q&A
         if !arch_phase.qa_history.is_empty() {
             content.push_str("**Platform & build details:**\n\n");
@@ -97,11 +103,14 @@ pub fn generate_agents_md(
                     .any(|k| d.summary.to_lowercase().contains(k))
             })
             .collect();
-        
+
         if !relevant_decisions.is_empty() {
             patterns_found = true;
             for decision in relevant_decisions {
-                content.push_str(&format!("- **{}**: {}\n", decision.summary, decision.reasoning));
+                content.push_str(&format!(
+                    "- **{}**: {}\n",
+                    decision.summary, decision.reasoning
+                ));
             }
         }
     }
@@ -113,24 +122,27 @@ pub fn generate_agents_md(
     // DO section
     content.push_str("## DO\n\n");
     let mut do_items = Vec::new();
-    
+
     // Extract specific versions and tools from decisions
     for phase in completed_phases {
         for decision in &phase.decisions {
             if decision.summary.to_lowercase().contains("use")
                 || decision.summary.to_lowercase().contains("version")
             {
-                do_items.push(format!("- {} (decided in interview Phase: {})", decision.summary, phase.definition.name));
+                do_items.push(format!(
+                    "- {} (decided in interview Phase: {})",
+                    decision.summary, phase.definition.name
+                ));
             }
         }
     }
-    
+
     // Add standard DO items
     do_items.push("- Run all tests before marking tasks complete".to_string());
     do_items.push("- Check Playwright tests pass for any GUI changes".to_string());
     do_items.push("- Follow the architecture decisions documented above".to_string());
     do_items.push("- Update AGENTS.md with learnings after significant iterations".to_string());
-    
+
     for item in &do_items {
         content.push_str(&format!("{}\n", item));
     }
@@ -139,7 +151,7 @@ pub fn generate_agents_md(
     // DON'T section
     content.push_str("## DON'T\n\n");
     let mut dont_items = Vec::new();
-    
+
     // Extract explicit exclusions from decisions
     for phase in completed_phases {
         for decision in &phase.decisions {
@@ -151,13 +163,13 @@ pub fn generate_agents_md(
             }
         }
     }
-    
+
     // Add standard DON'T items
     dont_items.push("- Don't skip tests - ALL testing is autonomous".to_string());
     dont_items.push("- Don't assume - everything was specified in the interview".to_string());
     dont_items.push("- Don't use deprecated or conflicting library versions".to_string());
     dont_items.push("- Don't introduce manual testing steps".to_string());
-    
+
     for item in &dont_items {
         content.push_str(&format!("{}\n", item));
     }
@@ -166,7 +178,7 @@ pub fn generate_agents_md(
     // Testing section (from Phase 8 - Testing & Verification)
     content.push_str("## Testing\n\n");
     content.push_str("**All tests must be runnable by AI agents autonomously.**\n\n");
-    
+
     if let Some(test_phase) = completed_phases
         .iter()
         .find(|p| p.definition.id == "testing_verification")
@@ -177,7 +189,7 @@ pub fn generate_agents_md(
             }
             content.push('\n');
         }
-        
+
         // Extract test configuration details from Q&A
         if !test_phase.qa_history.is_empty() {
             content.push_str("**Test configuration:**\n\n");
@@ -187,14 +199,14 @@ pub fn generate_agents_md(
             content.push('\n');
         }
     }
-    
+
     content.push_str("See `test-strategy.md` for detailed test specifications.\n\n");
     content.push_str("Every tier has machine-verifiable acceptance criteria.\n\n");
 
     // Common Failure Modes section
     content.push_str("## Common Failure Modes\n\n");
     content.push_str("_Pre-populated from research engine findings about the tech stack:_\n\n");
-    
+
     // Extract gotchas and warnings from decisions
     let mut failure_modes_found = false;
     for phase in completed_phases {
@@ -205,11 +217,14 @@ pub fn generate_agents_md(
                 || decision.reasoning.to_lowercase().contains("careful")
             {
                 failure_modes_found = true;
-                content.push_str(&format!("- **{}**: {}\n", phase.definition.name, decision.reasoning));
+                content.push_str(&format!(
+                    "- **{}**: {}\n",
+                    phase.definition.name, decision.reasoning
+                ));
             }
         }
     }
-    
+
     if !failure_modes_found {
         content.push_str("_No specific failure modes identified during interview. Research engine findings to be added._\n");
     }
@@ -230,7 +245,7 @@ pub fn generate_agents_md(
                     || d.summary.to_lowercase().contains("folder")
             })
             .collect();
-        
+
         if !structure_decisions.is_empty() {
             content.push_str("```\n");
             for decision in structure_decisions {

@@ -3,9 +3,12 @@
 //! Uses `text_input` in no-op mode so users can drag-select and copy text
 //! while keeping the underlying value immutable.
 
-use crate::theme::{colors, fonts, tokens, AppTheme};
-use iced::widget::{text_input, TextInput};
+use crate::app::{ContextMenuTarget, Message, SelectableField};
+use crate::theme::{AppTheme, colors, fonts, tokens};
+use crate::widgets::context_menu::{ContextMenuOptions, context_menu_actions};
 use iced::Border;
+use iced::Length;
+use iced::widget::{TextInput, column, mouse_area, text_input};
 
 /// Build a single-line selectable/read-only text field.
 ///
@@ -15,19 +18,25 @@ pub fn selectable_text_input<'a, Message: Clone + 'a>(
     value: &'a str,
     on_interaction: Message,
 ) -> TextInput<'a, Message> {
+    selectable_text_input_with_on_change(theme, value, move |_| on_interaction.clone())
+}
+
+/// Build a single-line selectable text field with editable callback support.
+pub fn selectable_text_input_with_on_change<'a, Message, F>(
+    theme: &AppTheme,
+    value: &'a str,
+    on_change: F,
+) -> TextInput<'a, Message>
+where
+    Message: Clone + 'a,
+    F: Fn(String) -> Message + Clone + 'a,
+{
     let theme_copy = *theme;
+    let on_paste = on_change.clone();
 
     text_input("", value)
-        // Keep widget enabled so pointer/keyboard selection works.
-        // Typed edits are ignored by routing input to a no-op message.
-        .on_input({
-            let msg = on_interaction.clone();
-            move |_| msg.clone()
-        })
-        .on_paste({
-            let msg = on_interaction.clone();
-            move |_| msg.clone()
-        })
+        .on_input(on_change)
+        .on_paste(on_paste)
         .font(fonts::FONT_MONO)
         .size(tokens::font_size::SM)
         .padding([2, 6])
@@ -56,4 +65,40 @@ pub fn selectable_text_input<'a, Message: Clone + 'a>(
                 }
             },
         )
+}
+
+/// Build a selectable text field with built-in right-click context menu support.
+pub fn selectable_text_field<'a, F>(
+    theme: &'a AppTheme,
+    value: &'a str,
+    field: SelectableField,
+    active_context_menu: &'a Option<ContextMenuTarget>,
+    on_change: F,
+) -> iced::Element<'a, Message>
+where
+    F: Fn(String) -> Message + Clone + 'a,
+{
+    let menu_open = matches!(
+        active_context_menu,
+        Some(ContextMenuTarget::SelectableField(current)) if current == &field
+    );
+
+    let input = mouse_area(
+        selectable_text_input_with_on_change(theme, value, on_change).width(Length::Fill),
+    )
+    .on_right_press(Message::OpenContextMenu(
+        ContextMenuTarget::SelectableField(field),
+    ));
+
+    let mut content = column![input].spacing(tokens::spacing::XS);
+    if menu_open {
+        content = content.push(context_menu_actions(
+            theme,
+            ContextMenuOptions {
+                show_select_all: false,
+            },
+        ));
+    }
+
+    content.into()
 }

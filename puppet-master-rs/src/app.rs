@@ -4,7 +4,7 @@ use crate::types::PuppetMasterEvent;
 use crate::widgets::Page;
 use anyhow::Result;
 use chrono::{DateTime, Utc};
-use iced::{widget::text_editor, window, Element, Subscription, Task, Theme};
+use iced::{Element, Subscription, Task, Theme, widget::text_editor, window};
 use std::collections::{HashMap, HashSet};
 use std::hash::{Hash, Hasher};
 use std::path::PathBuf;
@@ -89,6 +89,29 @@ pub struct GitInfoDisplay {
     pub user_email: String,
     pub remote_url: String,
     pub current_branch: String,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum SelectableField {
+    LoginAuthUrl(String),
+    GitUserName,
+    GitUserEmail,
+    GitRemoteUrl,
+    GitCurrentBranch,
+    ProjectCurrentPath,
+    ProjectPath(String),
+    InterviewCurrentQuestion,
+    InterviewEmptyReferences,
+    InterviewReferenceLink(usize),
+    InterviewReferenceFile(usize),
+    InterviewReferenceImage(usize),
+    InterviewReferenceDirectory(usize),
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum ContextMenuTarget {
+    DashboardTerminal,
+    SelectableField(SelectableField),
 }
 
 #[derive(Debug, Clone)]
@@ -184,12 +207,14 @@ pub struct App {
     pub output_lines: Vec<OutputLine>,
     pub terminal_editor_content: text_editor::Content,
     terminal_interaction_until: Option<std::time::Instant>,
+    pub active_context_menu: Option<ContextMenuTarget>,
     pub last_error: Option<String>,
     pub start_time: Option<DateTime<Utc>>,
 
     // Projects
     pub current_project: Option<ProjectInfo>,
     pub projects: Vec<ProjectInfo>,
+    projects_persistence: crate::projects::ProjectsPersistence,
 
     // Budgets
     pub budgets: HashMap<String, BudgetDisplayInfo>,
@@ -304,6 +329,10 @@ pub struct App {
     pub interview_answers: Vec<String>,
     pub interview_phases_complete: Vec<String>,
     pub interview_answer_input: String,
+    pub interview_reference_materials: Vec<crate::interview::ReferenceMaterial>,
+    pub interview_reference_link_input: String,
+    pub interview_researching: bool,
+    pub interview_empty_references_text: String,
 
     // Setup
     pub setup_platform_statuses: Vec<PlatformStatus>,
@@ -406,10 +435,17 @@ pub enum Message {
     ProjectFolderSelected(Option<PathBuf>),
     ProjectsRefresh,
     ProjectsLoaded(Vec<ProjectInfo>),
+    ShowNewProjectForm(bool),
+    NewProjectNameChanged(String),
+    NewProjectPathChanged(String),
     BrowseNewProjectPath,
     NewProjectPathSelected(Option<PathBuf>),
     CreateNewProject,
     ProjectCreated(Result<(), String>),
+    RememberProject(PathBuf),  // Add current project to known list
+    ForgetProject(PathBuf),    // Remove project from known list
+    PinProject(PathBuf, bool), // Pin/unpin project
+    CleanupMissingProjects,    // Remove projects that no longer exist
 
     // Config
     ConfigTextChanged(String),
@@ -497,6 +533,12 @@ pub enum Message {
     WizardPlanContentAction(text_editor::Action),
     MetricsSummaryAction(text_editor::Action),
     LoginCliAction(text_editor::Action),
+    OpenContextMenu(ContextMenuTarget),
+    CloseContextMenu,
+    ContextMenuCopy,
+    ContextMenuPaste,
+    ContextMenuPasteLoaded(Option<String>),
+    ContextMenuSelectAll,
 
     WizardTierPlatformChanged(String, String), // tier, platform
     WizardTierModelChanged(String, String),    // tier, model
@@ -533,6 +575,13 @@ pub enum Message {
     InterviewSubmitAnswer,
     InterviewTogglePause,
     InterviewEnd,
+    InterviewAddReferenceFile,
+    InterviewAddReferenceImage,
+    InterviewAddReferenceDirectory,
+    InterviewReferenceLinkInputChanged(String),
+    InterviewAddReferenceLink,
+    InterviewRemoveReference(usize),
+    InterviewReferencePicked(crate::interview::ReferenceType),
 
     // Interview Config UI
     ConfigInterviewFieldChanged(String, String), // field, value
@@ -617,6 +666,7 @@ pub enum Message {
     PlatformLoginComplete(crate::platforms::AuthTarget, Result<(), String>),
     PlatformLogoutComplete(crate::platforms::AuthTarget, Result<(), String>),
     CopyToClipboard(String),
+    SelectableFieldChanged(SelectableField, String),
     RefreshAuthStatus,
     LoadGitInfoForLogin,
     GitInfoForLoginLoaded(Option<GitInfoDisplay>),
@@ -697,11 +747,7 @@ async fn load_git_info() -> Option<GitInfoDisplay> {
 
         if output.status.success() {
             let s = String::from_utf8_lossy(&output.stdout).trim().to_string();
-            if s.is_empty() {
-                None
-            } else {
-                Some(s)
-            }
+            if s.is_empty() { None } else { Some(s) }
         } else {
             None
         }
@@ -716,11 +762,7 @@ async fn load_git_info() -> Option<GitInfoDisplay> {
 
         if output.status.success() {
             let s = String::from_utf8_lossy(&output.stdout).trim().to_string();
-            if s.is_empty() {
-                None
-            } else {
-                Some(s)
-            }
+            if s.is_empty() { None } else { Some(s) }
         } else {
             None
         }
@@ -735,11 +777,7 @@ async fn load_git_info() -> Option<GitInfoDisplay> {
 
         if output.status.success() {
             let s = String::from_utf8_lossy(&output.stdout).trim().to_string();
-            if s.is_empty() {
-                None
-            } else {
-                Some(s)
-            }
+            if s.is_empty() { None } else { Some(s) }
         } else {
             None
         }
@@ -796,12 +834,14 @@ impl App {
                  Start a new orchestration from the Wizard page or resume from the Dashboard.\n",
             ),
             terminal_interaction_until: None,
+            active_context_menu: None,
             last_error: None,
             start_time: None,
 
             // Projects
             current_project: None,
             projects: Vec::new(),
+            projects_persistence: crate::projects::ProjectsPersistence::default(),
 
             // Budgets
             budgets: HashMap::new(),
@@ -927,6 +967,10 @@ impl App {
             interview_answers: Vec::new(),
             interview_phases_complete: Vec::new(),
             interview_answer_input: String::new(),
+            interview_reference_materials: Vec::new(),
+            interview_reference_link_input: String::new(),
+            interview_researching: false,
+            interview_empty_references_text: "No reference materials added.".to_string(),
 
             // UI State
             toasts: Vec::new(),
@@ -1030,6 +1074,7 @@ impl App {
                 self.previous_page = Some(self.current_page);
                 self.page_transition = crate::widgets::TransitionState::start();
                 self.current_page = page;
+                self.active_context_menu = None;
 
                 // Auto-load data when navigating to certain pages
                 match page {
@@ -1404,6 +1449,7 @@ impl App {
                             name: name.clone(),
                             path: project_path.clone(),
                             status: crate::views::projects::ProjectStatus::Active,
+                            pinned: false,
                         };
 
                         // Mark all others inactive
@@ -1437,6 +1483,21 @@ impl App {
                     .map(|p| p.path.clone())
                     .unwrap_or_else(|| PathBuf::from(&project_or_path));
 
+                // Automatically remember this project
+                let name = resolved_path
+                    .file_name()
+                    .and_then(|n| n.to_str())
+                    .unwrap_or(&project_or_path)
+                    .to_string();
+
+                let mut known_project =
+                    crate::projects::KnownProject::new(name, resolved_path.clone());
+                known_project.touch(); // Update last accessed time
+
+                if let Err(e) = self.projects_persistence.add_or_update(known_project) {
+                    log::warn!("Failed to remember project: {}", e);
+                }
+
                 // Mark project active/inactive
                 for project in &mut self.projects {
                     project.status = if project.path == resolved_path {
@@ -1452,6 +1513,7 @@ impl App {
                         name: project_or_path.clone(),
                         path: resolved_path.clone(),
                         status: crate::views::projects::ProjectStatus::Active,
+                        pinned: false,
                     });
                 }
 
@@ -1545,51 +1607,79 @@ impl App {
             }
 
             Message::ProjectsRefresh => {
-                // Scan for projects in current directory and known locations
-                let cwd = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-                let mut found_projects = Vec::new();
+                // Load known projects from persistence
+                match self.projects_persistence.get_sorted() {
+                    Ok(known_projects) => {
+                        // Convert KnownProject to ProjectInfo
+                        let mut found_projects: Vec<ProjectInfo> = known_projects
+                            .iter()
+                            .map(|kp| {
+                                let status = if kp.path.join(".puppet-master").exists() {
+                                    crate::views::projects::ProjectStatus::Inactive
+                                } else {
+                                    crate::views::projects::ProjectStatus::Error
+                                };
 
-                // Check current directory
-                if cwd.join(".puppet-master").exists() || cwd.join("prd.json").exists() {
-                    found_projects.push(ProjectInfo {
-                        name: cwd
-                            .file_name()
-                            .and_then(|n| n.to_str())
-                            .unwrap_or("Current Project")
-                            .to_string(),
-                        path: cwd.clone(),
-                        status: crate::views::projects::ProjectStatus::Inactive,
-                    });
-                }
+                                ProjectInfo {
+                                    name: kp.name.clone(),
+                                    path: kp.path.clone(),
+                                    status,
+                                    pinned: kp.pinned,
+                                }
+                            })
+                            .collect();
 
-                // Scan for subdirectories with .puppet-master
-                if let Ok(entries) = std::fs::read_dir(&cwd) {
-                    for entry in entries.filter_map(Result::ok) {
-                        let path = entry.path();
-                        if path.is_dir() && path.join(".puppet-master").exists() {
-                            found_projects.push(ProjectInfo {
-                                name: path
-                                    .file_name()
-                                    .and_then(|n| n.to_str())
-                                    .unwrap_or("Project")
-                                    .to_string(),
-                                path: path.clone(),
-                                status: crate::views::projects::ProjectStatus::Inactive,
-                            });
+                        // Also check current directory and add if not in list
+                        let cwd = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
+                        if cwd.join(".puppet-master").exists() || cwd.join("prd.json").exists() {
+                            if !found_projects.iter().any(|p| p.path == cwd) {
+                                found_projects.push(ProjectInfo {
+                                    name: cwd
+                                        .file_name()
+                                        .and_then(|n| n.to_str())
+                                        .unwrap_or("Current Project")
+                                        .to_string(),
+                                    path: cwd.clone(),
+                                    status: crate::views::projects::ProjectStatus::Inactive,
+                                    pinned: false,
+                                });
+                            }
                         }
+
+                        self.projects = found_projects;
+                        self.add_toast(
+                            ToastType::Success,
+                            format!("Loaded {} projects", self.projects.len()),
+                        );
+                    }
+                    Err(e) => {
+                        self.add_toast(ToastType::Error, format!("Failed to load projects: {}", e));
                     }
                 }
-
-                self.projects = found_projects;
-                self.add_toast(
-                    ToastType::Success,
-                    format!("Found {} projects", self.projects.len()),
-                );
                 Task::none()
             }
 
             Message::ProjectsLoaded(projects) => {
                 self.projects = projects;
+                Task::none()
+            }
+
+            Message::ShowNewProjectForm(show) => {
+                self.show_new_project_form = show;
+                if !show {
+                    self.new_project_name.clear();
+                    self.new_project_path.clear();
+                }
+                Task::none()
+            }
+
+            Message::NewProjectNameChanged(name) => {
+                self.new_project_name = name;
+                Task::none()
+            }
+
+            Message::NewProjectPathChanged(path) => {
+                self.new_project_path = path;
                 Task::none()
             }
 
@@ -1664,6 +1754,111 @@ impl App {
                     }
                 }
                 Task::none()
+            }
+
+            Message::RememberProject(path) => {
+                let name = path
+                    .file_name()
+                    .and_then(|n| n.to_str())
+                    .unwrap_or("Project")
+                    .to_string();
+
+                let project = crate::projects::KnownProject::new(name, path);
+
+                match self.projects_persistence.add_or_update(project) {
+                    Ok(()) => {
+                        self.add_toast(
+                            ToastType::Success,
+                            "Project added to known projects".to_string(),
+                        );
+                        // Refresh the projects list
+                        self.update(Message::ProjectsRefresh)
+                    }
+                    Err(e) => {
+                        self.add_toast(
+                            ToastType::Error,
+                            format!("Failed to remember project: {}", e),
+                        );
+                        Task::none()
+                    }
+                }
+            }
+
+            Message::ForgetProject(path) => {
+                match self.projects_persistence.remove(&path) {
+                    Ok(true) => {
+                        self.add_toast(
+                            ToastType::Success,
+                            "Project removed from known projects".to_string(),
+                        );
+                        // Refresh the projects list
+                        self.update(Message::ProjectsRefresh)
+                    }
+                    Ok(false) => {
+                        self.add_toast(
+                            ToastType::Warning,
+                            "Project not found in known projects".to_string(),
+                        );
+                        Task::none()
+                    }
+                    Err(e) => {
+                        self.add_toast(
+                            ToastType::Error,
+                            format!("Failed to forget project: {}", e),
+                        );
+                        Task::none()
+                    }
+                }
+            }
+
+            Message::PinProject(path, pinned) => {
+                match self.projects_persistence.set_pinned(&path, pinned) {
+                    Ok(true) => {
+                        let msg = if pinned { "pinned" } else { "unpinned" };
+                        self.add_toast(ToastType::Success, format!("Project {}", msg));
+                        // Refresh the projects list
+                        self.update(Message::ProjectsRefresh)
+                    }
+                    Ok(false) => {
+                        self.add_toast(ToastType::Warning, "Project not found".to_string());
+                        Task::none()
+                    }
+                    Err(e) => {
+                        self.add_toast(
+                            ToastType::Error,
+                            format!("Failed to update project: {}", e),
+                        );
+                        Task::none()
+                    }
+                }
+            }
+
+            Message::CleanupMissingProjects => {
+                match self.projects_persistence.cleanup_missing() {
+                    Ok(count) => {
+                        if count > 0 {
+                            self.add_toast(
+                                ToastType::Success,
+                                format!("Removed {} missing projects", count),
+                            );
+                            // Refresh the projects list
+                            self.update(Message::ProjectsRefresh)
+                        } else {
+                            self.add_toast(
+                                ToastType::Info,
+                                "No missing projects to clean up".to_string(),
+                            );
+                            Task::none()
+                        }
+                    }
+                    Err(e) => {
+                        self.add_toast(
+                            ToastType::Error,
+                            format!("Failed to cleanup projects: {}", e),
+                        );
+                        Task::none()
+                    }
+                }
             }
 
             // ================================================================
@@ -1760,6 +1955,84 @@ impl App {
 
             Message::LoginCliAction(action) => {
                 apply_read_only_text_editor_action(&mut self.login_cli_content, action);
+                Task::none()
+            }
+
+            Message::OpenContextMenu(target) => {
+                if matches!(target, ContextMenuTarget::DashboardTerminal) {
+                    self.terminal_interaction_until =
+                        Some(std::time::Instant::now() + std::time::Duration::from_secs(3));
+                }
+                self.active_context_menu = Some(target);
+                Task::none()
+            }
+
+            Message::CloseContextMenu => {
+                self.active_context_menu = None;
+                Task::none()
+            }
+
+            Message::ContextMenuCopy => {
+                let text = match self.active_context_menu.clone() {
+                    Some(ContextMenuTarget::DashboardTerminal) => self
+                        .terminal_editor_content
+                        .selection()
+                        .unwrap_or_else(|| self.terminal_editor_content.text()),
+                    Some(ContextMenuTarget::SelectableField(field)) => {
+                        self.selectable_field_value(&field).unwrap_or_default()
+                    }
+                    None => String::new(),
+                };
+
+                if text.trim().is_empty() {
+                    return Task::none();
+                }
+
+                self.add_toast(ToastType::Success, "Copied to clipboard".to_string());
+                iced::clipboard::write::<Message>(text)
+            }
+
+            Message::ContextMenuPaste => {
+                iced::clipboard::read().map(Message::ContextMenuPasteLoaded)
+            }
+
+            Message::ContextMenuPasteLoaded(contents) => {
+                let Some(contents) = contents else {
+                    return Task::none();
+                };
+
+                if contents.is_empty() {
+                    return Task::none();
+                }
+
+                match self.active_context_menu.clone() {
+                    Some(ContextMenuTarget::DashboardTerminal) => {
+                        self.terminal_interaction_until =
+                            Some(std::time::Instant::now() + std::time::Duration::from_secs(3));
+                        self.terminal_editor_content
+                            .perform(text_editor::Action::Edit(text_editor::Edit::Paste(
+                                Arc::new(contents),
+                            )));
+                        Task::none()
+                    }
+                    Some(ContextMenuTarget::SelectableField(field)) => {
+                        self.set_selectable_field_value(field, contents);
+                        Task::none()
+                    }
+                    None => Task::none(),
+                }
+            }
+
+            Message::ContextMenuSelectAll => {
+                if matches!(
+                    self.active_context_menu,
+                    Some(ContextMenuTarget::DashboardTerminal)
+                ) {
+                    self.terminal_interaction_until =
+                        Some(std::time::Instant::now() + std::time::Duration::from_secs(3));
+                    self.terminal_editor_content
+                        .perform(text_editor::Action::SelectAll);
+                }
                 Task::none()
             }
 
@@ -4282,6 +4555,11 @@ impl App {
                 iced::clipboard::write::<Message>(text)
             }
 
+            Message::SelectableFieldChanged(field, value) => {
+                self.set_selectable_field_value(field, value);
+                Task::none()
+            }
+
             Message::PlatformLogin(target) => {
                 self.login_in_progress.insert(target, AuthActionKind::Login);
                 let target_copy = target;
@@ -4612,6 +4890,11 @@ impl App {
                 self.interview_current_question = String::new();
                 self.interview_answers.clear();
                 self.interview_phases_complete.clear();
+                self.interview_answer_input.clear();
+                self.interview_reference_materials.clear();
+                self.interview_reference_link_input.clear();
+                self.interview_researching = false;
+                self.interview_empty_references_text = "No reference materials added.".to_string();
                 self.current_page = Page::Interview;
                 Task::none()
             }
@@ -4619,6 +4902,7 @@ impl App {
                 self.previous_page = Some(self.current_page);
                 self.page_transition = crate::widgets::TransitionState::start();
                 self.current_page = Page::Interview;
+                self.active_context_menu = None;
                 Task::none()
             }
             Message::InterviewQuestionReceived(question) => {
@@ -4675,7 +4959,90 @@ impl App {
                 self.interview_active = false;
                 self.interview_paused = false;
                 self.interview_answer_input.clear();
+                self.interview_reference_materials.clear();
+                self.interview_reference_link_input.clear();
+                self.interview_researching = false;
+                self.interview_empty_references_text = "No reference materials added.".to_string();
                 self.add_toast(ToastType::Info, "Interview session ended".to_string());
+                Task::none()
+            }
+
+            Message::InterviewAddReferenceFile => Task::perform(
+                async {
+                    rfd::AsyncFileDialog::new()
+                        .set_title("Select Reference File")
+                        .pick_file()
+                        .await
+                        .map(|h| crate::interview::ReferenceType::File(h.path().to_path_buf()))
+                },
+                |picked| {
+                    picked
+                        .map(Message::InterviewReferencePicked)
+                        .unwrap_or(Message::None)
+                },
+            ),
+
+            Message::InterviewAddReferenceImage => Task::perform(
+                async {
+                    rfd::AsyncFileDialog::new()
+                        .set_title("Select Reference Image")
+                        .pick_file()
+                        .await
+                        .map(|h| crate::interview::ReferenceType::Image(h.path().to_path_buf()))
+                },
+                |picked| {
+                    picked
+                        .map(Message::InterviewReferencePicked)
+                        .unwrap_or(Message::None)
+                },
+            ),
+
+            Message::InterviewAddReferenceDirectory => Task::perform(
+                async {
+                    rfd::AsyncFileDialog::new()
+                        .set_title("Select Reference Directory")
+                        .pick_folder()
+                        .await
+                        .map(|h| crate::interview::ReferenceType::Directory(h.path().to_path_buf()))
+                },
+                |picked| {
+                    picked
+                        .map(Message::InterviewReferencePicked)
+                        .unwrap_or(Message::None)
+                },
+            ),
+
+            Message::InterviewReferenceLinkInputChanged(text) => {
+                self.interview_reference_link_input = text;
+                Task::none()
+            }
+
+            Message::InterviewAddReferenceLink => {
+                let url = self.interview_reference_link_input.trim();
+                if url.is_empty() {
+                    return Task::none();
+                }
+                let url = url.to_string();
+                self.interview_reference_link_input.clear();
+                self.update(Message::InterviewReferencePicked(
+                    crate::interview::ReferenceType::Link(url),
+                ))
+            }
+
+            Message::InterviewReferencePicked(ref_type) => {
+                self.interview_reference_materials
+                    .push(crate::interview::ReferenceMaterial {
+                        ref_type,
+                        description: None,
+                        added_at: Utc::now().to_rfc3339(),
+                    });
+                Task::none()
+            }
+
+            Message::InterviewRemoveReference(index) => {
+                if index < self.interview_reference_materials.len() {
+                    self.interview_reference_materials.remove(index);
+                }
                 Task::none()
             }
 
@@ -4758,17 +5125,70 @@ impl App {
         }
     }
 
+    /// Build InterviewPanelData from current interview state
+    fn build_interview_panel_data(
+        current_phase_id: &str,
+        current_question: &str,
+        phases_complete: &[String],
+    ) -> Option<crate::widgets::InterviewPanelData> {
+        // Map phase ID to index
+        let phase_index = match current_phase_id {
+            "scope_goals" => 0,
+            "architecture_technology" => 1,
+            "product_ux" => 2,
+            "data_persistence" => 3,
+            "security_secrets" => 4,
+            "deployment_environments" => 5,
+            "performance_reliability" => 6,
+            "testing_verification" => 7,
+            _ => return None, // Unknown phase
+        };
+
+        // Phase names from DOMAIN_TEMPLATES in interview/prompt_templates.rs
+        let phase_names = [
+            "Scope & Goals",
+            "Architecture & Technology",
+            "Product / UX",
+            "Data & Persistence",
+            "Security & Secrets",
+            "Deployment & Environments",
+            "Performance & Reliability",
+            "Testing & Verification",
+        ];
+
+        let phase_name = phase_names.get(phase_index)?;
+        let total_phases = 8;
+
+        Some(crate::widgets::InterviewPanelData::new(
+            phase_index,
+            total_phases,
+            *phase_name,
+            current_question,
+        ))
+    }
+
     /// Render the application UI
     pub fn view(&self) -> Element<'_, Message> {
         use crate::theme::tokens;
         use crate::views;
         use crate::widgets::LayoutSize;
-        use iced::widget::{column, container, stack, Responsive};
         use iced::Length;
+        use iced::widget::{Responsive, column, container, stack};
 
         // Wrap in Responsive widget to get available size
         Responsive::new(move |size| {
             let layout_size = LayoutSize::from_iced(size);
+
+            // Build interview panel data if interview is active
+            let interview_panel_data = if self.interview_active {
+                Self::build_interview_panel_data(
+                    &self.interview_current_phase,
+                    &self.interview_current_question,
+                    &self.interview_phases_complete,
+                )
+            } else {
+                None
+            };
 
             // Build main content based on current page
             let content: Element<Message> = match self.current_page {
@@ -4778,11 +5198,15 @@ impl App {
                     &self.progress,
                     &self.output_lines,
                     &self.terminal_editor_content,
+                    matches!(
+                        self.active_context_menu,
+                        Some(ContextMenuTarget::DashboardTerminal)
+                    ),
                     &self.budgets,
                     &self.last_error,
                     &self.start_time,
                     &self.current_project,
-                    &None::<crate::widgets::InterviewPanelData>, // TODO: Build interview data from state if needed
+                    &interview_panel_data,
                     &self.theme,
                     layout_size,
                 ),
@@ -4792,6 +5216,7 @@ impl App {
                     &self.new_project_name,
                     &self.new_project_path,
                     self.show_new_project_form,
+                    &self.active_context_menu,
                     &self.theme,
                     layout_size,
                 ),
@@ -4913,6 +5338,7 @@ impl App {
                     &self.login_messages,
                     &self.login_auth_urls,
                     &self.git_info,
+                    &self.active_context_menu,
                     &self.github_auth_status,
                     &self.login_cli_content,
                     &self.theme,
@@ -4959,6 +5385,11 @@ impl App {
                     &self.interview_answers,
                     &self.interview_phases_complete,
                     &self.interview_answer_input,
+                    &self.interview_reference_materials,
+                    &self.interview_empty_references_text,
+                    &self.interview_reference_link_input,
+                    self.interview_researching,
+                    &self.active_context_menu,
                     &self.theme,
                     layout_size,
                 ),
@@ -4998,6 +5429,7 @@ impl App {
         })
         .width(Length::Fill)
         .height(Length::Fill)
+        .into()
     }
 
     /// Get the current theme
@@ -5073,6 +5505,184 @@ impl App {
             tokio::spawn(async move {
                 let _ = sender.send(command).await;
             });
+        }
+    }
+
+    fn selectable_field_value(&self, field: &SelectableField) -> Option<String> {
+        match field {
+            SelectableField::LoginAuthUrl(platform) => self.login_auth_urls.get(platform).cloned(),
+            SelectableField::GitUserName => {
+                self.git_info.as_ref().map(|info| info.user_name.clone())
+            }
+            SelectableField::GitUserEmail => {
+                self.git_info.as_ref().map(|info| info.user_email.clone())
+            }
+            SelectableField::GitRemoteUrl => {
+                self.git_info.as_ref().map(|info| info.remote_url.clone())
+            }
+            SelectableField::GitCurrentBranch => self
+                .git_info
+                .as_ref()
+                .map(|info| info.current_branch.clone()),
+            SelectableField::ProjectCurrentPath => self
+                .current_project
+                .as_ref()
+                .map(|project| project.path.to_string_lossy().to_string()),
+            SelectableField::ProjectPath(path) => self
+                .projects
+                .iter()
+                .find(|project| project.path.to_string_lossy().as_ref() == path.as_str())
+                .map(|project| project.path.to_string_lossy().to_string())
+                .or_else(|| Some(path.clone())),
+            SelectableField::InterviewCurrentQuestion => {
+                Some(self.interview_current_question.clone())
+            }
+            SelectableField::InterviewEmptyReferences => {
+                Some(self.interview_empty_references_text.clone())
+            }
+            SelectableField::InterviewReferenceLink(index) => {
+                match self.interview_reference_materials.get(*index) {
+                    Some(material) => match &material.ref_type {
+                        crate::interview::ReferenceType::Link(url) => Some(url.clone()),
+                        _ => None,
+                    },
+                    None => None,
+                }
+            }
+            SelectableField::InterviewReferenceFile(index) => {
+                match self.interview_reference_materials.get(*index) {
+                    Some(material) => match &material.ref_type {
+                        crate::interview::ReferenceType::File(path) => {
+                            Some(path.to_string_lossy().to_string())
+                        }
+                        _ => None,
+                    },
+                    None => None,
+                }
+            }
+            SelectableField::InterviewReferenceImage(index) => {
+                match self.interview_reference_materials.get(*index) {
+                    Some(material) => match &material.ref_type {
+                        crate::interview::ReferenceType::Image(path) => {
+                            Some(path.to_string_lossy().to_string())
+                        }
+                        _ => None,
+                    },
+                    None => None,
+                }
+            }
+            SelectableField::InterviewReferenceDirectory(index) => {
+                match self.interview_reference_materials.get(*index) {
+                    Some(material) => match &material.ref_type {
+                        crate::interview::ReferenceType::Directory(path) => {
+                            Some(path.to_string_lossy().to_string())
+                        }
+                        _ => None,
+                    },
+                    None => None,
+                }
+            }
+        }
+    }
+
+    fn set_selectable_field_value(&mut self, field: SelectableField, value: String) {
+        match field {
+            SelectableField::LoginAuthUrl(platform) => {
+                self.login_auth_urls.insert(platform, value);
+            }
+            SelectableField::GitUserName => {
+                let info = self.git_info.get_or_insert_with(|| GitInfoDisplay {
+                    user_name: String::new(),
+                    user_email: String::new(),
+                    remote_url: String::new(),
+                    current_branch: String::new(),
+                });
+                info.user_name = value;
+            }
+            SelectableField::GitUserEmail => {
+                let info = self.git_info.get_or_insert_with(|| GitInfoDisplay {
+                    user_name: String::new(),
+                    user_email: String::new(),
+                    remote_url: String::new(),
+                    current_branch: String::new(),
+                });
+                info.user_email = value;
+            }
+            SelectableField::GitRemoteUrl => {
+                let info = self.git_info.get_or_insert_with(|| GitInfoDisplay {
+                    user_name: String::new(),
+                    user_email: String::new(),
+                    remote_url: String::new(),
+                    current_branch: String::new(),
+                });
+                info.remote_url = value;
+            }
+            SelectableField::GitCurrentBranch => {
+                let info = self.git_info.get_or_insert_with(|| GitInfoDisplay {
+                    user_name: String::new(),
+                    user_email: String::new(),
+                    remote_url: String::new(),
+                    current_branch: String::new(),
+                });
+                info.current_branch = value;
+            }
+            SelectableField::ProjectCurrentPath => {
+                if let Some(current_project) = self.current_project.as_mut() {
+                    let previous_path = current_project.path.clone();
+                    current_project.path = PathBuf::from(&value);
+
+                    if let Some(project) = self
+                        .projects
+                        .iter_mut()
+                        .find(|project| project.path == previous_path)
+                    {
+                        project.path = PathBuf::from(value);
+                    }
+                }
+            }
+            SelectableField::ProjectPath(previous_path) => {
+                let updated_path = PathBuf::from(&value);
+
+                if let Some(project) = self.projects.iter_mut().find(|project| {
+                    project.path.to_string_lossy().as_ref() == previous_path.as_str()
+                }) {
+                    project.path = updated_path.clone();
+                }
+
+                if let Some(current_project) = self.current_project.as_mut() {
+                    if current_project.path.to_string_lossy().as_ref() == previous_path.as_str() {
+                        current_project.path = updated_path;
+                    }
+                }
+            }
+            SelectableField::InterviewCurrentQuestion => {
+                self.interview_current_question = value;
+            }
+            SelectableField::InterviewEmptyReferences => {
+                self.interview_empty_references_text = value;
+            }
+            SelectableField::InterviewReferenceLink(index) => {
+                if let Some(material) = self.interview_reference_materials.get_mut(index) {
+                    material.ref_type = crate::interview::ReferenceType::Link(value);
+                }
+            }
+            SelectableField::InterviewReferenceFile(index) => {
+                if let Some(material) = self.interview_reference_materials.get_mut(index) {
+                    material.ref_type = crate::interview::ReferenceType::File(PathBuf::from(value));
+                }
+            }
+            SelectableField::InterviewReferenceImage(index) => {
+                if let Some(material) = self.interview_reference_materials.get_mut(index) {
+                    material.ref_type =
+                        crate::interview::ReferenceType::Image(PathBuf::from(value));
+                }
+            }
+            SelectableField::InterviewReferenceDirectory(index) => {
+                if let Some(material) = self.interview_reference_materials.get_mut(index) {
+                    material.ref_type =
+                        crate::interview::ReferenceType::Directory(PathBuf::from(value));
+                }
+            }
         }
     }
 
@@ -5508,7 +6118,7 @@ impl App {
         base: Element<'a, Message>,
         modal: &'a ModalContent,
     ) -> Element<'a, Message> {
-        use crate::widgets::{modal_overlay, ModalData, ModalSize};
+        use crate::widgets::{ModalData, ModalSize, modal_overlay};
 
         match modal {
             ModalContent::Confirm {
@@ -6096,5 +6706,79 @@ fn map_orchestrator_event(
             Some(PuppetMasterEvent::error(message, "orchestrator"))
         }
         _ => None,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_build_interview_panel_data_valid_phases() {
+        // Test first phase
+        let data =
+            App::build_interview_panel_data("scope_goals", "What problem is this solving?", &[]);
+        assert!(data.is_some());
+        let data = data.unwrap();
+        assert_eq!(data.current_phase, 0);
+        assert_eq!(data.total_phases, 8);
+        assert_eq!(data.phase_name, "Scope & Goals");
+        assert_eq!(data.current_question, "What problem is this solving?");
+
+        // Test middle phase
+        let data = App::build_interview_panel_data(
+            "data_persistence",
+            "What storage technology?",
+            &[
+                "scope_goals".to_string(),
+                "architecture_technology".to_string(),
+            ],
+        );
+        assert!(data.is_some());
+        let data = data.unwrap();
+        assert_eq!(data.current_phase, 3);
+        assert_eq!(data.phase_name, "Data & Persistence");
+
+        // Test last phase
+        let data = App::build_interview_panel_data(
+            "testing_verification",
+            "What test coverage target?",
+            &[],
+        );
+        assert!(data.is_some());
+        let data = data.unwrap();
+        assert_eq!(data.current_phase, 7);
+        assert_eq!(data.phase_name, "Testing & Verification");
+    }
+
+    #[test]
+    fn test_build_interview_panel_data_invalid_phase() {
+        // Unknown phase ID should return None
+        let data = App::build_interview_panel_data("unknown_phase", "Some question", &[]);
+        assert!(data.is_none());
+    }
+
+    #[test]
+    fn test_build_interview_panel_data_all_phases() {
+        // Verify all 8 phases map correctly
+        let phases = [
+            ("scope_goals", 0, "Scope & Goals"),
+            ("architecture_technology", 1, "Architecture & Technology"),
+            ("product_ux", 2, "Product / UX"),
+            ("data_persistence", 3, "Data & Persistence"),
+            ("security_secrets", 4, "Security & Secrets"),
+            ("deployment_environments", 5, "Deployment & Environments"),
+            ("performance_reliability", 6, "Performance & Reliability"),
+            ("testing_verification", 7, "Testing & Verification"),
+        ];
+
+        for (phase_id, expected_index, expected_name) in phases.iter() {
+            let data = App::build_interview_panel_data(phase_id, "Test question", &[]);
+            assert!(data.is_some(), "Phase {} should be valid", phase_id);
+            let data = data.unwrap();
+            assert_eq!(data.current_phase, *expected_index);
+            assert_eq!(data.phase_name, *expected_name);
+            assert_eq!(data.total_phases, 8);
+        }
     }
 }

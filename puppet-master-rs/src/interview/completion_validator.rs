@@ -194,7 +194,14 @@ fn check_vague_decisions(state: &InterviewState, issues: &mut Vec<ValidationIssu
 
 /// Checks for ambiguous language in user answers (TBD/later/maybe).
 fn check_ambiguous_answers(state: &InterviewState, issues: &mut Vec<ValidationIssue>) {
-    let ambiguous_markers = ["tbd", "to be determined", "later", "maybe", "not sure", "unsure"];
+    let ambiguous_markers = [
+        "tbd",
+        "to be determined",
+        "later",
+        "maybe",
+        "not sure",
+        "unsure",
+    ];
 
     for qa in &state.history {
         let lower = qa.answer.to_lowercase();
@@ -217,7 +224,7 @@ fn check_ambiguous_answers(state: &InterviewState, issues: &mut Vec<ValidationIs
 /// Verifies that technology versions are explicitly pinned in Architecture phase.
 fn check_version_pinning(state: &InterviewState, issues: &mut Vec<ValidationIssue>) {
     let unpinned_markers = ["latest", "current", "stable"];
-    
+
     // Check decisions from architecture phase
     let arch_decisions: Vec<_> = state
         .decisions
@@ -257,13 +264,24 @@ fn check_version_pinning(state: &InterviewState, issues: &mut Vec<ValidationIssu
     // Look for technology mentions without version patterns (X.Y.Z or vX.Y.Z)
     let version_regex = regex::Regex::new(r"\d+\.\d+(?:\.\d+)?").ok();
     let tech_keywords = [
-        "rust", "node", "react", "vue", "python", "typescript", "go",
-        "postgres", "mysql", "mongodb", "redis", "docker", "kubernetes",
+        "rust",
+        "node",
+        "react",
+        "vue",
+        "python",
+        "typescript",
+        "go",
+        "postgres",
+        "mysql",
+        "mongodb",
+        "redis",
+        "docker",
+        "kubernetes",
     ];
 
     for qa in arch_qa {
         let lower_answer = qa.answer.to_lowercase();
-        
+
         for tech in &tech_keywords {
             if lower_answer.contains(tech) {
                 // Check if a version pattern exists nearby
@@ -291,8 +309,18 @@ fn check_version_pinning(state: &InterviewState, issues: &mut Vec<ValidationIssu
 /// Verifies that deployment targets are specified in Deployment phase.
 fn check_deployment_targets(state: &InterviewState, issues: &mut Vec<ValidationIssue>) {
     let deploy_keywords = [
-        "cloud", "server", "desktop", "mobile", "web", "embedded",
-        "aws", "azure", "gcp", "docker", "kubernetes", "vm",
+        "cloud",
+        "server",
+        "desktop",
+        "mobile",
+        "web",
+        "embedded",
+        "aws",
+        "azure",
+        "gcp",
+        "docker",
+        "kubernetes",
+        "vm",
     ];
 
     // Check decisions from deployment phase
@@ -316,7 +344,8 @@ fn check_deployment_targets(state: &InterviewState, issues: &mut Vec<ValidationI
     if !has_target {
         issues.push(ValidationIssue {
             domain: "Deployment & Environments".to_string(),
-            message: "No specific deployment target identified (cloud/server/desktop/mobile/etc.)".to_string(),
+            message: "No specific deployment target identified (cloud/server/desktop/mobile/etc.)"
+                .to_string(),
             severity: ValidationSeverity::Error,
         });
     }
@@ -478,7 +507,12 @@ mod tests {
         let pm = PhaseManager::new();
         let result = validate_completion(&state, &pm);
         assert!(!result.is_valid);
-        assert!(result.errors().iter().any(|e| e.message.contains("ambiguous")));
+        assert!(
+            result
+                .errors()
+                .iter()
+                .any(|e| e.message.contains("ambiguous"))
+        );
     }
 
     #[test]
@@ -493,7 +527,12 @@ mod tests {
         let pm = PhaseManager::new();
         let result = validate_completion(&state, &pm);
         assert!(!result.is_valid);
-        assert!(result.errors().iter().any(|e| e.message.contains("unpinned")));
+        assert!(
+            result
+                .errors()
+                .iter()
+                .any(|e| e.message.contains("unpinned"))
+        );
     }
 
     #[test]
@@ -524,13 +563,20 @@ mod tests {
         let pm = PhaseManager::new();
         let result = validate_completion(&state, &pm);
         assert!(!result.is_valid);
-        assert!(result.errors().iter().any(|e| e.message.contains("open items")));
+        assert!(
+            result
+                .errors()
+                .iter()
+                .any(|e| e.message.contains("open items"))
+        );
     }
 
     #[test]
     fn test_first_issue_phase_index() {
         let mut state = make_complete_state();
-        state.decisions.retain(|d| d.phase != "architecture_technology");
+        state
+            .decisions
+            .retain(|d| d.phase != "architecture_technology");
         state.decisions.push(Decision {
             phase: "architecture_technology".to_string(),
             summary: "Use latest Rust".to_string(),
@@ -540,7 +586,7 @@ mod tests {
         let pm = PhaseManager::new();
         let result = validate_completion(&state, &pm);
         assert!(!result.is_valid);
-        
+
         // Should identify architecture phase (index 1) as having issues
         let issue_idx = result.first_issue_phase_index(&pm);
         assert_eq!(issue_idx, Some(1));

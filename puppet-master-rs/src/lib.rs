@@ -8,6 +8,7 @@ pub mod git;
 pub mod interview;
 pub mod logging;
 pub mod platforms;
+pub mod projects;
 pub mod start_chain;
 pub mod state;
 pub mod types;

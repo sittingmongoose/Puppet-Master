@@ -61,18 +61,26 @@ impl DocumentWriter {
     /// Writes a markdown document for a single completed phase.
     ///
     /// Returns the path to the written file.
+    ///
+    /// # Arguments
+    /// * `phase` - Phase definition
+    /// * `decisions` - Decisions made during this phase
+    /// * `qa_history` - Q&A history for this phase
+    /// * `output_dir` - Output directory
+    /// * `phase_number` - The sequential phase number (1-based)
     pub fn write_phase_document(
         phase: &InterviewPhaseDefinition,
         decisions: &[Decision],
         qa_history: &[InterviewQA],
         output_dir: &Path,
+        phase_number: usize,
     ) -> Result<PathBuf> {
         fs::create_dir_all(output_dir)
             .with_context(|| format!("Failed to create output dir {}", output_dir.display()))?;
 
         let filename = format!(
             "phase-{:02}-{}.md",
-            phase_number_from_id(&phase.id),
+            phase_number,
             phase.id.replace('_', "-")
         );
         let path = output_dir.join(&filename);
@@ -223,21 +231,6 @@ impl DocumentWriter {
     }
 }
 
-/// Derives a 1-based phase number from the phase ID.
-fn phase_number_from_id(id: &str) -> usize {
-    match id {
-        "scope_goals" => 1,
-        "architecture_technology" => 2,
-        "product_ux" => 3,
-        "data_persistence" => 4,
-        "security_secrets" => 5,
-        "deployment_environments" => 6,
-        "performance_reliability" => 7,
-        "testing_verification" => 8,
-        _ => 9,
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -280,6 +273,7 @@ mod tests {
             &sample_decisions(),
             &sample_qa(),
             dir.path(),
+            1, // Phase number
         )
         .unwrap();
         assert!(path.exists());
@@ -298,6 +292,7 @@ mod tests {
             &sample_decisions(),
             &sample_qa(),
             dir.path(),
+            1, // Phase number
         )
         .unwrap();
 

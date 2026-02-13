@@ -60,12 +60,12 @@ impl ReferenceManager {
     pub fn new() -> Self {
         Self {
             materials: Vec::new(),
-            max_file_size: 1024 * 1024,      // 1MB default
-            max_directory_files: 50,         // 50 files max
-            http_timeout_secs: 10,           // 10 second timeout for HTTP requests
-            max_url_size: 512 * 1024,        // 512KB max for URL content
+            max_file_size: 1024 * 1024,           // 1MB default
+            max_directory_files: 50,              // 50 files max
+            http_timeout_secs: 10,                // 10 second timeout for HTTP requests
+            max_url_size: 512 * 1024,             // 512KB max for URL content
             max_ocr_image_size: 10 * 1024 * 1024, // 10MB max for OCR images
-            ocr_timeout_secs: 30,            // 30 second timeout for OCR operations
+            ocr_timeout_secs: 30,                 // 30 second timeout for OCR operations
         }
     }
 
@@ -182,7 +182,7 @@ impl ReferenceManager {
                                 "*Image file present: {} bytes*\n\n",
                                 metadata.len()
                             ));
-                            
+
                             // Attempt OCR extraction
                             match self.extract_image_text(path) {
                                 Ok(text) if !text.trim().is_empty() => {
@@ -193,7 +193,9 @@ impl ReferenceManager {
                                 }
                                 Ok(_) => {
                                     // OCR succeeded but no text found
-                                    context.push_str("*Note: OCR completed but no text detected in image*\n\n");
+                                    context.push_str(
+                                        "*Note: OCR completed but no text detected in image*\n\n",
+                                    );
                                 }
                                 Err(e) => {
                                     debug!("OCR extraction failed for {}: {}", path.display(), e);
@@ -589,7 +591,7 @@ impl ReferenceManager {
     fn extract_pdf_content(&self, path: &Path) -> Result<String> {
         // Check file size first
         let metadata = fs::metadata(path).context("Failed to read PDF metadata")?;
-        
+
         if metadata.len() > self.max_file_size as u64 {
             return Ok(format!(
                 "[PDF too large: {} bytes (max: {} bytes). Please provide a smaller file or summary.]",
@@ -628,7 +630,7 @@ impl ReferenceManager {
     fn extract_image_text(&self, path: &Path) -> Result<String> {
         // Check file size first
         let metadata = fs::metadata(path).context("Failed to read image metadata")?;
-        
+
         if metadata.len() > self.max_ocr_image_size as u64 {
             anyhow::bail!(
                 "Image too large for OCR: {} bytes (max: {} bytes)",
@@ -638,8 +640,7 @@ impl ReferenceManager {
         }
 
         // Check if tesseract is available
-        let tesseract_path = which::which("tesseract")
-            .context("tesseract not found in PATH")?;
+        let tesseract_path = which::which("tesseract").context("tesseract not found in PATH")?;
 
         debug!("Found tesseract at: {}", tesseract_path.display());
 
@@ -647,14 +648,14 @@ impl ReferenceManager {
         // tesseract image.png stdout (outputs to stdout)
         let output = Command::new(tesseract_path)
             .arg(path)
-            .arg("stdout")  // Output to stdout instead of file
+            .arg("stdout") // Output to stdout instead of file
             .arg("-l")
-            .arg("eng")     // English language (most common)
+            .arg("eng") // English language (most common)
             .arg("--psm")
-            .arg("3")       // Page segmentation mode: Fully automatic
+            .arg("3") // Page segmentation mode: Fully automatic
             .arg("--oem")
-            .arg("3")       // OCR Engine Mode: Default (LSTM + legacy)
-            .env("OMP_THREAD_LIMIT", "1")  // Limit threads for safety
+            .arg("3") // OCR Engine Mode: Default (LSTM + legacy)
+            .env("OMP_THREAD_LIMIT", "1") // Limit threads for safety
             .output();
 
         // Handle command execution with timeout simulation
@@ -764,14 +765,22 @@ mod tests {
         let mgr = ReferenceManager::new();
         let pdf_path = PathBuf::from("test.pdf");
         let txt_path = PathBuf::from("test.txt");
-        
+
         // PDF extension is lowercase
         assert_eq!(
-            pdf_path.extension().unwrap().to_string_lossy().to_lowercase(),
+            pdf_path
+                .extension()
+                .unwrap()
+                .to_string_lossy()
+                .to_lowercase(),
             "pdf"
         );
         assert_ne!(
-            txt_path.extension().unwrap().to_string_lossy().to_lowercase(),
+            txt_path
+                .extension()
+                .unwrap()
+                .to_string_lossy()
+                .to_lowercase(),
             "pdf"
         );
     }
@@ -781,7 +790,7 @@ mod tests {
         let mgr = ReferenceManager::new();
         let html = r#"<html><body><script>alert('test');</script><p>Hello World</p></body></html>"#;
         let cleaned = mgr.clean_html_content(html);
-        
+
         assert!(!cleaned.contains("<script>"));
         assert!(!cleaned.contains("alert"));
         assert!(cleaned.contains("Hello World"));
@@ -790,7 +799,7 @@ mod tests {
     #[test]
     fn test_url_fetch_invalid_url() {
         let mgr = ReferenceManager::new().with_http_timeout_secs(1);
-        
+
         // Test with invalid URL - should fail gracefully
         let result = mgr.fetch_url_content("not-a-valid-url");
         assert!(result.is_err());
@@ -799,46 +808,47 @@ mod tests {
     #[test]
     fn test_load_context_with_invalid_pdf() {
         use std::io::Write;
-        
+
         // Create a temporary "PDF" file that's not actually a PDF
         let temp_dir = std::env::temp_dir();
         let fake_pdf = temp_dir.join("fake_test.pdf");
-        
+
         {
             let mut file = std::fs::File::create(&fake_pdf).unwrap();
             file.write_all(b"This is not a real PDF file").unwrap();
         }
-        
+
         let mut mgr = ReferenceManager::new();
         mgr.add(ReferenceMaterial {
             ref_type: ReferenceType::File(fake_pdf.clone()),
             description: Some("Fake PDF for testing".to_string()),
             added_at: chrono::Utc::now().to_rfc3339(),
         });
-        
+
         let context = mgr.load_context().unwrap();
-        
+
         // Should mention the file but indicate it failed to load
         assert!(context.contains("fake_test.pdf"));
         assert!(context.contains("failed") || context.contains("extraction failed"));
-        
+
         // Cleanup
         let _ = std::fs::remove_file(fake_pdf);
     }
 
     #[test]
     fn test_load_context_with_link_no_network() {
-        let mut mgr = ReferenceManager::new()
-            .with_http_timeout_secs(1);  // Short timeout
-        
+        let mut mgr = ReferenceManager::new().with_http_timeout_secs(1); // Short timeout
+
         mgr.add(ReferenceMaterial {
-            ref_type: ReferenceType::Link("http://definitely-not-a-real-domain-12345678.invalid".to_string()),
+            ref_type: ReferenceType::Link(
+                "http://definitely-not-a-real-domain-12345678.invalid".to_string(),
+            ),
             description: Some("Test link that should fail".to_string()),
             added_at: chrono::Utc::now().to_rfc3339(),
         });
-        
+
         let context = mgr.load_context().unwrap();
-        
+
         // Should contain the URL and a note about failure
         assert!(context.contains("definitely-not-a-real-domain-12345678"));
         assert!(context.contains("Unable to fetch") || context.contains("failed"));
@@ -849,7 +859,7 @@ mod tests {
         let mgr = ReferenceManager::new()
             .with_max_ocr_image_size(5_000_000)
             .with_ocr_timeout_secs(60);
-        
+
         assert_eq!(mgr.max_ocr_image_size, 5_000_000);
         assert_eq!(mgr.ocr_timeout_secs, 60);
     }
@@ -862,9 +872,9 @@ mod tests {
             description: Some("Test image".to_string()),
             added_at: chrono::Utc::now().to_rfc3339(),
         });
-        
+
         let context = mgr.load_context().unwrap();
-        
+
         // Should mention the image and indicate it's not found
         assert!(context.contains("image.png"));
         assert!(context.contains("not found"));
@@ -873,37 +883,37 @@ mod tests {
     #[test]
     fn test_image_reference_graceful_ocr_failure() {
         use std::io::Write;
-        
+
         // Create a small dummy image file
         let temp_dir = std::env::temp_dir();
         let fake_image = temp_dir.join("test_ocr_image.png");
-        
+
         {
             let mut file = std::fs::File::create(&fake_image).unwrap();
             // Write minimal PNG header (not a real image, but exists)
             file.write_all(&[137, 80, 78, 71, 13, 10, 26, 10]).unwrap();
         }
-        
+
         let mut mgr = ReferenceManager::new();
         mgr.add(ReferenceMaterial {
             ref_type: ReferenceType::Image(fake_image.clone()),
             description: Some("Fake image for OCR testing".to_string()),
             added_at: chrono::Utc::now().to_rfc3339(),
         });
-        
+
         let context = mgr.load_context().unwrap();
-        
+
         // Should mention the image
         assert!(context.contains("test_ocr_image.png"));
-        
+
         // If tesseract is not installed, should mention OCR not available
         // If tesseract is installed but fails on fake image, should still be graceful
         assert!(
-            context.contains("OCR not available") 
-            || context.contains("no text detected")
-            || context.contains("Extracted Text")
+            context.contains("OCR not available")
+                || context.contains("no text detected")
+                || context.contains("Extracted Text")
         );
-        
+
         // Cleanup
         let _ = std::fs::remove_file(fake_image);
     }
