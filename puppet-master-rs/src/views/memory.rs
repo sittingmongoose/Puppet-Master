@@ -2,11 +2,11 @@
 //!
 //! Displays the AGENTS.md content with section navigation buttons and read-only text area.
 
-use iced::widget::{column, row, text, container, scrollable, Space, text_editor, pick_list};
-use iced::{Element, Length};
 use crate::app::Message;
-use crate::theme::{AppTheme, tokens, fonts};
+use crate::theme::{AppTheme, fonts, tokens};
 use crate::widgets::*;
+use iced::widget::{Space, column, container, pick_list, row, scrollable, text, text_editor};
+use iced::{Element, Length};
 
 /// Memory section for navigation
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -56,7 +56,9 @@ pub fn view<'a>(
     current_section: &'a MemorySection,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
+    let mut content = column![]
+        .spacing(tokens::spacing::LG)
+        .padding(tokens::spacing::LG);
 
     // Header with Refresh button
     content = content.push(
@@ -66,11 +68,10 @@ pub fn view<'a>(
                 .font(crate::theme::fonts::FONT_DISPLAY)
                 .color(theme.ink()),
             Space::new().width(Length::Fill),
-            styled_button(theme, "REFRESH", ButtonVariant::Info)
-                .on_press(Message::MemoryRefresh),
+            styled_button(theme, "REFRESH", ButtonVariant::Info).on_press(Message::MemoryRefresh),
         ]
         .spacing(tokens::spacing::MD)
-        .align_y(iced::Alignment::Center)
+        .align_y(iced::Alignment::Center),
     );
 
     // Section navigation dropdown and filter controls
@@ -87,16 +88,19 @@ pub fn view<'a>(
             .width(Length::Fixed(200.0))
             .padding(tokens::spacing::SM)
             .text_size(tokens::font_size::BASE),
-        ].spacing(tokens::spacing::SM),
-    ].spacing(tokens::spacing::XXS);
+        ]
+        .spacing(tokens::spacing::SM),
+    ]
+    .spacing(tokens::spacing::XXS);
 
-    content = content.push(
-        themed_panel(container(nav_content).padding(tokens::spacing::MD), theme)
-    );
+    content = content.push(themed_panel(
+        container(nav_content).padding(tokens::spacing::MD),
+        theme,
+    ));
 
     // Content display - filtered by section
     // NOTE: The text_editor content is populated when section changes, so it already contains filtered content
-    
+
     // Use text_editor for selectable, read-only text
     let content_panel = themed_panel(
         container(
@@ -104,7 +108,7 @@ pub fn view<'a>(
                 .on_action(Message::MemoryContentAction)
                 .font(fonts::FONT_MONO)
                 .size(tokens::font_size::SM)
-                .height(Length::Fill)
+                .height(Length::Fill),
         )
         .padding(tokens::spacing::MD)
         .width(Length::Fill)
@@ -115,15 +119,13 @@ pub fn view<'a>(
     content = content.push(content_panel);
 
     // Help text
-    content = content.push(
-        help_text(
-            "About Memory System",
-            &[
-                "AGENTS.md stores learned patterns and best practices",
-                "Filtered content based on selected section above",
-            ]
-        )
-    );
+    content = content.push(help_text(
+        "About Memory System",
+        &[
+            "AGENTS.md stores learned patterns and best practices",
+            "Filtered content based on selected section above",
+        ],
+    ));
 
     scrollable(content)
         .width(Length::Fill)

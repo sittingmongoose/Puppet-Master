@@ -269,8 +269,7 @@ impl PermissionAudit {
     /// Create a new permission audit logger
     pub fn new(base_dir: impl AsRef<Path>) -> Result<Self> {
         let audit_dir = base_dir.as_ref().join(".puppet-master").join("audit");
-        fs::create_dir_all(&audit_dir)
-            .context("Failed to create audit directory")?;
+        fs::create_dir_all(&audit_dir).context("Failed to create audit directory")?;
 
         let log_path = audit_dir.join("permissions.jsonl");
 
@@ -308,21 +307,22 @@ impl PermissionAudit {
     pub async fn log(&self, event: PermissionEvent) -> Result<()> {
         self.open_file().await?;
 
-        let json = serde_json::to_string(&event)
-            .context("Failed to serialize permission event")?;
+        let json = serde_json::to_string(&event).context("Failed to serialize permission event")?;
 
         let mut handle = self.file_handle.lock().await;
         if let Some(file) = handle.as_mut() {
-            writeln!(file, "{}", json)
-                .context("Failed to write to audit log")?;
-            file.flush()
-                .context("Failed to flush audit log")?;
+            writeln!(file, "{}", json).context("Failed to write to audit log")?;
+            file.flush().context("Failed to flush audit log")?;
 
             info!(
                 "Audit: {} - {} - {} ({})",
                 event.platform,
                 event.action,
-                if event.approved { "APPROVED" } else { "REJECTED" },
+                if event.approved {
+                    "APPROVED"
+                } else {
+                    "REJECTED"
+                },
                 event.id
             );
         }
@@ -355,8 +355,7 @@ impl PermissionAudit {
         } else {
             PermissionAction::FileRead
         };
-        let event =
-            PermissionEvent::new(platform, action, approved).with_file_path(file_path);
+        let event = PermissionEvent::new(platform, action, approved).with_file_path(file_path);
         self.log(event).await
     }
 
@@ -367,9 +366,8 @@ impl PermissionAudit {
         command: impl Into<String>,
         approved: bool,
     ) -> Result<()> {
-        let event =
-            PermissionEvent::new(platform, PermissionAction::ShellCommand, approved)
-                .with_command(command);
+        let event = PermissionEvent::new(platform, PermissionAction::ShellCommand, approved)
+            .with_command(command);
         self.log(event).await
     }
 
@@ -379,8 +377,7 @@ impl PermissionAudit {
             return Ok(Vec::new());
         }
 
-        let file = File::open(&self.log_path)
-            .context("Failed to open audit log for reading")?;
+        let file = File::open(&self.log_path).context("Failed to open audit log for reading")?;
         let reader = BufReader::new(file);
 
         let mut results = Vec::new();
@@ -428,8 +425,7 @@ impl PermissionAudit {
         start: DateTime<Utc>,
         end: DateTime<Utc>,
     ) -> Result<Vec<PermissionEvent>> {
-        self.query(AuditQuery::new().time_range(start, end))
-            .await
+        self.query(AuditQuery::new().time_range(start, end)).await
     }
 
     /// Get approval statistics for a platform
@@ -479,8 +475,7 @@ impl PermissionAudit {
             return Ok(0);
         }
 
-        let file = File::open(&self.log_path)
-            .context("Failed to open audit log for reading")?;
+        let file = File::open(&self.log_path).context("Failed to open audit log for reading")?;
         let reader = BufReader::new(file);
 
         let mut kept_events = Vec::new();
@@ -509,20 +504,20 @@ impl PermissionAudit {
 
         // Rewrite the log file with only kept events
         let temp_path = self.log_path.with_extension("jsonl.tmp");
-        let mut temp_file = File::create(&temp_path)
-            .context("Failed to create temporary audit log")?;
+        let mut temp_file =
+            File::create(&temp_path).context("Failed to create temporary audit log")?;
 
         for line in kept_events {
-            writeln!(temp_file, "{}", line)
-                .context("Failed to write to temporary audit log")?;
+            writeln!(temp_file, "{}", line).context("Failed to write to temporary audit log")?;
         }
 
-        temp_file.flush().context("Failed to flush temporary audit log")?;
+        temp_file
+            .flush()
+            .context("Failed to flush temporary audit log")?;
         drop(temp_file);
 
         // Replace old log with new one
-        fs::rename(&temp_path, &self.log_path)
-            .context("Failed to replace audit log")?;
+        fs::rename(&temp_path, &self.log_path).context("Failed to replace audit log")?;
 
         // Close the file handle so it can be reopened
         let mut handle = self.file_handle.lock().await;
@@ -588,7 +583,12 @@ mod tests {
         let event = PermissionEvent::new(Platform::Cursor, PermissionAction::ToolApproval, true);
         audit.log(event).await.unwrap();
 
-        assert!(temp_dir.path().join(".puppet-master/audit/permissions.jsonl").exists());
+        assert!(
+            temp_dir
+                .path()
+                .join(".puppet-master/audit/permissions.jsonl")
+                .exists()
+        );
     }
 
     #[tokio::test]
@@ -622,10 +622,7 @@ mod tests {
         assert_eq!(tool_events.len(), 2);
 
         // Query by approval status
-        let approved_events = audit
-            .query(AuditQuery::new().approved(true))
-            .await
-            .unwrap();
+        let approved_events = audit.query(AuditQuery::new().approved(true)).await.unwrap();
         assert_eq!(approved_events.len(), 2);
     }
 

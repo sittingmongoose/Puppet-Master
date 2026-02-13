@@ -8,10 +8,14 @@ use async_trait::async_trait;
 use chrono::Utc;
 use std::process::Stdio;
 use tokio::process::Command;
-use tokio::time::{timeout, Duration};
+use tokio::time::{Duration, timeout};
 use which::which;
 
-async fn run_command(program: &str, args: &[&str], timeout_duration: Duration) -> Result<std::process::Output, String> {
+async fn run_command(
+    program: &str,
+    args: &[&str],
+    timeout_duration: Duration,
+) -> Result<std::process::Output, String> {
     let mut cmd = Command::new(program);
     cmd.args(args)
         .stdout(Stdio::piped())
@@ -124,19 +128,23 @@ impl DoctorCheck for PlatformCompatibilityCheck {
             };
 
             checked_any = true;
-            details.push(format!("{}: using '{}' at {:?}", spec.label, candidate, path));
+            details.push(format!(
+                "{}: using '{}' at {:?}",
+                spec.label, candidate, path
+            ));
 
-            let version = match run_command(&candidate, spec.version_args, Duration::from_secs(8)).await {
-                Ok(out) => {
-                    let text = combined_lower(&out);
-                    if out.status.success() {
-                        Some(text.lines().next().unwrap_or("").trim().to_string())
-                    } else {
-                        None
+            let version =
+                match run_command(&candidate, spec.version_args, Duration::from_secs(8)).await {
+                    Ok(out) => {
+                        let text = combined_lower(&out);
+                        if out.status.success() {
+                            Some(text.lines().next().unwrap_or("").trim().to_string())
+                        } else {
+                            None
+                        }
                     }
-                }
-                Err(_) => None,
-            };
+                    Err(_) => None,
+                };
 
             if let Some(v) = version {
                 details.push(format!("  version: {v}"));
@@ -144,16 +152,17 @@ impl DoctorCheck for PlatformCompatibilityCheck {
                 details.push("  version: unknown".to_string());
             }
 
-            let help_out = match run_command(&candidate, spec.help_args, Duration::from_secs(8)).await {
-                Ok(out) => out,
-                Err(e) => {
-                    incompatible.push(format!(
-                        "{}: failed to read --help output ({e})",
-                        spec.label
-                    ));
-                    continue;
-                }
-            };
+            let help_out =
+                match run_command(&candidate, spec.help_args, Duration::from_secs(8)).await {
+                    Ok(out) => out,
+                    Err(e) => {
+                        incompatible.push(format!(
+                            "{}: failed to read --help output ({e})",
+                            spec.label
+                        ));
+                        continue;
+                    }
+                };
 
             let help_text = combined_lower(&help_out);
             let mut missing = Vec::new();
@@ -191,10 +200,7 @@ impl DoctorCheck for PlatformCompatibilityCheck {
 
             return CheckResult {
                 passed: false,
-                message: format!(
-                    "Found {} incompatible platform CLI(s)",
-                    incompatible.len()
-                ),
+                message: format!("Found {} incompatible platform CLI(s)", incompatible.len()),
                 details: Some(details.join("\n")),
                 can_fix: false,
                 timestamp: Utc::now(),

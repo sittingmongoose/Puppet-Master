@@ -55,7 +55,7 @@ impl SessionTracker {
     pub fn generate_session_id(&self) -> String {
         let now = Utc::now();
         let timestamp = now.format("%Y-%m-%d-%H-%M-%S").to_string();
-        
+
         let mut counter = self.sequence_counter.lock().unwrap();
         let seq = counter.entry(timestamp.clone()).or_insert(0);
         *seq += 1;
@@ -104,10 +104,7 @@ impl SessionTracker {
     }
 
     /// Complete a session
-    pub fn complete_session(
-        &self,
-        session_id: &str,
-    ) -> Result<()> {
+    pub fn complete_session(&self, session_id: &str) -> Result<()> {
         let now = Utc::now();
 
         {
@@ -335,8 +332,18 @@ mod tests {
         let log_path = dir.path().join("sessions.jsonl");
         let tracker = SessionTracker::new(log_path)?;
 
-        let id1 = tracker.start_session("1.1.1".to_string(), TierType::Subtask, Platform::Cursor, "model".to_string())?;
-        let id2 = tracker.start_session("1.1.2".to_string(), TierType::Subtask, Platform::Cursor, "model".to_string())?;
+        let id1 = tracker.start_session(
+            "1.1.1".to_string(),
+            TierType::Subtask,
+            Platform::Cursor,
+            "model".to_string(),
+        )?;
+        let id2 = tracker.start_session(
+            "1.1.2".to_string(),
+            TierType::Subtask,
+            Platform::Cursor,
+            "model".to_string(),
+        )?;
 
         tracker.complete_session(&id1)?;
 

@@ -3,8 +3,8 @@
 //! This module provides a type-safe icon system using embedded SVG files.
 //! All icons are 24x24 viewBox, stroke-based, and use `currentColor` for theming.
 
-use iced::widget::{svg, Svg};
 use iced::Length;
+use iced::widget::{Svg, svg};
 
 /// Icon names matching our SVG files in assets/icons/
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -22,7 +22,7 @@ pub enum IconName {
     Ledger,
     Login,
     Settings,
-    
+
     // Action icons
     Play,
     Pause,
@@ -35,14 +35,14 @@ pub enum IconName {
     Collapse,
     Add,
     Search,
-    
+
     // Status icons
     Check,
     Cross,
     Warning,
     Info,
     Error,
-    
+
     // Misc icons
     Monitor,
     Brain,
@@ -98,7 +98,7 @@ fn icon_bytes(name: IconName) -> &'static [u8] {
         IconName::Ledger => include_bytes!("../../assets/icons/ledger.svg"),
         IconName::Login => include_bytes!("../../assets/icons/login.svg"),
         IconName::Settings => include_bytes!("../../assets/icons/settings.svg"),
-        
+
         // Actions
         IconName::Play => include_bytes!("../../assets/icons/play.svg"),
         IconName::Pause => include_bytes!("../../assets/icons/pause.svg"),
@@ -111,14 +111,14 @@ fn icon_bytes(name: IconName) -> &'static [u8] {
         IconName::Collapse => include_bytes!("../../assets/icons/collapse.svg"),
         IconName::Add => include_bytes!("../../assets/icons/add.svg"),
         IconName::Search => include_bytes!("../../assets/icons/search.svg"),
-        
+
         // Status
         IconName::Check => include_bytes!("../../assets/icons/check.svg"),
         IconName::Cross => include_bytes!("../../assets/icons/cross.svg"),
         IconName::Warning => include_bytes!("../../assets/icons/warning.svg"),
         IconName::Info => include_bytes!("../../assets/icons/info.svg"),
         IconName::Error => include_bytes!("../../assets/icons/error.svg"),
-        
+
         // Misc
         IconName::Monitor => include_bytes!("../../assets/icons/monitor.svg"),
         IconName::Brain => include_bytes!("../../assets/icons/brain.svg"),
@@ -152,7 +152,7 @@ pub fn icon<'a>(name: IconName) -> Svg<'a> {
 pub fn icon_sized<'a>(name: IconName, size: IconSize) -> Svg<'a> {
     let handle = svg::Handle::from_memory(icon_bytes(name));
     let size_px = size.pixels();
-    
+
     svg(handle)
         .width(Length::Fixed(size_px))
         .height(Length::Fixed(size_px))
@@ -163,7 +163,7 @@ pub fn icon_sized<'a>(name: IconName, size: IconSize) -> Svg<'a> {
 /// This is useful when you need precise control over icon dimensions.
 pub fn icon_custom<'a>(name: IconName, width: f32, height: f32) -> Svg<'a> {
     let handle = svg::Handle::from_memory(icon_bytes(name));
-    
+
     svg(handle)
         .width(Length::Fixed(width))
         .height(Length::Fixed(height))
@@ -190,23 +190,49 @@ mod tests {
     fn test_icon_bytes_exist() {
         // Verify all icons have valid bytes
         let icons = [
-            IconName::Dashboard, IconName::Projects, IconName::Wizard,
-            IconName::Config, IconName::Doctor, IconName::Tiers,
-            IconName::Evidence, IconName::Metrics, IconName::History,
-            IconName::Ledger, IconName::Login, IconName::Settings,
-            IconName::Play, IconName::Pause, IconName::Stop,
-            IconName::Refresh, IconName::Close, IconName::Upload,
-            IconName::Download, IconName::Expand, IconName::Collapse,
-            IconName::Add, IconName::Search, IconName::Check,
-            IconName::Cross, IconName::Warning, IconName::Info,
-            IconName::Error, IconName::Monitor, IconName::Brain,
-            IconName::Terminal, IconName::Moon, IconName::Sun,
+            IconName::Dashboard,
+            IconName::Projects,
+            IconName::Wizard,
+            IconName::Config,
+            IconName::Doctor,
+            IconName::Tiers,
+            IconName::Evidence,
+            IconName::Metrics,
+            IconName::History,
+            IconName::Ledger,
+            IconName::Login,
+            IconName::Settings,
+            IconName::Play,
+            IconName::Pause,
+            IconName::Stop,
+            IconName::Refresh,
+            IconName::Close,
+            IconName::Upload,
+            IconName::Download,
+            IconName::Expand,
+            IconName::Collapse,
+            IconName::Add,
+            IconName::Search,
+            IconName::Check,
+            IconName::Cross,
+            IconName::Warning,
+            IconName::Info,
+            IconName::Error,
+            IconName::Monitor,
+            IconName::Brain,
+            IconName::Terminal,
+            IconName::Moon,
+            IconName::Sun,
         ];
 
         for icon_name in icons.iter() {
             let bytes = icon_bytes(*icon_name);
             assert!(!bytes.is_empty(), "Icon {:?} has no bytes", icon_name);
-            assert!(bytes.len() > 100, "Icon {:?} bytes seem too small", icon_name);
+            assert!(
+                bytes.len() > 100,
+                "Icon {:?} bytes seem too small",
+                icon_name
+            );
         }
     }
 }

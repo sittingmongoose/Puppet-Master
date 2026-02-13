@@ -8,6 +8,10 @@
 //! - Event emission
 //! - Checkpoint management
 
+use crate::core::escalation_chain::{
+    EscalationChainFailureType, map_failure_type_to_chain_key, select_escalation_chain_step,
+    to_tier_type,
+};
 use crate::core::{
     auto_advancement::AdvancementEngine,
     checkpoint_manager::{CheckpointManager, CheckpointManagerConfig},
@@ -27,17 +31,13 @@ use crate::core::{
     tier_node::TierTree,
     worker_reviewer::WorkerReviewer,
 };
-use crate::core::escalation_chain::{
-    map_failure_type_to_chain_key, select_escalation_chain_step, to_tier_type,
-    EscalationChainFailureType,
-};
+use crate::git::GitManager;
+use crate::logging::{ActivityEventType, LoggerService};
+use crate::state::{ProgressManager, UsageTracker};
+use crate::types::BranchStrategy;
 use crate::types::*;
 use crate::verification::{GateRunConfig, GateRunner, VerificationIntegration};
-use crate::logging::{LoggerService, ActivityEventType};
-use crate::state::{ProgressManager, UsageTracker};
-use crate::git::GitManager;
-use crate::types::BranchStrategy;
-use anyhow::{anyhow, Context, Result};
+use anyhow::{Context, Result, anyhow};
 use async_trait::async_trait;
 use chrono::Utc;
 use crossbeam_channel::{Receiver, Sender};
@@ -47,7 +47,10 @@ use std::time::Instant;
 
 #[async_trait]
 trait IterationExecutor: Send + Sync {
-    async fn execute_iteration(&self, context: &IterationContext) -> Result<crate::core::execution_engine::IterationResult>;
+    async fn execute_iteration(
+        &self,
+        context: &IterationContext,
+    ) -> Result<crate::core::execution_engine::IterationResult>;
 }
 
 #[async_trait]
@@ -203,68 +206,69 @@ impl Orchestrator {
             10,
         ));
 
-        let gate_runner: Arc<dyn GateExecutor> = Arc::new(GateRunner::new(GateRunConfig::default()));
+        let gate_runner: Arc<dyn GateExecutor> =
+            Arc::new(GateRunner::new(GateRunConfig::default()));
 
         // Ensure workspace directory exists and is writable
         if !config.paths.workspace.exists() {
-            std::fs::create_dir_all(&config.paths.workspace)
-                .with_context(|| format!(
+            std::fs::create_dir_all(&config.paths.workspace).with_context(|| {
+                format!(
                     "Failed to create workspace directory: {}. Please ensure the path is writable.",
                     config.paths.workspace.display()
-                ))?;
+                )
+            })?;
         }
-        
+
         // Verify workspace is writable
         let test_file = config.paths.workspace.join(".puppet-master-write-test");
-        std::fs::write(&test_file, "test")
-            .with_context(|| format!(
+        std::fs::write(&test_file, "test").with_context(|| {
+            format!(
                 "Workspace directory is not writable: {}. Please check permissions.",
                 config.paths.workspace.display()
-            ))?;
+            )
+        })?;
         std::fs::remove_file(&test_file).ok();
 
         // Initialize .puppet-master directory structure
         let puppet_master_dir = config.paths.workspace.join(".puppet-master");
-        std::fs::create_dir_all(&puppet_master_dir)
-            .with_context(|| format!(
+        std::fs::create_dir_all(&puppet_master_dir).with_context(|| {
+            format!(
                 "Failed to create .puppet-master directory: {}",
                 puppet_master_dir.display()
-            ))?;
-        
+            )
+        })?;
+
         // Create subdirectories
         let subdirs = ["logs", "evidence", "checkpoints", "capabilities", "usage"];
         for subdir in &subdirs {
             let path = puppet_master_dir.join(subdir);
-            std::fs::create_dir_all(&path)
-                .with_context(|| format!(
-                    "Failed to create {} directory: {}",
-                    subdir,
-                    path.display()
-                ))?;
+            std::fs::create_dir_all(&path).with_context(|| {
+                format!("Failed to create {} directory: {}", subdir, path.display())
+            })?;
         }
-        
+
         // Initialize logging service
         let logger_service = LoggerService::new(puppet_master_dir.clone(), false);
-        
+
         // Log startup activity
         let _ = logger_service.log_activity(
             ActivityEventType::ProjectCreated,
-            "Orchestrator initialized"
+            "Orchestrator initialized",
         );
 
         // Initialize progress manager
         let progress_manager = ProgressManager::new(&config.paths.progress_path)?;
-        
+
         // Initialize usage tracker
         let usage_path = puppet_master_dir.join("usage.jsonl");
         let usage_tracker = UsageTracker::new(&usage_path)?;
-        
+
         // Initialize git manager
         let git_manager = GitManager::new(config.paths.workspace.clone());
-        
+
         // Initialize branch strategy
         let branch_strategy = BranchStrategy::Feature; // Default strategy
-        
+
         // Initialize verification integration if configured
         let verification_integration = Some(VerificationIntegration::new(
             &config.paths.workspace,
@@ -290,7 +294,9 @@ impl Orchestrator {
                     (crate::core::complexity_classifier::ModelLevel::Level3, true),
                 ]),
             };
-            platform_router_config.capabilities.insert(platform_config.platform, caps);
+            platform_router_config
+                .capabilities
+                .insert(platform_config.platform, caps);
         }
         let platform_router = Arc::new(Mutex::new(PlatformRouter::new(platform_router_config)));
 
@@ -313,7 +319,9 @@ impl Orchestrator {
             max_checkpoints: 10,
             auto_checkpoint_interval_secs: 300, // 5 minutes
         };
-        let checkpoint_manager = Arc::new(Mutex::new(CheckpointManager::new(checkpoint_manager_config)));
+        let checkpoint_manager = Arc::new(Mutex::new(CheckpointManager::new(
+            checkpoint_manager_config,
+        )));
 
         // Initialize parallel executor
         let parallel_executor_config = ParallelExecutorConfig {
@@ -359,30 +367,38 @@ impl Orchestrator {
         *tree = TierTree::from_prd(prd, self.config.orchestrator.max_iterations)?;
         Ok(())
     }
-    
+
     /// Get the logger service for external access
     pub fn logger_service(&self) -> &LoggerService {
         &self.logger_service
     }
-    
+
     /// Run log retention cleanup
     pub async fn cleanup_logs(&self) -> Result<()> {
         use crate::logging::{LogRetentionManager, RetentionConfig};
-        
-        let logs_dir = self.config.paths.workspace.join(".puppet-master").join("logs");
+
+        let logs_dir = self
+            .config
+            .paths
+            .workspace
+            .join(".puppet-master")
+            .join("logs");
         let retention_config = RetentionConfig {
             max_age_days: 30,
             max_file_count: 100,
             max_total_size_mb: 500,
             protected_patterns: vec!["current".to_string(), "latest".to_string()],
         };
-        
+
         let manager = LogRetentionManager::new(retention_config);
         let result = manager.cleanup(&logs_dir)?;
-        
-        log::info!("Log cleanup: deleted {} files, freed {} bytes", 
-            result.files_removed, result.bytes_freed);
-        
+
+        log::info!(
+            "Log cleanup: deleted {} files, freed {} bytes",
+            result.files_removed,
+            result.bytes_freed
+        );
+
         Ok(())
     }
 
@@ -552,7 +568,7 @@ impl Orchestrator {
                         let checkpoint_mgr = self.checkpoint_manager.lock().unwrap();
                         checkpoint_mgr.should_auto_checkpoint()
                     };
-                    
+
                     if should_checkpoint {
                         if let Err(e) = self.create_checkpoint("auto").await {
                             log::warn!("Failed to create auto-checkpoint: {}", e);
@@ -567,9 +583,12 @@ impl Orchestrator {
                     let phase_total = stats.phases.max(1);
                     let task_total = stats.tasks.max(1);
                     let subtask_total = stats.subtasks.max(1);
-                    let phase_pct = (stats.passed.min(stats.phases) as f64 / phase_total as f64) * 100.0;
-                    let task_pct = (stats.passed.min(stats.tasks) as f64 / task_total as f64) * 100.0;
-                    let subtask_pct = (stats.passed.min(stats.subtasks) as f64 / subtask_total as f64) * 100.0;
+                    let phase_pct =
+                        (stats.passed.min(stats.phases) as f64 / phase_total as f64) * 100.0;
+                    let task_pct =
+                        (stats.passed.min(stats.tasks) as f64 / task_total as f64) * 100.0;
+                    let subtask_pct =
+                        (stats.passed.min(stats.subtasks) as f64 / subtask_total as f64) * 100.0;
                     let progress = PuppetMasterEvent::progress(
                         phase_pct,
                         task_pct,
@@ -577,11 +596,14 @@ impl Orchestrator {
                         100.0,
                         overall,
                     );
-                    let _ = self.event_sender.send(OrchestratorEvent::PuppetMasterEvent(progress));
+                    let _ = self
+                        .event_sender
+                        .send(OrchestratorEvent::PuppetMasterEvent(progress));
 
                     let advancement = {
                         let tree = self.tier_tree.lock().unwrap();
-                        self.advancement_engine.determine_advancement(&tree, &tier_id)?
+                        self.advancement_engine
+                            .determine_advancement(&tree, &tier_id)?
                     };
 
                     if advancement.should_advance {
@@ -725,10 +747,12 @@ impl Orchestrator {
             // Log iteration start
             let _ = self.logger_service.log_activity(
                 ActivityEventType::OrchestrationStarted,
-                format!("Starting iteration {} for tier {}", attempt, tier_id)
+                format!("Starting iteration {} for tier {}", attempt, tier_id),
             );
 
-            let timeout_secs = tier_config.timeout_ms.map(|ms| ms.saturating_add(999) / 1000);
+            let timeout_secs = tier_config
+                .timeout_ms
+                .map(|ms| ms.saturating_add(999) / 1000);
 
             let context = IterationContext {
                 tier_id: tier_id.to_string(),
@@ -753,7 +777,7 @@ impl Orchestrator {
                 Ok(r) => r,
                 Err(e) => {
                     let signal = CompletionSignal::Error(e.to_string());
-                    
+
                     // Log error
                     let mut error_context = HashMap::new();
                     error_context.insert("tier_id".to_string(), tier_id.to_string());
@@ -761,26 +785,28 @@ impl Orchestrator {
                     let _ = self.logger_service.log_error(
                         crate::logging::ErrorCategory::Platform,
                         format!("Iteration execution failed: {}", e),
-                        error_context
+                        error_context,
                     );
-                    
+
                     let _ = self
                         .session_tracker
                         .fail_session(&session_id, format!("{}", signal));
-                    return self.handle_iteration_failure(tier_id, attempt, &signal).await;
+                    return self
+                        .handle_iteration_failure(tier_id, attempt, &signal)
+                        .await;
                 }
             };
 
             match iteration_result.signal {
                 CompletionSignal::Complete => {
                     let _ = self.session_tracker.complete_session(&session_id);
-                    
+
                     // Log completion
                     let _ = self.logger_service.log_activity(
                         ActivityEventType::IterationCompleted,
-                        format!("Iteration {} completed for tier {}", attempt, tier_id)
+                        format!("Iteration {} completed for tier {}", attempt, tier_id),
                     );
-                    
+
                     // Track usage
                     let usage_record = UsageRecord {
                         timestamp: Utc::now(),
@@ -825,30 +851,33 @@ impl Orchestrator {
                         let node = tree
                             .find_by_id_mut(tier_id)
                             .ok_or_else(|| anyhow!("Tier {} not found", tier_id))?;
-                        
+
                         // Validate transition before passing
                         let current = node.state_machine.current_state();
                         if let Err(e) = self.validate_tier_transition(current, TierState::Passed) {
                             log::warn!("Tier transition validation failed: {}", e);
                         }
                         node.state_machine.send(TierEvent::GatePass)?;
-                        
+
                         // Update progress
                         let progress_entry = ProgressEntry {
                             item_id: tier_id.to_string(),
                             status: ItemStatus::Passed,
                             progress: 100.0,
-                            message: Some(format!("Tier passed gate after {} iteration(s)", attempt)),
+                            message: Some(format!(
+                                "Tier passed gate after {} iteration(s)",
+                                attempt
+                            )),
                             timestamp: Utc::now(),
                         };
                         let _ = self.progress_manager.append_entry(&progress_entry);
-                        
+
                         // Log gate pass
                         let _ = self.logger_service.log_activity(
                             ActivityEventType::GatePassed,
-                            format!("Tier {} passed gate", tier_id)
+                            format!("Tier {} passed gate", tier_id),
                         );
-                        
+
                         return Ok(());
                     }
 
@@ -882,7 +911,11 @@ impl Orchestrator {
                             // Check loop guard before retrying
                             if let Err(e) = self.check_loop_guard(tier_id, attempt, Some(&reason)) {
                                 log::warn!("Loop detected, failing tier: {}", e);
-                                return Err(anyhow!("Tier {} gate failed with loop detection: {}", tier_id, reason));
+                                return Err(anyhow!(
+                                    "Tier {} gate failed with loop detection: {}",
+                                    tier_id,
+                                    reason
+                                ));
                             }
                             previous_feedback = Some(reason);
                             continue;
@@ -962,11 +995,17 @@ impl Orchestrator {
         match action {
             EscalationAction::Retry => {
                 // Check loop guard before retrying
-                if let Err(e) = self.check_loop_guard(tier_id, attempt, Some(&format!("{}", signal))) {
+                if let Err(e) =
+                    self.check_loop_guard(tier_id, attempt, Some(&format!("{}", signal)))
+                {
                     log::warn!("Loop detected during retry: {}", e);
-                    return Err(anyhow!("Tier {} failed with loop detection: {}", tier_id, e));
+                    return Err(anyhow!(
+                        "Tier {} failed with loop detection: {}",
+                        tier_id,
+                        e
+                    ));
                 }
-                
+
                 if next_state == TierState::Failed {
                     Err(anyhow!(
                         "Tier {} failed after {} attempts: {}",
@@ -1017,7 +1056,7 @@ impl Orchestrator {
         // Get the chain for this failure type
         if let Some(chain) = escalation_config.chains.get(&chain_key) {
             let selection = select_escalation_chain_step(chain, attempt)?;
-            
+
             // Convert EscalationChainAction to EscalationAction
             let action = match selection.step.action {
                 EscalationChainAction::Retry => EscalationAction::Retry,
@@ -1027,7 +1066,8 @@ impl Orchestrator {
                 EscalationChainAction::Escalate => {
                     // If escalate action, trigger escalation event
                     if let Some(target_tier_type) = to_tier_type(selection.step.to) {
-                        self.trigger_escalation(tier_id, tier_type, target_tier_type).await?;
+                        self.trigger_escalation(tier_id, tier_type, target_tier_type)
+                            .await?;
                     }
                     EscalationAction::EscalateToParent
                 }
@@ -1050,7 +1090,8 @@ impl Orchestrator {
             if let Some(escalation_target) = tier_config.escalation {
                 let target_tier_type = to_tier_type(Some(escalation_target))
                     .ok_or_else(|| anyhow!("Invalid escalation target"))?;
-                self.trigger_escalation(tier_id, tier_type, target_tier_type).await?;
+                self.trigger_escalation(tier_id, tier_type, target_tier_type)
+                    .await?;
                 Ok(EscalationAction::EscalateToParent)
             } else {
                 // No escalation configured, use retry as default
@@ -1076,9 +1117,10 @@ impl Orchestrator {
             // Walk up the tree to find a parent of the target type
             let mut current_parent = current_node.parent;
             let mut found_id: Option<String> = None;
-            
+
             while let Some(parent_idx) = current_parent {
-                let parent_node = tree.get_node(parent_idx)
+                let parent_node = tree
+                    .get_node(parent_idx)
                     .ok_or_else(|| anyhow!("Invalid parent index: {}", parent_idx))?;
                 if parent_node.tier_type == to_tier_type {
                     found_id = Some(parent_node.id.clone());
@@ -1100,14 +1142,13 @@ impl Orchestrator {
         let event = PuppetMasterEvent::Escalation {
             from_tier_id: from_tier_id.to_string(),
             to_tier_id: to_tier_id.clone(),
-            reason: format!(
-                "Escalating from {:?} to {:?}",
-                from_tier_type, to_tier_type
-            ),
+            reason: format!("Escalating from {:?} to {:?}", from_tier_type, to_tier_type),
             timestamp: Utc::now(),
         };
 
-        let _ = self.event_sender.send(OrchestratorEvent::PuppetMasterEvent(event));
+        let _ = self
+            .event_sender
+            .send(OrchestratorEvent::PuppetMasterEvent(event));
 
         log::info!(
             "Escalation triggered: {} ({:?}) -> {} ({:?})",
@@ -1145,7 +1186,8 @@ impl Orchestrator {
     /// Classify task complexity and route to appropriate platform
     fn classify_and_route_task(&self, tier_id: &str) -> Result<Platform> {
         let tree = self.tier_tree.lock().unwrap();
-        let node = tree.find_by_id(tier_id)
+        let node = tree
+            .find_by_id(tier_id)
             .ok_or_else(|| anyhow!("Tier {} not found", tier_id))?;
 
         // Build task info for classification
@@ -1265,11 +1307,16 @@ impl Orchestrator {
                     tier_states,
                     position,
                     metadata,
-                ).await
+                )
+                .await
             })
-        }).await.context("Failed to spawn checkpoint task")??;
+        })
+        .await
+        .context("Failed to spawn checkpoint task")??;
 
-        self.checkpoint_manager.lock().unwrap()
+        self.checkpoint_manager
+            .lock()
+            .unwrap()
             .update_last_checkpoint_time();
 
         log::info!("Created checkpoint {} (reason: {})", checkpoint_id, reason);
@@ -1326,13 +1373,13 @@ mod tests {
         ) -> Result<crate::core::execution_engine::IterationResult> {
             self.calls.fetch_add(1, Ordering::SeqCst);
             let mut guard = self.results.lock().unwrap();
-            guard
-                .pop_front()
-                .unwrap_or_else(|| Ok(crate::core::execution_engine::IterationResult {
+            guard.pop_front().unwrap_or_else(|| {
+                Ok(crate::core::execution_engine::IterationResult {
                     signal: CompletionSignal::Complete,
                     duration_secs: 0,
                     output_lines: 0,
-                }))
+                })
+            })
         }
     }
 
@@ -1412,10 +1459,7 @@ mod tests {
         }
 
         fn complete_session(&self, session_id: &str) -> Result<()> {
-            self.completed
-                .lock()
-                .unwrap()
-                .push(session_id.to_string());
+            self.completed.lock().unwrap().push(session_id.to_string());
             Ok(())
         }
 
@@ -1492,11 +1536,12 @@ mod tests {
         let (event_sender, event_receiver) = crossbeam_channel::unbounded();
 
         // Initialize test-only services with temporary directory
-        let temp_dir = std::env::temp_dir().join(format!("puppet-master-test-{}", std::process::id()));
+        let temp_dir =
+            std::env::temp_dir().join(format!("puppet-master-test-{}", std::process::id()));
         let _ = std::fs::create_dir_all(&temp_dir);
         let puppet_master_dir = temp_dir.join(".puppet-master");
         let _ = std::fs::create_dir_all(&puppet_master_dir);
-        
+
         let logger_service = LoggerService::new(puppet_master_dir.clone(), false);
         let progress_manager = ProgressManager::new(&temp_dir.join("progress.txt")).unwrap();
         let usage_tracker = UsageTracker::new(&puppet_master_dir.join("usage.jsonl")).unwrap();
@@ -1510,7 +1555,9 @@ mod tests {
         let platform_router = Arc::new(Mutex::new(PlatformRouter::with_defaults()));
         let loop_guard = Arc::new(Mutex::new(LoopGuard::default_config()));
         let fresh_spawn = FreshSpawn::with_defaults();
-        let checkpoint_manager = Arc::new(Mutex::new(CheckpointManager::new(CheckpointManagerConfig::default())));
+        let checkpoint_manager = Arc::new(Mutex::new(CheckpointManager::new(
+            CheckpointManagerConfig::default(),
+        )));
         let parallel_executor = ParallelExecutor::with_defaults();
 
         Orchestrator {

@@ -9,9 +9,13 @@
 //! - Completion signal detection
 //! - Stall detection
 
-use crate::platforms::{HealthMonitor, RateLimiter, QuotaManager, PermissionAudit, PermissionEvent, PermissionAction};
-use crate::types::{CompletionSignal, ExecutionRequest, ExecutionResult, OutputLine, OutputLineType, Platform};
-use anyhow::{anyhow, Context, Result};
+use crate::platforms::{
+    HealthMonitor, PermissionAction, PermissionAudit, PermissionEvent, QuotaManager, RateLimiter,
+};
+use crate::types::{
+    CompletionSignal, ExecutionRequest, ExecutionResult, OutputLine, OutputLineType, Platform,
+};
+use anyhow::{Context, Result, anyhow};
 use chrono::Utc;
 use log::{debug, info, warn};
 use regex::Regex;
@@ -70,7 +74,7 @@ impl ProcessRegistry {
     fn kill_process(pid: u32) {
         #[cfg(unix)]
         {
-            use nix::sys::signal::{kill, Signal};
+            use nix::sys::signal::{Signal, kill};
             use nix::unistd::Pid;
             let _ = kill(Pid::from_raw(pid as i32), Signal::SIGTERM);
         }
@@ -168,10 +172,8 @@ impl BaseRunner {
     pub fn new(command: String, platform: Platform) -> Self {
         // Use global singletons for health monitor, rate limiter, and quota manager
         // Try to create permission audit logger (optional, may fail)
-        let permission_audit = PermissionAudit::default_location()
-            .map(Arc::new)
-            .ok();
-        
+        let permission_audit = PermissionAudit::default_location().map(Arc::new).ok();
+
         Self {
             command,
             circuit_breaker: CircuitBreaker::new(5),
@@ -214,7 +216,9 @@ impl BaseRunner {
         // Check quota before execution
         if let Err(e) = self.quota_manager.enforce_quota(self.platform) {
             warn!("Quota enforcement failed: {}", e);
-            self.health_monitor.record_failure(self.platform, format!("Quota exhausted: {}", e)).await;
+            self.health_monitor
+                .record_failure(self.platform, format!("Quota exhausted: {}", e))
+                .await;
             return Err(e);
         }
 
@@ -224,7 +228,11 @@ impl BaseRunner {
         // Log API access permission event
         if let Some(ref audit) = self.permission_audit {
             let event = PermissionEvent::new(self.platform, PermissionAction::ApiAccess, true)
-                .with_details(format!("Executing: {} with {} args", self.command, args.len()));
+                .with_details(format!(
+                    "Executing: {} with {} args",
+                    self.command,
+                    args.len()
+                ));
             if let Some(session_id) = &request.session_id {
                 let event = event.with_session_id(session_id);
                 let _ = audit.log(event).await; // Ignore audit errors
@@ -238,7 +246,7 @@ impl BaseRunner {
 
         // Spawn the process
         info!("Executing: {} {}", self.command, args.join(" "));
-        
+
         let mut cmd = Command::new(&self.command);
         cmd.args(&args)
             .stdout(Stdio::piped())
@@ -299,7 +307,10 @@ impl BaseRunner {
         drop(tx); // Close the sender
 
         // Collect output with timeout and stall detection
-        let timeout_secs = request.timeout_ms.map(|ms| ms / 1000).unwrap_or(self.default_timeout);
+        let timeout_secs = request
+            .timeout_ms
+            .map(|ms| ms / 1000)
+            .unwrap_or(self.default_timeout);
         let timeout_duration = Duration::from_secs(timeout_secs);
 
         let mut output_lines = Vec::new();
@@ -325,11 +336,11 @@ impl BaseRunner {
         // Wait for the process to complete or kill it
         let exit_status = if timed_out {
             warn!("Process timed out, sending SIGTERM to PID {}", pid);
-            
+
             // Soft kill (SIGTERM)
             #[cfg(unix)]
             {
-                use nix::sys::signal::{kill, Signal};
+                use nix::sys::signal::{Signal, kill};
                 use nix::unistd::Pid;
                 let _ = kill(Pid::from_raw(pid as i32), Signal::SIGTERM);
             }
@@ -346,7 +357,10 @@ impl BaseRunner {
                 Ok(Ok(status)) => Some(status),
                 _ => {
                     // Hard kill (SIGKILL)
-                    warn!("Process did not exit gracefully, sending SIGKILL to PID {}", pid);
+                    warn!(
+                        "Process did not exit gracefully, sending SIGKILL to PID {}",
+                        pid
+                    );
                     let _ = child.kill().await;
                     child.wait().await.ok()
                 }
@@ -377,7 +391,11 @@ impl BaseRunner {
         let exit_code = exit_status.and_then(|s| s.code());
 
         // Build output string from collected lines
-        let output_str: String = output_lines.iter().map(|l| l.text.as_str()).collect::<Vec<_>>().join("\n");
+        let output_str: String = output_lines
+            .iter()
+            .map(|l| l.text.as_str())
+            .collect::<Vec<_>>()
+            .join("\n");
 
         let completion_signal = if completion_detected {
             if output_str.contains("<ralph>COMPLETE</ralph>") {
@@ -403,7 +421,11 @@ impl BaseRunner {
 
         let result = ExecutionResult {
             success,
-            output: if output_str.is_empty() { None } else { Some(output_str) },
+            output: if output_str.is_empty() {
+                None
+            } else {
+                Some(output_str)
+            },
             exit_code,
             duration_ms: Some((duration_secs * 1000.0) as u64),
             files_changed: Vec::new(),
@@ -424,13 +446,16 @@ impl BaseRunner {
             self.circuit_breaker.record_success();
         } else {
             let error_msg = error_message.unwrap_or_else(|| "Unknown error".to_string());
-            self.health_monitor.record_failure(self.platform, error_msg).await;
+            self.health_monitor
+                .record_failure(self.platform, error_msg)
+                .await;
             self.circuit_breaker.record_failure();
         }
 
         // Record quota usage (use tokens from result if available, otherwise estimate)
         let tokens = result.tokens_used.unwrap_or(0);
-        self.quota_manager.record_usage(self.platform, tokens, duration_secs);
+        self.quota_manager
+            .record_usage(self.platform, tokens, duration_secs);
 
         Ok(result)
     }
@@ -438,10 +463,13 @@ impl BaseRunner {
     /// Detect the type of output line based on content
     pub fn detect_line_type(line: &str) -> OutputLineType {
         let line_lower = line.to_lowercase();
-        
+
         if line_lower.contains("error:") || line_lower.contains("[error]") {
             OutputLineType::Stderr
-        } else if line_lower.contains("warning:") || line_lower.contains("[warning]") || line_lower.contains("[warn]") {
+        } else if line_lower.contains("warning:")
+            || line_lower.contains("[warning]")
+            || line_lower.contains("[warn]")
+        {
             OutputLineType::System
         } else if line_lower.contains("debug:") || line_lower.contains("[debug]") {
             OutputLineType::System
@@ -455,9 +483,9 @@ impl BaseRunner {
         let complete_regex = Regex::new(r"<ralph>COMPLETE</ralph>").unwrap();
         let gutter_regex = Regex::new(r"<ralph>GUTTER</ralph>").unwrap();
 
-        output.iter().any(|line| {
-            complete_regex.is_match(&line.text) || gutter_regex.is_match(&line.text)
-        })
+        output
+            .iter()
+            .any(|line| complete_regex.is_match(&line.text) || gutter_regex.is_match(&line.text))
     }
 
     /// Check if a command is available on PATH
@@ -524,7 +552,7 @@ mod tests {
     async fn test_command_availability() {
         // Test with a command that should exist on all systems
         assert!(BaseRunner::is_command_available("echo").await);
-        
+
         // Test with a command that likely doesn't exist
         assert!(!BaseRunner::is_command_available("nonexistent_command_xyz").await);
     }

@@ -9,7 +9,7 @@
 
 use crate::core::state_machine::TierStateMachine;
 use crate::types::*;
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, VecDeque};
 
@@ -51,7 +51,7 @@ impl TierNode {
         max_iterations: u32,
     ) -> Self {
         let state_machine = TierStateMachine::new(id.clone(), tier_type, max_iterations);
-        
+
         Self {
             index,
             id,
@@ -125,13 +125,21 @@ impl TierTree {
         }
 
         let index = self.nodes.len();
-        let mut node = TierNode::new(index, id.clone(), tier_type, title, description, max_iterations);
+        let mut node = TierNode::new(
+            index,
+            id.clone(),
+            tier_type,
+            title,
+            description,
+            max_iterations,
+        );
 
         // Set up parent-child relationship
         if let Some(parent_id) = parent_id {
-            let parent_index = self.find_index_by_id(&parent_id)
+            let parent_index = self
+                .find_index_by_id(&parent_id)
                 .ok_or_else(|| anyhow!("Parent tier {} not found", parent_id))?;
-            
+
             node.parent = Some(parent_index);
             self.nodes[parent_index].children.push(index);
         } else {
@@ -152,7 +160,10 @@ impl TierTree {
 
     /// Find mutable node by ID
     pub fn find_by_id_mut(&mut self, id: &str) -> Option<&mut TierNode> {
-        self.id_to_index.get(id).copied().map(|idx| &mut self.nodes[idx])
+        self.id_to_index
+            .get(id)
+            .copied()
+            .map(|idx| &mut self.nodes[idx])
     }
 
     /// Find node index by ID
@@ -191,21 +202,21 @@ impl TierTree {
     /// Get path from root to node (list of IDs)
     pub fn get_path(&self, node_id: &str) -> Vec<String> {
         let mut path = Vec::new();
-        
+
         if let Some(&mut_index) = self.id_to_index.get(node_id) {
             let mut current_index = mut_index;
-            
+
             loop {
                 let node = &self.nodes[current_index];
                 path.push(node.id.clone());
-                
+
                 match node.parent {
                     Some(parent_idx) => current_index = parent_idx,
                     None => break,
                 }
             }
         }
-        
+
         path.reverse();
         path
     }
@@ -233,7 +244,7 @@ impl TierTree {
     /// Find next pending node from a starting point (DFS)
     fn find_next_pending_from(&self, start_idx: usize) -> Option<&TierNode> {
         let node = &self.nodes[start_idx];
-        
+
         // If this node is pending and is a leaf, return it
         if node.is_leaf() && node.state_machine.current_state() == TierState::Pending {
             return Some(node);
@@ -257,7 +268,7 @@ impl TierTree {
         while let Some(idx) = stack.pop() {
             let node = &self.nodes[idx];
             result.push(node);
-            
+
             // Push children in reverse order so they're popped in correct order
             for &child_idx in node.children.iter().rev() {
                 stack.push(child_idx);
@@ -275,7 +286,7 @@ impl TierTree {
         while let Some(idx) = queue.pop_front() {
             let node = &self.nodes[idx];
             result.push(node);
-            
+
             for &child_idx in &node.children {
                 queue.push_back(child_idx);
             }
@@ -292,14 +303,14 @@ impl TierTree {
     /// Check if all children of a node have passed
     pub fn all_children_passed(&self, node_id: &str) -> bool {
         let children = self.get_children(node_id);
-        
+
         if children.is_empty() {
             return false;
         }
 
-        children.iter().all(|child| {
-            child.state_machine.current_state() == TierState::Passed
-        })
+        children
+            .iter()
+            .all(|child| child.state_machine.current_state() == TierState::Passed)
     }
 
     /// Count nodes by state
@@ -326,7 +337,10 @@ impl TierTree {
     }
 
     fn count_by_type(&self, tier_type: TierType) -> usize {
-        self.nodes.iter().filter(|n| n.tier_type == tier_type).count()
+        self.nodes
+            .iter()
+            .filter(|n| n.tier_type == tier_type)
+            .count()
     }
 
     /// Build tree from PRD data
@@ -403,7 +417,7 @@ mod tests {
 
     fn create_test_tree() -> TierTree {
         let mut tree = TierTree::new();
-        
+
         // Phase 1
         tree.add_node(
             "1".to_string(),
@@ -412,7 +426,8 @@ mod tests {
             "First phase".to_string(),
             None,
             3,
-        ).unwrap();
+        )
+        .unwrap();
 
         // Task 1.1
         tree.add_node(
@@ -422,7 +437,8 @@ mod tests {
             "First task".to_string(),
             Some("1".to_string()),
             3,
-        ).unwrap();
+        )
+        .unwrap();
 
         // Subtask 1.1.1
         tree.add_node(
@@ -432,7 +448,8 @@ mod tests {
             "First subtask".to_string(),
             Some("1.1".to_string()),
             3,
-        ).unwrap();
+        )
+        .unwrap();
 
         // Subtask 1.1.2
         tree.add_node(
@@ -442,7 +459,8 @@ mod tests {
             "Second subtask".to_string(),
             Some("1.1".to_string()),
             3,
-        ).unwrap();
+        )
+        .unwrap();
 
         tree
     }
@@ -528,7 +546,8 @@ mod tests {
             "Test".to_string(),
             None,
             3,
-        ).unwrap();
+        )
+        .unwrap();
 
         let result = tree.add_node(
             "1".to_string(),

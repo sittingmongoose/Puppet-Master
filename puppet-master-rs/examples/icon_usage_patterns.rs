@@ -5,9 +5,9 @@
 
 #![allow(dead_code)]
 
-use iced::widget::{button, row, column, container, text, Space};
+use crate::widgets::icon::{IconName, IconSize, icon, icon_sized};
+use iced::widget::{Space, button, column, container, row, text};
 use iced::{Element, Length, Padding};
-use crate::widgets::icon::{icon, icon_sized, IconName, IconSize};
 
 /// Example: Navigation sidebar with icons
 fn navigation_menu<'a>() -> Element<'a, Message> {
@@ -29,11 +29,11 @@ fn navigation_menu<'a>() -> Element<'a, Message> {
 fn nav_item<'a>(icon_name: IconName, label: &'a str, active: bool) -> Element<'a, Message> {
     let icon_widget = icon_sized(icon_name, IconSize::Medium);
     let text_widget = text(label).size(14);
-    
+
     button(
         row![icon_widget, text_widget]
             .spacing(12)
-            .padding(Padding::new(12.0))
+            .padding(Padding::new(12.0)),
     )
     .width(Length::Fill)
     .into()
@@ -46,9 +46,7 @@ fn action_toolbar<'a>() -> Element<'a, Message> {
         action_button(IconName::Play, "Start", Message::Start),
         action_button(IconName::Pause, "Pause", Message::Pause),
         action_button(IconName::Stop, "Stop", Message::Stop),
-        
         Space::with_width(Length::Fixed(16.0)),
-        
         // Icon-only buttons for secondary actions
         icon_button(IconName::Refresh, Message::Refresh),
         icon_button(IconName::Upload, Message::Upload),
@@ -61,32 +59,38 @@ fn action_toolbar<'a>() -> Element<'a, Message> {
 
 fn action_button<'a>(icon_name: IconName, label: &'a str, msg: Message) -> Element<'a, Message> {
     button(
-        row![
-            icon_sized(icon_name, IconSize::Small),
-            text(label).size(14)
-        ]
-        .spacing(6)
-        .padding(Padding::from([6, 12]))
+        row![icon_sized(icon_name, IconSize::Small), text(label).size(14)]
+            .spacing(6)
+            .padding(Padding::from([6, 12])),
     )
     .on_press(msg)
     .into()
 }
 
 fn icon_button<'a>(icon_name: IconName, msg: Message) -> Element<'a, Message> {
-    button(
-        container(icon_sized(icon_name, IconSize::Medium))
-            .padding(8)
-    )
-    .on_press(msg)
-    .into()
+    button(container(icon_sized(icon_name, IconSize::Medium)).padding(8))
+        .on_press(msg)
+        .into()
 }
 
 /// Example: Status messages with icons
 fn status_messages<'a>() -> Element<'a, Message> {
     column![
-        status_message(IconName::Check, "Operation completed successfully", StatusType::Success),
-        status_message(IconName::Warning, "Configuration needs attention", StatusType::Warning),
-        status_message(IconName::Error, "Failed to connect to server", StatusType::Error),
+        status_message(
+            IconName::Check,
+            "Operation completed successfully",
+            StatusType::Success
+        ),
+        status_message(
+            IconName::Warning,
+            "Configuration needs attention",
+            StatusType::Warning
+        ),
+        status_message(
+            IconName::Error,
+            "Failed to connect to server",
+            StatusType::Error
+        ),
         status_message(IconName::Info, "New update available", StatusType::Info),
     ]
     .spacing(12)
@@ -95,20 +99,16 @@ fn status_messages<'a>() -> Element<'a, Message> {
 }
 
 fn status_message<'a>(
-    icon_name: IconName, 
-    message: &'a str, 
-    status_type: StatusType
+    icon_name: IconName,
+    message: &'a str,
+    status_type: StatusType,
 ) -> Element<'a, Message> {
     let icon_widget = icon_sized(icon_name, IconSize::Small);
     let text_widget = text(message).size(14);
-    
-    container(
-        row![icon_widget, text_widget]
-            .spacing(8)
-            .padding(12)
-    )
-    .width(Length::Fill)
-    .into()
+
+    container(row![icon_widget, text_widget].spacing(8).padding(12))
+        .width(Length::Fill)
+        .into()
 }
 
 /// Example: Modal header with large icon
@@ -129,8 +129,16 @@ fn modal_header<'a>(icon_name: IconName, title: &'a str) -> Element<'a, Message>
 /// Example: List items with leading icons
 fn list_with_icons<'a>() -> Element<'a, Message> {
     column![
-        list_item(IconName::Monitor, "System Monitor", "Monitor system resources"),
-        list_item(IconName::Brain, "AI Assistant", "Intelligent code suggestions"),
+        list_item(
+            IconName::Monitor,
+            "System Monitor",
+            "Monitor system resources"
+        ),
+        list_item(
+            IconName::Brain,
+            "AI Assistant",
+            "Intelligent code suggestions"
+        ),
         list_item(IconName::Terminal, "Terminal", "Command line interface"),
         list_item(IconName::Evidence, "Evidence Store", "Execution evidence"),
     ]
@@ -140,21 +148,17 @@ fn list_with_icons<'a>() -> Element<'a, Message> {
 }
 
 fn list_item<'a>(
-    icon_name: IconName, 
-    title: &'a str, 
-    description: &'a str
+    icon_name: IconName,
+    title: &'a str,
+    description: &'a str,
 ) -> Element<'a, Message> {
     button(
         row![
             icon_sized(icon_name, IconSize::Large),
-            column![
-                text(title).size(16),
-                text(description).size(12)
-            ]
-            .spacing(4)
+            column![text(title).size(16), text(description).size(12)].spacing(4)
         ]
         .spacing(16)
-        .padding(12)
+        .padding(12),
     )
     .width(Length::Fill)
     .into()
@@ -182,18 +186,11 @@ fn expandable_section<'a>(title: &'a str, expanded: bool) -> Element<'a, Message
     } else {
         icon_sized(IconName::Expand, IconSize::Small)
     };
-    
-    button(
-        row![
-            chevron,
-            text(title).size(16),
-        ]
-        .spacing(8)
-        .padding(8)
-    )
-    .width(Length::Fill)
-    .on_press(Message::ToggleSection(title.to_string()))
-    .into()
+
+    button(row![chevron, text(title).size(16),].spacing(8).padding(8))
+        .width(Length::Fill)
+        .on_press(Message::ToggleSection(title.to_string()))
+        .into()
 }
 
 /// Example: Dashboard cards with category icons
@@ -209,11 +206,7 @@ fn dashboard_cards<'a>() -> Element<'a, Message> {
     .into()
 }
 
-fn dashboard_card<'a>(
-    icon_name: IconName,
-    title: &'a str,
-    value: &'a str
-) -> Element<'a, Message> {
+fn dashboard_card<'a>(icon_name: IconName, title: &'a str, value: &'a str) -> Element<'a, Message> {
     container(
         column![
             icon_sized(icon_name, IconSize::XLarge),
@@ -221,7 +214,7 @@ fn dashboard_card<'a>(
             text(title).size(14),
         ]
         .spacing(8)
-        .padding(20)
+        .padding(20),
     )
     .width(Length::Fill)
     .into()
@@ -248,7 +241,7 @@ fn setting_row<'a>(icon_name: IconName, label: &'a str) -> Element<'a, Message> 
             icon_sized(IconName::Expand, IconSize::Small),
         ]
         .spacing(12)
-        .padding(12)
+        .padding(12),
     )
     .width(Length::Fill)
     .into()
@@ -273,14 +266,11 @@ fn theme_toggle<'a>(is_dark: bool) -> Element<'a, Message> {
     } else {
         (IconName::Moon, "Dark Mode")
     };
-    
+
     button(
-        row![
-            icon_sized(icon_name, IconSize::Small),
-            text(label).size(14)
-        ]
-        .spacing(6)
-        .padding(Padding::from([6, 12]))
+        row![icon_sized(icon_name, IconSize::Small), text(label).size(14)]
+            .spacing(6)
+            .padding(Padding::from([6, 12])),
     )
     .on_press(Message::ToggleTheme)
     .into()

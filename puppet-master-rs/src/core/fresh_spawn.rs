@@ -165,12 +165,7 @@ impl FreshSpawn {
         // Wait for process with timeout
         let timed_out;
         let exit_status = if self.config.timeout_secs > 0 {
-            match timeout(
-                Duration::from_secs(self.config.timeout_secs),
-                child.wait(),
-            )
-            .await
-            {
+            match timeout(Duration::from_secs(self.config.timeout_secs), child.wait()).await {
                 Ok(Ok(status)) => {
                     timed_out = false;
                     Some(status)
@@ -247,11 +242,8 @@ mod tests {
     #[tokio::test]
     async fn test_spawn_successful_command() {
         let spawner = FreshSpawn::with_defaults();
-        
-        let (result, audit) = spawner
-            .spawn("echo", &["hello".to_string()])
-            .await
-            .unwrap();
+
+        let (result, audit) = spawner.spawn("echo", &["hello".to_string()]).await.unwrap();
 
         assert_eq!(result.exit_code, Some(0));
         assert!(result.stdout.contains("hello"));
@@ -263,12 +255,9 @@ mod tests {
     #[tokio::test]
     async fn test_spawn_failed_command() {
         let spawner = FreshSpawn::with_defaults();
-        
+
         // Use 'false' command which exits with code 1
-        let (result, _) = spawner
-            .spawn("false", &[])
-            .await
-            .unwrap();
+        let (result, _) = spawner.spawn("false", &[]).await.unwrap();
 
         assert_ne!(result.exit_code, Some(0));
         assert!(!result.timed_out);
@@ -283,10 +272,7 @@ mod tests {
         let spawner = FreshSpawn::new(config);
 
         // Sleep command that exceeds timeout
-        let (result, _) = spawner
-            .spawn("sleep", &["10".to_string()])
-            .await
-            .unwrap();
+        let (result, _) = spawner.spawn("sleep", &["10".to_string()]).await.unwrap();
 
         assert!(result.timed_out);
     }
@@ -313,7 +299,7 @@ mod tests {
     #[tokio::test]
     async fn test_spawn_captures_stderr() {
         let spawner = FreshSpawn::with_defaults();
-        
+
         // Command that writes to stderr
         let (result, _) = spawner
             .spawn("sh", &["-c".to_string(), "echo error >&2".to_string()])
@@ -326,11 +312,8 @@ mod tests {
     #[tokio::test]
     async fn test_audit_trail() {
         let spawner = FreshSpawn::with_defaults();
-        
-        let (_, audit) = spawner
-            .spawn("echo", &["test".to_string()])
-            .await
-            .unwrap();
+
+        let (_, audit) = spawner.spawn("echo", &["test".to_string()]).await.unwrap();
 
         assert_eq!(audit.command, "echo");
         assert_eq!(audit.args, vec!["test"]);

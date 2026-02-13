@@ -251,7 +251,10 @@ impl EvidenceCollection {
 
     /// Returns evidence for a specific item.
     pub fn for_item(&self, item_id: &str) -> Vec<&StoredEvidence> {
-        self.evidence.iter().filter(|e| e.item_id == item_id).collect()
+        self.evidence
+            .iter()
+            .filter(|e| e.item_id == item_id)
+            .collect()
     }
 
     /// Returns evidence of a specific type.

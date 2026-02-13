@@ -2,12 +2,12 @@
 //!
 //! Browse and filter evidence items with type and tier filtering, file type icons.
 
-use iced::widget::{column, row, text, container, scrollable, Space, text_editor};
-use iced::{Element, Length, Border};
 use crate::app::Message;
-use crate::theme::{AppTheme, tokens, fonts, colors};
+use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::widgets::*;
 use chrono::{DateTime, Utc};
+use iced::widget::{Space, column, container, row, scrollable, text, text_editor};
+use iced::{Border, Element, Length};
 use std::path::PathBuf;
 
 /// Evidence item for display
@@ -100,14 +100,15 @@ pub fn view<'a>(
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     // 3-column layout: Category filters (1/4) | File list (2/4) | Preview panel (1/4)
-    
+
     // LEFT COLUMN: Category filters
     let mut category_buttons = column![
         text("Categories")
             .size(tokens::font_size::BASE)
             .font(fonts::FONT_UI_BOLD)
             .color(theme.ink()),
-    ].spacing(tokens::spacing::SM);
+    ]
+    .spacing(tokens::spacing::SM);
 
     category_buttons = category_buttons.push(
         styled_button(
@@ -117,9 +118,12 @@ pub fn view<'a>(
                 ButtonVariant::Primary
             } else {
                 ButtonVariant::Ghost
-            }
+            },
         )
-        .on_press(Message::FilterEvidence(EvidenceFilter { evidence_type: None, ..filter.clone() }))
+        .on_press(Message::FilterEvidence(EvidenceFilter {
+            evidence_type: None,
+            ..filter.clone()
+        })),
     );
 
     for ev_type in EvidenceItemType::all() {
@@ -131,24 +135,24 @@ pub fn view<'a>(
                     ButtonVariant::Primary
                 } else {
                     ButtonVariant::Ghost
-                }
+                },
             )
-            .on_press(Message::FilterEvidence(EvidenceFilter { 
-                evidence_type: Some(ev_type), 
-                tier_id: filter.tier_id.clone() 
-            }))
+            .on_press(Message::FilterEvidence(EvidenceFilter {
+                evidence_type: Some(ev_type),
+                tier_id: filter.tier_id.clone(),
+            })),
         );
     }
 
-    category_buttons = category_buttons.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
+    category_buttons =
+        category_buttons.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
     category_buttons = category_buttons.push(
-        styled_button(theme, "Refresh", ButtonVariant::Info)
-            .on_press(Message::EvidenceRefresh)
+        styled_button(theme, "Refresh", ButtonVariant::Info).on_press(Message::EvidenceRefresh),
     );
 
     let left_panel = themed_panel(
         container(category_buttons).padding(tokens::spacing::MD),
-        theme
+        theme,
     );
 
     // CENTER COLUMN: File list with real file sizes
@@ -156,10 +160,12 @@ pub fn view<'a>(
         .iter()
         .enumerate()
         .filter(|(_, item)| {
-            let type_match = filter.evidence_type
+            let type_match = filter
+                .evidence_type
                 .map(|t| t == item.evidence_type)
                 .unwrap_or(true);
-            let tier_match = filter.tier_id
+            let tier_match = filter
+                .tier_id
                 .as_ref()
                 .map(|t| t == &item.tier_id)
                 .unwrap_or(true);
@@ -176,7 +182,8 @@ pub fn view<'a>(
             text("Try adjusting your filters")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
-        ].spacing(tokens::spacing::SM)
+        ]
+        .spacing(tokens::spacing::SM)
     } else {
         let mut items_col = column![].spacing(tokens::spacing::SM);
 
@@ -231,7 +238,8 @@ pub fn view<'a>(
                             .size(tokens::font_size::XS)
                             .color(theme.ink_faded()),
                     ],
-                ].spacing(tokens::spacing::XS),
+                ]
+                .spacing(tokens::spacing::XS),
                 Space::new().width(Length::Fill),
                 // Action buttons
                 row![
@@ -239,7 +247,8 @@ pub fn view<'a>(
                         .on_press(Message::EvidenceViewItem(idx)),
                     styled_button(theme, "Download", ButtonVariant::Secondary)
                         .on_press(Message::EvidenceDownloadItem(idx)),
-                ].spacing(tokens::spacing::XS)
+                ]
+                .spacing(tokens::spacing::XS)
             ]
             .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center);
@@ -249,20 +258,29 @@ pub fn view<'a>(
                     .padding(tokens::spacing::MD)
                     .width(Length::Fill)
                     .style(move |_: &iced::Theme| container::Style {
-                        background: Some(iced::Background::Color(
-                            if is_selected {
-                                iced::Color { a: 0.15, ..colors::ELECTRIC_BLUE }
-                            } else {
-                                theme.paper()
+                        background: Some(iced::Background::Color(if is_selected {
+                            iced::Color {
+                                a: 0.15,
+                                ..colors::ELECTRIC_BLUE
                             }
-                        )),
+                        } else {
+                            theme.paper()
+                        })),
                         border: Border {
-                            color: if is_selected { colors::ELECTRIC_BLUE } else { theme.ink() },
-                            width: if is_selected { tokens::borders::THICK } else { tokens::borders::MEDIUM },
+                            color: if is_selected {
+                                colors::ELECTRIC_BLUE
+                            } else {
+                                theme.ink()
+                            },
+                            width: if is_selected {
+                                tokens::borders::THICK
+                            } else {
+                                tokens::borders::MEDIUM
+                            },
                             radius: tokens::radii::SM.into(),
                         },
                         ..Default::default()
-                    })
+                    }),
             );
         }
 
@@ -270,11 +288,8 @@ pub fn view<'a>(
     };
 
     let center_panel = themed_panel(
-        container(
-            scrollable(center_content)
-                .height(Length::Fill)
-        ).padding(tokens::spacing::MD),
-        theme
+        container(scrollable(center_content).height(Length::Fill)).padding(tokens::spacing::MD),
+        theme,
     );
 
     // RIGHT COLUMN: Preview panel
@@ -289,15 +304,15 @@ pub fn view<'a>(
                 text_editor(preview_content)
                     .on_action(Message::EvidencePreviewAction)
                     .font(iced::Font::MONOSPACE)
-                    .height(Length::Fill)
+                    .height(Length::Fill),
             )
             .padding(tokens::spacing::SM)
             .width(Length::Fill)
             .height(Length::Fill)
             .style(move |_: &iced::Theme| container::Style {
-                background: Some(iced::Background::Color(
-                    iced::Color::from_rgb(0.05, 0.05, 0.05)
-                )),
+                background: Some(iced::Background::Color(iced::Color::from_rgb(
+                    0.05, 0.05, 0.05,
+                ))),
                 border: Border {
                     color: theme.ink(),
                     width: tokens::borders::THIN,
@@ -309,20 +324,21 @@ pub fn view<'a>(
             container(
                 text("Select an item to preview")
                     .size(tokens::font_size::SM)
-                    .color(theme.ink_faded())
+                    .color(theme.ink_faded()),
             )
             .padding(tokens::spacing::XL)
             .width(Length::Fill)
             .height(Length::Fill)
             .style(move |_: &iced::Theme| container::Style::default())
         }
-    ].spacing(tokens::spacing::SM);
+    ]
+    .spacing(tokens::spacing::SM);
 
     let right_panel = themed_panel(
         container(preview_panel_content)
             .padding(tokens::spacing::MD)
             .height(Length::Fill),
-        theme
+        theme,
     );
 
     // Combine all 3 columns
@@ -346,8 +362,7 @@ pub fn view<'a>(
                 .font(fonts::FONT_DISPLAY)
                 .color(theme.ink()),
             Space::new().width(Length::Fill),
-            styled_button(theme, "REFRESH", ButtonVariant::Info)
-                .on_press(Message::EvidenceRefresh),
+            styled_button(theme, "REFRESH", ButtonVariant::Info).on_press(Message::EvidenceRefresh),
         ]
         .spacing(tokens::spacing::MD)
         .align_y(iced::Alignment::Center),

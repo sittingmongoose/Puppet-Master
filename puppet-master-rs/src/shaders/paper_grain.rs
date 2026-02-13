@@ -1,10 +1,10 @@
 //! Paper Grain Shader - Subtle paper texture overlay
-//! 
+//!
 //! Provides a realistic paper grain effect that can be overlaid on any UI element.
 //! Intensity and color are configurable for both light and dark themes.
-//! 
+//!
 //! # WGSL Shader
-//! 
+//!
 //! The shader source is available as `PAPER_GRAIN_SHADER` constant and can be
 //! used with custom wgpu pipelines or Iced's shader widget when implementing
 //! full integration.
@@ -13,7 +13,7 @@
 pub const PAPER_GRAIN_SHADER: &str = include_str!("paper_grain.wgsl");
 
 /// Uniform data layout matching WGSL shader
-/// 
+///
 /// This struct must match the layout in paper_grain.wgsl exactly.
 #[repr(C)]
 #[derive(Debug, Clone, Copy)]

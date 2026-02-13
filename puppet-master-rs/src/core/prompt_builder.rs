@@ -8,7 +8,7 @@
 //! - Previous iteration feedback
 
 use crate::core::tier_node::TierTree;
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use std::fs;
 
 /// Prompt builder for constructing iteration prompts
@@ -74,7 +74,11 @@ impl PromptBuilder {
         prompt.push_str("## Context\n\n");
         prompt.push_str(&format!("**Tier**: {}\n", tree.get_path_string(tier_id)));
         prompt.push_str(&format!("**Type**: {:?}\n", node.tier_type));
-        prompt.push_str(&format!("**Iteration**: {}/{}\n\n", iteration, node.state_machine.max_iterations()));
+        prompt.push_str(&format!(
+            "**Iteration**: {}/{}\n\n",
+            iteration,
+            node.state_machine.max_iterations()
+        ));
 
         // Current task section
         prompt.push_str("## Current Task\n\n");
@@ -142,7 +146,11 @@ impl PromptBuilder {
         prompt.push_str("- All file operations should be relative to the workspace root\n");
         prompt.push_str("- Commit your changes with descriptive commit messages\n");
         prompt.push_str("- Run tests to verify your work\n");
-        prompt.push_str(&format!("- This is iteration {}/{}, use your iterations wisely\n\n", iteration, node.state_machine.max_iterations()));
+        prompt.push_str(&format!(
+            "- This is iteration {}/{}, use your iterations wisely\n\n",
+            iteration,
+            node.state_machine.max_iterations()
+        ));
 
         Ok(prompt)
     }
@@ -169,7 +177,9 @@ impl PromptBuilder {
         }
 
         prompt.push_str("## Instructions\n\n");
-        prompt.push_str("Complete the task above and signal completion with: `<ralph>COMPLETE</ralph>`\n");
+        prompt.push_str(
+            "Complete the task above and signal completion with: `<ralph>COMPLETE</ralph>`\n",
+        );
 
         prompt
     }
@@ -194,7 +204,7 @@ impl PromptBuilder {
         if let Some(path) = &self.agents_path {
             if path.exists() {
                 let content = fs::read_to_string(path)?;
-                
+
                 // Extract key sections
                 let mut excerpts = Vec::new();
 
@@ -248,7 +258,8 @@ impl PromptBuilder {
 
         prompt.push_str("## Instructions\n\n");
         prompt.push_str("Validate that all requirements above are met. ");
-        prompt.push_str("Signal `PASS` if all validations pass, or `FAIL - [reason]` if any fail.\n");
+        prompt
+            .push_str("Signal `PASS` if all validations pass, or `FAIL - [reason]` if any fail.\n");
 
         Ok(prompt)
     }
@@ -263,10 +274,10 @@ impl Default for PromptBuilder {
 /// Extract a section from markdown content
 fn extract_section(content: &str, header: &str) -> Option<String> {
     let lines: Vec<&str> = content.lines().collect();
-    
+
     // Find start of section
     let start = lines.iter().position(|line| line.starts_with(header))?;
-    
+
     // Find end of section (next ## header or end of file)
     let end = lines[start + 1..]
         .iter()
@@ -303,7 +314,10 @@ mod tests {
         let prompt = builder.build_simple_prompt(
             "Test Task",
             "This is a test task",
-            &vec!["Must pass tests".to_string(), "Must be documented".to_string()],
+            &vec![
+                "Must pass tests".to_string(),
+                "Must be documented".to_string(),
+            ],
         );
 
         assert!(prompt.contains("Test Task"));

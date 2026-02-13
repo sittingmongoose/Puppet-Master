@@ -137,7 +137,7 @@ impl RateLimiter {
         for &platform in Platform::all() {
             let config = RateLimiterConfig::default_for_platform(platform);
             let refill_rate = config.max_calls_per_minute as f64 / 60.0; // tokens per second
-            
+
             configs.insert(platform, config.clone());
             buckets.insert(
                 platform,
@@ -157,7 +157,7 @@ impl RateLimiter {
         let mut buckets = self.buckets.lock().unwrap();
 
         let refill_rate = config.max_calls_per_minute as f64 / 60.0;
-        
+
         configs.insert(config.platform, config.clone());
         buckets.insert(
             config.platform,

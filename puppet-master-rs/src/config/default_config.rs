@@ -23,7 +23,8 @@ fn get_default_workspace() -> PathBuf {
             let path = base_dirs.data_local_dir().join("RWM Puppet Master");
             let _ = std::fs::create_dir_all(&path);
             path
-        } else if let Some(home) = directories::BaseDirs::new().map(|b| b.home_dir().to_path_buf()) {
+        } else if let Some(home) = directories::BaseDirs::new().map(|b| b.home_dir().to_path_buf())
+        {
             let path = home.join(".rwm-puppet-master");
             let _ = std::fs::create_dir_all(&path);
             path
@@ -41,13 +42,15 @@ fn get_default_workspace() -> PathBuf {
                 return path;
             }
         }
-        
+
         // Check if we're running from a system install (/usr/bin)
         // If so, use ~/.local/share/rwm-puppet-master
         if let Ok(exe_path) = std::env::current_exe() {
             if exe_path.starts_with("/usr/bin") || exe_path.starts_with("/usr/local/bin") {
                 // System-wide install, use user data directory
-                if let Some(proj_dirs) = directories::ProjectDirs::from("com", "RWM", "Puppet Master") {
+                if let Some(proj_dirs) =
+                    directories::ProjectDirs::from("com", "RWM", "Puppet Master")
+                {
                     let path = proj_dirs.data_local_dir().to_path_buf();
                     if std::fs::create_dir_all(&path).is_ok() {
                         return path;
@@ -61,7 +64,7 @@ fn get_default_workspace() -> PathBuf {
                 }
             }
         }
-        
+
         // Try home directory
         if let Some(base_dirs) = directories::BaseDirs::new() {
             let path = base_dirs.home_dir().join(".rwm-puppet-master");
@@ -69,7 +72,7 @@ fn get_default_workspace() -> PathBuf {
                 return path;
             }
         }
-        
+
         // Running from source or local install, try current directory
         if let Ok(current) = std::env::current_dir() {
             // Only use current dir if it's writable
@@ -79,7 +82,7 @@ fn get_default_workspace() -> PathBuf {
                 return current;
             }
         }
-        
+
         // Last resort: temp directory
         let path = std::env::temp_dir().join("rwm-puppet-master");
         let _ = std::fs::create_dir_all(&path);
@@ -92,7 +95,7 @@ fn get_default_workspace() -> PathBuf {
                 return path;
             }
         }
-        
+
         // Fallback to home directory
         if let Some(base_dirs) = directories::BaseDirs::new() {
             let path = base_dirs.home_dir().join(".rwm-puppet-master");
@@ -100,7 +103,7 @@ fn get_default_workspace() -> PathBuf {
                 return path;
             }
         }
-        
+
         // Try current directory if writable
         if let Ok(current) = std::env::current_dir() {
             let test_file = current.join(".puppet-master-write-test");
@@ -109,7 +112,7 @@ fn get_default_workspace() -> PathBuf {
                 return current;
             }
         }
-        
+
         // Last resort: temp directory
         let path = std::env::temp_dir().join("rwm-puppet-master");
         let _ = std::fs::create_dir_all(&path);
@@ -122,7 +125,7 @@ fn get_default_workspace() -> PathBuf {
                 return path;
             }
         }
-        
+
         if let Ok(current) = std::env::current_dir() {
             let test_file = current.join(".puppet-master-write-test");
             if std::fs::write(&test_file, "test").is_ok() {
@@ -130,7 +133,7 @@ fn get_default_workspace() -> PathBuf {
                 return current;
             }
         }
-        
+
         let path = std::env::temp_dir().join("rwm-puppet-master");
         let _ = std::fs::create_dir_all(&path);
         path
@@ -160,6 +163,8 @@ pub fn default_config() -> PuppetMasterConfig {
         budget: BudgetConfig::default(),
         logging: LoggingConfig::default(),
         escalation: None,
+        interview: InterviewConfig::default(),
+        gui_automation: crate::types::GuiAutomationConfig::default(),
     }
 }
 
@@ -295,7 +300,7 @@ fn default_tiers() -> TierConfigs {
             task_failure_style: TaskFailureStyle::ContinueSameAgent,
             max_iterations: 10,
             escalation: None,
-            timeout_ms: Some(600_000), // 10 minutes
+            timeout_ms: Some(600_000),      // 10 minutes
             hard_timeout_ms: Some(900_000), // 15 minutes
             complexity: Complexity::Standard,
             task_types: vec![],
@@ -309,7 +314,7 @@ fn default_tiers() -> TierConfigs {
             task_failure_style: TaskFailureStyle::ContinueSameAgent,
             max_iterations: 20,
             escalation: Some(EscalationTarget::Phase),
-            timeout_ms: Some(300_000), // 5 minutes
+            timeout_ms: Some(300_000),      // 5 minutes
             hard_timeout_ms: Some(450_000), // 7.5 minutes
             complexity: Complexity::Standard,
             task_types: vec![],
@@ -323,7 +328,7 @@ fn default_tiers() -> TierConfigs {
             task_failure_style: TaskFailureStyle::ContinueSameAgent,
             max_iterations: 30,
             escalation: Some(EscalationTarget::Task),
-            timeout_ms: Some(180_000), // 3 minutes
+            timeout_ms: Some(180_000),      // 3 minutes
             hard_timeout_ms: Some(270_000), // 4.5 minutes
             complexity: Complexity::Simple,
             task_types: vec![],
@@ -337,7 +342,7 @@ fn default_tiers() -> TierConfigs {
             task_failure_style: TaskFailureStyle::ContinueSameAgent,
             max_iterations: 5,
             escalation: Some(EscalationTarget::Subtask),
-            timeout_ms: Some(60_000), // 1 minute
+            timeout_ms: Some(60_000),      // 1 minute
             hard_timeout_ms: Some(90_000), // 1.5 minutes
             complexity: Complexity::Simple,
             task_types: vec![],
@@ -358,9 +363,7 @@ fn default_paths() -> PathConfig {
             .join(".puppet-master")
             .join("usage")
             .join("usage.jsonl"),
-        event_db: workspace
-            .join(".puppet-master")
-            .join("events.db"),
+        event_db: workspace.join(".puppet-master").join("events.db"),
     }
 }
 

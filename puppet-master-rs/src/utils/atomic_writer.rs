@@ -98,8 +98,8 @@ impl AtomicWriter {
 
     /// Write JSON data atomically
     pub fn write_json<T: serde::Serialize>(path: impl AsRef<Path>, value: &T) -> Result<()> {
-        let json = serde_json::to_string_pretty(value)
-            .context("Failed to serialize value to JSON")?;
+        let json =
+            serde_json::to_string_pretty(value).context("Failed to serialize value to JSON")?;
         Self::write_string(path, &json)
     }
 }
@@ -142,7 +142,8 @@ mod tests {
         fs::write(&file_path, b"Original").expect("Failed to write initial content");
 
         // Write with backup
-        AtomicWriter::write_with_backup(&file_path, b"Updated").expect("Failed to write with backup");
+        AtomicWriter::write_with_backup(&file_path, b"Updated")
+            .expect("Failed to write with backup");
 
         // Check new content
         let content = fs::read_to_string(&file_path).expect("Failed to read updated content");

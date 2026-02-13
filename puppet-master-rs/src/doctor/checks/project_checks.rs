@@ -30,21 +30,21 @@ impl DoctorCheck for WorkingDirCheck {
 
     async fn run(&self) -> CheckResult {
         let cwd = std::env::current_dir();
-        
+
         match cwd {
             Ok(path) => CheckResult {
                 passed: true,
                 message: format!("Working directory: {:?}", path),
                 details: None,
                 can_fix: false,
-            timestamp: Utc::now(),
+                timestamp: Utc::now(),
             },
             Err(e) => CheckResult {
                 passed: false,
                 message: "Cannot access working directory".to_string(),
                 details: Some(format!("Error: {}", e)),
                 can_fix: false,
-            timestamp: Utc::now(),
+                timestamp: Utc::now(),
             },
         }
     }
@@ -79,34 +79,32 @@ impl DoctorCheck for PrdFileCheck {
 
     async fn run(&self) -> CheckResult {
         let prd_path = PathBuf::from(".puppet-master/prd.json");
-        
+
         if prd_path.exists() {
             // Try to read and validate JSON
             match tokio::fs::read_to_string(&prd_path).await {
-                Ok(content) => {
-                    match serde_json::from_str::<serde_json::Value>(&content) {
-                        Ok(_) => CheckResult {
-                            passed: true,
-                            message: "PRD file exists and is valid JSON".to_string(),
-                            details: Some(format!("Path: {:?}", prd_path)),
-                            can_fix: false,
+                Ok(content) => match serde_json::from_str::<serde_json::Value>(&content) {
+                    Ok(_) => CheckResult {
+                        passed: true,
+                        message: "PRD file exists and is valid JSON".to_string(),
+                        details: Some(format!("Path: {:?}", prd_path)),
+                        can_fix: false,
                         timestamp: Utc::now(),
-                        },
-                        Err(e) => CheckResult {
-                            passed: false,
-                            message: "PRD file exists but is invalid JSON".to_string(),
-                            details: Some(format!("Error: {}", e)),
-                            can_fix: false,
+                    },
+                    Err(e) => CheckResult {
+                        passed: false,
+                        message: "PRD file exists but is invalid JSON".to_string(),
+                        details: Some(format!("Error: {}", e)),
+                        can_fix: false,
                         timestamp: Utc::now(),
-                        },
-                    }
-                }
+                    },
+                },
                 Err(e) => CheckResult {
                     passed: false,
                     message: "Cannot read PRD file".to_string(),
                     details: Some(format!("Error: {}", e)),
                     can_fix: false,
-                timestamp: Utc::now(),
+                    timestamp: Utc::now(),
                 },
             }
         } else {
@@ -115,7 +113,7 @@ impl DoctorCheck for PrdFileCheck {
                 message: "PRD file not found".to_string(),
                 details: Some("Run 'puppet-master init' to create a new project".to_string()),
                 can_fix: false,
-            timestamp: Utc::now(),
+                timestamp: Utc::now(),
             }
         }
     }
@@ -150,14 +148,14 @@ impl DoctorCheck for StateDirectoryCheck {
 
     async fn run(&self) -> CheckResult {
         let state_dir = PathBuf::from(".puppet-master");
-        
+
         if state_dir.exists() && state_dir.is_dir() {
             CheckResult {
                 passed: true,
                 message: "State directory exists".to_string(),
                 details: Some(format!("Path: {:?}", state_dir)),
                 can_fix: false,
-            timestamp: Utc::now(),
+                timestamp: Utc::now(),
             }
         } else {
             CheckResult {
@@ -165,21 +163,21 @@ impl DoctorCheck for StateDirectoryCheck {
                 message: "State directory not found".to_string(),
                 details: Some("Directory .puppet-master is missing".to_string()),
                 can_fix: true,
-            timestamp: Utc::now(),
+                timestamp: Utc::now(),
             }
         }
     }
 
     async fn fix(&self, dry_run: bool) -> Option<FixResult> {
         let state_dir = PathBuf::from(".puppet-master");
-        
+
         if dry_run {
             return Some(FixResult {
                 success: true,
                 message: "Would create state directory".to_string(),
                 steps: vec![format!("mkdir {:?}", state_dir)],
-            fixable: true,
-            timestamp: Utc::now(),
+                fixable: true,
+                timestamp: Utc::now(),
             });
         }
 
@@ -188,15 +186,15 @@ impl DoctorCheck for StateDirectoryCheck {
                 success: true,
                 message: "Created state directory".to_string(),
                 steps: vec![format!("Created {:?}", state_dir)],
-            fixable: true,
-            timestamp: Utc::now(),
+                fixable: true,
+                timestamp: Utc::now(),
             }),
             Err(e) => Some(FixResult {
                 success: false,
                 message: format!("Failed to create state directory: {}", e),
                 steps: vec![],
-            fixable: true,
-            timestamp: Utc::now(),
+                fixable: true,
+                timestamp: Utc::now(),
             }),
         }
     }

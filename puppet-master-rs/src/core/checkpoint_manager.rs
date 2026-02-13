@@ -144,9 +144,7 @@ impl CheckpointManager {
         }
 
         if let Some(last) = self.last_checkpoint {
-            let elapsed = Utc::now()
-                .signed_duration_since(last)
-                .num_seconds() as u64;
+            let elapsed = Utc::now().signed_duration_since(last).num_seconds() as u64;
             elapsed >= self.config.auto_checkpoint_interval_secs
         } else {
             true // First checkpoint
@@ -163,7 +161,9 @@ impl CheckpointManager {
             // Check if the run was incomplete
             let recoverable = matches!(
                 checkpoint.orchestrator_state,
-                OrchestratorState::Executing | OrchestratorState::Planning | OrchestratorState::Paused
+                OrchestratorState::Executing
+                    | OrchestratorState::Planning
+                    | OrchestratorState::Paused
             );
 
             if recoverable || checkpoint.orchestrator_state == OrchestratorState::Error {
@@ -204,14 +204,15 @@ impl CheckpointManager {
         let pos = &checkpoint.current_position;
 
         match checkpoint.orchestrator_state {
-            OrchestratorState::Executing | OrchestratorState::Planning | OrchestratorState::Paused => {
+            OrchestratorState::Executing
+            | OrchestratorState::Planning
+            | OrchestratorState::Paused => {
                 suggestions.push(format!(
                     "Resume from checkpoint: puppet-master resume {}",
                     checkpoint.id
                 ));
-                suggestions.push(
-                    "Or restart with fresh state: puppet-master run --no-resume".to_string(),
-                );
+                suggestions
+                    .push("Or restart with fresh state: puppet-master run --no-resume".to_string());
             }
             OrchestratorState::Error => {
                 suggestions.push("Previous run failed. Review logs before resuming.".to_string());
@@ -264,9 +265,8 @@ impl CheckpointManager {
 
     /// Get time since last checkpoint
     pub fn time_since_last_checkpoint(&self) -> Option<i64> {
-        self.last_checkpoint.map(|last| {
-            Utc::now().signed_duration_since(last).num_seconds()
-        })
+        self.last_checkpoint
+            .map(|last| Utc::now().signed_duration_since(last).num_seconds())
     }
 }
 
@@ -477,9 +477,13 @@ mod tests {
         };
 
         let suggestions = manager.get_recovery_suggestions(&checkpoint);
-        
+
         assert!(!suggestions.is_empty());
-        assert!(suggestions.iter().any(|s| s.contains("Resume from checkpoint")));
+        assert!(
+            suggestions
+                .iter()
+                .any(|s| s.contains("Resume from checkpoint"))
+        );
         assert!(suggestions.iter().any(|s| s.contains("Progress")));
     }
 

@@ -177,8 +177,7 @@ impl UsageTracker {
     /// Create a new usage tracker
     pub fn new(base_dir: impl AsRef<Path>) -> Result<Self> {
         let usage_dir = base_dir.as_ref().join(".puppet-master").join("usage");
-        fs::create_dir_all(&usage_dir)
-            .context("Failed to create usage directory")?;
+        fs::create_dir_all(&usage_dir).context("Failed to create usage directory")?;
 
         let log_path = usage_dir.join("usage.jsonl");
 
@@ -216,15 +215,12 @@ impl UsageTracker {
     pub async fn track(&self, event: UsageEvent) -> Result<()> {
         self.open_file().await?;
 
-        let json = serde_json::to_string(&event)
-            .context("Failed to serialize usage event")?;
+        let json = serde_json::to_string(&event).context("Failed to serialize usage event")?;
 
         let mut handle = self.file_handle.lock().await;
         if let Some(file) = handle.as_mut() {
-            writeln!(file, "{}", json)
-                .context("Failed to write to usage log")?;
-            file.flush()
-                .context("Failed to flush usage log")?;
+            writeln!(file, "{}", json).context("Failed to write to usage log")?;
+            file.flush().context("Failed to flush usage log")?;
 
             debug!(
                 "Tracked usage: {} - {} tokens - {}ms - {}",
@@ -298,8 +294,7 @@ impl UsageTracker {
             return Ok(Vec::new());
         }
 
-        let file = File::open(&self.log_path)
-            .context("Failed to open usage log for reading")?;
+        let file = File::open(&self.log_path).context("Failed to open usage log for reading")?;
         let reader = BufReader::new(file);
 
         let mut events = Vec::new();
@@ -352,8 +347,8 @@ impl UsageTracker {
             .and_then(|m| m.as_str().parse::<u32>().ok())
             .unwrap_or(0);
 
-        let reset_duration = Duration::hours(reset_hours as i64)
-            + Duration::minutes(reset_minutes as i64);
+        let reset_duration =
+            Duration::hours(reset_hours as i64) + Duration::minutes(reset_minutes as i64);
         let resets_at = Utc::now() + reset_duration;
 
         Some(QuotaInfo {
@@ -460,8 +455,7 @@ impl UsageTracker {
             return Ok(0);
         }
 
-        let file = File::open(&self.log_path)
-            .context("Failed to open usage log for reading")?;
+        let file = File::open(&self.log_path).context("Failed to open usage log for reading")?;
         let reader = BufReader::new(file);
 
         let mut kept_events = Vec::new();
@@ -490,19 +484,19 @@ impl UsageTracker {
 
         // Rewrite log file
         let temp_path = self.log_path.with_extension("jsonl.tmp");
-        let mut temp_file = File::create(&temp_path)
-            .context("Failed to create temporary usage log")?;
+        let mut temp_file =
+            File::create(&temp_path).context("Failed to create temporary usage log")?;
 
         for line in kept_events {
-            writeln!(temp_file, "{}", line)
-                .context("Failed to write to temporary usage log")?;
+            writeln!(temp_file, "{}", line).context("Failed to write to temporary usage log")?;
         }
 
-        temp_file.flush().context("Failed to flush temporary usage log")?;
+        temp_file
+            .flush()
+            .context("Failed to flush temporary usage log")?;
         drop(temp_file);
 
-        fs::rename(&temp_path, &self.log_path)
-            .context("Failed to replace usage log")?;
+        fs::rename(&temp_path, &self.log_path).context("Failed to replace usage log")?;
 
         // Close file handle
         let mut handle = self.file_handle.lock().await;
@@ -546,10 +540,12 @@ mod tests {
 
         tracker.track(event).await.unwrap();
 
-        assert!(temp_dir
-            .path()
-            .join(".puppet-master/usage/usage.jsonl")
-            .exists());
+        assert!(
+            temp_dir
+                .path()
+                .join(".puppet-master/usage/usage.jsonl")
+                .exists()
+        );
     }
 
     #[tokio::test]

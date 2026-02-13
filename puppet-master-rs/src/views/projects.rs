@@ -2,11 +2,11 @@
 //!
 //! Lists available projects, allows creating new projects, and switching between them.
 
-use iced::widget::{column, row, text, container, scrollable, Space};
-use iced::{Element, Length, Border};
 use crate::app::Message;
-use crate::theme::{AppTheme, tokens, fonts, colors};
+use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::widgets::*;
+use iced::widget::{Space, column, container, row, scrollable, text};
+use iced::{Border, Element, Length};
 use std::path::PathBuf;
 
 /// Project information
@@ -33,7 +33,9 @@ pub fn view<'a>(
     show_new_form: bool,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
+    let mut content = column![]
+        .spacing(tokens::spacing::LG)
+        .padding(tokens::spacing::LG);
 
     // Header with action buttons
     let header = row![
@@ -67,7 +69,9 @@ pub fn view<'a>(
                     .color(theme.ink()),
                 styled_text_input(theme, "My Project", new_project_name)
                     .on_input(|s| Message::ConfigFieldChanged("new_project_name".to_string(), s)),
-            ].spacing(tokens::spacing::MD).align_y(iced::Alignment::Center),
+            ]
+            .spacing(tokens::spacing::MD)
+            .align_y(iced::Alignment::Center),
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
             row![
                 text("Working Directory:")
@@ -78,7 +82,9 @@ pub fn view<'a>(
                     .on_input(|s| Message::ConfigFieldChanged("new_project_path".to_string(), s)),
                 styled_button(theme, "Browse", ButtonVariant::Ghost)
                     .on_press(Message::BrowseNewProjectPath),
-            ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
+            ]
+            .spacing(tokens::spacing::SM)
+            .align_y(iced::Alignment::Center),
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
             row![
                 text("PRD File Path:")
@@ -89,7 +95,9 @@ pub fn view<'a>(
                     .on_input(|s| Message::ConfigFieldChanged("prd_path".to_string(), s)),
                 styled_button(theme, "Browse", ButtonVariant::Ghost)
                     .on_press(Message::OpenWizardFilePicker),
-            ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
+            ]
+            .spacing(tokens::spacing::SM)
+            .align_y(iced::Alignment::Center),
             Space::new().height(Length::Fixed(tokens::spacing::MD)),
             row![
                 styled_button(theme, "Cancel", ButtonVariant::Secondary)
@@ -97,15 +105,15 @@ pub fn view<'a>(
                 Space::new().width(Length::Fill),
                 styled_button(theme, "Create Project", ButtonVariant::Primary)
                     .on_press(Message::CreateNewProject),
-            ].spacing(tokens::spacing::MD),
-        ].spacing(tokens::spacing::SM);
+            ]
+            .spacing(tokens::spacing::MD),
+        ]
+        .spacing(tokens::spacing::SM);
 
-        content = content.push(
-            themed_panel(
-                container(form_content).padding(tokens::spacing::MD),
-                theme
-            )
-        );
+        content = content.push(themed_panel(
+            container(form_content).padding(tokens::spacing::MD),
+            theme,
+        ));
     }
 
     // Current project panel (if loaded)
@@ -151,12 +159,15 @@ pub fn view<'a>(
                             },
                             ..Default::default()
                         }),
-                    ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center),
+                    ]
+                    .spacing(tokens::spacing::SM)
+                    .align_y(iced::Alignment::Center),
                     Space::new().height(Length::Fixed(tokens::spacing::XXS)),
                     text(current_project.path.display().to_string())
                         .size(tokens::font_size::SM)
                         .color(theme.ink_faded()),
-                ].spacing(tokens::spacing::XXS),
+                ]
+                .spacing(tokens::spacing::XXS),
                 Space::new().width(Length::Fill),
                 row![
                     styled_button(theme, "View Tiers", ButtonVariant::Info)
@@ -165,45 +176,46 @@ pub fn view<'a>(
                         .on_press(Message::NavigateTo(Page::Config)),
                     styled_button(theme, "Switch", ButtonVariant::Secondary)
                         .on_press(Message::NavigateTo(Page::Projects)),
-                ].spacing(tokens::spacing::SM)
+                ]
+                .spacing(tokens::spacing::SM)
             ]
             .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center),
-        ].spacing(tokens::spacing::MD);
+        ]
+        .spacing(tokens::spacing::MD);
 
-        content = content.push(
-            themed_panel(
-                container(current_panel).padding(tokens::spacing::MD),
-                theme
-            )
-        );
+        content = content.push(themed_panel(
+            container(current_panel).padding(tokens::spacing::MD),
+            theme,
+        ));
     }
 
     // Recent projects list
     if projects.is_empty() {
-        content = content.push(
-            themed_panel(
-                container(
-                    column![
-                        text("No projects found")
-                            .size(tokens::font_size::MD)
-                            .color(theme.ink()),
-                        Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                        text("Create a new project or open an existing one to get started")
-                            .size(tokens::font_size::SM)
-                            .color(theme.ink_faded()),
-                    ].spacing(tokens::spacing::SM)
-                ).padding(tokens::spacing::XL),
-                theme
+        content = content.push(themed_panel(
+            container(
+                column![
+                    text("No projects found")
+                        .size(tokens::font_size::MD)
+                        .color(theme.ink()),
+                    Space::new().height(Length::Fixed(tokens::spacing::SM)),
+                    text("Create a new project or open an existing one to get started")
+                        .size(tokens::font_size::SM)
+                        .color(theme.ink_faded()),
+                ]
+                .spacing(tokens::spacing::SM),
             )
-        );
+            .padding(tokens::spacing::XL),
+            theme,
+        ));
     } else {
         let mut projects_content = column![
             text("Recent Projects")
                 .size(tokens::font_size::LG)
                 .font(fonts::FONT_UI_BOLD)
                 .color(theme.ink()),
-        ].spacing(tokens::spacing::MD);
+        ]
+        .spacing(tokens::spacing::MD);
 
         for project in projects {
             let is_current = current
@@ -249,7 +261,8 @@ pub fn view<'a>(
                     text(get_last_active_time(&project.path))
                         .size(tokens::font_size::XS)
                         .color(theme.ink_faded()),
-                ].spacing(tokens::spacing::XXS),
+                ]
+                .spacing(tokens::spacing::XXS),
                 Space::new().width(Length::Fill),
                 // Open button
                 if is_current {
@@ -268,9 +281,10 @@ pub fn view<'a>(
                 .style(move |_theme: &iced::Theme| {
                     if is_current {
                         iced::widget::container::Style {
-                            background: Some(iced::Background::Color(
-                                iced::Color { a: 0.15, ..colors::ACID_LIME }
-                            )),
+                            background: Some(iced::Background::Color(iced::Color {
+                                a: 0.15,
+                                ..colors::ACID_LIME
+                            })),
                             border: Border {
                                 color: colors::ACID_LIME,
                                 width: tokens::borders::THICK,
@@ -294,15 +308,11 @@ pub fn view<'a>(
             projects_content = projects_content.push(project_card);
         }
 
-        content = content.push(
-            themed_panel(
-                container(
-                    scrollable(projects_content)
-                        .height(Length::Fill)
-                ).padding(tokens::spacing::MD),
-                theme
-            )
-        );
+        content = content.push(themed_panel(
+            container(scrollable(projects_content).height(Length::Fill))
+                .padding(tokens::spacing::MD),
+            theme,
+        ));
     }
 
     scrollable(content)
@@ -314,27 +324,39 @@ pub fn view<'a>(
 // Helper function to get last active time from .puppet-master directory mtime
 fn get_last_active_time(path: &std::path::Path) -> String {
     let pm_dir = path.join(".puppet-master");
-    
+
     if let Ok(metadata) = std::fs::metadata(&pm_dir) {
         if let Ok(modified) = metadata.modified() {
             if let Ok(duration) = modified.elapsed() {
                 let seconds = duration.as_secs();
-                
+
                 if seconds < 60 {
                     return "Last active: Just now".to_string();
                 } else if seconds < 3600 {
                     let minutes = seconds / 60;
-                    return format!("Last active: {} minute{} ago", minutes, if minutes == 1 { "" } else { "s" });
+                    return format!(
+                        "Last active: {} minute{} ago",
+                        minutes,
+                        if minutes == 1 { "" } else { "s" }
+                    );
                 } else if seconds < 86400 {
                     let hours = seconds / 3600;
-                    return format!("Last active: {} hour{} ago", hours, if hours == 1 { "" } else { "s" });
+                    return format!(
+                        "Last active: {} hour{} ago",
+                        hours,
+                        if hours == 1 { "" } else { "s" }
+                    );
                 } else {
                     let days = seconds / 86400;
-                    return format!("Last active: {} day{} ago", days, if days == 1 { "" } else { "s" });
+                    return format!(
+                        "Last active: {} day{} ago",
+                        days,
+                        if days == 1 { "" } else { "s" }
+                    );
                 }
             }
         }
     }
-    
+
     "Last active: Unknown".to_string()
 }

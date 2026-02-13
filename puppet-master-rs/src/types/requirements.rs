@@ -85,7 +85,11 @@ pub struct ParsedRequirement {
 
 impl ParsedRequirement {
     /// Creates a new requirement with the given id, title, and description.
-    pub fn new(id: impl Into<String>, title: impl Into<String>, description: impl Into<String>) -> Self {
+    pub fn new(
+        id: impl Into<String>,
+        title: impl Into<String>,
+        description: impl Into<String>,
+    ) -> Self {
         Self {
             id: id.into(),
             title: title.into(),

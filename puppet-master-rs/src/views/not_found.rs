@@ -3,30 +3,34 @@
 //! Displays a friendly error message when navigating to an invalid route.
 //! Matches the retro-futuristic theme of the application.
 
-use iced::widget::{column, container, row, text, Space};
+use iced::widget::{Space, column, container, row, text};
 use iced::{Alignment, Element, Length};
 
 use crate::app::Message;
 use crate::theme::{AppTheme, tokens};
-use crate::widgets::{themed_panel, styled_button, ButtonVariant, header::Page};
+use crate::widgets::{ButtonVariant, header::Page, styled_button, themed_panel};
 
 /// Render the not found view
 pub fn view<'a>(theme: &'a AppTheme) -> Element<'a, Message> {
-
-    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
+    let mut content = column![]
+        .spacing(tokens::spacing::LG)
+        .padding(tokens::spacing::LG);
 
     // Large 404 header
-    content = content.push(
-        themed_panel(container(
+    content = content.push(themed_panel(
+        container(
             column![
                 text("404").size(tokens::font_size::DISPLAY),
                 text("Page Not Found").size(tokens::font_size::XL),
-                text("The page you're looking for doesn't exist or has been moved.").size(tokens::font_size::BASE),
+                text("The page you're looking for doesn't exist or has been moved.")
+                    .size(tokens::font_size::BASE),
             ]
             .spacing(tokens::spacing::SM)
-            .align_x(Alignment::Center)
-        ).padding(tokens::spacing::XL), theme)
-    );
+            .align_x(Alignment::Center),
+        )
+        .padding(tokens::spacing::XL),
+        theme,
+    ));
 
     // Navigation buttons
     let nav_buttons = row![
@@ -39,24 +43,26 @@ pub fn view<'a>(theme: &'a AppTheme) -> Element<'a, Message> {
     .spacing(tokens::spacing::MD)
     .align_y(Alignment::Center);
 
-    content = content.push(themed_panel(container(nav_buttons).padding(tokens::spacing::MD), theme));
+    content = content.push(themed_panel(
+        container(nav_buttons).padding(tokens::spacing::MD),
+        theme,
+    ));
 
     // ASCII art decoration
-    content = content.push(
-        themed_panel(container(text(ASCII_ART_404).size(tokens::font_size::XS)).padding(tokens::spacing::MD), theme)
-    );
+    content = content.push(themed_panel(
+        container(text(ASCII_ART_404).size(tokens::font_size::XS)).padding(tokens::spacing::MD),
+        theme,
+    ));
 
     scrollable_content(content)
 }
 
 /// Wrap content in a scrollable container
 fn scrollable_content(content: iced::widget::Column<'_, Message>) -> Element<'_, Message> {
-    container(
-        iced::widget::scrollable(content)
-    )
-    .width(Length::Fill)
-    .height(Length::Fill)
-    .into()
+    container(iced::widget::scrollable(content))
+        .width(Length::Fill)
+        .height(Length::Fill)
+        .into()
 }
 
 /// ASCII art for 404 page decoration

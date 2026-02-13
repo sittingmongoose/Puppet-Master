@@ -126,8 +126,9 @@ impl WorkerReviewer {
         prompt.push_str("2. Check each review criterion above\n");
         prompt.push_str("3. Test the functionality\n");
         prompt.push_str("4. If approved, signal: `PUPPET_MASTER: COMPLETE`\n");
-        prompt
-            .push_str("5. If revisions needed, signal: `PUPPET_MASTER: REVISE - [specific feedback]`\n");
+        prompt.push_str(
+            "5. If revisions needed, signal: `PUPPET_MASTER: REVISE - [specific feedback]`\n",
+        );
 
         prompt
     }

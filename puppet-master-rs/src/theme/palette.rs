@@ -1,14 +1,14 @@
 //! Semantic color palette
-//! 
+//!
 //! Provides semantic color accessors that adapt to light/dark mode.
 //! This layer sits on top of the raw color constants and provides
 //! meaningful names for UI elements.
 
-use iced::Color;
 use super::colors::*;
+use iced::Color;
 
 /// Semantic palette that adapts to light/dark mode
-/// 
+///
 /// This struct provides semantic names for colors, making it easier
 /// to reason about color usage in the UI. All colors are backed by
 /// the constants defined in `colors.rs`.
@@ -17,76 +17,76 @@ pub struct Palette {
     // ── Backgrounds ──────────────────────────────────────────────────
     /// Primary background color (main app background)
     pub background: Color,
-    
+
     /// Surface color (cards, panels)
     pub surface: Color,
-    
+
     /// Elevated surface (modals, popovers)
     pub surface_elevated: Color,
-    
+
     // ── Text ─────────────────────────────────────────────────────────
     /// Primary text color (body text, headings)
     pub text_primary: Color,
-    
+
     /// Secondary text color (less emphasis)
     pub text_secondary: Color,
-    
+
     /// Muted text color (hints, placeholders)
     pub text_muted: Color,
-    
+
     /// Text on accent backgrounds (white or cream)
     pub text_on_accent: Color,
-    
+
     // ── Borders ──────────────────────────────────────────────────────
     /// Primary border color (strong borders)
     pub border: Color,
-    
+
     /// Light border color (subtle dividers)
     pub border_light: Color,
-    
+
     // ── Shadows ──────────────────────────────────────────────────────
     /// Shadow color (hard shadows, no blur)
     pub shadow: Color,
-    
+
     // ── Accents ──────────────────────────────────────────────────────
     /// Electric blue accent (same in both modes)
     pub accent_blue: Color,
-    
+
     /// Hot magenta accent (same in both modes)
     pub accent_magenta: Color,
-    
+
     /// Acid lime accent (same in both modes)
     pub accent_lime: Color,
-    
+
     /// Safety orange accent (same in both modes)
     pub accent_orange: Color,
-    
+
     // ── Semantic ─────────────────────────────────────────────────────
     /// Success state color
     pub success: Color,
-    
+
     /// Error state color
     pub error: Color,
-    
+
     /// Warning state color
     pub warning: Color,
-    
+
     /// Info state color
     pub info: Color,
-    
+
     // ── Status ───────────────────────────────────────────────────────
     /// Running/executing state
     pub status_running: Color,
-    
+
     /// Paused state
     pub status_paused: Color,
-    
+
     /// Error/failed state
     pub status_error: Color,
-    
+
     /// Complete/passed state
     pub status_complete: Color,
-    
+
     /// Idle/pending state
     pub status_idle: Color,
 }
@@ -120,7 +120,7 @@ impl Palette {
             status_idle: STATUS_IDLE,
         }
     }
-    
+
     /// Dark mode palette
     pub fn dark() -> Self {
         Self {
@@ -149,9 +149,9 @@ impl Palette {
             status_idle: STATUS_IDLE,
         }
     }
-    
+
     /// Get status color for a given status string
-    /// 
+    ///
     /// This provides the same functionality as `colors::status_color()`
     /// but through the palette API.
     pub fn status_color(&self, status: &str) -> Color {

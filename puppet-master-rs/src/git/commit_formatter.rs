@@ -15,12 +15,7 @@ impl CommitFormatter {
     /// * `id` - Tier ID (e.g., PH-001, TK-001-002)
     /// * `title` - Brief description of the work
     /// * `status` - Current status
-    pub fn format_commit(
-        tier_type: TierType,
-        id: &str,
-        title: &str,
-        status: ItemStatus,
-    ) -> String {
+    pub fn format_commit(tier_type: TierType, id: &str, title: &str, status: ItemStatus) -> String {
         let tier_str = match tier_type {
             TierType::Phase => "PHASE",
             TierType::Task => "TASK",
@@ -38,11 +33,7 @@ impl CommitFormatter {
     }
 
     /// Format a gate commit message
-    pub fn format_gate_commit(
-        tier_type: TierType,
-        id: &str,
-        passed: bool,
-    ) -> String {
+    pub fn format_gate_commit(tier_type: TierType, id: &str, passed: bool) -> String {
         let tier_str = match tier_type {
             TierType::Phase => "PHASE",
             TierType::Task => "TASK",
@@ -56,11 +47,7 @@ impl CommitFormatter {
     }
 
     /// Format an iteration commit message
-    pub fn format_iteration_commit(
-        subtask_id: &str,
-        iteration: u32,
-        success: bool,
-    ) -> String {
+    pub fn format_iteration_commit(subtask_id: &str, iteration: u32, success: bool) -> String {
         let result = if success { "completed" } else { "attempted" };
         format!(
             "ralph: [ITERATION] {} attempt {} {}",
@@ -95,10 +82,7 @@ impl CommitFormatter {
     }
 
     /// Generate detailed commit body
-    pub fn format_commit_body(
-        files_changed: &[String],
-        notes: Option<&str>,
-    ) -> String {
+    pub fn format_commit_body(files_changed: &[String], notes: Option<&str>) -> String {
         let mut body = String::new();
 
         if !files_changed.is_empty() {

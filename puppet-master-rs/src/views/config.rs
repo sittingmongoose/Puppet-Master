@@ -1,21 +1,20 @@
 //! Config view - Comprehensive configuration editor with structured tabs
 //!
-//! 7 tabs: Tiers, Branching, Verification, Memory, Budgets, Advanced, YAML
+//! 8 tabs: Tiers, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML
 //! Every field is functional with real data binding.
 
 use crate::app::Message;
-use crate::config::gui_config::{GuiConfig, GitInfo};
-use crate::theme::{colors, fonts, tokens, AppTheme};
-use crate::widgets::{
-    styled_button::{styled_button, ButtonVariant},
-};
+use crate::config::gui_config::{GitInfo, GuiConfig};
+use crate::theme::{AppTheme, colors, fonts, tokens};
+use crate::widgets::styled_button::{ButtonVariant, styled_button};
 use iced::widget::{
-    column, container, row, scrollable, text, text_editor, text_input, pick_list, toggler, radio, Space,
+    Space, column, container, pick_list, radio, row, scrollable, text, text_editor, text_input,
+    toggler,
 };
 use iced::{Alignment, Border, Element, Length};
 use std::collections::HashMap;
 
-/// Configuration editor view with 7 functional tabs
+/// Configuration editor view with 8 functional tabs
 pub fn view<'a>(
     gui_config: &'a GuiConfig,
     config_text: &'a str,
@@ -75,6 +74,7 @@ pub fn view<'a>(
         "MEMORY",
         "BUDGETS",
         "ADVANCED",
+        "INTERVIEW",
         "YAML",
     ];
 
@@ -108,7 +108,8 @@ pub fn view<'a>(
         3 => tab_memory(gui_config, theme),
         4 => tab_budgets(gui_config, theme),
         5 => tab_advanced(gui_config, theme),
-        6 => tab_yaml(config_text, editor_content, valid, error, theme),
+        6 => tab_interview(gui_config, theme),
+        7 => tab_yaml(config_text, editor_content, valid, error, theme),
         _ => column![].into(),
     };
 
@@ -146,13 +147,13 @@ fn tab_button<'a>(
     } else {
         theme.ink_faded()
     };
-    
+
     let border_color = if active {
         colors::ELECTRIC_BLUE
     } else {
         iced::Color::TRANSPARENT
     };
-    
+
     // Create tab with bottom border indicator
     let tab_content = column![
         text(label)
@@ -169,10 +170,9 @@ fn tab_button<'a>(
             })
     ]
     .spacing(0);
-    
+
     iced::widget::mouse_area(
-        container(tab_content)
-            .padding([tokens::spacing::SM, tokens::spacing::LG])
+        container(tab_content).padding([tokens::spacing::SM, tokens::spacing::LG]),
     )
     .on_press(Message::ConfigTabChanged(index))
     .into()
@@ -204,8 +204,20 @@ fn tab_tiers<'a>(
     // Create a 2x2 grid of tier cards
     let phase_card = tier_card("phase", "PHASE", &gui_config.tiers.phase, models, theme);
     let task_card = tier_card("task", "TASK", &gui_config.tiers.task, models, theme);
-    let subtask_card = tier_card("subtask", "SUBTASK", &gui_config.tiers.subtask, models, theme);
-    let iteration_card = tier_card("iteration", "ITERATION", &gui_config.tiers.iteration, models, theme);
+    let subtask_card = tier_card(
+        "subtask",
+        "SUBTASK",
+        &gui_config.tiers.subtask,
+        models,
+        theme,
+    );
+    let iteration_card = tier_card(
+        "iteration",
+        "ITERATION",
+        &gui_config.tiers.iteration,
+        models,
+        theme,
+    );
 
     // First row: Phase and Task
     let row1 = row![phase_card, task_card]
@@ -257,11 +269,14 @@ fn tier_card<'a>(
             pick_list(
                 PLATFORMS,
                 Some(tier_config.platform.as_str()),
-                move |platform: &str| Message::ConfigTierPlatformChanged(tier_name.to_string(), platform.to_string())
+                move |platform: &str| Message::ConfigTierPlatformChanged(
+                    tier_name.to_string(),
+                    platform.to_string()
+                )
             )
             .width(Length::Fill)
         ]
-        .spacing(tokens::spacing::XXS)
+        .spacing(tokens::spacing::XXS),
     );
 
     // Model text input (simpler than pick_list with dynamic models)
@@ -272,10 +287,13 @@ fn tier_card<'a>(
                 .font(fonts::FONT_UI)
                 .color(theme.ink()),
             text_input("", &tier_config.model)
-                .on_input(move |model: String| Message::ConfigTierModelChanged(tier_name.to_string(), model))
+                .on_input(move |model: String| Message::ConfigTierModelChanged(
+                    tier_name.to_string(),
+                    model
+                ))
                 .width(Length::Fill)
         ]
-        .spacing(tokens::spacing::XXS)
+        .spacing(tokens::spacing::XXS),
     );
 
     // Reasoning Effort picker
@@ -289,11 +307,14 @@ fn tier_card<'a>(
             pick_list(
                 REASONING_OPTIONS,
                 Some(reasoning_value),
-                move |reasoning: &str| Message::ConfigTierReasoningChanged(tier_name.to_string(), reasoning.to_string())
+                move |reasoning: &str| Message::ConfigTierReasoningChanged(
+                    tier_name.to_string(),
+                    reasoning.to_string()
+                )
             )
             .width(Length::Fill)
         ]
-        .spacing(tokens::spacing::XXS)
+        .spacing(tokens::spacing::XXS),
     );
 
     // Plan Mode toggler
@@ -308,7 +329,7 @@ fn tier_card<'a>(
                 .on_toggle(move |_| Message::ConfigTierPlanModeToggled(tier_name.to_string()))
         ]
         .align_y(Alignment::Center)
-        .spacing(tokens::spacing::SM)
+        .spacing(tokens::spacing::SM),
     );
 
     // Ask Mode toggler
@@ -323,7 +344,7 @@ fn tier_card<'a>(
                 .on_toggle(move |_| Message::ConfigTierAskModeToggled(tier_name.to_string()))
         ]
         .align_y(Alignment::Center)
-        .spacing(tokens::spacing::SM)
+        .spacing(tokens::spacing::SM),
     );
 
     // Output Format picker
@@ -336,11 +357,14 @@ fn tier_card<'a>(
             pick_list(
                 OUTPUT_FORMATS,
                 Some(tier_config.output_format.as_str()),
-                move |format: &str| Message::ConfigTierOutputFormatChanged(tier_name.to_string(), format.to_string())
+                move |format: &str| Message::ConfigTierOutputFormatChanged(
+                    tier_name.to_string(),
+                    format.to_string()
+                )
             )
             .width(Length::Fill)
         ]
-        .spacing(tokens::spacing::XXS)
+        .spacing(tokens::spacing::XXS),
     );
 
     // Task Failure Style picker
@@ -353,11 +377,14 @@ fn tier_card<'a>(
             pick_list(
                 FAILURE_STYLES,
                 Some(tier_config.task_failure_style.as_str()),
-                move |style: &str| Message::ConfigTierFailureStyleChanged(tier_name.to_string(), style.to_string())
+                move |style: &str| Message::ConfigTierFailureStyleChanged(
+                    tier_name.to_string(),
+                    style.to_string()
+                )
             )
             .width(Length::Fill)
         ]
-        .spacing(tokens::spacing::XXS)
+        .spacing(tokens::spacing::XXS),
     );
 
     // Max Iterations text input
@@ -368,10 +395,13 @@ fn tier_card<'a>(
                 .font(fonts::FONT_UI)
                 .color(theme.ink()),
             text_input("", &tier_config.max_iterations.to_string())
-                .on_input(move |value| Message::ConfigTierMaxIterChanged(tier_name.to_string(), value))
+                .on_input(move |value| Message::ConfigTierMaxIterChanged(
+                    tier_name.to_string(),
+                    value
+                ))
                 .width(Length::Fill)
         ]
-        .spacing(tokens::spacing::XXS)
+        .spacing(tokens::spacing::XXS),
     );
 
     container(card_content)
@@ -413,8 +443,7 @@ fn tab_branching<'a>(
 
     // Git Info Display (if available)
     if let Some(info) = git_info {
-        let mut git_info_content = column![]
-            .spacing(tokens::spacing::XXS);
+        let mut git_info_content = column![].spacing(tokens::spacing::XXS);
 
         git_info_content = git_info_content.push(
             text(format!("Current Branch: {}", info.current_branch))
@@ -459,10 +488,13 @@ fn tab_branching<'a>(
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
             text_input("main", &gui_config.branching.base_branch)
-                .on_input(|value| Message::ConfigBranchingFieldChanged("base_branch".to_string(), value))
+                .on_input(|value| Message::ConfigBranchingFieldChanged(
+                    "base_branch".to_string(),
+                    value
+                ))
                 .width(Length::Fill)
         ]
-        .spacing(tokens::spacing::XXS)
+        .spacing(tokens::spacing::XXS),
     );
 
     // Naming Pattern field
@@ -476,10 +508,13 @@ fn tab_branching<'a>(
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
             text_input("rwm/{tier}/{id}", &gui_config.branching.naming_pattern)
-                .on_input(|value| Message::ConfigBranchingFieldChanged("naming_pattern".to_string(), value))
+                .on_input(|value| Message::ConfigBranchingFieldChanged(
+                    "naming_pattern".to_string(),
+                    value
+                ))
                 .width(Length::Fill)
         ]
-        .spacing(tokens::spacing::XXS)
+        .spacing(tokens::spacing::XXS),
     );
 
     // Granularity radio buttons
@@ -512,16 +547,13 @@ fn tab_branching<'a>(
                 |value: &str| Message::ConfigGranularityChanged(value.to_string())
             ),
         ]
-        .spacing(tokens::spacing::SM)
+        .spacing(tokens::spacing::SM),
     );
 
     content.into()
 }
 
-fn tab_verification<'a>(
-    gui_config: &'a GuiConfig,
-    theme: &'a AppTheme,
-) -> Element<'a, Message> {
+fn tab_verification<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a, Message> {
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::MD);
@@ -551,10 +583,13 @@ fn tab_verification<'a>(
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
             text_input("playwright", &gui_config.verification.browser_adapter)
-                .on_input(|value| Message::ConfigVerificationFieldChanged("browser_adapter".to_string(), value))
+                .on_input(|value| Message::ConfigVerificationFieldChanged(
+                    "browser_adapter".to_string(),
+                    value
+                ))
                 .width(Length::Fill)
         ]
-        .spacing(tokens::spacing::XXS)
+        .spacing(tokens::spacing::XXS),
     );
 
     // Evidence Directory field with folder picker
@@ -568,16 +603,22 @@ fn tab_verification<'a>(
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
             row![
-                text_input(".puppet-master/evidence", &gui_config.verification.evidence_directory)
-                    .on_input(|value| Message::ConfigVerificationFieldChanged("evidence_directory".to_string(), value))
-                    .width(Length::Fill),
+                text_input(
+                    ".puppet-master/evidence",
+                    &gui_config.verification.evidence_directory
+                )
+                .on_input(|value| Message::ConfigVerificationFieldChanged(
+                    "evidence_directory".to_string(),
+                    value
+                ))
+                .width(Length::Fill),
                 styled_button(theme, "Browse...", ButtonVariant::Secondary)
                     .on_press(Message::BrowseEvidenceDirectory)
             ]
             .spacing(tokens::spacing::SM)
             .align_y(Alignment::Center)
         ]
-        .spacing(tokens::spacing::XXS)
+        .spacing(tokens::spacing::XXS),
     );
 
     // Screenshot on Failure toggler
@@ -591,10 +632,14 @@ fn tab_verification<'a>(
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
             row![
-                text(if gui_config.verification.screenshot_on_failure { "Enabled" } else { "Disabled" })
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI)
-                    .color(theme.ink()),
+                text(if gui_config.verification.screenshot_on_failure {
+                    "Enabled"
+                } else {
+                    "Disabled"
+                })
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI)
+                .color(theme.ink()),
                 Space::new().width(Length::Fill),
                 toggler(gui_config.verification.screenshot_on_failure)
                     .on_toggle(|_| Message::ConfigVerificationScreenshotToggled)
@@ -602,17 +647,14 @@ fn tab_verification<'a>(
             .align_y(Alignment::Center)
             .spacing(tokens::spacing::SM)
         ]
-        .spacing(tokens::spacing::XXS)
+        .spacing(tokens::spacing::XXS),
     );
 
     content.into()
 }
 
-fn tab_memory<'a>(
-    gui_config: &'a GuiConfig,
-    theme: &'a AppTheme,
-) -> Element<'a, Message> {
-    use crate::widgets::styled_input::{styled_text_input_with_variant, InputVariant, InputSize};
+fn tab_memory<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a, Message> {
+    use crate::widgets::styled_input::{InputSize, InputVariant, styled_text_input_with_variant};
 
     let mut content = column![]
         .spacing(tokens::spacing::MD)
@@ -658,7 +700,7 @@ fn tab_memory<'a>(
             .spacing(tokens::spacing::SM)
             .align_y(iced::Alignment::Center),
         ]
-        .spacing(tokens::spacing::XS)
+        .spacing(tokens::spacing::XS),
     );
 
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
@@ -687,7 +729,7 @@ fn tab_memory<'a>(
             .spacing(tokens::spacing::SM)
             .align_y(iced::Alignment::Center),
         ]
-        .spacing(tokens::spacing::XS)
+        .spacing(tokens::spacing::XS),
     );
 
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
@@ -716,7 +758,7 @@ fn tab_memory<'a>(
             .spacing(tokens::spacing::SM)
             .align_y(iced::Alignment::Center),
         ]
-        .spacing(tokens::spacing::XS)
+        .spacing(tokens::spacing::XS),
     );
 
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
@@ -732,9 +774,13 @@ fn tab_memory<'a>(
             iced::widget::toggler(gui_config.memory.multi_level_agents)
                 .on_toggle(|_| Message::ConfigMemoryMultiLevelToggled),
             Space::new().width(Length::Fixed(tokens::spacing::SM)),
-            text(if gui_config.memory.multi_level_agents { "Enabled" } else { "Disabled" })
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            text(if gui_config.memory.multi_level_agents {
+                "Enabled"
+            } else {
+                "Disabled"
+            })
+            .size(tokens::font_size::SM)
+            .color(theme.ink_faded()),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
@@ -743,10 +789,7 @@ fn tab_memory<'a>(
     content.into()
 }
 
-fn tab_budgets<'a>(
-    gui_config: &'a GuiConfig,
-    theme: &'a AppTheme,
-) -> Element<'a, Message> {
+fn tab_budgets<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a, Message> {
     let mut content = column![]
         .spacing(tokens::spacing::MD)
         .padding(tokens::spacing::MD);
@@ -768,15 +811,40 @@ fn tab_budgets<'a>(
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
 
     // Create cards for each platform
-    content = content.push(budget_card("cursor", &gui_config.budgets.cursor, true, theme));
+    content = content.push(budget_card(
+        "cursor",
+        &gui_config.budgets.cursor,
+        true,
+        theme,
+    ));
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
-    content = content.push(budget_card("codex", &gui_config.budgets.codex, false, theme));
+    content = content.push(budget_card(
+        "codex",
+        &gui_config.budgets.codex,
+        false,
+        theme,
+    ));
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
-    content = content.push(budget_card("claude", &gui_config.budgets.claude, false, theme));
+    content = content.push(budget_card(
+        "claude",
+        &gui_config.budgets.claude,
+        false,
+        theme,
+    ));
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
-    content = content.push(budget_card("gemini", &gui_config.budgets.gemini, false, theme));
+    content = content.push(budget_card(
+        "gemini",
+        &gui_config.budgets.gemini,
+        false,
+        theme,
+    ));
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
-    content = content.push(budget_card("copilot", &gui_config.budgets.copilot, false, theme));
+    content = content.push(budget_card(
+        "copilot",
+        &gui_config.budgets.copilot,
+        false,
+        theme,
+    ));
 
     content.into()
 }
@@ -787,7 +855,7 @@ fn budget_card<'a>(
     is_cursor: bool,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    use crate::widgets::styled_input::{styled_text_input_with_variant, InputVariant, InputSize};
+    use crate::widgets::styled_input::{InputSize, InputVariant, styled_text_input_with_variant};
 
     let mut card_content = column![]
         .spacing(tokens::spacing::SM)
@@ -884,12 +952,13 @@ fn budget_card<'a>(
                     .size(tokens::font_size::SM)
                     .color(theme.ink())
                     .width(Length::Fixed(180.0)),
-                iced::widget::toggler(budget.unlimited_auto_mode)
-                    .on_toggle(move |v| Message::ConfigBudgetFieldChanged(
+                iced::widget::toggler(budget.unlimited_auto_mode).on_toggle(move |v| {
+                    Message::ConfigBudgetFieldChanged(
                         platform_name.to_string(),
                         "unlimited_auto_mode".to_string(),
-                        v.to_string()
-                    )),
+                        v.to_string(),
+                    )
+                }),
             ]
             .spacing(tokens::spacing::SM)
             .align_y(iced::Alignment::Center),
@@ -910,11 +979,8 @@ fn budget_card<'a>(
         .into()
 }
 
-fn tab_advanced<'a>(
-    gui_config: &'a GuiConfig,
-    theme: &'a AppTheme,
-) -> Element<'a, Message> {
-    use crate::widgets::styled_input::{styled_text_input_with_variant, InputVariant, InputSize};
+fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a, Message> {
+    use crate::widgets::styled_input::{InputSize, InputVariant, styled_text_input_with_variant};
     use iced::widget::pick_list;
 
     let mut content = column![]
@@ -1013,12 +1079,17 @@ fn tab_advanced<'a>(
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
-            iced::widget::toggler(gui_config.advanced.intensive_logging)
-                .on_toggle(|_| Message::ConfigAdvancedCheckboxToggled("intensive_logging".to_string())),
+            iced::widget::toggler(gui_config.advanced.intensive_logging).on_toggle(|_| {
+                Message::ConfigAdvancedCheckboxToggled("intensive_logging".to_string())
+            }),
             Space::new().width(Length::Fixed(tokens::spacing::SM)),
-            text(if gui_config.advanced.intensive_logging { "Enabled" } else { "Disabled" })
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            text(if gui_config.advanced.intensive_logging {
+                "Enabled"
+            } else {
+                "Disabled"
+            })
+            .size(tokens::font_size::SM)
+            .color(theme.ink_faded()),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
@@ -1084,8 +1155,9 @@ fn tab_advanced<'a>(
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
-            iced::widget::toggler(gui_config.advanced.execution.kill_on_failure)
-                .on_toggle(|_| Message::ConfigAdvancedCheckboxToggled("kill_on_failure".to_string())),
+            iced::widget::toggler(gui_config.advanced.execution.kill_on_failure).on_toggle(|_| {
+                Message::ConfigAdvancedCheckboxToggled("kill_on_failure".to_string())
+            }),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
@@ -1098,8 +1170,9 @@ fn tab_advanced<'a>(
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
-            iced::widget::toggler(gui_config.advanced.execution.enable_parallel)
-                .on_toggle(|_| Message::ConfigAdvancedCheckboxToggled("enable_parallel".to_string())),
+            iced::widget::toggler(gui_config.advanced.execution.enable_parallel).on_toggle(|_| {
+                Message::ConfigAdvancedCheckboxToggled("enable_parallel".to_string())
+            }),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
@@ -1115,7 +1188,11 @@ fn tab_advanced<'a>(
             styled_text_input_with_variant(
                 theme,
                 "1",
-                &gui_config.advanced.execution.max_parallel_phases.to_string(),
+                &gui_config
+                    .advanced
+                    .execution
+                    .max_parallel_phases
+                    .to_string(),
                 InputVariant::Default,
                 InputSize::Small,
             )
@@ -1164,8 +1241,9 @@ fn tab_advanced<'a>(
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
-            iced::widget::toggler(gui_config.advanced.checkpointing.enabled)
-                .on_toggle(|_| Message::ConfigAdvancedCheckboxToggled("checkpoint_enabled".to_string())),
+            iced::widget::toggler(gui_config.advanced.checkpointing.enabled).on_toggle(|_| {
+                Message::ConfigAdvancedCheckboxToggled("checkpoint_enabled".to_string())
+            }),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
@@ -1181,7 +1259,11 @@ fn tab_advanced<'a>(
             styled_text_input_with_variant(
                 theme,
                 "300",
-                &gui_config.advanced.checkpointing.interval_seconds.to_string(),
+                &gui_config
+                    .advanced
+                    .checkpointing
+                    .interval_seconds
+                    .to_string(),
                 InputVariant::Default,
                 InputSize::Small,
             )
@@ -1202,7 +1284,11 @@ fn tab_advanced<'a>(
             styled_text_input_with_variant(
                 theme,
                 "10",
-                &gui_config.advanced.checkpointing.max_checkpoints.to_string(),
+                &gui_config
+                    .advanced
+                    .checkpointing
+                    .max_checkpoints
+                    .to_string(),
                 InputVariant::Default,
                 InputSize::Small,
             )
@@ -1220,8 +1306,9 @@ fn tab_advanced<'a>(
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
-            iced::widget::toggler(gui_config.advanced.checkpointing.on_subtask_complete)
-                .on_toggle(|_| Message::ConfigAdvancedCheckboxToggled("checkpoint_on_subtask".to_string())),
+            iced::widget::toggler(gui_config.advanced.checkpointing.on_subtask_complete).on_toggle(
+                |_| Message::ConfigAdvancedCheckboxToggled("checkpoint_on_subtask".to_string())
+            ),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
@@ -1234,8 +1321,9 @@ fn tab_advanced<'a>(
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
-            iced::widget::toggler(gui_config.advanced.checkpointing.on_shutdown)
-                .on_toggle(|_| Message::ConfigAdvancedCheckboxToggled("checkpoint_on_shutdown".to_string())),
+            iced::widget::toggler(gui_config.advanced.checkpointing.on_shutdown).on_toggle(|_| {
+                Message::ConfigAdvancedCheckboxToggled("checkpoint_on_shutdown".to_string())
+            }),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
@@ -1279,7 +1367,10 @@ fn tab_advanced<'a>(
                 InputVariant::Default,
                 InputSize::Small,
             )
-            .on_input(|s| Message::ConfigAdvancedFieldChanged("loop_max_repetitions".to_string(), s))
+            .on_input(|s| Message::ConfigAdvancedFieldChanged(
+                "loop_max_repetitions".to_string(),
+                s
+            ))
             .width(Length::Fixed(150.0)),
         ]
         .spacing(tokens::spacing::SM)
@@ -1293,8 +1384,9 @@ fn tab_advanced<'a>(
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
-            iced::widget::toggler(gui_config.advanced.loop_guard.suppress_reply_relay)
-                .on_toggle(|_| Message::ConfigAdvancedCheckboxToggled("loop_suppress_relay".to_string())),
+            iced::widget::toggler(gui_config.advanced.loop_guard.suppress_reply_relay).on_toggle(
+                |_| Message::ConfigAdvancedCheckboxToggled("loop_suppress_relay".to_string())
+            ),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
@@ -1357,6 +1449,331 @@ fn tab_advanced<'a>(
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
+    );
+
+    content.into()
+}
+
+fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a, Message> {
+    const PLATFORMS: &[&str] = &["cursor", "codex", "claude", "gemini", "copilot"];
+    const REASONING_LEVELS: &[&str] = &["low", "medium", "high", "max"];
+    const INTERACTION_MODES: &[&str] = &["expert", "eli5"];
+
+    let mut content = column![]
+        .spacing(tokens::spacing::LG)
+        .padding(tokens::spacing::MD);
+
+    // Header
+    content = content.push(
+        text("INTERVIEW CONFIGURATION")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+    );
+
+    content = content.push(
+        text("Configure the interactive requirements interview for the Ralph Wiggum Model")
+            .size(tokens::font_size::SM)
+            .color(theme.ink_faded()),
+    );
+
+    // Primary Platform
+    content = content.push(
+        column![
+            text("Primary Platform")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            text("The AI platform used for the interview")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
+            pick_list(
+                PLATFORMS,
+                Some(gui_config.interview.platform.as_str()),
+                |platform: &str| Message::ConfigInterviewFieldChanged(
+                    "platform".to_string(),
+                    platform.to_string(),
+                )
+            )
+            .width(Length::Fixed(200.0))
+        ]
+        .spacing(tokens::spacing::XXS),
+    );
+
+    // Primary Model
+    content = content.push(
+        column![
+            text("Primary Model")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            text("Model identifier for the primary platform")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
+            text_input("claude-sonnet-4-5-20250929", &gui_config.interview.model)
+                .on_input(|value| Message::ConfigInterviewFieldChanged("model".to_string(), value,))
+                .width(Length::Fill)
+        ]
+        .spacing(tokens::spacing::XXS),
+    );
+
+    // Reasoning Level
+    content = content.push(
+        column![
+            text("Reasoning Level")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            text("How deeply the interview model reasons (low/medium/high/max)")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
+            pick_list(
+                REASONING_LEVELS,
+                Some(gui_config.interview.reasoning_level.as_str()),
+                |level: &str| Message::ConfigInterviewFieldChanged(
+                    "reasoning_level".to_string(),
+                    level.to_string(),
+                ),
+            )
+            .width(Length::Fixed(200.0))
+        ]
+        .spacing(tokens::spacing::XXS),
+    );
+
+    // Backup Platforms
+    content = content.push(
+        column![
+            text("Backup Platforms")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            text("Fallback platforms tried in order if primary quota is exhausted")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
+        ]
+        .spacing(tokens::spacing::XXS),
+    );
+
+    // Render existing backup platform entries
+    for (idx, pair) in gui_config.interview.backup_platforms.iter().enumerate() {
+        let idx_for_platform = idx;
+        let idx_for_model = idx;
+        let idx_for_remove = idx;
+        content = content.push(
+            row![
+                pick_list(PLATFORMS, Some(pair.platform.as_str()), move |p: &str| {
+                    Message::ConfigInterviewBackupChanged(
+                        idx_for_platform,
+                        "platform".to_string(),
+                        p.to_string(),
+                    )
+                })
+                .width(Length::Fixed(160.0)),
+                text_input("model", &pair.model)
+                    .on_input(move |m| Message::ConfigInterviewBackupChanged(
+                        idx_for_model,
+                        "model".to_string(),
+                        m,
+                    ))
+                    .width(Length::Fill),
+                styled_button(theme, "Remove", ButtonVariant::Secondary)
+                    .on_press(Message::ConfigInterviewRemoveBackup(idx_for_remove)),
+            ]
+            .spacing(tokens::spacing::SM)
+            .align_y(Alignment::Center),
+        );
+    }
+
+    content = content.push(
+        styled_button(theme, "Add Backup Platform", ButtonVariant::Info)
+            .on_press(Message::ConfigInterviewAddBackup),
+    );
+
+    // Max Questions Per Phase
+    content = content.push(
+        column![
+            text("Max Questions Per Phase")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            text("Number of questions asked per domain phase (3-15)")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
+            text_input(
+                "8",
+                &gui_config.interview.max_questions_per_phase.to_string()
+            )
+            .on_input(|value| Message::ConfigInterviewFieldChanged(
+                "max_questions_per_phase".to_string(),
+                value,
+            ))
+            .width(Length::Fixed(120.0))
+        ]
+        .spacing(tokens::spacing::XXS),
+    );
+
+    // First-Principles Mode
+    content = content.push(
+        column![
+            text("First-Principles Mode")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            text("Challenge assumptions before accepting them as requirements")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
+            row![
+                text(if gui_config.interview.first_principles {
+                    "Enabled"
+                } else {
+                    "Disabled"
+                })
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI)
+                .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                toggler(gui_config.interview.first_principles)
+                    .on_toggle(|_| Message::ConfigInterviewToggled("first_principles".to_string()))
+            ]
+            .align_y(Alignment::Center)
+            .spacing(tokens::spacing::SM)
+        ]
+        .spacing(tokens::spacing::XXS),
+    );
+
+    // Architecture Confirmation
+    content = content.push(
+        column![
+            text("Require Architecture Confirmation")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            text("Explicitly confirm tech stack versions, frameworks, and dependencies")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
+            row![
+                text(if gui_config.interview.require_architecture_confirmation {
+                    "Enabled"
+                } else {
+                    "Disabled"
+                })
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI)
+                .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                toggler(gui_config.interview.require_architecture_confirmation).on_toggle(|_| {
+                    Message::ConfigInterviewToggled("require_architecture_confirmation".to_string())
+                })
+            ]
+            .align_y(Alignment::Center)
+            .spacing(tokens::spacing::SM)
+        ]
+        .spacing(tokens::spacing::XXS),
+    );
+
+    // Playwright Requirements
+    content = content.push(
+        column![
+            text("Generate Playwright Requirements")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            text(
+                "Automatically generate testable Playwright specifications from acceptance criteria"
+            )
+            .size(tokens::font_size::SM)
+            .color(theme.ink_faded()),
+            row![
+                text(if gui_config.interview.generate_playwright_requirements {
+                    "Enabled"
+                } else {
+                    "Disabled"
+                })
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI)
+                .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                toggler(gui_config.interview.generate_playwright_requirements).on_toggle(|_| {
+                    Message::ConfigInterviewToggled("generate_playwright_requirements".to_string())
+                })
+            ]
+            .align_y(Alignment::Center)
+            .spacing(tokens::spacing::SM)
+        ]
+        .spacing(tokens::spacing::XXS),
+    );
+
+    // Generate Initial AGENTS.md
+    content = content.push(
+        column![
+            text("Generate Initial AGENTS.md")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            text("Create a starter AGENTS.md from interview decisions")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
+            row![
+                text(if gui_config.interview.generate_initial_agents_md {
+                    "Enabled"
+                } else {
+                    "Disabled"
+                })
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI)
+                .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                toggler(gui_config.interview.generate_initial_agents_md).on_toggle(|_| {
+                    Message::ConfigInterviewToggled("generate_initial_agents_md".to_string())
+                })
+            ]
+            .align_y(Alignment::Center)
+            .spacing(tokens::spacing::SM)
+        ]
+        .spacing(tokens::spacing::XXS),
+    );
+
+    // Interaction Mode
+    content = content.push(
+        column![
+            text("Interaction Mode")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            text("Expert mode is concise; ELI5 mode explains each question")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
+            pick_list(
+                INTERACTION_MODES,
+                Some(gui_config.interview.interaction_mode.as_str()),
+                |mode: &str| Message::ConfigInterviewFieldChanged(
+                    "interaction_mode".to_string(),
+                    mode.to_string(),
+                ),
+            )
+            .width(Length::Fixed(200.0))
+        ]
+        .spacing(tokens::spacing::XXS),
+    );
+
+    // Output Directory
+    content = content.push(
+        column![
+            text("Output Directory")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_UI_BOLD)
+                .color(theme.ink()),
+            text("Directory where interview phase documents are written")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
+            text_input(".puppet-master/interview", &gui_config.interview.output_dir)
+                .on_input(|value| Message::ConfigInterviewFieldChanged(
+                    "output_dir".to_string(),
+                    value,
+                ))
+                .width(Length::Fill)
+        ]
+        .spacing(tokens::spacing::XXS),
     );
 
     content.into()

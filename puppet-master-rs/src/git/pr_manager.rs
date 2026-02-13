@@ -33,23 +33,16 @@ impl PrManager {
 
         // Check if gh CLI is available
         if !self.is_gh_available().await? {
-            return Err(anyhow::anyhow!("gh CLI not found. Please install it from https://cli.github.com/"));
+            return Err(anyhow::anyhow!(
+                "gh CLI not found. Please install it from https://cli.github.com/"
+            ));
         }
 
         // Create PR using gh CLI
         let output = tokio::process::Command::new("gh")
             .current_dir(&self.repo_path)
             .args(&[
-                "pr",
-                "create",
-                "--title",
-                title,
-                "--body",
-                body,
-                "--base",
-                base,
-                "--head",
-                head,
+                "pr", "create", "--title", title, "--body", body, "--base", base, "--head", head,
             ])
             .output()
             .await
@@ -195,7 +188,10 @@ mod tests {
     fn test_generate_pr_body() {
         let body = PrManager::generate_pr_body(
             "Implement JWT authentication",
-            &["Login works".to_string(), "Token validation works".to_string()],
+            &[
+                "Login works".to_string(),
+                "Token validation works".to_string(),
+            ],
             &["src/auth.rs".to_string()],
         );
 

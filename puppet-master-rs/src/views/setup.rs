@@ -2,14 +2,14 @@
 //!
 //! Guides users through platform CLI detection and provides installation/authentication guidance.
 
-use iced::widget::{column, row, text, container, scrollable, Space};
-use iced::{Element, Length};
 use crate::app::{AuthActionKind, Message};
-use crate::theme::{AppTheme, tokens};
-use crate::widgets::*;
-use crate::types::Platform;
 use crate::doctor::InstallationStatus;
 use crate::platforms::AuthTarget;
+use crate::theme::{AppTheme, tokens};
+use crate::types::Platform;
+use crate::widgets::*;
+use iced::widget::{Space, column, container, row, scrollable, text};
+use iced::{Element, Length};
 use std::collections::HashMap;
 
 /// Platform installation status
@@ -28,7 +28,9 @@ pub fn view<'a>(
     login_in_progress: &'a HashMap<AuthTarget, AuthActionKind>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
+    let mut content = column![]
+        .spacing(tokens::spacing::LG)
+        .padding(tokens::spacing::LG);
 
     // Title
     content = content.push(
@@ -42,9 +44,9 @@ pub fn view<'a>(
                     .size(tokens::font_size::MD)
                     .color(theme.ink_faded()),
             ]
-            .spacing(tokens::spacing::SM)
+            .spacing(tokens::spacing::SM),
         )
-        .padding(tokens::spacing::LG)
+        .padding(tokens::spacing::LG),
     );
 
     // Description
@@ -80,12 +82,12 @@ pub fn view<'a>(
     let refresh_btn = if is_checking {
         styled_button(theme, "Detecting...", ButtonVariant::Secondary)
     } else {
-        styled_button(theme, "Refresh", ButtonVariant::Secondary)
-            .on_press(Message::RefreshSetup)
+        styled_button(theme, "Refresh", ButtonVariant::Secondary).on_press(Message::RefreshSetup)
     };
-    
+
     content = content.push(
-        container(row![detect_btn, refresh_btn].spacing(tokens::spacing::SM)).padding(tokens::spacing::SM)
+        container(row![detect_btn, refresh_btn].spacing(tokens::spacing::SM))
+            .padding(tokens::spacing::SM),
     );
 
     // Platform status results
@@ -115,8 +117,12 @@ pub fn view<'a>(
             let install_btn = if is_installed {
                 if let Some(kind) = auth_action {
                     match kind {
-                        AuthActionKind::Login => styled_button(theme, "Logging in...", ButtonVariant::Info),
-                        AuthActionKind::Logout => styled_button(theme, "Logging out...", ButtonVariant::Danger),
+                        AuthActionKind::Login => {
+                            styled_button(theme, "Logging in...", ButtonVariant::Info)
+                        }
+                        AuthActionKind::Logout => {
+                            styled_button(theme, "Logging out...", ButtonVariant::Danger)
+                        }
                     }
                 } else {
                     styled_button(theme, "Login", ButtonVariant::Info)
@@ -130,23 +136,20 @@ pub fn view<'a>(
             };
 
             let mut platform_row = row![
-                container(
-                    text(status_icon)
-                        .size(tokens::font_size::BASE)
-                )
-                .padding(tokens::spacing::SM)
-                .width(Length::Fixed(120.0))
-                .style(move |_theme: &iced::Theme| {
-                    iced::widget::container::Style {
-                        background: Some(iced::Background::Color(status_color)),
-                        border: iced::Border {
-                            color: crate::theme::colors::INK_BLACK,
-                            width: tokens::borders::MEDIUM,
-                            radius: tokens::radii::NONE.into(),
-                        },
-                        ..Default::default()
-                    }
-                }),
+                container(text(status_icon).size(tokens::font_size::BASE))
+                    .padding(tokens::spacing::SM)
+                    .width(Length::Fixed(120.0))
+                    .style(move |_theme: &iced::Theme| {
+                        iced::widget::container::Style {
+                            background: Some(iced::Background::Color(status_color)),
+                            border: iced::Border {
+                                color: crate::theme::colors::INK_BLACK,
+                                width: tokens::borders::MEDIUM,
+                                radius: tokens::radii::NONE.into(),
+                            },
+                            ..Default::default()
+                        }
+                    }),
                 text(format!("{}", platform_status.platform)).size(tokens::font_size::LG),
                 Space::new().width(Length::Fill),
                 text(format!("{}", platform_status.status)).size(tokens::font_size::BASE),
@@ -165,71 +168,71 @@ pub fn view<'a>(
             let mut platform_col = column![platform_row].spacing(tokens::spacing::SM);
 
             if !is_installed {
-                platform_col = platform_col.push(
-                    container(
-                        scrollable(
-                            text(&platform_status.instructions)
-                                .size(tokens::font_size::BASE)
-                                .line_height(iced::widget::text::LineHeight::Relative(1.6))
+                platform_col =
+                    platform_col.push(
+                        container(
+                            scrollable(
+                                text(&platform_status.instructions)
+                                    .size(tokens::font_size::BASE)
+                                    .line_height(iced::widget::text::LineHeight::Relative(1.6)),
+                            )
+                            .height(Length::Fixed(350.0)), // Increased from 150px to 350px for better readability
                         )
-                        .height(Length::Fixed(350.0)) // Increased from 150px to 350px for better readability
-                    )
-                    .padding(tokens::spacing::MD)
-                    .style(move |_theme: &iced::Theme| {
-                        iced::widget::container::Style {
-                            background: Some(iced::Background::Color(
-                                iced::Color::from_rgba(ink_color.r, ink_color.g, ink_color.b, 0.03)
-                            )),
+                        .padding(tokens::spacing::MD)
+                        .style(move |_theme: &iced::Theme| iced::widget::container::Style {
+                            background: Some(iced::Background::Color(iced::Color::from_rgba(
+                                ink_color.r,
+                                ink_color.g,
+                                ink_color.b,
+                                0.03,
+                            ))),
                             border: iced::Border {
-                                color: iced::Color::from_rgba(ink_color.r, ink_color.g, ink_color.b, 0.2),
+                                color: iced::Color::from_rgba(
+                                    ink_color.r,
+                                    ink_color.g,
+                                    ink_color.b,
+                                    0.2,
+                                ),
                                 width: tokens::borders::THIN,
                                 radius: tokens::radii::SM.into(),
                             },
                             ..Default::default()
-                        }
-                    })
-                );
+                        }),
+                    );
             }
 
-            status_content = status_content.push(
-                themed_panel(
-                    container(platform_col).padding(tokens::spacing::MD),
-                    theme
-                )
-            );
+            status_content = status_content.push(themed_panel(
+                container(platform_col).padding(tokens::spacing::MD),
+                theme,
+            ));
         }
 
-        content = content.push(
-            scrollable(status_content)
-                .height(Length::Fill)
-        );
+        content = content.push(scrollable(status_content).height(Length::Fill));
     } else if !is_checking {
         content = content.push(
             container(
                 text("No detection results yet. Click 'Run Detection' to begin.")
-                    .size(tokens::font_size::SM)
+                    .size(tokens::font_size::SM),
             )
-            .padding(tokens::spacing::LG)
+            .padding(tokens::spacing::LG),
         );
     }
 
     // Complete setup button
-    content = content.push(
-        themed_panel(
-            container(
-                row![
-                    text("Ready to start?").size(tokens::font_size::MD),
-                    Space::new().width(Length::Fill),
-                    styled_button(theme, "Complete Setup", ButtonVariant::Primary)
-                        .on_press(Message::SetupComplete),
-                ]
-                .spacing(tokens::spacing::MD)
-                .align_y(iced::Alignment::Center)
-            )
-            .padding(tokens::spacing::MD),
-            theme
+    content = content.push(themed_panel(
+        container(
+            row![
+                text("Ready to start?").size(tokens::font_size::MD),
+                Space::new().width(Length::Fill),
+                styled_button(theme, "Complete Setup", ButtonVariant::Primary)
+                    .on_press(Message::SetupComplete),
+            ]
+            .spacing(tokens::spacing::MD)
+            .align_y(iced::Alignment::Center),
         )
-    );
+        .padding(tokens::spacing::MD),
+        theme,
+    ));
 
     container(scrollable(content))
         .width(Length::Fill)

@@ -311,11 +311,7 @@ impl BudgetTracker {
     }
 
     /// Gets the total usage for a platform in a time period.
-    pub fn get_usage_in_period(
-        &self,
-        platform: Platform,
-        since: DateTime<Utc>,
-    ) -> u64 {
+    pub fn get_usage_in_period(&self, platform: Platform, since: DateTime<Utc>) -> u64 {
         self.usage_history
             .iter()
             .filter(|r| r.platform == platform && r.timestamp >= since)
@@ -374,7 +370,7 @@ impl UsageStats {
     /// Updates statistics from a usage record.
     pub fn update_from_record(&mut self, record: &UsageRecord) {
         self.total_executions += 1;
-        
+
         if record.success {
             self.successful_executions += 1;
         } else {
@@ -464,13 +460,12 @@ mod tests {
     #[test]
     fn test_budget_tracker() {
         let mut tracker = BudgetTracker::new();
-        
+
         let budget = BudgetInfo::new(Platform::Cursor, 1000, "hourly");
         tracker.add_budget(budget);
 
-        let record = UsageRecord::new(Platform::Cursor, "execution", true)
-            .with_tokens(100);
-        
+        let record = UsageRecord::new(Platform::Cursor, "execution", true).with_tokens(100);
+
         tracker.record_usage(record);
 
         assert_eq!(tracker.usage_history.len(), 1);

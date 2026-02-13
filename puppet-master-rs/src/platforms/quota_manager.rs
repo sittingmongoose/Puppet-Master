@@ -8,7 +8,7 @@
 //! - Cursor auto-mode unlimited support
 
 use crate::types::{Platform, QuotaStatus, UsageStats};
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use chrono::{DateTime, Utc};
 use log::{info, warn};
 use serde::{Deserialize, Serialize};
@@ -407,7 +407,10 @@ mod tests {
 
         // Record more usage (should hit limit)
         manager.record_usage(Platform::Cursor, 1000, 1.0);
-        assert_eq!(manager.check_quota(Platform::Cursor), QuotaStatus::Exhausted);
+        assert_eq!(
+            manager.check_quota(Platform::Cursor),
+            QuotaStatus::Exhausted
+        );
 
         // Should fail enforcement
         assert!(manager.enforce_quota(Platform::Cursor).is_err());

@@ -3,13 +3,13 @@
 //! Displays authentication status for all platforms with Login/Logout buttons in a
 //! responsive 3-column grid layout matching the Tauri React version.
 
-use iced::widget::{column, row, text, container, scrollable, Space, text_editor};
-use iced::{Element, Length, Alignment};
 use crate::app::{AuthActionKind, Message};
-use crate::theme::{AppTheme, tokens, colors};
 use crate::platforms::AuthTarget;
+use crate::theme::{colors, tokens, AppTheme};
 use crate::types::Platform;
 use crate::widgets::*;
+use iced::widget::{column, container, row, scrollable, text, text_editor, Space};
+use iced::{Alignment, Element, Length};
 use std::collections::HashMap;
 
 /// Authentication status for a platform
@@ -132,10 +132,12 @@ pub fn view<'a>(
     login_auth_urls: &'a HashMap<String, String>,
     git_info: &'a Option<crate::app::GitInfoDisplay>,
     github_auth_status: &'a Option<String>,
-    _cli_content: &'a text_editor::Content,
+    cli_content: &'a text_editor::Content,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
+    let mut content = column![]
+        .spacing(tokens::spacing::LG)
+        .padding(tokens::spacing::LG);
 
     // Header with title and action buttons
     let header = row![
@@ -146,8 +148,7 @@ pub fn view<'a>(
         Space::new().width(Length::Fill),
         styled_button(theme, "PLATFORM SETUP", ButtonVariant::Primary)
             .on_press(Message::NavigateTo(Page::Setup)),
-        styled_button(theme, "REFRESH", ButtonVariant::Ghost)
-            .on_press(Message::LoadLogin),
+        styled_button(theme, "REFRESH", ButtonVariant::Ghost).on_press(Message::LoadLogin),
     ]
     .spacing(tokens::spacing::MD)
     .align_y(Alignment::Center);
@@ -158,13 +159,23 @@ pub fn view<'a>(
     content = content.push(build_summary_panel(auth_status, theme));
 
     // Platform cards grid (responsive 3-column)
-    content = content.push(build_platform_grid(auth_status, login_in_progress, login_messages, login_auth_urls, theme));
+    content = content.push(build_platform_grid(
+        auth_status,
+        login_in_progress,
+        login_messages,
+        login_auth_urls,
+        theme,
+    ));
 
     // CLI alternative panel
-    content = content.push(build_cli_panel(theme));
+    content = content.push(build_cli_panel(cli_content, theme));
 
     // Git Configuration section
-    content = content.push(build_git_config_section(git_info, github_auth_status, theme));
+    content = content.push(build_git_config_section(
+        git_info,
+        github_auth_status,
+        theme,
+    ));
 
     scrollable(content)
         .width(Length::Fill)
@@ -194,18 +205,26 @@ fn build_summary_panel<'a>(
                         .color(color),
                 ]
                 .spacing(tokens::spacing::XS)
-                .align_x(Alignment::Center)
+                .align_x(Alignment::Center),
             )
             .padding(tokens::spacing::MD)
             .width(Length::Fill),
-            theme
+            theme,
         )
     };
 
     let stats_row = row![
         stat_card("Total Platforms".to_string(), total_count, theme.ink()),
-        stat_card("Authenticated".to_string(), authenticated_count, colors::ACID_LIME),
-        stat_card("Not Authenticated".to_string(), not_authenticated_count, colors::HOT_MAGENTA),
+        stat_card(
+            "Authenticated".to_string(),
+            authenticated_count,
+            colors::ACID_LIME
+        ),
+        stat_card(
+            "Not Authenticated".to_string(),
+            not_authenticated_count,
+            colors::HOT_MAGENTA
+        ),
         stat_card("Skipped".to_string(), skipped_count, colors::INK_FADED),
     ]
     .spacing(tokens::spacing::MD);
@@ -222,21 +241,25 @@ fn build_platform_grid<'a>(
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let platform_defs = get_platform_defs();
-    
+
     // Create 3-column grid manually (iced doesn't have a built-in grid)
     let mut grid_content = column![].spacing(tokens::spacing::MD);
-    
+
     let mut current_row = row![].spacing(tokens::spacing::MD);
     let mut count = 0;
-    
+
     for def in platform_defs.into_iter() {
-        let card = build_platform_card(&def, auth_status, login_in_progress, login_messages, login_auth_urls, theme);
-        current_row = current_row.push(
-            container(card)
-                .width(Length::FillPortion(1))
+        let card = build_platform_card(
+            &def,
+            auth_status,
+            login_in_progress,
+            login_messages,
+            login_auth_urls,
+            theme,
         );
+        current_row = current_row.push(container(card).width(Length::FillPortion(1)));
         count += 1;
-        
+
         // After every 3 cards, push the row and start a new one
         if count == 3 {
             grid_content = grid_content.push(current_row);
@@ -244,15 +267,12 @@ fn build_platform_grid<'a>(
             count = 0;
         }
     }
-    
+
     // Push the last row if it has any cards
     if count > 0 {
         // Fill remaining columns
         for _ in count..3 {
-            current_row = current_row.push(
-                container(Space::new())
-                    .width(Length::FillPortion(1))
-            );
+            current_row = current_row.push(container(Space::new()).width(Length::FillPortion(1)));
         }
         grid_content = grid_content.push(current_row);
     }
@@ -275,9 +295,13 @@ fn build_platform_card<'a>(
     let authenticated = status.map(|s| s.authenticated).unwrap_or(false);
     let auth_method = status.map(|s| s.method.as_str()).unwrap_or("Unknown");
     let status_details = if authenticated {
-        status.map(|s| s.hint.as_str()).unwrap_or("Authenticated successfully")
+        status
+            .map(|s| s.hint.as_str())
+            .unwrap_or("Authenticated successfully")
     } else {
-        status.map(|s| s.hint.as_str()).unwrap_or("Not authenticated")
+        status
+            .map(|s| s.hint.as_str())
+            .unwrap_or("Not authenticated")
     };
 
     // Icon (using SVG icon system)
@@ -292,32 +316,28 @@ fn build_platform_card<'a>(
     let status_badge = if authenticated {
         container(text("Authenticated").size(tokens::font_size::SM))
             .padding(tokens::spacing::SM)
-            .style(move |_theme: &iced::Theme| {
-                iced::widget::container::Style {
-                    background: Some(iced::Background::Color(colors::ACID_LIME)),
-                    border: iced::Border {
-                        color: colors::INK_BLACK,
-                        width: tokens::borders::MEDIUM,
-                        radius: tokens::radii::SM.into(),
-                    },
-                    text_color: Some(colors::INK_BLACK),
-                    ..Default::default()
-                }
+            .style(move |_theme: &iced::Theme| iced::widget::container::Style {
+                background: Some(iced::Background::Color(colors::ACID_LIME)),
+                border: iced::Border {
+                    color: colors::INK_BLACK,
+                    width: tokens::borders::MEDIUM,
+                    radius: tokens::radii::SM.into(),
+                },
+                text_color: Some(colors::INK_BLACK),
+                ..Default::default()
             })
     } else {
         container(text("Not Authenticated").size(tokens::font_size::SM))
             .padding(tokens::spacing::SM)
-            .style(move |_theme: &iced::Theme| {
-                iced::widget::container::Style {
-                    background: Some(iced::Background::Color(colors::HOT_MAGENTA)),
-                    border: iced::Border {
-                        color: colors::INK_BLACK,
-                        width: tokens::borders::MEDIUM,
-                        radius: tokens::radii::SM.into(),
-                    },
-                    text_color: Some(colors::INK_BLACK),
-                    ..Default::default()
-                }
+            .style(move |_theme: &iced::Theme| iced::widget::container::Style {
+                background: Some(iced::Background::Color(colors::HOT_MAGENTA)),
+                border: iced::Border {
+                    color: colors::INK_BLACK,
+                    width: tokens::borders::MEDIUM,
+                    radius: tokens::radii::SM.into(),
+                },
+                text_color: Some(colors::INK_BLACK),
+                ..Default::default()
             })
     };
 
@@ -346,21 +366,23 @@ fn build_platform_card<'a>(
     // Auth URL (if present)
     let auth_url_elem = if let Some(url) = login_auth_urls.get(def.name) {
         Some(
-            text(format!("Auth URL: {}", url))
-                .size(tokens::font_size::XS)
-                .color(colors::ELECTRIC_BLUE)
+            row![
+                text(format!("Auth URL: {}", url))
+                    .size(tokens::font_size::XS)
+                    .color(colors::ELECTRIC_BLUE)
+                    .width(Length::Fill),
+                styled_button_sized(theme, "COPY", ButtonVariant::Ghost, ButtonSize::Small)
+                    .on_press(Message::CopyToClipboard(url.clone()))
+            ]
+            .spacing(tokens::spacing::SM)
+            .align_y(Alignment::Center),
         )
     } else {
         None
     };
 
     // Action buttons
-    let action_buttons = build_action_buttons(
-        def,
-        authenticated,
-        in_progress,
-        theme
-    );
+    let action_buttons = build_action_buttons(def, authenticated, in_progress, theme);
 
     // Assemble card content
     let mut card_content = column![
@@ -404,66 +426,62 @@ fn build_action_buttons<'a>(
             AuthActionKind::Login => "Logging in...",
             AuthActionKind::Logout => "Logging out...",
         };
-        buttons = buttons.push(
-            styled_button(theme, label, ButtonVariant::Info)
-        );
+        buttons = buttons.push(styled_button(theme, label, ButtonVariant::Info));
     } else if authenticated {
         // Show logout button only for platforms that support it
         if def.supports_logout {
             buttons = buttons.push(
                 styled_button(theme, "Logout", ButtonVariant::Danger)
-                    .on_press(Message::PlatformLogout(def.auth_target))
+                    .on_press(Message::PlatformLogout(def.auth_target)),
             );
         } else {
             // For Claude & Gemini, show info text
             buttons = buttons.push(
                 text("Manage at platform console")
                     .size(tokens::font_size::SM)
-                    .color(theme.ink_faded())
+                    .color(theme.ink_faded()),
             );
         }
     } else {
         // Not authenticated: show login button
         buttons = buttons.push(
             styled_button(theme, "Login", ButtonVariant::Info)
-                .on_press(Message::PlatformLogin(def.auth_target))
+                .on_press(Message::PlatformLogin(def.auth_target)),
         );
     }
 
     // Refresh button (always visible)
-    buttons = buttons.push(
-        styled_button(theme, "Refresh", ButtonVariant::Ghost)
-            .on_press(Message::LoadLogin)
-    );
+    buttons = buttons
+        .push(styled_button(theme, "Refresh", ButtonVariant::Ghost).on_press(Message::LoadLogin));
 
     buttons.into()
 }
 
 /// Build CLI alternative panel
-fn build_cli_panel<'a>(theme: &'a AppTheme) -> Element<'a, Message> {
-    let platform_defs = get_platform_defs();
-    
-    let mut cli_commands = column![
+fn build_cli_panel<'a>(
+    cli_content: &'a text_editor::Content,
+    theme: &'a AppTheme,
+) -> Element<'a, Message> {
+    let cli_commands = column![
         text("CLI Alternative Commands")
             .size(tokens::font_size::LG)
             .color(theme.ink()),
         text("You can also authenticate using these CLI commands:")
             .size(tokens::font_size::SM)
             .color(theme.ink_faded()),
+        container(
+            text_editor(cli_content)
+                .on_action(Message::LoginCliAction)
+                .font(crate::theme::fonts::FONT_MONO)
+                .size(tokens::font_size::SM)
+                .height(Length::Fixed(140.0))
+        )
+        .padding(tokens::spacing::SM)
+        .width(Length::Fill),
     ]
     .spacing(tokens::spacing::SM);
 
-    for def in platform_defs.iter() {
-        let cmd_text = text(format!("• {}: {}", def.name, def.cli_command))
-            .size(tokens::font_size::SM)
-            .color(theme.ink_faded());
-        cli_commands = cli_commands.push(cmd_text);
-    }
-
-    themed_panel(
-        container(cli_commands).padding(tokens::spacing::MD),
-        theme
-    ).into()
+    themed_panel(container(cli_commands).padding(tokens::spacing::MD), theme).into()
 }
 
 /// Build Git Configuration section
@@ -472,11 +490,9 @@ fn build_git_config_section<'a>(
     github_auth_status: &'a Option<String>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![
-        text("Git Configuration")
-            .size(tokens::font_size::LG)
-            .color(theme.ink()),
-    ]
+    let mut content = column![text("Git Configuration")
+        .size(tokens::font_size::LG)
+        .color(theme.ink()),]
     .spacing(tokens::spacing::MD);
 
     // GitHub authentication card
@@ -492,9 +508,21 @@ fn build_git_config_section<'a>(
                         text("Git User")
                             .size(tokens::font_size::SM)
                             .color(theme.ink_faded()),
-                        text(&info.user_name)
-                            .size(tokens::font_size::MD)
-                            .color(theme.ink()),
+                        row![
+                            text(&info.user_name)
+                                .size(tokens::font_size::MD)
+                                .color(theme.ink())
+                                .width(Length::Fill),
+                            styled_button_sized(
+                                theme,
+                                "COPY",
+                                ButtonVariant::Ghost,
+                                ButtonSize::Small
+                            )
+                            .on_press(Message::CopyToClipboard(info.user_name.clone()))
+                        ]
+                        .spacing(tokens::spacing::SM)
+                        .align_y(Alignment::Center),
                     ]
                     .spacing(tokens::spacing::XS)
                 )
@@ -508,9 +536,21 @@ fn build_git_config_section<'a>(
                         text("Git Email")
                             .size(tokens::font_size::SM)
                             .color(theme.ink_faded()),
-                        text(&info.user_email)
-                            .size(tokens::font_size::MD)
-                            .color(theme.ink()),
+                        row![
+                            text(&info.user_email)
+                                .size(tokens::font_size::MD)
+                                .color(theme.ink())
+                                .width(Length::Fill),
+                            styled_button_sized(
+                                theme,
+                                "COPY",
+                                ButtonVariant::Ghost,
+                                ButtonSize::Small
+                            )
+                            .on_press(Message::CopyToClipboard(info.user_email.clone()))
+                        ]
+                        .spacing(tokens::spacing::SM)
+                        .align_y(Alignment::Center),
                     ]
                     .spacing(tokens::spacing::XS)
                 )
@@ -528,9 +568,21 @@ fn build_git_config_section<'a>(
                         text("Remote URL")
                             .size(tokens::font_size::SM)
                             .color(theme.ink_faded()),
-                        text(&info.remote_url)
-                            .size(tokens::font_size::MD)
-                            .color(theme.ink()),
+                        row![
+                            text(&info.remote_url)
+                                .size(tokens::font_size::MD)
+                                .color(theme.ink())
+                                .width(Length::Fill),
+                            styled_button_sized(
+                                theme,
+                                "COPY",
+                                ButtonVariant::Ghost,
+                                ButtonSize::Small
+                            )
+                            .on_press(Message::CopyToClipboard(info.remote_url.clone()))
+                        ]
+                        .spacing(tokens::spacing::SM)
+                        .align_y(Alignment::Center),
                     ]
                     .spacing(tokens::spacing::XS)
                 )
@@ -544,9 +596,21 @@ fn build_git_config_section<'a>(
                         text("Current Branch")
                             .size(tokens::font_size::SM)
                             .color(theme.ink_faded()),
-                        text(&info.current_branch)
-                            .size(tokens::font_size::MD)
-                            .color(theme.ink()),
+                        row![
+                            text(&info.current_branch)
+                                .size(tokens::font_size::MD)
+                                .color(theme.ink())
+                                .width(Length::Fill),
+                            styled_button_sized(
+                                theme,
+                                "COPY",
+                                ButtonVariant::Ghost,
+                                ButtonSize::Small
+                            )
+                            .on_press(Message::CopyToClipboard(info.current_branch.clone()))
+                        ]
+                        .spacing(tokens::spacing::SM)
+                        .align_y(Alignment::Center),
                     ]
                     .spacing(tokens::spacing::XS)
                 )
@@ -560,17 +624,15 @@ fn build_git_config_section<'a>(
         content = content.push(git_info_grid);
         content = content.push(remote_branch_grid);
     } else {
-        content = content.push(
-            themed_panel(
-                container(
-                    text("No git repository detected or git not configured")
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink_faded())
-                )
-                .padding(tokens::spacing::MD),
-                theme
+        content = content.push(themed_panel(
+            container(
+                text("No git repository detected or git not configured")
+                    .size(tokens::font_size::SM)
+                    .color(theme.ink_faded()),
             )
-        );
+            .padding(tokens::spacing::MD),
+            theme,
+        ));
     }
 
     // Note about Copilot
@@ -578,15 +640,12 @@ fn build_git_config_section<'a>(
         container(
             text("Note: GitHub Copilot uses your GitHub account authentication")
                 .size(tokens::font_size::SM)
-                .color(theme.ink_faded())
+                .color(theme.ink_faded()),
         )
-        .padding(tokens::spacing::SM)
+        .padding(tokens::spacing::SM),
     );
 
-    themed_panel(
-        container(content).padding(tokens::spacing::MD),
-        theme
-    ).into()
+    themed_panel(container(content).padding(tokens::spacing::MD), theme).into()
 }
 
 /// Build GitHub authentication card
@@ -602,46 +661,38 @@ fn build_github_card<'a>(
     let status_badge = if authenticated {
         container(text("Authenticated").size(tokens::font_size::SM))
             .padding(tokens::spacing::SM)
-            .style(move |_theme: &iced::Theme| {
-                iced::widget::container::Style {
-                    background: Some(iced::Background::Color(colors::ACID_LIME)),
-                    border: iced::Border {
-                        color: colors::INK_BLACK,
-                        width: tokens::borders::MEDIUM,
-                        radius: tokens::radii::SM.into(),
-                    },
-                    text_color: Some(colors::INK_BLACK),
-                    ..Default::default()
-                }
+            .style(move |_theme: &iced::Theme| iced::widget::container::Style {
+                background: Some(iced::Background::Color(colors::ACID_LIME)),
+                border: iced::Border {
+                    color: colors::INK_BLACK,
+                    width: tokens::borders::MEDIUM,
+                    radius: tokens::radii::SM.into(),
+                },
+                text_color: Some(colors::INK_BLACK),
+                ..Default::default()
             })
     } else {
         container(text("Not Authenticated").size(tokens::font_size::SM))
             .padding(tokens::spacing::SM)
-            .style(move |_theme: &iced::Theme| {
-                iced::widget::container::Style {
-                    background: Some(iced::Background::Color(colors::HOT_MAGENTA)),
-                    border: iced::Border {
-                        color: colors::INK_BLACK,
-                        width: tokens::borders::MEDIUM,
-                        radius: tokens::radii::SM.into(),
-                    },
-                    text_color: Some(colors::INK_BLACK),
-                    ..Default::default()
-                }
+            .style(move |_theme: &iced::Theme| iced::widget::container::Style {
+                background: Some(iced::Background::Color(colors::HOT_MAGENTA)),
+                border: iced::Border {
+                    color: colors::INK_BLACK,
+                    width: tokens::borders::MEDIUM,
+                    radius: tokens::radii::SM.into(),
+                },
+                text_color: Some(colors::INK_BLACK),
+                ..Default::default()
             })
     };
 
     let buttons = if authenticated {
-        row![
-            styled_button(theme, "Logout", ButtonVariant::Danger)
-                .on_press(Message::PlatformLogout(AuthTarget::GitHub)),
-        ]
+        row![styled_button(theme, "Logout", ButtonVariant::Danger)
+            .on_press(Message::PlatformLogout(AuthTarget::GitHub)),]
         .spacing(tokens::spacing::SM)
     } else {
-        row![
-            styled_button(theme, "Login", ButtonVariant::Info)
-                .on_press(Message::PlatformLogin(AuthTarget::GitHub)),
-        ]
+        row![styled_button(theme, "Login", ButtonVariant::Info)
+            .on_press(Message::PlatformLogin(AuthTarget::GitHub)),]
         .spacing(tokens::spacing::SM)
     };
 
@@ -659,9 +710,10 @@ fn build_github_card<'a>(
                 status_badge,
                 buttons,
             ]
-            .spacing(tokens::spacing::SM)
+            .spacing(tokens::spacing::SM),
         )
         .padding(tokens::spacing::MD),
-        theme
-    ).into()
+        theme,
+    )
+    .into()
 }

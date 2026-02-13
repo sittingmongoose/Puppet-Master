@@ -1,8 +1,8 @@
 pub mod colors;
-pub mod styles;
 pub mod fonts;
-pub mod tokens;
 pub mod palette;
+pub mod styles;
+pub mod tokens;
 
 use iced::Color;
 use palette::Palette;
@@ -32,7 +32,7 @@ impl AppTheme {
     }
 
     // ── Legacy accessors (kept for backward compatibility) ──────────
-    
+
     pub fn paper(&self) -> Color {
         self.palette().background
     }
@@ -55,6 +55,14 @@ impl AppTheme {
 
     pub fn accent(&self) -> Color {
         self.palette().accent_blue
+    }
+
+    pub fn success(&self) -> Color {
+        self.palette().success
+    }
+
+    pub fn paper_light(&self) -> Color {
+        self.palette().surface_elevated
     }
 
     pub fn is_dark(&self) -> bool {

@@ -55,6 +55,14 @@ pub struct PuppetMasterConfig {
     /// P2-T09: Configurable escalation chains.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub escalation: Option<EscalationChainsConfig>,
+
+    /// Interview configuration.
+    #[serde(default)]
+    pub interview: InterviewConfig,
+
+    /// GUI automation configuration.
+    #[serde(default)]
+    pub gui_automation: GuiAutomationConfig,
 }
 
 /// Orchestrator-specific configuration.
@@ -496,6 +504,59 @@ fn default_evidence_directory() -> PathBuf {
     PathBuf::from("evidence")
 }
 
+/// GUI automation execution configuration.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GuiAutomationConfig {
+    /// Enable GUI automation tooling.
+    #[serde(default = "default_true")]
+    pub enabled: bool,
+
+    /// Default mode (headless|native|hybrid).
+    #[serde(default = "default_gui_automation_mode")]
+    pub mode: String,
+
+    /// Isolation policy (ephemeralClone by default for full-action).
+    #[serde(default = "default_gui_automation_isolation")]
+    pub workspace_isolation: String,
+
+    /// Artifact output directory.
+    #[serde(default = "default_gui_automation_artifacts")]
+    pub artifacts_directory: PathBuf,
+
+    /// Visual diff threshold ratio (0.0-1.0).
+    #[serde(default = "default_gui_automation_visual_threshold")]
+    pub visual_diff_threshold: f32,
+}
+
+impl Default for GuiAutomationConfig {
+    fn default() -> Self {
+        Self {
+            enabled: true,
+            mode: default_gui_automation_mode(),
+            workspace_isolation: default_gui_automation_isolation(),
+            artifacts_directory: default_gui_automation_artifacts(),
+            visual_diff_threshold: default_gui_automation_visual_threshold(),
+        }
+    }
+}
+
+fn default_gui_automation_mode() -> String {
+    "hybrid".to_string()
+}
+
+fn default_gui_automation_isolation() -> String {
+    "ephemeralClone".to_string()
+}
+
+fn default_gui_automation_artifacts() -> PathBuf {
+    PathBuf::from(".puppet-master/evidence/gui-automation")
+}
+
+fn default_gui_automation_visual_threshold() -> f32 {
+    0.01
+}
+
 /// Memory and state file configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -773,6 +834,112 @@ pub struct EscalationChainsConfig {
     pub chains: std::collections::HashMap<EscalationChainKey, Vec<EscalationChainStepConfig>>,
 }
 
+// =============================================================================
+// Interview configuration
+// =============================================================================
+
+/// Configuration for the interactive requirements interview.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct InterviewConfig {
+    /// Primary AI platform for interviewing.
+    #[serde(default = "default_interview_platform")]
+    pub platform: String,
+
+    /// Primary model for interviewing.
+    #[serde(default = "default_interview_model")]
+    pub model: String,
+
+    /// Reasoning/effort level for the interview AI (low/medium/high/max).
+    #[serde(default = "default_reasoning_level")]
+    pub reasoning_level: String,
+
+    /// Backup platforms with models (tried in order if primary exhausted).
+    #[serde(default)]
+    pub backup_platforms: Vec<PlatformModelPair>,
+
+    /// Max questions per domain phase (default: 8).
+    #[serde(default = "default_max_questions_per_phase")]
+    pub max_questions_per_phase: u32,
+
+    /// Whether to use first-principles mode.
+    #[serde(default)]
+    pub first_principles: bool,
+
+    /// Output directory for interview documents.
+    #[serde(default = "default_interview_output_dir")]
+    pub output_dir: String,
+
+    /// Require explicit architecture/tech confirmation.
+    #[serde(default = "default_true")]
+    pub require_architecture_confirmation: bool,
+
+    /// Generate Playwright test requirements.
+    #[serde(default = "default_true")]
+    pub generate_playwright_requirements: bool,
+
+    /// Generate initial AGENTS.md from interview results.
+    #[serde(default = "default_true")]
+    pub generate_initial_agents_md: bool,
+
+    /// Interaction mode (expert or eli5).
+    #[serde(default = "default_interaction_mode")]
+    pub interaction_mode: String,
+}
+
+impl Default for InterviewConfig {
+    fn default() -> Self {
+        Self {
+            platform: default_interview_platform(),
+            model: default_interview_model(),
+            reasoning_level: default_reasoning_level(),
+            backup_platforms: vec![PlatformModelPair {
+                platform: "cursor".to_string(),
+                model: "claude-sonnet-4-5-20250929".to_string(),
+            }],
+            max_questions_per_phase: default_max_questions_per_phase(),
+            first_principles: false,
+            output_dir: default_interview_output_dir(),
+            require_architecture_confirmation: true,
+            generate_playwright_requirements: true,
+            generate_initial_agents_md: true,
+            interaction_mode: default_interaction_mode(),
+        }
+    }
+}
+
+fn default_interview_platform() -> String {
+    "claude".to_string()
+}
+
+fn default_interview_model() -> String {
+    "claude-sonnet-4-5-20250929".to_string()
+}
+
+fn default_reasoning_level() -> String {
+    "medium".to_string()
+}
+
+fn default_max_questions_per_phase() -> u32 {
+    8
+}
+
+fn default_interview_output_dir() -> String {
+    ".puppet-master/interview".to_string()
+}
+
+fn default_interaction_mode() -> String {
+    "expert".to_string()
+}
+
+/// A platform + model pair for backup platform configuration.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PlatformModelPair {
+    pub platform: String,
+    pub model: String,
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -811,7 +978,7 @@ pub enum ValidationError {
     /// Missing required field.
     #[error("Missing required field: {0}")]
     MissingField(String),
-    
+
     /// Invalid value for a field.
     #[error("Invalid value for {field}: {message}")]
     InvalidValue {
@@ -820,15 +987,15 @@ pub enum ValidationError {
         /// Error message.
         message: String,
     },
-    
+
     /// Invalid path.
     #[error("Invalid path: {0}")]
     InvalidPath(PathBuf),
-    
+
     /// Configuration conflict.
     #[error("Configuration conflict: {0}")]
     Conflict(String),
-    
+
     /// General validation error.
     #[error("{0}")]
     General(String),

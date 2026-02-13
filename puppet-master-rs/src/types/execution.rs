@@ -1,8 +1,8 @@
 //! Execution request and result types.
 
+use async_trait::async_trait;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
-use async_trait::async_trait;
 use std::path::PathBuf;
 use std::time::Duration;
 

@@ -2,10 +2,10 @@
 
 use crate::platforms::{PlatformRunner, UsageEvent, UsageTracker};
 use crate::types::{
-    ExecutionRequest, ItemStatus, ParsedRequirements, Phase, PRD, RequirementsSection, Subtask,
+    ExecutionRequest, ItemStatus, PRD, ParsedRequirements, Phase, RequirementsSection, Subtask,
     Task,
 };
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use chrono::Utc;
 use log::{info, warn};
 use std::path::Path;
@@ -112,7 +112,11 @@ impl PrdGenerator {
             .iter()
             .map(|s| s.title.len() + s.content.len())
             .sum::<usize>()
-            + requirements.description.as_ref().map(|d| d.len()).unwrap_or(0);
+            + requirements
+                .description
+                .as_ref()
+                .map(|d| d.len())
+                .unwrap_or(0);
 
         if source_chars >= LARGE_DOC_THRESHOLD {
             let mut multi = super::MultiPassGenerator::new();
@@ -131,7 +135,9 @@ impl PrdGenerator {
                     return Ok(prd);
                 }
                 Err(err) => {
-                    warn!("Multi-pass AI PRD generation failed: {err}; falling back to single-pass");
+                    warn!(
+                        "Multi-pass AI PRD generation failed: {err}; falling back to single-pass"
+                    );
                 }
             }
         }
@@ -149,9 +155,7 @@ impl PrdGenerator {
             Self::format_requirements_for_prompt(requirements),
         );
 
-        let (system_prompt, user_prompt) = template
-            .render_full(&vars)
-            .map_err(|e| anyhow!(e))?;
+        let (system_prompt, user_prompt) = template.render_full(&vars).map_err(|e| anyhow!(e))?;
 
         let mut prompt = String::new();
         if let Some(system) = system_prompt {
@@ -193,7 +197,11 @@ impl PrdGenerator {
             event = event.with_tokens(0, tokens);
         }
         if !exec.success {
-            event = event.with_error(exec.error_message.clone().unwrap_or_else(|| "AI PRD generation failed".to_string()));
+            event = event.with_error(
+                exec.error_message
+                    .clone()
+                    .unwrap_or_else(|| "AI PRD generation failed".to_string()),
+            );
         }
         if let Some(tracker) = usage_tracker {
             let _ = tracker.track(event).await;
@@ -298,9 +306,7 @@ impl PrdGenerator {
         for line in content.lines() {
             let trimmed = line.trim();
             if trimmed.starts_with("- ") || trimmed.starts_with("* ") {
-                let item_text = trimmed
-                    .trim_start_matches("- ")
-                    .trim_start_matches("* ");
+                let item_text = trimmed.trim_start_matches("- ").trim_start_matches("* ");
                 let subtask = Self::item_to_subtask(item_text, &task_id, &mut subtask_counter)?;
                 subtasks.push(subtask);
             }
@@ -309,11 +315,7 @@ impl PrdGenerator {
         // If no subtasks from bullets, create one from the full content
         if subtasks.is_empty() {
             let subtask = Subtask {
-                id: format!(
-                    "{}-{:03}",
-                    task_id.replace("TK", "ST"),
-                    subtask_counter
-                ),
+                id: format!("{}-{:03}", task_id.replace("TK", "ST"), subtask_counter),
                 task_id: task_id.clone(),
                 title: "Implementation".to_string(),
                 description: Some(content.to_string()),
@@ -344,11 +346,7 @@ impl PrdGenerator {
 
     /// Convert an item to a subtask
     fn item_to_subtask(item: &str, task_id: &str, subtask_counter: &mut usize) -> Result<Subtask> {
-        let subtask_id = format!(
-            "{}-{:03}",
-            task_id.replace("TK", "ST"),
-            *subtask_counter
-        );
+        let subtask_id = format!("{}-{:03}", task_id.replace("TK", "ST"), *subtask_counter);
         *subtask_counter += 1;
 
         let title = if item.len() > 80 {

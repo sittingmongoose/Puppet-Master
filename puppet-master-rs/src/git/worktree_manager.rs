@@ -46,7 +46,10 @@ impl WorktreeManager {
 
     /// Create a new worktree for a tier
     pub async fn create_worktree(&self, tier_id: &str, branch: &str) -> Result<WorktreeInfo> {
-        info!("Creating worktree for tier '{}' on branch '{}'", tier_id, branch);
+        info!(
+            "Creating worktree for tier '{}' on branch '{}'",
+            tier_id, branch
+        );
 
         // Ensure worktree base directory exists
         fs::create_dir_all(&self.worktree_base)
@@ -58,7 +61,10 @@ impl WorktreeManager {
 
         // Check if worktree already exists
         if worktree_path.exists() {
-            warn!("Worktree already exists at {:?}, removing it first", worktree_path);
+            warn!(
+                "Worktree already exists at {:?}, removing it first",
+                worktree_path
+            );
             self.remove_worktree(tier_id).await?;
         }
 
@@ -172,7 +178,7 @@ impl WorktreeManager {
         if !output.status.success() {
             let stderr = String::from_utf8_lossy(&output.stderr);
             warn!("Failed to remove worktree cleanly: {}", stderr);
-            
+
             // Try to remove the directory manually
             if worktree_path.exists() {
                 fs::remove_dir_all(&worktree_path)
@@ -186,11 +192,7 @@ impl WorktreeManager {
     }
 
     /// Merge worktree changes back to target branch
-    pub async fn merge_worktree(
-        &self,
-        tier_id: &str,
-        target_branch: &str,
-    ) -> Result<MergeResult> {
+    pub async fn merge_worktree(&self, tier_id: &str, target_branch: &str) -> Result<MergeResult> {
         info!(
             "Merging worktree '{}' into branch '{}'",
             tier_id, target_branch
@@ -243,10 +245,7 @@ impl WorktreeManager {
 
             if status_output.status.success() {
                 let conflict_stdout = String::from_utf8_lossy(&status_output.stdout);
-                conflicts = conflict_stdout
-                    .lines()
-                    .map(|s| s.to_string())
-                    .collect();
+                conflicts = conflict_stdout.lines().map(|s| s.to_string()).collect();
             }
         }
 
@@ -262,10 +261,7 @@ impl WorktreeManager {
 
             if diff_output.status.success() {
                 let diff_stdout = String::from_utf8_lossy(&diff_output.stdout);
-                files_changed = diff_stdout
-                    .lines()
-                    .map(|s| s.to_string())
-                    .collect();
+                files_changed = diff_stdout.lines().map(|s| s.to_string()).collect();
             }
         }
 
@@ -336,7 +332,7 @@ mod tests {
 
     async fn setup_test_repo() -> Result<TempDir> {
         let temp_dir = TempDir::new()?;
-        
+
         // Initialize git repo
         Command::new("git")
             .current_dir(temp_dir.path())
@@ -407,7 +403,10 @@ mod tests {
         let manager = WorktreeManager::new(temp_dir.path().to_path_buf());
 
         // Create a worktree
-        manager.create_worktree("tier1", "feature/tier1").await.unwrap();
+        manager
+            .create_worktree("tier1", "feature/tier1")
+            .await
+            .unwrap();
 
         // List worktrees
         let worktrees = manager.list_worktrees().await.unwrap();
@@ -423,7 +422,10 @@ mod tests {
         let manager = WorktreeManager::new(temp_dir.path().to_path_buf());
 
         // Create and remove worktree
-        manager.create_worktree("tier1", "feature/tier1").await.unwrap();
+        manager
+            .create_worktree("tier1", "feature/tier1")
+            .await
+            .unwrap();
         let result = manager.remove_worktree("tier1").await;
         assert!(result.is_ok());
 
@@ -439,7 +441,10 @@ mod tests {
 
         assert!(!manager.worktree_exists("tier1").await);
 
-        manager.create_worktree("tier1", "feature/tier1").await.unwrap();
+        manager
+            .create_worktree("tier1", "feature/tier1")
+            .await
+            .unwrap();
         assert!(manager.worktree_exists("tier1").await);
     }
 
@@ -451,7 +456,11 @@ mod tests {
         let path = manager.get_worktree_path("tier1");
         assert_eq!(
             path,
-            temp_dir.path().join(".puppet-master").join("worktrees").join("tier1")
+            temp_dir
+                .path()
+                .join(".puppet-master")
+                .join("worktrees")
+                .join("tier1")
         );
     }
 
@@ -461,7 +470,10 @@ mod tests {
         let manager = WorktreeManager::new(temp_dir.path().to_path_buf());
 
         let worktree_path = manager.worktree_base.join("tier1");
-        assert_eq!(manager.extract_tier_id(&worktree_path), Some("tier1".to_string()));
+        assert_eq!(
+            manager.extract_tier_id(&worktree_path),
+            Some("tier1".to_string())
+        );
 
         let other_path = PathBuf::from("/some/other/path");
         assert_eq!(manager.extract_tier_id(&other_path), None);

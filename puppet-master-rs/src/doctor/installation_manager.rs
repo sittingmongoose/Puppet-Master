@@ -5,7 +5,7 @@
 //! execution of official install commands.
 
 use crate::types::Platform;
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use log::debug;
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
@@ -129,7 +129,7 @@ impl InstallationManager {
     /// Get version of a CLI tool using robust detection
     fn get_cli_version(&self, cli_name: &str) -> Option<String> {
         debug!("Checking version for CLI: {}", cli_name);
-        
+
         // Step 1: Try to find the executable using which::which()
         let exe_path = match self.find_executable(cli_name) {
             Some(path) => {
@@ -141,11 +141,11 @@ impl InstallationManager {
                 return None;
             }
         };
-        
+
         // Step 2: Get version from the found executable
         self.get_version_from_path(&exe_path, cli_name)
     }
-    
+
     /// Find executable using which::which() and fallback directories
     fn find_executable(&self, cli_name: &str) -> Option<PathBuf> {
         // Step 1: Try which::which() first (searches PATH)
@@ -153,62 +153,70 @@ impl InstallationManager {
             debug!("Found {} in PATH via which: {}", cli_name, path.display());
             return Some(path);
         }
-        
+
         // Step 2: Check common installation directories
         let fallback_dirs = self.get_fallback_directories();
-        
+
         for dir in fallback_dirs {
             let exe_path = dir.join(cli_name);
-            
+
             // On Windows, also try with .exe extension
             #[cfg(target_os = "windows")]
             {
                 let exe_with_ext = dir.join(format!("{}.exe", cli_name));
                 if exe_with_ext.exists() && exe_with_ext.is_file() {
-                    debug!("Found {} in fallback directory: {}", cli_name, exe_with_ext.display());
+                    debug!(
+                        "Found {} in fallback directory: {}",
+                        cli_name,
+                        exe_with_ext.display()
+                    );
                     return Some(exe_with_ext);
                 }
             }
-            
+
             if exe_path.exists() && exe_path.is_file() {
-                debug!("Found {} in fallback directory: {}", cli_name, exe_path.display());
+                debug!(
+                    "Found {} in fallback directory: {}",
+                    cli_name,
+                    exe_path.display()
+                );
                 return Some(exe_path);
             }
         }
-        
+
         // Step 3: Try expanding shell PATH from profiles (GUI apps often miss shell PATH)
         if let Some(path) = self.find_in_shell_path(cli_name) {
             return Some(path);
         }
-        
+
         None
     }
-    
+
     /// Get fallback directories to search for executables
     fn get_fallback_directories(&self) -> Vec<PathBuf> {
         let mut dirs = Vec::new();
-        
+
         #[cfg(not(target_os = "windows"))]
         {
             // Unix-like systems (Linux, macOS)
             dirs.push(PathBuf::from("/usr/local/bin"));
             dirs.push(PathBuf::from("/usr/bin"));
             dirs.push(PathBuf::from("/bin"));
-            
+
             // macOS specific
             #[cfg(target_os = "macos")]
             {
                 dirs.push(PathBuf::from("/opt/homebrew/bin"));
                 dirs.push(PathBuf::from("/opt/local/bin"));
             }
-            
+
             // Linux specific
             #[cfg(target_os = "linux")]
             {
                 dirs.push(PathBuf::from("/home/linuxbrew/.linuxbrew/bin"));
                 dirs.push(PathBuf::from("/snap/bin"));
             }
-            
+
             // User-local directories
             if let Some(home) = std::env::var_os("HOME") {
                 let home_path = PathBuf::from(home);
@@ -219,7 +227,7 @@ impl InstallationManager {
                 dirs.push(home_path.join(".node_modules/bin"));
             }
         }
-        
+
         #[cfg(target_os = "windows")]
         {
             // Windows specific directories
@@ -242,10 +250,10 @@ impl InstallationManager {
                 dirs.push(user_path.join("AppData\\Local\\Programs"));
             }
         }
-        
+
         dirs
     }
-    
+
     /// Try to find executable by expanding shell PATH from profile files
     fn find_in_shell_path(&self, cli_name: &str) -> Option<PathBuf> {
         #[cfg(not(target_os = "windows"))]
@@ -258,26 +266,31 @@ impl InstallationManager {
                 format!("{}/.zshrc", home),
                 format!("{}/.profile", home),
             ];
-            
+
             for profile in shell_profiles {
                 if let Ok(content) = std::fs::read_to_string(&profile) {
                     // Look for PATH exports in the profile
                     for line in content.lines() {
-                        if line.trim_start().starts_with("export PATH=") || 
-                           line.trim_start().starts_with("PATH=") {
+                        if line.trim_start().starts_with("export PATH=")
+                            || line.trim_start().starts_with("PATH=")
+                        {
                             // Extract paths from the line
                             if let Some(paths_str) = line.split('=').nth(1) {
                                 // Parse PATH entries
                                 for path_entry in paths_str.split(':') {
-                                    let path_entry = path_entry.trim().trim_matches('"').trim_matches('\'');
+                                    let path_entry =
+                                        path_entry.trim().trim_matches('"').trim_matches('\'');
                                     // Expand $HOME or ~
-                                    let expanded = path_entry
-                                        .replace("$HOME", &home)
-                                        .replace('~', &home);
-                                    
+                                    let expanded =
+                                        path_entry.replace("$HOME", &home).replace('~', &home);
+
                                     let exe_path = PathBuf::from(expanded).join(cli_name);
                                     if exe_path.exists() && exe_path.is_file() {
-                                        debug!("Found {} in shell PATH: {}", cli_name, exe_path.display());
+                                        debug!(
+                                            "Found {} in shell PATH: {}",
+                                            cli_name,
+                                            exe_path.display()
+                                        );
                                         return Some(exe_path);
                                     }
                                 }
@@ -287,10 +300,10 @@ impl InstallationManager {
                 }
             }
         }
-        
+
         None
     }
-    
+
     /// Get version from an executable path
     fn get_version_from_path(&self, exe_path: &Path, cli_name: &str) -> Option<String> {
         // Special case for copilot - check via 'copilot --version'
@@ -307,10 +320,13 @@ impl InstallationManager {
                     }
                 }
             }
-            
+
             // Fallback: check if gh copilot extension exists
             if let Some(gh_path) = self.find_executable("gh") {
-                if let Ok(output) = Command::new(gh_path).args(&["copilot", "--version"]).output() {
+                if let Ok(output) = Command::new(gh_path)
+                    .args(&["copilot", "--version"])
+                    .output()
+                {
                     if output.status.success() {
                         let version_str = String::from_utf8_lossy(&output.stdout);
                         let version = self.extract_version(&version_str);
@@ -321,7 +337,7 @@ impl InstallationManager {
                     }
                 }
             }
-            
+
             return None;
         }
 
@@ -343,7 +359,12 @@ impl InstallationManager {
                     }
                 }
                 Err(e) => {
-                    debug!("Failed to execute '{}' with flag '{}': {}", exe_path.display(), flag, e);
+                    debug!(
+                        "Failed to execute '{}' with flag '{}': {}",
+                        exe_path.display(),
+                        flag,
+                        e
+                    );
                 }
             }
         }
@@ -592,9 +613,13 @@ Verify installation:
                     .status()
                     .map_err(|e| anyhow!("Failed to run Cursor install: {}", e))?;
                 if status.success() {
-                    Ok(InstallResult::success("Cursor installed. Restart terminal."))
+                    Ok(InstallResult::success(
+                        "Cursor installed. Restart terminal.",
+                    ))
                 } else {
-                    Ok(InstallResult::failure("Cursor install script exited with error"))
+                    Ok(InstallResult::failure(
+                        "Cursor install script exited with error",
+                    ))
                 }
             }
             OperatingSystem::Windows => {
@@ -610,9 +635,13 @@ Verify installation:
                     .status()
                     .map_err(|e| anyhow!("Failed to run Cursor install: {}", e))?;
                 if status.success() {
-                    Ok(InstallResult::success("Cursor installed. Restart terminal."))
+                    Ok(InstallResult::success(
+                        "Cursor installed. Restart terminal.",
+                    ))
                 } else {
-                    Ok(InstallResult::failure("Cursor install script exited with error"))
+                    Ok(InstallResult::failure(
+                        "Cursor install script exited with error",
+                    ))
                 }
             }
             OperatingSystem::Unknown => Ok(InstallResult::failure("Unsupported operating system")),
@@ -628,7 +657,9 @@ Verify installation:
             .status()
             .map_err(|e| anyhow!("Failed to run Codex install: {}", e))?;
         if status.success() {
-            Ok(InstallResult::success("Codex installed. Run 'codex login' to authenticate."))
+            Ok(InstallResult::success(
+                "Codex installed. Run 'codex login' to authenticate.",
+            ))
         } else {
             Ok(InstallResult::failure("npm install @openai/codex failed"))
         }
@@ -645,9 +676,13 @@ Verify installation:
                     .status()
                     .map_err(|e| anyhow!("Failed to run Claude install: {}", e))?;
                 if status.success() {
-                    Ok(InstallResult::success("Claude CLI installed. Run 'claude auth login'."))
+                    Ok(InstallResult::success(
+                        "Claude CLI installed. Run 'claude auth login'.",
+                    ))
                 } else {
-                    Ok(InstallResult::failure("Claude install script exited with error"))
+                    Ok(InstallResult::failure(
+                        "Claude install script exited with error",
+                    ))
                 }
             }
             OperatingSystem::Windows => {
@@ -663,9 +698,13 @@ Verify installation:
                     .status()
                     .map_err(|e| anyhow!("Failed to run Claude install: {}", e))?;
                 if status.success() {
-                    Ok(InstallResult::success("Claude CLI installed. Run 'claude auth login'."))
+                    Ok(InstallResult::success(
+                        "Claude CLI installed. Run 'claude auth login'.",
+                    ))
                 } else {
-                    Ok(InstallResult::failure("Claude install script exited with error"))
+                    Ok(InstallResult::failure(
+                        "Claude install script exited with error",
+                    ))
                 }
             }
             OperatingSystem::Unknown => Ok(InstallResult::failure("Unsupported operating system")),
@@ -681,9 +720,13 @@ Verify installation:
             .status()
             .map_err(|e| anyhow!("Failed to run Gemini install: {}", e))?;
         if status.success() {
-            Ok(InstallResult::success("Gemini CLI installed. Run 'gemini' and Login with Google."))
+            Ok(InstallResult::success(
+                "Gemini CLI installed. Run 'gemini' and Login with Google.",
+            ))
         } else {
-            Ok(InstallResult::failure("npm install @google/gemini-cli failed"))
+            Ok(InstallResult::failure(
+                "npm install @google/gemini-cli failed",
+            ))
         }
     }
 
@@ -703,9 +746,13 @@ Verify installation:
             .status()
             .map_err(|e| anyhow!("Failed to run Copilot install: {}", e))?;
         if status.success() {
-            Ok(InstallResult::success("Copilot CLI installed. Run 'copilot' and /login."))
+            Ok(InstallResult::success(
+                "Copilot CLI installed. Run 'copilot' and /login.",
+            ))
         } else {
-            Ok(InstallResult::failure("gh extension install github/gh-copilot failed"))
+            Ok(InstallResult::failure(
+                "gh extension install github/gh-copilot failed",
+            ))
         }
     }
 
@@ -761,18 +808,9 @@ mod tests {
     fn test_extract_version() {
         let manager = InstallationManager::new();
 
-        assert_eq!(
-            manager.extract_version("v1.2.3"),
-            "1.2.3"
-        );
-        assert_eq!(
-            manager.extract_version("version 2.0.1"),
-            "2.0.1"
-        );
-        assert_eq!(
-            manager.extract_version("tool v3.4.5-beta"),
-            "3.4.5"
-        );
+        assert_eq!(manager.extract_version("v1.2.3"), "1.2.3");
+        assert_eq!(manager.extract_version("version 2.0.1"), "2.0.1");
+        assert_eq!(manager.extract_version("tool v3.4.5-beta"), "3.4.5");
     }
 
     #[test]

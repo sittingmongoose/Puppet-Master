@@ -92,7 +92,7 @@ impl ParsedOutput {
 pub enum CompletionSignal {
     /// Task completed successfully: `<ralph>COMPLETE</ralph>`
     Complete,
-    
+
     /// Reached gutter (no more work to do): `<ralph>GUTTER</ralph>`
     Gutter,
 }
@@ -123,16 +123,16 @@ pub struct TestResults {
 pub struct TokenUsage {
     /// Input tokens consumed
     pub input_tokens: Option<u64>,
-    
+
     /// Output tokens generated
     pub output_tokens: Option<u64>,
-    
+
     /// Total tokens used
     pub total_tokens: Option<u64>,
-    
+
     /// Cache read tokens (for Claude)
     pub cache_read_tokens: Option<u64>,
-    
+
     /// Cache creation tokens (for Claude)
     pub cache_creation_tokens: Option<u64>,
 }
@@ -151,9 +151,7 @@ impl TokenUsage {
 
     /// Checks if usage is empty (no tokens recorded)
     pub fn is_empty(&self) -> bool {
-        self.input_tokens.is_none() 
-            && self.output_tokens.is_none() 
-            && self.total_tokens.is_none()
+        self.input_tokens.is_none() && self.output_tokens.is_none() && self.total_tokens.is_none()
     }
 }
 
@@ -162,10 +160,10 @@ impl TokenUsage {
 pub struct PlatformError {
     /// Error message text
     pub message: String,
-    
+
     /// Categorized error type
     pub category: ErrorCategory,
-    
+
     /// Whether error is recoverable
     pub recoverable: bool,
 }
@@ -186,25 +184,25 @@ impl PlatformError {
 pub enum ErrorCategory {
     /// Rate limit exceeded
     RateLimit,
-    
+
     /// Quota/usage limit exceeded
     QuotaExceeded,
-    
+
     /// Authentication or authorization failure
     AuthFailure,
-    
+
     /// Network connectivity issue
     NetworkError,
-    
+
     /// Model or API error
     ModelError,
-    
+
     /// Tool execution error
     ToolError,
-    
+
     /// Parse error
     ParseError,
-    
+
     /// Unknown or uncategorized error
     Unknown,
 }
@@ -213,17 +211,25 @@ impl ErrorCategory {
     /// Detects error category from error message text
     pub fn detect(message: &str) -> Self {
         let msg_lower = message.to_lowercase();
-        
+
         if msg_lower.contains("rate limit") || msg_lower.contains("too many requests") {
             Self::RateLimit
-        } else if msg_lower.contains("quota") || msg_lower.contains("usage limit") 
-            || msg_lower.contains("insufficient quota") {
+        } else if msg_lower.contains("quota")
+            || msg_lower.contains("usage limit")
+            || msg_lower.contains("insufficient quota")
+        {
             Self::QuotaExceeded
-        } else if msg_lower.contains("auth") || msg_lower.contains("unauthorized") 
-            || msg_lower.contains("forbidden") || msg_lower.contains("api key") {
+        } else if msg_lower.contains("auth")
+            || msg_lower.contains("unauthorized")
+            || msg_lower.contains("forbidden")
+            || msg_lower.contains("api key")
+        {
             Self::AuthFailure
-        } else if msg_lower.contains("network") || msg_lower.contains("connection") 
-            || msg_lower.contains("timeout") || msg_lower.contains("unreachable") {
+        } else if msg_lower.contains("network")
+            || msg_lower.contains("connection")
+            || msg_lower.contains("timeout")
+            || msg_lower.contains("unreachable")
+        {
             Self::NetworkError
         } else if msg_lower.contains("model") || msg_lower.contains("invalid model") {
             Self::ModelError
@@ -246,7 +252,7 @@ impl ErrorCategory {
 pub trait OutputParser: Send + Sync {
     /// Parses stdout and stderr from platform CLI execution
     fn parse(&self, stdout: &str, stderr: &str) -> ParsedOutput;
-    
+
     /// Returns the platform this parser handles
     fn platform(&self) -> Platform;
 }
@@ -258,7 +264,7 @@ impl ParsingUtils {
     /// Extracts file paths from text using common patterns
     pub fn extract_file_paths(text: &str) -> Vec<String> {
         let mut paths = HashSet::new();
-        
+
         // Match common file path patterns
         let patterns = [
             // Unix-style absolute paths
@@ -268,7 +274,7 @@ impl ParsingUtils {
             // Common source file patterns
             r"(?:[a-zA-Z0-9_\-./]+\.(?:rs|js|ts|py|go|java|cpp|c|h|hpp|md|json|yaml|yml|toml))",
         ];
-        
+
         for pattern in &patterns {
             if let Ok(re) = Regex::new(pattern) {
                 for cap in re.captures_iter(text) {
@@ -282,17 +288,17 @@ impl ParsingUtils {
                 }
             }
         }
-        
+
         paths.into_iter().collect()
     }
-    
+
     /// Attempts to parse JSON from text
     pub fn try_parse_json(text: &str) -> Option<serde_json::Value> {
         // Try direct parse
         if let Ok(json) = serde_json::from_str(text) {
             return Some(json);
         }
-        
+
         // Try to find JSON in text (look for {...} or [...])
         if let Some(start) = text.find('{') {
             if let Some(end) = text.rfind('}') {
@@ -301,7 +307,7 @@ impl ParsingUtils {
                 }
             }
         }
-        
+
         if let Some(start) = text.find('[') {
             if let Some(end) = text.rfind(']') {
                 if let Ok(json) = serde_json::from_str(&text[start..=end]) {
@@ -309,22 +315,26 @@ impl ParsingUtils {
                 }
             }
         }
-        
+
         None
     }
-    
+
     /// Extracts learnings/insights from output (best-effort)
     pub fn extract_learnings(text: &str) -> Vec<String> {
-        Self::extract_section_items(text, &["learnings", "insights"], &[
-            "files changed",
-            "changed files",
-            "tests",
-            "test results",
-            "token usage",
-            "tokens",
-            "errors",
-            "stack trace",
-        ])
+        Self::extract_section_items(
+            text,
+            &["learnings", "insights"],
+            &[
+                "files changed",
+                "changed files",
+                "tests",
+                "test results",
+                "token usage",
+                "tokens",
+                "errors",
+                "stack trace",
+            ],
+        )
     }
 
     /// Extracts a files-changed list from output (best-effort)
@@ -332,15 +342,19 @@ impl ParsingUtils {
         let mut files = HashSet::new();
 
         // Explicit sections
-        for item in Self::extract_section_items(text, &["files changed", "changed files"], &[
-            "learnings",
-            "insights",
-            "tests",
-            "test results",
-            "token usage",
-            "tokens",
-            "errors",
-        ]) {
+        for item in Self::extract_section_items(
+            text,
+            &["files changed", "changed files"],
+            &[
+                "learnings",
+                "insights",
+                "tests",
+                "test results",
+                "token usage",
+                "tokens",
+                "errors",
+            ],
+        ) {
             for f in Self::extract_file_paths(&item) {
                 files.insert(f);
             }
@@ -363,7 +377,9 @@ impl ParsingUtils {
         }
 
         // Git status / porcelain
-        if let Ok(re) = Regex::new(r"(?m)^(?:modified:|new file:|deleted:|renamed:|copied:)\s+(\S+)") {
+        if let Ok(re) =
+            Regex::new(r"(?m)^(?:modified:|new file:|deleted:|renamed:|copied:)\s+(\S+)")
+        {
             for cap in re.captures_iter(text) {
                 if let Some(m) = cap.get(1) {
                     files.insert(m.as_str().to_string());
@@ -568,7 +584,8 @@ impl ParsingUtils {
             return false;
         }
         let s = trimmed.trim_start();
-        line.starts_with(' ') || line.starts_with('\t')
+        line.starts_with(' ')
+            || line.starts_with('\t')
             || s.starts_with("at ")
             || s.starts_with("Caused by:")
             || s.starts_with("stack backtrace")
@@ -579,7 +596,11 @@ impl ParsingUtils {
             || s.starts_with("help:")
     }
 
-    fn extract_section_items(text: &str, section_keywords: &[&str], stop_keywords: &[&str]) -> Vec<String> {
+    fn extract_section_items(
+        text: &str,
+        section_keywords: &[&str],
+        stop_keywords: &[&str],
+    ) -> Vec<String> {
         let lines: Vec<&str> = text.lines().collect();
         let mut start = None;
 
@@ -686,7 +707,6 @@ impl ParsingUtils {
     }
 }
 
-
 // ============================================================================
 // Platform-specific parsers
 // ============================================================================
@@ -698,33 +718,33 @@ impl OutputParser for CursorOutputParser {
     fn platform(&self) -> Platform {
         Platform::Cursor
     }
-    
+
     fn parse(&self, stdout: &str, stderr: &str) -> ParsedOutput {
         let mut output = ParsedOutput::new(stdout.to_string());
-        
+
         // Detect completion signal
         output.completion_signal = CompletionSignal::detect(stdout);
-        
+
         // Try to parse JSON output (Cursor supports --output-format json)
         if let Some(json) = ParsingUtils::try_parse_json(stdout) {
             output.json_response = Some(json.clone());
-            
+
             // Extract token usage from JSON
             if let Some(usage) = json.get("usage") {
                 let mut token_usage = TokenUsage::default();
-                
+
                 if let Some(input) = usage.get("input_tokens").and_then(|v| v.as_u64()) {
                     token_usage.input_tokens = Some(input);
                 }
                 if let Some(output_tok) = usage.get("output_tokens").and_then(|v| v.as_u64()) {
                     token_usage.output_tokens = Some(output_tok);
                 }
-                
+
                 if !token_usage.is_empty() {
                     output.token_usage = Some(token_usage);
                 }
             }
-            
+
             // Extract files changed
             if let Some(files) = json.get("files_changed").and_then(|v| v.as_array()) {
                 output.files_changed = files
@@ -763,37 +783,43 @@ impl OutputParser for ClaudeOutputParser {
     fn platform(&self) -> Platform {
         Platform::Claude
     }
-    
+
     fn parse(&self, stdout: &str, stderr: &str) -> ParsedOutput {
         let mut output = ParsedOutput::new(stdout.to_string());
-        
+
         // Detect completion signal
         output.completion_signal = CompletionSignal::detect(stdout);
-        
+
         // Try to parse JSON output (Claude supports --output-format json)
         if let Some(json) = ParsingUtils::try_parse_json(stdout) {
             output.json_response = Some(json.clone());
-            
+
             // Extract token usage from result.usage
             if let Some(result) = json.get("result") {
                 if let Some(usage) = result.get("usage") {
                     let mut token_usage = TokenUsage::default();
-                    
+
                     if let Some(input) = usage.get("input_tokens").and_then(|v| v.as_u64()) {
                         token_usage.input_tokens = Some(input);
                     }
                     if let Some(output_tok) = usage.get("output_tokens").and_then(|v| v.as_u64()) {
                         token_usage.output_tokens = Some(output_tok);
                     }
-                    
+
                     // Claude-specific cache tokens
-                    if let Some(cache_read) = usage.get("cache_read_input_tokens").and_then(|v| v.as_u64()) {
+                    if let Some(cache_read) = usage
+                        .get("cache_read_input_tokens")
+                        .and_then(|v| v.as_u64())
+                    {
                         token_usage.cache_read_tokens = Some(cache_read);
                     }
-                    if let Some(cache_create) = usage.get("cache_creation_input_tokens").and_then(|v| v.as_u64()) {
+                    if let Some(cache_create) = usage
+                        .get("cache_creation_input_tokens")
+                        .and_then(|v| v.as_u64())
+                    {
                         token_usage.cache_creation_tokens = Some(cache_create);
                     }
-                    
+
                     if !token_usage.is_empty() {
                         output.token_usage = Some(token_usage);
                     }
@@ -824,41 +850,44 @@ impl OutputParser for CodexOutputParser {
     fn platform(&self) -> Platform {
         Platform::Codex
     }
-    
+
     fn parse(&self, stdout: &str, stderr: &str) -> ParsedOutput {
         let mut output = ParsedOutput::new(stdout.to_string());
-        
+
         // Detect completion signal
         output.completion_signal = CompletionSignal::detect(stdout);
-        
+
         // Codex outputs JSONL events (one JSON object per line with --json flag)
         let mut total_input_tokens = 0u64;
         let mut total_output_tokens = 0u64;
         let mut has_usage = false;
-        
+
         for line in stdout.lines() {
             if let Some(json) = ParsingUtils::try_parse_json(line) {
                 // Look for Turn events with usage information
                 if let Some(event_type) = json.get("type").and_then(|v| v.as_str()) {
                     if event_type == "Turn" || event_type == "turn" {
                         if let Some(usage) = json.get("usage") {
-                            if let Some(input) = usage.get("input_tokens").and_then(|v| v.as_u64()) {
+                            if let Some(input) = usage.get("input_tokens").and_then(|v| v.as_u64())
+                            {
                                 total_input_tokens += input;
                                 has_usage = true;
                             }
-                            if let Some(output_tok) = usage.get("output_tokens").and_then(|v| v.as_u64()) {
+                            if let Some(output_tok) =
+                                usage.get("output_tokens").and_then(|v| v.as_u64())
+                            {
                                 total_output_tokens += output_tok;
                                 has_usage = true;
                             }
                         }
                     }
                 }
-                
+
                 // Store last JSON response
                 output.json_response = Some(json);
             }
         }
-        
+
         if has_usage {
             output.token_usage = Some(TokenUsage::new(total_input_tokens, total_output_tokens));
         }
@@ -886,31 +915,32 @@ impl OutputParser for GeminiOutputParser {
     fn platform(&self) -> Platform {
         Platform::Gemini
     }
-    
+
     fn parse(&self, stdout: &str, stderr: &str) -> ParsedOutput {
         let mut output = ParsedOutput::new(stdout.to_string());
-        
+
         // Detect completion signal
         output.completion_signal = CompletionSignal::detect(stdout);
-        
+
         // Try to parse JSON output (Gemini supports --output-format json)
         if let Some(json) = ParsingUtils::try_parse_json(stdout) {
             output.json_response = Some(json.clone());
-            
+
             // Extract token usage from usageMetadata
             if let Some(usage) = json.get("usageMetadata") {
                 let mut token_usage = TokenUsage::default();
-                
+
                 if let Some(input) = usage.get("promptTokenCount").and_then(|v| v.as_u64()) {
                     token_usage.input_tokens = Some(input);
                 }
-                if let Some(output_tok) = usage.get("candidatesTokenCount").and_then(|v| v.as_u64()) {
+                if let Some(output_tok) = usage.get("candidatesTokenCount").and_then(|v| v.as_u64())
+                {
                     token_usage.output_tokens = Some(output_tok);
                 }
                 if let Some(total) = usage.get("totalTokenCount").and_then(|v| v.as_u64()) {
                     token_usage.total_tokens = Some(total);
                 }
-                
+
                 if !token_usage.is_empty() {
                     output.token_usage = Some(token_usage);
                 }
@@ -940,16 +970,16 @@ impl OutputParser for CopilotOutputParser {
     fn platform(&self) -> Platform {
         Platform::Copilot
     }
-    
+
     fn parse(&self, stdout: &str, stderr: &str) -> ParsedOutput {
         let mut output = ParsedOutput::new(stdout.to_string());
-        
+
         // Detect completion signal
         output.completion_signal = CompletionSignal::detect(stdout);
-        
+
         // Copilot (GitHub CLI) doesn't have structured JSON output
         // Use regex-based extraction
-        
+
         // Try to extract token counts from text patterns
         if let Ok(re) = Regex::new(r"(?i)(\d+)\s*tokens?\s*(?:used|consumed)") {
             if let Some(cap) = re.captures(stdout) {
@@ -982,7 +1012,7 @@ impl OutputParser for CopilotOutputParser {
                 true,
             ));
         }
-        
+
         output
     }
 }
@@ -1113,7 +1143,7 @@ index 0000000..1111111 100644
         let parser = CursorOutputParser;
         let stdout = r#"{"usage": {"input_tokens": 150, "output_tokens": 75}, "files_changed": ["test.rs"]}"#;
         let output = parser.parse(stdout, "");
-        
+
         assert!(output.json_response.is_some());
         assert!(output.token_usage.is_some());
         assert_eq!(output.files_changed, vec!["test.rs"]);
@@ -1124,7 +1154,7 @@ index 0000000..1111111 100644
         let parser = ClaudeOutputParser;
         let stdout = r#"{"result": {"usage": {"input_tokens": 200, "output_tokens": 100, "cache_read_input_tokens": 50}}}"#;
         let output = parser.parse(stdout, "");
-        
+
         assert!(output.token_usage.is_some());
         let usage = output.token_usage.unwrap();
         assert_eq!(usage.input_tokens, Some(200));

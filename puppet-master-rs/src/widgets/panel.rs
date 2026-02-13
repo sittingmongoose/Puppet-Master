@@ -3,10 +3,10 @@
 //! Provides styled panel containers that follow the retro-futuristic design language
 //! with sharp borders, hard shadows, and paper textures.
 
-use iced::widget::{container, text, column, row, Container, Column, Space};
-use iced::{Element, Length, Padding, Border, Shadow, Vector, Alignment};
-use iced::font::{Font, Weight};
 use crate::theme::{AppTheme, colors, styles, tokens};
+use iced::font::{Font, Weight};
+use iced::widget::{Column, Container, Space, column, container, row, text};
+use iced::{Alignment, Border, Element, Length, Padding, Shadow, Vector};
 
 /// Create a styled panel container with cross-hatch shadow and themed background
 ///
@@ -18,9 +18,7 @@ use crate::theme::{AppTheme, colors, styles, tokens};
 /// let content = text("Panel content");
 /// let styled = panel(content);
 /// ```
-pub fn panel<'a, Message>(
-    content: impl Into<Element<'a, Message>>,
-) -> Container<'a, Message>
+pub fn panel<'a, Message>(content: impl Into<Element<'a, Message>>) -> Container<'a, Message>
 where
     Message: Clone + 'a,
 {
@@ -102,17 +100,13 @@ where
 {
     let title_str = title.into();
     let theme_copy = *theme;
-    
+
     let header_content = column![
         // Header with title
-        container(
-            text(title_str)
-                .size(tokens::font_size::LG)
-                .font(Font {
-                    weight: Weight::Bold,
-                    ..Font::DEFAULT
-                })
-        )
+        container(text(title_str).size(tokens::font_size::LG).font(Font {
+            weight: Weight::Bold,
+            ..Font::DEFAULT
+        }))
         .padding(Padding::ZERO.bottom(tokens::spacing::SM))
         .width(Length::Fill)
         .style(move |_theme: &iced::Theme| {
@@ -126,15 +120,15 @@ where
                 ..container::Style::default()
             }
         }),
-        
         // Spacer
-        Space::new().width(Length::Fill).height(Length::Fixed(tokens::spacing::MD)),
-        
+        Space::new()
+            .width(Length::Fill)
+            .height(Length::Fixed(tokens::spacing::MD)),
         // Content
         content.into(),
     ]
     .spacing(0);
-    
+
     themed_panel(header_content, theme).into()
 }
 
@@ -163,23 +157,21 @@ where
 {
     let title_str = title.into();
     let theme_copy = *theme;
-    
+
     let header = container(
         row![
             // Title
-            text(title_str)
-                .size(tokens::font_size::LG)
-                .font(Font {
-                    weight: Weight::Bold,
-                    ..Font::DEFAULT
-                }),
+            text(title_str).size(tokens::font_size::LG).font(Font {
+                weight: Weight::Bold,
+                ..Font::DEFAULT
+            }),
             // Spacer
             Space::new().width(Length::Fill),
             // Actions
             header_actions.into(),
         ]
         .spacing(tokens::spacing::SM)
-        .align_y(Alignment::Center)
+        .align_y(Alignment::Center),
     )
     .padding(Padding::ZERO.bottom(tokens::spacing::SM))
     .width(Length::Fill)
@@ -194,14 +186,16 @@ where
             ..container::Style::default()
         }
     });
-    
+
     let panel_content = column![
         header,
-        Space::new().width(Length::Fill).height(Length::Fixed(tokens::spacing::MD)),
+        Space::new()
+            .width(Length::Fill)
+            .height(Length::Fixed(tokens::spacing::MD)),
         content.into(),
     ]
     .spacing(0);
-    
+
     themed_panel(panel_content, theme).into()
 }
 
@@ -223,7 +217,7 @@ where
     Message: Clone + 'a,
 {
     let theme_copy = *theme;
-    
+
     // Inner container with dashed border
     let inner = container(content)
         .padding(tokens::spacing::SM)
@@ -239,7 +233,7 @@ where
                 ..container::Style::default()
             }
         });
-    
+
     // Wrap in themed panel
     themed_panel(inner, theme)
 }
@@ -373,7 +367,10 @@ where
 /// let content = text("Body content");
 /// let panel = panel_with_header("Settings", content);
 /// ```
-#[deprecated(since = "0.1.1", note = "Use panel_with_title or panel_with_header instead")]
+#[deprecated(
+    since = "0.1.1",
+    note = "Use panel_with_title or panel_with_header instead"
+)]
 pub fn panel_with_header_legacy<'a, Message>(
     title: impl Into<String>,
     content: impl Into<Element<'a, Message>>,
@@ -382,17 +379,13 @@ where
     Message: Clone + 'a,
 {
     let title_str = title.into();
-    
+
     column![
         // Header with title
-        container(
-            text(title_str)
-                .size(20)
-                .font(Font {
-                    weight: Weight::Bold,
-                    ..Font::DEFAULT
-                })
-        )
+        container(text(title_str).size(20).font(Font {
+            weight: Weight::Bold,
+            ..Font::DEFAULT
+        }))
         .padding(Padding::ZERO.bottom(styles::SPACING_SM))
         .width(Length::Fill)
         .style(|_theme: &iced::Theme| container::Style {
@@ -403,10 +396,10 @@ where
             },
             ..container::Style::default()
         }),
-        
         // Spacer
-        Space::new().width(Length::Fill).height(Length::Fixed(styles::SPACING_MD)),
-        
+        Space::new()
+            .width(Length::Fill)
+            .height(Length::Fixed(styles::SPACING_MD)),
         // Content
         content.into(),
     ]
@@ -419,7 +412,10 @@ where
 ///
 /// This function is kept for backward compatibility. New code should use
 /// `panel_with_title` or `panel_with_header` instead.
-#[deprecated(since = "0.1.1", note = "Use panel_with_title or panel_with_header instead")]
+#[deprecated(
+    since = "0.1.1",
+    note = "Use panel_with_title or panel_with_header instead"
+)]
 pub fn themed_panel_with_header<'a, Message>(
     title: impl Into<String>,
     content: impl Into<Element<'a, Message>>,
@@ -430,4 +426,3 @@ where
 {
     panel_with_title(theme, title, content)
 }
-

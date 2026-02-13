@@ -18,6 +18,9 @@ pub fn validate_config(config: &PuppetMasterConfig) -> Vec<ValidationError> {
     // Validate tier configs
     validate_tiers(&config.tiers, &mut errors);
 
+    // Validate interview config
+    validate_interview(&config.interview, &mut errors);
+
     // Validate paths
     validate_paths(&config.paths, &mut errors);
 
@@ -104,6 +107,67 @@ fn validate_tier_config(
             errors.push(ValidationError::InvalidValue {
                 field: format!("tiers.{}.timeout_ms", name),
                 message: "timeout_ms should not exceed 3600000 (1 hour)".to_string(),
+            });
+        }
+    }
+}
+
+fn validate_interview(config: &crate::types::InterviewConfig, errors: &mut Vec<ValidationError>) {
+    if config.platform.trim().is_empty() {
+        errors.push(ValidationError::InvalidValue {
+            field: "interview.platform".to_string(),
+            message: "platform cannot be empty".to_string(),
+        });
+    }
+
+    if config.model.trim().is_empty() {
+        errors.push(ValidationError::InvalidValue {
+            field: "interview.model".to_string(),
+            message: "model cannot be empty".to_string(),
+        });
+    }
+
+    if config.output_dir.trim().is_empty() {
+        errors.push(ValidationError::InvalidValue {
+            field: "interview.output_dir".to_string(),
+            message: "output_dir cannot be empty".to_string(),
+        });
+    }
+
+    if !(3..=15).contains(&config.max_questions_per_phase) {
+        errors.push(ValidationError::InvalidValue {
+            field: "interview.max_questions_per_phase".to_string(),
+            message: "max_questions_per_phase must be between 3 and 15".to_string(),
+        });
+    }
+
+    let reasoning_level = config.reasoning_level.as_str();
+    if !["low", "medium", "high", "max"].contains(&reasoning_level) {
+        errors.push(ValidationError::InvalidValue {
+            field: "interview.reasoning_level".to_string(),
+            message: "reasoning_level must be low, medium, high, or max".to_string(),
+        });
+    }
+
+    let interaction_mode = config.interaction_mode.as_str();
+    if !["expert", "eli5"].contains(&interaction_mode) {
+        errors.push(ValidationError::InvalidValue {
+            field: "interview.interaction_mode".to_string(),
+            message: "interaction_mode must be expert or eli5".to_string(),
+        });
+    }
+
+    for (index, backup) in config.backup_platforms.iter().enumerate() {
+        if backup.platform.trim().is_empty() {
+            errors.push(ValidationError::InvalidValue {
+                field: format!("interview.backup_platforms[{index}].platform"),
+                message: "backup platform cannot be empty".to_string(),
+            });
+        }
+        if backup.model.trim().is_empty() {
+            errors.push(ValidationError::InvalidValue {
+                field: format!("interview.backup_platforms[{index}].model"),
+                message: "backup model cannot be empty".to_string(),
             });
         }
     }

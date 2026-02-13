@@ -133,7 +133,10 @@ impl CriterionToScriptConverter {
         }
     }
 
-    fn generate_regex_script(&self, criterion: &VerificationCriterion) -> Result<GeneratedScript, String> {
+    fn generate_regex_script(
+        &self,
+        criterion: &VerificationCriterion,
+    ) -> Result<GeneratedScript, String> {
         let content = format!(
             r#"{}
 set -e
@@ -175,7 +178,10 @@ fi
         })
     }
 
-    fn generate_command_script(&self, criterion: &VerificationCriterion) -> Result<GeneratedScript, String> {
+    fn generate_command_script(
+        &self,
+        criterion: &VerificationCriterion,
+    ) -> Result<GeneratedScript, String> {
         let content = format!(
             r#"{}
 set -e
@@ -206,7 +212,10 @@ fi
         })
     }
 
-    fn generate_file_check_script(&self, criterion: &VerificationCriterion) -> Result<GeneratedScript, String> {
+    fn generate_file_check_script(
+        &self,
+        criterion: &VerificationCriterion,
+    ) -> Result<GeneratedScript, String> {
         let content = format!(
             r#"{}
 set -e
@@ -237,8 +246,15 @@ fi
         })
     }
 
-    fn generate_api_script(&self, criterion: &VerificationCriterion) -> Result<GeneratedScript, String> {
-        let expected_status = criterion.options.get("status").unwrap_or(&"200".to_string()).clone();
+    fn generate_api_script(
+        &self,
+        criterion: &VerificationCriterion,
+    ) -> Result<GeneratedScript, String> {
+        let expected_status = criterion
+            .options
+            .get("status")
+            .unwrap_or(&"200".to_string())
+            .clone();
         let content = format!(
             r#"{}
 set -e
@@ -275,7 +291,10 @@ fi
         })
     }
 
-    fn generate_browser_script(&self, criterion: &VerificationCriterion) -> Result<GeneratedScript, String> {
+    fn generate_browser_script(
+        &self,
+        criterion: &VerificationCriterion,
+    ) -> Result<GeneratedScript, String> {
         let content = format!(
             r#"{}
 
@@ -325,7 +344,10 @@ if __name__ == "__main__":
         })
     }
 
-    fn generate_ai_script(&self, criterion: &VerificationCriterion) -> Result<GeneratedScript, String> {
+    fn generate_ai_script(
+        &self,
+        criterion: &VerificationCriterion,
+    ) -> Result<GeneratedScript, String> {
         let content = format!(
             r#"{}
 set -e
@@ -351,7 +373,10 @@ exit 0
         })
     }
 
-    fn generate_custom_script(&self, criterion: &VerificationCriterion) -> Result<GeneratedScript, String> {
+    fn generate_custom_script(
+        &self,
+        criterion: &VerificationCriterion,
+    ) -> Result<GeneratedScript, String> {
         let content = format!(
             r#"{}
 set -e
@@ -421,10 +446,8 @@ mod tests {
 
     #[test]
     fn test_generate_regex_script() {
-        let converter = CriterionToScriptConverter::new(
-            PathBuf::from("/tmp/scripts"),
-            ScriptType::Shell,
-        );
+        let converter =
+            CriterionToScriptConverter::new(PathBuf::from("/tmp/scripts"), ScriptType::Shell);
 
         let criterion = VerificationCriterion::new(
             "REG-001",
@@ -441,10 +464,8 @@ mod tests {
 
     #[test]
     fn test_generate_file_check_script() {
-        let converter = CriterionToScriptConverter::new(
-            PathBuf::from("/tmp/scripts"),
-            ScriptType::Shell,
-        );
+        let converter =
+            CriterionToScriptConverter::new(PathBuf::from("/tmp/scripts"), ScriptType::Shell);
 
         let criterion = VerificationCriterion::new(
             "FILE-001",
@@ -460,10 +481,8 @@ mod tests {
 
     #[test]
     fn test_generate_command_script() {
-        let converter = CriterionToScriptConverter::new(
-            PathBuf::from("/tmp/scripts"),
-            ScriptType::Shell,
-        );
+        let converter =
+            CriterionToScriptConverter::new(PathBuf::from("/tmp/scripts"), ScriptType::Shell);
 
         let criterion = VerificationCriterion::new(
             "CMD-001",

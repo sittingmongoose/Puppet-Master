@@ -3,7 +3,7 @@
 //! Generates verification criteria for each subtask and creates comprehensive
 //! test suites to validate implementation.
 
-use crate::types::{ParsedRequirements, PRD, Phase, Subtask, Priority};
+use crate::types::{PRD, ParsedRequirements, Phase, Priority, Subtask};
 use anyhow::Result;
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
@@ -173,7 +173,9 @@ impl TestPlanGenerator {
         for (idx, section) in requirements.sections.iter().enumerate() {
             let suite = Self::generate_suite_from_section(section, idx)?;
             total_tests += suite.tests.len() as u32;
-            total_minutes += suite.tests.iter()
+            total_minutes += suite
+                .tests
+                .iter()
                 .map(|t| t.estimated_seconds as f64 / 60.0)
                 .sum::<f64>();
             test_suites.push(suite);
@@ -198,7 +200,9 @@ impl TestPlanGenerator {
         for phase in &prd.phases {
             let suite = Self::generate_suite_from_phase(phase)?;
             total_tests += suite.tests.len() as u32;
-            total_minutes += suite.tests.iter()
+            total_minutes += suite
+                .tests
+                .iter()
                 .map(|t| t.estimated_seconds as f64 / 60.0)
                 .sum::<f64>();
             test_suites.push(suite);
@@ -303,7 +307,7 @@ impl TestPlanGenerator {
         // Create tests from acceptance criteria
         for (idx, criterion) in subtask.acceptance_criteria.iter().enumerate() {
             let verification_type = Self::infer_verification_type(criterion);
-            
+
             tests.push(TestCase {
                 name: format!("{} - Criterion {}", subtask.title, idx + 1),
                 description: criterion.clone(),
@@ -338,8 +342,8 @@ impl TestPlanGenerator {
     /// Check if a line contains testable content.
     fn is_testable_line(line: &str) -> bool {
         let trimmed = line.trim();
-        !trimmed.is_empty() 
-            && (trimmed.starts_with("- ") 
+        !trimmed.is_empty()
+            && (trimmed.starts_with("- ")
                 || trimmed.starts_with("* ")
                 || trimmed.starts_with("+ ")
                 || trimmed.to_lowercase().contains("must")
@@ -349,7 +353,8 @@ impl TestPlanGenerator {
 
     /// Create a test case from a single line.
     fn create_test_from_line(line: &str, index: usize) -> Option<TestCase> {
-        let trimmed = line.trim()
+        let trimmed = line
+            .trim()
             .trim_start_matches("- ")
             .trim_start_matches("* ")
             .trim_start_matches("+ ");
@@ -440,14 +445,14 @@ impl TestPlanGenerator {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::{ParsedRequirements, RequirementsSection, ItemStatus, PRDMetadata};
+    use crate::types::{ItemStatus, PRDMetadata, ParsedRequirements, RequirementsSection};
 
     #[test]
     fn test_generate_from_requirements() {
-        let requirements = ParsedRequirements::new("Test Project")
-            .with_section(RequirementsSection::new(
+        let requirements =
+            ParsedRequirements::new("Test Project").with_section(RequirementsSection::new(
                 "Feature 1",
-                "- Must support feature X\n- Should validate input"
+                "- Must support feature X\n- Should validate input",
             ));
 
         let plan = TestPlanGenerator::generate_from_requirements(&requirements).unwrap();

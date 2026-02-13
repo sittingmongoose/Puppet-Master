@@ -46,7 +46,9 @@ pub use checkpoint_manager::{CheckpointManager, CheckpointManagerConfig, Recover
 pub use complexity_classifier::{
     ClassificationResult, Complexity, ComplexityClassifier, ModelLevel, TaskInfo, TaskType,
 };
-pub use dependency_analyzer::{DependencyAnalyzer, DependencyGraph, DependencyNode, ValidationResult};
+pub use dependency_analyzer::{
+    DependencyAnalyzer, DependencyGraph, DependencyNode, ValidationResult,
+};
 pub use escalation::EscalationEngine;
 pub use execution_engine::ExecutionEngine;
 pub use fresh_spawn::{FreshSpawn, ProcessAudit, SpawnConfig, SpawnResult};
@@ -55,16 +57,19 @@ pub use orchestrator::Orchestrator;
 pub use parallel_executor::{
     ParallelExecutionResult, ParallelExecutor, ParallelExecutorConfig, SubtaskResult,
 };
-pub use platform_router::{PlatformCapabilities, PlatformRouter, PlatformRouterConfig, RoutingDecision};
+pub use platform_router::{
+    PlatformCapabilities, PlatformRouter, PlatformRouterConfig, RoutingDecision,
+};
 pub use prompt_builder::PromptBuilder;
 pub use session_tracker::SessionTracker;
 pub use state_machine::{OrchestratorStateMachine, TierStateMachine};
 pub use state_persistence::{
-    Checkpoint, CheckpointMetadata, CheckpointSummary, CurrentPosition, StatePersistence, TierContext,
+    Checkpoint, CheckpointMetadata, CheckpointSummary, CurrentPosition, StatePersistence,
+    TierContext,
 };
 pub use state_transitions::{
-    can_transition_orchestrator, can_transition_tier, get_valid_next_orchestrator_states,
-    get_valid_next_tier_states, OrchestratorTransition, StateTransitions, TierTransition,
+    OrchestratorTransition, StateTransitions, TierTransition, can_transition_orchestrator,
+    can_transition_tier, get_valid_next_orchestrator_states, get_valid_next_tier_states,
 };
 pub use tier_node::{TierNode, TierTree};
 pub use worker_reviewer::WorkerReviewer;

@@ -111,7 +111,6 @@ pub struct InterviewResult {
     pub critical_count: usize,
 }
 
-
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct AiInterviewPayload {
@@ -267,12 +266,17 @@ fn infer_importance(idx: usize) -> Importance {
 impl RequirementsInterviewer {
     /// Generate interview questions from parsed requirements.
     pub fn generate_questions(requirements: &ParsedRequirements) -> Result<InterviewResult> {
-        info!("Generating interview questions for: {}", requirements.project_name);
+        info!(
+            "Generating interview questions for: {}",
+            requirements.project_name
+        );
 
         let mut all_questions = Vec::new();
 
         // Always ask foundational questions
-        all_questions.extend(Self::generate_foundational_questions(&requirements.project_name));
+        all_questions.extend(Self::generate_foundational_questions(
+            &requirements.project_name,
+        ));
 
         // Analyze each section for gaps
         for section in &requirements.sections {
@@ -288,7 +292,7 @@ impl RequirementsInterviewer {
         // Group questions by category
         let mut questions_by_category: HashMap<QuestionCategory, Vec<InterviewQuestion>> =
             HashMap::new();
-        
+
         for question in &all_questions {
             questions_by_category
                 .entry(question.category)
@@ -384,7 +388,11 @@ impl RequirementsInterviewer {
             event = event.with_tokens(0, tokens);
         }
         if !exec.success {
-            event = event.with_error(exec.error_message.clone().unwrap_or_else(|| "AI interview failed".to_string()));
+            event = event.with_error(
+                exec.error_message
+                    .clone()
+                    .unwrap_or_else(|| "AI interview failed".to_string()),
+            );
         }
         if let Some(tracker) = usage_tracker {
             let _ = tracker.track(event).await;
@@ -424,7 +432,10 @@ impl RequirementsInterviewer {
             HashMap::new();
 
         for q in &questions {
-            questions_by_category.entry(q.category).or_default().push(q.clone());
+            questions_by_category
+                .entry(q.category)
+                .or_default()
+                .push(q.clone());
         }
 
         let critical_count = questions
@@ -444,13 +455,11 @@ impl RequirementsInterviewer {
     fn generate_foundational_questions(project_name: &str) -> Vec<InterviewQuestion> {
         vec![
             InterviewQuestion {
-                question: format!(
-                    "What is the primary goal of the {} project?",
-                    project_name
-                ),
+                question: format!("What is the primary goal of the {} project?", project_name),
                 category: QuestionCategory::Scope,
                 importance: Importance::Critical,
-                context: "Understanding the primary goal helps focus all implementation decisions".to_string(),
+                context: "Understanding the primary goal helps focus all implementation decisions"
+                    .to_string(),
                 suggested_answers: vec![],
                 required: true,
             },
@@ -458,7 +467,8 @@ impl RequirementsInterviewer {
                 question: "Who are the target users or audience for this project?".to_string(),
                 category: QuestionCategory::Scope,
                 importance: Importance::Critical,
-                context: "Knowing the users helps prioritize features and design decisions".to_string(),
+                context: "Knowing the users helps prioritize features and design decisions"
+                    .to_string(),
                 suggested_answers: vec![
                     "Developers".to_string(),
                     "End users".to_string(),
@@ -496,7 +506,7 @@ impl RequirementsInterviewer {
         section: &RequirementsSection,
     ) -> Result<Vec<InterviewQuestion>> {
         debug!("Analyzing section: {}", section.title);
-        
+
         let mut questions = Vec::new();
         let content_lower = section.content.to_lowercase();
 
@@ -524,7 +534,8 @@ impl RequirementsInterviewer {
                 ),
                 category: QuestionCategory::Performance,
                 importance: Importance::Important,
-                context: "Specific performance targets enable proper testing and validation".to_string(),
+                context: "Specific performance targets enable proper testing and validation"
+                    .to_string(),
                 suggested_answers: vec![],
                 required: false,
             });
@@ -595,7 +606,8 @@ impl RequirementsInterviewer {
                 required: true,
             },
             InterviewQuestion {
-                question: "Are there any existing systems or codebases to integrate with?".to_string(),
+                question: "Are there any existing systems or codebases to integrate with?"
+                    .to_string(),
                 category: QuestionCategory::Technical,
                 importance: Importance::Important,
                 context: "Existing systems constrain design and require compatibility".to_string(),
@@ -637,7 +649,8 @@ impl RequirementsInterviewer {
                 required: false,
             },
             InterviewQuestion {
-                question: "What types of testing are needed? (Unit, Integration, E2E, etc.)".to_string(),
+                question: "What types of testing are needed? (Unit, Integration, E2E, etc.)"
+                    .to_string(),
                 category: QuestionCategory::Testing,
                 importance: Importance::Important,
                 context: "Different test types require different infrastructure".to_string(),
@@ -710,7 +723,10 @@ impl RequirementsInterviewer {
     pub fn format_as_prompt(result: &InterviewResult) -> String {
         let mut prompt = String::from("# Requirements Clarification Questions\n\n");
         prompt.push_str(&format!("Total Questions: {}\n", result.total_questions));
-        prompt.push_str(&format!("Critical Questions: {}\n\n", result.critical_count));
+        prompt.push_str(&format!(
+            "Critical Questions: {}\n\n",
+            result.critical_count
+        ));
 
         // Group by category
         for (category, questions) in &result.questions_by_category {
@@ -723,7 +739,12 @@ impl RequirementsInterviewer {
                     Importance::NiceToHave => "🟢 NICE TO HAVE",
                 };
 
-                prompt.push_str(&format!("{}. {} {}\n", idx + 1, importance_marker, question.question));
+                prompt.push_str(&format!(
+                    "{}. {} {}\n",
+                    idx + 1,
+                    importance_marker,
+                    question.question
+                ));
                 prompt.push_str(&format!("   Context: {}\n", question.context));
 
                 if !question.suggested_answers.is_empty() {
@@ -749,38 +770,43 @@ mod tests {
     fn test_generate_foundational_questions() {
         let questions = RequirementsInterviewer::generate_foundational_questions("TestProject");
         assert!(!questions.is_empty());
-        assert!(questions.iter().any(|q| q.importance == Importance::Critical));
+        assert!(
+            questions
+                .iter()
+                .any(|q| q.importance == Importance::Critical)
+        );
     }
 
     #[test]
     fn test_analyze_section_with_performance() {
-        let section = RequirementsSection::new(
-            "Performance",
-            "System must be fast and responsive"
-        );
+        let section = RequirementsSection::new("Performance", "System must be fast and responsive");
 
         let questions = RequirementsInterviewer::analyze_section_for_questions(&section).unwrap();
-        assert!(questions.iter().any(|q| q.category == QuestionCategory::Performance));
+        assert!(
+            questions
+                .iter()
+                .any(|q| q.category == QuestionCategory::Performance)
+        );
     }
 
     #[test]
     fn test_analyze_section_with_security() {
-        let section = RequirementsSection::new(
-            "Security",
-            "System must be secure and protect user data"
-        );
+        let section =
+            RequirementsSection::new("Security", "System must be secure and protect user data");
 
         let questions = RequirementsInterviewer::analyze_section_for_questions(&section).unwrap();
-        assert!(questions.iter().any(|q| q.category == QuestionCategory::Security));
+        assert!(
+            questions
+                .iter()
+                .any(|q| q.category == QuestionCategory::Security)
+        );
     }
 
     #[test]
     fn test_generate_questions() {
-        let requirements = ParsedRequirements::new("TestProject")
-            .with_section(RequirementsSection::new(
-                "Feature 1",
-                "System should handle user authentication"
-            ));
+        let requirements = ParsedRequirements::new("TestProject").with_section(
+            RequirementsSection::new("Feature 1", "System should handle user authentication"),
+        );
 
         let result = RequirementsInterviewer::generate_questions(&requirements).unwrap();
         assert!(result.total_questions > 0);
@@ -806,7 +832,9 @@ mod tests {
         };
 
         result.questions.push(question.clone());
-        result.questions_by_category.insert(QuestionCategory::Scope, vec![question]);
+        result
+            .questions_by_category
+            .insert(QuestionCategory::Scope, vec![question]);
 
         let prompt = RequirementsInterviewer::format_as_prompt(&result);
         assert!(prompt.contains("Test question?"));

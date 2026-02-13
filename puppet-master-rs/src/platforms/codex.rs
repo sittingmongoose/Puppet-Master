@@ -43,7 +43,7 @@
 
 use crate::platforms::{BaseRunner, PlatformRunner};
 use crate::types::{ExecutionRequest, ExecutionResult, Platform};
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use async_trait::async_trait;
 use log::{debug, warn};
 use std::sync::Arc;
@@ -67,10 +67,7 @@ impl CodexRunner {
 
         // Codex config is TOML at ~/.codex/config.toml
         if let Some(home) = directories::BaseDirs::new() {
-            let config_path = home
-                .home_dir()
-                .join(".codex")
-                .join("config.toml");
+            let config_path = home.home_dir().join(".codex").join("config.toml");
 
             if config_path.exists() {
                 if let Ok(content) = tokio::fs::read_to_string(&config_path).await {
@@ -111,44 +108,48 @@ impl PlatformRunner for CodexRunner {
     }
 
     async fn execute(&self, request: &ExecutionRequest) -> Result<ExecutionResult> {
+        use crate::platforms::CompletionSignal as ParserCompletionSignal;
         use crate::platforms::create_parser;
         use crate::types::CompletionSignal as TypesCompletionSignal;
-        use crate::platforms::CompletionSignal as ParserCompletionSignal;
-        
+
         let args = self.build_args(request);
         let mut result = self.base.execute_command(request, args, None).await?;
-        
+
         // Parse output using platform-specific parser
         if let Some(output) = &result.output {
             let parser = create_parser(Platform::Codex);
             let parsed = parser.parse(output, "");
-            
+
             result.files_changed = parsed.files_changed.into_iter().map(|s| s.into()).collect();
             result.learnings = parsed.learnings;
-            
+
             if let Some(token_usage) = parsed.token_usage {
                 result.tokens_used = token_usage.total_tokens;
             }
-            
+
             if let Some(signal) = parsed.completion_signal {
                 result.completion_signal = match signal {
                     ParserCompletionSignal::Complete => TypesCompletionSignal::Complete,
                     ParserCompletionSignal::Gutter => TypesCompletionSignal::Gutter,
                 };
             }
-            
+
             if !parsed.errors.is_empty() {
-                let error_msgs: Vec<String> = parsed.errors.iter()
-                    .map(|e| e.message.clone())
-                    .collect();
+                let error_msgs: Vec<String> =
+                    parsed.errors.iter().map(|e| e.message.clone()).collect();
                 if let Some(existing_error) = &result.error_message {
-                    result.error_message = Some(format!("{}\nParsed errors: {}", existing_error, error_msgs.join("; ")));
+                    result.error_message = Some(format!(
+                        "{}\nParsed errors: {}",
+                        existing_error,
+                        error_msgs.join("; ")
+                    ));
                 } else {
-                    result.error_message = Some(format!("Parsed errors: {}", error_msgs.join("; ")));
+                    result.error_message =
+                        Some(format!("Parsed errors: {}", error_msgs.join("; ")));
                 }
             }
         }
-        
+
         Ok(result)
     }
 
@@ -294,11 +295,9 @@ mod tests {
     async fn test_discover_models() {
         let runner = CodexRunner::new();
         // Use timeout to prevent hanging if codex CLI is not installed
-        let result = tokio::time::timeout(
-            std::time::Duration::from_secs(5),
-            runner.discover_models(),
-        ).await;
-        
+        let result =
+            tokio::time::timeout(std::time::Duration::from_secs(5), runner.discover_models()).await;
+
         match result {
             Ok(models) => {
                 assert!(models.is_ok());

@@ -28,11 +28,12 @@ impl DoctorReporter {
             CheckCategory::Project,
             CheckCategory::Environment,
         ] {
-            let checks: Vec<&CheckReport> = report.checks.iter()
+            let checks: Vec<&CheckReport> = report
+                .checks
+                .iter()
                 .filter(|c| c.category == category)
                 .collect();
             if !checks.is_empty() {
-
                 output.push_str(&format!("--- {:?} Checks ---\n", category));
                 for check in checks {
                     let status = if check.result.passed {
@@ -118,11 +119,12 @@ impl DoctorReporter {
             CheckCategory::Project,
             CheckCategory::Environment,
         ] {
-            let checks: Vec<&CheckReport> = report.checks.iter()
+            let checks: Vec<&CheckReport> = report
+                .checks
+                .iter()
                 .filter(|c| c.category == category)
                 .collect();
             if !checks.is_empty() {
-
                 output.push_str(&format!("## {:?} Checks\n\n", category));
 
                 for check in checks {
@@ -156,26 +158,24 @@ impl DoctorReporter {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::{CheckResult, CheckCategory};
+    use crate::types::{CheckCategory, CheckResult};
     use chrono::Utc;
 
     #[test]
     fn test_format_text() {
         let report = DoctorReport {
-            checks: vec![
-                CheckReport {
-                    name: "test-check".to_string(),
-                    category: CheckCategory::Cli,
-                    description: "A test check".to_string(),
-                    result: CheckResult {
-                        passed: true,
-                        message: "All good".to_string(),
-                        details: None,
-                        can_fix: false,
-                        timestamp: Utc::now(),
-                    },
+            checks: vec![CheckReport {
+                name: "test-check".to_string(),
+                category: CheckCategory::Cli,
+                description: "A test check".to_string(),
+                result: CheckResult {
+                    passed: true,
+                    message: "All good".to_string(),
+                    details: None,
+                    can_fix: false,
+                    timestamp: Utc::now(),
                 },
-            ],
+            }],
             passed: 1,
             failed: 0,
             warnings: 0,

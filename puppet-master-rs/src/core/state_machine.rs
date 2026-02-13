@@ -7,7 +7,7 @@
 //! - Timestamp recording for audit trail
 
 use crate::types::*;
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use chrono::{DateTime, Utc};
 
 /// State transition record for state machines
@@ -35,7 +35,7 @@ impl<S: Clone> StateTransition<S> {
 // ============================================================================
 
 /// Main orchestrator state machine
-/// 
+///
 /// State flow: Idle → Planning → Executing ⇄ Paused → Complete/Error
 #[derive(Debug, Clone)]
 pub struct OrchestratorStateMachine {
@@ -68,30 +68,30 @@ impl OrchestratorStateMachine {
         let new_state = match (&self.current_state, &event) {
             // From Idle
             (OrchestratorState::Idle, OrchestratorEvent::Start) => OrchestratorState::Planning,
-            
+
             // From Planning
             (OrchestratorState::Planning, OrchestratorEvent::PlanComplete) => {
                 OrchestratorState::Executing
             }
             (OrchestratorState::Planning, OrchestratorEvent::Error(_)) => OrchestratorState::Error,
-            
+
             // From Executing
             (OrchestratorState::Executing, OrchestratorEvent::Pause) => OrchestratorState::Paused,
             (OrchestratorState::Executing, OrchestratorEvent::Complete) => {
                 OrchestratorState::Complete
             }
             (OrchestratorState::Executing, OrchestratorEvent::Error(_)) => OrchestratorState::Error,
-            
+
             // From Paused
             (OrchestratorState::Paused, OrchestratorEvent::Resume) => OrchestratorState::Executing,
             (OrchestratorState::Paused, OrchestratorEvent::Stop) => OrchestratorState::Idle,
-            
+
             // From Error
             (OrchestratorState::Error, OrchestratorEvent::Reset) => OrchestratorState::Idle,
-            
+
             // From Complete
             (OrchestratorState::Complete, OrchestratorEvent::Reset) => OrchestratorState::Idle,
-            
+
             // Invalid transitions
             _ => {
                 return Err(anyhow!(
@@ -114,7 +114,7 @@ impl OrchestratorStateMachine {
             event,
             timestamp: Utc::now(),
         };
-        
+
         self.history.push(transition);
         self.current_state = new_state;
     }
@@ -188,7 +188,7 @@ pub enum OrchestratorEvent {
 // ============================================================================
 
 /// Tier execution state machine
-/// 
+///
 /// State flow: Pending → Planning → Running → Gating → Passed/Failed/Escalated
 ///            Running can also transition to Retrying → Running
 #[derive(Debug, Clone)]
@@ -255,14 +255,14 @@ impl TierStateMachine {
         let new_state = match (&self.current_state, &event) {
             // From Pending
             (TierState::Pending, TierEvent::StartPlanning) => TierState::Planning,
-            
+
             // From Planning
             (TierState::Planning, TierEvent::StartExecution) => {
                 self.current_iteration += 1;
                 TierState::Running
             }
             (TierState::Planning, TierEvent::Fail(_)) => TierState::Failed,
-            
+
             // From Running
             (TierState::Running, TierEvent::Complete) => TierState::Gating,
             (TierState::Running, TierEvent::Retry) => {
@@ -284,7 +284,7 @@ impl TierStateMachine {
                 }
             }
             (TierState::Running, TierEvent::Escalate(_)) => TierState::Escalated,
-            
+
             // From Gating
             (TierState::Gating, TierEvent::GatePass) => TierState::Passed,
             (TierState::Gating, TierEvent::GateFail(_)) => {
@@ -295,21 +295,21 @@ impl TierStateMachine {
                 }
             }
             (TierState::Gating, TierEvent::Escalate(_)) => TierState::Escalated,
-            
+
             // From Retrying
             (TierState::Retrying, TierEvent::StartExecution) => {
                 self.current_iteration += 1;
                 TierState::Running
             }
             (TierState::Retrying, TierEvent::Escalate(_)) => TierState::Escalated,
-            
+
             // From Escalated
             (TierState::Escalated, TierEvent::Resume) => TierState::Running,
             (TierState::Escalated, TierEvent::Fail(_)) => TierState::Failed,
-            
+
             // From terminal states, only Reset allowed
             (TierState::Passed | TierState::Failed, TierEvent::Reset) => TierState::Pending,
-            
+
             // Invalid transitions
             _ => {
                 return Err(anyhow!(
@@ -333,25 +333,19 @@ impl TierStateMachine {
             event,
             timestamp: Utc::now(),
         };
-        
+
         self.history.push(transition);
         self.current_state = new_state;
     }
 
     /// Check if tier is in a terminal state
     pub fn is_terminal(&self) -> bool {
-        matches!(
-            self.current_state,
-            TierState::Passed | TierState::Failed
-        )
+        matches!(self.current_state, TierState::Passed | TierState::Failed)
     }
 
     /// Check if tier is running
     pub fn is_running(&self) -> bool {
-        matches!(
-            self.current_state,
-            TierState::Running | TierState::Retrying
-        )
+        matches!(self.current_state, TierState::Running | TierState::Retrying)
     }
 
     /// Check if tier needs escalation
@@ -412,7 +406,7 @@ mod tests {
         let mut sm = OrchestratorStateMachine::new();
         sm.send(OrchestratorEvent::Start).unwrap();
         sm.send(OrchestratorEvent::PlanComplete).unwrap();
-        
+
         sm.send(OrchestratorEvent::Pause).unwrap();
         assert_eq!(sm.current_state(), OrchestratorState::Paused);
         assert!(sm.is_paused());
@@ -428,7 +422,8 @@ mod tests {
         sm.send(OrchestratorEvent::Start).unwrap();
         sm.send(OrchestratorEvent::PlanComplete).unwrap();
 
-        sm.send(OrchestratorEvent::Error("Test error".to_string())).unwrap();
+        sm.send(OrchestratorEvent::Error("Test error".to_string()))
+            .unwrap();
         assert_eq!(sm.current_state(), OrchestratorState::Error);
         assert!(sm.is_error());
 
@@ -500,7 +495,8 @@ mod tests {
         sm.send(TierEvent::StartPlanning).unwrap();
         sm.send(TierEvent::StartExecution).unwrap();
 
-        sm.send(TierEvent::Escalate("Need help".to_string())).unwrap();
+        sm.send(TierEvent::Escalate("Need help".to_string()))
+            .unwrap();
         assert_eq!(sm.current_state(), TierState::Escalated);
         assert!(sm.needs_escalation());
 
@@ -515,7 +511,8 @@ mod tests {
         sm.send(TierEvent::StartExecution).unwrap();
         sm.send(TierEvent::Complete).unwrap();
 
-        sm.send(TierEvent::GateFail("Tests failed".to_string())).unwrap();
+        sm.send(TierEvent::GateFail("Tests failed".to_string()))
+            .unwrap();
         assert_eq!(sm.current_state(), TierState::Retrying);
         assert_eq!(sm.current_iteration(), 1);
     }

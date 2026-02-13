@@ -5,8 +5,8 @@
 
 use anyhow::Result;
 use log::info;
-use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
+use std::sync::atomic::{AtomicBool, Ordering};
 
 /// Global shutdown flag
 static SHUTDOWN: AtomicBool = AtomicBool::new(false);
@@ -18,13 +18,15 @@ fn main() -> Result<()> {
     }
 
     // Initialize logging
-    env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("info"))
-        .init();
+    env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("info")).init();
 
     // Load .env if present
     let _ = dotenv::dotenv();
 
-    info!("RWM Puppet Master v{} starting...", env!("CARGO_PKG_VERSION"));
+    info!(
+        "RWM Puppet Master v{} starting...",
+        env!("CARGO_PKG_VERSION")
+    );
 
     // Set up signal handlers for graceful shutdown
     let shutdown_flag = Arc::new(AtomicBool::new(false));

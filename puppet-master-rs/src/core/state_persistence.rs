@@ -7,7 +7,7 @@
 //! - Atomic writes with backup support
 
 use crate::types::*;
-use anyhow::{anyhow, Context, Result};
+use anyhow::{Context, Result, anyhow};
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
@@ -91,9 +91,8 @@ impl StatePersistence {
     /// * `checkpoint_dir` - Directory for storing checkpoints (default: .puppet-master/checkpoints)
     /// * `max_checkpoints` - Maximum checkpoints to retain (default: 10)
     pub fn new(checkpoint_dir: Option<PathBuf>, max_checkpoints: Option<usize>) -> Self {
-        let checkpoint_dir = checkpoint_dir.unwrap_or_else(|| {
-            PathBuf::from(".puppet-master").join("checkpoints")
-        });
+        let checkpoint_dir =
+            checkpoint_dir.unwrap_or_else(|| PathBuf::from(".puppet-master").join("checkpoints"));
         Self {
             checkpoint_dir,
             max_checkpoints: max_checkpoints.unwrap_or(10),
@@ -113,19 +112,17 @@ impl StatePersistence {
             .context("Failed to create checkpoint directory")?;
 
         // Serialize checkpoint to JSON
-        let json = serde_json::to_string_pretty(checkpoint)
-            .context("Failed to serialize checkpoint")?;
+        let json =
+            serde_json::to_string_pretty(checkpoint).context("Failed to serialize checkpoint")?;
 
         // Write to file atomically using temp file + rename
         let filename = format!("{}.json", checkpoint.id);
         let checkpoint_path = self.checkpoint_dir.join(&filename);
         let temp_path = self.checkpoint_dir.join(format!("{}.tmp", checkpoint.id));
 
-        fs::write(&temp_path, json)
-            .context("Failed to write checkpoint temp file")?;
-        
-        fs::rename(&temp_path, &checkpoint_path)
-            .context("Failed to rename checkpoint file")?;
+        fs::write(&temp_path, json).context("Failed to write checkpoint temp file")?;
+
+        fs::rename(&temp_path, &checkpoint_path).context("Failed to rename checkpoint file")?;
 
         // Clean up old checkpoints
         self.cleanup_old_checkpoints()?;
@@ -148,11 +145,11 @@ impl StatePersistence {
             return Ok(None);
         }
 
-        let json = fs::read_to_string(&checkpoint_path)
-            .context("Failed to read checkpoint file")?;
-        
-        let checkpoint: Checkpoint = serde_json::from_str(&json)
-            .context("Failed to deserialize checkpoint")?;
+        let json =
+            fs::read_to_string(&checkpoint_path).context("Failed to read checkpoint file")?;
+
+        let checkpoint: Checkpoint =
+            serde_json::from_str(&json).context("Failed to deserialize checkpoint")?;
 
         Ok(Some(checkpoint))
     }
@@ -163,8 +160,8 @@ impl StatePersistence {
             return Ok(Vec::new());
         }
 
-        let entries = fs::read_dir(&self.checkpoint_dir)
-            .context("Failed to read checkpoint directory")?;
+        let entries =
+            fs::read_dir(&self.checkpoint_dir).context("Failed to read checkpoint directory")?;
 
         let mut summaries = Vec::new();
 
@@ -207,8 +204,7 @@ impl StatePersistence {
             return Err(anyhow!("Checkpoint not found: {}", id));
         }
 
-        fs::remove_file(&checkpoint_path)
-            .context("Failed to delete checkpoint file")?;
+        fs::remove_file(&checkpoint_path).context("Failed to delete checkpoint file")?;
 
         Ok(())
     }
@@ -216,7 +212,7 @@ impl StatePersistence {
     /// Get the most recent checkpoint
     pub async fn get_latest_checkpoint(&self) -> Result<Option<Checkpoint>> {
         let summaries = self.list_checkpoints().await?;
-        
+
         if let Some(latest) = summaries.first() {
             self.load_checkpoint(&latest.id).await
         } else {
@@ -226,8 +222,8 @@ impl StatePersistence {
 
     /// Clean up old checkpoints, keeping only the most recent N
     fn cleanup_old_checkpoints(&self) -> Result<()> {
-        let entries = fs::read_dir(&self.checkpoint_dir)
-            .context("Failed to read checkpoint directory")?;
+        let entries =
+            fs::read_dir(&self.checkpoint_dir).context("Failed to read checkpoint directory")?;
 
         // Collect all checkpoint files with timestamps
         let mut files: Vec<(PathBuf, DateTime<Utc>)> = Vec::new();
@@ -314,7 +310,7 @@ mod tests {
         let persistence = StatePersistence::new(Some(temp_dir.path().to_path_buf()), None);
 
         let checkpoint = create_test_checkpoint("test-checkpoint-001");
-        
+
         // Save checkpoint
         persistence.save_checkpoint(&checkpoint).await.unwrap();
 
@@ -355,7 +351,10 @@ mod tests {
         persistence.save_checkpoint(&checkpoint).await.unwrap();
 
         // Delete checkpoint
-        persistence.delete_checkpoint("test-checkpoint-delete").await.unwrap();
+        persistence
+            .delete_checkpoint("test-checkpoint-delete")
+            .await
+            .unwrap();
 
         // Verify deleted
         let loaded = persistence
@@ -382,7 +381,7 @@ mod tests {
 
         // Get latest
         let latest = persistence.get_latest_checkpoint().await.unwrap().unwrap();
-        
+
         // Should be the last one saved
         assert_eq!(latest.id, "checkpoint-3");
     }

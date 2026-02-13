@@ -42,7 +42,7 @@ impl DoctorCheck for ConfigFileCheck {
                     message: "Config file found".to_string(),
                     details: Some(format!("Path: {:?}", path)),
                     can_fix: false,
-                timestamp: Utc::now(),
+                    timestamp: Utc::now(),
                 };
             }
         }
@@ -52,7 +52,7 @@ impl DoctorCheck for ConfigFileCheck {
             message: "Config file not found".to_string(),
             details: Some("Expected: puppet-master.yaml or puppet-master.yml".to_string()),
             can_fix: false,
-        timestamp: Utc::now(),
+            timestamp: Utc::now(),
         }
     }
 
@@ -94,35 +94,33 @@ impl DoctorCheck for ConfigValidCheck {
         for path in &config_paths {
             if path.exists() {
                 match tokio::fs::read_to_string(path).await {
-                    Ok(content) => {
-                        match serde_yaml::from_str::<serde_yaml::Value>(&content) {
-                            Ok(_) => {
-                                return CheckResult {
-                                    passed: true,
-                                    message: "Config file is valid YAML".to_string(),
-                                    details: Some(format!("Path: {:?}", path)),
-                                    can_fix: false,
+                    Ok(content) => match serde_yaml::from_str::<serde_yaml::Value>(&content) {
+                        Ok(_) => {
+                            return CheckResult {
+                                passed: true,
+                                message: "Config file is valid YAML".to_string(),
+                                details: Some(format!("Path: {:?}", path)),
+                                can_fix: false,
                                 timestamp: Utc::now(),
-                                };
-                            }
-                            Err(e) => {
-                                return CheckResult {
-                                    passed: false,
-                                    message: "Config file is invalid YAML".to_string(),
-                                    details: Some(format!("Error: {}", e)),
-                                    can_fix: false,
-                                timestamp: Utc::now(),
-                                };
-                            }
+                            };
                         }
-                    }
+                        Err(e) => {
+                            return CheckResult {
+                                passed: false,
+                                message: "Config file is invalid YAML".to_string(),
+                                details: Some(format!("Error: {}", e)),
+                                can_fix: false,
+                                timestamp: Utc::now(),
+                            };
+                        }
+                    },
                     Err(e) => {
                         return CheckResult {
                             passed: false,
                             message: "Cannot read config file".to_string(),
                             details: Some(format!("Error: {}", e)),
                             can_fix: false,
-                        timestamp: Utc::now(),
+                            timestamp: Utc::now(),
                         };
                     }
                 }
@@ -134,7 +132,7 @@ impl DoctorCheck for ConfigValidCheck {
             message: "No config file found to validate".to_string(),
             details: None,
             can_fix: false,
-        timestamp: Utc::now(),
+            timestamp: Utc::now(),
         }
     }
 

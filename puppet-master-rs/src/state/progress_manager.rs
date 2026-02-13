@@ -68,8 +68,9 @@ impl ProgressManager {
 
         // Create parent directory if needed
         if let Some(parent) = inner.path.parent() {
-            std::fs::create_dir_all(parent)
-                .with_context(|| format!("Failed to create progress directory {}", parent.display()))?;
+            std::fs::create_dir_all(parent).with_context(|| {
+                format!("Failed to create progress directory {}", parent.display())
+            })?;
         }
 
         let mut file = OpenOptions::new()
@@ -82,10 +83,7 @@ impl ProgressManager {
         let content = self.format_entry(entry);
 
         file.write_all(content.as_bytes()).with_context(|| {
-            format!(
-                "Failed to write to progress file {}",
-                inner.path.display()
-            )
+            format!("Failed to write to progress file {}", inner.path.display())
         })?;
 
         log::debug!("Appended progress entry for {}", entry.item_id);
@@ -96,10 +94,7 @@ impl ProgressManager {
     fn format_entry(&self, entry: &ProgressEntry) -> String {
         let mut content = String::new();
 
-        content.push_str(&format!(
-            "\n## {} ({})\n",
-            entry.item_id, entry.status
-        ));
+        content.push_str(&format!("\n## {} ({})\n", entry.item_id, entry.status));
         content.push_str(&format!("- Progress: {:.1}%\n", entry.progress));
         content.push_str(&format!(
             "- Timestamp: {}\n",
@@ -154,10 +149,7 @@ impl ProgressManager {
 
                 if let Some(value) = field.strip_prefix("Progress: ") {
                     if let Some(entry) = current_entry.as_mut() {
-                        entry.progress = value
-                            .trim_end_matches('%')
-                            .parse::<f64>()
-                            .unwrap_or(0.0);
+                        entry.progress = value.trim_end_matches('%').parse::<f64>().unwrap_or(0.0);
                     }
                 } else if let Some(value) = field.strip_prefix("Status: ") {
                     if let Some(entry) = current_entry.as_mut() {

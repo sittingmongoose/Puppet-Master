@@ -53,9 +53,8 @@ impl ArchiveManager {
         let file_path = self.archive_dir.join(&filename);
 
         // Write archive file
-        fs::write(&file_path, agents_content).with_context(|| {
-            format!("Failed to write archive file {}", file_path.display())
-        })?;
+        fs::write(&file_path, agents_content)
+            .with_context(|| format!("Failed to write archive file {}", file_path.display()))?;
 
         log::info!(
             "Archived AGENTS.md for tier {} to {}",
@@ -121,9 +120,7 @@ impl ArchiveManager {
         }
 
         // Remove prefix and suffix
-        let core = filename
-            .strip_prefix("AGENTS_")?
-            .strip_suffix(".md")?;
+        let core = filename.strip_prefix("AGENTS_")?.strip_suffix(".md")?;
 
         let parts: Vec<&str> = core.rsplitn(3, '_').collect();
         if parts.len() != 3 {
@@ -162,12 +159,8 @@ impl ArchiveManager {
             anyhow::bail!("Archive file not found: {}", entry.file_path.display());
         }
 
-        fs::read_to_string(&entry.file_path).with_context(|| {
-            format!(
-                "Failed to read archive file {}",
-                entry.file_path.display()
-            )
-        })
+        fs::read_to_string(&entry.file_path)
+            .with_context(|| format!("Failed to read archive file {}", entry.file_path.display()))
     }
 
     /// Clean up old archives, keeping only the most recent N entries per tier
@@ -199,7 +192,10 @@ impl ArchiveManager {
             // Remove older entries
             for entry in entries.iter().skip(keep_per_tier) {
                 fs::remove_file(&entry.file_path).with_context(|| {
-                    format!("Failed to remove archive file {}", entry.file_path.display())
+                    format!(
+                        "Failed to remove archive file {}",
+                        entry.file_path.display()
+                    )
                 })?;
                 log::debug!(
                     "Removed old archive for tier {}: {}",
@@ -279,11 +275,19 @@ mod tests {
         // won't match "phase1.20260211". However, all archives created on the same day
         // will have the same date-stamped tier_id.
         let phase1_archives = manager.list_archives(Some("phase1")).unwrap();
-        assert_eq!(phase1_archives.len(), 0, "Exact filter 'phase1' doesn't match 'phase1.YYYYMMDD'");
+        assert_eq!(
+            phase1_archives.len(),
+            0,
+            "Exact filter 'phase1' doesn't match 'phase1.YYYYMMDD'"
+        );
 
         let phase2_archives = manager.list_archives(Some("phase2")).unwrap();
-        assert_eq!(phase2_archives.len(), 0, "Exact filter 'phase2' doesn't match 'phase2.YYYYMMDD'");
-        
+        assert_eq!(
+            phase2_archives.len(),
+            0,
+            "Exact filter 'phase2' doesn't match 'phase2.YYYYMMDD'"
+        );
+
         // All archives are returned when no filter is used
         let all_archives = manager.list_archives(None).unwrap();
         assert_eq!(all_archives.len(), 3);
@@ -321,8 +325,11 @@ mod tests {
 
         // Keep only 2 most recent - should remove 3
         let removed = manager.cleanup(2).unwrap();
-        assert_eq!(removed, 3, "Should remove 3 archives, keeping 2 most recent");
-        
+        assert_eq!(
+            removed, 3,
+            "Should remove 3 archives, keeping 2 most recent"
+        );
+
         // Verify only 2 archives remain
         let archives_after = manager.list_archives(None).unwrap();
         assert_eq!(archives_after.len(), 2);

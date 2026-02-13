@@ -16,51 +16,62 @@ use anyhow::Result;
 use async_trait::async_trait;
 
 // Module declarations
-pub mod runner;
-pub mod cursor;
-pub mod codex;
-pub mod claude;
-pub mod gemini;
-pub mod copilot;
-pub mod quota_manager;
-pub mod rate_limiter;
-pub mod capability;
-pub mod output_parser;
-pub mod health_monitor;
-pub mod auth_status;
 pub mod auth_actions;
-pub mod platform_detector;
+pub mod auth_status;
+pub mod capability;
 pub mod circuit_breaker;
+pub mod claude;
+pub mod codex;
+pub mod copilot;
+pub mod cursor;
+pub mod gemini;
+pub mod health_monitor;
+pub mod model_catalog;
+pub mod output_parser;
 pub mod permission_audit;
 pub mod permission_detector;
+pub mod platform_detector;
+pub mod quota_manager;
+pub mod rate_limiter;
 pub mod registry;
-pub mod model_catalog;
+pub mod runner;
 pub mod usage_tracker;
 
 // Re-exports
-pub use runner::BaseRunner;
-pub use cursor::CursorRunner;
-pub use codex::CodexRunner;
-pub use claude::ClaudeRunner;
-pub use gemini::GeminiRunner;
-pub use copilot::CopilotRunner;
-pub use quota_manager::{QuotaConfig, QuotaManager};
-pub use rate_limiter::{RateLimiter, RateLimiterConfig};
+pub use auth_actions::{AuthTarget, spawn_login, spawn_logout};
+pub use auth_status::{AuthCheckResult, AuthStatusChecker};
 pub use capability::CapabilityInfo;
+pub use circuit_breaker::{
+    CircuitBreaker, CircuitBreakerConfig, CircuitBreakerInfo, CircuitBreakerManager, CircuitState,
+};
+pub use claude::ClaudeRunner;
+pub use codex::CodexRunner;
+pub use copilot::CopilotRunner;
+pub use cursor::CursorRunner;
+pub use gemini::GeminiRunner;
+pub use health_monitor::{HealthConfig, HealthMonitor, PlatformHealth};
+pub use model_catalog::{
+    ModelCatalog, ModelCatalogManager, ModelInfo, ModelProvider, get_default_model, get_model,
+    get_models,
+};
 pub use output_parser::{
     CompletionSignal, ErrorCategory, OutputParser, ParsedOutput, PlatformError, TokenUsage,
     create_parser,
 };
-pub use health_monitor::{HealthConfig, HealthMonitor, PlatformHealth};
-pub use auth_status::{AuthCheckResult, AuthStatusChecker};
-pub use auth_actions::{AuthTarget, spawn_login, spawn_logout};
+pub use permission_audit::{
+    ApprovalStats, AuditQuery, PermissionAction, PermissionAudit, PermissionEvent,
+};
+pub use permission_detector::{
+    AutoResponsePolicy, PermissionDetector, PermissionPrompt, PermissionType,
+};
 pub use platform_detector::{DetectedPlatform, InstallationStatus, PlatformDetector};
-pub use circuit_breaker::{CircuitBreaker, CircuitBreakerConfig, CircuitBreakerInfo, CircuitBreakerManager, CircuitState};
-pub use permission_audit::{PermissionAudit, PermissionEvent, PermissionAction, AuditQuery, ApprovalStats};
-pub use permission_detector::{PermissionDetector, PermissionPrompt, PermissionType, AutoResponsePolicy};
-pub use registry::{PlatformRegistry, PlatformInfo, global_registry, get_runner, list_available_platforms};
-pub use model_catalog::{ModelCatalog, ModelCatalogManager, ModelInfo, ModelProvider, get_models, get_model, get_default_model};
-pub use usage_tracker::{UsageTracker, UsageEvent, UsageSummary, QuotaInfo, PlanInfo};
+pub use quota_manager::{QuotaConfig, QuotaManager};
+pub use rate_limiter::{RateLimiter, RateLimiterConfig};
+pub use registry::{
+    PlatformInfo, PlatformRegistry, get_runner, global_registry, list_available_platforms,
+};
+pub use runner::BaseRunner;
+pub use usage_tracker::{PlanInfo, QuotaInfo, UsageEvent, UsageSummary, UsageTracker};
 
 /// Trait for platform-specific AI execution
 ///

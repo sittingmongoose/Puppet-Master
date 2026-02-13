@@ -132,7 +132,8 @@ impl IntensiveLogEntry {
 
     /// Convert to JSONL format
     pub fn to_jsonl(&self) -> Result<String> {
-        let json = serde_json::to_string(self).context("Failed to serialize intensive log entry")?;
+        let json =
+            serde_json::to_string(self).context("Failed to serialize intensive log entry")?;
         Ok(format!("{}\n", json))
     }
 }
@@ -219,10 +220,9 @@ impl IntensiveLogger {
         result: impl Into<String>,
         duration_ms: u64,
     ) -> Result<()> {
-        let entry =
-            IntensiveLogEntry::new(module, function, LogLevel::Debug, "Function returned")
-                .with_result(result)
-                .with_duration(duration_ms);
+        let entry = IntensiveLogEntry::new(module, function, LogLevel::Debug, "Function returned")
+            .with_result(result)
+            .with_duration(duration_ms);
         self.log(entry)
     }
 
@@ -237,13 +237,8 @@ impl IntensiveLogger {
         context.insert("from_state".to_string(), from_state.into());
         context.insert("to_state".to_string(), to_state.into());
 
-        let entry = IntensiveLogEntry::new(
-            "state",
-            "transition",
-            LogLevel::Info,
-            reason,
-        )
-        .with_context_map(context);
+        let entry = IntensiveLogEntry::new("state", "transition", LogLevel::Info, reason)
+            .with_context_map(context);
 
         self.log(entry)
     }
@@ -260,13 +255,8 @@ impl IntensiveLogger {
         arg_map.insert("command".to_string(), command.into());
         arg_map.insert("args".to_string(), args.join(" "));
 
-        let entry = IntensiveLogEntry::new(
-            "cli",
-            "invoke",
-            LogLevel::Debug,
-            "CLI invocation",
-        )
-        .with_args(arg_map);
+        let entry = IntensiveLogEntry::new("cli", "invoke", LogLevel::Debug, "CLI invocation")
+            .with_args(arg_map);
 
         self.log(entry)
     }
@@ -286,13 +276,8 @@ impl IntensiveLogger {
             context.extend(details);
         }
 
-        let entry = IntensiveLogEntry::new(
-            "fs",
-            "operation",
-            LogLevel::Debug,
-            "File operation",
-        )
-        .with_context_map(context);
+        let entry = IntensiveLogEntry::new("fs", "operation", LogLevel::Debug, "File operation")
+            .with_context_map(context);
 
         self.log(entry)
     }

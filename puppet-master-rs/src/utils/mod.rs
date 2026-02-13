@@ -9,10 +9,10 @@ pub mod project_paths;
 
 pub use atomic_writer::AtomicWriter;
 pub use file_lock::FileLock;
-pub use process::{kill_process, kill_process_tree, ProcessRegistry};
+pub use process::{ProcessRegistry, kill_process, kill_process_tree};
 pub use project_paths::{
-    derive_project_root, resolve_under_project_root, resolve_working_directory,
-    puppet_master_dir, evidence_dir, logs_dir, checkpoints_dir, usage_dir,
-    agents_dir, memory_dir, backups_dir, initialize_puppet_master_dirs,
-    is_within_project_root, get_relative_to_root, resolve_paths_under_root,
+    agents_dir, backups_dir, checkpoints_dir, derive_project_root, evidence_dir,
+    get_relative_to_root, initialize_puppet_master_dirs, is_within_project_root, logs_dir,
+    memory_dir, puppet_master_dir, resolve_paths_under_root, resolve_under_project_root,
+    resolve_working_directory, usage_dir,
 };

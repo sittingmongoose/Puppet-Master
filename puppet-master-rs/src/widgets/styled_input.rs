@@ -7,9 +7,9 @@
 //! - Optional labels and error states
 //! - Monospace font option for code inputs
 
-use iced::widget::{text_input, text, column, TextInput};
-use iced::{Element, Border, Color};
-use crate::theme::{AppTheme, colors, tokens, fonts};
+use crate::theme::{AppTheme, colors, fonts, tokens};
+use iced::widget::{TextInput, column, text, text_input};
+use iced::{Border, Color, Element};
 
 /// Input field variant
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -89,7 +89,13 @@ pub fn styled_text_input<'a, Message: Clone + 'a>(
     placeholder: &str,
     value: &str,
 ) -> TextInput<'a, Message> {
-    styled_text_input_with_variant(theme, placeholder, value, InputVariant::Default, InputSize::Medium)
+    styled_text_input_with_variant(
+        theme,
+        placeholder,
+        value,
+        InputVariant::Default,
+        InputSize::Medium,
+    )
 }
 
 /// Create a styled text input with custom variant and size
@@ -128,28 +134,30 @@ pub fn styled_text_input_with_variant<'a, Message: Clone + 'a>(
         .padding(padding)
         .size(font_size)
         .font(font)
-        .style(move |_iced_theme: &iced::Theme, status: text_input::Status| {
-            let is_focused = matches!(status, text_input::Status::Focused { .. });
-            let border_color = variant.border_color(&theme_copy, is_focused);
-            let border_width = if is_focused {
-                tokens::borders::THICK // Thicker border on focus
-            } else {
-                tokens::borders::MEDIUM
-            };
+        .style(
+            move |_iced_theme: &iced::Theme, status: text_input::Status| {
+                let is_focused = matches!(status, text_input::Status::Focused { .. });
+                let border_color = variant.border_color(&theme_copy, is_focused);
+                let border_width = if is_focused {
+                    tokens::borders::THICK // Thicker border on focus
+                } else {
+                    tokens::borders::MEDIUM
+                };
 
-            text_input::Style {
-                background: iced::Background::Color(theme_copy.paper()),
-                border: Border {
-                    color: border_color,
-                    width: border_width,
-                    radius: tokens::radii::SM.into(),
-                },
-                icon: theme_copy.ink(),
-                placeholder: theme_copy.ink_faded(),
-                value: theme_copy.ink(),
-                selection: colors::ELECTRIC_BLUE,
-            }
-        })
+                text_input::Style {
+                    background: iced::Background::Color(theme_copy.paper()),
+                    border: Border {
+                        color: border_color,
+                        width: border_width,
+                        radius: tokens::radii::SM.into(),
+                    },
+                    icon: theme_copy.ink(),
+                    placeholder: theme_copy.ink_faded(),
+                    value: theme_copy.ink(),
+                    selection: colors::ELECTRIC_BLUE,
+                }
+            },
+        )
 }
 
 /// Create a labeled text input with label above the field
@@ -183,8 +191,7 @@ pub fn labeled_input<'a, Message: Clone + 'a>(
             .size(tokens::font_size::SM)
             .font(fonts::FONT_UI_BOLD)
             .color(theme.ink()),
-        styled_text_input(theme, placeholder, value)
-            .on_input(on_change),
+        styled_text_input(theme, placeholder, value).on_input(on_change),
     ]
     .spacing(tokens::spacing::XS)
     .into()
@@ -240,7 +247,7 @@ pub fn labeled_input_with_error<'a, Message: Clone + 'a>(
         col = col.push(
             text(error_msg)
                 .size(tokens::font_size::SM)
-                .color(colors::HOT_MAGENTA)
+                .color(colors::HOT_MAGENTA),
         );
     }
 
@@ -264,7 +271,13 @@ pub fn code_input<'a, Message: Clone + 'a>(
     placeholder: &str,
     value: &str,
 ) -> TextInput<'a, Message> {
-    styled_text_input_with_variant(theme, placeholder, value, InputVariant::Code, InputSize::Medium)
+    styled_text_input_with_variant(
+        theme,
+        placeholder,
+        value,
+        InputVariant::Code,
+        InputSize::Medium,
+    )
 }
 
 /// Create a small text input
@@ -273,7 +286,13 @@ pub fn small_input<'a, Message: Clone + 'a>(
     placeholder: &str,
     value: &str,
 ) -> TextInput<'a, Message> {
-    styled_text_input_with_variant(theme, placeholder, value, InputVariant::Default, InputSize::Small)
+    styled_text_input_with_variant(
+        theme,
+        placeholder,
+        value,
+        InputVariant::Default,
+        InputSize::Small,
+    )
 }
 
 /// Create a large text input
@@ -282,7 +301,13 @@ pub fn large_input<'a, Message: Clone + 'a>(
     placeholder: &str,
     value: &str,
 ) -> TextInput<'a, Message> {
-    styled_text_input_with_variant(theme, placeholder, value, InputVariant::Default, InputSize::Large)
+    styled_text_input_with_variant(
+        theme,
+        placeholder,
+        value,
+        InputVariant::Default,
+        InputSize::Large,
+    )
 }
 
 #[cfg(test)]
@@ -294,7 +319,7 @@ mod tests {
         assert_eq!(InputSize::Small.padding(), 6);
         assert_eq!(InputSize::Medium.padding(), 10);
         assert_eq!(InputSize::Large.padding(), 12);
-        
+
         assert_eq!(InputSize::Small.font_size(), tokens::font_size::SM);
         assert_eq!(InputSize::Medium.font_size(), tokens::font_size::BASE);
         assert_eq!(InputSize::Large.font_size(), tokens::font_size::MD);

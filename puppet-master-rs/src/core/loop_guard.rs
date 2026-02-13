@@ -6,7 +6,6 @@
 //! - Configurable thresholds
 //! - Pattern-based cycle detection
 
-
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, VecDeque};
 
@@ -100,9 +99,7 @@ impl LoopDetection {
             Self::BlockedControlMessage => {
                 Some("Control/system messages are not allowed".to_string())
             }
-            Self::BlockedReplyRelay => {
-                Some("Reply relay suppression is enabled".to_string())
-            }
+            Self::BlockedReplyRelay => Some("Reply relay suppression is enabled".to_string()),
             Self::BlockedPattern { pattern_length } => {
                 Some(format!("Pattern of length {} detected", pattern_length))
             }
@@ -201,7 +198,7 @@ impl LoopGuard {
 
         let hash = self.hash_message(message);
         let count = self.message_counts.get(&hash).unwrap_or(&0);
-        
+
         *count < self.config.max_repetitions
     }
 
@@ -232,7 +229,7 @@ impl LoopGuard {
             message.to.as_deref().unwrap_or(""),
             message.content
         );
-        
+
         // Simple hash using hex encoding of bytes
         format!("{:x}", md5::compute(data.as_bytes()))
     }
@@ -264,7 +261,7 @@ impl LoopGuard {
         // Get the most recent pattern
         let hashes: Vec<_> = self.recent_hashes.iter().collect();
         let len = hashes.len();
-        
+
         // Compare last N hashes with previous N hashes
         for i in 0..pattern_len {
             if hashes[len - pattern_len + i] != hashes[len - 2 * pattern_len + i] {
@@ -342,7 +339,7 @@ mod tests {
     #[test]
     fn test_different_messages_allowed() {
         let mut guard = LoopGuard::default_config();
-        
+
         for i in 0..5 {
             let msg = LoopGuardMessage::new(
                 "feedback",
@@ -361,10 +358,10 @@ mod tests {
         let msg = LoopGuardMessage::new("feedback", None::<&str>, None::<&str>, "Fix this");
 
         assert_eq!(guard.get_count(&msg), 0);
-        
+
         guard.check(&msg);
         assert_eq!(guard.get_count(&msg), 1);
-        
+
         guard.check(&msg);
         assert_eq!(guard.get_count(&msg), 2);
     }
@@ -399,7 +396,7 @@ mod tests {
     #[test]
     fn test_pattern_detection() {
         let mut guard = LoopGuard::default_config();
-        
+
         // Create alternating pattern: A, B, A, B, A, B
         let msg_a = LoopGuardMessage::new("feedback", None::<&str>, None::<&str>, "Message A");
         let msg_b = LoopGuardMessage::new("feedback", None::<&str>, None::<&str>, "Message B");
@@ -436,13 +433,28 @@ mod tests {
 
         assert_eq!(guard.unique_message_count(), 0);
 
-        guard.check(&LoopGuardMessage::new("feedback", None::<&str>, None::<&str>, "A"));
+        guard.check(&LoopGuardMessage::new(
+            "feedback",
+            None::<&str>,
+            None::<&str>,
+            "A",
+        ));
         assert_eq!(guard.unique_message_count(), 1);
 
-        guard.check(&LoopGuardMessage::new("feedback", None::<&str>, None::<&str>, "B"));
+        guard.check(&LoopGuardMessage::new(
+            "feedback",
+            None::<&str>,
+            None::<&str>,
+            "B",
+        ));
         assert_eq!(guard.unique_message_count(), 2);
 
-        guard.check(&LoopGuardMessage::new("feedback", None::<&str>, None::<&str>, "A"));
+        guard.check(&LoopGuardMessage::new(
+            "feedback",
+            None::<&str>,
+            None::<&str>,
+            "A",
+        ));
         assert_eq!(guard.unique_message_count(), 2); // Same as before
     }
 

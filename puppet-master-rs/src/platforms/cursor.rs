@@ -42,7 +42,7 @@
 
 use crate::platforms::{BaseRunner, PlatformRunner};
 use crate::types::{ExecutionRequest, ExecutionResult, Platform};
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use async_trait::async_trait;
 use log::{debug, info, warn};
 use std::sync::Arc;
@@ -78,10 +78,7 @@ impl CursorRunner {
     async fn discover_models_from_cli(&self) -> Result<Vec<String>> {
         debug!("Discovering Cursor models via CLI");
 
-        let output = Command::new(&self.command)
-            .arg("models")
-            .output()
-            .await?;
+        let output = Command::new(&self.command).arg("models").output().await?;
 
         if !output.status.success() {
             return Err(anyhow!("Failed to discover models"));
@@ -96,7 +93,6 @@ impl CursorRunner {
 
         Ok(models)
     }
-
 }
 
 impl Default for CursorRunner {
@@ -112,10 +108,10 @@ impl PlatformRunner for CursorRunner {
     }
 
     async fn execute(&self, request: &ExecutionRequest) -> Result<ExecutionResult> {
+        use crate::platforms::CompletionSignal as ParserCompletionSignal;
         use crate::platforms::create_parser;
         use crate::types::CompletionSignal as TypesCompletionSignal;
-        use crate::platforms::CompletionSignal as ParserCompletionSignal;
-        
+
         // Build arguments
         let args = self.build_args(request);
 
@@ -123,29 +119,35 @@ impl PlatformRunner for CursorRunner {
         let use_stdin = request.prompt.len() > LARGE_PROMPT_THRESHOLD;
 
         let stdin_input = if use_stdin {
-            debug!("Using stdin for large prompt ({} bytes)", request.prompt.len());
+            debug!(
+                "Using stdin for large prompt ({} bytes)",
+                request.prompt.len()
+            );
             Some(request.prompt.clone())
         } else {
             None
         };
 
         // Execute via base runner
-        let mut result = self.base.execute_command(request, args, stdin_input).await?;
-        
+        let mut result = self
+            .base
+            .execute_command(request, args, stdin_input)
+            .await?;
+
         // Parse output using platform-specific parser
         if let Some(output) = &result.output {
             let parser = create_parser(Platform::Cursor);
             let parsed = parser.parse(output, ""); // stderr is already merged in output
-            
-            // Populate result with parsed data  
+
+            // Populate result with parsed data
             result.files_changed = parsed.files_changed.into_iter().map(|s| s.into()).collect();
             result.learnings = parsed.learnings;
-            
+
             // Update token usage if available
             if let Some(token_usage) = parsed.token_usage {
                 result.tokens_used = token_usage.total_tokens;
             }
-            
+
             // If parsed output detected a more specific completion signal, use it
             if let Some(signal) = parsed.completion_signal {
                 result.completion_signal = match signal {
@@ -153,20 +155,24 @@ impl PlatformRunner for CursorRunner {
                     ParserCompletionSignal::Gutter => TypesCompletionSignal::Gutter,
                 };
             }
-            
+
             // If errors were detected, include them in error_message
             if !parsed.errors.is_empty() {
-                let error_msgs: Vec<String> = parsed.errors.iter()
-                    .map(|e| e.message.clone())
-                    .collect();
+                let error_msgs: Vec<String> =
+                    parsed.errors.iter().map(|e| e.message.clone()).collect();
                 if let Some(existing_error) = &result.error_message {
-                    result.error_message = Some(format!("{}\nParsed errors: {}", existing_error, error_msgs.join("; ")));
+                    result.error_message = Some(format!(
+                        "{}\nParsed errors: {}",
+                        existing_error,
+                        error_msgs.join("; ")
+                    ));
                 } else {
-                    result.error_message = Some(format!("Parsed errors: {}", error_msgs.join("; ")));
+                    result.error_message =
+                        Some(format!("Parsed errors: {}", error_msgs.join("; ")));
                 }
             }
         }
-        
+
         Ok(result)
     }
 
@@ -306,11 +312,9 @@ mod tests {
     async fn test_discover_models() {
         let runner = CursorRunner::new();
         // Use timeout to prevent hanging if cursor CLI is not installed
-        let result = tokio::time::timeout(
-            std::time::Duration::from_secs(5),
-            runner.discover_models(),
-        ).await;
-        
+        let result =
+            tokio::time::timeout(std::time::Duration::from_secs(5), runner.discover_models()).await;
+
         match result {
             Ok(models) => {
                 assert!(models.is_ok());

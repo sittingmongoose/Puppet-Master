@@ -28,9 +28,8 @@ impl FileLock {
 
         // Create parent directory if needed
         if let Some(parent) = lock_path.parent() {
-            std::fs::create_dir_all(parent).with_context(|| {
-                format!("Failed to create lock directory {}", parent.display())
-            })?;
+            std::fs::create_dir_all(parent)
+                .with_context(|| format!("Failed to create lock directory {}", parent.display()))?;
         }
 
         let start = Instant::now();
@@ -72,7 +71,7 @@ impl FileLock {
             // Try to acquire exclusive lock (non-blocking)
             let fd = file.as_raw_fd();
             let result = unsafe { libc::flock(fd, libc::LOCK_EX | libc::LOCK_NB) };
-            
+
             if result != 0 {
                 anyhow::bail!("Failed to acquire flock");
             }
@@ -82,10 +81,10 @@ impl FileLock {
         {
             use std::os::windows::io::AsRawHandle;
             use winapi::um::fileapi::LockFile;
-            
+
             let handle = file.as_raw_handle() as *mut winapi::ctypes::c_void;
             let result = unsafe { LockFile(handle, 0, 0, 1, 0) };
-            
+
             if result == 0 {
                 anyhow::bail!("Failed to acquire Windows lock");
             }
@@ -122,7 +121,7 @@ impl Drop for FileLock {
         {
             use std::os::windows::io::AsRawHandle;
             use winapi::um::fileapi::UnlockFile;
-            
+
             let handle = self.lock_file.as_raw_handle() as *mut winapi::ctypes::c_void;
             unsafe {
                 UnlockFile(handle, 0, 0, 1, 0);

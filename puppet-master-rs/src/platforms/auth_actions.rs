@@ -4,7 +4,7 @@
 //! (CLI login, OAuth) rather than API keys.
 
 use crate::types::Platform;
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use log::info;
 use std::process::Stdio;
 use tokio::process::Command;
@@ -104,7 +104,12 @@ pub async fn spawn_login(target: AuthTarget) -> Result<()> {
         AuthTarget::GitHub => ("gh", vec!["auth", "login"]),
     };
 
-    info!("Spawning login for {}: {} {:?}", target.display_name(), program, args);
+    info!(
+        "Spawning login for {}: {} {:?}",
+        target.display_name(),
+        program,
+        args
+    );
 
     if args.is_empty() {
         let mut child = Command::new(program)
@@ -131,7 +136,12 @@ pub async fn spawn_login(target: AuthTarget) -> Result<()> {
         if status.success() {
             Ok(())
         } else {
-            Err(anyhow!("{} {} exited with code {:?}", program, args.join(" "), status.code()))
+            Err(anyhow!(
+                "{} {} exited with code {:?}",
+                program,
+                args.join(" "),
+                status.code()
+            ))
         }
     }
 }
@@ -155,7 +165,12 @@ pub async fn spawn_logout(target: AuthTarget) -> Result<()> {
         AuthTarget::GitHub => ("gh", vec!["auth", "logout"]),
     };
 
-    info!("Spawning logout for {}: {} {:?}", target.display_name(), program, args);
+    info!(
+        "Spawning logout for {}: {} {:?}",
+        target.display_name(),
+        program,
+        args
+    );
 
     // gh logout can require interactive confirmation.
     if matches!(target, AuthTarget::GitHub) {

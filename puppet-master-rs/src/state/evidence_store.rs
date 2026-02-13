@@ -47,7 +47,10 @@ impl EvidenceStore {
         ] {
             let subdir = base_path.join(evidence_type.to_string());
             fs::create_dir_all(&subdir).with_context(|| {
-                format!("Failed to create evidence subdirectory {}", subdir.display())
+                format!(
+                    "Failed to create evidence subdirectory {}",
+                    subdir.display()
+                )
             })?;
         }
 
@@ -97,8 +100,12 @@ impl EvidenceStore {
         let file_path = subdir.join(&filename);
 
         // Ensure subdirectory exists
-        fs::create_dir_all(&subdir)
-            .with_context(|| format!("Failed to create evidence subdirectory {}", subdir.display()))?;
+        fs::create_dir_all(&subdir).with_context(|| {
+            format!(
+                "Failed to create evidence subdirectory {}",
+                subdir.display()
+            )
+        })?;
 
         // Write data
         fs::write(&file_path, data)
@@ -174,8 +181,7 @@ impl EvidenceStore {
                 if let Some(filename) = path.file_name() {
                     if let Some(name) = filename.to_str() {
                         if name.starts_with(tier_id) {
-                            if let Some(evidence) = self.parse_evidence_file(&path, evidence_type)
-                            {
+                            if let Some(evidence) = self.parse_evidence_file(&path, evidence_type) {
                                 evidence_list.push(evidence);
                             }
                         }
@@ -315,10 +321,7 @@ impl EvidenceStore {
     /// Delete evidence
     pub fn delete_evidence(&self, evidence: &Evidence) -> Result<()> {
         fs::remove_file(&evidence.path).with_context(|| {
-            format!(
-                "Failed to delete evidence from {}",
-                evidence.path.display()
-            )
+            format!("Failed to delete evidence from {}", evidence.path.display())
         })?;
 
         log::debug!("Deleted evidence at {}", evidence.path.display());

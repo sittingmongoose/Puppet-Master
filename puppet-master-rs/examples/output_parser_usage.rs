@@ -6,15 +6,25 @@
 #![allow(dead_code, unused_imports)]
 
 use puppet_master::platforms::{
-    // Output parsing
-    create_parser, CompletionSignal, ErrorCategory, OutputParser, ParsedOutput, PlatformError,
-    TokenUsage,
-    // Health monitoring
-    HealthConfig, HealthMonitor, PlatformHealth,
     // Authentication
-    AuthCheckResult, AuthStatusChecker,
+    AuthCheckResult,
+    AuthStatusChecker,
+    CompletionSignal,
     // Platform detection
-    DetectedPlatform, InstallationStatus, PlatformDetector,
+    DetectedPlatform,
+    ErrorCategory,
+    // Health monitoring
+    HealthConfig,
+    HealthMonitor,
+    InstallationStatus,
+    OutputParser,
+    ParsedOutput,
+    PlatformDetector,
+    PlatformError,
+    PlatformHealth,
+    TokenUsage,
+    // Output parsing
+    create_parser,
 };
 use puppet_master::types::Platform;
 
@@ -70,9 +80,9 @@ async fn example_parse_output() {
 async fn example_health_monitoring() {
     // Create health monitor with custom configuration
     let config = HealthConfig::new(
-        3,                                      // Open circuit after 3 failures
-        chrono::Duration::minutes(5),           // 5 minute cooldown
-        chrono::Duration::minutes(1),           // Check every minute
+        3,                            // Open circuit after 3 failures
+        chrono::Duration::minutes(5), // 5 minute cooldown
+        chrono::Duration::minutes(1), // Check every minute
     );
 
     let monitor = HealthMonitor::with_config(config);
@@ -146,7 +156,10 @@ async fn example_check_authentication() {
     if cursor_auth.authenticated {
         println!("\n✓ Cursor is authenticated and ready to use");
     } else {
-        println!("\n✗ Cursor authentication required: {}", cursor_auth.message);
+        println!(
+            "\n✗ Cursor authentication required: {}",
+            cursor_auth.message
+        );
     }
 }
 
@@ -178,7 +191,10 @@ async fn example_detect_platforms() {
 
     // Check if specific platform is installed
     if let Some(cursor_info) = detection_map.get(&Platform::Cursor) {
-        println!("\nCursor is installed at: {}", cursor_info.executable_path());
+        println!(
+            "\nCursor is installed at: {}",
+            cursor_info.executable_path()
+        );
     } else {
         println!("\nCursor is not installed");
 
@@ -285,7 +301,7 @@ async fn example_error_handling() {
                 if let Some(health) = monitor.get_health(Platform::Claude).await {
                     if health.circuit_breaker_open {
                         println!("→ Circuit breaker opened - switching to backup platform");
-                        
+
                         // Find alternative platform
                         let available = monitor.get_available_platforms().await;
                         if let Some(backup) = available.iter().find(|&&p| p != Platform::Claude) {

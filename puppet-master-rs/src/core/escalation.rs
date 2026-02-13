@@ -293,8 +293,7 @@ mod tests {
     fn test_critical_failure_escalation() {
         let engine = EscalationEngine::with_defaults();
 
-        let action =
-            engine.determine_action(&FailureType::PermissionDenied, 1, TierState::Running);
+        let action = engine.determine_action(&FailureType::PermissionDenied, 1, TierState::Running);
         assert_eq!(action, EscalationAction::PauseForUser);
     }
 

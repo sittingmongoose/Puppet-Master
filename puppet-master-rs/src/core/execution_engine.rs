@@ -9,7 +9,7 @@
 
 use crate::core::state_machine::OrchestratorEvent;
 use crate::types::*;
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use crossbeam_channel::Sender;
 use std::collections::VecDeque;
 use std::process::Stdio;
@@ -64,9 +64,7 @@ impl ExecutionEngine {
         let mut child = self.spawn_platform(&platform, context).await?;
 
         // Capture output and detect completion
-        let signal = self
-            .capture_output(&mut child, context, start_time)
-            .await?;
+        let signal = self.capture_output(&mut child, context, start_time).await?;
 
         // Ensure process is terminated
         self.ensure_terminated(child).await;
@@ -74,11 +72,13 @@ impl ExecutionEngine {
         let duration = start_time.elapsed();
 
         // Emit iteration completed event
-        let _ = self.event_sender.send(OrchestratorEvent::IterationCompleted {
-            tier_id: context.tier_id.clone(),
-            iteration: context.iteration,
-            success: matches!(signal, CompletionSignal::Complete),
-        });
+        let _ = self
+            .event_sender
+            .send(OrchestratorEvent::IterationCompleted {
+                tier_id: context.tier_id.clone(),
+                iteration: context.iteration,
+                success: matches!(signal, CompletionSignal::Complete),
+            });
 
         Ok(IterationResult {
             signal,
@@ -220,22 +220,25 @@ impl ExecutionEngine {
                             if status.success() {
                                 return Ok(CompletionSignal::Complete);
                             } else {
-                                return Ok(CompletionSignal::Error(
-                                    format!("Process exited with status {}", status),
-                                ));
+                                return Ok(CompletionSignal::Error(format!(
+                                    "Process exited with status {}",
+                                    status
+                                )));
                             }
                         }
                         Err(e) => {
-                            return Ok(CompletionSignal::Error(
-                                format!("Failed to wait for process: {}", e),
-                            ));
+                            return Ok(CompletionSignal::Error(format!(
+                                "Failed to wait for process: {}",
+                                e
+                            )));
                         }
                     }
                 }
                 Ok(Err(e)) => {
-                    return Ok(CompletionSignal::Error(
-                        format!("IO error reading output: {}", e),
-                    ));
+                    return Ok(CompletionSignal::Error(format!(
+                        "IO error reading output: {}",
+                        e
+                    )));
                 }
                 Err(_) => {
                     // Timeout waiting for next line, continue loop
@@ -342,11 +345,36 @@ impl ExecutionEngine {
 
 fn fallback_chain_for(platform: Platform) -> &'static [Platform] {
     match platform {
-        Platform::Cursor => &[Platform::Codex, Platform::Claude, Platform::Gemini, Platform::Copilot],
-        Platform::Codex => &[Platform::Claude, Platform::Cursor, Platform::Gemini, Platform::Copilot],
-        Platform::Claude => &[Platform::Cursor, Platform::Codex, Platform::Gemini, Platform::Copilot],
-        Platform::Gemini => &[Platform::Copilot, Platform::Codex, Platform::Cursor, Platform::Claude],
-        Platform::Copilot => &[Platform::Gemini, Platform::Codex, Platform::Cursor, Platform::Claude],
+        Platform::Cursor => &[
+            Platform::Codex,
+            Platform::Claude,
+            Platform::Gemini,
+            Platform::Copilot,
+        ],
+        Platform::Codex => &[
+            Platform::Claude,
+            Platform::Cursor,
+            Platform::Gemini,
+            Platform::Copilot,
+        ],
+        Platform::Claude => &[
+            Platform::Cursor,
+            Platform::Codex,
+            Platform::Gemini,
+            Platform::Copilot,
+        ],
+        Platform::Gemini => &[
+            Platform::Copilot,
+            Platform::Codex,
+            Platform::Cursor,
+            Platform::Claude,
+        ],
+        Platform::Copilot => &[
+            Platform::Gemini,
+            Platform::Codex,
+            Platform::Cursor,
+            Platform::Claude,
+        ],
     }
 }
 
@@ -389,7 +417,7 @@ mod tests {
     #[test]
     fn test_parse_completion_signal_complete() {
         let engine = create_test_engine();
-        
+
         let signal = engine.parse_completion_signal("PUPPET_MASTER: COMPLETE");
         assert!(matches!(signal, Some(CompletionSignal::Complete)));
 
@@ -400,7 +428,7 @@ mod tests {
     #[test]
     fn test_parse_completion_signal_revise() {
         let engine = create_test_engine();
-        
+
         let signal = engine.parse_completion_signal("PUPPET_MASTER: REVISE - needs more tests");
         assert!(matches!(signal, Some(CompletionSignal::Gutter)));
     }
@@ -408,7 +436,7 @@ mod tests {
     #[test]
     fn test_parse_completion_signal_blocked() {
         let engine = create_test_engine();
-        
+
         let signal = engine.parse_completion_signal("PUPPET_MASTER: BLOCKED - waiting for API");
         assert!(matches!(signal, Some(CompletionSignal::Stalled)));
     }
@@ -416,7 +444,7 @@ mod tests {
     #[test]
     fn test_parse_completion_signal_help() {
         let engine = create_test_engine();
-        
+
         let signal = engine.parse_completion_signal("PUPPET_MASTER: HELP - unclear requirements");
         assert!(matches!(signal, Some(CompletionSignal::Stalled)));
     }
@@ -444,7 +472,7 @@ mod tests {
 
     fn create_test_engine() -> ExecutionEngine {
         let (tx, _rx) = crossbeam_channel::unbounded();
-        
+
         let mut p1 = PlatformConfig::new(Platform::Cursor, "claude-3-5-sonnet");
         p1.available = true;
         p1.priority = 100;

@@ -4,7 +4,7 @@
 //! checking CLI authentication status and subscription auth (preferred over API keys).
 
 use crate::types::Platform;
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use log::debug;
 use std::collections::HashMap;
 use std::process::Stdio;
@@ -19,20 +19,18 @@ pub struct AuthStatusChecker {
 impl AuthStatusChecker {
     /// Creates a new auth status checker with default timeout
     pub fn new() -> Self {
-        Self {
-            timeout_secs: 10,
-        }
+        Self { timeout_secs: 10 }
     }
-    
+
     /// Creates a new auth status checker with custom timeout
     pub fn with_timeout(timeout_secs: u64) -> Self {
         Self { timeout_secs }
     }
-    
+
     /// Checks authentication status for a specific platform
     pub async fn check_platform(&self, platform: Platform) -> AuthCheckResult {
         debug!("Checking authentication for platform: {}", platform);
-        
+
         match platform {
             Platform::Cursor => self.check_cursor().await,
             Platform::Codex => self.check_codex().await,
@@ -41,23 +39,23 @@ impl AuthStatusChecker {
             Platform::Copilot => self.check_copilot().await,
         }
     }
-    
+
     /// Checks authentication for all platforms
     pub async fn check_all(&self) -> HashMap<Platform, AuthCheckResult> {
         let mut results = HashMap::new();
-        
+
         for platform in Platform::all() {
             let result = self.check_platform(*platform).await;
             results.insert(*platform, result);
         }
-        
+
         results
     }
-    
+
     /// Checks only authenticated platforms
     pub async fn get_authenticated_platforms(&self) -> Vec<Platform> {
         let results = self.check_all().await;
-        
+
         results
             .into_iter()
             .filter_map(|(platform, result)| {
@@ -69,9 +67,9 @@ impl AuthStatusChecker {
             })
             .collect()
     }
-    
+
     // Platform-specific authentication checks
-    
+
     async fn check_cursor(&self) -> AuthCheckResult {
         // Prefer subscription auth: agent status (Cursor docs)
         for cmd in &["agent", "cursor-agent", "cursor"] {
@@ -88,20 +86,22 @@ impl AuthStatusChecker {
 
         AuthCheckResult::not_authenticated("Not authenticated. Run 'agent login' to authenticate.")
     }
-    
+
     async fn check_codex(&self) -> AuthCheckResult {
         // Subscription auth via Codex CLI login
         for cmd in &["codex"] {
             if let Ok(output) = self.run_command(cmd, &["login", "status"]).await {
                 if output.status.success() {
-                    return AuthCheckResult::authenticated("Codex CLI is authenticated via subscription");
+                    return AuthCheckResult::authenticated(
+                        "Codex CLI is authenticated via subscription",
+                    );
                 }
             }
         }
 
         AuthCheckResult::not_authenticated("Not authenticated. Run 'codex login' to authenticate.")
     }
-    
+
     async fn check_claude(&self) -> AuthCheckResult {
         // Check Claude CLI auth status
         if let Ok(output) = self.run_command("claude", &["auth", "status"]).await {
@@ -114,9 +114,11 @@ impl AuthStatusChecker {
             }
         }
 
-        AuthCheckResult::not_authenticated("Not authenticated. Run 'claude auth login' to authenticate.")
+        AuthCheckResult::not_authenticated(
+            "Not authenticated. Run 'claude auth login' to authenticate.",
+        )
     }
-    
+
     async fn check_gemini(&self) -> AuthCheckResult {
         let home = std::env::var("HOME").unwrap_or_default();
         let cred_path = std::path::Path::new(&home).join(".gemini");
@@ -144,9 +146,11 @@ impl AuthStatusChecker {
             }
         }
 
-        AuthCheckResult::not_authenticated("Not authenticated. Run 'gemini' and select 'Login with Google'.")
+        AuthCheckResult::not_authenticated(
+            "Not authenticated. Run 'gemini' and select 'Login with Google'.",
+        )
     }
-    
+
     async fn check_copilot(&self) -> AuthCheckResult {
         // GitHub Copilot uses GitHub CLI authentication
         if let Ok(output) = self.run_command("gh", &["auth", "status"]).await {
@@ -155,41 +159,45 @@ impl AuthStatusChecker {
             }
         }
 
-        AuthCheckResult::not_authenticated("Not authenticated. Run 'gh auth login' to authenticate.")
+        AuthCheckResult::not_authenticated(
+            "Not authenticated. Run 'gh auth login' to authenticate.",
+        )
     }
-    
+
     /// Check GitHub CLI authentication (separate from Copilot for general Git operations)
     pub async fn check_github(&self) -> AuthCheckResult {
         if let Ok(output) = self.run_command("gh", &["auth", "status"]).await {
             let stdout = String::from_utf8_lossy(&output.stdout);
             let stderr = String::from_utf8_lossy(&output.stderr);
             let combined = format!("{}{}", stdout, stderr);
-            
-            if combined.to_lowercase().contains("logged in") 
-                || combined.to_lowercase().contains("authenticated to") {
+
+            if combined.to_lowercase().contains("logged in")
+                || combined.to_lowercase().contains("authenticated to")
+            {
                 return AuthCheckResult::authenticated("GitHub CLI is authenticated");
             }
         }
-        
-        AuthCheckResult::not_authenticated(
-            "Run 'gh auth login' for GitHub authentication.",
-        )
+
+        AuthCheckResult::not_authenticated("Run 'gh auth login' for GitHub authentication.")
     }
-    
+
     /// Runs a command with timeout
     async fn run_command(&self, program: &str, args: &[&str]) -> Result<std::process::Output> {
         let timeout = tokio::time::Duration::from_secs(self.timeout_secs);
-        
+
         let future = Command::new(program)
             .args(args)
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
             .output();
-        
+
         match tokio::time::timeout(timeout, future).await {
             Ok(Ok(output)) => Ok(output),
             Ok(Err(e)) => Err(anyhow!("Command execution failed: {}", e)),
-            Err(_) => Err(anyhow!("Command timed out after {} seconds", self.timeout_secs)),
+            Err(_) => Err(anyhow!(
+                "Command timed out after {} seconds",
+                self.timeout_secs
+            )),
         }
     }
 }
@@ -205,13 +213,13 @@ impl Default for AuthStatusChecker {
 pub struct AuthCheckResult {
     /// Whether platform is authenticated
     pub authenticated: bool,
-    
+
     /// Status message
     pub message: String,
-    
+
     /// Additional details
     pub details: Option<String>,
-    
+
     /// Checked at timestamp
     pub checked_at: chrono::DateTime<chrono::Utc>,
 }
@@ -226,7 +234,7 @@ impl AuthCheckResult {
             checked_at: chrono::Utc::now(),
         }
     }
-    
+
     /// Creates a not authenticated result
     pub fn not_authenticated(message: impl Into<String>) -> Self {
         Self {
@@ -236,7 +244,7 @@ impl AuthCheckResult {
             checked_at: chrono::Utc::now(),
         }
     }
-    
+
     /// Adds details to the result
     pub fn with_details(mut self, details: impl Into<String>) -> Self {
         self.details = Some(details.into());
@@ -251,11 +259,9 @@ mod tests {
     #[tokio::test]
     async fn test_check_all() {
         let checker = AuthStatusChecker::new();
-        let result = tokio::time::timeout(
-            std::time::Duration::from_secs(10),
-            checker.check_all(),
-        ).await;
-        
+        let result =
+            tokio::time::timeout(std::time::Duration::from_secs(10), checker.check_all()).await;
+
         match result {
             Ok(results) => {
                 assert_eq!(results.len(), 5);
@@ -269,9 +275,8 @@ mod tests {
 
     #[test]
     fn test_auth_check_result() {
-        let result = AuthCheckResult::authenticated("Test message")
-            .with_details("Additional info");
-        
+        let result = AuthCheckResult::authenticated("Test message").with_details("Additional info");
+
         assert!(result.authenticated);
         assert_eq!(result.message, "Test message");
         assert_eq!(result.details, Some("Additional info".to_string()));
@@ -284,8 +289,9 @@ mod tests {
         let result = tokio::time::timeout(
             std::time::Duration::from_secs(5),
             checker.get_authenticated_platforms(),
-        ).await;
-        
+        )
+        .await;
+
         match result {
             Ok(platforms) => assert!(platforms.len() <= 5),
             Err(_) => {} // Timeout is acceptable in test environment

@@ -1,18 +1,18 @@
 //! Budget donut chart widget (Canvas-based)
 
-use iced::widget::{canvas, text, column, Canvas};
-use iced::widget::canvas::{Cache, Geometry, Path, Stroke};
-use iced::{Element, Rectangle, Color, Point};
-use iced::mouse;
-use std::f32::consts::PI;
 use crate::theme::colors;
+use iced::mouse;
+use iced::widget::canvas::{Cache, Geometry, Path, Stroke};
+use iced::widget::{Canvas, canvas, column, text};
+use iced::{Color, Element, Point, Rectangle};
+use std::f32::consts::PI;
 
 /// Budget donut chart size
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum BudgetSize {
-    Small,   // 80px
-    Medium,  // 120px
-    Large,   // 160px
+    Small,  // 80px
+    Medium, // 120px
+    Large,  // 160px
 }
 
 impl BudgetSize {
@@ -23,7 +23,7 @@ impl BudgetSize {
             BudgetSize::Large => 160.0,
         }
     }
-    
+
     pub fn ring_width(&self) -> f32 {
         match self {
             BudgetSize::Small => 12.0,
@@ -54,7 +54,7 @@ impl BudgetDonut {
             cache: Cache::new(),
         }
     }
-    
+
     /// Get the usage percentage
     fn percentage(&self) -> f32 {
         if self.limit <= 0.0 {
@@ -63,7 +63,7 @@ impl BudgetDonut {
             (self.used / self.limit * 100.0).min(100.0)
         }
     }
-    
+
     /// Get the color based on usage percentage
     fn color(&self) -> Color {
         let pct = self.percentage();
@@ -79,7 +79,7 @@ impl BudgetDonut {
 
 impl<Message> canvas::Program<Message> for BudgetDonut {
     type State = ();
-    
+
     fn draw(
         &self,
         _state: &Self::State,
@@ -92,7 +92,7 @@ impl<Message> canvas::Program<Message> for BudgetDonut {
             let center = frame.center();
             let ring_width = self.size.ring_width();
             let radius = self.size.diameter() / 2.0;
-            
+
             // Draw background ring (light gray)
             let bg_circle = Path::circle(center, radius - ring_width / 2.0);
             frame.stroke(
@@ -101,12 +101,12 @@ impl<Message> canvas::Program<Message> for BudgetDonut {
                     .with_color(Color::from_rgb(0.8, 0.8, 0.8))
                     .with_width(ring_width),
             );
-            
+
             // Draw usage arc
             let percentage = self.percentage();
             let angle = (percentage / 100.0) * 2.0 * PI;
             let color = self.color();
-            
+
             if angle > 0.0 {
                 let arc = Path::new(|builder| {
                     let start_angle = -PI / 2.0;
@@ -116,7 +116,7 @@ impl<Message> canvas::Program<Message> for BudgetDonut {
                         let current_angle = start_angle + (angle * t);
                         let x = center.x + (radius - ring_width / 2.0) * current_angle.cos();
                         let y = center.y + (radius - ring_width / 2.0) * current_angle.sin();
-                        
+
                         if i == 0 {
                             builder.move_to(Point::new(x, y));
                         } else {
@@ -124,15 +124,13 @@ impl<Message> canvas::Program<Message> for BudgetDonut {
                         }
                     }
                 });
-                
+
                 frame.stroke(
                     &arc,
-                    Stroke::default()
-                        .with_color(color)
-                        .with_width(ring_width),
+                    Stroke::default().with_color(color).with_width(ring_width),
                 );
             }
-            
+
             // Draw center text (percentage)
             let text_content = format!("{:.0}%", percentage);
             let text_size = match self.size {
@@ -140,7 +138,7 @@ impl<Message> canvas::Program<Message> for BudgetDonut {
                 BudgetSize::Medium => 20.0,
                 BudgetSize::Large => 28.0,
             };
-            
+
             frame.fill_text(canvas::Text {
                 content: text_content,
                 position: center,
@@ -151,7 +149,7 @@ impl<Message> canvas::Program<Message> for BudgetDonut {
                 ..canvas::Text::default()
             });
         });
-        
+
         vec![geometry]
     }
 }
@@ -168,11 +166,8 @@ where
 {
     let donut = BudgetDonut::new(used, limit, platform_name, size);
     let diameter = size.diameter();
-    
-    Canvas::new(donut)
-        .width(diameter)
-        .height(diameter)
-        .into()
+
+    Canvas::new(donut).width(diameter).height(diameter).into()
 }
 
 /// Create a budget donut with label below
@@ -187,12 +182,10 @@ where
 {
     let name = platform_name.into();
     let name_clone = name.clone();
-    
+
     column![
         budget_donut(used, limit, name, size),
-        text(name_clone)
-            .size(12)
-            .color(colors::INK_FADED)
+        text(name_clone).size(12).color(colors::INK_FADED)
     ]
     .spacing(8)
     .align_x(iced::Alignment::Center)

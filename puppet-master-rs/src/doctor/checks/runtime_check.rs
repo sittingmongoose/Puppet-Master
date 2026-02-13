@@ -30,7 +30,9 @@ impl RuntimeCheck {
             // Linux: Check if running from system install
             if let Ok(exe_path) = std::env::current_exe() {
                 if exe_path.starts_with("/usr/bin") || exe_path.starts_with("/usr/local/bin") {
-                    if let Some(proj_dirs) = directories::ProjectDirs::from("com", "RWM", "Puppet Master") {
+                    if let Some(proj_dirs) =
+                        directories::ProjectDirs::from("com", "RWM", "Puppet Master")
+                    {
                         proj_dirs.data_local_dir().to_path_buf()
                     } else if let Some(base_dirs) = directories::BaseDirs::new() {
                         base_dirs.data_local_dir().join("RWM Puppet Master")
@@ -51,7 +53,7 @@ impl RuntimeCheck {
     }
 
     /// Create with a specific working directory
-        #[allow(dead_code)]
+    #[allow(dead_code)]
     pub fn with_working_dir(working_dir: PathBuf) -> Self {
         Self { working_dir }
     }
@@ -92,7 +94,9 @@ impl RuntimeCheck {
                 name: "Working Directory".to_string(),
                 status: false,
                 message: format!("Directory does not exist: {:?}", self.working_dir),
-                fix_suggestion: Some("Create the directory or change to an existing one".to_string()),
+                fix_suggestion: Some(
+                    "Create the directory or change to an existing one".to_string(),
+                ),
             };
         }
 
@@ -114,7 +118,9 @@ impl RuntimeCheck {
                     name: "Working Directory".to_string(),
                     status: false,
                     message: format!("Directory is not writable: {}", e),
-                    fix_suggestion: Some("Check file permissions on the working directory".to_string()),
+                    fix_suggestion: Some(
+                        "Check file permissions on the working directory".to_string(),
+                    ),
                 }
             }
         }
@@ -142,27 +148,29 @@ impl RuntimeCheck {
                     name: ".puppet-master Directory".to_string(),
                     status: false,
                     message: format!("Directory is not writable: {}", e),
-                    fix_suggestion: Some("Check file permissions on .puppet-master directory".to_string()),
+                    fix_suggestion: Some(
+                        "Check file permissions on .puppet-master directory".to_string(),
+                    ),
                 },
             }
         } else {
             // Try to create it
             match fs::create_dir_all(&pm_dir) {
-                Ok(_) => {
-                    RuntimeItem {
-                        name: ".puppet-master Directory".to_string(),
-                        status: true,
-                        message: "Directory created successfully".to_string(),
-                        fix_suggestion: None,
-                    }
-                }
+                Ok(_) => RuntimeItem {
+                    name: ".puppet-master Directory".to_string(),
+                    status: true,
+                    message: "Directory created successfully".to_string(),
+                    fix_suggestion: None,
+                },
                 Err(e) => {
                     warn!("Cannot create .puppet-master directory: {}", e);
                     RuntimeItem {
                         name: ".puppet-master Directory".to_string(),
                         status: false,
                         message: format!("Cannot create directory: {}", e),
-                        fix_suggestion: Some("Check write permissions in the working directory".to_string()),
+                        fix_suggestion: Some(
+                            "Check write permissions in the working directory".to_string(),
+                        ),
                     }
                 }
             }
@@ -176,7 +184,7 @@ impl RuntimeCheck {
         #[cfg(unix)]
         {
             use std::os::unix::fs::MetadataExt;
-            
+
             // Check if working directory exists first
             if !self.working_dir.exists() {
                 return RuntimeItem {
@@ -186,12 +194,12 @@ impl RuntimeCheck {
                     fix_suggestion: Some("Create the working directory first".to_string()),
                 };
             }
-            
+
             match fs::metadata(&self.working_dir) {
                 Ok(metadata) => {
                     // Get filesystem stats
                     let _dev = metadata.dev();
-                    
+
                     // Try to use statvfs to get actual free space
                     // This is a simplified check - just verify we can read metadata
                     RuntimeItem {
@@ -231,7 +239,7 @@ impl RuntimeCheck {
         debug!("Checking SQLite");
 
         let db_path = self.working_dir.join(".puppet-master").join("test.db");
-        
+
         // Try to create/open a database
         match rusqlite::Connection::open(&db_path) {
             Ok(_conn) => {
@@ -250,7 +258,10 @@ impl RuntimeCheck {
                     name: "SQLite".to_string(),
                     status: false,
                     message: format!("Cannot open SQLite: {}", e),
-                    fix_suggestion: Some("Check write permissions and ensure SQLite is properly installed".to_string()),
+                    fix_suggestion: Some(
+                        "Check write permissions and ensure SQLite is properly installed"
+                            .to_string(),
+                    ),
                 }
             }
         }
@@ -410,13 +421,13 @@ mod tests {
     #[tokio::test]
     async fn test_doctor_check_run() {
         let temp_dir = TempDir::new().unwrap();
-        
+
         // Create .git directory so git check passes
         fs::create_dir(temp_dir.path().join(".git")).unwrap();
-        
+
         let check = RuntimeCheck::with_working_dir(temp_dir.path().to_path_buf());
         let result = check.run().await;
-        
+
         // Should pass most checks in a temp directory
         assert!(result.passed || !result.passed); // Always valid
     }

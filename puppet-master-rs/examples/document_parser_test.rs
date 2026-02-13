@@ -1,9 +1,9 @@
 //! Example demonstrating document parser functionality with DOCX and PDF support.
 
 use puppet_master::start_chain::DocumentParser;
+use std::io::{Cursor, Write};
 use std::path::Path;
 use tempfile::NamedTempFile;
-use std::io::{Write, Cursor};
 use zip::ZipWriter;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -54,13 +54,13 @@ fn test_markdown() -> Result<(), Box<dyn std::error::Error>> {
 
     let doc = DocumentParser::parse_file(temp_file.path())
         .map_err(|e| format!("Markdown parse error: {}", e))?;
-    
+
     assert_eq!(doc.title, "Requirements Document");
     assert!(!doc.sections.is_empty());
     assert!(doc.raw_text.contains("authentication"));
     println!("   - Found {} sections", doc.sections.len());
     println!("   - Title: {}", doc.title);
-    
+
     Ok(())
 }
 
@@ -72,12 +72,12 @@ fn test_plain_text() -> Result<(), Box<dyn std::error::Error>> {
 
     let doc = DocumentParser::parse_file(temp_file.path())
         .map_err(|e| format!("Plain text parse error: {}", e))?;
-    
+
     assert_eq!(doc.title, "Project Requirements");
     assert_eq!(doc.sections.len(), 1);
     println!("   - Title: {}", doc.title);
     println!("   - List items: {}", doc.sections[0].list_items.len());
-    
+
     Ok(())
 }
 
@@ -115,8 +115,8 @@ fn test_docx() -> Result<(), Box<dyn std::error::Error>> {
     </w:body>
 </w:document>"#;
 
-    let options = zip::write::SimpleFileOptions::default()
-        .compression_method(zip::CompressionMethod::Stored);
+    let options =
+        zip::write::SimpleFileOptions::default().compression_method(zip::CompressionMethod::Stored);
     zip.start_file("word/document.xml", options)?;
     zip.write_all(xml_content.as_bytes())?;
 
@@ -128,14 +128,14 @@ fn test_docx() -> Result<(), Box<dyn std::error::Error>> {
 
     let doc = DocumentParser::parse_file(temp_file.path())
         .map_err(|e| format!("DOCX parse error: {}", e))?;
-    
+
     assert_eq!(doc.title, "System Requirements");
     assert!(!doc.sections.is_empty());
     assert!(doc.raw_text.contains("system requirements"));
     println!("   - Title: {}", doc.title);
     println!("   - Sections: {}", doc.sections.len());
     println!("   - Text length: {} chars", doc.raw_text.len());
-    
+
     Ok(())
 }
 
@@ -150,6 +150,6 @@ fn test_pdf_error() -> Result<(), Box<dyn std::error::Error>> {
     let error = result.unwrap_err();
     assert!(error.contains("corrupt") || error.contains("encrypted") || error.contains("Failed"));
     println!("   - Correctly detected invalid PDF: {}", error);
-    
+
     Ok(())
 }

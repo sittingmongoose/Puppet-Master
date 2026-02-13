@@ -162,7 +162,10 @@ mod tests {
         let mut secrets = HashMap::new();
         SecretsManager::load_from_env(&mut secrets, "TEST_SECRET_KEY");
 
-        assert_eq!(secrets.get("TEST_SECRET_KEY"), Some(&"test_value".to_string()));
+        assert_eq!(
+            secrets.get("TEST_SECRET_KEY"),
+            Some(&"test_value".to_string())
+        );
 
         // Clean up
         unsafe {

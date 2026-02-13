@@ -1,10 +1,10 @@
 //! Scanline Shader - CRT/LCD scanline overlay effect
-//! 
+//!
 //! Provides retro terminal aesthetic with horizontal scanlines and moving scan bar.
 //! Perfect for terminal widgets and retro-style interfaces.
-//! 
+//!
 //! # WGSL Shader
-//! 
+//!
 //! The shader source is available as `SCANLINE_SHADER` constant and can be
 //! used with custom wgpu pipelines or Iced's shader widget when implementing
 //! full integration.
@@ -13,7 +13,7 @@
 pub const SCANLINE_SHADER: &str = include_str!("scanline.wgsl");
 
 /// Uniform data layout matching WGSL shader
-/// 
+///
 /// This struct must match the layout in scanline.wgsl exactly.
 #[repr(C)]
 #[derive(Debug, Clone, Copy)]

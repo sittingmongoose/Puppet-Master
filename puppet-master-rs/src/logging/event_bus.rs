@@ -6,7 +6,7 @@
 //! - Thread-safe
 
 use crate::types::PuppetMasterEvent;
-use crossbeam_channel::{unbounded, Receiver, Sender};
+use crossbeam_channel::{Receiver, Sender, unbounded};
 use std::sync::{Arc, Mutex};
 
 /// Thread-safe event bus for broadcasting events
@@ -155,7 +155,7 @@ impl Default for BroadcastEventBus {
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     use std::thread;
     use std::time::Duration;
 

@@ -3,7 +3,7 @@
 //! Takes a PRD and produces a detailed execution plan with phases, tasks,
 //! subtasks, and iterations, including time estimates and dependencies.
 
-use crate::types::{Platform, PRD, Phase, Task, Subtask};
+use crate::types::{PRD, Phase, Platform, Subtask, Task};
 use anyhow::{Context, Result};
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
@@ -115,14 +115,16 @@ impl TierPlanGenerator {
         let mut total_hours = 0.0;
 
         for phase in &prd.phases {
-            let phase_plan = Self::generate_phase_plan(phase)
-                .context("Failed to generate phase plan")?;
-            
-            total_iterations += phase_plan.tasks.iter()
+            let phase_plan =
+                Self::generate_phase_plan(phase).context("Failed to generate phase plan")?;
+
+            total_iterations += phase_plan
+                .tasks
+                .iter()
                 .flat_map(|t| &t.subtasks)
                 .map(|s| s.max_iterations)
                 .sum::<u32>();
-            
+
             total_hours += phase_plan.estimated_hours;
             phases.push(phase_plan);
         }
@@ -171,8 +173,8 @@ impl TierPlanGenerator {
 
         for subtask in &task.subtasks {
             let subtask_plan = Self::generate_subtask_plan(subtask)?;
-            task_hours += subtask_plan.estimated_hours_per_iteration 
-                * subtask_plan.max_iterations as f64;
+            task_hours +=
+                subtask_plan.estimated_hours_per_iteration * subtask_plan.max_iterations as f64;
             subtasks.push(subtask_plan);
         }
 
@@ -213,11 +215,8 @@ impl TierPlanGenerator {
     /// Calculate maximum iterations for a subtask.
     fn calculate_max_iterations(subtask: &Subtask) -> u32 {
         // Base on description complexity
-        let description_length = subtask.description
-            .as_ref()
-            .map(|d| d.len())
-            .unwrap_or(0);
-        
+        let description_length = subtask.description.as_ref().map(|d| d.len()).unwrap_or(0);
+
         let criteria_count = subtask.acceptance_criteria.len();
 
         // Simple heuristic
@@ -232,11 +231,8 @@ impl TierPlanGenerator {
 
     /// Estimate hours per subtask iteration.
     fn estimate_subtask_hours(subtask: &Subtask) -> f64 {
-        let description_length = subtask.description
-            .as_ref()
-            .map(|d| d.len())
-            .unwrap_or(0);
-        
+        let description_length = subtask.description.as_ref().map(|d| d.len()).unwrap_or(0);
+
         let criteria_count = subtask.acceptance_criteria.len();
 
         // Rough estimation based on complexity
@@ -277,10 +273,10 @@ impl TierPlanGenerator {
 
         // Default platform selection based on complexity
         match complexity {
-            5 => Platform::Claude,      // Most complex - use Claude
-            4 => Platform::Gemini,       // Complex - use Gemini
-            3 => Platform::Codex,        // Medium - use Codex
-            _ => Platform::Cursor,       // Simple - use Cursor
+            5 => Platform::Claude, // Most complex - use Claude
+            4 => Platform::Gemini, // Complex - use Gemini
+            3 => Platform::Codex,  // Medium - use Codex
+            _ => Platform::Cursor, // Simple - use Cursor
         }
     }
 
@@ -297,13 +293,13 @@ impl TierPlanGenerator {
     fn infer_priority(phase: &Phase) -> u32 {
         let has_dependencies = !phase.dependencies.is_empty();
         let task_count = phase.tasks.len();
-        
+
         // Phases with dependencies are typically more important
         let base_priority = if has_dependencies { 7 } else { 5 };
-        
+
         // Adjust based on task count
         let adjusted = base_priority + (task_count as u32).min(3);
-        
+
         adjusted.min(10)
     }
 
@@ -314,19 +310,20 @@ impl TierPlanGenerator {
         }
 
         let total_tasks: usize = phases.iter().map(|p| p.tasks.len()).sum();
-        let total_subtasks: usize = phases.iter()
+        let total_subtasks: usize = phases
+            .iter()
             .flat_map(|p| &p.tasks)
             .map(|t| t.subtasks.len())
             .sum();
-        
-        let avg_complexity: f64 = phases.iter()
+
+        let avg_complexity: f64 = phases
+            .iter()
             .flat_map(|p| &p.tasks)
             .map(|t| t.complexity as f64)
-            .sum::<f64>() / total_tasks.max(1) as f64;
+            .sum::<f64>()
+            / total_tasks.max(1) as f64;
 
-        let dependency_count: usize = phases.iter()
-            .map(|p| p.dependencies.len())
-            .sum();
+        let dependency_count: usize = phases.iter().map(|p| p.dependencies.len()).sum();
 
         // Normalize to 0.0-1.0 range
         let task_factor = (total_tasks as f64 / 20.0).min(1.0) * 0.3;
@@ -345,9 +342,11 @@ impl TierPlanGenerator {
         for phase in phases {
             if !phase.dependencies.is_empty() {
                 critical_path.push(phase.phase_id.clone());
-                
+
                 // Add tasks with longest estimated hours
-                if let Some(longest_task) = phase.tasks.iter()
+                if let Some(longest_task) = phase
+                    .tasks
+                    .iter()
                     .max_by(|a, b| a.estimated_hours.partial_cmp(&b.estimated_hours).unwrap())
                 {
                     critical_path.push(longest_task.task_id.clone());
@@ -362,13 +361,13 @@ impl TierPlanGenerator {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::{PRDMetadata, ItemStatus};
+    use crate::types::{ItemStatus, PRDMetadata};
 
     #[test]
     fn test_generate_empty_prd() {
         let prd = PRD::new("Test Project");
         let plan = TierPlanGenerator::generate(&prd).unwrap();
-        
+
         assert_eq!(plan.phases.len(), 0);
         assert_eq!(plan.estimated_iterations, 0);
     }
@@ -408,35 +407,31 @@ mod tests {
                 complexity: None,
                 task_type: None,
             },
-            5
+            5,
         );
-        
+
         assert_eq!(platform, Platform::Claude);
     }
 
     #[test]
     fn test_complexity_score_calculation() {
-        let phases = vec![
-            PhasePlan {
-                phase_id: "PH-001".to_string(),
-                name: "Phase 1".to_string(),
-                tasks: vec![
-                    TaskPlan {
-                        task_id: "TK-001".to_string(),
-                        name: "Task 1".to_string(),
-                        subtasks: vec![],
-                        platform: Platform::Cursor,
-                        model_level: "flash".to_string(),
-                        dependencies: vec![],
-                        estimated_hours: 2.0,
-                        complexity: 3,
-                    }
-                ],
+        let phases = vec![PhasePlan {
+            phase_id: "PH-001".to_string(),
+            name: "Phase 1".to_string(),
+            tasks: vec![TaskPlan {
+                task_id: "TK-001".to_string(),
+                name: "Task 1".to_string(),
+                subtasks: vec![],
+                platform: Platform::Cursor,
+                model_level: "flash".to_string(),
                 dependencies: vec![],
                 estimated_hours: 2.0,
-                priority: 5,
-            }
-        ];
+                complexity: 3,
+            }],
+            dependencies: vec![],
+            estimated_hours: 2.0,
+            priority: 5,
+        }];
 
         let score = TierPlanGenerator::calculate_complexity(&phases);
         assert!(score >= 0.0 && score <= 1.0);

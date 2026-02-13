@@ -2,12 +2,12 @@
 //!
 //! Tests for SQLite event logging with concurrent access.
 
-use puppet_master::state::{EventLedger, EventFilters};
-use puppet_master::types::{PuppetMasterEvent, TierState, TierType, LogLevel};
 use chrono::Utc;
-use tempfile::TempDir;
+use puppet_master::state::{EventFilters, EventLedger};
+use puppet_master::types::{LogLevel, PuppetMasterEvent, TierState, TierType};
 use std::sync::Arc;
 use std::thread;
+use tempfile::TempDir;
 
 #[test]
 fn test_event_ledger_insert_and_query() {

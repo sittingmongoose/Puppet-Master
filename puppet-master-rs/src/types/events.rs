@@ -294,9 +294,7 @@ pub enum PuppetMasterEvent {
     },
 
     /// Orchestrator resumed.
-    OrchestratorResumed {
-        timestamp: DateTime<Utc>,
-    },
+    OrchestratorResumed { timestamp: DateTime<Utc> },
 
     /// User interaction required.
     UserInteractionRequired {
@@ -395,13 +393,7 @@ impl PuppetMasterEvent {
     }
 
     /// Creates a progress update event.
-    pub fn progress(
-        phase: f64,
-        task: f64,
-        subtask: f64,
-        iteration: f64,
-        overall: f64,
-    ) -> Self {
+    pub fn progress(phase: f64, task: f64, subtask: f64, iteration: f64, overall: f64) -> Self {
         Self::Progress {
             phase_progress: phase,
             task_progress: task,
@@ -527,7 +519,7 @@ mod tests {
     #[test]
     fn test_progress_event() {
         let event = PuppetMasterEvent::progress(25.0, 50.0, 75.0, 100.0, 60.0);
-        
+
         if let PuppetMasterEvent::Progress {
             phase_progress,
             task_progress,

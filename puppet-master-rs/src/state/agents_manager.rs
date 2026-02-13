@@ -5,7 +5,7 @@
 //! - Parse sections and agent definitions
 //! - Append learnings to appropriate sections
 
-use crate::types::{AgentsDoc, AgentDefinition};
+use crate::types::{AgentDefinition, AgentsDoc};
 use anyhow::{Context, Result};
 use std::fs;
 use std::path::{Path, PathBuf};
@@ -71,10 +71,7 @@ impl AgentsManager {
             let trimmed = line.trim();
 
             if trimmed.starts_with("## ") || trimmed.starts_with("# ") {
-                let header = trimmed
-                    .trim_start_matches('#')
-                    .trim()
-                    .to_lowercase();
+                let header = trimmed.trim_start_matches('#').trim().to_lowercase();
 
                 current_section = Some(header);
             } else if trimmed.starts_with("- ") || trimmed.starts_with("* ") {
@@ -131,9 +128,17 @@ impl AgentsManager {
         content.push_str(&format!("# Agent Learnings - {}\n\n", doc.project_name));
 
         let patterns: Vec<_> = doc.agents.iter().filter(|a| a.role == "pattern").collect();
-        let failures: Vec<_> = doc.agents.iter().filter(|a| a.role == "failure_mode").collect();
+        let failures: Vec<_> = doc
+            .agents
+            .iter()
+            .filter(|a| a.role == "failure_mode")
+            .collect();
         let dos: Vec<_> = doc.agents.iter().filter(|a| a.role == "do_item").collect();
-        let donts: Vec<_> = doc.agents.iter().filter(|a| a.role == "dont_item").collect();
+        let donts: Vec<_> = doc
+            .agents
+            .iter()
+            .filter(|a| a.role == "dont_item")
+            .collect();
 
         if !patterns.is_empty() {
             content.push_str("## Successful Patterns\n\n");
@@ -173,28 +178,32 @@ impl AgentsManager {
     /// Append a pattern to the patterns section
     pub fn append_pattern(&self, tier_id: &str, pattern: String) -> Result<()> {
         let mut doc = self.load(tier_id)?;
-        doc.agents.push(AgentDefinition::new(&pattern, "pattern", &pattern));
+        doc.agents
+            .push(AgentDefinition::new(&pattern, "pattern", &pattern));
         self.save(tier_id, &doc)
     }
 
     /// Append a failure mode
     pub fn append_failure(&self, tier_id: &str, failure: String) -> Result<()> {
         let mut doc = self.load(tier_id)?;
-        doc.agents.push(AgentDefinition::new(&failure, "failure_mode", &failure));
+        doc.agents
+            .push(AgentDefinition::new(&failure, "failure_mode", &failure));
         self.save(tier_id, &doc)
     }
 
     /// Append to do list
     pub fn append_do(&self, tier_id: &str, item: String) -> Result<()> {
         let mut doc = self.load(tier_id)?;
-        doc.agents.push(AgentDefinition::new(&item, "do_item", &item));
+        doc.agents
+            .push(AgentDefinition::new(&item, "do_item", &item));
         self.save(tier_id, &doc)
     }
 
     /// Append to don't list
     pub fn append_dont(&self, tier_id: &str, item: String) -> Result<()> {
         let mut doc = self.load(tier_id)?;
-        doc.agents.push(AgentDefinition::new(&item, "dont_item", &item));
+        doc.agents
+            .push(AgentDefinition::new(&item, "dont_item", &item));
         self.save(tier_id, &doc)
     }
 
@@ -218,15 +227,18 @@ impl AgentsManager {
 
         Ok(hierarchy)
     }
-    
+
     /// Validate AGENTS.md with gate enforcer
-    pub fn validate_with_enforcer(&self, tier_id: &str) -> Result<crate::state::agents_gate_enforcer::EnforcementResult> {
+    pub fn validate_with_enforcer(
+        &self,
+        tier_id: &str,
+    ) -> Result<crate::state::agents_gate_enforcer::EnforcementResult> {
         use crate::state::agents_gate_enforcer::GateEnforcer;
-        
+
         let doc = self.load(tier_id)?;
         let content = self.format_agents_doc(&doc);
         let enforcer = GateEnforcer::new();
-        
+
         enforcer.enforce(&content, &doc)
     }
 
@@ -255,14 +267,27 @@ mod tests {
         let manager = AgentsManager::new(temp_dir.path());
 
         let mut doc = AgentsDoc::new("phase1");
-        doc.agents.push(AgentDefinition::new("Pattern 1", "pattern", "Pattern 1"));
-        doc.agents.push(AgentDefinition::new("Failure 1", "failure_mode", "Failure 1"));
+        doc.agents
+            .push(AgentDefinition::new("Pattern 1", "pattern", "Pattern 1"));
+        doc.agents.push(AgentDefinition::new(
+            "Failure 1",
+            "failure_mode",
+            "Failure 1",
+        ));
 
         manager.save("phase1", &doc).unwrap();
         let loaded = manager.load("phase1").unwrap();
 
-        let patterns: Vec<_> = loaded.agents.iter().filter(|a| a.role == "pattern").collect();
-        let failures: Vec<_> = loaded.agents.iter().filter(|a| a.role == "failure_mode").collect();
+        let patterns: Vec<_> = loaded
+            .agents
+            .iter()
+            .filter(|a| a.role == "pattern")
+            .collect();
+        let failures: Vec<_> = loaded
+            .agents
+            .iter()
+            .filter(|a| a.role == "failure_mode")
+            .collect();
         assert_eq!(patterns.len(), 1);
         assert_eq!(failures.len(), 1);
     }
@@ -295,7 +320,11 @@ mod tests {
             .unwrap();
 
         let merged = manager.merge_hierarchy("phase1.task1").unwrap();
-        let patterns: Vec<_> = merged.agents.iter().filter(|a| a.role == "pattern").collect();
+        let patterns: Vec<_> = merged
+            .agents
+            .iter()
+            .filter(|a| a.role == "pattern")
+            .collect();
         assert_eq!(patterns.len(), 2);
     }
 }

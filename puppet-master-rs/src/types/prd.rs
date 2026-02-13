@@ -583,11 +583,7 @@ impl PRD {
 
     /// Recalculates metadata based on current phases/tasks/subtasks.
     pub fn update_metadata(&mut self) {
-        self.metadata.total_tasks = self
-            .phases
-            .iter()
-            .map(|p| p.tasks.len() as u32)
-            .sum();
+        self.metadata.total_tasks = self.phases.iter().map(|p| p.tasks.len() as u32).sum();
 
         self.metadata.total_subtasks = self
             .phases
@@ -658,7 +654,7 @@ mod tests {
     #[test]
     fn test_prd_metadata_update() {
         let mut prd = PRD::new("Test");
-        
+
         let phase = Phase {
             id: "phase1".to_string(),
             title: "Phase 1".to_string(),
@@ -694,7 +690,7 @@ mod tests {
     #[test]
     fn test_prd_find_operations() {
         let mut prd = PRD::new("Test");
-        
+
         let phase = Phase {
             id: "phase1".to_string(),
             title: "Phase 1".to_string(),

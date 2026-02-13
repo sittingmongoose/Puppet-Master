@@ -8,8 +8,8 @@ use once_cell::sync::Lazy;
 use regex::Regex;
 use std::collections::{HashMap, HashSet};
 
-use crate::types::prd::PRD;
 use crate::types::ParsedRequirements;
+use crate::types::prd::PRD;
 
 static REQUIREMENT_ID_RE: Lazy<Regex> = Lazy::new(|| {
     // Examples: REQ-001, NFR-12, SEC-7
@@ -50,7 +50,10 @@ pub fn extract_requirement_ids(text: &str) -> Vec<String> {
 }
 
 /// Build a mapping of requirement IDs to PRD item IDs where they are referenced.
-pub fn map_requirements_to_prd(prd: &PRD, requirement_ids: &[String]) -> HashMap<String, Vec<String>> {
+pub fn map_requirements_to_prd(
+    prd: &PRD,
+    requirement_ids: &[String],
+) -> HashMap<String, Vec<String>> {
     let mut by_req: HashMap<String, Vec<String>> = HashMap::new();
 
     let prd_items = collect_prd_items(prd);
@@ -88,7 +91,8 @@ fn collect_prd_items(prd: &PRD) -> Vec<(String, String)> {
         for task in &phase.tasks {
             items.push((
                 task.id.clone(),
-                join_texts([Some(task.title.as_str()), task.description.as_deref(), None]).to_uppercase(),
+                join_texts([Some(task.title.as_str()), task.description.as_deref(), None])
+                    .to_uppercase(),
             ));
 
             for subtask in &task.subtasks {
@@ -181,7 +185,7 @@ impl RequirementsInventory {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::prd::{ItemStatus, Phase, PRDMetadata, Task};
+    use crate::types::prd::{ItemStatus, PRDMetadata, Phase, Task};
 
     fn create_test_prd() -> PRD {
         use crate::types::prd::Subtask;
@@ -261,10 +265,25 @@ mod tests {
         }
         .with_prd_mapping(&prd);
 
-        assert_eq!(inventory.uncovered_requirement_ids(), vec!["REQ-999".to_string()]);
-        assert_eq!(inventory.requirement_to_prd_items["REQ-001"], vec!["P1".to_string()]);
-        assert_eq!(inventory.requirement_to_prd_items["REQ-002"], vec!["P1-T1".to_string()]);
-        assert_eq!(inventory.requirement_to_prd_items["REQ-003"], vec!["P1-T1-S1".to_string()]);
-        assert_eq!(inventory.requirement_to_prd_items["REQ-004"], vec!["P1-T1-S1".to_string()]);
+        assert_eq!(
+            inventory.uncovered_requirement_ids(),
+            vec!["REQ-999".to_string()]
+        );
+        assert_eq!(
+            inventory.requirement_to_prd_items["REQ-001"],
+            vec!["P1".to_string()]
+        );
+        assert_eq!(
+            inventory.requirement_to_prd_items["REQ-002"],
+            vec!["P1-T1".to_string()]
+        );
+        assert_eq!(
+            inventory.requirement_to_prd_items["REQ-003"],
+            vec!["P1-T1-S1".to_string()]
+        );
+        assert_eq!(
+            inventory.requirement_to_prd_items["REQ-004"],
+            vec!["P1-T1-S1".to_string()]
+        );
     }
 }

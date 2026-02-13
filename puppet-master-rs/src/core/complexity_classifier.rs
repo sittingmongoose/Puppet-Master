@@ -259,7 +259,10 @@ impl ComplexityClassifier {
         // Trivial - all Level1
         matrix.insert((Complexity::Trivial, TaskType::Feature), ModelLevel::Level1);
         matrix.insert((Complexity::Trivial, TaskType::Bugfix), ModelLevel::Level1);
-        matrix.insert((Complexity::Trivial, TaskType::Refactor), ModelLevel::Level1);
+        matrix.insert(
+            (Complexity::Trivial, TaskType::Refactor),
+            ModelLevel::Level1,
+        );
         matrix.insert((Complexity::Trivial, TaskType::Test), ModelLevel::Level1);
         matrix.insert((Complexity::Trivial, TaskType::Docs), ModelLevel::Level1);
 
@@ -271,23 +274,38 @@ impl ComplexityClassifier {
         matrix.insert((Complexity::Simple, TaskType::Docs), ModelLevel::Level1);
 
         // Moderate - mostly Level2
-        matrix.insert((Complexity::Moderate, TaskType::Feature), ModelLevel::Level2);
+        matrix.insert(
+            (Complexity::Moderate, TaskType::Feature),
+            ModelLevel::Level2,
+        );
         matrix.insert((Complexity::Moderate, TaskType::Bugfix), ModelLevel::Level2);
-        matrix.insert((Complexity::Moderate, TaskType::Refactor), ModelLevel::Level2);
+        matrix.insert(
+            (Complexity::Moderate, TaskType::Refactor),
+            ModelLevel::Level2,
+        );
         matrix.insert((Complexity::Moderate, TaskType::Test), ModelLevel::Level2);
         matrix.insert((Complexity::Moderate, TaskType::Docs), ModelLevel::Level1);
 
         // Complex - Level2 for tests/docs, Level3 for others
         matrix.insert((Complexity::Complex, TaskType::Feature), ModelLevel::Level3);
         matrix.insert((Complexity::Complex, TaskType::Bugfix), ModelLevel::Level3);
-        matrix.insert((Complexity::Complex, TaskType::Refactor), ModelLevel::Level3);
+        matrix.insert(
+            (Complexity::Complex, TaskType::Refactor),
+            ModelLevel::Level3,
+        );
         matrix.insert((Complexity::Complex, TaskType::Test), ModelLevel::Level2);
         matrix.insert((Complexity::Complex, TaskType::Docs), ModelLevel::Level2);
 
         // Critical - all Level3 except docs
-        matrix.insert((Complexity::Critical, TaskType::Feature), ModelLevel::Level3);
+        matrix.insert(
+            (Complexity::Critical, TaskType::Feature),
+            ModelLevel::Level3,
+        );
         matrix.insert((Complexity::Critical, TaskType::Bugfix), ModelLevel::Level3);
-        matrix.insert((Complexity::Critical, TaskType::Refactor), ModelLevel::Level3);
+        matrix.insert(
+            (Complexity::Critical, TaskType::Refactor),
+            ModelLevel::Level3,
+        );
         matrix.insert((Complexity::Critical, TaskType::Test), ModelLevel::Level2);
         matrix.insert((Complexity::Critical, TaskType::Docs), ModelLevel::Level2);
 
@@ -313,7 +331,9 @@ mod tests {
         TaskInfo {
             title: title.to_string(),
             description: String::new(),
-            acceptance_criteria: (0..criteria_count).map(|i| format!("Criterion {}", i)).collect(),
+            acceptance_criteria: (0..criteria_count)
+                .map(|i| format!("Criterion {}", i))
+                .collect(),
             test_command_count: test_count,
             additional_context: String::new(),
         }
@@ -323,7 +343,7 @@ mod tests {
     fn test_classify_trivial_task() {
         let classifier = ComplexityClassifier::new();
         let task = create_task("Simple fix", 2, 1);
-        
+
         let result = classifier.classify(&task);
         assert_eq!(result.complexity, Complexity::Trivial);
     }
@@ -332,7 +352,7 @@ mod tests {
     fn test_classify_simple_task() {
         let classifier = ComplexityClassifier::new();
         let task = create_task("Add validation", 4, 2);
-        
+
         let result = classifier.classify(&task);
         assert_eq!(result.complexity, Complexity::Simple);
     }
@@ -341,7 +361,7 @@ mod tests {
     fn test_classify_moderate_task() {
         let classifier = ComplexityClassifier::new();
         let task = create_task("Implement feature", 8, 3);
-        
+
         let result = classifier.classify(&task);
         assert_eq!(result.complexity, Complexity::Moderate);
     }
@@ -350,7 +370,7 @@ mod tests {
     fn test_classify_complex_task() {
         let classifier = ComplexityClassifier::new();
         let task = create_task("Major refactor", 15, 5);
-        
+
         let result = classifier.classify(&task);
         assert_eq!(result.complexity, Complexity::Complex);
     }
@@ -365,7 +385,7 @@ mod tests {
             test_command_count: 1,
             additional_context: String::new(),
         };
-        
+
         let result = classifier.classify(&task);
         assert_eq!(result.complexity, Complexity::Critical);
     }
@@ -374,7 +394,7 @@ mod tests {
     fn test_classify_docs_type() {
         let classifier = ComplexityClassifier::new();
         let task = create_task("Update README documentation", 2, 0);
-        
+
         let result = classifier.classify(&task);
         assert_eq!(result.task_type, TaskType::Docs);
     }
@@ -383,7 +403,7 @@ mod tests {
     fn test_classify_test_type() {
         let classifier = ComplexityClassifier::new();
         let task = create_task("Add unit tests for parser", 3, 5);
-        
+
         let result = classifier.classify(&task);
         assert_eq!(result.task_type, TaskType::Test);
     }
@@ -392,7 +412,7 @@ mod tests {
     fn test_classify_bugfix_type() {
         let classifier = ComplexityClassifier::new();
         let task = create_task("Fix crash in login handler", 2, 1);
-        
+
         let result = classifier.classify(&task);
         assert_eq!(result.task_type, TaskType::Bugfix);
     }
@@ -401,7 +421,7 @@ mod tests {
     fn test_classify_refactor_type() {
         let classifier = ComplexityClassifier::new();
         let task = create_task("Refactor state machine code", 5, 2);
-        
+
         let result = classifier.classify(&task);
         assert_eq!(result.task_type, TaskType::Refactor);
     }
@@ -410,7 +430,7 @@ mod tests {
     fn test_classify_feature_type() {
         let classifier = ComplexityClassifier::new();
         let task = create_task("Implement new export feature", 6, 3);
-        
+
         let result = classifier.classify(&task);
         assert_eq!(result.task_type, TaskType::Feature);
     }
@@ -418,12 +438,12 @@ mod tests {
     #[test]
     fn test_model_level_routing() {
         let classifier = ComplexityClassifier::new();
-        
+
         // Trivial docs -> Level1
         let task = create_task("Update README", 1, 0);
         let result = classifier.classify(&task);
         assert_eq!(result.model_level, ModelLevel::Level1);
-        
+
         // Simple bugfix -> Level2
         let task = TaskInfo {
             title: "Fix validation bug".to_string(),
@@ -434,7 +454,7 @@ mod tests {
         };
         let result = classifier.classify(&task);
         assert_eq!(result.model_level, ModelLevel::Level2);
-        
+
         // Critical feature -> Level3
         let task = TaskInfo {
             title: "Implement security encryption".to_string(),

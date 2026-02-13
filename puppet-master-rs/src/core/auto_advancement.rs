@@ -8,7 +8,7 @@
 
 use crate::core::tier_node::{TierNode, TierTree};
 use crate::types::*;
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 
 /// Auto-advancement engine
 #[derive(Debug)]
@@ -77,7 +77,10 @@ impl AdvancementEngine {
         if self.all_children_passed(tree, &parent_task.children) {
             self.advance_from_task(tree, parent_task)
         } else {
-            Ok(AdvancementResult::new(false, "Some subtasks not complete yet"))
+            Ok(AdvancementResult::new(
+                false,
+                "Some subtasks not complete yet",
+            ))
         }
     }
 
@@ -142,7 +145,10 @@ impl AdvancementEngine {
         {
             Ok(AdvancementResult::new(true, "All work complete"))
         } else {
-            Ok(AdvancementResult::new(false, "Some phases not complete yet"))
+            Ok(AdvancementResult::new(
+                false,
+                "Some phases not complete yet",
+            ))
         }
     }
 
@@ -204,7 +210,7 @@ mod tests {
 
     fn create_test_tree() -> TierTree {
         let mut tree = TierTree::new();
-        
+
         tree.add_node(
             "1".to_string(),
             TierType::Phase,
@@ -212,7 +218,8 @@ mod tests {
             "First phase".to_string(),
             None,
             3,
-        ).unwrap();
+        )
+        .unwrap();
 
         tree.add_node(
             "1.1".to_string(),
@@ -221,7 +228,8 @@ mod tests {
             "First task".to_string(),
             Some("1".to_string()),
             3,
-        ).unwrap();
+        )
+        .unwrap();
 
         tree.add_node(
             "1.1.1".to_string(),
@@ -230,7 +238,8 @@ mod tests {
             "First subtask".to_string(),
             Some("1.1".to_string()),
             3,
-        ).unwrap();
+        )
+        .unwrap();
 
         tree.add_node(
             "1.1.2".to_string(),
@@ -239,7 +248,8 @@ mod tests {
             "Second subtask".to_string(),
             Some("1.1".to_string()),
             3,
-        ).unwrap();
+        )
+        .unwrap();
 
         tree.add_node(
             "1.2".to_string(),
@@ -248,7 +258,8 @@ mod tests {
             "Second task".to_string(),
             Some("1".to_string()),
             3,
-        ).unwrap();
+        )
+        .unwrap();
 
         tree.add_node(
             "1.2.1".to_string(),
@@ -257,7 +268,8 @@ mod tests {
             "Third subtask".to_string(),
             Some("1.2".to_string()),
             3,
-        ).unwrap();
+        )
+        .unwrap();
 
         tree
     }
@@ -268,10 +280,14 @@ mod tests {
         let engine = AdvancementEngine::new();
 
         if let Some(node) = tree.find_by_id_mut("1.1.1") {
-            node.state_machine.send(crate::core::state_machine::TierEvent::StartPlanning)?;
-            node.state_machine.send(crate::core::state_machine::TierEvent::StartExecution)?;
-            node.state_machine.send(crate::core::state_machine::TierEvent::Complete)?;
-            node.state_machine.send(crate::core::state_machine::TierEvent::GatePass)?;
+            node.state_machine
+                .send(crate::core::state_machine::TierEvent::StartPlanning)?;
+            node.state_machine
+                .send(crate::core::state_machine::TierEvent::StartExecution)?;
+            node.state_machine
+                .send(crate::core::state_machine::TierEvent::Complete)?;
+            node.state_machine
+                .send(crate::core::state_machine::TierEvent::GatePass)?;
         }
 
         let result = engine.determine_advancement(&tree, "1.1.1")?;
@@ -287,10 +303,14 @@ mod tests {
 
         for tier_id in &["1.1.1", "1.1.2"] {
             if let Some(node) = tree.find_by_id_mut(tier_id) {
-                node.state_machine.send(crate::core::state_machine::TierEvent::StartPlanning)?;
-                node.state_machine.send(crate::core::state_machine::TierEvent::StartExecution)?;
-                node.state_machine.send(crate::core::state_machine::TierEvent::Complete)?;
-                node.state_machine.send(crate::core::state_machine::TierEvent::GatePass)?;
+                node.state_machine
+                    .send(crate::core::state_machine::TierEvent::StartPlanning)?;
+                node.state_machine
+                    .send(crate::core::state_machine::TierEvent::StartExecution)?;
+                node.state_machine
+                    .send(crate::core::state_machine::TierEvent::Complete)?;
+                node.state_machine
+                    .send(crate::core::state_machine::TierEvent::GatePass)?;
             }
         }
 
@@ -325,20 +345,28 @@ mod tests {
         // Pass all subtasks
         for tier_id in &["1.1.1", "1.1.2", "1.2.1"] {
             if let Some(node) = tree.find_by_id_mut(tier_id) {
-                node.state_machine.send(crate::core::state_machine::TierEvent::StartPlanning)?;
-                node.state_machine.send(crate::core::state_machine::TierEvent::StartExecution)?;
-                node.state_machine.send(crate::core::state_machine::TierEvent::Complete)?;
-                node.state_machine.send(crate::core::state_machine::TierEvent::GatePass)?;
+                node.state_machine
+                    .send(crate::core::state_machine::TierEvent::StartPlanning)?;
+                node.state_machine
+                    .send(crate::core::state_machine::TierEvent::StartExecution)?;
+                node.state_machine
+                    .send(crate::core::state_machine::TierEvent::Complete)?;
+                node.state_machine
+                    .send(crate::core::state_machine::TierEvent::GatePass)?;
             }
         }
 
         // Also pass parent tasks and phase (is_complete checks all nodes)
         for tier_id in &["1.1", "1.2", "1"] {
             if let Some(node) = tree.find_by_id_mut(tier_id) {
-                node.state_machine.send(crate::core::state_machine::TierEvent::StartPlanning)?;
-                node.state_machine.send(crate::core::state_machine::TierEvent::StartExecution)?;
-                node.state_machine.send(crate::core::state_machine::TierEvent::Complete)?;
-                node.state_machine.send(crate::core::state_machine::TierEvent::GatePass)?;
+                node.state_machine
+                    .send(crate::core::state_machine::TierEvent::StartPlanning)?;
+                node.state_machine
+                    .send(crate::core::state_machine::TierEvent::StartExecution)?;
+                node.state_machine
+                    .send(crate::core::state_machine::TierEvent::Complete)?;
+                node.state_machine
+                    .send(crate::core::state_machine::TierEvent::GatePass)?;
             }
         }
 

@@ -29,7 +29,7 @@ async fn file_contains(path: &Path, needle: &str) -> Result<bool, String> {
     if !path.exists() {
         return Err(format!("File does not exist: {}", path.display()));
     }
-    
+
     let content = tokio::fs::read_to_string(path)
         .await
         .map_err(|e| format!("Failed to read {}: {}", path.display(), e))?;
@@ -98,9 +98,18 @@ impl DoctorCheck for WiringCheck {
 
         let mut source_ok = true;
         for (label, ok) in [
-            ("orchestrator uses ExecutionEngine::new", file_contains(&orchestrator_path, "ExecutionEngine::new").await),
-            ("orchestrator uses GateRunner::new", file_contains(&orchestrator_path, "GateRunner::new").await),
-            ("orchestrator calls run_gate", file_contains(&orchestrator_path, ".run_gate(").await),
+            (
+                "orchestrator uses ExecutionEngine::new",
+                file_contains(&orchestrator_path, "ExecutionEngine::new").await,
+            ),
+            (
+                "orchestrator uses GateRunner::new",
+                file_contains(&orchestrator_path, "GateRunner::new").await,
+            ),
+            (
+                "orchestrator calls run_gate",
+                file_contains(&orchestrator_path, ".run_gate(").await,
+            ),
         ] {
             match ok {
                 Ok(true) => details.push(format!("[OK] {label}")),

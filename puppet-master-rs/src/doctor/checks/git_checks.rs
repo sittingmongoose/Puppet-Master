@@ -43,7 +43,7 @@ impl DoctorCheck for GitInstalledCheck {
                         message: format!("Git found at {:?}", path),
                         details: Some(version.trim().to_string()),
                         can_fix: false,
-                    timestamp: Utc::now(),
+                        timestamp: Utc::now(),
                     }
                 } else {
                     CheckResult {
@@ -51,7 +51,7 @@ impl DoctorCheck for GitInstalledCheck {
                         message: format!("Git found at {:?}", path),
                         details: None,
                         can_fix: false,
-                    timestamp: Utc::now(),
+                        timestamp: Utc::now(),
                     }
                 }
             }
@@ -60,7 +60,7 @@ impl DoctorCheck for GitInstalledCheck {
                 message: "Git not found".to_string(),
                 details: Some("Install git from https://git-scm.com/".to_string()),
                 can_fix: false,
-            timestamp: Utc::now(),
+                timestamp: Utc::now(),
             },
         }
     }
@@ -105,17 +105,23 @@ impl DoctorCheck for GitConfiguredCheck {
             .await;
 
         match (name_result, email_result) {
-            (Ok(name_output), Ok(email_output)) if name_output.status.success() && email_output.status.success() => {
-                let name = String::from_utf8_lossy(&name_output.stdout).trim().to_string();
-                let email = String::from_utf8_lossy(&email_output.stdout).trim().to_string();
-                
+            (Ok(name_output), Ok(email_output))
+                if name_output.status.success() && email_output.status.success() =>
+            {
+                let name = String::from_utf8_lossy(&name_output.stdout)
+                    .trim()
+                    .to_string();
+                let email = String::from_utf8_lossy(&email_output.stdout)
+                    .trim()
+                    .to_string();
+
                 if !name.is_empty() && !email.is_empty() {
                     CheckResult {
                         passed: true,
                         message: "Git is configured".to_string(),
                         details: Some(format!("Name: {}, Email: {}", name, email)),
                         can_fix: false,
-                    timestamp: Utc::now(),
+                        timestamp: Utc::now(),
                     }
                 } else {
                     CheckResult {
@@ -132,7 +138,7 @@ impl DoctorCheck for GitConfiguredCheck {
                 message: "Could not read git config".to_string(),
                 details: Some("Ensure git is installed and configured".to_string()),
                 can_fix: false,
-            timestamp: Utc::now(),
+                timestamp: Utc::now(),
             },
         }
     }
@@ -179,7 +185,7 @@ impl DoctorCheck for GitRepoCheck {
                     message: "Git repository found".to_string(),
                     details: Some(format!("Git directory: {}", git_dir)),
                     can_fix: false,
-                timestamp: Utc::now(),
+                    timestamp: Utc::now(),
                 }
             }
             _ => CheckResult {
@@ -187,7 +193,7 @@ impl DoctorCheck for GitRepoCheck {
                 message: "Not in a git repository".to_string(),
                 details: Some("Run: git init".to_string()),
                 can_fix: true,
-            timestamp: Utc::now(),
+                timestamp: Utc::now(),
             },
         }
     }
@@ -198,8 +204,8 @@ impl DoctorCheck for GitRepoCheck {
                 success: true,
                 message: "Would initialize git repository".to_string(),
                 steps: vec!["git init".to_string()],
-            fixable: true,
-            timestamp: Utc::now(),
+                fixable: true,
+                timestamp: Utc::now(),
             });
         }
 
@@ -213,15 +219,15 @@ impl DoctorCheck for GitRepoCheck {
                 success: true,
                 message: "Initialized git repository".to_string(),
                 steps: vec!["git init".to_string()],
-            fixable: true,
-            timestamp: Utc::now(),
+                fixable: true,
+                timestamp: Utc::now(),
             }),
             _ => Some(FixResult {
                 success: false,
                 message: "Failed to initialize git repository".to_string(),
                 steps: vec![],
-            fixable: true,
-            timestamp: Utc::now(),
+                fixable: true,
+                timestamp: Utc::now(),
             }),
         }
     }

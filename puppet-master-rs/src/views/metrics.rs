@@ -4,14 +4,16 @@
 
 use crate::app::Message;
 use crate::state::{MetricsSnapshot, PlatformMetrics, SubtaskMetrics};
-use crate::theme::{AppTheme, tokens, fonts, colors};
+use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::widgets::*;
-use iced::widget::{column, container, scrollable, table, text, row, Space};
 use iced::widget::table::column as table_column;
-use iced::{Element, Length, Pixels, Border};
+use iced::widget::{Space, column, container, row, scrollable, table, text};
+use iced::{Border, Element, Length, Pixels};
 
 pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'a, Message> {
-    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
+    let mut content = column![]
+        .spacing(tokens::spacing::LG)
+        .padding(tokens::spacing::LG);
 
     // Header with Refresh button
     content = content.push(
@@ -21,15 +23,10 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                 .font(fonts::FONT_DISPLAY)
                 .color(theme.ink()),
             Space::new().width(Length::Fill),
-            styled_button(
-                theme,
-                "REFRESH",
-                ButtonVariant::Info,
-            )
-            .on_press(Message::RefreshMetrics)
+            styled_button(theme, "REFRESH", ButtonVariant::Info,).on_press(Message::RefreshMetrics)
         ]
         .spacing(tokens::spacing::MD)
-        .align_y(iced::Alignment::Center)
+        .align_y(iced::Alignment::Center),
     );
 
     if snapshot.platforms.is_empty() && snapshot.subtasks.is_empty() {
@@ -58,9 +55,9 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
 
     // Session overview stat cards - 4 columns
     let overall = &snapshot.overall;
-    
+
     let mut stat_cards = row![].spacing(tokens::spacing::MD);
-    
+
     stat_cards = stat_cards.push(
         container(
             column![
@@ -73,7 +70,7 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                     .color(theme.ink_faded()),
             ]
             .spacing(tokens::spacing::XXS)
-            .align_x(iced::Alignment::Center)
+            .align_x(iced::Alignment::Center),
         )
         .padding(tokens::spacing::MD)
         .width(Length::FillPortion(1))
@@ -84,9 +81,9 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                 radius: tokens::radii::NONE.into(),
             },
             ..Default::default()
-        })
+        }),
     );
-    
+
     stat_cards = stat_cards.push(
         container(
             column![
@@ -99,7 +96,7 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                     .color(theme.ink_faded()),
             ]
             .spacing(tokens::spacing::XXS)
-            .align_x(iced::Alignment::Center)
+            .align_x(iced::Alignment::Center),
         )
         .padding(tokens::spacing::MD)
         .width(Length::FillPortion(1))
@@ -110,9 +107,9 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                 radius: tokens::radii::NONE.into(),
             },
             ..Default::default()
-        })
+        }),
     );
-    
+
     stat_cards = stat_cards.push(
         container(
             column![
@@ -125,7 +122,7 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                     .color(theme.ink_faded()),
             ]
             .spacing(tokens::spacing::XXS)
-            .align_x(iced::Alignment::Center)
+            .align_x(iced::Alignment::Center),
         )
         .padding(tokens::spacing::MD)
         .width(Length::FillPortion(1))
@@ -136,9 +133,9 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                 radius: tokens::radii::NONE.into(),
             },
             ..Default::default()
-        })
+        }),
     );
-    
+
     stat_cards = stat_cards.push(
         container(
             column![
@@ -151,7 +148,7 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                     .color(theme.ink_faded()),
             ]
             .spacing(tokens::spacing::XXS)
-            .align_x(iced::Alignment::Center)
+            .align_x(iced::Alignment::Center),
         )
         .padding(tokens::spacing::MD)
         .width(Length::FillPortion(1))
@@ -162,9 +159,9 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                 radius: tokens::radii::NONE.into(),
             },
             ..Default::default()
-        })
+        }),
     );
-    
+
     content = content.push(stat_cards);
 
     // Overall summary with visual elements
@@ -204,7 +201,8 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                     },
                     ProgressSize::Medium
                 ),
-            ].spacing(tokens::spacing::XXS),
+            ]
+            .spacing(tokens::spacing::XXS),
             Space::new().width(Length::Fixed(tokens::spacing::LG)),
             column![
                 text("Escalation Rate")
@@ -222,12 +220,17 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                     },
                     ProgressSize::Medium
                 ),
-            ].spacing(tokens::spacing::XXS),
-        ].spacing(tokens::spacing::MD),
+            ]
+            .spacing(tokens::spacing::XXS),
+        ]
+        .spacing(tokens::spacing::MD),
     ]
     .spacing(tokens::spacing::XXS);
 
-    content = content.push(themed_panel(container(summary).padding(tokens::spacing::MD), theme));
+    content = content.push(themed_panel(
+        container(summary).padding(tokens::spacing::MD),
+        theme,
+    ));
 
     // Per-platform stats with visual bars
     if !snapshot.platforms.is_empty() {
@@ -237,7 +240,8 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                 .font(fonts::FONT_UI_BOLD)
                 .color(theme.ink()),
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
-        ].spacing(tokens::spacing::MD);
+        ]
+        .spacing(tokens::spacing::MD);
 
         for platform_metrics in &snapshot.platforms {
             let platform_card = column![
@@ -270,7 +274,8 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                             },
                             ProgressSize::Small
                         ),
-                    ].spacing(tokens::spacing::XXS),
+                    ]
+                    .spacing(tokens::spacing::XXS),
                     Space::new().width(Length::Fixed(tokens::spacing::MD)),
                     column![
                         text("Avg Latency")
@@ -279,7 +284,8 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                         text(format!("{:.0} ms", platform_metrics.avg_latency_ms()))
                             .size(tokens::font_size::SM)
                             .color(theme.ink()),
-                    ].spacing(tokens::spacing::XXS),
+                    ]
+                    .spacing(tokens::spacing::XXS),
                     Space::new().width(Length::Fixed(tokens::spacing::MD)),
                     column![
                         text("Estimated Cost")
@@ -288,16 +294,16 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                         text(format!("${:.4}", platform_metrics.estimated_cost_usd))
                             .size(tokens::font_size::SM)
                             .color(theme.ink()),
-                    ].spacing(tokens::spacing::XXS),
+                    ]
+                    .spacing(tokens::spacing::XXS),
                 ],
-            ].spacing(tokens::spacing::SM);
+            ]
+            .spacing(tokens::spacing::SM);
 
-            platform_stats = platform_stats.push(
-                themed_panel(
-                    container(platform_card).padding(tokens::spacing::MD),
-                    theme
-                )
-            );
+            platform_stats = platform_stats.push(themed_panel(
+                container(platform_card).padding(tokens::spacing::MD),
+                theme,
+            ));
         }
 
         content = content.push(platform_stats);
@@ -317,20 +323,30 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                 table_column(text("Effort"), |r: PlatformMetrics| {
                     text(r.last_reasoning_effort.unwrap_or_default())
                 }),
-                table_column(text("Iters"), |r: PlatformMetrics| text(r.iterations.to_string())),
+                table_column(text("Iters"), |r: PlatformMetrics| {
+                    text(r.iterations.to_string())
+                }),
                 table_column(text("Success"), |r: PlatformMetrics| {
                     text(format!("{:.1}%", r.success_rate() * 100.0))
                 }),
                 table_column(text("Avg ms"), |r: PlatformMetrics| {
                     text(format!("{:.0}", r.avg_latency_ms()))
                 }),
-                table_column(text("P95 ms"), |r: PlatformMetrics| text(r.p95_latency_ms.to_string())),
+                table_column(text("P95 ms"), |r: PlatformMetrics| {
+                    text(r.p95_latency_ms.to_string())
+                }),
                 table_column(text("Esc%"), |r: PlatformMetrics| {
                     text(format!("{:.1}%", r.escalation_rate() * 100.0))
                 }),
-                table_column(text("Retries"), |r: PlatformMetrics| text(r.retries.to_string())),
-                table_column(text("Timeouts"), |r: PlatformMetrics| text(r.timeouts.to_string())),
-                table_column(text("Tokens"), |r: PlatformMetrics| text(r.estimated_tokens.to_string())),
+                table_column(text("Retries"), |r: PlatformMetrics| {
+                    text(r.retries.to_string())
+                }),
+                table_column(text("Timeouts"), |r: PlatformMetrics| {
+                    text(r.timeouts.to_string())
+                }),
+                table_column(text("Tokens"), |r: PlatformMetrics| {
+                    text(r.estimated_tokens.to_string())
+                }),
                 table_column(text("Cost"), |r: PlatformMetrics| {
                     text(format!("${:.4}", r.estimated_cost_usd))
                 }),
@@ -347,8 +363,12 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                     .size(tokens::font_size::MD)
                     .font(fonts::FONT_UI_BOLD)
                     .color(theme.ink()),
-                themed_panel(container(platform_table).padding(tokens::spacing::SM), theme),
-            ].spacing(tokens::spacing::SM)
+                themed_panel(
+                    container(platform_table).padding(tokens::spacing::SM),
+                    theme
+                ),
+            ]
+            .spacing(tokens::spacing::SM),
         );
     }
 
@@ -359,10 +379,11 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
             vec![
                 table_column(text("Subtask"), |r: SubtaskMetrics| text(r.subtask_id)),
                 table_column(text("Platform"), |r: SubtaskMetrics| {
-                    text(r
-                        .last_platform
-                        .map(|p| format!("{:?}", p))
-                        .unwrap_or_default())
+                    text(
+                        r.last_platform
+                            .map(|p| format!("{:?}", p))
+                            .unwrap_or_default(),
+                    )
                 }),
                 table_column(text("Model"), |r: SubtaskMetrics| {
                     text(r.last_model.unwrap_or_default())
@@ -370,21 +391,33 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                 table_column(text("Effort"), |r: SubtaskMetrics| {
                     text(r.last_reasoning_effort.unwrap_or_default())
                 }),
-                table_column(text("Iters"), |r: SubtaskMetrics| text(r.iterations.to_string())),
+                table_column(text("Iters"), |r: SubtaskMetrics| {
+                    text(r.iterations.to_string())
+                }),
                 table_column(text("Success"), |r: SubtaskMetrics| {
                     text(format!("{:.1}%", r.success_rate() * 100.0))
                 }),
                 table_column(text("Avg ms"), |r: SubtaskMetrics| {
                     text(format!("{:.0}", r.avg_latency_ms()))
                 }),
-                table_column(text("P95 ms"), |r: SubtaskMetrics| text(r.p95_latency_ms.to_string())),
-                table_column(text("Esc"), |r: SubtaskMetrics| text(r.escalations.to_string())),
-                table_column(text("Retries"), |r: SubtaskMetrics| text(r.retries.to_string())),
-                table_column(text("Timeouts"), |r: SubtaskMetrics| text(r.timeouts.to_string())),
+                table_column(text("P95 ms"), |r: SubtaskMetrics| {
+                    text(r.p95_latency_ms.to_string())
+                }),
+                table_column(text("Esc"), |r: SubtaskMetrics| {
+                    text(r.escalations.to_string())
+                }),
+                table_column(text("Retries"), |r: SubtaskMetrics| {
+                    text(r.retries.to_string())
+                }),
+                table_column(text("Timeouts"), |r: SubtaskMetrics| {
+                    text(r.timeouts.to_string())
+                }),
                 table_column(text("Gate"), |r: SubtaskMetrics| {
                     text(format!("{}PASS/{}FAIL", r.gate_passes, r.gate_failures))
                 }),
-                table_column(text("Tokens"), |r: SubtaskMetrics| text(r.estimated_tokens.to_string())),
+                table_column(text("Tokens"), |r: SubtaskMetrics| {
+                    text(r.estimated_tokens.to_string())
+                }),
                 table_column(text("Cost"), |r: SubtaskMetrics| {
                     text(format!("${:.4}", r.estimated_cost_usd))
                 }),
@@ -402,7 +435,8 @@ pub fn view<'a>(snapshot: &'a MetricsSnapshot, theme: &'a AppTheme) -> Element<'
                     .font(fonts::FONT_UI_BOLD)
                     .color(theme.ink()),
                 themed_panel(container(subtask_table).padding(tokens::spacing::SM), theme),
-            ].spacing(tokens::spacing::SM)
+            ]
+            .spacing(tokens::spacing::SM),
         );
     }
 

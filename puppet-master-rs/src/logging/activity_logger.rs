@@ -175,7 +175,11 @@ impl ActivityLogger {
     }
 
     /// Log a simple event with just type and description
-    pub fn log_simple(&self, event_type: ActivityEventType, description: impl Into<String>) -> Result<()> {
+    pub fn log_simple(
+        &self,
+        event_type: ActivityEventType,
+        description: impl Into<String>,
+    ) -> Result<()> {
         let event = ActivityEvent::new(event_type, description);
         self.log(event)
     }
@@ -269,8 +273,9 @@ impl ActivityLogger {
     /// Clear the activity log
     pub fn clear(&self) -> Result<()> {
         if self.log_path.exists() {
-            std::fs::remove_file(&self.log_path)
-                .with_context(|| format!("Failed to clear activity log {}", self.log_path.display()))?;
+            std::fs::remove_file(&self.log_path).with_context(|| {
+                format!("Failed to clear activity log {}", self.log_path.display())
+            })?;
         }
         Ok(())
     }
@@ -292,13 +297,19 @@ mod tests {
             .unwrap();
 
         logger
-            .log_simple(ActivityEventType::OrchestrationStarted, "Started orchestration")
+            .log_simple(
+                ActivityEventType::OrchestrationStarted,
+                "Started orchestration",
+            )
             .unwrap();
 
         let events = logger.read_all().unwrap();
         assert_eq!(events.len(), 2);
         assert_eq!(events[0].event_type, ActivityEventType::ProjectCreated);
-        assert_eq!(events[1].event_type, ActivityEventType::OrchestrationStarted);
+        assert_eq!(
+            events[1].event_type,
+            ActivityEventType::OrchestrationStarted
+        );
     }
 
     #[test]

@@ -1,12 +1,13 @@
 //! Verifier registry for pluggable verification system
 
 use crate::types::{Criterion, Verifier, VerifierResult};
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use std::collections::HashMap;
 use std::sync::Arc;
 
 use super::{
-    AIVerifier, BrowserVerifier, CommandVerifier, FileExistsVerifier, RegexVerifier, ScriptVerifier,
+    AIVerifier, BrowserVerifier, CommandVerifier, FileExistsVerifier, IcedGuiVerifier,
+    RegexVerifier, ScriptVerifier,
 };
 
 /// Registry of verifier implementations
@@ -35,6 +36,7 @@ impl VerifierRegistry {
         self.register(Arc::new(BrowserVerifier::new()));
         self.register(Arc::new(CommandVerifier::new()));
         self.register(Arc::new(FileExistsVerifier::new()));
+        self.register(Arc::new(IcedGuiVerifier::new()));
         self.register(Arc::new(RegexVerifier::new()));
         self.register(Arc::new(ScriptVerifier::new()));
     }
@@ -91,6 +93,7 @@ mod tests {
         assert!(registry.get("browser").is_some());
         assert!(registry.get("command").is_some());
         assert!(registry.get("file_exists").is_some());
+        assert!(registry.get("iced_gui").is_some());
         assert!(registry.get("regex").is_some());
         assert!(registry.get("script").is_some());
     }

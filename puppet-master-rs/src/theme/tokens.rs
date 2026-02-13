@@ -1,12 +1,12 @@
 //! Design tokens matching the Tauri CSS design system
-//! 
+//!
 //! This module provides constants for spacing, borders, radii, typography,
 //! shadows, and layout that maintain visual consistency across the application.
 
-use iced::{Shadow, Vector, Color};
+use iced::{Color, Shadow, Vector};
 
 /// Spacing scale (in pixels)
-/// 
+///
 /// Use these for consistent padding, margins, and gaps throughout the UI.
 pub mod spacing {
     pub const XXXS: f32 = 2.0;
@@ -20,7 +20,7 @@ pub mod spacing {
 }
 
 /// Border widths
-/// 
+///
 /// The retro design emphasizes strong, visible borders.
 pub mod borders {
     pub const THIN: f32 = 1.0;
@@ -29,7 +29,7 @@ pub mod borders {
 }
 
 /// Border radii
-/// 
+///
 /// The retro design typically uses 0 (sharp corners), but subtle rounding
 /// is available for special cases.
 pub mod radii {
@@ -41,7 +41,7 @@ pub mod radii {
 }
 
 /// Font sizes
-/// 
+///
 /// Typography scale for consistent text sizing.
 pub mod font_size {
     pub const XS: f32 = 11.0;
@@ -55,11 +55,11 @@ pub mod font_size {
 }
 
 /// Shadow definitions
-/// 
+///
 /// The retro design uses hard, offset shadows (no blur) for a bold, flat look.
 pub mod shadows {
     use super::*;
-    
+
     /// Panel shadow - used for major UI panels and cards
     pub fn panel_shadow(ink: Color) -> Shadow {
         Shadow {
@@ -68,7 +68,7 @@ pub mod shadows {
             blur_radius: 0.0,
         }
     }
-    
+
     /// Button shadow - standard button depth
     pub fn button_shadow(ink: Color) -> Shadow {
         Shadow {
@@ -77,7 +77,7 @@ pub mod shadows {
             blur_radius: 0.0,
         }
     }
-    
+
     /// Button shadow when pressed - reduced depth for pressed state
     pub fn button_shadow_pressed(ink: Color) -> Shadow {
         Shadow {
@@ -86,7 +86,7 @@ pub mod shadows {
             blur_radius: 0.0,
         }
     }
-    
+
     /// Header shadow - subtle bottom shadow
     pub fn header_shadow(ink: Color) -> Shadow {
         Shadow {
@@ -95,7 +95,7 @@ pub mod shadows {
             blur_radius: 0.0,
         }
     }
-    
+
     /// No shadow
     pub fn none() -> Shadow {
         Shadow {
@@ -107,31 +107,31 @@ pub mod shadows {
 }
 
 /// Layout constants
-/// 
+///
 /// Standard dimensions for major UI components.
 pub mod layout {
     /// Height of the main header bar
     pub const HEADER_HEIGHT: f32 = 60.0;
-    
+
     /// Width of the sidebar navigation
     pub const SIDEBAR_WIDTH: f32 = 220.0;
-    
+
     /// Maximum content width for centered layouts
     pub const MAX_CONTENT_WIDTH: f32 = 1200.0;
-    
+
     /// Width of toast notifications
     pub const TOAST_WIDTH: f32 = 380.0;
-    
+
     /// Modal dialog sizes
     pub const MODAL_SM: f32 = 400.0;
     pub const MODAL_MD: f32 = 600.0;
     pub const MODAL_LG: f32 = 800.0;
-    
+
     /// Common button heights
     pub const BUTTON_HEIGHT_SM: f32 = 32.0;
     pub const BUTTON_HEIGHT_MD: f32 = 40.0;
     pub const BUTTON_HEIGHT_LG: f32 = 48.0;
-    
+
     /// Input field heights
     pub const INPUT_HEIGHT_SM: f32 = 32.0;
     pub const INPUT_HEIGHT_MD: f32 = 40.0;

@@ -137,17 +137,29 @@ pub enum BrowserAction {
         #[serde(default)]
         timeout_ms: Option<u64>,
     },
-    AssertVisible { selector: String },
+    AssertVisible {
+        selector: String,
+    },
     AssertText {
         selector: String,
         text: String,
         #[serde(default)]
         exact: bool,
     },
-    Click { selector: String },
-    Fill { selector: String, value: String },
-    Select { selector: String, value: String },
-    Hover { selector: String },
+    Click {
+        selector: String,
+    },
+    Fill {
+        selector: String,
+        value: String,
+    },
+    Select {
+        selector: String,
+        value: String,
+    },
+    Hover {
+        selector: String,
+    },
 }
 
 impl Default for BrowserVerifierConfig {
@@ -355,10 +367,8 @@ impl BrowserVerifier {
                             &bytes,
                             HashMap::from([(String::from("kind"), String::from("screenshot"))]),
                         )?;
-                        evidence_metadata.insert(
-                            "screenshot_path".to_string(),
-                            ev.path.display().to_string(),
-                        );
+                        evidence_metadata
+                            .insert("screenshot_path".to_string(), ev.path.display().to_string());
                     }
                 }
 
@@ -371,10 +381,8 @@ impl BrowserVerifier {
                             &bytes,
                             HashMap::from([(String::from("kind"), String::from("trace"))]),
                         )?;
-                        evidence_metadata.insert(
-                            "trace_path".to_string(),
-                            ev.path.display().to_string(),
-                        );
+                        evidence_metadata
+                            .insert("trace_path".to_string(), ev.path.display().to_string());
                     }
                 }
 
@@ -387,10 +395,8 @@ impl BrowserVerifier {
                             &bytes,
                             HashMap::from([(String::from("kind"), String::from("console"))]),
                         )?;
-                        evidence_metadata.insert(
-                            "console_path".to_string(),
-                            ev.path.display().to_string(),
-                        );
+                        evidence_metadata
+                            .insert("console_path".to_string(), ev.path.display().to_string());
                     }
                 }
 
@@ -403,10 +409,8 @@ impl BrowserVerifier {
                             &bytes,
                             HashMap::from([(String::from("kind"), String::from("network"))]),
                         )?;
-                        evidence_metadata.insert(
-                            "network_path".to_string(),
-                            ev.path.display().to_string(),
-                        );
+                        evidence_metadata
+                            .insert("network_path".to_string(), ev.path.display().to_string());
                     }
                 }
             }
@@ -555,7 +559,9 @@ fn parse_script_output(stdout: &str) -> Result<BrowserScriptResult> {
 }
 
 async fn run_with_timeout(mut cmd: Command, timeout: Duration) -> Result<std::process::Output> {
-    let child = cmd.spawn().context("Failed to spawn Playwright node process")?;
+    let child = cmd
+        .spawn()
+        .context("Failed to spawn Playwright node process")?;
     let pid = child.id();
 
     let output = tokio::time::timeout(timeout, child.wait_with_output()).await;
@@ -575,7 +581,7 @@ async fn run_with_timeout(mut cmd: Command, timeout: Duration) -> Result<std::pr
 
 #[cfg(unix)]
 fn kill_process(pid: u32) {
-    use nix::sys::signal::{kill, Signal};
+    use nix::sys::signal::{Signal, kill};
     use nix::unistd::Pid;
 
     let _ = kill(Pid::from_raw(pid as i32), Signal::SIGKILL);

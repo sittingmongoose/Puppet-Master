@@ -6,10 +6,10 @@
 //! - Thick ink border
 //! - Optional percentage label
 
-use iced::widget::{canvas, container, row, text, Canvas};
-use iced::{Border, Color, Element, Length, Point, Rectangle, Size, Theme as IcedTheme};
-use iced::mouse;
 use crate::theme::{AppTheme, colors, tokens};
+use iced::mouse;
+use iced::widget::{Canvas, canvas, container, row, text};
+use iced::{Border, Color, Element, Length, Point, Rectangle, Size, Theme as IcedTheme};
 
 /// Progress bar color variant
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -88,38 +88,44 @@ impl<Message> canvas::Program<Message> for ProgressBarState {
         // Draw filled portion with gradient effect (3D look)
         if fill_width > 0.0 {
             let base_color = self.variant.color();
-            
+
             // Draw main fill
             frame.fill_rectangle(
                 Point::ORIGIN,
                 Size::new(fill_width, bounds.height),
                 base_color,
             );
-            
+
             // Add subtle gradient effect (lighter at top, darker at bottom)
             let gradient_height = bounds.height * 0.3;
-            let top_highlight = Color { a: 0.15, ..Color::WHITE };
+            let top_highlight = Color {
+                a: 0.15,
+                ..Color::WHITE
+            };
             frame.fill_rectangle(
                 Point::ORIGIN,
                 Size::new(fill_width, gradient_height),
                 top_highlight,
             );
-            
+
             // Animated shimmer effect - bright highlight that moves across
             let shimmer_cycle = 2.0; // seconds for full cycle
             let shimmer_pos = (self.time / shimmer_cycle).fract();
             let shimmer_x = shimmer_pos * (bounds.width + 80.0) - 40.0;
             let shimmer_width = 40.0;
-            
+
             // Only draw shimmer if it overlaps with filled area
             if shimmer_x < fill_width && shimmer_x + shimmer_width > 0.0 {
                 let shimmer_start = shimmer_x.max(0.0);
                 let shimmer_end = (shimmer_x + shimmer_width).min(fill_width);
                 let shimmer_draw_width = shimmer_end - shimmer_start;
-                
+
                 if shimmer_draw_width > 0.0 {
                     // Create bright shimmer with gradient falloff
-                    let shimmer_color = Color { a: 0.3, ..Color::WHITE };
+                    let shimmer_color = Color {
+                        a: 0.3,
+                        ..Color::WHITE
+                    };
                     frame.fill_rectangle(
                         Point::new(shimmer_start, 0.0),
                         Size::new(shimmer_draw_width, bounds.height),
@@ -127,12 +133,16 @@ impl<Message> canvas::Program<Message> for ProgressBarState {
                     );
                 }
             }
-            
+
             // Animated pulsing glow at the edge
             let pulse_cycle = 1.5; // seconds for full pulse
-            let pulse_alpha = ((self.time * std::f32::consts::TAU / pulse_cycle).sin() * 0.5 + 0.5) * 0.2;
-            let glow_color = Color { a: pulse_alpha, ..base_color };
-            
+            let pulse_alpha =
+                ((self.time * std::f32::consts::TAU / pulse_cycle).sin() * 0.5 + 0.5) * 0.2;
+            let glow_color = Color {
+                a: pulse_alpha,
+                ..base_color
+            };
+
             // Draw glow as a subtle border
             if fill_width > 2.0 {
                 let glow_width = 2.0;
@@ -147,13 +157,13 @@ impl<Message> canvas::Program<Message> for ProgressBarState {
         // Draw cross-hatch pattern in unfilled area with slow animation
         if progress_clamped < 1.0 {
             let unfilled_start = fill_width;
-            
+
             // Animated cross-hatch - slowly drifts
             let drift_cycle = 4.0; // seconds for full drift
             let drift_offset = (self.time / drift_cycle).fract() * 16.0;
             let line_spacing = 8.0;
             let mut x = unfilled_start - drift_offset;
-            
+
             while x < bounds.width {
                 // Diagonal line from top-left to bottom-right
                 let path = canvas::Path::line(
@@ -163,12 +173,15 @@ impl<Message> canvas::Program<Message> for ProgressBarState {
                 frame.stroke(
                     &path,
                     canvas::Stroke {
-                        style: canvas::Style::Solid(Color { a: 0.15, ..self.ink_color }),
+                        style: canvas::Style::Solid(Color {
+                            a: 0.15,
+                            ..self.ink_color
+                        }),
                         width: 1.0,
                         ..canvas::Stroke::default()
                     },
                 );
-                
+
                 x += line_spacing;
             }
 
@@ -183,12 +196,15 @@ impl<Message> canvas::Program<Message> for ProgressBarState {
                 frame.stroke(
                     &path,
                     canvas::Stroke {
-                        style: canvas::Style::Solid(Color { a: 0.15, ..self.ink_color }),
+                        style: canvas::Style::Solid(Color {
+                            a: 0.15,
+                            ..self.ink_color
+                        }),
                         width: 1.0,
                         ..canvas::Stroke::default()
                     },
                 );
-                
+
                 x += line_spacing;
             }
         }
@@ -241,7 +257,7 @@ pub fn animated_progress_bar<'a, Message: 'a>(
 ) -> Element<'a, Message> {
     let height = size.height();
     let ink = theme.ink();
-    
+
     let canvas_widget = Canvas::new(ProgressBarState {
         progress,
         variant,
@@ -368,7 +384,12 @@ pub fn default_progress_bar<'a, Message: 'a>(
     max: f32,
 ) -> Element<'a, Message> {
     let progress = if max > 0.0 { value / max } else { 0.0 };
-    styled_progress_bar(theme, progress, ProgressVariant::Default, ProgressSize::Medium)
+    styled_progress_bar(
+        theme,
+        progress,
+        ProgressVariant::Default,
+        ProgressSize::Medium,
+    )
 }
 
 /// Create a success (lime) progress bar
@@ -378,7 +399,12 @@ pub fn success_progress_bar<'a, Message: 'a>(
     max: f32,
 ) -> Element<'a, Message> {
     let progress = if max > 0.0 { value / max } else { 0.0 };
-    styled_progress_bar(theme, progress, ProgressVariant::Success, ProgressSize::Medium)
+    styled_progress_bar(
+        theme,
+        progress,
+        ProgressVariant::Success,
+        ProgressSize::Medium,
+    )
 }
 
 /// Create a warning (orange) progress bar
@@ -388,7 +414,12 @@ pub fn warning_progress_bar<'a, Message: 'a>(
     max: f32,
 ) -> Element<'a, Message> {
     let progress = if max > 0.0 { value / max } else { 0.0 };
-    styled_progress_bar(theme, progress, ProgressVariant::Warning, ProgressSize::Medium)
+    styled_progress_bar(
+        theme,
+        progress,
+        ProgressVariant::Warning,
+        ProgressSize::Medium,
+    )
 }
 
 /// Create an error (magenta) progress bar
@@ -398,7 +429,12 @@ pub fn error_progress_bar<'a, Message: 'a>(
     max: f32,
 ) -> Element<'a, Message> {
     let progress = if max > 0.0 { value / max } else { 0.0 };
-    styled_progress_bar(theme, progress, ProgressVariant::Error, ProgressSize::Medium)
+    styled_progress_bar(
+        theme,
+        progress,
+        ProgressVariant::Error,
+        ProgressSize::Medium,
+    )
 }
 
 /// Create a progress bar that auto-selects color based on percentage
@@ -413,7 +449,7 @@ pub fn auto_color_progress_bar<'a, Message: 'a>(
 ) -> Element<'a, Message> {
     let progress = if max > 0.0 { value / max } else { 0.0 };
     let percentage = progress * 100.0;
-    
+
     let variant = if percentage < 80.0 {
         ProgressVariant::Default
     } else if percentage < 95.0 {
@@ -421,7 +457,7 @@ pub fn auto_color_progress_bar<'a, Message: 'a>(
     } else {
         ProgressVariant::Error
     };
-    
+
     styled_progress_bar(theme, progress, variant, ProgressSize::Medium)
 }
 

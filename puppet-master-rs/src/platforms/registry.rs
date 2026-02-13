@@ -11,7 +11,7 @@
 //! - Automatic filtering of unavailable platforms
 
 use crate::platforms::{
-    create_runner, AuthStatusChecker, HealthMonitor, PlatformRunner, ModelCatalogManager,
+    AuthStatusChecker, HealthMonitor, ModelCatalogManager, PlatformRunner, create_runner,
 };
 use crate::types::Platform;
 use anyhow::{Context, Result};
@@ -65,24 +65,31 @@ impl PlatformRegistry {
             self.register(*platform, runner_arc, name).await?;
         }
 
-        info!("Platform registry initialized with {} runners", Platform::all().len());
-        
+        info!(
+            "Platform registry initialized with {} runners",
+            Platform::all().len()
+        );
+
         // Initialize model catalogs
         info!("Initializing model catalogs for all platforms");
         for platform in Platform::all() {
             if let Some(catalog) = self.model_catalog.get_catalog(*platform) {
-                debug!("Loaded {} models for {}", catalog.get_models().len(), platform);
+                debug!(
+                    "Loaded {} models for {}",
+                    catalog.get_models().len(),
+                    platform
+                );
             }
         }
-        
+
         Ok(())
     }
-    
+
     /// Get the model catalog manager
     pub fn model_catalog(&self) -> Arc<ModelCatalogManager> {
         Arc::clone(&self.model_catalog)
     }
-    
+
     /// Get available models for a platform
     pub fn get_platform_models(&self, platform: Platform) -> Vec<String> {
         if let Some(catalog) = self.model_catalog.get_catalog(platform) {
@@ -130,7 +137,9 @@ impl PlatformRegistry {
     /// Get a runner for a platform
     pub async fn get(&self, platform: Platform) -> Option<Arc<dyn PlatformRunner>> {
         let runners = self.runners.read().await;
-        runners.get(&platform).map(|entry| Arc::clone(&entry.runner))
+        runners
+            .get(&platform)
+            .map(|entry| Arc::clone(&entry.runner))
     }
 
     /// Check if a platform is registered
@@ -182,13 +191,11 @@ impl PlatformRegistry {
         let runners = self.runners.read().await;
         runners
             .iter()
-            .filter_map(|(platform, entry)| {
-                if entry.enabled {
-                    Some(*platform)
-                } else {
-                    None
-                }
-            })
+            .filter_map(
+                |(platform, entry)| {
+                    if entry.enabled { Some(*platform) } else { None }
+                },
+            )
             .collect()
     }
 
@@ -419,7 +426,10 @@ mod tests {
 
         for platform in [Platform::Cursor, Platform::Codex, Platform::Claude] {
             let runner = Arc::from(create_runner(platform));
-            registry.register(platform, runner, format!("{}", platform)).await.unwrap();
+            registry
+                .register(platform, runner, format!("{}", platform))
+                .await
+                .unwrap();
         }
 
         registry.disable(Platform::Codex).await.unwrap();

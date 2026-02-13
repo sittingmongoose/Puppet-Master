@@ -149,8 +149,8 @@ impl ErrorLogger {
         message: impl Into<String>,
         context: HashMap<String, String>,
     ) -> Result<()> {
-        let record = ErrorRecord::new(category, message, ErrorSeverity::High)
-            .with_context_map(context);
+        let record =
+            ErrorRecord::new(category, message, ErrorSeverity::High).with_context_map(context);
         self.log(record)
     }
 
@@ -242,11 +242,7 @@ impl ErrorLogger {
     }
 
     /// Read errors within a time range
-    pub fn read_range(
-        &self,
-        start: DateTime<Utc>,
-        end: DateTime<Utc>,
-    ) -> Result<Vec<ErrorRecord>> {
+    pub fn read_range(&self, start: DateTime<Utc>, end: DateTime<Utc>) -> Result<Vec<ErrorRecord>> {
         let all_errors = self.read_all()?;
 
         Ok(all_errors
@@ -282,8 +278,9 @@ impl ErrorLogger {
     /// Clear the error log
     pub fn clear(&self) -> Result<()> {
         if self.log_path.exists() {
-            std::fs::remove_file(&self.log_path)
-                .with_context(|| format!("Failed to clear error log {}", self.log_path.display()))?;
+            std::fs::remove_file(&self.log_path).with_context(|| {
+                format!("Failed to clear error log {}", self.log_path.display())
+            })?;
         }
         Ok(())
     }
@@ -296,11 +293,7 @@ mod tests {
 
     #[test]
     fn test_error_record_creation() {
-        let record = ErrorRecord::new(
-            ErrorCategory::Platform,
-            "Test error",
-            ErrorSeverity::High,
-        );
+        let record = ErrorRecord::new(ErrorCategory::Platform, "Test error", ErrorSeverity::High);
         assert_eq!(record.error_type, ErrorCategory::Platform);
         assert_eq!(record.message, "Test error");
         assert_eq!(record.severity, ErrorSeverity::High);
@@ -310,13 +303,9 @@ mod tests {
 
     #[test]
     fn test_error_record_with_context() {
-        let record = ErrorRecord::new(
-            ErrorCategory::Git,
-            "Git error",
-            ErrorSeverity::Medium,
-        )
-        .with_context("repo", "/path/to/repo")
-        .with_context("branch", "main");
+        let record = ErrorRecord::new(ErrorCategory::Git, "Git error", ErrorSeverity::Medium)
+            .with_context("repo", "/path/to/repo")
+            .with_context("branch", "main");
 
         assert_eq!(record.context.len(), 2);
         assert_eq!(record.context.get("repo").unwrap(), "/path/to/repo");
@@ -441,21 +430,13 @@ mod tests {
         let log_path = temp_dir.path().join("errors.jsonl");
         let logger = ErrorLogger::new(log_path);
 
-        let record1 = ErrorRecord::new(
-            ErrorCategory::Platform,
-            "Low error",
-            ErrorSeverity::Low,
-        );
+        let record1 = ErrorRecord::new(ErrorCategory::Platform, "Low error", ErrorSeverity::Low);
         let record2 = ErrorRecord::new(
             ErrorCategory::Platform,
             "Critical error",
             ErrorSeverity::Critical,
         );
-        let record3 = ErrorRecord::new(
-            ErrorCategory::Git,
-            "Medium error",
-            ErrorSeverity::Medium,
-        );
+        let record3 = ErrorRecord::new(ErrorCategory::Git, "Medium error", ErrorSeverity::Medium);
 
         logger.log(record1).unwrap();
         logger.log(record2).unwrap();

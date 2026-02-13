@@ -84,7 +84,10 @@ impl ValidationResult {
 
     /// Counts issues by severity.
     pub fn count_by_severity(&self, severity: IssueSeverity) -> usize {
-        self.issues.iter().filter(|i| i.severity == severity).count()
+        self.issues
+            .iter()
+            .filter(|i| i.severity == severity)
+            .count()
     }
 
     /// Returns critical issues.
@@ -111,7 +114,10 @@ impl CoverageValidator {
             for req_id in requirement_ids {
                 if phase.title.contains(req_id)
                     || phase.goal.as_ref().map_or(false, |g| g.contains(req_id))
-                    || phase.description.as_ref().map_or(false, |d| d.contains(req_id))
+                    || phase
+                        .description
+                        .as_ref()
+                        .map_or(false, |d| d.contains(req_id))
                 {
                     covered_requirements.insert(req_id.clone());
                 }
@@ -120,7 +126,10 @@ impl CoverageValidator {
             for task in &phase.tasks {
                 for req_id in requirement_ids {
                     if task.title.contains(req_id)
-                        || task.description.as_ref().map_or(false, |d| d.contains(req_id))
+                        || task
+                            .description
+                            .as_ref()
+                            .map_or(false, |d| d.contains(req_id))
                     {
                         covered_requirements.insert(req_id.clone());
                     }
@@ -178,7 +187,11 @@ impl QualityValidator {
             items_validated += 1;
 
             // Check phase has description
-            if phase.description.as_ref().map_or(true, |d| d.trim().is_empty()) {
+            if phase
+                .description
+                .as_ref()
+                .map_or(true, |d| d.trim().is_empty())
+            {
                 issues.push(ValidationIssue::new(
                     IssueSeverity::Medium,
                     "quality",
@@ -201,7 +214,11 @@ impl QualityValidator {
                 items_validated += 1;
 
                 // Check task has description
-                if task.description.as_ref().map_or(true, |d| d.trim().is_empty()) {
+                if task
+                    .description
+                    .as_ref()
+                    .map_or(true, |d| d.trim().is_empty())
+                {
                     issues.push(ValidationIssue::new(
                         IssueSeverity::Medium,
                         "quality",
@@ -262,7 +279,9 @@ impl QualityValidator {
                                             subtask.id, criterion
                                         ),
                                     )
-                                    .with_suggestion("Replace with specific, machine-verifiable criteria"),
+                                    .with_suggestion(
+                                        "Replace with specific, machine-verifiable criteria",
+                                    ),
                                 );
                             }
                         }
@@ -441,11 +460,7 @@ impl AiGapValidator {
         let mut high_count = 0usize;
 
         for gap in report.gaps {
-            let sev = gap
-                .severity
-                .as_deref()
-                .unwrap_or("medium")
-                .to_lowercase();
+            let sev = gap.severity.as_deref().unwrap_or("medium").to_lowercase();
 
             let severity = match sev.as_str() {
                 "critical" => {
@@ -495,7 +510,8 @@ impl AiGapValidator {
             .map_err(|e| format!("Unknown platform: {e}"))?;
 
         let working_dir = std::env::current_dir().map_err(|e| e.to_string())?;
-        let (command, args) = build_platform_command(platform, prompt, &working_dir, self.config.model.as_deref());
+        let (command, args) =
+            build_platform_command(platform, prompt, &working_dir, self.config.model.as_deref());
 
         let mut cmd = Command::new(&command);
         cmd.args(&args)
@@ -520,7 +536,12 @@ impl AiGapValidator {
 
         if !output.status.success() {
             let stderr = String::from_utf8_lossy(&output.stderr);
-            return Err(format!("{} CLI failed: {} ({})", platform, output.status, stderr.trim()));
+            return Err(format!(
+                "{} CLI failed: {} ({})",
+                platform,
+                output.status,
+                stderr.trim()
+            ));
         }
 
         Ok(String::from_utf8_lossy(&output.stdout).to_string())
@@ -548,7 +569,12 @@ fn summarize_prd(prd: &PRD) -> String {
         for task in &phase.tasks {
             out.push_str(&format!("  {}: {}\n", task.id, task.title));
             for subtask in &task.subtasks {
-                out.push_str(&format!("    {}: {} (AC: {})\n", subtask.id, subtask.title, subtask.acceptance_criteria.len()));
+                out.push_str(&format!(
+                    "    {}: {} (AC: {})\n",
+                    subtask.id,
+                    subtask.title,
+                    subtask.acceptance_criteria.len()
+                ));
             }
         }
         out.push('\n');
@@ -750,24 +776,30 @@ impl CompositeValidator {
         ai_config: AiGapValidatorConfig,
     ) -> ValidationResult {
         let base = Self::validate(prd, requirement_ids);
-        let ai_result = AiGapValidator::new(ai_config).validate(prd, requirements_text).await;
+        let ai_result = AiGapValidator::new(ai_config)
+            .validate(prd, requirements_text)
+            .await;
 
         let mut all_issues = base.issues;
         all_issues.extend(ai_result.issues);
 
         let passed = base.passed && ai_result.passed;
-        ValidationResult::new(passed, all_issues, base.items_validated + ai_result.items_validated)
+        ValidationResult::new(
+            passed,
+            all_issues,
+            base.items_validated + ai_result.items_validated,
+        )
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::prd::{ItemStatus, Phase, PRDMetadata, Task};
+    use crate::types::prd::{ItemStatus, PRDMetadata, Phase, Task};
 
     fn create_test_prd() -> PRD {
         use crate::types::prd::Subtask;
-        
+
         PRD {
             metadata: PRDMetadata {
                 name: "Test".to_string(),
@@ -823,13 +855,8 @@ mod tests {
 
     #[test]
     fn test_validation_issue_creation() {
-        let issue = ValidationIssue::new(
-            IssueSeverity::High,
-            "test",
-            "P1-T1",
-            "Test issue",
-        )
-        .with_suggestion("Fix it");
+        let issue = ValidationIssue::new(IssueSeverity::High, "test", "P1-T1", "Test issue")
+            .with_suggestion("Fix it");
 
         assert_eq!(issue.severity, IssueSeverity::High);
         assert_eq!(issue.category, "test");
@@ -854,7 +881,7 @@ mod tests {
         let mut prd = create_test_prd();
         // Remove subtasks to test validation
         prd.phases[0].tasks[0].subtasks.clear();
-        
+
         let result = QualityValidator::validate(&prd);
 
         // Should find that task has no subtasks

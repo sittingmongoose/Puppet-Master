@@ -193,10 +193,12 @@ impl LogRetentionManager {
             let modified = metadata
                 .modified()
                 .ok()
-                .and_then(|t| DateTime::from_timestamp(
-                    t.duration_since(std::time::UNIX_EPOCH).ok()?.as_secs() as i64,
-                    0,
-                ))
+                .and_then(|t| {
+                    DateTime::from_timestamp(
+                        t.duration_since(std::time::UNIX_EPOCH).ok()?.as_secs() as i64,
+                        0,
+                    )
+                })
                 .unwrap_or_else(Utc::now);
 
             // Check if protected
@@ -215,10 +217,7 @@ impl LogRetentionManager {
 
     /// Check if a file is protected
     fn is_protected(&self, path: &Path) -> Result<bool> {
-        let file_name = path
-            .file_name()
-            .and_then(|n| n.to_str())
-            .unwrap_or("");
+        let file_name = path.file_name().and_then(|n| n.to_str()).unwrap_or("");
 
         for pattern in &self.config.protected_patterns {
             if glob_match(pattern, file_name) {
@@ -256,15 +255,9 @@ impl LogRetentionManager {
         let total_size = files.iter().map(|f| f.size).sum();
         let protected_files = files.iter().filter(|f| f.protected).count();
 
-        let oldest_file = files
-            .iter()
-            .min_by_key(|f| f.modified)
-            .map(|f| f.modified);
+        let oldest_file = files.iter().min_by_key(|f| f.modified).map(|f| f.modified);
 
-        let newest_file = files
-            .iter()
-            .max_by_key(|f| f.modified)
-            .map(|f| f.modified);
+        let newest_file = files.iter().max_by_key(|f| f.modified).map(|f| f.modified);
 
         Ok(LogStats {
             total_files,
@@ -379,9 +372,8 @@ mod tests {
         file.write_all(&vec![0u8; size]).unwrap();
 
         // Set modification time
-        let modified_time = (Utc::now() - Duration::days(age_days))
-            .timestamp() as u64;
-        
+        let modified_time = (Utc::now() - Duration::days(age_days)).timestamp() as u64;
+
         // Note: Setting file times requires additional platform-specific code
         // For testing, we'll just create the files
 
@@ -409,9 +401,11 @@ mod tests {
 
         let manager = LogRetentionManager::new(config);
 
-        assert!(manager
-            .is_protected(Path::new("important.protected"))
-            .unwrap());
+        assert!(
+            manager
+                .is_protected(Path::new("important.protected"))
+                .unwrap()
+        );
         assert!(!manager.is_protected(Path::new("regular.log")).unwrap());
     }
 
@@ -444,14 +438,14 @@ mod tests {
     #[test]
     fn test_needs_cleanup() {
         let temp_dir = TempDir::new().unwrap();
-        
+
         let config = RetentionConfig {
             max_age_days: 30,
             max_total_size_mb: 1, // 1 MB
             max_file_count: 2,
             protected_patterns: Vec::new(),
         };
-        
+
         let manager = LogRetentionManager::new(config);
 
         // Initially should not need cleanup

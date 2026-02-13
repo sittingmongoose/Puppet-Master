@@ -1,16 +1,14 @@
 use crate::theme::AppTheme;
+use crate::tray::TrayAction;
 use crate::types::PuppetMasterEvent;
 use crate::widgets::Page;
-use crate::tray::TrayAction;
 use anyhow::Result;
 use chrono::{DateTime, Utc};
-use iced::{
-    window, Element, Subscription, Task, Theme,
-    widget::text_editor,
-};
+use iced::{widget::text_editor, window, Element, Subscription, Task, Theme};
 use std::collections::{HashMap, HashSet};
 use std::hash::{Hash, Hasher};
 use std::path::PathBuf;
+use std::process::Command;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 
@@ -77,7 +75,7 @@ fn tray_action_stream(
 // ============================================================================
 
 // Re-use Toast types from widgets module
-pub use crate::widgets::{Toast, ToastType, ToastManager};
+pub use crate::widgets::{Toast, ToastManager, ToastType};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum AuthActionKind {
@@ -118,7 +116,7 @@ pub enum AppCommand {
     Replan(String),
     Reopen(String),
     Kill(u32),
-    
+
     StartChainPipeline(String), // requirements text
 }
 
@@ -127,18 +125,18 @@ pub enum AppCommand {
 // ============================================================================
 
 // Re-use types from view modules for App state to avoid conversion
+pub use crate::state::{MetricsCollector, MetricsSnapshot};
 pub use crate::views::dashboard::{
-    CurrentItem, ProgressState, OutputLine, OutputType, BudgetDisplayInfo,
+    BudgetDisplayInfo, CurrentItem, OutputLine, OutputType, ProgressState,
 };
-pub use crate::views::projects::ProjectInfo;
 pub use crate::views::doctor::DoctorCheckResult;
-pub use crate::views::tiers::TierDisplayNode;
-pub use crate::views::evidence::{EvidenceItem, EvidenceFilter};
+pub use crate::views::evidence::{EvidenceFilter, EvidenceItem};
 pub use crate::views::history::SessionInfo;
 pub use crate::views::ledger::{LedgerEntry, LedgerFilter};
-pub use crate::state::{MetricsCollector, MetricsSnapshot};
 pub use crate::views::login::AuthStatus;
+pub use crate::views::projects::ProjectInfo;
 pub use crate::views::setup::PlatformStatus;
+pub use crate::views::tiers::TierDisplayNode;
 
 // ============================================================================
 // Wizard Types
@@ -209,7 +207,7 @@ pub struct App {
     pub config_editor_content: text_editor::Content,
     pub config_valid: bool,
     pub config_error: Option<String>,
-    pub config_active_tab: usize,  // 0-6 for the 7 tabs (Tiers, Branching, Verification, Memory, Budgets, Advanced, YAML)
+    pub config_active_tab: usize, // 0-7 for the 8 tabs (Tiers, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML)
     pub config_is_dirty: bool,
     pub gui_config: crate::config::gui_config::GuiConfig,
     pub config_models: HashMap<String, Vec<String>>,
@@ -255,10 +253,10 @@ pub struct App {
     // Login
     pub platform_auth_status: HashMap<String, AuthStatus>,
     pub login_in_progress: HashMap<crate::platforms::AuthTarget, AuthActionKind>,
-    pub login_messages: HashMap<String, String>,     // platform -> login result message
-    pub login_auth_urls: HashMap<String, String>,    // platform -> auth URL from login
-    pub git_info: Option<GitInfoDisplay>,            // git user, email, remote
-    pub github_auth_status: Option<String>,          // "authenticated" or "not_authenticated"
+    pub login_messages: HashMap<String, String>, // platform -> login result message
+    pub login_auth_urls: HashMap<String, String>, // platform -> auth URL from login
+    pub git_info: Option<GitInfoDisplay>,        // git user, email, remote
+    pub github_auth_status: Option<String>,      // "authenticated" or "not_authenticated"
     pub setup_installing: Option<crate::types::Platform>,
     pub login_cli_content: text_editor::Content,
 
@@ -269,20 +267,42 @@ pub struct App {
 
     // Wizard
     pub wizard_step: usize,
+    // Step 0: Project Setup
+    pub wizard_is_new_project: bool,
+    pub wizard_has_github_repo: bool,
+    pub wizard_github_url: String,
+    pub wizard_create_github_repo: bool,
+    pub wizard_github_visibility: String, // "public" or "private"
+    pub wizard_github_description: String,
+    // Step 0.5: Quick Interview Config
+    pub wizard_use_interview: bool,
+    pub wizard_interaction_mode: String, // "expert" or "eli5"
+    pub wizard_reasoning_level: String,  // "low", "medium", "high"
+    pub wizard_generate_agents_md: bool,
+    // Original wizard fields
     pub wizard_project_name: String,
     pub wizard_project_path: String,
     pub wizard_requirements_text: String,
     pub wizard_prd_platform: String,
     pub wizard_prd_model: String,
-    pub wizard_prd_text: String,  // generated PRD (editable in step 3)
+    pub wizard_prd_text: String, // generated PRD (editable in step 3)
     pub wizard_prd_editor_content: text_editor::Content,
-    pub wizard_prd_preview: Option<String>,  // kept for compatibility
-    pub wizard_tier_configs: HashMap<String, WizardTierConfig>,  // "phase"/"task"/"subtask"/"iteration"
+    pub wizard_prd_preview: Option<String>, // kept for compatibility
+    pub wizard_tier_configs: HashMap<String, WizardTierConfig>, // "phase"/"task"/"subtask"/"iteration"
     pub wizard_plan_text: String,
-    pub wizard_generating: bool,  // loading state
-    pub wizard_models: HashMap<String, Vec<String>>,  // platform -> model list
+    pub wizard_generating: bool,                     // loading state
+    pub wizard_models: HashMap<String, Vec<String>>, // platform -> model list
     pub wizard_requirements_preview_content: text_editor::Content,
     pub wizard_plan_content: text_editor::Content,
+
+    // Interview
+    pub interview_active: bool,
+    pub interview_paused: bool,
+    pub interview_current_phase: String,
+    pub interview_current_question: String,
+    pub interview_answers: Vec<String>,
+    pub interview_phases_complete: Vec<String>,
+    pub interview_answer_input: String,
 
     // Setup
     pub setup_platform_statuses: Vec<PlatformStatus>,
@@ -292,19 +312,19 @@ pub struct App {
     pub toasts: Vec<Toast>,
     pub show_modal: Option<ModalContent>,
     next_toast_id: usize,
-    
+
     // Page transitions
     pub page_transition: crate::widgets::TransitionState,
     pub previous_page: Option<Page>,
-    
+
     // Animation time
     pub animation_time: f32,
     last_tick_time: Option<DateTime<Utc>>,
-    
+
     // Window size
     pub window_width: f32,
     pub window_height: f32,
-    
+
     // Retro overlay effects
     pub retro_overlay: crate::widgets::RetroOverlay,
 
@@ -331,8 +351,8 @@ pub struct App {
     pub memory_content_string: String,
     pub memory_section: crate::views::memory::MemorySection,
     pub memory_loading: bool,
-    
-    // Metrics  
+
+    // Metrics
     pub metrics_summary_content: text_editor::Content,
 
     // Coverage
@@ -444,13 +464,27 @@ pub enum Message {
     // Wizard
     WizardNextStep,
     WizardPrevStep,
+    // Step 0: Project Setup
+    WizardIsNewProjectToggled(bool),
+    WizardHasGithubRepoToggled(bool),
+    WizardGithubUrlChanged(String),
+    WizardCreateGithubRepoToggled(bool),
+    WizardGithubVisibilityChanged(String),
+    WizardGithubDescriptionChanged(String),
+    WizardInitializeProject,
+    // Step 0.5: Quick Interview Config
+    WizardUseInterviewToggled(bool),
+    WizardInteractionModeChanged(String),
+    WizardReasoningLevelChanged(String),
+    WizardGenerateAgentsMdToggled(bool),
+    // Original wizard messages
     WizardProjectNameChanged(String),
     WizardProjectPathChanged(String),
     WizardRequirementsChanged(String),
     WizardPrdPlatformChanged(String),
     WizardPrdModelChanged(String),
     WizardPrdEditorAction(text_editor::Action),
-    
+
     // Read-only text editor actions (for selection/copy support)
     DashboardTerminalAction(text_editor::Action),
     DoctorDetailAction(String, text_editor::Action), // check name, action
@@ -462,15 +496,15 @@ pub enum Message {
     WizardPlanContentAction(text_editor::Action),
     MetricsSummaryAction(text_editor::Action),
     LoginCliAction(text_editor::Action),
-    
-    WizardTierPlatformChanged(String, String),  // tier, platform
-    WizardTierModelChanged(String, String),  // tier, model
-    WizardTierReasoningChanged(String, String),  // tier, effort
-    WizardTierPlanModeToggled(String, bool),  // tier, value
+
+    WizardTierPlatformChanged(String, String), // tier, platform
+    WizardTierModelChanged(String, String),    // tier, model
+    WizardTierReasoningChanged(String, String), // tier, effort
+    WizardTierPlanModeToggled(String, bool),   // tier, value
     WizardTierAskModeToggled(String, bool),
     WizardTierOutputFormatChanged(String, String),
-    WizardBrowseProjectPath,  // opens folder picker
-    WizardBrowseRequirementsFile,  // opens file picker
+    WizardBrowseProjectPath,      // opens folder picker
+    WizardBrowseRequirementsFile, // opens file picker
     WizardProjectPathSelected(Option<PathBuf>),
     WizardRequirementsFileSelected(Option<PathBuf>),
     WizardGeneratePrd,
@@ -484,6 +518,27 @@ pub enum Message {
     WizardFilePickerResult(Option<PathBuf>),
     WizardGenerate,
     WizardSave,
+
+    // Interview
+    StartInterview,
+    InterviewQuestionReceived(String),
+    InterviewAnswerSubmitted(String),
+    InterviewPhaseComplete(String),
+    InterviewComplete,
+    InterviewPaused,
+    InterviewResumed,
+    NavigateToInterview,
+    InterviewAnswerInputChanged(String),
+    InterviewSubmitAnswer,
+    InterviewTogglePause,
+    InterviewEnd,
+
+    // Interview Config UI
+    ConfigInterviewFieldChanged(String, String), // field, value
+    ConfigInterviewToggled(String),              // field name
+    ConfigInterviewBackupChanged(usize, String, String), // index, field, value
+    ConfigInterviewAddBackup,
+    ConfigInterviewRemoveBackup(usize),
 
     // Setup
     SetupRunDetection,
@@ -560,6 +615,7 @@ pub enum Message {
     PlatformLogout(crate::platforms::AuthTarget),
     PlatformLoginComplete(crate::platforms::AuthTarget, Result<(), String>),
     PlatformLogoutComplete(crate::platforms::AuthTarget, Result<(), String>),
+    CopyToClipboard(String),
     RefreshAuthStatus,
     LoadGitInfoForLogin,
     GitInfoForLoginLoaded(Option<GitInfoDisplay>),
@@ -605,10 +661,31 @@ pub enum Message {
 // Helper Functions
 // ============================================================================
 
+fn apply_read_only_text_editor_action(
+    content: &mut text_editor::Content,
+    action: text_editor::Action,
+) {
+    if !action.is_edit() {
+        content.perform(action);
+    }
+}
+
+fn default_login_cli_text() -> String {
+    [
+        "• Cursor: agent login",
+        "• Codex: codex login",
+        "• Claude: claude auth login",
+        "• Gemini: gemini",
+        "• Copilot: copilot",
+        "• GitHub: gh auth login",
+    ]
+    .join("\n")
+}
+
 /// Load git information (user, email, remote, branch)
 async fn load_git_info() -> Option<GitInfoDisplay> {
     use tokio::process::Command;
-    
+
     // Helper to run git command and get output
     async fn git_config(key: &str) -> Option<String> {
         let output = Command::new("git")
@@ -616,7 +693,7 @@ async fn load_git_info() -> Option<GitInfoDisplay> {
             .output()
             .await
             .ok()?;
-        
+
         if output.status.success() {
             let s = String::from_utf8_lossy(&output.stdout).trim().to_string();
             if s.is_empty() {
@@ -628,14 +705,14 @@ async fn load_git_info() -> Option<GitInfoDisplay> {
             None
         }
     }
-    
+
     async fn git_remote_url() -> Option<String> {
         let output = Command::new("git")
             .args(["remote", "get-url", "origin"])
             .output()
             .await
             .ok()?;
-        
+
         if output.status.success() {
             let s = String::from_utf8_lossy(&output.stdout).trim().to_string();
             if s.is_empty() {
@@ -647,14 +724,14 @@ async fn load_git_info() -> Option<GitInfoDisplay> {
             None
         }
     }
-    
+
     async fn git_current_branch() -> Option<String> {
         let output = Command::new("git")
             .args(["branch", "--show-current"])
             .output()
             .await
             .ok()?;
-        
+
         if output.status.success() {
             let s = String::from_utf8_lossy(&output.stdout).trim().to_string();
             if s.is_empty() {
@@ -666,13 +743,17 @@ async fn load_git_info() -> Option<GitInfoDisplay> {
             None
         }
     }
-    
+
     // Fetch all git info
     let user_name = git_config("user.name").await?;
     let user_email = git_config("user.email").await?;
-    let remote_url = git_remote_url().await.unwrap_or_else(|| "No remote configured".to_string());
-    let current_branch = git_current_branch().await.unwrap_or_else(|| "No branch".to_string());
-    
+    let remote_url = git_remote_url()
+        .await
+        .unwrap_or_else(|| "No remote configured".to_string());
+    let current_branch = git_current_branch()
+        .await
+        .unwrap_or_else(|| "No branch".to_string());
+
     Some(GitInfoDisplay {
         user_name,
         user_email,
@@ -711,7 +792,7 @@ impl App {
             terminal_editor_content: text_editor::Content::with_text(
                 "=== RWM Puppet Master Terminal ===\n\
                  No active orchestration.\n\
-                 Start a new orchestration from the Wizard page or resume from the Dashboard.\n"
+                 Start a new orchestration from the Wizard page or resume from the Dashboard.\n",
             ),
             last_error: None,
             start_time: None,
@@ -788,7 +869,7 @@ impl App {
             git_info: None,
             github_auth_status: None,
             setup_installing: None,
-            login_cli_content: text_editor::Content::new(),
+            login_cli_content: text_editor::Content::with_text(&default_login_cli_text()),
 
             // Projects
             new_project_name: String::new(),
@@ -796,7 +877,20 @@ impl App {
             show_new_project_form: false,
 
             // Wizard
-            wizard_step: 1,
+            wizard_step: 0, // Start at Step 0
+            // Step 0: Project Setup
+            wizard_is_new_project: true,
+            wizard_has_github_repo: false,
+            wizard_github_url: String::new(),
+            wizard_create_github_repo: false,
+            wizard_github_visibility: "public".to_string(),
+            wizard_github_description: String::new(),
+            // Step 0.5: Quick Interview Config
+            wizard_use_interview: false,
+            wizard_interaction_mode: "expert".to_string(),
+            wizard_reasoning_level: "medium".to_string(),
+            wizard_generate_agents_md: true,
+            // Original wizard fields
             wizard_project_name: String::new(),
             wizard_project_path: String::new(),
             wizard_requirements_text: String::new(),
@@ -823,23 +917,32 @@ impl App {
             setup_platform_statuses: Vec::new(),
             setup_is_checking: false,
 
+            // Interview
+            interview_active: false,
+            interview_paused: false,
+            interview_current_phase: String::new(),
+            interview_current_question: String::new(),
+            interview_answers: Vec::new(),
+            interview_phases_complete: Vec::new(),
+            interview_answer_input: String::new(),
+
             // UI State
             toasts: Vec::new(),
             show_modal: None,
             next_toast_id: 0,
-            
+
             // Page transitions
             page_transition: crate::widgets::TransitionState::default(),
             previous_page: None,
-            
+
             // Animation time
             animation_time: 0.0,
             last_tick_time: None,
-            
+
             // Window size (default desktop size)
             window_width: 1280.0,
             window_height: 720.0,
-            
+
             // Retro overlay effects
             retro_overlay: crate::widgets::RetroOverlay::new(
                 true, // Start with dark theme
@@ -853,13 +956,13 @@ impl App {
             settings_show_timestamps: true,
             settings_retention_days: 30,
             settings_intensive_logging: false,
-            
+
             // Memory
             memory_content: text_editor::Content::new(),
             memory_content_string: String::new(),
             memory_section: crate::views::memory::MemorySection::Overview,
             memory_loading: false,
-            
+
             // Metrics
             metrics_summary_content: text_editor::Content::new(),
 
@@ -925,7 +1028,7 @@ impl App {
                 self.previous_page = Some(self.current_page);
                 self.page_transition = crate::widgets::TransitionState::start();
                 self.current_page = page;
-                
+
                 // Auto-load data when navigating to certain pages
                 match page {
                     Page::Login => {
@@ -937,24 +1040,33 @@ impl App {
                                 for platform in crate::types::Platform::all() {
                                     let result = checker.check_platform(*platform).await;
                                     let name = format!("{:?}", platform);
-                                    map.insert(name.clone(), AuthStatus {
-                                        platform: name,
-                                        authenticated: result.authenticated,
-                                        method: if result.message.contains("environment variable") {
-                                            crate::views::login::AuthMethod::EnvVar
-                                        } else {
-                                            crate::views::login::AuthMethod::CliLogin
+                                    map.insert(
+                                        name.clone(),
+                                        AuthStatus {
+                                            platform: name,
+                                            authenticated: result.authenticated,
+                                            method: if result
+                                                .message
+                                                .contains("environment variable")
+                                            {
+                                                crate::views::login::AuthMethod::EnvVar
+                                            } else {
+                                                crate::views::login::AuthMethod::CliLogin
+                                            },
+                                            hint: result.message.clone(),
                                         },
-                                        hint: result.message.clone(),
-                                    });
+                                    );
                                 }
                                 let gh = checker.check_github().await;
-                                map.insert("GitHub".to_string(), AuthStatus {
-                                    platform: "GitHub".to_string(),
-                                    authenticated: gh.authenticated,
-                                    method: crate::views::login::AuthMethod::CliLogin,
-                                    hint: gh.message.clone(),
-                                });
+                                map.insert(
+                                    "GitHub".to_string(),
+                                    AuthStatus {
+                                        platform: "GitHub".to_string(),
+                                        authenticated: gh.authenticated,
+                                        method: crate::views::login::AuthMethod::CliLogin,
+                                        hint: gh.message.clone(),
+                                    },
+                                );
                                 map
                             },
                             Message::AuthStatusReceived,
@@ -1005,7 +1117,7 @@ impl App {
                     }
                     _ => {}
                 }
-                
+
                 Task::none()
             }
 
@@ -1018,7 +1130,8 @@ impl App {
                     AppTheme::Dark => AppTheme::Light,
                 };
                 // Update retro overlay for new theme
-                self.retro_overlay.update(self.theme.is_dark(), self.theme.ink());
+                self.retro_overlay
+                    .update(self.theme.is_dark(), self.theme.ink());
                 Task::none()
             }
             Message::ToggleMinimizeToTray => {
@@ -1065,7 +1178,7 @@ impl App {
                 self.add_toast(ToastType::Warning, "Clearing all data...".to_string());
                 let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
                 let data_dir = base.join(".puppet-master");
-                
+
                 if data_dir.exists() {
                     // Clear evidence, logs, but keep settings
                     if let Ok(_) = std::fs::remove_dir_all(data_dir.join("evidence")) {
@@ -1075,7 +1188,7 @@ impl App {
                         self.add_toast(ToastType::Success, "Logs cleared".to_string());
                     }
                 }
-                
+
                 Task::none()
             }
 
@@ -1086,14 +1199,14 @@ impl App {
                 self.settings_retention_days = 30;
                 self.settings_intensive_logging = false;
                 self.minimize_to_tray = true;
-                
+
                 // Delete settings file
                 let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
                 let settings_file = base.join(".puppet-master").join("settings.json");
                 if settings_file.exists() {
                     let _ = std::fs::remove_file(&settings_file);
                 }
-                
+
                 self.add_toast(ToastType::Success, "Settings reset to defaults".to_string());
                 Task::none()
             }
@@ -1101,7 +1214,7 @@ impl App {
             Message::SettingsOpenDataDir => {
                 let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
                 let data_dir = base.join(".puppet-master");
-                
+
                 // Try to open directory with platform-specific command
                 #[cfg(target_os = "linux")]
                 {
@@ -1111,9 +1224,7 @@ impl App {
                 }
                 #[cfg(target_os = "macos")]
                 {
-                    let _ = std::process::Command::new("open")
-                        .arg(&data_dir)
-                        .spawn();
+                    let _ = std::process::Command::new("open").arg(&data_dir).spawn();
                 }
                 #[cfg(target_os = "windows")]
                 {
@@ -1121,7 +1232,7 @@ impl App {
                         .arg(&data_dir)
                         .spawn();
                 }
-                
+
                 self.add_toast(ToastType::Info, "Opening data directory...".to_string());
                 Task::none()
             }
@@ -1130,12 +1241,12 @@ impl App {
                 let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
                 let data_dir = base.join(".puppet-master");
                 let settings_file = data_dir.join("settings.json");
-                
+
                 // Create directory if needed (including parent directories)
                 if let Some(parent) = settings_file.parent() {
                     let _ = std::fs::create_dir_all(parent);
                 }
-                
+
                 // Serialize settings
                 let settings = serde_json::json!({
                     "log_level": self.settings_log_level,
@@ -1145,7 +1256,7 @@ impl App {
                     "intensive_logging": self.settings_intensive_logging,
                     "minimize_to_tray": self.minimize_to_tray,
                 });
-                
+
                 if let Ok(json) = serde_json::to_string_pretty(&settings) {
                     if let Ok(_) = std::fs::write(&settings_file, json) {
                         self.add_toast(ToastType::Success, "Settings saved".to_string());
@@ -1153,7 +1264,7 @@ impl App {
                         self.add_toast(ToastType::Error, "Failed to save settings".to_string());
                     }
                 }
-                
+
                 Task::none()
             }
 
@@ -1238,10 +1349,7 @@ impl App {
                     TrayAction::OpenGui => {
                         // Restore window from tray
                         return window::latest().and_then(|id| {
-                            Task::batch(vec![
-                                window::minimize(id, false),
-                                window::gain_focus(id),
-                            ])
+                            Task::batch(vec![window::minimize(id, false), window::gain_focus(id)])
                         });
                     }
                     TrayAction::Quit => {
@@ -1274,18 +1382,17 @@ impl App {
                         crate::views::projects::ProjectStatus::Inactive
                     };
                 }
-                self.current_project = self.projects.iter()
-                    .find(|p| p.name == name)
-                    .cloned();
+                self.current_project = self.projects.iter().find(|p| p.name == name).cloned();
                 self.add_toast(ToastType::Success, format!("Switched to project: {}", name));
                 Task::none()
             }
 
             Message::CreateProject(name, path) => {
                 let project_path = PathBuf::from(&path);
-                match std::fs::create_dir_all(&project_path)
-                    .and_then(|_| crate::utils::project_paths::initialize_puppet_master_dirs(&project_path).map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e)))
-                {
+                match std::fs::create_dir_all(&project_path).and_then(|_| {
+                    crate::utils::project_paths::initialize_puppet_master_dirs(&project_path)
+                        .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))
+                }) {
                     Ok(()) => {
                         let config_path = project_path.join("puppet-master.yaml");
                         let cfg = crate::config::ConfigManager::new();
@@ -1365,7 +1472,11 @@ impl App {
                 }
 
                 // Best-effort config load
-                let candidates = ["pm-config.yaml", "puppet-master.yaml", ".puppet-master.yaml"];
+                let candidates = [
+                    "pm-config.yaml",
+                    "puppet-master.yaml",
+                    ".puppet-master.yaml",
+                ];
                 let mut loaded = None;
                 for name in candidates {
                     let p = resolved_path.join(name);
@@ -1396,7 +1507,10 @@ impl App {
                 } else {
                     self.add_toast(
                         ToastType::Info,
-                        format!("Opened project at {} (no config found)", resolved_path.display()),
+                        format!(
+                            "Opened project at {} (no config found)",
+                            resolved_path.display()
+                        ),
                     );
                 }
 
@@ -1411,7 +1525,7 @@ impl App {
                             .set_title("Select Project Directory")
                             .pick_folder()
                             .await;
-                        
+
                         result.map(|folder| folder.path().to_path_buf())
                     },
                     Message::ProjectFolderSelected,
@@ -1432,11 +1546,12 @@ impl App {
                 // Scan for projects in current directory and known locations
                 let cwd = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
                 let mut found_projects = Vec::new();
-                
+
                 // Check current directory
                 if cwd.join(".puppet-master").exists() || cwd.join("prd.json").exists() {
                     found_projects.push(ProjectInfo {
-                        name: cwd.file_name()
+                        name: cwd
+                            .file_name()
                             .and_then(|n| n.to_str())
                             .unwrap_or("Current Project")
                             .to_string(),
@@ -1444,14 +1559,15 @@ impl App {
                         status: crate::views::projects::ProjectStatus::Inactive,
                     });
                 }
-                
+
                 // Scan for subdirectories with .puppet-master
                 if let Ok(entries) = std::fs::read_dir(&cwd) {
                     for entry in entries.filter_map(Result::ok) {
                         let path = entry.path();
                         if path.is_dir() && path.join(".puppet-master").exists() {
                             found_projects.push(ProjectInfo {
-                                name: path.file_name()
+                                name: path
+                                    .file_name()
                                     .and_then(|n| n.to_str())
                                     .unwrap_or("Project")
                                     .to_string(),
@@ -1461,9 +1577,12 @@ impl App {
                         }
                     }
                 }
-                
+
                 self.projects = found_projects;
-                self.add_toast(ToastType::Success, format!("Found {} projects", self.projects.len()));
+                self.add_toast(
+                    ToastType::Success,
+                    format!("Found {} projects", self.projects.len()),
+                );
                 Task::none()
             }
 
@@ -1472,19 +1591,17 @@ impl App {
                 Task::none()
             }
 
-            Message::BrowseNewProjectPath => {
-                Task::perform(
-                    async {
-                        let result = rfd::AsyncFileDialog::new()
-                            .set_title("Select Project Directory")
-                            .pick_folder()
-                            .await;
-                        
-                        result.map(|folder| folder.path().to_path_buf())
-                    },
-                    Message::NewProjectPathSelected,
-                )
-            }
+            Message::BrowseNewProjectPath => Task::perform(
+                async {
+                    let result = rfd::AsyncFileDialog::new()
+                        .set_title("Select Project Directory")
+                        .pick_folder()
+                        .await;
+
+                    result.map(|folder| folder.path().to_path_buf())
+                },
+                Message::NewProjectPathSelected,
+            ),
 
             Message::NewProjectPathSelected(path_opt) => {
                 if let Some(path) = path_opt {
@@ -1496,40 +1613,52 @@ impl App {
             Message::CreateNewProject => {
                 // Validate inputs
                 if self.new_project_name.trim().is_empty() {
-                    self.add_toast(ToastType::Warning, "Please enter a project name".to_string());
+                    self.add_toast(
+                        ToastType::Warning,
+                        "Please enter a project name".to_string(),
+                    );
                     return Task::none();
                 }
-                
+
                 if self.new_project_path.trim().is_empty() {
-                    self.add_toast(ToastType::Warning, "Please select a project path".to_string());
+                    self.add_toast(
+                        ToastType::Warning,
+                        "Please select a project path".to_string(),
+                    );
                     return Task::none();
                 }
-                
+
                 let project_path = PathBuf::from(&self.new_project_path);
-                
+
                 // Check if path exists
                 if !project_path.exists() {
                     self.add_toast(ToastType::Error, "Selected path does not exist".to_string());
                     return Task::none();
                 }
-                
+
                 // Create project
                 self.update(Message::CreateProject(
                     self.new_project_name.clone(),
-                    self.new_project_path.clone()
+                    self.new_project_path.clone(),
                 ))
             }
 
             Message::ProjectCreated(result) => {
                 match result {
                     Ok(()) => {
-                        self.add_toast(ToastType::Success, "Project created successfully".to_string());
+                        self.add_toast(
+                            ToastType::Success,
+                            "Project created successfully".to_string(),
+                        );
                         self.show_new_project_form = false;
                         self.new_project_name.clear();
                         self.new_project_path.clear();
                     }
                     Err(e) => {
-                        self.add_toast(ToastType::Error, format!("Failed to create project: {}", e));
+                        self.add_toast(
+                            ToastType::Error,
+                            format!("Failed to create project: {}", e),
+                        );
                     }
                 }
                 Task::none()
@@ -1571,61 +1700,62 @@ impl App {
                 let text = self.config_editor_content.text();
                 self.update(Message::ConfigTextChanged(text))
             }
-            
-            // Read-only text editor actions - process all actions for selection/clipboard support
-            // The widgets remain effectively read-only because users can't easily trigger Edit actions
-            // without .on_action(), but we need to process all actions to support Ctrl+C copying
+
+            // Read-only text editor actions - keep selection/copy while blocking edits
             Message::DashboardTerminalAction(action) => {
-                self.terminal_editor_content.perform(action);
+                apply_read_only_text_editor_action(&mut self.terminal_editor_content, action);
                 Task::none()
             }
-            
+
             Message::DoctorDetailAction(check_name, action) => {
                 if let Some(content) = self.doctor_detail_contents.get_mut(&check_name) {
-                    content.perform(action);
+                    apply_read_only_text_editor_action(content, action);
                 }
                 Task::none()
             }
-            
+
             Message::EvidencePreviewAction(action) => {
-                self.evidence_preview_content.perform(action);
+                apply_read_only_text_editor_action(&mut self.evidence_preview_content, action);
                 Task::none()
             }
-            
+
             Message::LedgerExpandedAction(entry_id, action) => {
                 if let Some(content) = self.ledger_expanded_contents.get_mut(&entry_id) {
-                    content.perform(action);
+                    apply_read_only_text_editor_action(content, action);
                 }
                 Task::none()
             }
-            
+
             Message::MemoryContentAction(action) => {
-                self.memory_content.perform(action);
+                apply_read_only_text_editor_action(&mut self.memory_content, action);
                 Task::none()
             }
-            
+
             Message::TierDetailsAction(action) => {
-                self.tier_details_content.perform(action);
+                apply_read_only_text_editor_action(&mut self.tier_details_content, action);
                 Task::none()
             }
-            
+
             Message::WizardRequirementsPreviewAction(action) => {
-                self.wizard_requirements_preview_content.perform(action);
+                apply_read_only_text_editor_action(
+                    &mut self.wizard_requirements_preview_content,
+                    action,
+                );
                 Task::none()
             }
-            
+
             Message::WizardPlanContentAction(action) => {
-                self.wizard_plan_content.perform(action);
+                apply_read_only_text_editor_action(&mut self.wizard_plan_content, action);
                 Task::none()
             }
-            
+
             Message::MetricsSummaryAction(action) => {
-                self.metrics_summary_content.perform(action);
+                apply_read_only_text_editor_action(&mut self.metrics_summary_content, action);
                 Task::none()
             }
-            
+
             Message::LoginCliAction(action) => {
-                self.login_cli_content.perform(action);
+                apply_read_only_text_editor_action(&mut self.login_cli_content, action);
                 Task::none()
             }
 
@@ -1656,7 +1786,9 @@ impl App {
                     .current_project
                     .as_ref()
                     .map(|p| p.path.clone())
-                    .unwrap_or_else(|| std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")));
+                    .unwrap_or_else(|| {
+                        std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
+                    });
 
                 let config_path = base.join("puppet-master.yaml");
 
@@ -1682,9 +1814,13 @@ impl App {
                             );
                         }
                         Err(e) => {
-                            let friendly_msg = if e.to_string().contains("No such file or directory") 
-                                || e.to_string().contains("cannot find the path") {
-                                "Could not save configuration. The parent directory may not exist.".to_string()
+                            let friendly_msg = if e
+                                .to_string()
+                                .contains("No such file or directory")
+                                || e.to_string().contains("cannot find the path")
+                            {
+                                "Could not save configuration. The parent directory may not exist."
+                                    .to_string()
                             } else if e.to_string().contains("Permission denied") {
                                 "Permission denied. Please check write permissions for the configuration file.".to_string()
                             } else {
@@ -1698,7 +1834,8 @@ impl App {
                     match std::fs::write(&config_path, &self.config_text) {
                         Ok(()) => {
                             // Try to parse back into gui_config
-                            if let Ok(loaded) = crate::config::gui_config::load_config(&config_path) {
+                            if let Ok(loaded) = crate::config::gui_config::load_config(&config_path)
+                            {
                                 self.gui_config = loaded;
                             }
                             self.config_is_dirty = false;
@@ -1708,9 +1845,13 @@ impl App {
                             );
                         }
                         Err(e) => {
-                            let friendly_msg = if e.to_string().contains("No such file or directory") 
-                                || e.to_string().contains("cannot find the path") {
-                                "Could not save configuration. The parent directory may not exist.".to_string()
+                            let friendly_msg = if e
+                                .to_string()
+                                .contains("No such file or directory")
+                                || e.to_string().contains("cannot find the path")
+                            {
+                                "Could not save configuration. The parent directory may not exist."
+                                    .to_string()
                             } else if e.to_string().contains("Permission denied") {
                                 "Permission denied. Please check write permissions for the configuration file.".to_string()
                             } else {
@@ -1729,7 +1870,9 @@ impl App {
                     .current_project
                     .as_ref()
                     .map(|p| p.path.clone())
-                    .unwrap_or_else(|| std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")));
+                    .unwrap_or_else(|| {
+                        std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
+                    });
 
                 let config_path = base.join("puppet-master.yaml");
 
@@ -1737,12 +1880,12 @@ impl App {
                     Ok(text) => {
                         self.config_text = text.clone();
                         self.config_editor_content = text_editor::Content::with_text(&text);
-                        
+
                         // Try to load into gui_config
                         if let Ok(loaded) = crate::config::gui_config::load_config(&config_path) {
                             self.gui_config = loaded;
                         }
-                        
+
                         self.config_valid = true;
                         self.config_error = None;
                         self.config_is_dirty = false;
@@ -1752,8 +1895,9 @@ impl App {
                         );
                     }
                     Err(e) => {
-                        let friendly_msg = if e.to_string().contains("No such file or directory") 
-                            || e.to_string().contains("cannot find the path") {
+                        let friendly_msg = if e.to_string().contains("No such file or directory")
+                            || e.to_string().contains("cannot find the path")
+                        {
                             "No configuration file found. Create one using the Config page and click Save.".to_string()
                         } else if e.to_string().contains("Permission denied") {
                             "Permission denied. Please check read permissions for the configuration file.".to_string()
@@ -1774,7 +1918,10 @@ impl App {
                         if errors.is_empty() {
                             self.config_valid = true;
                             self.config_error = None;
-                            self.add_toast(ToastType::Success, "Configuration is valid".to_string());
+                            self.add_toast(
+                                ToastType::Success,
+                                "Configuration is valid".to_string(),
+                            );
                         } else {
                             self.config_valid = false;
                             let msg = errors
@@ -1783,7 +1930,10 @@ impl App {
                                 .collect::<Vec<_>>()
                                 .join("\n");
                             self.config_error = Some(msg.clone());
-                            self.add_toast(ToastType::Error, "Configuration validation failed".to_string());
+                            self.add_toast(
+                                ToastType::Error,
+                                "Configuration validation failed".to_string(),
+                            );
                         }
                     }
                     Err(e) => {
@@ -1940,24 +2090,22 @@ impl App {
             }
 
             Message::ConfigVerificationScreenshotToggled => {
-                self.gui_config.verification.screenshot_on_failure = 
+                self.gui_config.verification.screenshot_on_failure =
                     !self.gui_config.verification.screenshot_on_failure;
                 self.config_is_dirty = true;
                 Task::none()
             }
 
-            Message::BrowseEvidenceDirectory => {
-                Task::perform(
-                    async {
-                        let result = rfd::AsyncFileDialog::new()
-                            .set_title("Select Evidence Directory")
-                            .pick_folder()
-                            .await;
-                        result.map(|h| h.path().to_path_buf())
-                    },
-                    Message::EvidenceDirectorySelected,
-                )
-            }
+            Message::BrowseEvidenceDirectory => Task::perform(
+                async {
+                    let result = rfd::AsyncFileDialog::new()
+                        .set_title("Select Evidence Directory")
+                        .pick_folder()
+                        .await;
+                    result.map(|h| h.path().to_path_buf())
+                },
+                Message::EvidenceDirectorySelected,
+            ),
 
             Message::EvidenceDirectorySelected(path_opt) => {
                 if let Some(path) = path_opt {
@@ -1981,58 +2129,53 @@ impl App {
             }
 
             Message::ConfigMemoryMultiLevelToggled => {
-                self.gui_config.memory.multi_level_agents = !self.gui_config.memory.multi_level_agents;
+                self.gui_config.memory.multi_level_agents =
+                    !self.gui_config.memory.multi_level_agents;
                 self.config_is_dirty = true;
                 Task::none()
             }
 
-            Message::BrowseMemoryProgressFile => {
-                Task::perform(
-                    async {
-                        let result = rfd::AsyncFileDialog::new()
-                            .set_title("Select Progress File")
-                            .add_filter("Text Files", &["txt", "md", "log"])
-                            .add_filter("All Files", &["*"])
-                            .pick_file()
-                            .await;
-                        
-                        result.map(|file| file.path().to_path_buf())
-                    },
-                    Message::MemoryProgressFileSelected,
-                )
-            }
+            Message::BrowseMemoryProgressFile => Task::perform(
+                async {
+                    let result = rfd::AsyncFileDialog::new()
+                        .set_title("Select Progress File")
+                        .add_filter("Text Files", &["txt", "md", "log"])
+                        .add_filter("All Files", &["*"])
+                        .pick_file()
+                        .await;
 
-            Message::BrowseMemoryAgentsFile => {
-                Task::perform(
-                    async {
-                        let result = rfd::AsyncFileDialog::new()
-                            .set_title("Select Agents File")
-                            .add_filter("JSON/Markdown", &["json", "md"])
-                            .add_filter("All Files", &["*"])
-                            .pick_file()
-                            .await;
-                        
-                        result.map(|file| file.path().to_path_buf())
-                    },
-                    Message::MemoryAgentsFileSelected,
-                )
-            }
+                    result.map(|file| file.path().to_path_buf())
+                },
+                Message::MemoryProgressFileSelected,
+            ),
 
-            Message::BrowseMemoryPrdFile => {
-                Task::perform(
-                    async {
-                        let result = rfd::AsyncFileDialog::new()
-                            .set_title("Select PRD File")
-                            .add_filter("JSON Files", &["json"])
-                            .add_filter("All Files", &["*"])
-                            .pick_file()
-                            .await;
-                        
-                        result.map(|file| file.path().to_path_buf())
-                    },
-                    Message::MemoryPrdFileSelected,
-                )
-            }
+            Message::BrowseMemoryAgentsFile => Task::perform(
+                async {
+                    let result = rfd::AsyncFileDialog::new()
+                        .set_title("Select Agents File")
+                        .add_filter("JSON/Markdown", &["json", "md"])
+                        .add_filter("All Files", &["*"])
+                        .pick_file()
+                        .await;
+
+                    result.map(|file| file.path().to_path_buf())
+                },
+                Message::MemoryAgentsFileSelected,
+            ),
+
+            Message::BrowseMemoryPrdFile => Task::perform(
+                async {
+                    let result = rfd::AsyncFileDialog::new()
+                        .set_title("Select PRD File")
+                        .add_filter("JSON Files", &["json"])
+                        .add_filter("All Files", &["*"])
+                        .pick_file()
+                        .await;
+
+                    result.map(|file| file.path().to_path_buf())
+                },
+                Message::MemoryPrdFileSelected,
+            ),
 
             Message::MemoryProgressFileSelected(path) => {
                 if let Some(p) = path {
@@ -2067,7 +2210,7 @@ impl App {
                     "copilot" => &mut self.gui_config.budgets.copilot,
                     _ => return Task::none(),
                 };
-                
+
                 match field.as_str() {
                     "max_calls_per_run" => {
                         if let Ok(num) = value.parse::<u32>() {
@@ -2151,42 +2294,43 @@ impl App {
             Message::ConfigAdvancedCheckboxToggled(field) => {
                 match field.as_str() {
                     "intensive_logging" => {
-                        self.gui_config.advanced.intensive_logging = !self.gui_config.advanced.intensive_logging;
+                        self.gui_config.advanced.intensive_logging =
+                            !self.gui_config.advanced.intensive_logging;
                     }
                     "kill_on_failure" => {
-                        self.gui_config.advanced.execution.kill_on_failure = 
+                        self.gui_config.advanced.execution.kill_on_failure =
                             !self.gui_config.advanced.execution.kill_on_failure;
                     }
                     "enable_parallel" => {
-                        self.gui_config.advanced.execution.enable_parallel = 
+                        self.gui_config.advanced.execution.enable_parallel =
                             !self.gui_config.advanced.execution.enable_parallel;
                     }
                     "checkpoint_enabled" => {
-                        self.gui_config.advanced.checkpointing.enabled = 
+                        self.gui_config.advanced.checkpointing.enabled =
                             !self.gui_config.advanced.checkpointing.enabled;
                     }
                     "checkpoint_on_subtask" => {
-                        self.gui_config.advanced.checkpointing.on_subtask_complete = 
+                        self.gui_config.advanced.checkpointing.on_subtask_complete =
                             !self.gui_config.advanced.checkpointing.on_subtask_complete;
                     }
                     "checkpoint_on_shutdown" => {
-                        self.gui_config.advanced.checkpointing.on_shutdown = 
+                        self.gui_config.advanced.checkpointing.on_shutdown =
                             !self.gui_config.advanced.checkpointing.on_shutdown;
                     }
                     "loop_enabled" => {
-                        self.gui_config.advanced.loop_guard.enabled = 
+                        self.gui_config.advanced.loop_guard.enabled =
                             !self.gui_config.advanced.loop_guard.enabled;
                     }
                     "loop_suppress_relay" => {
-                        self.gui_config.advanced.loop_guard.suppress_reply_relay = 
+                        self.gui_config.advanced.loop_guard.suppress_reply_relay =
                             !self.gui_config.advanced.loop_guard.suppress_reply_relay;
                     }
                     "lan_mode" => {
-                        self.gui_config.advanced.network.lan_mode = 
+                        self.gui_config.advanced.network.lan_mode =
                             !self.gui_config.advanced.network.lan_mode;
                     }
                     "trust_proxy" => {
-                        self.gui_config.advanced.network.trust_proxy = 
+                        self.gui_config.advanced.network.trust_proxy =
                             !self.gui_config.advanced.network.trust_proxy;
                     }
                     _ => {}
@@ -2209,14 +2353,10 @@ impl App {
                 Task::none()
             }
 
-            Message::LoadGitInfo => {
-                Task::perform(
-                    async {
-                        crate::config::gui_config::get_git_info()
-                    },
-                    |info| Message::GitInfoLoaded(Some(info)),
-                )
-            }
+            Message::LoadGitInfo => Task::perform(
+                async { crate::config::gui_config::get_git_info() },
+                |info| Message::GitInfoLoaded(Some(info)),
+            ),
 
             Message::GitInfoLoaded(info) => {
                 self.config_git_info = info;
@@ -2242,11 +2382,21 @@ impl App {
                                 .into_iter()
                                 .map(|check| DoctorCheckResult {
                                     category: match check.category {
-                                        crate::types::CheckCategory::Cli => crate::views::doctor::CheckCategory::Cli,
-                                        crate::types::CheckCategory::Git => crate::views::doctor::CheckCategory::Git,
-                                        crate::types::CheckCategory::Project => crate::views::doctor::CheckCategory::Project,
-                                        crate::types::CheckCategory::Config => crate::views::doctor::CheckCategory::Runtime,
-                                        crate::types::CheckCategory::Environment => crate::views::doctor::CheckCategory::Runtime,
+                                        crate::types::CheckCategory::Cli => {
+                                            crate::views::doctor::CheckCategory::Cli
+                                        }
+                                        crate::types::CheckCategory::Git => {
+                                            crate::views::doctor::CheckCategory::Git
+                                        }
+                                        crate::types::CheckCategory::Project => {
+                                            crate::views::doctor::CheckCategory::Project
+                                        }
+                                        crate::types::CheckCategory::Config => {
+                                            crate::views::doctor::CheckCategory::Runtime
+                                        }
+                                        crate::types::CheckCategory::Environment => {
+                                            crate::views::doctor::CheckCategory::Runtime
+                                        }
                                     },
                                     name: check.name,
                                     passed: check.result.passed,
@@ -2261,7 +2411,10 @@ impl App {
                                 .collect();
                             Message::DoctorResultsReceived(results)
                         }
-                        Err(e) => Message::DoctorRunFailed(ToastType::Error, format!("Doctor checks failed: {}", e)),
+                        Err(e) => Message::DoctorRunFailed(
+                            ToastType::Error,
+                            format!("Doctor checks failed: {}", e),
+                        ),
                     },
                 )
             }
@@ -2278,11 +2431,21 @@ impl App {
                     |res| match res {
                         Ok(Some(check)) => Message::DoctorCheckResultReceived(DoctorCheckResult {
                             category: match check.category {
-                                crate::types::CheckCategory::Cli => crate::views::doctor::CheckCategory::Cli,
-                                crate::types::CheckCategory::Git => crate::views::doctor::CheckCategory::Git,
-                                crate::types::CheckCategory::Project => crate::views::doctor::CheckCategory::Project,
-                                crate::types::CheckCategory::Config => crate::views::doctor::CheckCategory::Runtime,
-                                crate::types::CheckCategory::Environment => crate::views::doctor::CheckCategory::Runtime,
+                                crate::types::CheckCategory::Cli => {
+                                    crate::views::doctor::CheckCategory::Cli
+                                }
+                                crate::types::CheckCategory::Git => {
+                                    crate::views::doctor::CheckCategory::Git
+                                }
+                                crate::types::CheckCategory::Project => {
+                                    crate::views::doctor::CheckCategory::Project
+                                }
+                                crate::types::CheckCategory::Config => {
+                                    crate::views::doctor::CheckCategory::Runtime
+                                }
+                                crate::types::CheckCategory::Environment => {
+                                    crate::views::doctor::CheckCategory::Runtime
+                                }
                             },
                             name: check.name,
                             passed: check.result.passed,
@@ -2294,14 +2457,24 @@ impl App {
                             fix_available: check.result.can_fix,
                             fix_command: None,
                         }),
-                        Ok(None) => Message::DoctorRunFailed(ToastType::Warning, "Check not found".to_string()),
-                        Err(e) => Message::DoctorRunFailed(ToastType::Error, format!("Check failed: {}", e)),
+                        Ok(None) => Message::DoctorRunFailed(
+                            ToastType::Warning,
+                            "Check not found".to_string(),
+                        ),
+                        Err(e) => Message::DoctorRunFailed(
+                            ToastType::Error,
+                            format!("Check failed: {}", e),
+                        ),
                     },
                 )
             }
 
             Message::FixCheck(name, dry_run) => {
-                let action = if dry_run { "Previewing fix" } else { "Applying fix" };
+                let action = if dry_run {
+                    "Previewing fix"
+                } else {
+                    "Applying fix"
+                };
                 self.doctor_fixing.insert(name.clone());
                 self.add_toast(ToastType::Info, format!("{}: {}", action, name));
 
@@ -2341,15 +2514,29 @@ impl App {
                     move |res| match res {
                         Ok(Some(check)) => Message::DoctorCheckResultReceived(DoctorCheckResult {
                             category: match check.category {
-                                crate::types::CheckCategory::Cli => crate::views::doctor::CheckCategory::Cli,
-                                crate::types::CheckCategory::Git => crate::views::doctor::CheckCategory::Git,
-                                crate::types::CheckCategory::Project => crate::views::doctor::CheckCategory::Project,
-                                crate::types::CheckCategory::Config => crate::views::doctor::CheckCategory::Runtime,
-                                crate::types::CheckCategory::Environment => crate::views::doctor::CheckCategory::Runtime,
+                                crate::types::CheckCategory::Cli => {
+                                    crate::views::doctor::CheckCategory::Cli
+                                }
+                                crate::types::CheckCategory::Git => {
+                                    crate::views::doctor::CheckCategory::Git
+                                }
+                                crate::types::CheckCategory::Project => {
+                                    crate::views::doctor::CheckCategory::Project
+                                }
+                                crate::types::CheckCategory::Config => {
+                                    crate::views::doctor::CheckCategory::Runtime
+                                }
+                                crate::types::CheckCategory::Environment => {
+                                    crate::views::doctor::CheckCategory::Runtime
+                                }
                             },
                             name: check.name,
                             passed: check.result.passed,
-                            message: check.result.details.clone().unwrap_or_else(|| check.result.message.clone()),
+                            message: check
+                                .result
+                                .details
+                                .clone()
+                                .unwrap_or_else(|| check.result.message.clone()),
                             fix_available: check.result.can_fix,
                             fix_command: None,
                         }),
@@ -2366,7 +2553,11 @@ impl App {
 
             Message::DoctorCheckResultReceived(result) => {
                 self.doctor_running = false;
-                if let Some(existing) = self.doctor_results.iter_mut().find(|r| r.name == result.name) {
+                if let Some(existing) = self
+                    .doctor_results
+                    .iter_mut()
+                    .find(|r| r.name == result.name)
+                {
                     *existing = result;
                 } else {
                     self.doctor_results.push(result);
@@ -2405,7 +2596,7 @@ impl App {
                         if !check.message.is_empty() {
                             self.doctor_detail_contents.insert(
                                 check_name.clone(),
-                                text_editor::Content::with_text(&check.message)
+                                text_editor::Content::with_text(&check.message),
                             );
                         }
                     }
@@ -2415,20 +2606,27 @@ impl App {
 
             Message::InstallAllMissing => {
                 // Collect all failed checks that have fixes available
-                let fixable_checks: Vec<String> = self.doctor_results
+                let fixable_checks: Vec<String> = self
+                    .doctor_results
                     .iter()
                     .filter(|r| !r.passed && r.fix_available)
                     .map(|r| r.name.clone())
                     .collect();
 
                 if fixable_checks.is_empty() {
-                    self.add_toast(ToastType::Info, "No failed checks with fixes available".to_string());
+                    self.add_toast(
+                        ToastType::Info,
+                        "No failed checks with fixes available".to_string(),
+                    );
                     return Task::none();
                 }
 
                 self.add_toast(
                     ToastType::Info,
-                    format!("Installing {} missing dependencies...", fixable_checks.len())
+                    format!(
+                        "Installing {} missing dependencies...",
+                        fixable_checks.len()
+                    ),
                 );
 
                 // Mark all as fixing
@@ -2462,18 +2660,272 @@ impl App {
             // Wizard
             // ================================================================
             Message::WizardNextStep => {
-                // Advance to next step (max step is 6)
-                if self.wizard_step < 6 {
+                // Advance to next step (max step is 8: 0, 0.5, 1-6)
+                // Steps: 0 (Project Setup), 1 (Interview Config), 2 (Requirements), 3 (Generate PRD), 
+                // 4 (Review PRD), 5 (Configure Tiers), 6 (Generate Plan), 7 (Review Plan), 8 (Review & Start)
+                if self.wizard_step < 8 {
                     self.wizard_step += 1;
                 }
                 Task::none()
             }
 
             Message::WizardPrevStep => {
-                // Go back to previous step (min step is 1)
-                if self.wizard_step > 1 {
+                // Go back to previous step (min step is 0)
+                if self.wizard_step > 0 {
                     self.wizard_step -= 1;
                 }
+                Task::none()
+            }
+
+            // Step 0: Project Setup
+            Message::WizardIsNewProjectToggled(is_new) => {
+                self.wizard_is_new_project = is_new;
+                Task::none()
+            }
+
+            Message::WizardHasGithubRepoToggled(has_repo) => {
+                self.wizard_has_github_repo = has_repo;
+                if !has_repo {
+                    self.wizard_github_url.clear();
+                }
+                Task::none()
+            }
+
+            Message::WizardGithubUrlChanged(url) => {
+                self.wizard_github_url = url;
+                Task::none()
+            }
+
+            Message::WizardCreateGithubRepoToggled(create) => {
+                self.wizard_create_github_repo = create;
+                Task::none()
+            }
+
+            Message::WizardGithubVisibilityChanged(visibility) => {
+                self.wizard_github_visibility = visibility;
+                Task::none()
+            }
+
+            Message::WizardGithubDescriptionChanged(desc) => {
+                self.wizard_github_description = desc;
+                Task::none()
+            }
+
+            Message::WizardInitializeProject => {
+                // Validate project setup
+                if self.wizard_project_name.trim().is_empty() {
+                    self.add_toast(
+                        ToastType::Warning,
+                        "Please enter a project name".to_string(),
+                    );
+                    return Task::none();
+                }
+                if self.wizard_project_path.trim().is_empty() {
+                    self.add_toast(
+                        ToastType::Warning,
+                        "Please select a project path".to_string(),
+                    );
+                    return Task::none();
+                }
+                if self.wizard_has_github_repo && self.wizard_github_url.trim().is_empty() {
+                    self.add_toast(
+                        ToastType::Warning,
+                        "Please enter your GitHub repository URL".to_string(),
+                    );
+                    return Task::none();
+                }
+
+                // Initialize git repo if needed
+                let project_path = PathBuf::from(&self.wizard_project_path);
+                
+                // Create project directory
+                if let Err(e) = std::fs::create_dir_all(&project_path) {
+                    self.add_toast(
+                        ToastType::Error,
+                        format!("Failed to create project directory: {}", e),
+                    );
+                    return Task::none();
+                }
+
+                // Create .puppet-master directory
+                let pm_dir = project_path.join(".puppet-master");
+                if let Err(e) = std::fs::create_dir_all(&pm_dir) {
+                    self.add_toast(
+                        ToastType::Error,
+                        format!("Failed to create .puppet-master directory: {}", e),
+                    );
+                    return Task::none();
+                }
+
+                // Initialize git repo if not already present
+                let git_dir = project_path.join(".git");
+                if !git_dir.exists() {
+                    match Command::new("git")
+                        .arg("-C")
+                        .arg(&project_path)
+                        .arg("init")
+                        .status()
+                    {
+                        Ok(status) if status.success() => {
+                            self.add_toast(
+                                ToastType::Success,
+                                "Initialized git repository".to_string(),
+                            );
+                        }
+                        Ok(status) => {
+                            self.add_toast(
+                                ToastType::Error,
+                                format!("Git init failed (exit {})", status.code().unwrap_or(-1)),
+                            );
+                            return Task::none();
+                        }
+                        Err(err) => {
+                            self.add_toast(
+                                ToastType::Error,
+                                format!("Failed to run git init: {}", err),
+                            );
+                            return Task::none();
+                        }
+                    }
+                }
+
+                // Configure remote or create GitHub repo if requested
+                if self.wizard_has_github_repo {
+                    let remote_status = Command::new("git")
+                        .arg("-C")
+                        .arg(&project_path)
+                        .arg("remote")
+                        .arg("get-url")
+                        .arg("origin")
+                        .status();
+
+                    let needs_remote = match remote_status {
+                        Ok(status) => !status.success(),
+                        Err(_) => true,
+                    };
+
+                    if needs_remote {
+                        match Command::new("git")
+                            .arg("-C")
+                            .arg(&project_path)
+                            .arg("remote")
+                            .arg("add")
+                            .arg("origin")
+                            .arg(&self.wizard_github_url)
+                            .status()
+                        {
+                            Ok(status) if status.success() => {
+                                self.add_toast(
+                                    ToastType::Success,
+                                    "Configured git remote origin".to_string(),
+                                );
+                            }
+                            Ok(status) => {
+                                self.add_toast(
+                                    ToastType::Error,
+                                    format!(
+                                        "Failed to add git remote (exit {})",
+                                        status.code().unwrap_or(-1)
+                                    ),
+                                );
+                                return Task::none();
+                            }
+                            Err(err) => {
+                                self.add_toast(
+                                    ToastType::Error,
+                                    format!("Failed to add git remote: {}", err),
+                                );
+                                return Task::none();
+                            }
+                        }
+                    }
+                } else if self.wizard_create_github_repo {
+                    let repo_name = self
+                        .wizard_project_name
+                        .trim()
+                        .replace(' ', "-")
+                        .to_lowercase();
+                    let visibility_flag = if self.wizard_github_visibility == "private" {
+                        "--private"
+                    } else {
+                        "--public"
+                    };
+
+                    let mut cmd = Command::new("gh");
+                    cmd.arg("repo")
+                        .arg("create")
+                        .arg(&repo_name)
+                        .arg(visibility_flag)
+                        .arg("--confirm")
+                        .arg("--source")
+                        .arg(&project_path)
+                        .arg("--remote")
+                        .arg("origin");
+
+                    if !self.wizard_github_description.trim().is_empty() {
+                        cmd.arg("--description")
+                            .arg(&self.wizard_github_description);
+                    }
+
+                    match cmd.status() {
+                        Ok(status) if status.success() => {
+                            self.add_toast(
+                                ToastType::Success,
+                                "GitHub repository created".to_string(),
+                            );
+                        }
+                        Ok(status) => {
+                            self.add_toast(
+                                ToastType::Error,
+                                format!(
+                                    "GitHub repo creation failed (exit {})",
+                                    status.code().unwrap_or(-1)
+                                ),
+                            );
+                            return Task::none();
+                        }
+                        Err(err) => {
+                            self.add_toast(
+                                ToastType::Error,
+                                format!("Failed to run gh repo create: {}", err),
+                            );
+                            return Task::none();
+                        }
+                    }
+                }
+
+                self.add_toast(
+                    ToastType::Success,
+                    "Project initialized successfully".to_string(),
+                );
+                self.wizard_step = 1;
+                Task::none()
+            }
+
+            // Step 0.5: Quick Interview Config
+            Message::WizardUseInterviewToggled(use_interview) => {
+                self.wizard_use_interview = use_interview;
+                Task::none()
+            }
+
+            Message::WizardInteractionModeChanged(mode) => {
+                self.wizard_interaction_mode = mode;
+                self.gui_config.interview.interaction_mode =
+                    self.wizard_interaction_mode.clone();
+                Task::none()
+            }
+
+            Message::WizardReasoningLevelChanged(level) => {
+                self.wizard_reasoning_level = level;
+                self.gui_config.interview.reasoning_level =
+                    self.wizard_reasoning_level.clone();
+                Task::none()
+            }
+
+            Message::WizardGenerateAgentsMdToggled(generate) => {
+                self.wizard_generate_agents_md = generate;
+                self.gui_config.interview.generate_initial_agents_md =
+                    self.wizard_generate_agents_md;
                 Task::none()
             }
 
@@ -2572,7 +3024,7 @@ impl App {
                             .set_title("Select Project Folder")
                             .pick_folder()
                             .await;
-                        
+
                         result.map(|folder| folder.path().to_path_buf())
                     },
                     Message::WizardProjectPathSelected,
@@ -2596,7 +3048,7 @@ impl App {
                             .set_title("Select Requirements File")
                             .pick_file()
                             .await;
-                        
+
                         result.map(|file| file.path().to_path_buf())
                     },
                     Message::WizardRequirementsFileSelected,
@@ -2610,19 +3062,25 @@ impl App {
                         Ok(content) => {
                             self.wizard_requirements_text = content.clone();
                             // Update the preview content
-                            self.wizard_requirements_preview_content = text_editor::Content::with_text(&content);
-                            self.add_toast(ToastType::Success, format!("Loaded file: {}", path.display()));
+                            self.wizard_requirements_preview_content =
+                                text_editor::Content::with_text(&content);
+                            self.add_toast(
+                                ToastType::Success,
+                                format!("Loaded file: {}", path.display()),
+                            );
                             Task::none()
                         }
                         Err(e) => {
-                            let friendly_msg = if e.to_string().contains("No such file or directory") 
-                                || e.to_string().contains("cannot find the path") {
-                                format!("File not found: {}", path.display())
-                            } else if e.to_string().contains("Permission denied") {
-                                format!("Permission denied reading file: {}", path.display())
-                            } else {
-                                format!("Failed to read requirements file: {}", e)
-                            };
+                            let friendly_msg =
+                                if e.to_string().contains("No such file or directory")
+                                    || e.to_string().contains("cannot find the path")
+                                {
+                                    format!("File not found: {}", path.display())
+                                } else if e.to_string().contains("Permission denied") {
+                                    format!("Permission denied reading file: {}", path.display())
+                                } else {
+                                    format!("Failed to read requirements file: {}", e)
+                                };
                             self.add_toast(ToastType::Error, friendly_msg);
                             Task::none()
                         }
@@ -2634,18 +3092,21 @@ impl App {
 
             Message::WizardGeneratePrd => {
                 if self.wizard_requirements_text.trim().is_empty() {
-                    self.add_toast(ToastType::Warning, "Please enter requirements first".to_string());
+                    self.add_toast(
+                        ToastType::Warning,
+                        "Please enter requirements first".to_string(),
+                    );
                     return Task::none();
                 }
-                
+
                 self.wizard_generating = true;
                 let requirements = self.wizard_requirements_text.clone();
-                
+
                 // Generate placeholder PRD (real AI integration comes later)
                 Task::perform(
                     async move {
                         tokio::time::sleep(tokio::time::Duration::from_millis(1500)).await;
-                        
+
                         let prd = format!(
                             "# Product Requirements Document\n\n\
                             ## Project Overview\n\n\
@@ -2667,7 +3128,7 @@ impl App {
                             4. Deployment\n",
                             requirements
                         );
-                        
+
                         Ok(prd)
                     },
                     Message::WizardPrdGenerated,
@@ -2681,8 +3142,11 @@ impl App {
                         self.wizard_prd_text = prd.clone();
                         self.wizard_prd_editor_content = text_editor::Content::with_text(&prd);
                         self.wizard_prd_preview = Some(prd);
-                        self.wizard_step = 3;  // Move to review step
-                        self.add_toast(ToastType::Success, "PRD generated successfully".to_string());
+                        self.wizard_step = 3; // Move to review step
+                        self.add_toast(
+                            ToastType::Success,
+                            "PRD generated successfully".to_string(),
+                        );
                     }
                     Err(e) => {
                         self.add_toast(ToastType::Error, format!("Failed to generate PRD: {}", e));
@@ -2693,18 +3157,21 @@ impl App {
 
             Message::WizardGeneratePlan => {
                 if self.wizard_prd_text.trim().is_empty() {
-                    self.add_toast(ToastType::Warning, "No PRD available for plan generation".to_string());
+                    self.add_toast(
+                        ToastType::Warning,
+                        "No PRD available for plan generation".to_string(),
+                    );
                     return Task::none();
                 }
-                
+
                 self.wizard_generating = true;
                 let prd = self.wizard_prd_text.clone();
-                
+
                 // Generate placeholder plan (real AI integration comes later)
                 Task::perform(
                     async move {
                         tokio::time::sleep(tokio::time::Duration::from_millis(1500)).await;
-                        
+
                         let plan = format!(
                             "# Execution Plan\n\n\
                             ## Overview\n\
@@ -2724,7 +3191,7 @@ impl App {
                             Based on PRD:\n{}\n",
                             prd.chars().take(200).collect::<String>()
                         );
-                        
+
                         Ok(plan)
                     },
                     Message::WizardPlanGenerated,
@@ -2738,7 +3205,10 @@ impl App {
                         self.wizard_plan_text = plan.clone();
                         // Update plan content for text_editor
                         self.wizard_plan_content = text_editor::Content::with_text(&plan);
-                        self.add_toast(ToastType::Success, "Plan generated successfully".to_string());
+                        self.add_toast(
+                            ToastType::Success,
+                            "Plan generated successfully".to_string(),
+                        );
                     }
                     Err(e) => {
                         self.add_toast(ToastType::Error, format!("Failed to generate plan: {}", e));
@@ -2750,22 +3220,31 @@ impl App {
             Message::WizardStartChain => {
                 // Validate all required fields
                 if self.wizard_project_name.trim().is_empty() {
-                    self.add_toast(ToastType::Warning, "Please enter a project name".to_string());
+                    self.add_toast(
+                        ToastType::Warning,
+                        "Please enter a project name".to_string(),
+                    );
                     return Task::none();
                 }
                 if self.wizard_project_path.trim().is_empty() {
-                    self.add_toast(ToastType::Warning, "Please select a project path".to_string());
+                    self.add_toast(
+                        ToastType::Warning,
+                        "Please select a project path".to_string(),
+                    );
                     return Task::none();
                 }
                 if self.wizard_prd_text.trim().is_empty() {
-                    self.add_toast(ToastType::Warning, "Please generate a PRD first".to_string());
+                    self.add_toast(
+                        ToastType::Warning,
+                        "Please generate a PRD first".to_string(),
+                    );
                     return Task::none();
                 }
-                
+
                 // Save PRD to project folder
                 let project_path = PathBuf::from(&self.wizard_project_path);
                 let prd_path = project_path.join("prd.md");
-                
+
                 if let Err(e) = std::fs::create_dir_all(&project_path) {
                     let friendly_msg = if e.to_string().contains("Permission denied") {
                         "Permission denied. Please check directory permissions.".to_string()
@@ -2775,30 +3254,34 @@ impl App {
                     self.add_toast(ToastType::Error, friendly_msg);
                     return Task::none();
                 }
-                
+
                 if let Err(e) = std::fs::write(&prd_path, &self.wizard_prd_text) {
                     let friendly_msg = if e.to_string().contains("Permission denied") {
-                        "Permission denied. Please check write permissions for the PRD file.".to_string()
+                        "Permission denied. Please check write permissions for the PRD file."
+                            .to_string()
                     } else {
                         format!("Failed to save PRD file: {}", e)
                     };
                     self.add_toast(ToastType::Error, friendly_msg);
                     return Task::none();
                 }
-                
+
                 // Save plan if available
                 if !self.wizard_plan_text.is_empty() {
                     let plan_path = project_path.join("plan.md");
                     let _ = std::fs::write(&plan_path, &self.wizard_plan_text);
                 }
-                
+
                 // Navigate to dashboard and show success
                 self.add_toast(
                     ToastType::Success,
-                    format!("Project '{}' created successfully!", self.wizard_project_name),
+                    format!(
+                        "Project '{}' created successfully!",
+                        self.wizard_project_name
+                    ),
                 );
                 self.current_page = Page::Dashboard;
-                
+
                 // Reset wizard state for next use
                 self.wizard_step = 1;
                 self.wizard_project_name.clear();
@@ -2807,39 +3290,51 @@ impl App {
                 self.wizard_prd_text.clear();
                 self.wizard_prd_editor_content = text_editor::Content::new();
                 self.wizard_plan_text.clear();
-                
+
                 Task::none()
             }
 
             Message::WizardRefreshModels => {
                 // Load hardcoded model lists
                 let mut models = HashMap::new();
-                models.insert("cursor".to_string(), vec![
-                    "auto".to_string(),
-                    "claude-sonnet-4".to_string(),
-                    "gpt-4o".to_string(),
-                    "gemini-2.5-pro".to_string(),
-                ]);
-                models.insert("codex".to_string(), vec![
-                    "gpt-5.2-codex".to_string(),
-                    "gpt-5.1-codex".to_string(),
-                    "gpt-4.1".to_string(),
-                ]);
-                models.insert("claude".to_string(), vec![
-                    "claude-sonnet-4-5".to_string(),
-                    "claude-sonnet-4".to_string(),
-                    "claude-opus-4".to_string(),
-                ]);
-                models.insert("gemini".to_string(), vec![
-                    "gemini-2.5-pro".to_string(),
-                    "gemini-2.5-flash".to_string(),
-                    "gemini-3-pro-preview".to_string(),
-                ]);
-                models.insert("copilot".to_string(), vec![
-                    "claude-sonnet-4-5".to_string(),
-                    "gpt-4o".to_string(),
-                ]);
-                
+                models.insert(
+                    "cursor".to_string(),
+                    vec![
+                        "auto".to_string(),
+                        "claude-sonnet-4".to_string(),
+                        "gpt-4o".to_string(),
+                        "gemini-2.5-pro".to_string(),
+                    ],
+                );
+                models.insert(
+                    "codex".to_string(),
+                    vec![
+                        "gpt-5.2-codex".to_string(),
+                        "gpt-5.1-codex".to_string(),
+                        "gpt-4.1".to_string(),
+                    ],
+                );
+                models.insert(
+                    "claude".to_string(),
+                    vec![
+                        "claude-sonnet-4-5".to_string(),
+                        "claude-sonnet-4".to_string(),
+                        "claude-opus-4".to_string(),
+                    ],
+                );
+                models.insert(
+                    "gemini".to_string(),
+                    vec![
+                        "gemini-2.5-pro".to_string(),
+                        "gemini-2.5-flash".to_string(),
+                        "gemini-3-pro-preview".to_string(),
+                    ],
+                );
+                models.insert(
+                    "copilot".to_string(),
+                    vec!["claude-sonnet-4-5".to_string(), "gpt-4o".to_string()],
+                );
+
                 Task::done(Message::WizardModelsLoaded(models))
             }
 
@@ -2865,7 +3360,7 @@ impl App {
             }
 
             Message::WizardSave => {
-                // Alias for WizardStartChain  
+                // Alias for WizardStartChain
                 self.update(Message::WizardStartChain)
             }
 
@@ -2874,22 +3369,27 @@ impl App {
             // ================================================================
             Message::SetupRunDetection => {
                 self.setup_is_checking = true;
-                self.add_toast(ToastType::Info, "Detecting platform installations...".to_string());
+                self.add_toast(
+                    ToastType::Info,
+                    "Detecting platform installations...".to_string(),
+                );
 
                 Task::perform(
                     async {
                         use crate::doctor::InstallationManager;
-                        
-                        
+
                         let manager = InstallationManager::new();
                         let results = manager.check_all_platforms();
-                        
+
                         results
                             .into_iter()
                             .map(|(platform, status)| PlatformStatus {
                                 platform,
                                 status: status.clone(),
-                                instructions: if matches!(status, crate::doctor::InstallationStatus::Installed(_)) {
+                                instructions: if matches!(
+                                    status,
+                                    crate::doctor::InstallationStatus::Installed(_)
+                                ) {
                                     String::new()
                                 } else {
                                     manager.get_installation_instructions(platform)
@@ -2904,16 +3404,22 @@ impl App {
             Message::SetupDetectionComplete(statuses) => {
                 self.setup_is_checking = false;
                 self.setup_platform_statuses = statuses;
-                
-                let installed_count = self.setup_platform_statuses.iter()
+
+                let installed_count = self
+                    .setup_platform_statuses
+                    .iter()
                     .filter(|s| matches!(s.status, crate::doctor::InstallationStatus::Installed(_)))
                     .count();
-                
+
                 self.add_toast(
                     ToastType::Success,
-                    format!("Detection complete. {} of {} platforms installed.", installed_count, self.setup_platform_statuses.len()),
+                    format!(
+                        "Detection complete. {} of {} platforms installed.",
+                        installed_count,
+                        self.setup_platform_statuses.len()
+                    ),
                 );
-                
+
                 Task::none()
             }
 
@@ -2922,11 +3428,13 @@ impl App {
                     .current_project
                     .as_ref()
                     .map(|p| p.path.clone())
-                    .unwrap_or_else(|| std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")));
-                
+                    .unwrap_or_else(|| {
+                        std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
+                    });
+
                 let marker_dir = base.join(".puppet-master");
                 let marker_file = marker_dir.join("setup-complete");
-                
+
                 // Create directory if it doesn't exist
                 if let Err(e) = std::fs::create_dir_all(&marker_dir) {
                     let friendly_msg = if e.to_string().contains("Permission denied") {
@@ -2937,7 +3445,7 @@ impl App {
                     self.add_toast(ToastType::Error, friendly_msg);
                     return Task::none();
                 }
-                
+
                 // Create marker file
                 match std::fs::write(&marker_file, "") {
                     Ok(()) => {
@@ -2945,7 +3453,7 @@ impl App {
                             ToastType::Success,
                             "Setup complete! You can now use Puppet Master.".to_string(),
                         );
-                        
+
                         // Navigate to dashboard
                         self.current_page = Page::Dashboard;
                     }
@@ -2958,7 +3466,7 @@ impl App {
                         self.add_toast(ToastType::Error, friendly_msg);
                     }
                 }
-                
+
                 Task::none()
             }
 
@@ -2980,34 +3488,37 @@ impl App {
 
             Message::SelectTier(tier_id) => {
                 self.selected_tier = Some(tier_id.clone());
-                
+
                 // Find tier details from tier_tree
                 if let Some(tier) = self.tier_tree.iter().find(|t| t.id == tier_id) {
                     // Determine tier type and get platform/model from config
                     let (platform, model) = match tier.tier_type {
-                        crate::views::tiers::TierNodeType::Phase => {
-                            (self.gui_config.tiers.phase.platform.clone(), 
-                             self.gui_config.tiers.phase.model.clone())
-                        },
-                        crate::views::tiers::TierNodeType::Task => {
-                            (self.gui_config.tiers.task.platform.clone(), 
-                             self.gui_config.tiers.task.model.clone())
-                        },
-                        crate::views::tiers::TierNodeType::Subtask => {
-                            (self.gui_config.tiers.subtask.platform.clone(), 
-                             self.gui_config.tiers.subtask.model.clone())
-                        },
+                        crate::views::tiers::TierNodeType::Phase => (
+                            self.gui_config.tiers.phase.platform.clone(),
+                            self.gui_config.tiers.phase.model.clone(),
+                        ),
+                        crate::views::tiers::TierNodeType::Task => (
+                            self.gui_config.tiers.task.platform.clone(),
+                            self.gui_config.tiers.task.model.clone(),
+                        ),
+                        crate::views::tiers::TierNodeType::Subtask => (
+                            self.gui_config.tiers.subtask.platform.clone(),
+                            self.gui_config.tiers.subtask.model.clone(),
+                        ),
                     };
-                    
+
                     // Load dependencies from PRD if available
-                    let base = self.current_project
+                    let base = self
+                        .current_project
                         .as_ref()
                         .map(|p| p.path.clone())
-                        .unwrap_or_else(|| std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")));
-                    
+                        .unwrap_or_else(|| {
+                            std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
+                        });
+
                     let prd_path = base.join(".puppet-master").join("prd.json");
                     let mut dependencies = Vec::new();
-                    
+
                     if prd_path.exists() {
                         // Try to load PRD and find dependencies
                         if let Ok(content) = std::fs::read_to_string(&prd_path) {
@@ -3028,18 +3539,18 @@ impl App {
                             }
                         }
                     }
-                    
+
                     let tier_type_str = match tier.tier_type {
                         crate::views::tiers::TierNodeType::Phase => "Phase",
                         crate::views::tiers::TierNodeType::Task => "Task",
                         crate::views::tiers::TierNodeType::Subtask => "Subtask",
                     };
-                    
+
                     let description = format!(
                         "Status: {}\nPlatform: {}\nModel: {}\nType: {}",
                         tier.status, platform, model, tier_type_str
                     );
-                    
+
                     self.selected_tier_details = Some(crate::views::tiers::TierDetails {
                         id: tier.id.clone(),
                         title: tier.title.clone(),
@@ -3051,7 +3562,7 @@ impl App {
                     // Update tier_details_content with the description
                     self.tier_details_content = text_editor::Content::with_text(&description);
                 }
-                
+
                 Task::none()
             }
 
@@ -3106,11 +3617,12 @@ impl App {
             Message::EvidenceDownloadItem(index) => {
                 if let Some(item) = self.evidence_items.get(index) {
                     let source_path = item.path.clone();
-                    let default_name = source_path.file_name()
+                    let default_name = source_path
+                        .file_name()
                         .and_then(|n| n.to_str())
                         .unwrap_or("evidence-item")
                         .to_string();
-                    
+
                     return Task::perform(
                         async move {
                             let file_handle = rfd::AsyncFileDialog::new()
@@ -3118,17 +3630,17 @@ impl App {
                                 .set_file_name(&default_name)
                                 .save_file()
                                 .await;
-                            
+
                             if let Some(handle) = file_handle {
                                 let dest_path = handle.path().to_path_buf();
                                 match std::fs::copy(&source_path, &dest_path) {
                                     Ok(_) => Message::AddToast(
                                         ToastType::Success,
-                                        format!("Saved to {}", dest_path.display())
+                                        format!("Saved to {}", dest_path.display()),
                                     ),
                                     Err(e) => Message::AddToast(
                                         ToastType::Error,
-                                        format!("Failed to save: {}", e)
+                                        format!("Failed to save: {}", e),
                                     ),
                                 }
                             } else {
@@ -3143,27 +3655,45 @@ impl App {
 
             Message::EvidenceRefresh => {
                 // Re-scan evidence directory
-                let base = self.current_project
+                let base = self
+                    .current_project
                     .as_ref()
                     .map(|p| p.path.clone())
-                    .unwrap_or_else(|| std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")));
-                
+                    .unwrap_or_else(|| {
+                        std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
+                    });
+
                 let evidence_dir = base.join(".puppet-master").join("evidence");
-                
+
                 if evidence_dir.exists() {
                     // Scan evidence directory
                     let mut new_items = Vec::new();
-                    
+
                     // Define subdirectories to scan
                     let subdirs = vec![
-                        ("test-logs", crate::views::evidence::EvidenceItemType::TestLog),
-                        ("screenshots", crate::views::evidence::EvidenceItemType::Screenshot),
-                        ("browser-traces", crate::views::evidence::EvidenceItemType::BrowserTrace),
-                        ("file-snapshots", crate::views::evidence::EvidenceItemType::FileSnapshot),
+                        (
+                            "test-logs",
+                            crate::views::evidence::EvidenceItemType::TestLog,
+                        ),
+                        (
+                            "screenshots",
+                            crate::views::evidence::EvidenceItemType::Screenshot,
+                        ),
+                        (
+                            "browser-traces",
+                            crate::views::evidence::EvidenceItemType::BrowserTrace,
+                        ),
+                        (
+                            "file-snapshots",
+                            crate::views::evidence::EvidenceItemType::FileSnapshot,
+                        ),
                         ("metrics", crate::views::evidence::EvidenceItemType::Metrics),
-                        ("gate-reports", crate::views::evidence::EvidenceItemType::GateReport),
+                        (
+                            "gate-reports",
+                            crate::views::evidence::EvidenceItemType::GateReport,
+                        ),
                     ];
-                    
+
                     for (subdir_name, ev_type) in subdirs {
                         let subdir_path = evidence_dir.join(subdir_name);
                         if subdir_path.exists() && subdir_path.is_dir() {
@@ -3172,32 +3702,40 @@ impl App {
                                     if let Ok(metadata) = entry.metadata() {
                                         if metadata.is_file() {
                                             let path = entry.path();
-                                            let filename = path.file_name()
+                                            let filename = path
+                                                .file_name()
                                                 .and_then(|n| n.to_str())
                                                 .unwrap_or("unknown")
                                                 .to_string();
-                                            
+
                                             // Skip .gitkeep files
                                             if filename == ".gitkeep" {
                                                 continue;
                                             }
-                                            
+
                                             // Extract tier ID from filename if present (e.g., TEST-003)
-                                            let tier_id = filename.split('-')
+                                            let tier_id = filename
+                                                .split('-')
                                                 .take(2)
                                                 .collect::<Vec<_>>()
                                                 .join("-");
-                                            
+
                                             // Get file timestamp
-                                            let timestamp = metadata.modified()
+                                            let timestamp = metadata
+                                                .modified()
                                                 .ok()
                                                 .and_then(|t| {
                                                     use std::time::SystemTime;
-                                                    let duration = t.duration_since(SystemTime::UNIX_EPOCH).ok()?;
-                                                    chrono::DateTime::from_timestamp(duration.as_secs() as i64, 0)
+                                                    let duration = t
+                                                        .duration_since(SystemTime::UNIX_EPOCH)
+                                                        .ok()?;
+                                                    chrono::DateTime::from_timestamp(
+                                                        duration.as_secs() as i64,
+                                                        0,
+                                                    )
                                                 })
                                                 .unwrap_or_else(|| chrono::Utc::now());
-                                            
+
                                             new_items.push(EvidenceItem {
                                                 id: format!("{}-{}", tier_id, filename),
                                                 tier_id,
@@ -3212,17 +3750,20 @@ impl App {
                             }
                         }
                     }
-                    
+
                     // Sort by timestamp descending (newest first)
                     new_items.sort_by(|a, b| b.timestamp.cmp(&a.timestamp));
-                    
+
                     self.evidence_items = new_items;
-                    self.add_toast(ToastType::Success, format!("Found {} evidence items", self.evidence_items.len()));
+                    self.add_toast(
+                        ToastType::Success,
+                        format!("Found {} evidence items", self.evidence_items.len()),
+                    );
                 } else {
                     self.evidence_items.clear();
                     self.add_toast(ToastType::Info, "No evidence directory found".to_string());
                 }
-                
+
                 Task::none()
             }
 
@@ -3244,7 +3785,7 @@ impl App {
                                 // Binary file or read error
                                 Message::EvidenceContentLoaded(
                                     path_str,
-                                    "[Binary file - preview not available]".to_string()
+                                    "[Binary file - preview not available]".to_string(),
                                 )
                             }
                         }
@@ -3279,12 +3820,11 @@ impl App {
                 Task::none()
             }
 
-            Message::LoadHistory => {
-                self.update(Message::NavigateTo(Page::History))
-            }
+            Message::LoadHistory => self.update(Message::NavigateTo(Page::History)),
 
             Message::HistoryNextPage => {
-                let total_pages = (self.history_sessions.len() + self.history_items_per_page - 1) / self.history_items_per_page;
+                let total_pages = (self.history_sessions.len() + self.history_items_per_page - 1)
+                    / self.history_items_per_page;
                 if self.history_page + 1 < total_pages {
                     self.history_page += 1;
                 }
@@ -3326,7 +3866,10 @@ impl App {
             Message::MemorySectionChanged(section) => {
                 self.memory_section = section;
                 // Update memory_content with filtered content for the new section
-                let filtered = crate::views::memory::filter_content(&self.memory_content_string, &self.memory_section);
+                let filtered = crate::views::memory::filter_content(
+                    &self.memory_content_string,
+                    &self.memory_section,
+                );
                 self.memory_content = text_editor::Content::with_text(&filtered);
                 Task::none()
             }
@@ -3340,17 +3883,19 @@ impl App {
                             PathBuf::from("AGENTS.md"),
                             PathBuf::from(".puppet-master/AGENTS.md"),
                         ];
-                        
+
                         for path in paths {
                             if let Ok(content) = std::fs::read_to_string(&path) {
                                 return Message::MemoryContentLoaded(content);
                             }
                         }
-                        
+
                         // Return empty or default content
-                        Message::MemoryContentLoaded(String::from("# AGENTS.md\n\nNo AGENTS.md file found. This file stores learned patterns and best practices."))
+                        Message::MemoryContentLoaded(String::from(
+                            "# AGENTS.md\n\nNo AGENTS.md file found. This file stores learned patterns and best practices.",
+                        ))
                     },
-                    |msg| msg
+                    |msg| msg,
                 )
             }
 
@@ -3365,19 +3910,15 @@ impl App {
 
             Message::MemoryEditExternal => {
                 let path = PathBuf::from("AGENTS.md");
-                
+
                 // Try to open with default editor
                 #[cfg(target_os = "linux")]
                 {
-                    let _ = std::process::Command::new("xdg-open")
-                        .arg(&path)
-                        .spawn();
+                    let _ = std::process::Command::new("xdg-open").arg(&path).spawn();
                 }
                 #[cfg(target_os = "macos")]
                 {
-                    let _ = std::process::Command::new("open")
-                        .arg(&path)
-                        .spawn();
+                    let _ = std::process::Command::new("open").arg(&path).spawn();
                 }
                 #[cfg(target_os = "windows")]
                 {
@@ -3385,20 +3926,24 @@ impl App {
                         .args(&["/C", "start", path.to_str().unwrap_or("")])
                         .spawn();
                 }
-                
-                self.add_toast(ToastType::Info, "Opening AGENTS.md in external editor...".to_string());
+
+                self.add_toast(
+                    ToastType::Info,
+                    "Opening AGENTS.md in external editor...".to_string(),
+                );
                 Task::none()
             }
 
             Message::MemoryExport => {
                 // For now, just show a toast. Could add file picker later
-                self.add_toast(ToastType::Info, "Export functionality coming soon".to_string());
+                self.add_toast(
+                    ToastType::Info,
+                    "Export functionality coming soon".to_string(),
+                );
                 Task::none()
             }
 
-            Message::MemoryRefresh => {
-                self.update(Message::LoadMemoryContent)
-            }
+            Message::MemoryRefresh => self.update(Message::LoadMemoryContent),
 
             // ================================================================
             // Ledger
@@ -3408,15 +3953,14 @@ impl App {
                 Task::none()
             }
 
-            Message::LoadLedger => {
-                self.update(Message::NavigateTo(Page::Ledger))
-            }
+            Message::LoadLedger => self.update(Message::NavigateTo(Page::Ledger)),
 
             Message::LedgerFilterTypeChanged(type_str_opt) => {
                 if let Some(type_str) = type_str_opt {
                     // Parse the event type string
                     use crate::views::ledger::EventType;
-                    let event_type = EventType::all().into_iter()
+                    let event_type = EventType::all()
+                        .into_iter()
                         .find(|et| et.as_str() == type_str);
                     self.ledger_filter.event_type = event_type;
                 } else {
@@ -3452,31 +3996,39 @@ impl App {
 
             Message::LedgerRefresh => {
                 // Re-read ledger data from disk - looking for usage.jsonl (JSONL format)
-                let base = self.current_project
+                let base = self
+                    .current_project
                     .as_ref()
                     .map(|p| p.path.clone())
-                    .unwrap_or_else(|| std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")));
-                
-                let ledger_path = base.join(".puppet-master").join("usage").join("usage.jsonl");
-                
+                    .unwrap_or_else(|| {
+                        std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
+                    });
+
+                let ledger_path = base
+                    .join(".puppet-master")
+                    .join("usage")
+                    .join("usage.jsonl");
+
                 if ledger_path.exists() {
                     match std::fs::read_to_string(&ledger_path) {
                         Ok(content) => {
                             // Parse JSONL format (one JSON object per line)
                             let mut entries = Vec::new();
                             let mut entry_id = 0;
-                            
+
                             for (line_no, line) in content.lines().enumerate() {
                                 if line.trim().is_empty() {
                                     continue;
                                 }
-                                
+
                                 match serde_json::from_str::<serde_json::Value>(line) {
                                     Ok(json) => {
                                         // Parse the JSON object into a LedgerEntry
                                         // Expected fields: timestamp, platform, operation, tokens_in, tokens_out, cost, etc.
-                                        
-                                        let timestamp = if let Some(ts_str) = json.get("timestamp").and_then(|v| v.as_str()) {
+
+                                        let timestamp = if let Some(ts_str) =
+                                            json.get("timestamp").and_then(|v| v.as_str())
+                                        {
                                             chrono::DateTime::parse_from_rfc3339(ts_str)
                                                 .ok()
                                                 .map(|dt| dt.with_timezone(&chrono::Utc))
@@ -3484,9 +4036,11 @@ impl App {
                                         } else {
                                             chrono::Utc::now()
                                         };
-                                        
+
                                         // Determine event type from operation field
-                                        let event_type = if let Some(op) = json.get("operation").and_then(|v| v.as_str()) {
+                                        let event_type = if let Some(op) =
+                                            json.get("operation").and_then(|v| v.as_str())
+                                        {
                                             match op.to_lowercase().as_str() {
                                                 "request" | "platform_request" => crate::views::ledger::EventType::PlatformRequest,
                                                 "response" | "platform_response" => crate::views::ledger::EventType::PlatformResponse,
@@ -3495,35 +4049,42 @@ impl App {
                                         } else {
                                             crate::views::ledger::EventType::StateSnapshot
                                         };
-                                        
-                                        let tier_id = json.get("tier_id")
+
+                                        let tier_id = json
+                                            .get("tier_id")
                                             .or_else(|| json.get("tier"))
                                             .and_then(|v| v.as_str())
                                             .map(|s| s.to_string());
-                                        
+
                                         // Format the data as a readable string
-                                        let data = if let Some(platform) = json.get("platform").and_then(|v| v.as_str()) {
-                                            let tokens_in = json.get("tokens_in")
+                                        let data = if let Some(platform) =
+                                            json.get("platform").and_then(|v| v.as_str())
+                                        {
+                                            let tokens_in = json
+                                                .get("tokens_in")
                                                 .or_else(|| json.get("input_tokens"))
                                                 .and_then(|v| v.as_u64())
                                                 .unwrap_or(0);
-                                            let tokens_out = json.get("tokens_out")
+                                            let tokens_out = json
+                                                .get("tokens_out")
                                                 .or_else(|| json.get("output_tokens"))
                                                 .and_then(|v| v.as_u64())
                                                 .unwrap_or(0);
-                                            let cost = json.get("cost")
+                                            let cost = json
+                                                .get("cost")
                                                 .and_then(|v| v.as_f64())
                                                 .unwrap_or(0.0);
-                                            
+
                                             format!(
                                                 "Platform: {}, Input: {} tokens, Output: {} tokens, Cost: ${:.4}",
                                                 platform, tokens_in, tokens_out, cost
                                             )
                                         } else {
                                             // Fallback to pretty JSON if we can't parse specific fields
-                                            serde_json::to_string_pretty(&json).unwrap_or_else(|_| line.to_string())
+                                            serde_json::to_string_pretty(&json)
+                                                .unwrap_or_else(|_| line.to_string())
                                         };
-                                        
+
                                         entries.push(LedgerEntry {
                                             id: entry_id,
                                             timestamp,
@@ -3531,21 +4092,32 @@ impl App {
                                             tier_id,
                                             data,
                                         });
-                                        
+
                                         entry_id += 1;
                                     }
                                     Err(e) => {
-                                        log::warn!("Failed to parse ledger line {}: {} - {}", line_no + 1, e, line);
+                                        log::warn!(
+                                            "Failed to parse ledger line {}: {} - {}",
+                                            line_no + 1,
+                                            e,
+                                            line
+                                        );
                                     }
                                 }
                             }
-                            
+
                             self.ledger_entries = entries;
-                            self.add_toast(ToastType::Success, format!("Ledger refreshed: {} entries", self.ledger_entries.len()));
+                            self.add_toast(
+                                ToastType::Success,
+                                format!("Ledger refreshed: {} entries", self.ledger_entries.len()),
+                            );
                         }
                         Err(e) => {
-                            let friendly_msg = if e.to_string().contains("No such file or directory") 
-                                || e.to_string().contains("cannot find the path") {
+                            let friendly_msg = if e
+                                .to_string()
+                                .contains("No such file or directory")
+                                || e.to_string().contains("cannot find the path")
+                            {
                                 "Ledger file not found. Run an orchestration to start tracking usage.".to_string()
                             } else if e.to_string().contains("Permission denied") {
                                 "Permission denied. Please check read permissions for the ledger file.".to_string()
@@ -3558,9 +4130,12 @@ impl App {
                 } else {
                     // No ledger file found - clear entries and show info
                     self.ledger_entries.clear();
-                    self.add_toast(ToastType::Info, "No usage data yet - run an orchestration to see usage".to_string());
+                    self.add_toast(
+                        ToastType::Info,
+                        "No usage data yet - run an orchestration to see usage".to_string(),
+                    );
                 }
-                
+
                 Task::none()
             }
 
@@ -3578,7 +4153,10 @@ impl App {
                     |file_handle_opt| {
                         if let Some(file_handle) = file_handle_opt {
                             let path = file_handle.path().to_path_buf();
-                            Message::AddToast(ToastType::Info, format!("Exporting to {}", path.display()))
+                            Message::AddToast(
+                                ToastType::Info,
+                                format!("Exporting to {}", path.display()),
+                            )
                         } else {
                             Message::None
                         }
@@ -3605,18 +4183,17 @@ impl App {
                     // Create text_editor::Content for the event data
                     if let Some(entry) = self.ledger_entries.get(index) {
                         // Pretty-print JSON data
-                        let formatted_data = if entry.data.starts_with('{') || entry.data.starts_with('[') {
-                            // Attempt to format as JSON
-                            serde_json::from_str::<serde_json::Value>(&entry.data)
-                                .and_then(|v| serde_json::to_string_pretty(&v))
-                                .unwrap_or_else(|_| entry.data.clone())
-                        } else {
-                            entry.data.clone()
-                        };
-                        self.ledger_expanded_contents.insert(
-                            index,
-                            text_editor::Content::with_text(&formatted_data)
-                        );
+                        let formatted_data =
+                            if entry.data.starts_with('{') || entry.data.starts_with('[') {
+                                // Attempt to format as JSON
+                                serde_json::from_str::<serde_json::Value>(&entry.data)
+                                    .and_then(|v| serde_json::to_string_pretty(&v))
+                                    .unwrap_or_else(|_| entry.data.clone())
+                            } else {
+                                entry.data.clone()
+                            };
+                        self.ledger_expanded_contents
+                            .insert(index, text_editor::Content::with_text(&formatted_data));
                     }
                 }
                 Task::none()
@@ -3625,13 +4202,11 @@ impl App {
             // ================================================================
             // Config / Login / Doctor / Setup refresh
             // ================================================================
-            Message::LoadConfig => {
-                self.update(Message::ReloadConfig)
-            }
+            Message::LoadConfig => self.update(Message::ReloadConfig),
 
             Message::LoadLogin => {
                 self.current_page = Page::Login;
-                
+
                 // Load both auth status and git info
                 let load_auth = Task::perform(
                     async {
@@ -3640,42 +4215,46 @@ impl App {
                         for platform in crate::types::Platform::all() {
                             let result = checker.check_platform(*platform).await;
                             let name = format!("{:?}", platform);
-                            map.insert(name.clone(), AuthStatus {
-                                platform: name,
-                                authenticated: result.authenticated,
-                                method: if result.message.contains("environment variable") {
-                                    crate::views::login::AuthMethod::EnvVar
-                                } else {
-                                    crate::views::login::AuthMethod::CliLogin
+                            map.insert(
+                                name.clone(),
+                                AuthStatus {
+                                    platform: name,
+                                    authenticated: result.authenticated,
+                                    method: if result.message.contains("environment variable") {
+                                        crate::views::login::AuthMethod::EnvVar
+                                    } else {
+                                        crate::views::login::AuthMethod::CliLogin
+                                    },
+                                    hint: result.message.clone(),
                                 },
-                                hint: result.message.clone(),
-                            });
+                            );
                         }
                         let gh = checker.check_github().await;
-                        map.insert("GitHub".to_string(), AuthStatus {
-                            platform: "GitHub".to_string(),
-                            authenticated: gh.authenticated,
-                            method: crate::views::login::AuthMethod::CliLogin,
-                            hint: gh.message.clone(),
-                        });
+                        map.insert(
+                            "GitHub".to_string(),
+                            AuthStatus {
+                                platform: "GitHub".to_string(),
+                                authenticated: gh.authenticated,
+                                method: crate::views::login::AuthMethod::CliLogin,
+                                hint: gh.message.clone(),
+                            },
+                        );
                         map
                     },
                     Message::AuthStatusReceived,
                 );
-                
+
                 let load_git = Task::perform(
-                    async {
-                        load_git_info().await
-                    },
+                    async { load_git_info().await },
                     Message::GitInfoForLoginLoaded,
                 );
-                
+
                 Task::batch(vec![load_auth, load_git])
             }
 
             Message::AuthStatusReceived(map) => {
                 self.platform_auth_status = map;
-                
+
                 // Update GitHub auth status from the map
                 if let Some(github_status) = self.platform_auth_status.get("GitHub") {
                     self.github_auth_status = if github_status.authenticated {
@@ -3684,21 +4263,21 @@ impl App {
                         Some("not_authenticated".to_string())
                     };
                 }
-                
+
                 // Populate CLI content for login view
-                let cli_text = [
-                    "• Cursor: agent login",
-                    "• Codex: codex login",
-                    "• Claude: claude auth login",
-                    "• Gemini: gcloud auth login",
-                    "• DeepSeek: deepseek login",
-                    "• Mistral: mistral login",
-                    "• Grok: grok login",
-                    "• GitHub: gh auth login",
-                ].join("\n");
+                let cli_text = default_login_cli_text();
                 self.login_cli_content = text_editor::Content::with_text(&cli_text);
-                
+
                 Task::none()
+            }
+
+            Message::CopyToClipboard(text) => {
+                if text.trim().is_empty() {
+                    return Task::none();
+                }
+
+                self.add_toast(ToastType::Success, "Copied to clipboard".to_string());
+                iced::clipboard::write::<Message>(text)
             }
 
             Message::PlatformLogin(target) => {
@@ -3706,7 +4285,8 @@ impl App {
                 let target_copy = target;
                 Task::perform(
                     async move {
-                        crate::platforms::spawn_login(target_copy).await
+                        crate::platforms::spawn_login(target_copy)
+                            .await
                             .map_err(|e| e.to_string())
                     },
                     move |res| Message::PlatformLoginComplete(target_copy, res),
@@ -3716,8 +4296,14 @@ impl App {
             Message::PlatformLoginComplete(target, res) => {
                 self.login_in_progress.remove(&target);
                 match &res {
-                    Ok(()) => self.add_toast(ToastType::Success, format!("{} login completed", target.display_name())),
-                    Err(e) => self.add_toast(ToastType::Error, format!("{} login failed: {}", target.display_name(), e)),
+                    Ok(()) => self.add_toast(
+                        ToastType::Success,
+                        format!("{} login completed", target.display_name()),
+                    ),
+                    Err(e) => self.add_toast(
+                        ToastType::Error,
+                        format!("{} login failed: {}", target.display_name(), e),
+                    ),
                 }
                 Task::perform(
                     async {
@@ -3726,24 +4312,30 @@ impl App {
                         for platform in crate::types::Platform::all() {
                             let result = checker.check_platform(*platform).await;
                             let name = format!("{:?}", platform);
-                            map.insert(name.clone(), AuthStatus {
-                                platform: name,
-                                authenticated: result.authenticated,
-                                method: if result.message.contains("environment variable") {
-                                    crate::views::login::AuthMethod::EnvVar
-                                } else {
-                                    crate::views::login::AuthMethod::CliLogin
+                            map.insert(
+                                name.clone(),
+                                AuthStatus {
+                                    platform: name,
+                                    authenticated: result.authenticated,
+                                    method: if result.message.contains("environment variable") {
+                                        crate::views::login::AuthMethod::EnvVar
+                                    } else {
+                                        crate::views::login::AuthMethod::CliLogin
+                                    },
+                                    hint: result.message.clone(),
                                 },
-                                hint: result.message.clone(),
-                            });
+                            );
                         }
                         let gh = checker.check_github().await;
-                        map.insert("GitHub".to_string(), AuthStatus {
-                            platform: "GitHub".to_string(),
-                            authenticated: gh.authenticated,
-                            method: crate::views::login::AuthMethod::CliLogin,
-                            hint: gh.message.clone(),
-                        });
+                        map.insert(
+                            "GitHub".to_string(),
+                            AuthStatus {
+                                platform: "GitHub".to_string(),
+                                authenticated: gh.authenticated,
+                                method: crate::views::login::AuthMethod::CliLogin,
+                                hint: gh.message.clone(),
+                            },
+                        );
                         map
                     },
                     Message::AuthStatusReceived,
@@ -3751,11 +4343,13 @@ impl App {
             }
 
             Message::PlatformLogout(target) => {
-                self.login_in_progress.insert(target, AuthActionKind::Logout);
+                self.login_in_progress
+                    .insert(target, AuthActionKind::Logout);
                 let target_copy = target;
                 Task::perform(
                     async move {
-                        crate::platforms::spawn_logout(target_copy).await
+                        crate::platforms::spawn_logout(target_copy)
+                            .await
                             .map_err(|e| e.to_string())
                     },
                     move |res| Message::PlatformLogoutComplete(target_copy, res),
@@ -3765,8 +4359,14 @@ impl App {
             Message::PlatformLogoutComplete(target, res) => {
                 self.login_in_progress.remove(&target);
                 match &res {
-                    Ok(()) => self.add_toast(ToastType::Success, format!("{} logout completed", target.display_name())),
-                    Err(e) => self.add_toast(ToastType::Error, format!("{} logout failed: {}", target.display_name(), e)),
+                    Ok(()) => self.add_toast(
+                        ToastType::Success,
+                        format!("{} logout completed", target.display_name()),
+                    ),
+                    Err(e) => self.add_toast(
+                        ToastType::Error,
+                        format!("{} logout failed: {}", target.display_name(), e),
+                    ),
                 }
                 Task::perform(
                     async {
@@ -3775,7 +4375,46 @@ impl App {
                         for platform in crate::types::Platform::all() {
                             let result = checker.check_platform(*platform).await;
                             let name = format!("{:?}", platform);
-                            map.insert(name.clone(), AuthStatus {
+                            map.insert(
+                                name.clone(),
+                                AuthStatus {
+                                    platform: name,
+                                    authenticated: result.authenticated,
+                                    method: if result.message.contains("environment variable") {
+                                        crate::views::login::AuthMethod::EnvVar
+                                    } else {
+                                        crate::views::login::AuthMethod::CliLogin
+                                    },
+                                    hint: result.message.clone(),
+                                },
+                            );
+                        }
+                        let gh = checker.check_github().await;
+                        map.insert(
+                            "GitHub".to_string(),
+                            AuthStatus {
+                                platform: "GitHub".to_string(),
+                                authenticated: gh.authenticated,
+                                method: crate::views::login::AuthMethod::CliLogin,
+                                hint: gh.message.clone(),
+                            },
+                        );
+                        map
+                    },
+                    Message::AuthStatusReceived,
+                )
+            }
+
+            Message::RefreshAuthStatus => Task::perform(
+                async {
+                    let checker = crate::platforms::AuthStatusChecker::new();
+                    let mut map: HashMap<String, AuthStatus> = HashMap::new();
+                    for platform in crate::types::Platform::all() {
+                        let result = checker.check_platform(*platform).await;
+                        let name = format!("{:?}", platform);
+                        map.insert(
+                            name.clone(),
+                            AuthStatus {
                                 platform: name,
                                 authenticated: result.authenticated,
                                 method: if result.message.contains("environment variable") {
@@ -3784,66 +4423,33 @@ impl App {
                                     crate::views::login::AuthMethod::CliLogin
                                 },
                                 hint: result.message.clone(),
-                            });
-                        }
-                        let gh = checker.check_github().await;
-                        map.insert("GitHub".to_string(), AuthStatus {
+                            },
+                        );
+                    }
+                    let gh = checker.check_github().await;
+                    map.insert(
+                        "GitHub".to_string(),
+                        AuthStatus {
                             platform: "GitHub".to_string(),
                             authenticated: gh.authenticated,
                             method: crate::views::login::AuthMethod::CliLogin,
                             hint: gh.message.clone(),
-                        });
-                        map
-                    },
-                    Message::AuthStatusReceived,
-                )
-            }
+                        },
+                    );
+                    map
+                },
+                Message::AuthStatusReceived,
+            ),
 
-            Message::RefreshAuthStatus => {
-                Task::perform(
-                    async {
-                        let checker = crate::platforms::AuthStatusChecker::new();
-                        let mut map: HashMap<String, AuthStatus> = HashMap::new();
-                        for platform in crate::types::Platform::all() {
-                            let result = checker.check_platform(*platform).await;
-                            let name = format!("{:?}", platform);
-                            map.insert(name.clone(), AuthStatus {
-                                platform: name,
-                                authenticated: result.authenticated,
-                                method: if result.message.contains("environment variable") {
-                                    crate::views::login::AuthMethod::EnvVar
-                                } else {
-                                    crate::views::login::AuthMethod::CliLogin
-                                },
-                                hint: result.message.clone(),
-                            });
-                        }
-                        let gh = checker.check_github().await;
-                        map.insert("GitHub".to_string(), AuthStatus {
-                            platform: "GitHub".to_string(),
-                            authenticated: gh.authenticated,
-                            method: crate::views::login::AuthMethod::CliLogin,
-                            hint: gh.message.clone(),
-                        });
-                        map
-                    },
-                    Message::AuthStatusReceived,
-                )
-            }
-
-            Message::LoadGitInfoForLogin => {
-                Task::perform(
-                    async {
-                        load_git_info().await
-                    },
-                    Message::GitInfoForLoginLoaded,
-                )
-            }
+            Message::LoadGitInfoForLogin => Task::perform(
+                async { load_git_info().await },
+                Message::GitInfoForLoginLoaded,
+            ),
 
             Message::GitInfoForLoginLoaded(git_info) => {
                 let has_git_info = git_info.is_some();
                 self.git_info = git_info;
-                
+
                 // Also check GitHub auth status
                 if has_git_info {
                     Task::perform(
@@ -3856,9 +4462,7 @@ impl App {
                                 Some("not_authenticated".to_string())
                             }
                         },
-                        |_status| {
-                            Message::RefreshAuthStatus
-                        },
+                        |_status| Message::RefreshAuthStatus,
                     )
                 } else {
                     self.github_auth_status = None;
@@ -3873,7 +4477,13 @@ impl App {
                     async move {
                         let manager = crate::doctor::InstallationManager::new();
                         match manager.execute_install(platform_copy) {
-                            Ok(r) => if r.success { Ok(()) } else { Err(r.message) },
+                            Ok(r) => {
+                                if r.success {
+                                    Ok(())
+                                } else {
+                                    Err(r.message)
+                                }
+                            }
                             Err(e) => Err(e.to_string()),
                         }
                     },
@@ -3885,18 +4495,17 @@ impl App {
                 self.setup_installing = None;
                 match &res {
                     Ok(()) => self.add_toast(ToastType::Success, format!("{} installed", platform)),
-                    Err(e) => self.add_toast(ToastType::Error, format!("{} install failed: {}", platform, e)),
+                    Err(e) => self.add_toast(
+                        ToastType::Error,
+                        format!("{} install failed: {}", platform, e),
+                    ),
                 }
                 self.update(Message::SetupRunDetection)
             }
 
-            Message::RefreshDoctor => {
-                self.update(Message::RunAllChecks)
-            }
+            Message::RefreshDoctor => self.update(Message::RunAllChecks),
 
-            Message::RefreshSetup => {
-                self.update(Message::SetupRunDetection)
-            }
+            Message::RefreshSetup => self.update(Message::SetupRunDetection),
 
             // ================================================================
             // Metrics
@@ -3953,16 +4562,16 @@ impl App {
                     0.016 // Default to ~60fps
                 };
                 self.last_tick_time = Some(now);
-                
+
                 // Update animation time (loops every ~1000 seconds)
                 self.animation_time = (self.animation_time + delta) % 1000.0;
-                
+
                 // Update page transition
                 if self.page_transition.update(delta) {
                     // Transition complete
                     self.previous_page = None;
                 }
-                
+
                 // Clean up expired toasts (older than 5 seconds)
                 self.toasts.retain(|t| !t.is_expired());
                 Task::none()
@@ -3982,12 +4591,164 @@ impl App {
                     iced::exit()
                 }
             }
-            
+
             Message::WindowResized(width, height) => {
                 self.window_width = width;
                 self.window_height = height;
                 // Clear canvas caches when window resizes
                 self.retro_overlay.clear_cache();
+                Task::none()
+            }
+
+            // ================================================================
+            // Interview
+            // ================================================================
+            Message::StartInterview => {
+                self.interview_active = true;
+                self.interview_paused = false;
+                self.interview_current_phase = "scope_goals".to_string();
+                self.interview_current_question = String::new();
+                self.interview_answers.clear();
+                self.interview_phases_complete.clear();
+                self.current_page = Page::Interview;
+                Task::none()
+            }
+            Message::NavigateToInterview => {
+                self.previous_page = Some(self.current_page);
+                self.page_transition = crate::widgets::TransitionState::start();
+                self.current_page = Page::Interview;
+                Task::none()
+            }
+            Message::InterviewQuestionReceived(question) => {
+                self.interview_current_question = question;
+                Task::none()
+            }
+            Message::InterviewAnswerSubmitted(answer) => {
+                self.interview_answers.push(answer);
+                self.interview_current_question = String::new();
+                Task::none()
+            }
+            Message::InterviewPhaseComplete(phase) => {
+                self.interview_phases_complete.push(phase);
+                Task::none()
+            }
+            Message::InterviewComplete => {
+                self.interview_active = false;
+                Task::none()
+            }
+            Message::InterviewPaused => {
+                self.interview_paused = true;
+                Task::none()
+            }
+            Message::InterviewResumed => {
+                self.interview_paused = false;
+                Task::none()
+            }
+            Message::InterviewAnswerInputChanged(text) => {
+                self.interview_answer_input = text;
+                Task::none()
+            }
+            Message::InterviewSubmitAnswer => {
+                if !self.interview_answer_input.trim().is_empty() {
+                    let answer = self.interview_answer_input.clone();
+                    self.interview_answers.push(answer.clone());
+                    self.interview_answer_input.clear();
+                    
+                    // Simulate receiving next question (in real implementation, this would
+                    // be sent to the interview orchestrator backend)
+                    self.interview_current_question = format!(
+                        "Follow-up question based on: '{}'",
+                        answer.chars().take(30).collect::<String>()
+                    );
+                    
+                    self.add_toast(ToastType::Success, "Answer submitted".to_string());
+                }
+                Task::none()
+            }
+            Message::InterviewTogglePause => {
+                self.interview_paused = !self.interview_paused;
+                Task::none()
+            }
+            Message::InterviewEnd => {
+                self.interview_active = false;
+                self.interview_paused = false;
+                self.interview_answer_input.clear();
+                self.add_toast(
+                    ToastType::Info,
+                    "Interview session ended".to_string(),
+                );
+                Task::none()
+            }
+
+            // ================================================================
+            // Interview Config UI
+            // ================================================================
+            Message::ConfigInterviewFieldChanged(field, value) => {
+                match field.as_str() {
+                    "platform" => self.gui_config.interview.platform = value,
+                    "model" => self.gui_config.interview.model = value,
+                    "output_dir" => self.gui_config.interview.output_dir = value,
+                    "reasoning_level" => self.gui_config.interview.reasoning_level = value,
+                    "interaction_mode" => self.gui_config.interview.interaction_mode = value,
+                    "max_questions_per_phase" => {
+                        if let Ok(v) = value.parse::<u32>() {
+                            self.gui_config.interview.max_questions_per_phase = v.clamp(3, 15);
+                        }
+                    }
+                    _ => {}
+                }
+                self.config_is_dirty = true;
+                Task::none()
+            }
+            Message::ConfigInterviewToggled(field) => {
+                match field.as_str() {
+                    "first_principles" => {
+                        self.gui_config.interview.first_principles =
+                            !self.gui_config.interview.first_principles;
+                    }
+                    "require_architecture_confirmation" => {
+                        self.gui_config.interview.require_architecture_confirmation =
+                            !self.gui_config.interview.require_architecture_confirmation;
+                    }
+                    "generate_playwright_requirements" => {
+                        self.gui_config.interview.generate_playwright_requirements =
+                            !self.gui_config.interview.generate_playwright_requirements;
+                    }
+                    "generate_initial_agents_md" => {
+                        self.gui_config.interview.generate_initial_agents_md =
+                            !self.gui_config.interview.generate_initial_agents_md;
+                    }
+                    _ => {}
+                }
+                self.config_is_dirty = true;
+                Task::none()
+            }
+            Message::ConfigInterviewBackupChanged(idx, field, value) => {
+                if let Some(entry) = self.gui_config.interview.backup_platforms.get_mut(idx) {
+                    match field.as_str() {
+                        "platform" => entry.platform = value,
+                        "model" => entry.model = value,
+                        _ => {}
+                    }
+                }
+                self.config_is_dirty = true;
+                Task::none()
+            }
+            Message::ConfigInterviewAddBackup => {
+                self.gui_config.interview.backup_platforms.push(
+                    crate::config::gui_config::BackupPlatformEntry {
+                        platform: "cursor".to_string(),
+                        model: String::new(),
+                    },
+                );
+                self.config_is_dirty = true;
+                Task::none()
+            }
+            Message::ConfigInterviewRemoveBackup(idx) => {
+                if idx < self.gui_config.interview.backup_platforms.len() {
+                    self.gui_config.interview.backup_platforms.remove(idx);
+                }
+                self.config_is_dirty = true;
                 Task::none()
             }
 
@@ -4000,8 +4761,10 @@ impl App {
 
     /// Render the application UI
     pub fn view(&self) -> Element<'_, Message> {
+        use crate::theme::tokens;
         use crate::views;
         use iced::widget::{column, container, stack};
+        use iced::Length;
 
         // Build main content based on current page
         let content: Element<Message> = match self.current_page {
@@ -4026,10 +4789,23 @@ impl App {
                 &self.theme,
             ),
             Page::Wizard => {
-                // Clamp wizard step to valid range (1-6)
-                let wizard_step = self.wizard_step.max(1).min(6);
+                // Clamp wizard step to valid range (0-8)
+                let wizard_step = self.wizard_step.min(8);
                 views::wizard::view(
                     wizard_step,
+                    // Step 0 params
+                    self.wizard_is_new_project,
+                    self.wizard_has_github_repo,
+                    &self.wizard_github_url,
+                    self.wizard_create_github_repo,
+                    &self.wizard_github_visibility,
+                    &self.wizard_github_description,
+                    // Step 0.5 params
+                    self.wizard_use_interview,
+                    &self.wizard_interaction_mode,
+                    &self.wizard_reasoning_level,
+                    self.wizard_generate_agents_md,
+                    // Original params
                     &self.wizard_project_name,
                     &self.wizard_project_path,
                     &self.wizard_requirements_text,
@@ -4068,9 +4844,13 @@ impl App {
                 &self.doctor_detail_contents,
                 &self.theme,
             ),
-            Page::Tiers => {
-                views::tiers::view(&self.tier_tree, &self.selected_tier, &self.selected_tier_details, &self.tier_details_content, &self.theme)
-            }
+            Page::Tiers => views::tiers::view(
+                &self.tier_tree,
+                &self.selected_tier,
+                &self.selected_tier_details,
+                &self.tier_details_content,
+                &self.theme,
+            ),
             Page::Evidence => views::evidence::view(
                 &self.evidence_items,
                 &self.evidence_filter,
@@ -4080,17 +4860,27 @@ impl App {
                 &self.theme,
             ),
             Page::Metrics => views::metrics::view(&self.metrics, &self.theme),
-            Page::History => {
-                views::history::view(&self.history_display_sessions, self.history_page, self.history_total_pages, self.history_filter, &self.history_search, &self.theme)
-            }
+            Page::History => views::history::view(
+                &self.history_display_sessions,
+                self.history_page,
+                self.history_total_pages,
+                self.history_filter,
+                &self.history_search,
+                &self.theme,
+            ),
             Page::Coverage => views::coverage::view(
                 self.coverage_overall,
                 &self.coverage_categories,
                 &self.coverage_requirements,
                 &self.coverage_phase_filter,
-                &self.theme
+                &self.theme,
             ),
-            Page::Memory => views::memory::view(&self.memory_content, &self.memory_content_string, &self.memory_section, &self.theme),
+            Page::Memory => views::memory::view(
+                &self.memory_content,
+                &self.memory_content_string,
+                &self.memory_section,
+                &self.theme,
+            ),
             Page::Ledger => views::ledger::view(
                 &self.ledger_entries,
                 &self.ledger_filter,
@@ -4109,7 +4899,7 @@ impl App {
                 &self.git_info,
                 &self.github_auth_status,
                 &self.login_cli_content,
-                &self.theme
+                &self.theme,
             ),
             Page::Settings => {
                 // Convert log level string to enum
@@ -4142,17 +4932,28 @@ impl App {
                 &self.login_in_progress,
                 &self.theme,
             ),
+            Page::Interview => views::interview::view(
+                self.interview_active,
+                self.interview_paused,
+                &self.interview_current_phase,
+                &self.interview_current_question,
+                &self.interview_answers,
+                &self.interview_phases_complete,
+                &self.interview_answer_input,
+                &self.theme,
+            ),
         };
 
-        // Build the full layout
-        let main_layout = column![
-            self.render_header(),
-            content,
-        ]
-        .spacing(0);
+        // Build the full layout (header + content constrained to same width as content boxes)
+        let main_layout = column![self.render_header(), content].spacing(0);
+        let constrained = container(main_layout)
+            .width(Length::Fill)
+            .height(Length::Fill)
+            .max_width(tokens::layout::MAX_CONTENT_WIDTH)
+            .center_x(Length::Fill);
 
-        // Wrap in container
-        let base = container(main_layout)
+        // Wrap in full-size container for overlays
+        let base = container(constrained)
             .width(iced::Length::Fill)
             .height(iced::Length::Fill);
 
@@ -4194,10 +4995,7 @@ impl App {
         } else {
             std::time::Duration::from_secs(1) // 1fps otherwise
         };
-        subscriptions.push(
-            time::every(tick_duration)
-                .map(|_| Message::Tick(Utc::now()))
-        );
+        subscriptions.push(time::every(tick_duration).map(|_| Message::Tick(Utc::now())));
 
         // Backend event receiver
         if let Some(ref receiver) = self.event_receiver {
@@ -4226,19 +5024,15 @@ impl App {
         }
 
         // Window events (close and resize)
-        subscriptions.push(
-            iced::event::listen_with(|event, _status, id| {
-                match event {
-                    iced::Event::Window(window::Event::CloseRequested) => {
-                        Some(Message::WindowCloseRequested(id))
-                    }
-                    iced::Event::Window(window::Event::Resized(size)) => {
-                        Some(Message::WindowResized(size.width, size.height))
-                    }
-                    _ => None,
-                }
-            })
-        );
+        subscriptions.push(iced::event::listen_with(|event, _status, id| match event {
+            iced::Event::Window(window::Event::CloseRequested) => {
+                Some(Message::WindowCloseRequested(id))
+            }
+            iced::Event::Window(window::Event::Resized(size)) => {
+                Some(Message::WindowResized(size.width, size.height))
+            }
+            _ => None,
+        }));
 
         Subscription::batch(subscriptions)
     }
@@ -4266,13 +5060,25 @@ impl App {
             PuppetMasterEvent::StateChanged { from: _, to, .. } => {
                 self.orchestrator_status = format!("{:?}", to);
             }
-            PuppetMasterEvent::IterationStart { item_id, platform, model, reasoning_effort, session_id, timestamp, .. } => {
+            PuppetMasterEvent::IterationStart {
+                item_id,
+                platform,
+                model,
+                reasoning_effort,
+                session_id,
+                timestamp,
+                ..
+            } => {
                 self.history_active_by_item
                     .entry(item_id.clone())
                     .or_default()
                     .push(session_id.clone());
 
-                if let Some(existing) = self.history_sessions.iter_mut().find(|s| s.id == *session_id) {
+                if let Some(existing) = self
+                    .history_sessions
+                    .iter_mut()
+                    .find(|s| s.id == *session_id)
+                {
                     existing.start_time = *timestamp;
                     existing.end_time = None;
                     existing.status = crate::views::history::SessionStatus::Running;
@@ -4316,7 +5122,12 @@ impl App {
                     reasoning_effort: reasoning_effort.clone(),
                 });
             }
-            PuppetMasterEvent::IterationComplete { item_id, success, timestamp, .. } => {
+            PuppetMasterEvent::IterationComplete {
+                item_id,
+                success,
+                timestamp,
+                ..
+            } => {
                 if let Some(ref item) = self.current_item {
                     if item.phase_id == *item_id {
                         self.current_item = None;
@@ -4346,7 +5157,13 @@ impl App {
                     }
                 }
             }
-            PuppetMasterEvent::Progress { phase_progress, task_progress, subtask_progress, overall_progress, .. } => {
+            PuppetMasterEvent::Progress {
+                phase_progress,
+                task_progress,
+                subtask_progress,
+                overall_progress,
+                ..
+            } => {
                 self.progress = ProgressState {
                     phase_current: *phase_progress as usize,
                     phase_total: 100,
@@ -4357,7 +5174,12 @@ impl App {
                     overall_percent: *overall_progress as f32,
                 };
             }
-            PuppetMasterEvent::Output { line, source: _, line_type: _, timestamp } => {
+            PuppetMasterEvent::Output {
+                line,
+                source: _,
+                line_type: _,
+                timestamp,
+            } => {
                 self.output_lines.push(OutputLine {
                     timestamp: *timestamp,
                     line_type: OutputType::Stdout,
@@ -4374,27 +5196,40 @@ impl App {
                 self.last_error = Some(message.clone());
                 self.add_toast(ToastType::Error, message.clone());
             }
-            PuppetMasterEvent::StartChainStep { step, total, description, .. } => {
+            PuppetMasterEvent::StartChainStep {
+                step,
+                total,
+                description,
+                ..
+            } => {
                 // Show progress for wizard PRD generation
                 self.add_toast(
                     ToastType::Info,
-                    format!("Step {}/{}: {}", step, total, description)
+                    format!("Step {}/{}: {}", step, total, description),
                 );
             }
-            PuppetMasterEvent::StartChainComplete { success, message, .. } => {
+            PuppetMasterEvent::StartChainComplete {
+                success, message, ..
+            } => {
                 if *success {
                     self.add_toast(
                         ToastType::Success,
-                        message.clone().unwrap_or_else(|| "PRD generation completed".to_string())
+                        message
+                            .clone()
+                            .unwrap_or_else(|| "PRD generation completed".to_string()),
                     );
                 } else {
                     self.add_toast(
                         ToastType::Error,
-                        message.clone().unwrap_or_else(|| "PRD generation failed".to_string())
+                        message
+                            .clone()
+                            .unwrap_or_else(|| "PRD generation failed".to_string()),
                     );
                 }
             }
-            PuppetMasterEvent::Custom { event_type, data, .. } => {
+            PuppetMasterEvent::Custom {
+                event_type, data, ..
+            } => {
                 // Handle WizardPrdGenerated event
                 if event_type == "WizardPrdGenerated" {
                     if let Some(prd_json) = data.get("prd").and_then(|v| v.as_str()) {
@@ -4409,7 +5244,8 @@ impl App {
 
     /// Sync terminal output lines to text_editor::Content for selection support
     fn sync_terminal_content(&mut self) {
-        let terminal_text = self.output_lines
+        let terminal_text = self
+            .output_lines
             .iter()
             .map(|line| {
                 let timestamp = line.timestamp.format("%H:%M:%S");
@@ -4427,17 +5263,21 @@ impl App {
 
     /// Compute coverage data from PRD and evidence
     fn compute_coverage(&mut self) {
-        use crate::views::coverage::{RequirementCoverage, CategoryCoverage};
-        
+        use crate::views::coverage::{CategoryCoverage, RequirementCoverage};
+
         // Get project path
-        let base = self.current_project
+        let base = self
+            .current_project
             .as_ref()
             .map(|p| p.path.clone())
             .unwrap_or_else(|| std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")));
-        
+
         let prd_path = base.join(".puppet-master").join("prd.json");
-        let evidence_dir = base.join(".puppet-master").join("evidence").join("gate-reports");
-        
+        let evidence_dir = base
+            .join(".puppet-master")
+            .join("evidence")
+            .join("gate-reports");
+
         // Try to load PRD
         if !prd_path.exists() {
             self.coverage_requirements.clear();
@@ -4445,15 +5285,15 @@ impl App {
             self.coverage_overall = 0.0;
             return;
         }
-        
+
         let Ok(content) = std::fs::read_to_string(&prd_path) else {
             return;
         };
-        
+
         let Ok(prd) = serde_json::from_str::<crate::types::PRD>(&content) else {
             return;
         };
-        
+
         // Load gate reports to check verification status
         let mut gate_reports = std::collections::HashMap::new();
         if evidence_dir.exists() && evidence_dir.is_dir() {
@@ -4468,16 +5308,16 @@ impl App {
                 }
             }
         }
-        
+
         // Build requirements list from PRD
         let mut requirements = Vec::new();
         let mut category_stats = std::collections::HashMap::new();
-        
+
         for phase in &prd.phases {
             // Phase-level requirements
             let phase_covered = phase.status == crate::types::ItemStatus::Passed;
             let phase_evidence_count = phase.evidence.len();
-            
+
             let phase_req = RequirementCoverage {
                 id: phase.id.clone(),
                 description: phase.title.clone(),
@@ -4486,7 +5326,7 @@ impl App {
                 tier_ids: vec![phase.id.clone()],
             };
             requirements.push(phase_req);
-            
+
             // Update category stats
             let category = "Phase";
             let entry = category_stats.entry(category.to_string()).or_insert((0, 0));
@@ -4494,12 +5334,12 @@ impl App {
             if phase_covered {
                 entry.1 += 1; // covered
             }
-            
+
             // Task-level requirements
             for task in &phase.tasks {
                 let task_covered = task.status == crate::types::ItemStatus::Passed;
                 let task_evidence_count = task.evidence.len();
-                
+
                 let task_req = RequirementCoverage {
                     id: task.id.clone(),
                     description: task.title.clone(),
@@ -4508,7 +5348,7 @@ impl App {
                     tier_ids: vec![phase.id.clone(), task.id.clone()],
                 };
                 requirements.push(task_req);
-                
+
                 // Update category stats
                 let category = "Task";
                 let entry = category_stats.entry(category.to_string()).or_insert((0, 0));
@@ -4516,12 +5356,12 @@ impl App {
                 if task_covered {
                     entry.1 += 1;
                 }
-                
+
                 // Subtask-level requirements
                 for subtask in &task.subtasks {
                     let subtask_covered = subtask.status == crate::types::ItemStatus::Passed;
                     let subtask_evidence_count = subtask.evidence.len();
-                    
+
                     let subtask_req = RequirementCoverage {
                         id: subtask.id.clone(),
                         description: subtask.title.clone(),
@@ -4530,7 +5370,7 @@ impl App {
                         tier_ids: vec![phase.id.clone(), task.id.clone(), subtask.id.clone()],
                     };
                     requirements.push(subtask_req);
-                    
+
                     // Update category stats
                     let category = "Subtask";
                     let entry = category_stats.entry(category.to_string()).or_insert((0, 0));
@@ -4541,7 +5381,7 @@ impl App {
                 }
             }
         }
-        
+
         // Build category coverage
         let mut categories = Vec::new();
         for (name, (total, covered)) in category_stats {
@@ -4556,7 +5396,7 @@ impl App {
                 test_count: total,
             });
         }
-        
+
         // Compute overall coverage
         let total_requirements = requirements.len();
         let covered_requirements = requirements.iter().filter(|r| r.covered).count();
@@ -4565,7 +5405,7 @@ impl App {
         } else {
             0.0
         };
-        
+
         self.coverage_requirements = requirements;
         self.coverage_categories = categories;
         self.coverage_overall = overall;
@@ -4619,11 +5459,19 @@ impl App {
     }
 
     /// Render modal overlay
-    fn render_modal_overlay<'a>(&self, base: Element<'a, Message>, modal: &'a ModalContent) -> Element<'a, Message> {
+    fn render_modal_overlay<'a>(
+        &self,
+        base: Element<'a, Message>,
+        modal: &'a ModalContent,
+    ) -> Element<'a, Message> {
         use crate::widgets::{modal_overlay, ModalData, ModalSize};
-        
+
         match modal {
-            ModalContent::Confirm { title, message, on_confirm } => {
+            ModalContent::Confirm {
+                title,
+                message,
+                on_confirm,
+            } => {
                 let modal_data = ModalData {
                     title: title.clone(),
                     body: message.clone(),
@@ -4631,7 +5479,7 @@ impl App {
                     confirm_label: Some("Confirm".to_string()),
                     cancel_label: Some("Cancel".to_string()),
                 };
-                
+
                 modal_overlay(
                     base,
                     Some(modal_data),
@@ -4648,7 +5496,7 @@ impl App {
                     confirm_label: None,
                     cancel_label: Some("Close".to_string()),
                 };
-                
+
                 modal_overlay(
                     base,
                     Some(modal_data),
@@ -4661,7 +5509,9 @@ impl App {
     }
 
     fn recompute_history_display(&mut self) {
-        let filtered: Vec<_> = self.history_sessions.iter()
+        let filtered: Vec<_> = self
+            .history_sessions
+            .iter()
             .filter(|s| {
                 if let Some(ref filter) = self.history_filter {
                     if s.status != *filter {
@@ -4671,7 +5521,9 @@ impl App {
                 if !self.history_search.is_empty() {
                     let search_lower = self.history_search.to_lowercase();
                     let matches_id = s.id.to_lowercase().contains(&search_lower);
-                    let matches_platform = s.platform.as_ref()
+                    let matches_platform = s
+                        .platform
+                        .as_ref()
                         .map(|p| p.to_lowercase().contains(&search_lower))
                         .unwrap_or(false);
                     if !matches_id && !matches_platform {
@@ -4682,8 +5534,12 @@ impl App {
             })
             .cloned()
             .collect();
-        
-        self.history_total_pages = if filtered.is_empty() { 1 } else { (filtered.len() + self.history_items_per_page - 1) / self.history_items_per_page };
+
+        self.history_total_pages = if filtered.is_empty() {
+            1
+        } else {
+            (filtered.len() + self.history_items_per_page - 1) / self.history_items_per_page
+        };
         let start = (self.history_page * self.history_items_per_page).min(filtered.len());
         let end = (start + self.history_items_per_page).min(filtered.len());
         self.history_display_sessions = filtered[start..end].to_vec();
@@ -4693,7 +5549,7 @@ impl App {
     fn load_settings(&mut self) {
         let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
         let settings_file = base.join(".puppet-master").join("settings.json");
-        
+
         if settings_file.exists() {
             if let Ok(content) = std::fs::read_to_string(&settings_file) {
                 if let Ok(json) = serde_json::from_str::<serde_json::Value>(&content) {
@@ -4704,19 +5560,27 @@ impl App {
                     if let Some(auto_scroll) = json.get("auto_scroll").and_then(|v| v.as_bool()) {
                         self.settings_auto_scroll = auto_scroll;
                     }
-                    if let Some(show_timestamps) = json.get("show_timestamps").and_then(|v| v.as_bool()) {
+                    if let Some(show_timestamps) =
+                        json.get("show_timestamps").and_then(|v| v.as_bool())
+                    {
                         self.settings_show_timestamps = show_timestamps;
                     }
-                    if let Some(retention_days) = json.get("retention_days").and_then(|v| v.as_u64()) {
+                    if let Some(retention_days) =
+                        json.get("retention_days").and_then(|v| v.as_u64())
+                    {
                         self.settings_retention_days = retention_days as u32;
                     }
-                    if let Some(intensive_logging) = json.get("intensive_logging").and_then(|v| v.as_bool()) {
+                    if let Some(intensive_logging) =
+                        json.get("intensive_logging").and_then(|v| v.as_bool())
+                    {
                         self.settings_intensive_logging = intensive_logging;
                     }
-                    if let Some(minimize_to_tray) = json.get("minimize_to_tray").and_then(|v| v.as_bool()) {
+                    if let Some(minimize_to_tray) =
+                        json.get("minimize_to_tray").and_then(|v| v.as_bool())
+                    {
                         self.minimize_to_tray = minimize_to_tray;
                     }
-                    
+
                     log::info!("Settings loaded from disk");
                 }
             }
@@ -4727,10 +5591,10 @@ impl App {
     fn load_history_from_disk(&mut self) {
         let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
         let data_dir = base.join(".puppet-master");
-        
+
         // Clear existing history
         self.history_sessions.clear();
-        
+
         // Try to read from logs/sessions.jsonl (one session per line)
         let sessions_file = data_dir.join("logs").join("sessions.jsonl");
         if sessions_file.exists() {
@@ -4739,69 +5603,85 @@ impl App {
                     if line.trim().is_empty() {
                         continue;
                     }
-                    
+
                     if let Ok(json) = serde_json::from_str::<serde_json::Value>(line) {
                         // Parse session info from JSON
-                        let id = json.get("id")
+                        let id = json
+                            .get("id")
                             .or_else(|| json.get("session_id"))
                             .and_then(|v| v.as_str())
                             .unwrap_or("unknown")
                             .to_string();
-                        
-                        let start_time = json.get("start_time")
+
+                        let start_time = json
+                            .get("start_time")
                             .or_else(|| json.get("timestamp"))
                             .and_then(|v| v.as_str())
                             .and_then(|s| chrono::DateTime::parse_from_rfc3339(s).ok())
                             .map(|dt| dt.with_timezone(&chrono::Utc))
                             .unwrap_or_else(|| chrono::Utc::now());
-                        
-                        let end_time = json.get("end_time")
+
+                        let end_time = json
+                            .get("end_time")
                             .and_then(|v| v.as_str())
                             .and_then(|s| chrono::DateTime::parse_from_rfc3339(s).ok())
                             .map(|dt| dt.with_timezone(&chrono::Utc));
-                        
-                        let status = json.get("status")
+
+                        let status = json
+                            .get("status")
                             .and_then(|v| v.as_str())
                             .map(|s| match s.to_lowercase().as_str() {
                                 "running" => crate::views::history::SessionStatus::Running,
-                                "completed" | "success" => crate::views::history::SessionStatus::Completed,
+                                "completed" | "success" => {
+                                    crate::views::history::SessionStatus::Completed
+                                }
                                 "failed" | "error" => crate::views::history::SessionStatus::Failed,
-                                "cancelled" | "canceled" => crate::views::history::SessionStatus::Cancelled,
+                                "cancelled" | "canceled" => {
+                                    crate::views::history::SessionStatus::Cancelled
+                                }
                                 _ => crate::views::history::SessionStatus::Completed,
                             })
                             .unwrap_or(crate::views::history::SessionStatus::Completed);
-                        
-                        let items_completed = json.get("items_completed")
+
+                        let items_completed = json
+                            .get("items_completed")
                             .or_else(|| json.get("completed"))
                             .and_then(|v| v.as_u64())
                             .unwrap_or(0) as usize;
-                        
-                        let items_total = json.get("items_total")
+
+                        let items_total = json
+                            .get("items_total")
                             .or_else(|| json.get("total"))
                             .and_then(|v| v.as_u64())
                             .unwrap_or(0) as usize;
-                        
-                        let platform = json.get("platform")
+
+                        let platform = json
+                            .get("platform")
                             .and_then(|v| v.as_str())
                             .map(|s| s.to_string());
-                        
-                        let model = json.get("model")
+
+                        let model = json
+                            .get("model")
                             .and_then(|v| v.as_str())
                             .map(|s| s.to_string());
-                        
-                        let reasoning_effort = json.get("reasoning_effort")
+
+                        let reasoning_effort = json
+                            .get("reasoning_effort")
                             .or_else(|| json.get("reasoning"))
                             .and_then(|v| v.as_str())
                             .map(|s| s.to_string());
-                        
-                        let phases = json.get("phases")
+
+                        let phases = json
+                            .get("phases")
                             .and_then(|v| v.as_array())
-                            .map(|arr| arr.iter()
-                                .filter_map(|v| v.as_str())
-                                .map(|s| s.to_string())
-                                .collect())
+                            .map(|arr| {
+                                arr.iter()
+                                    .filter_map(|v| v.as_str())
+                                    .map(|s| s.to_string())
+                                    .collect()
+                            })
                             .unwrap_or_else(Vec::new);
-                        
+
                         self.history_sessions.push(SessionInfo {
                             id,
                             start_time,
@@ -4819,14 +5699,18 @@ impl App {
                 }
             }
         }
-        
+
         // Sort sessions by start time (newest first)
-        self.history_sessions.sort_by(|a, b| b.start_time.cmp(&a.start_time));
-        
+        self.history_sessions
+            .sort_by(|a, b| b.start_time.cmp(&a.start_time));
+
         // Recompute display after loading
         self.recompute_history_display();
-        
-        log::info!("Loaded {} history sessions from disk", self.history_sessions.len());
+
+        log::info!(
+            "Loaded {} history sessions from disk",
+            self.history_sessions.len()
+        );
     }
 }
 
@@ -4999,7 +5883,10 @@ fn spawn_orchestrator_backend(
                     AppCommand::Kill(pid) => {
                         let event_tx = event_tx.clone();
                         tokio::task::spawn_blocking(move || {
-                            let res = crate::utils::process::kill_process(pid, crate::utils::process::Signal::Kill);
+                            let res = crate::utils::process::kill_process(
+                                pid,
+                                crate::utils::process::Signal::Kill,
+                            );
                             let msg = match res {
                                 Ok(()) => PuppetMasterEvent::ProcessKilled {
                                     pid,
@@ -5017,11 +5904,13 @@ fn spawn_orchestrator_backend(
                     AppCommand::StartChainPipeline(requirements_text) => {
                         let event_tx = event_tx.clone();
                         let config_clone = config.clone();
-                        
+
                         tokio::spawn(async move {
-                            use crate::start_chain::{StartChainPipeline, StartChainParams, RequirementsInput};
                             use crate::platforms::PlatformRegistry;
-                            
+                            use crate::start_chain::{
+                                RequirementsInput, StartChainParams, StartChainPipeline,
+                            };
+
                             // Convert event_tx to tokio unbounded sender by spawning a forwarding task
                             let (tx, mut rx) = tokio::sync::mpsc::unbounded_channel();
                             let event_tx_clone = event_tx.clone();
@@ -5030,7 +5919,7 @@ fn spawn_orchestrator_backend(
                                     let _ = event_tx_clone.send(event);
                                 }
                             });
-                            
+
                             // Create platform registry for AI execution
                             let platform_registry = Arc::new(PlatformRegistry::new());
                             if let Err(e) = platform_registry.init_default().await {
@@ -5039,12 +5928,12 @@ fn spawn_orchestrator_backend(
                                     "start_chain",
                                 ));
                             }
-                            
+
                             // Create pipeline with config and dependencies
                             let pipeline = StartChainPipeline::new(config_clone.clone().into())
                                 .with_platform_registry(platform_registry)
                                 .with_event_tx(tx);
-                            
+
                             // Setup parameters - use a simple project name from requirements
                             let project_name = requirements_text
                                 .lines()
@@ -5052,12 +5941,12 @@ fn spawn_orchestrator_backend(
                                 .and_then(|l| l.strip_prefix('#').map(|s| s.trim()))
                                 .unwrap_or("Project")
                                 .to_string();
-                            
+
                             let params = StartChainParams::new(
                                 project_name,
-                                RequirementsInput::Text(requirements_text)
+                                RequirementsInput::Text(requirements_text),
                             );
-                            
+
                             // Run pipeline
                             match pipeline.run(params).await {
                                 Ok(result) => {
@@ -5078,11 +5967,16 @@ fn spawn_orchestrator_backend(
                                                 format!("Failed to serialize PRD: {}", e),
                                                 "start_chain",
                                             ));
-                                            let _ = event_tx.send(PuppetMasterEvent::StartChainComplete {
-                                                success: false,
-                                                message: Some(format!("Serialization failed: {}", e)),
-                                                timestamp: Utc::now(),
-                                            });
+                                            let _ = event_tx.send(
+                                                PuppetMasterEvent::StartChainComplete {
+                                                    success: false,
+                                                    message: Some(format!(
+                                                        "Serialization failed: {}",
+                                                        e
+                                                    )),
+                                                    timestamp: Utc::now(),
+                                                },
+                                            );
                                         }
                                     }
                                 }
@@ -5113,21 +6007,26 @@ fn map_orchestrator_event(
     use crate::core::state_machine::OrchestratorEvent;
 
     match event {
-        OrchestratorEvent::StateChanged { old_state, new_state } => Some(PuppetMasterEvent::StateChanged {
+        OrchestratorEvent::StateChanged {
+            old_state,
+            new_state,
+        } => Some(PuppetMasterEvent::StateChanged {
             from: old_state,
             to: new_state,
             timestamp: Utc::now(),
             reason: None,
         }),
-        OrchestratorEvent::IterationStarted { tier_id, iteration } => Some(PuppetMasterEvent::IterationStart {
-            item_id: tier_id,
-            platform: config.tiers.iteration.platform,
-            model: config.tiers.iteration.model.clone(),
-            reasoning_effort: config.tiers.iteration.reasoning_effort.clone(),
-            attempt: iteration,
-            session_id: "unknown".to_string(),
-            timestamp: Utc::now(),
-        }),
+        OrchestratorEvent::IterationStarted { tier_id, iteration } => {
+            Some(PuppetMasterEvent::IterationStart {
+                item_id: tier_id,
+                platform: config.tiers.iteration.platform,
+                model: config.tiers.iteration.model.clone(),
+                reasoning_effort: config.tiers.iteration.reasoning_effort.clone(),
+                attempt: iteration,
+                session_id: "unknown".to_string(),
+                timestamp: Utc::now(),
+            })
+        }
         OrchestratorEvent::IterationCompleted {
             tier_id,
             iteration: _,
@@ -5149,7 +6048,9 @@ fn map_orchestrator_event(
             line_type,
             timestamp: Utc::now(),
         }),
-        OrchestratorEvent::Error(message) => Some(PuppetMasterEvent::error(message, "orchestrator")),
+        OrchestratorEvent::Error(message) => {
+            Some(PuppetMasterEvent::error(message, "orchestrator"))
+        }
         _ => None,
     }
 }

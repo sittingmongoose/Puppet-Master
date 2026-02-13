@@ -48,7 +48,11 @@ impl Platform {
     pub fn supports_plan_mode(&self) -> bool {
         matches!(
             self,
-            Platform::Cursor | Platform::Codex | Platform::Claude | Platform::Gemini | Platform::Copilot
+            Platform::Cursor
+                | Platform::Codex
+                | Platform::Claude
+                | Platform::Gemini
+                | Platform::Copilot
         )
     }
 

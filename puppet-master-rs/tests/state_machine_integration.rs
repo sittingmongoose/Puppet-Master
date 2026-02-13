@@ -2,7 +2,9 @@
 //!
 //! Tests for orchestrator and tier state machine transitions.
 
-use puppet_master::core::state_machine::{OrchestratorStateMachine, TierStateMachine, TierEvent, OrchestratorEvent};
+use puppet_master::core::state_machine::{
+    OrchestratorEvent, OrchestratorStateMachine, TierEvent, TierStateMachine,
+};
 use puppet_master::types::{OrchestratorState, TierState, TierType};
 
 #[test]
@@ -42,7 +44,10 @@ fn test_orchestrator_error_transition() {
     assert_eq!(sm.current_state(), OrchestratorState::Planning);
 
     // Can transition to Error
-    assert!(sm.send(OrchestratorEvent::Error("Test error".to_string())).is_ok());
+    assert!(
+        sm.send(OrchestratorEvent::Error("Test error".to_string()))
+            .is_ok()
+    );
     assert_eq!(sm.current_state(), OrchestratorState::Error);
 
     // Can recover from Error to Idle
@@ -125,7 +130,7 @@ fn test_tier_max_iterations() {
         sm.send(TierEvent::StartPlanning).ok();
         sm.send(TierEvent::StartExecution).unwrap();
         assert_eq!(sm.current_iteration(), i);
-        
+
         if i < 2 {
             sm.send(TierEvent::Fail("Fail".to_string())).unwrap();
             assert_eq!(sm.current_state(), TierState::Retrying);
@@ -147,7 +152,10 @@ fn test_tier_escalation() {
     sm.send(TierEvent::StartExecution).unwrap();
 
     // Escalate
-    assert!(sm.send(TierEvent::Escalate("Needs human intervention".to_string())).is_ok());
+    assert!(
+        sm.send(TierEvent::Escalate("Needs human intervention".to_string()))
+            .is_ok()
+    );
     assert_eq!(sm.current_state(), TierState::Escalated);
 
     // Resume after escalation
@@ -166,7 +174,10 @@ fn test_tier_gate_failure_retry() {
     assert_eq!(sm.current_state(), TierState::Gating);
 
     // Fail gate
-    assert!(sm.send(TierEvent::GateFail("Gate check failed".to_string())).is_ok());
+    assert!(
+        sm.send(TierEvent::GateFail("Gate check failed".to_string()))
+            .is_ok()
+    );
     assert_eq!(sm.current_state(), TierState::Retrying);
 
     // Try again

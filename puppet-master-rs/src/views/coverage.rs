@@ -2,11 +2,11 @@
 //!
 //! Shows overall coverage percentage and per-requirement breakdown with category stats.
 
-use iced::widget::{column, row, text, container, scrollable, Space, pick_list};
-use iced::{Element, Length, Border};
 use crate::app::Message;
-use crate::theme::{AppTheme, tokens, fonts, colors};
+use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::widgets::*;
+use iced::widget::{Space, column, container, pick_list, row, scrollable, text};
+use iced::{Border, Element, Length};
 
 /// Test category breakdown
 #[derive(Debug, Clone, Default)]
@@ -34,7 +34,9 @@ pub fn view<'a>(
     phase_filter: &'a str,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
+    let mut content = column![]
+        .spacing(tokens::spacing::LG)
+        .padding(tokens::spacing::LG);
 
     // Header with phase filter
     let phase_options = vec![
@@ -67,16 +69,16 @@ pub fn view<'a>(
             styled_button(theme, "REFRESH", ButtonVariant::Info),
         ]
         .spacing(tokens::spacing::MD)
-        .align_y(iced::Alignment::Center)
+        .align_y(iced::Alignment::Center),
     );
 
     // Overall stats cards - 4 columns
     let covered_count = requirements.iter().filter(|r| r.covered).count();
     let total_count = requirements.len();
     let total_evidence: usize = requirements.iter().map(|r| r.evidence_count).sum();
-    
+
     let mut stat_cards = row![].spacing(tokens::spacing::MD);
-    
+
     stat_cards = stat_cards.push(
         container(
             column![
@@ -95,7 +97,7 @@ pub fn view<'a>(
                     .color(theme.ink_faded()),
             ]
             .spacing(tokens::spacing::XXS)
-            .align_x(iced::Alignment::Center)
+            .align_x(iced::Alignment::Center),
         )
         .padding(tokens::spacing::MD)
         .width(Length::FillPortion(1))
@@ -106,9 +108,9 @@ pub fn view<'a>(
                 radius: tokens::radii::NONE.into(),
             },
             ..Default::default()
-        })
+        }),
     );
-    
+
     stat_cards = stat_cards.push(
         container(
             column![
@@ -119,12 +121,19 @@ pub fn view<'a>(
                 text("Features Tested")
                     .size(tokens::font_size::XS)
                     .color(theme.ink_faded()),
-                text(format!("{:.0}%", if total_count > 0 { (covered_count as f32 / total_count as f32) * 100.0 } else { 0.0 }))
-                    .size(tokens::font_size::XS)
-                    .color(colors::ACID_LIME),
+                text(format!(
+                    "{:.0}%",
+                    if total_count > 0 {
+                        (covered_count as f32 / total_count as f32) * 100.0
+                    } else {
+                        0.0
+                    }
+                ))
+                .size(tokens::font_size::XS)
+                .color(colors::ACID_LIME),
             ]
             .spacing(tokens::spacing::XXS)
-            .align_x(iced::Alignment::Center)
+            .align_x(iced::Alignment::Center),
         )
         .padding(tokens::spacing::MD)
         .width(Length::FillPortion(1))
@@ -135,9 +144,9 @@ pub fn view<'a>(
                 radius: tokens::radii::NONE.into(),
             },
             ..Default::default()
-        })
+        }),
     );
-    
+
     stat_cards = stat_cards.push(
         container(
             column![
@@ -148,12 +157,23 @@ pub fn view<'a>(
                 text("Features Verified")
                     .size(tokens::font_size::XS)
                     .color(theme.ink_faded()),
-                text(format!("{:.0}%", if total_count > 0 { (covered_count as f32 / total_count as f32) * 100.0 } else { 0.0 }))
-                    .size(tokens::font_size::XS)
-                    .color(if covered_count == total_count { colors::ACID_LIME } else { colors::SAFETY_ORANGE }),
+                text(format!(
+                    "{:.0}%",
+                    if total_count > 0 {
+                        (covered_count as f32 / total_count as f32) * 100.0
+                    } else {
+                        0.0
+                    }
+                ))
+                .size(tokens::font_size::XS)
+                .color(if covered_count == total_count {
+                    colors::ACID_LIME
+                } else {
+                    colors::SAFETY_ORANGE
+                }),
             ]
             .spacing(tokens::spacing::XXS)
-            .align_x(iced::Alignment::Center)
+            .align_x(iced::Alignment::Center),
         )
         .padding(tokens::spacing::MD)
         .width(Length::FillPortion(1))
@@ -164,9 +184,9 @@ pub fn view<'a>(
                 radius: tokens::radii::NONE.into(),
             },
             ..Default::default()
-        })
+        }),
     );
-    
+
     stat_cards = stat_cards.push(
         container(
             column![
@@ -179,7 +199,7 @@ pub fn view<'a>(
                     .color(theme.ink_faded()),
             ]
             .spacing(tokens::spacing::XXS)
-            .align_x(iced::Alignment::Center)
+            .align_x(iced::Alignment::Center),
         )
         .padding(tokens::spacing::MD)
         .width(Length::FillPortion(1))
@@ -190,9 +210,9 @@ pub fn view<'a>(
                 radius: tokens::radii::NONE.into(),
             },
             ..Default::default()
-        })
+        }),
     );
-    
+
     content = content.push(stat_cards);
 
     // Category breakdown
@@ -203,7 +223,8 @@ pub fn view<'a>(
                 .font(fonts::FONT_UI_BOLD)
                 .color(theme.ink()),
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
-        ].spacing(tokens::spacing::MD);
+        ]
+        .spacing(tokens::spacing::MD);
 
         for cat in categories {
             let cat_row = row![
@@ -230,45 +251,48 @@ pub fn view<'a>(
                 text(format!("{} tests", cat.test_count))
                     .size(tokens::font_size::SM)
                     .color(theme.ink_faded()),
-            ].spacing(tokens::spacing::MD).align_y(iced::Alignment::Center);
+            ]
+            .spacing(tokens::spacing::MD)
+            .align_y(iced::Alignment::Center);
 
             category_content = category_content.push(cat_row);
         }
 
-        content = content.push(
-            themed_panel(
-                container(category_content).padding(tokens::spacing::MD),
-                theme
-            )
-        );
+        content = content.push(themed_panel(
+            container(category_content).padding(tokens::spacing::MD),
+            theme,
+        ));
     }
 
     // Per-requirement breakdown
     if requirements.is_empty() {
-        content = content.push(
-            themed_panel(
-                container(
-                    column![
-                        text("No requirements defined")
-                            .size(tokens::font_size::BASE)
-                            .color(theme.ink()),
-                        Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                        text("Define requirements in the wizard to see coverage")
-                            .size(tokens::font_size::SM)
-                            .color(theme.ink_faded()),
-                    ].spacing(tokens::spacing::SM)
-                ).padding(tokens::spacing::XL),
-                theme,
+        content = content.push(themed_panel(
+            container(
+                column![
+                    text("No requirements defined")
+                        .size(tokens::font_size::BASE)
+                        .color(theme.ink()),
+                    Space::new().height(Length::Fixed(tokens::spacing::SM)),
+                    text("Define requirements in the wizard to see coverage")
+                        .size(tokens::font_size::SM)
+                        .color(theme.ink_faded()),
+                ]
+                .spacing(tokens::spacing::SM),
             )
-        );
+            .padding(tokens::spacing::XL),
+            theme,
+        ));
     } else {
         let covered_count = requirements.iter().filter(|r| r.covered).count();
         let total_count = requirements.len();
 
         let summary = row![
-            text(format!("{} of {} requirements covered", covered_count, total_count))
-                .size(tokens::font_size::BASE)
-                .color(theme.ink()),
+            text(format!(
+                "{} of {} requirements covered",
+                covered_count, total_count
+            ))
+            .size(tokens::font_size::BASE)
+            .color(theme.ink()),
             Space::new().width(Length::Fill),
             status_badge(
                 if covered_count == total_count {
@@ -284,20 +308,51 @@ pub fn view<'a>(
         .spacing(tokens::spacing::MD)
         .align_y(iced::Alignment::Center);
 
-        content = content.push(
-            themed_panel(container(summary).padding(tokens::spacing::MD), theme)
-        );
+        content = content.push(themed_panel(
+            container(summary).padding(tokens::spacing::MD),
+            theme,
+        ));
 
         // Requirement table
         let mut table = column![
             // Table header with background
             container(
                 row![
-                    container(text("Status").size(tokens::font_size::SM).font(fonts::FONT_UI_BOLD).color(theme.ink())).width(Length::Fixed(80.0)),
-                    container(text("ID").size(tokens::font_size::SM).font(fonts::FONT_UI_BOLD).color(theme.ink())).width(Length::FillPortion(1)),
-                    container(text("Description").size(tokens::font_size::SM).font(fonts::FONT_UI_BOLD).color(theme.ink())).width(Length::FillPortion(3)),
-                    container(text("Evidence").size(tokens::font_size::SM).font(fonts::FONT_UI_BOLD).color(theme.ink())).width(Length::Fixed(100.0)),
-                    container(text("Tiers").size(tokens::font_size::SM).font(fonts::FONT_UI_BOLD).color(theme.ink())).width(Length::Fixed(80.0)),
+                    container(
+                        text("Status")
+                            .size(tokens::font_size::SM)
+                            .font(fonts::FONT_UI_BOLD)
+                            .color(theme.ink())
+                    )
+                    .width(Length::Fixed(80.0)),
+                    container(
+                        text("ID")
+                            .size(tokens::font_size::SM)
+                            .font(fonts::FONT_UI_BOLD)
+                            .color(theme.ink())
+                    )
+                    .width(Length::FillPortion(1)),
+                    container(
+                        text("Description")
+                            .size(tokens::font_size::SM)
+                            .font(fonts::FONT_UI_BOLD)
+                            .color(theme.ink())
+                    )
+                    .width(Length::FillPortion(3)),
+                    container(
+                        text("Evidence")
+                            .size(tokens::font_size::SM)
+                            .font(fonts::FONT_UI_BOLD)
+                            .color(theme.ink())
+                    )
+                    .width(Length::Fixed(100.0)),
+                    container(
+                        text("Tiers")
+                            .size(tokens::font_size::SM)
+                            .font(fonts::FONT_UI_BOLD)
+                            .color(theme.ink())
+                    )
+                    .width(Length::Fixed(80.0)),
                 ]
                 .spacing(tokens::spacing::SM)
                 .padding(tokens::spacing::SM)
@@ -305,76 +360,84 @@ pub fn view<'a>(
             .width(Length::Fill)
             .style(move |_theme: &iced::Theme| {
                 iced::widget::container::Style {
-                    background: Some(iced::Background::Color(
-                        iced::Color { a: 0.1, ..theme.ink() }
-                    )),
+                    background: Some(iced::Background::Color(iced::Color {
+                        a: 0.1,
+                        ..theme.ink()
+                    })),
                     ..Default::default()
                 }
             }),
-        ].spacing(tokens::spacing::XS);
+        ]
+        .spacing(tokens::spacing::XS);
 
         let mut rows_col = column![].spacing(tokens::spacing::XS);
 
         for req in requirements {
             let row_widget = row![
+                container(if req.covered {
+                    status_dot(Status::Complete)
+                } else {
+                    status_dot(Status::Error)
+                })
+                .width(Length::Fixed(80.0)),
+                container(text(&req.id).size(tokens::font_size::XS).color(theme.ink()))
+                    .width(Length::FillPortion(1)),
                 container(
-                    if req.covered {
-                        status_dot(Status::Complete)
-                    } else {
-                        status_dot(Status::Error)
-                    }
-                ).width(Length::Fixed(80.0)),
-                container(text(&req.id).size(tokens::font_size::XS).color(theme.ink())).width(Length::FillPortion(1)),
-                container(text(&req.description).size(tokens::font_size::XS).color(theme.ink())).width(Length::FillPortion(3)),
-                container(text(format!("{}", req.evidence_count)).size(tokens::font_size::XS).color(theme.ink()))
-                    .width(Length::Fixed(100.0)),
-                container(text(format!("{}", req.tier_ids.len())).size(tokens::font_size::XS).color(theme.ink()))
-                    .width(Length::Fixed(80.0)),
+                    text(&req.description)
+                        .size(tokens::font_size::XS)
+                        .color(theme.ink())
+                )
+                .width(Length::FillPortion(3)),
+                container(
+                    text(format!("{}", req.evidence_count))
+                        .size(tokens::font_size::XS)
+                        .color(theme.ink())
+                )
+                .width(Length::Fixed(100.0)),
+                container(
+                    text(format!("{}", req.tier_ids.len()))
+                        .size(tokens::font_size::XS)
+                        .color(theme.ink())
+                )
+                .width(Length::Fixed(80.0)),
             ]
             .spacing(tokens::spacing::SM)
             .padding(tokens::spacing::SM);
 
-            rows_col = rows_col.push(
-                container(row_widget)
-                    .width(Length::Fill)
-                    .style(move |_theme: &iced::Theme| {
-                        iced::widget::container::Style {
-                            background: Some(iced::Background::Color(
-                                if req.covered {
-                                    iced::Color { a: 0.15, ..colors::ACID_LIME }
-                                } else {
-                                    iced::Color { a: 0.15, ..colors::HOT_MAGENTA }
-                                }
-                            )),
-                            ..Default::default()
+            rows_col = rows_col.push(container(row_widget).width(Length::Fill).style(
+                move |_theme: &iced::Theme| iced::widget::container::Style {
+                    background: Some(iced::Background::Color(if req.covered {
+                        iced::Color {
+                            a: 0.15,
+                            ..colors::ACID_LIME
                         }
-                    })
-            );
+                    } else {
+                        iced::Color {
+                            a: 0.15,
+                            ..colors::HOT_MAGENTA
+                        }
+                    })),
+                    ..Default::default()
+                },
+            ));
         }
 
         table = table.push(rows_col);
 
-        content = content.push(
-            themed_panel(
-                container(
-                    scrollable(table)
-                        .height(Length::Fill)
-                ).padding(tokens::spacing::MD),
-                theme,
-            )
-        );
+        content = content.push(themed_panel(
+            container(scrollable(table).height(Length::Fill)).padding(tokens::spacing::MD),
+            theme,
+        ));
     }
 
     // Help text
-    content = content.push(
-        help_text(
-            "About Coverage",
-            &[
-                "Coverage is calculated based on evidence collected during orchestration",
-                "Aim for 100% coverage before final delivery",
-            ]
-        )
-    );
+    content = content.push(help_text(
+        "About Coverage",
+        &[
+            "Coverage is calculated based on evidence collected during orchestration",
+            "Aim for 100% coverage before final delivery",
+        ],
+    ));
 
     scrollable(content)
         .width(Length::Fill)

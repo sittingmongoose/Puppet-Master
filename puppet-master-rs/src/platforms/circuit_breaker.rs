@@ -15,7 +15,7 @@
 //! an alert is triggered to notify operators.
 
 use crate::types::Platform;
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use chrono::{DateTime, Duration, Utc};
 use log::{debug, info, warn};
 use serde::{Deserialize, Serialize};
@@ -303,7 +303,10 @@ impl CircuitBreaker {
 
     /// Transition to half-open state
     fn transition_to_half_open(&self, state: &mut CircuitBreakerState) {
-        info!("{} circuit breaker: half-open (testing recovery)", self.platform);
+        info!(
+            "{} circuit breaker: half-open (testing recovery)",
+            self.platform
+        );
         state.state = CircuitState::HalfOpen;
         state.last_state_change = Utc::now();
         state.success_count = 0;
@@ -395,7 +398,7 @@ impl Clone for CircuitBreaker {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use tokio::time::{sleep, Duration as TokioDuration};
+    use tokio::time::{Duration as TokioDuration, sleep};
 
     #[tokio::test]
     async fn test_circuit_breaker_closed_to_open() {
@@ -506,12 +509,16 @@ mod tests {
         assert_eq!(breaker.get_state().await, CircuitState::Open);
 
         // Third attempt should fail fast without executing
-        let result = breaker.execute(|| async { Ok::<(), anyhow::Error>(()) }).await;
+        let result = breaker
+            .execute(|| async { Ok::<(), anyhow::Error>(()) })
+            .await;
         assert!(result.is_err());
-        assert!(result
-            .unwrap_err()
-            .to_string()
-            .contains("circuit breaker is open"));
+        assert!(
+            result
+                .unwrap_err()
+                .to_string()
+                .contains("circuit breaker is open")
+        );
     }
 
     #[tokio::test]

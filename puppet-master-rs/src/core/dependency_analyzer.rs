@@ -6,7 +6,7 @@
 //! - Parallelization groups (execution waves)
 //! - Dependency validation
 
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use std::collections::{HashMap, HashSet};
 
 /// Dependency node representing a task in the dependency graph
@@ -58,10 +58,7 @@ impl DependencyAnalyzer {
     ///
     /// # Errors
     /// Returns error if cycles detected or invalid dependencies found
-    pub fn build_graph(
-        &self,
-        dependencies: Vec<(String, Vec<String>)>,
-    ) -> Result<DependencyGraph> {
+    pub fn build_graph(&self, dependencies: Vec<(String, Vec<String>)>) -> Result<DependencyGraph> {
         // Phase 1: Build nodes
         let mut nodes = HashMap::new();
         let all_ids: HashSet<String> = dependencies.iter().map(|(id, _)| id.clone()).collect();
@@ -145,7 +142,10 @@ impl DependencyAnalyzer {
     /// Perform topological sort
     ///
     /// Returns flattened list of task IDs in execution order
-    pub fn topological_sort(&self, dependencies: Vec<(String, Vec<String>)>) -> Result<Vec<String>> {
+    pub fn topological_sort(
+        &self,
+        dependencies: Vec<(String, Vec<String>)>,
+    ) -> Result<Vec<String>> {
         let graph = self.build_graph(dependencies)?;
         Ok(graph.levels.into_iter().flatten().collect())
     }
@@ -273,7 +273,11 @@ impl DependencyAnalyzer {
     }
 
     /// Find a cycle in the dependency graph using DFS
-    fn find_cycle(&self, nodes: &HashMap<String, DependencyNode>, processed: &HashSet<String>) -> Vec<String> {
+    fn find_cycle(
+        &self,
+        nodes: &HashMap<String, DependencyNode>,
+        processed: &HashSet<String>,
+    ) -> Vec<String> {
         let mut visiting = HashSet::new();
         let mut path = Vec::new();
 
@@ -353,7 +357,7 @@ mod tests {
     #[test]
     fn test_simple_dependency_chain() {
         let analyzer = DependencyAnalyzer::new();
-        
+
         // A -> B -> C (linear chain)
         let deps = vec![
             ("A".to_string(), vec![]),
@@ -362,7 +366,7 @@ mod tests {
         ];
 
         let graph = analyzer.build_graph(deps).unwrap();
-        
+
         assert_eq!(graph.levels.len(), 3);
         assert_eq!(graph.levels[0], vec!["A"]);
         assert_eq!(graph.levels[1], vec!["B"]);
@@ -372,7 +376,7 @@ mod tests {
     #[test]
     fn test_parallel_execution() {
         let analyzer = DependencyAnalyzer::new();
-        
+
         // A, B, C can all run in parallel (no dependencies)
         let deps = vec![
             ("A".to_string(), vec![]),
@@ -381,7 +385,7 @@ mod tests {
         ];
 
         let graph = analyzer.build_graph(deps).unwrap();
-        
+
         assert_eq!(graph.levels.len(), 1);
         assert_eq!(graph.levels[0].len(), 3);
     }
@@ -389,7 +393,7 @@ mod tests {
     #[test]
     fn test_diamond_dependency() {
         let analyzer = DependencyAnalyzer::new();
-        
+
         //     A
         //    / \
         //   B   C
@@ -403,7 +407,7 @@ mod tests {
         ];
 
         let graph = analyzer.build_graph(deps).unwrap();
-        
+
         assert_eq!(graph.levels.len(), 3);
         assert_eq!(graph.levels[0], vec!["A"]);
         assert!(graph.levels[1].contains(&"B".to_string()));
@@ -414,7 +418,7 @@ mod tests {
     #[test]
     fn test_cycle_detection() {
         let analyzer = DependencyAnalyzer::new();
-        
+
         // A -> B -> C -> A (cycle)
         let deps = vec![
             ("A".to_string(), vec!["C".to_string()]),
@@ -424,13 +428,18 @@ mod tests {
 
         let result = analyzer.build_graph(deps);
         assert!(result.is_err());
-        assert!(result.unwrap_err().to_string().contains("Circular dependency"));
+        assert!(
+            result
+                .unwrap_err()
+                .to_string()
+                .contains("Circular dependency")
+        );
     }
 
     #[test]
     fn test_invalid_dependency() {
         let analyzer = DependencyAnalyzer::new();
-        
+
         // A depends on non-existent B
         let deps = vec![("A".to_string(), vec!["B".to_string()])];
 
@@ -442,7 +451,7 @@ mod tests {
     #[test]
     fn test_topological_sort() {
         let analyzer = DependencyAnalyzer::new();
-        
+
         let deps = vec![
             ("A".to_string(), vec![]),
             ("B".to_string(), vec!["A".to_string()]),
@@ -462,25 +471,17 @@ mod tests {
         assert!(analyzer.is_ready_to_execute("A", &[], &completed));
 
         // Task with unmet dependencies should not be ready
-        assert!(!analyzer.is_ready_to_execute(
-            "B",
-            &["A".to_string()],
-            &completed
-        ));
+        assert!(!analyzer.is_ready_to_execute("B", &["A".to_string()], &completed));
 
         // After completing dependency, should be ready
         completed.insert("A".to_string());
-        assert!(analyzer.is_ready_to_execute(
-            "B",
-            &["A".to_string()],
-            &completed
-        ));
+        assert!(analyzer.is_ready_to_execute("B", &["A".to_string()], &completed));
     }
 
     #[test]
     fn test_get_ready_tasks() {
         let analyzer = DependencyAnalyzer::new();
-        
+
         let deps = vec![
             ("A".to_string(), vec![]),
             ("B".to_string(), vec!["A".to_string()]),

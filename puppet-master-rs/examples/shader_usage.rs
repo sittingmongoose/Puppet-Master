@@ -186,10 +186,10 @@ mod tests {
     fn shader_sources_have_required_functions() {
         assert!(PAPER_GRAIN_SHADER.contains("fn vs_main"));
         assert!(PAPER_GRAIN_SHADER.contains("fn fs_main"));
-        
+
         assert!(SCANLINE_SHADER.contains("fn vs_main"));
         assert!(SCANLINE_SHADER.contains("fn fs_main"));
-        
+
         assert!(THEME_FIZZLE_SHADER.contains("fn vs_main"));
         assert!(THEME_FIZZLE_SHADER.contains("fn fs_main"));
     }
@@ -197,10 +197,10 @@ mod tests {
     #[test]
     fn uniform_structs_are_sized_correctly() {
         use std::mem::size_of;
-        
+
         // Verify structs are properly padded for GPU alignment
-        assert_eq!(size_of::<PaperGrainUniforms>(), 48);  // 12 floats
-        assert_eq!(size_of::<ScanlineUniforms>(), 32);    // 8 floats
+        assert_eq!(size_of::<PaperGrainUniforms>(), 48); // 12 floats
+        assert_eq!(size_of::<ScanlineUniforms>(), 32); // 8 floats
         assert_eq!(size_of::<ThemeFizzleUniforms>(), 48); // 12 floats
     }
 

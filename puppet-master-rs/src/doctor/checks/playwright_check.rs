@@ -9,9 +9,13 @@ use chrono::Utc;
 use std::path::PathBuf;
 use std::process::Stdio;
 use tokio::process::Command;
-use tokio::time::{timeout, Duration};
+use tokio::time::{Duration, timeout};
 
-async fn run_command(program: &str, args: &[&str], timeout_duration: Duration) -> Result<std::process::Output, String> {
+async fn run_command(
+    program: &str,
+    args: &[&str],
+    timeout_duration: Duration,
+) -> Result<std::process::Output, String> {
     let mut cmd = Command::new(program);
     cmd.args(args)
         .stdout(Stdio::piped())
@@ -21,10 +25,7 @@ async fn run_command(program: &str, args: &[&str], timeout_duration: Duration) -
     match timeout(timeout_duration, cmd.output()).await {
         Ok(Ok(output)) => Ok(output),
         Ok(Err(e)) => Err(format!("Failed to run {program}: {e}")),
-        Err(_) => Err(format!(
-            "Timed out running {program} {:?}",
-            args
-        )),
+        Err(_) => Err(format!("Timed out running {program} {:?}", args)),
     }
 }
 
@@ -51,7 +52,10 @@ fn any_playwright_browser_dirs_exist(browsers_dir: &PathBuf) -> Result<Vec<Strin
     for entry in entries {
         let entry = entry.map_err(|e| format!("Failed to read directory entry: {e}"))?;
         let name = entry.file_name().to_string_lossy().to_string();
-        if name.starts_with("chromium-") || name.starts_with("firefox-") || name.starts_with("webkit-") {
+        if name.starts_with("chromium-")
+            || name.starts_with("firefox-")
+            || name.starts_with("webkit-")
+        {
             found.push(name);
         }
     }
@@ -103,7 +107,9 @@ impl DoctorCheck for PlaywrightCheck {
         .await
         {
             Ok(out) => Ok(out),
-            Err(_) => run_command("npx", &["playwright", "--version"], Duration::from_secs(10)).await,
+            Err(_) => {
+                run_command("npx", &["playwright", "--version"], Duration::from_secs(10)).await
+            }
         };
 
         let version_text = match version_output {
@@ -151,7 +157,11 @@ impl DoctorCheck for PlaywrightCheck {
         if let Ok(out) = run_command("node", &["-e", node_script], Duration::from_secs(10)).await {
             if out.status.success() {
                 if let Ok(value) = serde_json::from_slice::<serde_json::Value>(&out.stdout) {
-                    for (label, key) in [("chromium", "chromium"), ("firefox", "firefox"), ("webkit", "webkit")] {
+                    for (label, key) in [
+                        ("chromium", "chromium"),
+                        ("firefox", "firefox"),
+                        ("webkit", "webkit"),
+                    ] {
                         if let Some(path) = value.get(key).and_then(|v| v.as_str()) {
                             if std::path::Path::new(path).exists() {
                                 found.push(format!("{label}: {path}"));

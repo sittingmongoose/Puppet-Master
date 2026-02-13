@@ -1,10 +1,10 @@
 //! Theme Fizzle Shader - Dissolve transition effect
-//! 
+//!
 //! Provides a blocky pixel dissolve transition between two colors or themes.
 //! Perfect for smooth theme transitions with visual interest.
-//! 
+//!
 //! # WGSL Shader
-//! 
+//!
 //! The shader source is available as `THEME_FIZZLE_SHADER` constant and can be
 //! used with custom wgpu pipelines or Iced's shader widget when implementing
 //! full integration.
@@ -13,7 +13,7 @@
 pub const THEME_FIZZLE_SHADER: &str = include_str!("theme_fizzle.wgsl");
 
 /// Uniform data layout matching WGSL shader
-/// 
+///
 /// This struct must match the layout in theme_fizzle.wgsl exactly.
 #[repr(C)]
 #[derive(Debug, Clone, Copy)]

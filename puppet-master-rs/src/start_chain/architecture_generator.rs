@@ -89,7 +89,10 @@ fn strip_markdown_fences(text: &str) -> String {
 impl ArchitectureGenerator {
     /// Generate architecture documentation from PRD
     pub fn generate(prd: &PRD) -> String {
-        info!("Generating architecture documentation for {}", prd.metadata.name);
+        info!(
+            "Generating architecture documentation for {}",
+            prd.metadata.name
+        );
 
         let mut doc = String::new();
 
@@ -226,7 +229,9 @@ Requirements:
         }
 
         if !exec.success {
-            warn!("AI architecture generation returned unsuccessful result; using template fallback");
+            warn!(
+                "AI architecture generation returned unsuccessful result; using template fallback"
+            );
             return Ok(Self::generate(prd));
         }
 
@@ -288,7 +293,10 @@ Requirements:
 
         for phase in &prd.phases {
             breakdown.push_str(&format!("### {} - {}\n\n", phase.id, phase.title));
-            breakdown.push_str(&format!("{}\n\n", phase.description.as_deref().unwrap_or("")));
+            breakdown.push_str(&format!(
+                "{}\n\n",
+                phase.description.as_deref().unwrap_or("")
+            ));
 
             if !phase.tasks.is_empty() {
                 breakdown.push_str("**Components:**\n\n");
@@ -347,7 +355,9 @@ Requirements:
         stack.push_str("|-------|------------|-------|\n");
         stack.push_str("| Backend | TBD | Based on PRD constraints and team preferences |\n");
         stack.push_str("| Frontend | TBD | Depends on target platforms and UX requirements |\n");
-        stack.push_str("| Data Store | TBD | Choose based on persistence, scale, and consistency needs |\n");
+        stack.push_str(
+            "| Data Store | TBD | Choose based on persistence, scale, and consistency needs |\n",
+        );
         stack.push_str("| CI/CD | TBD | Integrate with required deployment environments |\n");
         stack.push_str("\n");
 
@@ -357,7 +367,9 @@ Requirements:
                 stack.push_str("- Consider mobile-first UI and offline sync requirements.\n");
             }
             if d.contains("cli") {
-                stack.push_str("- Consider a CLI-first UX and cross-platform packaging requirements.\n");
+                stack.push_str(
+                    "- Consider a CLI-first UX and cross-platform packaging requirements.\n",
+                );
             }
         }
 

@@ -91,10 +91,7 @@ impl StateTransitions {
     }
 
     /// Get valid next orchestrator states from current state
-    pub fn get_valid_orchestrator_states(
-        &self,
-        from: OrchestratorState,
-    ) -> Vec<OrchestratorState> {
+    pub fn get_valid_orchestrator_states(&self, from: OrchestratorState) -> Vec<OrchestratorState> {
         self.orchestrator_lookup
             .get(&from)
             .cloned()
@@ -344,8 +341,10 @@ mod tests {
         let transitions = StateTransitions::new();
 
         // Idle → Planning
-        assert!(transitions
-            .is_valid_orchestrator_transition(OrchestratorState::Idle, OrchestratorState::Planning));
+        assert!(transitions.is_valid_orchestrator_transition(
+            OrchestratorState::Idle,
+            OrchestratorState::Planning
+        ));
 
         // Planning → Executing
         assert!(transitions.is_valid_orchestrator_transition(
@@ -388,8 +387,10 @@ mod tests {
         ));
 
         // Idle → Complete (invalid)
-        assert!(!transitions
-            .is_valid_orchestrator_transition(OrchestratorState::Idle, OrchestratorState::Complete));
+        assert!(!transitions.is_valid_orchestrator_transition(
+            OrchestratorState::Idle,
+            OrchestratorState::Complete
+        ));
     }
 
     #[test]

@@ -91,12 +91,12 @@ impl MergedAgents {
         });
 
         // Deduplicate do rules
-        let seen_do: std::collections::HashSet<_> = 
+        let seen_do: std::collections::HashSet<_> =
             self.do_rules.iter().map(|s| s.to_lowercase()).collect();
         self.do_rules = seen_do.into_iter().collect();
 
         // Deduplicate don't rules
-        let seen_dont: std::collections::HashSet<_> = 
+        let seen_dont: std::collections::HashSet<_> =
             self.dont_rules.iter().map(|s| s.to_lowercase()).collect();
         self.dont_rules = seen_dont.into_iter().collect();
     }
@@ -244,7 +244,10 @@ impl MultiLevelLoader {
         let mut content = String::new();
 
         content.push_str("# Merged Agent Learnings\n\n");
-        content.push_str(&format!("Merged from {} levels: ", merged.source_levels.len()));
+        content.push_str(&format!(
+            "Merged from {} levels: ",
+            merged.source_levels.len()
+        ));
         content.push_str(&merged.source_levels.join(", "));
         content.push_str("\n\n");
 
@@ -300,23 +303,29 @@ mod tests {
 
         // Create root AGENTS.md
         let mut root_doc = AgentsDoc::new("root");
-        root_doc
-            .agents
-            .push(AgentDefinition::new("Root Pattern", "pattern", "Root Pattern"));
+        root_doc.agents.push(AgentDefinition::new(
+            "Root Pattern",
+            "pattern",
+            "Root Pattern",
+        ));
         loader.save("root", &root_doc).unwrap();
 
         // Create phase1 AGENTS.md
         let mut phase_doc = AgentsDoc::new("phase1");
-        phase_doc
-            .agents
-            .push(AgentDefinition::new("Phase Pattern", "pattern", "Phase Pattern"));
+        phase_doc.agents.push(AgentDefinition::new(
+            "Phase Pattern",
+            "pattern",
+            "Phase Pattern",
+        ));
         loader.save("phase1", &phase_doc).unwrap();
 
         // Create phase1.task1 AGENTS.md
         let mut task_doc = AgentsDoc::new("phase1.task1");
-        task_doc
-            .agents
-            .push(AgentDefinition::new("Task Pattern", "pattern", "Task Pattern"));
+        task_doc.agents.push(AgentDefinition::new(
+            "Task Pattern",
+            "pattern",
+            "Task Pattern",
+        ));
         loader.save("phase1.task1", &task_doc).unwrap();
 
         loader
@@ -363,15 +372,19 @@ mod tests {
 
         // Create docs with duplicate patterns
         let mut root_doc = AgentsDoc::new("root");
-        root_doc
-            .agents
-            .push(AgentDefinition::new("Duplicate", "pattern", "Duplicate Pattern"));
+        root_doc.agents.push(AgentDefinition::new(
+            "Duplicate",
+            "pattern",
+            "Duplicate Pattern",
+        ));
         loader.save("root", &root_doc).unwrap();
 
         let mut phase_doc = AgentsDoc::new("phase1");
-        phase_doc
-            .agents
-            .push(AgentDefinition::new("Duplicate", "pattern", "Duplicate Pattern"));
+        phase_doc.agents.push(AgentDefinition::new(
+            "Duplicate",
+            "pattern",
+            "Duplicate Pattern",
+        ));
         loader.save("phase1", &phase_doc).unwrap();
 
         let merged = loader.load("phase1").unwrap();

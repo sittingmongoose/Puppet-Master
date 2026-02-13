@@ -15,70 +15,66 @@
 //! - Requirements traceability
 //! - Document parsing
 
-mod requirements_parser;
-mod prd_generator;
 mod architecture_generator;
-mod tier_plan_generator;
-mod test_plan_generator;
-mod requirements_interviewer;
 mod criterion_classifier;
-mod structure_detector;
-mod validation_gate;
 mod criterion_to_script;
-mod multi_pass_generator;
-mod traceability;
 mod document_parser;
-mod prompt_templates;
-mod prd_validators;
-mod requirements_inventory;
+mod multi_pass_generator;
 mod pipeline;
+mod prd_generator;
+mod prd_validators;
+mod prompt_templates;
+mod requirements_interviewer;
+mod requirements_inventory;
+mod requirements_parser;
+mod structure_detector;
+mod test_plan_generator;
+mod tier_plan_generator;
+mod traceability;
+mod validation_gate;
 
-pub use requirements_parser::RequirementsParser;
-pub use prd_generator::PrdGenerator;
 pub use architecture_generator::ArchitectureGenerator;
-pub use tier_plan_generator::{TierPlanGenerator, TierPlan, PhasePlan, TaskPlan, SubtaskPlan};
-pub use test_plan_generator::{
-    TestPlanGenerator, TestPlan, TestSuite, TestCase, VerificationType, CoverageTargets,
-};
-pub use requirements_interviewer::{
-    RequirementsInterviewer, InterviewQuestion, QuestionCategory, Importance, InterviewResult,
-};
 pub use criterion_classifier::{
-    CriterionClassifier, ClassifiedCriterion, VerificationType as CriterionVerificationType,
-    ClassificationResult,
-};
-pub use structure_detector::{
-    StructureDetector, DocumentStructure, Section, ListItem, ListType, CodeBlock, Link,
-    DocumentStatistics,
-};
-pub use validation_gate::{
-    ValidationGate, ValidationResult, ValidationError, ValidationWarning, Severity, CheckResult,
+    ClassificationResult, ClassifiedCriterion, CriterionClassifier,
+    VerificationType as CriterionVerificationType,
 };
 pub use criterion_to_script::{
-    CriterionToScriptConverter, VerificationCriterion, CriterionType,
-    GeneratedScript, ScriptType,
-};
-pub use multi_pass_generator::{
-    MultiPassGenerator, MultiPassConfig, PassResult, GenerationSummary,
-};
-pub use traceability::{
-    TraceabilityMatrix, TraceabilityLink, TraceabilityItemType, CoverageStatus,
-    TraceabilityStats,
+    CriterionToScriptConverter, CriterionType, GeneratedScript, ScriptType, VerificationCriterion,
 };
 pub use document_parser::{
-    DocumentParser, ParsedDocument, DocumentSection, ListItem as DocumentListItem,
+    DocumentParser, DocumentSection, ListItem as DocumentListItem, ParsedDocument,
+};
+pub use multi_pass_generator::{
+    GenerationSummary, MultiPassConfig, MultiPassGenerator, PassResult,
+};
+pub use pipeline::{RequirementsInput, StartChainParams, StartChainPipeline, StartChainResult};
+pub use prd_generator::PrdGenerator;
+pub use prd_validators::{
+    AiGapValidator, AiGapValidatorConfig, CompositeValidator, CoverageValidator, IssueSeverity,
+    NoManualValidator, QualityValidator, ValidationIssue, ValidationResult as ValidatorResult,
 };
 pub use prompt_templates::{PromptTemplate, PromptTemplates};
-pub use prd_validators::{
-    AiGapValidator, AiGapValidatorConfig, CoverageValidator, QualityValidator, NoManualValidator,
-    CompositeValidator, ValidationIssue, IssueSeverity, ValidationResult as ValidatorResult,
+pub use requirements_interviewer::{
+    Importance, InterviewQuestion, InterviewResult, QuestionCategory, RequirementsInterviewer,
 };
 pub use requirements_inventory::{
-    extract_requirement_ids, map_requirements_to_prd, RequirementsInventory,
+    RequirementsInventory, extract_requirement_ids, map_requirements_to_prd,
 };
-pub use pipeline::{
-    StartChainPipeline, StartChainParams, StartChainResult, RequirementsInput,
+pub use requirements_parser::RequirementsParser;
+pub use structure_detector::{
+    CodeBlock, DocumentStatistics, DocumentStructure, Link, ListItem, ListType, Section,
+    StructureDetector,
+};
+pub use test_plan_generator::{
+    CoverageTargets, TestCase, TestPlan, TestPlanGenerator, TestSuite, VerificationType,
+};
+pub use tier_plan_generator::{PhasePlan, SubtaskPlan, TaskPlan, TierPlan, TierPlanGenerator};
+pub use traceability::{
+    CoverageStatus, TraceabilityItemType, TraceabilityLink, TraceabilityMatrix, TraceabilityStats,
+};
+pub use validation_gate::{
+    CheckResult, Severity, ValidationError, ValidationGate, ValidationResult, ValidationWarning,
 };
 
 // Re-export types
-pub use crate::types::{ParsedRequirements, RequirementsSection, PRD};
+pub use crate::types::{PRD, ParsedRequirements, RequirementsSection};

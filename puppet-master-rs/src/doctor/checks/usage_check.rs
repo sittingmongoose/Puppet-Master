@@ -106,7 +106,7 @@ pub enum UsageStatus {
 
 impl UsageStatus {
     /// Determine status from usage percentage
-        #[allow(dead_code)]
+    #[allow(dead_code)]
     pub fn from_percent(percent: f64) -> Self {
         if percent >= 95.0 {
             Self::Critical
@@ -118,7 +118,7 @@ impl UsageStatus {
     }
 
     /// Check if this status indicates a problem
-        #[allow(dead_code)]
+    #[allow(dead_code)]
     pub fn is_problem(&self) -> bool {
         matches!(self, Self::Warning | Self::Critical)
     }
@@ -149,10 +149,7 @@ impl DoctorCheck for UsageCheck {
             match result.status {
                 UsageStatus::Critical => {
                     has_critical = true;
-                    warn!(
-                        "Critical usage for {}: {}",
-                        result.platform, result.message
-                    );
+                    warn!("Critical usage for {}: {}", result.platform, result.message);
                     messages.push(format!("[WARN]  {}: {}", result.platform, result.message));
                 }
                 UsageStatus::Warning => {

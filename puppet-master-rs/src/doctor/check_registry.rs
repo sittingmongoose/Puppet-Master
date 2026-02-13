@@ -83,7 +83,9 @@ impl CheckRegistry {
 
         // Additional checks
         self.register(Arc::new(playwright_check::PlaywrightCheck::new()));
-        self.register(Arc::new(platform_compatibility_check::PlatformCompatibilityCheck::new()));
+        self.register(Arc::new(
+            platform_compatibility_check::PlatformCompatibilityCheck::new(),
+        ));
         self.register(Arc::new(wiring_check::WiringCheck::new()));
     }
 
@@ -166,7 +168,10 @@ impl CheckRegistry {
     }
 
     /// Attempt to fix all fixable issues
-    pub async fn fix_all(&self, dry_run: bool) -> Result<Vec<(String, Option<crate::types::FixResult>)>> {
+    pub async fn fix_all(
+        &self,
+        dry_run: bool,
+    ) -> Result<Vec<(String, Option<crate::types::FixResult>)>> {
         let mut fixes = Vec::new();
 
         for check in &self.checks {

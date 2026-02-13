@@ -6,7 +6,7 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-use crate::types::{PuppetMasterConfig, Platform};
+use crate::types::{Platform, PuppetMasterConfig};
 
 /// Start chain override configuration
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
@@ -252,10 +252,7 @@ fn apply_logging_overrides(config: &mut PuppetMasterConfig, overrides: &LoggingO
     }
 }
 
-fn apply_verification_overrides(
-    config: &mut PuppetMasterConfig,
-    overrides: &VerificationOverride,
-) {
+fn apply_verification_overrides(config: &mut PuppetMasterConfig, overrides: &VerificationOverride) {
     if overrides.skip_verification {
         config.verification.strict_mode = false;
     }
@@ -292,8 +289,11 @@ mod tests {
     };
 
     fn create_test_config() -> PuppetMasterConfig {
-        use crate::types::{ProjectConfig, OrchestratorConfig, PathConfig, UiConfig, BranchingConfig, MemoryConfig, Platform, ModelLevel, TaskFailureStyle};
         use crate::types::config::LimitAction;
+        use crate::types::{
+            BranchingConfig, MemoryConfig, ModelLevel, OrchestratorConfig, PathConfig, Platform,
+            ProjectConfig, TaskFailureStyle, UiConfig,
+        };
         use std::path::PathBuf;
 
         PuppetMasterConfig {
@@ -391,6 +391,7 @@ mod tests {
             platforms: HashMap::new(),
             paths: PathConfig::default(),
             ui: UiConfig::default(),
+            gui_automation: crate::types::GuiAutomationConfig::default(),
         }
     }
 

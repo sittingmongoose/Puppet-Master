@@ -100,9 +100,11 @@ impl GateRunner {
             std::time::Duration::from_secs(self.config.timeout_seconds),
             async {
                 if self.config.parallel_execution {
-                    self.verify_criteria_parallel(gate_id, &session_id, criteria).await
+                    self.verify_criteria_parallel(gate_id, &session_id, criteria)
+                        .await
                 } else {
-                    self.verify_criteria_sequential(gate_id, &session_id, criteria).await
+                    self.verify_criteria_sequential(gate_id, &session_id, criteria)
+                        .await
                 }
             },
         )
@@ -170,7 +172,11 @@ impl GateRunner {
             .collect();
 
         let report_text = if all_passed {
-            format!("All {} criteria passed for gate {}", criteria.len(), gate_id)
+            format!(
+                "All {} criteria passed for gate {}",
+                criteria.len(),
+                gate_id
+            )
         } else {
             let failed_count = criterion_results.iter().filter(|cr| !cr.passed).count();
             format!(
@@ -202,7 +208,10 @@ impl GateRunner {
 
         for criterion in criteria {
             if stopped {
-                results.push(skipped_result(criterion, "Skipped due to stop-on-first-failure"));
+                results.push(skipped_result(
+                    criterion,
+                    "Skipped due to stop-on-first-failure",
+                ));
                 continue;
             }
 
@@ -281,7 +290,12 @@ impl GateRunner {
             .collect()
     }
 
-    async fn verify_criterion(&self, gate_id: &str, session_id: &str, criterion: &Criterion) -> CriterionResult {
+    async fn verify_criterion(
+        &self,
+        gate_id: &str,
+        session_id: &str,
+        criterion: &Criterion,
+    ) -> CriterionResult {
         debug!("Verifying criterion: {}", criterion.id);
 
         verify_one(
@@ -357,13 +371,7 @@ async fn verify_one(
 
                 let res = tokio::task::spawn_blocking(move || {
                     if let Some(content) = metadata.get("content").cloned() {
-                        store2.store_text(
-                            &tier_id,
-                            &session_id,
-                            evidence_type,
-                            &content,
-                            metadata,
-                        )
+                        store2.store_text(&tier_id, &session_id, evidence_type, &content, metadata)
                     } else if let Ok(bytes) = std::fs::read(&path_hint) {
                         store2.store_evidence(
                             &tier_id,

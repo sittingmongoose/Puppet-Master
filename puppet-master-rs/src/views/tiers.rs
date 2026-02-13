@@ -2,11 +2,11 @@
 //!
 //! Displays the phase/task/subtask hierarchy with expand/collapse, acceptance criteria, and status colors.
 
-use iced::widget::{column, row, text, container, scrollable, Space, text_editor};
-use iced::{Element, Length, Border};
 use crate::app::Message;
-use crate::theme::{AppTheme, tokens, fonts, colors};
+use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::widgets::*;
+use iced::widget::{Space, column, container, row, scrollable, text, text_editor};
+use iced::{Border, Element, Length};
 
 /// Tier display node for tree rendering
 #[derive(Debug, Clone)]
@@ -64,7 +64,9 @@ pub fn view<'a>(
     tier_details_content: &'a text_editor::Content,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
+    let mut content = column![]
+        .spacing(tokens::spacing::LG)
+        .padding(tokens::spacing::LG);
 
     // Header
     content = content.push(
@@ -80,7 +82,7 @@ pub fn view<'a>(
                 .on_press(Message::CollapseAllTiers),
         ]
         .spacing(tokens::spacing::SM)
-        .align_y(iced::Alignment::Center)
+        .align_y(iced::Alignment::Center),
     );
 
     // Tree view
@@ -104,8 +106,13 @@ pub fn view<'a>(
                 // Expand/collapse button
                 if node.has_children {
                     Element::from(
-                        styled_button_sized(theme, expand_icon, ButtonVariant::Ghost, ButtonSize::Small)
-                            .on_press(Message::ToggleTierExpand(node.id.clone()))
+                        styled_button_sized(
+                            theme,
+                            expand_icon,
+                            ButtonVariant::Ghost,
+                            ButtonSize::Small,
+                        )
+                        .on_press(Message::ToggleTierExpand(node.id.clone())),
                     )
                 } else {
                     Element::from(Space::new().width(Length::Fixed(32.0)))
@@ -157,16 +164,18 @@ pub fn view<'a>(
                             Element::from(
                                 text(format!(" (iter: {})", node.iteration_count))
                                     .size(tokens::font_size::XS)
-                                    .color(colors::SAFETY_ORANGE)
+                                    .color(colors::SAFETY_ORANGE),
                             )
                         } else {
                             Element::from(Space::new().width(Length::Shrink))
                         },
-                    ].spacing(tokens::spacing::XXS),
+                    ]
+                    .spacing(tokens::spacing::XXS),
                     text(&node.title)
                         .size(tokens::font_size::BASE)
                         .color(theme.ink()),
-                ].spacing(tokens::spacing::XXS),
+                ]
+                .spacing(tokens::spacing::XXS),
             ]
             .spacing(tokens::spacing::SM)
             .align_y(iced::Alignment::Center),
@@ -180,26 +189,27 @@ pub fn view<'a>(
                     .size(tokens::font_size::SM)
                     .font(fonts::FONT_UI_BOLD)
                     .color(theme.ink()),
-            ].spacing(tokens::spacing::XXS);
+            ]
+            .spacing(tokens::spacing::XXS);
 
             for criterion in &node.acceptance_criteria {
                 criteria_col = criteria_col.push(
                     text(format!("• {}", criterion))
                         .size(tokens::font_size::SM)
-                        .color(theme.ink_faded())
+                        .color(theme.ink_faded()),
                 );
             }
 
-            node_content = node_content.push(
-                container(criteria_col)
-                    .padding(tokens::spacing::SM)
-                    .style(move |_: &iced::Theme| container::Style {
-                        background: Some(iced::Background::Color(
-                            iced::Color { a: 0.1, ..theme.ink() }
-                        )),
+            node_content =
+                node_content.push(container(criteria_col).padding(tokens::spacing::SM).style(
+                    move |_: &iced::Theme| container::Style {
+                        background: Some(iced::Background::Color(iced::Color {
+                            a: 0.1,
+                            ..theme.ink()
+                        })),
                         ..Default::default()
-                    })
-            );
+                    },
+                ));
         }
 
         let node_container = container(node_content)
@@ -208,9 +218,10 @@ pub fn view<'a>(
             .style(move |_theme: &iced::Theme| {
                 if is_selected {
                     iced::widget::container::Style {
-                        background: Some(iced::Background::Color(
-                            iced::Color { a: 0.2, ..colors::ACID_LIME }
-                        )),
+                        background: Some(iced::Background::Color(iced::Color {
+                            a: 0.2,
+                            ..colors::ACID_LIME
+                        })),
                         border: Border {
                             color: colors::ACID_LIME,
                             width: tokens::borders::MEDIUM,
@@ -224,35 +235,28 @@ pub fn view<'a>(
             });
 
         tree_col = tree_col.push(
-            iced::widget::mouse_area(node_container)
-                .on_press(Message::SelectTier(node.id.clone()))
+            iced::widget::mouse_area(node_container).on_press(Message::SelectTier(node.id.clone())),
         );
     }
 
-    let tree_scroll = scrollable(tree_col)
-        .height(Length::Fill);
+    let tree_scroll = scrollable(tree_col).height(Length::Fill);
 
     // Split view: tree on left, details on right
     let main_row = if let Some(details) = selected_details {
         row![
-            container(tree_scroll)
-                .width(Length::FillPortion(2)),
+            container(tree_scroll).width(Length::FillPortion(2)),
             container(render_details(details, tier_details_content, theme))
                 .width(Length::FillPortion(1)),
-        ].spacing(tokens::spacing::LG)
-    } else {
-        row![
-            container(tree_scroll)
-                .width(Length::Fill),
         ]
+        .spacing(tokens::spacing::LG)
+    } else {
+        row![container(tree_scroll).width(Length::Fill),]
     };
 
-    content = content.push(
-        themed_panel(
-            container(main_row).padding(tokens::spacing::MD),
-            theme
-        )
-    );
+    content = content.push(themed_panel(
+        container(main_row).padding(tokens::spacing::MD),
+        theme,
+    ));
 
     scrollable(content)
         .width(Length::Fill)
@@ -271,7 +275,11 @@ pub struct TierDetails {
     pub platform: String,
 }
 
-fn render_details<'a>(details: &'a TierDetails, tier_details_content: &'a text_editor::Content, theme: &'a AppTheme) -> Element<'a, Message> {
+fn render_details<'a>(
+    details: &'a TierDetails,
+    tier_details_content: &'a text_editor::Content,
+    theme: &'a AppTheme,
+) -> Element<'a, Message> {
     let content = column![
         text("Details")
             .size(tokens::font_size::LG)
@@ -286,7 +294,8 @@ fn render_details<'a>(details: &'a TierDetails, tier_details_content: &'a text_e
             text(&details.id)
                 .size(tokens::font_size::BASE)
                 .color(theme.ink_faded()),
-        ].spacing(tokens::spacing::XXS),
+        ]
+        .spacing(tokens::spacing::XXS),
         column![
             text("Title:")
                 .size(tokens::font_size::SM)
@@ -295,7 +304,8 @@ fn render_details<'a>(details: &'a TierDetails, tier_details_content: &'a text_e
             text(&details.title)
                 .size(tokens::font_size::BASE)
                 .color(theme.ink_faded()),
-        ].spacing(tokens::spacing::XXS),
+        ]
+        .spacing(tokens::spacing::XXS),
         column![
             text("Description:")
                 .size(tokens::font_size::SM)
@@ -310,7 +320,8 @@ fn render_details<'a>(details: &'a TierDetails, tier_details_content: &'a text_e
                     .height(Length::Fixed(150.0))
             )
             .width(Length::Fill)
-        ].spacing(tokens::spacing::XXS),
+        ]
+        .spacing(tokens::spacing::XXS),
         column![
             text("Status:")
                 .size(tokens::font_size::SM)
@@ -333,7 +344,8 @@ fn render_details<'a>(details: &'a TierDetails, tier_details_content: &'a text_e
                     ..Default::default()
                 }
             }),
-        ].spacing(tokens::spacing::XXS),
+        ]
+        .spacing(tokens::spacing::XXS),
         column![
             text("Platform:")
                 .size(tokens::font_size::SM)
@@ -342,8 +354,10 @@ fn render_details<'a>(details: &'a TierDetails, tier_details_content: &'a text_e
             text(&details.platform)
                 .size(tokens::font_size::BASE)
                 .color(theme.ink_faded()),
-        ].spacing(tokens::spacing::XXS),
-    ].spacing(tokens::spacing::MD);
+        ]
+        .spacing(tokens::spacing::XXS),
+    ]
+    .spacing(tokens::spacing::MD);
 
     themed_panel(scrollable(content), theme).into()
 }

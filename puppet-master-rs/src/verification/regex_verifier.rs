@@ -37,13 +37,17 @@ impl Verifier for RegexVerifier {
         debug!("Checking regex pattern in file: {}", file);
 
         if file.is_empty() || pattern.is_empty() {
-            return VerifierResult::failure("Regex verifier requires expected in 'file:pattern' format");
+            return VerifierResult::failure(
+                "Regex verifier requires expected in 'file:pattern' format",
+            );
         }
 
         // Read file content
         let content = match std::fs::read_to_string(file) {
             Ok(c) => c,
-            Err(e) => return VerifierResult::failure(format!("Failed to read file {}: {}", file, e)),
+            Err(e) => {
+                return VerifierResult::failure(format!("Failed to read file {}: {}", file, e));
+            }
         };
 
         // Compile and check regex
@@ -62,7 +66,10 @@ impl Verifier for RegexVerifier {
         };
 
         // Find all matches for evidence
-        let matches: Vec<_> = re.find_iter(&content).map(|m| m.as_str().to_string()).collect();
+        let matches: Vec<_> = re
+            .find_iter(&content)
+            .map(|m| m.as_str().to_string())
+            .collect();
         let match_summary = if matches.is_empty() {
             "No matches found".to_string()
         } else {

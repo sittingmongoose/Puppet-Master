@@ -115,13 +115,14 @@ impl ProcessRegistry {
         // Step 2: Wait for graceful shutdown with polling
         let start = Instant::now();
         let poll_interval = Duration::from_millis(100);
-        
+
         while start.elapsed() < timeout {
-            let alive: Vec<u32> = pids.iter()
+            let alive: Vec<u32> = pids
+                .iter()
                 .copied()
                 .filter(|&pid| is_process_alive(pid))
                 .collect();
-            
+
             if alive.is_empty() {
                 log::info!("All processes terminated gracefully");
                 break;
@@ -153,7 +154,8 @@ impl ProcessRegistry {
         }
 
         // Step 5: Verify all processes terminated
-        let still_alive: Vec<u32> = pids.iter()
+        let still_alive: Vec<u32> = pids
+            .iter()
             .copied()
             .filter(|&pid| is_process_alive(pid))
             .collect();
@@ -163,11 +165,19 @@ impl ProcessRegistry {
         inner.clear();
 
         if !still_alive.is_empty() {
-            log::error!("Failed to kill {} processes: {:?}", still_alive.len(), still_alive);
+            log::error!(
+                "Failed to kill {} processes: {:?}",
+                still_alive.len(),
+                still_alive
+            );
             anyhow::bail!("Failed to kill {} processes", still_alive.len());
         }
 
-        log::info!("Process cleanup complete: {} terminated, {} failed", killed, failed);
+        log::info!(
+            "Process cleanup complete: {} terminated, {} failed",
+            killed,
+            failed
+        );
         Ok(())
     }
 
@@ -209,7 +219,7 @@ pub enum Signal {
 }
 
 /// Perform graceful shutdown of all processes
-/// 
+///
 /// This function:
 /// 1. Sets the global shutdown flag
 /// 2. Sends SIGTERM to all tracked processes
@@ -251,22 +261,22 @@ pub fn graceful_shutdown_sync() {
 }
 
 /// Setup signal handlers for graceful shutdown
-/// 
+///
 /// Handles:
 /// - SIGINT and SIGTERM on Unix
 /// - Ctrl+C on Windows
-/// 
+///
 /// When a signal is received, sets the shutdown flag and calls graceful_shutdown
 pub fn setup_signal_handlers() -> Result<()> {
     ctrlc::set_handler(move || {
         log::info!("Received shutdown signal (Ctrl+C)");
-        
+
         // Set shutdown flag
         set_shutdown_flag();
-        
+
         // Perform graceful shutdown
         graceful_shutdown_sync();
-        
+
         // Exit the process
         std::process::exit(0);
     })
@@ -277,7 +287,7 @@ pub fn setup_signal_handlers() -> Result<()> {
 }
 
 /// RAII guard that kills a process when dropped
-/// 
+///
 /// This guard automatically:
 /// - Sends SIGTERM when dropped
 /// - Waits briefly for graceful exit
@@ -294,7 +304,7 @@ impl ProcessDropGuard {
     pub fn new(pid: u32) -> Self {
         let registry = ProcessRegistry::global();
         registry.register(pid);
-        
+
         Self {
             pid,
             registry,
@@ -306,7 +316,7 @@ impl ProcessDropGuard {
     pub fn with_grace_period(pid: u32, grace_period: Duration) -> Self {
         let registry = ProcessRegistry::global();
         registry.register(pid);
-        
+
         Self {
             pid,
             registry,
@@ -342,7 +352,10 @@ impl Drop for ProcessDropGuard {
                     log::debug!("Process {} exited gracefully", self.pid);
                 } else {
                     // Force kill with SIGKILL
-                    log::warn!("Process {} did not exit gracefully, force killing", self.pid);
+                    log::warn!(
+                        "Process {} did not exit gracefully, force killing",
+                        self.pid
+                    );
                     if let Err(e) = kill_process(self.pid, Signal::Kill) {
                         log::error!("Failed to force kill process {}: {}", self.pid, e);
                     }
@@ -370,7 +383,12 @@ pub fn kill_process(pid: u32, signal: Signal) -> Result<()> {
 
         if result != 0 {
             let err = std::io::Error::last_os_error();
-            anyhow::bail!("Failed to send signal {:?} to process {}: {}", signal, pid, err);
+            anyhow::bail!(
+                "Failed to send signal {:?} to process {}: {}",
+                signal,
+                pid,
+                err
+            );
         }
 
         log::debug!("Sent signal {:?} to process {}", signal, pid);
@@ -437,7 +455,7 @@ pub fn is_process_running(pid: u32) -> bool {
 }
 
 /// Wait for a process to exit with timeout
-/// 
+///
 /// Returns true if the process exited within the timeout, false otherwise
 pub fn wait_for_exit(pid: u32, timeout: Duration) -> bool {
     let start = Instant::now();
@@ -454,7 +472,7 @@ pub fn wait_for_exit(pid: u32, timeout: Duration) -> bool {
 }
 
 /// Kill a process group (Unix only)
-/// 
+///
 /// On Unix, kills the entire process group by sending a signal to -pgid
 #[cfg(unix)]
 pub fn kill_process_group(pid: u32, signal: Signal) -> Result<()> {
@@ -467,12 +485,17 @@ pub fn kill_process_group(pid: u32, signal: Signal) -> Result<()> {
 
     // Negative PID means process group
     let pgid = -(pid as i32);
-    
+
     let result = unsafe { libc::kill(pgid, sig) };
 
     if result != 0 {
         let err = std::io::Error::last_os_error();
-        anyhow::bail!("Failed to send signal {:?} to process group {}: {}", signal, pid, err);
+        anyhow::bail!(
+            "Failed to send signal {:?} to process group {}: {}",
+            signal,
+            pid,
+            err
+        );
     }
 
     log::debug!("Sent signal {:?} to process group {}", signal, pid);
@@ -542,7 +565,7 @@ fn kill_process_with_timeout(pid: u32, graceful_timeout: Duration) -> Result<()>
 }
 
 /// Spawn a tracked process with automatic registration and cleanup
-/// 
+///
 /// Returns the child process and a drop guard. The process will be:
 /// - Automatically registered in the global registry
 /// - Killed when the guard is dropped (unless disarmed)
@@ -643,7 +666,10 @@ mod tests {
 
         // Should not be running (or skip test if it's still alive - WSL issue)
         if !dead {
-            eprintln!("Warning: Process {} still alive after kill - may be WSL limitation", pid);
+            eprintln!(
+                "Warning: Process {} still alive after kill - may be WSL limitation",
+                pid
+            );
             let _ = kill_process(pid, Signal::Kill); // Force kill
             let _ = child.wait();
             // Don't fail the test in WSL environments where process cleanup is flaky
@@ -713,7 +739,10 @@ mod tests {
 
         // Process should be dead (or skip if WSL issue)
         if !dead {
-            eprintln!("Warning: Process {} still alive after drop - may be WSL limitation", pid);
+            eprintln!(
+                "Warning: Process {} still alive after drop - may be WSL limitation",
+                pid
+            );
             let _ = kill_process(pid, Signal::Kill);
             let _ = child.wait();
             return;
@@ -750,7 +779,10 @@ mod tests {
 
         // Process should be dead (or skip if WSL issue)
         if !dead {
-            eprintln!("Warning: Process {} still alive after drop - may be WSL limitation", pid);
+            eprintln!(
+                "Warning: Process {} still alive after drop - may be WSL limitation",
+                pid
+            );
             let _ = kill_process(pid, Signal::Kill);
             let _ = child.wait();
             return;
@@ -810,7 +842,10 @@ mod tests {
 
         // Main process should be dead (or skip if WSL issue)
         if !dead {
-            eprintln!("Warning: Process {} still alive after kill_process_group - may be WSL limitation", pid);
+            eprintln!(
+                "Warning: Process {} still alive after kill_process_group - may be WSL limitation",
+                pid
+            );
             let _ = kill_process(pid, Signal::Kill);
             let _ = child.wait();
             return;

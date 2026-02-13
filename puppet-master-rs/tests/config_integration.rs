@@ -45,12 +45,19 @@ platforms:
 
     // Load the config
     let result = ConfigManager::load(&config_path);
-    assert!(result.is_ok(), "Failed to load valid config: {:?}", result.err());
+    assert!(
+        result.is_ok(),
+        "Failed to load valid config: {:?}",
+        result.err()
+    );
 
     let config_mgr = result.unwrap();
     let config = config_mgr.get_config();
     assert_eq!(config.project.name, "test-project");
-    assert_eq!(config.project.working_directory.to_str().unwrap(), "/tmp/test-project");
+    assert_eq!(
+        config.project.working_directory.to_str().unwrap(),
+        "/tmp/test-project"
+    );
     assert_eq!(config.tiers.phase.max_iterations, 3);
     assert_eq!(config.tiers.task.max_iterations, 5);
 }
@@ -60,11 +67,20 @@ fn test_default_config_works() {
     // Create a default config manager
     let config_mgr = ConfigManager::new();
     let config = config_mgr.get_config();
-    
+
     // Verify defaults are reasonable
-    assert!(!config.project.name.is_empty(), "Project name should not be empty");
-    assert!(config.tiers.phase.max_iterations > 0, "Phase max_iterations should be > 0");
-    assert!(config.tiers.task.max_iterations > 0, "Task max_iterations should be > 0");
+    assert!(
+        !config.project.name.is_empty(),
+        "Project name should not be empty"
+    );
+    assert!(
+        config.tiers.phase.max_iterations > 0,
+        "Phase max_iterations should be > 0"
+    );
+    assert!(
+        config.tiers.task.max_iterations > 0,
+        "Task max_iterations should be > 0"
+    );
 }
 
 #[test]
@@ -111,13 +127,13 @@ fn test_config_save_and_reload() {
     let config_mgr = ConfigManager::new();
     let mut config = config_mgr.get_config();
     config.project.name = "modified-project".to_string();
-    
+
     config_mgr.set_config(config.clone()).unwrap();
     config_mgr.save_to(&config_path).unwrap();
-    
+
     // Load it back
     let config_mgr2 = ConfigManager::load(&config_path).unwrap();
     let config2 = config_mgr2.get_config();
-    
+
     assert_eq!(config2.project.name, "modified-project");
 }

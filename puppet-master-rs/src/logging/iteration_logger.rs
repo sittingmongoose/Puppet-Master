@@ -206,7 +206,9 @@ impl IterationLogger {
         })?;
 
         // Create a log file per session
-        let log_file = self.log_dir.join(format!("{}.jsonl", iteration_log.session_id));
+        let log_file = self
+            .log_dir
+            .join(format!("{}.jsonl", iteration_log.session_id));
 
         // Open file in append mode
         let mut file = OpenOptions::new()
@@ -263,9 +265,15 @@ impl IterationLogger {
     }
 
     /// Read a specific iteration
-    pub fn read_iteration(&self, session_id: &str, iteration_id: &str) -> Result<Option<IterationLog>> {
+    pub fn read_iteration(
+        &self,
+        session_id: &str,
+        iteration_id: &str,
+    ) -> Result<Option<IterationLog>> {
         let logs = self.read_session(session_id)?;
-        Ok(logs.into_iter().find(|log| log.iteration_id == iteration_id))
+        Ok(logs
+            .into_iter()
+            .find(|log| log.iteration_id == iteration_id))
     }
 
     /// Get statistics for a session
@@ -412,7 +420,11 @@ mod tests {
         assert_eq!(stats.failed_iterations, 1);
         // Duration is calculated from timestamps which are very close together,
         // so total_duration_ms will be close to 0
-        assert!(stats.total_duration_ms < 100, "Duration should be minimal, got {}", stats.total_duration_ms);
+        assert!(
+            stats.total_duration_ms < 100,
+            "Duration should be minimal, got {}",
+            stats.total_duration_ms
+        );
         assert_eq!(stats.total_tokens, 2700);
         assert!((stats.total_cost - 0.09).abs() < 0.001);
     }
@@ -422,8 +434,10 @@ mod tests {
         let temp_dir = TempDir::new().unwrap();
         let logger = IterationLogger::new(temp_dir.path().to_path_buf());
 
-        let log1 = IterationLog::new("session1", "iter1", Platform::Cursor, "model1").complete(true);
-        let log2 = IterationLog::new("session2", "iter1", Platform::Claude, "model2").complete(true);
+        let log1 =
+            IterationLog::new("session1", "iter1", Platform::Cursor, "model1").complete(true);
+        let log2 =
+            IterationLog::new("session2", "iter1", Platform::Claude, "model2").complete(true);
 
         logger.log(&log1).unwrap();
         logger.log(&log2).unwrap();

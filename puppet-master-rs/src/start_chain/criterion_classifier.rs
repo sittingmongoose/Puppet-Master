@@ -3,7 +3,7 @@
 //! Determines what type of verification each requirement needs
 //! and whether it can be automated.
 
-use crate::types::{ParsedRequirements, RequirementsSection, PRD, Subtask, Priority};
+use crate::types::{PRD, ParsedRequirements, Priority, RequirementsSection, Subtask};
 use anyhow::Result;
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
@@ -136,8 +136,13 @@ pub struct ClassificationResult {
 
 impl CriterionClassifier {
     /// Classify requirements into verification criteria.
-    pub fn classify_requirements(requirements: &ParsedRequirements) -> Result<ClassificationResult> {
-        info!("Classifying requirements for: {}", requirements.project_name);
+    pub fn classify_requirements(
+        requirements: &ParsedRequirements,
+    ) -> Result<ClassificationResult> {
+        info!(
+            "Classifying requirements for: {}",
+            requirements.project_name
+        );
 
         let mut criteria = Vec::new();
 
@@ -180,7 +185,7 @@ impl CriterionClassifier {
         // Parse content for individual requirements
         for line in section.content.lines() {
             let trimmed = line.trim();
-            
+
             if Self::is_requirement_line(trimmed) {
                 let requirement_text = trimmed
                     .trim_start_matches("- ")
@@ -219,10 +224,8 @@ impl CriterionClassifier {
         // If no acceptance criteria, classify the subtask itself
         if criteria.is_empty() {
             if let Some(ref description) = subtask.description {
-                let criterion = Self::classify_requirement(
-                    description,
-                    &format!("{}-C01", subtask.id),
-                )?;
+                let criterion =
+                    Self::classify_requirement(description, &format!("{}-C01", subtask.id))?;
                 criteria.push(criterion);
             }
         }
@@ -231,10 +234,7 @@ impl CriterionClassifier {
     }
 
     /// Classify a single requirement text.
-    fn classify_requirement(
-        text: &str,
-        requirement_id: &str,
-    ) -> Result<ClassifiedCriterion> {
+    fn classify_requirement(text: &str, requirement_id: &str) -> Result<ClassifiedCriterion> {
         let verification_type = Self::infer_verification_type(text);
         let automated = verification_type.is_automatable();
         let priority = Self::infer_priority(text);
@@ -256,7 +256,7 @@ impl CriterionClassifier {
 
     /// Check if a line contains a requirement.
     fn is_requirement_line(line: &str) -> bool {
-        !line.is_empty() 
+        !line.is_empty()
             && (line.starts_with("- ")
                 || line.starts_with("* ")
                 || line.starts_with("+ ")
@@ -332,10 +332,11 @@ impl CriterionClassifier {
                 // Try to extract filename
                 if let Some(start) = lower.find("file") {
                     if let Some(name_start) = text[start..].find(|c: char| c == '`' || c == '"') {
-                        if let Some(name_end) = text[start + name_start + 1..]
-                            .find(|c: char| c == '`' || c == '"')
+                        if let Some(name_end) =
+                            text[start + name_start + 1..].find(|c: char| c == '`' || c == '"')
                         {
-                            let filename = &text[start + name_start + 1..start + name_start + 1 + name_end];
+                            let filename =
+                                &text[start + name_start + 1..start + name_start + 1 + name_end];
                             return Some(format!("test -f {}", filename));
                         }
                     }
@@ -355,7 +356,9 @@ impl CriterionClassifier {
             VerificationType::UnitTest => Some("All tests pass".to_string()),
             VerificationType::IntegrationTest => Some("Integration tests pass".to_string()),
             VerificationType::Security => Some("No security vulnerabilities found".to_string()),
-            VerificationType::Documentation => Some("Documentation generates successfully".to_string()),
+            VerificationType::Documentation => {
+                Some("Documentation generates successfully".to_string())
+            }
             VerificationType::FileExists => Some("File exists".to_string()),
             VerificationType::Command => Some("Command exits with code 0".to_string()),
             _ => None,
@@ -397,7 +400,7 @@ impl CriterionClassifier {
         let total_count = criteria.len();
         let automatable_count = criteria.iter().filter(|c| c.automated).count();
         let manual_count = total_count - automatable_count;
-        
+
         let automation_coverage = if total_count > 0 {
             (automatable_count as f64 / total_count as f64) * 100.0
         } else {
@@ -417,7 +420,7 @@ impl CriterionClassifier {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::{ParsedRequirements, ItemStatus};
+    use crate::types::{ItemStatus, ParsedRequirements};
 
     #[test]
     fn test_infer_verification_type() {
@@ -457,8 +460,12 @@ mod tests {
 
     #[test]
     fn test_is_requirement_line() {
-        assert!(CriterionClassifier::is_requirement_line("- Must do something"));
-        assert!(CriterionClassifier::is_requirement_line("Should verify this"));
+        assert!(CriterionClassifier::is_requirement_line(
+            "- Must do something"
+        ));
+        assert!(CriterionClassifier::is_requirement_line(
+            "Should verify this"
+        ));
         assert!(!CriterionClassifier::is_requirement_line(""));
         assert!(!CriterionClassifier::is_requirement_line("   "));
     }
@@ -480,10 +487,10 @@ mod tests {
 
     #[test]
     fn test_classify_requirements() {
-        let requirements = ParsedRequirements::new("Test Project")
-            .with_section(RequirementsSection::new(
+        let requirements =
+            ParsedRequirements::new("Test Project").with_section(RequirementsSection::new(
                 "Features",
-                "- Must build successfully\n- Should pass all tests"
+                "- Must build successfully\n- Should pass all tests",
             ));
 
         let result = CriterionClassifier::classify_requirements(&requirements).unwrap();
@@ -495,7 +502,7 @@ mod tests {
     fn test_suggest_verification_command() {
         let cmd = CriterionClassifier::suggest_verification_command(
             "Must build successfully",
-            VerificationType::Build
+            VerificationType::Build,
         );
         assert!(cmd.is_some());
         assert!(cmd.unwrap().contains("cargo"));
@@ -503,10 +510,8 @@ mod tests {
 
     #[test]
     fn test_suggest_expected_result() {
-        let result = CriterionClassifier::suggest_expected_result(
-            "Run tests",
-            VerificationType::UnitTest
-        );
+        let result =
+            CriterionClassifier::suggest_expected_result("Run tests", VerificationType::UnitTest);
         assert!(result.is_some());
         assert!(result.unwrap().contains("pass"));
     }

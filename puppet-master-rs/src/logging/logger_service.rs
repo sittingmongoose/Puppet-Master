@@ -92,7 +92,8 @@ impl LoggerService {
 
         let activity_logger = ActivityLogger::new(logs_dir.join("activity.jsonl"));
         let error_logger = ErrorLogger::new(logs_dir.join("errors.jsonl"));
-        let intensive_logger = IntensiveLogger::new(logs_dir.join("intensive.jsonl"), intensive_enabled);
+        let intensive_logger =
+            IntensiveLogger::new(logs_dir.join("intensive.jsonl"), intensive_enabled);
 
         Self {
             inner: Arc::new(Mutex::new(LoggerServiceInner {
@@ -159,12 +160,9 @@ impl LoggerService {
                 ServiceLogLevel::Warn => super::IntensiveLogLevel::Warn,
                 ServiceLogLevel::Error | ServiceLogLevel::Fatal => super::IntensiveLogLevel::Error,
             };
-            inner.intensive_logger.log_simple(
-                &module_str,
-                "log",
-                intensive_level,
-                &message_str,
-            )?;
+            inner
+                .intensive_logger
+                .log_simple(&module_str, "log", intensive_level, &message_str)?;
         }
 
         // Log errors to error logger
@@ -182,7 +180,11 @@ impl LoggerService {
     }
 
     /// Log an activity event
-    pub fn log_activity(&self, event_type: ActivityEventType, description: impl Into<String>) -> Result<()> {
+    pub fn log_activity(
+        &self,
+        event_type: ActivityEventType,
+        description: impl Into<String>,
+    ) -> Result<()> {
         let inner = self.inner.lock().unwrap();
         inner.activity_logger.log_simple(event_type, description)
     }
@@ -380,7 +382,12 @@ mod tests {
         context.insert("key".to_string(), "value".to_string());
 
         service
-            .log(ServiceLogLevel::Info, "test_module", "Test message", context)
+            .log(
+                ServiceLogLevel::Info,
+                "test_module",
+                "Test message",
+                context,
+            )
             .unwrap();
 
         // Test that error was logged for error level
@@ -424,7 +431,9 @@ mod tests {
             .log_error(ErrorCategory::Platform, "Platform error", context)
             .unwrap();
 
-        let errors = service.get_errors_by_category(ErrorCategory::Platform).unwrap();
+        let errors = service
+            .get_errors_by_category(ErrorCategory::Platform)
+            .unwrap();
         assert_eq!(errors.len(), 1);
         assert_eq!(errors[0].message, "Platform error");
     }
@@ -476,7 +485,7 @@ mod tests {
         );
         assert_eq!(
             service.determine_error_category("network_client"),
-            ErrorCategory::Platform  // Contains "cli" so matches Platform category
+            ErrorCategory::Platform // Contains "cli" so matches Platform category
         );
         assert_eq!(
             service.determine_error_category("other_module"),

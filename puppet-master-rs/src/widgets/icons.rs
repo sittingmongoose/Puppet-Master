@@ -1,8 +1,8 @@
 //! Icon definitions using Unicode symbols and text
 
-use iced::widget::{text, Text};
-use iced::Color;
 use crate::theme::colors;
+use iced::Color;
+use iced::widget::{Text, text};
 
 /// Icon name enum
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -13,13 +13,13 @@ pub enum IconName {
     Claude,
     Gemini,
     Copilot,
-    
+
     // Status icons
     Check,
     Cross,
     Info,
     Warning,
-    
+
     // Action icons
     Rocket,
     Gear,
@@ -47,7 +47,7 @@ pub enum IconName {
     Chart,
     List,
     Grid,
-    
+
     // Navigation
     ChevronLeft,
     ChevronRight,
@@ -57,7 +57,7 @@ pub enum IconName {
     ArrowRight,
     ArrowUp,
     ArrowDown,
-    
+
     // UI
     Menu,
     Close,
@@ -77,13 +77,13 @@ impl IconName {
             IconName::Claude => "A",
             IconName::Gemini => "G",
             IconName::Copilot => "P",
-            
+
             // Status icons
             IconName::Check => "OK",
             IconName::Cross => "X",
             IconName::Info => "i",
             IconName::Warning => "!",
-            
+
             // Action icons
             IconName::Rocket => ">",
             IconName::Gear => "*",
@@ -111,7 +111,7 @@ impl IconName {
             IconName::Chart => "#",
             IconName::List => "=",
             IconName::Grid => "#",
-            
+
             // Navigation
             IconName::ChevronLeft => "<",
             IconName::ChevronRight => ">",
@@ -121,7 +121,7 @@ impl IconName {
             IconName::ArrowRight => "->",
             IconName::ArrowUp => "^",
             IconName::ArrowDown => "v",
-            
+
             // UI
             IconName::Menu => "=",
             IconName::Close => "X",
@@ -131,17 +131,26 @@ impl IconName {
             IconName::Moon => ")",
         }
     }
-    
+
     /// Get default size for this icon type
     pub fn default_size(&self) -> f32 {
         match self {
             // Emoji icons are larger
-            IconName::Codex | IconName::Claude | IconName::Gemini | 
-            IconName::Copilot | IconName::Rocket | IconName::Folder |
-            IconName::Document | IconName::Delete | IconName::Search |
-            IconName::Calendar | IconName::Clock | IconName::User |
-            IconName::Home | IconName::Chart => 20.0,
-            
+            IconName::Codex
+            | IconName::Claude
+            | IconName::Gemini
+            | IconName::Copilot
+            | IconName::Rocket
+            | IconName::Folder
+            | IconName::Document
+            | IconName::Delete
+            | IconName::Search
+            | IconName::Calendar
+            | IconName::Clock
+            | IconName::User
+            | IconName::Home
+            | IconName::Chart => 20.0,
+
             // Text icons are smaller
             _ => 16.0,
         }
@@ -156,8 +165,7 @@ impl IconName {
 /// let folder_icon = icon(IconName::Folder);
 /// ```
 pub fn icon<'a>(name: IconName) -> Text<'a> {
-    text(name.symbol())
-        .size(name.default_size())
+    text(name.symbol()).size(name.default_size())
 }
 
 /// Create an icon widget with custom size
@@ -167,8 +175,7 @@ pub fn icon<'a>(name: IconName) -> Text<'a> {
 /// let large_check = icon_with_size(IconName::Check, 24.0);
 /// ```
 pub fn icon_with_size<'a>(name: IconName, size: f32) -> Text<'a> {
-    text(name.symbol())
-        .size(size)
+    text(name.symbol()).size(size)
 }
 
 /// Create a colored icon
@@ -178,16 +185,12 @@ pub fn icon_with_size<'a>(name: IconName, size: f32) -> Text<'a> {
 /// let red_cross = icon_with_color(IconName::Cross, colors::HOT_MAGENTA);
 /// ```
 pub fn icon_with_color<'a>(name: IconName, color: Color) -> Text<'a> {
-    text(name.symbol())
-        .size(name.default_size())
-        .color(color)
+    text(name.symbol()).size(name.default_size()).color(color)
 }
 
 /// Create an icon with custom size and color
 pub fn icon_styled<'a>(name: IconName, size: f32, color: Color) -> Text<'a> {
-    text(name.symbol())
-        .size(size)
-        .color(color)
+    text(name.symbol()).size(size).color(color)
 }
 
 /// Platform icon helpers

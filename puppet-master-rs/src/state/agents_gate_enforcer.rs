@@ -167,7 +167,11 @@ impl GateEnforcer {
     }
 
     /// Enforce rules against AGENTS.md content
-    pub fn enforce(&self, agents_content: &str, agents_doc: &crate::types::AgentsDoc) -> Result<EnforcementResult> {
+    pub fn enforce(
+        &self,
+        agents_content: &str,
+        agents_doc: &crate::types::AgentsDoc,
+    ) -> Result<EnforcementResult> {
         let mut violations = Vec::new();
         let mut warnings = Vec::new();
 
@@ -222,10 +226,7 @@ impl GateEnforcer {
                     if !section_exists {
                         violations.push(Violation::new(
                             &rule.name,
-                            format!(
-                                "{}: section '{}' not found",
-                                rule.description, section_name
-                            ),
+                            format!("{}: section '{}' not found", rule.description, section_name),
                             rule.severity,
                         ));
                     }
@@ -235,10 +236,7 @@ impl GateEnforcer {
                     if !agents_content.contains(pattern) {
                         violations.push(Violation::new(
                             &rule.name,
-                            format!(
-                                "{}: pattern '{}' not found",
-                                rule.description, pattern
-                            ),
+                            format!("{}: pattern '{}' not found", rule.description, pattern),
                             rule.severity,
                         ));
                     }
@@ -257,7 +255,10 @@ impl GateEnforcer {
                             ));
                         }
                     } else {
-                        warnings.push(format!("Invalid regex pattern in rule '{}': {}", rule.name, pattern));
+                        warnings.push(format!(
+                            "Invalid regex pattern in rule '{}': {}",
+                            rule.name, pattern
+                        ));
                     }
                 }
             }
@@ -276,18 +277,26 @@ impl GateEnforcer {
 
         // Add general warnings
         if agents_content.trim().is_empty() {
-            result.warnings.push("AGENTS.md is empty - no learnings documented yet".to_string());
+            result
+                .warnings
+                .push("AGENTS.md is empty - no learnings documented yet".to_string());
         }
 
         if agents_doc.agents.is_empty() {
-            result.warnings.push("No agent definitions found in AGENTS.md".to_string());
+            result
+                .warnings
+                .push("No agent definitions found in AGENTS.md".to_string());
         }
 
         Ok(result)
     }
 
     /// Quick check - returns true if enforcement would pass
-    pub fn quick_check(&self, agents_content: &str, agents_doc: &crate::types::AgentsDoc) -> Result<bool> {
+    pub fn quick_check(
+        &self,
+        agents_content: &str,
+        agents_doc: &crate::types::AgentsDoc,
+    ) -> Result<bool> {
         let result = self.enforce(agents_content, agents_doc)?;
         Ok(result.passed)
     }
@@ -388,9 +397,21 @@ mod tests {
 "#;
 
         let mut doc = AgentsDoc::new("test");
-        doc.agents.push(AgentDefinition::new("Pattern 1", "pattern", "Always check inputs"));
-        doc.agents.push(AgentDefinition::new("Pattern 2", "pattern", "Log important events"));
-        doc.agents.push(AgentDefinition::new("Failure 1", "failure_mode", "Missing error handling"));
+        doc.agents.push(AgentDefinition::new(
+            "Pattern 1",
+            "pattern",
+            "Always check inputs",
+        ));
+        doc.agents.push(AgentDefinition::new(
+            "Pattern 2",
+            "pattern",
+            "Log important events",
+        ));
+        doc.agents.push(AgentDefinition::new(
+            "Failure 1",
+            "failure_mode",
+            "Missing error handling",
+        ));
 
         (content.to_string(), doc)
     }
@@ -409,13 +430,18 @@ mod tests {
     fn test_min_patterns_violation() {
         let enforcer = GateEnforcer::new();
         let mut doc = AgentsDoc::new("test");
-        doc.agents.push(AgentDefinition::new("Pattern 1", "pattern", "Only one"));
+        doc.agents
+            .push(AgentDefinition::new("Pattern 1", "pattern", "Only one"));
 
         let content = "# AGENTS\n\n## Patterns\n- Only one\n";
         let result = enforcer.enforce(content, &doc).unwrap();
 
         // Should have warning about not enough patterns
-        let pattern_violations: Vec<_> = result.violations.iter().filter(|v| v.rule == "min-patterns").collect();
+        let pattern_violations: Vec<_> = result
+            .violations
+            .iter()
+            .filter(|v| v.rule == "min-patterns")
+            .collect();
         assert_eq!(pattern_violations.len(), 1);
     }
 
@@ -447,7 +473,11 @@ mod tests {
 
         // Should fail because "CRITICAL" is not in content
         assert!(!result.passed);
-        let custom_violations: Vec<_> = result.violations.iter().filter(|v| v.rule == "custom-pattern").collect();
+        let custom_violations: Vec<_> = result
+            .violations
+            .iter()
+            .filter(|v| v.rule == "custom-pattern")
+            .collect();
         assert_eq!(custom_violations.len(), 1);
         assert_eq!(custom_violations[0].severity, ViolationSeverity::Error);
     }

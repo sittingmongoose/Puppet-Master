@@ -1,0 +1,199 @@
+//! Ephemeral workspace cloning and artifact manifest helpers.
+
+use crate::automation::{ArtifactManifest, ArtifactManifestEntry};
+use anyhow::{Context, Result, bail};
+use std::ffi::OsStr;
+use std::path::{Path, PathBuf};
+use std::process::Command;
+
+/// Ephemeral cloned workspace metadata.
+#[derive(Debug, Clone)]
+pub struct ClonedWorkspace {
+    pub original_root: PathBuf,
+    pub clone_root: PathBuf,
+}
+
+impl ClonedWorkspace {
+    pub fn cleanup(&self) -> Result<()> {
+        if self.clone_root.exists() {
+            std::fs::remove_dir_all(&self.clone_root).with_context(|| {
+                format!(
+                    "Failed to remove cloned workspace {}",
+                    self.clone_root.display()
+                )
+            })?;
+        }
+        Ok(())
+    }
+}
+
+/// Create an ephemeral clone using platform-native copy semantics.
+pub fn create_ephemeral_clone(original_root: &Path, run_id: &str) -> Result<ClonedWorkspace> {
+    if !original_root.exists() {
+        bail!("Workspace root does not exist: {}", original_root.display());
+    }
+
+    let clone_root = std::env::temp_dir()
+        .join("rwm-puppet-master-gui-automation")
+        .join(run_id)
+        .join("workspace");
+
+    if let Some(parent) = clone_root.parent() {
+        std::fs::create_dir_all(parent)
+            .with_context(|| format!("Failed to create parent {}", parent.display()))?;
+    }
+
+    std::fs::create_dir_all(&clone_root)
+        .with_context(|| format!("Failed to create clone root {}", clone_root.display()))?;
+
+    #[cfg(unix)]
+    {
+        let source = format!("{}/.", original_root.display());
+        let status = Command::new("cp")
+            .args(["-a", &source])
+            .arg(&clone_root)
+            .status()
+            .context("Failed to spawn cp for workspace clone")?;
+
+        if !status.success() {
+            bail!("cp -a failed while cloning workspace");
+        }
+    }
+
+    #[cfg(not(unix))]
+    {
+        copy_recursive(original_root, &clone_root)?;
+    }
+
+    Ok(ClonedWorkspace {
+        original_root: original_root.to_path_buf(),
+        clone_root,
+    })
+}
+
+/// Ensure a candidate path stays within a root.
+pub fn ensure_path_within(root: &Path, candidate: &Path) -> Result<()> {
+    let canonical_root = root
+        .canonicalize()
+        .with_context(|| format!("Failed to canonicalize root {}", root.display()))?;
+
+    let canonical_candidate = if candidate.exists() {
+        candidate
+            .canonicalize()
+            .with_context(|| format!("Failed to canonicalize candidate {}", candidate.display()))?
+    } else if let Some(parent) = candidate.parent() {
+        let canonical_parent = parent
+            .canonicalize()
+            .with_context(|| format!("Failed to canonicalize parent {}", parent.display()))?;
+        canonical_parent.join(candidate.file_name().unwrap_or_else(|| OsStr::new("")))
+    } else {
+        candidate.to_path_buf()
+    };
+
+    if !canonical_candidate.starts_with(&canonical_root) {
+        bail!(
+            "Path {} is outside allowed root {}",
+            candidate.display(),
+            root.display()
+        );
+    }
+
+    Ok(())
+}
+
+/// Build manifest (hash + metadata) for all artifacts under root.
+pub fn build_artifact_manifest(root: &Path) -> Result<ArtifactManifest> {
+    let mut entries = Vec::new();
+
+    if root.exists() {
+        collect_manifest_entries(root, root, &mut entries)?;
+    }
+
+    entries.sort_by(|a, b| a.relative_path.cmp(&b.relative_path));
+
+    Ok(ArtifactManifest {
+        root: root.to_path_buf(),
+        entries,
+    })
+}
+
+fn collect_manifest_entries(
+    base: &Path,
+    current: &Path,
+    out: &mut Vec<ArtifactManifestEntry>,
+) -> Result<()> {
+    for entry in std::fs::read_dir(current)
+        .with_context(|| format!("Failed to read dir {}", current.display()))?
+    {
+        let entry = entry?;
+        let path = entry.path();
+
+        if path.is_dir() {
+            collect_manifest_entries(base, &path, out)?;
+            continue;
+        }
+
+        if !path.is_file() {
+            continue;
+        }
+
+        let bytes = std::fs::read(&path)
+            .with_context(|| format!("Failed to read artifact {}", path.display()))?;
+        let digest = md5::compute(&bytes);
+        let rel = path
+            .strip_prefix(base)
+            .unwrap_or(&path)
+            .to_string_lossy()
+            .to_string();
+
+        out.push(ArtifactManifestEntry {
+            relative_path: rel,
+            kind: classify_artifact_kind(&path),
+            md5: format!("{:x}", digest),
+            bytes: bytes.len() as u64,
+        });
+    }
+
+    Ok(())
+}
+
+fn classify_artifact_kind(path: &Path) -> String {
+    match path
+        .extension()
+        .and_then(|v| v.to_str())
+        .unwrap_or_default()
+    {
+        "png" | "jpg" | "jpeg" => "screenshot".to_string(),
+        "json" | "jsonl" => "data".to_string(),
+        "md" => "summary".to_string(),
+        "log" | "txt" => "log".to_string(),
+        _ => "other".to_string(),
+    }
+}
+
+#[cfg(not(unix))]
+fn copy_recursive(source: &Path, dest: &Path) -> Result<()> {
+    for entry in std::fs::read_dir(source)
+        .with_context(|| format!("Failed to read source dir {}", source.display()))?
+    {
+        let entry = entry?;
+        let src_path = entry.path();
+        let dst_path = dest.join(entry.file_name());
+
+        if src_path.is_dir() {
+            std::fs::create_dir_all(&dst_path)
+                .with_context(|| format!("Failed to create dir {}", dst_path.display()))?;
+            copy_recursive(&src_path, &dst_path)?;
+        } else if src_path.is_file() {
+            std::fs::copy(&src_path, &dst_path).with_context(|| {
+                format!(
+                    "Failed to copy {} to {}",
+                    src_path.display(),
+                    dst_path.display()
+                )
+            })?;
+        }
+    }
+
+    Ok(())
+}

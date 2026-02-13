@@ -19,46 +19,44 @@ pub mod state;
 pub mod transitions;
 
 // Re-export commonly used types for convenience
-pub use budget::{BudgetInfo, QuotaStatus, UsageRecord, UsageStats, UsageAction};
+pub use budget::{BudgetInfo, QuotaStatus, UsageAction, UsageRecord, UsageStats};
+pub use capabilities::{AuthStatus, CooldownInfo, FeatureFlag, PlatformCapabilities, QuotaInfo};
 pub use config::{
     BranchingConfig, BudgetConfig, BudgetEnforcementConfig, Complexity, EscalationChainAction,
     EscalationChainKey, EscalationChainStepConfig, EscalationChainsConfig, EscalationTarget,
-    Granularity, LoggingConfig, MemoryConfig, MergePolicy, ModelLevel, ProjectConfig,
-    PuppetMasterConfig, PushPolicy, TaskFailureStyle, TaskType, TierConfig, TierConfigs,
-    UiConfig, VerificationConfig, ValidationError, OrchestratorConfig, PathConfig,
+    Granularity, GuiAutomationConfig, InterviewConfig, LoggingConfig, MemoryConfig, MergePolicy,
+    ModelLevel, OrchestratorConfig, PathConfig, PlatformModelPair, ProjectConfig,
+    PuppetMasterConfig, PushPolicy, TaskFailureStyle, TaskType, TierConfig, TierConfigs, UiConfig,
+    ValidationError, VerificationConfig,
 };
 pub use doctor::{CheckCategory, CheckResult, DoctorCheck, FixResult};
-pub use events::{PuppetMasterEvent, OutputLineType, LogLevel};
-pub use execution::{
-    CompletionSignal, ExecutionRequest, ExecutionResult, ProcessInfo,
-    ExecutionMode, ExecutionStatus, OutputLine, ReasoningEffort,
-    ReviewResult, Role, VerificationMethod, Verifier, VerifierResult,
-    EvidenceType, EvidenceData,
+pub use events::{LogLevel, OutputLineType, PuppetMasterEvent};
+pub use evidence::{
+    EvidenceCollection, EvidenceType as EvidenceTypeNew, GateReportEvidence, StoredEvidence,
+    VerifierResult as VerifierResultNew,
 };
-pub use git::{GitResult, GitStatus, BranchStrategy, GitConfig, CommitPolicy};
+pub use execution::{
+    CompletionSignal, EvidenceData, EvidenceType, ExecutionMode, ExecutionRequest, ExecutionResult,
+    ExecutionStatus, OutputLine, ProcessInfo, ReasoningEffort, ReviewResult, Role,
+    VerificationMethod, Verifier, VerifierResult,
+};
+pub use git::{BranchStrategy, CommitPolicy, GitConfig, GitResult, GitStatus};
 pub use platform::{CliPaths, Platform, PlatformConfig};
 pub use prd::{
-    Criterion, Evidence, GateReport, ItemStatus, Iteration, Phase, Subtask, Task, PRDMetadata, PRD,
-    CriterionType, CriterionResult, GateResult, GateDecision, TestResult, Priority, TestPlan,
-};
-pub use start_chain::{
-    ParsedRequirements, RequirementsSection, ProjectInfo, AgentsDoc, AgentDefinition, ProgressEntry,
-};
-pub use state::{
-    OrchestratorContext, OrchestratorState, StateTransition, TierState, TierType,
-    AdvancementResult, EscalationAction, IterationContext, SessionInfo, SessionState,
+    Criterion, CriterionResult, CriterionType, Evidence, GateDecision, GateReport, GateResult,
+    ItemStatus, Iteration, PRD, PRDMetadata, Phase, Priority, Subtask, Task, TestPlan, TestResult,
 };
 pub use requirements::{
-    RequirementsSource, RequirementPriority, ParsedRequirement,
-    RequirementsStats, RequirementsInventory,
+    ParsedRequirement, RequirementPriority, RequirementsInventory, RequirementsSource,
+    RequirementsStats,
 };
-pub use evidence::{
-    EvidenceType as EvidenceTypeNew, StoredEvidence, VerifierResult as VerifierResultNew,
-    GateReportEvidence, EvidenceCollection,
+pub use start_chain::{
+    AgentDefinition, AgentsDoc, ParsedRequirements, ProgressEntry, ProjectInfo, RequirementsSection,
 };
-pub use capabilities::{
-    FeatureFlag, QuotaInfo, CooldownInfo, AuthStatus, PlatformCapabilities,
+pub use state::{
+    AdvancementResult, EscalationAction, IterationContext, OrchestratorContext, OrchestratorState,
+    SessionInfo, SessionState, StateTransition, TierState, TierType,
 };
 pub use transitions::{
-    TransitionTrigger, TransitionAction, OrchestratorTransition, TierTransition, TransitionHistory,
+    OrchestratorTransition, TierTransition, TransitionAction, TransitionHistory, TransitionTrigger,
 };

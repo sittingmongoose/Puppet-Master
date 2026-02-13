@@ -35,10 +35,10 @@ impl TransitionState {
     }
 
     /// Update transition progress
-    /// 
+    ///
     /// # Arguments
     /// * `delta_seconds` - Time elapsed since last update
-    /// 
+    ///
     /// # Returns
     /// `true` if transition is complete, `false` otherwise
     pub fn update(&mut self, delta_seconds: f32) -> bool {
@@ -47,7 +47,7 @@ impl TransitionState {
         }
 
         self.progress += delta_seconds / TRANSITION_DURATION;
-        
+
         if self.progress >= 1.0 {
             self.progress = 1.0;
             self.active = false;
@@ -63,7 +63,7 @@ impl TransitionState {
         if !self.active {
             return 1.0;
         }
-        
+
         // Ease-out cubic: 1 - (1-x)^3
         let t = self.progress.clamp(0.0, 1.0);
         1.0 - (1.0 - t).powi(3)
@@ -74,7 +74,7 @@ impl TransitionState {
         if !self.active {
             return 0.0;
         }
-        
+
         1.0 - self.opacity()
     }
 }
@@ -151,7 +151,7 @@ mod tests {
         state.progress = 0.5;
         let opacity = state.opacity();
         assert!(opacity > 0.0 && opacity < 1.0);
-        
+
         state.progress = 1.0;
         assert_eq!(state.opacity(), 1.0);
     }

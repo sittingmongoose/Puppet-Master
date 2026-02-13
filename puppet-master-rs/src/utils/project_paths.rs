@@ -169,11 +169,7 @@ pub fn initialize_puppet_master_dirs(root: &Path) -> Result<()> {
 pub fn is_within_project_root(root: &Path, path: &Path) -> bool {
     path.canonicalize()
         .ok()
-        .and_then(|p| {
-            p.ancestors()
-                .find(|a| *a == root)
-                .map(|_| true)
-        })
+        .and_then(|p| p.ancestors().find(|a| *a == root).map(|_| true))
         .unwrap_or(false)
 }
 
@@ -265,10 +261,7 @@ mod tests {
     fn test_evidence_dir() {
         let root = PathBuf::from("/project");
         let ev_dir = evidence_dir(&root);
-        assert_eq!(
-            ev_dir,
-            PathBuf::from("/project/.puppet-master/evidence")
-        );
+        assert_eq!(ev_dir, PathBuf::from("/project/.puppet-master/evidence"));
     }
 
     #[test]
@@ -282,10 +275,7 @@ mod tests {
     fn test_checkpoints_dir() {
         let root = PathBuf::from("/project");
         let cp_dir = checkpoints_dir(&root);
-        assert_eq!(
-            cp_dir,
-            PathBuf::from("/project/.puppet-master/checkpoints")
-        );
+        assert_eq!(cp_dir, PathBuf::from("/project/.puppet-master/checkpoints"));
     }
 
     #[test]
@@ -313,10 +303,7 @@ mod tests {
     fn test_backups_dir() {
         let root = PathBuf::from("/project");
         let backups = backups_dir(&root);
-        assert_eq!(
-            backups,
-            PathBuf::from("/project/.puppet-master/backups")
-        );
+        assert_eq!(backups, PathBuf::from("/project/.puppet-master/backups"));
     }
 
     #[test]

@@ -44,6 +44,9 @@ pub const FONT_DISPLAY_BOLD: Font = Font {
 /// UI font (Rajdhani) - Use for all body text, labels, and general UI
 pub const FONT_UI: Font = Font::with_name("Rajdhani");
 
+/// Backward-compatible alias used by some view modules.
+pub const FONT_BODY: Font = FONT_UI;
+
 /// UI font medium weight - Use for slightly emphasized text
 pub const FONT_UI_MEDIUM: Font = Font {
     family: iced::font::Family::Name("Rajdhani"),
@@ -87,7 +90,6 @@ pub fn load_fonts() -> Vec<iced::Task<()>> {
         // Load Orbitron fonts (display/headings)
         iced::font::load(ORBITRON_BOLD_BYTES).map(|_| ()),
         iced::font::load(ORBITRON_REGULAR_BYTES).map(|_| ()),
-        
         // Load Rajdhani fonts (UI text)
         iced::font::load(RAJDHANI_REGULAR_BYTES).map(|_| ()),
         iced::font::load(RAJDHANI_MEDIUM_BYTES).map(|_| ()),
@@ -131,11 +133,26 @@ mod tests {
     #[test]
     fn test_font_bytes_embedded() {
         // Verify font bytes are non-empty
-        assert!(!ORBITRON_BOLD_BYTES.is_empty(), "Orbitron Bold should be embedded");
-        assert!(!ORBITRON_REGULAR_BYTES.is_empty(), "Orbitron Regular should be embedded");
-        assert!(!RAJDHANI_REGULAR_BYTES.is_empty(), "Rajdhani Regular should be embedded");
-        assert!(!RAJDHANI_MEDIUM_BYTES.is_empty(), "Rajdhani Medium should be embedded");
-        assert!(!RAJDHANI_BOLD_BYTES.is_empty(), "Rajdhani Bold should be embedded");
+        assert!(
+            !ORBITRON_BOLD_BYTES.is_empty(),
+            "Orbitron Bold should be embedded"
+        );
+        assert!(
+            !ORBITRON_REGULAR_BYTES.is_empty(),
+            "Orbitron Regular should be embedded"
+        );
+        assert!(
+            !RAJDHANI_REGULAR_BYTES.is_empty(),
+            "Rajdhani Regular should be embedded"
+        );
+        assert!(
+            !RAJDHANI_MEDIUM_BYTES.is_empty(),
+            "Rajdhani Medium should be embedded"
+        );
+        assert!(
+            !RAJDHANI_BOLD_BYTES.is_empty(),
+            "Rajdhani Bold should be embedded"
+        );
     }
 
     #[test]
@@ -143,19 +160,36 @@ mod tests {
         // TTF files start with specific magic numbers
         // TrueType: 0x00 0x01 0x00 0x00 or "true" (0x74 0x72 0x75 0x65)
         // OpenType with TrueType: 0x00 0x01 0x00 0x00
-        
+
         let is_ttf = |bytes: &[u8]| {
-            bytes.len() >= 4 && (
-                (bytes[0] == 0x00 && bytes[1] == 0x01 && bytes[2] == 0x00 && bytes[3] == 0x00) ||
-                (bytes[0] == 0x74 && bytes[1] == 0x72 && bytes[2] == 0x75 && bytes[3] == 0x65)
-            )
+            bytes.len() >= 4
+                && ((bytes[0] == 0x00 && bytes[1] == 0x01 && bytes[2] == 0x00 && bytes[3] == 0x00)
+                    || (bytes[0] == 0x74
+                        && bytes[1] == 0x72
+                        && bytes[2] == 0x75
+                        && bytes[3] == 0x65))
         };
 
-        assert!(is_ttf(ORBITRON_BOLD_BYTES), "Orbitron Bold should be TTF format");
-        assert!(is_ttf(ORBITRON_REGULAR_BYTES), "Orbitron Regular should be TTF format");
-        assert!(is_ttf(RAJDHANI_REGULAR_BYTES), "Rajdhani Regular should be TTF format");
-        assert!(is_ttf(RAJDHANI_MEDIUM_BYTES), "Rajdhani Medium should be TTF format");
-        assert!(is_ttf(RAJDHANI_BOLD_BYTES), "Rajdhani Bold should be TTF format");
+        assert!(
+            is_ttf(ORBITRON_BOLD_BYTES),
+            "Orbitron Bold should be TTF format"
+        );
+        assert!(
+            is_ttf(ORBITRON_REGULAR_BYTES),
+            "Orbitron Regular should be TTF format"
+        );
+        assert!(
+            is_ttf(RAJDHANI_REGULAR_BYTES),
+            "Rajdhani Regular should be TTF format"
+        );
+        assert!(
+            is_ttf(RAJDHANI_MEDIUM_BYTES),
+            "Rajdhani Medium should be TTF format"
+        );
+        assert!(
+            is_ttf(RAJDHANI_BOLD_BYTES),
+            "Rajdhani Bold should be TTF format"
+        );
     }
 
     #[test]

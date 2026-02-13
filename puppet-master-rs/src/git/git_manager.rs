@@ -132,7 +132,8 @@ impl GitManager {
     pub async fn push(&self, remote: &str, branch: &str) -> Result<GitResult> {
         info!("Pushing {} to {}", branch, remote);
         let result = self.run_git_cmd(&["push", remote, branch]).await?;
-        self.log_action("push", &format!("{}/{}", remote, branch), &result).await?;
+        self.log_action("push", &format!("{}/{}", remote, branch), &result)
+            .await?;
         Ok(result)
     }
 
@@ -148,7 +149,8 @@ impl GitManager {
     pub async fn reset(&self, mode: &str, target: &str) -> Result<GitResult> {
         warn!("Resetting: {} to {}", mode, target);
         let result = self.run_git_cmd(&["reset", mode, target]).await?;
-        self.log_action("reset", &format!("{} {}", mode, target), &result).await?;
+        self.log_action("reset", &format!("{} {}", mode, target), &result)
+            .await?;
         Ok(result)
     }
 
@@ -274,7 +276,7 @@ mod tests {
         let (_temp_dir, manager) = setup_test_repo().await;
         let result = manager.create_branch("test-branch").await.unwrap();
         assert!(result.success);
-        
+
         let current = manager.current_branch().await.unwrap();
         assert_eq!(current, "test-branch");
     }

@@ -78,7 +78,10 @@ impl PromptTemplate {
     }
 
     /// Returns the full prompt (system + user).
-    pub fn render_full(&self, variables: &HashMap<String, String>) -> Result<(Option<String>, String), String> {
+    pub fn render_full(
+        &self,
+        variables: &HashMap<String, String>,
+    ) -> Result<(Option<String>, String), String> {
         let user_prompt = self.render(variables)?;
         Ok((self.system_prompt.clone(), user_prompt))
     }
@@ -406,10 +409,7 @@ mod tests {
 
         let mut variables = HashMap::new();
         variables.insert("project_name".to_string(), "Test Project".to_string());
-        variables.insert(
-            "project_description".to_string(),
-            "A test".to_string(),
-        );
+        variables.insert("project_description".to_string(), "A test".to_string());
         variables.insert("requirements".to_string(), "REQ-001".to_string());
 
         let rendered = template.render(&variables);

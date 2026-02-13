@@ -306,11 +306,10 @@ mod tests {
 
     #[test]
     fn test_agents_doc() {
-        let agent = AgentDefinition::new("Worker", "executor", "Executes tasks")
-            .with_capability("coding");
+        let agent =
+            AgentDefinition::new("Worker", "executor", "Executes tasks").with_capability("coding");
 
-        let doc = AgentsDoc::new("MyProject")
-            .with_agent(agent);
+        let doc = AgentsDoc::new("MyProject").with_agent(agent);
 
         assert_eq!(doc.project_name, "MyProject");
         assert_eq!(doc.agents.len(), 1);

@@ -4,16 +4,16 @@
 //! Redesigned to match the Tauri React GUI's polished retro-futuristic design.
 
 use crate::app::Message;
-use crate::theme::{colors, fonts, tokens, AppTheme};
+use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::widgets::{
-    progress_bar::{styled_progress_bar, ProgressSize, ProgressVariant},
-    status_badge::{status_dot_typed, Status},
-    styled_button::{styled_button, ButtonVariant},
+    progress_bar::{ProgressSize, ProgressVariant, styled_progress_bar},
+    status_badge::{Status, status_dot_typed},
+    styled_button::{ButtonVariant, styled_button},
     terminal::LineType,
     themed_panel,
 };
 use chrono::{DateTime, Utc};
-use iced::widget::{column, container, row, text, text_editor, Space};
+use iced::widget::{Space, column, container, row, text, text_editor};
 use iced::{Background, Border, Element, Length};
 use std::collections::HashMap;
 
@@ -140,7 +140,7 @@ pub fn view<'a>(
     // 2x2 grid layout matching React:
     // Row 1: Current Item | Progress
     // Row 2: Controls     | Live Output
-    
+
     let current_item_panel = build_current_item_panel(current_item, theme);
     let progress_panel = build_progress_panel(progress, theme);
     let controls_panel = build_controls_panel(status, theme);
@@ -181,11 +181,11 @@ fn build_status_bar<'a>(
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let status_enum = status_from_str(status);
-    
+
     let mut status_content = row![]
         .spacing(tokens::spacing::MD)
         .align_y(iced::Alignment::Center);
-    
+
     // Status indicator
     status_content = status_content.push(
         row![
@@ -196,59 +196,68 @@ fn build_status_bar<'a>(
                 .color(theme.ink()),
         ]
         .spacing(tokens::spacing::SM)
-        .align_y(iced::Alignment::Center)
+        .align_y(iced::Alignment::Center),
     );
-    
+
     // Workflow position (Phase X/Y | Task X/Y | Subtask X/Y | Iter X/Y)
     status_content = status_content.push(
         text("│")
             .size(tokens::font_size::BASE)
             .font(fonts::FONT_MONO)
-            .color(theme.ink_faded())
+            .color(theme.ink_faded()),
     );
-    
+
     status_content = status_content.push(
         row![
-            text(format!("Phase {}/{}", progress.phase_current, progress.phase_total))
-                .size(tokens::font_size::SM)
-                .font(fonts::FONT_MONO)
-                .color(theme.ink()),
+            text(format!(
+                "Phase {}/{}",
+                progress.phase_current, progress.phase_total
+            ))
+            .size(tokens::font_size::SM)
+            .font(fonts::FONT_MONO)
+            .color(theme.ink()),
             text("│")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
-            text(format!("Task {}/{}", progress.task_current, progress.task_total))
-                .size(tokens::font_size::SM)
-                .font(fonts::FONT_MONO)
-                .color(theme.ink()),
+            text(format!(
+                "Task {}/{}",
+                progress.task_current, progress.task_total
+            ))
+            .size(tokens::font_size::SM)
+            .font(fonts::FONT_MONO)
+            .color(theme.ink()),
             text("│")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
-            text(format!("Subtask {}/{}", progress.subtask_current, progress.subtask_total))
-                .size(tokens::font_size::SM)
-                .font(fonts::FONT_MONO)
-                .color(theme.ink()),
+            text(format!(
+                "Subtask {}/{}",
+                progress.subtask_current, progress.subtask_total
+            ))
+            .size(tokens::font_size::SM)
+            .font(fonts::FONT_MONO)
+            .color(theme.ink()),
         ]
         .spacing(tokens::spacing::SM)
-        .align_y(iced::Alignment::Center)
+        .align_y(iced::Alignment::Center),
     );
-    
+
     status_content = status_content.push(Space::new().width(Length::Fill));
-    
+
     // Budget indicators with warning colors
     if !budgets.is_empty() {
         status_content = status_content.push(
             text("Budget:")
                 .size(tokens::font_size::SM)
-                .color(theme.ink())
+                .color(theme.ink()),
         );
-        
+
         for (platform, budget_info) in budgets.iter() {
             let usage_percent = if budget_info.total > 0 && budget_info.total != usize::MAX {
                 (budget_info.used as f32 / budget_info.total as f32 * 100.0) as u32
             } else {
                 0
             };
-            
+
             let budget_color = if usage_percent >= 100 {
                 colors::HOT_MAGENTA
             } else if usage_percent >= 80 {
@@ -256,22 +265,25 @@ fn build_status_bar<'a>(
             } else {
                 theme.ink()
             };
-            
+
             let budget_text = if budget_info.total == usize::MAX {
                 format!("{} {}/∞", platform, budget_info.used)
             } else {
-                format!("{} {}/{} ({}%)", platform, budget_info.used, budget_info.total, usage_percent)
+                format!(
+                    "{} {}/{} ({}%)",
+                    platform, budget_info.used, budget_info.total, usage_percent
+                )
             };
-            
+
             status_content = status_content.push(
                 text(budget_text)
                     .size(tokens::font_size::SM)
                     .font(fonts::FONT_MONO)
-                    .color(budget_color)
+                    .color(budget_color),
             );
         }
     }
-    
+
     themed_panel(status_content, theme).into()
 }
 
@@ -281,7 +293,7 @@ fn build_project_panel<'a>(
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     use crate::widgets::Page;
-    
+
     let mut content = column![
         text("PROJECT")
             .size(tokens::font_size::LG)
@@ -317,7 +329,7 @@ fn build_project_panel<'a>(
                 .spacing(tokens::spacing::SM),
             ]
             .spacing(tokens::spacing::MD)
-            .align_y(iced::Alignment::Center)
+            .align_y(iced::Alignment::Center),
         );
     } else {
         // No project loaded
@@ -335,7 +347,7 @@ fn build_project_panel<'a>(
                 ]
                 .spacing(tokens::spacing::SM),
             ]
-            .spacing(tokens::spacing::SM)
+            .spacing(tokens::spacing::SM),
         );
     }
 
@@ -347,10 +359,12 @@ fn build_current_item_panel<'a>(
     current_item: &'a Option<CurrentItem>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![text("CURRENT ITEM")
-        .size(tokens::font_size::LG)
-        .font(fonts::FONT_UI_BOLD)
-        .color(theme.ink()),]
+    let mut content = column![
+        text("CURRENT ITEM")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),
+    ]
     .spacing(tokens::spacing::MD);
 
     if let Some(item) = current_item {
@@ -483,63 +497,53 @@ fn build_controls_panel<'a>(status: &'a str, theme: &'a AppTheme) -> Element<'a,
     // 2x2 grid matching React (or 4 columns on one row)
     let mut button_row1 = row![].spacing(tokens::spacing::SM);
     let mut button_row2 = row![].spacing(tokens::spacing::SM);
-    
+
     // Start button
     if can_start {
         button_row1 = button_row1.push(
             styled_button(theme, "START", ButtonVariant::Primary)
-                .on_press(Message::StartOrchestrator)
+                .on_press(Message::StartOrchestrator),
         );
     } else {
-        button_row1 = button_row1.push(
-            styled_button(theme, "START", ButtonVariant::Primary)
-        );
+        button_row1 = button_row1.push(styled_button(theme, "START", ButtonVariant::Primary));
     }
-    
+
     // Pause button
     if can_pause {
         button_row1 = button_row1.push(
             styled_button(theme, "PAUSE", ButtonVariant::Warning)
-                .on_press(Message::PauseOrchestrator)
+                .on_press(Message::PauseOrchestrator),
         );
     } else {
-        button_row1 = button_row1.push(
-            styled_button(theme, "PAUSE", ButtonVariant::Warning)
-        );
+        button_row1 = button_row1.push(styled_button(theme, "PAUSE", ButtonVariant::Warning));
     }
-    
+
     // Resume button
     if can_resume {
         button_row2 = button_row2.push(
             styled_button(theme, "RESUME", ButtonVariant::Info)
-                .on_press(Message::ResumeOrchestrator)
+                .on_press(Message::ResumeOrchestrator),
         );
     } else {
-        button_row2 = button_row2.push(
-            styled_button(theme, "RESUME", ButtonVariant::Info)
-        );
+        button_row2 = button_row2.push(styled_button(theme, "RESUME", ButtonVariant::Info));
     }
-    
+
     // Stop button
     if can_stop {
         button_row2 = button_row2.push(
-            styled_button(theme, "STOP", ButtonVariant::Danger)
-                .on_press(Message::StopOrchestrator)
+            styled_button(theme, "STOP", ButtonVariant::Danger).on_press(Message::StopOrchestrator),
         );
     } else {
-        button_row2 = button_row2.push(
-            styled_button(theme, "STOP", ButtonVariant::Danger)
-        );
+        button_row2 = button_row2.push(styled_button(theme, "STOP", ButtonVariant::Danger));
     }
-    
+
     content = content.push(button_row1);
     content = content.push(button_row2);
-    
+
     // Retry button appears separately when status is error
     if can_retry {
         content = content.push(
-            styled_button(theme, "RETRY", ButtonVariant::Info)
-                .on_press(Message::ResetOrchestrator)
+            styled_button(theme, "RETRY", ButtonVariant::Info).on_press(Message::ResetOrchestrator),
         );
     }
 
@@ -574,7 +578,7 @@ fn build_progress_panel<'a>(
                 .font(fonts::FONT_MONO)
                 .color(theme.ink()),
         ]
-        .spacing(tokens::spacing::SM)
+        .spacing(tokens::spacing::SM),
     );
 
     // Tier progress rows (compact format matching React's TierProgressRow)
@@ -582,21 +586,21 @@ fn build_progress_panel<'a>(
         "Phases:",
         progress.phase_current,
         progress.phase_total,
-        theme
+        theme,
     ));
-    
+
     content = content.push(build_tier_progress_row(
         "Tasks:",
         progress.task_current,
         progress.task_total,
-        theme
+        theme,
     ));
-    
+
     content = content.push(build_tier_progress_row(
         "Subtasks:",
         progress.subtask_current,
         progress.subtask_total,
-        theme
+        theme,
     ));
 
     themed_panel(content, theme).into()
@@ -614,7 +618,7 @@ fn build_tier_progress_row<'a>(
     } else {
         0.0
     };
-    
+
     row![
         text(label)
             .size(tokens::font_size::BASE)

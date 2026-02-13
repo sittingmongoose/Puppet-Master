@@ -134,7 +134,7 @@ impl StructureDetector {
 
         let lines: Vec<&str> = content.lines().collect();
         let mut metadata = HashMap::new();
-        
+
         let mut current_section: Option<SectionBuilder> = None;
         let mut section_stack: Vec<SectionBuilder> = Vec::new();
         let mut in_code_block = false;
@@ -246,7 +246,7 @@ impl StructureDetector {
         let lines: Vec<&str> = content.lines().collect();
         let mut sections = Vec::new();
         let metadata = HashMap::new();
-        
+
         let mut current_section: Option<SectionBuilder> = None;
         let mut paragraph_buffer = String::new();
 
@@ -338,16 +338,17 @@ impl StructureDetector {
 
     /// Strip heading markers from line.
     fn strip_heading_markers(line: &str) -> String {
-        line.trim_start()
-            .trim_start_matches('#')
-            .trim()
-            .to_string()
+        line.trim_start().trim_start_matches('#').trim().to_string()
     }
 
     /// Check if a text line looks like a header.
     fn looks_like_text_header(line: &str) -> bool {
         // All uppercase and longer than 3 chars
-        if line.len() > 3 && line.chars().all(|c| c.is_uppercase() || c.is_whitespace() || c == ':') {
+        if line.len() > 3
+            && line
+                .chars()
+                .all(|c| c.is_uppercase() || c.is_whitespace() || c == ':')
+        {
             return true;
         }
 
@@ -378,7 +379,10 @@ impl StructureDetector {
         }
 
         // Task list
-        if trimmed.starts_with("- [ ]") || trimmed.starts_with("- [x]") || trimmed.starts_with("- [X]") {
+        if trimmed.starts_with("- [ ]")
+            || trimmed.starts_with("- [x]")
+            || trimmed.starts_with("- [X]")
+        {
             let text = trimmed[5..].trim().to_string();
             return Some(ListItem {
                 text,
@@ -389,7 +393,12 @@ impl StructureDetector {
         }
 
         // Ordered list
-        if trimmed.chars().next().map(|c| c.is_numeric()).unwrap_or(false) {
+        if trimmed
+            .chars()
+            .next()
+            .map(|c| c.is_numeric())
+            .unwrap_or(false)
+        {
             if let Some(dot_pos) = trimmed.find(". ") {
                 let text = trimmed[dot_pos + 2..].trim().to_string();
                 return Some(ListItem {

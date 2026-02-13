@@ -9,9 +9,9 @@
 //! - Scrollable with up to 1000+ lines via virtual scrolling
 //! - Scanline overlay effect (subtle)
 
-use iced::widget::{column, container, row, scrollable, text, Space};
-use iced::{Element, Length, Padding, Border, Background, Color};
-use crate::theme::{AppTheme, colors, tokens, fonts};
+use crate::theme::{AppTheme, colors, fonts, tokens};
+use iced::widget::{Space, column, container, row, scrollable, text};
+use iced::{Background, Border, Color, Element, Length, Padding};
 
 /// Type of terminal output line
 #[derive(Debug, Clone, PartialEq)]
@@ -39,7 +39,7 @@ impl LineType {
             LineType::Info => Color::from_rgb(0.6, 0.6, 0.6),
         }
     }
-    
+
     pub fn prefix(&self) -> &'static str {
         match self {
             LineType::Stdout => "stdout",
@@ -57,69 +57,72 @@ pub fn terminal_output<'a, Message: 'a>(
     height: f32,
 ) -> Element<'a, Message> {
     let mut content = column![].spacing(1.0);
-    
+
     // Show last N lines (performance limit)
-    let visible_lines = if lines.len() > 500 { &lines[lines.len()-500..] } else { lines };
-    
+    let visible_lines = if lines.len() > 500 {
+        &lines[lines.len() - 500..]
+    } else {
+        lines
+    };
+
     for line in visible_lines {
         let timestamp_text = text(&line.timestamp)
             .size(tokens::font_size::XS)
             .color(Color::from_rgb(0.4, 0.4, 0.4))
             .font(fonts::FONT_MONO);
-        
+
         let prefix_text = text(format!("[{}]", line.line_type.prefix()))
             .size(tokens::font_size::XS)
             .color(line.line_type.color())
             .font(fonts::FONT_MONO);
-        
+
         let content_text = text(&line.content)
             .size(tokens::font_size::SM)
             .color(line.line_type.color())
             .font(fonts::FONT_MONO);
-        
+
         let line_row = row![
             timestamp_text,
             Space::new().width(Length::Fixed(8.0)),
             prefix_text,
             Space::new().width(Length::Fixed(8.0)),
             content_text,
-        ].align_y(iced::Alignment::Center);
-        
+        ]
+        .align_y(iced::Alignment::Center);
+
         content = content.push(line_row);
     }
-    
+
     // If empty, show placeholder
     if lines.is_empty() {
         content = content.push(
             text("Waiting for output...")
                 .size(tokens::font_size::SM)
                 .color(Color::from_rgb(0.4, 0.4, 0.4))
-                .font(fonts::FONT_MONO)
+                .font(fonts::FONT_MONO),
         );
     }
-    
+
     // Terminal container with dark styling
     let terminal_bg = Color::from_rgb(0.08, 0.08, 0.08); // Near black
     let terminal_border = Color::from_rgb(0.2, 0.2, 0.2);
-    
+
     container(
         scrollable(
             container(content)
                 .padding(Padding::new(tokens::spacing::MD))
-                .width(Length::Fill)
+                .width(Length::Fill),
         )
-        .height(Length::Fixed(height))
+        .height(Length::Fixed(height)),
     )
-    .style(move |_theme: &iced::Theme| {
-        iced::widget::container::Style {
-            background: Some(Background::Color(terminal_bg)),
-            border: Border {
-                color: terminal_border,
-                width: tokens::borders::THICK,
-                radius: tokens::radii::NONE.into(),
-            },
-            ..Default::default()
-        }
+    .style(move |_theme: &iced::Theme| iced::widget::container::Style {
+        background: Some(Background::Color(terminal_bg)),
+        border: Border {
+            color: terminal_border,
+            width: tokens::borders::THICK,
+            radius: tokens::radii::NONE.into(),
+        },
+        ..Default::default()
     })
     .width(Length::Fill)
     .into()

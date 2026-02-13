@@ -6,9 +6,9 @@
 //! - Thread-safe CRUD operations
 //! - Hierarchical Phase/Task/Subtask navigation
 
-use crate::types::{ItemStatus, Phase, PRD, Subtask, Task};
+use crate::types::{ItemStatus, PRD, Phase, Subtask, Task};
 use crate::utils::atomic_writer::AtomicWriter;
-use anyhow::{anyhow, Context, Result};
+use anyhow::{Context, Result, anyhow};
 use serde_json;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
@@ -51,10 +51,13 @@ impl PrdManager {
     fn load_from_file(path: &Path) -> Result<PRD> {
         // Check if file exists, return default PRD if not
         if !path.exists() {
-            log::info!("PRD file {} does not exist, creating default PRD", path.display());
+            log::info!(
+                "PRD file {} does not exist, creating default PRD",
+                path.display()
+            );
             return Ok(PRD::new("New Project"));
         }
-        
+
         let content = std::fs::read_to_string(path)
             .with_context(|| format!("Failed to read PRD from {}", path.display()))?;
 
@@ -70,8 +73,8 @@ impl PrdManager {
         self.create_backup(&inner.path)?;
 
         // Serialize PRD
-        let json = serde_json::to_string_pretty(&inner.prd)
-            .context("Failed to serialize PRD to JSON")?;
+        let json =
+            serde_json::to_string_pretty(&inner.prd).context("Failed to serialize PRD to JSON")?;
 
         // Atomic write
         AtomicWriter::write(&inner.path, json.as_bytes())
@@ -212,9 +215,7 @@ impl PrdManager {
                         return Some((task.id.clone(), ItemType::Task(task.clone())));
                     }
 
-                    if task.status == ItemStatus::Running
-                        || task.status == ItemStatus::Passed
-                    {
+                    if task.status == ItemStatus::Running || task.status == ItemStatus::Passed {
                         for subtask in &task.subtasks {
                             if subtask.status == ItemStatus::Pending {
                                 return Some((
@@ -243,10 +244,9 @@ impl PrdManager {
                 .phases
                 .iter()
                 .flat_map(|p| {
-                    std::iter::once(&p.id)
-                        .chain(p.tasks.iter().flat_map(|t| {
-                            std::iter::once(&t.id).chain(t.subtasks.iter().map(|s| &s.id))
-                        }))
+                    std::iter::once(&p.id).chain(p.tasks.iter().flat_map(|t| {
+                        std::iter::once(&t.id).chain(t.subtasks.iter().map(|s| &s.id))
+                    }))
                 })
                 .any(|id| {
                     if id == dep_id {

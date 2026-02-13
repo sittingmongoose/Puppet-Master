@@ -5,10 +5,10 @@
 //! - Colored pill badges with text
 //! - Status-specific colors from the theme
 
-use iced::widget::{canvas, container, text, row, Canvas, Container};
-use iced::{Element, Border, Color, Point, Rectangle, Theme as IcedTheme};
+use crate::theme::{AppTheme, colors, fonts, tokens};
 use iced::mouse;
-use crate::theme::{AppTheme, colors, tokens, fonts};
+use iced::widget::{Canvas, Container, canvas, container, row, text};
+use iced::{Border, Color, Element, Point, Rectangle, Theme as IcedTheme};
 
 /// Status state enum
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -39,7 +39,7 @@ impl Status {
             Status::Warning => colors::STATUS_PAUSED,
         }
     }
-    
+
     /// Get label text for this status
     pub fn label(&self) -> &'static str {
         match self {
@@ -56,7 +56,7 @@ impl Status {
             Status::Warning => "Warning",
         }
     }
-    
+
     /// Check if this status should pulse/animate
     pub fn should_pulse(&self) -> bool {
         matches!(self, Status::Running | Status::InProgress)
@@ -129,22 +129,16 @@ impl<Message> canvas::Program<Message> for StatusDotState {
 /// ```ignore
 /// let dot = status_dot(&theme, "running");
 /// ```
-pub fn status_dot<'a, Message: 'a>(
-    theme: &AppTheme,
-    status: &str,
-) -> Element<'a, Message> {
+pub fn status_dot<'a, Message: 'a>(theme: &AppTheme, status: &str) -> Element<'a, Message> {
     let status_enum = Status::from(status);
     status_dot_typed(theme, status_enum)
 }
 
 /// Create a status dot with typed Status enum
-pub fn status_dot_typed<'a, Message: 'a>(
-    theme: &AppTheme,
-    status: Status,
-) -> Element<'a, Message> {
+pub fn status_dot_typed<'a, Message: 'a>(theme: &AppTheme, status: Status) -> Element<'a, Message> {
     let color = status.color();
     let border_color = theme.ink();
-    
+
     let canvas_widget = Canvas::new(StatusDotState {
         color,
         border_color,
@@ -186,7 +180,7 @@ pub fn status_badge_typed<'a, Message: 'a + Clone>(
 ) -> Element<'a, Message> {
     let color = status.color();
     let themed_ink = theme.ink();
-    
+
     let content = row![
         status_dot_typed(theme, status),
         text(label)
@@ -200,10 +194,7 @@ pub fn status_badge_typed<'a, Message: 'a + Clone>(
     container(content)
         .padding([tokens::spacing::XS as u16, tokens::spacing::SM as u16])
         .style(move |_iced_theme: &IcedTheme| container::Style {
-            background: Some(iced::Background::Color(Color {
-                a: 0.15,
-                ..color
-            })),
+            background: Some(iced::Background::Color(Color { a: 0.15, ..color })),
             border: Border {
                 color,
                 width: tokens::borders::MEDIUM,
@@ -233,12 +224,12 @@ pub fn status_badge_with_text<'a, Message: 'a>(
     let status_enum = Status::from(status);
     let color = status_enum.color();
     let themed_ink = theme.ink();
-    
+
     container(
         text(text_content.to_uppercase())
             .size(tokens::font_size::SM)
             .font(fonts::FONT_UI_BOLD)
-            .color(colors::PAPER_CREAM)
+            .color(colors::PAPER_CREAM),
     )
     .padding([tokens::spacing::XS as u16, tokens::spacing::SM as u16])
     .style(move |_iced_theme: &IcedTheme| container::Style {
@@ -269,7 +260,7 @@ pub fn pulsing_status_dot<'a, Message: 'a>(
     let mut color = status.color();
     color.a = pulse_alpha.clamp(0.3, 1.0);
     let border_color = theme.ink();
-    
+
     let canvas_widget = Canvas::new(StatusDotState {
         color,
         border_color,
@@ -335,7 +326,7 @@ where
     let theme = AppTheme::Light;
     let color = status.color();
     let border_color = theme.ink();
-    
+
     let canvas_widget = Canvas::new(StatusDotState {
         color,
         border_color,
@@ -343,9 +334,7 @@ where
     .width(12.0)
     .height(12.0);
 
-    Container::new(canvas_widget)
-        .width(12.0)
-        .height(12.0)
+    Container::new(canvas_widget).width(12.0).height(12.0)
 }
 
 /// Legacy API: Create a status badge with label using default light theme
@@ -360,7 +349,7 @@ pub fn status_badge_legacy<'a, Message: 'a + Clone>(
     let color = status.color();
     let themed_ink = theme.ink();
     let label_str = label.into();
-    
+
     let content = row![
         status_dot_legacy(status),
         text(label_str)
@@ -374,10 +363,7 @@ pub fn status_badge_legacy<'a, Message: 'a + Clone>(
     container(content)
         .padding([tokens::spacing::XS as u16, tokens::spacing::SM as u16])
         .style(move |_iced_theme: &IcedTheme| container::Style {
-            background: Some(iced::Background::Color(Color {
-                a: 0.15,
-                ..color
-            })),
+            background: Some(iced::Background::Color(Color { a: 0.15, ..color })),
             border: Border {
                 color,
                 width: tokens::borders::MEDIUM,
@@ -402,7 +388,7 @@ where
     let mut color = status.color();
     color.a = pulse_alpha.clamp(0.3, 1.0);
     let border_color = theme.ink();
-    
+
     let canvas_widget = Canvas::new(StatusDotState {
         color,
         border_color,
@@ -410,7 +396,5 @@ where
     .width(12.0)
     .height(12.0);
 
-    Container::new(canvas_widget)
-        .width(12.0)
-        .height(12.0)
+    Container::new(canvas_widget).width(12.0).height(12.0)
 }

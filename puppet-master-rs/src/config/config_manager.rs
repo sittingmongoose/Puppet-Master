@@ -5,9 +5,9 @@
 //! - Merge with default values
 //! - Save configuration back to file
 
-use crate::config::default_config::default_config;
-use crate::config::config_schema::validate_config;
 use crate::config::config_override::{ConfigOverride, apply_overrides};
+use crate::config::config_schema::validate_config;
+use crate::config::default_config::default_config;
 use crate::types::PuppetMasterConfig;
 use anyhow::{Context, Result};
 use std::path::{Path, PathBuf};
@@ -38,12 +38,12 @@ impl ConfigManager {
     /// Load configuration from a file
     pub fn load(path: impl AsRef<Path>) -> Result<Self> {
         let path = path.as_ref();
-        
+
         // Check if file exists before trying to read it
         if !path.exists() {
             anyhow::bail!("Config file does not exist: {}", path.display());
         }
-        
+
         let content = std::fs::read_to_string(path)
             .with_context(|| format!("Failed to read config from {}", path.display()))?;
 
@@ -79,7 +79,11 @@ impl ConfigManager {
     /// 3. Parent directories (up to 3 levels)
     /// 4. Home directory
     pub fn discover() -> Result<Self> {
-        let config_names = ["pm-config.yaml", "puppet-master.yaml", ".puppet-master.yaml"];
+        let config_names = [
+            "pm-config.yaml",
+            "puppet-master.yaml",
+            ".puppet-master.yaml",
+        ];
 
         // Try default workspace directory first (handles Windows/Linux system installs)
         let workspace_dir = Self::get_default_workspace();
@@ -150,7 +154,9 @@ impl ConfigManager {
             // Linux: Check if running from system install
             if let Ok(exe_path) = std::env::current_exe() {
                 if exe_path.starts_with("/usr/bin") || exe_path.starts_with("/usr/local/bin") {
-                    if let Some(proj_dirs) = directories::ProjectDirs::from("com", "RWM", "Puppet Master") {
+                    if let Some(proj_dirs) =
+                        directories::ProjectDirs::from("com", "RWM", "Puppet Master")
+                    {
                         return proj_dirs.data_local_dir().to_path_buf();
                     } else if let Some(base_dirs) = directories::BaseDirs::new() {
                         return base_dirs.data_local_dir().join("RWM Puppet Master");
@@ -174,23 +180,18 @@ impl ConfigManager {
         } else {
             let workspace = Self::get_default_workspace();
             // Create workspace directory if it doesn't exist
-            std::fs::create_dir_all(&workspace)
-                .context("Failed to create workspace directory")?;
+            std::fs::create_dir_all(&workspace).context("Failed to create workspace directory")?;
             let default_path = workspace.join("pm-config.yaml");
             // Store this path for future saves
             inner.config_path = Some(default_path.clone());
             default_path
         };
 
-        let yaml = serde_yaml::to_string(&inner.config)
-            .context("Failed to serialize config to YAML")?;
+        let yaml =
+            serde_yaml::to_string(&inner.config).context("Failed to serialize config to YAML")?;
 
-        std::fs::write(&config_path, yaml).with_context(|| {
-            format!(
-                "Failed to write config to {}",
-                config_path.display()
-            )
-        })?;
+        std::fs::write(&config_path, yaml)
+            .with_context(|| format!("Failed to write config to {}", config_path.display()))?;
 
         log::info!("Saved configuration to {}", config_path.display());
         Ok(())
@@ -207,8 +208,8 @@ impl ConfigManager {
                 .with_context(|| format!("Failed to create directory {}", parent.display()))?;
         }
 
-        let yaml = serde_yaml::to_string(&inner.config)
-            .context("Failed to serialize config to YAML")?;
+        let yaml =
+            serde_yaml::to_string(&inner.config).context("Failed to serialize config to YAML")?;
 
         std::fs::write(path, yaml)
             .with_context(|| format!("Failed to write config to {}", path.display()))?;
@@ -262,17 +263,17 @@ impl ConfigManager {
         log::debug!("Configuration merged");
         Ok(())
     }
-    
+
     /// Apply configuration overrides to the current configuration
     ///
     /// This modifies the configuration in-place with the specified overrides.
     /// Overrides allow runtime modifications without changing the base config file.
     pub fn apply_overrides(&self, overrides: &ConfigOverride) -> Result<()> {
         let mut inner = self.inner.lock().unwrap();
-        
+
         // Apply overrides to the configuration
         apply_overrides(&mut inner.config, overrides);
-        
+
         log::info!("Applied configuration overrides");
         Ok(())
     }
@@ -300,10 +301,7 @@ mod tests {
         let loaded = ConfigManager::load(&config_path).unwrap();
         let config = loaded.get_config();
 
-        assert_eq!(
-            config.orchestrator.session_prefix,
-            "PM"
-        );
+        assert_eq!(config.orchestrator.session_prefix, "PM");
     }
 
     #[test]

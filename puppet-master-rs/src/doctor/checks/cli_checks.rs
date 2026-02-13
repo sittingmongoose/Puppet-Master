@@ -135,7 +135,9 @@ impl DoctorCheck for CodexCheck {
 
     async fn fix(&self, dry_run: bool) -> Option<FixResult> {
         if dry_run {
-            return Some(FixResult::success("Would run: npm install -g @openai/codex"));
+            return Some(FixResult::success(
+                "Would run: npm install -g @openai/codex",
+            ));
         }
         let manager = InstallationManager::new();
         match manager.execute_install(self.0.platform) {
@@ -187,7 +189,9 @@ impl DoctorCheck for ClaudeCheck {
 
     async fn fix(&self, dry_run: bool) -> Option<FixResult> {
         if dry_run {
-            return Some(FixResult::success("Would run: curl -fsSL https://claude.ai/install.sh | bash"));
+            return Some(FixResult::success(
+                "Would run: curl -fsSL https://claude.ai/install.sh | bash",
+            ));
         }
         let manager = InstallationManager::new();
         match manager.execute_install(self.0.platform) {
@@ -239,7 +243,9 @@ impl DoctorCheck for GeminiCheck {
 
     async fn fix(&self, dry_run: bool) -> Option<FixResult> {
         if dry_run {
-            return Some(FixResult::success("Would run: npm install -g @google/gemini-cli"));
+            return Some(FixResult::success(
+                "Would run: npm install -g @google/gemini-cli",
+            ));
         }
         let manager = InstallationManager::new();
         match manager.execute_install(self.0.platform) {
@@ -291,7 +297,9 @@ impl DoctorCheck for CopilotCheck {
 
     async fn fix(&self, dry_run: bool) -> Option<FixResult> {
         if dry_run {
-            return Some(FixResult::success("Would run: gh extension install github/gh-copilot (requires gh)"));
+            return Some(FixResult::success(
+                "Would run: gh extension install github/gh-copilot (requires gh)",
+            ));
         }
         let manager = InstallationManager::new();
         match manager.execute_install(self.0.platform) {

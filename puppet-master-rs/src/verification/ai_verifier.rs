@@ -136,10 +136,7 @@ impl AIVerifier {
         }
 
         // Default to failure if unclear
-        Ok((
-            false,
-            format!("AI response unclear: {}", response),
-        ))
+        Ok((false, format!("AI response unclear: {}", response)))
     }
 
     /// Execute platform CLI to get AI assessment (async, non-blocking)
@@ -147,11 +144,10 @@ impl AIVerifier {
         let platform = Platform::from_str(&self.config.platform)
             .with_context(|| format!("Unknown platform: {}", self.config.platform))?;
 
-        let working_dir = self
-            .config
-            .working_directory
-            .clone()
-            .unwrap_or(std::env::current_dir().context("Failed to determine current directory")?);
+        let working_dir =
+            self.config.working_directory.clone().unwrap_or(
+                std::env::current_dir().context("Failed to determine current directory")?,
+            );
 
         // Verify platform is available before spawning.
         let registry = global_registry().await?;
@@ -535,7 +531,6 @@ fn generate_session_id(now: chrono::DateTime<Utc>) -> String {
     )
 }
 
-
 impl Default for AIVerifier {
     fn default() -> Self {
         Self::new()
@@ -623,10 +618,7 @@ mod tests {
 
         let verifier = AIVerifier::with_config(config);
         assert_eq!(verifier.config.platform, "claude");
-        assert_eq!(
-            verifier.config.model,
-            Some("claude-3-opus".to_string())
-        );
+        assert_eq!(verifier.config.model, Some("claude-3-opus".to_string()));
         assert_eq!(verifier.config.timeout_seconds, 120);
     }
 
@@ -743,11 +735,8 @@ mod tests {
         };
         let verifier = AIVerifier::with_config(config);
 
-        let (cmd, args) = verifier.build_platform_command(
-            Platform::Claude,
-            "hello",
-            Path::new("/tmp"),
-        );
+        let (cmd, args) =
+            verifier.build_platform_command(Platform::Claude, "hello", Path::new("/tmp"));
 
         assert_eq!(cmd, "claude");
         assert!(args.contains(&"-p".to_string()));
@@ -775,7 +764,8 @@ mod tests {
 
     #[test]
     fn test_parse_platform_output_codex_jsonl_combines_content() {
-        let stdout = "{\"session_id\":\"S1\",\"content\":\"PASS: first\"}\n{\"content\":\"\nmore\"}\n";
+        let stdout =
+            "{\"session_id\":\"S1\",\"content\":\"PASS: first\"}\n{\"content\":\"\nmore\"}\n";
         let parsed = parse_platform_output(Platform::Codex, stdout);
         assert!(parsed.response_text.contains("PASS: first"));
         assert_eq!(parsed.session_id, Some("S1".to_string()));

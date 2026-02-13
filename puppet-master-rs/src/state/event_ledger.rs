@@ -8,7 +8,7 @@
 use crate::types::PuppetMasterEvent;
 use anyhow::{Context, Result};
 use chrono::{DateTime, Utc};
-use rusqlite::{params, Connection, OptionalExtension};
+use rusqlite::{Connection, OptionalExtension, params};
 use serde_json;
 use std::path::Path;
 use std::sync::{Arc, Mutex};
@@ -151,7 +151,10 @@ impl EventLedger {
             | PuppetMasterEvent::GateStart { tier_id, .. }
             | PuppetMasterEvent::GateComplete { tier_id, .. }
             | PuppetMasterEvent::EvidenceStored { tier_id, .. }
-            | PuppetMasterEvent::Error { tier_id: Some(tier_id), .. }
+            | PuppetMasterEvent::Error {
+                tier_id: Some(tier_id),
+                ..
+            }
             | PuppetMasterEvent::ReplanComplete { tier_id, .. }
             | PuppetMasterEvent::ReviewerVerdict { tier_id, .. }
             | PuppetMasterEvent::Timeout { tier_id, .. }
@@ -178,7 +181,9 @@ impl EventLedger {
     pub fn query_events(&self, filters: EventFilters) -> Result<Vec<EventRecord>> {
         let conn = self.inner.lock().unwrap();
 
-        let mut query = "SELECT id, timestamp, type, tier_id, session_id, data FROM events WHERE 1=1".to_string();
+        let mut query =
+            "SELECT id, timestamp, type, tier_id, session_id, data FROM events WHERE 1=1"
+                .to_string();
         let mut params: Vec<Box<dyn rusqlite::ToSql>> = Vec::new();
 
         if let Some(event_type) = &filters.event_type {
@@ -338,7 +343,7 @@ impl EventRecord {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::{TierType, TierState};
+    use crate::types::{TierState, TierType};
     use tempfile::TempDir;
 
     #[test]

@@ -23,6 +23,10 @@ pub struct GuiConfig {
     pub memory: MemoryConfig,
     pub budgets: BudgetsConfig,
     pub advanced: AdvancedConfig,
+    #[serde(default)]
+    pub interview: InterviewGuiConfig,
+    #[serde(default)]
+    pub gui_automation: GuiAutomationGuiConfig,
 }
 
 // ============================================================================
@@ -188,6 +192,57 @@ fn default_browser_adapter() -> String {
 
 fn default_evidence_directory() -> String {
     ".puppet-master/evidence".to_string()
+}
+
+// ============================================================================
+// Tab 3b: GUI Automation Config
+// ============================================================================
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct GuiAutomationGuiConfig {
+    #[serde(default = "default_enabled_gui_automation")]
+    pub enabled: bool,
+    #[serde(default = "default_gui_automation_mode")]
+    pub mode: String,
+    #[serde(default = "default_gui_automation_isolation")]
+    pub workspace_isolation: String,
+    #[serde(default = "default_gui_automation_artifacts")]
+    pub artifacts_directory: String,
+    #[serde(default = "default_gui_automation_visual_threshold")]
+    pub visual_diff_threshold: f32,
+}
+
+impl Default for GuiAutomationGuiConfig {
+    fn default() -> Self {
+        Self {
+            enabled: true,
+            mode: default_gui_automation_mode(),
+            workspace_isolation: default_gui_automation_isolation(),
+            artifacts_directory: default_gui_automation_artifacts(),
+            visual_diff_threshold: default_gui_automation_visual_threshold(),
+        }
+    }
+}
+
+fn default_gui_automation_mode() -> String {
+    "hybrid".to_string()
+}
+
+fn default_enabled_gui_automation() -> bool {
+    true
+}
+
+fn default_gui_automation_isolation() -> String {
+    "ephemeralClone".to_string()
+}
+
+fn default_gui_automation_artifacts() -> String {
+    ".puppet-master/evidence/gui-automation".to_string()
+}
+
+fn default_gui_automation_visual_threshold() -> f32 {
+    0.01
 }
 
 // ============================================================================
@@ -509,6 +564,93 @@ fn default_allowed_origins() -> String {
 }
 
 // ============================================================================
+// Tab 7: Interview Config
+// ============================================================================
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct InterviewGuiConfig {
+    #[serde(default = "default_interview_platform")]
+    pub platform: String,
+    #[serde(default = "default_interview_model")]
+    pub model: String,
+    #[serde(default = "default_reasoning_level")]
+    pub reasoning_level: String,
+    #[serde(default)]
+    pub backup_platforms: Vec<BackupPlatformEntry>,
+    #[serde(default = "default_max_questions_per_phase")]
+    pub max_questions_per_phase: u32,
+    #[serde(default)]
+    pub first_principles: bool,
+    #[serde(default = "default_interview_output_dir")]
+    pub output_dir: String,
+    #[serde(default = "default_true_interview")]
+    pub require_architecture_confirmation: bool,
+    #[serde(default = "default_true_interview")]
+    pub generate_playwright_requirements: bool,
+    #[serde(default = "default_true_interview")]
+    pub generate_initial_agents_md: bool,
+    #[serde(default = "default_interaction_mode")]
+    pub interaction_mode: String,
+}
+
+impl Default for InterviewGuiConfig {
+    fn default() -> Self {
+        Self {
+            platform: default_interview_platform(),
+            model: default_interview_model(),
+            reasoning_level: default_reasoning_level(),
+            backup_platforms: vec![BackupPlatformEntry {
+                platform: "cursor".to_string(),
+                model: "claude-sonnet-4-5-20250929".to_string(),
+            }],
+            max_questions_per_phase: default_max_questions_per_phase(),
+            first_principles: false,
+            output_dir: default_interview_output_dir(),
+            require_architecture_confirmation: true,
+            generate_playwright_requirements: true,
+            generate_initial_agents_md: true,
+            interaction_mode: default_interaction_mode(),
+        }
+    }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct BackupPlatformEntry {
+    pub platform: String,
+    pub model: String,
+}
+
+fn default_interview_platform() -> String {
+    "claude".to_string()
+}
+
+fn default_interview_model() -> String {
+    "claude-sonnet-4-5-20250929".to_string()
+}
+
+fn default_reasoning_level() -> String {
+    "medium".to_string()
+}
+
+fn default_max_questions_per_phase() -> u32 {
+    8
+}
+
+fn default_interview_output_dir() -> String {
+    ".puppet-master/interview".to_string()
+}
+
+fn default_interaction_mode() -> String {
+    "expert".to_string()
+}
+
+fn default_true_interview() -> bool {
+    true
+}
+
+// ============================================================================
 // Git Info (for branching tab)
 // ============================================================================
 
@@ -529,16 +671,19 @@ pub struct GitInfo {
 pub fn load_config(path: &Path) -> Result<GuiConfig> {
     // Check if file exists, return default if not
     if !path.exists() {
-        log::info!("Config file {} does not exist, using defaults", path.display());
+        log::info!(
+            "Config file {} does not exist, using defaults",
+            path.display()
+        );
         return Ok(GuiConfig::default());
     }
-    
+
     let content = std::fs::read_to_string(path)
         .with_context(|| format!("Failed to read config from {}", path.display()))?;
-    
-    let config: GuiConfig = serde_yaml::from_str(&content)
-        .with_context(|| "Failed to parse config YAML")?;
-    
+
+    let config: GuiConfig =
+        serde_yaml::from_str(&content).with_context(|| "Failed to parse config YAML")?;
+
     Ok(config)
 }
 
@@ -546,17 +691,16 @@ pub fn load_config(path: &Path) -> Result<GuiConfig> {
 pub fn save_config(path: &Path, config: &GuiConfig) -> Result<()> {
     // Ensure parent directory exists
     if let Some(parent) = path.parent() {
-        std::fs::create_dir_all(parent).with_context(|| {
-            format!("Failed to create parent directory {}", parent.display())
-        })?;
+        std::fs::create_dir_all(parent)
+            .with_context(|| format!("Failed to create parent directory {}", parent.display()))?;
     }
-    
-    let yaml = serde_yaml::to_string(config)
-        .with_context(|| "Failed to serialize config to YAML")?;
-    
+
+    let yaml =
+        serde_yaml::to_string(config).with_context(|| "Failed to serialize config to YAML")?;
+
     std::fs::write(path, yaml)
         .with_context(|| format!("Failed to write config to {}", path.display()))?;
-    
+
     Ok(())
 }
 
@@ -585,20 +729,14 @@ pub fn get_git_info() -> GitInfo {
     }
 
     // Get user name
-    if let Ok(output) = Command::new("git")
-        .args(["config", "user.name"])
-        .output()
-    {
+    if let Ok(output) = Command::new("git").args(["config", "user.name"]).output() {
         if output.status.success() {
             info.user_name = String::from_utf8_lossy(&output.stdout).trim().to_string();
         }
     }
 
     // Get user email
-    if let Ok(output) = Command::new("git")
-        .args(["config", "user.email"])
-        .output()
-    {
+    if let Ok(output) = Command::new("git").args(["config", "user.email"]).output() {
         if output.status.success() {
             info.user_email = String::from_utf8_lossy(&output.stdout).trim().to_string();
         }
@@ -646,10 +784,7 @@ pub fn get_models_for_platform(platform: &str) -> Vec<String> {
             "gemini-2.5-flash".to_string(),
             "gemini-2.0-ultra".to_string(),
         ],
-        "copilot" => vec![
-            "gpt-5-copilot".to_string(),
-            "gpt-4.5-copilot".to_string(),
-        ],
+        "copilot" => vec!["gpt-5-copilot".to_string(), "gpt-4.5-copilot".to_string()],
         _ => vec![],
     }
 }

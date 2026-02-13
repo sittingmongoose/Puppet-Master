@@ -158,12 +158,21 @@ impl ValidationGate {
             issues.push("Missing name");
         }
 
-        if prd.metadata.description.is_none() || prd.metadata.description.as_ref().map(|d| d.is_empty()).unwrap_or(true) {
+        if prd.metadata.description.is_none()
+            || prd
+                .metadata
+                .description
+                .as_ref()
+                .map(|d| d.is_empty())
+                .unwrap_or(true)
+        {
             warnings.push(ValidationWarning {
                 code: "META-002".to_string(),
                 message: "PRD should have a description".to_string(),
                 location: "metadata".to_string(),
-                suggestion: Some("Add a project description to help understand the goals".to_string()),
+                suggestion: Some(
+                    "Add a project description to help understand the goals".to_string(),
+                ),
             });
             score -= 10.0;
             issues.push("Missing description");
@@ -381,7 +390,9 @@ impl ValidationGate {
                             code: "SUBTASK-004".to_string(),
                             message: "Subtask has no acceptance criteria".to_string(),
                             location: format!("subtask: {}", subtask.id),
-                            suggestion: Some("Add acceptance criteria to define success".to_string()),
+                            suggestion: Some(
+                                "Add acceptance criteria to define success".to_string(),
+                            ),
                         });
                         score -= 5.0;
                     }
@@ -410,7 +421,9 @@ impl ValidationGate {
 
         // Collect all valid IDs
         let phase_ids: std::collections::HashSet<_> = prd.phases.iter().map(|p| &p.id).collect();
-        let task_ids: std::collections::HashSet<_> = prd.phases.iter()
+        let task_ids: std::collections::HashSet<_> = prd
+            .phases
+            .iter()
             .flat_map(|p| &p.tasks)
             .map(|t| &t.id)
             .collect();
@@ -487,7 +500,9 @@ impl ValidationGate {
 
         let total_phases = prd.phases.len();
         let total_tasks: usize = prd.phases.iter().map(|p| p.tasks.len()).sum();
-        let total_subtasks: usize = prd.phases.iter()
+        let total_subtasks: usize = prd
+            .phases
+            .iter()
             .flat_map(|p| &p.tasks)
             .map(|t| t.subtasks.len())
             .sum();
@@ -556,14 +571,23 @@ impl ValidationGate {
         let error_penalty = errors.len() as f64 * 5.0;
         let warning_penalty = warnings.len() as f64 * 2.0;
 
-        (check_score - error_penalty - warning_penalty).max(0.0).min(100.0)
+        (check_score - error_penalty - warning_penalty)
+            .max(0.0)
+            .min(100.0)
     }
 
     /// Generate a validation report.
     pub fn format_report(result: &ValidationResult) -> String {
         let mut report = String::from("# PRD Validation Report\n\n");
 
-        report.push_str(&format!("**Status:** {}\n", if result.passed { "[OK] PASSED" } else { "[FAIL] FAILED" }));
+        report.push_str(&format!(
+            "**Status:** {}\n",
+            if result.passed {
+                "[OK] PASSED"
+            } else {
+                "[FAIL] FAILED"
+            }
+        ));
         report.push_str(&format!("**Score:** {:.1}/100.0\n\n", result.score));
 
         if !result.errors.is_empty() {
@@ -610,13 +634,13 @@ impl ValidationGate {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::{PRDMetadata, ItemStatus, Phase, Task, Subtask};
+    use crate::types::{ItemStatus, PRDMetadata, Phase, Subtask, Task};
 
     #[test]
     fn test_validate_empty_prd() {
         let prd = PRD::new("Test");
         let result = ValidationGate::validate(&prd).unwrap();
-        
+
         assert!(!result.passed);
         assert!(!result.errors.is_empty());
     }
@@ -624,7 +648,7 @@ mod tests {
     #[test]
     fn test_validate_valid_prd() {
         let mut prd = PRD::new("Test Project");
-        
+
         let phase = Phase {
             id: "PH-001".to_string(),
             title: "Phase 1".to_string(),
@@ -673,7 +697,7 @@ mod tests {
     #[test]
     fn test_duplicate_phase_ids() {
         let mut prd = PRD::new("Test");
-        
+
         prd.phases.push(Phase {
             id: "PH-001".to_string(),
             title: "Phase 1".to_string(),
@@ -715,14 +739,12 @@ mod tests {
             errors: vec![],
             warnings: vec![],
             score: 95.0,
-            checks: vec![
-                CheckResult {
-                    name: "Test Check".to_string(),
-                    passed: true,
-                    score: 95.0,
-                    details: Some("All good".to_string()),
-                }
-            ],
+            checks: vec![CheckResult {
+                name: "Test Check".to_string(),
+                passed: true,
+                score: 95.0,
+                details: Some("All good".to_string()),
+            }],
         };
 
         let report = ValidationGate::format_report(&result);

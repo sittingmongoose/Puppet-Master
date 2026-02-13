@@ -11,7 +11,7 @@ use notify::{Event, EventKind, RecommendedWatcher, RecursiveMode, Watcher};
 use std::fs::File;
 use std::io::{BufRead, BufReader, Seek, SeekFrom};
 use std::path::{Path, PathBuf};
-use std::sync::mpsc::{channel, Receiver};
+use std::sync::mpsc::{Receiver, channel};
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
@@ -74,12 +74,14 @@ impl LogStreamer {
         };
 
         let position = Arc::new(Mutex::new(position));
-        let callback = Arc::new(Mutex::new(Box::new(callback) as Box<dyn FnMut(LogEntry) + Send>));
+        let callback = Arc::new(Mutex::new(
+            Box::new(callback) as Box<dyn FnMut(LogEntry) + Send>
+        ));
 
         // Set up file watcher
         let (tx, rx) = channel();
-        let mut watcher = notify::recommended_watcher(tx)
-            .context("Failed to create file watcher")?;
+        let mut watcher =
+            notify::recommended_watcher(tx).context("Failed to create file watcher")?;
 
         // Watch the log file directory
         if let Some(parent) = path.parent() {
@@ -224,8 +226,8 @@ where
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::sync::atomic::{AtomicUsize, Ordering};
     use std::sync::Arc;
+    use std::sync::atomic::{AtomicUsize, Ordering};
     use tempfile::TempDir;
 
     #[test]

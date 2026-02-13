@@ -243,10 +243,7 @@ impl PermissionDetector {
         // Try to match each pattern
         for pattern in patterns {
             if pattern.regex.is_match(output) {
-                debug!(
-                    "Detected permission prompt for {}: {}",
-                    platform, output
-                );
+                debug!("Detected permission prompt for {}: {}", platform, output);
 
                 return Some(PermissionPrompt {
                     platform,
@@ -264,26 +261,22 @@ impl PermissionDetector {
     }
 
     /// Detect permission prompts in multiple lines
-    pub fn detect_in_lines(
-        &self,
-        platform: Platform,
-        lines: &[String],
-    ) -> Vec<PermissionPrompt> {
+    pub fn detect_in_lines(&self, platform: Platform, lines: &[String]) -> Vec<PermissionPrompt> {
         let mut prompts = Vec::new();
 
         for (idx, line) in lines.iter().enumerate() {
             if let Some(mut prompt) = self.detect(platform, line) {
                 // Add context lines
                 let mut context = Vec::new();
-                
+
                 // Previous line
                 if idx > 0 {
                     context.push(lines[idx - 1].clone());
                 }
-                
+
                 // Current line
                 context.push(line.clone());
-                
+
                 // Next line
                 if idx + 1 < lines.len() {
                     context.push(lines[idx + 1].clone());
@@ -300,7 +293,7 @@ impl PermissionDetector {
     /// Check if output contains a yes/no prompt
     fn is_yes_no_prompt(&self, output: &str) -> bool {
         let output_lower = output.to_lowercase();
-        
+
         // Common yes/no patterns
         output_lower.contains("[y/n]")
             || output_lower.contains("(y/n)")
@@ -494,7 +487,7 @@ mod tests {
     #[test]
     fn test_auto_response_policy_confidence_based() {
         let policy = AutoResponsePolicy::ConfidenceBased { threshold: 80 };
-        
+
         // High confidence - should approve
         let prompt_high = PermissionPrompt {
             platform: Platform::Cursor,

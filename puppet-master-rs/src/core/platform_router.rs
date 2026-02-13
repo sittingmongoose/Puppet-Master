@@ -8,7 +8,7 @@
 //! - Fallback chains
 
 use crate::types::{Platform, TierType};
-use anyhow::{anyhow, Result};
+use anyhow::{Result, anyhow};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -85,23 +85,48 @@ impl PlatformRouterConfig {
         HashMap::from([
             (
                 Platform::Cursor,
-                vec![Platform::Codex, Platform::Claude, Platform::Gemini, Platform::Copilot],
+                vec![
+                    Platform::Codex,
+                    Platform::Claude,
+                    Platform::Gemini,
+                    Platform::Copilot,
+                ],
             ),
             (
                 Platform::Codex,
-                vec![Platform::Claude, Platform::Cursor, Platform::Gemini, Platform::Copilot],
+                vec![
+                    Platform::Claude,
+                    Platform::Cursor,
+                    Platform::Gemini,
+                    Platform::Copilot,
+                ],
             ),
             (
                 Platform::Claude,
-                vec![Platform::Codex, Platform::Cursor, Platform::Gemini, Platform::Copilot],
+                vec![
+                    Platform::Codex,
+                    Platform::Cursor,
+                    Platform::Gemini,
+                    Platform::Copilot,
+                ],
             ),
             (
                 Platform::Gemini,
-                vec![Platform::Copilot, Platform::Codex, Platform::Cursor, Platform::Claude],
+                vec![
+                    Platform::Copilot,
+                    Platform::Codex,
+                    Platform::Cursor,
+                    Platform::Claude,
+                ],
             ),
             (
                 Platform::Copilot,
-                vec![Platform::Gemini, Platform::Codex, Platform::Cursor, Platform::Claude],
+                vec![
+                    Platform::Gemini,
+                    Platform::Codex,
+                    Platform::Cursor,
+                    Platform::Claude,
+                ],
             ),
         ])
     }
@@ -185,7 +210,11 @@ impl PlatformRouter {
     ) -> Option<RoutingDecision> {
         // Get capabilities or use default
         let default_caps = PlatformCapabilities::default();
-        let caps = self.config.capabilities.get(&platform).unwrap_or(&default_caps);
+        let caps = self
+            .config
+            .capabilities
+            .get(&platform)
+            .unwrap_or(&default_caps);
 
         // Check if platform is available
         if !caps.available {
@@ -293,7 +322,7 @@ mod tests {
     #[test]
     fn test_fallback_on_unavailable_platform() {
         let mut config = PlatformRouterConfig::default();
-        
+
         // Cursor unavailable
         config.capabilities.insert(
             Platform::Cursor,
@@ -302,7 +331,7 @@ mod tests {
                 ..Default::default()
             },
         );
-        
+
         // Codex available (first fallback)
         config.capabilities.insert(
             Platform::Codex,
@@ -329,7 +358,7 @@ mod tests {
     fn test_fallback_on_low_health() {
         let mut config = PlatformRouterConfig::default();
         config.min_health_score = 70;
-        
+
         // Cursor low health
         config.capabilities.insert(
             Platform::Cursor,
@@ -340,7 +369,7 @@ mod tests {
                 ..Default::default()
             },
         );
-        
+
         // Codex healthy
         config.capabilities.insert(
             Platform::Codex,
@@ -366,7 +395,7 @@ mod tests {
     fn test_fallback_on_low_quota() {
         let mut config = PlatformRouterConfig::default();
         config.min_quota_remaining = 20;
-        
+
         // Cursor low quota
         config.capabilities.insert(
             Platform::Cursor,
@@ -377,7 +406,7 @@ mod tests {
                 ..Default::default()
             },
         );
-        
+
         // Codex available
         config.capabilities.insert(
             Platform::Codex,
@@ -422,7 +451,7 @@ mod tests {
         };
 
         router.update_capabilities(Platform::Cursor, caps);
-        
+
         assert!(router.is_platform_available(Platform::Cursor));
         assert_eq!(router.get_health_score(Platform::Cursor), 85);
     }

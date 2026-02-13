@@ -6,10 +6,9 @@ use crate::start_chain::{
 };
 use crate::state::EvidenceStore;
 use crate::types::{
-    config::PuppetMasterConfig, events::PuppetMasterEvent,
-    EvidenceType, ParsedRequirements, PRD,
+    EvidenceType, PRD, ParsedRequirements, config::PuppetMasterConfig, events::PuppetMasterEvent,
 };
-use anyhow::{anyhow, Context, Result};
+use anyhow::{Context, Result, anyhow};
 use chrono::Utc;
 use log::{info, warn};
 use std::collections::HashMap;
@@ -82,7 +81,9 @@ impl StartChainParams {
 
         if self.use_ai {
             if self.ai_platform.is_none() {
-                return Err(anyhow!("AI platform must be specified when use_ai is enabled"));
+                return Err(anyhow!(
+                    "AI platform must be specified when use_ai is enabled"
+                ));
             }
             if self.ai_model.is_none() {
                 return Err(anyhow!("AI model must be specified when use_ai is enabled"));
@@ -202,13 +203,23 @@ impl StartChainPipeline {
 
         // Step 5: Generate test plan
         self.emit_step(5, 8, "Generating test plan").await;
-        let test_plan = self.generate_test_plan(&prd, &requirements, &params).await?;
-        info!("Generated test plan with {} test suites", test_plan.test_suites.len());
+        let test_plan = self
+            .generate_test_plan(&prd, &requirements, &params)
+            .await?;
+        info!(
+            "Generated test plan with {} test suites",
+            test_plan.test_suites.len()
+        );
 
         // Step 6: Generate interview questions
         self.emit_step(6, 8, "Generating interview questions").await;
-        let interview_questions = self.generate_interview_questions(&requirements, &params).await?;
-        info!("Generated {} interview questions", interview_questions.len());
+        let interview_questions = self
+            .generate_interview_questions(&requirements, &params)
+            .await?;
+        info!(
+            "Generated {} interview questions",
+            interview_questions.len()
+        );
 
         // Step 7: Validate PRD
         self.emit_step(7, 8, "Validating PRD").await;
@@ -262,14 +273,11 @@ impl StartChainPipeline {
         match input {
             RequirementsInput::Text(text) => {
                 // Parse text - will auto-detect markdown vs plain text
-                RequirementsParser::parse_text(text)
-                    .context("Failed to parse requirements text")
+                RequirementsParser::parse_text(text).context("Failed to parse requirements text")
             }
-            RequirementsInput::File(path) => {
-                RequirementsParser::parse_file(path)
-                    .await
-                    .context("Failed to parse requirements file")
-            }
+            RequirementsInput::File(path) => RequirementsParser::parse_file(path)
+                .await
+                .context("Failed to parse requirements file"),
         }
     }
 
@@ -287,9 +295,7 @@ impl StartChainPipeline {
                 let model = params.ai_model.as_ref().unwrap();
 
                 // Parse platform from string
-                let platform = platform_name
-                    .parse()
-                    .context("Invalid platform name")?;
+                let platform = platform_name.parse().context("Invalid platform name")?;
 
                 // Get runner from registry
                 match registry.get(platform).await {
@@ -340,8 +346,13 @@ impl StartChainPipeline {
 
         let result = if params.validate_with_ai && params.ai_gap_config.is_some() {
             let ai_config = params.ai_gap_config.clone().unwrap();
-            CompositeValidator::validate_with_ai(prd, &requirement_ids, &requirements_text, ai_config)
-                .await
+            CompositeValidator::validate_with_ai(
+                prd,
+                &requirement_ids,
+                &requirements_text,
+                ai_config,
+            )
+            .await
         } else {
             CompositeValidator::validate(prd, &requirement_ids)
         };
@@ -356,9 +367,12 @@ impl StartChainPipeline {
             RequirementsInput::File(path) => {
                 // Check if file exists before trying to read it
                 if !path.exists() {
-                    return Err(anyhow!("Requirements file does not exist: {}", path.display()));
+                    return Err(anyhow!(
+                        "Requirements file does not exist: {}",
+                        path.display()
+                    ));
                 }
-                
+
                 let ext = path
                     .extension()
                     .and_then(|s| s.to_str())
@@ -370,9 +384,9 @@ impl StartChainPipeline {
                         .map_err(|e| anyhow!("Failed to parse document: {}", e))?;
                     Ok(doc.raw_text)
                 } else {
-                    tokio::fs::read_to_string(path)
-                        .await
-                        .with_context(|| format!("Failed to read requirements file: {}", path.display()))
+                    tokio::fs::read_to_string(path).await.with_context(|| {
+                        format!("Failed to read requirements file: {}", path.display())
+                    })
                 }
             }
         }
@@ -388,12 +402,13 @@ impl StartChainPipeline {
                 let platform_name = params.ai_platform.as_ref().unwrap();
                 let model = params.ai_model.as_ref().unwrap();
 
-                let platform = platform_name
-                    .parse()
-                    .context("Invalid platform name")?;
+                let platform = platform_name.parse().context("Invalid platform name")?;
 
                 if let Some(runner) = registry.get(platform).await {
-                    info!("Using AI platform {} with model {} for architecture", platform_name, model);
+                    info!(
+                        "Using AI platform {} with model {} for architecture",
+                        platform_name, model
+                    );
                     match ArchitectureGenerator::generate_with_ai(
                         prd,
                         runner,
@@ -405,7 +420,10 @@ impl StartChainPipeline {
                     {
                         Ok(arch) => return Ok(arch),
                         Err(e) => {
-                            warn!("AI architecture generation failed: {}; falling back to heuristic", e);
+                            warn!(
+                                "AI architecture generation failed: {}; falling back to heuristic",
+                                e
+                            );
                         }
                     }
                 }
@@ -418,9 +436,13 @@ impl StartChainPipeline {
     }
 
     /// Generate tier plan.
-    async fn generate_tier_plan(&self, prd: &PRD, _params: &StartChainParams) -> Result<super::TierPlan> {
+    async fn generate_tier_plan(
+        &self,
+        prd: &PRD,
+        _params: &StartChainParams,
+    ) -> Result<super::TierPlan> {
         use crate::start_chain::TierPlanGenerator;
-        
+
         info!("Generating tier plan");
         TierPlanGenerator::generate(prd)
     }
@@ -433,7 +455,7 @@ impl StartChainPipeline {
         _params: &StartChainParams,
     ) -> Result<super::TestPlan> {
         use crate::start_chain::TestPlanGenerator;
-        
+
         info!("Generating test plan");
         TestPlanGenerator::generate_from_prd(prd)
     }
@@ -452,12 +474,13 @@ impl StartChainPipeline {
                 let platform_name = params.ai_platform.as_ref().unwrap();
                 let model = params.ai_model.as_ref().unwrap();
 
-                let platform = platform_name
-                    .parse()
-                    .context("Invalid platform name")?;
+                let platform = platform_name.parse().context("Invalid platform name")?;
 
                 if let Some(runner) = registry.get(platform).await {
-                    info!("Using AI platform {} with model {} for interview questions", platform_name, model);
+                    info!(
+                        "Using AI platform {} with model {} for interview questions",
+                        platform_name, model
+                    );
                     match RequirementsInterviewer::interview_with_ai(
                         requirements,
                         runner,
@@ -470,7 +493,10 @@ impl StartChainPipeline {
                     {
                         Ok(result) => return Ok(result.questions),
                         Err(e) => {
-                            warn!("AI interview question generation failed: {}; falling back to heuristic", e);
+                            warn!(
+                                "AI interview question generation failed: {}; falling back to heuristic",
+                                e
+                            );
                         }
                     }
                 }
@@ -522,8 +548,8 @@ impl StartChainPipeline {
 
         // Save tier-plan.json
         let tier_plan_path = start_chain_dir.join("tier-plan.json");
-        let tier_plan_json = serde_json::to_string_pretty(tier_plan)
-            .context("Failed to serialize tier plan")?;
+        let tier_plan_json =
+            serde_json::to_string_pretty(tier_plan).context("Failed to serialize tier plan")?;
         tokio::fs::write(&tier_plan_path, tier_plan_json)
             .await
             .context("Failed to write tier plan file")?;
@@ -531,8 +557,8 @@ impl StartChainPipeline {
 
         // Save test-plan.json
         let test_plan_path = start_chain_dir.join("test-plan.json");
-        let test_plan_json = serde_json::to_string_pretty(test_plan)
-            .context("Failed to serialize test plan")?;
+        let test_plan_json =
+            serde_json::to_string_pretty(test_plan).context("Failed to serialize test plan")?;
         tokio::fs::write(&test_plan_path, test_plan_json)
             .await
             .context("Failed to write test plan file")?;
@@ -568,7 +594,11 @@ impl StartChainPipeline {
             .context("Failed to write interview questions file")?;
         artifacts.insert("interview-questions".to_string(), questions_path);
 
-        info!("Saved {} artifacts to {:?}", artifacts.len(), start_chain_dir);
+        info!(
+            "Saved {} artifacts to {:?}",
+            artifacts.len(),
+            start_chain_dir
+        );
         Ok(artifacts)
     }
 
@@ -709,9 +739,10 @@ mod tests {
 
     #[test]
     fn test_params_builder() {
-        let params = StartChainParams::new("Test Project", RequirementsInput::Text("test".to_string()))
-            .with_ai("cursor", "gpt-4")
-            .with_evidence();
+        let params =
+            StartChainParams::new("Test Project", RequirementsInput::Text("test".to_string()))
+                .with_ai("cursor", "gpt-4")
+                .with_evidence();
 
         assert_eq!(params.project_name, "Test Project");
         assert!(params.use_ai);

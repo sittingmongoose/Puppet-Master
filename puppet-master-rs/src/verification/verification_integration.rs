@@ -21,8 +21,12 @@ impl VerificationIntegration {
     pub fn new(repo_root: impl AsRef<Path>, config: GateRunConfig) -> Result<Self> {
         let repo_root = repo_root.as_ref();
         let evidence_root = repo_root.join(".puppet-master").join("evidence");
-        let evidence_store = EvidenceStore::new(&evidence_root)
-            .with_context(|| format!("Failed to initialize EvidenceStore at {}", evidence_root.display()))?;
+        let evidence_store = EvidenceStore::new(&evidence_root).with_context(|| {
+            format!(
+                "Failed to initialize EvidenceStore at {}",
+                evidence_root.display()
+            )
+        })?;
         let event_bus = BroadcastEventBus::new();
 
         let mut registry = VerifierRegistry::new();

@@ -25,33 +25,33 @@ impl RequirementsParser {
         if !path.exists() {
             anyhow::bail!("Requirements file does not exist: {}", path.display());
         }
-        
+
         let extension = path.extension().and_then(|e| e.to_str()).unwrap_or("");
 
         match extension {
             "md" | "markdown" => {
-                let content = tokio::fs::read_to_string(path)
-                    .await
-                    .with_context(|| format!("Failed to read requirements file: {}", path.display()))?;
+                let content = tokio::fs::read_to_string(path).await.with_context(|| {
+                    format!("Failed to read requirements file: {}", path.display())
+                })?;
                 Self::parse_markdown(&content)
             }
             "txt" | "" => {
-                let content = tokio::fs::read_to_string(path)
-                    .await
-                    .with_context(|| format!("Failed to read requirements file: {}", path.display()))?;
+                let content = tokio::fs::read_to_string(path).await.with_context(|| {
+                    format!("Failed to read requirements file: {}", path.display())
+                })?;
                 Self::parse_text(&content)
             }
             "docx" | "pdf" => {
                 // Use DocumentParser for binary formats
                 let parsed_doc = DocumentParser::parse_file(path)
                     .map_err(|e| anyhow::anyhow!("Failed to parse document: {}", e))?;
-                
+
                 Self::convert_parsed_document_to_requirements(parsed_doc)
             }
             _ => {
-                let content = tokio::fs::read_to_string(path)
-                    .await
-                    .with_context(|| format!("Failed to read requirements file: {}", path.display()))?;
+                let content = tokio::fs::read_to_string(path).await.with_context(|| {
+                    format!("Failed to read requirements file: {}", path.display())
+                })?;
                 Self::parse_text(&content)
             }
         }
@@ -109,7 +109,10 @@ impl RequirementsParser {
         let internal_sections = Self::build_hierarchy(section_stack);
 
         // Convert internal sections to RequirementsSection
-        let sections = internal_sections.iter().map(|s| Self::convert_section(s)).collect();
+        let sections = internal_sections
+            .iter()
+            .map(|s| Self::convert_section(s))
+            .collect();
 
         if project_name.is_empty() {
             project_name = "Untitled Project".to_string();
@@ -178,8 +181,7 @@ impl RequirementsParser {
         }
 
         let section = RequirementsSection::new("Requirements", text_content);
-        Ok(ParsedRequirements::new("Untitled Project")
-            .with_sections(vec![section]))
+        Ok(ParsedRequirements::new("Untitled Project").with_sections(vec![section]))
     }
 
     /// Detect if text content is markdown
@@ -189,18 +191,25 @@ impl RequirementsParser {
 
         for line in content.lines().take(50) {
             let trimmed = line.trim();
-            
+
             // Check for markdown headings
-            if trimmed.starts_with('#') && trimmed.chars().nth(1).map_or(false, |c| c.is_whitespace() || c == '#') {
+            if trimmed.starts_with('#')
+                && trimmed
+                    .chars()
+                    .nth(1)
+                    .map_or(false, |c| c.is_whitespace() || c == '#')
+            {
                 heading_count += 1;
             }
-            
+
             // Check for other markdown indicators
-            if trimmed.starts_with("```") || trimmed.starts_with("---") 
+            if trimmed.starts_with("```")
+                || trimmed.starts_with("---")
                 || trimmed.contains("[") && trimmed.contains("](")
-                || trimmed.starts_with(">") 
+                || trimmed.starts_with(">")
                 || (trimmed.starts_with("*") && trimmed.ends_with("*") && trimmed.len() > 2)
-                || (trimmed.starts_with("_") && trimmed.ends_with("_") && trimmed.len() > 2) {
+                || (trimmed.starts_with("_") && trimmed.ends_with("_") && trimmed.len() > 2)
+            {
                 markdown_indicator_count += 1;
             }
         }
@@ -215,7 +224,7 @@ impl RequirementsParser {
 
         for section in doc.sections {
             let mut content = section.content.clone();
-            
+
             // Add list items to content
             for item in &section.list_items {
                 if !content.is_empty() {
@@ -233,7 +242,10 @@ impl RequirementsParser {
                 if !content.is_empty() {
                     content.push('\n');
                 }
-                content.push_str(&format!("\n### {}\n{}", subsection.title, subsection.content));
+                content.push_str(&format!(
+                    "\n### {}\n{}",
+                    subsection.title, subsection.content
+                ));
             }
 
             sections.push(RequirementsSection::new(section.title.clone(), content));
@@ -241,7 +253,10 @@ impl RequirementsParser {
 
         // If no sections found, create one from raw text
         if sections.is_empty() && !doc.raw_text.trim().is_empty() {
-            sections.push(RequirementsSection::new("Requirements", doc.raw_text.clone()));
+            sections.push(RequirementsSection::new(
+                "Requirements",
+                doc.raw_text.clone(),
+            ));
         }
 
         let project_name = if doc.title == "Untitled" {
@@ -265,10 +280,7 @@ impl RequirementsParser {
     }
 
     fn strip_heading_markers(line: &str) -> String {
-        line.trim_start()
-            .trim_start_matches('#')
-            .trim()
-            .to_string()
+        line.trim_start().trim_start_matches('#').trim().to_string()
     }
 
     fn add_section_to_stack(stack: &mut Vec<InternalSection>, section: InternalSection) {
@@ -374,9 +386,18 @@ Requirements for the project
 
     #[test]
     fn test_heading_level() {
-        assert_eq!(RequirementsParser::get_heading_level("# Heading 1"), Some(1));
-        assert_eq!(RequirementsParser::get_heading_level("## Heading 2"), Some(2));
-        assert_eq!(RequirementsParser::get_heading_level("### Heading 3"), Some(3));
+        assert_eq!(
+            RequirementsParser::get_heading_level("# Heading 1"),
+            Some(1)
+        );
+        assert_eq!(
+            RequirementsParser::get_heading_level("## Heading 2"),
+            Some(2)
+        );
+        assert_eq!(
+            RequirementsParser::get_heading_level("### Heading 3"),
+            Some(3)
+        );
         assert_eq!(RequirementsParser::get_heading_level("Not a heading"), None);
     }
 }

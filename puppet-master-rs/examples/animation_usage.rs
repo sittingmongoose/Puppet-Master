@@ -6,14 +6,13 @@
 //! - Responsive layout
 //! - Design token spacing
 
-use iced::widget::{column, row, container, text};
-use iced::{Element, Length};
 use crate::app::Message;
 use crate::theme::{AppTheme, tokens};
 use crate::widgets::{
-    animated_progress_bar, ProgressVariant, ProgressSize,
-    TransitionState, fade_color,
+    ProgressSize, ProgressVariant, TransitionState, animated_progress_bar, fade_color,
 };
+use iced::widget::{column, container, row, text};
+use iced::{Element, Length};
 
 /// Example view demonstrating all new features
 pub fn example_view<'a>(
@@ -22,71 +21,69 @@ pub fn example_view<'a>(
     window_width: f32,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    
     // ═══════════════════════════════════════════════════════════════════════
     // PART 1: Using Animated Progress Bars
     // ═══════════════════════════════════════════════════════════════════════
-    
+
     let progress_section = column![
         text("Animated Progress Bars")
             .size(tokens::font_size::LG)
             .color(theme.ink()),
-            
         // Example 1: Basic animated progress bar
         animated_progress_bar(
             theme,
-            0.65,                           // 65% progress
-            ProgressVariant::Default,       // Blue
+            0.65,                     // 65% progress
+            ProgressVariant::Default, // Blue
             ProgressSize::Medium,
-            animation_time,                 // Pass app's animation clock
+            animation_time, // Pass app's animation clock
         ),
-        
         // Example 2: Success progress bar with animation
         animated_progress_bar(
             theme,
             0.85,
-            ProgressVariant::Success,       // Green/Lime
+            ProgressVariant::Success, // Green/Lime
             ProgressSize::Large,
             animation_time,
         ),
-        
         // Example 3: Warning progress bar
         animated_progress_bar(
             theme,
             0.95,
-            ProgressVariant::Warning,       // Orange
+            ProgressVariant::Warning, // Orange
             ProgressSize::Small,
             animation_time,
         ),
     ]
-    .spacing(tokens::spacing::MD);  // Using design tokens!
-    
+    .spacing(tokens::spacing::MD); // Using design tokens!
+
     // ═══════════════════════════════════════════════════════════════════════
     // PART 2: Using Page Transitions
     // ═══════════════════════════════════════════════════════════════════════
-    
+
     // Apply fade color to text during transitions
     let text_color = if transition.active {
-        fade_color(theme.ink(), transition)  // Fades in smoothly
+        fade_color(theme.ink(), transition) // Fades in smoothly
     } else {
         theme.ink()
     };
-    
+
     let transition_section = column![
         text("Page Transition Demo")
             .size(tokens::font_size::LG)
-            .color(text_color),  // This will fade in during transitions
-            
-        text(format!("Transition progress: {:.1}%", transition.progress * 100.0))
-            .size(tokens::font_size::SM)
-            .color(text_color),
+            .color(text_color), // This will fade in during transitions
+        text(format!(
+            "Transition progress: {:.1}%",
+            transition.progress * 100.0
+        ))
+        .size(tokens::font_size::SM)
+        .color(text_color),
     ]
     .spacing(tokens::spacing::SM);
-    
+
     // ═══════════════════════════════════════════════════════════════════════
     // PART 3: Responsive Layout
     // ═══════════════════════════════════════════════════════════════════════
-    
+
     let responsive_section = if window_width < 768.0 {
         // Mobile: Single column, compact spacing
         column![
@@ -99,7 +96,6 @@ pub fn example_view<'a>(
         .spacing(tokens::spacing::SM)
         .padding(tokens::spacing::MD)
         .into()
-        
     } else if window_width < 1024.0 {
         // Tablet: Compact two-column
         row![
@@ -111,14 +107,11 @@ pub fn example_view<'a>(
             ]
             .spacing(tokens::spacing::MD)
             .width(Length::FillPortion(1)),
-            
-            transition_section
-                .width(Length::FillPortion(1)),
+            transition_section.width(Length::FillPortion(1)),
         ]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG)
         .into()
-        
     } else {
         // Desktop: Full two-column with generous spacing
         row![
@@ -130,64 +123,53 @@ pub fn example_view<'a>(
             ]
             .spacing(tokens::spacing::LG)
             .width(Length::FillPortion(2)),
-            
-            transition_section
-                .width(Length::FillPortion(1)),
+            transition_section.width(Length::FillPortion(1)),
         ]
         .spacing(tokens::spacing::XL)
         .padding(tokens::spacing::XL)
         .into()
     };
-    
+
     // ═══════════════════════════════════════════════════════════════════════
     // PART 4: Consistent Spacing with Design Tokens
     // ═══════════════════════════════════════════════════════════════════════
-    
+
     column![
         text("Design System Spacing Examples")
             .size(tokens::font_size::XL)
             .color(theme.ink()),
-            
         row![
             text("XXXS (2px):"),
             container(text("•")).padding(tokens::spacing::XXXS),
         ]
         .spacing(tokens::spacing::SM),
-        
         row![
             text("XS (4px):"),
             container(text("•")).padding(tokens::spacing::XS),
         ]
         .spacing(tokens::spacing::SM),
-        
         row![
             text("SM (8px):"),
             container(text("•")).padding(tokens::spacing::SM),
         ]
         .spacing(tokens::spacing::SM),
-        
         row![
             text("MD (16px):"),
             container(text("•")).padding(tokens::spacing::MD),
         ]
         .spacing(tokens::spacing::SM),
-        
         row![
             text("LG (24px):"),
             container(text("•")).padding(tokens::spacing::LG),
         ]
         .spacing(tokens::spacing::SM),
-        
         row![
             text("XL (32px):"),
             container(text("•")).padding(tokens::spacing::XL),
         ]
         .spacing(tokens::spacing::SM),
-        
         // Separator
-        container(text("───────────────────────────"))
-            .padding(tokens::spacing::MD),
-            
+        container(text("───────────────────────────")).padding(tokens::spacing::MD),
         // Show responsive layout
         responsive_section,
     ]
@@ -227,7 +209,7 @@ Message::NavigateTo(page) => {
     // 2. Starts transition (TransitionState::start())
     // 3. Changes current page
     // 4. Tick handler animates the transition
-    
+
     self.current_page = page;
     Task::none()
 }
@@ -252,16 +234,16 @@ to animated widgets and they handle the rest!
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_responsive_breakpoints() {
         // Mobile
-        assert!(768.0 > 767.0);  // Mobile breakpoint
-        
+        assert!(768.0 > 767.0); // Mobile breakpoint
+
         // Tablet
-        assert!(1024.0 > 768.0);  // Tablet range
-        
+        assert!(1024.0 > 768.0); // Tablet range
+
         // Desktop
-        assert!(1280.0 > 1024.0);  // Desktop breakpoint
+        assert!(1280.0 > 1024.0); // Desktop breakpoint
     }
 }

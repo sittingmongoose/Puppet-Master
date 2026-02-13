@@ -8,9 +8,9 @@
 //! - Info: Electric Blue - for RESUME/RETRY actions
 //! - Ghost: Transparent - inverts on hover
 
-use iced::widget::{button, text, Button};
+use crate::theme::{AppTheme, colors, fonts, tokens};
+use iced::widget::{Button, button, text};
 use iced::{Background, Border, Color, Shadow, Vector};
-use crate::theme::{AppTheme, colors, tokens, fonts};
 
 /// Button color variant
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -117,12 +117,9 @@ impl ButtonVariant {
         }
     }
 
-    /// Get border color for this variant
+    /// Get border color for this variant (theme-aware for dark mode visibility)
     fn border_color(&self, theme: &AppTheme) -> Color {
-        match self {
-            ButtonVariant::Ghost => theme.ink(),
-            _ => colors::INK_BLACK,
-        }
+        theme.ink()
     }
 
     /// Get shadow for this variant in the given state
@@ -185,30 +182,26 @@ pub fn styled_button_sized<'a, Message: Clone + 'a>(
     let padding_x = size.padding_x();
     let padding_y = size.padding_y();
 
-    button(
-        text(label_string)
-            .size(font_size)
-            .font(fonts::FONT_UI_BOLD)
-    )
-    .padding([padding_y, padding_x])
-    .style(move |_iced_theme: &iced::Theme, status: button::Status| {
-        let bg_color = variant.background_color(&theme_copy, &status);
-        let text_color = variant.text_color(&theme_copy, &status);
-        let border_color = variant.border_color(&theme_copy);
-        let shadow = variant.shadow(&theme_copy, &status);
+    button(text(label_string).size(font_size).font(fonts::FONT_UI_BOLD))
+        .padding([padding_y, padding_x])
+        .style(move |_iced_theme: &iced::Theme, status: button::Status| {
+            let bg_color = variant.background_color(&theme_copy, &status);
+            let text_color = variant.text_color(&theme_copy, &status);
+            let border_color = variant.border_color(&theme_copy);
+            let shadow = variant.shadow(&theme_copy, &status);
 
-        button::Style {
-            background: Some(Background::Color(bg_color)),
-            text_color,
-            border: Border {
-                color: border_color,
-                width: tokens::borders::THICK,
-                radius: tokens::radii::NONE.into(),
-            },
-            shadow,
-            snap: true, // Snap to pixel boundaries for crisp rendering
-        }
-    })
+            button::Style {
+                background: Some(Background::Color(bg_color)),
+                text_color,
+                border: Border {
+                    color: border_color,
+                    width: tokens::borders::THICK,
+                    radius: tokens::radii::NONE.into(),
+                },
+                shadow,
+                snap: true, // Snap to pixel boundaries for crisp rendering
+            }
+        })
 }
 
 /// Helper function to lighten a color
@@ -256,18 +249,12 @@ pub fn warning_button<'a, Message: Clone + 'a>(
 }
 
 /// Create an info button (Electric Blue)
-pub fn info_button<'a, Message: Clone + 'a>(
-    theme: &AppTheme,
-    label: &str,
-) -> Button<'a, Message> {
+pub fn info_button<'a, Message: Clone + 'a>(theme: &AppTheme, label: &str) -> Button<'a, Message> {
     styled_button(theme, label, ButtonVariant::Info)
 }
 
 /// Create a ghost button (Transparent)
-pub fn ghost_button<'a, Message: Clone + 'a>(
-    theme: &AppTheme,
-    label: &str,
-) -> Button<'a, Message> {
+pub fn ghost_button<'a, Message: Clone + 'a>(theme: &AppTheme, label: &str) -> Button<'a, Message> {
     styled_button(theme, label, ButtonVariant::Ghost)
 }
 
@@ -280,7 +267,7 @@ mod tests {
         assert_eq!(ButtonSize::Small.padding_x(), 8);
         assert_eq!(ButtonSize::Medium.padding_x(), 24);
         assert_eq!(ButtonSize::Large.padding_x(), 32);
-        
+
         assert_eq!(ButtonSize::Small.font_size(), tokens::font_size::SM);
         assert_eq!(ButtonSize::Medium.font_size(), tokens::font_size::BASE);
         assert_eq!(ButtonSize::Large.font_size(), tokens::font_size::LG);

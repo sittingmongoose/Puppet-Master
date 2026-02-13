@@ -3,7 +3,7 @@
 //! Tests for PRD creation, loading, saving, and manipulation.
 
 use puppet_master::state::PrdManager;
-use puppet_master::types::{ItemStatus, Phase, PRDMetadata, Task, Subtask, PRD};
+use puppet_master::types::{ItemStatus, PRD, PRDMetadata, Phase, Subtask, Task};
 use std::fs;
 use tempfile::TempDir;
 
@@ -112,14 +112,14 @@ fn test_prd_atomic_writes() {
     // Update PRD by getting, modifying and setting
     let mut updated_prd = manager.get_prd();
     updated_prd.metadata.name = "Updated".to_string();
-    
+
     // Save
     manager.save().unwrap();
 
     // Verify the file is valid JSON and contains updated data
     let content = fs::read_to_string(&prd_path).unwrap();
     let parsed: serde_json::Value = serde_json::from_str(&content).unwrap();
-    
+
     // Check metadata has been updated
     assert!(parsed.get("metadata").is_some());
 
@@ -195,12 +195,20 @@ fn test_prd_status_updates() {
     assert!(result.is_ok(), "Failed to update subtask status");
 
     let prd = manager.get_prd();
-    assert_eq!(prd.phases[0].tasks[0].subtasks[0].status, ItemStatus::Running);
+    assert_eq!(
+        prd.phases[0].tasks[0].subtasks[0].status,
+        ItemStatus::Running
+    );
 
     // Complete the subtask
-    manager.update_status("PH0-T01-ST01", ItemStatus::Passed).unwrap();
+    manager
+        .update_status("PH0-T01-ST01", ItemStatus::Passed)
+        .unwrap();
     let prd = manager.get_prd();
-    assert_eq!(prd.phases[0].tasks[0].subtasks[0].status, ItemStatus::Passed);
+    assert_eq!(
+        prd.phases[0].tasks[0].subtasks[0].status,
+        ItemStatus::Passed
+    );
 }
 
 #[test]
@@ -361,7 +369,7 @@ fn test_prd_backup_creation() {
     };
 
     let manager = PrdManager::new_with_prd(&prd_path, prd);
-    
+
     // Save multiple times to create backups
     for i in 1..=3 {
         // Get the PRD, update it, and save
@@ -408,7 +416,7 @@ fn test_prd_concurrent_access() {
 
     let manager = PrdManager::new_with_prd(&prd_path, prd);
     manager.save().unwrap();
-    
+
     let manager = Arc::new(manager);
 
     // Spawn multiple threads that read the PRD

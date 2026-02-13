@@ -3,10 +3,8 @@
 //! Pure helpers for selecting which escalation step should apply for a given
 //! failure type and attempt number.
 
-use crate::types::{
-    EscalationChainKey, EscalationChainStepConfig, EscalationTarget, TierType,
-};
-use anyhow::{anyhow, Result};
+use crate::types::{EscalationChainKey, EscalationChainStepConfig, EscalationTarget, TierType};
+use anyhow::{Result, anyhow};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum EscalationChainFailureType {
@@ -24,7 +22,9 @@ pub struct EscalationChainSelection {
 }
 
 /// Map an internal failure type to the config key used in `escalation.chains`.
-pub fn map_failure_type_to_chain_key(failure_type: EscalationChainFailureType) -> EscalationChainKey {
+pub fn map_failure_type_to_chain_key(
+    failure_type: EscalationChainFailureType,
+) -> EscalationChainKey {
     match failure_type {
         EscalationChainFailureType::TestFailure => EscalationChainKey::TestFailure,
         EscalationChainFailureType::Acceptance => EscalationChainKey::Acceptance,
@@ -171,7 +171,10 @@ mod tests {
         }];
 
         assert_eq!(
-            select_escalation_chain_step(&chain, 10).unwrap().step.action,
+            select_escalation_chain_step(&chain, 10)
+                .unwrap()
+                .step
+                .action,
             EscalationChainAction::Escalate
         );
     }
@@ -192,7 +195,10 @@ mod tests {
 
     #[test]
     fn coerces_tier_types_when_provided() {
-        assert_eq!(to_tier_type(Some(EscalationTarget::Phase)), Some(TierType::Phase));
+        assert_eq!(
+            to_tier_type(Some(EscalationTarget::Phase)),
+            Some(TierType::Phase)
+        );
         assert_eq!(to_tier_type(None), None);
     }
 

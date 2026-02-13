@@ -19,11 +19,7 @@ impl BranchStrategyManager {
     }
 
     /// Ensure the appropriate branch exists and is checked out for a tier
-    pub async fn ensure_branch(
-        &self,
-        tier_type: TierType,
-        tier_id: &str,
-    ) -> Result<String> {
+    pub async fn ensure_branch(&self, tier_type: TierType, tier_id: &str) -> Result<String> {
         let branch_name = self.generate_branch_name(tier_type, tier_id);
 
         // Check if branch exists
@@ -45,35 +41,31 @@ impl BranchStrategyManager {
     pub fn generate_branch_name(&self, tier_type: TierType, tier_id: &str) -> String {
         match self.strategy {
             BranchStrategy::MainOnly => "main".to_string(),
-            BranchStrategy::Feature | BranchStrategy::Tier => {
-                match tier_type {
-                    TierType::Phase => {
-                        format!("ph-{}", Self::sanitize_id(tier_id))
-                    }
-                    TierType::Task => {
-                        format!("tk-{}", Self::sanitize_id(tier_id))
-                    }
-                    TierType::Subtask => {
-                        let task_id = Self::extract_task_id(tier_id);
-                        format!("tk-{}", Self::sanitize_id(&task_id))
-                    }
-                    TierType::Iteration => {
-                        let task_id = Self::extract_task_id(tier_id);
-                        format!("tk-{}", Self::sanitize_id(&task_id))
-                    }
+            BranchStrategy::Feature | BranchStrategy::Tier => match tier_type {
+                TierType::Phase => {
+                    format!("ph-{}", Self::sanitize_id(tier_id))
                 }
-            }
-            BranchStrategy::Release => {
-                match tier_type {
-                    TierType::Phase => format!("release/ph-{}", Self::sanitize_id(tier_id)),
-                    TierType::Task => format!("release/tk-{}", Self::sanitize_id(tier_id)),
-                    TierType::Subtask => format!("release/st-{}", Self::sanitize_id(tier_id)),
-                    TierType::Iteration => {
-                        let task_id = Self::extract_task_id(tier_id);
-                        format!("release/tk-{}", Self::sanitize_id(&task_id))
-                    }
+                TierType::Task => {
+                    format!("tk-{}", Self::sanitize_id(tier_id))
                 }
-            }
+                TierType::Subtask => {
+                    let task_id = Self::extract_task_id(tier_id);
+                    format!("tk-{}", Self::sanitize_id(&task_id))
+                }
+                TierType::Iteration => {
+                    let task_id = Self::extract_task_id(tier_id);
+                    format!("tk-{}", Self::sanitize_id(&task_id))
+                }
+            },
+            BranchStrategy::Release => match tier_type {
+                TierType::Phase => format!("release/ph-{}", Self::sanitize_id(tier_id)),
+                TierType::Task => format!("release/tk-{}", Self::sanitize_id(tier_id)),
+                TierType::Subtask => format!("release/st-{}", Self::sanitize_id(tier_id)),
+                TierType::Iteration => {
+                    let task_id = Self::extract_task_id(tier_id);
+                    format!("release/tk-{}", Self::sanitize_id(&task_id))
+                }
+            },
         }
     }
 
@@ -87,7 +79,7 @@ impl BranchStrategyManager {
     }
 
     /// Extract phase ID from tier ID (e.g., TK-001-002 -> PH-001)
-        #[allow(dead_code)]
+    #[allow(dead_code)]
     fn extract_phase_id(tier_id: &str) -> String {
         let parts: Vec<&str> = tier_id.split('-').collect();
         if parts.len() >= 2 {
@@ -108,19 +100,19 @@ impl BranchStrategyManager {
     }
 
     /// Merge branch according to strategy
-    pub async fn merge_branch(
-        &self,
-        source_branch: &str,
-        merge_type: &str,
-    ) -> Result<()> {
+    pub async fn merge_branch(&self, source_branch: &str, merge_type: &str) -> Result<()> {
         info!("Merging {} using {} strategy", source_branch, merge_type);
 
         match merge_type {
             "merge" => {
-                self.git.run_git_cmd(&["merge", "--no-ff", source_branch]).await?;
+                self.git
+                    .run_git_cmd(&["merge", "--no-ff", source_branch])
+                    .await?;
             }
             "squash" => {
-                self.git.run_git_cmd(&["merge", "--squash", source_branch]).await?;
+                self.git
+                    .run_git_cmd(&["merge", "--squash", source_branch])
+                    .await?;
                 // Caller needs to commit after squash
             }
             "rebase" => {
@@ -146,18 +138,30 @@ mod tests {
         assert_eq!(BranchStrategyManager::sanitize_id("TK-001-002"), "001-002");
         // ST_001_002_003 becomes st_001_002_003 (lowercase), then st-001-002-003 (underscores replaced)
         // The "st-" replacement doesn't match "st_", so we get "st-001-002-003"
-        assert_eq!(BranchStrategyManager::sanitize_id("ST_001_002_003"), "st-001-002-003");
+        assert_eq!(
+            BranchStrategyManager::sanitize_id("ST_001_002_003"),
+            "st-001-002-003"
+        );
     }
 
     #[test]
     fn test_extract_phase_id() {
-        assert_eq!(BranchStrategyManager::extract_phase_id("TK-001-002"), "PH-001");
-        assert_eq!(BranchStrategyManager::extract_phase_id("ST-001-002-003"), "PH-001");
+        assert_eq!(
+            BranchStrategyManager::extract_phase_id("TK-001-002"),
+            "PH-001"
+        );
+        assert_eq!(
+            BranchStrategyManager::extract_phase_id("ST-001-002-003"),
+            "PH-001"
+        );
     }
 
     #[test]
     fn test_extract_task_id() {
-        assert_eq!(BranchStrategyManager::extract_task_id("ST-001-002-003"), "TK-001-002");
+        assert_eq!(
+            BranchStrategyManager::extract_task_id("ST-001-002-003"),
+            "TK-001-002"
+        );
     }
 
     #[test]

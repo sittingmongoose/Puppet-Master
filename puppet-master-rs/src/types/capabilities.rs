@@ -240,14 +240,8 @@ impl PlatformCapabilities {
     /// Checks if the platform is ready for use.
     pub fn is_ready(&self) -> bool {
         self.auth_status == AuthStatus::Authenticated
-            && self
-                .cooldown_info
-                .as_ref()
-                .map_or(true, |c| !c.active)
-            && self
-                .quota_info
-                .as_ref()
-                .map_or(true, |q| !q.is_exhausted())
+            && self.cooldown_info.as_ref().map_or(true, |c| !c.active)
+            && self.quota_info.as_ref().map_or(true, |q| !q.is_exhausted())
     }
 
     /// Returns a reason if the platform is not ready.
@@ -309,10 +303,8 @@ mod tests {
 
     #[test]
     fn test_platform_capabilities_features() {
-        let mut caps = PlatformCapabilities::new(
-            Platform::Claude,
-            vec!["claude-3-opus".to_string()],
-        );
+        let mut caps =
+            PlatformCapabilities::new(Platform::Claude, vec!["claude-3-opus".to_string()]);
 
         caps.features.push(FeatureFlag::JsonOutput);
         caps.features.push(FeatureFlag::PlanMode);
@@ -326,10 +318,8 @@ mod tests {
 
     #[test]
     fn test_platform_readiness() {
-        let mut caps = PlatformCapabilities::new(
-            Platform::Claude,
-            vec!["claude-3-opus".to_string()],
-        );
+        let mut caps =
+            PlatformCapabilities::new(Platform::Claude, vec!["claude-3-opus".to_string()]);
 
         // Not authenticated
         assert!(!caps.is_ready());

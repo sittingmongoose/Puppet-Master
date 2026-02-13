@@ -38,14 +38,12 @@
 //! ```
 
 use anyhow::{Context, Result};
-use crossbeam_channel::{bounded, Receiver, Sender};
+use crossbeam_channel::{Receiver, Sender, bounded};
 use image::{ImageBuffer, Rgba};
 use log::{debug, warn};
 use muda::{Menu, MenuEvent, MenuItem, PredefinedMenuItem};
 use std::sync::{Arc, Mutex};
-use tray_icon::{
-    menu::MenuId, Icon, TrayIcon, TrayIconBuilder, TrayIconEvent,
-};
+use tray_icon::{Icon, TrayIcon, TrayIconBuilder, TrayIconEvent, menu::MenuId};
 #[cfg(not(target_os = "macos"))]
 use tray_icon::{MouseButton, MouseButtonState};
 
@@ -109,8 +107,7 @@ impl TrayManager {
         debug!("Initializing system tray manager");
 
         // Load or create fallback icon
-        let icon = Self::load_icon(ICON_BYTES)
-            .context("Failed to load tray icon")?;
+        let icon = Self::load_icon(ICON_BYTES).context("Failed to load tray icon")?;
 
         // Create menu
         let menu = Menu::new();
@@ -140,8 +137,7 @@ impl TrayManager {
 
         // Quit item
         let quit_item = MenuItem::new("Exit", true, None);
-        menu.append(&quit_item)
-            .context("Failed to add Quit item")?;
+        menu.append(&quit_item).context("Failed to add Quit item")?;
 
         // Create tray icon
         let tray = TrayIconBuilder::new()
@@ -172,13 +168,7 @@ impl TrayManager {
 
         let menu_rx_clone = menu_rx.clone();
         std::thread::spawn(move || {
-            Self::handle_menu_events(
-                menu_rx_clone,
-                action_tx_menu,
-                open_id,
-                restart_id,
-                quit_id,
-            );
+            Self::handle_menu_events(menu_rx_clone, action_tx_menu, open_id, restart_id, quit_id);
         });
 
         let action_tx_tray = action_tx.clone();
@@ -233,7 +223,10 @@ impl TrayManager {
                 let (width, height) = rgba.dimensions();
                 let icon = Icon::from_rgba(rgba.into_raw(), width, height)
                     .context("Failed to create icon from RGBA data")?;
-                debug!("Loaded tray icon from embedded bytes ({}x{})", width, height);
+                debug!(
+                    "Loaded tray icon from embedded bytes ({}x{})",
+                    width, height
+                );
                 Ok(icon)
             }
             Err(e) => {

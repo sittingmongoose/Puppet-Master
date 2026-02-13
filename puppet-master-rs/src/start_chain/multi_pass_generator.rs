@@ -3,10 +3,10 @@
 use serde::{Deserialize, Serialize};
 
 use crate::platforms::{PlatformRunner, UsageEvent, UsageTracker};
-use crate::types::{ExecutionRequest, ParsedRequirements};
-use crate::types::prd::PRD;
 use crate::start_chain::PromptTemplates;
-use anyhow::{anyhow, Result as AnyhowResult};
+use crate::types::prd::PRD;
+use crate::types::{ExecutionRequest, ParsedRequirements};
+use anyhow::{Result as AnyhowResult, anyhow};
 use chrono::Utc;
 use std::path::Path;
 use std::sync::Arc;
@@ -124,7 +124,8 @@ impl MultiPassGenerator {
             current_prd = Some(prd);
         }
 
-        let mut prd = current_prd.ok_or_else(|| anyhow!("multi-pass generation produced no PRD"))?;
+        let mut prd =
+            current_prd.ok_or_else(|| anyhow!("multi-pass generation produced no PRD"))?;
         if prd.metadata.name.is_empty() {
             prd.metadata.name = requirements.project_name.clone();
         }
@@ -159,7 +160,10 @@ impl MultiPassGenerator {
                 let template = PromptTemplates::prd_generation();
 
                 let mut vars = std::collections::HashMap::new();
-                vars.insert("project_name".to_string(), requirements.project_name.clone());
+                vars.insert(
+                    "project_name".to_string(),
+                    requirements.project_name.clone(),
+                );
                 vars.insert(
                     "project_description".to_string(),
                     requirements
@@ -172,9 +176,8 @@ impl MultiPassGenerator {
                     Self::format_requirements_for_prompt(requirements),
                 );
 
-                let (system_prompt, user_prompt) = template
-                    .render_full(&vars)
-                    .map_err(|e| anyhow!(e))?;
+                let (system_prompt, user_prompt) =
+                    template.render_full(&vars).map_err(|e| anyhow!(e))?;
 
                 let mut prompt = String::new();
                 if let Some(system) = system_prompt {
@@ -209,7 +212,8 @@ Return ONLY the updated PRD as a single JSON object (camelCase), no markdown fen
                 )
             }
             _ => {
-                let prev = previous_prd.ok_or_else(|| anyhow!("validation requires previous PRD"))?;
+                let prev =
+                    previous_prd.ok_or_else(|| anyhow!("validation requires previous PRD"))?;
                 format!(
                     r#"You are validating a PRD for quality and completeness.
 
@@ -286,7 +290,11 @@ Return ONLY the final PRD as a single JSON object (camelCase), no markdown fence
             event = event.with_tokens(0, tokens);
         }
         if !exec.success {
-            event = event.with_error(exec.error_message.clone().unwrap_or_else(|| "AI PRD generation failed".to_string()));
+            event = event.with_error(
+                exec.error_message
+                    .clone()
+                    .unwrap_or_else(|| "AI PRD generation failed".to_string()),
+            );
         }
         if let Some(tracker) = usage_tracker {
             let _ = tracker.track(event).await;
@@ -297,7 +305,8 @@ Return ONLY the final PRD as a single JSON object (camelCase), no markdown fence
         if !exec.success {
             return Err(anyhow!(
                 "AI PRD generation unsuccessful: {}",
-                exec.error_message.unwrap_or_else(|| "unknown error".to_string())
+                exec.error_message
+                    .unwrap_or_else(|| "unknown error".to_string())
             ));
         }
 
@@ -336,7 +345,9 @@ Return ONLY the final PRD as a single JSON object (camelCase), no markdown fence
 
         if let (Some(start), Some(end)) = (raw_output.find('{'), raw_output.rfind('}')) {
             if start < end {
-                if let Ok(json) = serde_json::from_str::<serde_json::Value>(&raw_output[start..=end]) {
+                if let Ok(json) =
+                    serde_json::from_str::<serde_json::Value>(&raw_output[start..=end])
+                {
                     if let Some(text) = Self::extract_text_from_json(&json) {
                         return text;
                     }
@@ -475,7 +486,9 @@ Return ONLY the final PRD as a single JSON object (camelCase), no markdown fence
             for task in &mut phase.tasks {
                 for subtask in &mut task.subtasks {
                     if subtask.acceptance_criteria.is_empty() {
-                        result.gaps_found.push(format!("Subtask {} lacks acceptance criteria", subtask.id));
+                        result
+                            .gaps_found
+                            .push(format!("Subtask {} lacks acceptance criteria", subtask.id));
                     }
                 }
 
@@ -637,7 +650,7 @@ pub struct GenerationSummary {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::prd::{Phase, PRDMetadata, Task};
+    use crate::types::prd::{PRDMetadata, Phase, Task};
 
     fn create_test_prd() -> PRD {
         PRD {
@@ -701,7 +714,7 @@ mod tests {
     fn test_coverage_calculation() {
         let generator = MultiPassGenerator::new();
         let mut prd = create_test_prd();
-        
+
         // Add a subtask with criteria
         use crate::types::prd::Subtask;
         prd.phases[0].tasks[0].subtasks.push(Subtask {
@@ -717,7 +730,7 @@ mod tests {
             acceptance_criteria: vec!["Test criterion".to_string()],
             iteration_records: Vec::new(),
         });
-        
+
         let coverage = generator.calculate_coverage(&prd);
         assert!(coverage > 0.0); // Subtask has criteria
     }

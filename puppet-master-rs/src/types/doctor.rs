@@ -90,19 +90,19 @@ impl CheckResult {
 pub trait DoctorCheck: Send + Sync {
     /// Unique check name/ID.
     fn name(&self) -> &str;
-    
+
     /// Check category.
     fn category(&self) -> CheckCategory;
-    
+
     /// Check description.
     fn description(&self) -> &str;
-    
+
     /// Run the check.
     async fn run(&self) -> CheckResult;
-    
+
     /// Attempt to fix the issue if possible.
     async fn fix(&self, dry_run: bool) -> Option<FixResult>;
-    
+
     /// Returns whether this check has a fix available.
     fn has_fix(&self) -> bool {
         false
@@ -173,8 +173,7 @@ mod tests {
 
     #[test]
     fn test_check_result() {
-        let result = CheckResult::pass("All checks passed")
-            .with_details("No issues found");
+        let result = CheckResult::pass("All checks passed").with_details("No issues found");
 
         assert!(result.passed);
         assert_eq!(result.message, "All checks passed");
@@ -183,8 +182,7 @@ mod tests {
 
     #[test]
     fn test_check_result_fixable() {
-        let result = CheckResult::fail("Check failed")
-            .with_fix();
+        let result = CheckResult::fail("Check failed").with_fix();
 
         assert!(!result.passed);
         assert!(result.can_fix);

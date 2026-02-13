@@ -322,7 +322,9 @@ impl MetricsCollector {
                 reasoning_effort,
                 ..
             } => {
-                inner.last_platform_by_item.insert(item_id.clone(), *platform);
+                inner
+                    .last_platform_by_item
+                    .insert(item_id.clone(), *platform);
 
                 let entry = inner
                     .subtasks
@@ -374,7 +376,10 @@ impl MetricsCollector {
                 }
 
                 if let Some(p) = platform {
-                    let plat = inner.platforms.entry(p).or_insert_with(|| PlatformAgg::new(p));
+                    let plat = inner
+                        .platforms
+                        .entry(p)
+                        .or_insert_with(|| PlatformAgg::new(p));
 
                     plat.metrics.iterations += 1;
                     if *success {
@@ -388,12 +393,15 @@ impl MetricsCollector {
 
                     if let Some(summary) = output_summary {
                         let est = estimate_tokens_from_text(summary);
-                        plat.metrics.estimated_tokens = plat.metrics.estimated_tokens.saturating_add(est);
+                        plat.metrics.estimated_tokens =
+                            plat.metrics.estimated_tokens.saturating_add(est);
                     }
                 }
             }
 
-            PuppetMasterEvent::GateComplete { tier_id, passed, .. } => {
+            PuppetMasterEvent::GateComplete {
+                tier_id, passed, ..
+            } => {
                 let sub = inner
                     .subtasks
                     .entry(tier_id.clone())
@@ -414,7 +422,10 @@ impl MetricsCollector {
                 sub.metrics.retries += 1;
 
                 if let Some(p) = sub.metrics.last_platform {
-                    let plat = inner.platforms.entry(p).or_insert_with(|| PlatformAgg::new(p));
+                    let plat = inner
+                        .platforms
+                        .entry(p)
+                        .or_insert_with(|| PlatformAgg::new(p));
                     plat.metrics.retries += 1;
                 }
             }
@@ -427,7 +438,10 @@ impl MetricsCollector {
                 sub.metrics.timeouts += 1;
 
                 if let Some(p) = sub.metrics.last_platform {
-                    let plat = inner.platforms.entry(p).or_insert_with(|| PlatformAgg::new(p));
+                    let plat = inner
+                        .platforms
+                        .entry(p)
+                        .or_insert_with(|| PlatformAgg::new(p));
                     plat.metrics.timeouts += 1;
                 }
             }
@@ -440,7 +454,10 @@ impl MetricsCollector {
                 sub.metrics.escalations += 1;
 
                 if let Some(p) = sub.metrics.last_platform {
-                    let plat = inner.platforms.entry(p).or_insert_with(|| PlatformAgg::new(p));
+                    let plat = inner
+                        .platforms
+                        .entry(p)
+                        .or_insert_with(|| PlatformAgg::new(p));
                     plat.metrics.escalations += 1;
                 }
             }
@@ -514,11 +531,8 @@ impl MetricsCollector {
             .collect();
         platforms.sort_by_key(|p| format!("{:?}", p.platform));
 
-        let mut subtasks: Vec<SubtaskMetrics> = inner
-            .subtasks
-            .values()
-            .map(|s| s.metrics.clone())
-            .collect();
+        let mut subtasks: Vec<SubtaskMetrics> =
+            inner.subtasks.values().map(|s| s.metrics.clone()).collect();
         subtasks.sort_by(|a, b| a.subtask_id.cmp(&b.subtask_id));
 
         let mut overall = OverallMetrics::default();
@@ -552,15 +566,16 @@ impl MetricsCollector {
     /// Export a snapshot as pretty JSON.
     pub fn export_json(&self, path: impl AsRef<Path>) -> Result<()> {
         let path = path.as_ref();
-        
+
         // Create parent directory if needed
         if let Some(parent) = path.parent() {
             std::fs::create_dir_all(parent)
                 .with_context(|| format!("Failed to create directory {}", parent.display()))?;
         }
-        
+
         let snapshot = self.snapshot();
-        let json = serde_json::to_string_pretty(&snapshot).context("Failed to serialize metrics snapshot")?;
+        let json = serde_json::to_string_pretty(&snapshot)
+            .context("Failed to serialize metrics snapshot")?;
         let mut file = File::create(path)
             .with_context(|| format!("Failed to create metrics JSON {}", path.display()))?;
         file.write_all(json.as_bytes())
@@ -573,13 +588,13 @@ impl MetricsCollector {
     /// The CSV includes both platform and subtask rows, distinguished by `kind`.
     pub fn export_csv(&self, path: impl AsRef<Path>) -> Result<()> {
         let path = path.as_ref();
-        
+
         // Create parent directory if needed
         if let Some(parent) = path.parent() {
             std::fs::create_dir_all(parent)
                 .with_context(|| format!("Failed to create directory {}", parent.display()))?;
         }
-        
+
         let snapshot = self.snapshot();
 
         let mut file = File::create(path)
@@ -663,7 +678,11 @@ fn p95_of(mut samples: Vec<u64>) -> u64 {
 }
 
 fn to_csv_row(fields: &[String]) -> String {
-    fields.iter().map(|f| csv_escape(f)).collect::<Vec<_>>().join(",")
+    fields
+        .iter()
+        .map(|f| csv_escape(f))
+        .collect::<Vec<_>>()
+        .join(",")
 }
 
 fn csv_escape(field: &str) -> String {
@@ -749,7 +768,13 @@ mod tests {
         assert!(json_text.contains("\"platforms\""));
 
         let csv_text = std::fs::read_to_string(&csv_path).unwrap();
-        assert!(csv_text.lines().next().unwrap().starts_with("kind,id,platform"));
+        assert!(
+            csv_text
+                .lines()
+                .next()
+                .unwrap()
+                .starts_with("kind,id,platform")
+        );
         assert!(csv_text.contains("platform"));
         assert!(csv_text.contains("subtask"));
     }

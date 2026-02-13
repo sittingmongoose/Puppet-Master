@@ -1,12 +1,12 @@
 //! Multi-format document parsing for requirements extraction.
 
-use serde::{Deserialize, Serialize};
-use std::path::Path;
-use std::io::{Read, Cursor};
-use zip::ZipArchive;
+use lopdf::Document as PdfDocument;
 use quick_xml::Reader;
 use quick_xml::events::Event;
-use lopdf::Document as PdfDocument;
+use serde::{Deserialize, Serialize};
+use std::io::{Cursor, Read};
+use std::path::Path;
+use zip::ZipArchive;
 
 /// A parsed document with structured content.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -191,7 +191,7 @@ impl DocumentParser {
                 return Err(format!(
                     "Unsupported file format: .{} (supported: .md, .txt, .docx, .pdf)",
                     extension
-                ))
+                ));
             }
         };
 
@@ -214,8 +214,12 @@ impl DocumentParser {
     /// * `Err(String)` - Parse error (e.g., corrupt file, encrypted, invalid format)
     pub fn parse_docx(content: &[u8]) -> Result<ParsedDocument, String> {
         let cursor = Cursor::new(content);
-        let mut archive = ZipArchive::new(cursor)
-            .map_err(|e| format!("Failed to open DOCX archive (possibly corrupt or encrypted): {}", e))?;
+        let mut archive = ZipArchive::new(cursor).map_err(|e| {
+            format!(
+                "Failed to open DOCX archive (possibly corrupt or encrypted): {}",
+                e
+            )
+        })?;
 
         // Extract document.xml which contains the main content
         let mut document_xml = archive
@@ -300,7 +304,8 @@ impl DocumentParser {
                                 } else {
                                     // Regular paragraph - add to current section or create default
                                     if current_section.is_none() {
-                                        current_section = Some(DocumentSection::new("Content", 1, String::new()));
+                                        current_section =
+                                            Some(DocumentSection::new("Content", 1, String::new()));
                                     }
 
                                     if let Some(section) = current_section.as_mut() {
@@ -308,7 +313,9 @@ impl DocumentParser {
                                         section.content.push('\n');
 
                                         // Check for list items
-                                        if let Some(list_item) = Self::parse_list_item(&current_text) {
+                                        if let Some(list_item) =
+                                            Self::parse_list_item(&current_text)
+                                        {
                                             section.list_items.push(list_item);
                                         }
                                     }
@@ -332,7 +339,13 @@ impl DocumentParser {
                     }
                 }
                 Ok(Event::Eof) => break,
-                Err(e) => return Err(format!("XML parsing error at position {}: {}", reader.buffer_position(), e)),
+                Err(e) => {
+                    return Err(format!(
+                        "XML parsing error at position {}: {}",
+                        reader.buffer_position(),
+                        e
+                    ));
+                }
                 _ => {}
             }
             buf.clear();
@@ -357,7 +370,8 @@ impl DocumentParser {
     fn extract_heading_level(style: &str) -> Option<usize> {
         if style.starts_with("Heading") {
             // Try to extract number from "Heading1", "Heading2", etc.
-            style.chars()
+            style
+                .chars()
                 .skip_while(|c| !c.is_ascii_digit())
                 .take_while(|c| c.is_ascii_digit())
                 .collect::<String>()
@@ -403,7 +417,9 @@ impl DocumentParser {
         }
 
         if all_text.is_empty() {
-            return Err("No text content found in PDF (possibly image-based or encrypted)".to_string());
+            return Err(
+                "No text content found in PDF (possibly image-based or encrypted)".to_string(),
+            );
         }
 
         // Try to detect structure from the extracted text
@@ -413,7 +429,7 @@ impl DocumentParser {
     /// Parses extracted PDF text, attempting to detect structure.
     fn parse_pdf_text(text: &str) -> Result<ParsedDocument, String> {
         let lines: Vec<&str> = text.lines().collect();
-        
+
         // Try to find a title (first non-empty line, often larger/bold in PDFs)
         let title = lines
             .iter()
@@ -426,14 +442,16 @@ impl DocumentParser {
 
         for line in &lines {
             let trimmed = line.trim();
-            
+
             if trimmed.is_empty() {
                 continue;
             }
 
             // Heuristic: Lines that are short, ALL CAPS, or end with certain patterns might be headings
-            let is_potential_heading = trimmed.len() < 60 
-                && (trimmed.chars().all(|c| c.is_uppercase() || c.is_whitespace() || c.is_numeric())
+            let is_potential_heading = trimmed.len() < 60
+                && (trimmed
+                    .chars()
+                    .all(|c| c.is_uppercase() || c.is_whitespace() || c.is_numeric())
                     || (!trimmed.contains('.') && trimmed.len() < 40));
 
             if is_potential_heading && !trimmed.starts_with('-') && !trimmed.starts_with('*') {
@@ -496,7 +514,11 @@ impl DocumentParser {
                     doc.title = heading.title.clone();
                 }
 
-                current_section = Some(DocumentSection::new(heading.title, heading.level, String::new()));
+                current_section = Some(DocumentSection::new(
+                    heading.title,
+                    heading.level,
+                    String::new(),
+                ));
             } else if let Some(section) = current_section.as_mut() {
                 // Check for list items
                 if let Some(list_item) = Self::parse_list_item(line) {
@@ -555,10 +577,7 @@ impl DocumentParser {
         }
 
         let level = trimmed.chars().take_while(|c| *c == '#').count();
-        let title = trimmed
-            .trim_start_matches('#')
-            .trim()
-            .to_string();
+        let title = trimmed.trim_start_matches('#').trim().to_string();
 
         if title.is_empty() {
             return None;
@@ -624,8 +643,8 @@ struct Heading {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use tempfile::NamedTempFile;
     use std::io::Write;
+    use tempfile::NamedTempFile;
 
     #[test]
     fn test_parse_file_markdown() {
@@ -779,11 +798,15 @@ The system must be scalable.
         let doc = DocumentParser::parse_pdf_text(pdf_text).unwrap();
         assert_eq!(doc.title, "PROJECT REQUIREMENTS");
         assert!(!doc.sections.is_empty());
-        
+
         // Check that some sections were detected
         let section_titles: Vec<&str> = doc.sections.iter().map(|s| s.title.as_str()).collect();
-        assert!(section_titles.iter().any(|t| t.contains("REQUIREMENTS") || t == &"Content"));
-        
+        assert!(
+            section_titles
+                .iter()
+                .any(|t| t.contains("REQUIREMENTS") || t == &"Content")
+        );
+
         // Check that list items were detected
         let has_list_items = doc.sections.iter().any(|s| !s.list_items.is_empty());
         assert!(has_list_items);

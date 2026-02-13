@@ -249,7 +249,12 @@ impl PromotionEngine {
             .map(|(key, stats)| {
                 (
                     key.clone(),
-                    (stats.count, stats.successes, stats.failures, stats.source_tier.clone()),
+                    (
+                        stats.count,
+                        stats.successes,
+                        stats.failures,
+                        stats.source_tier.clone(),
+                    ),
                 )
             })
             .collect()
@@ -384,12 +389,8 @@ mod tests {
     fn test_export_import_stats() {
         let mut engine = PromotionEngine::with_defaults();
 
-        engine
-            .record_usage("Pattern A", "phase1", true)
-            .unwrap();
-        engine
-            .record_usage("Pattern A", "phase1", true)
-            .unwrap();
+        engine.record_usage("Pattern A", "phase1", true).unwrap();
+        engine.record_usage("Pattern A", "phase1", true).unwrap();
 
         let exported = engine.export_stats();
         assert_eq!(exported.len(), 1);
@@ -405,9 +406,7 @@ mod tests {
     fn test_clear_stats() {
         let mut engine = PromotionEngine::with_defaults();
 
-        engine
-            .record_usage("Pattern", "tier", true)
-            .unwrap();
+        engine.record_usage("Pattern", "tier", true).unwrap();
         assert!(engine.get_stats("Pattern").is_some());
 
         engine.clear_stats();

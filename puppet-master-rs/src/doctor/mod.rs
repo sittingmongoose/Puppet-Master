@@ -14,7 +14,9 @@ mod installation_manager;
 
 pub use check_registry::{CheckRegistry, DoctorReport};
 pub use doctor_reporter::DoctorReporter;
-pub use installation_manager::{InstallationManager, InstallationStatus, InstallResult, OperatingSystem};
+pub use installation_manager::{
+    InstallResult, InstallationManager, InstallationStatus, OperatingSystem,
+};
 
 // Re-export check types
-pub use crate::types::{CheckCategory, CheckResult, FixResult, DoctorCheck};
+pub use crate::types::{CheckCategory, CheckResult, DoctorCheck, FixResult};

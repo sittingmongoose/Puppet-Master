@@ -194,7 +194,10 @@ impl ParallelExecutor {
                     {
                         Ok(Ok(output)) => Ok(output),
                         Ok(Err(e)) => Err(e),
-                        Err(_) => Err(anyhow::anyhow!("Task timed out after {} seconds", timeout_secs)),
+                        Err(_) => Err(anyhow::anyhow!(
+                            "Task timed out after {} seconds",
+                            timeout_secs
+                        )),
                     }
                 } else {
                     // Execute without timeout
@@ -250,7 +253,7 @@ impl ParallelExecutor {
 mod tests {
     use super::*;
     use std::sync::atomic::{AtomicUsize, Ordering};
-    use tokio::time::{sleep, Duration};
+    use tokio::time::{Duration, sleep};
 
     #[tokio::test]
     async fn test_execute_parallel_tasks() {
@@ -305,7 +308,7 @@ mod tests {
 
         assert!(result.success);
         assert_eq!(result.completed_count, 3);
-        
+
         // Check that B's level is higher than A's
         let a_level = result.results.get("A").unwrap().level;
         let b_level = result.results.get("B").unwrap().level;
@@ -405,9 +408,9 @@ mod tests {
                     async move {
                         let current = active.fetch_add(1, Ordering::SeqCst) + 1;
                         max_active.fetch_max(current, Ordering::SeqCst);
-                        
+
                         sleep(Duration::from_millis(50)).await;
-                        
+
                         active.fetch_sub(1, Ordering::SeqCst);
                         Ok(format!("Completed {}", id))
                     }
@@ -443,7 +446,7 @@ mod tests {
 
         assert!(!result.success);
         assert_eq!(result.failed_count, 1);
-        
+
         let a_result = result.results.get("A").unwrap();
         assert!(!a_result.success);
         assert!(a_result.error.as_ref().unwrap().contains("timed out"));

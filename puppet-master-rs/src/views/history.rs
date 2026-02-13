@@ -2,12 +2,12 @@
 //!
 //! Displays past orchestration sessions with filtering and details.
 
-use iced::widget::{column, row, text, container, scrollable, Space};
-use iced::{Element, Length, Border};
 use crate::app::Message;
-use crate::theme::{AppTheme, tokens, fonts, colors};
+use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::widgets::*;
 use chrono::{DateTime, Utc};
+use iced::widget::{Space, column, container, row, scrollable, text};
+use iced::{Border, Element, Length};
 
 /// Session information
 #[derive(Debug, Clone)]
@@ -71,7 +71,9 @@ pub fn view<'a>(
     search_query: &'a str,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![].spacing(tokens::spacing::LG).padding(tokens::spacing::LG);
+    let mut content = column![]
+        .spacing(tokens::spacing::LG)
+        .padding(tokens::spacing::LG);
 
     // Header with Refresh button
     content = content.push(
@@ -81,36 +83,36 @@ pub fn view<'a>(
                 .font(crate::theme::fonts::FONT_DISPLAY)
                 .color(theme.ink()),
             Space::new().width(Length::Fill),
-            styled_button(theme, "REFRESH", ButtonVariant::Info)
-                .on_press(Message::LoadHistory),
+            styled_button(theme, "REFRESH", ButtonVariant::Info).on_press(Message::LoadHistory),
         ]
         .spacing(tokens::spacing::MD)
-        .align_y(iced::Alignment::Center)
+        .align_y(iced::Alignment::Center),
     );
 
     // Search input
-    content = content.push(
-        themed_panel(
-            container(
-                row![
-                    text("Search:")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink())
-                        .width(Length::Fixed(80.0)),
-                    styled_text_input(theme, "Search by ID or project...", search_query)
-                        .on_input(Message::HistorySearchChanged)
-                        .width(Length::Fill),
-                ]
-                .spacing(tokens::spacing::SM)
-                .align_y(iced::Alignment::Center)
-            ).padding(tokens::spacing::MD),
-            theme
+    content = content.push(themed_panel(
+        container(
+            row![
+                text("Search:")
+                    .size(tokens::font_size::BASE)
+                    .color(theme.ink())
+                    .width(Length::Fixed(80.0)),
+                styled_text_input(theme, "Search by ID or project...", search_query)
+                    .on_input(Message::HistorySearchChanged)
+                    .width(Length::Fill),
+            ]
+            .spacing(tokens::spacing::SM)
+            .align_y(iced::Alignment::Center),
         )
-    );
+        .padding(tokens::spacing::MD),
+        theme,
+    ));
 
     // Status filter buttons
     let mut filter_row = row![
-        text("Filter:").size(tokens::font_size::BASE).color(theme.ink()),
+        text("Filter:")
+            .size(tokens::font_size::BASE)
+            .color(theme.ink()),
         styled_button(
             theme,
             "All",
@@ -119,8 +121,11 @@ pub fn view<'a>(
             } else {
                 ButtonVariant::Secondary
             }
-        ).on_press(Message::HistoryFilterChanged(None)),
-    ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center);
+        )
+        .on_press(Message::HistoryFilterChanged(None)),
+    ]
+    .spacing(tokens::spacing::SM)
+    .align_y(iced::Alignment::Center);
 
     for status in SessionStatus::all() {
         filter_row = filter_row.push(
@@ -131,62 +136,63 @@ pub fn view<'a>(
                     ButtonVariant::Primary
                 } else {
                     ButtonVariant::Secondary
-                }
-            ).on_press(Message::HistoryFilterChanged(Some(status)))
+                },
+            )
+            .on_press(Message::HistoryFilterChanged(Some(status))),
         );
     }
 
-    content = content.push(
-        themed_panel(
-            container(filter_row).padding(tokens::spacing::MD),
-            theme
-        )
-    );
+    content = content.push(themed_panel(
+        container(filter_row).padding(tokens::spacing::MD),
+        theme,
+    ));
 
     // Pagination controls
-    content = content.push(
-        themed_panel(
-            container(
-                row![
-                    styled_button(theme, "PREVIOUS", ButtonVariant::Secondary)
-                        .on_press(Message::HistoryPrevPage),
-                    Space::new().width(Length::Fill),
-                    text(format!("Page {} of {}", page + 1, total_pages.max(1)))
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink()),
-                    Space::new().width(Length::Fill),
-                    styled_button(theme, "NEXT", ButtonVariant::Secondary)
-                        .on_press(Message::HistoryNextPage),
-                ].spacing(tokens::spacing::SM).align_y(iced::Alignment::Center)
-            ).padding(tokens::spacing::MD),
-            theme
+    content = content.push(themed_panel(
+        container(
+            row![
+                styled_button(theme, "PREVIOUS", ButtonVariant::Secondary)
+                    .on_press(Message::HistoryPrevPage),
+                Space::new().width(Length::Fill),
+                text(format!("Page {} of {}", page + 1, total_pages.max(1)))
+                    .size(tokens::font_size::BASE)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                styled_button(theme, "NEXT", ButtonVariant::Secondary)
+                    .on_press(Message::HistoryNextPage),
+            ]
+            .spacing(tokens::spacing::SM)
+            .align_y(iced::Alignment::Center),
         )
-    );
+        .padding(tokens::spacing::MD),
+        theme,
+    ));
 
     if sessions.is_empty() {
-        content = content.push(
-            themed_panel(
-                container(
-                    column![
-                        text("No execution history")
-                            .size(tokens::font_size::MD)
-                            .color(theme.ink()),
-                        Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                        text("History will appear after orchestration runs")
-                            .size(tokens::font_size::SM)
-                            .color(theme.ink_faded()),
-                    ].spacing(tokens::spacing::SM)
-                ).padding(tokens::spacing::XL),
-                theme
+        content = content.push(themed_panel(
+            container(
+                column![
+                    text("No execution history")
+                        .size(tokens::font_size::MD)
+                        .color(theme.ink()),
+                    Space::new().height(Length::Fixed(tokens::spacing::SM)),
+                    text("History will appear after orchestration runs")
+                        .size(tokens::font_size::SM)
+                        .color(theme.ink_faded()),
+                ]
+                .spacing(tokens::spacing::SM),
             )
-        );
+            .padding(tokens::spacing::XL),
+            theme,
+        ));
     } else {
         let mut sessions_col = column![].spacing(tokens::spacing::MD);
 
         for session in sessions {
             let duration = if let Some(end) = session.end_time {
                 let dur = end.signed_duration_since(session.start_time);
-                format!("{}h {}m {}s",
+                format!(
+                    "{}h {}m {}s",
                     dur.num_hours(),
                     dur.num_minutes() % 60,
                     dur.num_seconds() % 60
@@ -220,38 +226,43 @@ pub fn view<'a>(
                             .size(tokens::font_size::MD)
                             .font(fonts::FONT_UI_BOLD)
                             .color(theme.ink()),
-                        text(format!("Started: {}", 
+                        text(format!(
+                            "Started: {}",
                             session.start_time.format("%Y-%m-%d %H:%M:%S")
                         ))
-                            .size(tokens::font_size::SM)
-                            .color(theme.ink_faded()),
+                        .size(tokens::font_size::SM)
+                        .color(theme.ink_faded()),
                         text(format!(
                             "Platform: {} | Model: {} | Effort: {}",
                             session.platform.as_deref().unwrap_or("—"),
                             session.model.as_deref().unwrap_or("—"),
                             session.reasoning_effort.as_deref().unwrap_or("—"),
                         ))
-                            .size(tokens::font_size::SM)
-                            .color(theme.ink_faded()),
-                    ].spacing(tokens::spacing::XS),
+                        .size(tokens::font_size::SM)
+                        .color(theme.ink_faded()),
+                    ]
+                    .spacing(tokens::spacing::XS),
                     Space::new().width(Length::Fill),
                     column![
-                        text(format!("{}/{} items", 
-                            session.items_completed, 
-                            session.items_total
+                        text(format!(
+                            "{}/{} items",
+                            session.items_completed, session.items_total
                         ))
-                            .size(tokens::font_size::BASE)
-                            .color(theme.ink()),
+                        .size(tokens::font_size::BASE)
+                        .color(theme.ink()),
                         text(duration.clone())
                             .size(tokens::font_size::SM)
                             .color(theme.ink_faded()),
-                    ].spacing(tokens::spacing::XS).align_x(iced::Alignment::End),
+                    ]
+                    .spacing(tokens::spacing::XS)
+                    .align_x(iced::Alignment::End),
                     styled_button_sized(
                         theme,
                         if session.expanded { "v" } else { ">" },
                         ButtonVariant::Ghost,
                         ButtonSize::Small
-                    ).on_press(Message::SelectSession(session.id.clone())),
+                    )
+                    .on_press(Message::SelectSession(session.id.clone())),
                 ]
                 .spacing(tokens::spacing::MD)
                 .align_y(iced::Alignment::Center),
@@ -266,13 +277,14 @@ pub fn view<'a>(
                         .size(tokens::font_size::BASE)
                         .font(fonts::FONT_UI_BOLD)
                         .color(theme.ink()),
-                ].spacing(tokens::spacing::XS);
+                ]
+                .spacing(tokens::spacing::XS);
 
                 for phase in &session.phases {
                     details = details.push(
                         text(format!("• {}", phase))
                             .size(tokens::font_size::SM)
-                            .color(theme.ink_faded())
+                            .color(theme.ink_faded()),
                     );
                 }
 
@@ -280,34 +292,29 @@ pub fn view<'a>(
                     details = details.push(
                         text(format!("Ended: {}", end.format("%Y-%m-%d %H:%M:%S")))
                             .size(tokens::font_size::SM)
-                            .color(theme.ink_faded())
+                            .color(theme.ink_faded()),
                     );
                 }
 
-                session_content = session_content.push(
-                    container(details)
-                        .padding(tokens::spacing::MD)
-                        .style(move |_: &iced::Theme| container::Style {
-                            background: Some(iced::Background::Color(
-                                iced::Color { a: 0.1, ..theme.ink() }
-                            )),
+                session_content =
+                    session_content.push(container(details).padding(tokens::spacing::MD).style(
+                        move |_: &iced::Theme| container::Style {
+                            background: Some(iced::Background::Color(iced::Color {
+                                a: 0.1,
+                                ..theme.ink()
+                            })),
                             ..Default::default()
-                        })
-                );
+                        },
+                    ));
             }
 
-            sessions_col = sessions_col.push(
-                themed_panel(
-                    container(session_content).padding(tokens::spacing::MD),
-                    theme
-                )
-            );
+            sessions_col = sessions_col.push(themed_panel(
+                container(session_content).padding(tokens::spacing::MD),
+                theme,
+            ));
         }
 
-        content = content.push(
-            scrollable(sessions_col)
-                .height(Length::Fill)
-        );
+        content = content.push(scrollable(sessions_col).height(Length::Fill));
     }
 
     scrollable(content)
