@@ -687,8 +687,15 @@ fn view_status_badge<'a>(
 fn view_status_badge_large<'a>(status: CheckStatus, theme: &'a AppTheme) -> Element<'a, Message> {
     let status_color = status.color(theme);
     let theme_copy = *theme;
+    let icon_name = match status {
+        CheckStatus::Pass => IconName::Check,
+        CheckStatus::Fail => IconName::Cross,
+        CheckStatus::Warn => IconName::Warning,
+        CheckStatus::Skip => IconName::Info,
+    };
+    let icon_el = svg_icon_sized(icon_name, IconSize::XLarge);
 
-    container(text("*").size(tokens::font_size::XXL))
+    container(icon_el)
         .padding(tokens::spacing::SM)
         .style(move |_theme: &iced::Theme| container::Style {
             background: Some(Background::Color(status_color)),

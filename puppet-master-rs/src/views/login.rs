@@ -257,7 +257,11 @@ fn build_platform_grid<'a>(
             login_auth_urls,
             theme,
         );
-        current_row = current_row.push(container(card).width(Length::FillPortion(1)));
+        current_row = current_row.push(
+            container(card)
+                .width(Length::FillPortion(1))
+                .height(Length::Fill),
+        );
         count += 1;
 
         // After every 3 cards, push the row and start a new one

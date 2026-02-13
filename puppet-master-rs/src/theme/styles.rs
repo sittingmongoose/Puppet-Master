@@ -2,18 +2,6 @@ use crate::theme::{AppTheme, colors, tokens};
 use iced::widget::{button, container, progress_bar, scrollable, text_input};
 use iced::{Border, Color, Shadow, Vector};
 
-// ── Legacy Spacing Constants (kept for backward compatibility) ──────
-pub const SPACING_XS: f32 = 4.0;
-pub const SPACING_SM: f32 = 8.0;
-pub const SPACING_MD: f32 = 16.0;
-pub const SPACING_LG: f32 = 24.0;
-pub const SPACING_XL: f32 = 32.0;
-
-// ── Legacy Border Constants (kept for backward compatibility) ───────
-pub const BORDER_THIN: f32 = 1.0;
-pub const BORDER_MEDIUM: f32 = 2.0;
-pub const BORDER_THICK: f32 = 3.0;
-
 /// Button variant for styling
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ButtonVariant {
@@ -45,7 +33,7 @@ impl ButtonVariant {
             text_color,
             border: Border {
                 color: border_color,
-                width: BORDER_THICK,
+                width: tokens::borders::THICK,
                 radius: 0.0.into(),
             },
             shadow: Shadow {
@@ -64,7 +52,7 @@ pub fn panel_style(theme: &AppTheme) -> container::Style {
         background: Some(iced::Background::Color(theme.paper())),
         border: Border {
             color: theme.ink(),
-            width: BORDER_THICK,
+            width: tokens::borders::THICK,
             radius: 0.0.into(),
         },
         shadow: Shadow {
@@ -83,7 +71,7 @@ pub fn header_style(theme: &AppTheme) -> container::Style {
         background: Some(iced::Background::Color(theme.paper())),
         border: Border {
             color: theme.ink(),
-            width: BORDER_THICK,
+            width: tokens::borders::THICK,
             radius: 0.0.into(),
         },
         shadow: Shadow {
@@ -102,7 +90,7 @@ pub fn text_input_style(theme: &AppTheme) -> text_input::Style {
         background: iced::Background::Color(theme.paper()),
         border: Border {
             color: theme.ink(),
-            width: BORDER_MEDIUM,
+            width: tokens::borders::MEDIUM,
             radius: 0.0.into(),
         },
         icon: theme.ink_faded(),
@@ -118,7 +106,7 @@ pub fn text_input_focused_style(theme: &AppTheme) -> text_input::Style {
         background: iced::Background::Color(theme.paper()),
         border: Border {
             color: colors::ELECTRIC_BLUE,
-            width: BORDER_MEDIUM,
+            width: tokens::borders::MEDIUM,
             radius: 0.0.into(),
         },
         icon: theme.ink(),
@@ -139,7 +127,7 @@ pub fn progress_bar_style(theme: &AppTheme, fill_color: Color) -> progress_bar::
         bar: iced::Background::Color(fill_color),
         border: Border {
             color: theme.ink(),
-            width: BORDER_THICK,
+            width: tokens::borders::THICK,
             radius: 0.0.into(),
         },
     }
@@ -152,7 +140,7 @@ pub fn nav_active_style(theme: &AppTheme) -> button::Style {
         text_color: theme.paper(),
         border: Border {
             color: theme.ink(),
-            width: BORDER_MEDIUM,
+            width: tokens::borders::MEDIUM,
             radius: 0.0.into(),
         },
         shadow: Shadow::default(),
@@ -167,7 +155,7 @@ pub fn nav_inactive_style(theme: &AppTheme) -> button::Style {
         text_color: theme.ink(),
         border: Border {
             color: theme.ink(),
-            width: BORDER_MEDIUM,
+            width: tokens::borders::MEDIUM,
             radius: 0.0.into(),
         },
         shadow: Shadow::default(),

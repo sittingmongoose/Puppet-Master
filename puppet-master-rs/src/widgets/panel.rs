@@ -386,7 +386,7 @@ where
             weight: Weight::Bold,
             ..Font::DEFAULT
         }))
-        .padding(Padding::ZERO.bottom(styles::SPACING_SM))
+        .padding(Padding::ZERO.bottom(tokens::spacing::SM))
         .width(Length::Fill)
         .style(|_theme: &iced::Theme| container::Style {
             border: Border {
@@ -399,7 +399,7 @@ where
         // Spacer
         Space::new()
             .width(Length::Fill)
-            .height(Length::Fixed(styles::SPACING_MD)),
+            .height(Length::Fixed(tokens::spacing::MD)),
         // Content
         content.into(),
     ]

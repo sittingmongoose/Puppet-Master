@@ -90,12 +90,15 @@ pub fn view<'a>(
             .padding(tokens::spacing::SM),
     );
 
-    // Platform status results
+    // Platform status results - use 2-column grid for better horizontal spacing
     if !platform_statuses.is_empty() {
-        let mut status_content = column![].spacing(tokens::spacing::MD);
+        let mut grid_rows = column![].spacing(tokens::spacing::LG);
         let ink_color = theme.ink(); // Capture for use in closure
 
-        for platform_status in platform_statuses {
+        // Build platform cards in pairs for 2-column layout
+        let mut current_row = row![].spacing(tokens::spacing::LG);
+        
+        for (idx, platform_status) in platform_statuses.iter().enumerate() {
             let status_color = match &platform_status.status {
                 InstallationStatus::Installed(_) => iced::Color::from_rgb(0.0, 0.8, 0.0),
                 InstallationStatus::NotInstalled => iced::Color::from_rgb(0.8, 0.0, 0.0),
@@ -176,8 +179,10 @@ pub fn view<'a>(
                                     .size(tokens::font_size::BASE)
                                     .line_height(iced::widget::text::LineHeight::Relative(1.6)),
                             )
-                            .height(Length::Fixed(350.0)), // Increased from 150px to 350px for better readability
+                            .height(Length::Shrink)
                         )
+                        .height(Length::Shrink)
+                        .max_height(350.0)
                         .padding(tokens::spacing::MD)
                         .style(move |_theme: &iced::Theme| iced::widget::container::Style {
                             background: Some(iced::Background::Color(iced::Color::from_rgba(
@@ -201,13 +206,27 @@ pub fn view<'a>(
                     );
             }
 
-            status_content = status_content.push(themed_panel(
+            let card = themed_panel(
                 container(platform_col).padding(tokens::spacing::MD),
                 theme,
-            ));
+            );
+            
+            current_row = current_row.push(
+                container(card)
+                    .width(Length::FillPortion(1))
+                    .height(Length::Shrink)
+            );
+            
+            // Every 2 cards, push the row and start a new one
+            if (idx + 1) % 2 == 0 || idx == platform_statuses.len() - 1 {
+                grid_rows = grid_rows.push(current_row);
+                if idx < platform_statuses.len() - 1 {
+                    current_row = row![].spacing(tokens::spacing::LG);
+                }
+            }
         }
 
-        content = content.push(scrollable(status_content).height(Length::Fill));
+        content = content.push(scrollable(grid_rows).height(Length::Fill));
     } else if !is_checking {
         content = content.push(
             container(

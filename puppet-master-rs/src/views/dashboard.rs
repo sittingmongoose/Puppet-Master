@@ -153,10 +153,14 @@ pub fn view<'a>(
     ]
     .spacing(tokens::spacing::LG);
 
-    // Second row
+    // Second row (containers fill height so panels stretch)
     let grid_row2 = row![
-        container(controls_panel).width(Length::FillPortion(1)),
-        container(output_panel).width(Length::FillPortion(1)),
+        container(controls_panel)
+            .width(Length::FillPortion(1))
+            .height(Length::Fill),
+        container(output_panel)
+            .width(Length::FillPortion(1))
+            .height(Length::Fill),
     ]
     .spacing(tokens::spacing::LG);
 

@@ -146,19 +146,23 @@ pub fn view<'a>(
         .width(Length::Fill),
     };
 
-    content = content.push(container(step_panel).width(Length::Fill).style(
-        move |_: &iced::Theme| container::Style {
-            background: Some(iced::Background::Color(theme.paper())),
-            border: Border {
-                color: theme.ink(),
-                width: tokens::borders::THICK,
-                radius: tokens::radii::NONE.into(),
-            },
-            shadow: tokens::shadows::panel_shadow(theme.ink()),
-            text_color: Some(theme.ink()),
-            ..Default::default()
-        },
-    ));
+    content = content.push(
+        container(step_panel)
+            .width(Length::Fill)
+            .padding(tokens::spacing::LG)
+            .max_width(tokens::layout::MAX_CONTENT_WIDTH)
+            .style(move |_: &iced::Theme| container::Style {
+                background: Some(iced::Background::Color(theme.paper())),
+                border: Border {
+                    color: theme.ink(),
+                    width: tokens::borders::THICK,
+                    radius: tokens::radii::NONE.into(),
+                },
+                shadow: tokens::shadows::panel_shadow(theme.ink()),
+                text_color: Some(theme.ink()),
+                ..Default::default()
+            }),
+    );
 
     scrollable(content)
         .width(Length::Fill)
@@ -475,7 +479,7 @@ fn step2_upload_requirements<'a>(
     requirements_text: &'a str,
     requirements_preview_content: &'a text_editor::Content,
     theme: &'a AppTheme,
-) -> container::Container<'a, Message> {
+) -> Element<'a, Message> {
     let char_count = requirements_text.len();
     let can_proceed = !project_name.trim().is_empty()
         && !project_path.trim().is_empty()
@@ -619,10 +623,7 @@ fn step2_upload_requirements<'a>(
         ].spacing(tokens::spacing::MD),
     ].spacing(tokens::spacing::MD);
 
-    container(scrollable(step_content).width(Length::Fill))
-        .padding(tokens::spacing::LG)
-        .width(Length::Fill)
-        .max_width(tokens::layout::MAX_CONTENT_WIDTH)
+    scrollable(step_content).width(Length::Fill).into()
 }
 
 /// Step 2: Generate PRD
@@ -634,7 +635,7 @@ fn step3_generate_prd<'a>(
     models: &'a HashMap<String, Vec<String>>,
     generating: bool,
     theme: &'a AppTheme,
-) -> container::Container<'a, Message> {
+) -> Element<'a, Message> {
     let platform_models = models.get(prd_platform);
 
     let preview_text = if requirements_text.len() > 1000 {
@@ -753,10 +754,7 @@ fn step3_generate_prd<'a>(
     ]
     .spacing(tokens::spacing::MD);
 
-    container(scrollable(step_content).width(Length::Fill))
-        .padding(tokens::spacing::LG)
-        .width(Length::Fill)
-        .max_width(tokens::layout::MAX_CONTENT_WIDTH)
+    scrollable(step_content).width(Length::Fill).into()
 }
 
 /// Step 3: Review Architecture
@@ -765,7 +763,7 @@ fn step4_review_prd<'a>(
     prd_editor_content: &'a text_editor::Content,
     prd_text: &'a str,
     theme: &'a AppTheme,
-) -> container::Container<'a, Message> {
+) -> Element<'a, Message> {
     let has_prd = !prd_text.is_empty();
 
     let step_content = column![
@@ -812,10 +810,7 @@ fn step4_review_prd<'a>(
     ]
     .spacing(tokens::spacing::MD);
 
-    container(scrollable(step_content).width(Length::Fill))
-        .padding(tokens::spacing::LG)
-        .width(Length::Fill)
-        .max_width(tokens::layout::MAX_CONTENT_WIDTH)
+    scrollable(step_content).width(Length::Fill).into()
 }
 
 /// Step 4: Configure Tiers
@@ -824,7 +819,7 @@ fn step5_configure_tiers<'a>(
     tier_configs: &'a HashMap<String, WizardTierConfig>,
     models: &'a HashMap<String, Vec<String>>,
     theme: &'a AppTheme,
-) -> container::Container<'a, Message> {
+) -> Element<'a, Message> {
     let tiers = vec!["phase", "task", "subtask", "iteration"];
 
     let mut tier_sections = column![].spacing(tokens::spacing::MD);
@@ -993,10 +988,7 @@ fn step5_configure_tiers<'a>(
     ]
     .spacing(tokens::spacing::MD);
 
-    container(scrollable(step_content).width(Length::Fill))
-        .padding(tokens::spacing::LG)
-        .width(Length::Fill)
-        .max_width(tokens::layout::MAX_CONTENT_WIDTH)
+    scrollable(step_content).width(Length::Fill).into()
 }
 
 /// Step 5: Generate Plan
@@ -1006,7 +998,7 @@ fn step6_generate_plan<'a>(
     plan_content: &'a text_editor::Content,
     generating: bool,
     theme: &'a AppTheme,
-) -> container::Container<'a, Message> {
+) -> Element<'a, Message> {
     let has_plan = !plan_text.is_empty();
 
     let step_content = column![
@@ -1100,10 +1092,7 @@ fn step6_generate_plan<'a>(
     ]
     .spacing(tokens::spacing::MD);
 
-    container(scrollable(step_content).width(Length::Fill))
-        .padding(tokens::spacing::LG)
-        .width(Length::Fill)
-        .max_width(tokens::layout::MAX_CONTENT_WIDTH)
+    scrollable(step_content).width(Length::Fill).into()
 }
 
 /// Step 7: Review Plan (new step)
@@ -1273,10 +1262,7 @@ fn step8_review_start<'a>(
     ]
     .spacing(tokens::spacing::MD);
 
-    container(scrollable(step_content).width(Length::Fill))
-        .padding(tokens::spacing::LG)
-        .width(Length::Fill)
-        .max_width(tokens::layout::MAX_CONTENT_WIDTH)
+    scrollable(step_content).width(Length::Fill).into()
 }
 
 /// Create a step circle indicator
@@ -1310,6 +1296,10 @@ fn step_circle<'a>(
         text(label)
             .size(tokens::font_size::BASE)
             .font(fonts::FONT_UI_BOLD)
+            .width(Length::Fill)
+            .height(Length::Fill)
+            .horizontal_alignment(iced::alignment::Horizontal::Center)
+            .vertical_alignment(iced::alignment::Vertical::Center)
             .style(move |_theme: &iced::Theme| iced::widget::text::Style {
                 color: Some(text_color),
             }),

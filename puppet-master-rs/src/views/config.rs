@@ -8,8 +8,8 @@ use crate::config::gui_config::{GitInfo, GuiConfig};
 use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::widgets::styled_button::{ButtonVariant, styled_button};
 use iced::widget::{
-    Space, column, container, pick_list, radio, row, scrollable, text, text_editor, text_input,
-    toggler,
+    button, Space, column, container, pick_list, radio, row, scrollable, text, text_editor,
+    text_input, toggler,
 };
 use iced::{Alignment, Border, Element, Length};
 use std::collections::HashMap;
@@ -83,7 +83,7 @@ pub fn view<'a>(
         .enumerate()
         .map(|(idx, label)| tab_button(label, active_tab == idx, idx, theme))
         .collect::<Vec<_>>())
-    .spacing(tokens::spacing::XXS);
+    .spacing(tokens::spacing::SM);
 
     content = content.push(
         container(tabs)
@@ -154,7 +154,7 @@ fn tab_button<'a>(
         iced::Color::TRANSPARENT
     };
 
-    // Create tab with bottom border indicator
+    // Create tab with bottom border indicator (use button for native hover/pointer)
     let tab_content = column![
         text(label)
             .size(tokens::font_size::SM)
@@ -171,11 +171,30 @@ fn tab_button<'a>(
     ]
     .spacing(0);
 
-    iced::widget::mouse_area(
-        container(tab_content).padding([tokens::spacing::SM, tokens::spacing::LG]),
-    )
-    .on_press(Message::ConfigTabChanged(index))
-    .into()
+    let ink_faded = theme.ink_faded();
+    button(container(tab_content).padding([tokens::spacing::SM, tokens::spacing::LG]))
+        .on_press(Message::ConfigTabChanged(index))
+        .style(move |_theme: &iced::Theme, status: button::Status| {
+            match status {
+            button::Status::Hovered => button::Style {
+                background: Some(iced::Background::Color(iced::Color::from_rgba(
+                    ink_faded.r, ink_faded.g, ink_faded.b, 0.15,
+                ))),
+                text_color: text_color,
+                border: iced::Border::default(),
+                shadow: iced::Shadow::default(),
+                snap: button::Style::default().snap,
+            },
+            _ => button::Style {
+                background: Some(iced::Background::Color(iced::Color::TRANSPARENT)),
+                text_color: text_color,
+                border: iced::Border::default(),
+                shadow: iced::Shadow::default(),
+                snap: button::Style::default().snap,
+            },
+        }
+        })
+        .into()
 }
 
 fn tab_tiers<'a>(

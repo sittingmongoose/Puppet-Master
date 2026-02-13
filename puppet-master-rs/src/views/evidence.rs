@@ -201,15 +201,18 @@ pub fn view<'a>(
             let is_selected = selected_item == Some(idx);
 
             let item_row = row![
-                // Type icon badge with color
+                // Type icon badge with color (square, centered)
                 container(
                     text(item.evidence_type.icon())
                         .size(tokens::font_size::BASE)
                         .font(fonts::FONT_UI_BOLD)
                         .color(colors::INK_BLACK)
                 )
-                .padding(tokens::spacing::MD)
-                .width(Length::Fixed(60.0))
+                .padding(tokens::spacing::SM)
+                .width(Length::Fixed(48.0))
+                .height(Length::Fixed(48.0))
+                .align_x(iced::Alignment::Center)
+                .align_y(iced::Alignment::Center)
                 .style(move |_theme: &iced::Theme| {
                     iced::widget::container::Style {
                         background: Some(iced::Background::Color(item.evidence_type.color())),

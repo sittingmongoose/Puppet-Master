@@ -250,8 +250,8 @@ where
         nav_buttons = nav_buttons.push(btn);
     }
 
-    // Build the full header row
-    let mut header_row = row![].spacing(spacing::MD).align_y(iced::Alignment::Center);
+    // Build the full header row (XL spacing between logo and nav for visual separation)
+    let mut header_row = row![].spacing(spacing::XL).align_y(iced::Alignment::Center);
 
     // Left: Logo
     header_row = header_row.push(logo);
