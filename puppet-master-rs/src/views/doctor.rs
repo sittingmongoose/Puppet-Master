@@ -6,7 +6,7 @@
 use crate::app::Message;
 use crate::theme::{AppTheme, colors, tokens};
 use crate::types::Platform;
-use crate::widgets::*;
+use crate::widgets::{responsive::responsive_grid, *};
 use iced::widget::{Checkbox, Space, column, container, row, scrollable, text, text_editor};
 use iced::{Alignment, Background, Border, Color, Element, Length};
 use std::collections::{HashMap, HashSet};
@@ -114,7 +114,9 @@ pub fn view<'a>(
     expanded_checks: &'a HashSet<String>,
     detail_contents: &'a HashMap<String, text_editor::Content>,
     theme: &'a AppTheme,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
+    let _ = size; // TODO: Use size for responsive layout in Phase 3
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
@@ -129,7 +131,7 @@ pub fn view<'a>(
     // Platform Selection Panel (toggleable)
     // ═══════════════════════════════════════════════════════════════════
     if platform_selector_visible {
-        let platform_panel = view_platform_selector(selected_platforms, theme);
+        let platform_panel = view_platform_selector(selected_platforms, theme, size);
         content = content.push(platform_panel);
     }
 
@@ -257,6 +259,7 @@ fn view_header<'a>(
 fn view_platform_selector<'a>(
     selected_platforms: &'a [Platform],
     theme: &'a AppTheme,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
     let all_platforms = Platform::all();
 
@@ -276,18 +279,14 @@ fn view_platform_selector<'a>(
             .color(theme.ink_faded()),
     );
 
-    // Platform cards in a 3-column grid (simulated with rows)
-    let mut row_content = row![].spacing(tokens::spacing::MD);
-    for (idx, platform) in all_platforms.iter().enumerate() {
-        let platform_card = view_platform_card(*platform, selected_platforms, theme);
-        row_content = row_content.push(platform_card);
+    // Platform cards in responsive grid
+    let platform_cards: Vec<Element<'a, Message>> = all_platforms
+        .iter()
+        .map(|platform| view_platform_card(*platform, selected_platforms, theme))
+        .collect();
 
-        // After every 3 items or at the end, push the row
-        if (idx + 1) % 3 == 0 || idx == all_platforms.len() - 1 {
-            grid = grid.push(row_content);
-            row_content = row![].spacing(tokens::spacing::MD);
-        }
-    }
+    let platform_grid = responsive_grid(size.width, platform_cards, tokens::spacing::MD);
+    grid = grid.push(platform_grid);
 
     // Summary
     if !selected_platforms.is_empty() {

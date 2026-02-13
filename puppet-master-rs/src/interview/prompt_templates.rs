@@ -12,6 +12,10 @@ pub struct PromptConfig {
     pub feature: String,
     /// Whether first-principles mode is enabled.
     pub first_principles: bool,
+    /// Interaction mode (expert or eli5).
+    pub interaction_mode: String,
+    /// Optional existing-project scan context.
+    pub project_context: Option<String>,
     /// Additional context file contents.
     pub context_content: Option<String>,
 }
@@ -37,10 +41,13 @@ const DOMAIN_TEMPLATES: [DomainTemplate; 8] = [
         name: "Architecture & Technology",
         focus: "Tech stack, framework versions, rendering approach, dependency consistency, and build toolchain.",
         key_questions: "- Which programming languages and frameworks?\n\
-             - What specific versions/editions?\n\
+             - What specific versions/editions? (MUST be pinned, NO 'latest')\n\
              - What rendering approach (e.g. GPU vs software)?\n\
              - Are all dependencies consistent and compatible?\n\
-             - What is the build and packaging strategy?",
+             - What is the build and packaging strategy?\n\
+             - Have all technology versions been explicitly pinned?\n\
+             - Are there known compatibility issues between versions?\n\
+             - What is the upgrade strategy for dependencies?",
     },
     DomainTemplate {
         name: "Product / UX",
@@ -49,7 +56,12 @@ const DOMAIN_TEMPLATES: [DomainTemplate; 8] = [
              - What screens or views are needed?\n\
              - How does navigation work?\n\
              - What accessibility requirements exist?\n\
-             - What edge cases should be handled?",
+             - What edge cases should be handled?\n\
+             - Is this a GUI application? If so, what framework?\n\
+             - What are the UI/UX design patterns and guidelines?\n\
+             - Are there mockups, wireframes, or design systems?\n\
+             - What is the user experience for first-time vs. returning users?\n\
+             - How is user feedback collected and displayed?",
     },
     DomainTemplate {
         name: "Data & Persistence",
@@ -125,6 +137,19 @@ pub fn generate_system_prompt(
         config.feature, domain.name, domain.focus,
     ));
 
+    // Interaction mode
+    if config.interaction_mode.to_lowercase() == "eli5" {
+        parts.push(
+            "\n**ELI5 Mode:** Use simple language. For each question, include a brief explanation of what it means and why it matters. Define technical terms inline."
+                .to_string(),
+        );
+    } else {
+        parts.push(
+            "\n**Expert Mode:** Be concise and technical. Avoid unnecessary explanations unless the user seems confused."
+                .to_string(),
+        );
+    }
+
     // First-principles mode
     if config.first_principles {
         parts.push(
@@ -149,9 +174,14 @@ pub fn generate_system_prompt(
         );
     }
 
-    // Additional context files
+    // Existing-project scan context
+    if let Some(ctx) = &config.project_context {
+        parts.push(format!("\n**Existing project context:**\n{ctx}"));
+    }
+
+    // Additional context files / reference materials
     if let Some(ctx) = &config.context_content {
-        parts.push(format!("\n**Additional context:**\n{ctx}"));
+        parts.push(format!("\n**Reference materials / additional context:**\n{ctx}"));
     }
 
     // Domain-specific guidance
@@ -234,6 +264,8 @@ mod tests {
         let config = PromptConfig {
             feature: "Login page".to_string(),
             first_principles: false,
+            interaction_mode: "expert".to_string(),
+            project_context: None,
             context_content: None,
         };
 
@@ -249,6 +281,8 @@ mod tests {
         let config = PromptConfig {
             feature: "Dashboard".to_string(),
             first_principles: true,
+            interaction_mode: "expert".to_string(),
+            project_context: None,
             context_content: None,
         };
 
@@ -262,12 +296,15 @@ mod tests {
         let config = PromptConfig {
             feature: "API".to_string(),
             first_principles: false,
+            interaction_mode: "expert".to_string(),
+            project_context: None,
             context_content: Some("We use Rust.".to_string()),
         };
 
         let prev = vec!["Phase 1 defined scope as CLI tool.".to_string()];
         let prompt = generate_system_prompt(&config, 2, &prev);
         assert!(prompt.contains("We use Rust."));
+        assert!(prompt.contains("Expert Mode"));
         assert!(prompt.contains("Phase 1 defined scope as CLI tool."));
         assert!(prompt.contains("Product / UX"));
     }

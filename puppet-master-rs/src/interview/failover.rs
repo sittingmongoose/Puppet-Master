@@ -3,6 +3,7 @@
 //! Monitors quota and switches to backup platforms when the current
 //! one is exhausted.
 
+use crate::platforms::output_parser::ErrorCategory;
 use crate::types::Platform;
 use log::{info, warn};
 use serde::{Deserialize, Serialize};
@@ -25,6 +26,7 @@ impl PlatformModelPair {
 }
 
 /// Manages an ordered list of platform/model pairs for failover.
+#[derive(Clone)]
 pub struct FailoverManager {
     platforms: Vec<PlatformModelPair>,
     current_index: usize,
@@ -92,6 +94,28 @@ impl FailoverManager {
     pub fn reset(&mut self) {
         self.current_index = 0;
     }
+
+    /// Sets the current failover index (for syncing state after async operations).
+    pub fn set_index(&mut self, index: usize) {
+        if index < self.platforms.len() {
+            self.current_index = index;
+        }
+    }
+
+    /// Returns the previous platform pair before the current one.
+    pub fn get_previous_platform(&self) -> Option<&PlatformModelPair> {
+        if self.current_index > 0 {
+            Some(&self.platforms[self.current_index - 1])
+        } else {
+            None
+        }
+    }
+}
+
+/// Checks if an error message indicates quota exhaustion or rate limiting.
+pub fn is_quota_error(error: &str) -> bool {
+    let category = ErrorCategory::detect(error);
+    matches!(category, ErrorCategory::QuotaExceeded | ErrorCategory::RateLimit)
 }
 
 #[cfg(test)]
@@ -156,5 +180,34 @@ mod tests {
             FailoverManager::new(PlatformModelPair::new(Platform::Claude, "model"), vec![]);
         assert!(mgr.is_exhausted());
         assert!(mgr.failover().is_none());
+    }
+
+    #[test]
+    fn test_get_previous_platform() {
+        let mut mgr = make_manager();
+        assert!(mgr.get_previous_platform().is_none());
+
+        mgr.failover();
+        assert_eq!(
+            mgr.get_previous_platform().unwrap().platform,
+            Platform::Claude
+        );
+
+        mgr.failover();
+        assert_eq!(
+            mgr.get_previous_platform().unwrap().platform,
+            Platform::Gemini
+        );
+    }
+
+    #[test]
+    fn test_is_quota_error() {
+        assert!(is_quota_error("quota exhausted"));
+        assert!(is_quota_error("Quota Exceeded"));
+        assert!(is_quota_error("rate limit exceeded"));
+        assert!(is_quota_error("too many requests"));
+        assert!(is_quota_error("insufficient quota"));
+        assert!(!is_quota_error("network error"));
+        assert!(!is_quota_error("invalid model"));
     }
 }

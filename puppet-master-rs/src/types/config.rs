@@ -74,6 +74,18 @@ pub struct OrchestratorConfig {
     pub progress_file: String,
     pub prd_file: String,
     pub session_prefix: String,
+    /// Enable git integration for branch management
+    #[serde(default = "default_true")]
+    pub enable_git: bool,
+    /// Enable verification gates integration
+    #[serde(default = "default_true")]
+    pub enable_verification: bool,
+    /// Enable parallel execution of independent subtasks
+    #[serde(default)]
+    pub enable_parallel_execution: bool,
+    /// Enable platform router for dynamic platform selection
+    #[serde(default = "default_true")]
+    pub enable_platform_router: bool,
 }
 
 impl Default for OrchestratorConfig {
@@ -84,6 +96,10 @@ impl Default for OrchestratorConfig {
             progress_file: "progress.txt".to_string(),
             prd_file: "prd.json".to_string(),
             session_prefix: "PM".to_string(),
+            enable_git: true,
+            enable_verification: true,
+            enable_parallel_execution: false,
+            enable_platform_router: true,
         }
     }
 }

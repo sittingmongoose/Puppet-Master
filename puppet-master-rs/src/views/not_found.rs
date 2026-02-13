@@ -11,7 +11,11 @@ use crate::theme::{AppTheme, tokens};
 use crate::widgets::{ButtonVariant, header::Page, styled_button, themed_panel};
 
 /// Render the not found view
-pub fn view<'a>(theme: &'a AppTheme) -> Element<'a, Message> {
+pub fn view<'a>(
+    theme: &'a AppTheme,
+    size: crate::widgets::responsive::LayoutSize,
+) -> Element<'a, Message> {
+    let _ = size; // TODO: Use size for responsive layout if needed
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);

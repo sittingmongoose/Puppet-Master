@@ -5,9 +5,9 @@
 //! - Colored pill badges with text
 //! - Status-specific colors from the theme
 
-use crate::theme::{AppTheme, colors, fonts, tokens};
+use crate::theme::{colors, fonts, tokens, AppTheme};
 use iced::mouse;
-use iced::widget::{Canvas, Container, canvas, container, row, text};
+use iced::widget::{canvas, container, row, text, Canvas, Container};
 use iced::{Border, Color, Element, Point, Rectangle, Theme as IcedTheme};
 
 /// Status state enum

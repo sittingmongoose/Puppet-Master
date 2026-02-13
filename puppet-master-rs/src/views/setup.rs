@@ -27,7 +27,9 @@ pub fn view<'a>(
     setup_installing: Option<Platform>,
     login_in_progress: &'a HashMap<AuthTarget, AuthActionKind>,
     theme: &'a AppTheme,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
+    let _ = size; // TODO: Use size for responsive layout if needed
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
@@ -220,9 +222,7 @@ pub fn view<'a>(
             // Every 2 cards, push the row and start a new one
             if (idx + 1) % 2 == 0 || idx == platform_statuses.len() - 1 {
                 grid_rows = grid_rows.push(current_row);
-                if idx < platform_statuses.len() - 1 {
-                    current_row = row![].spacing(tokens::spacing::LG);
-                }
+                current_row = row![].spacing(tokens::spacing::LG);
             }
         }
 

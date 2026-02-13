@@ -3,9 +3,9 @@
 //! Lists available projects, allows creating new projects, and switching between them.
 
 use crate::app::Message;
-use crate::theme::{AppTheme, colors, fonts, tokens};
+use crate::theme::{colors, fonts, tokens, AppTheme};
 use crate::widgets::*;
-use iced::widget::{Space, column, container, row, scrollable, text};
+use iced::widget::{column, container, row, scrollable, text, Space};
 use iced::{Border, Element, Length};
 use std::path::PathBuf;
 
@@ -32,7 +32,9 @@ pub fn view<'a>(
     new_project_path: &'a str,
     show_new_form: bool,
     theme: &'a AppTheme,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
+    let _ = size; // TODO: Use size for responsive layout if needed
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
@@ -45,7 +47,7 @@ pub fn view<'a>(
             .color(theme.ink()),
         Space::new().width(Length::Fill),
         styled_button(theme, "START NEW PROJECT", ButtonVariant::Primary)
-            .on_press(Message::NavigateTo(Page::Projects)),
+            .on_press(Message::ShowNewProjectForm(true)),
         styled_button(theme, "OPEN EXISTING", ButtonVariant::Info)
             .on_press(Message::OpenProjectFolderPicker),
     ]
@@ -68,7 +70,7 @@ pub fn view<'a>(
                     .width(Length::Fixed(150.0))
                     .color(theme.ink()),
                 styled_text_input(theme, "My Project", new_project_name)
-                    .on_input(|s| Message::ConfigFieldChanged("new_project_name".to_string(), s)),
+                    .on_input(Message::NewProjectNameChanged),
             ]
             .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center),
@@ -79,29 +81,20 @@ pub fn view<'a>(
                     .width(Length::Fixed(150.0))
                     .color(theme.ink()),
                 styled_text_input(theme, "/path/to/project", new_project_path)
-                    .on_input(|s| Message::ConfigFieldChanged("new_project_path".to_string(), s)),
+                    .on_input(Message::NewProjectPathChanged),
                 styled_button(theme, "Browse", ButtonVariant::Ghost)
                     .on_press(Message::BrowseNewProjectPath),
             ]
             .spacing(tokens::spacing::SM)
             .align_y(iced::Alignment::Center),
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
-            row![
-                text("PRD File Path:")
-                    .size(tokens::font_size::BASE)
-                    .width(Length::Fixed(150.0))
-                    .color(theme.ink()),
-                styled_text_input(theme, "PRD.md", "")
-                    .on_input(|s| Message::ConfigFieldChanged("prd_path".to_string(), s)),
-                styled_button(theme, "Browse", ButtonVariant::Ghost)
-                    .on_press(Message::OpenWizardFilePicker),
-            ]
-            .spacing(tokens::spacing::SM)
-            .align_y(iced::Alignment::Center),
+            text("PRD file: prd.json (auto)")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
             Space::new().height(Length::Fixed(tokens::spacing::MD)),
             row![
                 styled_button(theme, "Cancel", ButtonVariant::Secondary)
-                    .on_press(Message::NavigateTo(Page::Projects)),
+                    .on_press(Message::ShowNewProjectForm(false)),
                 Space::new().width(Length::Fill),
                 styled_button(theme, "Create Project", ButtonVariant::Primary)
                     .on_press(Message::CreateNewProject),
@@ -163,9 +156,12 @@ pub fn view<'a>(
                     .spacing(tokens::spacing::SM)
                     .align_y(iced::Alignment::Center),
                     Space::new().height(Length::Fixed(tokens::spacing::XXS)),
-                    text(current_project.path.display().to_string())
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink_faded()),
+                    selectable_text_input(
+                        theme,
+                        current_project.path.to_str().unwrap_or("<non-utf8 path>"),
+                        Message::None,
+                    )
+                    .width(Length::Fill),
                 ]
                 .spacing(tokens::spacing::XXS),
                 Space::new().width(Length::Fill),
@@ -209,12 +205,10 @@ pub fn view<'a>(
             theme,
         ));
     } else {
-        let mut projects_content = column![
-            text("Recent Projects")
-                .size(tokens::font_size::LG)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
-        ]
+        let mut projects_content = column![text("Recent Projects")
+            .size(tokens::font_size::LG)
+            .font(fonts::FONT_UI_BOLD)
+            .color(theme.ink()),]
         .spacing(tokens::spacing::MD);
 
         for project in projects {
@@ -255,9 +249,12 @@ pub fn view<'a>(
                         .size(tokens::font_size::BASE)
                         .font(fonts::FONT_UI_BOLD)
                         .color(theme.ink()),
-                    text(project.path.display().to_string())
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink_faded()),
+                    selectable_text_input(
+                        theme,
+                        project.path.to_str().unwrap_or("<non-utf8 path>"),
+                        Message::None,
+                    )
+                    .width(Length::Fill),
                     text(get_last_active_time(&project.path))
                         .size(tokens::font_size::XS)
                         .color(theme.ink_faded()),

@@ -7,6 +7,7 @@ use crate::app::Message;
 use crate::config::gui_config::{GitInfo, GuiConfig};
 use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::widgets::styled_button::{ButtonVariant, styled_button};
+use crate::widgets::{help_tooltip, interaction_mode_to_variant};
 use iced::widget::{
     button, Space, column, container, pick_list, radio, row, scrollable, text, text_editor,
     text_input, toggler,
@@ -26,6 +27,7 @@ pub fn view<'a>(
     models: &'a HashMap<String, Vec<String>>,
     git_info: &'a Option<GitInfo>,
     theme: &'a AppTheme,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
     let mut content = column![]
         .spacing(tokens::spacing::LG)
@@ -85,20 +87,29 @@ pub fn view<'a>(
         .collect::<Vec<_>>())
     .spacing(tokens::spacing::SM);
 
-    content = content.push(
+    // Wrap tabs in scrollable container for narrow screens
+    let tabs_container = if size.is_desktop_or_larger() {
+        // Wide: tabs fit, no scroll needed
         container(tabs)
             .padding([tokens::spacing::SM, tokens::spacing::MD])
             .width(Length::Fill)
-            .style(move |_: &iced::Theme| container::Style {
-                background: Some(iced::Background::Color(theme.paper())),
-                border: Border {
-                    color: theme.ink(),
-                    width: tokens::borders::THICK,
-                    radius: tokens::radii::NONE.into(),
-                },
-                ..Default::default()
-            }),
-    );
+    } else {
+        // Narrow: wrap in scrollable to allow horizontal scrolling if tabs overflow
+        container(scrollable(tabs).width(Length::Fill))
+            .padding([tokens::spacing::SM, tokens::spacing::MD])
+            .width(Length::Fill)
+    }
+    .style(move |_: &iced::Theme| container::Style {
+        background: Some(iced::Background::Color(theme.paper())),
+        border: Border {
+            color: theme.ink(),
+            width: tokens::borders::THICK,
+            radius: tokens::radii::NONE.into(),
+        },
+        ..Default::default()
+    });
+
+    content = content.push(tabs_container);
 
     // Tab Content
     let tab_content = match active_tab {
@@ -1478,6 +1489,9 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
     const REASONING_LEVELS: &[&str] = &["low", "medium", "high", "max"];
     const INTERACTION_MODES: &[&str] = &["expert", "eli5"];
 
+    // Determine tooltip variant from interaction mode
+    let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
+
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::MD);
@@ -1499,10 +1513,15 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
     // Primary Platform
     content = content.push(
         column![
-            text("Primary Platform")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Primary Platform")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fixed(tokens::spacing::XS)),
+                help_tooltip("interview.primary_platform", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text("The AI platform used for the interview")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -1522,10 +1541,15 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
     // Primary Model
     content = content.push(
         column![
-            text("Primary Model")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Primary Model")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fixed(tokens::spacing::XS)),
+                help_tooltip("interview.primary_model", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text("Model identifier for the primary platform")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -1539,10 +1563,15 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
     // Reasoning Level
     content = content.push(
         column![
-            text("Reasoning Level")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Reasoning Level")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fixed(tokens::spacing::XS)),
+                help_tooltip("interview.reasoning_level", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text("How deeply the interview model reasons (low/medium/high/max)")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -1562,10 +1591,15 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
     // Backup Platforms
     content = content.push(
         column![
-            text("Backup Platforms")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Backup Platforms")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fixed(tokens::spacing::XS)),
+                help_tooltip("interview.backup_platforms", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text("Fallback platforms tried in order if primary quota is exhausted")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -1611,10 +1645,15 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
     // Max Questions Per Phase
     content = content.push(
         column![
-            text("Max Questions Per Phase")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Max Questions Per Phase")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fixed(tokens::spacing::XS)),
+                help_tooltip("interview.max_questions_per_phase", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text("Number of questions asked per domain phase (3-15)")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -1634,10 +1673,15 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
     // First-Principles Mode
     content = content.push(
         column![
-            text("First-Principles Mode")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("First-Principles Mode")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fixed(tokens::spacing::XS)),
+                help_tooltip("interview.first_principles", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text("Challenge assumptions before accepting them as requirements")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -1663,10 +1707,15 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
     // Architecture Confirmation
     content = content.push(
         column![
-            text("Require Architecture Confirmation")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Require Architecture Confirmation")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fixed(tokens::spacing::XS)),
+                help_tooltip("interview.architecture_confirmation", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text("Explicitly confirm tech stack versions, frameworks, and dependencies")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -1693,10 +1742,15 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
     // Playwright Requirements
     content = content.push(
         column![
-            text("Generate Playwright Requirements")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Generate Playwright Requirements")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fixed(tokens::spacing::XS)),
+                help_tooltip("interview.playwright_requirements", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text(
                 "Automatically generate testable Playwright specifications from acceptance criteria"
             )
@@ -1725,10 +1779,15 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
     // Generate Initial AGENTS.md
     content = content.push(
         column![
-            text("Generate Initial AGENTS.md")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Generate Initial AGENTS.md")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fixed(tokens::spacing::XS)),
+                help_tooltip("interview.generate_agents_md", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text("Create a starter AGENTS.md from interview decisions")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -1755,10 +1814,15 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
     // Interaction Mode
     content = content.push(
         column![
-            text("Interaction Mode")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Interaction Mode")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fixed(tokens::spacing::XS)),
+                help_tooltip("interview.interaction_mode", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text("Expert mode is concise; ELI5 mode explains each question")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -1778,10 +1842,15 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
     // Output Directory
     content = content.push(
         column![
-            text("Output Directory")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Output Directory")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fixed(tokens::spacing::XS)),
+                help_tooltip("interview.output_dir", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text("Directory where interview phase documents are written")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),

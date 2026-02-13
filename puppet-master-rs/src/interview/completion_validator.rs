@@ -51,6 +51,20 @@ impl ValidationResult {
             .filter(|i| i.severity == ValidationSeverity::Warning)
             .collect()
     }
+
+    /// Finds the index of the first phase with issues, if any.
+    pub fn first_issue_phase_index(&self, phase_manager: &PhaseManager) -> Option<usize> {
+        // Extract phase IDs from error issues
+        for issue in self.errors() {
+            // Try to match domain name to phase
+            for (idx, phase) in phase_manager.phases().iter().enumerate() {
+                if issue.domain.contains(&phase.domain) || issue.domain == phase.id {
+                    return Some(idx);
+                }
+            }
+        }
+        None
+    }
 }
 
 /// Validates that an interview is complete and has zero gaps.
@@ -71,6 +85,18 @@ pub fn validate_completion(
 
     // Check 4: No vague or TBD items in decisions.
     check_vague_decisions(state, &mut issues);
+
+    // Check 5: Detect ambiguous language in answers (TBD/later/maybe).
+    check_ambiguous_answers(state, &mut issues);
+
+    // Check 6: Version pinning for architecture phase.
+    check_version_pinning(state, &mut issues);
+
+    // Check 7: Deployment targets specified.
+    check_deployment_targets(state, &mut issues);
+
+    // Check 8: No open items.
+    check_open_items(state, &mut issues);
 
     let is_valid = !issues
         .iter()
@@ -166,6 +192,177 @@ fn check_vague_decisions(state: &InterviewState, issues: &mut Vec<ValidationIssu
     }
 }
 
+/// Checks for ambiguous language in user answers (TBD/later/maybe).
+fn check_ambiguous_answers(state: &InterviewState, issues: &mut Vec<ValidationIssue>) {
+    let ambiguous_markers = ["tbd", "to be determined", "later", "maybe", "not sure", "unsure"];
+
+    for qa in &state.history {
+        let lower = qa.answer.to_lowercase();
+        for marker in &ambiguous_markers {
+            if lower.contains(marker) {
+                issues.push(ValidationIssue {
+                    domain: "Answers".to_string(),
+                    message: format!(
+                        "Answer contains ambiguous language ('{marker}'): {}",
+                        qa.answer.chars().take(80).collect::<String>()
+                    ),
+                    severity: ValidationSeverity::Error,
+                });
+                break;
+            }
+        }
+    }
+}
+
+/// Verifies that technology versions are explicitly pinned in Architecture phase.
+fn check_version_pinning(state: &InterviewState, issues: &mut Vec<ValidationIssue>) {
+    let unpinned_markers = ["latest", "current", "stable"];
+    
+    // Check decisions from architecture phase
+    let arch_decisions: Vec<_> = state
+        .decisions
+        .iter()
+        .filter(|d| d.phase == "architecture_technology")
+        .collect();
+
+    for decision in arch_decisions {
+        let lower = decision.summary.to_lowercase();
+        for marker in &unpinned_markers {
+            if lower.contains(marker) {
+                issues.push(ValidationIssue {
+                    domain: "Architecture & Technology".to_string(),
+                    message: format!(
+                        "Decision uses unpinned version tag ('{marker}'): {}",
+                        decision.summary
+                    ),
+                    severity: ValidationSeverity::Error,
+                });
+                break;
+            }
+        }
+    }
+
+    // Check Q&A from architecture phase - look for version patterns
+    let arch_qa: Vec<_> = state
+        .history
+        .iter()
+        .enumerate()
+        .filter(|(i, _)| {
+            // Heuristic: first ~10 questions likely cover architecture
+            *i < 10 || state.history.len() < 10
+        })
+        .map(|(_, qa)| qa)
+        .collect();
+
+    // Look for technology mentions without version patterns (X.Y.Z or vX.Y.Z)
+    let version_regex = regex::Regex::new(r"\d+\.\d+(?:\.\d+)?").ok();
+    let tech_keywords = [
+        "rust", "node", "react", "vue", "python", "typescript", "go",
+        "postgres", "mysql", "mongodb", "redis", "docker", "kubernetes",
+    ];
+
+    for qa in arch_qa {
+        let lower_answer = qa.answer.to_lowercase();
+        
+        for tech in &tech_keywords {
+            if lower_answer.contains(tech) {
+                // Check if a version pattern exists nearby
+                let has_version = version_regex
+                    .as_ref()
+                    .map(|re| re.is_match(&qa.answer))
+                    .unwrap_or(false);
+
+                if !has_version {
+                    issues.push(ValidationIssue {
+                        domain: "Architecture & Technology".to_string(),
+                        message: format!(
+                            "Technology mentioned without specific version: '{tech}' in answer to: {}",
+                            qa.question.chars().take(60).collect::<String>()
+                        ),
+                        severity: ValidationSeverity::Warning,
+                    });
+                    break;
+                }
+            }
+        }
+    }
+}
+
+/// Verifies that deployment targets are specified in Deployment phase.
+fn check_deployment_targets(state: &InterviewState, issues: &mut Vec<ValidationIssue>) {
+    let deploy_keywords = [
+        "cloud", "server", "desktop", "mobile", "web", "embedded",
+        "aws", "azure", "gcp", "docker", "kubernetes", "vm",
+    ];
+
+    // Check decisions from deployment phase
+    let deploy_decisions: Vec<_> = state
+        .decisions
+        .iter()
+        .filter(|d| d.phase == "deployment_environments")
+        .collect();
+
+    if deploy_decisions.is_empty() {
+        // Deployment phase not completed or no decisions recorded
+        return;
+    }
+
+    // Look for at least one deployment target keyword
+    let has_target = deploy_decisions.iter().any(|d| {
+        let lower = d.summary.to_lowercase();
+        deploy_keywords.iter().any(|kw| lower.contains(kw))
+    });
+
+    if !has_target {
+        issues.push(ValidationIssue {
+            domain: "Deployment & Environments".to_string(),
+            message: "No specific deployment target identified (cloud/server/desktop/mobile/etc.)".to_string(),
+            severity: ValidationSeverity::Error,
+        });
+    }
+}
+
+/// Checks for explicit "open items" mentions in decisions or answers.
+fn check_open_items(state: &InterviewState, issues: &mut Vec<ValidationIssue>) {
+    let open_markers = ["open item", "unresolved", "pending", "todo", "to do"];
+
+    // Check decisions
+    for decision in &state.decisions {
+        let lower = decision.summary.to_lowercase();
+        for marker in &open_markers {
+            if lower.contains(marker) {
+                issues.push(ValidationIssue {
+                    domain: decision.phase.clone(),
+                    message: format!(
+                        "Decision mentions open items ('{marker}'): {}",
+                        decision.summary
+                    ),
+                    severity: ValidationSeverity::Error,
+                });
+                break;
+            }
+        }
+    }
+
+    // Check Q&A history
+    for qa in &state.history {
+        let lower = qa.answer.to_lowercase();
+        for marker in &open_markers {
+            if lower.contains(marker) {
+                issues.push(ValidationIssue {
+                    domain: "Answers".to_string(),
+                    message: format!(
+                        "Answer mentions open items ('{marker}'): {}",
+                        qa.answer.chars().take(80).collect::<String>()
+                    ),
+                    severity: ValidationSeverity::Error,
+                });
+                break;
+            }
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -244,7 +441,7 @@ mod tests {
         });
         state.decisions.push(Decision {
             phase: "deployment_environments".to_string(),
-            summary: "Deploy as microservice mesh".to_string(),
+            summary: "Deploy to AWS as microservice mesh".to_string(),
             reasoning: String::new(),
             timestamp: "2026-01-01T00:00:00Z".to_string(),
         });
@@ -268,5 +465,84 @@ mod tests {
         let result = validate_completion(&state, &pm);
         // Insufficient questions is a warning.
         assert!(!result.warnings().is_empty());
+    }
+
+    #[test]
+    fn test_ambiguous_answer() {
+        let mut state = make_complete_state();
+        state.history.push(crate::interview::state::InterviewQA {
+            question: "What database?".to_string(),
+            answer: "Maybe PostgreSQL or TBD".to_string(),
+            timestamp: "2026-01-01T00:00:00Z".to_string(),
+        });
+        let pm = PhaseManager::new();
+        let result = validate_completion(&state, &pm);
+        assert!(!result.is_valid);
+        assert!(result.errors().iter().any(|e| e.message.contains("ambiguous")));
+    }
+
+    #[test]
+    fn test_unpinned_version() {
+        let mut state = make_complete_state();
+        state.decisions.push(Decision {
+            phase: "architecture_technology".to_string(),
+            summary: "Use Rust latest version".to_string(),
+            reasoning: String::new(),
+            timestamp: "2026-01-01T00:00:00Z".to_string(),
+        });
+        let pm = PhaseManager::new();
+        let result = validate_completion(&state, &pm);
+        assert!(!result.is_valid);
+        assert!(result.errors().iter().any(|e| e.message.contains("unpinned")));
+    }
+
+    #[test]
+    fn test_missing_deployment_target() {
+        let mut state = make_complete_state();
+        state.decisions.push(Decision {
+            phase: "deployment_environments".to_string(),
+            summary: "We'll figure it out later".to_string(),
+            reasoning: String::new(),
+            timestamp: "2026-01-01T00:00:00Z".to_string(),
+        });
+        let pm = PhaseManager::new();
+        let result = validate_completion(&state, &pm);
+        assert!(!result.is_valid);
+        // Should catch both "no deployment target" and "later" ambiguity
+        assert!(result.errors().len() >= 1);
+    }
+
+    #[test]
+    fn test_open_items_detected() {
+        let mut state = make_complete_state();
+        state.decisions.push(Decision {
+            phase: "scope_goals".to_string(),
+            summary: "Feature X is an open item pending review".to_string(),
+            reasoning: String::new(),
+            timestamp: "2026-01-01T00:00:00Z".to_string(),
+        });
+        let pm = PhaseManager::new();
+        let result = validate_completion(&state, &pm);
+        assert!(!result.is_valid);
+        assert!(result.errors().iter().any(|e| e.message.contains("open items")));
+    }
+
+    #[test]
+    fn test_first_issue_phase_index() {
+        let mut state = make_complete_state();
+        state.decisions.retain(|d| d.phase != "architecture_technology");
+        state.decisions.push(Decision {
+            phase: "architecture_technology".to_string(),
+            summary: "Use latest Rust".to_string(),
+            reasoning: String::new(),
+            timestamp: "2026-01-01T00:00:00Z".to_string(),
+        });
+        let pm = PhaseManager::new();
+        let result = validate_completion(&state, &pm);
+        assert!(!result.is_valid);
+        
+        // Should identify architecture phase (index 1) as having issues
+        let issue_idx = result.first_issue_phase_index(&pm);
+        assert_eq!(issue_idx, Some(1));
     }
 }

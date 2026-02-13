@@ -3,7 +3,7 @@
 //! Provides utilities for creating responsive layouts that adapt to window size,
 //! following common breakpoints for mobile, tablet, and desktop layouts.
 
-use iced::widget::{Column, Row, row};
+use iced::widget::{row, Column, Row};
 use iced::{Element, Length};
 
 /// Responsive breakpoints (in pixels)
@@ -21,6 +21,46 @@ pub mod breakpoints {
     pub const DESKTOP_LG: f32 = 1440.0;
 }
 
+/// Layout size information for responsive design
+///
+/// Wraps Iced's `Size` type to provide convenient access to width/height
+/// and device category detection.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct LayoutSize {
+    pub width: f32,
+    pub height: f32,
+}
+
+impl LayoutSize {
+    /// Create a `LayoutSize` from Iced's `Size` type
+    pub fn from_iced(size: iced::Size) -> Self {
+        Self {
+            width: size.width,
+            height: size.height,
+        }
+    }
+
+    /// Get the device category based on width
+    pub fn device(&self) -> Device {
+        Device::from_width(self.width)
+    }
+
+    /// Check if this is a mobile-sized layout
+    pub fn is_mobile(&self) -> bool {
+        self.device().is_mobile()
+    }
+
+    /// Check if this is a tablet or smaller layout
+    pub fn is_tablet_or_smaller(&self) -> bool {
+        self.device().is_tablet_or_smaller()
+    }
+
+    /// Check if this is a desktop or larger layout
+    pub fn is_desktop_or_larger(&self) -> bool {
+        self.device().is_desktop_or_larger()
+    }
+}
+
 /// Device category based on window width
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Device {
@@ -32,14 +72,23 @@ pub enum Device {
 
 impl Device {
     /// Determine device category from window width
+    ///
+    /// Breakpoints:
+    /// - Mobile: width < 768px
+    /// - Tablet: 768px <= width < 1024px
+    /// - Desktop: 1024px <= width < 1440px
+    /// - DesktopLarge: width >= 1440px
     pub fn from_width(width: f32) -> Self {
         if width < breakpoints::MOBILE {
             Device::Mobile
-        } else if width < breakpoints::TABLET {
+        } else if width < breakpoints::DESKTOP {
+            // Tablet: 768 <= width < 1024
             Device::Tablet
         } else if width < breakpoints::DESKTOP_LG {
+            // Desktop: 1024 <= width < 1440
             Device::Desktop
         } else {
+            // DesktopLarge: width >= 1440
             Device::DesktopLarge
         }
     }
@@ -213,7 +262,7 @@ pub fn column_count_for_width(window_width: f32) -> usize {
 
 /// Check if layout should be compact (single column) for given width
 pub fn is_compact_layout(window_width: f32) -> bool {
-    window_width < breakpoints::TABLET
+    window_width < breakpoints::DESKTOP
 }
 
 /// Check if layout should be expanded (multi-column) for given width

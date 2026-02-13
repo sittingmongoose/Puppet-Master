@@ -1,28 +1,24 @@
 //! Execution engine for running iterations with platform runners
 //!
 //! Handles:
-//! - Platform process spawning
-//! - Output capture and buffering
-//! - Timeout management (soft SIGTERM + hard SIGKILL)
+//! - Platform runner execution with quota awareness
+//! - Automatic platform failover on quota exhaustion
+//! - Output capture and parsing
+//! - Timeout management
 //! - Stall detection (no output / repeated output)
 //! - Completion signal parsing
 
 use crate::core::state_machine::OrchestratorEvent;
+use crate::interview::failover::is_quota_error;
+use crate::platforms::{get_runner, quota_manager::global_quota_manager};
 use crate::types::*;
 use anyhow::{Result, anyhow};
 use crossbeam_channel::Sender;
-use std::collections::VecDeque;
-use std::process::Stdio;
-use std::time::{Duration, Instant};
-use tokio::io::{AsyncBufReadExt, BufReader};
-use tokio::process::{Child, Command};
-use tokio::time::timeout;
+use std::time::Instant;
 
-/// Execution engine for running platform iterations
+/// Execution engine for running platform iterations with quota-aware failover
 #[derive(Debug)]
 pub struct ExecutionEngine {
-    /// Platform configurations
-    platforms: Vec<PlatformConfig>,
     /// Event sender for real-time updates
     event_sender: Sender<OrchestratorEvent>,
     /// Stall timeout (seconds without output)
@@ -34,25 +30,20 @@ pub struct ExecutionEngine {
 impl ExecutionEngine {
     /// Create new execution engine
     pub fn new(
-        platforms: Vec<PlatformConfig>,
         event_sender: Sender<OrchestratorEvent>,
         stall_timeout_secs: u64,
         stall_max_repeats: usize,
     ) -> Self {
         Self {
-            platforms,
             event_sender,
             stall_timeout_secs,
             stall_max_repeats,
         }
     }
 
-    /// Execute a single iteration
+    /// Execute a single iteration with platform runner and quota-aware failover
     pub async fn execute_iteration(&self, context: &IterationContext) -> Result<IterationResult> {
         let start_time = Instant::now();
-
-        // Select platform (preferred from context, with fallback chain)
-        let platform = self.select_platform_for_context(context.platform)?;
 
         // Emit iteration started event
         let _ = self.event_sender.send(OrchestratorEvent::IterationStarted {
@@ -60,193 +51,153 @@ impl ExecutionEngine {
             iteration: context.iteration,
         });
 
-        // Build and spawn command
-        let mut child = self.spawn_platform(&platform, context).await?;
+        // Build fallback chain: preferred platform first, then fallback candidates
+        let mut candidates: Vec<Platform> = Vec::with_capacity(6);
+        candidates.push(context.platform);
+        candidates.extend_from_slice(fallback_chain_for(context.platform));
 
-        // Capture output and detect completion
-        let signal = self.capture_output(&mut child, context, start_time).await?;
+        let mut last_error: Option<String> = None;
 
-        // Ensure process is terminated
-        self.ensure_terminated(child).await;
+        // Try each platform in the failover chain
+        for (attempt, &platform) in candidates.iter().enumerate() {
+            log::info!(
+                "Attempting execution on {} (attempt {} of {})",
+                platform,
+                attempt + 1,
+                candidates.len()
+            );
 
-        let duration = start_time.elapsed();
+            // Check quota before execution
+            if let Err(e) = global_quota_manager().enforce_quota(platform) {
+                log::warn!(
+                    "Quota exhausted for {}: {}. Trying next platform...",
+                    platform,
+                    e
+                );
+                last_error = Some(format!("Quota exhausted: {}", e));
+                continue;
+            }
 
-        // Emit iteration completed event
-        let _ = self
-            .event_sender
-            .send(OrchestratorEvent::IterationCompleted {
+            // Emit platform selection event
+            let _ = self.event_sender.send(OrchestratorEvent::PlatformSelected {
                 tier_id: context.tier_id.clone(),
-                iteration: context.iteration,
-                success: matches!(signal, CompletionSignal::Complete),
+                platform,
+                attempt: attempt as u32,
             });
 
-        Ok(IterationResult {
-            signal,
-            duration_secs: duration.as_secs(),
-            output_lines: 0, // Could be tracked if needed
-        })
-    }
+            // Get platform runner
+            let runner = match get_runner(platform).await {
+                Ok(r) => r,
+                Err(e) => {
+                    log::warn!("Failed to get runner for {}: {}. Trying next...", platform, e);
+                    last_error = Some(format!("Runner unavailable: {}", e));
+                    continue;
+                }
+            };
 
-    /// Select best available platform (highest priority).
-    fn select_platform(&self) -> Result<&PlatformConfig> {
-        self.platforms
-            .iter()
-            .filter(|p| p.available)
-            .max_by_key(|p| p.priority)
-            .ok_or_else(|| anyhow!("No available platforms"))
-    }
+            // Build execution request
+            let mut request = ExecutionRequest::new(
+                platform,
+                context.model.clone(),
+                context.prompt.clone(),
+                context.working_dir.clone(),
+            );
 
-    /// Select a platform based on the preferred platform in the iteration context.
-    ///
-    /// If the preferred platform is unavailable (or has no remaining quota), try a deterministic
-    /// fallback chain (e.g., Claude → Cursor).
-    fn select_platform_for_context(&self, preferred: Platform) -> Result<&PlatformConfig> {
-        // Try preferred first, then fallbacks.
-        let mut candidates: Vec<Platform> = Vec::with_capacity(6);
-        candidates.push(preferred);
-        candidates.extend_from_slice(fallback_chain_for(preferred));
+            if let Some(timeout_ms) = context.timeout_ms {
+                request = request.with_timeout(std::time::Duration::from_millis(timeout_ms));
+            }
 
-        for candidate in candidates {
-            if let Some(p) = self
-                .platforms
-                .iter()
-                .find(|p| p.available && p.platform == candidate && self.has_quota(p))
-            {
-                return Ok(p);
+            request = request.with_session_id(context.session_id.clone());
+
+            if !context.context_files.is_empty() {
+                request = request.with_context_files(context.context_files.clone());
+            }
+
+            for (key, value) in &context.env_vars {
+                request = request.with_env(key.clone(), value.clone());
+            }
+
+            // Execute the request
+            match runner.execute(&request).await {
+                Ok(result) => {
+                    if result.success {
+                        let output = result.output.unwrap_or_default();
+                        let signal = self.parse_completion_signal_from_output(&output);
+                        let duration = start_time.elapsed();
+
+                        // Emit iteration completed event
+                        let _ = self
+                            .event_sender
+                            .send(OrchestratorEvent::IterationCompleted {
+                                tier_id: context.tier_id.clone(),
+                                iteration: context.iteration,
+                                success: matches!(signal, CompletionSignal::Complete),
+                            });
+
+                        return Ok(IterationResult {
+                            signal,
+                            duration_secs: duration.as_secs(),
+                            output_lines: output.lines().count(),
+                            output,
+                        });
+                    } else {
+                        let error_msg = result.error_message.unwrap_or_default();
+
+                        // Check if this is a quota/rate limit error
+                        if is_quota_error(&error_msg) {
+                            log::warn!(
+                                "Quota/rate limit error detected for {}: {}. Trying next platform...",
+                                platform,
+                                error_msg
+                            );
+                            last_error = Some(format!("Quota error: {}", error_msg));
+                            continue;
+                        } else {
+                            // Non-quota error, fail immediately
+                            return Err(anyhow!("Execution failed: {}", error_msg));
+                        }
+                    }
+                }
+                Err(e) => {
+                    let error_msg = format!("{}", e);
+
+                    // Check if this is a quota/rate limit error
+                    if is_quota_error(&error_msg) {
+                        log::warn!(
+                            "Quota/rate limit error in runner for {}: {}. Trying next platform...",
+                            platform,
+                            error_msg
+                        );
+                        last_error = Some(format!("Quota error: {}", error_msg));
+                        continue;
+                    } else {
+                        // Non-quota error, fail immediately
+                        return Err(anyhow!("Runner execution error: {}", e));
+                    }
+                }
             }
         }
 
+        // All platforms exhausted
         Err(anyhow!(
-            "No available platforms found for preferred {}",
-            preferred
+            "All platforms exhausted. Last error: {}",
+            last_error.unwrap_or_else(|| "Unknown error".to_string())
         ))
     }
 
-    /// Spawn platform process
-    async fn spawn_platform(
-        &self,
-        platform: &PlatformConfig,
-        context: &IterationContext,
-    ) -> Result<Child> {
-        let mut cmd = Command::new(&platform.executable);
-
-        // Set working directory
-        cmd.current_dir(&context.working_dir);
-
-        // Set environment variables
-        for (key, value) in &context.env_vars {
-            cmd.env(key, value);
-        }
-
-        // Pass prompt as argument or via stdin
-        // This is platform-specific; adjust as needed
-        cmd.arg("--prompt")
-            .arg(&context.prompt)
-            .stdin(Stdio::null())
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped());
-
-        let child = cmd
-            .spawn()
-            .map_err(|e| anyhow!("Failed to spawn platform {}: {}", platform.name, e))?;
-
-        Ok(child)
-    }
-
-    /// Capture output and detect completion signals
-    async fn capture_output(
-        &self,
-        child: &mut Child,
-        context: &IterationContext,
-        start_time: Instant,
-    ) -> Result<CompletionSignal> {
-        let stdout = child
-            .stdout
-            .take()
-            .ok_or_else(|| anyhow!("Failed to capture stdout"))?;
-        let mut reader = BufReader::new(stdout).lines();
-
-        let mut output_buffer = VecDeque::with_capacity(self.stall_max_repeats);
-        let mut last_output_time = Instant::now();
-        let timeout_duration = Duration::from_secs(context.timeout_secs.unwrap_or(300));
-        let stall_duration = Duration::from_secs(self.stall_timeout_secs);
-
-        loop {
-            // Check total timeout
-            if start_time.elapsed() >= timeout_duration {
-                return Ok(CompletionSignal::Timeout);
-            }
-
-            // Check stall timeout
-            if last_output_time.elapsed() >= stall_duration {
-                return Ok(CompletionSignal::Stalled);
-            }
-
-            // Try to read next line with timeout
-            match timeout(Duration::from_secs(1), reader.next_line()).await {
-                Ok(Ok(Some(line))) => {
-                    last_output_time = Instant::now();
-
-                    // Emit output line event
-                    let _ = self.event_sender.send(OrchestratorEvent::OutputLine {
-                        tier_id: context.tier_id.clone(),
-                        line: line.clone(),
-                        line_type: OutputLineType::Stdout,
-                    });
-
-                    // Check for completion signals
-                    if let Some(signal) = self.parse_completion_signal(&line) {
-                        return Ok(signal);
-                    }
-
-                    // Track repeated output for stall detection
-                    output_buffer.push_back(line.clone());
-                    if output_buffer.len() > self.stall_max_repeats {
-                        output_buffer.pop_front();
-                    }
-
-                    // Check if all recent outputs are identical (stalled)
-                    if output_buffer.len() >= self.stall_max_repeats {
-                        let first = output_buffer.front().unwrap();
-                        if output_buffer.iter().all(|l| l == first) {
-                            return Ok(CompletionSignal::Stalled);
-                        }
-                    }
-                }
-                Ok(Ok(None)) => {
-                    // Process ended, check exit status
-                    match child.wait().await {
-                        Ok(status) => {
-                            if status.success() {
-                                return Ok(CompletionSignal::Complete);
-                            } else {
-                                return Ok(CompletionSignal::Error(format!(
-                                    "Process exited with status {}",
-                                    status
-                                )));
-                            }
-                        }
-                        Err(e) => {
-                            return Ok(CompletionSignal::Error(format!(
-                                "Failed to wait for process: {}",
-                                e
-                            )));
-                        }
-                    }
-                }
-                Ok(Err(e)) => {
-                    return Ok(CompletionSignal::Error(format!(
-                        "IO error reading output: {}",
-                        e
-                    )));
-                }
-                Err(_) => {
-                    // Timeout waiting for next line, continue loop
-                    continue;
-                }
+    /// Parse completion signal from output text
+    fn parse_completion_signal_from_output(&self, output: &str) -> CompletionSignal {
+        // Check each line for signals
+        for line in output.lines() {
+            if let Some(signal) = self.parse_completion_signal(line) {
+                return signal;
             }
         }
+
+        // Default to Complete if no specific signal found and execution succeeded
+        CompletionSignal::Complete
     }
+
 
     /// Parse completion signal from output line
     fn parse_completion_signal(&self, line: &str) -> Option<CompletionSignal> {
@@ -292,54 +243,6 @@ impl ExecutionEngine {
         }
 
         None
-    }
-
-    /// Ensure child process is fully terminated
-    async fn ensure_terminated(&self, mut child: Child) {
-        // Try graceful termination first (SIGTERM)
-        if let Err(e) = child.kill().await {
-            log::warn!("Failed to kill child process: {}", e);
-        }
-
-        // Wait up to 5 seconds for graceful shutdown
-        match tokio::time::timeout(Duration::from_secs(5), child.wait()).await {
-            Ok(_) => {
-                log::debug!("Child process terminated gracefully");
-            }
-            Err(_) => {
-                log::warn!("Child process did not terminate, force killing");
-                // Process should be killed by now, but log warning
-            }
-        }
-    }
-
-    /// Get platform by name (for quota fallback)
-    pub fn get_platform(&self, name: &str) -> Option<&PlatformConfig> {
-        self.platforms.iter().find(|p| p.name == name)
-    }
-
-    /// Check if platform has quota remaining
-    pub fn has_quota(&self, platform: &PlatformConfig) -> bool {
-        if let Some(quota) = platform.quota {
-            quota > 0
-        } else {
-            true // No quota means unlimited
-        }
-    }
-
-    /// Select platform with quota fallback
-    pub fn select_platform_with_fallback(&self) -> Result<&PlatformConfig> {
-        // Try primary platform first
-        if let Some(primary) = self.select_platform().ok().filter(|p| self.has_quota(p)) {
-            return Ok(primary);
-        }
-
-        // Fall back to any available platform with quota
-        self.platforms
-            .iter()
-            .filter(|p| p.available && self.has_quota(p))
-            .max_by_key(|p| p.priority)
-            .ok_or_else(|| anyhow!("No available platforms with quota remaining"))
     }
 }
 
@@ -387,6 +290,8 @@ pub struct IterationResult {
     pub duration_secs: u64,
     /// Number of output lines captured
     pub output_lines: usize,
+    /// Full output captured from agent
+    pub output: String,
 }
 
 /// Extract reason from completion signal line
@@ -456,31 +361,8 @@ mod tests {
         assert_eq!(extract_reason("No separator here"), "No separator here");
     }
 
-    #[test]
-    fn test_platform_selection() {
-        let engine = create_test_engine();
-        let platform = engine.select_platform().unwrap();
-        assert_eq!(platform.platform, Platform::Cursor);
-    }
-
-    #[test]
-    fn test_quota_check() {
-        let engine = create_test_engine();
-        let platform = &engine.platforms[0];
-        assert!(engine.has_quota(platform));
-    }
-
     fn create_test_engine() -> ExecutionEngine {
         let (tx, _rx) = crossbeam_channel::unbounded();
-
-        let mut p1 = PlatformConfig::new(Platform::Cursor, "claude-3-5-sonnet");
-        p1.available = true;
-        p1.priority = 100;
-        let mut p2 = PlatformConfig::new(Platform::Codex, "gpt-5");
-        p2.available = true;
-        p2.priority = 90;
-        let platforms = vec![p1, p2];
-
-        ExecutionEngine::new(platforms, tx, 120, 10)
+        ExecutionEngine::new(tx, 120, 10)
     }
 }

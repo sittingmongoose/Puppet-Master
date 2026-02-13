@@ -7,7 +7,7 @@ use crate::app::{AuthActionKind, Message};
 use crate::platforms::AuthTarget;
 use crate::theme::{colors, tokens, AppTheme};
 use crate::types::Platform;
-use crate::widgets::*;
+use crate::widgets::{responsive::responsive_grid, *};
 use iced::widget::{column, container, row, scrollable, text, text_editor, Space};
 use iced::{Alignment, Element, Length};
 use std::collections::HashMap;
@@ -134,6 +134,7 @@ pub fn view<'a>(
     github_auth_status: &'a Option<String>,
     cli_content: &'a text_editor::Content,
     theme: &'a AppTheme,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
     let mut content = column![]
         .spacing(tokens::spacing::LG)
@@ -155,16 +156,17 @@ pub fn view<'a>(
 
     content = content.push(header);
 
-    // Summary stats panel
-    content = content.push(build_summary_panel(auth_status, theme));
+    // Summary stats panel (responsive)
+    content = content.push(build_summary_panel(auth_status, theme, size));
 
-    // Platform cards grid (responsive 3-column)
+    // Platform cards grid (responsive)
     content = content.push(build_platform_grid(
         auth_status,
         login_in_progress,
         login_messages,
         login_auth_urls,
         theme,
+        size,
     ));
 
     // CLI alternative panel
@@ -183,10 +185,11 @@ pub fn view<'a>(
         .into()
 }
 
-/// Build the summary stats panel (4-column grid)
+/// Build the summary stats panel (responsive grid)
 fn build_summary_panel<'a>(
     auth_status: &'a HashMap<String, AuthStatus>,
     theme: &'a AppTheme,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
     let total_count = auth_status.len();
     let authenticated_count = auth_status.values().filter(|s| s.authenticated).count();
@@ -213,75 +216,54 @@ fn build_summary_panel<'a>(
         )
     };
 
-    let stats_row = row![
+    let stat_cards = vec![
         stat_card("Total Platforms".to_string(), total_count, theme.ink()),
         stat_card(
             "Authenticated".to_string(),
             authenticated_count,
-            colors::ACID_LIME
+            colors::ACID_LIME,
         ),
         stat_card(
             "Not Authenticated".to_string(),
             not_authenticated_count,
-            colors::HOT_MAGENTA
+            colors::HOT_MAGENTA,
         ),
         stat_card("Skipped".to_string(), skipped_count, colors::INK_FADED),
-    ]
-    .spacing(tokens::spacing::MD);
+    ];
 
-    stats_row.into()
+    // Use responsive_grid to adapt column count based on screen size
+    responsive_grid(size.width, stat_cards, tokens::spacing::MD)
 }
 
-/// Build the platform cards grid (responsive 3-column)
+/// Build the platform cards grid (responsive)
 fn build_platform_grid<'a>(
     auth_status: &'a HashMap<String, AuthStatus>,
     login_in_progress: &'a HashMap<AuthTarget, AuthActionKind>,
     login_messages: &'a HashMap<String, String>,
     login_auth_urls: &'a HashMap<String, String>,
     theme: &'a AppTheme,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
     let platform_defs = get_platform_defs();
 
-    // Create 3-column grid manually (iced doesn't have a built-in grid)
-    let mut grid_content = column![].spacing(tokens::spacing::MD);
+    // Build all platform cards
+    let cards: Vec<Element<'a, Message>> = platform_defs
+        .into_iter()
+        .map(|def| {
+            build_platform_card(
+                &def,
+                auth_status,
+                login_in_progress,
+                login_messages,
+                login_auth_urls,
+                theme,
+            )
+            .into()
+        })
+        .collect();
 
-    let mut current_row = row![].spacing(tokens::spacing::MD);
-    let mut count = 0;
-
-    for def in platform_defs.into_iter() {
-        let card = build_platform_card(
-            &def,
-            auth_status,
-            login_in_progress,
-            login_messages,
-            login_auth_urls,
-            theme,
-        );
-        current_row = current_row.push(
-            container(card)
-                .width(Length::FillPortion(1))
-                .height(Length::Fill),
-        );
-        count += 1;
-
-        // After every 3 cards, push the row and start a new one
-        if count == 3 {
-            grid_content = grid_content.push(current_row);
-            current_row = row![].spacing(tokens::spacing::MD);
-            count = 0;
-        }
-    }
-
-    // Push the last row if it has any cards
-    if count > 0 {
-        // Fill remaining columns
-        for _ in count..3 {
-            current_row = current_row.push(container(Space::new()).width(Length::FillPortion(1)));
-        }
-        grid_content = grid_content.push(current_row);
-    }
-
-    grid_content.into()
+    // Use responsive_grid to adapt column count based on screen size
+    responsive_grid(size.width, cards, tokens::spacing::MD)
 }
 
 /// Build a single platform card
@@ -371,10 +353,10 @@ fn build_platform_card<'a>(
     let auth_url_elem = if let Some(url) = login_auth_urls.get(def.name) {
         Some(
             row![
-                text(format!("Auth URL: {}", url))
+                text("Auth URL:")
                     .size(tokens::font_size::XS)
-                    .color(colors::ELECTRIC_BLUE)
-                    .width(Length::Fill),
+                    .color(colors::ELECTRIC_BLUE),
+                selectable_text_input(theme, url, Message::None).width(Length::Fill),
                 styled_button_sized(theme, "COPY", ButtonVariant::Ghost, ButtonSize::Small)
                     .on_press(Message::CopyToClipboard(url.clone()))
             ]
@@ -513,9 +495,7 @@ fn build_git_config_section<'a>(
                             .size(tokens::font_size::SM)
                             .color(theme.ink_faded()),
                         row![
-                            text(&info.user_name)
-                                .size(tokens::font_size::MD)
-                                .color(theme.ink())
+                            selectable_text_input(theme, &info.user_name, Message::None)
                                 .width(Length::Fill),
                             styled_button_sized(
                                 theme,
@@ -541,9 +521,7 @@ fn build_git_config_section<'a>(
                             .size(tokens::font_size::SM)
                             .color(theme.ink_faded()),
                         row![
-                            text(&info.user_email)
-                                .size(tokens::font_size::MD)
-                                .color(theme.ink())
+                            selectable_text_input(theme, &info.user_email, Message::None)
                                 .width(Length::Fill),
                             styled_button_sized(
                                 theme,
@@ -573,9 +551,7 @@ fn build_git_config_section<'a>(
                             .size(tokens::font_size::SM)
                             .color(theme.ink_faded()),
                         row![
-                            text(&info.remote_url)
-                                .size(tokens::font_size::MD)
-                                .color(theme.ink())
+                            selectable_text_input(theme, &info.remote_url, Message::None)
                                 .width(Length::Fill),
                             styled_button_sized(
                                 theme,
@@ -601,9 +577,7 @@ fn build_git_config_section<'a>(
                             .size(tokens::font_size::SM)
                             .color(theme.ink_faded()),
                         row![
-                            text(&info.current_branch)
-                                .size(tokens::font_size::MD)
-                                .color(theme.ink())
+                            selectable_text_input(theme, &info.current_branch, Message::None)
                                 .width(Length::Fill),
                             styled_button_sized(
                                 theme,

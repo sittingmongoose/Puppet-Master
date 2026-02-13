@@ -7,6 +7,7 @@
 pub mod agents_md_generator;
 pub mod completion_validator;
 pub mod document_writer;
+pub mod codebase_scanner;
 pub mod failover;
 pub mod orchestrator;
 pub mod phase_manager;
@@ -15,6 +16,7 @@ pub mod question_parser;
 pub mod reference_manager;
 pub mod research_engine;
 pub mod state;
+pub mod technology_matrix;
 pub mod test_strategy_generator;
 
 pub use agents_md_generator::{generate_agents_md, write_agents_md};
@@ -32,6 +34,7 @@ pub use question_parser::{
 pub use reference_manager::{ReferenceMaterial, ReferenceManager, ReferenceType};
 pub use research_engine::{ResearchConfig, ResearchEngine, ResearchResult, ResearchType};
 pub use state::{Decision, InterviewPhase, InterviewQA, InterviewState};
+pub use technology_matrix::{write_technology_matrix, TechnologyEntry, TechnologyExtractor};
 pub use test_strategy_generator::{
-    generate_test_strategy, write_test_strategy, CoverageLevel, TestStrategyConfig,
+    write_test_strategy, CoverageLevel, TestStrategyConfig,
 };

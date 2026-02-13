@@ -15,6 +15,7 @@
 //! - Requirements traceability
 //! - Document parsing
 
+mod acceptance_criteria_injector;
 mod architecture_generator;
 mod criterion_classifier;
 mod criterion_to_script;
@@ -33,6 +34,9 @@ mod tier_plan_generator;
 mod traceability;
 mod validation_gate;
 
+pub use acceptance_criteria_injector::{
+    AcceptanceCriteriaInjector, InjectionResult, InjectorConfig,
+};
 pub use architecture_generator::ArchitectureGenerator;
 pub use criterion_classifier::{
     ClassificationResult, ClassifiedCriterion, CriterionClassifier,

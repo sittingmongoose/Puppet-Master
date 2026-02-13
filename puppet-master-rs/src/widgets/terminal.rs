@@ -9,8 +9,8 @@
 //! - Scrollable with up to 1000+ lines via virtual scrolling
 //! - Scanline overlay effect (subtle)
 
-use crate::theme::{AppTheme, colors, fonts, tokens};
-use iced::widget::{Space, column, container, row, scrollable, text};
+use crate::theme::{colors, fonts, tokens, AppTheme};
+use iced::widget::{column, container, row, scrollable, text, Space};
 use iced::{Background, Border, Color, Element, Length, Padding};
 
 /// Type of terminal output line

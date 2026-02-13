@@ -63,6 +63,7 @@ pub fn view<'a>(
     selected_details: &'a Option<TierDetails>,
     tier_details_content: &'a text_editor::Content,
     theme: &'a AppTheme,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
     let mut content = column![]
         .spacing(tokens::spacing::LG)
@@ -241,20 +242,36 @@ pub fn view<'a>(
 
     let tree_scroll = scrollable(tree_col).height(Length::Fill);
 
-    // Split view: tree on left, details on right
-    let main_row = if let Some(details) = selected_details {
-        row![
-            container(tree_scroll).width(Length::FillPortion(2)),
-            container(render_details(details, tier_details_content, theme))
-                .width(Length::FillPortion(1)),
-        ]
-        .spacing(tokens::spacing::LG)
+    // Responsive layout:
+    // Wide (>= 1024px): Side-by-side (tree | details)
+    // Narrow (< 1024px): Stacked (tree on top, details below)
+    let main_layout = if let Some(details) = selected_details {
+        if size.is_desktop_or_larger() {
+            // Wide: side-by-side row
+            row![
+                container(tree_scroll).width(Length::FillPortion(2)),
+                container(render_details(details, tier_details_content, theme))
+                    .width(Length::FillPortion(1)),
+            ]
+            .spacing(tokens::spacing::LG)
+            .into()
+        } else {
+            // Narrow: stacked column
+            column![
+                container(tree_scroll).width(Length::Fill).height(Length::Fixed(300.0)),
+                container(render_details(details, tier_details_content, theme))
+                    .width(Length::Fill),
+            ]
+            .spacing(tokens::spacing::LG)
+            .into()
+        }
     } else {
-        row![container(tree_scroll).width(Length::Fill),]
+        // No details selected: just tree
+        row![container(tree_scroll).width(Length::Fill),].into()
     };
 
     content = content.push(themed_panel(
-        container(main_row).padding(tokens::spacing::MD),
+        container(main_layout).padding(tokens::spacing::MD),
         theme,
     ));
 

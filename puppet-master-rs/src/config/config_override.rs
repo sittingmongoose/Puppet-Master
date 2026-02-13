@@ -391,6 +391,7 @@ mod tests {
             platforms: HashMap::new(),
             paths: PathConfig::default(),
             ui: UiConfig::default(),
+            interview: crate::types::InterviewConfig::default(),
             gui_automation: crate::types::GuiAutomationConfig::default(),
         }
     }

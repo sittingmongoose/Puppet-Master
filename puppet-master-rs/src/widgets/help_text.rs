@@ -1,7 +1,7 @@
 //! Help text widget for forms and controls
 
-use crate::theme::{AppTheme, colors};
-use iced::widget::{Column, column, text};
+use crate::theme::{colors, AppTheme};
+use iced::widget::{column, text, Column};
 
 /// Create help text panel with title and bullet points
 ///

@@ -8,8 +8,8 @@
 //! - Info: Electric Blue - for RESUME/RETRY actions
 //! - Ghost: Transparent - inverts on hover
 
-use crate::theme::{AppTheme, colors, fonts, tokens};
-use iced::widget::{Button, button, text};
+use crate::theme::{colors, fonts, tokens, AppTheme};
+use iced::widget::{button, text, Button};
 use iced::{Background, Border, Color, Shadow, Vector};
 
 /// Button color variant

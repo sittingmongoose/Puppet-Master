@@ -313,7 +313,7 @@ mod tests {
         assert!(master_path.exists());
         let content = fs::read_to_string(&master_path).unwrap();
         assert!(content.contains("TestProject"));
-        assert!(content.contains("Phases completed: 1"));
+        assert!(content.contains("**Phases completed:** 1"));
     }
 
     #[test]

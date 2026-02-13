@@ -5,6 +5,7 @@
 use crate::app::{Message, WizardTierConfig};
 use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::widgets::{
+    help_tooltip, interaction_mode_to_variant,
     styled_button::{ButtonVariant, styled_button},
     styled_input::{InputSize, InputVariant, styled_text_input_with_variant},
     themed_panel,
@@ -12,7 +13,7 @@ use crate::widgets::{
 use iced::widget::{
     Space, column, container, pick_list, row, scrollable, text, text_editor, toggler,
 };
-use iced::{Border, Element, Length};
+use iced::{Alignment, Border, Element, Length};
 use std::collections::HashMap;
 
 // Static options for pick_lists
@@ -51,7 +52,9 @@ pub fn view<'a>(
     requirements_preview_content: &'a text_editor::Content,
     plan_content: &'a text_editor::Content,
     theme: &'a AppTheme,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
+    let _ = size; // TODO: Use size for responsive layout if needed
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
@@ -109,14 +112,14 @@ pub fn view<'a>(
             project_name,
             project_path,
             theme,
-        ),
+        ).into(),
         1 => step1_interview_config(
             use_interview,
             interaction_mode,
             reasoning_level,
             generate_agents_md,
             theme,
-        ),
+        ).into(),
         2 => step2_upload_requirements(
             project_name,
             project_path,
@@ -135,15 +138,16 @@ pub fn view<'a>(
         4 => step4_review_prd(prd_editor_content, prd_text, theme),
         5 => step5_configure_tiers(tier_configs, models, theme),
         6 => step6_generate_plan(plan_text, plan_content, generating, theme),
-        7 => step7_review_plan(plan_text, plan_content, theme),
-        8 => step8_review_start(project_name, project_path, theme),
+        7 => step7_review_plan(plan_text, plan_content, theme).into(),
+        8 => step8_review_start(project_name, project_path, theme).into(),
         _ => container(
             text("Invalid step")
                 .size(tokens::font_size::XL)
                 .color(colors::HOT_MAGENTA),
         )
         .padding(tokens::spacing::LG)
-        .width(Length::Fill),
+        .width(Length::Fill)
+        .into(),
     };
 
     content = content.push(
@@ -366,6 +370,9 @@ fn step1_interview_config<'a>(
     generate_agents_md: bool,
     theme: &'a AppTheme,
 ) -> container::Container<'a, Message> {
+    // Determine tooltip variant based on interaction mode
+    let tooltip_variant = interaction_mode_to_variant(interaction_mode);
+
     let step_content = column![
         text("Step 0.5: Interview Configuration")
             .size(tokens::font_size::XL)
@@ -401,10 +408,15 @@ fn step1_interview_config<'a>(
             column![
                 Space::new().height(Length::Fixed(tokens::spacing::MD)),
                 // Interaction Mode
-                text("Interaction Mode:")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
+                row![
+                    text("Interaction Mode:")
+                        .size(tokens::font_size::BASE)
+                        .font(fonts::FONT_UI_BOLD)
+                        .color(theme.ink()),
+                    Space::new().width(Length::Fixed(tokens::spacing::XS)),
+                    help_tooltip("interview.interaction_mode", tooltip_variant, theme),
+                ]
+                .align_y(Alignment::Center),
                 pick_list(
                     vec!["expert", "eli5"],
                     Some(interaction_mode),
@@ -420,10 +432,15 @@ fn step1_interview_config<'a>(
                 .color(theme.ink_faded()),
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
                 // Reasoning Level
-                text("AI Reasoning Level:")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
+                row![
+                    text("AI Reasoning Level:")
+                        .size(tokens::font_size::BASE)
+                        .font(fonts::FONT_UI_BOLD)
+                        .color(theme.ink()),
+                    Space::new().width(Length::Fixed(tokens::spacing::XS)),
+                    help_tooltip("interview.reasoning_level", tooltip_variant, theme),
+                ]
+                .align_y(Alignment::Center),
                 pick_list(
                     INTERVIEW_REASONING_LEVELS,
                     Some(reasoning_level),
@@ -442,8 +459,11 @@ fn step1_interview_config<'a>(
                     text("Generate initial AGENTS.md")
                         .size(tokens::font_size::BASE)
                         .color(theme.ink()),
+                    Space::new().width(Length::Fixed(tokens::spacing::XS)),
+                    help_tooltip("interview.generate_agents_md", tooltip_variant, theme),
                 ]
-                .spacing(tokens::spacing::SM),
+                .spacing(tokens::spacing::SM)
+                .align_y(Alignment::Center),
                 text("Create a starter agent configuration file to guide AI agents")
                     .size(tokens::font_size::SM)
                     .color(theme.ink_faded()),
@@ -599,7 +619,7 @@ fn step2_upload_requirements<'a>(
                     .color(theme.ink_faded()),
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
                 styled_button(theme, "START INTERACTIVE INTERVIEW", ButtonVariant::Info)
-                    .on_press(Message::NavigateToInterview),
+                    .on_press(Message::StartInterview),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center)
@@ -1262,7 +1282,9 @@ fn step8_review_start<'a>(
     ]
     .spacing(tokens::spacing::MD);
 
-    scrollable(step_content).width(Length::Fill).into()
+    container(scrollable(step_content).width(Length::Fill))
+        .width(Length::Fill)
+        .height(Length::Fill)
 }
 
 /// Create a step circle indicator
@@ -1296,10 +1318,6 @@ fn step_circle<'a>(
         text(label)
             .size(tokens::font_size::BASE)
             .font(fonts::FONT_UI_BOLD)
-            .width(Length::Fill)
-            .height(Length::Fill)
-            .horizontal_alignment(iced::alignment::Horizontal::Center)
-            .vertical_alignment(iced::alignment::Vertical::Center)
             .style(move |_theme: &iced::Theme| iced::widget::text::Style {
                 color: Some(text_color),
             }),

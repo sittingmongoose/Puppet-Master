@@ -175,6 +175,10 @@ fn default_orchestrator() -> OrchestratorConfig {
         progress_file: "progress.txt".to_string(),
         prd_file: "prd.json".to_string(),
         session_prefix: "PM".to_string(),
+        enable_git: true,
+        enable_verification: true,
+        enable_parallel_execution: false,
+        enable_platform_router: true,
     }
 }
 

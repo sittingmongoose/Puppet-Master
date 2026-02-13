@@ -183,6 +183,7 @@ pub struct App {
     pub progress: ProgressState,
     pub output_lines: Vec<OutputLine>,
     pub terminal_editor_content: text_editor::Content,
+    terminal_interaction_until: Option<std::time::Instant>,
     pub last_error: Option<String>,
     pub start_time: Option<DateTime<Utc>>,
 
@@ -794,6 +795,7 @@ impl App {
                  No active orchestration.\n\
                  Start a new orchestration from the Wizard page or resume from the Dashboard.\n",
             ),
+            terminal_interaction_until: None,
             last_error: None,
             start_time: None,
 
@@ -1703,6 +1705,8 @@ impl App {
 
             // Read-only text editor actions - keep selection/copy while blocking edits
             Message::DashboardTerminalAction(action) => {
+                self.terminal_interaction_until =
+                    Some(std::time::Instant::now() + std::time::Duration::from_secs(3));
                 apply_read_only_text_editor_action(&mut self.terminal_editor_content, action);
                 Task::none()
             }
@@ -2661,7 +2665,7 @@ impl App {
             // ================================================================
             Message::WizardNextStep => {
                 // Advance to next step (max step is 8: 0, 0.5, 1-6)
-                // Steps: 0 (Project Setup), 1 (Interview Config), 2 (Requirements), 3 (Generate PRD), 
+                // Steps: 0 (Project Setup), 1 (Interview Config), 2 (Requirements), 3 (Generate PRD),
                 // 4 (Review PRD), 5 (Configure Tiers), 6 (Generate Plan), 7 (Review Plan), 8 (Review & Start)
                 if self.wizard_step < 8 {
                     self.wizard_step += 1;
@@ -2737,7 +2741,7 @@ impl App {
 
                 // Initialize git repo if needed
                 let project_path = PathBuf::from(&self.wizard_project_path);
-                
+
                 // Create project directory
                 if let Err(e) = std::fs::create_dir_all(&project_path) {
                     self.add_toast(
@@ -2910,15 +2914,13 @@ impl App {
 
             Message::WizardInteractionModeChanged(mode) => {
                 self.wizard_interaction_mode = mode;
-                self.gui_config.interview.interaction_mode =
-                    self.wizard_interaction_mode.clone();
+                self.gui_config.interview.interaction_mode = self.wizard_interaction_mode.clone();
                 Task::none()
             }
 
             Message::WizardReasoningLevelChanged(level) => {
                 self.wizard_reasoning_level = level;
-                self.gui_config.interview.reasoning_level =
-                    self.wizard_reasoning_level.clone();
+                self.gui_config.interview.reasoning_level = self.wizard_reasoning_level.clone();
                 Task::none()
             }
 
@@ -4653,14 +4655,14 @@ impl App {
                     let answer = self.interview_answer_input.clone();
                     self.interview_answers.push(answer.clone());
                     self.interview_answer_input.clear();
-                    
+
                     // Simulate receiving next question (in real implementation, this would
                     // be sent to the interview orchestrator backend)
                     self.interview_current_question = format!(
                         "Follow-up question based on: '{}'",
                         answer.chars().take(30).collect::<String>()
                     );
-                    
+
                     self.add_toast(ToastType::Success, "Answer submitted".to_string());
                 }
                 Task::none()
@@ -4673,10 +4675,7 @@ impl App {
                 self.interview_active = false;
                 self.interview_paused = false;
                 self.interview_answer_input.clear();
-                self.add_toast(
-                    ToastType::Info,
-                    "Interview session ended".to_string(),
-                );
+                self.add_toast(ToastType::Info, "Interview session ended".to_string());
                 Task::none()
             }
 
@@ -4763,216 +4762,242 @@ impl App {
     pub fn view(&self) -> Element<'_, Message> {
         use crate::theme::tokens;
         use crate::views;
-        use iced::widget::{column, container, stack};
+        use crate::widgets::LayoutSize;
+        use iced::widget::{column, container, stack, Responsive};
         use iced::Length;
 
-        // Build main content based on current page
-        let content: Element<Message> = match self.current_page {
-            Page::Dashboard => views::dashboard::view(
-                &self.orchestrator_status,
-                &self.current_item,
-                &self.progress,
-                &self.output_lines,
-                &self.terminal_editor_content,
-                &self.budgets,
-                &self.last_error,
-                &self.start_time,
-                &self.current_project,
-                &self.theme,
-            ),
-            Page::Projects => views::projects::view(
-                &self.projects,
-                &self.current_project,
-                &self.new_project_name,
-                &self.new_project_path,
-                self.show_new_project_form,
-                &self.theme,
-            ),
-            Page::Wizard => {
-                // Clamp wizard step to valid range (0-8)
-                let wizard_step = self.wizard_step.min(8);
-                views::wizard::view(
-                    wizard_step,
-                    // Step 0 params
-                    self.wizard_is_new_project,
-                    self.wizard_has_github_repo,
-                    &self.wizard_github_url,
-                    self.wizard_create_github_repo,
-                    &self.wizard_github_visibility,
-                    &self.wizard_github_description,
-                    // Step 0.5 params
-                    self.wizard_use_interview,
-                    &self.wizard_interaction_mode,
-                    &self.wizard_reasoning_level,
-                    self.wizard_generate_agents_md,
-                    // Original params
-                    &self.wizard_project_name,
-                    &self.wizard_project_path,
-                    &self.wizard_requirements_text,
-                    &self.wizard_prd_platform,
-                    &self.wizard_prd_model,
-                    &self.wizard_prd_editor_content,
-                    &self.wizard_prd_text,
-                    &self.wizard_tier_configs,
-                    &self.wizard_plan_text,
-                    self.wizard_generating,
-                    &self.wizard_models,
-                    &self.wizard_requirements_preview_content,
-                    &self.wizard_plan_content,
+        // Wrap in Responsive widget to get available size
+        Responsive::new(move |size| {
+            let layout_size = LayoutSize::from_iced(size);
+
+            // Build main content based on current page
+            let content: Element<Message> = match self.current_page {
+                Page::Dashboard => views::dashboard::view(
+                    &self.orchestrator_status,
+                    &self.current_item,
+                    &self.progress,
+                    &self.output_lines,
+                    &self.terminal_editor_content,
+                    &self.budgets,
+                    &self.last_error,
+                    &self.start_time,
+                    &self.current_project,
+                    &None::<crate::widgets::InterviewPanelData>, // TODO: Build interview data from state if needed
                     &self.theme,
-                )
-            }
-            Page::Config => views::config::view(
-                &self.gui_config,
-                &self.config_text,
-                &self.config_editor_content,
-                self.config_valid,
-                &self.config_error,
-                self.config_active_tab,
-                self.config_is_dirty,
-                &self.config_models,
-                &self.config_git_info,
-                &self.theme,
-            ),
-            Page::Doctor => views::doctor::view(
-                &self.doctor_results,
-                self.doctor_running,
-                &self.doctor_fixing,
-                self.doctor_platform_selector_visible,
-                &self.doctor_selected_platforms,
-                &self.doctor_expanded_checks,
-                &self.doctor_detail_contents,
-                &self.theme,
-            ),
-            Page::Tiers => views::tiers::view(
-                &self.tier_tree,
-                &self.selected_tier,
-                &self.selected_tier_details,
-                &self.tier_details_content,
-                &self.theme,
-            ),
-            Page::Evidence => views::evidence::view(
-                &self.evidence_items,
-                &self.evidence_filter,
-                &self._empty_string_vec,
-                self.evidence_selected_item,
-                &self.evidence_preview_content,
-                &self.theme,
-            ),
-            Page::Metrics => views::metrics::view(&self.metrics, &self.theme),
-            Page::History => views::history::view(
-                &self.history_display_sessions,
-                self.history_page,
-                self.history_total_pages,
-                self.history_filter,
-                &self.history_search,
-                &self.theme,
-            ),
-            Page::Coverage => views::coverage::view(
-                self.coverage_overall,
-                &self.coverage_categories,
-                &self.coverage_requirements,
-                &self.coverage_phase_filter,
-                &self.theme,
-            ),
-            Page::Memory => views::memory::view(
-                &self.memory_content,
-                &self.memory_content_string,
-                &self.memory_section,
-                &self.theme,
-            ),
-            Page::Ledger => views::ledger::view(
-                &self.ledger_entries,
-                &self.ledger_filter,
-                &self._empty_string_vec,
-                &self.ledger_expanded_events,
-                &self.ledger_expanded_contents,
-                &self.ledger_filter_tier,
-                &self.ledger_filter_session,
-                &self.theme,
-            ),
-            Page::Login => views::login::view(
-                &self.platform_auth_status,
-                &self.login_in_progress,
-                &self.login_messages,
-                &self.login_auth_urls,
-                &self.git_info,
-                &self.github_auth_status,
-                &self.login_cli_content,
-                &self.theme,
-            ),
-            Page::Settings => {
-                // Convert log level string to enum
-                let log_level = match self.settings_log_level.as_str() {
-                    "error" => views::settings::LogLevel::Error,
-                    "warn" => views::settings::LogLevel::Warn,
-                    "debug" => views::settings::LogLevel::Debug,
-                    "trace" => views::settings::LogLevel::Trace,
-                    _ => views::settings::LogLevel::Info,
-                };
-                let auto_scroll = if self.settings_auto_scroll {
-                    views::settings::AutoScroll::Enabled
-                } else {
-                    views::settings::AutoScroll::Disabled
-                };
-                views::settings::view(
+                    layout_size,
+                ),
+                Page::Projects => views::projects::view(
+                    &self.projects,
+                    &self.current_project,
+                    &self.new_project_name,
+                    &self.new_project_path,
+                    self.show_new_project_form,
                     &self.theme,
-                    log_level,
-                    auto_scroll,
-                    self.settings_show_timestamps,
-                    self.minimize_to_tray,
-                    self.settings_retention_days,
-                    self.settings_intensive_logging,
-                )
+                    layout_size,
+                ),
+                Page::Wizard => {
+                    // Clamp wizard step to valid range (0-8)
+                    let wizard_step = self.wizard_step.min(8);
+                    views::wizard::view(
+                        wizard_step,
+                        // Step 0 params
+                        self.wizard_is_new_project,
+                        self.wizard_has_github_repo,
+                        &self.wizard_github_url,
+                        self.wizard_create_github_repo,
+                        &self.wizard_github_visibility,
+                        &self.wizard_github_description,
+                        // Step 0.5 params
+                        self.wizard_use_interview,
+                        &self.wizard_interaction_mode,
+                        &self.wizard_reasoning_level,
+                        self.wizard_generate_agents_md,
+                        // Original params
+                        &self.wizard_project_name,
+                        &self.wizard_project_path,
+                        &self.wizard_requirements_text,
+                        &self.wizard_prd_platform,
+                        &self.wizard_prd_model,
+                        &self.wizard_prd_editor_content,
+                        &self.wizard_prd_text,
+                        &self.wizard_tier_configs,
+                        &self.wizard_plan_text,
+                        self.wizard_generating,
+                        &self.wizard_models,
+                        &self.wizard_requirements_preview_content,
+                        &self.wizard_plan_content,
+                        &self.theme,
+                        layout_size,
+                    )
+                }
+                Page::Config => views::config::view(
+                    &self.gui_config,
+                    &self.config_text,
+                    &self.config_editor_content,
+                    self.config_valid,
+                    &self.config_error,
+                    self.config_active_tab,
+                    self.config_is_dirty,
+                    &self.config_models,
+                    &self.config_git_info,
+                    &self.theme,
+                    layout_size,
+                ),
+                Page::Doctor => views::doctor::view(
+                    &self.doctor_results,
+                    self.doctor_running,
+                    &self.doctor_fixing,
+                    self.doctor_platform_selector_visible,
+                    &self.doctor_selected_platforms,
+                    &self.doctor_expanded_checks,
+                    &self.doctor_detail_contents,
+                    &self.theme,
+                    layout_size,
+                ),
+                Page::Tiers => views::tiers::view(
+                    &self.tier_tree,
+                    &self.selected_tier,
+                    &self.selected_tier_details,
+                    &self.tier_details_content,
+                    &self.theme,
+                    layout_size,
+                ),
+                Page::Evidence => views::evidence::view(
+                    &self.evidence_items,
+                    &self.evidence_filter,
+                    &self._empty_string_vec,
+                    self.evidence_selected_item,
+                    &self.evidence_preview_content,
+                    &self.theme,
+                    layout_size,
+                ),
+                Page::Metrics => views::metrics::view(&self.metrics, &self.theme, layout_size),
+                Page::History => views::history::view(
+                    &self.history_display_sessions,
+                    self.history_page,
+                    self.history_total_pages,
+                    self.history_filter,
+                    &self.history_search,
+                    &self.theme,
+                    layout_size,
+                ),
+                Page::Coverage => views::coverage::view(
+                    self.coverage_overall,
+                    &self.coverage_categories,
+                    &self.coverage_requirements,
+                    &self.coverage_phase_filter,
+                    &self.theme,
+                    layout_size,
+                ),
+                Page::Memory => views::memory::view(
+                    &self.memory_content,
+                    &self.memory_content_string,
+                    &self.memory_section,
+                    &self.theme,
+                    layout_size,
+                ),
+                Page::Ledger => views::ledger::view(
+                    &self.ledger_entries,
+                    &self.ledger_filter,
+                    &self._empty_string_vec,
+                    &self.ledger_expanded_events,
+                    &self.ledger_expanded_contents,
+                    &self.ledger_filter_tier,
+                    &self.ledger_filter_session,
+                    &self.theme,
+                    layout_size,
+                ),
+                Page::Login => views::login::view(
+                    &self.platform_auth_status,
+                    &self.login_in_progress,
+                    &self.login_messages,
+                    &self.login_auth_urls,
+                    &self.git_info,
+                    &self.github_auth_status,
+                    &self.login_cli_content,
+                    &self.theme,
+                    layout_size,
+                ),
+                Page::Settings => {
+                    // Convert log level string to enum
+                    let log_level = match self.settings_log_level.as_str() {
+                        "error" => views::settings::LogLevel::Error,
+                        "warn" => views::settings::LogLevel::Warn,
+                        "debug" => views::settings::LogLevel::Debug,
+                        "trace" => views::settings::LogLevel::Trace,
+                        _ => views::settings::LogLevel::Info,
+                    };
+                    let auto_scroll = if self.settings_auto_scroll {
+                        views::settings::AutoScroll::Enabled
+                    } else {
+                        views::settings::AutoScroll::Disabled
+                    };
+                    views::settings::view(
+                        &self.theme,
+                        log_level,
+                        auto_scroll,
+                        self.settings_show_timestamps,
+                        self.minimize_to_tray,
+                        self.settings_retention_days,
+                        self.settings_intensive_logging,
+                        layout_size,
+                    )
+                }
+                Page::Setup => views::setup::view(
+                    &self.setup_platform_statuses,
+                    self.setup_is_checking,
+                    self.setup_installing,
+                    &self.login_in_progress,
+                    &self.theme,
+                    layout_size,
+                ),
+                Page::Interview => views::interview::view(
+                    self.interview_active,
+                    self.interview_paused,
+                    &self.interview_current_phase,
+                    &self.interview_current_question,
+                    &self.interview_answers,
+                    &self.interview_phases_complete,
+                    &self.interview_answer_input,
+                    &self.theme,
+                    layout_size,
+                ),
+            };
+
+            // Build the full layout (header + content constrained to same width as content boxes)
+            // Use effective max width: full width on small screens, max 1200px on large screens
+            let effective_max_width = layout_size.width.min(tokens::layout::MAX_CONTENT_WIDTH);
+            let main_layout = column![self.render_header(), content].spacing(0);
+            let constrained = container(main_layout)
+                .width(Length::Shrink)
+                .height(Length::Fill)
+                .max_width(effective_max_width);
+
+            // Wrap in full-size container for overlays (center the constrained content horizontally)
+            let base = container(constrained)
+                .width(iced::Length::Fill)
+                .height(iced::Length::Fill)
+                .align_x(iced::Alignment::Center);
+
+            // Layer with retro overlay effects (pixel grid and scanlines)
+            let with_overlay = stack![
+                base,
+                crate::widgets::pixel_grid_overlay(self.retro_overlay.pixel_grid()),
+                crate::widgets::scanline_overlay(self.retro_overlay.scanlines()),
+            ];
+
+            // Add toasts overlay
+            let with_toasts = self.render_toasts_overlay(with_overlay.into());
+
+            // Add modal overlay if present
+            if let Some(ref modal) = self.show_modal {
+                self.render_modal_overlay(with_toasts, modal)
+            } else {
+                with_toasts
             }
-            Page::Setup => views::setup::view(
-                &self.setup_platform_statuses,
-                self.setup_is_checking,
-                self.setup_installing,
-                &self.login_in_progress,
-                &self.theme,
-            ),
-            Page::Interview => views::interview::view(
-                self.interview_active,
-                self.interview_paused,
-                &self.interview_current_phase,
-                &self.interview_current_question,
-                &self.interview_answers,
-                &self.interview_phases_complete,
-                &self.interview_answer_input,
-                &self.theme,
-            ),
-        };
-
-        // Build the full layout (header + content constrained to same width as content boxes)
-        let main_layout = column![self.render_header(), content].spacing(0);
-        let constrained = container(main_layout)
-            .width(Length::Fill)
-            .height(Length::Fill)
-            .max_width(tokens::layout::MAX_CONTENT_WIDTH)
-            .center_x(Length::Fill);
-
-        // Wrap in full-size container for overlays
-        let base = container(constrained)
-            .width(iced::Length::Fill)
-            .height(iced::Length::Fill);
-
-        // Layer with retro overlay effects (pixel grid and scanlines)
-        let with_overlay = stack![
-            base,
-            crate::widgets::pixel_grid_overlay(self.retro_overlay.pixel_grid()),
-            crate::widgets::scanline_overlay(self.retro_overlay.scanlines()),
-        ];
-
-        // Add toasts overlay
-        let with_toasts = self.render_toasts_overlay(with_overlay.into());
-
-        // Add modal overlay if present
-        if let Some(ref modal) = self.show_modal {
-            self.render_modal_overlay(with_toasts, modal)
-        } else {
-            with_toasts
-        }
+        })
+        .width(Length::Fill)
+        .height(Length::Fill)
     }
 
     /// Get the current theme
@@ -5258,7 +5283,26 @@ impl App {
             })
             .collect::<Vec<_>>()
             .join("\n");
+
+        if self.terminal_editor_content.text() == terminal_text {
+            return;
+        }
+
+        // Preserve active selection so users can copy while output continues streaming.
+        if self.terminal_editor_content.selection().is_some() {
+            return;
+        }
+
+        if self
+            .terminal_interaction_until
+            .is_some_and(|deadline| std::time::Instant::now() < deadline)
+        {
+            return;
+        }
+
+        let previous_cursor = self.terminal_editor_content.cursor();
         self.terminal_editor_content = text_editor::Content::with_text(&terminal_text);
+        self.terminal_editor_content.move_to(previous_cursor);
     }
 
     /// Compute coverage data from PRD and evidence

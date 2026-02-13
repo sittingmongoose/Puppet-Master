@@ -55,7 +55,9 @@ pub fn view<'a>(
     _agents_content: &'a str,
     current_section: &'a MemorySection,
     theme: &'a AppTheme,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
+    let _ = size; // TODO: Use size for responsive layout if needed
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);

@@ -3,7 +3,7 @@
 use crate::theme::fonts::{FONT_DISPLAY_BOLD, FONT_UI, FONT_UI_BOLD};
 use crate::theme::tokens::{borders, shadows, spacing};
 use crate::theme::AppTheme;
-use iced::widget::{Space, button, column, container, row, rule, text};
+use iced::widget::{button, column, container, row, rule, text, Space};
 use iced::{Background, Border, Color, Element, Length, Padding, Shadow, Vector};
 
 /// Application page enum

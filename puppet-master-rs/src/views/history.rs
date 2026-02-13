@@ -70,7 +70,9 @@ pub fn view<'a>(
     current_filter: Option<SessionStatus>,
     search_query: &'a str,
     theme: &'a AppTheme,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
+    let _ = size; // TODO: Use size for responsive layout if needed
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);

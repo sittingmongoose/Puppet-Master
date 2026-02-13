@@ -179,6 +179,12 @@ pub enum OrchestratorEvent {
         line: String,
         line_type: OutputLineType,
     },
+    /// Platform selected for execution (for failover tracking)
+    PlatformSelected {
+        tier_id: String,
+        platform: Platform,
+        attempt: u32,
+    },
     /// PuppetMasterEvent wrapper for events to be published externally
     PuppetMasterEvent(PuppetMasterEvent),
 }

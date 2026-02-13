@@ -91,6 +91,9 @@ impl PrdGenerator {
             prd.phases.push(phase);
         }
 
+        Self::inject_default_acceptance_criteria(&mut prd, requirements);
+        prd.update_metadata();
+
         Ok(prd)
     }
 
@@ -247,6 +250,8 @@ impl PrdGenerator {
             prd.metadata.created_at = Some(Utc::now());
         }
         prd.metadata.updated_at = Some(Utc::now());
+
+        Self::inject_default_acceptance_criteria(&mut prd, requirements);
         prd.update_metadata();
 
         Ok(prd)
@@ -370,6 +375,24 @@ impl PrdGenerator {
         })
     }
 
+    /// Inject default acceptance criteria into subtasks that have none.
+    ///
+    /// Uses the AcceptanceCriteriaInjector to ensure every subtask has machine-verifiable criteria.
+    fn inject_default_acceptance_criteria(prd: &mut PRD, _requirements: &ParsedRequirements) {
+        let injector = super::AcceptanceCriteriaInjector::default();
+        match injector.inject(prd) {
+            Ok(result) => {
+                info!(
+                    "Injected {} criteria into {} subtasks",
+                    result.criteria_injected, result.subtasks_without_criteria
+                );
+            }
+            Err(e) => {
+                warn!("Failed to inject acceptance criteria: {}", e);
+            }
+        }
+    }
+
     /// Extract project description from requirements
     fn extract_description(requirements: &ParsedRequirements) -> String {
         requirements
@@ -412,6 +435,37 @@ mod tests {
         assert_eq!(prd.metadata.name, "Test Project");
         assert_eq!(prd.phases.len(), 1);
         assert_eq!(prd.phases[0].title, "Phase 1");
+        
+        // Verify acceptance criteria were injected
+        for phase in &prd.phases {
+            for task in &phase.tasks {
+                for subtask in &task.subtasks {
+                    assert!(!subtask.acceptance_criteria.is_empty(),
+                        "Subtask {} should have acceptance_criteria injected", subtask.id);
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn test_acceptance_criteria_injection() {
+        let mut requirements = ParsedRequirements::new("Test Project");
+        requirements.sections.push(RequirementsSection::new(
+            "Implementation",
+            "Build the feature\n- Write code\n- Add tests",
+        ));
+
+        let prd = PrdGenerator::generate("Test Project", &requirements).unwrap();
+
+        // Verify subtasks have prefixed acceptance criteria
+        let subtask = &prd.phases[0].tasks[0].subtasks[0];
+        assert!(!subtask.acceptance_criteria.is_empty());
+        
+        // Check for prefixed format
+        let has_prefixed = subtask.acceptance_criteria.iter().any(|c| {
+            c.starts_with("command:") || c.starts_with("file_exists:") || c.starts_with("regex:")
+        });
+        assert!(has_prefixed, "Generated PRD should have prefixed acceptance criteria");
     }
 
     #[test]

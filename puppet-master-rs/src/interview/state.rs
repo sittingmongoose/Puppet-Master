@@ -10,6 +10,8 @@ use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::{Path, PathBuf};
 
+use super::reference_manager::ReferenceMaterial;
+
 /// Current state format version for migrations.
 const CURRENT_STATE_VERSION: u32 = 1;
 
@@ -75,6 +77,9 @@ pub struct InterviewState {
     pub first_principles: bool,
     /// Context files provided by the user.
     pub context_files: Vec<String>,
+    /// Reference materials added during the interview.
+    #[serde(default)]
+    pub reference_materials: Vec<ReferenceMaterial>,
     /// ISO-8601 timestamp when the interview started.
     pub started_at: String,
     /// ISO-8601 timestamp of the last update.
@@ -107,6 +112,7 @@ pub fn create_state(
         provider: provider.to_string(),
         first_principles,
         context_files,
+        reference_materials: Vec::new(),
         started_at: now.clone(),
         updated_at: now,
         phase: InterviewPhase::Exploring,
@@ -118,20 +124,17 @@ pub fn create_state(
     }
 }
 
-/// Returns the path to the interview state file within the given base directory.
-fn state_path(base_dir: &Path) -> PathBuf {
-    base_dir
-        .join(".puppet-master")
-        .join("interview")
-        .join("state.yaml")
+/// Returns the path to the interview state file at the specified output directory.
+fn state_path_at_output_dir(output_dir: &Path) -> PathBuf {
+    output_dir.join("state.yaml")
 }
 
-/// Loads an existing interview state from YAML on disk.
+/// Loads an existing interview state from YAML at the specified output directory.
 ///
 /// Returns `Ok(None)` if no state file exists. Returns an error if the
 /// file exists but cannot be read or parsed.
-pub fn load_state(base_dir: &Path) -> Result<Option<InterviewState>> {
-    let path = state_path(base_dir);
+pub fn load_state_at_output_dir(output_dir: &Path) -> Result<Option<InterviewState>> {
+    let path = state_path_at_output_dir(output_dir);
     if !path.exists() {
         debug!("No interview state file at {}", path.display());
         return Ok(None);
@@ -151,11 +154,20 @@ pub fn load_state(base_dir: &Path) -> Result<Option<InterviewState>> {
     Ok(Some(state))
 }
 
-/// Saves the interview state to YAML on disk.
+/// Loads an existing interview state from YAML on disk using the default location.
+///
+/// Returns `Ok(None)` if no state file exists. Returns an error if the
+/// file exists but cannot be read or parsed.
+pub fn load_state(base_dir: &Path) -> Result<Option<InterviewState>> {
+    let output_dir = base_dir.join(".puppet-master").join("interview");
+    load_state_at_output_dir(&output_dir)
+}
+
+/// Saves the interview state to YAML at the specified output directory.
 ///
 /// Creates parent directories as needed and updates the `updated_at` timestamp.
-pub fn save_state(state: &mut InterviewState, base_dir: &Path) -> Result<PathBuf> {
-    let path = state_path(base_dir);
+pub fn save_state_at_output_dir(state: &mut InterviewState, output_dir: &Path) -> Result<PathBuf> {
+    let path = state_path_at_output_dir(output_dir);
 
     if let Some(parent) = path.parent() {
         fs::create_dir_all(parent)
@@ -181,15 +193,29 @@ pub fn save_state(state: &mut InterviewState, base_dir: &Path) -> Result<PathBuf
     Ok(path)
 }
 
-/// Removes the interview state file (cleanup after successful completion).
-pub fn clear_state(base_dir: &Path) -> Result<()> {
-    let path = state_path(base_dir);
+/// Saves the interview state to YAML on disk using the default location.
+///
+/// Creates parent directories as needed and updates the `updated_at` timestamp.
+pub fn save_state(state: &mut InterviewState, base_dir: &Path) -> Result<PathBuf> {
+    let output_dir = base_dir.join(".puppet-master").join("interview");
+    save_state_at_output_dir(state, &output_dir)
+}
+
+/// Removes the interview state file at the specified output directory.
+pub fn clear_state_at_output_dir(output_dir: &Path) -> Result<()> {
+    let path = state_path_at_output_dir(output_dir);
     if path.exists() {
         fs::remove_file(&path)
             .with_context(|| format!("Failed to remove interview state at {}", path.display()))?;
         info!("Cleared interview state at {}", path.display());
     }
     Ok(())
+}
+
+/// Removes the interview state file (cleanup after successful completion) using the default location.
+pub fn clear_state(base_dir: &Path) -> Result<()> {
+    let output_dir = base_dir.join(".puppet-master").join("interview");
+    clear_state_at_output_dir(&output_dir)
 }
 
 /// Appends a question-answer pair to the state history.
@@ -222,6 +248,7 @@ mod tests {
         assert_eq!(state.current_domain_phase, 0);
         assert!(state.history.is_empty());
         assert!(state.decisions.is_empty());
+        assert!(state.reference_materials.is_empty());
     }
 
     #[test]

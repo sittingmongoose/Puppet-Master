@@ -349,7 +349,7 @@ impl TierTree {
 
         // Add phases
         for phase in &prd.phases {
-            let _phase_idx = tree.add_node(
+            let phase_idx = tree.add_node(
                 phase.id.clone(),
                 TierType::Phase,
                 phase.title.clone(),
@@ -358,9 +358,13 @@ impl TierTree {
                 max_iterations,
             )?;
 
+            if let Some(node) = tree.get_node_mut(phase_idx) {
+                node.dependencies = phase.dependencies.clone();
+            }
+
             // Add tasks
             for task in &phase.tasks {
-                let _task_idx = tree.add_node(
+                let task_idx = tree.add_node(
                     task.id.clone(),
                     TierType::Task,
                     task.title.clone(),
@@ -369,9 +373,13 @@ impl TierTree {
                     max_iterations,
                 )?;
 
+                if let Some(node) = tree.get_node_mut(task_idx) {
+                    node.dependencies = task.dependencies.clone();
+                }
+
                 // Add subtasks
                 for subtask in &task.subtasks {
-                    let _subtask_idx = tree.add_node(
+                    let subtask_idx = tree.add_node(
                         subtask.id.clone(),
                         TierType::Subtask,
                         subtask.title.clone(),
@@ -379,6 +387,10 @@ impl TierTree {
                         Some(task.id.clone()),
                         max_iterations,
                     )?;
+
+                    if let Some(node) = tree.get_node_mut(subtask_idx) {
+                        node.acceptance_criteria = subtask.acceptance_criteria.clone();
+                    }
                 }
             }
         }

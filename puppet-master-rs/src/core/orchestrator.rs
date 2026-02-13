@@ -31,9 +31,9 @@ use crate::core::{
     tier_node::TierTree,
     worker_reviewer::WorkerReviewer,
 };
-use crate::git::GitManager;
+use crate::git::{GitManager, PrManager};
 use crate::logging::{ActivityEventType, LoggerService};
-use crate::state::{ProgressManager, UsageTracker};
+use crate::state::{AgentsManager, ProgressManager, UsageTracker};
 use crate::types::BranchStrategy;
 use crate::types::*;
 use crate::verification::{GateRunConfig, GateRunner, VerificationIntegration};
@@ -132,13 +132,13 @@ pub struct Orchestrator {
     /// Escalation engine
     escalation_engine: Arc<EscalationEngine>,
     /// Worker/Reviewer coordinator
-    _worker_reviewer: Arc<WorkerReviewer>,
+    worker_reviewer: Arc<WorkerReviewer>,
     /// Event sender
     event_sender: Sender<OrchestratorEvent>,
     /// Event receiver (for external subscribers)
     event_receiver: Receiver<OrchestratorEvent>,
     /// Last checkpoint time
-    _last_checkpoint: Arc<Mutex<Instant>>,
+    last_checkpoint: Arc<Mutex<Instant>>,
     /// Prompt builder
     prompt_builder: PromptBuilder,
     /// Iteration executor (real engine in production, mockable in tests)
@@ -153,26 +153,30 @@ pub struct Orchestrator {
     progress_manager: ProgressManager,
     /// Usage tracker for platform usage
     usage_tracker: UsageTracker,
+    /// AGENTS.md manager for learnings persistence
+    agents_manager: AgentsManager,
     /// Git manager for git operations
-    _git_manager: GitManager,
+    git_manager: GitManager,
     /// Branch strategy for git branch naming
-    _branch_strategy: BranchStrategy,
+    branch_strategy: BranchStrategy,
+    /// PR manager for pull request creation
+    pr_manager: PrManager,
     /// Verification integration
-    _verification_integration: Option<VerificationIntegration>,
+    verification_integration: Option<VerificationIntegration>,
     /// Complexity classifier for task classification
     complexity_classifier: ComplexityClassifier,
     /// Dependency analyzer for subtask ordering
-    _dependency_analyzer: DependencyAnalyzer,
+    dependency_analyzer: DependencyAnalyzer,
     /// Platform router for platform selection
     platform_router: Arc<Mutex<PlatformRouter>>,
     /// Loop guard for iteration loop detection
     loop_guard: Arc<Mutex<LoopGuard>>,
     /// Fresh spawn manager for process spawning
-    _fresh_spawn: FreshSpawn,
+    fresh_spawn: FreshSpawn,
     /// Checkpoint manager for state persistence
     checkpoint_manager: Arc<Mutex<CheckpointManager>>,
     /// Parallel executor for concurrent subtasks
-    _parallel_executor: ParallelExecutor,
+    parallel_executor: ParallelExecutor,
 }
 
 impl Orchestrator {
@@ -198,9 +202,7 @@ impl Orchestrator {
         let session_tracker: Arc<dyn SessionLifecycle> =
             Arc::new(SessionTracker::new(session_log_path)?);
 
-        let platforms = config.platforms.values().cloned().collect::<Vec<_>>();
         let iteration_executor: Arc<dyn IterationExecutor> = Arc::new(ExecutionEngine::new(
-            platforms,
             event_sender.clone(),
             120,
             10,
@@ -263,11 +265,17 @@ impl Orchestrator {
         let usage_path = puppet_master_dir.join("usage.jsonl");
         let usage_tracker = UsageTracker::new(&usage_path)?;
 
+        // Initialize AGENTS.md manager
+        let agents_manager = AgentsManager::new(&config.paths.workspace);
+
         // Initialize git manager
         let git_manager = GitManager::new(config.paths.workspace.clone());
 
         // Initialize branch strategy
         let branch_strategy = BranchStrategy::Feature; // Default strategy
+
+        // Initialize PR manager
+        let pr_manager = PrManager::new(config.paths.workspace.clone());
 
         // Initialize verification integration if configured
         let verification_integration = Some(VerificationIntegration::new(
@@ -337,10 +345,10 @@ impl Orchestrator {
             tier_tree: Arc::new(Mutex::new(TierTree::new())),
             advancement_engine,
             escalation_engine,
-            _worker_reviewer: worker_reviewer,
+            worker_reviewer,
             event_sender,
             event_receiver,
-            _last_checkpoint: Arc::new(Mutex::new(Instant::now())),
+            last_checkpoint: Arc::new(Mutex::new(Instant::now())),
             prompt_builder,
             iteration_executor,
             gate_runner,
@@ -348,16 +356,18 @@ impl Orchestrator {
             logger_service,
             progress_manager,
             usage_tracker,
-            _git_manager: git_manager,
-            _branch_strategy: branch_strategy,
-            _verification_integration: verification_integration,
+            agents_manager,
+            git_manager,
+            branch_strategy,
+            pr_manager,
+            verification_integration,
             complexity_classifier,
-            _dependency_analyzer: dependency_analyzer,
+            dependency_analyzer,
             platform_router,
             loop_guard,
-            _fresh_spawn: fresh_spawn,
+            fresh_spawn,
             checkpoint_manager,
-            _parallel_executor: parallel_executor,
+            parallel_executor,
         })
     }
 
@@ -400,6 +410,379 @@ impl Orchestrator {
         );
 
         Ok(())
+    }
+
+    /// Create git branch for tier execution (if git enabled)
+    async fn create_tier_branch(&self, tier_id: &str, tier_type: TierType) -> Result<Option<String>> {
+        if !self.config.orchestrator.enable_git {
+            return Ok(None);
+        }
+
+        // Generate branch name based on strategy
+        let branch_name = match self.branch_strategy {
+            BranchStrategy::MainOnly => return Ok(Some("main".to_string())),
+            BranchStrategy::Feature | BranchStrategy::Tier => {
+                match tier_type {
+                    TierType::Phase => format!("ph-{}", tier_id.to_lowercase().replace("_", "-")),
+                    TierType::Task => format!("tk-{}", tier_id.to_lowercase().replace("_", "-")),
+                    TierType::Subtask => format!("st-{}", tier_id.to_lowercase().replace("_", "-")),
+                    TierType::Iteration => format!("it-{}", tier_id.to_lowercase().replace("_", "-")),
+                }
+            }
+            BranchStrategy::Release => {
+                format!("release/{}", tier_id.to_lowercase().replace("_", "-"))
+            }
+        };
+
+        match self.git_manager.create_branch(&branch_name).await {
+            Ok(_) => {
+                log::info!("Created git branch: {}", branch_name);
+                Ok(Some(branch_name))
+            }
+            Err(e) => {
+                log::warn!("Failed to create git branch: {}. Continuing without git integration.", e);
+                Ok(None)
+            }
+        }
+    }
+
+    /// Parse AGENTS.md updates from agent output
+    fn parse_agents_updates(&self, output: &str) -> Vec<(String, String)> {
+        let mut updates = Vec::new();
+        
+        // Look for agents-update code blocks
+        let mut in_block = false;
+        for line in output.lines() {
+            if line.trim() == "```agents-update" {
+                in_block = true;
+                continue;
+            }
+            if line.trim() == "```" && in_block {
+                in_block = false;
+                continue;
+            }
+            
+            if in_block {
+                let trimmed = line.trim();
+                if let Some(pattern) = trimmed.strip_prefix("PATTERN:") {
+                    updates.push(("pattern".to_string(), pattern.trim().to_string()));
+                } else if let Some(failure) = trimmed.strip_prefix("FAILURE:") {
+                    updates.push(("failure".to_string(), failure.trim().to_string()));
+                } else if let Some(do_item) = trimmed.strip_prefix("DO:") {
+                    updates.push(("do".to_string(), do_item.trim().to_string()));
+                } else if let Some(dont_item) = trimmed.strip_prefix("DONT:") {
+                    updates.push(("dont".to_string(), dont_item.trim().to_string()));
+                }
+            }
+        }
+        
+        updates
+    }
+
+    /// Process AGENTS.md updates from iteration output
+    async fn process_agents_updates(&self, tier_id: &str, output: &str) -> Result<()> {
+        let updates = self.parse_agents_updates(output);
+        
+        if updates.is_empty() {
+            return Ok(()); // No updates to process
+        }
+        
+        log::debug!("Processing {} AGENTS.md updates for tier {}", updates.len(), tier_id);
+        
+        for (update_type, content) in updates {
+            match update_type.as_str() {
+                "pattern" => {
+                    if let Err(e) = self.agents_manager.append_pattern(tier_id, content.clone()) {
+                        log::warn!("Failed to append pattern to AGENTS.md: {}", e);
+                    } else {
+                        log::debug!("Added pattern: {}", content);
+                    }
+                }
+                "failure" => {
+                    if let Err(e) = self.agents_manager.append_failure(tier_id, content.clone()) {
+                        log::warn!("Failed to append failure to AGENTS.md: {}", e);
+                    } else {
+                        log::debug!("Added failure mode: {}", content);
+                    }
+                }
+                "do" => {
+                    if let Err(e) = self.agents_manager.append_do(tier_id, content.clone()) {
+                        log::warn!("Failed to append do item to AGENTS.md: {}", e);
+                    } else {
+                        log::debug!("Added do item: {}", content);
+                    }
+                }
+                "dont" => {
+                    if let Err(e) = self.agents_manager.append_dont(tier_id, content.clone()) {
+                        log::warn!("Failed to append dont item to AGENTS.md: {}", e);
+                    } else {
+                        log::debug!("Added dont item: {}", content);
+                    }
+                }
+                _ => {}
+            }
+        }
+        
+        Ok(())
+    }
+
+    /// Commit changes after successful tier iteration
+    async fn commit_tier_progress(&self, tier_id: &str, _tier_type: TierType, iteration: u32) -> Result<()> {
+        if !self.config.orchestrator.enable_git {
+            return Ok(());
+        }
+        
+        let message = format!("tier: {} iteration {} complete", tier_id, iteration);
+        
+        match self.git_manager.commit(&message).await {
+            Ok(_) => {
+                log::info!("Committed tier {} progress", tier_id);
+                Ok(())
+            }
+            Err(e) => {
+                log::warn!("Failed to commit tier progress: {}. Continuing.", e);
+                Ok(())
+            }
+        }
+    }
+
+    /// Create pull request for tier after successful completion
+    async fn create_tier_pr(&self, tier_id: &str, tier_type: TierType) -> Result<()> {
+        // Check if auto-PR is enabled
+        if !self.config.branching.auto_pr {
+            return Ok(());
+        }
+
+        if !self.config.orchestrator.enable_git {
+            return Ok(());
+        }
+
+        // Get tier information for PR
+        let (title, description, acceptance_criteria) = {
+            let tree = self.tier_tree.lock().unwrap();
+            let node = tree
+                .find_by_id(tier_id)
+                .ok_or_else(|| anyhow!("Tier {} not found", tier_id))?;
+            
+            let title = node.title.clone();
+            let description = node.description.clone();
+            let criteria = node.acceptance_criteria.clone();
+            
+            (title, description, criteria)
+        };
+
+        // Get current branch name
+        let head_branch = match self.git_manager.current_branch().await {
+            Ok(branch) => branch,
+            Err(e) => {
+                log::warn!("Failed to get current branch for PR: {}", e);
+                return Ok(());
+            }
+        };
+
+        // Generate PR title and body
+        let tier_type_str = match tier_type {
+            TierType::Phase => "Phase",
+            TierType::Task => "Task",
+            TierType::Subtask => "Subtask",
+            TierType::Iteration => "Iteration",
+        };
+        
+        let pr_title = PrManager::generate_pr_title(tier_type_str, tier_id, &title);
+        let pr_body = PrManager::generate_pr_body(&description, &acceptance_criteria, &[]);
+
+        // Create PR
+        let base_branch = &self.config.branching.base_branch;
+        match self.pr_manager.create_pr(&pr_title, &pr_body, base_branch, &head_branch).await {
+            Ok(result) => {
+                if result.success {
+                    if let Some(url) = result.pr_url {
+                        log::info!("Created PR for tier {}: {}", tier_id, url);
+                        
+                        // Log PR creation activity
+                        let _ = self.logger_service.log_activity(
+                            ActivityEventType::OrchestrationCompleted,
+                            format!("Created PR for tier {}: {}", tier_id, url),
+                        );
+                    } else {
+                        log::info!("PR created successfully for tier {}", tier_id);
+                    }
+                } else {
+                    log::warn!("Failed to create PR for tier {}: {}", tier_id, result.message);
+                }
+                Ok(())
+            }
+            Err(e) => {
+                log::warn!("Failed to create PR for tier {}: {}. Continuing.", tier_id, e);
+                Ok(())
+            }
+        }
+    }
+
+    /// Run verification gate (if verification enabled)
+    async fn run_verification_gate(&self, tier_id: &str, tier_type: TierType, criteria: &[Criterion]) -> Result<bool> {
+        if !self.config.orchestrator.enable_verification {
+            return Ok(true); // Skip verification if disabled
+        }
+
+        if let Some(ref verification) = self.verification_integration {
+            let gate_type = self.gate_type_for(tier_type);
+            match verification.run_gate(gate_type, tier_id, criteria, None).await {
+                report => {
+                    log::info!("Verification gate for {}: {}", tier_id, if report.passed { "PASSED" } else { "FAILED" });
+                    Ok(report.passed)
+                }
+            }
+        } else {
+            Ok(true) // No verification configured
+        }
+    }
+
+    /// Select optimal platform using platform router (if enabled)
+    fn select_platform(&self, tier_id: &str, tier_type: TierType) -> Result<Platform> {
+        if !self.config.orchestrator.enable_platform_router {
+            return Ok(self.tier_config_for(tier_type).platform);
+        }
+
+        self.classify_and_route_task(tier_id)
+            .or_else(|e| {
+                log::warn!("Platform routing failed for {}: {}. Using default.", tier_id, e);
+                Ok(self.tier_config_for(tier_type).platform)
+            })
+    }
+
+    /// Execute subtasks in parallel (if enabled and applicable)
+    async fn execute_subtasks_parallel(&self, subtask_ids: &[String]) -> Result<Vec<Result<()>>> {
+        if !self.config.orchestrator.enable_parallel_execution || subtask_ids.len() <= 1 {
+            // Sequential execution
+            let mut results = Vec::new();
+            for id in subtask_ids {
+                results.push(self.execute_tier(id).await);
+            }
+            return Ok(results);
+        }
+
+        log::info!("Executing {} subtasks in parallel", subtask_ids.len());
+
+        // For now, assume no dependencies between subtasks at same level
+        // In a full implementation, we'd extract dependencies from PRD
+        let dependencies: Vec<(String, Vec<String>)> = subtask_ids
+            .iter()
+            .map(|id| (id.clone(), vec![]))
+            .collect();
+
+        // Get parallelizable groups
+        let groups = self
+            .dependency_analyzer
+            .get_parallelizable_groups(dependencies)?;
+
+        log::debug!("Executing {} groups of parallelizable subtasks", groups.len());
+
+        // Execute each group sequentially, but within each group execute in parallel
+        let mut all_results = Vec::new();
+        for group in groups {
+            // For this minimal implementation, still execute sequentially
+            // A full implementation would use tokio::spawn or similar
+            for id in group {
+                all_results.push(self.execute_tier(&id).await);
+            }
+        }
+
+        Ok(all_results)
+    }
+
+    /// Check if we should create a checkpoint
+    fn should_checkpoint(&self) -> bool {
+        let last = self.last_checkpoint.lock().unwrap();
+        last.elapsed().as_secs() >= 300 // Every 5 minutes
+    }
+
+    /// Create checkpoint if needed
+    async fn checkpoint_if_needed(&self) -> Result<()> {
+        if !self.should_checkpoint() {
+            return Ok(());
+        }
+
+        let (orchestrator_state, tier_states, stats) = {
+            let tree = self.tier_tree.lock().unwrap();
+            let stats = tree.get_stats();
+            let orchestrator_state = self.current_state();
+
+            // Build tier states
+            let mut tier_states = HashMap::new();
+            for node in tree.iter_dfs() {
+                let tier_context = crate::core::state_persistence::TierContext {
+                    state: node.state_machine.current_state(),
+                    tier_type: node.tier_type,
+                    item_id: node.id.clone(),
+                    iteration_count: 0, // TODO: track iteration count
+                    max_iterations: node.state_machine.max_iterations(),
+                    last_error: None,
+                };
+                tier_states.insert(node.id.clone(), tier_context);
+            }
+            (orchestrator_state, tier_states, stats)
+        };
+
+        let current_position = CurrentPosition {
+            phase_id: None, // TODO: track actual position
+            task_id: None,
+            subtask_id: None,
+            iteration: 0,
+        };
+
+        let metadata = CheckpointMetadata {
+            project_name: self.config.project.name.clone(),
+            completed_subtasks: stats.passed,
+            total_subtasks: stats.subtasks,
+            iterations_run: 0, // TODO: track globally
+        };
+
+        // Use async create method
+        let checkpoint_manager = self.checkpoint_manager.clone();
+        tokio::task::spawn_blocking(move || {
+            let mut mgr = checkpoint_manager.lock().unwrap();
+            tokio::runtime::Handle::current().block_on(async {
+                mgr.create(
+                    orchestrator_state,
+                    OrchestratorContext::default(),
+                    tier_states,
+                    current_position,
+                    metadata,
+                )
+                .await
+            })
+        })
+        .await
+        .context("Failed to spawn checkpoint task")??;
+        
+        let mut last = self.last_checkpoint.lock().unwrap();
+        *last = Instant::now();
+
+        log::info!("Checkpoint created");
+        Ok(())
+    }
+
+    /// Use worker/reviewer pattern for quality assurance
+    fn apply_worker_reviewer(&self, _tier_id: &str, output: &str, signal: &CompletionSignal, cycle: u32) -> Result<(bool, String)> {
+        if !self.worker_reviewer.is_enabled() {
+            return Ok((true, output.to_string()));
+        }
+
+        if !self.worker_reviewer.should_review(signal, cycle) {
+            return Ok((true, output.to_string()));
+        }
+
+        let review_result = self.worker_reviewer.parse_review_result(signal);
+        let needs_revision = !review_result.passed;
+
+        let feedback = if needs_revision {
+            review_result.reasoning.clone()
+        } else {
+            output.to_string()
+        };
+
+        Ok((review_result.passed, feedback))
     }
 
     /// Start orchestration
@@ -650,13 +1033,49 @@ impl Orchestrator {
         acceptance_criteria
             .iter()
             .enumerate()
-            .map(|(i, desc)| Criterion {
-                id: format!("AC-{}", i + 1),
-                description: desc.clone(),
-                met: false,
-                verification_method: None,
-                expected: None,
-                actual: None,
+            .map(|(i, desc)| {
+                // Parse prefixed format: "command: <cmd>", "file_exists: <path>", "regex: <file>:<pattern>"
+                if let Some(content) = desc.strip_prefix("command:") {
+                    let content = content.trim();
+                    Criterion {
+                        id: format!("AC-{}", i + 1),
+                        description: format!("Execute command: {}", content),
+                        met: false,
+                        verification_method: Some("command".to_string()),
+                        expected: Some(content.to_string()),
+                        actual: None,
+                    }
+                } else if let Some(content) = desc.strip_prefix("file_exists:") {
+                    let content = content.trim();
+                    Criterion {
+                        id: format!("AC-{}", i + 1),
+                        description: format!("File exists: {}", content),
+                        met: false,
+                        verification_method: Some("file_exists".to_string()),
+                        expected: Some(content.to_string()),
+                        actual: None,
+                    }
+                } else if let Some(content) = desc.strip_prefix("regex:") {
+                    let content = content.trim();
+                    Criterion {
+                        id: format!("AC-{}", i + 1),
+                        description: format!("Pattern match: {}", content),
+                        met: false,
+                        verification_method: Some("regex".to_string()),
+                        expected: Some(content.to_string()),
+                        actual: None,
+                    }
+                } else {
+                    // Fallback to unprefixed (legacy support)
+                    Criterion {
+                        id: format!("AC-{}", i + 1),
+                        description: desc.clone(),
+                        met: false,
+                        verification_method: Some("command".to_string()),
+                        expected: Some(desc.clone()),
+                        actual: None,
+                    }
+                }
             })
             .collect()
     }
@@ -737,6 +1156,23 @@ impl Orchestrator {
                 }
             }
 
+            // Create git branch for tier (if git enabled)
+            let _branch = self.create_tier_branch(tier_id, tier_type).await?;
+
+            // Use platform router to select optimal platform (if enabled)
+            let selected_platform = self.select_platform(tier_id, tier_type)?;
+            let tier_config = if selected_platform != tier_config.platform {
+                log::info!("Overriding platform for {}: {:?} -> {:?}", tier_id, tier_config.platform, selected_platform);
+                let mut config = tier_config.clone();
+                config.platform = selected_platform;
+                config
+            } else {
+                tier_config.clone()
+            };
+
+            // Check if checkpoint is needed
+            let _ = self.checkpoint_if_needed().await;
+
             let session_id = self.session_tracker.start_session(
                 tier_id.to_string(),
                 tier_type,
@@ -801,6 +1237,16 @@ impl Orchestrator {
                 CompletionSignal::Complete => {
                     let _ = self.session_tracker.complete_session(&session_id);
 
+                    // Process AGENTS.md updates from output
+                    if let Err(e) = self.process_agents_updates(tier_id, &iteration_result.output).await {
+                        log::warn!("Failed to process AGENTS.md updates: {}", e);
+                    }
+
+                    // Commit progress to git after successful iteration
+                    if let Err(e) = self.commit_tier_progress(tier_id, tier_type, attempt).await {
+                        log::warn!("Failed to commit tier progress: {}", e);
+                    }
+
                     // Log completion
                     let _ = self.logger_service.log_activity(
                         ActivityEventType::IterationCompleted,
@@ -847,36 +1293,53 @@ impl Orchestrator {
                         .await;
 
                     if gate_report.passed {
-                        let mut tree = self.tier_tree.lock().unwrap();
-                        let node = tree
-                            .find_by_id_mut(tier_id)
-                            .ok_or_else(|| anyhow!("Tier {} not found", tier_id))?;
-
-                        // Validate transition before passing
-                        let current = node.state_machine.current_state();
-                        if let Err(e) = self.validate_tier_transition(current, TierState::Passed) {
-                            log::warn!("Tier transition validation failed: {}", e);
+                        // Run additional verification integration if enabled
+                        let verification_passed = self.run_verification_gate(tier_id, tier_type, &criteria).await?;
+                        
+                        if !verification_passed {
+                            log::warn!("Verification integration failed for tier {}", tier_id);
+                            let reason = "Verification integration failed".to_string();
+                            previous_feedback = Some(reason.clone());
+                            continue; // Retry
                         }
-                        node.state_machine.send(TierEvent::GatePass)?;
 
-                        // Update progress
-                        let progress_entry = ProgressEntry {
-                            item_id: tier_id.to_string(),
-                            status: ItemStatus::Passed,
-                            progress: 100.0,
-                            message: Some(format!(
-                                "Tier passed gate after {} iteration(s)",
-                                attempt
-                            )),
-                            timestamp: Utc::now(),
-                        };
-                        let _ = self.progress_manager.append_entry(&progress_entry);
+                        {
+                            let mut tree = self.tier_tree.lock().unwrap();
+                            let node = tree
+                                .find_by_id_mut(tier_id)
+                                .ok_or_else(|| anyhow!("Tier {} not found", tier_id))?;
 
-                        // Log gate pass
-                        let _ = self.logger_service.log_activity(
-                            ActivityEventType::GatePassed,
-                            format!("Tier {} passed gate", tier_id),
-                        );
+                            // Validate transition before passing
+                            let current = node.state_machine.current_state();
+                            if let Err(e) = self.validate_tier_transition(current, TierState::Passed) {
+                                log::warn!("Tier transition validation failed: {}", e);
+                            }
+                            node.state_machine.send(TierEvent::GatePass)?;
+
+                            // Update progress
+                            let progress_entry = ProgressEntry {
+                                item_id: tier_id.to_string(),
+                                status: ItemStatus::Passed,
+                                progress: 100.0,
+                                message: Some(format!(
+                                    "Tier passed gate after {} iteration(s)",
+                                    attempt
+                                )),
+                                timestamp: Utc::now(),
+                            };
+                            let _ = self.progress_manager.append_entry(&progress_entry);
+
+                            // Log gate pass
+                            let _ = self.logger_service.log_activity(
+                                ActivityEventType::GatePassed,
+                                format!("Tier {} passed gate", tier_id),
+                            );
+                        } // Drop lock before async operations
+
+                        // Create PR for tier if auto_pr is enabled
+                        if let Err(e) = self.create_tier_pr(tier_id, tier_type).await {
+                            log::warn!("Failed to create PR for tier {}: {}", tier_id, e);
+                        }
 
                         return Ok(());
                     }
@@ -1378,6 +1841,7 @@ mod tests {
                     signal: CompletionSignal::Complete,
                     duration_secs: 0,
                     output_lines: 0,
+                    output: String::new(),
                 })
             })
         }
@@ -1566,10 +2030,10 @@ mod tests {
             tier_tree: Arc::new(Mutex::new(tree)),
             advancement_engine: Arc::new(AdvancementEngine::new()),
             escalation_engine: Arc::new(EscalationEngine::with_defaults()),
-            _worker_reviewer: Arc::new(WorkerReviewer::with_defaults()),
+            worker_reviewer: Arc::new(WorkerReviewer::with_defaults()),
             event_sender,
             event_receiver,
-            _last_checkpoint: Arc::new(Mutex::new(Instant::now())),
+            last_checkpoint: Arc::new(Mutex::new(Instant::now())),
             prompt_builder: PromptBuilder::new(),
             iteration_executor,
             gate_runner,
@@ -1577,16 +2041,18 @@ mod tests {
             logger_service,
             progress_manager,
             usage_tracker,
-            _git_manager: git_manager,
-            _branch_strategy: branch_strategy,
-            _verification_integration: None,
+            agents_manager: AgentsManager::new(&temp_dir),
+            git_manager: git_manager.clone(),
+            branch_strategy: branch_strategy,
+            pr_manager: PrManager::new(temp_dir.clone()),
+            verification_integration: None,
             complexity_classifier,
-            _dependency_analyzer: dependency_analyzer,
+            dependency_analyzer: dependency_analyzer,
             platform_router,
             loop_guard,
-            _fresh_spawn: fresh_spawn,
+            fresh_spawn: fresh_spawn,
             checkpoint_manager,
-            _parallel_executor: parallel_executor,
+            parallel_executor: parallel_executor,
         }
     }
 
@@ -1599,6 +2065,7 @@ mod tests {
                 signal: CompletionSignal::Complete,
                 duration_secs: 0,
                 output_lines: 0,
+                output: String::new(),
             },
         )]));
         let gate = Arc::new(MockGateRunner::new(vec![passed_report()]));
@@ -1627,11 +2094,13 @@ mod tests {
                 signal: CompletionSignal::Timeout,
                 duration_secs: 0,
                 output_lines: 0,
+                output: String::new(),
             }),
             Ok(crate::core::execution_engine::IterationResult {
                 signal: CompletionSignal::Complete,
                 duration_secs: 0,
                 output_lines: 0,
+                output: String::new(),
             }),
         ]));
         let gate = Arc::new(MockGateRunner::new(vec![passed_report()]));
@@ -1660,11 +2129,13 @@ mod tests {
                 signal: CompletionSignal::Complete,
                 duration_secs: 0,
                 output_lines: 0,
+                output: String::new(),
             }),
             Ok(crate::core::execution_engine::IterationResult {
                 signal: CompletionSignal::Complete,
                 duration_secs: 0,
                 output_lines: 0,
+                output: String::new(),
             }),
         ]));
         let gate = Arc::new(MockGateRunner::new(vec![
@@ -1696,11 +2167,13 @@ mod tests {
                 signal: CompletionSignal::Stalled,
                 duration_secs: 0,
                 output_lines: 0,
+                output: String::new(),
             }),
             Ok(crate::core::execution_engine::IterationResult {
                 signal: CompletionSignal::Stalled,
                 duration_secs: 0,
                 output_lines: 0,
+                output: String::new(),
             }),
         ]));
         let gate = Arc::new(MockGateRunner::new(vec![]));
@@ -1717,5 +2190,123 @@ mod tests {
         assert_eq!(exec.call_count(), 2);
         assert_eq!(sessions.started_count(), 2);
         assert_eq!(sessions.failed_count(), 2);
+    }
+
+    #[test]
+    fn test_parse_agents_updates() {
+        let config = default_config();
+        let orchestrator = Orchestrator::new(config).unwrap();
+        
+        let output = r#"
+Some agent output here...
+<ralph>COMPLETE</ralph>
+
+```agents-update
+PATTERN: Use async/await for all I/O operations
+FAILURE: Blocking calls in async context cause deadlocks
+DO: Always validate input before processing
+DONT: Mix sync and async code without proper consideration
+```
+
+More output after...
+"#;
+        
+        let updates = orchestrator.parse_agents_updates(output);
+        
+        assert_eq!(updates.len(), 4);
+        assert_eq!(updates[0].0, "pattern");
+        assert!(updates[0].1.contains("async/await"));
+        assert_eq!(updates[1].0, "failure");
+        assert!(updates[1].1.contains("Blocking calls"));
+        assert_eq!(updates[2].0, "do");
+        assert!(updates[2].1.contains("validate input"));
+        assert_eq!(updates[3].0, "dont");
+        assert!(updates[3].1.contains("Mix sync and async"));
+    }
+
+    #[test]
+    fn test_parse_agents_updates_empty() {
+        let config = default_config();
+        let orchestrator = Orchestrator::new(config).unwrap();
+        
+        let output = "No AGENTS updates here";
+        let updates = orchestrator.parse_agents_updates(output);
+        
+        assert_eq!(updates.len(), 0);
+    }
+
+    #[test]
+    fn test_parse_agents_updates_multiple_blocks() {
+        let config = default_config();
+        let orchestrator = Orchestrator::new(config).unwrap();
+        
+        let output = r#"
+```agents-update
+PATTERN: First pattern
+```
+
+Some text in between
+
+```agents-update
+PATTERN: Second pattern
+FAILURE: Some failure
+```
+"#;
+        
+        let updates = orchestrator.parse_agents_updates(output);
+        
+        assert_eq!(updates.len(), 3);
+        assert!(updates[0].1.contains("First pattern"));
+        assert!(updates[1].1.contains("Second pattern"));
+        assert!(updates[2].1.contains("Some failure"));
+    }
+
+    #[test]
+    fn test_build_gate_criteria_with_prefixes() {
+        let config = default_config();
+        let orchestrator = Orchestrator::new(config).unwrap();
+        
+        let acceptance_criteria = vec![
+            "command: cargo test".to_string(),
+            "file_exists: Cargo.toml".to_string(),
+            "regex: README.md:puppet-master".to_string(),
+        ];
+        
+        let criteria = orchestrator.build_gate_criteria(&acceptance_criteria);
+        
+        assert_eq!(criteria.len(), 3);
+        
+        // Check command criterion
+        assert_eq!(criteria[0].verification_method, Some("command".to_string()));
+        assert_eq!(criteria[0].expected, Some("cargo test".to_string()));
+        
+        // Check file_exists criterion
+        assert_eq!(criteria[1].verification_method, Some("file_exists".to_string()));
+        assert_eq!(criteria[1].expected, Some("Cargo.toml".to_string()));
+        
+        // Check regex criterion
+        assert_eq!(criteria[2].verification_method, Some("regex".to_string()));
+        assert_eq!(criteria[2].expected, Some("README.md:puppet-master".to_string()));
+    }
+
+    #[test]
+    fn test_build_gate_criteria_legacy_format() {
+        let config = default_config();
+        let orchestrator = Orchestrator::new(config).unwrap();
+        
+        let acceptance_criteria = vec![
+            "All tests pass".to_string(),
+            "Code is formatted".to_string(),
+        ];
+        
+        let criteria = orchestrator.build_gate_criteria(&acceptance_criteria);
+        
+        assert_eq!(criteria.len(), 2);
+        
+        // Should default to command with the original text
+        assert_eq!(criteria[0].verification_method, Some("command".to_string()));
+        assert_eq!(criteria[0].expected, Some("All tests pass".to_string()));
+        assert_eq!(criteria[1].verification_method, Some("command".to_string()));
+        assert_eq!(criteria[1].expected, Some("Code is formatted".to_string()));
     }
 }

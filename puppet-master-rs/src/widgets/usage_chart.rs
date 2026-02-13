@@ -1,9 +1,9 @@
 //! Usage chart widget (Canvas-based bar chart)
 
-use crate::theme::{AppTheme, colors};
+use crate::theme::{colors, AppTheme};
 use iced::mouse;
 use iced::widget::canvas::{Cache, Geometry, Path, Stroke};
-use iced::widget::{Canvas, canvas};
+use iced::widget::{canvas, Canvas};
 use iced::{Color, Element, Point, Rectangle};
 
 /// Platform usage data point

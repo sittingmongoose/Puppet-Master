@@ -79,7 +79,9 @@ pub fn view<'a>(
     minimize_to_tray: bool,
     retention_days: u32,
     intensive_logging: bool,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
+    let _ = size; // TODO: Use size for responsive layout if needed
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);

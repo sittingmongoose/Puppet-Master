@@ -4,7 +4,7 @@
 
 use crate::app::Message;
 use crate::theme::{AppTheme, colors, fonts, tokens};
-use crate::widgets::*;
+use crate::widgets::{responsive::LayoutSize, *};
 use chrono::{DateTime, Utc};
 use iced::widget::{Space, column, container, row, scrollable, text, text_editor};
 use iced::{Border, Element, Length};
@@ -98,8 +98,11 @@ pub fn view<'a>(
     selected_item: Option<usize>,
     preview_content: &'a text_editor::Content,
     theme: &'a AppTheme,
+    size: LayoutSize,
 ) -> Element<'a, Message> {
-    // 3-column layout: Category filters (1/4) | File list (2/4) | Preview panel (1/4)
+    // Responsive layout:
+    // Wide (>= 1024px): 3-column layout (1-2-1): Filters | List | Preview
+    // Narrow (< 1024px): Single column stack: Filters → List → Preview
 
     // LEFT COLUMN: Category filters
     let mut category_buttons = column![
@@ -344,19 +347,32 @@ pub fn view<'a>(
         theme,
     );
 
-    // Combine all 3 columns
-    let main_content = row![
-        container(left_panel)
-            .width(Length::FillPortion(1))
-            .height(Length::Fill),
-        container(center_panel)
-            .width(Length::FillPortion(2))
-            .height(Length::Fill),
-        container(right_panel)
-            .width(Length::FillPortion(1))
-            .height(Length::Fill),
-    ]
-    .spacing(tokens::spacing::MD);
+    // Combine columns based on screen size
+    let main_content = if size.is_desktop_or_larger() {
+        // Wide layout: 3-column row (1-2-1)
+        row![
+            container(left_panel)
+                .width(Length::FillPortion(1))
+                .height(Length::Fill),
+            container(center_panel)
+                .width(Length::FillPortion(2))
+                .height(Length::Fill),
+            container(right_panel)
+                .width(Length::FillPortion(1))
+                .height(Length::Fill),
+        ]
+        .spacing(tokens::spacing::MD)
+        .into()
+    } else {
+        // Narrow layout: single column stack
+        column![
+            container(left_panel).width(Length::Fill),
+            container(center_panel).width(Length::Fill).height(Length::Fill),
+            container(right_panel).width(Length::Fill).height(Length::Fill),
+        ]
+        .spacing(tokens::spacing::MD)
+        .into()
+    };
 
     let full_content = column![
         row![

@@ -6,9 +6,9 @@
 //! - Thick ink border
 //! - Optional percentage label
 
-use crate::theme::{AppTheme, colors, tokens};
+use crate::theme::{colors, tokens, AppTheme};
 use iced::mouse;
-use iced::widget::{Canvas, canvas, container, row, text};
+use iced::widget::{canvas, container, row, text, Canvas};
 use iced::{Border, Color, Element, Length, Point, Rectangle, Size, Theme as IcedTheme};
 
 /// Progress bar color variant

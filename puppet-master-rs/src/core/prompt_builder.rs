@@ -133,13 +133,27 @@ impl PromptBuilder {
             prompt.push_str("\n\n");
         }
 
+        // Interview outputs (master requirements + test strategy)
+        if let Some(outputs) = self.load_interview_outputs()? {
+            prompt.push_str("## Interview Outputs\n\n");
+            prompt.push_str(&outputs);
+            prompt.push_str("\n\n");
+        }
+
         // Instructions
         prompt.push_str("## Instructions\n\n");
         prompt.push_str("1. Review the current task, acceptance criteria, and context above\n");
         prompt.push_str("2. Complete the work according to the requirements\n");
         prompt.push_str("3. Follow the agent guidelines and best practices\n");
         prompt.push_str("4. When complete, signal completion with: `<ralph>COMPLETE</ralph>`\n");
-        prompt.push_str("5. If you are stuck/blocked, signal with: `<ralph>GUTTER</ralph>`\n\n");
+        prompt.push_str("5. If you are stuck/blocked, signal with: `<ralph>GUTTER</ralph>`\n");
+        prompt.push_str("6. After significant work, provide learnings in this format:\n\n");
+        prompt.push_str("```agents-update\n");
+        prompt.push_str("PATTERN: <successful pattern discovered>\n");
+        prompt.push_str("FAILURE: <failure mode to avoid>\n");
+        prompt.push_str("DO: <best practice to follow>\n");
+        prompt.push_str("DONT: <anti-pattern to avoid>\n");
+        prompt.push_str("```\n\n");
 
         // Working directory reminder
         prompt.push_str("## Important Notes\n\n");
@@ -228,6 +242,57 @@ impl PromptBuilder {
             }
         }
         Ok(None)
+    }
+
+    /// Load interview output documents (master requirements + test strategy).
+    fn load_interview_outputs(&self) -> Result<Option<String>> {
+        let Some(agents_path) = &self.agents_path else {
+            return Ok(None);
+        };
+        let Some(workspace) = agents_path.parent() else {
+            return Ok(None);
+        };
+
+        let requirements_path = workspace
+            .join(".puppet-master")
+            .join("requirements")
+            .join("master_requirements.md");
+        let test_strategy_path = workspace.join(".puppet-master").join("test-strategy.md");
+
+        let read_excerpt = |path: &std::path::Path, max_chars: usize| -> Result<String> {
+            let mut content = fs::read_to_string(path)?;
+            if content.len() > max_chars {
+                content.truncate(max_chars);
+                content.push_str("\n\n...(truncated)...\n");
+            }
+            Ok(content)
+        };
+
+        let mut sections = Vec::new();
+
+        if requirements_path.exists() {
+            let excerpt = read_excerpt(&requirements_path, 6000)?;
+            sections.push(format!(
+                "### Master Requirements (excerpt from `{}`)\n\n{}\n",
+                requirements_path.display(),
+                excerpt
+            ));
+        }
+
+        if test_strategy_path.exists() {
+            let excerpt = read_excerpt(&test_strategy_path, 4000)?;
+            sections.push(format!(
+                "### Test Strategy (excerpt from `{}`)\n\n{}\n",
+                test_strategy_path.display(),
+                excerpt
+            ));
+        }
+
+        if sections.is_empty() {
+            Ok(None)
+        } else {
+            Ok(Some(sections.join("\n")))
+        }
     }
 
     /// Build gate validation prompt

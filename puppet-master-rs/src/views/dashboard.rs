@@ -4,16 +4,18 @@
 //! Redesigned to match the Tauri React GUI's polished retro-futuristic design.
 
 use crate::app::Message;
-use crate::theme::{AppTheme, colors, fonts, tokens};
+use crate::theme::{colors, fonts, tokens, AppTheme};
 use crate::widgets::{
-    progress_bar::{ProgressSize, ProgressVariant, styled_progress_bar},
-    status_badge::{Status, status_dot_typed},
-    styled_button::{ButtonVariant, styled_button},
+    interview_panel::interview_panel_compact,
+    progress_bar::{styled_progress_bar, ProgressSize, ProgressVariant},
+    responsive::LayoutSize,
+    status_badge::{status_dot_typed, Status},
+    styled_button::{styled_button, ButtonVariant},
     terminal::LineType,
-    themed_panel,
+    themed_panel, InterviewPanelData,
 };
 use chrono::{DateTime, Utc};
-use iced::widget::{Space, column, container, row, text, text_editor};
+use iced::widget::{column, container, row, text, text_editor, Space};
 use iced::{Background, Border, Element, Length};
 use std::collections::HashMap;
 
@@ -104,7 +106,9 @@ pub fn view<'a>(
     error: &'a Option<String>,
     _start_time: &'a Option<DateTime<Utc>>,
     current_project: &'a Option<crate::views::projects::ProjectInfo>,
+    interview_data: &Option<InterviewPanelData>,
     theme: &'a AppTheme,
+    size: LayoutSize,
 ) -> Element<'a, Message> {
     let mut content = column![]
         .spacing(tokens::spacing::LG)
@@ -112,6 +116,15 @@ pub fn view<'a>(
 
     // ══ PROJECT PANEL ═════════════════════════════════════════════════
     content = content.push(build_project_panel(current_project, theme));
+
+    // ══ INTERVIEW PANEL (if active) ═══════════════════════════════════
+    if let Some(interview_info) = interview_data {
+        content = content.push(interview_panel_compact(
+            theme,
+            interview_info,
+            Message::NavigateToInterview,
+        ));
+    }
 
     // ══ ERROR DISPLAY (if present) ════════════════════════════════════
     if let Some(err) = error {
@@ -137,35 +150,49 @@ pub fn view<'a>(
     content = content.push(build_status_bar(status, progress, budgets, theme));
 
     // ══ MAIN DASHBOARD GRID ═══════════════════════════════════════════
-    // 2x2 grid layout matching React:
-    // Row 1: Current Item | Progress
-    // Row 2: Controls     | Live Output
+    // Responsive layout:
+    // Wide (>= 1024px): 2x2 grid
+    //   Row 1: Current Item | Progress
+    //   Row 2: Controls     | Live Output
+    // Narrow (< 1024px): Single column stack
+    //   Current Item → Progress → Controls → Live Output
 
     let current_item_panel = build_current_item_panel(current_item, theme);
     let progress_panel = build_progress_panel(progress, theme);
     let controls_panel = build_controls_panel(status, theme);
     let output_panel = build_output_log_panel(terminal_editor_content, theme);
 
-    // First row
-    let grid_row1 = row![
-        container(current_item_panel).width(Length::FillPortion(1)),
-        container(progress_panel).width(Length::FillPortion(1)),
-    ]
-    .spacing(tokens::spacing::LG);
+    if size.is_desktop_or_larger() {
+        // Wide layout: 2x2 grid
+        let grid_row1 = row![
+            container(current_item_panel).width(Length::FillPortion(1)),
+            container(progress_panel).width(Length::FillPortion(1)),
+        ]
+        .spacing(tokens::spacing::LG);
 
-    // Second row (containers fill height so panels stretch)
-    let grid_row2 = row![
-        container(controls_panel)
-            .width(Length::FillPortion(1))
-            .height(Length::Fill),
-        container(output_panel)
-            .width(Length::FillPortion(1))
-            .height(Length::Fill),
-    ]
-    .spacing(tokens::spacing::LG);
+        let grid_row2 = row![
+            container(controls_panel)
+                .width(Length::FillPortion(1))
+                .height(Length::Fill),
+            container(output_panel)
+                .width(Length::FillPortion(1))
+                .height(Length::Fill),
+        ]
+        .spacing(tokens::spacing::LG);
 
-    content = content.push(grid_row1);
-    content = content.push(grid_row2);
+        content = content.push(grid_row1);
+        content = content.push(grid_row2);
+    } else {
+        // Narrow layout: single column stack
+        content = content.push(container(current_item_panel).width(Length::Fill));
+        content = content.push(container(progress_panel).width(Length::Fill));
+        content = content.push(container(controls_panel).width(Length::Fill));
+        content = content.push(
+            container(output_panel)
+                .width(Length::Fill)
+                .height(Length::Fill),
+        );
+    }
 
     container(content)
         .width(Length::Fill)
@@ -298,12 +325,10 @@ fn build_project_panel<'a>(
 ) -> Element<'a, Message> {
     use crate::widgets::Page;
 
-    let mut content = column![
-        text("PROJECT")
-            .size(tokens::font_size::LG)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
-    ]
+    let mut content = column![text("PROJECT")
+        .size(tokens::font_size::LG)
+        .font(fonts::FONT_UI_BOLD)
+        .color(theme.ink()),]
     .spacing(tokens::spacing::MD);
 
     if let Some(project) = current_project {
@@ -363,12 +388,10 @@ fn build_current_item_panel<'a>(
     current_item: &'a Option<CurrentItem>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![
-        text("CURRENT ITEM")
-            .size(tokens::font_size::LG)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
-    ]
+    let mut content = column![text("CURRENT ITEM")
+        .size(tokens::font_size::LG)
+        .font(fonts::FONT_UI_BOLD)
+        .color(theme.ink()),]
     .spacing(tokens::spacing::MD);
 
     if let Some(item) = current_item {
@@ -483,12 +506,10 @@ fn build_current_item_panel<'a>(
 
 /// Build the Run Controls panel (matches React's ControlsPanel)
 fn build_controls_panel<'a>(status: &'a str, theme: &'a AppTheme) -> Element<'a, Message> {
-    let mut content = column![
-        text("RUN CONTROLS")
-            .size(tokens::font_size::LG)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
-    ]
+    let mut content = column![text("RUN CONTROLS")
+        .size(tokens::font_size::LG)
+        .font(fonts::FONT_UI_BOLD)
+        .color(theme.ink()),]
     .spacing(tokens::spacing::MD);
 
     // Button states based on orchestrator status
@@ -559,12 +580,10 @@ fn build_progress_panel<'a>(
     progress: &'a ProgressState,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![
-        text("PROGRESS")
-            .size(tokens::font_size::LG)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
-    ]
+    let mut content = column![text("PROGRESS")
+        .size(tokens::font_size::LG)
+        .font(fonts::FONT_UI_BOLD)
+        .color(theme.ink()),]
     .spacing(tokens::spacing::MD);
 
     // Overall progress bar (large, at top)
@@ -652,13 +671,27 @@ fn build_output_log_panel<'a>(
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     // Terminal-like output panel with dark background and monospace font
+    let terminal_bg = iced::Color::from_rgb(0.08, 0.08, 0.08); // Dark background matching React
+    let terminal_border = iced::Color::from_rgb(0.2, 0.2, 0.2);
+
     let terminal_editor = text_editor(terminal_editor_content)
         .on_action(Message::DashboardTerminalAction)
         .font(fonts::FONT_MONO)
+        .style(move |_theme: &iced::Theme, _status| text_editor::Style {
+            background: Background::Color(terminal_bg),
+            border: Border {
+                color: terminal_border,
+                width: 0.0,
+                radius: tokens::radii::NONE.into(),
+            },
+            placeholder: colors::INK_FADED,
+            value: colors::ACID_LIME,
+            selection: iced::Color {
+                a: 0.55,
+                ..colors::ELECTRIC_BLUE
+            },
+        })
         .height(Length::Fill);
-
-    let terminal_bg = iced::Color::from_rgb(0.08, 0.08, 0.08); // Dark background matching React
-    let terminal_border = iced::Color::from_rgb(0.2, 0.2, 0.2);
 
     let log_container = container(terminal_editor)
         .padding(tokens::spacing::MD)
