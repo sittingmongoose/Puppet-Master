@@ -46,7 +46,7 @@
 //! - Uses `--output-format json` for structured output
 
 use crate::platforms::context_files::{append_prompt_attachments, context_file_parent_dirs};
-use crate::platforms::{BaseRunner, PlatformRunner};
+use crate::platforms::{BaseRunner, PlatformRunner, platform_specs};
 use crate::types::{ExecutionRequest, ExecutionResult, Platform};
 use anyhow::{Result, anyhow};
 use async_trait::async_trait;
@@ -62,8 +62,9 @@ pub struct GeminiRunner {
 impl GeminiRunner {
     /// Create a new Gemini runner
     pub fn new() -> Self {
+        let command = Platform::Gemini.resolve_cli_command();
         Self {
-            base: Arc::new(BaseRunner::new("gemini".to_string(), Platform::Gemini)),
+            base: Arc::new(BaseRunner::new(command, Platform::Gemini)),
         }
     }
 
@@ -71,7 +72,7 @@ impl GeminiRunner {
     async fn discover_models_from_cli(&self) -> Result<Vec<String>> {
         debug!("Discovering Gemini models via CLI");
 
-        let output = Command::new("gemini").arg("models").output().await?;
+        let output = Command::new(&self.base.command).arg("models").output().await?;
 
         if !output.status.success() {
             return Err(anyhow!("Failed to discover models"));
@@ -148,7 +149,12 @@ impl PlatformRunner for GeminiRunner {
     }
 
     async fn is_available(&self) -> bool {
-        BaseRunner::is_command_available("gemini").await
+        for cmd in platform_specs::cli_binary_names(Platform::Gemini) {
+            if BaseRunner::is_command_available(cmd).await {
+                return true;
+            }
+        }
+        false
     }
 
     async fn discover_models(&self) -> Result<Vec<String>> {
@@ -161,13 +167,10 @@ impl PlatformRunner for GeminiRunner {
 
         // Fallback to known Gemini models
         warn!("CLI model discovery failed, using known Gemini models");
-        Ok(vec![
-            "gemini-2.5-pro".to_string(),
-            "gemini-2.5-flash".to_string(),
-            "gemini-2.5-flash-lite".to_string(),
-            "gemini-3-pro-preview".to_string(),
-            "gemini-3-flash-preview".to_string(),
-        ])
+        Ok(platform_specs::fallback_model_ids(Platform::Gemini)
+            .into_iter()
+            .map(str::to_string)
+            .collect())
     }
 
     fn build_args(&self, request: &ExecutionRequest) -> Vec<String> {
@@ -195,7 +198,15 @@ impl PlatformRunner for GeminiRunner {
         args.push(request.model.clone());
 
         // Allow Gemini access to referenced attachment locations (max 5)
-        let dirs = context_file_parent_dirs(&request.context_files);
+        // DRY:FN:gemini_working_dir — Pass working directory via --include-directories
+        let mut dirs = context_file_parent_dirs(&request.context_files);
+        
+        // Add working directory if different from CWD
+        let cwd = std::env::current_dir().unwrap_or_default();
+        if request.working_directory != cwd {
+            dirs.push(request.working_directory.clone());
+        }
+        
         if !dirs.is_empty() {
             let include = dirs
                 .into_iter()
@@ -203,7 +214,12 @@ impl PlatformRunner for GeminiRunner {
                 .map(|d| d.display().to_string())
                 .collect::<Vec<_>>()
                 .join(",");
-            args.push("--include-directories".to_string());
+            args.push(
+                platform_specs::get_spec(Platform::Gemini)
+                    .working_dir_flag
+                    .unwrap_or("--include-directories")
+                    .to_string(),
+            );
             args.push(include);
         }
 

@@ -3,6 +3,7 @@
 //! Wizard flow with Project Setup and Interview Config steps for Rust/Iced GUI.
 
 use crate::app::{Message, WizardTierConfig};
+use crate::platforms::platform_specs;
 use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::widgets::{
     help_tooltip, interaction_mode_to_variant,
@@ -16,8 +17,8 @@ use iced::widget::{
 use iced::{Alignment, Border, Element, Length};
 use std::collections::HashMap;
 
-// Static options for pick_lists
-const PLATFORMS: &[&str] = &["cursor", "codex", "claude", "gemini", "copilot"];
+// Static options for pick_lists — platform list sourced from platform_specs (DRY)
+const PLATFORMS: &[&str] = platform_specs::PLATFORM_ID_STRS;
 const REASONING_EFFORTS: &[&str] = &["low", "medium", "high"];
 const INTERVIEW_REASONING_LEVELS: &[&str] = &["low", "medium", "high", "max"];
 const OUTPUT_FORMATS: &[&str] = &["markdown", "json", "yaml"];
@@ -888,129 +889,169 @@ fn step5_configure_tiers<'a>(
         if let Some(config) = tier_configs.get(tier) {
             let platform_models = models.get(&config.platform);
 
-            let tier_panel = themed_panel(
-                container(
-                    column![
-                        text(format!("{} Configuration", tier.to_uppercase()))
-                            .size(tokens::font_size::MD)
-                            .font(fonts::FONT_UI_BOLD)
-                            .color(theme.ink()),
-                        Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                        // Platform
-                        row![
-                            text("Platform:")
-                                .size(tokens::font_size::BASE)
-                                .color(theme.ink())
-                                .width(Length::Fixed(150.0)),
-                            pick_list(PLATFORMS, Some(config.platform.as_str()), move |p| {
-                                Message::WizardTierPlatformChanged(tier.to_string(), p.to_string())
-                            })
-                            .width(Length::Fixed(200.0)),
-                        ]
-                        .spacing(tokens::spacing::SM)
-                        .align_y(iced::Alignment::Center),
-                        Space::new().height(Length::Fixed(tokens::spacing::XS)),
-                        // Model
-                        row![
-                            text("Model:")
-                                .size(tokens::font_size::BASE)
-                                .color(theme.ink())
-                                .width(Length::Fixed(150.0)),
-                            {
-                                let tier_model_picker: Element<'_, Message> =
-                                    if let Some(models_list) = platform_models {
-                                        let selected = models_list
-                                            .iter()
-                                            .find(|m| m.as_str() == config.model.as_str())
-                                            .cloned();
-                                        pick_list(
-                                            models_list.as_slice(),
-                                            selected,
-                                            move |m: String| {
-                                                Message::WizardTierModelChanged(tier.to_string(), m)
-                                            },
-                                        )
-                                        .width(Length::Fixed(300.0))
-                                        .into()
-                                    } else {
-                                        text("auto")
-                                            .size(tokens::font_size::SM)
-                                            .color(theme.ink_faded())
-                                            .into()
-                                    };
-                                tier_model_picker
-                            },
-                        ]
-                        .spacing(tokens::spacing::SM)
-                        .align_y(iced::Alignment::Center),
-                        Space::new().height(Length::Fixed(tokens::spacing::XS)),
-                        // Reasoning Effort
-                        row![
-                            text("Reasoning:")
-                                .size(tokens::font_size::BASE)
-                                .color(theme.ink())
-                                .width(Length::Fixed(150.0)),
-                            pick_list(
-                                REASONING_EFFORTS,
-                                Some(config.reasoning_effort.as_str()),
-                                move |e| Message::WizardTierReasoningChanged(
-                                    tier.to_string(),
-                                    e.to_string()
+            // Check if effort/reasoning is relevant for this platform
+            let show_reasoning = crate::types::Platform::from_str_loose(&config.platform)
+                .map(|p| {
+                    crate::platforms::platform_specs::supports_effort(p)
+                        && !crate::platforms::platform_specs::reasoning_is_model_based(p)
+                })
+                .unwrap_or(false);
+
+            // Build effort options from platform_specs
+            let effort_options: Vec<String> = if show_reasoning {
+                if let Some(p) = crate::types::Platform::from_str_loose(&config.platform) {
+                    if let Some(levels) = crate::platforms::platform_specs::effort_levels_for(p) {
+                        levels.iter().map(|l| l.id.to_string()).collect()
+                    } else {
+                        REASONING_EFFORTS.iter().map(|s| (*s).to_string()).collect()
+                    }
+                } else {
+                    REASONING_EFFORTS.iter().map(|s| (*s).to_string()).collect()
+                }
+            } else {
+                Vec::new()
+            };
+
+            let mut tier_col = column![
+                text(format!("{} Configuration", tier.to_uppercase()))
+                    .size(tokens::font_size::MD)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().height(Length::Fixed(tokens::spacing::SM)),
+                // Platform
+                row![
+                    text("Platform:")
+                        .size(tokens::font_size::BASE)
+                        .color(theme.ink())
+                        .width(Length::Fixed(150.0)),
+                    pick_list(PLATFORMS, Some(config.platform.as_str()), move |p| {
+                        Message::WizardTierPlatformChanged(tier.to_string(), p.to_string())
+                    })
+                    .width(Length::Fixed(200.0)),
+                ]
+                .spacing(tokens::spacing::SM)
+                .align_y(iced::Alignment::Center),
+                Space::new().height(Length::Fixed(tokens::spacing::XS)),
+                // Model
+                row![
+                    text("Model:")
+                        .size(tokens::font_size::BASE)
+                        .color(theme.ink())
+                        .width(Length::Fixed(150.0)),
+                    {
+                        let tier_model_picker: Element<'_, Message> =
+                            if let Some(models_list) = platform_models {
+                                let selected = models_list
+                                    .iter()
+                                    .find(|m| m.as_str() == config.model.as_str())
+                                    .cloned();
+                                pick_list(
+                                    models_list.as_slice(),
+                                    selected,
+                                    move |m: String| {
+                                        Message::WizardTierModelChanged(tier.to_string(), m)
+                                    },
                                 )
+                                .width(Length::Fixed(300.0))
+                                .into()
+                            } else {
+                                text("auto")
+                                    .size(tokens::font_size::SM)
+                                    .color(theme.ink_faded())
+                                    .into()
+                            };
+                        tier_model_picker
+                    },
+                ]
+                .spacing(tokens::spacing::SM)
+                .align_y(iced::Alignment::Center),
+            ]
+            .spacing(tokens::spacing::SM);
+
+            // Reasoning Effort — only shown for platforms that support it (not Cursor or Gemini)
+            if show_reasoning && !effort_options.is_empty() {
+                let selected_effort = effort_options
+                    .iter()
+                    .find(|o| o.as_str() == config.reasoning_effort.as_str())
+                    .cloned();
+                tier_col = tier_col.push(Space::new().height(Length::Fixed(tokens::spacing::XS)));
+                tier_col = tier_col.push(
+                    row![
+                        text("Reasoning:")
+                            .size(tokens::font_size::BASE)
+                            .color(theme.ink())
+                            .width(Length::Fixed(150.0)),
+                        pick_list(
+                            effort_options,
+                            selected_effort,
+                            move |e: String| Message::WizardTierReasoningChanged(
+                                tier.to_string(),
+                                e
                             )
-                            .width(Length::Fixed(200.0)),
-                        ]
-                        .spacing(tokens::spacing::SM)
-                        .align_y(iced::Alignment::Center),
-                        Space::new().height(Length::Fixed(tokens::spacing::XS)),
-                        // Plan Mode
-                        row![
-                            text("Plan Mode:")
-                                .size(tokens::font_size::BASE)
-                                .color(theme.ink())
-                                .width(Length::Fixed(150.0)),
-                            toggler(config.plan_mode).on_toggle(move |v| {
-                                Message::WizardTierPlanModeToggled(tier.to_string(), v)
-                            }),
-                        ]
-                        .spacing(tokens::spacing::SM)
-                        .align_y(iced::Alignment::Center),
-                        Space::new().height(Length::Fixed(tokens::spacing::XS)),
-                        // Ask Mode
-                        row![
-                            text("Ask Mode:")
-                                .size(tokens::font_size::BASE)
-                                .color(theme.ink())
-                                .width(Length::Fixed(150.0)),
-                            toggler(config.ask_mode).on_toggle(move |v| {
-                                Message::WizardTierAskModeToggled(tier.to_string(), v)
-                            }),
-                        ]
-                        .spacing(tokens::spacing::SM)
-                        .align_y(iced::Alignment::Center),
-                        Space::new().height(Length::Fixed(tokens::spacing::XS)),
-                        // Output Format
-                        row![
-                            text("Output Format:")
-                                .size(tokens::font_size::BASE)
-                                .color(theme.ink())
-                                .width(Length::Fixed(150.0)),
-                            pick_list(
-                                OUTPUT_FORMATS,
-                                Some(config.output_format.as_str()),
-                                move |f| Message::WizardTierOutputFormatChanged(
-                                    tier.to_string(),
-                                    f.to_string()
-                                )
-                            )
-                            .width(Length::Fixed(200.0)),
-                        ]
-                        .spacing(tokens::spacing::SM)
-                        .align_y(iced::Alignment::Center),
+                        )
+                        .width(Length::Fixed(200.0)),
                     ]
-                    .spacing(tokens::spacing::SM),
-                )
-                .padding(tokens::spacing::MD),
+                    .spacing(tokens::spacing::SM)
+                    .align_y(iced::Alignment::Center),
+                );
+            }
+
+            // Plan Mode
+            tier_col = tier_col.push(Space::new().height(Length::Fixed(tokens::spacing::XS)));
+            tier_col = tier_col.push(
+                row![
+                    text("Plan Mode:")
+                        .size(tokens::font_size::BASE)
+                        .color(theme.ink())
+                        .width(Length::Fixed(150.0)),
+                    toggler(config.plan_mode).on_toggle(move |v| {
+                        Message::WizardTierPlanModeToggled(tier.to_string(), v)
+                    }),
+                ]
+                .spacing(tokens::spacing::SM)
+                .align_y(iced::Alignment::Center),
+            );
+
+            // Ask Mode
+            tier_col = tier_col.push(Space::new().height(Length::Fixed(tokens::spacing::XS)));
+            tier_col = tier_col.push(
+                row![
+                    text("Ask Mode:")
+                        .size(tokens::font_size::BASE)
+                        .color(theme.ink())
+                        .width(Length::Fixed(150.0)),
+                    toggler(config.ask_mode).on_toggle(move |v| {
+                        Message::WizardTierAskModeToggled(tier.to_string(), v)
+                    }),
+                ]
+                .spacing(tokens::spacing::SM)
+                .align_y(iced::Alignment::Center),
+            );
+
+            // Output Format
+            tier_col = tier_col.push(Space::new().height(Length::Fixed(tokens::spacing::XS)));
+            tier_col = tier_col.push(
+                row![
+                    text("Output Format:")
+                        .size(tokens::font_size::BASE)
+                        .color(theme.ink())
+                        .width(Length::Fixed(150.0)),
+                    pick_list(
+                        OUTPUT_FORMATS,
+                        Some(config.output_format.as_str()),
+                        move |f| Message::WizardTierOutputFormatChanged(
+                            tier.to_string(),
+                            f.to_string()
+                        )
+                    )
+                    .width(Length::Fixed(200.0)),
+                ]
+                .spacing(tokens::spacing::SM)
+                .align_y(iced::Alignment::Center),
+            );
+
+            let tier_panel = themed_panel(
+                container(tier_col).padding(tokens::spacing::MD),
                 theme,
             );
 

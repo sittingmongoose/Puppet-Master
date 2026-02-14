@@ -7,7 +7,9 @@ Always use the Context7 MCP.  You need to take your time and be careful as this 
 
 ## Project Overview
 
-RWM Puppet Master is a CLI orchestrator implementing the Ralph Wiggum Method - a four-tier hierarchical approach to AI-assisted development. The system coordinates multiple AI CLI platforms (Cursor, Codex, Claude Code) without using APIs, relying exclusively on CLI invocations.
+RWM Puppet Master is a CLI orchestrator implementing the Ralph Wiggum Method - a four-tier hierarchical approach to AI-assisted development. The system coordinates multiple AI CLI platforms (Cursor, Codex, Claude Code, Gemini, GitHub Copilot) without using APIs, relying exclusively on CLI invocations.
+
+> **NOTE: Rewrite in Progress** — The codebase was rewritten from Tauri/TypeScript to **Rust/Iced** (`puppet-master-rs/`). The Rust codebase is the active development target. Some sections below still reference the old TypeScript patterns for reference, but all new work should be in Rust.
 
 ### Key Concepts
 - **Four Tiers**: Phase → Task → Subtask → Iteration
@@ -20,7 +22,41 @@ RWM Puppet Master is a CLI orchestrator implementing the Ralph Wiggum Method - a
 
 ## Architecture Notes
 
-### Module Responsibilities
+> **The active codebase is `puppet-master-rs/` (Rust/Iced).** All paths below are relative to `puppet-master-rs/src/`.
+
+### Module Responsibilities (Rust/Iced)
+
+| Module | Purpose |
+|--------|---------|
+| `src/app.rs` | Main app state, Message enum, update/view logic (~4700 lines) |
+| `src/views/` | Iced view functions (config, setup, doctor, wizard, interview, etc.) |
+| `src/widgets/` | Reusable Iced UI components (see `docs/gui-widget-catalog.md`) |
+| `src/platforms/` | Platform runners, auth, detection, capability, **platform_specs.rs** |
+| `src/platforms/platform_specs.rs` | **Single source of truth** for ALL platform CLI data |
+| `src/core/` | State machines, orchestrator, execution engine |
+| `src/config/` | GUI config, app settings |
+| `src/types/` | Type definitions (Platform enum, PlatformConfig, etc.) |
+| `src/interview/` | Interview orchestrator, phase management |
+| `src/git/` | Git operations, worktree, PR management |
+| `src/doctor/` | Platform health checks |
+| `src/state/` | Agent state management, promotion gates |
+| `src/projects/` | Project management |
+| `src/start_chain/` | Startup chain orchestration |
+
+### Supported Platforms (5 total)
+All platform data is in `src/platforms/platform_specs.rs`. **Never hardcode platform info elsewhere.**
+
+| Platform | CLI Binary | Auth | Subscription |
+|----------|-----------|------|-------------|
+| Cursor | `agent` | `agent login` (browser OAuth) | Cursor subscription |
+| Codex | `codex` | `codex login` (browser OAuth) | ChatGPT subscription |
+| Claude Code | `claude` | Interactive browser login | Anthropic subscription |
+| Gemini | `gemini` | Google OAuth on first run | Google subscription |
+| GitHub Copilot | `copilot` | `/login` (GitHub OAuth) | GitHub subscription |
+
+**CRITICAL: Subscription auth ONLY — NO API keys.** API keys are expensive and don't go towards subscriptions.
+
+### Legacy Module Responsibilities (TypeScript — for reference only)
 
 | Module | Purpose |
 |--------|---------|
@@ -62,6 +98,41 @@ Tier:         PENDING → PLANNING → RUNNING → GATING → PASSED
 ---
 
 ## Codebase Patterns
+
+### Rust/Iced Patterns (Active Codebase)
+
+**Platform data — always use platform_specs:**
+```rust
+use crate::platforms::platform_specs;
+
+// CORRECT — single source of truth
+let binary = platform_specs::cli_binary_names(platform);
+let supports = platform_specs::supports_effort(platform);
+let models = platform_specs::fallback_model_ids(platform);
+
+// WRONG — hardcoded data
+let binary = match platform { Platform::Cursor => "agent", ... };
+```
+
+**Iced view functions — always check widgets first:**
+```rust
+use crate::widgets::{styled_button, page_header, status_badge, refresh_button};
+
+// CORRECT — reuse shared widgets
+let btn = styled_button("Save", Message::Save);
+let header = page_header("Settings", vec![refresh_button(Message::Refresh)]);
+
+// WRONG — hand-rolled UI
+let btn = button(text("Save")).style(|_| { ... });
+```
+
+**DRY tagging — tag all new reusable items:**
+```rust
+// DRY:FN:my_helper — What it does
+pub fn my_helper() { ... }
+```
+
+### Legacy TypeScript Patterns (Reference Only)
 
 ### ESM Import Pattern
 ```typescript
@@ -130,22 +201,65 @@ class RegexVerifier implements Verifier {
 }
 ```
 
-### GUI DRY / Reuse-First (Rust/Iced)
-- Before adding new GUI code, check `puppet-master-rs/src/widgets/` and `docs/gui-widget-catalog.md`.
-- Prefer shared widgets/helpers first:
-  - `selectable_text_field`
-  - `context_menu_actions`
-  - `auth_status_chip`
-  - `page_header`
-  - `refresh_button`
+### DRY Method — Reuse-First (Rust/Iced)
+
+The codebase uses a DRY tagging system for agent discoverability. All reusable code is tagged with `// DRY:` comments.
+
+**Tag convention:**
+```rust
+// DRY:WIDGET:<name>  — Reusable UI widget (see src/widgets/)
+// DRY:DATA:<name>    — Single source of truth data module
+// DRY:FN:<name>      — Reusable helper/query function
+// DRY:HELPER:<name>  — Shared utility function
+```
+
+**To discover existing reusable items:**
+```sh
+grep -r "DRY:" puppet-master-rs/src/       # All tagged items
+grep -r "DRY:WIDGET" puppet-master-rs/src/  # Just widgets
+grep -r "DRY:DATA" puppet-master-rs/src/    # Data sources
+grep -r "DRY:FN" puppet-master-rs/src/      # Functions
+```
+
+**Before writing new code, ALWAYS check:**
+1. `docs/gui-widget-catalog.md` — Full widget + data source catalog
+2. `puppet-master-rs/src/widgets/` — Shared UI widgets
+3. `puppet-master-rs/src/platforms/platform_specs.rs` — Single source of truth for ALL platform CLI data (binary names, install paths, auth, models, effort, images, headless, experimental, subagents, SDKs)
+4. Grep for `DRY:` tags in the area you're working
+
+**Key DRY data sources (non-widget):**
+- `platform_specs::get_spec(platform)` — Full platform spec (auth, models, effort, images, etc.)
+- `platform_specs::supports_effort(platform)` — Effort/reasoning support (true: Claude/Codex/Copilot)
+- `platform_specs::supports_images(platform)` — Image support (ALL 5 platforms)
+- `platform_specs::cli_binary_names(platform)` — CLI binary names to search for
+- `platform_specs::fallback_model_ids(platform)` — Fallback models when dynamic discovery fails
+- `platform_specs::reasoning_is_model_based(platform)` — True only for Cursor (reasoning in model names)
+
+**Key reusable widgets:**
+- `selectable_text_field` — Read-only selectable text
+- `context_menu_actions` — Copy/paste/select-all context menu
+- `auth_status_chip` — Auth state badge
+- `page_header` + `refresh_button` — Page title with actions
+- `status_badge` / `status_dot` — Status indicators
+- `styled_button` — Themed buttons (primary/secondary/danger/etc.)
+- `styled_text_input` — Themed text inputs
+- `modal_overlay` / `confirm_modal` — Modal dialogs
+- `toast_overlay` — Toast notifications
+
+**When writing new code, ALWAYS tag reusable items:**
+```rust
+// DRY:FN:my_new_helper — Short description
+pub fn my_new_helper() { ... }
+```
+
 - Bespoke UI is allowed only if existing widgets cannot express the requirement.
 - Any bespoke bypass must include an inline rationale:
 ```rust
 // UI-DRY-EXCEPTION: <short reason>
 ```
-- Run:
-  - `scripts/generate-widget-catalog.sh` after widget changes
-  - `scripts/check-widget-reuse.sh` before handoff (warn-only, always exit 0)
+- Run after widget changes:
+  - `scripts/generate-widget-catalog.sh`
+  - `scripts/check-widget-reuse.sh` (warn-only, always exit 0)
 
 ---
 
@@ -194,62 +308,72 @@ yarn-error.log*
 
 ## Pre-Completion Verification Checklist
 
-**BEFORE updating the Task Status Log, you MUST verify compliance with ALL rules by checking this checklist:**
+**BEFORE updating the Task Status Log, you MUST verify compliance with ALL rules by checking this checklist.**
 
-1. **ESM Import Patterns** (AGENTS.md: Codebase Patterns, .cursorrules: ESM Import Rules)
-   - [ ] All local imports use `.js` extension
-   - [ ] Type-only exports use `export type` and `import type`
-   - [ ] No runtime imports for type aliases (like Platform)
+> **Determine which stack you're working in first:**
+> - **Rust/Iced** (primary): Code in `puppet-master-rs/` — use the Rust checklist
+> - **Legacy TypeScript**: Code in `src/` — use the TypeScript checklist
 
-2. **Module Organization** (AGENTS.md: Architecture Notes, .cursorrules: File Organization)
-   - [ ] Files created in correct directories per module responsibilities
-   - [ ] Barrel exports follow pattern (type-only for types, regular for runtime values)
-   - [ ] Module responsibilities respected
+### Rust/Iced Checklist (puppet-master-rs/)
 
-3. **Tooling Rules** (AGENTS.md: Tooling Rules, .cursorrules: Technology Stack)
-   - [ ] Using Vitest (NOT Jest patterns)
-   - [ ] TypeScript strict mode enabled
-   - [ ] ESLint configuration correct
-   - [ ] Git commit format followed (if committing)
+1. **Compilation**
+   - [ ] `cd puppet-master-rs && cargo check` passes with no errors
+   - [ ] `cargo test` passes (all existing + new tests)
+   - [ ] No new warnings introduced (check `cargo check 2>&1 | grep warning`)
 
-4. **Testing Requirements** (AGENTS.md: Testing, .cursorrules: Testing Requirements)
-   - [ ] Tests written for new code (if applicable)
-   - [ ] Test files in correct locations (next to source files)
-   - [ ] All required tests pass
-   - [ ] `npm run typecheck` passes
+2. **DRY Method** (see DRY Method section below)
+   - [ ] Checked `docs/gui-widget-catalog.md` before creating new UI components
+   - [ ] Checked `src/platforms/platform_specs.rs` before hardcoding platform data
+   - [ ] Used `platform_specs::` functions instead of duplicating platform info
+   - [ ] Tagged new reusable items with `// DRY:WIDGET:`, `// DRY:DATA:`, `// DRY:FN:`, or `// DRY:HELPER:`
+   - [ ] No hardcoded platform models, CLI commands, auth, or capabilities
 
-5. **Code Patterns** (AGENTS.md: Codebase Patterns, Common Failure Modes)
-   - [ ] State machine pattern followed (if applicable)
-   - [ ] Manager pattern followed (if applicable)
-   - [ ] Verifier pattern followed (if applicable)
+3. **Module Organization**
+   - [ ] Files created in correct `src/` subdirectory per module responsibilities
+   - [ ] New modules declared in parent `mod.rs` with `pub mod`
+   - [ ] Imports use `use crate::` paths (not relative)
+
+4. **Code Patterns**
    - [ ] No session reuse (fresh processes only, if applicable)
-   - [ ] No API calls (CLI only, if applicable)
-   - [ ] File locking used for shared files (if applicable)
+   - [ ] No direct API calls (CLI only — subscription auth, not API keys)
+   - [ ] Platform data sourced from `platform_specs` (single source of truth)
+   - [ ] Widget reuse from `src/widgets/` (check catalog first)
 
-6. **DO/DON'T Checklist** (AGENTS.md: DO, DON'T)
-   - [ ] All DO items followed (check DO section)
-   - [ ] All DON'T items avoided (check DON'T section)
+5. **Testing**
+   - [ ] Tests written for new public functions
+   - [ ] Tests in same file (`#[cfg(test)] mod tests`) or `tests/` directory
+   - [ ] `cargo test` passes
+
+6. **Scope & Safety**
    - [ ] No modifications outside task scope
    - [ ] Canonical documents not deleted/simplified
-   - [ ] Specific `.log` patterns in gitignore (not blanket `*.log`)
-
-7. **Task-Specific Requirements** (.cursorrules: When Working on Tasks)
-   - [ ] Referenced documentation sections read FIRST
-   - [ ] Only specified task implemented
-   - [ ] Tests run after implementation
+   - [ ] No API keys or secrets in code (subscription auth ONLY)
    - [ ] Task scope strictly followed
 
-8. **File-Specific Rules** (.cursorrules: Critical Patterns)
-   - [ ] Gitignore patterns correct (no blanket `*.log`, evidence logs tracked)
-   - [ ] Session ID format correct (if applicable): `PM-YYYY-MM-DD-HH-MM-SS-NNN`
-   - [ ] No Thread terminology (use Session if applicable)
+### Legacy TypeScript Checklist (src/)
 
-9. **Final Verification**
-   - [ ] All acceptance criteria met (checkboxes updated in phase file)
+> Only use this if working on the legacy TypeScript codebase (`src/`), NOT `puppet-master-rs/`.
+
+1. **ESM Import Patterns**
+   - [ ] All local imports use `.js` extension
+   - [ ] Type-only exports use `export type` and `import type`
+
+2. **Tooling**
+   - [ ] Using Vitest (NOT Jest patterns)
+   - [ ] `npm run typecheck` passes
+   - [ ] `npm run build` passes
+
+3. **Testing**
+   - [ ] Tests written for new code
    - [ ] All required tests pass
-   - [ ] `npm run typecheck` passes (if applicable)
-   - [ ] `npm run build` passes (if applicable)
-   - [ ] No linter errors (if applicable)
+
+### Universal Checklist (both stacks)
+
+1. **DO/DON'T** — See DO and DON'T sections below
+2. **Gitignore** — Specific `.log` patterns (not blanket `*.log`), evidence logs tracked
+3. **Git commit format** followed (if committing)
+4. **Referenced documentation sections** read FIRST
+5. **Task scope** strictly followed
 
 **After completing this checklist, proceed to update the Task Status Log.**
 
@@ -268,195 +392,238 @@ After completing ANY build queue task, you MUST update the Task Status Log in th
 
 ## Common Failure Modes
 
-### Import Extension Missing
+### Rust/Iced Failures
+
+#### Hardcoded Platform Data
+**Symptom**: Wrong models, wrong CLI flags, wrong auth commands
+**Cause**: Platform data duplicated instead of using `platform_specs`
+**Fix**: Always use `crate::platforms::platform_specs::` functions
+```rust
+// WRONG — hardcoded
+let models = vec!["gpt-5", "gpt-5-turbo"];
+
+// RIGHT — from single source of truth
+let models = platform_specs::fallback_model_ids(platform);
+```
+
+#### Wrong Effort/Reasoning Check
+**Symptom**: Effort picker shows for Gemini (not supported) or Cursor (model-based)
+**Cause**: Checking wrong conditions
+**Fix**: Use platform_specs
+```rust
+// WRONG
+matches!(platform, Platform::Claude | Platform::Gemini)
+
+// RIGHT
+platform_specs::supports_effort(platform)
+// Returns: true for Claude/Codex/Copilot, false for Gemini/Cursor
+```
+
+#### Borrow Checker — Reference to Temporary
+**Symptom**: `cannot return reference to temporary value`
+**Cause**: Returning reference to inline-constructed value
+**Fix**: Use `static` for data that needs `&'static` lifetime
+
+#### Missing Widget Reuse
+**Symptom**: Duplicate UI code across views
+**Cause**: Not checking `docs/gui-widget-catalog.md` first
+**Fix**: Search `grep -r "DRY:WIDGET" puppet-master-rs/src/widgets/`
+
+### Legacy TypeScript Failures
+
+#### Import Extension Missing
 **Symptom**: `ERR_MODULE_NOT_FOUND` at runtime
-**Cause**: Missing `.js` extension in import
 **Fix**: Add `.js` to all local imports
-```typescript
-// Before (fails)
-import { foo } from './bar';
 
-// After (works)
-import { foo } from './bar.js';
-```
+#### Jest Instead of Vitest
+**Symptom**: `jest is not defined`
+**Fix**: Use `vi.fn()` not `jest.fn()`
 
-### Jest Instead of Vitest
-**Symptom**: `jest is not defined` or `require is not defined`
-**Cause**: Using Jest patterns in ESM project
-**Fix**: Use Vitest imports and patterns
-```typescript
-// Use vi.fn() not jest.fn()
-const mock = vi.fn();
-```
+### Both Stacks
 
-### Session Reuse
+#### Session Reuse
 **Symptom**: Agent behavior inconsistent, context pollution
-**Cause**: Reusing sessions instead of fresh spawns
 **Fix**: Always spawn new process per iteration
-```typescript
-// Always use spawn(), never reuse
-const process = spawn(command, args);
-```
-
-### State File Corruption
-**Symptom**: Invalid JSON, missing fields
-**Cause**: Concurrent writes without locking
-**Fix**: Use file locking for prd.json
-```typescript
-await withFileLock(prdPath, async () => {
-  await prdManager.save(prd);
-});
-```
 
 ---
 
 ## DO
 
-- ✅ Use `.js` extension in all local imports
-- ✅ Use `import type` and `export type` for type aliases (like Platform)
-- ✅ Use Vitest for testing
-- ✅ Spawn fresh process for each iteration
-- ✅ Use Session ID format `PM-YYYY-MM-DD-HH-MM-SS-NNN`
-- ✅ Follow barrel export pattern (type-only for types)
+### Both Stacks
+- ✅ Spawn fresh process for each iteration (no session reuse)
 - ✅ Run tests after each change
-- ✅ Use discriminated unions for events
-- ✅ Save evidence for verification results
-- ✅ Use async/await for file operations
 - ✅ Follow the task scope exactly
 - ✅ Update Task Status Log after completing any task
 - ✅ Use specific `.log` patterns in gitignore (not `*.log`)
-- ✅ Reuse shared widgets/helpers before creating bespoke Rust/Iced UI
+- ✅ Use Session ID format `PM-YYYY-MM-DD-HH-MM-SS-NNN`
+- ✅ Save evidence for verification results
+- ✅ Use subscription auth ONLY — NO API keys for platform access
+
+### Rust/Iced (puppet-master-rs/)
+- ✅ Check `docs/gui-widget-catalog.md` and `src/widgets/` before creating new UI
+- ✅ Use `platform_specs::` functions for ALL platform data (models, CLI, auth, capabilities)
+- ✅ Tag reusable code with `// DRY:WIDGET:`, `// DRY:DATA:`, `// DRY:FN:`, `// DRY:HELPER:`
+- ✅ Run `cargo check` and `cargo test` after changes
+- ✅ Import platform specs as `use crate::platforms::platform_specs;`
+- ✅ Declare new modules in parent `mod.rs`
+
+### Legacy TypeScript (src/)
+- ✅ Use `.js` extension in all local imports
+- ✅ Use `import type` and `export type` for type aliases (like Platform)
+- ✅ Use Vitest for testing
+- ✅ Follow barrel export pattern (type-only for types)
+- ✅ Use discriminated unions for events
+- ✅ Use async/await for file operations
 
 ---
 
 ## DON'T
 
-- ❌ Use Jest patterns (`jest.fn()`, `jest.mock()`)
-- ❌ Omit `.js` extension in imports
-- ❌ Use `import { Platform }` for type aliases (use `import type`)
+### Both Stacks
 - ❌ Reuse sessions or processes
 - ❌ Use "Thread" terminology (use "Session")
-- ❌ Call APIs directly (CLI only)
+- ❌ Call APIs directly (CLI only — subscription auth, NOT API keys)
 - ❌ Modify files outside task scope
 - ❌ Delete or simplify canonical documents
-- ❌ Use `exec()` for process spawning (use `spawn()`)
-- ❌ Skip file locking for shared files
 - ❌ Ignore test failures
 - ❌ Use blanket `*.log` in gitignore (evidence logs are tracked!)
 - ❌ Ignore `.puppet-master/` directory in gitignore
+
+### Rust/Iced (puppet-master-rs/)
+- ❌ Hardcode platform data (models, CLI commands, auth, capabilities) — use `platform_specs`
 - ❌ Re-implement existing widget patterns without checking `docs/gui-widget-catalog.md`
+- ❌ Duplicate effort/reasoning/image checks — use `platform_specs::supports_effort()` etc.
+- ❌ Use API keys for platform auth — subscription-only (OAuth/browser login)
+
+### Legacy TypeScript (src/)
+- ❌ Use Jest patterns (`jest.fn()`, `jest.mock()`)
+- ❌ Omit `.js` extension in imports
+- ❌ Use `import { Platform }` for type aliases (use `import type`)
+- ❌ Use `exec()` for process spawning (use `spawn()`)
+- ❌ Skip file locking for shared files
 
 ---
 
 ## Testing
 
-### Unit Test Location
-Place tests next to source files:
-```
-src/
-├── config/
-│   ├── config-manager.ts
-│   └── config-manager.test.ts
+### Rust/Iced (puppet-master-rs/) — Primary
+
+**Test location:** In-file `#[cfg(test)] mod tests` blocks, or `puppet-master-rs/tests/` for integration tests.
+
+**Test commands:**
+```bash
+cd puppet-master-rs
+cargo test                        # Run all tests
+cargo test platform_specs         # Run tests matching pattern
+cargo test -- --nocapture         # Show println output
+cargo check                       # Type check only (faster)
 ```
 
-### Integration Test Location
-```
-src/
-└── __tests__/
-    ├── integration.test.ts
-    └── fixtures/
-        ├── sample-prd.json
-        └── sample-config.yaml
+**Example test pattern:**
+```rust
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_supports_effort() {
+        assert!(platform_specs::supports_effort(Platform::Claude));
+        assert!(!platform_specs::supports_effort(Platform::Gemini));
+    }
+}
 ```
 
-### Test Commands
+### Legacy TypeScript (src/) — Reference Only
+
+**Test commands:**
 ```bash
 npm test                    # Run all tests
 npm test -- -t "pattern"    # Run specific tests
 npm run test:coverage       # With coverage
-npm run test:watch          # Watch mode
-```
-
-### Mocking Pattern
-```typescript
-import { vi } from 'vitest';
-
-const mockRunner = {
-  spawnFreshProcess: vi.fn().mockResolvedValue({
-    pid: 12345,
-    stdout: createMockStream(),
-  }),
-};
 ```
 
 ---
 
 ## Directory Structure
 
+### Rust/Iced Codebase (Primary — Active Development)
+```
+puppet-master-rs/                   # Rust/Iced desktop app
+├── src/
+│   ├── app.rs                      # Main app state + message handlers (~4700 lines)
+│   ├── main.rs                     # Entry point
+│   ├── platforms/                   # Platform CLI integration
+│   │   ├── mod.rs                  # Module declarations + PlatformRunner trait
+│   │   ├── platform_specs.rs       # ⭐ SINGLE SOURCE OF TRUTH for all platform data
+│   │   ├── cursor.rs               # Cursor runner (build_args, execute)
+│   │   ├── claude.rs               # Claude runner
+│   │   ├── codex.rs                # Codex runner
+│   │   ├── gemini.rs               # Gemini runner
+│   │   ├── copilot.rs              # Copilot runner
+│   │   ├── auth_actions.rs         # Login/logout actions
+│   │   ├── auth_status.rs          # Auth status checks
+│   │   ├── platform_detector.rs    # CLI binary detection
+│   │   ├── capability.rs           # Platform capability probing
+│   │   ├── model_catalog.rs        # Dynamic model cache
+│   │   └── registry.rs             # Runner registry (runtime)
+│   ├── views/                       # Iced GUI views
+│   │   ├── config.rs               # Config page (tier cards, model picker)
+│   │   ├── setup.rs                # Setup wizard (install, login)
+│   │   ├── doctor.rs               # Doctor checks
+│   │   ├── wizard.rs               # Task wizard
+│   │   ├── interview.rs            # Interview management
+│   │   └── ...                     # Other views
+│   ├── widgets/                     # Reusable Iced widgets (see docs/gui-widget-catalog.md)
+│   ├── types/                       # Shared types (Platform enum, config)
+│   ├── config/                      # Configuration (gui_config.rs)
+│   ├── core/                        # Orchestrator, execution engine
+│   └── state/                       # Agent state management
+├── tests/                           # Integration tests
+├── Cargo.toml                       # Rust dependencies
+└── README.md
+```
+
+### Project Root
 ```
 puppet-master/
-├── .puppet-master/           # Runtime data
-│   ├── capabilities/         # Platform capability cache
-│   ├── evidence/             # Verification evidence
-│   │   ├── test-logs/
-│   │   ├── screenshots/
-│   │   ├── browser-traces/
-│   │   ├── file-snapshots/
-│   │   ├── metrics/
-│   │   └── gate-reports/
-│   ├── usage/                # Usage tracking
-│   │   └── usage.jsonl
-│   ├── checkpoints/          # State checkpoints
-│   └── logs/                 # Operation logs
-├── src/                      # Source code
-├── dist/                     # Compiled output
-├── progress.txt              # Short-term memory
-├── AGENTS.md                 # Long-term memory (this file)
-├── prd.json                  # Work queue
-├── config.yaml               # Configuration
-└── package.json
+├── puppet-master-rs/            # ⭐ Rust/Iced app (see above)
+├── .puppet-master/              # Runtime data (capabilities, evidence, usage, logs)
+├── docs/
+│   └── gui-widget-catalog.md    # Widget reuse catalog (check before creating new UI)
+├── AGENTS.md                    # ⭐ This file — agent instructions (read FIRST)
+├── PLATFORM_SPECS_PLAN.md       # Platform specs refactor plan
+├── src/                         # Legacy TypeScript code (reference only)
+├── src-tauri/                   # Legacy Tauri wrapper (reference only)
+└── config.yaml                  # Configuration
 ```
 
 ---
 
 ## Configuration
 
-### Required Config Sections
-```yaml
-project:
-  name: string
-  workingDirectory: string
+### Tier Config (Rust/Iced)
+Each tier selects a platform, model, and optional effort level. Models are fetched dynamically from platform CLIs and cached.
 
+**Supported platforms:** `cursor`, `codex`, `claude`, `gemini`, `copilot`
+
+**Key behaviors:**
+- Changing platform cascades: model list updates, effort picker shows/hides
+- Cursor: model names encode reasoning (e.g., `sonnet-4.5-thinking`), no separate effort picker, "Auto" mode available
+- Gemini: no effort/reasoning support
+- Claude: effort via `CLAUDE_CODE_EFFORT_LEVEL` env var (low/medium/high)
+- Codex/Copilot: effort levels Low/Medium/High/Extra High
+- ALL 5 platforms support images
+
+### Legacy Config Format (Reference)
+```yaml
 tiers:
   phase:
-    platform: cursor | codex | claude
-    model: string
-    taskFailureStyle: spawn_new_agent | continue_same_agent | skip_retries
+    platform: cursor | codex | claude | gemini | copilot
+    model: string       # Dynamic — fetched from platform CLI, cached
     maxIterations: number
   task: ...
   subtask: ...
   iteration: ...
-
-branching:
-  baseBranch: string
-  namingPattern: string
-  granularity: single | per-phase | per-task
-
-verification:
-  browserAdapter: string
-  screenshotOnFailure: boolean
-  evidenceDirectory: string
-
-memory:
-  progressFile: string
-  agentsFile: string
-  prdFile: string
-  multiLevelAgents: boolean
-
-budgets:
-  claude: { maxCallsPerRun, maxCallsPerHour, maxCallsPerDay }
-  codex: ...
-  cursor: ...
 ```
 
 ---
@@ -944,6 +1111,7 @@ Agents should emit these signals to indicate status:
 | Date | Change |
 |------|--------|
 | 2026-01-11 | Initial creation for BUILD_QUEUE generation |
+| 2026-02-14 | Major update: Added Rust/Iced architecture, 5 platforms (was 3), DRY Method with tagging convention, platform_specs as single source of truth, subscription-only auth policy, updated checklists for Rust |
 
 ---
 

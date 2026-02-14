@@ -527,7 +527,7 @@ impl AcceptanceCriteriaInjector {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::{ItemStatus, PRDMetadata};
+    use crate::types::ItemStatus;
 
     fn create_test_subtask(id: &str, title: &str) -> Subtask {
         Subtask {

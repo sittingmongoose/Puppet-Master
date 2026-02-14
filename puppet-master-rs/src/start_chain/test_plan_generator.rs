@@ -445,7 +445,7 @@ impl TestPlanGenerator {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::{ItemStatus, PRDMetadata, ParsedRequirements, RequirementsSection};
+    use crate::types::{ParsedRequirements, RequirementsSection};
 
     #[test]
     fn test_generate_from_requirements() {

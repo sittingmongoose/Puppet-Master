@@ -101,7 +101,7 @@ fn test_event_ledger_filter_by_tier() {
     let ledger = EventLedger::new(&db_path).unwrap();
 
     // Insert events for different tiers
-    for i in 0..3 {
+    for _ in 0..3 {
         let event = PuppetMasterEvent::TierChanged {
             tier_id: "PH0".to_string(),
             tier_type: TierType::Phase,

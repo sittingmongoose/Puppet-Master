@@ -3,11 +3,13 @@
 //! This module provides automatic detection of installed AI platform CLIs,
 //! checking system PATH and common installation locations.
 
+use crate::platforms::platform_specs;
 use crate::types::Platform;
+use crate::types::platform::CliPaths;
 use log::{debug, info};
 use semver::Version;
 use std::collections::HashMap;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::Stdio;
 use tokio::process::Command;
 use which::which;
@@ -30,17 +32,215 @@ impl PlatformDetector {
         detected
     }
 
-    /// Detects a specific platform
+    /// Detects a specific platform using platform_specs for binary names and install paths
     pub async fn detect_platform(platform: Platform) -> Option<DetectedPlatform> {
-        debug!("Detecting platform: {}", platform);
+        Self::detect_platform_with_custom_paths(platform, None).await
+    }
 
-        match platform {
-            Platform::Cursor => Self::detect_cursor().await,
-            Platform::Codex => Self::detect_codex().await,
-            Platform::Claude => Self::detect_claude().await,
-            Platform::Gemini => Self::detect_gemini().await,
-            Platform::Copilot => Self::detect_copilot().await,
+    // DRY:FN:detect_platform_with_custom_paths — Detects platform CLI with custom path priority
+    /// Detects a specific platform with custom path priority
+    ///
+    /// This method searches for a platform CLI in the following order:
+    /// 1. Custom path (if provided and non-empty)
+    /// 2. System PATH
+    /// 3. Platform specs default install paths
+    /// 4. Common system locations
+    ///
+    /// All searched paths are recorded in the `searched_paths` field.
+    pub async fn detect_platform_with_custom_paths(
+        platform: Platform,
+        custom_path: Option<&str>,
+    ) -> Option<DetectedPlatform> {
+        Self::detect_platform_with_custom_paths_trace(platform, custom_path)
+            .await
+            .detected
+    }
+
+    // DRY:FN:detect_platform_with_custom_paths_trace — Detect platform and capture searched paths
+    /// Detects a specific platform with custom path priority and returns full trace data.
+    ///
+    /// Unlike `detect_platform_with_custom_paths`, this preserves `searched_paths` even when no
+    /// CLI is found, which allows setup UI to display the actual detection path attempts.
+    pub async fn detect_platform_with_custom_paths_trace(
+        platform: Platform,
+        custom_path: Option<&str>,
+    ) -> PlatformDetectionTrace {
+        debug!(
+            "Detecting platform {} with custom path: {:?}",
+            platform, custom_path
+        );
+
+        let cli_names = platform_specs::cli_binary_names(platform);
+        let spec = platform_specs::get_spec(platform);
+        let mut searched_paths = Vec::new();
+
+        // Check custom path first if provided
+        if let Some(custom) = custom_path {
+            if !custom.trim().is_empty() {
+                let home = std::env::var("HOME").unwrap_or_default();
+                let expanded = custom.replace('~', &home);
+                let path = PathBuf::from(&expanded);
+                searched_paths.push(custom.to_string());
+
+                if path.exists() && path.is_file() {
+                    let cli_name = path
+                        .file_name()
+                        .map(|n| n.to_string_lossy().to_string())
+                        .unwrap_or_else(|| {
+                            cli_names.first().map(|s| s.to_string()).unwrap_or_default()
+                        });
+
+                    // Avoid Copilot false positives from gh-only path detection.
+                    if platform == Platform::Copilot && Self::is_gh_binary_name(&cli_name) {
+                        debug!(
+                            "Skipping Copilot detection for custom gh path: {}",
+                            path.display()
+                        );
+                    } else {
+                        let version = Self::get_version_for_path(&path, spec.version_command).await;
+
+                        let detected = DetectedPlatform {
+                            platform,
+                            cli_path: path,
+                            cli_name,
+                            version,
+                            available: true,
+                            searched_paths: searched_paths.clone(),
+                        };
+                        return PlatformDetectionTrace {
+                            detected: Some(detected),
+                            searched_paths,
+                        };
+                    }
+                }
+            }
         }
+
+        // Fall back to standard detection logic
+        // Search PATH first
+        searched_paths.push("PATH".to_string());
+        for name in cli_names {
+            searched_paths.push(format!("PATH lookup: {}", name));
+
+            // Avoid Copilot false positives from gh-only detection.
+            if platform == Platform::Copilot && Self::is_gh_binary_name(name) {
+                continue;
+            }
+
+            if let Some(path) = Self::find_in_path(name) {
+                let version = Self::get_version_for_path(&path, spec.version_command).await;
+                let detected = DetectedPlatform {
+                    platform,
+                    cli_path: path,
+                    cli_name: name.to_string(),
+                    version,
+                    available: true,
+                    searched_paths: searched_paths.clone(),
+                };
+                return PlatformDetectionTrace {
+                    detected: Some(detected),
+                    searched_paths,
+                };
+            }
+        }
+
+        // Search platform_specs default install paths
+        let install_paths = platform_specs::default_install_paths(platform);
+        let home = std::env::var("HOME").unwrap_or_default();
+        for install_path in install_paths {
+            let expanded = install_path.replace('~', &home);
+            searched_paths.push(install_path.to_string());
+            let path = PathBuf::from(&expanded);
+            if path.exists() && path.is_file() {
+                let cli_name = path
+                    .file_name()
+                    .map(|n| n.to_string_lossy().to_string())
+                    .unwrap_or_default();
+
+                // Avoid Copilot false positives from gh-only path detection.
+                if platform == Platform::Copilot && Self::is_gh_binary_name(&cli_name) {
+                    continue;
+                }
+
+                let version = Self::get_version_for_path(&path, spec.version_command).await;
+                let detected = DetectedPlatform {
+                    platform,
+                    cli_path: path,
+                    cli_name,
+                    version,
+                    available: true,
+                    searched_paths: searched_paths.clone(),
+                };
+                return PlatformDetectionTrace {
+                    detected: Some(detected),
+                    searched_paths,
+                };
+            }
+        }
+
+        // Check common system locations as last resort
+        let common_paths = [
+            "/usr/local/bin",
+            "/usr/bin",
+            "/opt/homebrew/bin",
+            "/home/linuxbrew/.linuxbrew/bin",
+        ];
+
+        for base_path in &common_paths {
+            for name in cli_names {
+                let path = PathBuf::from(base_path).join(name);
+                searched_paths.push(path.to_string_lossy().to_string());
+
+                // Avoid Copilot false positives from gh-only detection.
+                if platform == Platform::Copilot && Self::is_gh_binary_name(name) {
+                    continue;
+                }
+
+                if path.exists() && path.is_file() {
+                    let version = Self::get_version_for_path(&path, spec.version_command).await;
+                    let detected = DetectedPlatform {
+                        platform,
+                        cli_path: path,
+                        cli_name: name.to_string(),
+                        version,
+                        available: true,
+                        searched_paths: searched_paths.clone(),
+                    };
+                    return PlatformDetectionTrace {
+                        detected: Some(detected),
+                        searched_paths,
+                    };
+                }
+            }
+        }
+
+        PlatformDetectionTrace {
+            detected: None,
+            searched_paths,
+        }
+    }
+
+    /// Detects all installed platforms using custom CLI paths from config
+    ///
+    /// This method respects custom CLI paths from the configuration and falls back
+    /// to standard detection if no custom path is configured for a platform.
+    pub async fn detect_installed_with_config(cli_paths: &CliPaths) -> Vec<DetectedPlatform> {
+        let mut detected = Vec::new();
+
+        for platform in Platform::all() {
+            let custom_path = cli_paths.get(*platform);
+            if let Some(info) =
+                Self::detect_platform_with_custom_paths(*platform, custom_path).await
+            {
+                detected.push(info);
+            }
+        }
+
+        info!(
+            "Detected {} installed platform(s) with custom config",
+            detected.len()
+        );
+        detected
     }
 
     /// Creates a detection map for all platforms
@@ -58,125 +258,6 @@ impl PlatformDetector {
         !Self::detect_installed().await.is_empty()
     }
 
-    // Platform-specific detection
-
-    async fn detect_cursor() -> Option<DetectedPlatform> {
-        // Per AGENTS.md contract: prefer 'agent', fallback to 'cursor-agent'
-        let cli_names = ["agent", "cursor-agent", "cursor"];
-
-        for name in &cli_names {
-            if let Some(path) = Self::find_in_path(name) {
-                let version = Self::get_version(name, &["--version"]).await;
-
-                return Some(DetectedPlatform {
-                    platform: Platform::Cursor,
-                    cli_path: path,
-                    cli_name: name.to_string(),
-                    version,
-                    available: true,
-                });
-            }
-        }
-
-        // Check common installation locations
-        Self::check_common_locations(Platform::Cursor, &cli_names).await
-    }
-
-    async fn detect_codex() -> Option<DetectedPlatform> {
-        let cli_names = ["codex"];
-
-        for name in &cli_names {
-            if let Some(path) = Self::find_in_path(name) {
-                let version = Self::get_version(name, &["--version"]).await;
-
-                return Some(DetectedPlatform {
-                    platform: Platform::Codex,
-                    cli_path: path,
-                    cli_name: name.to_string(),
-                    version,
-                    available: true,
-                });
-            }
-        }
-
-        Self::check_common_locations(Platform::Codex, &cli_names).await
-    }
-
-    async fn detect_claude() -> Option<DetectedPlatform> {
-        let cli_names = ["claude", "claude-cli"];
-
-        for name in &cli_names {
-            if let Some(path) = Self::find_in_path(name) {
-                let version = Self::get_version(name, &["--version"]).await;
-
-                return Some(DetectedPlatform {
-                    platform: Platform::Claude,
-                    cli_path: path,
-                    cli_name: name.to_string(),
-                    version,
-                    available: true,
-                });
-            }
-        }
-
-        Self::check_common_locations(Platform::Claude, &cli_names).await
-    }
-
-    async fn detect_gemini() -> Option<DetectedPlatform> {
-        // Prefer 'gemini' as per AGENTS.md contract, fallback to gemini-cli
-        let cli_names = ["gemini", "gemini-cli", "gcloud"];
-
-        for name in &cli_names {
-            if let Some(path) = Self::find_in_path(name) {
-                let version = Self::get_version(name, &["--version"]).await;
-
-                return Some(DetectedPlatform {
-                    platform: Platform::Gemini,
-                    cli_path: path,
-                    cli_name: name.to_string(),
-                    version,
-                    available: true,
-                });
-            }
-        }
-
-        Self::check_common_locations(Platform::Gemini, &cli_names).await
-    }
-
-    async fn detect_copilot() -> Option<DetectedPlatform> {
-        // Try 'copilot' first (standalone), then 'gh copilot' (extension)
-        let cli_names = ["copilot", "gh"];
-
-        for name in &cli_names {
-            if let Some(path) = Self::find_in_path(name) {
-                let version = if name == &"copilot" {
-                    // Direct copilot command
-                    Self::get_version(name, &["--version"]).await
-                } else {
-                    // gh copilot extension
-                    Self::get_version("gh", &["copilot", "--version"]).await
-                };
-
-                // Verify copilot extension is installed if using gh
-                let has_copilot = if name == &"copilot" {
-                    true
-                } else {
-                    Self::check_copilot_extension().await
-                };
-
-                return Some(DetectedPlatform {
-                    platform: Platform::Copilot,
-                    cli_path: path,
-                    cli_name: name.to_string(),
-                    version,
-                    available: has_copilot,
-                });
-            }
-        }
-
-        None
-    }
-
     // Helper functions
 
     /// Finds a command in system PATH
@@ -184,10 +265,10 @@ impl PlatformDetector {
         which(name).ok()
     }
 
-    /// Gets version string from CLI
-    async fn get_version(command: &str, args: &[&str]) -> Option<String> {
-        let output = Command::new(command)
-            .args(args)
+    /// Gets version string by executing an absolute or relative CLI path.
+    async fn get_version_for_path(command_path: &Path, version_flag: &str) -> Option<String> {
+        let output = Command::new(command_path)
+            .arg(version_flag)
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
             .output()
@@ -216,55 +297,18 @@ impl PlatformDetector {
         text.lines().next().map(|s| s.trim().to_string())
     }
 
-    /// Checks common installation locations
-    async fn check_common_locations(
-        platform: Platform,
-        cli_names: &[&str],
-    ) -> Option<DetectedPlatform> {
-        let common_paths = [
-            "/usr/local/bin",
-            "/usr/bin",
-            "/opt/homebrew/bin",
-            "/home/linuxbrew/.linuxbrew/bin",
-        ];
-
-        for base_path in &common_paths {
-            for name in cli_names {
-                let path = PathBuf::from(base_path).join(name);
-
-                if path.exists() && path.is_file() {
-                    let version = Self::get_version(name, &["--version"]).await;
-
-                    return Some(DetectedPlatform {
-                        platform,
-                        cli_path: path,
-                        cli_name: name.to_string(),
-                        version,
-                        available: true,
-                    });
-                }
-            }
-        }
-
-        None
+    fn is_gh_binary_name(name: &str) -> bool {
+        name.eq_ignore_ascii_case("gh") || name.eq_ignore_ascii_case("gh.exe")
     }
+}
 
-    /// Checks if GitHub Copilot extension is installed
-    async fn check_copilot_extension() -> bool {
-        let output = Command::new("gh")
-            .args(&["extension", "list"])
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped())
-            .output()
-            .await;
-
-        if let Ok(output) = output {
-            let stdout = String::from_utf8_lossy(&output.stdout);
-            stdout.contains("copilot")
-        } else {
-            false
-        }
-    }
+/// Detection trace data for setup UI and diagnostics.
+#[derive(Debug, Clone)]
+pub struct PlatformDetectionTrace {
+    /// Detected platform info, when found.
+    pub detected: Option<DetectedPlatform>,
+    /// All path probes used during detection, including misses.
+    pub searched_paths: Vec<String>,
 }
 
 /// Information about a detected platform
@@ -284,6 +328,9 @@ pub struct DetectedPlatform {
 
     /// Whether platform is available for use
     pub available: bool,
+
+    /// Paths that were searched during detection
+    pub searched_paths: Vec<String>,
 }
 
 impl DetectedPlatform {
@@ -364,9 +411,11 @@ impl InstallationStatus {
                     .push("Install Gemini CLI: npm install -g @google/gemini-cli".to_string());
             }
             Platform::Copilot => {
-                recommendations.push("Install GitHub CLI: https://cli.github.com".to_string());
+                recommendations
+                    .push("Install Copilot CLI: npm install -g @github/copilot".to_string());
                 recommendations.push(
-                    "Install Copilot extension: gh extension install github/gh-copilot".to_string(),
+                    "Authenticate with: 'copilot login' (or run 'copilot' then '/login'; GH_TOKEN/GITHUB_TOKEN also supported)."
+                        .to_string(),
                 );
             }
         }
@@ -434,6 +483,7 @@ mod tests {
             cli_name: "cursor".to_string(),
             version: Some("1.2.3".to_string()),
             available: true,
+            searched_paths: vec!["PATH".to_string()],
         };
 
         assert!(detected.semver_version().is_some());
@@ -449,6 +499,7 @@ mod tests {
             cli_name: "cursor".to_string(),
             version: Some("1.2.3".to_string()),
             available: true,
+            searched_paths: vec!["PATH".to_string()],
         };
 
         let status = InstallationStatus::from_detected(&detected);
@@ -458,5 +509,62 @@ mod tests {
         let not_installed = InstallationStatus::not_installed(Platform::Cursor);
         assert!(!not_installed.installed);
         assert!(!not_installed.recommendations.is_empty());
+    }
+
+    #[tokio::test]
+    async fn test_detect_with_custom_paths() {
+        use crate::types::platform::CliPaths;
+
+        // Test with empty custom paths (should behave like regular detect)
+        let cli_paths = CliPaths::default();
+        let detected = PlatformDetector::detect_installed_with_config(&cli_paths).await;
+        assert!(detected.len() <= 5);
+
+        // Verify searched_paths is populated
+        for platform_info in detected {
+            assert!(!platform_info.searched_paths.is_empty());
+        }
+    }
+
+    #[tokio::test]
+    async fn test_detect_platform_with_custom_path() {
+        // Test with custom path that doesn't exist
+        let trace = PlatformDetector::detect_platform_with_custom_paths_trace(
+            Platform::Cursor,
+            Some("/nonexistent/path/cursor"),
+        )
+        .await;
+
+        // Should record custom path even when no binary is found there.
+        assert!(
+            trace
+                .searched_paths
+                .contains(&"/nonexistent/path/cursor".to_string())
+        );
+    }
+
+    #[tokio::test]
+    async fn test_copilot_custom_gh_path_not_treated_as_copilot() {
+        let temp_file = std::env::temp_dir().join(format!(
+            "rwm-pm-test-gh-{}-{}",
+            std::process::id(),
+            chrono::Utc::now().timestamp_nanos_opt().unwrap_or_default()
+        ));
+        std::fs::write(&temp_file, "mock gh binary").expect("failed to write temp test file");
+
+        let custom = temp_file.to_string_lossy().to_string();
+        let trace = PlatformDetector::detect_platform_with_custom_paths_trace(
+            Platform::Copilot,
+            Some(&custom),
+        )
+        .await;
+
+        assert!(trace.searched_paths.contains(&custom));
+
+        if let Some(detected) = trace.detected {
+            assert!(!PlatformDetector::is_gh_binary_name(&detected.cli_name));
+        }
+
+        let _ = std::fs::remove_file(temp_file);
     }
 }

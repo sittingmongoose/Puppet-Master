@@ -361,7 +361,7 @@ impl TierPlanGenerator {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::{ItemStatus, PRDMetadata};
+    use crate::types::ItemStatus;
 
     #[test]
     fn test_generate_empty_prd() {

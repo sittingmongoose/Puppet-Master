@@ -3,6 +3,7 @@
 //! This module provides authentication verification for each platform,
 //! checking CLI authentication status and subscription auth (preferred over API keys).
 
+use crate::platforms::platform_specs;
 use crate::types::Platform;
 use anyhow::{Result, anyhow};
 use log::debug;
@@ -72,8 +73,9 @@ impl AuthStatusChecker {
 
     async fn check_cursor(&self) -> AuthCheckResult {
         // Prefer subscription auth: agent status (Cursor docs)
-        for cmd in &["agent", "cursor-agent", "cursor"] {
-            if let Ok(output) = self.run_command(cmd, &["status"]).await {
+        let spec = platform_specs::get_spec(Platform::Cursor);
+        for cmd in platform_specs::cli_binary_names(Platform::Cursor) {
+            if let Ok(output) = self.run_command(cmd, spec.auth.status_args).await {
                 let stdout = String::from_utf8_lossy(&output.stdout);
                 let stderr = String::from_utf8_lossy(&output.stderr);
                 let combined = format!("{}{}", stdout, stderr).to_lowercase();
@@ -89,8 +91,9 @@ impl AuthStatusChecker {
 
     async fn check_codex(&self) -> AuthCheckResult {
         // Subscription auth via Codex CLI login
-        for cmd in &["codex"] {
-            if let Ok(output) = self.run_command(cmd, &["login", "status"]).await {
+        let spec = platform_specs::get_spec(Platform::Codex);
+        for cmd in platform_specs::cli_binary_names(Platform::Codex) {
+            if let Ok(output) = self.run_command(cmd, spec.auth.status_args).await {
                 if output.status.success() {
                     return AuthCheckResult::authenticated(
                         "Codex CLI is authenticated via subscription",
@@ -103,29 +106,48 @@ impl AuthStatusChecker {
     }
 
     async fn check_claude(&self) -> AuthCheckResult {
-        // Check Claude CLI auth status
-        if let Ok(output) = self.run_command("claude", &["auth", "status"]).await {
-            let stdout = String::from_utf8_lossy(&output.stdout);
-            let stderr = String::from_utf8_lossy(&output.stderr);
-            let combined = format!("{}{}", stdout, stderr).to_lowercase();
+        // Claude has no `auth status` subcommand.
+        // Check: 1) ~/.claude/ credentials exist  2) `claude --version` succeeds (CLI installed)
+        let home = std::env::var("HOME").unwrap_or_default();
+        let cred_path = std::path::Path::new(&home).join(".claude");
+        let spec = platform_specs::get_spec(Platform::Claude);
 
-            if combined.contains("logged in") || combined.contains("authenticated") {
-                return AuthCheckResult::authenticated("Claude CLI is authenticated");
+        if cred_path.exists() {
+            for cmd in platform_specs::cli_binary_names(Platform::Claude) {
+                if let Ok(output) = self.run_command(cmd, &[spec.version_command]).await {
+                    if output.status.success() {
+                        return AuthCheckResult::authenticated(
+                            "Claude CLI installed and credentials cached",
+                        );
+                    }
+                }
+            }
+        }
+
+        // CLI exists but no cached creds
+        for cmd in platform_specs::cli_binary_names(Platform::Claude) {
+            if let Ok(output) = self.run_command(cmd, &[spec.version_command]).await {
+                if output.status.success() {
+                    return AuthCheckResult::not_authenticated(
+                        "Claude CLI installed but not authenticated. Run 'claude' to complete browser-based login.",
+                    );
+                }
             }
         }
 
         AuthCheckResult::not_authenticated(
-            "Not authenticated. Run 'claude auth login' to authenticate.",
+            "Not authenticated. Install Claude Code CLI and run 'claude' to complete browser-based login.",
         )
     }
 
     async fn check_gemini(&self) -> AuthCheckResult {
         let home = std::env::var("HOME").unwrap_or_default();
         let cred_path = std::path::Path::new(&home).join(".gemini");
+        let spec = platform_specs::get_spec(Platform::Gemini);
 
         if cred_path.exists() {
-            for cmd in &["gemini", "gemini-cli"] {
-                if let Ok(output) = self.run_command(cmd, &["--version"]).await {
+            for cmd in platform_specs::cli_binary_names(Platform::Gemini) {
+                if let Ok(output) = self.run_command(cmd, &[spec.version_command]).await {
                     if output.status.success() {
                         return AuthCheckResult::authenticated(
                             "Gemini CLI installed and credentials cached",
@@ -136,8 +158,8 @@ impl AuthStatusChecker {
         }
 
         // CLI exists but no cached creds
-        for cmd in &["gemini", "gemini-cli"] {
-            if let Ok(output) = self.run_command(cmd, &["--version"]).await {
+        for cmd in platform_specs::cli_binary_names(Platform::Gemini) {
+            if let Ok(output) = self.run_command(cmd, &[spec.version_command]).await {
                 if output.status.success() {
                     return AuthCheckResult::not_authenticated(
                         "Gemini CLI installed but not authenticated. Run 'gemini' and select 'Login with Google'.",
@@ -152,16 +174,36 @@ impl AuthStatusChecker {
     }
 
     async fn check_copilot(&self) -> AuthCheckResult {
-        // GitHub Copilot uses GitHub CLI authentication
-        if let Ok(output) = self.run_command("gh", &["auth", "status"]).await {
-            if output.status.success() {
-                return AuthCheckResult::authenticated("GitHub CLI is authenticated");
+        let spec = platform_specs::get_spec(Platform::Copilot);
+        let mut copilot_cli_installed = false;
+        for cmd in platform_specs::cli_binary_names(Platform::Copilot) {
+            if let Ok(output) = self.run_command(cmd, &[spec.version_command]).await {
+                if output.status.success() {
+                    copilot_cli_installed = true;
+                    break;
+                }
             }
         }
 
-        AuthCheckResult::not_authenticated(
-            "Not authenticated. Run 'gh auth login' to authenticate.",
-        )
+        // Copilot CLI uses GitHub auth. Check `gh auth status` as a fallback
+        // because GitHub auth underpins Copilot session auth.
+        if let Ok(output) = self.run_command("gh", &["auth", "status"]).await {
+            if output.status.success() {
+                return AuthCheckResult::authenticated(
+                    "GitHub CLI is authenticated (Copilot uses GitHub auth)",
+                );
+            }
+        }
+
+        if copilot_cli_installed {
+            AuthCheckResult::not_authenticated(
+                "Copilot CLI installed but not authenticated. Run 'copilot login' (or use /login interactively; GH_TOKEN/GITHUB_TOKEN also supported).",
+            )
+        } else {
+            AuthCheckResult::not_authenticated(
+                "Not authenticated. Install Copilot CLI, then run 'copilot login' (or use /login interactively; GH_TOKEN/GITHUB_TOKEN also supported).",
+            )
+        }
     }
 
     /// Check GitHub CLI authentication (separate from Copilot for general Git operations)

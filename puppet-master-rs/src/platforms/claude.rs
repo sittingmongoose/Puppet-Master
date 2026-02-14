@@ -51,7 +51,7 @@
 //! - Always uses `--output-format json` for structured output
 
 use crate::platforms::context_files::{append_prompt_attachments, context_file_parent_dirs};
-use crate::platforms::{BaseRunner, PlatformRunner};
+use crate::platforms::{BaseRunner, PlatformRunner, platform_specs};
 use crate::types::{ExecutionRequest, ExecutionResult, Platform};
 use anyhow::{Result, anyhow};
 use async_trait::async_trait;
@@ -67,8 +67,9 @@ pub struct ClaudeRunner {
 impl ClaudeRunner {
     /// Create a new Claude runner
     pub fn new() -> Self {
+        let command = Platform::Claude.resolve_cli_command();
         Self {
-            base: Arc::new(BaseRunner::new("claude".to_string(), Platform::Claude)),
+            base: Arc::new(BaseRunner::new(command, Platform::Claude)),
         }
     }
 
@@ -77,7 +78,7 @@ impl ClaudeRunner {
         debug!("Discovering Claude models via CLI");
 
         // Try to get model list from help or config
-        let output = Command::new("claude").arg("--help").output().await?;
+        let output = Command::new(&self.base.command).arg("--help").output().await?;
 
         if output.status.success() {
             let help_text = String::from_utf8_lossy(&output.stdout);
@@ -120,8 +121,19 @@ impl PlatformRunner for ClaudeRunner {
         use crate::platforms::create_parser;
         use crate::types::CompletionSignal as TypesCompletionSignal;
 
-        let args = self.build_args(request);
-        let mut result = self.base.execute_command(request, args, None).await?;
+        // Set effort level as env var (Claude uses CLAUDE_CODE_EFFORT_LEVEL, not a CLI flag)
+        let mut effective_request = request.clone();
+        if let Some(ref effort) = request.reasoning_effort {
+            effective_request
+                .env_vars
+                .insert("CLAUDE_CODE_EFFORT_LEVEL".to_string(), effort.clone());
+        }
+
+        let args = self.build_args(&effective_request);
+        let mut result = self
+            .base
+            .execute_command(&effective_request, args, None)
+            .await?;
 
         // Parse output using platform-specific parser
         if let Some(output) = &result.output {
@@ -162,7 +174,12 @@ impl PlatformRunner for ClaudeRunner {
     }
 
     async fn is_available(&self) -> bool {
-        BaseRunner::is_command_available("claude").await
+        for cmd in platform_specs::cli_binary_names(Platform::Claude) {
+            if BaseRunner::is_command_available(cmd).await {
+                return true;
+            }
+        }
+        false
     }
 
     async fn discover_models(&self) -> Result<Vec<String>> {
@@ -175,14 +192,10 @@ impl PlatformRunner for ClaudeRunner {
 
         // Fallback to known Claude models
         warn!("CLI model discovery failed, using known Claude models");
-        Ok(vec![
-            "claude-sonnet-4-5".to_string(),
-            "claude-sonnet-4".to_string(),
-            "claude-opus-4".to_string(),
-            "claude-haiku-4".to_string(),
-            "sonnet".to_string(),
-            "opus".to_string(),
-        ])
+        Ok(platform_specs::fallback_model_ids(Platform::Claude)
+            .into_iter()
+            .map(str::to_string)
+            .collect())
     }
 
     fn build_args(&self, request: &ExecutionRequest) -> Vec<String> {
@@ -220,6 +233,17 @@ impl PlatformRunner for ClaudeRunner {
         for dir in context_file_parent_dirs(&request.context_files) {
             args.push("--add-dir".to_string());
             args.push(dir.display().to_string());
+        }
+
+        // DRY:FN:claude_working_dir — Pass working directory via platform_specs working_dir_flag
+        // Add working directory for multi-directory workspace awareness
+        let wd = request.working_directory.display().to_string();
+        let cwd = std::env::current_dir().unwrap_or_default();
+        if request.working_directory != cwd {
+            if let Some(flag) = platform_specs::get_spec(Platform::Claude).working_dir_flag {
+                args.push(flag.to_string());
+                args.push(wd);
+            }
         }
 
         // Add any extra args

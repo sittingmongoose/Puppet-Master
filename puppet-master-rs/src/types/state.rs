@@ -382,6 +382,34 @@ mod tests {
         assert_eq!(transition.trigger, Some("user_command".to_string()));
         assert!(transition.metadata.contains_key("phase"));
     }
+
+    #[test]
+    fn test_iteration_context_subagent_field() {
+        let ctx = IterationContext {
+            tier_id: "test".to_string(),
+            phase_id: "ph0".to_string(),
+            task_id: "t01".to_string(),
+            subtask_id: "st001".to_string(),
+            iteration_number: 1,
+            iteration: 1,
+            prompt: "test".to_string(),
+            model: "test-model".to_string(),
+            platform: crate::types::Platform::Claude,
+            working_directory: std::path::PathBuf::from("/tmp"),
+            working_dir: std::path::PathBuf::from("/tmp"),
+            session_id: "test-session".to_string(),
+            timeout_ms: None,
+            timeout_secs: None,
+            context_files: vec![],
+            env_vars: std::collections::HashMap::new(),
+            plan_mode: true,
+            reasoning_effort: Some("high".to_string()),
+            subagent_enabled: true,
+        };
+        assert!(ctx.subagent_enabled);
+        assert!(ctx.plan_mode);
+        assert_eq!(ctx.reasoning_effort.as_deref(), Some("high"));
+    }
 }
 
 /// Context for an iteration execution.
@@ -404,6 +432,15 @@ pub struct IterationContext {
     pub timeout_secs: Option<u64>,
     pub context_files: Vec<std::path::PathBuf>,
     pub env_vars: std::collections::HashMap<String, String>,
+    /// Whether to run in planning/read-only mode when supported.
+    #[serde(default)]
+    pub plan_mode: bool,
+    /// Optional reasoning effort level for platforms that support it.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub reasoning_effort: Option<String>,
+    /// Whether subagent/multi-agent mode is enabled for this iteration's platform
+    #[serde(default)]
+    pub subagent_enabled: bool,
 }
 
 /// Information about a session.

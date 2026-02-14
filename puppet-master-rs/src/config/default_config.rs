@@ -2,6 +2,7 @@
 //!
 //! Provides sensible default configuration values for the RWM Puppet Master.
 
+use crate::platforms::platform_specs;
 use crate::types::*;
 use std::collections::HashMap;
 use std::path::PathBuf;
@@ -179,125 +180,76 @@ fn default_orchestrator() -> OrchestratorConfig {
         enable_verification: true,
         enable_parallel_execution: false,
         enable_platform_router: true,
+        enable_subagents: false,
     }
 }
 
 fn default_platforms() -> HashMap<String, PlatformConfig> {
     let mut platforms = HashMap::new();
+    // DRY:FN:platform_default_config_from_specs — Build platform defaults from platform_specs.
+    let mk = |platform: Platform,
+              enabled: bool,
+              priority: u32,
+              max_tokens: u32,
+              temperature: f32| PlatformConfig {
+        platform,
+        model: platform_specs::default_model_for(platform)
+            .unwrap_or_else(|| platform.default_cli_name())
+            .to_string(),
+        name: platform_specs::display_name_for(platform).to_string(),
+        executable: platform_specs::cli_binary_names(platform)
+            .first()
+            .copied()
+            .unwrap_or_else(|| platform.default_cli_name())
+            .to_string(),
+        reasoning_effort: None,
+        plan_mode: false,
+        cli_path: None,
+        extra_args: Vec::new(),
+        enabled,
+        api_key_env: None,
+        max_tokens: Some(max_tokens),
+        temperature: Some(temperature),
+        available: false,
+        priority,
+        quota: None,
+    };
 
     platforms.insert(
-        "claude".to_string(),
-        PlatformConfig {
-            platform: Platform::Claude,
-            model: "claude-3-5-sonnet-20241022".to_string(),
-            name: "Claude".to_string(),
-            executable: "claude".to_string(),
-            reasoning_effort: None,
-            plan_mode: false,
-            cli_path: None,
-            extra_args: Vec::new(),
-            enabled: true,
-            api_key_env: Some("ANTHROPIC_API_KEY".to_string()),
-            max_tokens: Some(8192),
-            temperature: Some(0.7),
-            available: false,
-            priority: 1,
-            quota: None,
-        },
+        Platform::Claude.to_string(),
+        mk(Platform::Claude, true, 1, 8192, 0.7),
     );
-
     platforms.insert(
-        "openai".to_string(),
-        PlatformConfig {
-            platform: Platform::Codex,
-            model: "gpt-4-turbo".to_string(),
-            name: "OpenAI".to_string(),
-            executable: "codex".to_string(),
-            reasoning_effort: None,
-            plan_mode: false,
-            cli_path: None,
-            extra_args: Vec::new(),
-            enabled: true,
-            api_key_env: Some("OPENAI_API_KEY".to_string()),
-            max_tokens: Some(4096),
-            temperature: Some(0.7),
-            available: false,
-            priority: 2,
-            quota: None,
-        },
+        Platform::Codex.to_string(),
+        mk(Platform::Codex, true, 2, 4096, 0.7),
     );
-
     platforms.insert(
-        "cursor".to_string(),
-        PlatformConfig {
-            platform: Platform::Cursor,
-            model: "claude-3-5-sonnet-20241022".to_string(),
-            name: "Cursor".to_string(),
-            executable: "cursor-agent".to_string(),
-            reasoning_effort: None,
-            plan_mode: false,
-            cli_path: None,
-            extra_args: Vec::new(),
-            enabled: true,
-            api_key_env: Some("CURSOR_API_KEY".to_string()),
-            max_tokens: Some(8192),
-            temperature: Some(0.7),
-            available: false,
-            priority: 3,
-            quota: None,
-        },
+        Platform::Cursor.to_string(),
+        mk(Platform::Cursor, true, 3, 8192, 0.7),
     );
-
     platforms.insert(
-        "gemini".to_string(),
-        PlatformConfig {
-            platform: Platform::Gemini,
-            model: "gemini-2.0-flash-exp".to_string(),
-            name: "Gemini".to_string(),
-            executable: "gemini".to_string(),
-            reasoning_effort: None,
-            plan_mode: false,
-            cli_path: None,
-            extra_args: Vec::new(),
-            enabled: true,
-            api_key_env: Some("GEMINI_API_KEY".to_string()),
-            max_tokens: Some(8192),
-            temperature: Some(0.7),
-            available: false,
-            priority: 4,
-            quota: None,
-        },
+        Platform::Gemini.to_string(),
+        mk(Platform::Gemini, true, 4, 8192, 0.7),
     );
-
     platforms.insert(
-        "copilot".to_string(),
-        PlatformConfig {
-            platform: Platform::Copilot,
-            model: "gpt-4".to_string(),
-            name: "Copilot".to_string(),
-            executable: "copilot".to_string(),
-            reasoning_effort: None,
-            plan_mode: false,
-            cli_path: None,
-            extra_args: Vec::new(),
-            enabled: false,
-            api_key_env: Some("GITHUB_TOKEN".to_string()),
-            max_tokens: Some(4096),
-            temperature: Some(0.7),
-            available: false,
-            priority: 5,
-            quota: None,
-        },
+        Platform::Copilot.to_string(),
+        mk(Platform::Copilot, false, 5, 4096, 0.7),
     );
 
     platforms
 }
 
 fn default_tiers() -> TierConfigs {
+    let default_model = |platform: Platform| {
+        platform_specs::default_model_for(platform)
+            .unwrap_or_else(|| platform.default_cli_name())
+            .to_string()
+    };
+
     TierConfigs {
         phase: TierConfig {
             platform: Platform::Claude,
-            model: "claude-3-5-sonnet-20241022".to_string(),
+            model: default_model(Platform::Claude),
             model_level: ModelLevel::Level2,
             reasoning_effort: None,
             plan_mode: false,
@@ -311,7 +263,7 @@ fn default_tiers() -> TierConfigs {
         },
         task: TierConfig {
             platform: Platform::Cursor,
-            model: "claude-3-5-sonnet-20241022".to_string(),
+            model: default_model(Platform::Cursor),
             model_level: ModelLevel::Level2,
             reasoning_effort: None,
             plan_mode: false,
@@ -325,7 +277,7 @@ fn default_tiers() -> TierConfigs {
         },
         subtask: TierConfig {
             platform: Platform::Cursor,
-            model: "claude-3-5-sonnet-20241022".to_string(),
+            model: default_model(Platform::Cursor),
             model_level: ModelLevel::Level2,
             reasoning_effort: None,
             plan_mode: false,
@@ -339,7 +291,7 @@ fn default_tiers() -> TierConfigs {
         },
         iteration: TierConfig {
             platform: Platform::Cursor,
-            model: "claude-3-5-sonnet-20241022".to_string(),
+            model: default_model(Platform::Cursor),
             model_level: ModelLevel::Level1,
             reasoning_effort: None,
             plan_mode: false,
@@ -408,7 +360,7 @@ mod tests {
         assert_eq!(config.orchestrator.max_depth, 3);
         assert!(config.platforms.len() >= 4);
         assert!(config.platforms.contains_key("claude"));
-        assert!(config.platforms.contains_key("openai"));
+        assert!(config.platforms.contains_key("codex"));
     }
 
     #[test]
@@ -416,9 +368,10 @@ mod tests {
         let platforms = default_platforms();
 
         assert!(platforms.get("claude").unwrap().enabled);
-        assert!(platforms.get("openai").unwrap().enabled);
+        assert!(platforms.get("codex").unwrap().enabled);
         assert!(platforms.get("cursor").unwrap().enabled);
         assert!(!platforms.get("copilot").unwrap().enabled);
+        assert!(platforms.values().all(|cfg| cfg.api_key_env.is_none()));
     }
 
     #[test]

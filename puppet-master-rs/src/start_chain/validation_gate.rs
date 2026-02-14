@@ -634,7 +634,7 @@ impl ValidationGate {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::{ItemStatus, PRDMetadata, Phase, Subtask, Task};
+    use crate::types::{ItemStatus, Phase, Subtask, Task};
 
     #[test]
     fn test_validate_empty_prd() {

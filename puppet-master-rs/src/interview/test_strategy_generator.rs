@@ -517,7 +517,7 @@ pub fn write_test_strategy(
 mod tests {
     use super::*;
     use crate::interview::phase_manager::InterviewPhaseDefinition;
-    use crate::interview::state::{Decision, InterviewQA};
+    use crate::interview::state::InterviewQA;
     use tempfile::TempDir;
 
     fn sample_phase() -> CompletedPhase {

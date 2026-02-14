@@ -612,65 +612,52 @@ fn build_platform_command(
     working_dir: &std::path::Path,
     model: Option<&str>,
 ) -> (String, Vec<String>) {
+    let spec = crate::platforms::platform_specs::get_spec(platform);
     let mut args: Vec<String> = Vec::new();
+    let command = platform.resolve_cli_command();
 
-    let command = match platform {
-        crate::types::Platform::Cursor => {
-            if which::which("agent").is_ok() {
-                "agent".to_string()
-            } else {
-                "cursor-agent".to_string()
-            }
-        }
-        crate::types::Platform::Codex => "codex".to_string(),
-        crate::types::Platform::Claude => "claude".to_string(),
-        crate::types::Platform::Gemini => "gemini".to_string(),
-        crate::types::Platform::Copilot => "copilot".to_string(),
-    };
+    if let Some(subcommand) = spec.headless.subcommand {
+        args.push(subcommand.to_string());
+    }
+    if !spec.headless.prompt_flag.is_empty() {
+        args.push(spec.headless.prompt_flag.to_string());
+    }
+    args.push(prompt.to_string());
 
     match platform {
         crate::types::Platform::Cursor => {
-            args.push("-p".to_string());
-            args.push(prompt.to_string());
             if let Some(model) = model {
                 args.push("--model".to_string());
                 args.push(model.to_string());
             }
-            args.push("--output-format".to_string());
-            args.push("json".to_string());
+            push_json_output_args(&mut args, platform);
         }
         crate::types::Platform::Codex => {
-            args.push("exec".to_string());
-            args.push(prompt.to_string());
             args.push("--full-auto".to_string());
-            args.push("--json".to_string());
+            push_json_output_args(&mut args, platform);
             if let Some(model) = model {
                 args.push("--model".to_string());
                 args.push(model.to_string());
             }
             args.push("--color".to_string());
             args.push("never".to_string());
-            args.push("--cd".to_string());
-            args.push(working_dir.display().to_string());
+            if let Some(flag) = spec.working_dir_flag {
+                args.push(flag.to_string());
+                args.push(working_dir.display().to_string());
+            }
         }
         crate::types::Platform::Claude => {
-            args.push("-p".to_string());
-            args.push(prompt.to_string());
             if let Some(model) = model {
                 args.push("--model".to_string());
                 args.push(model.to_string());
             }
-            args.push("--output-format".to_string());
-            args.push("json".to_string());
+            push_json_output_args(&mut args, platform);
             args.push("--no-session-persistence".to_string());
             args.push("--permission-mode".to_string());
             args.push("bypassPermissions".to_string());
         }
         crate::types::Platform::Gemini => {
-            args.push("-p".to_string());
-            args.push(prompt.to_string());
-            args.push("--output-format".to_string());
-            args.push("json".to_string());
+            push_json_output_args(&mut args, platform);
             args.push("--approval-mode".to_string());
             args.push("yolo".to_string());
             if let Some(model) = model {
@@ -679,8 +666,6 @@ fn build_platform_command(
             }
         }
         crate::types::Platform::Copilot => {
-            args.push("-p".to_string());
-            args.push(prompt.to_string());
             args.push("--allow-all-tools".to_string());
             args.push("--stream".to_string());
             args.push("off".to_string());
@@ -690,6 +675,18 @@ fn build_platform_command(
     }
 
     (command, args)
+}
+
+fn push_json_output_args(args: &mut Vec<String>, platform: crate::types::Platform) {
+    let spec = crate::platforms::platform_specs::get_spec(platform);
+    let flag = spec.headless.output_format_flag;
+    if flag.is_empty() || !spec.headless.output_formats.contains(&"json") {
+        return;
+    }
+    args.push(flag.to_string());
+    if flag != "--json" {
+        args.push("json".to_string());
+    }
 }
 
 /// Validator to ensure no manual verification steps.

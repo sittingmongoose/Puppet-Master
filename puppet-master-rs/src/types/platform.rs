@@ -44,21 +44,50 @@ impl Platform {
         }
     }
 
+    /// DRY:FN:resolve_cli_command — Resolve the best available CLI command using platform_specs.
+    pub fn resolve_cli_command(&self) -> String {
+        let cli_names = crate::platforms::platform_specs::cli_binary_names(*self);
+        for name in cli_names {
+            if which::which(name).is_ok() {
+                return (*name).to_string();
+            }
+        }
+
+        // Backward-compatible fallback for older Cursor installs.
+        if matches!(self, Platform::Cursor) && which::which("cursor-agent").is_ok() {
+            return "cursor-agent".to_string();
+        }
+
+        cli_names
+            .first()
+            .copied()
+            .unwrap_or(self.default_cli_name())
+            .to_string()
+    }
+
     /// Returns whether this platform supports plan mode.
     pub fn supports_plan_mode(&self) -> bool {
-        matches!(
-            self,
-            Platform::Cursor
-                | Platform::Codex
-                | Platform::Claude
-                | Platform::Gemini
-                | Platform::Copilot
-        )
+        crate::platforms::platform_specs::supports_plan_mode(*self)
     }
 
     /// Returns whether this platform supports reasoning effort.
     pub fn supports_reasoning_effort(&self) -> bool {
-        matches!(self, Platform::Codex | Platform::Claude | Platform::Gemini)
+        crate::platforms::platform_specs::supports_effort(*self)
+    }
+
+    /// Returns whether reasoning is encoded in model names (true only for Cursor).
+    pub fn reasoning_is_model_based(&self) -> bool {
+        crate::platforms::platform_specs::reasoning_is_model_based(*self)
+    }
+
+    /// Returns whether this platform has an auto model selection mode (true only for Cursor).
+    pub fn has_auto_mode(&self) -> bool {
+        crate::platforms::platform_specs::has_auto_mode(*self)
+    }
+
+    /// Parse from string, returning `None` instead of `Err` for convenience.
+    pub fn from_str_loose(s: &str) -> Option<Platform> {
+        s.parse().ok()
     }
 }
 
@@ -151,6 +180,24 @@ impl CliPaths {
             Platform::Claude => self.claude = Some(path),
             Platform::Gemini => self.gemini = Some(path),
             Platform::Copilot => self.copilot = Some(path),
+        }
+    }
+}
+
+impl crate::config::gui_config::CliPaths {
+    /// DRY:FN:gui_cli_paths_get — Compatibility accessor for GUI CLI paths.
+    pub fn get(&self, platform: Platform) -> Option<&str> {
+        let path = match platform {
+            Platform::Cursor => self.cursor.as_str(),
+            Platform::Codex => self.codex.as_str(),
+            Platform::Claude => self.claude.as_str(),
+            Platform::Gemini => self.gemini.as_str(),
+            Platform::Copilot => self.copilot.as_str(),
+        };
+        if path.trim().is_empty() {
+            None
+        } else {
+            Some(path)
         }
     }
 }
@@ -292,12 +339,35 @@ mod tests {
 
     #[test]
     fn test_platform_features() {
+        // All 5 platforms support plan mode
         assert!(Platform::Cursor.supports_plan_mode());
         assert!(Platform::Claude.supports_plan_mode());
         assert!(Platform::Copilot.supports_plan_mode());
+        assert!(Platform::Codex.supports_plan_mode());
+        assert!(Platform::Gemini.supports_plan_mode());
+
+        // Effort: Claude, Codex, Copilot = true; Cursor, Gemini = false
         assert!(Platform::Claude.supports_reasoning_effort());
         assert!(Platform::Codex.supports_reasoning_effort());
+        assert!(Platform::Copilot.supports_reasoning_effort());
         assert!(!Platform::Cursor.supports_reasoning_effort());
+        assert!(!Platform::Gemini.supports_reasoning_effort());
+
+        // Model-based reasoning: only Cursor
+        assert!(Platform::Cursor.reasoning_is_model_based());
+        assert!(!Platform::Claude.reasoning_is_model_based());
+
+        // Auto mode: only Cursor
+        assert!(Platform::Cursor.has_auto_mode());
+        assert!(!Platform::Claude.has_auto_mode());
+    }
+
+    #[test]
+    fn test_resolve_cli_command_has_fallback() {
+        for platform in Platform::all() {
+            let command = platform.resolve_cli_command();
+            assert!(!command.is_empty());
+        }
     }
 
     #[test]

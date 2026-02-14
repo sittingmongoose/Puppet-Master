@@ -791,7 +791,10 @@ impl Orchestrator {
             String::new()
         };
 
-        // Create tier-specific enforcer (higher tiers have stricter rules)
+        // Keep a baseline enforcer instance alive on the orchestrator for shared policy configuration.
+        let _baseline_gate_enforcer = &self.gate_enforcer;
+
+        // Create tier-specific enforcer (higher tiers have stricter rules).
         let tier_enforcer = GateEnforcer::for_tier(tier_id);
 
         // Run enforcement
@@ -1042,6 +1045,13 @@ impl Orchestrator {
             return Ok(results);
         }
 
+        let parallel_config = self.parallel_executor.config();
+        log::debug!(
+            "Parallel executor config: max_concurrent={}, continue_on_failure={}, task_timeout_secs={}",
+            parallel_config.max_concurrent,
+            parallel_config.continue_on_failure,
+            parallel_config.task_timeout_secs
+        );
         log::info!("Executing {} subtasks in parallel", subtask_ids.len());
 
         // Build dependency list from tier nodes (if any)
@@ -1339,6 +1349,12 @@ impl Orchestrator {
             OrchestratorState::Executing => {}
             OrchestratorState::Complete | OrchestratorState::Error => return Ok(()),
         }
+
+        let fresh_spawn_timeout_secs = self.fresh_spawn.config().timeout_secs;
+        log::debug!(
+            "Fresh spawn configured with default timeout {}s",
+            fresh_spawn_timeout_secs
+        );
 
         loop {
             let (is_executing, is_paused) = {
@@ -1825,6 +1841,9 @@ impl Orchestrator {
                 timeout_secs,
                 context_files: Vec::new(),
                 env_vars: HashMap::new(),
+                plan_mode: tier_config.plan_mode,
+                reasoning_effort: tier_config.reasoning_effort.clone(),
+                subagent_enabled: self.config.orchestrator.enable_subagents,
             };
 
             let iteration_result = match self.iteration_executor.execute_iteration(&context).await {
@@ -1850,6 +1869,13 @@ impl Orchestrator {
                         .await;
                 }
             };
+
+            let _review_probe = self.apply_worker_reviewer(
+                tier_id,
+                &iteration_result.output,
+                &iteration_result.signal,
+                attempt,
+            );
 
             match iteration_result.signal {
                 CompletionSignal::Complete => {
@@ -2480,7 +2506,6 @@ impl Orchestrator {
 mod tests {
     use super::*;
     use crate::config::default_config::default_config;
-    use crate::git::CommitFormatter;
     use chrono::Utc;
     use std::collections::VecDeque;
     use std::sync::atomic::{AtomicUsize, Ordering};
@@ -2687,7 +2712,6 @@ mod tests {
         let usage_tracker = UsageTracker::new(&puppet_master_dir.join("usage.jsonl")).unwrap();
         let git_manager = GitManager::new(temp_dir.clone());
         let branch_strategy = BranchStrategy::Feature;
-        let commit_formatter = CommitFormatter;
 
         // Initialize new modules
         let complexity_classifier = ComplexityClassifier::new();

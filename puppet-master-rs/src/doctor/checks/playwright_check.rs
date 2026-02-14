@@ -11,24 +11,6 @@ use std::process::Stdio;
 use tokio::process::Command;
 use tokio::time::{Duration, timeout};
 
-async fn run_command(
-    program: &str,
-    args: &[&str],
-    timeout_duration: Duration,
-) -> Result<std::process::Output, String> {
-    let mut cmd = Command::new(program);
-    cmd.args(args)
-        .stdout(Stdio::piped())
-        .stderr(Stdio::piped())
-        .kill_on_drop(true);
-
-    match timeout(timeout_duration, cmd.output()).await {
-        Ok(Ok(output)) => Ok(output),
-        Ok(Err(e)) => Err(format!("Failed to run {program}: {e}")),
-        Err(_) => Err(format!("Timed out running {program} {:?}", args)),
-    }
-}
-
 fn combined_output(output: &std::process::Output) -> String {
     let stdout = String::from_utf8_lossy(&output.stdout);
     let stderr = String::from_utf8_lossy(&output.stderr);

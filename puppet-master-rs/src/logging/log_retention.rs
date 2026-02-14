@@ -372,7 +372,7 @@ mod tests {
         file.write_all(&vec![0u8; size]).unwrap();
 
         // Set modification time
-        let modified_time = (Utc::now() - Duration::days(age_days)).timestamp() as u64;
+        let _modified_time = (Utc::now() - Duration::days(age_days)).timestamp() as u64;
 
         // Note: Setting file times requires additional platform-specific code
         // For testing, we'll just create the files

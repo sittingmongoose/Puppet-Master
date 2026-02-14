@@ -86,6 +86,9 @@ pub struct OrchestratorConfig {
     /// Enable platform router for dynamic platform selection
     #[serde(default = "default_true")]
     pub enable_platform_router: bool,
+    /// Enable subagent/multi-agent mode for platforms that support it (DRY: uses platform_specs)
+    #[serde(default)]
+    pub enable_subagents: bool,
 }
 
 impl Default for OrchestratorConfig {
@@ -100,6 +103,7 @@ impl Default for OrchestratorConfig {
             enable_verification: true,
             enable_parallel_execution: false,
             enable_platform_router: true,
+            enable_subagents: false,
         }
     }
 }

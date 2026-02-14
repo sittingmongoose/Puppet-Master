@@ -14,9 +14,10 @@ use std::sync::{Arc, Mutex};
 
 // Start chain pipeline imports for wizard
 use crate::config::ConfigManager;
+use crate::config::gui_config::InstallScope;
 use crate::start_chain::{
-    format_prd_to_markdown, format_tier_plan_to_markdown, RequirementsInput, StartChainParams,
-    StartChainPipeline, TierPlanGenerator,
+    RequirementsInput, StartChainParams, StartChainPipeline, TierPlanGenerator,
+    format_prd_to_markdown, format_tier_plan_to_markdown,
 };
 
 // ============================================================================
@@ -350,6 +351,13 @@ pub struct App {
     pub setup_platform_statuses: Vec<PlatformStatus>,
     pub setup_is_checking: bool,
 
+    // Dynamic model cache (Phase C — platform_specs backed)
+    pub model_cache:
+        HashMap<crate::types::Platform, crate::platforms::model_catalog::CachedModelList>,
+    pub model_refresh_loading: HashMap<crate::types::Platform, bool>,
+    pub tier_model_lists: HashMap<String, Vec<String>>,
+    pub tier_effort_visible: HashMap<String, bool>,
+
     // UI State
     pub toasts: Vec<Toast>,
     pub show_modal: Option<ModalContent>,
@@ -468,6 +476,8 @@ pub enum Message {
     ReloadConfig,
     ValidateConfig,
     RefreshModels,
+    RefreshModelsForPlatform(crate::types::Platform),
+    RefreshModelsComplete(crate::types::Platform, Result<Vec<String>, String>),
     // New GUI config messages
     ConfigTierPlatformChanged(String, String), // tier_name, platform
     ConfigTierModelChanged(String, String),
@@ -596,7 +606,9 @@ pub enum Message {
     InterviewRemoveReference(usize),
     InterviewReferencePicked(crate::interview::ReferenceType),
     InterviewReferenceContextLoaded(Result<String, String>),
-    InterviewInitialized(Result<(Arc<Mutex<crate::interview::InterviewOrchestrator>>, String), String>),
+    InterviewInitialized(
+        Result<(Arc<Mutex<crate::interview::InterviewOrchestrator>>, String), String>,
+    ),
     InterviewAIResponse(Result<crate::interview::TurnResult, String>),
 
     // Interview Config UI
@@ -737,14 +749,60 @@ fn apply_read_only_text_editor_action(
     }
 }
 
+// DRY:FN:platform_login_command_text — Builds login command guidance from platform specs
+fn platform_login_command_text(platform: crate::types::Platform) -> String {
+    use crate::platforms::platform_specs;
+
+    let spec = platform_specs::get_spec(platform);
+    let base_cmd = spec
+        .auth
+        .login_command
+        .or_else(|| spec.cli_binary_names.first().copied())
+        .unwrap_or_default();
+
+    // Copilot supports `copilot login`; `/login` in interactive mode remains a fallback.
+    if platform == crate::types::Platform::Copilot {
+        let cmd = if spec.auth.login_args.is_empty() {
+            base_cmd.to_string()
+        } else {
+            format!("{} {}", base_cmd, spec.auth.login_args.join(" "))
+        };
+        return format!(
+            "{}  (or run /login interactively, or set GH_TOKEN/GITHUB_TOKEN)",
+            cmd
+        );
+    }
+
+    if spec.auth.login_args.is_empty() {
+        return base_cmd.to_string();
+    }
+
+    format!("{} {}", base_cmd, spec.auth.login_args.join(" "))
+}
+
 fn default_login_cli_text() -> String {
     [
-        "• Cursor: agent login",
-        "• Codex: codex login",
-        "• Claude: claude auth login",
-        "• Gemini: gemini",
-        "• Copilot: copilot",
-        "• GitHub: gh auth login",
+        format!(
+            "• Cursor: {}",
+            platform_login_command_text(crate::types::Platform::Cursor)
+        ),
+        format!(
+            "• Codex: {}",
+            platform_login_command_text(crate::types::Platform::Codex)
+        ),
+        format!(
+            "• Claude: {}",
+            platform_login_command_text(crate::types::Platform::Claude)
+        ),
+        format!(
+            "• Gemini: {}",
+            platform_login_command_text(crate::types::Platform::Gemini)
+        ),
+        format!(
+            "• Copilot: {}",
+            platform_login_command_text(crate::types::Platform::Copilot)
+        ),
+        "• GitHub: gh auth login".to_string(),
     ]
     .join("\n")
 }
@@ -879,7 +937,7 @@ impl App {
             config_active_tab: 0,
             config_is_dirty: false,
             gui_config: crate::config::gui_config::GuiConfig::default(),
-            config_models: crate::config::gui_config::build_model_map(),
+            config_models: crate::platforms::model_catalog::build_model_map_from_specs(),
             config_git_info: None,
 
             // Tiers
@@ -974,6 +1032,12 @@ impl App {
             // Setup
             setup_platform_statuses: Vec::new(),
             setup_is_checking: false,
+
+            // Dynamic model cache
+            model_cache: crate::platforms::model_catalog::load_persistent_cache(),
+            model_refresh_loading: HashMap::new(),
+            tier_model_lists: HashMap::new(),
+            tier_effort_visible: HashMap::new(),
 
             // Interview
             interview_active: false,
@@ -1188,8 +1252,13 @@ impl App {
                             return self.update(Message::SetupRunDetection);
                         }
                         // Also run Playwright check if we don't have results yet
-                        if !self.doctor_results.iter().any(|r| r.name == "playwright-browsers") {
-                            return self.update(Message::RunCheck("playwright-browsers".to_string()));
+                        if !self
+                            .doctor_results
+                            .iter()
+                            .any(|r| r.name == "playwright-browsers")
+                        {
+                            return self
+                                .update(Message::RunCheck("playwright-browsers".to_string()));
                         }
                     }
                     Page::Config => {
@@ -1657,7 +1726,9 @@ impl App {
                             .iter()
                             .map(|kp| {
                                 let (status, summary) = if kp.path.join(".puppet-master").exists() {
-                                    let inspector = crate::projects::ProjectStatusInspector::new(kp.path.clone());
+                                    let inspector = crate::projects::ProjectStatusInspector::new(
+                                        kp.path.clone(),
+                                    );
                                     match inspector.inspect() {
                                         Ok(s) => {
                                             let view_status = if s.orchestrator_status
@@ -1712,7 +1783,8 @@ impl App {
                         let cwd = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
                         if cwd.join(".puppet-master").exists() || cwd.join("prd.json").exists() {
                             if !found_projects.iter().any(|p| p.path == cwd) {
-                                let inspector = crate::projects::ProjectStatusInspector::new(cwd.clone());
+                                let inspector =
+                                    crate::projects::ProjectStatusInspector::new(cwd.clone());
                                 let (status, summary) = match inspector.inspect() {
                                     Ok(s) => {
                                         let view_status = if s.orchestrator_status
@@ -2164,8 +2236,88 @@ impl App {
             }
 
             Message::RefreshModels => {
-                self.config_models = crate::config::gui_config::build_model_map();
-                self.add_toast(ToastType::Success, "Models refreshed".to_string());
+                // Refresh all platforms — spawn async tasks for each
+                for platform in crate::types::Platform::all() {
+                    self.model_refresh_loading.insert(*platform, true);
+                }
+                let platforms: Vec<crate::types::Platform> = crate::types::Platform::all().to_vec();
+                let tasks: Vec<Task<Message>> = platforms
+                    .into_iter()
+                    .map(|platform| {
+                        Task::perform(
+                            async move {
+                                let result = tokio::task::spawn_blocking(move || {
+                                    crate::platforms::model_catalog::refresh_models_blocking(
+                                        platform,
+                                    )
+                                })
+                                .await;
+                                (platform, result)
+                            },
+                            move |(p, res)| match res {
+                                Ok(cached) => Message::RefreshModelsComplete(p, Ok(cached.models)),
+                                Err(e) => Message::RefreshModelsComplete(
+                                    p,
+                                    Err(format!("Refresh failed: {}", e)),
+                                ),
+                            },
+                        )
+                    })
+                    .collect();
+                self.add_toast(ToastType::Info, "Refreshing models...".to_string());
+                Task::batch(tasks)
+            }
+
+            Message::RefreshModelsForPlatform(platform) => {
+                self.model_refresh_loading.insert(platform, true);
+                Task::perform(
+                    async move {
+                        tokio::task::spawn_blocking(move || {
+                            crate::platforms::model_catalog::refresh_models_blocking(platform)
+                        })
+                        .await
+                    },
+                    move |res| match res {
+                        Ok(cached) => Message::RefreshModelsComplete(platform, Ok(cached.models)),
+                        Err(e) => Message::RefreshModelsComplete(
+                            platform,
+                            Err(format!("Refresh failed: {}", e)),
+                        ),
+                    },
+                )
+            }
+
+            Message::RefreshModelsComplete(platform, result) => {
+                self.model_refresh_loading.insert(platform, false);
+                let platform_key = match platform {
+                    crate::types::Platform::Cursor => "cursor",
+                    crate::types::Platform::Codex => "codex",
+                    crate::types::Platform::Claude => "claude",
+                    crate::types::Platform::Gemini => "gemini",
+                    crate::types::Platform::Copilot => "copilot",
+                };
+                match result {
+                    Ok(models) => {
+                        let cached = crate::platforms::model_catalog::CachedModelList {
+                            display_names: models.clone(),
+                            models: models.clone(),
+                            last_refreshed: Some(chrono::Utc::now()),
+                            source: crate::platforms::model_catalog::ModelSource::Dynamic,
+                        };
+                        self.model_cache.insert(platform, cached);
+                        self.config_models.insert(platform_key.to_string(), models);
+                        // Persist cache
+                        crate::platforms::model_catalog::save_persistent_cache(&self.model_cache);
+                        // Update tier_model_lists for any tier using this platform
+                        self.update_tier_model_lists_for_platform(platform_key);
+                    }
+                    Err(e) => {
+                        self.add_toast(
+                            ToastType::Error,
+                            format!("Failed to refresh models for {:?}: {}", platform, e),
+                        );
+                    }
+                }
                 Task::none()
             }
 
@@ -2336,6 +2488,16 @@ impl App {
 
             // New GUI config messages
             Message::ConfigTierPlatformChanged(tier_name, platform) => {
+                // Compute model list and effort visibility before mutable borrow
+                let model_list = self.get_model_list_for_platform(&platform);
+                let parsed_platform = crate::types::Platform::from_str_loose(&platform);
+                let effort_visible = parsed_platform
+                    .map(|p| {
+                        crate::platforms::platform_specs::supports_effort(p)
+                            && !crate::platforms::platform_specs::reasoning_is_model_based(p)
+                    })
+                    .unwrap_or(false);
+
                 let tier = match tier_name.as_str() {
                     "phase" => &mut self.gui_config.tiers.phase,
                     "task" => &mut self.gui_config.tiers.task,
@@ -2344,12 +2506,21 @@ impl App {
                     _ => return Task::none(),
                 };
                 tier.platform = platform.clone();
-                // Reset model to first available for new platform
-                if let Some(models) = self.config_models.get(&platform) {
-                    if let Some(first_model) = models.first() {
-                        tier.model = first_model.clone();
-                    }
+
+                // Reset model to first in new list if current not present
+                if !model_list.iter().any(|m| m == &tier.model) {
+                    tier.model = model_list.first().cloned().unwrap_or_default();
                 }
+
+                // Clear reasoning if effort not visible
+                if !effort_visible {
+                    tier.reasoning_effort = None;
+                }
+
+                self.tier_model_lists.insert(tier_name.clone(), model_list);
+                self.tier_effort_visible
+                    .insert(tier_name.clone(), effort_visible);
+
                 self.config_is_dirty = true;
                 Task::none()
             }
@@ -2643,6 +2814,13 @@ impl App {
                     "cli_claude" => self.gui_config.advanced.cli_paths.claude = value,
                     "cli_gemini" => self.gui_config.advanced.cli_paths.gemini = value,
                     "cli_copilot" => self.gui_config.advanced.cli_paths.copilot = value,
+                    // Install Scope
+                    "install_scope" => {
+                        self.gui_config.advanced.install_scope = match value.as_str() {
+                            "projectlocal" => InstallScope::ProjectLocal,
+                            _ => InstallScope::Global,
+                        };
+                    }
                     // Execution
                     "max_parallel_phases" => {
                         if let Ok(num) = value.parse::<u32>() {
@@ -2720,6 +2898,40 @@ impl App {
                     "trust_proxy" => {
                         self.gui_config.advanced.network.trust_proxy =
                             !self.gui_config.advanced.network.trust_proxy;
+                    }
+                    "subagent_claude" | "subagent_copilot" | "subagent_codex" => {
+                        let platform_key = field
+                            .strip_prefix("subagent_")
+                            .unwrap_or(&field)
+                            .to_string();
+                        let current = self
+                            .gui_config
+                            .advanced
+                            .subagent_enabled
+                            .get(&platform_key)
+                            .copied()
+                            .unwrap_or(false);
+                        self.gui_config
+                            .advanced
+                            .subagent_enabled
+                            .insert(platform_key, !current);
+                    }
+                    "experimental_codex" | "experimental_gemini" | "experimental_copilot" => {
+                        let platform_key = field
+                            .strip_prefix("experimental_")
+                            .unwrap_or(&field)
+                            .to_string();
+                        let current = self
+                            .gui_config
+                            .advanced
+                            .experimental_enabled
+                            .get(&platform_key)
+                            .copied()
+                            .unwrap_or(false);
+                        self.gui_config
+                            .advanced
+                            .experimental_enabled
+                            .insert(platform_key, !current);
                     }
                     _ => {}
                 }
@@ -3704,46 +3916,8 @@ impl App {
             }
 
             Message::WizardRefreshModels => {
-                // Load hardcoded model lists
-                let mut models = HashMap::new();
-                models.insert(
-                    "cursor".to_string(),
-                    vec![
-                        "auto".to_string(),
-                        "claude-sonnet-4".to_string(),
-                        "gpt-4o".to_string(),
-                        "gemini-2.5-pro".to_string(),
-                    ],
-                );
-                models.insert(
-                    "codex".to_string(),
-                    vec![
-                        "gpt-5.2-codex".to_string(),
-                        "gpt-5.1-codex".to_string(),
-                        "gpt-4.1".to_string(),
-                    ],
-                );
-                models.insert(
-                    "claude".to_string(),
-                    vec![
-                        "claude-sonnet-4-5".to_string(),
-                        "claude-sonnet-4".to_string(),
-                        "claude-opus-4".to_string(),
-                    ],
-                );
-                models.insert(
-                    "gemini".to_string(),
-                    vec![
-                        "gemini-2.5-pro".to_string(),
-                        "gemini-2.5-flash".to_string(),
-                        "gemini-3-pro-preview".to_string(),
-                    ],
-                );
-                models.insert(
-                    "copilot".to_string(),
-                    vec!["claude-sonnet-4-5".to_string(), "gpt-4o".to_string()],
-                );
-
+                // Use platform_specs fallback models (dynamic cache populated via RefreshModels)
+                let models = crate::platforms::model_catalog::build_model_map_from_specs();
                 Task::done(Message::WizardModelsLoaded(models))
             }
 
@@ -3782,29 +3956,67 @@ impl App {
                     ToastType::Info,
                     "Detecting platform installations...".to_string(),
                 );
+                let cli_paths = self.gui_config.advanced.cli_paths.clone();
 
                 Task::perform(
-                    async {
+                    async move {
                         use crate::doctor::InstallationManager;
+                        use crate::platforms::PlatformDetector;
+                        use crate::types::Platform;
 
                         let manager = InstallationManager::new();
-                        let results = manager.check_all_platforms();
+                        let mut statuses = Vec::with_capacity(Platform::all().len());
 
-                        results
-                            .into_iter()
-                            .map(|(platform, status)| PlatformStatus {
+                        for platform in Platform::all().iter().copied() {
+                            let detection =
+                                PlatformDetector::detect_platform_with_custom_paths_trace(
+                                    platform,
+                                    cli_paths.get(platform),
+                                )
+                                .await;
+
+                            let (status, instructions, detected_path) = match detection.detected {
+                                Some(detected) if detected.available => {
+                                    let detected_path = detected.executable_path();
+                                    let version =
+                                        detected.version.unwrap_or_else(|| "unknown".to_string());
+                                    (
+                                        crate::doctor::InstallationStatus::Installed(version),
+                                        String::new(),
+                                        Some(detected_path),
+                                    )
+                                }
+                                Some(detected) => {
+                                    let mut instructions =
+                                        manager.get_installation_instructions(platform);
+                                    if platform == Platform::Copilot {
+                                        instructions.push_str(
+                                            "\n\nDetected GitHub CLI path but not a standalone Copilot CLI. Use or install the `copilot` binary.",
+                                        );
+                                    }
+                                    (
+                                        crate::doctor::InstallationStatus::NotInstalled,
+                                        instructions,
+                                        Some(detected.executable_path()),
+                                    )
+                                }
+                                None => (
+                                    crate::doctor::InstallationStatus::NotInstalled,
+                                    manager.get_installation_instructions(platform),
+                                    None,
+                                ),
+                            };
+
+                            statuses.push(PlatformStatus {
                                 platform,
-                                status: status.clone(),
-                                instructions: if matches!(
-                                    status,
-                                    crate::doctor::InstallationStatus::Installed(_)
-                                ) {
-                                    String::new()
-                                } else {
-                                    manager.get_installation_instructions(platform)
-                                },
-                            })
-                            .collect::<Vec<_>>()
+                                status,
+                                instructions,
+                                detected_path,
+                                searched_paths: detection.searched_paths,
+                            });
+                        }
+
+                        statuses
                     },
                     Message::SetupDetectionComplete,
                 )
@@ -5032,23 +5244,29 @@ impl App {
                 self.interview_researching = true;
                 self.interview_empty_references_text = "No reference materials added.".to_string();
                 self.current_page = Page::Interview;
-                
+
                 // Initialize orchestrator asynchronously
                 let gui_config = self.gui_config.clone();
-                let project_path = self.current_project
+                let project_path = self
+                    .current_project
                     .as_ref()
                     .map(|p| p.path.clone())
                     .unwrap_or_else(|| std::env::current_dir().unwrap_or_default());
                 let is_existing_project = !self.wizard_is_new_project;
-                
+
                 Task::perform(
                     async move {
-                        Self::initialize_interview_orchestrator(gui_config, project_path, is_existing_project).await
+                        Self::initialize_interview_orchestrator(
+                            gui_config,
+                            project_path,
+                            is_existing_project,
+                        )
+                        .await
                     },
                     Message::InterviewInitialized,
                 )
             }
-            
+
             Message::InterviewInitialized(result) => {
                 self.interview_researching = false;
                 match result {
@@ -5058,13 +5276,15 @@ impl App {
                             let orch = orchestrator.lock().unwrap();
                             let phase_manager = orch.phase_manager();
                             self.interview_phase_definitions = phase_manager.phases().to_vec();
-                            self.interview_reference_materials = orch.reference_materials().to_vec();
+                            self.interview_reference_materials =
+                                orch.reference_materials().to_vec();
                         }
-                        self.interview_empty_references_text = if self.interview_reference_materials.is_empty() {
-                            "No reference materials added.".to_string()
-                        } else {
-                            "".to_string()
-                        };
+                        self.interview_empty_references_text =
+                            if self.interview_reference_materials.is_empty() {
+                                "No reference materials added.".to_string()
+                            } else {
+                                "".to_string()
+                            };
                         self.interview_orchestrator = Some(orchestrator.clone());
                         // Now get first question from AI
                         let gui_config = self.gui_config.clone();
@@ -5077,12 +5297,15 @@ impl App {
                     }
                     Err(e) => {
                         self.interview_active = false;
-                        self.add_toast(ToastType::Error, format!("Failed to start interview: {}", e));
+                        self.add_toast(
+                            ToastType::Error,
+                            format!("Failed to start interview: {}", e),
+                        );
                     }
                 }
                 Task::none()
             }
-            
+
             Message::InterviewAIResponse(result) => {
                 self.interview_researching = false;
                 match result {
@@ -5090,12 +5313,14 @@ impl App {
                         // Update UI with the AI's response
                         if let Some(question) = turn_result.question {
                             self.interview_current_question = question.question;
-                            self.interview_questions.push(self.interview_current_question.clone());
+                            self.interview_questions
+                                .push(self.interview_current_question.clone());
                         } else if !turn_result.text.is_empty() {
                             self.interview_current_question = turn_result.text;
-                            self.interview_questions.push(self.interview_current_question.clone());
+                            self.interview_questions
+                                .push(self.interview_current_question.clone());
                         }
-                        
+
                         // Check for phase completion
                         if turn_result.is_phase_complete {
                             let orchestrator_clone = self.interview_orchestrator.clone();
@@ -5108,19 +5333,25 @@ impl App {
                                 match orch.advance_phase() {
                                     Ok(Some(new_prompt)) => {
                                         // Get next phase's first question
-                                        if let Some(current) = orch.get_state().completed_phases.last() {
+                                        if let Some(current) =
+                                            orch.get_state().completed_phases.last()
+                                        {
                                             self.interview_current_phase = current.clone();
                                         }
                                         // Update phase definitions (in case dynamic phases were added)
                                         let phase_manager = orch.phase_manager();
-                                        self.interview_phase_definitions = phase_manager.phases().to_vec();
+                                        self.interview_phase_definitions =
+                                            phase_manager.phases().to_vec();
                                         drop(orch);
                                         let orch_clone = orchestrator.clone();
                                         let gui_config = self.gui_config.clone();
                                         self.interview_researching = true;
                                         return Task::perform(
                                             async move {
-                                                Self::execute_ai_turn(orch_clone, gui_config, new_prompt).await
+                                                Self::execute_ai_turn(
+                                                    orch_clone, gui_config, new_prompt,
+                                                )
+                                                .await
                                             },
                                             Message::InterviewAIResponse,
                                         );
@@ -5128,10 +5359,16 @@ impl App {
                                     Ok(None) => {
                                         // Interview complete
                                         self.interview_active = false;
-                                        self.add_toast(ToastType::Success, "Interview complete!".to_string());
+                                        self.add_toast(
+                                            ToastType::Success,
+                                            "Interview complete!".to_string(),
+                                        );
                                     }
                                     Err(e) => {
-                                        self.add_toast(ToastType::Error, format!("Phase advance failed: {}", e));
+                                        self.add_toast(
+                                            ToastType::Error,
+                                            format!("Phase advance failed: {}", e),
+                                        );
                                     }
                                 }
                             }
@@ -5139,7 +5376,8 @@ impl App {
                     }
                     Err(e) => {
                         self.add_toast(ToastType::Error, format!("AI response failed: {}", e));
-                        self.interview_current_question = "Error getting question. Please try again.".to_string();
+                        self.interview_current_question =
+                            "Error getting question. Please try again.".to_string();
                     }
                 }
                 Task::none()
@@ -5192,10 +5430,11 @@ impl App {
                         let orch = orchestrator.clone();
                         let gui_config = self.gui_config.clone();
                         let answer_clone = answer.clone();
-                        
+
                         return Task::perform(
                             async move {
-                                Self::submit_answer_and_get_response(orch, gui_config, answer_clone).await
+                                Self::submit_answer_and_get_response(orch, gui_config, answer_clone)
+                                    .await
                             },
                             Message::InterviewAIResponse,
                         );
@@ -5430,7 +5669,7 @@ impl App {
         // Find current phase index and name from PhaseManager
         let phases = phase_manager.phases();
         let current_phase_id = &self.interview_current_phase;
-        
+
         let (phase_index, phase_def) = phases
             .iter()
             .enumerate()
@@ -5857,9 +6096,7 @@ impl App {
                     None => None,
                 }
             }
-            SelectableField::InterviewAnswer(index) => {
-                self.interview_answers.get(*index).cloned()
-            }
+            SelectableField::InterviewAnswer(index) => self.interview_answers.get(*index).cloned(),
             SelectableField::InterviewQuestion(index) => {
                 self.interview_questions.get(*index).cloned()
             }
@@ -6364,6 +6601,53 @@ impl App {
         self.toasts.push(Toast::new(id, toast_type, message));
     }
 
+    /// Get the model list for a platform, preferring cache then fallback.
+    fn get_model_list_for_platform(&self, platform_str: &str) -> Vec<String> {
+        // Try model cache first
+        if let Some(p) = crate::types::Platform::from_str_loose(platform_str) {
+            if let Some(cached) = self.model_cache.get(&p) {
+                if !cached.models.is_empty() {
+                    let mut list = cached.models.clone();
+                    // For Cursor, prepend "Auto (recommended)" if not already present
+                    if p == crate::types::Platform::Cursor && !list.iter().any(|m| m == "auto") {
+                        list.insert(0, "auto".to_string());
+                    }
+                    return list;
+                }
+            }
+        }
+        // Fallback to config_models (backed by platform_specs)
+        if let Some(models) = self.config_models.get(platform_str) {
+            return models.clone();
+        }
+        // Ultimate fallback
+        if let Some(p) = crate::types::Platform::from_str_loose(platform_str) {
+            return crate::platforms::platform_specs::fallback_model_ids(p)
+                .into_iter()
+                .map(|s| s.to_string())
+                .collect();
+        }
+        Vec::new()
+    }
+
+    /// Update tier_model_lists for all tiers that use a given platform.
+    fn update_tier_model_lists_for_platform(&mut self, platform_key: &str) {
+        let tiers = ["phase", "task", "subtask", "iteration"];
+        for tier_name in &tiers {
+            let tier_platform = match *tier_name {
+                "phase" => &self.gui_config.tiers.phase.platform,
+                "task" => &self.gui_config.tiers.task.platform,
+                "subtask" => &self.gui_config.tiers.subtask.platform,
+                "iteration" => &self.gui_config.tiers.iteration.platform,
+                _ => continue,
+            };
+            if tier_platform == platform_key {
+                let list = self.get_model_list_for_platform(platform_key);
+                self.tier_model_lists.insert(tier_name.to_string(), list);
+            }
+        }
+    }
+
     /// Render the header bar
     fn render_header(&self) -> Element<'_, Message> {
         crate::widgets::header::simple_header(
@@ -6673,13 +6957,17 @@ impl App {
             return;
         };
 
-        let context_files = Self::compute_interview_context_files(&self.interview_reference_materials);
+        let context_files =
+            Self::compute_interview_context_files(&self.interview_reference_materials);
 
         let mut orch = orchestrator.lock().unwrap();
         orch.set_reference_materials(self.interview_reference_materials.clone());
         orch.set_context_files(context_files);
         if let Err(e) = orch.save_state() {
-            log::warn!("Failed to persist interview state after reference update: {}", e);
+            log::warn!(
+                "Failed to persist interview state after reference update: {}",
+                e
+            );
         }
     }
 
@@ -6700,20 +6988,27 @@ impl App {
         project_path: PathBuf,
         is_existing_project: bool,
     ) -> Result<(Arc<Mutex<crate::interview::InterviewOrchestrator>>, String), String> {
-        use crate::interview::{InterviewOrchestrator, InterviewOrchestratorConfig};
         use crate::interview::failover::PlatformModelPair;
         use crate::interview::state::load_state_at_output_dir;
+        use crate::interview::{InterviewOrchestrator, InterviewOrchestratorConfig};
         use crate::types::Platform;
 
         // Scan codebase context for existing projects
         let project_context = if is_existing_project {
             match crate::interview::codebase_scanner::scan_project(&project_path) {
                 Ok(context) => {
-                    log::info!("Scanned existing project at {}: {} bytes", project_path.display(), context.len());
+                    log::info!(
+                        "Scanned existing project at {}: {} bytes",
+                        project_path.display(),
+                        context.len()
+                    );
                     Some(context)
                 }
                 Err(e) => {
-                    log::warn!("Failed to scan existing project context: {} (continuing without context)", e);
+                    log::warn!(
+                        "Failed to scan existing project context: {} (continuing without context)",
+                        e
+                    );
                     None
                 }
             }
@@ -6786,7 +7081,7 @@ impl App {
         };
 
         let mut orchestrator = InterviewOrchestrator::new(config);
-        
+
         // If we have existing state, restore it and generate resume prompt
         let system_prompt = if let Some(saved_state) = existing_state {
             log::info!(
@@ -6795,7 +7090,7 @@ impl App {
                 saved_state.phase,
                 saved_state.current_domain_phase
             );
-            
+
             // Resume from the saved state
             orchestrator
                 .resume_from_state(saved_state)
@@ -6837,7 +7132,7 @@ impl App {
         };
 
         let mut last_error = String::new();
-        
+
         for _attempt in 0..max_attempts {
             // Get current platform and model from failover manager
             let (platform, model, context_files) = {
@@ -6866,12 +7161,13 @@ impl App {
 
             // Build execution request
             let working_dir = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-            let mut request = ExecutionRequest::new(platform, model.clone(), system_prompt.clone(), working_dir);
+            let mut request =
+                ExecutionRequest::new(platform, model.clone(), system_prompt.clone(), working_dir);
 
             if !context_files.is_empty() {
                 request.context_files = context_files.into_iter().map(PathBuf::from).collect();
             }
-            
+
             // Add reasoning effort if specified
             if !gui_config.interview.reasoning_level.is_empty() {
                 request.reasoning_effort = Some(gui_config.interview.reasoning_level.clone());
@@ -6883,11 +7179,11 @@ impl App {
                 Err(e) => {
                     let error_msg = e.to_string();
                     last_error = error_msg.clone();
-                    
+
                     // Check if it's a quota/rate limit error
                     if is_quota_error(&error_msg) {
                         log::warn!("Quota/rate limit error on {}: {}", platform, error_msg);
-                        
+
                         // Try failover to next platform
                         let mut orch = orchestrator.lock().unwrap();
                         if let Some(next_platform) = orch.failover_manager_mut().failover() {
@@ -6898,7 +7194,10 @@ impl App {
                             );
                             continue; // Retry with next platform
                         } else {
-                            return Err(format!("All platforms exhausted. Last error: {}", error_msg));
+                            return Err(format!(
+                                "All platforms exhausted. Last error: {}",
+                                error_msg
+                            ));
                         }
                     } else {
                         // Non-recoverable error, fail immediately
@@ -6918,12 +7217,15 @@ impl App {
 
             // Success! Reset failover manager for next turn
             orch.failover_manager_mut().reset();
-            
+
             return Ok(turn_result);
         }
 
         // All attempts exhausted
-        Err(format!("All platforms exhausted after {} attempts. Last error: {}", max_attempts, last_error))
+        Err(format!(
+            "All platforms exhausted after {} attempts. Last error: {}",
+            max_attempts, last_error
+        ))
     }
 
     /// Submit user answer and get the next AI response.
@@ -6942,7 +7244,11 @@ impl App {
         // Build the conversation prompt with the answer
         let conversation_prompt = {
             let orch = orchestrator.lock().unwrap();
-            format!("{}\n\nUser's answer: {}", orch.current_system_prompt(), answer)
+            format!(
+                "{}\n\nUser's answer: {}",
+                orch.current_system_prompt(),
+                answer
+            )
         };
 
         // Execute the AI turn with the updated prompt
@@ -7294,18 +7600,18 @@ fn map_orchestrator_event(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::interview::{InterviewOrchestrator, InterviewOrchestratorConfig};
     use crate::interview::failover::PlatformModelPair;
+    use crate::interview::{InterviewOrchestrator, InterviewOrchestratorConfig};
     use crate::types::Platform;
-    use std::sync::{Arc, Mutex};
-    use std::sync::atomic::AtomicBool;
     use std::path::PathBuf;
+    use std::sync::atomic::AtomicBool;
+    use std::sync::{Arc, Mutex};
 
     /// Helper to create a minimal test app with interview orchestrator
     fn create_test_app_with_interview(phase_id: &str, question: &str) -> App {
         let shutdown = Arc::new(AtomicBool::new(false));
         let (mut app, _task) = App::new(shutdown);
-        
+
         // Create a minimal orchestrator config for testing
         let config = InterviewOrchestratorConfig {
             feature: "Test Feature".to_string(),
@@ -7326,13 +7632,13 @@ mod tests {
             interaction_mode: "expert".to_string(),
             research_config: None,
         };
-        
+
         let orchestrator = InterviewOrchestrator::new(config);
         app.interview_orchestrator = Some(Arc::new(Mutex::new(orchestrator)));
         app.interview_active = true;
         app.interview_current_phase = phase_id.to_string();
         app.interview_current_question = question.to_string();
-        
+
         app
     }
 
@@ -7357,7 +7663,8 @@ mod tests {
         assert_eq!(data.phase_name, "Data & Persistence");
 
         // Test last phase
-        let app = create_test_app_with_interview("testing_verification", "What test coverage target?");
+        let app =
+            create_test_app_with_interview("testing_verification", "What test coverage target?");
         let data = app.build_interview_panel_data();
         assert!(data.is_some());
         let data = data.unwrap();
@@ -7402,21 +7709,21 @@ mod tests {
     fn test_build_interview_panel_data_dynamic_phase() {
         // Test that dynamic phases (Phase 9+) work correctly
         let mut app = create_test_app_with_interview("scope_goals", "Initial question");
-        
+
         // Add a dynamic phase to the orchestrator
         if let Some(ref orchestrator) = app.interview_orchestrator {
             let mut orch = orchestrator.lock().unwrap();
             orch.phase_manager_mut().add_dynamic_phase(
                 "feature_authentication",
                 "Authentication Deep Dive",
-                "Detailed authentication requirements"
+                "Detailed authentication requirements",
             );
         }
-        
+
         // Now switch to the dynamic phase
         app.interview_current_phase = "feature_authentication".to_string();
         app.interview_current_question = "How should users authenticate?".to_string();
-        
+
         let data = app.build_interview_panel_data();
         assert!(data.is_some(), "Dynamic phase should be valid");
         let data = data.unwrap();
@@ -7432,8 +7739,11 @@ mod tests {
         let shutdown = Arc::new(AtomicBool::new(false));
         let (mut app, _task) = App::new(shutdown);
         app.interview_active = false;
-        
+
         let data = app.build_interview_panel_data();
-        assert!(data.is_none(), "Should return None when interview is not active");
+        assert!(
+            data.is_none(),
+            "Should return None when interview is not active"
+        );
     }
 }

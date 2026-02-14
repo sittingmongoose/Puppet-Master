@@ -1,7 +1,9 @@
 //! Platform secrets and environment variable checks
 //!
-//! Validates that required secrets/environment variables are set for each platform.
+//! Validates optional environment overrides used by legacy headless/CI flows.
+//! Primary auth policy is subscription/browser login.
 
+use crate::platforms::platform_specs;
 use crate::types::{CheckCategory, CheckResult, DoctorCheck, FixResult, Platform};
 use async_trait::async_trait;
 use chrono::Utc;
@@ -27,61 +29,25 @@ impl SecretsCheck {
     /// Check secrets for a specific platform
     pub fn check_platform(&self, platform: Platform) -> SecretCheckResult {
         debug!("Checking secrets for platform: {}", platform);
-
-        let env_vars = match platform {
-            Platform::Cursor => vec![EnvVarStatus {
-                name: "CURSOR_API_KEY".to_string(),
-                set: env::var("CURSOR_API_KEY").is_ok(),
-                required: false,
-                description: "API key for headless Cursor operations".to_string(),
-            }],
-            Platform::Codex => vec![EnvVarStatus {
-                name: "CODEX_API_KEY".to_string(),
-                set: env::var("CODEX_API_KEY").is_ok(),
-                required: false,
-                description: "API key for Codex CLI in CI environments".to_string(),
-            }],
-            Platform::Claude => vec![EnvVarStatus {
-                name: "ANTHROPIC_API_KEY".to_string(),
-                set: env::var("ANTHROPIC_API_KEY").is_ok(),
-                required: false,
-                description: "API key for Claude Admin API access".to_string(),
-            }],
-            Platform::Gemini => vec![
+        let auth_hint = Self::preferred_auth_hint(platform);
+        let env_vars = Self::legacy_override_env_vars(platform)
+            .iter()
+            .map(|name| {
+                let description = if *name == "GOOGLE_CLOUD_PROJECT" {
+                    "Optional Gemini Vertex AI project identifier for CI/headless runs".to_string()
+                } else {
+                    format!("Optional legacy override; preferred auth: {auth_hint}")
+                };
                 EnvVarStatus {
-                    name: "GEMINI_API_KEY".to_string(),
-                    set: env::var("GEMINI_API_KEY").is_ok(),
+                    name: (*name).to_string(),
+                    set: env::var(name)
+                        .map(|v| !v.trim().is_empty())
+                        .unwrap_or(false),
                     required: false,
-                    description: "API key for Google Gemini".to_string(),
-                },
-                EnvVarStatus {
-                    name: "GOOGLE_API_KEY".to_string(),
-                    set: env::var("GOOGLE_API_KEY").is_ok(),
-                    required: false,
-                    description: "Alternative API key for Google Gemini".to_string(),
-                },
-                EnvVarStatus {
-                    name: "GOOGLE_CLOUD_PROJECT".to_string(),
-                    set: env::var("GOOGLE_CLOUD_PROJECT").is_ok(),
-                    required: false,
-                    description: "Google Cloud project ID for Vertex AI".to_string(),
-                },
-            ],
-            Platform::Copilot => vec![
-                EnvVarStatus {
-                    name: "GH_TOKEN".to_string(),
-                    set: env::var("GH_TOKEN").is_ok(),
-                    required: false,
-                    description: "GitHub token for Copilot in CI".to_string(),
-                },
-                EnvVarStatus {
-                    name: "GITHUB_TOKEN".to_string(),
-                    set: env::var("GITHUB_TOKEN").is_ok(),
-                    required: false,
-                    description: "Alternative GitHub token for Copilot".to_string(),
-                },
-            ],
-        };
+                    description,
+                }
+            })
+            .collect::<Vec<_>>();
 
         let overall_status = Self::determine_status(&env_vars);
 
@@ -104,6 +70,34 @@ impl SecretsCheck {
         } else {
             SecretStatus::AllSet
         }
+    }
+
+    // DRY:FN:legacy_override_env_vars — optional legacy env vars retained for CI/headless compatibility.
+    fn legacy_override_env_vars(platform: Platform) -> &'static [&'static str] {
+        match platform {
+            Platform::Cursor => &["CURSOR_API_KEY"],
+            Platform::Codex => &["CODEX_API_KEY", "OPENAI_API_KEY"],
+            Platform::Claude => &["ANTHROPIC_API_KEY"],
+            Platform::Gemini => &["GEMINI_API_KEY", "GOOGLE_API_KEY", "GOOGLE_CLOUD_PROJECT"],
+            Platform::Copilot => &["GH_TOKEN", "GITHUB_TOKEN"],
+        }
+    }
+
+    fn preferred_auth_hint(platform: Platform) -> String {
+        let spec = platform_specs::get_spec(platform);
+        if let Some(login_cmd) = spec.auth.login_command {
+            if spec.auth.login_args.is_empty() {
+                return format!("browser login via `{login_cmd}`");
+            }
+            return format!(
+                "browser login via `{}`",
+                std::iter::once(login_cmd)
+                    .chain(spec.auth.login_args.iter().copied())
+                    .collect::<Vec<_>>()
+                    .join(" ")
+            );
+        }
+        format!("interactive browser login in {}", spec.display_name)
     }
 }
 
@@ -160,7 +154,7 @@ impl DoctorCheck for SecretsCheck {
     }
 
     fn description(&self) -> &str {
-        "Check that required environment variables and secrets are set for each platform"
+        "Check optional legacy environment overrides; subscription/browser auth is preferred"
     }
 
     async fn run(&self) -> CheckResult {
@@ -208,7 +202,9 @@ impl DoctorCheck for SecretsCheck {
         } else if has_optional_missing {
             CheckResult {
                 passed: true,
-                message: "Optional environment variables missing (non-critical)".to_string(),
+                message:
+                    "Optional legacy env overrides missing (non-critical; browser auth preferred)"
+                        .to_string(),
                 details: Some(messages.join("\n")),
                 can_fix: false,
                 timestamp: Utc::now(),
@@ -216,7 +212,7 @@ impl DoctorCheck for SecretsCheck {
         } else {
             CheckResult {
                 passed: true,
-                message: "All platform environment variables are set".to_string(),
+                message: "Optional legacy env overrides are configured".to_string(),
                 details: Some(messages.join("\n")),
                 can_fix: false,
                 timestamp: Utc::now(),

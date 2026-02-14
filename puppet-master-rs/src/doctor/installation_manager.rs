@@ -4,6 +4,7 @@
 //! Provides status checks, platform-specific installation instructions, and
 //! execution of official install commands.
 
+use crate::platforms::platform_specs;
 use crate::types::Platform;
 use anyhow::{Result, anyhow};
 use log::debug;
@@ -107,17 +108,8 @@ impl InstallationManager {
 
     /// Check installation status of a platform's CLI tool
     pub fn check_installation(&self, platform: Platform) -> InstallationStatus {
-        // Use fallback chains to match platform_detector.rs detection logic
-        let cli_names: Vec<&str> = match platform {
-            Platform::Cursor => vec!["agent", "cursor-agent", "cursor"],
-            Platform::Codex => vec!["codex"],
-            Platform::Claude => vec!["claude", "claude-cli"],
-            Platform::Gemini => vec!["gemini", "gemini-cli"],
-            Platform::Copilot => vec!["copilot", "gh"],
-        };
-
         // Try each CLI name in order until one is found
-        for cli_name in cli_names {
+        for cli_name in platform_specs::cli_binary_names(platform) {
             if let Some(version) = self.get_cli_version(cli_name) {
                 return InstallationStatus::Installed(version);
             }
@@ -306,38 +298,20 @@ impl InstallationManager {
 
     /// Get version from an executable path
     fn get_version_from_path(&self, exe_path: &Path, cli_name: &str) -> Option<String> {
-        // Special case for copilot - check via 'copilot --version'
-        // (copilot is a standalone CLI, but we also verify gh for compatibility)
+        // Special case for Copilot: prefer `copilot version` and fall back to `--version`.
         if cli_name == "copilot" {
-            // First try copilot directly
-            if let Ok(output) = Command::new(exe_path).arg("--version").output() {
-                if output.status.success() {
-                    let version_str = String::from_utf8_lossy(&output.stdout);
-                    let version = self.extract_version(&version_str);
-                    if !version.is_empty() {
-                        debug!("Found copilot version: {}", version);
-                        return Some(version);
-                    }
-                }
-            }
-
-            // Fallback: check if gh copilot extension exists
-            if let Some(gh_path) = self.find_executable("gh") {
-                if let Ok(output) = Command::new(gh_path)
-                    .args(&["copilot", "--version"])
-                    .output()
-                {
+            for version_flag in ["version", "--version"] {
+                if let Ok(output) = Command::new(exe_path).arg(version_flag).output() {
                     if output.status.success() {
                         let version_str = String::from_utf8_lossy(&output.stdout);
                         let version = self.extract_version(&version_str);
                         if !version.is_empty() {
-                            debug!("Found gh copilot version: {}", version);
+                            debug!("Found copilot version: {}", version);
                             return Some(version);
                         }
                     }
                 }
             }
-
             return None;
         }
 
@@ -491,7 +465,8 @@ impl InstallationManager {
    irm https://claude.ai/install.ps1 | iex
 
  Authenticate:
-   claude auth login
+   claude
+   # Complete browser-based login in the interactive session
 
  Verify installation:
    claude --version
@@ -539,42 +514,33 @@ impl InstallationManager {
             OperatingSystem::MacOS | OperatingSystem::Linux => {
                 r#"Install GitHub Copilot CLI:
 
-1. Install GitHub CLI:
-   # macOS with Homebrew
-   brew install gh
-
-   # Linux
-   # See: https://github.com/cli/cli/blob/trunk/docs/install_linux.md
+1. Install Copilot CLI:
+   npm install -g @github/copilot
+   # or on macOS: brew install copilot-cli
 
 2. Authenticate:
-   gh auth login
-
-3. Install Copilot extension:
-   gh extension install github/gh-copilot
+   copilot login
+   # fallback: launch `copilot` and run /login interactively
+   # or set GH_TOKEN / GITHUB_TOKEN with Copilot Requests scope
 
 Verify installation:
-  copilot --version
-  # or: gh copilot --version
+  copilot version
 "#
             }
             OperatingSystem::Windows => {
                 r#"Install GitHub Copilot CLI on Windows:
 
-1. Install GitHub CLI:
-   # Using winget
-   winget install GitHub.cli
-
-   # Or download from: https://cli.github.com/
+1. Install Copilot CLI:
+   winget install GitHub.Copilot
+   # or: npm install -g @github/copilot
 
 2. Authenticate:
-   gh auth login
-
-3. Install Copilot extension:
-   gh extension install github/gh-copilot
+   copilot login
+   # fallback: launch `copilot` and run /login interactively
+   # or set GH_TOKEN / GITHUB_TOKEN with Copilot Requests scope
 
 Verify installation:
-  copilot --version
-  # or: gh copilot --version
+  copilot version
 "#
             }
             OperatingSystem::Unknown => "Platform-specific instructions not available.",
@@ -677,7 +643,7 @@ Verify installation:
                     .map_err(|e| anyhow!("Failed to run Claude install: {}", e))?;
                 if status.success() {
                     Ok(InstallResult::success(
-                        "Claude CLI installed. Run 'claude auth login'.",
+                        "Claude CLI installed. Run 'claude' to complete browser-based login.",
                     ))
                 } else {
                     Ok(InstallResult::failure(
@@ -699,7 +665,7 @@ Verify installation:
                     .map_err(|e| anyhow!("Failed to run Claude install: {}", e))?;
                 if status.success() {
                     Ok(InstallResult::success(
-                        "Claude CLI installed. Run 'claude auth login'.",
+                        "Claude CLI installed. Run 'claude' to complete browser-based login.",
                     ))
                 } else {
                     Ok(InstallResult::failure(
@@ -731,27 +697,32 @@ Verify installation:
     }
 
     fn execute_copilot_install(&self) -> Result<InstallResult> {
-        // Copilot requires gh (GitHub CLI) first
-        let gh_status = Command::new("gh").arg("--version").output();
-        if gh_status.is_err() || !gh_status.as_ref().unwrap().status.success() {
-            return Ok(InstallResult::failure(
-                "GitHub CLI (gh) is required. Install first: brew install gh (macOS) or winget install GitHub.cli (Windows)",
-            ));
-        }
-        let status = Command::new("gh")
-            .args(["extension", "install", "github/gh-copilot"])
-            .stdin(Stdio::inherit())
-            .stdout(Stdio::inherit())
-            .stderr(Stdio::inherit())
-            .status()
-            .map_err(|e| anyhow!("Failed to run Copilot install: {}", e))?;
+        let install_cmd = "npm install -g @github/copilot";
+        let status = if matches!(self.os, OperatingSystem::Windows) {
+            Command::new("powershell")
+                .args(["-NoProfile", "-Command", install_cmd])
+                .stdin(Stdio::inherit())
+                .stdout(Stdio::inherit())
+                .stderr(Stdio::inherit())
+                .status()
+                .map_err(|e| anyhow!("Failed to run Copilot install: {}", e))?
+        } else {
+            Command::new("sh")
+                .args(["-c", install_cmd])
+                .stdin(Stdio::inherit())
+                .stdout(Stdio::inherit())
+                .stderr(Stdio::inherit())
+                .status()
+                .map_err(|e| anyhow!("Failed to run Copilot install: {}", e))?
+        };
+
         if status.success() {
             Ok(InstallResult::success(
-                "Copilot CLI installed. Run 'copilot' and /login.",
+                "Copilot CLI installed. Run 'copilot login' to authenticate (or use /login interactively; GH_TOKEN/GITHUB_TOKEN also supported).",
             ))
         } else {
             Ok(InstallResult::failure(
-                "gh extension install github/gh-copilot failed",
+                "Copilot CLI install failed (npm install -g @github/copilot)",
             ))
         }
     }
@@ -881,6 +852,17 @@ mod tests {
         let instructions = manager.get_copilot_instructions();
 
         assert!(instructions.contains("Copilot"));
-        assert!(instructions.contains("gh"));
+        assert!(instructions.contains("copilot login"));
+        assert!(instructions.contains("/login"));
+        assert!(instructions.contains("GH_TOKEN"));
+    }
+
+    #[test]
+    fn test_claude_instructions_do_not_use_auth_login_subcommand() {
+        let manager = InstallationManager::new();
+        let instructions = manager.get_claude_instructions();
+
+        assert!(!instructions.contains("claude auth login"));
+        assert!(instructions.contains("claude"));
     }
 }

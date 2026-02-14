@@ -256,6 +256,11 @@ impl BaseRunner {
         // Set working directory
         cmd.current_dir(&request.working_directory);
 
+        // Set environment variables from the request
+        for (key, value) in &request.env_vars {
+            cmd.env(key, value);
+        }
+
         // Handle stdin if needed
         if stdin_input.is_some() {
             cmd.stdin(Stdio::piped());

@@ -7,7 +7,7 @@
 //!
 //! ## Key flags (non-interactive `exec` mode)
 //! - `exec "prompt"` — Non-interactive execution with JSONL output
-//! - `--full-auto` — Sets `--ask-for-approval on-request` + `--sandbox workspace-write`
+//! - `--full-auto` — Convenience mode for sandboxed automatic execution
 //! - `--json` or `--experimental-json` — JSONL event stream output
 //! - `--model <model>` or `-m <model>` — Model selection (e.g., `gpt-5.2-codex`)
 //! - `--cd <dir>` or `-C <dir>` — Working directory
@@ -16,14 +16,13 @@
 //! - `--skip-git-repo-check` — Allow running outside Git repository
 //! - `--output-last-message <path>` or `-o <path>` — Write final message to file
 //! - `--output-schema <path>` — Structured JSON output with custom schema
-//! - `--ask-for-approval <policy>` — `untrusted | on-failure | on-request | never`
 //! - `--sandbox <mode>` — `read-only | workspace-write | danger-full-access`
 //! - `--add-dir <path>` — Grant additional directories write access (repeatable)
 //! - `--image <path>` or `-i <path>` — Attach image files
 //! - `--profile <name>` or `-p <name>` — Load config profile from `~/.codex/config.toml`
 //! - `-c key=value` or `--config key=value` — Inline config overrides
 //! - `--search` — Enable web search capability
-//! - `--reasoning-effort <level>` — For reasoning models (low/medium/high/xhigh)
+//! - `-c model_reasoning_effort=<level>` — Override reasoning effort via config key
 //!
 //! ## Authentication
 //! - Reuses saved CLI auth by default
@@ -42,7 +41,7 @@
 //! - Uses `--color never` for clean output parsing
 
 use crate::platforms::context_files::{context_file_parent_dirs, has_image_extension};
-use crate::platforms::{BaseRunner, PlatformRunner};
+use crate::platforms::{BaseRunner, PlatformRunner, platform_specs};
 use crate::types::{ExecutionRequest, ExecutionResult, Platform};
 use anyhow::{Result, anyhow};
 use async_trait::async_trait;
@@ -57,8 +56,9 @@ pub struct CodexRunner {
 impl CodexRunner {
     /// Create a new Codex runner
     pub fn new() -> Self {
+        let command = Platform::Codex.resolve_cli_command();
         Self {
-            base: Arc::new(BaseRunner::new("codex".to_string(), Platform::Codex)),
+            base: Arc::new(BaseRunner::new(command, Platform::Codex)),
         }
     }
 
@@ -155,7 +155,12 @@ impl PlatformRunner for CodexRunner {
     }
 
     async fn is_available(&self) -> bool {
-        BaseRunner::is_command_available("codex").await
+        for cmd in platform_specs::cli_binary_names(Platform::Codex) {
+            if BaseRunner::is_command_available(cmd).await {
+                return true;
+            }
+        }
+        false
     }
 
     async fn discover_models(&self) -> Result<Vec<String>> {
@@ -168,13 +173,10 @@ impl PlatformRunner for CodexRunner {
 
         // Fallback to known Codex models
         warn!("Config-based model discovery failed, using known Codex models");
-        Ok(vec![
-            "gpt-5.2-codex".to_string(),
-            "gpt-5.1-codex".to_string(),
-            "gpt-5.1-codex-mini".to_string(),
-            "gpt-5-codex".to_string(),
-            "o3-mini".to_string(),
-        ])
+        Ok(platform_specs::fallback_model_ids(Platform::Codex)
+            .into_iter()
+            .map(str::to_string)
+            .collect())
     }
 
     fn build_args(&self, request: &ExecutionRequest) -> Vec<String> {
@@ -186,8 +188,11 @@ impl PlatformRunner for CodexRunner {
         // Add prompt
         args.push(request.prompt.clone());
 
-        // Full-auto mode (unless plan mode)
-        if !request.plan_mode {
+        // Plan mode uses read-only sandbox behavior.
+        if request.plan_mode {
+            args.push("--sandbox".to_string());
+            args.push("read-only".to_string());
+        } else {
             args.push("--full-auto".to_string());
         }
 
@@ -202,8 +207,13 @@ impl PlatformRunner for CodexRunner {
         args.push("--color".to_string());
         args.push("never".to_string());
 
-        // Working directory
-        args.push("--cd".to_string());
+        // DRY:FN:codex_working_dir — Pass working directory via platform_specs working_dir_flag.
+        args.push(
+            platform_specs::get_spec(Platform::Codex)
+                .working_dir_flag
+                .unwrap_or("--cd")
+                .to_string(),
+        );
         args.push(request.working_directory.display().to_string());
 
         // Allow access to any referenced file locations
@@ -220,14 +230,10 @@ impl PlatformRunner for CodexRunner {
             }
         }
 
-        // Reasoning effort (for o3/o3-mini models)
+        // Reasoning effort override via config key (supported by current Codex CLI)
         if let Some(ref effort) = request.reasoning_effort {
-            args.push("--reasoning-effort".to_string());
-            args.push(effort.to_string());
-        } else if request.model.contains("o3") {
-            // Default to medium for o3 models
-            args.push("--reasoning-effort".to_string());
-            args.push("medium".to_string());
+            args.push("-c".to_string());
+            args.push(format!("model_reasoning_effort={effort}"));
         }
 
         // Add any extra args
@@ -285,8 +291,9 @@ mod tests {
 
         let args = runner.build_args(&request);
 
-        assert!(args.contains(&"--reasoning-effort".to_string()));
-        assert!(args.contains(&"high".to_string()));
+        assert!(args.contains(&"-c".to_string()));
+        assert!(args.contains(&"model_reasoning_effort=high".to_string()));
+        assert!(!args.contains(&"--reasoning-effort".to_string()));
     }
 
     #[test]
@@ -302,8 +309,10 @@ mod tests {
 
         let args = runner.build_args(&request);
 
-        // Should not have --full-auto in plan mode
+        // Should not have --full-auto in plan mode; should enforce read-only plan behavior
         assert!(!args.contains(&"--full-auto".to_string()));
+        assert!(args.contains(&"--sandbox".to_string()));
+        assert!(args.contains(&"read-only".to_string()));
     }
 
     #[test]

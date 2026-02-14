@@ -4,8 +4,10 @@
 //! Every field is functional with real data binding.
 
 use crate::app::Message;
-use crate::config::gui_config::{GitInfo, GuiConfig};
+use crate::config::gui_config::{GitInfo, GuiConfig, InstallScope};
+use crate::platforms::platform_specs;
 use crate::theme::{AppTheme, colors, fonts, tokens};
+use crate::types::Platform;
 use crate::widgets::styled_button::{ButtonVariant, styled_button};
 use crate::widgets::{help_tooltip, interaction_mode_to_variant};
 use iced::widget::{
@@ -236,12 +238,51 @@ fn tab_tiers<'a>(
 
     let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
 
+    // Helper to build dynamic model list for a tier
+    let model_list_for = |tier_config: &crate::config::gui_config::TierConfig| -> Vec<String> {
+        if let Some(list) = models.get(&tier_config.platform) {
+            list.clone()
+        } else {
+            // Fallback from platform_specs
+            if let Some(p) = crate::types::Platform::from_str_loose(&tier_config.platform) {
+                crate::platforms::platform_specs::fallback_model_ids(p)
+                    .into_iter()
+                    .map(|s| s.to_string())
+                    .collect()
+            } else {
+                Vec::new()
+            }
+        }
+    };
+
+    // Helper to compute effort visibility
+    let effort_visible_for = |tier_config: &crate::config::gui_config::TierConfig| -> bool {
+        if let Some(p) = crate::types::Platform::from_str_loose(&tier_config.platform) {
+            crate::platforms::platform_specs::supports_effort(p)
+                && !crate::platforms::platform_specs::reasoning_is_model_based(p)
+        } else {
+            false
+        }
+    };
+
+    // Pre-compute model lists and effort visibility to avoid lifetime issues
+    let phase_models = model_list_for(&gui_config.tiers.phase);
+    let task_models = model_list_for(&gui_config.tiers.task);
+    let subtask_models = model_list_for(&gui_config.tiers.subtask);
+    let iteration_models = model_list_for(&gui_config.tiers.iteration);
+
+    let phase_effort = effort_visible_for(&gui_config.tiers.phase);
+    let task_effort = effort_visible_for(&gui_config.tiers.task);
+    let subtask_effort = effort_visible_for(&gui_config.tiers.subtask);
+    let iteration_effort = effort_visible_for(&gui_config.tiers.iteration);
+
     // Create a 2x2 grid of tier cards
     let phase_card = tier_card(
         "phase",
         "PHASE",
         &gui_config.tiers.phase,
-        models,
+        phase_models,
+        phase_effort,
         tooltip_variant,
         theme,
     );
@@ -249,7 +290,8 @@ fn tab_tiers<'a>(
         "task",
         "TASK",
         &gui_config.tiers.task,
-        models,
+        task_models,
+        task_effort,
         tooltip_variant,
         theme,
     );
@@ -257,7 +299,8 @@ fn tab_tiers<'a>(
         "subtask",
         "SUBTASK",
         &gui_config.tiers.subtask,
-        models,
+        subtask_models,
+        subtask_effort,
         tooltip_variant,
         theme,
     );
@@ -265,7 +308,8 @@ fn tab_tiers<'a>(
         "iteration",
         "ITERATION",
         &gui_config.tiers.iteration,
-        models,
+        iteration_models,
+        iteration_effort,
         tooltip_variant,
         theme,
     );
@@ -290,14 +334,14 @@ fn tier_card<'a>(
     tier_name: &'a str,
     display_name: &'a str,
     tier_config: &'a crate::config::gui_config::TierConfig,
-    _models: &'a HashMap<String, Vec<String>>,
+    model_list: Vec<String>,
+    effort_visible: bool,
     tooltip_variant: crate::widgets::tooltips::TooltipVariant,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    const PLATFORMS: &[&str] = &["cursor", "codex", "claude", "gemini", "copilot"];
-    const REASONING_OPTIONS: &[&str] = &["default", "low", "medium", "high", "xhigh"];
     const OUTPUT_FORMATS: &[&str] = &["text", "json", "stream-json"];
     const FAILURE_STYLES: &[&str] = &["spawn_new_agent", "continue_same_agent", "skip_retries"];
+    let platforms = platform_specs::PLATFORM_ID_STRS;
 
     let mut card_content = column![]
         .spacing(tokens::spacing::SM)
@@ -324,7 +368,7 @@ fn tier_card<'a>(
             ]
             .align_y(Alignment::Center),
             pick_list(
-                PLATFORMS,
+                platforms,
                 Some(tier_config.platform.as_str()),
                 move |platform: &str| Message::ConfigTierPlatformChanged(
                     tier_name.to_string(),
@@ -336,53 +380,98 @@ fn tier_card<'a>(
         .spacing(tokens::spacing::XXS),
     );
 
-    // Model text input (simpler than pick_list with dynamic models)
-    card_content = card_content.push(
-        column![
-            row![
-                text("Model")
-                    .size(tokens::font_size::SM)
-                    .font(fonts::FONT_UI)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fill),
-                help_tooltip("tier.model", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            text_input("", &tier_config.model)
-                .on_input(move |model: String| Message::ConfigTierModelChanged(
-                    tier_name.to_string(),
-                    model
-                ))
-                .width(Length::Fill)
-        ]
-        .spacing(tokens::spacing::XXS),
-    );
+    // Model pick_list (dynamic from cache / fallback) with Refresh button
+    {
+        let selected_model = model_list
+            .iter()
+            .find(|m| m.as_str() == tier_config.model.as_str())
+            .cloned();
 
-    // Reasoning Effort picker
-    let reasoning_value = tier_config.reasoning_effort.as_deref().unwrap_or("default");
-    card_content = card_content.push(
-        column![
-            row![
-                text("Reasoning Effort")
-                    .size(tokens::font_size::SM)
-                    .font(fonts::FONT_UI)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fill),
-                help_tooltip("tier.reasoning", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            pick_list(
-                REASONING_OPTIONS,
-                Some(reasoning_value),
-                move |reasoning: &str| Message::ConfigTierReasoningChanged(
-                    tier_name.to_string(),
-                    reasoning.to_string()
-                )
-            )
+        let model_picker: Element<'a, Message> = if model_list.is_empty() {
+            text_input("Select platform first", &tier_config.model)
+                .on_input(move |model: String| {
+                    Message::ConfigTierModelChanged(tier_name.to_string(), model)
+                })
+                .width(Length::Fill)
+                .into()
+        } else {
+            pick_list(model_list, selected_model, move |model: String| {
+                Message::ConfigTierModelChanged(tier_name.to_string(), model)
+            })
             .width(Length::Fill)
-        ]
-        .spacing(tokens::spacing::XXS),
-    );
+            .into()
+        };
+
+        let refresh_message = crate::types::Platform::from_str_loose(&tier_config.platform)
+            .map(Message::RefreshModelsForPlatform)
+            .unwrap_or(Message::RefreshModels);
+
+        card_content = card_content.push(
+            column![
+                row![
+                    text("Model")
+                        .size(tokens::font_size::SM)
+                        .font(fonts::FONT_UI)
+                        .color(theme.ink()),
+                    Space::new().width(Length::Fill),
+                    help_tooltip("tier.model", tooltip_variant, theme),
+                ]
+                .align_y(Alignment::Center),
+                row![
+                    model_picker,
+                    styled_button(theme, "Refresh", ButtonVariant::Ghost)
+                        .on_press(refresh_message),
+                ]
+                .spacing(tokens::spacing::XS)
+            ]
+            .spacing(tokens::spacing::XXS),
+        );
+    }
+
+    // Reasoning Effort picker — conditional: hidden for Cursor (model-based) and Gemini (unsupported)
+    if effort_visible {
+        // Build effort levels from platform_specs
+        let effort_options: Vec<String> = {
+            let mut opts = vec!["default".to_string()];
+            if let Some(p) = crate::types::Platform::from_str_loose(&tier_config.platform) {
+                if let Some(levels) = crate::platforms::platform_specs::effort_levels_for(p) {
+                    for level in levels {
+                        opts.push(level.id.to_string());
+                    }
+                }
+            }
+            opts
+        };
+
+        let reasoning_value = tier_config.reasoning_effort.as_deref().unwrap_or("default");
+        let selected_reasoning = effort_options
+            .iter()
+            .find(|o| o.as_str() == reasoning_value)
+            .cloned();
+
+        card_content = card_content.push(
+            column![
+                row![
+                    text("Reasoning Effort")
+                        .size(tokens::font_size::SM)
+                        .font(fonts::FONT_UI)
+                        .color(theme.ink()),
+                    Space::new().width(Length::Fill),
+                    help_tooltip("tier.reasoning", tooltip_variant, theme),
+                ]
+                .align_y(Alignment::Center),
+                pick_list(
+                    effort_options,
+                    selected_reasoning,
+                    move |reasoning: String| {
+                        Message::ConfigTierReasoningChanged(tier_name.to_string(), reasoning)
+                    }
+                )
+                .width(Length::Fill)
+            ]
+            .spacing(tokens::spacing::XXS),
+        );
+    }
 
     // Plan Mode toggler
     card_content = card_content.push(
@@ -1305,6 +1394,137 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
 
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
 
+    // ===== Installation Section =====
+    content = content.push(
+        text("INSTALLATION")
+            .size(tokens::font_size::BASE)
+            .font(fonts::FONT_UI_BOLD)
+            .color(colors::ELECTRIC_BLUE),
+    );
+
+    // Install Scope
+    const INSTALL_SCOPES: &[InstallScope] = &[InstallScope::Global, InstallScope::ProjectLocal];
+    content = content.push(
+        row![
+            text("Install Scope:")
+                .size(tokens::font_size::SM)
+                .color(theme.ink())
+                .width(Length::Fixed(180.0)),
+            help_tooltip("install_scope", tooltip_variant, theme),
+            pick_list(
+                INSTALL_SCOPES,
+                Some(&gui_config.advanced.install_scope),
+                |scope| {
+                    let value = match scope {
+                        InstallScope::Global => "global",
+                        InstallScope::ProjectLocal => "projectlocal",
+                    };
+                    Message::ConfigAdvancedFieldChanged(
+                        "install_scope".to_string(),
+                        value.to_string(),
+                    )
+                }
+            )
+            .width(Length::Fixed(200.0)),
+        ]
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+    );
+
+    content = content.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
+
+    // ===== Experimental Features Section =====
+    content = content.push(
+        text("EXPERIMENTAL FEATURES")
+            .size(tokens::font_size::BASE)
+            .font(fonts::FONT_UI_BOLD)
+            .color(colors::ELECTRIC_BLUE),
+    );
+
+    // Only show experimental toggles for platforms that support it
+    let experimental_platforms = [
+        (Platform::Codex, "codex", "Codex"),
+        (Platform::Gemini, "gemini", "Gemini"),
+        (Platform::Copilot, "copilot", "Copilot"),
+    ];
+
+    for (platform, key, display_name) in experimental_platforms {
+        if platform_specs::supports_experimental(platform) {
+            let enabled = gui_config
+                .advanced
+                .experimental_enabled
+                .get(key)
+                .copied()
+                .unwrap_or(false);
+
+            content = content.push(
+                row![
+                    text(format!("Enable {} Experimental:", display_name))
+                        .size(tokens::font_size::SM)
+                        .color(theme.ink())
+                        .width(Length::Fixed(180.0)),
+                    help_tooltip(&format!("experimental_{}", key), tooltip_variant, theme),
+                    iced::widget::toggler(enabled).on_toggle(move |_| {
+                        Message::ConfigAdvancedCheckboxToggled(format!("experimental_{}", key))
+                    }),
+                ]
+                .spacing(tokens::spacing::SM)
+                .align_y(iced::Alignment::Center),
+            );
+        }
+    }
+
+    content = content.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
+
+    // ===== Subagent / Multi-Agent Section =====
+    content = content.push(
+        text("SUBAGENT / MULTI-AGENT")
+            .size(tokens::font_size::BASE)
+            .font(fonts::FONT_UI_BOLD)
+            .color(colors::ELECTRIC_BLUE),
+    );
+
+    // Only show subagent toggles for platforms that support it
+    let subagent_platforms = [
+        (Platform::Claude, "claude", "Claude (Agent Teams)"),
+        (Platform::Copilot, "copilot", "Copilot (Fleet / Delegate)"),
+        (Platform::Codex, "codex", "Codex (Sub-agents)"),
+    ];
+
+    for (platform, key, display_name) in subagent_platforms {
+        if platform_specs::supports_subagents(platform) {
+            let enabled = gui_config
+                .advanced
+                .subagent_enabled
+                .get(key)
+                .copied()
+                .unwrap_or(false);
+
+            let spec = platform_specs::get_spec(platform);
+            let note = spec.subagent.as_ref().map(|s| s.note).unwrap_or("");
+
+            content = content.push(
+                row![
+                    text(format!("Enable {}:", display_name))
+                        .size(tokens::font_size::SM)
+                        .color(theme.ink())
+                        .width(Length::Fixed(250.0)),
+                    iced::widget::toggler(enabled).on_toggle(move |_| {
+                        Message::ConfigAdvancedCheckboxToggled(format!("subagent_{}", key))
+                    }),
+                    Space::new().width(Length::Fixed(tokens::spacing::SM)),
+                    text(note)
+                        .size(tokens::font_size::XS)
+                        .color(theme.ink_faded()),
+                ]
+                .spacing(tokens::spacing::SM)
+                .align_y(iced::Alignment::Center),
+            );
+        }
+    }
+
+    content = content.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
+
     // ===== Execution Settings Section =====
     content = content.push(
         text("EXECUTION")
@@ -1635,9 +1855,9 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
 }
 
 fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a, Message> {
-    const PLATFORMS: &[&str] = &["cursor", "codex", "claude", "gemini", "copilot"];
     const REASONING_LEVELS: &[&str] = &["low", "medium", "high", "max"];
     const INTERACTION_MODES: &[&str] = &["expert", "eli5"];
+    let platforms = platform_specs::PLATFORM_ID_STRS;
 
     // Determine tooltip variant from interaction mode
     let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
@@ -1676,7 +1896,7 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
             pick_list(
-                PLATFORMS,
+                platforms,
                 Some(gui_config.interview.platform.as_str()),
                 |platform: &str| Message::ConfigInterviewFieldChanged(
                     "platform".to_string(),
@@ -1692,7 +1912,7 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
     let vision_platform_options: Vec<String> = {
         let detected = crate::interview::ReferenceManager::get_vision_capable_platforms();
         if detected.is_empty() {
-            PLATFORMS.iter().map(|p| (*p).to_string()).collect()
+            platforms.iter().map(|p| (*p).to_string()).collect()
         } else {
             detected
         }
@@ -1800,7 +2020,7 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
         let idx_for_remove = idx;
         content = content.push(
             row![
-                pick_list(PLATFORMS, Some(pair.platform.as_str()), move |p: &str| {
+                pick_list(platforms, Some(pair.platform.as_str()), move |p: &str| {
                     Message::ConfigInterviewBackupChanged(
                         idx_for_platform,
                         "platform".to_string(),

@@ -47,7 +47,6 @@ struct PlatformDef {
     auth_target: AuthTarget,
     icon_name: IconName,
     supports_logout: bool,
-    cli_command: &'static str,
 }
 
 impl PlatformDef {
@@ -57,7 +56,6 @@ impl PlatformDef {
         auth_target: AuthTarget,
         icon_name: IconName,
         supports_logout: bool,
-        cli_command: &'static str,
     ) -> Self {
         Self {
             name,
@@ -65,53 +63,49 @@ impl PlatformDef {
             auth_target,
             icon_name,
             supports_logout,
-            cli_command,
         }
     }
 }
 
 /// Get all platform definitions
 fn get_platform_defs() -> Vec<PlatformDef> {
+    use crate::platforms::platform_specs;
+
     vec![
         PlatformDef::new(
             "Cursor",
-            "Cursor IDE",
+            platform_specs::get_spec(Platform::Cursor).display_name,
             AuthTarget::Platform(Platform::Cursor),
             IconName::Dashboard,
             true,
-            "agent login",
         ),
         PlatformDef::new(
             "Codex",
-            "OpenAI Codex",
+            platform_specs::get_spec(Platform::Codex).display_name,
             AuthTarget::Platform(Platform::Codex),
             IconName::Terminal,
             true,
-            "codex login",
         ),
         PlatformDef::new(
             "Claude",
-            "Claude Code",
+            platform_specs::get_spec(Platform::Claude).display_name,
             AuthTarget::Platform(Platform::Claude),
             IconName::Brain,
             false, // Claude: manage at platform console
-            "claude auth login",
         ),
         PlatformDef::new(
             "Gemini",
-            "Google Gemini",
+            platform_specs::get_spec(Platform::Gemini).display_name,
             AuthTarget::Platform(Platform::Gemini),
             IconName::Config,
             false, // Gemini: manage at platform console
-            "gemini",
         ),
         PlatformDef::new(
             "Copilot",
-            "GitHub Copilot",
+            platform_specs::get_spec(Platform::Copilot).display_name,
             AuthTarget::Platform(Platform::Copilot),
             IconName::Doctor,
             true,
-            "copilot",
         ),
         PlatformDef::new(
             "GitHub",
@@ -119,7 +113,6 @@ fn get_platform_defs() -> Vec<PlatformDef> {
             AuthTarget::GitHub,
             IconName::Projects,
             true,
-            "gh auth login",
         ),
     ]
 }

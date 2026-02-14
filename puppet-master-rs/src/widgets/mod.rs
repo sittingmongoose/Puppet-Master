@@ -2,6 +2,26 @@
 //!
 //! This module provides themed, reusable UI components following the
 //! "Vibrant Technical / Retro-Futuristic Paper Texture" design language.
+//!
+//! # DRY Tags (for agent discoverability — see also docs/gui-widget-catalog.md)
+//! - DRY:WIDGET:auth_status_chip — Authenticated/not-authenticated badge chip
+//! - DRY:WIDGET:styled_button — Primary/secondary/danger/warning/info/ghost buttons
+//! - DRY:WIDGET:styled_text_input — Themed text inputs with variants and sizes
+//! - DRY:WIDGET:selectable_text_field — Read-only selectable text (canonical for display values)
+//! - DRY:WIDGET:context_menu_actions — Copy/paste/select-all/close context menu row
+//! - DRY:WIDGET:page_header — Page title + right-side actions (incl. refresh_button)
+//! - DRY:WIDGET:refresh_button — Standardized refresh action button
+//! - DRY:WIDGET:status_badge — Status dots and badges (green/yellow/red/blue)
+//! - DRY:WIDGET:modal_overlay — Modal dialog with confirm/error variants
+//! - DRY:WIDGET:toast_overlay — Toast notifications (success/error/warning/info)
+//! - DRY:WIDGET:panel — Paper-texture panel with border and header variants
+//! - DRY:WIDGET:progress_bar — Animated progress bars with variants and labels
+//! - DRY:WIDGET:terminal_output — Styled terminal/command output display
+//! - DRY:WIDGET:help_tooltip — "?" icon with contextual help text
+//! - DRY:WIDGET:budget_donut — Donut chart for budget/usage visualization
+//! - DRY:WIDGET:usage_chart — Bar chart for usage data
+//! - DRY:WIDGET:interview_panel — Interview progress side panel
+//! - DRY:WIDGET:responsive_columns — Responsive grid/column layout helpers
 
 pub mod auth_status;
 pub mod budget_donut;

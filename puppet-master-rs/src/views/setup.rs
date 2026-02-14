@@ -18,6 +18,8 @@ pub struct PlatformStatus {
     pub platform: Platform,
     pub status: InstallationStatus,
     pub instructions: String,
+    pub detected_path: Option<String>,
+    pub searched_paths: Vec<String>,
 }
 
 /// Setup wizard view
@@ -171,6 +173,44 @@ pub fn view<'a>(
 
             let mut platform_col = column![platform_row].spacing(tokens::spacing::SM);
 
+            // Show detection trace info from actual setup detection data
+            match &platform_status.status {
+                InstallationStatus::Installed(version) => {
+                    platform_col = platform_col.push(
+                        text(format!("Version: {}", version))
+                            .size(tokens::font_size::SM)
+                            .color(theme.ink_faded()),
+                    );
+                }
+                InstallationStatus::Outdated { current, latest } => {
+                    platform_col = platform_col.push(
+                        text(format!("Current: {} (latest: {})", current, latest))
+                            .size(tokens::font_size::SM)
+                            .color(theme.ink_faded()),
+                    );
+                }
+                InstallationStatus::NotInstalled => {}
+            }
+
+            if let Some(found_path) = &platform_status.detected_path {
+                platform_col = platform_col.push(
+                    text(format!("Found: {}", found_path))
+                        .size(tokens::font_size::SM)
+                        .color(theme.ink_faded()),
+                );
+            }
+
+            if !platform_status.searched_paths.is_empty() {
+                platform_col = platform_col.push(
+                    text(format!(
+                        "Searched: {}",
+                        platform_status.searched_paths.join(", ")
+                    ))
+                    .size(tokens::font_size::SM)
+                    .color(theme.ink_faded()),
+                );
+            }
+
             if !is_installed {
                 platform_col =
                     platform_col.push(
@@ -234,11 +274,13 @@ pub fn view<'a>(
     }
 
     // Playwright browser check section
-    let playwright_check = doctor_results.iter().find(|r| r.name == "playwright-browsers");
+    let playwright_check = doctor_results
+        .iter()
+        .find(|r| r.name == "playwright-browsers");
     if let Some(check) = playwright_check {
         if !check.passed {
             let is_installing = doctor_fixing.contains("playwright-browsers");
-            
+
             let install_btn = if is_installing {
                 styled_button(theme, "Installing...", ButtonVariant::Primary)
             } else {

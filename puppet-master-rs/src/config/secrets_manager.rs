@@ -1,8 +1,8 @@
 //! Secrets Manager
 //!
-//! Manages API keys and credentials:
-//! - Read from environment variables
-//! - Load from .env file
+//! Manages optional credential overrides for CLI-based auth flows:
+//! - Runtime-only secrets map
+//! - Optional compatibility lookup for legacy env vars
 //! - Never log or persist secrets
 
 use std::collections::HashMap;
@@ -20,18 +20,16 @@ struct SecretsManagerInner {
 }
 
 impl SecretsManager {
-    /// Create a new secrets manager and load from environment
+    /// Create a new secrets manager.
+    ///
+    /// Subscription/browser auth is the default policy, so we do not preload
+    /// API-key-style environment variables into runtime state.
     pub fn new() -> Self {
-        let mut secrets = HashMap::new();
-
-        // Load common API keys from environment
-        Self::load_from_env(&mut secrets, "ANTHROPIC_API_KEY");
-        Self::load_from_env(&mut secrets, "OPENAI_API_KEY");
-        Self::load_from_env(&mut secrets, "CURSOR_API_KEY");
-        Self::load_from_env(&mut secrets, "GEMINI_API_KEY");
-        Self::load_from_env(&mut secrets, "GITHUB_TOKEN");
-
-        log::debug!("Loaded {} secrets from environment", secrets.len());
+        let secrets = HashMap::new();
+        log::debug!(
+            "Initialized secrets manager with {} runtime secrets",
+            secrets.len()
+        );
 
         Self {
             inner: Arc::new(Mutex::new(SecretsManagerInner { secrets })),
@@ -39,6 +37,7 @@ impl SecretsManager {
     }
 
     /// Load a secret from environment variable
+    #[cfg(test)]
     fn load_from_env(secrets: &mut HashMap<String, String>, key: &str) {
         if let Ok(value) = env::var(key) {
             if !value.is_empty() {
@@ -61,18 +60,29 @@ impl SecretsManager {
 
     /// Get a secret by platform name
     ///
-    /// Maps platform names to their environment variable keys
+    /// Uses runtime secrets first, then falls back to legacy environment
+    /// variables for backward compatibility with older CI/headless setups.
     pub fn get_platform_key(&self, platform: &str) -> Option<String> {
-        let env_key = match platform.to_lowercase().as_str() {
-            "claude" | "anthropic" => "ANTHROPIC_API_KEY",
-            "openai" | "gpt" => "OPENAI_API_KEY",
-            "cursor" => "CURSOR_API_KEY",
-            "gemini" | "google" => "GEMINI_API_KEY",
-            "copilot" | "github" => "GITHUB_TOKEN",
+        let env_keys = match platform.to_lowercase().as_str() {
+            "claude" | "anthropic" => &["ANTHROPIC_API_KEY"][..],
+            "codex" | "openai" | "gpt" => &["CODEX_API_KEY", "OPENAI_API_KEY"][..],
+            "cursor" => &["CURSOR_API_KEY"][..],
+            "gemini" | "google" => &["GEMINI_API_KEY", "GOOGLE_API_KEY"][..],
+            "copilot" | "github" => &["GH_TOKEN", "GITHUB_TOKEN"][..],
             _ => return None,
         };
 
-        self.get_key(env_key)
+        for env_key in env_keys {
+            if let Some(value) = self.get_key(env_key) {
+                return Some(value);
+            }
+            if let Ok(value) = env::var(env_key) {
+                if !value.is_empty() {
+                    return Some(value);
+                }
+            }
+        }
+        None
     }
 
     /// Set a secret (runtime only, not persisted)
@@ -89,19 +99,11 @@ impl SecretsManager {
 
     /// Check which platforms have credentials available
     pub fn available_platforms(&self) -> Vec<String> {
-        let platforms = [
-            ("claude", "ANTHROPIC_API_KEY"),
-            ("openai", "OPENAI_API_KEY"),
-            ("cursor", "CURSOR_API_KEY"),
-            ("gemini", "GEMINI_API_KEY"),
-            ("copilot", "GITHUB_TOKEN"),
-        ];
-
-        platforms
+        crate::platforms::platform_specs::PLATFORM_ID_STRS
             .iter()
-            .filter_map(|(platform, key)| {
-                if self.has_key(key) {
-                    Some(platform.to_string())
+            .filter_map(|platform| {
+                if self.get_platform_key(platform).is_some() {
+                    Some((*platform).to_string())
                 } else {
                     None
                 }
@@ -116,18 +118,11 @@ impl SecretsManager {
         log::debug!("Cleared all secrets");
     }
 
-    /// Reload secrets from environment
+    /// Reload runtime secrets (keeps subscription-auth default, no env preload).
     pub fn reload(&self) {
         let mut inner = self.inner.lock().unwrap();
         inner.secrets.clear();
-
-        Self::load_from_env(&mut inner.secrets, "ANTHROPIC_API_KEY");
-        Self::load_from_env(&mut inner.secrets, "OPENAI_API_KEY");
-        Self::load_from_env(&mut inner.secrets, "CURSOR_API_KEY");
-        Self::load_from_env(&mut inner.secrets, "GEMINI_API_KEY");
-        Self::load_from_env(&mut inner.secrets, "GITHUB_TOKEN");
-
-        log::debug!("Reloaded {} secrets from environment", inner.secrets.len());
+        log::debug!("Reloaded runtime secrets (count: {})", inner.secrets.len());
     }
 }
 
@@ -200,16 +195,13 @@ mod tests {
 
         // Set up test credentials
         manager.set_key("ANTHROPIC_API_KEY".to_string(), "test1".to_string());
-        manager.set_key("OPENAI_API_KEY".to_string(), "test2".to_string());
+        manager.set_key("CODEX_API_KEY".to_string(), "test2".to_string());
 
         assert_eq!(
             manager.get_platform_key("claude"),
             Some("test1".to_string())
         );
-        assert_eq!(
-            manager.get_platform_key("openai"),
-            Some("test2".to_string())
-        );
+        assert_eq!(manager.get_platform_key("codex"), Some("test2".to_string()));
         assert_eq!(manager.get_platform_key("unknown"), None);
     }
 
@@ -218,12 +210,29 @@ mod tests {
         let manager = SecretsManager::new();
 
         manager.set_key("ANTHROPIC_API_KEY".to_string(), "test".to_string());
-        manager.set_key("OPENAI_API_KEY".to_string(), "test".to_string());
+        manager.set_key("CODEX_API_KEY".to_string(), "test".to_string());
 
         let platforms = manager.available_platforms();
         assert!(platforms.contains(&"claude".to_string()));
-        assert!(platforms.contains(&"openai".to_string()));
+        assert!(platforms.contains(&"codex".to_string()));
         assert!(!platforms.contains(&"unknown".to_string()));
+    }
+
+    #[test]
+    fn test_platform_mapping_env_fallback() {
+        unsafe {
+            env::set_var("OPENAI_API_KEY", "legacy-openai-key");
+        }
+
+        let manager = SecretsManager::new();
+        assert_eq!(
+            manager.get_platform_key("openai"),
+            Some("legacy-openai-key".to_string())
+        );
+
+        unsafe {
+            env::remove_var("OPENAI_API_KEY");
+        }
     }
 
     #[test]

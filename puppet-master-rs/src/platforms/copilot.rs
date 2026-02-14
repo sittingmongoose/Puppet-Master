@@ -47,7 +47,7 @@
 //! - Disables streaming for easier output parsing
 
 use crate::platforms::context_files::append_prompt_attachments;
-use crate::platforms::{BaseRunner, PlatformRunner};
+use crate::platforms::{BaseRunner, PlatformRunner, platform_specs};
 use crate::types::{ExecutionRequest, ExecutionResult, Platform};
 use anyhow::Result;
 use async_trait::async_trait;
@@ -62,8 +62,9 @@ pub struct CopilotRunner {
 impl CopilotRunner {
     /// Create a new Copilot runner
     pub fn new() -> Self {
+        let command = Platform::Copilot.resolve_cli_command();
         Self {
-            base: Arc::new(BaseRunner::new("copilot".to_string(), Platform::Copilot)),
+            base: Arc::new(BaseRunner::new(command, Platform::Copilot)),
         }
     }
 }
@@ -127,7 +128,12 @@ impl PlatformRunner for CopilotRunner {
     }
 
     async fn is_available(&self) -> bool {
-        BaseRunner::is_command_available("copilot").await
+        for cmd in platform_specs::cli_binary_names(Platform::Copilot) {
+            if BaseRunner::is_command_available(cmd).await {
+                return true;
+            }
+        }
+        false
     }
 
     async fn discover_models(&self) -> Result<Vec<String>> {
@@ -135,9 +141,10 @@ impl PlatformRunner for CopilotRunner {
         // Default model is Claude Sonnet 4.5 (GitHub reserves right to change).
         // Model switching only available via /model slash command in interactive mode.
         warn!("GitHub Copilot does not support model discovery in programmatic mode");
-        Ok(vec![
-            "claude-sonnet-4-5".to_string(), // Default as of 2026
-        ])
+        Ok(platform_specs::fallback_model_ids(Platform::Copilot)
+            .into_iter()
+            .map(str::to_string)
+            .collect())
     }
 
     fn build_args(&self, request: &ExecutionRequest) -> Vec<String> {
@@ -147,6 +154,9 @@ impl PlatformRunner for CopilotRunner {
         let prompt = append_prompt_attachments(&request.prompt, &request.context_files, "@");
         args.push("-p".to_string());
         args.push(prompt);
+
+        // Silent mode for headless (response only, easier to parse)
+        args.push("-s".to_string());
 
         // Allow all tools (required for autonomous operation)
         args.push("--allow-all-tools".to_string());
@@ -159,6 +169,15 @@ impl PlatformRunner for CopilotRunner {
         if !request.plan_mode {
             args.push("--allow-all-paths".to_string());
             args.push("--allow-all-urls".to_string());
+        }
+
+        // DRY:FN:copilot_working_dir — Pass working directory via --add-dir
+        let cwd = std::env::current_dir().unwrap_or_default();
+        if request.working_directory != cwd {
+            if let Some(flag) = platform_specs::get_spec(Platform::Copilot).working_dir_flag {
+                args.push(flag.to_string());
+                args.push(request.working_directory.display().to_string());
+            }
         }
 
         // Add any extra args
@@ -195,6 +214,7 @@ mod tests {
 
         assert!(args.contains(&"-p".to_string()));
         assert!(args.contains(&"Test prompt".to_string()));
+        assert!(args.contains(&"-s".to_string())); // Silent mode for headless
         assert!(args.contains(&"--allow-all-tools".to_string()));
         assert!(args.contains(&"--stream".to_string()));
         assert!(args.contains(&"off".to_string()));

@@ -420,7 +420,7 @@ impl CriterionClassifier {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::types::{ItemStatus, ParsedRequirements};
+    use crate::types::ParsedRequirements;
 
     #[test]
     fn test_infer_verification_type() {

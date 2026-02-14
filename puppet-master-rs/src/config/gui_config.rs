@@ -356,6 +356,18 @@ pub struct AdvancedConfig {
     #[serde(default)]
     pub cli_paths: CliPaths,
 
+    // Installation scope
+    #[serde(default)]
+    pub install_scope: InstallScope,
+
+    // Per-platform experimental features toggle
+    #[serde(default)]
+    pub experimental_enabled: std::collections::HashMap<String, bool>,
+
+    // Per-platform subagent/multi-agent toggle
+    #[serde(default)]
+    pub subagent_enabled: std::collections::HashMap<String, bool>,
+
     // Rate Limits
     #[serde(default)]
     pub rate_limits: RateLimits,
@@ -385,6 +397,9 @@ impl Default for AdvancedConfig {
             parallel_iterations: default_parallel_iterations(),
             intensive_logging: false,
             cli_paths: CliPaths::default(),
+            install_scope: InstallScope::default(),
+            experimental_enabled: std::collections::HashMap::new(),
+            subagent_enabled: std::collections::HashMap::new(),
             rate_limits: RateLimits::default(),
             execution: ExecutionConfig::default(),
             checkpointing: CheckpointingConfig::default(),
@@ -404,6 +419,31 @@ fn default_process_timeout() -> u64 {
 
 fn default_parallel_iterations() -> u32 {
     1
+}
+
+/// DRY:DATA:INSTALL_SCOPE — Installation scope for platform CLIs
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "lowercase")]
+pub enum InstallScope {
+    /// System-wide installation (default PATH)
+    Global,
+    /// Project-local installation (./node_modules/.bin/ for npm-based platforms)
+    ProjectLocal,
+}
+
+impl Default for InstallScope {
+    fn default() -> Self {
+        Self::Global
+    }
+}
+
+impl std::fmt::Display for InstallScope {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::Global => write!(f, "Global"),
+            Self::ProjectLocal => write!(f, "Project Local"),
+        }
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
@@ -767,46 +807,19 @@ pub fn get_git_info() -> GitInfo {
     info
 }
 
-/// Get available models for a platform
-pub fn get_models_for_platform(platform: &str) -> Vec<String> {
-    match platform {
-        "cursor" => vec![
-            "gpt-5".to_string(),
-            "gpt-5-turbo".to_string(),
-            "gpt-4.1".to_string(),
-            "gpt-4.5".to_string(),
-        ],
-        "codex" => vec![
-            "gpt-5.2-codex".to_string(),
-            "gpt-5.1-codex".to_string(),
-            "gpt-4.3-codex".to_string(),
-        ],
-        "claude" => vec![
-            "claude-sonnet-4-5".to_string(),
-            "claude-sonnet-4-3".to_string(),
-            "claude-opus-4".to_string(),
-            "claude-haiku-4".to_string(),
-        ],
-        "gemini" => vec![
-            "gemini-2.5-pro".to_string(),
-            "gemini-2.5-flash".to_string(),
-            "gemini-2.0-ultra".to_string(),
-        ],
-        "copilot" => vec!["gpt-5-copilot".to_string(), "gpt-4.5-copilot".to_string()],
-        _ => vec![],
-    }
-}
-
-/// Check if a model supports reasoning effort
-pub fn model_supports_reasoning(platform: &str, _model: &str) -> bool {
-    matches!(platform, "claude" | "gemini")
-}
-
-/// Build the initial model map for all platforms
+/// Build the initial model map for all platforms using platform_specs fallback data.
+// DRY:FN:build_model_map — Builds HashMap<platform_name, Vec<model_id>> from platform_specs fallback data
 pub fn build_model_map() -> HashMap<String, Vec<String>> {
+    use crate::platforms::platform_specs;
+    use crate::types::Platform;
+
     let mut map = HashMap::new();
-    for platform in &["cursor", "codex", "claude", "gemini", "copilot"] {
-        map.insert(platform.to_string(), get_models_for_platform(platform));
+    for platform in Platform::all() {
+        let models: Vec<String> = platform_specs::fallback_model_ids(*platform)
+            .into_iter()
+            .map(|s| s.to_string())
+            .collect();
+        map.insert(platform.to_string(), models);
     }
     map
 }

@@ -4,6 +4,7 @@
 //! platform filtering, summary statistics, and fix suggestions.
 
 use crate::app::Message;
+use crate::platforms::platform_specs;
 use crate::theme::{AppTheme, colors, tokens};
 use crate::types::Platform;
 use crate::widgets::{responsive::responsive_grid, *};
@@ -326,13 +327,8 @@ fn view_platform_card<'a>(
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let is_selected = selected_platforms.contains(&platform);
-    let platform_name = match platform {
-        Platform::Cursor => "Cursor",
-        Platform::Codex => "Codex",
-        Platform::Claude => "Claude",
-        Platform::Gemini => "Gemini",
-        Platform::Copilot => "Copilot",
-    };
+    // DRY: use platform_specs for display name instead of hardcoding
+    let platform_name = platform_specs::display_name_for(platform);
 
     // For this example, we'll assume all platforms are "Not Installed" unless checked passes
     // In a real implementation, this would check against actual installation status

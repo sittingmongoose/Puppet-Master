@@ -41,7 +41,7 @@
 //! - Prompts > 32KB are sent via stdin
 
 use crate::platforms::context_files::append_prompt_attachments;
-use crate::platforms::{BaseRunner, PlatformRunner};
+use crate::platforms::{BaseRunner, PlatformRunner, platform_specs};
 use crate::types::{ExecutionRequest, ExecutionResult, Platform};
 use anyhow::{Result, anyhow};
 use async_trait::async_trait;
@@ -60,15 +60,19 @@ pub struct CursorRunner {
 impl CursorRunner {
     /// Create a new Cursor runner
     pub fn new() -> Self {
+        let command = Platform::Cursor.resolve_cli_command();
         Self {
-            base: Arc::new(BaseRunner::new("agent".to_string(), Platform::Cursor)),
-            command: "agent".to_string(),
+            base: Arc::new(BaseRunner::new(command.clone(), Platform::Cursor)),
+            command,
         }
     }
 
     /// Initialize the runner (find available command)
     async fn _init(&mut self) {
-        if let Some(cmd) = BaseRunner::find_available_command(&["agent", "cursor-agent"]).await {
+        if let Some(cmd) =
+            BaseRunner::find_available_command(platform_specs::cli_binary_names(Platform::Cursor))
+                .await
+        {
             info!("Using Cursor command: {}", cmd);
             self.command = cmd.clone();
             self.base = Arc::new(BaseRunner::new(cmd, Platform::Cursor));
@@ -182,8 +186,18 @@ impl PlatformRunner for CursorRunner {
     }
 
     async fn is_available(&self) -> bool {
-        BaseRunner::is_command_available(&self.command).await
-            || BaseRunner::is_command_available("cursor-agent").await
+        if BaseRunner::is_command_available(&self.command).await {
+            return true;
+        }
+
+        for cmd in platform_specs::cli_binary_names(Platform::Cursor) {
+            if BaseRunner::is_command_available(cmd).await {
+                return true;
+            }
+        }
+
+        // Backward compatibility for older Cursor installs.
+        BaseRunner::is_command_available("cursor-agent").await
     }
 
     async fn discover_models(&self) -> Result<Vec<String>> {
@@ -196,17 +210,10 @@ impl PlatformRunner for CursorRunner {
 
         // Fallback to known models
         warn!("CLI model discovery failed, using known Cursor models");
-        Ok(vec![
-            "gpt-5".to_string(),
-            "gpt-4o".to_string(),
-            "gpt-4o-mini".to_string(),
-            "claude-sonnet-4-5".to_string(),
-            "claude-sonnet-4".to_string(),
-            "claude-haiku-4".to_string(),
-            "o3-mini".to_string(),
-            "gemini-2.5-pro".to_string(),
-            "gemini-2.5-flash".to_string(),
-        ])
+        Ok(platform_specs::fallback_model_ids(Platform::Cursor)
+            .into_iter()
+            .map(str::to_string)
+            .collect())
     }
 
     fn build_args(&self, request: &ExecutionRequest) -> Vec<String> {
@@ -225,19 +232,20 @@ impl PlatformRunner for CursorRunner {
         args.push("--model".to_string());
         args.push(request.model.clone());
 
-        // Add force flag for autonomous file changes in headless mode
-        if !request.plan_mode {
-            args.push("--force".to_string());
-        }
-
-        // Add mode if plan mode
+        // Plan mode or force for headless autonomous file changes
         if request.plan_mode {
-            args.push("--mode=plan".to_string());
+            args.push("--mode".to_string());
+            args.push("plan".to_string());
+        } else {
+            args.push("--force".to_string());
         }
 
         // Always request JSON output for structured parsing
         args.push("--output-format".to_string());
         args.push("json".to_string());
+
+        // NOTE: Cursor uses --add-dir in platform_specs, but it doesn't need explicit working_dir
+        // flag since cmd.current_dir() (set by base runner) is sufficient
 
         // Add any extra args
         for arg in &request.extra_args {
@@ -293,7 +301,8 @@ mod tests {
 
         let args = runner.build_args(&request);
 
-        assert!(args.contains(&"--mode=plan".to_string()));
+        assert!(args.contains(&"--mode".to_string()));
+        assert!(args.contains(&"plan".to_string()));
     }
 
     #[test]

@@ -116,28 +116,12 @@ impl ReferenceManager {
 
     /// Returns a list of vision-capable platforms from the model catalog.
     /// This can be used to filter UI options based on actual capabilities.
+    // DRY:FN:get_vision_capable_platforms -- Returns all platforms that support images via platform_specs
     pub fn get_vision_capable_platforms() -> Vec<String> {
-        use crate::platforms::model_catalog::ModelCatalogManager;
-        use crate::types::Platform;
-        
-        let catalog_mgr = ModelCatalogManager::new();
-        let mut capable_platforms = Vec::new();
-        
-        for platform in &[
-            Platform::Codex,
-            Platform::Cursor,
-            Platform::Claude,
-            Platform::Gemini,
-            Platform::Copilot,
-        ] {
-            if let Some(catalog) = catalog_mgr.get_catalog(*platform) {
-                if !catalog.get_vision_models().is_empty() {
-                    capable_platforms.push(platform.to_string().to_lowercase());
-                }
-            }
-        }
-        
-        capable_platforms
+        crate::platforms::platform_specs::image_capable_platforms()
+            .into_iter()
+            .map(|p| p.to_string().to_lowercase())
+            .collect()
     }
 
     /// Derives context file paths from reference materials for platform runners.
@@ -933,7 +917,6 @@ mod tests {
 
     #[test]
     fn test_pdf_detection() {
-        let mgr = ReferenceManager::new();
         let pdf_path = PathBuf::from("test.pdf");
         let txt_path = PathBuf::from("test.txt");
 

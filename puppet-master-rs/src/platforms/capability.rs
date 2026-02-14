@@ -180,104 +180,43 @@ impl CapabilityCache {
         None
     }
 
-    /// Probe for platform-specific features
-    async fn probe_features(&self, platform: Platform, command: &str) -> Vec<String> {
+    /// Build feature list using static platform_specs data.
+    /// Only runtime-probed: CLI existence and version (done elsewhere).
+    /// Static features from docs: image support, plan mode, effort, experimental, subagents.
+    async fn probe_features(&self, platform: Platform, _command: &str) -> Vec<String> {
+        use crate::platforms::platform_specs;
+
         let mut features = Vec::new();
 
-        match platform {
-            Platform::Cursor => {
-                // Check for agent vs cursor-agent
-                if which::which("agent").is_ok() {
-                    features.push("agent_command".to_string());
-                }
-                if which::which("cursor-agent").is_ok() {
-                    features.push("cursor_agent_command".to_string());
-                }
-
-                // Check for model listing support
-                if self.check_command_flag(command, "models").await {
-                    features.push("model_discovery".to_string());
-                }
-
-                // Check for mode support
-                if self.check_command_flag(command, "--mode").await {
-                    features.push("execution_modes".to_string());
-                }
-
-                // Check for JSON output
-                if self.check_command_flag(command, "--output-format").await {
-                    features.push("json_output".to_string());
-                }
-            }
-            Platform::Codex => {
-                // Check for full-auto mode
-                if self.check_command_flag(command, "--full-auto").await {
-                    features.push("full_auto".to_string());
-                }
-
-                // Check for JSON output
-                if self.check_command_flag(command, "--json").await {
-                    features.push("json_output".to_string());
-                }
-
-                // Check for reasoning effort
-                if self.check_command_flag(command, "--reasoning-effort").await {
-                    features.push("reasoning_effort".to_string());
-                }
-            }
-            Platform::Claude => {
-                // Check for permission modes
-                if self.check_command_flag(command, "--permission-mode").await {
-                    features.push("permission_modes".to_string());
-                }
-
-                // Check for JSON output
-                if self.check_command_flag(command, "--output-format").await {
-                    features.push("json_output".to_string());
-                }
-            }
-            Platform::Gemini => {
-                // Check for approval modes
-                if self.check_command_flag(command, "--approval-mode").await {
-                    features.push("approval_modes".to_string());
-                }
-
-                // Check for model listing
-                if self.check_command_flag(command, "models").await {
-                    features.push("model_discovery".to_string());
-                }
-            }
-            Platform::Copilot => {
-                // Check for tool permissions
-                if self.check_command_flag(command, "--allow-all-tools").await {
-                    features.push("tool_permissions".to_string());
-                }
-
-                // Check for streaming
-                if self.check_command_flag(command, "--stream").await {
-                    features.push("streaming".to_string());
-                }
-            }
+        // All static features from platform_specs (no runtime probing needed)
+        if platform_specs::supports_images(platform) {
+            features.push("image_support".to_string());
+        }
+        if platform_specs::supports_plan_mode(platform) {
+            features.push("plan_mode".to_string());
+        }
+        if platform_specs::supports_effort(platform) {
+            features.push("reasoning_effort".to_string());
+        }
+        if platform_specs::supports_experimental(platform) {
+            features.push("experimental".to_string());
+        }
+        if platform_specs::supports_subagents(platform) {
+            features.push("subagents".to_string());
+        }
+        if platform_specs::has_sdk(platform) {
+            features.push("sdk".to_string());
+        }
+        if platform_specs::reasoning_is_model_based(platform) {
+            features.push("reasoning_model_based".to_string());
+        }
+        if platform_specs::has_auto_mode(platform) {
+            features.push("auto_mode".to_string());
         }
 
         features
     }
 
-    /// Check if a command accepts a specific flag (via --help)
-    async fn check_command_flag(&self, command: &str, flag: &str) -> bool {
-        if let Ok(output) = Command::new(command)
-            .arg("--help")
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped())
-            .output()
-            .await
-        {
-            let help_text = String::from_utf8_lossy(&output.stdout);
-            help_text.contains(flag)
-        } else {
-            false
-        }
-    }
 }
 
 impl Default for CapabilityCache {
@@ -322,6 +261,7 @@ pub async fn get_features(platform: Platform) -> Vec<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::platforms::platform_specs;
 
     #[tokio::test]
     async fn test_capability_cache() {
@@ -336,9 +276,14 @@ mod tests {
 
     #[test]
     fn test_capability_info_validity() {
+        let cursor_cli = platform_specs::cli_binary_names(Platform::Cursor)
+            .first()
+            .copied()
+            .unwrap_or("agent")
+            .to_string();
         let info = CapabilityInfo::available(
             Platform::Cursor,
-            "agent".to_string(),
+            cursor_cli,
             Some("1.0.0".to_string()),
             vec!["json_output".to_string()],
         );

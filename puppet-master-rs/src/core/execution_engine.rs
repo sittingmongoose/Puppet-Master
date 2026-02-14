@@ -10,7 +10,9 @@
 
 use crate::core::state_machine::OrchestratorEvent;
 use crate::interview::failover::is_quota_error;
-use crate::platforms::{get_runner, quota_manager::global_quota_manager};
+use crate::platforms::{
+    get_runner, platform_specs, quota_manager::global_quota_manager, sdk_bridge::SdkBridge,
+};
 use crate::types::*;
 use anyhow::{Result, anyhow};
 use crossbeam_channel::Sender;
@@ -44,6 +46,11 @@ impl ExecutionEngine {
     /// Execute a single iteration with platform runner and quota-aware failover
     pub async fn execute_iteration(&self, context: &IterationContext) -> Result<IterationResult> {
         let start_time = Instant::now();
+        log::debug!(
+            "Execution guard config: stall_timeout_secs={}, stall_max_repeats={}",
+            self.stall_timeout_secs,
+            self.stall_max_repeats
+        );
 
         // Emit iteration started event
         let _ = self.event_sender.send(OrchestratorEvent::IterationStarted {
@@ -100,29 +107,10 @@ impl ExecutionEngine {
             };
 
             // Build execution request
-            let mut request = ExecutionRequest::new(
-                platform,
-                context.model.clone(),
-                context.prompt.clone(),
-                context.working_dir.clone(),
-            );
-
-            if let Some(timeout_ms) = context.timeout_ms {
-                request = request.with_timeout(std::time::Duration::from_millis(timeout_ms));
-            }
-
-            request = request.with_session_id(context.session_id.clone());
-
-            if !context.context_files.is_empty() {
-                request = request.with_context_files(context.context_files.clone());
-            }
-
-            for (key, value) in &context.env_vars {
-                request = request.with_env(key.clone(), value.clone());
-            }
+            let request = self.build_execution_request(context, platform);
 
             // Execute the request
-            match runner.execute(&request).await {
+            match self.execute_with_sdk_fallback(&*runner, &request).await {
                 Ok(result) => {
                     if result.success {
                         let output = result.output.unwrap_or_default();
@@ -187,6 +175,125 @@ impl ExecutionEngine {
             "All platforms exhausted. Last error: {}",
             last_error.unwrap_or_else(|| "Unknown error".to_string())
         ))
+    }
+
+    // DRY:FN:build_execution_request — Build an ExecutionRequest from IterationContext and target platform
+    fn build_execution_request(
+        &self,
+        context: &IterationContext,
+        platform: Platform,
+    ) -> ExecutionRequest {
+        let mut request = ExecutionRequest::new(
+            platform,
+            context.model.clone(),
+            context.prompt.clone(),
+            context.working_dir.clone(),
+        )
+        .with_plan_mode(context.plan_mode)
+        .with_sdk(platform_specs::has_sdk(platform))
+        .with_session_id(context.session_id.clone());
+
+        if let Some(timeout_ms) = context.timeout_ms {
+            request = request.with_timeout(std::time::Duration::from_millis(timeout_ms));
+        }
+
+        if let Some(ref effort) = context.reasoning_effort {
+            request = request.with_reasoning_effort(effort.clone());
+        }
+
+        if !context.context_files.is_empty() {
+            request = request.with_context_files(context.context_files.clone());
+        }
+
+        for (key, value) in &context.env_vars {
+            request = request.with_env(key.clone(), value.clone());
+        }
+
+        // DRY:FN:subagent_config_injection — Apply subagent env vars and extra args
+        if context.subagent_enabled {
+            for (key, value) in platform_specs::subagent_env_vars(platform) {
+                request = request.with_env(key.to_string(), value.to_string());
+            }
+            for arg in platform_specs::subagent_extra_args(platform) {
+                request.extra_args.push(arg.to_string());
+            }
+        }
+
+        request
+    }
+
+    // DRY:FN:execute_with_sdk_fallback — Try SDK execution first when enabled, then fall back to CLI runner
+    async fn execute_with_sdk_fallback(
+        &self,
+        runner: &dyn crate::platforms::PlatformRunner,
+        request: &ExecutionRequest,
+    ) -> Result<ExecutionResult> {
+        if request.use_sdk && platform_specs::has_sdk(request.platform) {
+            if let Some(result) = self.try_execute_with_sdk(request).await {
+                return Ok(result);
+            }
+            log::info!(
+                "Falling back to CLI runner for {} after SDK attempt",
+                request.platform
+            );
+        }
+
+        runner.execute(request).await
+    }
+
+    /// Try SDK execution and return `Some(result)` on success, `None` to trigger CLI fallback.
+    async fn try_execute_with_sdk(&self, request: &ExecutionRequest) -> Option<ExecutionResult> {
+        let Some(bridge) = SdkBridge::new() else {
+            log::info!(
+                "SDK bridge unavailable for {} (Node.js not found)",
+                request.platform
+            );
+            return None;
+        };
+
+        if !bridge.is_sdk_installed(request.platform).await {
+            log::info!(
+                "SDK package not installed for {}. Falling back to CLI",
+                request.platform
+            );
+            return None;
+        }
+
+        let sdk_result = match bridge
+            .execute_prompt(
+                request.platform,
+                &request.prompt,
+                &request.model,
+                &request.working_directory,
+                request.plan_mode,
+                request.reasoning_effort.as_deref(),
+            )
+            .await
+        {
+            Ok(result) => result,
+            Err(e) => {
+                log::warn!(
+                    "SDK execution failed for {}: {}. Falling back to CLI",
+                    request.platform,
+                    e
+                );
+                return None;
+            }
+        };
+
+        if !sdk_result.success {
+            log::warn!(
+                "SDK execution returned failure for {}: {}",
+                request.platform,
+                sdk_result.output
+            );
+            return None;
+        }
+
+        let mut result = ExecutionResult::success().with_output(sdk_result.output.clone());
+        result.exit_code = Some(sdk_result.exit_code);
+        result.session_id = request.session_id.clone();
+        Some(result)
     }
 
     /// Parse completion signal from output text
@@ -321,6 +428,8 @@ fn extract_reason(line: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::collections::HashMap;
+    use std::path::PathBuf;
 
     #[test]
     fn test_parse_completion_signal_complete() {
@@ -364,8 +473,57 @@ mod tests {
         assert_eq!(extract_reason("No separator here"), "No separator here");
     }
 
+    #[test]
+    fn test_build_execution_request_includes_plan_mode_and_reasoning_effort() {
+        let engine = create_test_engine();
+        let mut context = test_context(Platform::Claude);
+        context.plan_mode = true;
+        context.reasoning_effort = Some("high".to_string());
+
+        let request = engine.build_execution_request(&context, Platform::Claude);
+
+        assert!(request.plan_mode);
+        assert_eq!(request.reasoning_effort.as_deref(), Some("high"));
+    }
+
+    #[test]
+    fn test_build_execution_request_sets_sdk_by_platform_capability() {
+        let engine = create_test_engine();
+        let context = test_context(Platform::Codex);
+
+        let codex_request = engine.build_execution_request(&context, Platform::Codex);
+        let claude_request = engine.build_execution_request(&context, Platform::Claude);
+
+        assert!(codex_request.use_sdk);
+        assert!(!claude_request.use_sdk);
+    }
+
     fn create_test_engine() -> ExecutionEngine {
         let (tx, _rx) = crossbeam_channel::unbounded();
         ExecutionEngine::new(tx, 120, 10)
+    }
+
+    fn test_context(platform: Platform) -> IterationContext {
+        IterationContext {
+            tier_id: "tier-1".to_string(),
+            phase_id: "ph-1".to_string(),
+            task_id: "tk-1".to_string(),
+            subtask_id: "st-1".to_string(),
+            iteration_number: 1,
+            iteration: 1,
+            prompt: "test prompt".to_string(),
+            model: "test-model".to_string(),
+            platform,
+            working_directory: PathBuf::from("/tmp"),
+            working_dir: PathBuf::from("/tmp"),
+            session_id: "session-1".to_string(),
+            timeout_ms: Some(30_000),
+            timeout_secs: Some(30),
+            context_files: vec![],
+            env_vars: HashMap::new(),
+            plan_mode: false,
+            reasoning_effort: None,
+            subagent_enabled: false,
+        }
     }
 }

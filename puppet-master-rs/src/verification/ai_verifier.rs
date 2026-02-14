@@ -3,7 +3,7 @@
 //! Uses AI platforms to perform semantic verification of criteria.
 //! Asks AI to analyze context and determine if a criterion is met.
 
-use crate::platforms::global_registry;
+use crate::platforms::{global_registry, platform_specs};
 use crate::state::EvidenceStore;
 use crate::types::{Criterion, Evidence, EvidenceType, Platform, Verifier, VerifierResult};
 use anyhow::{Context, Result};
@@ -217,65 +217,52 @@ impl AIVerifier {
         prompt: &str,
         working_dir: &Path,
     ) -> (String, Vec<String>) {
+        let spec = platform_specs::get_spec(platform);
         let mut args: Vec<String> = Vec::new();
+        let command = platform.resolve_cli_command();
 
-        let command = match platform {
-            Platform::Cursor => {
-                if which::which("agent").is_ok() {
-                    "agent".to_string()
-                } else {
-                    "cursor-agent".to_string()
-                }
-            }
-            Platform::Codex => "codex".to_string(),
-            Platform::Claude => "claude".to_string(),
-            Platform::Gemini => "gemini".to_string(),
-            Platform::Copilot => "copilot".to_string(),
-        };
+        if let Some(subcommand) = spec.headless.subcommand {
+            args.push(subcommand.to_string());
+        }
+        if !spec.headless.prompt_flag.is_empty() {
+            args.push(spec.headless.prompt_flag.to_string());
+        }
+        args.push(prompt.to_string());
 
         match platform {
             Platform::Cursor => {
-                args.push("-p".to_string());
-                args.push(prompt.to_string());
                 if let Some(model) = &self.config.model {
                     args.push("--model".to_string());
                     args.push(model.clone());
                 }
-                args.push("--output-format".to_string());
-                args.push("json".to_string());
+                push_json_output_args(&mut args, platform);
             }
             Platform::Codex => {
-                args.push("exec".to_string());
-                args.push(prompt.to_string());
                 args.push("--full-auto".to_string());
-                args.push("--json".to_string());
+                push_json_output_args(&mut args, platform);
                 if let Some(model) = &self.config.model {
                     args.push("--model".to_string());
                     args.push(model.clone());
                 }
                 args.push("--color".to_string());
                 args.push("never".to_string());
-                args.push("--cd".to_string());
-                args.push(working_dir.display().to_string());
+                if let Some(flag) = spec.working_dir_flag {
+                    args.push(flag.to_string());
+                    args.push(working_dir.display().to_string());
+                }
             }
             Platform::Claude => {
-                args.push("-p".to_string());
-                args.push(prompt.to_string());
                 if let Some(model) = &self.config.model {
                     args.push("--model".to_string());
                     args.push(model.clone());
                 }
-                args.push("--output-format".to_string());
-                args.push("json".to_string());
+                push_json_output_args(&mut args, platform);
                 args.push("--no-session-persistence".to_string());
                 args.push("--permission-mode".to_string());
                 args.push("bypassPermissions".to_string());
             }
             Platform::Gemini => {
-                args.push("-p".to_string());
-                args.push(prompt.to_string());
-                args.push("--output-format".to_string());
-                args.push("json".to_string());
+                push_json_output_args(&mut args, platform);
                 args.push("--approval-mode".to_string());
                 args.push("yolo".to_string());
                 if let Some(model) = &self.config.model {
@@ -284,8 +271,6 @@ impl AIVerifier {
                 }
             }
             Platform::Copilot => {
-                args.push("-p".to_string());
-                args.push(prompt.to_string());
                 args.push("--allow-all-tools".to_string());
                 args.push("--stream".to_string());
                 args.push("off".to_string());
@@ -364,6 +349,18 @@ impl AIVerifier {
         })
         .await
         .context("EvidenceStore write join error")?
+    }
+}
+
+fn push_json_output_args(args: &mut Vec<String>, platform: Platform) {
+    let spec = platform_specs::get_spec(platform);
+    let flag = spec.headless.output_format_flag;
+    if flag.is_empty() || !spec.headless.output_formats.contains(&"json") {
+        return;
+    }
+    args.push(flag.to_string());
+    if flag != "--json" {
+        args.push("json".to_string());
     }
 }
 
