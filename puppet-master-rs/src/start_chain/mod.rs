@@ -20,6 +20,7 @@ mod architecture_generator;
 mod criterion_classifier;
 mod criterion_to_script;
 mod document_parser;
+mod formatters;
 mod multi_pass_generator;
 mod pipeline;
 mod prd_generator;
@@ -48,6 +49,7 @@ pub use criterion_to_script::{
 pub use document_parser::{
     DocumentParser, DocumentSection, ListItem as DocumentListItem, ParsedDocument,
 };
+pub use formatters::{format_prd_to_markdown, format_tier_plan_to_markdown};
 pub use multi_pass_generator::{
     GenerationSummary, MultiPassConfig, MultiPassGenerator, PassResult,
 };

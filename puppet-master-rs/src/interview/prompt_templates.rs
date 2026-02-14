@@ -116,10 +116,12 @@ const DOMAIN_TEMPLATES: [DomainTemplate; 8] = [
 /// * `config` - Interview configuration (feature name, first-principles flag, context).
 /// * `phase_index` - Zero-based index into the 8 domain phases.
 /// * `previous_docs` - Content from previously completed phase documents (for cross-reference).
+/// * `current_phase_qa` - Q/A history from the current phase (for stateless coherence).
 pub fn generate_system_prompt(
     config: &PromptConfig,
     phase_index: usize,
     previous_docs: &[String],
+    current_phase_qa: &[super::state::InterviewQA],
 ) -> String {
     let domain = &DOMAIN_TEMPLATES[phase_index.min(DOMAIN_TEMPLATES.len() - 1)];
     let phase_number = phase_index + 1;
@@ -171,6 +173,28 @@ pub fn generate_system_prompt(
         }
         parts.push(
             "\nUse the above as context. Do not re-ask questions already answered.".to_string(),
+        );
+    }
+
+    // Current phase Q/A history (for stateless coherence)
+    if !current_phase_qa.is_empty() {
+        parts.push(format!(
+            "\n**Prior questions and answers in this phase (Phase {}):**",
+            phase_number
+        ));
+        for (i, qa) in current_phase_qa.iter().enumerate() {
+            parts.push(format!(
+                "\nQ{}: {}\nA{}: {}",
+                i + 1,
+                qa.question,
+                i + 1,
+                qa.answer
+            ));
+        }
+        parts.push(
+            "\nContinue from where you left off. Build upon the information already gathered. \
+             Do not re-ask these questions unless clarification is needed."
+                .to_string(),
         );
     }
 
@@ -271,7 +295,7 @@ mod tests {
             context_content: None,
         };
 
-        let prompt = generate_system_prompt(&config, 0, &[]);
+        let prompt = generate_system_prompt(&config, 0, &[], &[]);
         assert!(prompt.contains("Login page"));
         assert!(prompt.contains("Scope & Goals"));
         assert!(prompt.contains("PM_QUESTION"));
@@ -288,7 +312,7 @@ mod tests {
             context_content: None,
         };
 
-        let prompt = generate_system_prompt(&config, 1, &[]);
+        let prompt = generate_system_prompt(&config, 1, &[], &[]);
         assert!(prompt.contains("First Principles"));
         assert!(prompt.contains("Architecture & Technology"));
     }
@@ -304,11 +328,48 @@ mod tests {
         };
 
         let prev = vec!["Phase 1 defined scope as CLI tool.".to_string()];
-        let prompt = generate_system_prompt(&config, 2, &prev);
+        let prompt = generate_system_prompt(&config, 2, &prev, &[]);
         assert!(prompt.contains("We use Rust."));
         assert!(prompt.contains("Expert Mode"));
         assert!(prompt.contains("Phase 1 defined scope as CLI tool."));
         assert!(prompt.contains("Product / UX"));
+    }
+
+    #[test]
+    fn test_generate_system_prompt_with_qa_history() {
+        use super::super::state::InterviewQA;
+
+        let config = PromptConfig {
+            feature: "Login feature".to_string(),
+            first_principles: false,
+            interaction_mode: "expert".to_string(),
+            project_context: None,
+            context_content: None,
+        };
+
+        let qa_history = vec![
+            InterviewQA {
+                question: "What authentication method will you use?".to_string(),
+                answer: "OAuth2 with social providers".to_string(),
+                timestamp: "2024-01-01T00:00:00Z".to_string(),
+            },
+            InterviewQA {
+                question: "What about session management?".to_string(),
+                answer: "JWT tokens with 1-hour expiry".to_string(),
+                timestamp: "2024-01-01T00:01:00Z".to_string(),
+            },
+        ];
+
+        let prompt = generate_system_prompt(&config, 0, &[], &qa_history);
+
+        // Verify Q/A history is included
+        assert!(prompt.contains("Prior questions and answers in this phase"));
+        assert!(prompt.contains("Q1: What authentication method will you use?"));
+        assert!(prompt.contains("A1: OAuth2 with social providers"));
+        assert!(prompt.contains("Q2: What about session management?"));
+        assert!(prompt.contains("A2: JWT tokens with 1-hour expiry"));
+        assert!(prompt.contains("Continue from where you left off"));
+        assert!(prompt.contains("Do not re-ask these questions"));
     }
 
     #[test]

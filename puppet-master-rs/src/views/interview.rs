@@ -4,7 +4,7 @@
 //! and interactive controls. Follows the retro-futuristic design language.
 
 use crate::app::{ContextMenuTarget, Message, SelectableField};
-use crate::interview::{ReferenceMaterial, ReferenceType};
+use crate::interview::{InterviewPhaseDefinition, ReferenceMaterial, ReferenceType};
 use crate::theme::{AppTheme, fonts, tokens};
 use crate::widgets::{
     InputVariant, selectable_text_field,
@@ -16,22 +16,15 @@ use crate::widgets::{
 use iced::widget::{Space, column, container, row, scrollable, text};
 use iced::{Background, Border, Element, Length};
 
-/// Interview phase display data
-#[derive(Debug, Clone)]
-pub struct InterviewPhase {
-    pub name: String,
-    pub display_name: String,
-    pub completed: bool,
-    pub active: bool,
-}
-
 /// Interview view - Interactive requirements gathering interface
 pub fn view<'a>(
     active: bool,
     paused: bool,
     current_phase: &'a str,
+    phase_definitions: &'a [InterviewPhaseDefinition],
     current_question: &'a str,
     answers: &'a [String],
+    questions: &'a [String],
     phases_complete: &'a [String],
     answer_input: &'a str,
     reference_materials: &'a [ReferenceMaterial],
@@ -42,7 +35,7 @@ pub fn view<'a>(
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
-    let _ = size; // TODO: Use size for responsive layout if needed
+    // Interview uses vertical layout; size used for conditional panel display
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
@@ -124,16 +117,23 @@ pub fn view<'a>(
     }
 
     // Phase tracker - show all phases with completion status
-    let phases = vec![
-        ("scope_goals", "Scope & Goals"),
-        ("architecture_technology", "Architecture & Technology"),
-        ("product_ux", "Product / UX"),
-        ("data_persistence", "Data & Persistence"),
-        ("security_secrets", "Security & Secrets"),
-        ("deployment_environments", "Deployment & Environments"),
-        ("performance_reliability", "Performance & Reliability"),
-        ("testing_verification", "Testing & Verification"),
-    ];
+    let phases: Vec<(&str, &str)> = if phase_definitions.is_empty() {
+        vec![
+            ("scope_goals", "Scope & Goals"),
+            ("architecture_technology", "Architecture & Technology"),
+            ("product_ux", "Product / UX"),
+            ("data_persistence", "Data & Persistence"),
+            ("security_secrets", "Security & Secrets"),
+            ("deployment_environments", "Deployment & Environments"),
+            ("performance_reliability", "Performance & Reliability"),
+            ("testing_verification", "Testing & Verification"),
+        ]
+    } else {
+        phase_definitions
+            .iter()
+            .map(|p| (p.id.as_str(), p.name.as_str()))
+            .collect()
+    };
 
     let mut phase_row = row![].spacing(tokens::spacing::SM);
     for (phase_id, phase_name) in phases {
@@ -319,7 +319,7 @@ pub fn view<'a>(
     );
     content = content.push(input_panel);
 
-    // Reference materials
+    // Reference materials - responsive button layout
     let add_file_btn = styled_button(theme, "ADD FILE", ButtonVariant::Secondary)
         .on_press(Message::InterviewAddReferenceFile);
     let add_image_btn = styled_button(theme, "ADD IMAGE", ButtonVariant::Secondary)
@@ -339,6 +339,17 @@ pub fn view<'a>(
 
     let add_link_btn = styled_button(theme, "ADD LINK", ButtonVariant::Primary)
         .on_press(Message::InterviewAddReferenceLink);
+    
+    // Responsive layout: stack buttons vertically on mobile
+    let button_layout: Element<'_, Message> = if size.is_mobile() {
+        column![add_file_btn, add_image_btn, add_dir_btn]
+            .spacing(tokens::spacing::SM)
+            .into()
+    } else {
+        row![add_file_btn, add_image_btn, add_dir_btn]
+            .spacing(tokens::spacing::SM)
+            .into()
+    };
 
     let mut refs_list = column![]
         .spacing(tokens::spacing::SM)
@@ -448,7 +459,7 @@ pub fn view<'a>(
                 .size(tokens::font_size::MD)
                 .color(theme.ink()),
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
-            row![add_file_btn, add_image_btn, add_dir_btn].spacing(tokens::spacing::SM),
+            button_layout,
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
             row![link_input_widget, add_link_btn]
                 .spacing(tokens::spacing::SM)
@@ -501,52 +512,83 @@ pub fn view<'a>(
 
     content = content.push(progress_panel);
 
-    // Previous answers (scrollable)
+    // Previous Q&A history (scrollable)
     if !answers.is_empty() {
-        let mut answers_list = column![]
+        let mut history_list = column![]
             .spacing(tokens::spacing::SM)
             .padding(tokens::spacing::MD);
 
-        answers_list = answers_list.push(
-            text("PREVIOUS ANSWERS")
+        history_list = history_list.push(
+            text("INTERVIEW HISTORY")
                 .font(fonts::FONT_DISPLAY)
                 .size(tokens::font_size::MD)
                 .color(theme.ink()),
         );
 
         for (idx, answer) in answers.iter().enumerate() {
-            answers_list = answers_list.push(
-                container(
-                    column![
-                        text(format!("Q{}", idx + 1))
-                            .font(fonts::FONT_MONO)
-                            .size(tokens::font_size::XS)
-                            .color(theme.accent()),
-                        text(answer)
-                            .font(fonts::FONT_BODY)
-                            .size(tokens::font_size::SM)
-                            .color(theme.ink()),
-                    ]
-                    .spacing(tokens::spacing::XXXS),
-                )
-                .padding(tokens::spacing::SM)
-                .width(Length::Fill)
-                .style(move |_: &iced::Theme| container::Style {
-                    background: Some(Background::Color(theme.paper_light())),
-                    border: Border {
-                        color: theme.ink_faded(),
-                        width: 1.0,
-                        radius: tokens::radii::NONE.into(),
-                    },
-                    text_color: Some(theme.ink()),
-                    ..Default::default()
-                }),
+            let question = questions.get(idx).map(|s| s.as_str()).unwrap_or("<no question>");
+            
+            let mut qa_column = column![]
+                .spacing(tokens::spacing::XS);
+            
+            // Question label
+            qa_column = qa_column.push(
+                text(format!("Q{}", idx + 1))
+                    .font(fonts::FONT_MONO)
+                    .size(tokens::font_size::XS)
+                    .color(theme.accent()),
+            );
+            
+            // Selectable question text
+            qa_column = qa_column.push(selectable_text_field(
+                theme,
+                question,
+                SelectableField::InterviewQuestion(idx),
+                active_context_menu,
+                move |value| {
+                    Message::SelectableFieldChanged(SelectableField::InterviewQuestion(idx), value)
+                },
+            ));
+            
+            // Answer label
+            qa_column = qa_column.push(
+                text(format!("A{}", idx + 1))
+                    .font(fonts::FONT_MONO)
+                    .size(tokens::font_size::XS)
+                    .color(theme.success()),
+            );
+            
+            // Selectable answer text
+            qa_column = qa_column.push(selectable_text_field(
+                theme,
+                answer,
+                SelectableField::InterviewAnswer(idx),
+                active_context_menu,
+                move |value| {
+                    Message::SelectableFieldChanged(SelectableField::InterviewAnswer(idx), value)
+                },
+            ));
+            
+            history_list = history_list.push(
+                container(qa_column)
+                    .padding(tokens::spacing::SM)
+                    .width(Length::Fill)
+                    .style(move |_: &iced::Theme| container::Style {
+                        background: Some(Background::Color(theme.paper_light())),
+                        border: Border {
+                            color: theme.ink_faded(),
+                            width: 1.0,
+                            radius: tokens::radii::NONE.into(),
+                        },
+                        text_color: Some(theme.ink()),
+                        ..Default::default()
+                    }),
             );
         }
 
-        let answers_panel =
-            themed_panel(scrollable(answers_list).height(Length::Fixed(300.0)), theme);
-        content = content.push(answers_panel);
+        let history_panel =
+            themed_panel(scrollable(history_list).height(Length::Fixed(300.0)), theme);
+        content = content.push(history_panel);
     }
 
     container(scrollable(content))

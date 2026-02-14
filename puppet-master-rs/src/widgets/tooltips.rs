@@ -56,6 +56,14 @@ static TOOLTIPS: Lazy<HashMap<&'static str, TooltipEntry>> = Lazy::new(|| {
         );
 
     map.insert(
+            "interview.vision_provider",
+            TooltipEntry::new(
+                "Preferred vision provider for image references",
+                "If you attach images as reference materials, this setting chooses which platform should be preferred for vision-capable work. The UI will only offer platforms that are detected as vision-capable."
+            )
+        );
+
+    map.insert(
             "interview.primary_model",
             TooltipEntry::new(
                 "Model identifier (e.g., claude-sonnet-4-5-20250929)",
@@ -247,6 +255,22 @@ static TOOLTIPS: Lazy<HashMap<&'static str, TooltipEntry>> = Lazy::new(|| {
         )
     );
 
+    map.insert(
+        "tier.task_failure_style",
+        TooltipEntry::new(
+            "Retry strategy when a tier fails",
+            "What to do when the AI fails at this tier. Spawn new agent is safest; continue same agent can preserve context; skip retries moves on quickly."
+        )
+    );
+
+    map.insert(
+        "tier.max_iterations",
+        TooltipEntry::new(
+            "Maximum attempts per item",
+            "How many times the system will retry before giving up on this tier item. Higher is more resilient but can burn quota."
+        )
+    );
+
     // ═══════════════════════════════════════════════════════════════
     // Budget Tab Tooltips
     // ═══════════════════════════════════════════════════════════════
@@ -395,6 +419,142 @@ static TOOLTIPS: Lazy<HashMap<&'static str, TooltipEntry>> = Lazy::new(|| {
         )
     );
 
+    map.insert(
+        "memory.progress_file",
+        TooltipEntry::new(
+            "Path to progress.txt",
+            "Where the orchestrator writes short-term progress notes (a running narrative of what’s happening)."
+        )
+    );
+
+    map.insert(
+        "memory.agents_file",
+        TooltipEntry::new(
+            "Path to AGENTS.md",
+            "Where long-term agent guidance lives (project rules, gotchas, patterns). Agents read this to stay consistent."
+        )
+    );
+
+    map.insert(
+        "memory.prd_file",
+        TooltipEntry::new(
+            "Path to prd.json work queue",
+            "The PRD/work-queue file the orchestrator reads to decide what to do next."
+        )
+    );
+
+    map.insert(
+        "memory.multi_level_agents",
+        TooltipEntry::new(
+            "Enable per-tier agent memory",
+            "When enabled, each tier can have its own agent context/memory behavior. Leave on for most runs."
+        )
+    );
+
+    map.insert(
+        "checkpointing.enabled",
+        TooltipEntry::new(
+            "Enable periodic checkpoints",
+            "Save state snapshots periodically so you can resume safely if the run crashes or is stopped."
+        )
+    );
+
+    map.insert(
+        "checkpointing.interval_seconds",
+        TooltipEntry::new(
+            "Seconds between automatic checkpoints",
+            "How often to write checkpoint files. Smaller numbers = safer but more disk writes."
+        )
+    );
+
+    map.insert(
+        "checkpointing.max_checkpoints",
+        TooltipEntry::new(
+            "How many checkpoints to keep",
+            "Older checkpoints beyond this count are deleted to avoid filling disk."
+        )
+    );
+
+    map.insert(
+        "checkpointing.on_subtask_complete",
+        TooltipEntry::new(
+            "Checkpoint on subtask completion",
+            "When enabled, write a checkpoint every time a subtask completes successfully."
+        )
+    );
+
+    map.insert(
+        "checkpointing.on_shutdown",
+        TooltipEntry::new(
+            "Checkpoint on shutdown",
+            "When enabled, write a checkpoint when the orchestrator shuts down cleanly."
+        )
+    );
+
+    map.insert(
+        "loop_guard.enabled",
+        TooltipEntry::new(
+            "Enable loop detection",
+            "Detect repeated failures/retries and stop the run before it burns unlimited quota."
+        )
+    );
+
+    map.insert(
+        "loop_guard.max_repetitions",
+        TooltipEntry::new(
+            "Max repeated cycles",
+            "How many times the system can repeat the same pattern before the loop guard stops execution."
+        )
+    );
+
+    map.insert(
+        "loop_guard.suppress_reply_relay",
+        TooltipEntry::new(
+            "Hide repeated reply relays",
+            "When enabled, the UI/network relay will suppress repetitive reply spam while a loop is detected."
+        )
+    );
+
+    map.insert(
+        "cli_paths.cursor",
+        TooltipEntry::new(
+            "Path to Cursor CLI binary",
+            "Override where the system looks for the Cursor CLI. Leave blank to use auto-detection from PATH."
+        )
+    );
+
+    map.insert(
+        "cli_paths.codex",
+        TooltipEntry::new(
+            "Path to Codex CLI binary",
+            "Override where the system looks for the Codex CLI. Leave blank to use auto-detection from PATH."
+        )
+    );
+
+    map.insert(
+        "cli_paths.claude",
+        TooltipEntry::new(
+            "Path to Claude CLI binary",
+            "Override where the system looks for the Claude Code CLI. Leave blank to use auto-detection from PATH."
+        )
+    );
+
+    map.insert(
+        "cli_paths.gemini",
+        TooltipEntry::new(
+            "Path to Gemini CLI binary",
+            "Override where the system looks for the Gemini CLI. Leave blank to use auto-detection from PATH."
+        )
+    );
+
+    map.insert(
+        "cli_paths.copilot",
+        TooltipEntry::new(
+            "Path to Copilot CLI binary",
+            "Override where the system looks for the Copilot CLI. Leave blank to use auto-detection from PATH."
+        )
+    );
+
     // ═══════════════════════════════════════════════════════════════
     // Network Tab Tooltips
     // ═══════════════════════════════════════════════════════════════
@@ -475,6 +635,30 @@ static TOOLTIPS: Lazy<HashMap<&'static str, TooltipEntry>> = Lazy::new(|| {
         )
     );
 
+    map.insert(
+        "verification.browser_adapter",
+        TooltipEntry::new(
+            "Browser automation backend (e.g., playwright)",
+            "Which tool will drive the browser for end-to-end checks. Playwright is the default recommendation."
+        )
+    );
+
+    map.insert(
+        "verification.evidence_directory",
+        TooltipEntry::new(
+            "Where verification evidence is written",
+            "Folder where screenshots, logs, traces, and other proof from verification runs are saved."
+        )
+    );
+
+    map.insert(
+        "verification.screenshot_on_failure",
+        TooltipEntry::new(
+            "Capture screenshots on verification failure",
+            "When enabled, the system saves a screenshot whenever a verification step fails, which makes debugging much faster."
+        )
+    );
+
     // ═══════════════════════════════════════════════════════════════
     // Branching Tab Tooltips
     // ═══════════════════════════════════════════════════════════════
@@ -516,6 +700,22 @@ static TOOLTIPS: Lazy<HashMap<&'static str, TooltipEntry>> = Lazy::new(|| {
         TooltipEntry::new(
             "Clean up merged branches automatically",
             "Delete feature branches after merging to keep your repo tidy. Standard practice. Turn off if you want to keep branch history forever."
+        )
+    );
+
+    map.insert(
+        "branching.naming_pattern",
+        TooltipEntry::new(
+            "Branch name template",
+            "Pattern used to generate new branch names. Use placeholders like {tier} and {id} to keep branches organized."
+        )
+    );
+
+    map.insert(
+        "branching.granularity",
+        TooltipEntry::new(
+            "When to create new branches",
+            "Choose whether to work on one branch for the whole run, or to create separate branches per phase or per task."
         )
     );
 

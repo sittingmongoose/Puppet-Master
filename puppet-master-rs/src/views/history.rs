@@ -72,7 +72,7 @@ pub fn view<'a>(
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
-    let _ = size; // TODO: Use size for responsive layout if needed
+    // Use mobile-friendly layouts for filter buttons
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
@@ -105,11 +105,8 @@ pub fn view<'a>(
         theme,
     ));
 
-    // Status filter buttons
-    let mut filter_row = row![
-        text("Filter:")
-            .size(tokens::font_size::BASE)
-            .color(theme.ink()),
+    // Status filter buttons - stack on mobile, horizontal on desktop
+    let mut filter_buttons: Vec<Element<Message>> = vec![
         styled_button(
             theme,
             "All",
@@ -119,13 +116,12 @@ pub fn view<'a>(
                 ButtonVariant::Secondary
             }
         )
-        .on_press(Message::HistoryFilterChanged(None)),
-    ]
-    .spacing(tokens::spacing::SM)
-    .align_y(iced::Alignment::Center);
+        .on_press(Message::HistoryFilterChanged(None))
+        .into(),
+    ];
 
     for status in SessionStatus::all() {
-        filter_row = filter_row.push(
+        filter_buttons.push(
             styled_button(
                 theme,
                 status.as_str(),
@@ -135,12 +131,40 @@ pub fn view<'a>(
                     ButtonVariant::Secondary
                 },
             )
-            .on_press(Message::HistoryFilterChanged(Some(status))),
+            .on_press(Message::HistoryFilterChanged(Some(status)))
+            .into(),
         );
     }
 
+    let filter_layout: Element<Message> = if size.is_mobile() {
+        // Mobile: vertical stack
+        let mut filter_col = column![
+            text("Filter:")
+                .size(tokens::font_size::BASE)
+                .color(theme.ink()),
+        ]
+        .spacing(tokens::spacing::SM);
+        for btn in filter_buttons {
+            filter_col = filter_col.push(btn);
+        }
+        Element::from(filter_col)
+    } else {
+        // Desktop: horizontal row
+        let mut filter_row = row![
+            text("Filter:")
+                .size(tokens::font_size::BASE)
+                .color(theme.ink()),
+        ]
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center);
+        for btn in filter_buttons {
+            filter_row = filter_row.push(btn);
+        }
+        Element::from(filter_row)
+    };
+
     content = content.push(themed_panel(
-        container(filter_row).padding(tokens::spacing::MD),
+        container(filter_layout).padding(tokens::spacing::MD),
         theme,
     ));
 

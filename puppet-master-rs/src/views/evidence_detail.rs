@@ -14,9 +14,9 @@ pub fn view<'a>(
     item: &'a EvidenceItem,
     content_preview: &'a Option<String>,
     theme: &'a AppTheme,
-    size: crate::widgets::responsive::LayoutSize,
+    _size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
-    let _ = size; // TODO: Use size for responsive layout if needed
+    // Detail view uses vertical layout; size reserved for future enhancements
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);

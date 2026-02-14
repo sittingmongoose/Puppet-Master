@@ -138,6 +138,7 @@ impl GateEnforcer {
     }
 
     /// Define default enforcement rules
+    /// Uses Warning level for subtask/task tiers, to be strengthened at phase/root levels
     fn default_rules() -> Vec<Rule> {
         vec![
             Rule {
@@ -159,6 +160,46 @@ impl GateEnforcer {
                 check: RuleCheck::SectionExists("successful patterns".to_string()),
             },
         ]
+    }
+
+    /// Create gate enforcer with rules adjusted for tier level
+    /// Higher tiers (phase/root) have stricter enforcement (Error vs Warning)
+    pub fn for_tier(tier_id: &str) -> Self {
+        let tier_parts: Vec<&str> = tier_id.split('.').collect();
+        let tier_level = tier_parts.len();
+        
+        // phase (1 part) or root (0 parts) = high tier
+        // task (2 parts) or subtask (3+ parts) = low tier
+        let is_high_tier = tier_level <= 1;
+        
+        let rules = if is_high_tier {
+            // High tier: promote critical rules to Error level
+            vec![
+                Rule {
+                    name: "min-patterns".to_string(),
+                    description: "At least 2 successful patterns should be documented".to_string(),
+                    severity: ViolationSeverity::Error, // Error at phase/root
+                    check: RuleCheck::MinPatterns(2),
+                },
+                Rule {
+                    name: "min-failure-modes".to_string(),
+                    description: "At least 1 failure mode should be documented".to_string(),
+                    severity: ViolationSeverity::Error, // Error at phase/root
+                    check: RuleCheck::MinFailureModes(1),
+                },
+                Rule {
+                    name: "patterns-section".to_string(),
+                    description: "AGENTS.md should have a Successful Patterns section".to_string(),
+                    severity: ViolationSeverity::Error, // Error at phase/root
+                    check: RuleCheck::SectionExists("successful patterns".to_string()),
+                },
+            ]
+        } else {
+            // Low tier: keep as warnings
+            Self::default_rules()
+        };
+        
+        Self { rules }
     }
 
     /// Add a custom rule
@@ -500,5 +541,80 @@ mod tests {
         let (content, doc) = create_test_doc();
 
         assert!(enforcer.quick_check(&content, &doc).unwrap());
+    }
+
+    #[test]
+    fn test_tier_specific_enforcement_low_tier() {
+        // Low tier (subtask) - uses warnings
+        let enforcer = GateEnforcer::for_tier("phase1.task1.subtask1");
+        let mut doc = AgentsDoc::new("test");
+        doc.agents
+            .push(AgentDefinition::new("Pattern 1", "pattern", "Only one"));
+
+        let content = "# AGENTS\n\n## Patterns\n- Only one\n";
+        let result = enforcer.enforce(content, &doc).unwrap();
+
+        // Should pass (warnings don't block)
+        assert!(result.passed);
+        assert!(!result.violations.is_empty());
+        assert!(result.violations.iter().all(|v| v.severity != ViolationSeverity::Error));
+    }
+
+    #[test]
+    fn test_tier_specific_enforcement_high_tier() {
+        // High tier (phase) - uses errors
+        let enforcer = GateEnforcer::for_tier("phase1");
+        let mut doc = AgentsDoc::new("test");
+        doc.agents
+            .push(AgentDefinition::new("Pattern 1", "pattern", "Only one"));
+
+        let content = "# AGENTS\n\n## Patterns\n- Only one\n";
+        let result = enforcer.enforce(content, &doc).unwrap();
+
+        // Should fail (errors block)
+        assert!(!result.passed);
+        assert!(result.violations.iter().any(|v| v.severity == ViolationSeverity::Error));
+    }
+
+    #[test]
+    fn test_high_tier_requires_failure_modes() {
+        let enforcer = GateEnforcer::for_tier("phase1");
+
+        // Satisfy patterns requirement, but provide no failure modes.
+        let mut doc = AgentsDoc::new("test");
+        doc.agents
+            .push(AgentDefinition::new("Pattern 1", "pattern", "Pattern 1"));
+        doc.agents
+            .push(AgentDefinition::new("Pattern 2", "pattern", "Pattern 2"));
+
+        let content = "# AGENTS\n\n## Successful Patterns\n\n- Pattern 1\n- Pattern 2\n";
+        let result = enforcer.enforce(content, &doc).unwrap();
+
+        assert!(!result.passed);
+        let violation = result
+            .violations
+            .iter()
+            .find(|v| v.rule == "min-failure-modes")
+            .expect("Expected min-failure-modes violation");
+        assert_eq!(violation.severity, ViolationSeverity::Error);
+    }
+
+    #[test]
+    fn test_tier_level_detection() {
+        // Test different tier formats
+        let subtask = GateEnforcer::for_tier("phase1.task1.subtask1");
+        let task = GateEnforcer::for_tier("phase1.task1");
+        let phase = GateEnforcer::for_tier("phase1");
+        let root = GateEnforcer::for_tier("root");
+
+        // Check that phase and root have error-level rules
+        let has_errors = |enforcer: &GateEnforcer| {
+            enforcer.rules.iter().any(|r| r.severity == ViolationSeverity::Error)
+        };
+
+        assert!(!has_errors(&subtask), "Subtask should use warnings");
+        assert!(!has_errors(&task), "Task should use warnings");
+        assert!(has_errors(&phase), "Phase should use errors");
+        assert!(has_errors(&root), "Root should use errors");
     }
 }

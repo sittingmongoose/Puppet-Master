@@ -41,6 +41,7 @@
 //! - Uses `--json` for structured JSONL output
 //! - Uses `--color never` for clean output parsing
 
+use crate::platforms::context_files::{context_file_parent_dirs, has_image_extension};
 use crate::platforms::{BaseRunner, PlatformRunner};
 use crate::types::{ExecutionRequest, ExecutionResult, Platform};
 use anyhow::{Result, anyhow};
@@ -205,6 +206,20 @@ impl PlatformRunner for CodexRunner {
         args.push("--cd".to_string());
         args.push(request.working_directory.display().to_string());
 
+        // Allow access to any referenced file locations
+        for dir in context_file_parent_dirs(&request.context_files) {
+            args.push("--add-dir".to_string());
+            args.push(dir.display().to_string());
+        }
+
+        // Attach image files (Codex supports -i/--image)
+        for p in &request.context_files {
+            if has_image_extension(p.as_path()) {
+                args.push("--image".to_string());
+                args.push(p.display().to_string());
+            }
+        }
+
         // Reasoning effort (for o3/o3-mini models)
         if let Some(ref effort) = request.reasoning_effort {
             args.push("--reasoning-effort".to_string());
@@ -289,6 +304,27 @@ mod tests {
 
         // Should not have --full-auto in plan mode
         assert!(!args.contains(&"--full-auto".to_string()));
+    }
+
+    #[test]
+    fn test_build_args_with_images() {
+        let runner = CodexRunner::new();
+        let request = ExecutionRequest::new(
+            Platform::Codex,
+            "gpt-5.2-codex".to_string(),
+            "Test prompt".to_string(),
+            PathBuf::from("/tmp"),
+        )
+        .with_context_files(vec![PathBuf::from("/tmp/ref.png"), PathBuf::from("/tmp/ref.txt")]);
+
+        let args = runner.build_args(&request);
+
+        // Image file attached, non-image ignored
+        assert!(args.contains(&"--image".to_string()));
+        assert!(args.contains(&"/tmp/ref.png".to_string()));
+        assert!(!args.contains(&"/tmp/ref.txt".to_string()));
+        assert!(args.contains(&"--add-dir".to_string()));
+        assert!(args.contains(&"/tmp".to_string()));
     }
 
     #[tokio::test]

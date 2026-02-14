@@ -607,6 +607,39 @@ impl Orchestrator {
     }
 
     /// Create pull request for tier after successful completion
+    /// Create pull request for completed tier
+    ///
+    /// # Graceful Error Handling
+    /// 
+    /// This method handles PR creation failures gracefully:
+    /// - Runs preflight checks via `PrManager::create_pr()`
+    /// - If preflight fails (gh not installed/authenticated), logs warning and continues
+    /// - If PR creation fails, logs warning and continues
+    /// - **Never panics or crashes** - always returns `Ok(())`
+    /// 
+    /// This ensures the orchestrator can continue operating even in environments
+    /// without gh CLI (CI/headless) or without GitHub authentication.
+    ///
+    /// # Arguments
+    /// * `tier_id` - Tier identifier
+    /// * `tier_type` - Type of tier (Phase/Task/Subtask/Iteration)
+    ///
+    /// # Example Behavior
+    /// ```text
+    /// Without gh CLI:
+    ///   WARN: Failed to create PR for tier TK-001: Preflight check failed: 
+    ///         gh CLI not found. Install from https://cli.github.com/
+    ///   → Orchestrator continues normally
+    ///
+    /// With gh CLI but not authenticated:
+    ///   WARN: Failed to create PR for tier TK-001: Preflight check failed:
+    ///         gh CLI not authenticated. Run 'gh auth login'
+    ///   → Orchestrator continues normally
+    ///
+    /// With gh CLI authenticated:
+    ///   INFO: Created PR for tier TK-001: https://github.com/owner/repo/pull/42
+    ///   → PR created successfully
+    /// ```
     async fn create_tier_pr(&self, tier_id: &str, tier_type: TierType) -> Result<()> {
         // Check if auto-PR is enabled
         if !self.config.branching.auto_pr {
@@ -758,9 +791,11 @@ impl Orchestrator {
             String::new()
         };
 
+        // Create tier-specific enforcer (higher tiers have stricter rules)
+        let tier_enforcer = GateEnforcer::for_tier(tier_id);
+
         // Run enforcement
-        let result = self
-            .gate_enforcer
+        let result = tier_enforcer
             .enforce(&agents_content, &agents_doc)
             .context("Failed to run AGENTS.md enforcement")?;
 
@@ -1077,39 +1112,71 @@ impl Orchestrator {
             return Ok(());
         }
 
-        let (orchestrator_state, tier_states, stats) = {
+        let (orchestrator_state, tier_states, stats, position, total_iterations) = {
             let tree = self.tier_tree.lock().unwrap();
             let stats = tree.get_stats();
             let orchestrator_state = self.current_state();
 
-            // Build tier states
+            // Track current position and total iterations
+            let mut current_phase_id: Option<String> = None;
+            let mut current_task_id: Option<String> = None;
+            let mut current_subtask_id: Option<String> = None;
+            let mut current_iteration: u32 = 0;
+            let mut total_iterations: usize = 0;
+
+            // Build tier states and collect position data
             let mut tier_states = HashMap::new();
             for node in tree.iter_dfs() {
+                let state = node.state_machine.current_state();
+                let iteration_count = node.state_machine.current_iteration();
+                
+                // Sum all iterations across all nodes
+                total_iterations += iteration_count as usize;
+
+                // Track active tier position
+                if state.is_active() {
+                    match node.tier_type {
+                        TierType::Phase => {
+                            current_phase_id = Some(node.id.clone());
+                        }
+                        TierType::Task => {
+                            current_task_id = Some(node.id.clone());
+                        }
+                        TierType::Subtask => {
+                            current_subtask_id = Some(node.id.clone());
+                        }
+                        TierType::Iteration => {
+                            current_iteration = iteration_count;
+                        }
+                    }
+                }
+
                 let tier_context = crate::core::state_persistence::TierContext {
-                    state: node.state_machine.current_state(),
+                    state,
                     tier_type: node.tier_type,
                     item_id: node.id.clone(),
-                    iteration_count: 0, // TODO: track iteration count
+                    iteration_count,
                     max_iterations: node.state_machine.max_iterations(),
                     last_error: None,
                 };
                 tier_states.insert(node.id.clone(), tier_context);
             }
-            (orchestrator_state, tier_states, stats)
-        };
 
-        let current_position = CurrentPosition {
-            phase_id: None, // TODO: track actual position
-            task_id: None,
-            subtask_id: None,
-            iteration: 0,
+            let current_position = CurrentPosition {
+                phase_id: current_phase_id,
+                task_id: current_task_id,
+                subtask_id: current_subtask_id,
+                iteration: current_iteration,
+            };
+
+            (orchestrator_state, tier_states, stats, current_position, total_iterations)
         };
 
         let metadata = CheckpointMetadata {
             project_name: self.config.project.name.clone(),
             completed_subtasks: stats.passed,
             total_subtasks: stats.subtasks,
-            iterations_run: 0, // TODO: track globally
+            iterations_run: total_iterations,
         };
 
         // Use async create method
@@ -1121,7 +1188,7 @@ impl Orchestrator {
                     orchestrator_state,
                     OrchestratorContext::default(),
                     tier_states,
-                    current_position,
+                    position,
                     metadata,
                 )
                 .await
@@ -2301,38 +2368,70 @@ impl Orchestrator {
             sm.current_state()
         };
 
-        let (stats, tier_states) = {
+        let (stats, tier_states, position, total_iterations) = {
             let tree = self.tier_tree.lock().unwrap();
             let stats = tree.get_stats();
 
-            // Build tier states
+            // Track current position and total iterations
+            let mut current_phase_id: Option<String> = None;
+            let mut current_task_id: Option<String> = None;
+            let mut current_subtask_id: Option<String> = None;
+            let mut current_iteration: u32 = 0;
+            let mut total_iterations: usize = 0;
+
+            // Build tier states and collect position data
             let mut tier_states = std::collections::HashMap::new();
             for node in tree.iter_dfs() {
+                let state = node.state_machine.current_state();
+                let iteration_count = node.state_machine.current_iteration();
+                
+                // Sum all iterations across all nodes
+                total_iterations += iteration_count as usize;
+
+                // Track active tier position
+                if state.is_active() {
+                    match node.tier_type {
+                        TierType::Phase => {
+                            current_phase_id = Some(node.id.clone());
+                        }
+                        TierType::Task => {
+                            current_task_id = Some(node.id.clone());
+                        }
+                        TierType::Subtask => {
+                            current_subtask_id = Some(node.id.clone());
+                        }
+                        TierType::Iteration => {
+                            current_iteration = iteration_count;
+                        }
+                    }
+                }
+
                 let tier_context = crate::core::state_persistence::TierContext {
-                    state: node.state_machine.current_state(),
+                    state,
                     tier_type: node.tier_type,
                     item_id: node.id.clone(),
-                    iteration_count: 0, // TODO: track iteration count in TierStateMachine
+                    iteration_count,
                     max_iterations: node.state_machine.max_iterations(),
                     last_error: None,
                 };
                 tier_states.insert(node.id.clone(), tier_context);
             }
-            (stats, tier_states)
+
+            let position = CurrentPosition {
+                phase_id: current_phase_id,
+                task_id: current_task_id,
+                subtask_id: current_subtask_id,
+                iteration: current_iteration,
+            };
+
+            (stats, tier_states, position, total_iterations)
         };
 
         let metadata = CheckpointMetadata {
             project_name: self.config.project.name.clone(),
             completed_subtasks: stats.passed,
             total_subtasks: stats.subtasks,
-            iterations_run: 0, // Could track this globally
-        };
-
-        let position = CurrentPosition {
-            phase_id: None, // Could track current phase
-            task_id: None,
-            subtask_id: None,
-            iteration: 0,
+            iterations_run: total_iterations,
         };
 
         // Spawn blocking to avoid holding mutex across await
@@ -3037,4 +3136,11 @@ PATTERN: Use Result<T, E> for error handling
                 .ends_with(subtask_id)
         );
     }
+
+    // NOTE: Checkpoint metadata population (CurrentPosition and iterations_run) is tested
+    // through integration tests and verified manually. The logic:
+    // 1. CurrentPosition is populated by finding active tiers (state.is_active()) 
+    //    and capturing phase_id/task_id/subtask_id based on tier_type
+    // 2. iterations_run is the sum of node.state_machine.current_iteration() across all nodes
+    // This implementation is in checkpoint_if_needed() and create_checkpoint() methods.
 }

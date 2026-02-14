@@ -34,7 +34,8 @@ impl AgentsManager {
     /// Get the AGENTS.md path for a specific tier
     pub fn get_agents_path(&self, tier_id: &str) -> PathBuf {
         let inner = self.inner.lock().unwrap();
-        let parts: Vec<&str> = tier_id.split('.').collect();
+        let tier_id = if tier_id == "root" { "" } else { tier_id };
+        let parts: Vec<&str> = tier_id.split('.').filter(|p| !p.is_empty()).collect();
 
         let mut path = inner.root_path.clone();
 

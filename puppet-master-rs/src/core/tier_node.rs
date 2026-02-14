@@ -9,7 +9,7 @@
 
 use crate::core::state_machine::TierStateMachine;
 use crate::types::*;
-use anyhow::{Context, Result, anyhow};
+use anyhow::{Result, anyhow};
 use log::warn;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, VecDeque};

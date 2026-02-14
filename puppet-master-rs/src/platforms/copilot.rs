@@ -46,6 +46,7 @@
 //! - Uses `-p` mode with `--allow-all-tools` and `--allow-all-paths`
 //! - Disables streaming for easier output parsing
 
+use crate::platforms::context_files::append_prompt_attachments;
 use crate::platforms::{BaseRunner, PlatformRunner};
 use crate::types::{ExecutionRequest, ExecutionResult, Platform};
 use anyhow::Result;
@@ -142,9 +143,10 @@ impl PlatformRunner for CopilotRunner {
     fn build_args(&self, request: &ExecutionRequest) -> Vec<String> {
         let mut args = Vec::new();
 
-        // Add prompt
+        // Add prompt (Copilot attaches files via @path tokens)
+        let prompt = append_prompt_attachments(&request.prompt, &request.context_files, "@");
         args.push("-p".to_string());
-        args.push(request.prompt.clone());
+        args.push(prompt);
 
         // Allow all tools (required for autonomous operation)
         args.push("--allow-all-tools".to_string());
@@ -216,6 +218,22 @@ mod tests {
 
         // Plan mode should NOT include --allow-all-paths
         assert!(!args.contains(&"--allow-all-paths".to_string()));
+    }
+
+    #[test]
+    fn test_build_args_with_context_files() {
+        let runner = CopilotRunner::new();
+        let request = ExecutionRequest::new(
+            Platform::Copilot,
+            "github-copilot".to_string(),
+            "Test prompt".to_string(),
+            PathBuf::from("/tmp"),
+        )
+        .with_context_files(vec![PathBuf::from("/tmp/ref.png")]);
+
+        let args = runner.build_args(&request);
+
+        assert!(args.iter().any(|a| a.contains("@/tmp/ref.png")));
     }
 
     #[tokio::test]

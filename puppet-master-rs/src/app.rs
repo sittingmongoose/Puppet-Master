@@ -12,6 +12,13 @@ use std::process::Command;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 
+// Start chain pipeline imports for wizard
+use crate::config::ConfigManager;
+use crate::start_chain::{
+    format_prd_to_markdown, format_tier_plan_to_markdown, RequirementsInput, StartChainParams,
+    StartChainPipeline, TierPlanGenerator,
+};
+
 // ============================================================================
 // Subscriptions
 // ============================================================================
@@ -106,6 +113,8 @@ pub enum SelectableField {
     InterviewReferenceFile(usize),
     InterviewReferenceImage(usize),
     InterviewReferenceDirectory(usize),
+    InterviewAnswer(usize),
+    InterviewQuestion(usize),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -327,12 +336,15 @@ pub struct App {
     pub interview_current_phase: String,
     pub interview_current_question: String,
     pub interview_answers: Vec<String>,
+    pub interview_questions: Vec<String>, // Track questions for history
     pub interview_phases_complete: Vec<String>,
+    pub interview_phase_definitions: Vec<crate::interview::InterviewPhaseDefinition>,
     pub interview_answer_input: String,
     pub interview_reference_materials: Vec<crate::interview::ReferenceMaterial>,
     pub interview_reference_link_input: String,
     pub interview_researching: bool,
     pub interview_empty_references_text: String,
+    interview_orchestrator: Option<Arc<Mutex<crate::interview::InterviewOrchestrator>>>,
 
     // Setup
     pub setup_platform_statuses: Vec<PlatformStatus>,
@@ -497,6 +509,7 @@ pub enum Message {
     ToggleDoctorPlatform(crate::types::Platform),
     ToggleDoctorCheckExpand(String), // check name
     InstallAllMissing,
+    InstallPlaywright, // Trigger Playwright auto-install
 
     // Wizard
     WizardNextStep,
@@ -582,6 +595,9 @@ pub enum Message {
     InterviewAddReferenceLink,
     InterviewRemoveReference(usize),
     InterviewReferencePicked(crate::interview::ReferenceType),
+    InterviewReferenceContextLoaded(Result<String, String>),
+    InterviewInitialized(Result<(Arc<Mutex<crate::interview::InterviewOrchestrator>>, String), String>),
+    InterviewAIResponse(Result<crate::interview::TurnResult, String>),
 
     // Interview Config UI
     ConfigInterviewFieldChanged(String, String), // field, value
@@ -965,12 +981,15 @@ impl App {
             interview_current_phase: String::new(),
             interview_current_question: String::new(),
             interview_answers: Vec::new(),
+            interview_questions: Vec::new(),
             interview_phases_complete: Vec::new(),
+            interview_phase_definitions: Vec::new(),
             interview_answer_input: String::new(),
             interview_reference_materials: Vec::new(),
             interview_reference_link_input: String::new(),
             interview_researching: false,
             interview_empty_references_text: "No reference materials added.".to_string(),
+            interview_orchestrator: None,
 
             // UI State
             toasts: Vec::new(),
@@ -1043,11 +1062,49 @@ impl App {
         }
 
         // Initial tasks: load fonts, load projects, load config, etc.
-        let font_tasks: Vec<iced::Task<Message>> = crate::theme::fonts::load_fonts()
+        let mut startup_tasks: Vec<iced::Task<Message>> = crate::theme::fonts::load_fonts()
             .into_iter()
             .map(|task| task.map(|_| Message::None))
             .collect();
-        let task = Task::batch(font_tasks);
+
+        // Best-effort: recover leaked/orphaned worktrees from previous crashes.
+        startup_tasks.push(Task::perform(
+            async {
+                let cwd = std::env::current_dir().unwrap_or_default();
+
+                let Ok(output) = tokio::process::Command::new("git")
+                    .current_dir(&cwd)
+                    .args(["rev-parse", "--show-toplevel"])
+                    .output()
+                    .await
+                else {
+                    return;
+                };
+
+                if !output.status.success() {
+                    return;
+                }
+
+                let repo_root = std::path::PathBuf::from(
+                    String::from_utf8_lossy(&output.stdout).trim().to_string(),
+                );
+
+                let manager = crate::git::WorktreeManager::new(repo_root);
+                match manager.recover_orphaned_worktrees().await {
+                    Ok(recovered) => {
+                        if recovered > 0 {
+                            log::info!("Recovered {recovered} orphaned worktree(s) on startup");
+                        }
+                    }
+                    Err(e) => {
+                        log::warn!("Worktree recovery failed on startup: {e:#}");
+                    }
+                }
+            },
+            |_| Message::None,
+        ));
+
+        let task = Task::batch(startup_tasks);
 
         // First-boot detection: check if setup has been completed
         let cwd = std::env::current_dir().unwrap_or_default();
@@ -1129,6 +1186,10 @@ impl App {
                         // Auto-run detection if no results yet
                         if self.setup_platform_statuses.is_empty() && !self.setup_is_checking {
                             return self.update(Message::SetupRunDetection);
+                        }
+                        // Also run Playwright check if we don't have results yet
+                        if !self.doctor_results.iter().any(|r| r.name == "playwright-browsers") {
+                            return self.update(Message::RunCheck("playwright-browsers".to_string()));
                         }
                     }
                     Page::Config => {
@@ -1421,14 +1482,6 @@ impl App {
             // Projects
             // ================================================================
             Message::SelectProject(name) => {
-                // Update current project
-                for project in &mut self.projects {
-                    project.status = if project.name == name {
-                        crate::views::projects::ProjectStatus::Active
-                    } else {
-                        crate::views::projects::ProjectStatus::Inactive
-                    };
-                }
                 self.current_project = self.projects.iter().find(|p| p.name == name).cloned();
                 self.add_toast(ToastType::Success, format!("Switched to project: {}", name));
                 Task::none()
@@ -1448,14 +1501,11 @@ impl App {
                         let info = ProjectInfo {
                             name: name.clone(),
                             path: project_path.clone(),
-                            status: crate::views::projects::ProjectStatus::Active,
+                            status: crate::views::projects::ProjectStatus::Idle,
+                            status_summary: None,
                             pinned: false,
                         };
 
-                        // Mark all others inactive
-                        for project in &mut self.projects {
-                            project.status = crate::views::projects::ProjectStatus::Inactive;
-                        }
                         self.projects.push(info.clone());
                         self.current_project = Some(info);
 
@@ -1498,21 +1548,13 @@ impl App {
                     log::warn!("Failed to remember project: {}", e);
                 }
 
-                // Mark project active/inactive
-                for project in &mut self.projects {
-                    project.status = if project.path == resolved_path {
-                        crate::views::projects::ProjectStatus::Active
-                    } else {
-                        crate::views::projects::ProjectStatus::Inactive
-                    };
-                }
-
                 // Ensure it's in the list
                 if !self.projects.iter().any(|p| p.path == resolved_path) {
                     self.projects.push(ProjectInfo {
                         name: project_or_path.clone(),
                         path: resolved_path.clone(),
-                        status: crate::views::projects::ProjectStatus::Active,
+                        status: crate::views::projects::ProjectStatus::Idle,
+                        status_summary: None,
                         pinned: false,
                     });
                 }
@@ -1614,16 +1656,53 @@ impl App {
                         let mut found_projects: Vec<ProjectInfo> = known_projects
                             .iter()
                             .map(|kp| {
-                                let status = if kp.path.join(".puppet-master").exists() {
-                                    crate::views::projects::ProjectStatus::Inactive
+                                let (status, summary) = if kp.path.join(".puppet-master").exists() {
+                                    let inspector = crate::projects::ProjectStatusInspector::new(kp.path.clone());
+                                    match inspector.inspect() {
+                                        Ok(s) => {
+                                            let view_status = if s.orchestrator_status
+                                                == crate::projects::OrchestratorStatus::Executing
+                                            {
+                                                crate::views::projects::ProjectStatus::Executing
+                                            } else if s.orchestrator_status
+                                                == crate::projects::OrchestratorStatus::Paused
+                                            {
+                                                crate::views::projects::ProjectStatus::Paused
+                                            } else if s.orchestrator_status
+                                                == crate::projects::OrchestratorStatus::Failed
+                                            {
+                                                crate::views::projects::ProjectStatus::Error
+                                            } else if s.interview_status
+                                                == crate::projects::InterviewStatus::Complete
+                                            {
+                                                crate::views::projects::ProjectStatus::Complete
+                                            } else if s.interview_status
+                                                == crate::projects::InterviewStatus::Running
+                                            {
+                                                crate::views::projects::ProjectStatus::Interviewing
+                                            } else {
+                                                crate::views::projects::ProjectStatus::Idle
+                                            };
+                                            (view_status, Some(s.summary()))
+                                        }
+                                        Err(e) => {
+                                            log::warn!(
+                                                "Failed to inspect project status for {}: {}",
+                                                kp.path.display(),
+                                                e
+                                            );
+                                            (crate::views::projects::ProjectStatus::Idle, None)
+                                        }
+                                    }
                                 } else {
-                                    crate::views::projects::ProjectStatus::Error
+                                    (crate::views::projects::ProjectStatus::Error, None)
                                 };
 
                                 ProjectInfo {
                                     name: kp.name.clone(),
                                     path: kp.path.clone(),
                                     status,
+                                    status_summary: summary,
                                     pinned: kp.pinned,
                                 }
                             })
@@ -1633,6 +1712,37 @@ impl App {
                         let cwd = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
                         if cwd.join(".puppet-master").exists() || cwd.join("prd.json").exists() {
                             if !found_projects.iter().any(|p| p.path == cwd) {
+                                let inspector = crate::projects::ProjectStatusInspector::new(cwd.clone());
+                                let (status, summary) = match inspector.inspect() {
+                                    Ok(s) => {
+                                        let view_status = if s.orchestrator_status
+                                            == crate::projects::OrchestratorStatus::Executing
+                                        {
+                                            crate::views::projects::ProjectStatus::Executing
+                                        } else if s.orchestrator_status
+                                            == crate::projects::OrchestratorStatus::Paused
+                                        {
+                                            crate::views::projects::ProjectStatus::Paused
+                                        } else if s.orchestrator_status
+                                            == crate::projects::OrchestratorStatus::Failed
+                                        {
+                                            crate::views::projects::ProjectStatus::Error
+                                        } else if s.interview_status
+                                            == crate::projects::InterviewStatus::Complete
+                                        {
+                                            crate::views::projects::ProjectStatus::Complete
+                                        } else if s.interview_status
+                                            == crate::projects::InterviewStatus::Running
+                                        {
+                                            crate::views::projects::ProjectStatus::Interviewing
+                                        } else {
+                                            crate::views::projects::ProjectStatus::Idle
+                                        };
+                                        (view_status, Some(s.summary()))
+                                    }
+                                    Err(_) => (crate::views::projects::ProjectStatus::Idle, None),
+                                };
+
                                 found_projects.push(ProjectInfo {
                                     name: cwd
                                         .file_name()
@@ -1640,7 +1750,8 @@ impl App {
                                         .unwrap_or("Current Project")
                                         .to_string(),
                                     path: cwd.clone(),
-                                    status: crate::views::projects::ProjectStatus::Inactive,
+                                    status,
+                                    status_summary: summary,
                                     pinned: false,
                                 });
                             }
@@ -2933,6 +3044,11 @@ impl App {
                 Task::batch(tasks)
             }
 
+            Message::InstallPlaywright => {
+                // Trigger the PlaywrightCheck fix
+                self.update(Message::FixCheck("playwright-browsers".to_string(), false))
+            }
+
             // ================================================================
             // Wizard
             // ================================================================
@@ -3376,35 +3492,39 @@ impl App {
 
                 self.wizard_generating = true;
                 let requirements = self.wizard_requirements_text.clone();
+                let project_name = self.wizard_project_name.clone();
 
-                // Generate placeholder PRD (real AI integration comes later)
+                // Use StartChainPipeline to generate real PRD
                 Task::perform(
                     async move {
-                        tokio::time::sleep(tokio::time::Duration::from_millis(1500)).await;
+                        // Load config
+                        let config = match ConfigManager::discover() {
+                            Ok(cfg) => Arc::new(cfg.get_config()),
+                            Err(e) => {
+                                return Err(format!("Failed to load config: {}", e));
+                            }
+                        };
 
-                        let prd = format!(
-                            "# Product Requirements Document\n\n\
-                            ## Project Overview\n\n\
-                            Generated from user requirements.\n\n\
-                            ## Requirements\n\n\
-                            {}\n\n\
-                            ## Technical Specifications\n\n\
-                            - Architecture: Modular\n\
-                            - Technology Stack: TBD\n\
-                            - Deployment: Cloud-based\n\n\
-                            ## Success Criteria\n\n\
-                            - All requirements met\n\
-                            - Quality standards achieved\n\
-                            - Timeline adhered to\n\n\
-                            ## Phases\n\n\
-                            1. Planning & Design\n\
-                            2. Development\n\
-                            3. Testing & QA\n\
-                            4. Deployment\n",
-                            requirements
+                        // Create pipeline
+                        let pipeline = StartChainPipeline::new(config);
+
+                        // Create parameters - deterministic generation (no AI)
+                        let params = StartChainParams::new(
+                            if project_name.is_empty() {
+                                "New Project"
+                            } else {
+                                &project_name
+                            },
+                            RequirementsInput::Text(requirements),
                         );
 
-                        Ok(prd)
+                        // Run pipeline
+                        let result = pipeline.run(params).await.map_err(|e| e.to_string())?;
+
+                        // Format PRD to markdown
+                        let prd_markdown = format_prd_to_markdown(&result.prd);
+
+                        Ok(prd_markdown)
                     },
                     Message::WizardPrdGenerated,
                 )
@@ -3440,34 +3560,44 @@ impl App {
                 }
 
                 self.wizard_generating = true;
-                let prd = self.wizard_prd_text.clone();
+                let requirements = self.wizard_requirements_text.clone();
+                let project_name = self.wizard_project_name.clone();
 
-                // Generate placeholder plan (real AI integration comes later)
+                // Use StartChainPipeline to generate real tier plan
                 Task::perform(
                     async move {
-                        tokio::time::sleep(tokio::time::Duration::from_millis(1500)).await;
+                        // Load config
+                        let config = match ConfigManager::discover() {
+                            Ok(cfg) => Arc::new(cfg.get_config()),
+                            Err(e) => {
+                                return Err(format!("Failed to load config: {}", e));
+                            }
+                        };
 
-                        let plan = format!(
-                            "# Execution Plan\n\n\
-                            ## Overview\n\
-                            Generated from PRD.\n\n\
-                            ## Phase 1: Planning & Design\n\
-                            - Task 1.1: Requirements Analysis\n\
-                            - Task 1.2: Architecture Design\n\n\
-                            ## Phase 2: Development\n\
-                            - Task 2.1: Core Implementation\n\
-                            - Task 2.2: Feature Development\n\n\
-                            ## Phase 3: Testing & QA\n\
-                            - Task 3.1: Unit Testing\n\
-                            - Task 3.2: Integration Testing\n\n\
-                            ## Phase 4: Deployment\n\
-                            - Task 4.1: Staging Deployment\n\
-                            - Task 4.2: Production Release\n\n\
-                            Based on PRD:\n{}\n",
-                            prd.chars().take(200).collect::<String>()
+                        // Create pipeline
+                        let pipeline = StartChainPipeline::new(config);
+
+                        // Create parameters - deterministic generation (no AI)
+                        let params = StartChainParams::new(
+                            if project_name.is_empty() {
+                                "New Project"
+                            } else {
+                                &project_name
+                            },
+                            RequirementsInput::Text(requirements),
                         );
 
-                        Ok(plan)
+                        // Run pipeline to get PRD, then generate tier plan
+                        let result = pipeline.run(params).await.map_err(|e| e.to_string())?;
+
+                        // Generate tier plan from PRD
+                        let tier_plan =
+                            TierPlanGenerator::generate(&result.prd).map_err(|e| e.to_string())?;
+
+                        // Format tier plan to markdown
+                        let plan_markdown = format_tier_plan_to_markdown(&tier_plan);
+
+                        Ok(plan_markdown)
                     },
                     Message::WizardPlanGenerated,
                 )
@@ -3516,20 +3646,24 @@ impl App {
                     return Task::none();
                 }
 
-                // Save PRD to project folder
+                // Create .puppet-master directory structure
                 let project_path = PathBuf::from(&self.wizard_project_path);
-                let prd_path = project_path.join("prd.md");
+                let puppet_master_dir = project_path.join(".puppet-master");
+                let start_chain_dir = puppet_master_dir.join("start-chain");
 
-                if let Err(e) = std::fs::create_dir_all(&project_path) {
+                // Create directories
+                if let Err(e) = std::fs::create_dir_all(&start_chain_dir) {
                     let friendly_msg = if e.to_string().contains("Permission denied") {
                         "Permission denied. Please check directory permissions.".to_string()
                     } else {
-                        format!("Failed to create project directory: {}", e)
+                        format!("Failed to create .puppet-master directory: {}", e)
                     };
                     self.add_toast(ToastType::Error, friendly_msg);
                     return Task::none();
                 }
 
+                // Save PRD as markdown to .puppet-master/start-chain/prd.md
+                let prd_path = start_chain_dir.join("prd.md");
                 if let Err(e) = std::fs::write(&prd_path, &self.wizard_prd_text) {
                     let friendly_msg = if e.to_string().contains("Permission denied") {
                         "Permission denied. Please check write permissions for the PRD file."
@@ -3541,9 +3675,9 @@ impl App {
                     return Task::none();
                 }
 
-                // Save plan if available
+                // Save plan if available to .puppet-master/start-chain/tier-plan.md
                 if !self.wizard_plan_text.is_empty() {
-                    let plan_path = project_path.join("plan.md");
+                    let plan_path = start_chain_dir.join("tier-plan.md");
                     let _ = std::fs::write(&plan_path, &self.wizard_plan_text);
                 }
 
@@ -3551,7 +3685,7 @@ impl App {
                 self.add_toast(
                     ToastType::Success,
                     format!(
-                        "Project '{}' created successfully!",
+                        "Project '{}' created successfully! Files saved to .puppet-master/start-chain/",
                         self.wizard_project_name
                     ),
                 );
@@ -3695,7 +3829,8 @@ impl App {
                     ),
                 );
 
-                Task::none()
+                // Also run the Playwright check to update the UI
+                self.update(Message::RunCheck("playwright-browsers".to_string()))
             }
 
             Message::SetupComplete => {
@@ -4887,15 +5022,126 @@ impl App {
                 self.interview_active = true;
                 self.interview_paused = false;
                 self.interview_current_phase = "scope_goals".to_string();
-                self.interview_current_question = String::new();
+                self.interview_current_question = "Initializing interview...".to_string();
                 self.interview_answers.clear();
+                self.interview_questions.clear();
                 self.interview_phases_complete.clear();
                 self.interview_answer_input.clear();
                 self.interview_reference_materials.clear();
                 self.interview_reference_link_input.clear();
-                self.interview_researching = false;
+                self.interview_researching = true;
                 self.interview_empty_references_text = "No reference materials added.".to_string();
                 self.current_page = Page::Interview;
+                
+                // Initialize orchestrator asynchronously
+                let gui_config = self.gui_config.clone();
+                let project_path = self.current_project
+                    .as_ref()
+                    .map(|p| p.path.clone())
+                    .unwrap_or_else(|| std::env::current_dir().unwrap_or_default());
+                let is_existing_project = !self.wizard_is_new_project;
+                
+                Task::perform(
+                    async move {
+                        Self::initialize_interview_orchestrator(gui_config, project_path, is_existing_project).await
+                    },
+                    Message::InterviewInitialized,
+                )
+            }
+            
+            Message::InterviewInitialized(result) => {
+                self.interview_researching = false;
+                match result {
+                    Ok((orchestrator, system_prompt)) => {
+                        // Store orchestrator and restore any saved interview state into the UI
+                        {
+                            let orch = orchestrator.lock().unwrap();
+                            let phase_manager = orch.phase_manager();
+                            self.interview_phase_definitions = phase_manager.phases().to_vec();
+                            self.interview_reference_materials = orch.reference_materials().to_vec();
+                        }
+                        self.interview_empty_references_text = if self.interview_reference_materials.is_empty() {
+                            "No reference materials added.".to_string()
+                        } else {
+                            "".to_string()
+                        };
+                        self.interview_orchestrator = Some(orchestrator.clone());
+                        // Now get first question from AI
+                        let gui_config = self.gui_config.clone();
+                        return Task::perform(
+                            async move {
+                                Self::execute_ai_turn(orchestrator, gui_config, system_prompt).await
+                            },
+                            Message::InterviewAIResponse,
+                        );
+                    }
+                    Err(e) => {
+                        self.interview_active = false;
+                        self.add_toast(ToastType::Error, format!("Failed to start interview: {}", e));
+                    }
+                }
+                Task::none()
+            }
+            
+            Message::InterviewAIResponse(result) => {
+                self.interview_researching = false;
+                match result {
+                    Ok(turn_result) => {
+                        // Update UI with the AI's response
+                        if let Some(question) = turn_result.question {
+                            self.interview_current_question = question.question;
+                            self.interview_questions.push(self.interview_current_question.clone());
+                        } else if !turn_result.text.is_empty() {
+                            self.interview_current_question = turn_result.text;
+                            self.interview_questions.push(self.interview_current_question.clone());
+                        }
+                        
+                        // Check for phase completion
+                        if turn_result.is_phase_complete {
+                            let orchestrator_clone = self.interview_orchestrator.clone();
+                            if let Some(orchestrator) = orchestrator_clone {
+                                let mut orch = orchestrator.lock().unwrap();
+                                if let Some(phase) = orch.get_state().completed_phases.last() {
+                                    self.interview_phases_complete.push(phase.clone());
+                                }
+                                // Advance to next phase
+                                match orch.advance_phase() {
+                                    Ok(Some(new_prompt)) => {
+                                        // Get next phase's first question
+                                        if let Some(current) = orch.get_state().completed_phases.last() {
+                                            self.interview_current_phase = current.clone();
+                                        }
+                                        // Update phase definitions (in case dynamic phases were added)
+                                        let phase_manager = orch.phase_manager();
+                                        self.interview_phase_definitions = phase_manager.phases().to_vec();
+                                        drop(orch);
+                                        let orch_clone = orchestrator.clone();
+                                        let gui_config = self.gui_config.clone();
+                                        self.interview_researching = true;
+                                        return Task::perform(
+                                            async move {
+                                                Self::execute_ai_turn(orch_clone, gui_config, new_prompt).await
+                                            },
+                                            Message::InterviewAIResponse,
+                                        );
+                                    }
+                                    Ok(None) => {
+                                        // Interview complete
+                                        self.interview_active = false;
+                                        self.add_toast(ToastType::Success, "Interview complete!".to_string());
+                                    }
+                                    Err(e) => {
+                                        self.add_toast(ToastType::Error, format!("Phase advance failed: {}", e));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Err(e) => {
+                        self.add_toast(ToastType::Error, format!("AI response failed: {}", e));
+                        self.interview_current_question = "Error getting question. Please try again.".to_string();
+                    }
+                }
                 Task::none()
             }
             Message::NavigateToInterview => {
@@ -4920,6 +5166,7 @@ impl App {
             }
             Message::InterviewComplete => {
                 self.interview_active = false;
+                self.interview_phase_definitions.clear();
                 Task::none()
             }
             Message::InterviewPaused => {
@@ -4939,15 +5186,23 @@ impl App {
                     let answer = self.interview_answer_input.clone();
                     self.interview_answers.push(answer.clone());
                     self.interview_answer_input.clear();
+                    self.interview_researching = true;
 
-                    // Simulate receiving next question (in real implementation, this would
-                    // be sent to the interview orchestrator backend)
-                    self.interview_current_question = format!(
-                        "Follow-up question based on: '{}'",
-                        answer.chars().take(30).collect::<String>()
-                    );
-
-                    self.add_toast(ToastType::Success, "Answer submitted".to_string());
+                    if let Some(orchestrator) = &self.interview_orchestrator {
+                        let orch = orchestrator.clone();
+                        let gui_config = self.gui_config.clone();
+                        let answer_clone = answer.clone();
+                        
+                        return Task::perform(
+                            async move {
+                                Self::submit_answer_and_get_response(orch, gui_config, answer_clone).await
+                            },
+                            Message::InterviewAIResponse,
+                        );
+                    } else {
+                        self.interview_researching = false;
+                        self.add_toast(ToastType::Error, "Interview not initialized".to_string());
+                    }
                 }
                 Task::none()
             }
@@ -4963,6 +5218,8 @@ impl App {
                 self.interview_reference_link_input.clear();
                 self.interview_researching = false;
                 self.interview_empty_references_text = "No reference materials added.".to_string();
+                self.interview_phase_definitions.clear();
+                self.interview_orchestrator = None; // Drop orchestrator
                 self.add_toast(ToastType::Info, "Interview session ended".to_string());
                 Task::none()
             }
@@ -5036,13 +5293,46 @@ impl App {
                         description: None,
                         added_at: Utc::now().to_rfc3339(),
                     });
-                Task::none()
+                self.sync_interview_references_to_orchestrator();
+
+                let materials = self.interview_reference_materials.clone();
+                Task::perform(
+                    Self::build_interview_reference_context(materials),
+                    Message::InterviewReferenceContextLoaded,
+                )
             }
 
             Message::InterviewRemoveReference(index) => {
                 if index < self.interview_reference_materials.len() {
                     self.interview_reference_materials.remove(index);
                 }
+                self.sync_interview_references_to_orchestrator();
+
+                let materials = self.interview_reference_materials.clone();
+                Task::perform(
+                    Self::build_interview_reference_context(materials),
+                    Message::InterviewReferenceContextLoaded,
+                )
+            }
+
+            Message::InterviewReferenceContextLoaded(result) => {
+                let Ok(context) = result else {
+                    return Task::none();
+                };
+
+                let Some(orchestrator) = self.interview_orchestrator.as_ref() else {
+                    return Task::none();
+                };
+
+                let mut orch = orchestrator.lock().unwrap();
+                orch.set_reference_context(context);
+                if let Err(e) = orch.save_state() {
+                    log::warn!(
+                        "Failed to persist interview state after reference context update: {}",
+                        e
+                    );
+                }
+
                 Task::none()
             }
 
@@ -5056,6 +5346,7 @@ impl App {
                     "output_dir" => self.gui_config.interview.output_dir = value,
                     "reasoning_level" => self.gui_config.interview.reasoning_level = value,
                     "interaction_mode" => self.gui_config.interview.interaction_mode = value,
+                    "vision_provider" => self.gui_config.interview.vision_provider = value,
                     "max_questions_per_phase" => {
                         if let Ok(v) = value.parse::<u32>() {
                             self.gui_config.interview.max_questions_per_phase = v.clamp(3, 15);
@@ -5125,45 +5416,33 @@ impl App {
         }
     }
 
-    /// Build InterviewPanelData from current interview state
-    fn build_interview_panel_data(
-        current_phase_id: &str,
-        current_question: &str,
-        phases_complete: &[String],
-    ) -> Option<crate::widgets::InterviewPanelData> {
-        // Map phase ID to index
-        let phase_index = match current_phase_id {
-            "scope_goals" => 0,
-            "architecture_technology" => 1,
-            "product_ux" => 2,
-            "data_persistence" => 3,
-            "security_secrets" => 4,
-            "deployment_environments" => 5,
-            "performance_reliability" => 6,
-            "testing_verification" => 7,
-            _ => return None, // Unknown phase
-        };
+    /// Build InterviewPanelData from current interview state, dynamically using PhaseManager
+    fn build_interview_panel_data(&self) -> Option<crate::widgets::InterviewPanelData> {
+        if !self.interview_active {
+            return None;
+        }
 
-        // Phase names from DOMAIN_TEMPLATES in interview/prompt_templates.rs
-        let phase_names = [
-            "Scope & Goals",
-            "Architecture & Technology",
-            "Product / UX",
-            "Data & Persistence",
-            "Security & Secrets",
-            "Deployment & Environments",
-            "Performance & Reliability",
-            "Testing & Verification",
-        ];
+        // Get PhaseManager from the interview orchestrator
+        let orchestrator = self.interview_orchestrator.as_ref()?;
+        let orch = orchestrator.lock().ok()?;
+        let phase_manager = orch.phase_manager();
 
-        let phase_name = phase_names.get(phase_index)?;
-        let total_phases = 8;
+        // Find current phase index and name from PhaseManager
+        let phases = phase_manager.phases();
+        let current_phase_id = &self.interview_current_phase;
+        
+        let (phase_index, phase_def) = phases
+            .iter()
+            .enumerate()
+            .find(|(_, p)| p.id == *current_phase_id)?;
+
+        let total_phases = phase_manager.total_phases();
 
         Some(crate::widgets::InterviewPanelData::new(
             phase_index,
             total_phases,
-            *phase_name,
-            current_question,
+            &phase_def.name,
+            &self.interview_current_question,
         ))
     }
 
@@ -5180,15 +5459,7 @@ impl App {
             let layout_size = LayoutSize::from_iced(size);
 
             // Build interview panel data if interview is active
-            let interview_panel_data = if self.interview_active {
-                Self::build_interview_panel_data(
-                    &self.interview_current_phase,
-                    &self.interview_current_question,
-                    &self.interview_phases_complete,
-                )
-            } else {
-                None
-            };
+            let interview_panel_data = self.build_interview_panel_data();
 
             // Build main content based on current page
             let content: Element<Message> = match self.current_page {
@@ -5374,6 +5645,8 @@ impl App {
                     self.setup_is_checking,
                     self.setup_installing,
                     &self.login_in_progress,
+                    &self.doctor_results,
+                    &self.doctor_fixing,
                     &self.theme,
                     layout_size,
                 ),
@@ -5381,8 +5654,10 @@ impl App {
                     self.interview_active,
                     self.interview_paused,
                     &self.interview_current_phase,
+                    &self.interview_phase_definitions,
                     &self.interview_current_question,
                     &self.interview_answers,
+                    &self.interview_questions,
                     &self.interview_phases_complete,
                     &self.interview_answer_input,
                     &self.interview_reference_materials,
@@ -5582,6 +5857,12 @@ impl App {
                     None => None,
                 }
             }
+            SelectableField::InterviewAnswer(index) => {
+                self.interview_answers.get(*index).cloned()
+            }
+            SelectableField::InterviewQuestion(index) => {
+                self.interview_questions.get(*index).cloned()
+            }
         }
     }
 
@@ -5681,6 +5962,16 @@ impl App {
                 if let Some(material) = self.interview_reference_materials.get_mut(index) {
                     material.ref_type =
                         crate::interview::ReferenceType::Directory(PathBuf::from(value));
+                }
+            }
+            SelectableField::InterviewAnswer(index) => {
+                if let Some(answer) = self.interview_answers.get_mut(index) {
+                    *answer = value;
+                }
+            }
+            SelectableField::InterviewQuestion(index) => {
+                if let Some(question) = self.interview_questions.get_mut(index) {
+                    *question = value;
                 }
             }
         }
@@ -6366,6 +6657,297 @@ impl App {
             self.history_sessions.len()
         );
     }
+
+    // ========================================================================
+    // Interview AI Helper Methods
+    // ========================================================================
+
+    fn compute_interview_context_files(
+        materials: &[crate::interview::ReferenceMaterial],
+    ) -> Vec<String> {
+        crate::interview::ReferenceManager::derive_context_files(materials)
+    }
+
+    fn sync_interview_references_to_orchestrator(&mut self) {
+        let Some(orchestrator) = self.interview_orchestrator.as_ref() else {
+            return;
+        };
+
+        let context_files = Self::compute_interview_context_files(&self.interview_reference_materials);
+
+        let mut orch = orchestrator.lock().unwrap();
+        orch.set_reference_materials(self.interview_reference_materials.clone());
+        orch.set_context_files(context_files);
+        if let Err(e) = orch.save_state() {
+            log::warn!("Failed to persist interview state after reference update: {}", e);
+        }
+    }
+
+    async fn build_interview_reference_context(
+        materials: Vec<crate::interview::ReferenceMaterial>,
+    ) -> Result<String, String> {
+        let mut mgr = crate::interview::ReferenceManager::new();
+        for m in materials {
+            mgr.add(m);
+        }
+        mgr.load_context().map_err(|e| e.to_string())
+    }
+
+    /// Initialize the interview orchestrator with platform registry and config.
+    /// Returns (orchestrator, initial_system_prompt).
+    async fn initialize_interview_orchestrator(
+        gui_config: crate::config::gui_config::GuiConfig,
+        project_path: PathBuf,
+        is_existing_project: bool,
+    ) -> Result<(Arc<Mutex<crate::interview::InterviewOrchestrator>>, String), String> {
+        use crate::interview::{InterviewOrchestrator, InterviewOrchestratorConfig};
+        use crate::interview::failover::PlatformModelPair;
+        use crate::interview::state::load_state_at_output_dir;
+        use crate::types::Platform;
+
+        // Scan codebase context for existing projects
+        let project_context = if is_existing_project {
+            match crate::interview::codebase_scanner::scan_project(&project_path) {
+                Ok(context) => {
+                    log::info!("Scanned existing project at {}: {} bytes", project_path.display(), context.len());
+                    Some(context)
+                }
+                Err(e) => {
+                    log::warn!("Failed to scan existing project context: {} (continuing without context)", e);
+                    None
+                }
+            }
+        } else {
+            None
+        };
+
+        // Parse primary platform from interview config
+        let primary_platform = match gui_config.interview.platform.to_lowercase().as_str() {
+            "cursor" => Platform::Cursor,
+            "codex" => Platform::Codex,
+            "claude" => Platform::Claude,
+            "gemini" => Platform::Gemini,
+            "copilot" => Platform::Copilot,
+            _ => Platform::Cursor, // default fallback
+        };
+
+        let primary_pair = PlatformModelPair {
+            platform: primary_platform,
+            model: gui_config.interview.model.clone(),
+        };
+
+        // Parse backup platforms
+        let backup_platforms: Vec<PlatformModelPair> = gui_config
+            .interview
+            .backup_platforms
+            .iter()
+            .filter_map(|bp| {
+                let platform = match bp.platform.to_lowercase().as_str() {
+                    "cursor" => Platform::Cursor,
+                    "codex" => Platform::Codex,
+                    "claude" => Platform::Claude,
+                    "gemini" => Platform::Gemini,
+                    "copilot" => Platform::Copilot,
+                    _ => return None,
+                };
+                Some(PlatformModelPair {
+                    platform,
+                    model: bp.model.clone(),
+                })
+            })
+            .collect();
+
+        // Create output directory
+        let output_dir = project_path.join(&gui_config.interview.output_dir);
+        std::fs::create_dir_all(&output_dir)
+            .map_err(|e| format!("Failed to create interview output dir: {}", e))?;
+
+        // Check for existing saved state to resume from
+        let existing_state = load_state_at_output_dir(&output_dir)
+            .map_err(|e| format!("Failed to check for existing interview state: {}", e))?;
+
+        // Build orchestrator config
+        let feature = gui_config.project.name.clone();
+        let config = InterviewOrchestratorConfig {
+            feature: feature.clone(),
+            first_principles: gui_config.interview.first_principles,
+            context_files: Vec::new(), // Could be populated from reference materials later
+            context_content: None,
+            project_context, // Scanned from existing codebase if applicable
+            base_dir: project_path.clone(),
+            output_dir: output_dir.clone(),
+            primary_platform: primary_pair,
+            backup_platforms,
+            project_name: gui_config.project.name.clone(),
+            generate_initial_agents_md: gui_config.interview.generate_initial_agents_md,
+            generate_playwright_requirements: gui_config.interview.generate_playwright_requirements,
+            interaction_mode: gui_config.interview.interaction_mode.clone(),
+            research_config: None, // Could add research engine config
+        };
+
+        let mut orchestrator = InterviewOrchestrator::new(config);
+        
+        // If we have existing state, restore it and generate resume prompt
+        let system_prompt = if let Some(saved_state) = existing_state {
+            log::info!(
+                "Resuming interview from saved state: feature='{}', phase='{}', domain_phase={}",
+                saved_state.feature,
+                saved_state.phase,
+                saved_state.current_domain_phase
+            );
+            
+            // Resume from the saved state
+            orchestrator
+                .resume_from_state(saved_state)
+                .map_err(|e| format!("Failed to resume interview: {}", e))?
+        } else {
+            // No existing state, start fresh
+            log::info!("Starting new interview session");
+            orchestrator
+                .initialize()
+                .map_err(|e| format!("Failed to initialize interview: {}", e))?
+        };
+
+        Ok((Arc::new(Mutex::new(orchestrator)), system_prompt))
+    }
+
+    /// Execute an AI turn: send prompt to platform runner and process the response.
+    /// Uses FailoverManager to retry with backup platforms on quota/rate limit errors.
+    async fn execute_ai_turn(
+        orchestrator: Arc<Mutex<crate::interview::InterviewOrchestrator>>,
+        gui_config: crate::config::gui_config::GuiConfig,
+        system_prompt: String,
+    ) -> Result<crate::interview::TurnResult, String> {
+        use crate::interview::failover::is_quota_error;
+        use crate::platforms::PlatformRegistry;
+        use crate::types::ExecutionRequest;
+        use std::sync::Arc as StdArc;
+
+        // Create platform registry once
+        let registry = StdArc::new(PlatformRegistry::new());
+        registry
+            .init_default()
+            .await
+            .map_err(|e| format!("Failed to initialize platform registry: {}", e))?;
+
+        // Retry loop with failover (max attempts = total platforms)
+        let max_attempts = {
+            let orch = orchestrator.lock().unwrap();
+            orch.failover_manager().total_platforms()
+        };
+
+        let mut last_error = String::new();
+        
+        for _attempt in 0..max_attempts {
+            // Get current platform and model from failover manager
+            let (platform, model, context_files) = {
+                let orch = orchestrator.lock().unwrap();
+                let current = orch.failover_manager().get_current_platform();
+                (
+                    current.platform,
+                    current.model.clone(),
+                    orch.context_files().to_vec(),
+                )
+            };
+
+            // Get runner for the platform
+            let runner = match registry.get(platform).await {
+                Some(r) => r,
+                None => {
+                    last_error = format!("Platform {} not available", platform);
+                    // Try next platform
+                    let mut orch = orchestrator.lock().unwrap();
+                    if orch.failover_manager_mut().failover().is_none() {
+                        break; // No more platforms
+                    }
+                    continue;
+                }
+            };
+
+            // Build execution request
+            let working_dir = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
+            let mut request = ExecutionRequest::new(platform, model.clone(), system_prompt.clone(), working_dir);
+
+            if !context_files.is_empty() {
+                request.context_files = context_files.into_iter().map(PathBuf::from).collect();
+            }
+            
+            // Add reasoning effort if specified
+            if !gui_config.interview.reasoning_level.is_empty() {
+                request.reasoning_effort = Some(gui_config.interview.reasoning_level.clone());
+            }
+
+            // Execute the request
+            let result = match runner.execute(&request).await {
+                Ok(r) => r,
+                Err(e) => {
+                    let error_msg = e.to_string();
+                    last_error = error_msg.clone();
+                    
+                    // Check if it's a quota/rate limit error
+                    if is_quota_error(&error_msg) {
+                        log::warn!("Quota/rate limit error on {}: {}", platform, error_msg);
+                        
+                        // Try failover to next platform
+                        let mut orch = orchestrator.lock().unwrap();
+                        if let Some(next_platform) = orch.failover_manager_mut().failover() {
+                            log::info!(
+                                "Failing over to {} ({})",
+                                next_platform.platform,
+                                next_platform.model
+                            );
+                            continue; // Retry with next platform
+                        } else {
+                            return Err(format!("All platforms exhausted. Last error: {}", error_msg));
+                        }
+                    } else {
+                        // Non-recoverable error, fail immediately
+                        return Err(format!("Platform execution failed: {}", error_msg));
+                    }
+                }
+            };
+
+            // Extract output text
+            let output_text = result.output.as_deref().unwrap_or("");
+
+            // Process AI response through orchestrator
+            let mut orch = orchestrator.lock().unwrap();
+            let turn_result = orch
+                .process_ai_response(output_text)
+                .map_err(|e| format!("Failed to process AI response: {}", e))?;
+
+            // Success! Reset failover manager for next turn
+            orch.failover_manager_mut().reset();
+            
+            return Ok(turn_result);
+        }
+
+        // All attempts exhausted
+        Err(format!("All platforms exhausted after {} attempts. Last error: {}", max_attempts, last_error))
+    }
+
+    /// Submit user answer and get the next AI response.
+    async fn submit_answer_and_get_response(
+        orchestrator: Arc<Mutex<crate::interview::InterviewOrchestrator>>,
+        gui_config: crate::config::gui_config::GuiConfig,
+        answer: String,
+    ) -> Result<crate::interview::TurnResult, String> {
+        // Record the user's answer
+        {
+            let mut orch = orchestrator.lock().unwrap();
+            orch.send_user_response(&answer)
+                .map_err(|e| format!("Failed to record answer: {}", e))?;
+        }
+
+        // Build the conversation prompt with the answer
+        let conversation_prompt = {
+            let orch = orchestrator.lock().unwrap();
+            format!("{}\n\nUser's answer: {}", orch.current_system_prompt(), answer)
+        };
+
+        // Execute the AI turn with the updated prompt
+        Self::execute_ai_turn(orchestrator, gui_config, conversation_prompt).await
+    }
 }
 
 // ============================================================================
@@ -6712,12 +7294,53 @@ fn map_orchestrator_event(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::interview::{InterviewOrchestrator, InterviewOrchestratorConfig};
+    use crate::interview::failover::PlatformModelPair;
+    use crate::types::Platform;
+    use std::sync::{Arc, Mutex};
+    use std::sync::atomic::AtomicBool;
+    use std::path::PathBuf;
+
+    /// Helper to create a minimal test app with interview orchestrator
+    fn create_test_app_with_interview(phase_id: &str, question: &str) -> App {
+        let shutdown = Arc::new(AtomicBool::new(false));
+        let (mut app, _task) = App::new(shutdown);
+        
+        // Create a minimal orchestrator config for testing
+        let config = InterviewOrchestratorConfig {
+            feature: "Test Feature".to_string(),
+            first_principles: false,
+            context_files: vec![],
+            context_content: None,
+            project_context: None,
+            base_dir: PathBuf::from("/tmp/test"),
+            output_dir: PathBuf::from("/tmp/test/output"),
+            primary_platform: PlatformModelPair {
+                platform: Platform::Gemini,
+                model: "gemini-2.0-flash-exp".to_string(),
+            },
+            backup_platforms: vec![],
+            project_name: "test-project".to_string(),
+            generate_initial_agents_md: false,
+            generate_playwright_requirements: false,
+            interaction_mode: "expert".to_string(),
+            research_config: None,
+        };
+        
+        let orchestrator = InterviewOrchestrator::new(config);
+        app.interview_orchestrator = Some(Arc::new(Mutex::new(orchestrator)));
+        app.interview_active = true;
+        app.interview_current_phase = phase_id.to_string();
+        app.interview_current_question = question.to_string();
+        
+        app
+    }
 
     #[test]
     fn test_build_interview_panel_data_valid_phases() {
         // Test first phase
-        let data =
-            App::build_interview_panel_data("scope_goals", "What problem is this solving?", &[]);
+        let app = create_test_app_with_interview("scope_goals", "What problem is this solving?");
+        let data = app.build_interview_panel_data();
         assert!(data.is_some());
         let data = data.unwrap();
         assert_eq!(data.current_phase, 0);
@@ -6726,25 +7349,16 @@ mod tests {
         assert_eq!(data.current_question, "What problem is this solving?");
 
         // Test middle phase
-        let data = App::build_interview_panel_data(
-            "data_persistence",
-            "What storage technology?",
-            &[
-                "scope_goals".to_string(),
-                "architecture_technology".to_string(),
-            ],
-        );
+        let app = create_test_app_with_interview("data_persistence", "What storage technology?");
+        let data = app.build_interview_panel_data();
         assert!(data.is_some());
         let data = data.unwrap();
         assert_eq!(data.current_phase, 3);
         assert_eq!(data.phase_name, "Data & Persistence");
 
         // Test last phase
-        let data = App::build_interview_panel_data(
-            "testing_verification",
-            "What test coverage target?",
-            &[],
-        );
+        let app = create_test_app_with_interview("testing_verification", "What test coverage target?");
+        let data = app.build_interview_panel_data();
         assert!(data.is_some());
         let data = data.unwrap();
         assert_eq!(data.current_phase, 7);
@@ -6754,7 +7368,8 @@ mod tests {
     #[test]
     fn test_build_interview_panel_data_invalid_phase() {
         // Unknown phase ID should return None
-        let data = App::build_interview_panel_data("unknown_phase", "Some question", &[]);
+        let app = create_test_app_with_interview("unknown_phase", "Some question");
+        let data = app.build_interview_panel_data();
         assert!(data.is_none());
     }
 
@@ -6773,12 +7388,52 @@ mod tests {
         ];
 
         for (phase_id, expected_index, expected_name) in phases.iter() {
-            let data = App::build_interview_panel_data(phase_id, "Test question", &[]);
+            let app = create_test_app_with_interview(phase_id, "Test question");
+            let data = app.build_interview_panel_data();
             assert!(data.is_some(), "Phase {} should be valid", phase_id);
             let data = data.unwrap();
             assert_eq!(data.current_phase, *expected_index);
             assert_eq!(data.phase_name, *expected_name);
             assert_eq!(data.total_phases, 8);
         }
+    }
+
+    #[test]
+    fn test_build_interview_panel_data_dynamic_phase() {
+        // Test that dynamic phases (Phase 9+) work correctly
+        let mut app = create_test_app_with_interview("scope_goals", "Initial question");
+        
+        // Add a dynamic phase to the orchestrator
+        if let Some(ref orchestrator) = app.interview_orchestrator {
+            let mut orch = orchestrator.lock().unwrap();
+            orch.phase_manager_mut().add_dynamic_phase(
+                "feature_authentication",
+                "Authentication Deep Dive",
+                "Detailed authentication requirements"
+            );
+        }
+        
+        // Now switch to the dynamic phase
+        app.interview_current_phase = "feature_authentication".to_string();
+        app.interview_current_question = "How should users authenticate?".to_string();
+        
+        let data = app.build_interview_panel_data();
+        assert!(data.is_some(), "Dynamic phase should be valid");
+        let data = data.unwrap();
+        assert_eq!(data.current_phase, 8, "Should be phase index 8 (9th phase)");
+        assert_eq!(data.total_phases, 9, "Should now have 9 total phases");
+        assert_eq!(data.phase_name, "Authentication Deep Dive");
+        assert_eq!(data.current_question, "How should users authenticate?");
+    }
+
+    #[test]
+    fn test_build_interview_panel_data_inactive_interview() {
+        // When interview is not active, should return None
+        let shutdown = Arc::new(AtomicBool::new(false));
+        let (mut app, _task) = App::new(shutdown);
+        app.interview_active = false;
+        
+        let data = app.build_interview_panel_data();
+        assert!(data.is_none(), "Should return None when interview is not active");
     }
 }

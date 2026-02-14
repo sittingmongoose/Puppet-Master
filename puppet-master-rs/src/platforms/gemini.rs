@@ -45,6 +45,7 @@
 //! - Uses `--approval-mode yolo` for autonomous execution
 //! - Uses `--output-format json` for structured output
 
+use crate::platforms::context_files::{append_prompt_attachments, context_file_parent_dirs};
 use crate::platforms::{BaseRunner, PlatformRunner};
 use crate::types::{ExecutionRequest, ExecutionResult, Platform};
 use anyhow::{Result, anyhow};
@@ -172,9 +173,10 @@ impl PlatformRunner for GeminiRunner {
     fn build_args(&self, request: &ExecutionRequest) -> Vec<String> {
         let mut args = Vec::new();
 
-        // Add prompt
+        // Add prompt (Gemini attaches files via @path tokens)
+        let prompt = append_prompt_attachments(&request.prompt, &request.context_files, "@");
         args.push("-p".to_string());
-        args.push(request.prompt.clone());
+        args.push(prompt);
 
         // JSON output format
         args.push("--output-format".to_string());
@@ -191,6 +193,19 @@ impl PlatformRunner for GeminiRunner {
         // Add model
         args.push("--model".to_string());
         args.push(request.model.clone());
+
+        // Allow Gemini access to referenced attachment locations (max 5)
+        let dirs = context_file_parent_dirs(&request.context_files);
+        if !dirs.is_empty() {
+            let include = dirs
+                .into_iter()
+                .take(5)
+                .map(|d| d.display().to_string())
+                .collect::<Vec<_>>()
+                .join(",");
+            args.push("--include-directories".to_string());
+            args.push(include);
+        }
 
         // Add any extra args
         for arg in &request.extra_args {
@@ -249,6 +264,23 @@ mod tests {
 
         assert!(args.contains(&"--approval-mode".to_string()));
         assert!(args.contains(&"plan".to_string()));
+    }
+
+    #[test]
+    fn test_build_args_with_context_files() {
+        let runner = GeminiRunner::new();
+        let request = ExecutionRequest::new(
+            Platform::Gemini,
+            "gemini-2.0-flash-exp".to_string(),
+            "Test prompt".to_string(),
+            PathBuf::from("/tmp"),
+        )
+        .with_context_files(vec![PathBuf::from("/tmp/ref.png")]);
+
+        let args = runner.build_args(&request);
+
+        assert!(args.iter().any(|a| a.contains("@/tmp/ref.png")));
+        assert!(args.contains(&"--include-directories".to_string()));
     }
 
     #[tokio::test]

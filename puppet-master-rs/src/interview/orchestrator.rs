@@ -11,6 +11,7 @@ use super::failover::{FailoverManager, PlatformModelPair};
 use super::phase_manager::PhaseManager;
 use super::prompt_templates::{self, PromptConfig};
 use super::question_parser::{self, ParsedAIResponse, PhaseCompletion, StructuredQuestion};
+use super::reference_manager::{ReferenceManager, ReferenceMaterial};
 use super::research_engine::{ResearchConfig, ResearchEngine};
 use super::state::{self, Decision, InterviewPhase, InterviewState};
 
@@ -103,7 +104,7 @@ pub enum OrchestratorEvent {
 
 /// Manages the full lifecycle of an interactive interview session.
 pub struct InterviewOrchestrator {
-    config: InterviewOrchestratorConfig,
+    pub config: InterviewOrchestratorConfig,
     state: InterviewState,
     phase_manager: PhaseManager,
     failover_manager: FailoverManager,
@@ -115,6 +116,17 @@ pub struct InterviewOrchestrator {
     phase_qa_start_index: usize,
     /// Tracks the last question text asked by the AI (for send_user_response).
     last_question_text: Option<String>,
+}
+
+impl std::fmt::Debug for InterviewOrchestrator {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("InterviewOrchestrator")
+            .field("feature", &self.config.feature)
+            .field("is_initialized", &self.is_initialized)
+            .field("current_phase", &self.state.phase)
+            .field("current_domain_phase", &self.state.current_domain_phase)
+            .finish_non_exhaustive()
+    }
 }
 
 impl InterviewOrchestrator {
@@ -167,8 +179,36 @@ impl InterviewOrchestrator {
         &self.state
     }
 
+    /// Sets context file paths and persists them into state.
+    pub fn set_context_files(&mut self, files: Vec<String>) {
+        self.config.context_files = files.clone();
+        self.state.context_files = files;
+    }
+
+    pub fn context_files(&self) -> &[String] {
+        &self.state.context_files
+    }
+
+    /// Sets reference materials to persist in state (UI uses this to restore refs on resume).
+    pub fn set_reference_materials(&mut self, materials: Vec<ReferenceMaterial>) {
+        self.state.reference_materials = materials;
+    }
+
+    pub fn reference_materials(&self) -> &[ReferenceMaterial] {
+        &self.state.reference_materials
+    }
+
+    /// Returns a reference to the phase manager for UI display.
+    pub fn get_phase_manager(&self) -> &PhaseManager {
+        &self.phase_manager
+    }
+
     /// Replaces the current state (e.g. when resuming from a saved state).
     pub fn set_state(&mut self, state: InterviewState) {
+        // Restore dynamic phases if any were saved
+        if !state.dynamic_phases.is_empty() {
+            self.phase_manager.restore_dynamic_phases(state.dynamic_phases.clone());
+        }
         self.phase_manager.set_index(state.current_domain_phase);
         self.state = state;
     }
@@ -180,6 +220,9 @@ impl InterviewOrchestrator {
             .iter()
             .map(|p| std::fs::read_to_string(&p.document_path).unwrap_or_default())
             .collect();
+
+        // Extract current phase Q/A history for stateless coherence
+        let current_phase_qa = &self.state.history[self.phase_qa_start_index..];
 
         let config = PromptConfig {
             feature: self.config.feature.clone(),
@@ -193,6 +236,7 @@ impl InterviewOrchestrator {
             &config,
             self.phase_manager.current_index(),
             &previous_docs,
+            current_phase_qa,
         )
     }
 
@@ -218,6 +262,52 @@ impl InterviewOrchestrator {
         self.save_state()?;
 
         // Return the system prompt for the caller to send to the AI.
+        Ok(self.current_system_prompt())
+    }
+
+    /// Resumes an interview from a previously saved state.
+    ///
+    /// This method loads the state and marks the orchestrator as initialized.
+    /// Returns the system prompt for the current position in the interview.
+    pub fn resume_from_state(&mut self, state: InterviewState) -> Result<String> {
+        if self.is_initialized {
+            anyhow::bail!("Orchestrator already initialized, cannot resume");
+        }
+
+        log::info!(
+            "Resuming interview: feature='{}', phase={:?}, domain_phase={}",
+            state.feature,
+            state.phase,
+            state.current_domain_phase
+        );
+
+        // Set the state (this updates phase_manager too)
+        self.set_state(state);
+
+        // Best-effort: if older state files didn't persist context_files, derive them from references.
+        if self.state.context_files.is_empty() && !self.state.reference_materials.is_empty() {
+            let derived = ReferenceManager::derive_context_files(&self.state.reference_materials);
+            if !derived.is_empty() {
+                self.set_context_files(derived);
+            }
+        }
+
+        // Best-effort: rebuild reference context content so the initial prompt includes metadata/OCR.
+        if self.config.context_content.is_none() && !self.state.reference_materials.is_empty() {
+            let mut mgr = ReferenceManager::new();
+            for m in self.state.reference_materials.clone() {
+                mgr.add(m);
+            }
+            match mgr.load_context() {
+                Ok(ctx) => self.set_reference_context(ctx),
+                Err(e) => log::warn!("Failed to rebuild reference context on resume: {}", e),
+            }
+        }
+
+        // Mark as initialized since we're resuming from a saved state
+        self.is_initialized = true;
+
+        // Return the current system prompt for continuing the interview
         Ok(self.current_system_prompt())
     }
 
@@ -518,6 +608,8 @@ impl InterviewOrchestrator {
 
     /// Saves the current state to disk.
     pub fn save_state(&mut self) -> Result<PathBuf> {
+        // Sync dynamic phases from PhaseManager to state before saving
+        self.state.dynamic_phases = self.phase_manager.dynamic_phases();
         let path = state::save_state_at_output_dir(&mut self.state, &self.config.output_dir)?;
         self.emit(OrchestratorEvent::StateSaved { path: path.clone() });
         Ok(path)
@@ -554,6 +646,11 @@ impl InterviewOrchestrator {
     /// Returns a reference to the phase manager.
     pub fn phase_manager(&self) -> &PhaseManager {
         &self.phase_manager
+    }
+
+    /// Returns a mutable reference to the phase manager.
+    pub fn phase_manager_mut(&mut self) -> &mut PhaseManager {
+        &mut self.phase_manager
     }
 
     /// Returns a reference to the research engine, if configured.
@@ -790,5 +887,71 @@ mod tests {
         assert_eq!(history.len(), 1);
         assert_eq!(history[0].question, "(no question)");
         assert_eq!(history[0].answer, "Random input");
+    }
+
+    #[test]
+    fn test_dynamic_phases_added_and_persisted() {
+        let dir = tempfile::TempDir::new().unwrap();
+        let config = test_config(dir.path());
+        let mut orch = InterviewOrchestrator::new(config);
+        orch.initialize().unwrap();
+
+        // Seed multiple auth signals so feature detection exceeds the threshold (>=2).
+        orch.process_ai_response("Do you need authentication?").unwrap();
+        orch.send_user_response("Yes: OAuth2 login").unwrap();
+        orch.process_ai_response("Any other auth requirements?").unwrap();
+        orch.send_user_response("SSO authentication").unwrap();
+
+        // Complete all 8 standard phases.
+        for i in 0..8 {
+            let phase_id = orch
+                .get_phase_manager()
+                .current_phase()
+                .map(|p| p.id.clone())
+                .unwrap_or_else(|| "testing_verification".to_string());
+
+            // Phase completion marker for the current phase.
+            let completion = format!(
+                r#"<<<PM_PHASE_COMPLETE>>>
+{{
+  "phase": "{}",
+  "summary": "done",
+  "decisions": ["JWT authentication"],
+  "openItems": []
+}}
+<<<END_PM_PHASE_COMPLETE>>>"#,
+                phase_id
+            );
+            orch.process_ai_response(&completion).unwrap();
+
+            let next_prompt = orch.advance_phase().unwrap();
+            if i < 7 {
+                assert!(next_prompt.is_some());
+            } else {
+                let prompt = next_prompt.unwrap();
+                assert!(prompt.contains("Authentication"));
+            }
+        }
+
+        assert!(orch.get_phase_manager().total_phases() > 8);
+        assert!(orch
+            .get_phase_manager()
+            .phases()
+            .iter()
+            .any(|p| p.id == "feature-auth"));
+
+        // Verify YAML persistence includes the dynamic phase definitions.
+        let loaded = state::load_state(dir.path()).unwrap().unwrap();
+        assert!(!loaded.dynamic_phases.is_empty());
+        assert!(loaded.dynamic_phases.iter().any(|p| p.id == "feature-auth"));
+
+        let mut orch2 = InterviewOrchestrator::new(test_config(dir.path()));
+        orch2.set_state(loaded);
+        assert!(orch2.get_phase_manager().total_phases() > 8);
+        assert!(orch2
+            .get_phase_manager()
+            .phases()
+            .iter()
+            .any(|p| p.id == "feature-auth"));
     }
 }

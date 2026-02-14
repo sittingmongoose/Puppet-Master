@@ -234,14 +234,31 @@ fn tab_tiers<'a>(
             .color(theme.ink_faded()),
     );
 
+    let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
+
     // Create a 2x2 grid of tier cards
-    let phase_card = tier_card("phase", "PHASE", &gui_config.tiers.phase, models, theme);
-    let task_card = tier_card("task", "TASK", &gui_config.tiers.task, models, theme);
+    let phase_card = tier_card(
+        "phase",
+        "PHASE",
+        &gui_config.tiers.phase,
+        models,
+        tooltip_variant,
+        theme,
+    );
+    let task_card = tier_card(
+        "task",
+        "TASK",
+        &gui_config.tiers.task,
+        models,
+        tooltip_variant,
+        theme,
+    );
     let subtask_card = tier_card(
         "subtask",
         "SUBTASK",
         &gui_config.tiers.subtask,
         models,
+        tooltip_variant,
         theme,
     );
     let iteration_card = tier_card(
@@ -249,6 +266,7 @@ fn tab_tiers<'a>(
         "ITERATION",
         &gui_config.tiers.iteration,
         models,
+        tooltip_variant,
         theme,
     );
 
@@ -273,6 +291,7 @@ fn tier_card<'a>(
     display_name: &'a str,
     tier_config: &'a crate::config::gui_config::TierConfig,
     _models: &'a HashMap<String, Vec<String>>,
+    tooltip_variant: crate::widgets::tooltips::TooltipVariant,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     const PLATFORMS: &[&str] = &["cursor", "codex", "claude", "gemini", "copilot"];
@@ -295,10 +314,15 @@ fn tier_card<'a>(
     // Platform picker
     card_content = card_content.push(
         column![
-            text("Platform")
-                .size(tokens::font_size::SM)
-                .font(fonts::FONT_UI)
-                .color(theme.ink()),
+            row![
+                text("Platform")
+                    .size(tokens::font_size::SM)
+                    .font(fonts::FONT_UI)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                help_tooltip("tier.platform", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             pick_list(
                 PLATFORMS,
                 Some(tier_config.platform.as_str()),
@@ -315,10 +339,15 @@ fn tier_card<'a>(
     // Model text input (simpler than pick_list with dynamic models)
     card_content = card_content.push(
         column![
-            text("Model")
-                .size(tokens::font_size::SM)
-                .font(fonts::FONT_UI)
-                .color(theme.ink()),
+            row![
+                text("Model")
+                    .size(tokens::font_size::SM)
+                    .font(fonts::FONT_UI)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                help_tooltip("tier.model", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text_input("", &tier_config.model)
                 .on_input(move |model: String| Message::ConfigTierModelChanged(
                     tier_name.to_string(),
@@ -333,10 +362,15 @@ fn tier_card<'a>(
     let reasoning_value = tier_config.reasoning_effort.as_deref().unwrap_or("default");
     card_content = card_content.push(
         column![
-            text("Reasoning Effort")
-                .size(tokens::font_size::SM)
-                .font(fonts::FONT_UI)
-                .color(theme.ink()),
+            row![
+                text("Reasoning Effort")
+                    .size(tokens::font_size::SM)
+                    .font(fonts::FONT_UI)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                help_tooltip("tier.reasoning", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             pick_list(
                 REASONING_OPTIONS,
                 Some(reasoning_value),
@@ -358,6 +392,7 @@ fn tier_card<'a>(
                 .font(fonts::FONT_UI)
                 .color(theme.ink()),
             Space::new().width(Length::Fill),
+            help_tooltip("tier.plan_mode", tooltip_variant, theme),
             toggler(tier_config.plan_mode)
                 .on_toggle(move |_| Message::ConfigTierPlanModeToggled(tier_name.to_string()))
         ]
@@ -373,6 +408,7 @@ fn tier_card<'a>(
                 .font(fonts::FONT_UI)
                 .color(theme.ink()),
             Space::new().width(Length::Fill),
+            help_tooltip("tier.ask_mode", tooltip_variant, theme),
             toggler(tier_config.ask_mode)
                 .on_toggle(move |_| Message::ConfigTierAskModeToggled(tier_name.to_string()))
         ]
@@ -383,10 +419,15 @@ fn tier_card<'a>(
     // Output Format picker
     card_content = card_content.push(
         column![
-            text("Output Format")
-                .size(tokens::font_size::SM)
-                .font(fonts::FONT_UI)
-                .color(theme.ink()),
+            row![
+                text("Output Format")
+                    .size(tokens::font_size::SM)
+                    .font(fonts::FONT_UI)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                help_tooltip("tier.output_format", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             pick_list(
                 OUTPUT_FORMATS,
                 Some(tier_config.output_format.as_str()),
@@ -403,10 +444,15 @@ fn tier_card<'a>(
     // Task Failure Style picker
     card_content = card_content.push(
         column![
-            text("Task Failure Style")
-                .size(tokens::font_size::SM)
-                .font(fonts::FONT_UI)
-                .color(theme.ink()),
+            row![
+                text("Task Failure Style")
+                    .size(tokens::font_size::SM)
+                    .font(fonts::FONT_UI)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                help_tooltip("tier.task_failure_style", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             pick_list(
                 FAILURE_STYLES,
                 Some(tier_config.task_failure_style.as_str()),
@@ -423,10 +469,15 @@ fn tier_card<'a>(
     // Max Iterations text input
     card_content = card_content.push(
         column![
-            text("Max Iterations")
-                .size(tokens::font_size::SM)
-                .font(fonts::FONT_UI)
-                .color(theme.ink()),
+            row![
+                text("Max Iterations")
+                    .size(tokens::font_size::SM)
+                    .font(fonts::FONT_UI)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                help_tooltip("tier.max_iterations", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text_input("", &tier_config.max_iterations.to_string())
                 .on_input(move |value| Message::ConfigTierMaxIterChanged(
                     tier_name.to_string(),
@@ -456,6 +507,8 @@ fn tab_branching<'a>(
     git_info: &'a Option<GitInfo>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
+    let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
+
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::MD);
@@ -513,10 +566,15 @@ fn tab_branching<'a>(
     // Base Branch field
     content = content.push(
         column![
-            text("Base Branch")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Base Branch")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                help_tooltip("branching.base_branch", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text("The branch to use as the base for new branches (e.g., 'main', 'develop')")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -533,10 +591,15 @@ fn tab_branching<'a>(
     // Naming Pattern field
     content = content.push(
         column![
-            text("Naming Pattern")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Naming Pattern")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                help_tooltip("branching.naming_pattern", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text("Pattern for branch names. Use {tier} and {id} as placeholders")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -554,10 +617,15 @@ fn tab_branching<'a>(
     let granularity_ref = gui_config.branching.granularity.as_str();
     content = content.push(
         column![
-            text("Granularity")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Granularity")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                help_tooltip("branching.granularity", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text("Choose when to create new branches")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -587,6 +655,8 @@ fn tab_branching<'a>(
 }
 
 fn tab_verification<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a, Message> {
+    let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
+
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::MD);
@@ -608,10 +678,15 @@ fn tab_verification<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Eleme
     // Browser Adapter field
     content = content.push(
         column![
-            text("Browser Adapter")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Browser Adapter")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                help_tooltip("verification.browser_adapter", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text("The browser automation adapter to use (e.g., 'playwright', 'selenium')")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -628,10 +703,15 @@ fn tab_verification<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Eleme
     // Evidence Directory field with folder picker
     content = content.push(
         column![
-            text("Evidence Directory")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Evidence Directory")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                help_tooltip("verification.evidence_directory", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text("Directory where verification evidence (screenshots, logs) will be stored")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -657,10 +737,15 @@ fn tab_verification<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Eleme
     // Screenshot on Failure toggler
     content = content.push(
         column![
-            text("Screenshot on Failure")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Screenshot on Failure")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                help_tooltip("verification.screenshot_on_failure", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             text("Automatically capture screenshots when tests or verifications fail")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -689,6 +774,8 @@ fn tab_verification<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Eleme
 fn tab_memory<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a, Message> {
     use crate::widgets::styled_input::{InputSize, InputVariant, styled_text_input_with_variant};
 
+    let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
+
     let mut content = column![]
         .spacing(tokens::spacing::MD)
         .padding(tokens::spacing::MD);
@@ -712,10 +799,15 @@ fn tab_memory<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a,
     // Progress File
     content = content.push(
         column![
-            text("Progress File")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Progress File")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                help_tooltip("memory.progress_file", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             row![
                 styled_text_input_with_variant(
                     theme,
@@ -741,10 +833,15 @@ fn tab_memory<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a,
     // Agents File
     content = content.push(
         column![
-            text("Agents File")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("Agents File")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                help_tooltip("memory.agents_file", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             row![
                 styled_text_input_with_variant(
                     theme,
@@ -770,10 +867,15 @@ fn tab_memory<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a,
     // PRD File
     content = content.push(
         column![
-            text("PRD File")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            row![
+                text("PRD File")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fill),
+                help_tooltip("memory.prd_file", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
             row![
                 styled_text_input_with_variant(
                     theme,
@@ -803,6 +905,8 @@ fn tab_memory<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a,
                 .size(tokens::font_size::BASE)
                 .font(fonts::FONT_UI_BOLD)
                 .color(theme.ink()),
+            Space::new().width(Length::Fill),
+            help_tooltip("memory.multi_level_agents", tooltip_variant, theme),
             Space::new().width(Length::Fixed(tokens::spacing::SM)),
             iced::widget::toggler(gui_config.memory.multi_level_agents)
                 .on_toggle(|_| Message::ConfigMemoryMultiLevelToggled),
@@ -823,6 +927,8 @@ fn tab_memory<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a,
 }
 
 fn tab_budgets<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a, Message> {
+    let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
+
     let mut content = column![]
         .spacing(tokens::spacing::MD)
         .padding(tokens::spacing::MD);
@@ -848,6 +954,7 @@ fn tab_budgets<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a
         "cursor",
         &gui_config.budgets.cursor,
         true,
+        tooltip_variant,
         theme,
     ));
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
@@ -855,6 +962,7 @@ fn tab_budgets<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a
         "codex",
         &gui_config.budgets.codex,
         false,
+        tooltip_variant,
         theme,
     ));
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
@@ -862,6 +970,7 @@ fn tab_budgets<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a
         "claude",
         &gui_config.budgets.claude,
         false,
+        tooltip_variant,
         theme,
     ));
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
@@ -869,6 +978,7 @@ fn tab_budgets<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a
         "gemini",
         &gui_config.budgets.gemini,
         false,
+        tooltip_variant,
         theme,
     ));
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
@@ -876,6 +986,7 @@ fn tab_budgets<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a
         "copilot",
         &gui_config.budgets.copilot,
         false,
+        tooltip_variant,
         theme,
     ));
 
@@ -886,6 +997,7 @@ fn budget_card<'a>(
     platform_name: &'a str,
     budget: &'a crate::config::gui_config::PlatformBudget,
     is_cursor: bool,
+    tooltip_variant: crate::widgets::tooltips::TooltipVariant,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     use crate::widgets::styled_input::{InputSize, InputVariant, styled_text_input_with_variant};
@@ -909,6 +1021,7 @@ fn budget_card<'a>(
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("budget.max_calls_per_run", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
                 "100",
@@ -934,6 +1047,7 @@ fn budget_card<'a>(
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("budget.max_calls_per_hour", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
                 "200",
@@ -959,6 +1073,7 @@ fn budget_card<'a>(
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("budget.max_calls_per_day", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
                 "1000",
@@ -985,6 +1100,7 @@ fn budget_card<'a>(
                     .size(tokens::font_size::SM)
                     .color(theme.ink())
                     .width(Length::Fixed(180.0)),
+                help_tooltip("budget.unlimited_auto_mode", tooltip_variant, theme),
                 iced::widget::toggler(budget.unlimited_auto_mode).on_toggle(move |v| {
                     Message::ConfigBudgetFieldChanged(
                         platform_name.to_string(),
@@ -1015,6 +1131,8 @@ fn budget_card<'a>(
 fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a, Message> {
     use crate::widgets::styled_input::{InputSize, InputVariant, styled_text_input_with_variant};
     use iced::widget::pick_list;
+
+    let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
 
     let mut content = column![]
         .spacing(tokens::spacing::MD)
@@ -1052,6 +1170,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("orchestrator.log_level", tooltip_variant, theme),
             pick_list(
                 LOG_LEVELS,
                 Some(gui_config.advanced.log_level.as_str()),
@@ -1070,6 +1189,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("orchestrator.process_timeout", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
                 "300000",
@@ -1091,6 +1211,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("orchestrator.parallel_iterations", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
                 "1",
@@ -1112,6 +1233,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("orchestrator.intensive_logging", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.intensive_logging).on_toggle(|_| {
                 Message::ConfigAdvancedCheckboxToggled("intensive_logging".to_string())
             }),
@@ -1147,12 +1269,22 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
     ];
 
     for (platform, path) in platforms {
+        let tooltip_key = match platform {
+            "cursor" => "cli_paths.cursor",
+            "codex" => "cli_paths.codex",
+            "claude" => "cli_paths.claude",
+            "gemini" => "cli_paths.gemini",
+            "copilot" => "cli_paths.copilot",
+            _ => "",
+        };
+
         content = content.push(
             row![
                 text(format!("{}:", platform.to_uppercase()))
                     .size(tokens::font_size::SM)
                     .color(theme.ink())
                     .width(Length::Fixed(180.0)),
+                help_tooltip(tooltip_key, tooltip_variant, theme),
                 styled_text_input_with_variant(
                     theme,
                     &format!("/path/to/{}-cli", platform),
@@ -1188,6 +1320,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("orchestrator.kill_agent_on_failure", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.execution.kill_on_failure).on_toggle(|_| {
                 Message::ConfigAdvancedCheckboxToggled("kill_on_failure".to_string())
             }),
@@ -1203,6 +1336,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("orchestrator.enable_parallel", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.execution.enable_parallel).on_toggle(|_| {
                 Message::ConfigAdvancedCheckboxToggled("enable_parallel".to_string())
             }),
@@ -1218,6 +1352,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("orchestrator.max_parallel_phases", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
                 "1",
@@ -1243,6 +1378,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("orchestrator.max_parallel_tasks", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
                 "3",
@@ -1274,6 +1410,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("checkpointing.enabled", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.checkpointing.enabled).on_toggle(|_| {
                 Message::ConfigAdvancedCheckboxToggled("checkpoint_enabled".to_string())
             }),
@@ -1289,6 +1426,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("checkpointing.interval_seconds", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
                 "300",
@@ -1314,6 +1452,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("checkpointing.max_checkpoints", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
                 "10",
@@ -1339,6 +1478,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("checkpointing.on_subtask_complete", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.checkpointing.on_subtask_complete).on_toggle(
                 |_| Message::ConfigAdvancedCheckboxToggled("checkpoint_on_subtask".to_string())
             ),
@@ -1354,6 +1494,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("checkpointing.on_shutdown", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.checkpointing.on_shutdown).on_toggle(|_| {
                 Message::ConfigAdvancedCheckboxToggled("checkpoint_on_shutdown".to_string())
             }),
@@ -1379,6 +1520,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("loop_guard.enabled", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.loop_guard.enabled)
                 .on_toggle(|_| Message::ConfigAdvancedCheckboxToggled("loop_enabled".to_string())),
         ]
@@ -1393,6 +1535,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("loop_guard.max_repetitions", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
                 "3",
@@ -1417,6 +1560,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("loop_guard.suppress_reply_relay", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.loop_guard.suppress_reply_relay).on_toggle(
                 |_| Message::ConfigAdvancedCheckboxToggled("loop_suppress_relay".to_string())
             ),
@@ -1442,6 +1586,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("network.lan_mode", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.network.lan_mode)
                 .on_toggle(|_| Message::ConfigAdvancedCheckboxToggled("lan_mode".to_string())),
         ]
@@ -1456,6 +1601,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("network.trust_proxy", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.network.trust_proxy)
                 .on_toggle(|_| Message::ConfigAdvancedCheckboxToggled("trust_proxy".to_string())),
         ]
@@ -1470,6 +1616,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .size(tokens::font_size::SM)
                 .color(theme.ink())
                 .width(Length::Fixed(180.0)),
+            help_tooltip("network.allowed_origins", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
                 "*",
@@ -1535,6 +1682,42 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
                     "platform".to_string(),
                     platform.to_string(),
                 )
+            )
+            .width(Length::Fixed(200.0))
+        ]
+        .spacing(tokens::spacing::XXS),
+    );
+
+    // Vision Provider
+    let vision_platform_options: Vec<String> = {
+        let detected = crate::interview::ReferenceManager::get_vision_capable_platforms();
+        if detected.is_empty() {
+            PLATFORMS.iter().map(|p| (*p).to_string()).collect()
+        } else {
+            detected
+        }
+    };
+
+    content = content.push(
+        column![
+            row![
+                text("Vision Provider")
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fixed(tokens::spacing::XS)),
+                help_tooltip("interview.vision_provider", tooltip_variant, theme),
+            ]
+            .align_y(Alignment::Center),
+            text("Preferred platform for vision-capable image references")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
+            pick_list(
+                vision_platform_options,
+                Some(gui_config.interview.vision_provider.clone()),
+                |platform: String| {
+                    Message::ConfigInterviewFieldChanged("vision_provider".to_string(), platform)
+                }
             )
             .width(Length::Fixed(200.0))
         ]

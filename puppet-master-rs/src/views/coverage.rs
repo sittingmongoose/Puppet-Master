@@ -33,9 +33,9 @@ pub fn view<'a>(
     requirements: &'a [RequirementCoverage],
     phase_filter: &'a str,
     theme: &'a AppTheme,
-    size: crate::widgets::responsive::LayoutSize,
+    _size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
-    let _ = size; // TODO: Use size for responsive layout if needed
+    // Coverage view uses vertical card layout; size available for future grid improvements
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);

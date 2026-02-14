@@ -901,6 +901,11 @@ pub struct InterviewConfig {
     /// Interaction mode (expert or eli5).
     #[serde(default = "default_interaction_mode")]
     pub interaction_mode: String,
+
+    /// Preferred platform for vision analysis (default: codex).
+    /// Will be filtered to only show platforms with vision capability.
+    #[serde(default = "default_vision_provider")]
+    pub vision_provider: String,
 }
 
 impl Default for InterviewConfig {
@@ -920,6 +925,7 @@ impl Default for InterviewConfig {
             generate_playwright_requirements: true,
             generate_initial_agents_md: true,
             interaction_mode: default_interaction_mode(),
+            vision_provider: default_vision_provider(),
         }
     }
 }
@@ -946,6 +952,10 @@ fn default_interview_output_dir() -> String {
 
 fn default_interaction_mode() -> String {
     "expert".to_string()
+}
+
+fn default_vision_provider() -> String {
+    "codex".to_string()
 }
 
 /// A platform + model pair for backup platform configuration.

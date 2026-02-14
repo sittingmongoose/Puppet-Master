@@ -261,7 +261,18 @@ impl PromptBuilder {
             .join(".puppet-master")
             .join("interview")
             .join("requirements-complete.md");
-        let test_strategy_path = workspace.join(".puppet-master").join("test-strategy.md");
+        
+        // Try interview/ subdirectory first (current location), then fall back to root .puppet-master/ (legacy)
+        let test_strategy_path_interview = workspace
+            .join(".puppet-master")
+            .join("interview")
+            .join("test-strategy.md");
+        let test_strategy_path_legacy = workspace.join(".puppet-master").join("test-strategy.md");
+        let test_strategy_path = if test_strategy_path_interview.exists() {
+            test_strategy_path_interview
+        } else {
+            test_strategy_path_legacy
+        };
 
         let read_excerpt = |path: &std::path::Path, max_chars: usize| -> Result<String> {
             let mut content = fs::read_to_string(path)?;
@@ -538,8 +549,8 @@ Some content
             b"# Requirements Complete\nThis is the interview requirements complete document.\n",
         )?;
 
-        // Create test-strategy.md
-        let test_strategy_path = puppet_master_dir.join("test-strategy.md");
+        // Create test-strategy.md in interview/ subdirectory (preferred location)
+        let test_strategy_path = interview_dir.join("test-strategy.md");
         let mut test_strategy_file = fs::File::create(&test_strategy_path)?;
         test_strategy_file.write_all(b"# Test Strategy\nThis is the test strategy document.\n")?;
 
@@ -716,6 +727,74 @@ Some content
         // Verify truncation marker is present
         assert!(prompt.contains("...(truncated)..."));
         assert!(prompt.contains("Interview Requirements Complete"));
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_load_interview_outputs_test_strategy_fallback() -> Result<()> {
+        use tempfile::TempDir;
+
+        // Create temporary directory structure
+        let temp_dir = TempDir::new()?;
+        let workspace = temp_dir.path();
+
+        // Create .puppet-master directory structure
+        let puppet_master_dir = workspace.join(".puppet-master");
+        fs::create_dir(&puppet_master_dir)?;
+
+        let interview_dir = puppet_master_dir.join("interview");
+        fs::create_dir(&interview_dir)?;
+
+        // Create AGENTS.md in workspace
+        let agents_path = workspace.join("AGENTS.md");
+        fs::write(&agents_path, b"# Test Agents\n")?;
+
+        // Create test-strategy.md in LEGACY location (root .puppet-master/)
+        let test_strategy_legacy_path = puppet_master_dir.join("test-strategy.md");
+        fs::write(
+            &test_strategy_legacy_path,
+            b"# Test Strategy\nThis is the LEGACY test strategy document.\n",
+        )?;
+
+        // Create prompt builder with agents path
+        let builder = PromptBuilder::new().with_agents_path(agents_path.clone());
+
+        // Create a simple tree for testing
+        let mut tree = TierTree::new();
+        tree.add_node(
+            "1".to_string(),
+            TierType::Task,
+            "Test Task".to_string(),
+            "Test description".to_string(),
+            None,
+            3,
+        )?;
+
+        // Build prompt and verify legacy path is used
+        let prompt = builder.build_prompt(&tree, "1", 1, None)?;
+
+        // Verify test strategy from legacy location is included
+        assert!(prompt.contains("Interview Outputs"));
+        assert!(prompt.contains("Test Strategy"));
+        assert!(prompt.contains("LEGACY test strategy document"));
+
+        // Now create the preferred location and verify it takes precedence
+        let test_strategy_interview_path = interview_dir.join("test-strategy.md");
+        fs::write(
+            &test_strategy_interview_path,
+            b"# Test Strategy\nThis is the PREFERRED test strategy document.\n",
+        )?;
+
+        // Create a new builder to re-evaluate paths
+        let builder2 = PromptBuilder::new().with_agents_path(agents_path);
+        let prompt2 = builder2.build_prompt(&tree, "1", 1, None)?;
+
+        // Verify preferred path is now used (not legacy)
+        assert!(prompt2.contains("Interview Outputs"));
+        assert!(prompt2.contains("Test Strategy"));
+        assert!(prompt2.contains("PREFERRED test strategy document"));
+        assert!(!prompt2.contains("LEGACY test strategy document"));
 
         Ok(())
     }

@@ -24,7 +24,10 @@ impl Default for PromotionConfig {
         Self {
             min_usage_count: 3,
             min_success_rate: 0.75,
-            promotion_threshold: 0.8,
+            // Lowered from 0.8 to 0.65 to make promotion reachable
+            // With 3 uses (min) + 100% success: (0.3 + 1.0) / 2 = 0.65 ✓
+            // With 5 uses + 80% success: (0.5 + 0.8) / 2 = 0.65 ✓
+            promotion_threshold: 0.65,
         }
     }
 }
@@ -386,6 +389,42 @@ mod tests {
     }
 
     #[test]
+    fn test_promotion_to_root_uses_root_agents_md() {
+        let temp_dir = TempDir::new().unwrap();
+        let manager = AgentsManager::new(temp_dir.path());
+        let mut engine = PromotionEngine::with_defaults();
+
+        // Create a promotable phase-level pattern so target tier is root.
+        for _ in 0..3 {
+            engine
+                .record_usage("Phase Pattern", "phase1", true)
+                .unwrap();
+        }
+
+        let entries = vec![AgentDefinition::new(
+            "Phase Pattern",
+            "pattern",
+            "Phase Pattern",
+        )];
+
+        let candidates = engine.evaluate(&entries);
+        assert_eq!(candidates.len(), 1);
+        assert_eq!(candidates[0].target_tier, "root");
+
+        engine.promote(&candidates[0], &manager).unwrap();
+
+        // Root tier should be stored at the workspace root (not in a "root/" subdir).
+        let root_doc = manager.load("").unwrap();
+        let patterns: Vec<_> = root_doc
+            .agents
+            .iter()
+            .filter(|a| a.role == "pattern")
+            .collect();
+        assert_eq!(patterns.len(), 1);
+        assert!(patterns[0].description.contains("Phase Pattern"));
+    }
+
+    #[test]
     fn test_export_import_stats() {
         let mut engine = PromotionEngine::with_defaults();
 
@@ -411,5 +450,76 @@ mod tests {
 
         engine.clear_stats();
         assert!(engine.get_stats("Pattern").is_none());
+    }
+
+    #[test]
+    fn test_promotion_reachable_with_minimal_usage() {
+        // Verify that promotion is actually reachable with minimum thresholds
+        let mut engine = PromotionEngine::with_defaults();
+        let tier_id = "phase1.task1";
+
+        // Test with exactly minimum usage (3 uses) and 100% success
+        for _ in 0..3 {
+            engine
+                .record_usage("Minimal Pattern", tier_id, true)
+                .unwrap();
+        }
+
+        let entries = vec![AgentDefinition::new(
+            "Minimal Pattern",
+            "pattern",
+            "Minimal Pattern",
+        )];
+
+        let candidates = engine.evaluate(&entries);
+
+        // Should be promotable with min usage + perfect success rate
+        // Score: (3/10 + 1.0) / 2 = 0.65, threshold is 0.65
+        assert_eq!(
+            candidates.len(),
+            1,
+            "Should promote with minimal usage and high success rate"
+        );
+        assert_eq!(candidates[0].usage_count, 3);
+        assert_eq!(candidates[0].success_rate, 1.0);
+        assert!(
+            candidates[0].score >= 0.65,
+            "Score {} should meet threshold 0.65",
+            candidates[0].score
+        );
+    }
+
+    #[test]
+    fn test_promotion_reachable_with_good_usage() {
+        // Verify promotion is reachable with moderate usage + good success
+        let mut engine = PromotionEngine::with_defaults();
+        let tier_id = "phase1.task1";
+
+        // 5 uses, 4 successes = 80% success rate
+        for _ in 0..4 {
+            engine
+                .record_usage("Good Pattern", tier_id, true)
+                .unwrap();
+        }
+        engine
+            .record_usage("Good Pattern", tier_id, false)
+            .unwrap();
+
+        let entries = vec![AgentDefinition::new(
+            "Good Pattern",
+            "pattern",
+            "Good Pattern",
+        )];
+
+        let candidates = engine.evaluate(&entries);
+
+        // Should be promotable: (5/10 + 0.8) / 2 = 0.65
+        assert_eq!(
+            candidates.len(),
+            1,
+            "Should promote with moderate usage and good success rate"
+        );
+        assert_eq!(candidates[0].usage_count, 5);
+        assert_eq!(candidates[0].success_rate, 0.8);
     }
 }

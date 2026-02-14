@@ -7,3 +7,8 @@ rustflags = ["-C", "target-feature=+crt-static"]
 # Default target for CI Linux builds (uncomment to default to musl)
 # [build]
 # target = "x86_64-unknown-linux-musl"
+
+# Build on local filesystem to avoid "Invalid argument (os error 22)" on network mounts
+# This is critical when the repo is on SMB/NFS shares where build scripts may fail
+[build]
+target-dir = "/tmp/puppet-master-build"

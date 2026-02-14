@@ -5,7 +5,7 @@
 use crate::app::Message;
 use crate::theme::{AppTheme, fonts, tokens};
 use crate::widgets::*;
-use iced::widget::{Space, column, container, pick_list, row, scrollable, text, text_editor};
+use iced::widget::{column, container, pick_list, row, scrollable, text, text_editor};
 use iced::{Element, Length};
 
 /// Memory section for navigation
@@ -55,9 +55,9 @@ pub fn view<'a>(
     _agents_content: &'a str,
     current_section: &'a MemorySection,
     theme: &'a AppTheme,
-    size: crate::widgets::responsive::LayoutSize,
+    _size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
-    let _ = size; // TODO: Use size for responsive layout if needed
+    // Memory viewer uses vertical layout; size available for future responsive enhancements
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);

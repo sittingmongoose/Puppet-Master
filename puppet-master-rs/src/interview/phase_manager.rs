@@ -95,6 +95,23 @@ impl PhaseManager {
             max_questions: 8,
         });
     }
+
+    /// Returns the dynamic phases (Phase 9+) as a Vec.
+    pub fn dynamic_phases(&self) -> Vec<InterviewPhaseDefinition> {
+        if self.phases.len() > 8 {
+            self.phases[8..].to_vec()
+        } else {
+            Vec::new()
+        }
+    }
+
+    /// Restores dynamic phases from saved state.
+    pub fn restore_dynamic_phases(&mut self, dynamic_phases: Vec<InterviewPhaseDefinition>) {
+        // Remove any existing dynamic phases first
+        self.phases.truncate(8);
+        // Add the restored dynamic phases
+        self.phases.extend(dynamic_phases);
+    }
 }
 
 impl Default for PhaseManager {
@@ -218,6 +235,41 @@ mod tests {
         pm.add_dynamic_phase("feature_auth", "Authentication", "Auth deep dive");
         assert_eq!(pm.total_phases(), 9);
         assert_eq!(pm.phases()[8].id, "feature_auth");
+    }
+
+    #[test]
+    fn test_dynamic_phases_extraction() {
+        let mut pm = PhaseManager::new();
+        assert_eq!(pm.dynamic_phases().len(), 0);
+        
+        pm.add_dynamic_phase("feature_auth", "Authentication", "Auth deep dive");
+        pm.add_dynamic_phase("feature_api", "API", "API design");
+        
+        let dynamic = pm.dynamic_phases();
+        assert_eq!(dynamic.len(), 2);
+        assert_eq!(dynamic[0].id, "feature_auth");
+        assert_eq!(dynamic[1].id, "feature_api");
+    }
+
+    #[test]
+    fn test_restore_dynamic_phases() {
+        let mut pm = PhaseManager::new();
+        
+        // Add some dynamic phases
+        pm.add_dynamic_phase("feature_auth", "Authentication", "Auth deep dive");
+        pm.add_dynamic_phase("feature_api", "API", "API design");
+        
+        // Extract them
+        let dynamic = pm.dynamic_phases();
+        assert_eq!(pm.total_phases(), 10);
+        
+        // Create a new phase manager and restore
+        let mut pm2 = PhaseManager::new();
+        assert_eq!(pm2.total_phases(), 8);
+        pm2.restore_dynamic_phases(dynamic);
+        assert_eq!(pm2.total_phases(), 10);
+        assert_eq!(pm2.phases()[8].id, "feature_auth");
+        assert_eq!(pm2.phases()[9].id, "feature_api");
     }
 
     #[test]

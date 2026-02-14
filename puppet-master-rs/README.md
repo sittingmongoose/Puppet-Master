@@ -14,17 +14,22 @@ cargo build
 Shared Rust/Iced widgets are documented in `docs/gui-widget-catalog.md`.
 When implementing GUI changes, prefer existing widgets in `src/widgets/` first and only add bespoke UI when needed.
 
-## WSL Users: Cargo Check Failure
+## Network Mount / WSL Build Issues (OS Error 22)
 
-If `cargo check` or `cargo build` fails with **"Invalid argument (os error 22)"** when building wayland-sys or other crates, this is caused by a **WSL noexec mount**. Cargo compiles build scripts into executables and runs them; when the project or build dirs are on a path mounted with `noexec` (e.g. `/mnt/c/...`), the OS refuses to execute those binaries.
+If `cargo check` or `cargo build` fails with **"Invalid argument (os error 22)"**, this is caused by network filesystems (SMB/CIFS/NFS) or WSL noexec mounts that prevent Cargo build scripts from executing.
 
-**Fix:** Ensure the project and build dirs are on the WSL filesystem, or set:
+**Solution Implemented:** This project includes a `.cargo/config.toml` that automatically redirects build artifacts to `/tmp/puppet-master-build` (local filesystem), avoiding the issue entirely.
 
 ```bash
-export TMPDIR=/tmp
-export CARGO_TARGET_DIR=~/.cargo-target   # or /home/$USER/.cargo-target
-cargo check
+cd puppet-master-rs
+cargo check  # Should work without errors
 ```
 
-- Move the project to `/home/...` (WSL filesystem) instead of `/mnt/c/...` when possible.
-- CI (GitHub Actions) is not affected—runners use standard filesystems.
+**Verification:**
+```bash
+./verify-cargo-build.sh  # Run verification script
+```
+
+**Details:** See [CARGO_OS_ERROR_22_FIX.md](CARGO_OS_ERROR_22_FIX.md) and [NETWORK_MOUNT_WORKAROUND.md](NETWORK_MOUNT_WORKAROUND.md) for complete documentation.
+
+**Note:** CI (GitHub Actions) is unaffected—runners use standard local filesystems.

@@ -26,10 +26,11 @@ pub fn view<'a>(
     is_checking: bool,
     setup_installing: Option<Platform>,
     login_in_progress: &'a HashMap<AuthTarget, AuthActionKind>,
+    doctor_results: &'a [crate::app::DoctorCheckResult],
+    doctor_fixing: &'a std::collections::HashSet<String>,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
-    let _ = size; // TODO: Use size for responsive layout if needed
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
@@ -89,12 +90,13 @@ pub fn view<'a>(
     };
     content = content.push(container(row![detect_btn].spacing(tokens::spacing::SM)));
 
-    // Platform status results - use 2-column grid for better horizontal spacing
+    // Platform status results - responsive grid based on window width
     if !platform_statuses.is_empty() {
         let mut grid_rows = column![].spacing(tokens::spacing::LG);
         let ink_color = theme.ink(); // Capture for use in closure
 
-        // Build platform cards in pairs for 2-column layout
+        // Responsive column count: desktop = 2 cols, mobile = 1 col
+        let columns_per_row = if size.is_desktop_or_larger() { 2 } else { 1 };
         let mut current_row = row![].spacing(tokens::spacing::LG);
 
         for (idx, platform_status) in platform_statuses.iter().enumerate() {
@@ -213,8 +215,8 @@ pub fn view<'a>(
                     .height(Length::Shrink),
             );
 
-            // Every 2 cards, push the row and start a new one
-            if (idx + 1) % 2 == 0 || idx == platform_statuses.len() - 1 {
+            // Push row when reaching column limit or at the end
+            if (idx + 1) % columns_per_row == 0 || idx == platform_statuses.len() - 1 {
                 grid_rows = grid_rows.push(current_row);
                 current_row = row![].spacing(tokens::spacing::LG);
             }
@@ -229,6 +231,52 @@ pub fn view<'a>(
             )
             .padding(tokens::spacing::LG),
         );
+    }
+
+    // Playwright browser check section
+    let playwright_check = doctor_results.iter().find(|r| r.name == "playwright-browsers");
+    if let Some(check) = playwright_check {
+        if !check.passed {
+            let is_installing = doctor_fixing.contains("playwright-browsers");
+            
+            let install_btn = if is_installing {
+                styled_button(theme, "Installing...", ButtonVariant::Primary)
+            } else {
+                styled_button(theme, "Install Playwright", ButtonVariant::Primary)
+                    .on_press(Message::InstallPlaywright)
+            };
+
+            let status_icon = text("⚠")
+                .size(tokens::font_size::XL)
+                .color(iced::Color::from_rgb(0.8, 0.5, 0.0));
+
+            content = content.push(themed_panel(
+                container(
+                    column![
+                        row![
+                            status_icon,
+                            column![
+                                text("Playwright Browser Dependencies")
+                                    .size(tokens::font_size::LG)
+                                    .font(crate::theme::fonts::FONT_UI_BOLD)
+                                    .color(theme.ink()),
+                                text(&check.message)
+                                    .size(tokens::font_size::BASE)
+                                    .color(theme.ink_faded()),
+                            ]
+                            .spacing(tokens::spacing::XS),
+                            Space::new().width(Length::Fill),
+                            install_btn,
+                        ]
+                        .spacing(tokens::spacing::MD)
+                        .align_y(iced::Alignment::Center),
+                    ]
+                    .spacing(tokens::spacing::SM),
+                )
+                .padding(tokens::spacing::MD),
+                theme,
+            ));
+        }
     }
 
     // Complete setup button

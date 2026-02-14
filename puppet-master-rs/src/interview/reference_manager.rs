@@ -9,7 +9,6 @@ use serde::{Deserialize, Serialize};
 use std::fs;
 use std::io::Read;
 use std::path::{Path, PathBuf};
-use std::process::Command;
 use std::time::Duration;
 
 /// Types of reference materials that can be provided.
@@ -36,6 +35,16 @@ pub struct ReferenceMaterial {
     pub description: Option<String>,
     /// When this was added.
     pub added_at: String,
+}
+
+/// Image metadata extracted from file
+#[derive(Debug, Clone)]
+struct ImageMetadata {
+    filename: String,
+    size_bytes: u64,
+    mime_type: String,
+    dimensions: Option<(u32, u32)>,
+    hash: String,
 }
 
 /// Manages a collection of reference materials for the interview.
@@ -103,6 +112,84 @@ impl ReferenceManager {
     pub fn with_ocr_timeout_secs(mut self, secs: u64) -> Self {
         self.ocr_timeout_secs = secs;
         self
+    }
+
+    /// Returns a list of vision-capable platforms from the model catalog.
+    /// This can be used to filter UI options based on actual capabilities.
+    pub fn get_vision_capable_platforms() -> Vec<String> {
+        use crate::platforms::model_catalog::ModelCatalogManager;
+        use crate::types::Platform;
+        
+        let catalog_mgr = ModelCatalogManager::new();
+        let mut capable_platforms = Vec::new();
+        
+        for platform in &[
+            Platform::Codex,
+            Platform::Cursor,
+            Platform::Claude,
+            Platform::Gemini,
+            Platform::Copilot,
+        ] {
+            if let Some(catalog) = catalog_mgr.get_catalog(*platform) {
+                if !catalog.get_vision_models().is_empty() {
+                    capable_platforms.push(platform.to_string().to_lowercase());
+                }
+            }
+        }
+        
+        capable_platforms
+    }
+
+    /// Derives context file paths from reference materials for platform runners.
+    ///
+    /// We include:
+    /// - explicit File/Image references
+    /// - image files from Directory references (non-recursive, capped)
+    pub fn derive_context_files(materials: &[ReferenceMaterial]) -> Vec<String> {
+        use std::collections::HashSet;
+
+        fn is_image(path: &Path) -> bool {
+            let Some(ext) = path.extension().and_then(|e| e.to_str()) else {
+                return false;
+            };
+            matches!(
+                ext.to_ascii_lowercase().as_str(),
+                "png" | "jpg" | "jpeg" | "gif" | "webp"
+            )
+        }
+
+        let mut out: Vec<String> = Vec::new();
+        let mut seen: HashSet<String> = HashSet::new();
+
+        for m in materials {
+            match &m.ref_type {
+                ReferenceType::Link(_) => {}
+                ReferenceType::File(p) | ReferenceType::Image(p) => {
+                    let p = std::fs::canonicalize(p).unwrap_or_else(|_| p.clone());
+                    let s = p.to_string_lossy().to_string();
+                    if seen.insert(s.clone()) {
+                        out.push(s);
+                    }
+                }
+                ReferenceType::Directory(dir) => {
+                    let Ok(entries) = std::fs::read_dir(dir) else {
+                        continue;
+                    };
+                    for entry in entries.flatten().take(50) {
+                        let path = entry.path();
+                        if path.is_file() && is_image(&path) {
+                            let p = std::fs::canonicalize(&path).unwrap_or(path);
+                            let s = p.to_string_lossy().to_string();
+                            if seen.insert(s.clone()) {
+                                out.push(s);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        out
     }
 
     /// Adds a new reference material.
@@ -175,38 +262,56 @@ impl ReferenceManager {
                 },
                 ReferenceType::Image(path) => {
                     context.push_str(&format!("**Image:** {}\n\n", path.display()));
+                    
                     // Check if file exists
                     if path.exists() {
-                        if let Ok(metadata) = fs::metadata(path) {
-                            context.push_str(&format!(
-                                "*Image file present: {} bytes*\n\n",
-                                metadata.len()
-                            ));
-
-                            // Attempt OCR extraction
-                            match self.extract_image_text(path) {
-                                Ok(text) if !text.trim().is_empty() => {
-                                    context.push_str("**Extracted Text (OCR):**\n");
-                                    context.push_str("```\n");
-                                    context.push_str(&text);
-                                    context.push_str("\n```\n\n");
+                        // Extract comprehensive metadata
+                        match self.extract_image_metadata(path) {
+                            Ok(metadata) => {
+                                // Always include metadata
+                                context.push_str(&format!(
+                                    "**Image Metadata:**\n\
+                                     - Filename: {}\n\
+                                     - Size: {} bytes\n\
+                                     - Type: {}\n",
+                                    metadata.filename, metadata.size_bytes, metadata.mime_type
+                                ));
+                                
+                                if let Some((width, height)) = metadata.dimensions {
+                                    context.push_str(&format!("- Dimensions: {}x{}\n", width, height));
                                 }
-                                Ok(_) => {
-                                    // OCR succeeded but no text found
-                                    context.push_str(
-                                        "*Note: OCR completed but no text detected in image*\n\n",
-                                    );
-                                }
-                                Err(e) => {
-                                    debug!("OCR extraction failed for {}: {}", path.display(), e);
-                                    context.push_str(&format!(
-                                        "*Note: OCR not available ({}). Please describe image content or extract text manually.*\n\n",
-                                        e
-                                    ));
+                                
+                                context.push_str(&format!("- Hash: {}\n\n", metadata.hash));
+                                
+                                // Try OCR extraction (best effort)
+                                match self.extract_image_text_async(path) {
+                                    Ok(text) if !text.trim().is_empty() => {
+                                        context.push_str("**Extracted Text (OCR):**\n");
+                                        context.push_str("```\n");
+                                        context.push_str(&text);
+                                        context.push_str("\n```\n\n");
+                                    }
+                                    Ok(_) => {
+                                        context.push_str(
+                                            "*Note: OCR completed but no text detected in image*\n\n",
+                                        );
+                                    }
+                                    Err(e) => {
+                                        debug!("OCR extraction failed for {}: {}", path.display(), e);
+                                        context.push_str(&format!(
+                                            "*Note: OCR not available ({})*\n\n",
+                                            e
+                                        ));
+                                    }
                                 }
                             }
-                        } else {
-                            context.push_str("*Error: Unable to read image metadata*\n\n");
+                            Err(e) => {
+                                warn!("Failed to extract image metadata: {}", e);
+                                context.push_str(&format!(
+                                    "*Error: Unable to read image metadata ({})*\n\n",
+                                    e
+                                ));
+                            }
                         }
                     } else {
                         context.push_str("*Error: Image file not found*\n\n");
@@ -621,13 +726,65 @@ impl ReferenceManager {
         }
     }
 
-    /// Extracts text from an image using Tesseract OCR (external binary).
+    /// Extracts comprehensive image metadata.
+    ///
+    /// Always returns: filename, size, mime type, hash
+    /// Best effort: dimensions (requires valid image format)
+    fn extract_image_metadata(&self, path: &Path) -> Result<ImageMetadata> {
+        let metadata = fs::metadata(path).context("Failed to read file metadata")?;
+        
+        let filename = path
+            .file_name()
+            .and_then(|n| n.to_str())
+            .unwrap_or("unknown")
+            .to_string();
+        
+        let size_bytes = metadata.len();
+        
+        // Determine MIME type from extension
+        let mime_type = path
+            .extension()
+            .and_then(|ext| ext.to_str())
+            .map(|ext| match ext.to_lowercase().as_str() {
+                "png" => "image/png",
+                "jpg" | "jpeg" => "image/jpeg",
+                "gif" => "image/gif",
+                "bmp" => "image/bmp",
+                "webp" => "image/webp",
+                "svg" => "image/svg+xml",
+                "tiff" | "tif" => "image/tiff",
+                _ => "image/unknown",
+            })
+            .unwrap_or("image/unknown")
+            .to_string();
+        
+        // Compute hash
+        let mut file = fs::File::open(path).context("Failed to open file for hashing")?;
+        let mut buffer = Vec::new();
+        file.read_to_end(&mut buffer)
+            .context("Failed to read file for hashing")?;
+        let hash = format!("{:x}", md5::compute(&buffer));
+        
+        // Try to extract dimensions using image crate
+        let dimensions = image::image_dimensions(path).ok();
+        
+        Ok(ImageMetadata {
+            filename,
+            size_bytes,
+            mime_type,
+            dimensions,
+            hash,
+        })
+    }
+
+    /// Extracts text from an image using Tesseract OCR with enforced timeout.
     ///
     /// This is a best-effort operation that:
     /// - Checks for tesseract installation
-    /// - Enforces size and timeout limits
-    /// - Returns graceful errors if OCR is unavailable
-    fn extract_image_text(&self, path: &Path) -> Result<String> {
+    /// - Enforces size limits
+    /// - **Enforces real timeout** using tokio::time::timeout
+    /// - Returns graceful errors if OCR is unavailable or times out
+    fn extract_image_text_async(&self, path: &Path) -> Result<String> {
         // Check file size first
         let metadata = fs::metadata(path).context("Failed to read image metadata")?;
 
@@ -644,48 +801,62 @@ impl ReferenceManager {
 
         debug!("Found tesseract at: {}", tesseract_path.display());
 
-        // Run tesseract with timeout
-        // tesseract image.png stdout (outputs to stdout)
-        let output = Command::new(tesseract_path)
-            .arg(path)
-            .arg("stdout") // Output to stdout instead of file
-            .arg("-l")
-            .arg("eng") // English language (most common)
-            .arg("--psm")
-            .arg("3") // Page segmentation mode: Fully automatic
-            .arg("--oem")
-            .arg("3") // OCR Engine Mode: Default (LSTM + legacy)
-            .env("OMP_THREAD_LIMIT", "1") // Limit threads for safety
-            .output();
+        // Run tesseract with ENFORCED timeout using tokio
+        let timeout_duration = Duration::from_secs(self.ocr_timeout_secs);
+        let path_owned = path.to_owned();
+        let tesseract_path_owned = tesseract_path.to_owned();
+        
+        // Block on async runtime to execute with timeout
+        let output = tokio::runtime::Runtime::new()
+            .context("Failed to create tokio runtime")?
+            .block_on(async {
+                tokio::time::timeout(timeout_duration, async {
+                    tokio::process::Command::new(&tesseract_path_owned)
+                        .arg(&path_owned)
+                        .arg("stdout") // Output to stdout instead of file
+                        .arg("-l")
+                        .arg("eng") // English language (most common)
+                        .arg("--psm")
+                        .arg("3") // Page segmentation mode: Fully automatic
+                        .arg("--oem")
+                        .arg("3") // OCR Engine Mode: Default (LSTM + legacy)
+                        .env("OMP_THREAD_LIMIT", "1") // Limit threads for safety
+                        .output()
+                        .await
+                })
+                .await
+            });
 
-        // Handle command execution with timeout simulation
-        // Note: std::process::Command doesn't have built-in timeout,
-        // but tesseract typically completes quickly. For production,
-        // consider using tokio::process with timeout or signal handling.
-        let output = match output {
-            Ok(output) => output,
-            Err(e) => {
+        match output {
+            Ok(Ok(output)) => {
+                if !output.status.success() {
+                    let stderr = String::from_utf8_lossy(&output.stderr);
+                    anyhow::bail!("tesseract failed: {}", stderr.trim());
+                }
+
+                // Get the extracted text
+                let text = String::from_utf8_lossy(&output.stdout).to_string();
+
+                // Basic cleanup: trim excessive whitespace
+                let cleaned = text
+                    .lines()
+                    .map(|line| line.trim())
+                    .filter(|line| !line.is_empty())
+                    .collect::<Vec<_>>()
+                    .join("\n");
+
+                Ok(cleaned)
+            }
+            Ok(Err(e)) => {
                 anyhow::bail!("Failed to execute tesseract: {}", e);
             }
-        };
-
-        if !output.status.success() {
-            let stderr = String::from_utf8_lossy(&output.stderr);
-            anyhow::bail!("tesseract failed: {}", stderr.trim());
+            Err(_) => {
+                anyhow::bail!(
+                    "OCR operation timed out after {} seconds",
+                    self.ocr_timeout_secs
+                );
+            }
         }
-
-        // Get the extracted text
-        let text = String::from_utf8_lossy(&output.stdout).to_string();
-
-        // Basic cleanup: trim excessive whitespace
-        let cleaned = text
-            .lines()
-            .map(|line| line.trim())
-            .filter(|line| !line.is_empty())
-            .collect::<Vec<_>>()
-            .join("\n");
-
-        Ok(cleaned)
     }
 
     /// Clears all reference materials.
@@ -916,5 +1087,87 @@ mod tests {
 
         // Cleanup
         let _ = std::fs::remove_file(fake_image);
+    }
+
+    #[test]
+    fn test_image_metadata_extraction() {
+        use std::io::Write;
+
+        // Create a small test image
+        let temp_dir = std::env::temp_dir();
+        let test_image = temp_dir.join("test_metadata.png");
+
+        {
+            // Create a minimal valid PNG (1x1 white pixel)
+            let png_data = vec![
+                137, 80, 78, 71, 13, 10, 26, 10, // PNG signature
+                0, 0, 0, 13, 73, 72, 68, 82, // IHDR chunk
+                0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 0, 0, 0, 144, 119, 83, 222,
+                0, 0, 0, 12, 73, 68, 65, 84, // IDAT chunk
+                8, 215, 99, 248, 255, 255, 63, 0, 5, 254, 2, 254, 167, 53, 129, 132,
+                0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130, // IEND chunk
+            ];
+            let mut file = std::fs::File::create(&test_image).unwrap();
+            file.write_all(&png_data).unwrap();
+        }
+
+        let mgr = ReferenceManager::new();
+        let metadata = mgr.extract_image_metadata(&test_image).unwrap();
+
+        // Verify metadata fields
+        assert_eq!(metadata.filename, "test_metadata.png");
+        assert!(metadata.size_bytes > 0);
+        assert_eq!(metadata.mime_type, "image/png");
+        assert!(metadata.dimensions.is_some());
+        if let Some((w, h)) = metadata.dimensions {
+            assert_eq!(w, 1);
+            assert_eq!(h, 1);
+        }
+        assert!(!metadata.hash.is_empty());
+
+        // Cleanup
+        let _ = std::fs::remove_file(test_image);
+    }
+
+    #[test]
+    fn test_ocr_timeout_config() {
+        // Verify timeout can be configured
+        let mgr = ReferenceManager::new().with_ocr_timeout_secs(5);
+        assert_eq!(mgr.ocr_timeout_secs, 5);
+
+        // Very short timeout should fail quickly if tesseract is available
+        // but we won't test actual timeout in unit tests (would be flaky)
+    }
+
+    #[test]
+    fn test_vision_capable_platforms() {
+        // Test that we can query vision-capable platforms
+        let platforms = ReferenceManager::get_vision_capable_platforms();
+        
+        // Should return a non-empty list
+        assert!(!platforms.is_empty(), "Should have at least one vision-capable platform");
+        
+        // Should include cursor (our default preference)
+        assert!(
+            platforms.contains(&"cursor".to_string()),
+            "Cursor should be vision-capable"
+        );
+        
+        // Should also include other known vision platforms
+        assert!(
+            platforms.contains(&"claude".to_string()),
+            "Claude should be vision-capable"
+        );
+        
+        // Codex supports image attachments via --image
+        assert!(
+            platforms.contains(&"codex".to_string()),
+            "Codex should be vision-capable"
+        );
+        
+        // All returned platforms should be lowercase
+        for platform in &platforms {
+            assert_eq!(platform, &platform.to_lowercase());
+        }
     }
 }

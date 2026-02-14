@@ -10,7 +10,6 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 use super::document_writer::CompletedPhase;
-use super::state::{Decision, InterviewQA};
 
 /// A single technology entry with its version information.
 #[derive(Debug, Clone)]
@@ -324,6 +323,7 @@ fn default_tech_patterns() -> Vec<TechPattern> {
 mod tests {
     use super::*;
     use crate::interview::phase_manager::InterviewPhaseDefinition;
+    use crate::interview::state::Decision;
 
     fn make_test_phase(id: &str, decisions: Vec<Decision>) -> CompletedPhase {
         CompletedPhase {

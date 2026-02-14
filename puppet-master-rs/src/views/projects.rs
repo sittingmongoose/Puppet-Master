@@ -15,13 +15,17 @@ pub struct ProjectInfo {
     pub name: String,
     pub path: PathBuf,
     pub status: ProjectStatus,
+    pub status_summary: Option<String>,
     pub pinned: bool,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ProjectStatus {
-    Active,
-    Inactive,
+    Idle,
+    Interviewing,
+    Executing,
+    Paused,
+    Complete,
     Error,
 }
 
@@ -36,7 +40,7 @@ pub fn view<'a>(
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
-    let _ = size; // TODO: Use size for responsive layout if needed
+    // Use size for adjusting form layout on mobile
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
@@ -68,29 +72,52 @@ pub fn view<'a>(
                 .font(fonts::FONT_UI_BOLD)
                 .color(theme.ink()),
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
-            row![
-                text("Project Name:")
-                    .size(tokens::font_size::BASE)
-                    .width(Length::Fixed(150.0))
-                    .color(theme.ink()),
-                styled_text_input(theme, "My Project", new_project_name)
-                    .on_input(Message::NewProjectNameChanged),
-            ]
-            .spacing(tokens::spacing::MD)
-            .align_y(iced::Alignment::Center),
-            Space::new().height(Length::Fixed(tokens::spacing::SM)),
-            row![
-                text("Working Directory:")
-                    .size(tokens::font_size::BASE)
-                    .width(Length::Fixed(150.0))
-                    .color(theme.ink()),
-                styled_text_input(theme, "/path/to/project", new_project_path)
-                    .on_input(Message::NewProjectPathChanged),
-                styled_button(theme, "Browse", ButtonVariant::Ghost)
-                    .on_press(Message::BrowseNewProjectPath),
-            ]
-            .spacing(tokens::spacing::SM)
-            .align_y(iced::Alignment::Center),
+            if size.is_mobile() {
+                // Stack form fields vertically on mobile
+                Element::from(column![
+                    text("Project Name:")
+                        .size(tokens::font_size::BASE)
+                        .color(theme.ink()),
+                    styled_text_input(theme, "My Project", new_project_name)
+                        .on_input(Message::NewProjectNameChanged),
+                    text("Working Directory:")
+                        .size(tokens::font_size::BASE)
+                        .color(theme.ink()),
+                    styled_text_input(theme, "/path/to/project", new_project_path)
+                        .on_input(Message::NewProjectPathChanged),
+                    styled_button(theme, "Browse", ButtonVariant::Ghost)
+                        .on_press(Message::BrowseNewProjectPath),
+                ]
+                .spacing(tokens::spacing::SM))
+            } else {
+                // Horizontal layout for desktop
+                Element::from(column![
+                    row![
+                        text("Project Name:")
+                            .size(tokens::font_size::BASE)
+                            .width(Length::Fixed(150.0))
+                            .color(theme.ink()),
+                        styled_text_input(theme, "My Project", new_project_name)
+                            .on_input(Message::NewProjectNameChanged),
+                    ]
+                    .spacing(tokens::spacing::MD)
+                    .align_y(iced::Alignment::Center),
+                    Space::new().height(Length::Fixed(tokens::spacing::SM)),
+                    row![
+                        text("Working Directory:")
+                            .size(tokens::font_size::BASE)
+                            .width(Length::Fixed(150.0))
+                            .color(theme.ink()),
+                        styled_text_input(theme, "/path/to/project", new_project_path)
+                            .on_input(Message::NewProjectPathChanged),
+                        styled_button(theme, "Browse", ButtonVariant::Ghost)
+                            .on_press(Message::BrowseNewProjectPath),
+                    ]
+                    .spacing(tokens::spacing::SM)
+                    .align_y(iced::Alignment::Center),
+                ]
+                .spacing(tokens::spacing::SM))
+            },
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
             text("PRD file: prd.json (auto)")
                 .size(tokens::font_size::SM)
@@ -115,16 +142,13 @@ pub fn view<'a>(
 
     // Current project panel (if loaded)
     if let Some(current_project) = current {
-        let status_color = match current_project.status {
-            ProjectStatus::Active => colors::ACID_LIME,
-            ProjectStatus::Inactive => theme.ink_faded(),
-            ProjectStatus::Error => colors::HOT_MAGENTA,
-        };
-
-        let status_text = match current_project.status {
-            ProjectStatus::Active => "ACTIVE",
-            ProjectStatus::Inactive => "INACTIVE",
-            ProjectStatus::Error => "ERROR",
+        let (status_text, status_color) = match current_project.status {
+            ProjectStatus::Idle => ("IDLE", theme.ink_faded()),
+            ProjectStatus::Interviewing => ("INTERVIEW", colors::ELECTRIC_BLUE),
+            ProjectStatus::Executing => ("EXECUTING", colors::NEON_CYAN),
+            ProjectStatus::Paused => ("PAUSED", colors::SAFETY_ORANGE),
+            ProjectStatus::Complete => ("COMPLETE", colors::ACID_LIME),
+            ProjectStatus::Error => ("ERROR", colors::HOT_MAGENTA),
         };
 
         let current_panel = column![
@@ -172,6 +196,15 @@ pub fn view<'a>(
                             )
                         },
                     ),
+                    if let Some(summary) = &current_project.status_summary {
+                        text(summary)
+                            .size(tokens::font_size::XS)
+                            .color(theme.ink_faded())
+                    } else {
+                        text("")
+                            .size(tokens::font_size::XS)
+                            .color(theme.ink_faded())
+                    },
                 ]
                 .spacing(tokens::spacing::XXS),
                 Space::new().width(Length::Fill),
@@ -230,8 +263,11 @@ pub fn view<'a>(
                 .unwrap_or(false);
 
             let (status_text, status_color) = match project.status {
-                ProjectStatus::Active => ("ACTIVE", colors::ACID_LIME),
-                ProjectStatus::Inactive => ("INACTIVE", theme.ink_faded()),
+                ProjectStatus::Idle => ("IDLE", theme.ink_faded()),
+                ProjectStatus::Interviewing => ("INTERVIEW", colors::ELECTRIC_BLUE),
+                ProjectStatus::Executing => ("EXECUTING", colors::NEON_CYAN),
+                ProjectStatus::Paused => ("PAUSED", colors::SAFETY_ORANGE),
+                ProjectStatus::Complete => ("COMPLETE", colors::ACID_LIME),
                 ProjectStatus::Error => ("ERROR", colors::HOT_MAGENTA),
             };
 
@@ -292,6 +328,15 @@ pub fn view<'a>(
                             move |value| Message::SelectableFieldChanged(field.clone(), value)
                         },
                     ),
+                    if let Some(summary) = &project.status_summary {
+                        text(summary)
+                            .size(tokens::font_size::XS)
+                            .color(theme.ink_faded())
+                    } else {
+                        text(get_last_active_time(&project.path))
+                            .size(tokens::font_size::XS)
+                            .color(theme.ink_faded())
+                    },
                     text(get_last_active_time(&project.path))
                         .size(tokens::font_size::XS)
                         .color(theme.ink_faded()),

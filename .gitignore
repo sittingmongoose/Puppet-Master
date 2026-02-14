@@ -43,6 +43,7 @@ installer-work/
 
 # Project-local runtime state that should not be committed (volatile / machine-specific).
 .puppet-master/gui-token.txt
+.puppet-master/puppet-master.db
 .puppet-master/events.db
 .puppet-master/events.db-shm
 .puppet-master/events.db-wal

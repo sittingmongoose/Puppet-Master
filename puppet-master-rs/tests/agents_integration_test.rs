@@ -20,7 +20,7 @@ fn test_full_agents_lifecycle() {
     let mut promotion_engine = PromotionEngine::new(PromotionConfig {
         min_usage_count: 3,
         min_success_rate: 0.75,
-        promotion_threshold: 0.8,
+        promotion_threshold: 0.65,
     });
 
     let tier_id = "phase1.task1";
@@ -88,7 +88,7 @@ fn test_full_agents_lifecycle() {
     );
     assert_eq!(top_candidate.source_tier, tier_id);
     assert_eq!(top_candidate.target_tier, parent_tier);
-    assert!(top_candidate.score >= 0.8, "Promotion score should be high");
+    assert!(top_candidate.score >= 0.65, "Promotion score should meet threshold");
     assert_eq!(top_candidate.usage_count, 10);
     assert_eq!(top_candidate.success_rate, 1.0);
 

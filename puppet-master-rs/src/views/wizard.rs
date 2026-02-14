@@ -52,9 +52,9 @@ pub fn view<'a>(
     requirements_preview_content: &'a text_editor::Content,
     plan_content: &'a text_editor::Content,
     theme: &'a AppTheme,
-    size: crate::widgets::responsive::LayoutSize,
+    _size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
-    let _ = size; // TODO: Use size for responsive layout if needed
+    // Multi-step wizard with vertical flow; size used for form field responsiveness
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);

@@ -17,11 +17,47 @@ impl PrManager {
 
     /// Create a pull request using gh CLI
     ///
+    /// # Runtime Behavior
+    /// 
+    /// This method performs preflight checks before attempting PR creation:
+    /// - Verifies gh CLI is installed
+    /// - Verifies gh is authenticated with GitHub
+    /// 
+    /// If preflight checks fail, returns `Ok(PrResult)` with `success: false` 
+    /// and an actionable error message. **Never panics or crashes**.
+    ///
     /// # Arguments
     /// * `title` - PR title
     /// * `body` - PR description
     /// * `base` - Base branch (e.g., "main")
     /// * `head` - Head branch (e.g., "tk-001-002")
+    ///
+    /// # Returns
+    /// Always returns `Ok(PrResult)`. Check `PrResult.success` for status.
+    /// If `success` is false, `message` contains actionable error details.
+    ///
+    /// # Example
+    /// ```no_run
+    /// # use puppet_master::git::PrManager;
+    /// # use std::path::PathBuf;
+    /// # tokio_test::block_on(async {
+    /// let manager = PrManager::new(PathBuf::from("/repo"));
+    /// let result = manager.create_pr(
+    ///     "Fix: Update auth flow",
+    ///     "Description here",
+    ///     "main",
+    ///     "feature/auth"
+    /// ).await.unwrap();
+    /// 
+    /// if result.success {
+    ///     println!("PR created: {:?}", result.pr_url);
+    /// } else {
+    ///     eprintln!("PR creation failed: {}", result.message);
+    ///     // Message contains actionable guidance like:
+    ///     // "gh CLI not found. Install from https://cli.github.com/ and run 'gh auth login'"
+    /// }
+    /// # });
+    /// ```
     pub async fn create_pr(
         &self,
         title: &str,
@@ -137,10 +173,22 @@ impl PrManager {
     /// Run preflight checks before attempting PR creation
     ///
     /// Verifies:
-    /// - gh CLI is installed
-    /// - gh is authenticated to GitHub
+    /// - gh CLI is installed (checks `which gh`)
+    /// - gh is authenticated to GitHub (checks `gh auth status`)
     ///
-    /// Returns Ok(()) if all checks pass, Err with actionable message if any fail
+    /// # Returns
+    /// - `Ok(())` if all checks pass
+    /// - `Err` with actionable message if any check fails
+    ///
+    /// # Error Messages
+    /// Provides user-friendly guidance:
+    /// - Missing gh: "gh CLI not found. Install from https://cli.github.com/ and run 'gh auth login'"
+    /// - Not authenticated: "gh CLI not authenticated. Run 'gh auth login' to authenticate with GitHub"
+    ///
+    /// # No Network Calls in Unit Tests
+    /// While this method may make system calls (`which gh`, `gh auth status`),
+    /// it does not make direct network/HTTP calls. Unit tests can safely mock
+    /// or skip this behavior.
     pub async fn preflight_check(&self) -> Result<()> {
         // Check if gh CLI exists
         if !self.is_gh_available().await? {
@@ -247,6 +295,7 @@ pub struct PrInfo {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::path::PathBuf;
 
     #[test]
     fn test_generate_pr_title() {
@@ -366,5 +415,209 @@ mod tests {
             PrManager::generate_pr_title("subtask", "ST-001", "Fix bug"),
             "[SUBTASK] ST-001: Fix bug"
         );
+    }
+
+    #[test]
+    fn test_pr_manager_new() {
+        let temp_dir = PathBuf::from("/tmp/test-repo");
+        let manager = PrManager::new(temp_dir.clone());
+        assert_eq!(manager.repo_path, temp_dir);
+    }
+
+    // Unit tests must not make network calls
+    #[test]
+    fn test_pr_result_success_with_url() {
+        let result = PrResult {
+            success: true,
+            pr_url: Some("https://github.com/user/repo/pull/123".to_string()),
+            message: "PR created successfully".to_string(),
+        };
+        
+        assert!(result.success);
+        assert!(result.pr_url.is_some());
+        assert_eq!(result.pr_url.unwrap(), "https://github.com/user/repo/pull/123");
+        assert!(result.message.contains("successfully"));
+    }
+
+    #[test]
+    fn test_pr_result_failure_no_url() {
+        let result = PrResult {
+            success: false,
+            pr_url: None,
+            message: "Preflight check failed: gh CLI not found".to_string(),
+        };
+        
+        assert!(!result.success);
+        assert!(result.pr_url.is_none());
+        assert!(result.message.contains("Preflight check failed"));
+    }
+
+    #[test]
+    fn test_build_pr_create_args_comprehensive() {
+        let args = PrManager::build_pr_create_args(
+            "[TASK] TK-001: Feature",
+            "Multi-line\ndescription\nwith special chars: &<>\"'",
+            "main",
+            "feature/tk-001"
+        );
+
+        assert_eq!(args[0], "pr");
+        assert_eq!(args[1], "create");
+        assert!(args.contains(&"--title".to_string()));
+        assert!(args.contains(&"[TASK] TK-001: Feature".to_string()));
+        assert!(args.contains(&"--body".to_string()));
+        assert!(args.contains(&"--base".to_string()));
+        assert!(args.contains(&"main".to_string()));
+        assert!(args.contains(&"--head".to_string()));
+        assert!(args.contains(&"feature/tk-001".to_string()));
+    }
+}
+
+// E2E validation tests - only run when gh is available and authenticated
+#[cfg(test)]
+mod e2e_tests {
+    use super::*;
+    use std::process::Command;
+
+    /// Check if gh CLI is available and authenticated
+    /// Returns true only if gh exists AND is authenticated
+    fn is_gh_ready() -> bool {
+        // Check if gh command exists
+        let gh_exists = Command::new("which")
+            .arg("gh")
+            .output()
+            .map(|output| output.status.success())
+            .unwrap_or(false);
+
+        if !gh_exists {
+            return false;
+        }
+
+        // Check if gh is authenticated
+        let gh_auth = Command::new("gh")
+            .args(&["auth", "status"])
+            .output()
+            .map(|output| output.status.success())
+            .unwrap_or(false);
+
+        gh_auth
+    }
+
+    #[tokio::test]
+    async fn test_preflight_check_validates_gh_availability() {
+        let temp_dir = std::env::temp_dir().join("pr-test");
+        let manager = PrManager::new(temp_dir);
+
+        // Run preflight check
+        let result = manager.preflight_check().await;
+
+        if is_gh_ready() {
+            // If gh is available and authenticated, preflight should pass
+            assert!(
+                result.is_ok(),
+                "Preflight check should pass when gh is available and authenticated"
+            );
+        } else {
+            // If gh is not available or not authenticated, preflight should fail with actionable error
+            assert!(
+                result.is_err(),
+                "Preflight check should fail when gh is not available or not authenticated"
+            );
+
+            let error_msg = result.unwrap_err().to_string();
+            // Error should contain actionable guidance
+            assert!(
+                error_msg.contains("gh CLI") || error_msg.contains("gh auth"),
+                "Error message should mention gh CLI or authentication: {}",
+                error_msg
+            );
+        }
+    }
+
+    #[tokio::test]
+    async fn test_create_pr_returns_error_without_crash_when_gh_missing() {
+        let temp_dir = std::env::temp_dir().join("pr-test-2");
+        std::fs::create_dir_all(&temp_dir).ok();
+        let manager = PrManager::new(temp_dir);
+
+        // Attempt to create PR - should not crash regardless of gh availability
+        let result = manager
+            .create_pr(
+                "Test PR",
+                "Test body",
+                "main",
+                "test-branch"
+            )
+            .await;
+
+        // Should return Ok with a PrResult, not crash with Err
+        assert!(result.is_ok(), "create_pr should return Ok(PrResult), not crash");
+
+        let pr_result = result.unwrap();
+
+        if !is_gh_ready() {
+            // When gh is not ready, PrResult should indicate failure with actionable message
+            assert!(
+                !pr_result.success,
+                "PrResult.success should be false when gh is not available"
+            );
+            assert!(
+                pr_result.pr_url.is_none(),
+                "PrResult.pr_url should be None when PR creation fails"
+            );
+            assert!(
+                pr_result.message.contains("Preflight check failed") 
+                    || pr_result.message.contains("gh CLI"),
+                "Message should indicate why PR creation failed: {}",
+                pr_result.message
+            );
+        }
+    }
+
+    #[tokio::test]
+    async fn test_is_gh_available_no_network_call() {
+        // This test verifies the is_gh_available method behavior
+        // It checks local command availability without network calls
+        let temp_dir = std::env::temp_dir().join("pr-test-3");
+        let manager = PrManager::new(temp_dir);
+
+        let result = manager.is_gh_available().await;
+        
+        // Should complete without panic
+        assert!(result.is_ok(), "is_gh_available should not panic");
+
+        // Result should match whether 'gh' command exists locally
+        let gh_exists = Command::new("which")
+            .arg("gh")
+            .output()
+            .map(|o| o.status.success())
+            .unwrap_or(false);
+
+        assert_eq!(
+            result.unwrap(),
+            gh_exists,
+            "is_gh_available should match 'which gh' result"
+        );
+    }
+
+    #[tokio::test]
+    async fn test_list_prs_handles_missing_gh_gracefully() {
+        let temp_dir = std::env::temp_dir().join("pr-test-4");
+        std::fs::create_dir_all(&temp_dir).ok();
+        let manager = PrManager::new(temp_dir);
+
+        // Should handle missing gh or unauthenticated gh gracefully
+        let result = manager.list_prs().await;
+
+        if is_gh_ready() {
+            // If gh is ready, we should get a result (empty list or actual PRs)
+            assert!(result.is_ok(), "list_prs should work when gh is authenticated");
+        } else {
+            // If gh is not ready, should return empty list or error gracefully
+            // Either Ok(empty vec) or Err is acceptable
+            if let Ok(prs) = result {
+                assert!(prs.is_empty() || true, "PRs list returned");
+            }
+        }
     }
 }

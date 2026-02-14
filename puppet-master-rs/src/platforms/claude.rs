@@ -50,6 +50,7 @@
 //! - Plan mode uses `--permission-mode plan` flag
 //! - Always uses `--output-format json` for structured output
 
+use crate::platforms::context_files::{append_prompt_attachments, context_file_parent_dirs};
 use crate::platforms::{BaseRunner, PlatformRunner};
 use crate::types::{ExecutionRequest, ExecutionResult, Platform};
 use anyhow::{Result, anyhow};
@@ -189,7 +190,11 @@ impl PlatformRunner for ClaudeRunner {
 
         // Add prompt
         args.push("-p".to_string());
-        args.push(request.prompt.clone());
+        args.push(append_prompt_attachments(
+            &request.prompt,
+            &request.context_files,
+            "",
+        ));
 
         // Add model
         args.push("--model".to_string());
@@ -209,6 +214,12 @@ impl PlatformRunner for ClaudeRunner {
         } else {
             // bypassPermissions for fully autonomous operation
             args.push("bypassPermissions".to_string());
+        }
+
+        // Allow additional reference directories
+        for dir in context_file_parent_dirs(&request.context_files) {
+            args.push("--add-dir".to_string());
+            args.push(dir.display().to_string());
         }
 
         // Add any extra args
@@ -269,6 +280,23 @@ mod tests {
 
         assert!(args.contains(&"--permission-mode".to_string()));
         assert!(args.contains(&"plan".to_string()));
+    }
+
+    #[test]
+    fn test_build_args_with_context_files() {
+        let runner = ClaudeRunner::new();
+        let request = ExecutionRequest::new(
+            Platform::Claude,
+            "claude-3-5-sonnet-20241022".to_string(),
+            "Test prompt".to_string(),
+            PathBuf::from("/tmp"),
+        )
+        .with_context_files(vec![PathBuf::from("/tmp/ref.png")]);
+
+        let args = runner.build_args(&request);
+
+        assert!(args.iter().any(|a| a.contains("/tmp/ref.png")));
+        assert!(args.contains(&"--add-dir".to_string()));
     }
 
     #[tokio::test]

@@ -22,6 +22,7 @@ pub mod capability;
 pub mod circuit_breaker;
 pub mod claude;
 pub mod codex;
+pub mod context_files;
 pub mod copilot;
 pub mod cursor;
 pub mod gemini;

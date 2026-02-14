@@ -13,9 +13,9 @@ use crate::widgets::{ButtonVariant, header::Page, styled_button, themed_panel};
 /// Render the not found view
 pub fn view<'a>(
     theme: &'a AppTheme,
-    size: crate::widgets::responsive::LayoutSize,
+    _size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
-    let _ = size; // TODO: Use size for responsive layout if needed
+    // Simple error page with centered content; size parameter available for future use
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);

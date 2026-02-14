@@ -8,7 +8,7 @@ use crate::platforms::AuthTarget;
 use crate::theme::{AppTheme, colors, tokens};
 use crate::types::Platform;
 use crate::widgets::{responsive::responsive_grid, *};
-use iced::widget::{Space, column, container, row, scrollable, text, text_editor};
+use iced::widget::{column, container, row, scrollable, text, text_editor};
 use iced::{Alignment, Element, Length};
 use std::collections::HashMap;
 
@@ -501,7 +501,7 @@ fn build_git_config_section<'a>(
         ]
         .spacing(tokens::spacing::SM)
         .align_y(Alignment::Center);
-        let mut git_user_column = column![
+        let git_user_column = column![
             text("Git User")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -522,7 +522,7 @@ fn build_git_config_section<'a>(
         ]
         .spacing(tokens::spacing::SM)
         .align_y(Alignment::Center);
-        let mut git_email_column = column![
+        let git_email_column = column![
             text("Git Email")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -559,7 +559,7 @@ fn build_git_config_section<'a>(
         ]
         .spacing(tokens::spacing::SM)
         .align_y(Alignment::Center);
-        let mut git_remote_column = column![
+        let git_remote_column = column![
             text("Remote URL")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),
@@ -580,7 +580,7 @@ fn build_git_config_section<'a>(
         ]
         .spacing(tokens::spacing::SM)
         .align_y(Alignment::Center);
-        let mut git_branch_column = column![
+        let git_branch_column = column![
             text("Current Branch")
                 .size(tokens::font_size::SM)
                 .color(theme.ink_faded()),

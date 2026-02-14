@@ -10,6 +10,7 @@ use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::{Path, PathBuf};
 
+use super::phase_manager::InterviewPhaseDefinition;
 use super::reference_manager::ReferenceMaterial;
 
 /// Current state format version for migrations.
@@ -96,6 +97,9 @@ pub struct InterviewState {
     pub completed_phases: Vec<String>,
     /// Key decisions made during the interview.
     pub decisions: Vec<Decision>,
+    /// Dynamic phase definitions (Phase 9+) detected from interview content.
+    #[serde(default)]
+    pub dynamic_phases: Vec<InterviewPhaseDefinition>,
 }
 
 /// Creates a new interview state with sensible defaults.
@@ -121,6 +125,7 @@ pub fn create_state(
         ai_context: String::new(),
         completed_phases: Vec::new(),
         decisions: Vec::new(),
+        dynamic_phases: Vec::new(),
     }
 }
 
@@ -256,6 +261,14 @@ mod tests {
         let dir = TempDir::new().unwrap();
         let mut state = create_state("dashboard", "cursor", true, vec!["ctx.md".to_string()]);
         add_to_history(&mut state, "What is the goal?", "Build a dashboard");
+        state.dynamic_phases.push(InterviewPhaseDefinition {
+            id: "feature_auth".to_string(),
+            domain: "Authentication".to_string(),
+            name: "Authentication".to_string(),
+            description: "Auth deep dive".to_string(),
+            min_questions: 3,
+            max_questions: 8,
+        });
 
         let path = save_state(&mut state, dir.path()).unwrap();
         assert!(path.exists());
@@ -266,6 +279,8 @@ mod tests {
         assert!(loaded.first_principles);
         assert_eq!(loaded.history.len(), 1);
         assert_eq!(loaded.history[0].question, "What is the goal?");
+        assert_eq!(loaded.dynamic_phases.len(), 1);
+        assert_eq!(loaded.dynamic_phases[0].id, "feature_auth");
     }
 
     #[test]

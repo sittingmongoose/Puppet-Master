@@ -81,14 +81,29 @@ pub fn view<'a>(
     intensive_logging: bool,
     size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
-    let _ = size; // TODO: Use size for responsive layout if needed
+    // Settings panels use standard single-column layout; size is used for header responsiveness
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
 
-    // Header with action buttons
-    content = content.push(
-        row![
+    // Header with action buttons - responsive button sizing
+    let header_row: Element<Message> = if size.is_mobile() {
+        Element::from(column![
+            text("Settings")
+                .size(tokens::font_size::DISPLAY)
+                .font(crate::theme::fonts::FONT_DISPLAY)
+                .color(theme.ink()),
+            row![
+                styled_button(theme, "RESET TO DEFAULTS", ButtonVariant::Warning)
+                    .on_press(Message::SettingsResetDefaults),
+                styled_button(theme, "SAVE CHANGES", ButtonVariant::Primary)
+                    .on_press(Message::SaveSettings),
+            ]
+            .spacing(tokens::spacing::SM),
+        ]
+        .spacing(tokens::spacing::SM))
+    } else {
+        Element::from(row![
             text("Settings")
                 .size(tokens::font_size::DISPLAY)
                 .font(crate::theme::fonts::FONT_DISPLAY)
@@ -100,8 +115,10 @@ pub fn view<'a>(
                 .on_press(Message::SaveSettings),
         ]
         .spacing(tokens::spacing::SM)
-        .align_y(iced::Alignment::Center),
-    );
+        .align_y(iced::Alignment::Center))
+    };
+
+    content = content.push(header_row);
 
     // --- Appearance Section ---
     let theme_content = column![

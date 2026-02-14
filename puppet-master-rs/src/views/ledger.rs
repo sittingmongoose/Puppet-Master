@@ -108,9 +108,9 @@ pub fn view<'a>(
     filter_tier: &'a str,
     filter_session: &'a str,
     theme: &'a AppTheme,
-    size: crate::widgets::responsive::LayoutSize,
+    _size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
-    let _ = size; // TODO: Use size for responsive layout in Phase 3
+    // Ledger uses table layout; size reserved for Phase 3 responsive table enhancements
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);

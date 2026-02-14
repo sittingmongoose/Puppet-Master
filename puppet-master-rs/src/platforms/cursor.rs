@@ -40,6 +40,7 @@
 //! - Always uses `-p` mode with `--force` for autonomous operation
 //! - Prompts > 32KB are sent via stdin
 
+use crate::platforms::context_files::append_prompt_attachments;
 use crate::platforms::{BaseRunner, PlatformRunner};
 use crate::types::{ExecutionRequest, ExecutionResult, Platform};
 use anyhow::{Result, anyhow};
@@ -112,18 +113,22 @@ impl PlatformRunner for CursorRunner {
         use crate::platforms::create_parser;
         use crate::types::CompletionSignal as TypesCompletionSignal;
 
+        let mut effective_request = request.clone();
+        effective_request.prompt =
+            append_prompt_attachments(&request.prompt, &request.context_files, "");
+
         // Build arguments
-        let args = self.build_args(request);
+        let args = self.build_args(&effective_request);
 
         // Check if we need to use stdin for large prompts
-        let use_stdin = request.prompt.len() > LARGE_PROMPT_THRESHOLD;
+        let use_stdin = effective_request.prompt.len() > LARGE_PROMPT_THRESHOLD;
 
         let stdin_input = if use_stdin {
             debug!(
                 "Using stdin for large prompt ({} bytes)",
-                request.prompt.len()
+                effective_request.prompt.len()
             );
-            Some(request.prompt.clone())
+            Some(effective_request.prompt.clone())
         } else {
             None
         };
@@ -131,7 +136,7 @@ impl PlatformRunner for CursorRunner {
         // Execute via base runner
         let mut result = self
             .base
-            .execute_command(request, args, stdin_input)
+            .execute_command(&effective_request, args, stdin_input)
             .await?;
 
         // Parse output using platform-specific parser

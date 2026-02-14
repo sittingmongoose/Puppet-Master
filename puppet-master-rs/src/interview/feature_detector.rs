@@ -1,8 +1,7 @@
 //! Detects major features from interview state and requirements for dynamic phase generation.
 
-use super::state::{Decision, InterviewQA, InterviewState};
+use super::state::InterviewState;
 use log::debug;
-use std::collections::HashSet;
 
 /// A detected feature that warrants its own dedicated interview phase.
 #[derive(Debug, Clone)]
@@ -184,8 +183,9 @@ fn feature_id_to_description(id: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::interview::state::{Decision, create_state};
+    use crate::interview::state::{Decision, InterviewQA, create_state};
     use chrono::Utc;
+    use std::collections::HashSet;
 
     #[test]
     fn test_detect_features_empty_state() {

@@ -323,6 +323,181 @@ impl WorktreeManager {
     pub async fn worktree_exists(&self, tier_id: &str) -> bool {
         self.get_worktree_path(tier_id).exists()
     }
+
+    /// Detect orphaned worktrees that are not tracked by git
+    ///
+    /// Returns worktree paths that exist in .puppet-master/worktrees but are not
+    /// registered in git's worktree list (likely leaked after a crash).
+    pub async fn detect_orphaned_worktrees(&self) -> Result<Vec<PathBuf>> {
+        debug!("Detecting orphaned worktrees");
+
+        // Get list of worktrees tracked by git
+        let git_worktrees = self.list_worktrees().await?;
+        let git_worktree_paths: std::collections::HashSet<PathBuf> = git_worktrees
+            .into_iter()
+            .map(|w| w.path)
+            .collect();
+
+        // Scan the worktree base directory
+        let mut orphaned = Vec::new();
+
+        if !self.worktree_base.exists() {
+            debug!("Worktree base directory does not exist");
+            return Ok(orphaned);
+        }
+
+        let mut entries = fs::read_dir(&self.worktree_base)
+            .await
+            .context("Failed to read worktree base directory")?;
+
+        while let Some(entry) = entries.next_entry().await? {
+            let path = entry.path();
+
+            // Only consider directories
+            if !path.is_dir() {
+                continue;
+            }
+
+            // Check if this worktree is tracked by git
+            if !git_worktree_paths.contains(&path) {
+                warn!("Found orphaned worktree: {:?}", path);
+                orphaned.push(path);
+            }
+        }
+
+        Ok(orphaned)
+    }
+
+    /// Check if a worktree is safe to prune
+    ///
+    /// A worktree is safe to prune if:
+    /// - It's not in git's worktree list
+    /// - It doesn't have uncommitted changes
+    /// - It's under our worktree_base directory
+    async fn is_safe_to_prune(&self, worktree_path: &PathBuf) -> bool {
+        // Must be under our worktree_base
+        if !worktree_path.starts_with(&self.worktree_base) {
+            warn!("Worktree {:?} is not under worktree_base", worktree_path);
+            return false;
+        }
+
+        // Must be a directory
+        if !worktree_path.is_dir() {
+            return false;
+        }
+
+        // Check if it has a .git file (worktrees have .git files, not directories)
+        let git_file = worktree_path.join(".git");
+        if !git_file.exists() {
+            debug!("Worktree {:?} has no .git file, safe to remove", worktree_path);
+            return true;
+        }
+
+        // Check for uncommitted changes using git status
+        let status_output = Command::new("git")
+            .current_dir(worktree_path)
+            .args(&["status", "--porcelain"])
+            .output()
+            .await;
+
+        match status_output {
+            Ok(output) => {
+                if !output.status.success() {
+                    // Git command failed, worktree might be corrupted
+                    debug!("Git status failed for {:?}, considering safe to prune", worktree_path);
+                    return true;
+                }
+
+                let stdout = String::from_utf8_lossy(&output.stdout);
+                if stdout.trim().is_empty() {
+                    debug!("Worktree {:?} has no uncommitted changes", worktree_path);
+                    true
+                } else {
+                    warn!("Worktree {:?} has uncommitted changes, not safe to prune", worktree_path);
+                    warn!("Changes:\n{}", stdout);
+                    false
+                }
+            }
+            Err(e) => {
+                warn!("Failed to check git status for {:?}: {}", worktree_path, e);
+                false
+            }
+        }
+    }
+
+    /// Recover from leaked/orphaned worktrees after a crash
+    ///
+    /// This safely removes orphaned worktrees that were created by Puppet Master
+    /// but not properly cleaned up after a crash. Only removes worktrees that:
+    /// - Are not tracked by git
+    /// - Have no uncommitted changes
+    /// - Are under .puppet-master/worktrees/
+    ///
+    /// Returns the number of worktrees recovered/removed.
+    pub async fn recover_orphaned_worktrees(&self) -> Result<usize> {
+        info!("Starting worktree recovery");
+
+        let orphaned = self.detect_orphaned_worktrees().await?;
+
+        if orphaned.is_empty() {
+            info!("No orphaned worktrees found");
+            return Ok(0);
+        }
+
+        info!("Found {} potentially orphaned worktree(s)", orphaned.len());
+
+        let mut recovered = 0;
+
+        for worktree_path in orphaned {
+            if !self.is_safe_to_prune(&worktree_path).await {
+                warn!(
+                    "Skipping worktree {:?} - not safe to prune",
+                    worktree_path
+                );
+                continue;
+            }
+
+            info!("Removing orphaned worktree: {:?}", worktree_path);
+
+            // Try to remove using git worktree remove first
+            let git_remove = Command::new("git")
+                .current_dir(&self.repo_root)
+                .args(&["worktree", "remove", "--force"])
+                .arg(&worktree_path)
+                .output()
+                .await;
+
+            match git_remove {
+                Ok(output) if output.status.success() => {
+                    info!("Successfully removed worktree via git: {:?}", worktree_path);
+                    recovered += 1;
+                }
+                _ => {
+                    // Git remove failed, try manual removal
+                    debug!("Git worktree remove failed, trying manual removal");
+
+                    match fs::remove_dir_all(&worktree_path).await {
+                        Ok(_) => {
+                            info!("Successfully removed worktree directory: {:?}", worktree_path);
+                            recovered += 1;
+                        }
+                        Err(e) => {
+                            warn!("Failed to remove worktree {:?}: {}", worktree_path, e);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Run git worktree prune to clean up git's internal tracking
+        if recovered > 0 {
+            info!("Running git worktree prune to clean up internal state");
+            let _ = self.prune().await;
+        }
+
+        info!("Worktree recovery complete: {} worktree(s) removed", recovered);
+        Ok(recovered)
+    }
 }
 
 #[cfg(test)]
@@ -477,5 +652,131 @@ mod tests {
 
         let other_path = PathBuf::from("/some/other/path");
         assert_eq!(manager.extract_tier_id(&other_path), None);
+    }
+
+    #[tokio::test]
+    async fn test_detect_orphaned_worktrees_empty() {
+        let temp_dir = setup_test_repo().await.unwrap();
+        let manager = WorktreeManager::new(temp_dir.path().to_path_buf());
+
+        // No worktrees yet
+        let orphaned = manager.detect_orphaned_worktrees().await.unwrap();
+        assert!(orphaned.is_empty());
+    }
+
+    #[tokio::test]
+    async fn test_detect_orphaned_worktrees_with_orphan() {
+        let temp_dir = setup_test_repo().await.unwrap();
+        let manager = WorktreeManager::new(temp_dir.path().to_path_buf());
+
+        // Create worktree base directory
+        fs::create_dir_all(&manager.worktree_base).await.unwrap();
+
+        // Create an orphaned worktree directory (not tracked by git)
+        let orphan_path = manager.worktree_base.join("orphan-tier");
+        fs::create_dir_all(&orphan_path).await.unwrap();
+        fs::write(orphan_path.join("test.txt"), b"orphan").await.unwrap();
+
+        // Detect orphaned worktrees
+        let orphaned = manager.detect_orphaned_worktrees().await.unwrap();
+        assert_eq!(orphaned.len(), 1);
+        assert_eq!(orphaned[0], orphan_path);
+    }
+
+    #[tokio::test]
+    async fn test_detect_orphaned_worktrees_ignores_tracked() {
+        let temp_dir = setup_test_repo().await.unwrap();
+        let manager = WorktreeManager::new(temp_dir.path().to_path_buf());
+
+        // Create a tracked worktree
+        manager
+            .create_worktree("tier1", "feature/tier1")
+            .await
+            .unwrap();
+
+        // Create an orphaned worktree
+        let orphan_path = manager.worktree_base.join("orphan-tier");
+        fs::create_dir_all(&orphan_path).await.unwrap();
+
+        // Detect orphaned - should only find the orphan, not the tracked one
+        let orphaned = manager.detect_orphaned_worktrees().await.unwrap();
+        assert_eq!(orphaned.len(), 1);
+        assert_eq!(orphaned[0], orphan_path);
+    }
+
+    #[tokio::test]
+    async fn test_is_safe_to_prune_outside_base() {
+        let temp_dir = setup_test_repo().await.unwrap();
+        let manager = WorktreeManager::new(temp_dir.path().to_path_buf());
+
+        let outside_path = PathBuf::from("/tmp/outside-worktree");
+        assert!(!manager.is_safe_to_prune(&outside_path).await);
+    }
+
+    #[tokio::test]
+    async fn test_is_safe_to_prune_no_git() {
+        let temp_dir = setup_test_repo().await.unwrap();
+        let manager = WorktreeManager::new(temp_dir.path().to_path_buf());
+
+        // Create directory without .git
+        fs::create_dir_all(&manager.worktree_base).await.unwrap();
+        let no_git_path = manager.worktree_base.join("no-git");
+        fs::create_dir_all(&no_git_path).await.unwrap();
+
+        assert!(manager.is_safe_to_prune(&no_git_path).await);
+    }
+
+    #[tokio::test]
+    async fn test_recover_orphaned_worktrees_empty() {
+        let temp_dir = setup_test_repo().await.unwrap();
+        let manager = WorktreeManager::new(temp_dir.path().to_path_buf());
+
+        let recovered = manager.recover_orphaned_worktrees().await.unwrap();
+        assert_eq!(recovered, 0);
+    }
+
+    #[tokio::test]
+    async fn test_recover_orphaned_worktrees_removes_orphan() {
+        let temp_dir = setup_test_repo().await.unwrap();
+        let manager = WorktreeManager::new(temp_dir.path().to_path_buf());
+
+        // Create worktree base directory
+        fs::create_dir_all(&manager.worktree_base).await.unwrap();
+
+        // Create an orphaned worktree directory (no .git, so safe to prune)
+        let orphan_path = manager.worktree_base.join("orphan-tier");
+        fs::create_dir_all(&orphan_path).await.unwrap();
+        fs::write(orphan_path.join("test.txt"), b"orphan").await.unwrap();
+
+        // Recover orphaned worktrees
+        let recovered = manager.recover_orphaned_worktrees().await.unwrap();
+        assert_eq!(recovered, 1);
+
+        // Verify orphan is removed
+        assert!(!orphan_path.exists());
+    }
+
+    #[tokio::test]
+    async fn test_recover_orphaned_worktrees_preserves_tracked() {
+        let temp_dir = setup_test_repo().await.unwrap();
+        let manager = WorktreeManager::new(temp_dir.path().to_path_buf());
+
+        // Create a tracked worktree
+        let tracked_info = manager
+            .create_worktree("tier1", "feature/tier1")
+            .await
+            .unwrap();
+
+        // Create an orphaned worktree (no .git file)
+        let orphan_path = manager.worktree_base.join("orphan-tier");
+        fs::create_dir_all(&orphan_path).await.unwrap();
+
+        // Recover - should remove orphan but not tracked
+        let recovered = manager.recover_orphaned_worktrees().await.unwrap();
+        assert_eq!(recovered, 1);
+
+        // Verify tracked worktree still exists
+        assert!(tracked_info.path.exists());
+        assert!(!orphan_path.exists());
     }
 }
