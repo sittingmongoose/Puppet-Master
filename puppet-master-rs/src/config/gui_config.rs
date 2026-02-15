@@ -9,6 +9,8 @@ use std::collections::HashMap;
 use std::path::Path;
 use std::process::Command;
 
+use crate::types::config::DEFAULT_GUI_AUTOMATION_ARTIFACTS_DIR;
+
 // ============================================================================
 // Top-level GUI Config
 // ============================================================================
@@ -245,7 +247,7 @@ fn default_gui_automation_isolation() -> String {
 }
 
 fn default_gui_automation_artifacts() -> String {
-    ".puppet-master/evidence/gui-automation".to_string()
+    DEFAULT_GUI_AUTOMATION_ARTIFACTS_DIR.to_string()
 }
 
 fn default_gui_automation_visual_threshold() -> f32 {

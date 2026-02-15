@@ -97,6 +97,41 @@ impl DebugFeedCollector {
         });
     }
 
+    // DRY:FN:record_runtime_activity
+    /// Record a synthetic runtime checkpoint as both backend-event and log entries.
+    ///
+    /// This is used when automation runners are not connected to the full app event bus
+    /// so debug timelines still contain backend/log sources.
+    pub fn record_runtime_activity(
+        &mut self,
+        kind: &str,
+        message: impl Into<String>,
+        payload: serde_json::Value,
+    ) {
+        let message = message.into();
+        let backend_event = PuppetMasterEvent::Custom {
+            event_type: format!("gui_automation.{kind}"),
+            data: payload.clone(),
+            timestamp: Utc::now(),
+        };
+        self.record_backend_event(&backend_event);
+
+        let raw = serde_json::json!({
+            "kind": kind,
+            "message": message,
+            "payload": payload,
+            "source": "gui_automation",
+        })
+        .to_string();
+
+        self.record_log_entry(&LogEntry {
+            timestamp: Utc::now().to_rfc3339(),
+            level: crate::logging::LogLevel::Info,
+            message,
+            raw,
+        });
+    }
+
     // DRY:FN:events
     pub fn events(&self) -> &[DebugFeedEvent] {
         &self.events
@@ -120,6 +155,7 @@ impl DebugFeedCollector {
     }
 }
 
+// DRY:FN:event_type_name
 fn event_type_name(event: &PuppetMasterEvent) -> &'static str {
     match event {
         PuppetMasterEvent::StateChanged { .. } => "state_changed",
@@ -164,6 +200,7 @@ fn event_type_name(event: &PuppetMasterEvent) -> &'static str {
     }
 }
 
+// DRY:FN:write_jsonl
 fn write_jsonl<T: Serialize>(path: &Path, items: &[T]) -> Result<()> {
     let mut out = String::new();
     for item in items {
@@ -177,6 +214,7 @@ fn write_jsonl<T: Serialize>(path: &Path, items: &[T]) -> Result<()> {
         .with_context(|| format!("Failed to write debug timeline {}", path.display()))
 }
 
+// DRY:FN:write_summary
 fn write_summary(path: &Path, events: &[DebugFeedEvent]) -> Result<()> {
     let mut by_source: HashMap<String, usize> = HashMap::new();
     let mut by_kind: HashMap<String, usize> = HashMap::new();

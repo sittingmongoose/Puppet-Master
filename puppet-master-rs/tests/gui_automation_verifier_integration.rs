@@ -9,7 +9,7 @@ async fn test_iced_gui_verifier_runs() {
         "fullAction": false,
         "workspaceRoot": std::env::current_dir().expect("cwd"),
         "artifactsRoot": temp.path(),
-        "workspaceIsolation": "inPlaceDirect",
+        "workspaceIsolation": "ephemeralClone",
         "captureFullBundle": true
     })
     .to_string();

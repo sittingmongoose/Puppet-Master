@@ -17,6 +17,8 @@ use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
+use crate::types::config::DEFAULT_GUI_AUTOMATION_ARTIFACTS_DIR;
+
 pub use action_catalog::{ActionDefinition, list_actions, resolve_action};
 pub use debug_feed::{DebugBundlePaths, DebugFeedCollector};
 pub use headless_runner::HeadlessRunner;
@@ -246,22 +248,27 @@ pub struct GuiRunResult {
     pub artifact_manifest: ArtifactManifest,
 }
 
+// DRY:FN:default_workspace_root
 fn default_workspace_root() -> PathBuf {
     std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
 }
 
+// DRY:FN:default_artifacts_root
 fn default_artifacts_root() -> PathBuf {
-    PathBuf::from(".puppet-master/evidence/gui-automation")
+    PathBuf::from(DEFAULT_GUI_AUTOMATION_ARTIFACTS_DIR)
 }
 
+// DRY:FN:default_timeout_ms
 fn default_timeout_ms() -> u64 {
     120_000
 }
 
+// DRY:FN:default_true
 fn default_true() -> bool {
     true
 }
 
+// DRY:FN:normalize_run_id
 fn normalize_run_id(spec: &mut GuiRunSpec) {
     if !spec.run_id.trim().is_empty() {
         return;
@@ -270,6 +277,7 @@ fn normalize_run_id(spec: &mut GuiRunSpec) {
     spec.run_id = format!("GA-{}", Utc::now().format("%Y-%m-%d-%H-%M-%S-%3f"));
 }
 
+// DRY:FN:run_artifact_root
 fn run_artifact_root(spec: &GuiRunSpec) -> PathBuf {
     if spec.artifacts_root.is_absolute() {
         return spec.artifacts_root.join(&spec.run_id);
@@ -285,12 +293,7 @@ fn run_artifact_root(spec: &GuiRunSpec) -> PathBuf {
 pub fn run_gui_automation(mut spec: GuiRunSpec) -> Result<GuiRunResult> {
     normalize_run_id(&mut spec);
 
-    if spec.full_action && spec.workspace_isolation != WorkspaceIsolation::EphemeralClone {
-        bail!(
-            "full-action runs require workspaceIsolation=ephemeralClone; got {:?}",
-            spec.workspace_isolation
-        );
-    }
+    validate_workspace_isolation(spec.workspace_isolation, spec.full_action)?;
 
     let started_at = Utc::now();
     let artifacts_root = run_artifact_root(&spec);
@@ -303,6 +306,15 @@ pub fn run_gui_automation(mut spec: GuiRunSpec) -> Result<GuiRunResult> {
 
     let mut debug_feed = DebugFeedCollector::new(spec.run_id.clone());
     debug_feed.record_system(
+        "run_started",
+        "GUI automation run started",
+        serde_json::json!({
+            "mode": spec.mode,
+            "workspace": spec.workspace_root,
+            "fullAction": spec.full_action,
+        }),
+    );
+    debug_feed.record_runtime_activity(
         "run_started",
         "GUI automation run started",
         serde_json::json!({
@@ -324,6 +336,13 @@ pub fn run_gui_automation(mut spec: GuiRunSpec) -> Result<GuiRunResult> {
                 "cloneRoot": root,
             }),
         );
+        debug_feed.record_runtime_activity(
+            "workspace_cloned",
+            "Created ephemeral workspace clone",
+            serde_json::json!({
+                "cloneRoot": root,
+            }),
+        );
         cloned_workspace = Some(cloned);
         root
     } else {
@@ -336,6 +355,13 @@ pub fn run_gui_automation(mut spec: GuiRunSpec) -> Result<GuiRunResult> {
 
     match spec.mode {
         GuiRunMode::Headless => {
+            debug_feed.record_runtime_activity(
+                "runner_started",
+                "Starting headless runner",
+                serde_json::json!({
+                    "runner": "headless",
+                }),
+            );
             let outcome = headless_runner::run(
                 &spec,
                 &effective_workspace_root,
@@ -345,8 +371,23 @@ pub fn run_gui_automation(mut spec: GuiRunSpec) -> Result<GuiRunResult> {
             passed &= outcome.passed;
             step_results.extend(outcome.step_results);
             messages.push(outcome.message);
+            debug_feed.record_runtime_activity(
+                "runner_finished",
+                "Headless runner completed",
+                serde_json::json!({
+                    "runner": "headless",
+                    "passed": outcome.passed,
+                }),
+            );
         }
         GuiRunMode::Native => {
+            debug_feed.record_runtime_activity(
+                "runner_started",
+                "Starting native runner",
+                serde_json::json!({
+                    "runner": "native",
+                }),
+            );
             let outcome = native_runner::run(
                 &spec,
                 &effective_workspace_root,
@@ -356,8 +397,23 @@ pub fn run_gui_automation(mut spec: GuiRunSpec) -> Result<GuiRunResult> {
             passed &= outcome.passed;
             step_results.extend(outcome.step_results);
             messages.push(outcome.message);
+            debug_feed.record_runtime_activity(
+                "runner_finished",
+                "Native runner completed",
+                serde_json::json!({
+                    "runner": "native",
+                    "passed": outcome.passed,
+                }),
+            );
         }
         GuiRunMode::Hybrid => {
+            debug_feed.record_runtime_activity(
+                "runner_started",
+                "Starting hybrid runners",
+                serde_json::json!({
+                    "runner": "hybrid",
+                }),
+            );
             let headless_outcome = headless_runner::run(
                 &spec,
                 &effective_workspace_root,
@@ -367,6 +423,14 @@ pub fn run_gui_automation(mut spec: GuiRunSpec) -> Result<GuiRunResult> {
             passed &= headless_outcome.passed;
             step_results.extend(headless_outcome.step_results);
             messages.push(format!("headless: {}", headless_outcome.message));
+            debug_feed.record_runtime_activity(
+                "runner_finished",
+                "Headless stage completed",
+                serde_json::json!({
+                    "runner": "headless",
+                    "passed": headless_outcome.passed,
+                }),
+            );
 
             let native_outcome = native_runner::run(
                 &spec,
@@ -377,17 +441,26 @@ pub fn run_gui_automation(mut spec: GuiRunSpec) -> Result<GuiRunResult> {
             passed &= native_outcome.passed;
             step_results.extend(native_outcome.step_results);
             messages.push(format!("native: {}", native_outcome.message));
+            debug_feed.record_runtime_activity(
+                "runner_finished",
+                "Native stage completed",
+                serde_json::json!({
+                    "runner": "native",
+                    "passed": native_outcome.passed,
+                }),
+            );
         }
     }
-
-    let debug_paths = debug_feed.write_bundle(&artifacts_root)?;
-
-    let artifact_manifest = build_artifact_manifest(&artifacts_root)?;
 
     if let Some(cloned) = &cloned_workspace {
         if !spec.retain_workspace {
             cloned.cleanup()?;
             debug_feed.record_system(
+                "workspace_cleaned",
+                "Removed ephemeral workspace clone",
+                serde_json::json!({}),
+            );
+            debug_feed.record_runtime_activity(
                 "workspace_cleaned",
                 "Removed ephemeral workspace clone",
                 serde_json::json!({}),
@@ -400,8 +473,29 @@ pub fn run_gui_automation(mut spec: GuiRunSpec) -> Result<GuiRunResult> {
                     "cloneRoot": cloned.clone_root,
                 }),
             );
+            debug_feed.record_runtime_activity(
+                "workspace_retained",
+                "Retained ephemeral workspace clone for debugging",
+                serde_json::json!({
+                    "cloneRoot": cloned.clone_root,
+                }),
+            );
         }
     }
+
+    debug_feed.record_runtime_activity(
+        "run_finished",
+        "GUI automation run finished",
+        serde_json::json!({
+            "passed": passed,
+            "mode": spec.mode,
+            "stepCount": step_results.len(),
+        }),
+    );
+
+    let debug_paths = debug_feed.write_bundle(&artifacts_root)?;
+
+    let artifact_manifest = build_artifact_manifest(&artifacts_root)?;
 
     let finished_at = Utc::now();
 
@@ -430,4 +524,116 @@ pub struct RunnerOutcome {
     pub passed: bool,
     pub message: String,
     pub step_results: Vec<GuiStepResult>,
+}
+
+// DRY:FN:validate_workspace_isolation
+fn validate_workspace_isolation(isolation: WorkspaceIsolation, full_action: bool) -> Result<()> {
+    match isolation {
+        WorkspaceIsolation::EphemeralClone => Ok(()),
+        WorkspaceIsolation::SameWorkspaceWithBackups => bail!(
+            "workspaceIsolation=sameWorkspaceWithBackups is not implemented yet; use ephemeralClone (fullAction={full_action})"
+        ),
+        WorkspaceIsolation::InPlaceDirect => bail!(
+            "workspaceIsolation=inPlaceDirect is not implemented yet; use ephemeralClone (fullAction={full_action})"
+        ),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn make_workspace() -> tempfile::TempDir {
+        let temp = tempfile::tempdir().expect("tempdir");
+        std::fs::write(temp.path().join("README.md"), "gui automation workspace")
+            .expect("workspace seed");
+        temp
+    }
+
+    #[test]
+    fn unsupported_workspace_isolation_modes_fail_fast() {
+        let workspace = make_workspace();
+        let artifacts = tempfile::tempdir().expect("tempdir");
+
+        for isolation in [
+            WorkspaceIsolation::SameWorkspaceWithBackups,
+            WorkspaceIsolation::InPlaceDirect,
+        ] {
+            let spec = GuiRunSpec {
+                scenario_name: "unsupported-isolation".to_string(),
+                mode: GuiRunMode::Headless,
+                full_action: false,
+                workspace_root: workspace.path().to_path_buf(),
+                artifacts_root: artifacts.path().to_path_buf(),
+                workspace_isolation: isolation,
+                capture_full_bundle: false,
+                steps: vec![GuiStep {
+                    id: "nav-dashboard".to_string(),
+                    action: GuiAction::Navigate {
+                        page: "dashboard".to_string(),
+                    },
+                    assertions: Vec::new(),
+                    timeout_ms: None,
+                }],
+                ..GuiRunSpec::default()
+            };
+
+            let err = run_gui_automation(spec)
+                .expect_err("unsupported isolation should fail")
+                .to_string();
+            assert!(
+                err.contains("not implemented yet"),
+                "unexpected error: {}",
+                err
+            );
+        }
+    }
+
+    #[test]
+    fn run_emits_backend_and_log_debug_events() {
+        let workspace = make_workspace();
+        let artifacts = tempfile::tempdir().expect("tempdir");
+
+        let spec = GuiRunSpec {
+            scenario_name: "debug-feed-runtime-events".to_string(),
+            mode: GuiRunMode::Headless,
+            full_action: false,
+            workspace_root: workspace.path().to_path_buf(),
+            artifacts_root: artifacts.path().to_path_buf(),
+            workspace_isolation: WorkspaceIsolation::EphemeralClone,
+            capture_full_bundle: false,
+            steps: vec![GuiStep {
+                id: "nav-dashboard".to_string(),
+                action: GuiAction::Navigate {
+                    page: "dashboard".to_string(),
+                },
+                assertions: Vec::new(),
+                timeout_ms: None,
+            }],
+            ..GuiRunSpec::default()
+        };
+
+        let result = run_gui_automation(spec).expect("run_gui_automation");
+        let timeline = result.debug_timeline_path.as_ref().expect("timeline path");
+        let content = std::fs::read_to_string(timeline).expect("timeline readable");
+
+        let events: Vec<DebugFeedEvent> = content
+            .lines()
+            .filter(|line| !line.trim().is_empty())
+            .map(|line| serde_json::from_str(line).expect("timeline event parse"))
+            .collect();
+
+        assert!(
+            events
+                .iter()
+                .any(|event| matches!(event.source, DebugSource::BackendEvent)),
+            "expected at least one backend event source in debug feed"
+        );
+        assert!(
+            events
+                .iter()
+                .any(|event| matches!(event.source, DebugSource::Log)),
+            "expected at least one log source in debug feed"
+        );
+    }
 }

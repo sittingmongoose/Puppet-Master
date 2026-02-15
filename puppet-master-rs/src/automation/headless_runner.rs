@@ -60,6 +60,14 @@ pub fn run(
             "Step execution started",
             serde_json::json!({ "action": step.action }),
         );
+        debug_feed.record_runtime_activity(
+            "step_started",
+            "Headless step execution started",
+            serde_json::json!({
+                "stepId": step.id,
+                "action": step.action,
+            }),
+        );
 
         let mut step_passed = true;
         let mut message = String::from("ok");
@@ -104,6 +112,20 @@ pub fn run(
                 "artifacts": artifacts,
             }),
         );
+        debug_feed.record_runtime_activity(
+            "step_finished",
+            if step_passed {
+                "Headless step execution finished"
+            } else {
+                "Headless step execution failed"
+            },
+            serde_json::json!({
+                "stepId": step.id,
+                "passed": step_passed,
+                "message": message,
+                "artifacts": artifacts,
+            }),
+        );
 
         if !step_passed {
             passed = false;
@@ -130,6 +152,7 @@ pub fn run(
     })
 }
 
+// DRY:FN:execute_action
 fn execute_action(
     app: &mut App,
     step: &GuiStep,
@@ -153,10 +176,8 @@ fn execute_action(
             let _ = app.update(msg);
             Ok(())
         }
-        GuiAction::Type { selector, text: _ } => {
-            // Current implementation maps type actions to known selectors where possible.
-            // Freeform text entry support can be added incrementally with field-level action IDs.
-            let msg = selector_to_message(selector)?;
+        GuiAction::Type { selector, text } => {
+            let msg = selector_to_type_message(selector, text)?;
             let _ = app.update(msg);
             Ok(())
         }
@@ -174,6 +195,7 @@ fn execute_action(
     }
 }
 
+// DRY:FN:selector_to_message
 fn selector_to_message(selector: &GuiSelector) -> std::result::Result<Message, String> {
     match selector {
         GuiSelector::ActionId { value } => {
@@ -192,6 +214,112 @@ fn selector_to_message(selector: &GuiSelector) -> std::result::Result<Message, S
     }
 }
 
+// DRY:FN:selector_to_type_message
+fn selector_to_type_message(
+    selector: &GuiSelector,
+    text: &str,
+) -> std::result::Result<Message, String> {
+    let value = text.to_string();
+    match selector_key(selector)?.as_str() {
+        "input_new_project_name" | "new_project_name" => Ok(Message::NewProjectNameChanged(value)),
+        "input_new_project_path" | "new_project_path" => Ok(Message::NewProjectPathChanged(value)),
+        "input_config_text" | "config_text" => Ok(Message::ConfigTextChanged(value)),
+        "input_wizard_github_url" | "wizard_github_url" => {
+            Ok(Message::WizardGithubUrlChanged(value))
+        }
+        "input_wizard_github_visibility" | "wizard_github_visibility" => {
+            Ok(Message::WizardGithubVisibilityChanged(value))
+        }
+        "input_wizard_github_description" | "wizard_github_description" => {
+            Ok(Message::WizardGithubDescriptionChanged(value))
+        }
+        "input_wizard_interaction_mode" | "wizard_interaction_mode" => {
+            Ok(Message::WizardInteractionModeChanged(value))
+        }
+        "input_wizard_reasoning_level" | "wizard_reasoning_level" => {
+            Ok(Message::WizardReasoningLevelChanged(value))
+        }
+        "input_wizard_project_name" | "wizard_project_name" | "project_name" => {
+            Ok(Message::WizardProjectNameChanged(value))
+        }
+        "input_wizard_project_path" | "wizard_project_path" | "project_path" => {
+            Ok(Message::WizardProjectPathChanged(value))
+        }
+        "input_wizard_requirements" | "wizard_requirements" | "requirements" => {
+            Ok(Message::WizardRequirementsChanged(value))
+        }
+        "input_wizard_prd_platform" | "wizard_prd_platform" => {
+            Ok(Message::WizardPrdPlatformChanged(value))
+        }
+        "input_wizard_prd_model" | "wizard_prd_model" => Ok(Message::WizardPrdModelChanged(value)),
+        "input_interview_answer" | "interview_answer" => {
+            Ok(Message::InterviewAnswerInputChanged(value))
+        }
+        "input_interview_reference_link" | "interview_reference_link" => {
+            Ok(Message::InterviewReferenceLinkInputChanged(value))
+        }
+        "input_history_search" | "history_search" => Ok(Message::HistorySearchChanged(value)),
+        "input_settings_log_level" | "settings_log_level" => {
+            Ok(Message::SettingsLogLevelChanged(value))
+        }
+        "input_settings_retention_days" | "settings_retention_days" => {
+            Ok(Message::SettingsRetentionDaysChanged(value))
+        }
+        "input_ledger_filter_tier" | "ledger_filter_tier" => {
+            Ok(Message::LedgerFilterTierChanged(value))
+        }
+        "input_ledger_filter_session" | "ledger_filter_session" => {
+            Ok(Message::LedgerFilterSessionChanged(value))
+        }
+        "input_ledger_filter_limit" | "ledger_filter_limit" => {
+            Ok(Message::LedgerFilterLimitChanged(value))
+        }
+        "input_coverage_filter" | "coverage_filter" => Ok(Message::CoverageFilterChanged(value)),
+        key => Err(format!("No type mapping for selector '{}'", key)),
+    }
+}
+
+// DRY:FN:selector_key
+fn selector_key(selector: &GuiSelector) -> std::result::Result<String, String> {
+    match selector {
+        GuiSelector::ActionId { value } => Ok(canonical_selector_key(value)),
+        GuiSelector::Text { value } => Ok(canonical_selector_key(value)),
+        GuiSelector::RoleText { role: _, text } => Ok(canonical_selector_key(text)),
+        GuiSelector::RegexText { pattern } => Err(format!(
+            "Regex selector '{}' not supported for type actions in headless mode",
+            pattern
+        )),
+    }
+}
+
+// DRY:HELPER:canonical_selector_key
+fn canonical_selector_key(raw: &str) -> String {
+    let mut out = String::new();
+    let mut prev_separator = true;
+    let mut prev_was_lower_or_digit = false;
+
+    for ch in raw.trim().chars() {
+        if ch.is_ascii_alphanumeric() {
+            let is_upper = ch.is_ascii_uppercase();
+            if is_upper && prev_was_lower_or_digit && !prev_separator {
+                out.push('_');
+            }
+            out.push(ch.to_ascii_lowercase());
+            prev_separator = false;
+            prev_was_lower_or_digit = ch.is_ascii_lowercase() || ch.is_ascii_digit();
+        } else {
+            if !prev_separator && !out.is_empty() {
+                out.push('_');
+            }
+            prev_separator = true;
+            prev_was_lower_or_digit = false;
+        }
+    }
+
+    out.trim_matches('_').to_string()
+}
+
+// DRY:FN:evaluate_assertion
 fn evaluate_assertion(app: &App, assertion: &GuiAssertion) -> std::result::Result<(), String> {
     match assertion {
         GuiAssertion::PageIs { page } => {
@@ -228,6 +356,7 @@ fn evaluate_assertion(app: &App, assertion: &GuiAssertion) -> std::result::Resul
     }
 }
 
+// DRY:FN:write_snapshot_artifacts
 fn write_snapshot_artifacts(app: &App, root: &Path, label: &str) -> Result<(PathBuf, PathBuf)> {
     std::fs::create_dir_all(root)?;
 
@@ -255,6 +384,7 @@ fn write_snapshot_artifacts(app: &App, root: &Path, label: &str) -> Result<(Path
     Ok((png_path, json_path))
 }
 
+// DRY:FN:sanitize_label
 fn sanitize_label(value: &str) -> String {
     value
         .chars()
@@ -268,6 +398,7 @@ fn sanitize_label(value: &str) -> String {
         .collect()
 }
 
+// DRY:FN:parse_page
 fn parse_page(page: &str) -> Option<Page> {
     match page.trim().to_lowercase().as_str() {
         "dashboard" => Some(Page::Dashboard),
@@ -290,6 +421,7 @@ fn parse_page(page: &str) -> Option<Page> {
     }
 }
 
+// DRY:FN:default_steps
 fn default_steps() -> Vec<GuiStep> {
     vec![
         GuiStep {
@@ -317,6 +449,7 @@ fn default_steps() -> Vec<GuiStep> {
 
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
+// DRY:DATA:AppSnapshot
 struct AppSnapshot {
     current_page: String,
     orchestrator_status: String,
@@ -324,4 +457,44 @@ struct AppSnapshot {
     output_line_count: usize,
     wizard_step: usize,
     doctor_running: bool,
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn type_action_selector_maps_text_to_message() {
+        let selector = GuiSelector::ActionId {
+            value: "input.wizard.projectName".to_string(),
+        };
+        let message = selector_to_type_message(&selector, "AlphaProject").expect("selector map");
+        match message {
+            Message::WizardProjectNameChanged(value) => assert_eq!(value, "AlphaProject"),
+            other => panic!("unexpected message: {:?}", other),
+        }
+    }
+
+    #[test]
+    fn execute_type_action_updates_app_text_field() {
+        let (mut app, _task) = App::new(Arc::new(AtomicBool::new(false)));
+        let temp = tempfile::tempdir().expect("tempdir");
+
+        let step = GuiStep {
+            id: "type-project-name".to_string(),
+            action: GuiAction::Type {
+                selector: GuiSelector::ActionId {
+                    value: "input.wizard.project_name".to_string(),
+                },
+                text: "BetaProject".to_string(),
+            },
+            assertions: Vec::new(),
+            timeout_ms: None,
+        };
+
+        let mut artifacts = Vec::new();
+        execute_action(&mut app, &step, temp.path(), &mut artifacts).expect("type action");
+
+        assert_eq!(app.wizard_project_name, "BetaProject");
+    }
 }

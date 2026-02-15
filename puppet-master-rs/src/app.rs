@@ -1676,8 +1676,14 @@ impl App {
                     match std::fs::read_to_string(&config_path) {
                         Ok(text) => {
                             self.config_text = text;
+                            self.sync_config_editor_from_text();
+                            if let Ok(config) = crate::config::gui_config::load_config(&config_path)
+                            {
+                                self.gui_config = config;
+                            }
                             self.config_valid = true;
                             self.config_error = None;
+                            self.config_is_dirty = false;
                             self.add_toast(
                                 ToastType::Success,
                                 format!("Opened project at {}", resolved_path.display()),
@@ -1691,13 +1697,38 @@ impl App {
                         }
                     }
                 } else {
-                    self.add_toast(
-                        ToastType::Info,
-                        format!(
-                            "Opened project at {} (no config found)",
-                            resolved_path.display()
-                        ),
-                    );
+                    let config_path = self.active_config_path();
+                    match self.bootstrap_config_if_missing(&config_path) {
+                        Ok(true) => {
+                            self.add_toast(
+                                ToastType::Info,
+                                format!(
+                                    "Opened project at {} (created default config at {})",
+                                    resolved_path.display(),
+                                    config_path.display()
+                                ),
+                            );
+                        }
+                        Ok(false) => {
+                            self.add_toast(
+                                ToastType::Info,
+                                format!(
+                                    "Opened project at {} (config already present)",
+                                    resolved_path.display()
+                                ),
+                            );
+                        }
+                        Err(e) => {
+                            self.add_toast(
+                                ToastType::Warning,
+                                format!(
+                                    "Opened project at {}, but failed to create default config: {}",
+                                    resolved_path.display(),
+                                    e
+                                ),
+                            );
+                        }
+                    }
                 }
 
                 Task::none()
@@ -2327,15 +2358,7 @@ impl App {
             }
 
             Message::SaveConfig => {
-                let base = self
-                    .current_project
-                    .as_ref()
-                    .map(|p| p.path.clone())
-                    .unwrap_or_else(|| {
-                        std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
-                    });
-
-                let config_path = base.join("puppet-master.yaml");
+                let config_path = self.active_config_path();
 
                 // Ensure parent directory exists
                 if let Some(parent) = config_path.parent() {
@@ -2348,10 +2371,7 @@ impl App {
                     match crate::config::gui_config::save_config(&config_path, &self.gui_config) {
                         Ok(()) => {
                             // Also update config_text to match
-                            if let Ok(yaml) = serde_yaml::to_string(&self.gui_config) {
-                                self.config_text = yaml.clone();
-                                self.config_editor_content = text_editor::Content::with_text(&yaml);
-                            }
+                            self.sync_config_text_from_gui();
                             self.config_is_dirty = false;
                             self.add_toast(
                                 ToastType::Success,
@@ -2411,20 +2431,31 @@ impl App {
             }
 
             Message::ReloadConfig => {
-                let base = self
-                    .current_project
-                    .as_ref()
-                    .map(|p| p.path.clone())
-                    .unwrap_or_else(|| {
-                        std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
-                    });
-
-                let config_path = base.join("puppet-master.yaml");
+                let config_path = self.active_config_path();
+                match self.bootstrap_config_if_missing(&config_path) {
+                    Ok(true) => {
+                        self.add_toast(
+                            ToastType::Info,
+                            format!(
+                                "Created default configuration template at {}",
+                                config_path.display()
+                            ),
+                        );
+                    }
+                    Ok(false) => {}
+                    Err(e) => {
+                        self.add_toast(
+                            ToastType::Error,
+                            format!("Failed to create default configuration file: {}", e),
+                        );
+                        return Task::none();
+                    }
+                }
 
                 match std::fs::read_to_string(&config_path) {
                     Ok(text) => {
-                        self.config_text = text.clone();
-                        self.config_editor_content = text_editor::Content::with_text(&text);
+                        self.config_text = text;
+                        self.sync_config_editor_from_text();
 
                         // Try to load into gui_config
                         if let Ok(loaded) = crate::config::gui_config::load_config(&config_path) {
@@ -6618,6 +6649,77 @@ impl App {
         self.coverage_requirements = requirements;
         self.coverage_categories = categories;
         self.coverage_overall = overall;
+    }
+
+    // DRY:FN:active_config_base_dir
+    /// Resolve the active base directory used for config read/write operations.
+    fn active_config_base_dir(&self) -> PathBuf {
+        self.current_project
+            .as_ref()
+            .map(|p| p.path.clone())
+            .unwrap_or_else(|| std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")))
+    }
+
+    // DRY:FN:active_config_path
+    /// Resolve the canonical configuration file path for the active project/context.
+    fn active_config_path(&self) -> PathBuf {
+        self.active_config_base_dir().join("puppet-master.yaml")
+    }
+
+    // DRY:FN:build_default_gui_config_template
+    /// Build a starter GUI config template contextualized to the active project path.
+    fn build_default_gui_config_template(
+        &self,
+        base_dir: &std::path::Path,
+    ) -> crate::config::gui_config::GuiConfig {
+        let mut config = crate::config::gui_config::GuiConfig::default();
+        config.project.working_directory = base_dir.display().to_string();
+
+        if let Some(project) = &self.current_project {
+            config.project.name = project.name.clone();
+        } else if let Some(name) = base_dir.file_name().and_then(|n| n.to_str()) {
+            if !name.is_empty() {
+                config.project.name = name.to_string();
+            }
+        }
+
+        config
+    }
+
+    // DRY:FN:sync_config_editor_from_text
+    /// Keep the YAML editor buffer synchronized with `config_text`.
+    fn sync_config_editor_from_text(&mut self) {
+        self.config_editor_content = text_editor::Content::with_text(&self.config_text);
+    }
+
+    // DRY:FN:sync_config_text_from_gui
+    /// Serialize `gui_config` and keep both text and editor buffers in sync.
+    fn sync_config_text_from_gui(&mut self) {
+        if let Ok(yaml) = serde_yaml::to_string(&self.gui_config) {
+            self.config_text = yaml;
+            self.sync_config_editor_from_text();
+        }
+    }
+
+    // DRY:FN:bootstrap_config_if_missing
+    /// Create a default config template file when no config exists yet.
+    /// Returns true when a new file was created.
+    fn bootstrap_config_if_missing(&mut self, config_path: &PathBuf) -> Result<bool> {
+        if config_path.exists() {
+            return Ok(false);
+        }
+
+        let base_dir = config_path
+            .parent()
+            .unwrap_or_else(|| std::path::Path::new("."));
+        let template = self.build_default_gui_config_template(base_dir);
+        crate::config::gui_config::save_config(config_path, &template)?;
+        self.gui_config = template;
+        self.sync_config_text_from_gui();
+        self.config_valid = true;
+        self.config_error = None;
+        self.config_is_dirty = false;
+        Ok(true)
     }
 
     /// Add a toast notification

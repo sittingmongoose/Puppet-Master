@@ -8,20 +8,31 @@
  * Response: {"id":"...","ok":true,"result":...} or {"id":"...","ok":false,"error":"..."}
  */
 
-const { spawnSync } = require('node:child_process');
-const fs = require('node:fs');
-const path = require('node:path');
-const readline = require('node:readline');
+import { spawnSync } from 'node:child_process';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import readline from 'node:readline';
+import { fileURLToPath } from 'node:url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, '..');
 const manifestPath = path.join(repoRoot, 'puppet-master-rs', 'Cargo.toml');
 
 function runGuiAutomation(args) {
+  const cargoTargetDir = process.env.CARGO_TARGET_DIR || '/tmp/puppet-master-build';
+  const tempDir = process.env.TMPDIR || '/tmp';
   const cmdArgs = ['run', '--quiet', '--manifest-path', manifestPath, '--bin', 'gui-automation', '--', ...args];
   const out = spawnSync('cargo', cmdArgs, {
     cwd: repoRoot,
     encoding: 'utf8',
     maxBuffer: 20 * 1024 * 1024,
+    env: {
+      ...process.env,
+      CARGO_TARGET_DIR: cargoTargetDir,
+      TMPDIR: tempDir,
+    },
   });
 
   if (out.status !== 0) {
@@ -39,6 +50,15 @@ function parseJsonSafe(text) {
   }
 }
 
+// DRY:HELPER:writeInlineScenarioTempFile
+function writeInlineScenarioTempFile(payload) {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gui-automation-scenario-'));
+  const scenarioPath = path.join(tempDir, 'scenario.json');
+  const body = typeof payload === 'string' ? payload : JSON.stringify(payload, null, 2);
+  fs.writeFileSync(scenarioPath, body, 'utf8');
+  return { tempDir, scenarioPath };
+}
+
 function handleRequest(req) {
   const method = req.method;
   const params = req.params || {};
@@ -46,13 +66,32 @@ function handleRequest(req) {
   switch (method) {
     case 'gui_run_scenario': {
       const args = ['run'];
-      if (params.scenarioPath) args.push('--scenario', String(params.scenarioPath));
+      if (params.scenarioPath && (params.scenario !== undefined || params.scenarioJson !== undefined)) {
+        throw new Error('Provide either params.scenarioPath or inline params.scenario/params.scenarioJson, not both');
+      }
+
+      let inlineScenarioTemp = null;
+      if (params.scenarioPath) {
+        args.push('--scenario', String(params.scenarioPath));
+      } else if (params.scenario !== undefined || params.scenarioJson !== undefined) {
+        const payload = params.scenario !== undefined ? params.scenario : params.scenarioJson;
+        inlineScenarioTemp = writeInlineScenarioTempFile(payload);
+        args.push('--scenario', inlineScenarioTemp.scenarioPath);
+      }
+
       if (params.mode) args.push('--mode', String(params.mode));
       if (params.workspace) args.push('--workspace', String(params.workspace));
       if (params.artifacts) args.push('--artifacts', String(params.artifacts));
       if (params.runId) args.push('--run-id', String(params.runId));
       if (params.resultPath) args.push('--result-path', String(params.resultPath));
-      return parseJsonSafe(runGuiAutomation(args));
+
+      try {
+        return parseJsonSafe(runGuiAutomation(args));
+      } finally {
+        if (inlineScenarioTemp) {
+          fs.rmSync(inlineScenarioTemp.tempDir, { recursive: true, force: true });
+        }
+      }
     }
 
     case 'gui_run_step': {

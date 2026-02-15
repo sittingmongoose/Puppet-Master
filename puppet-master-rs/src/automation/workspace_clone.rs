@@ -122,6 +122,7 @@ pub fn build_artifact_manifest(root: &Path) -> Result<ArtifactManifest> {
     })
 }
 
+// DRY:FN:collect_manifest_entries
 fn collect_manifest_entries(
     base: &Path,
     current: &Path,
@@ -162,6 +163,7 @@ fn collect_manifest_entries(
     Ok(())
 }
 
+// DRY:FN:classify_artifact_kind
 fn classify_artifact_kind(path: &Path) -> String {
     match path
         .extension()
@@ -177,6 +179,7 @@ fn classify_artifact_kind(path: &Path) -> String {
 }
 
 #[cfg(not(unix))]
+// DRY:FN:copy_recursive
 fn copy_recursive(source: &Path, dest: &Path) -> Result<()> {
     for entry in std::fs::read_dir(source)
         .with_context(|| format!("Failed to read source dir {}", source.display()))?

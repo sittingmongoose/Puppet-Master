@@ -14,7 +14,7 @@ fn test_native_smoke_run_gated() {
         full_action: false,
         workspace_root: std::env::current_dir().expect("cwd"),
         artifacts_root: temp.path().to_path_buf(),
-        workspace_isolation: WorkspaceIsolation::InPlaceDirect,
+        workspace_isolation: WorkspaceIsolation::EphemeralClone,
         capture_full_bundle: true,
         ..GuiRunSpec::default()
     };

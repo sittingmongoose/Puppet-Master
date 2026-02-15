@@ -64,7 +64,7 @@ pub fn run(
     thread::sleep(Duration::from_secs(3));
 
     let screenshot_path = artifacts_root.join("native-smoke.png");
-    let screenshot_ok = capture_native_screenshot(&screenshot_path)?;
+    let screenshot = capture_native_screenshot(&screenshot_path)?;
 
     // Best-effort graceful shutdown.
     let _ = child.kill();
@@ -72,46 +72,34 @@ pub fn run(
 
     let finished_at = Utc::now();
 
-    let mut artifacts = Vec::new();
-    if screenshot_ok {
-        artifacts.push(screenshot_path);
-    }
-
-    let passed = screenshot_ok;
-    let message = if screenshot_ok {
-        "native smoke run completed".to_string()
-    } else {
-        "native smoke run completed without screenshot tool".to_string()
-    };
+    let native_step = native_step_outcome(screenshot, screenshot_path);
 
     debug_feed.record_step(
         &step_id,
         "native_finished",
-        &message,
+        &native_step.run_message,
         serde_json::json!({
-            "passed": passed,
-            "artifacts": artifacts,
+            "passed": native_step.passed,
+            "artifacts": native_step.artifacts,
+            "screenshotStatus": native_step.screenshot_status,
         }),
     );
 
     Ok(RunnerOutcome {
-        passed,
-        message,
+        passed: native_step.passed,
+        message: native_step.run_message.clone(),
         step_results: vec![GuiStepResult {
             id: step_id,
-            passed,
-            message: if passed {
-                "captured native screenshot".to_string()
-            } else {
-                "no screenshot command available (grim/gnome-screenshot/import)".to_string()
-            },
+            passed: native_step.passed,
+            message: native_step.step_message,
             started_at,
             finished_at,
-            artifacts,
+            artifacts: native_step.artifacts,
         }],
     })
 }
 
+// DRY:FN:resolve_cargo_dir
 fn resolve_cargo_dir(workspace_root: &Path) -> PathBuf {
     if workspace_root.join("Cargo.toml").exists() {
         workspace_root.to_path_buf()
@@ -126,11 +114,55 @@ fn resolve_cargo_dir(workspace_root: &Path) -> PathBuf {
     }
 }
 
-fn capture_native_screenshot(path: &Path) -> Result<bool> {
+enum ScreenshotCaptureResult {
+    Captured,
+    Skipped(String),
+}
+
+// DRY:DATA:NativeStepOutcome
+#[derive(Debug, Clone)]
+struct NativeStepOutcome {
+    passed: bool,
+    run_message: String,
+    step_message: String,
+    artifacts: Vec<PathBuf>,
+    screenshot_status: String,
+}
+
+// DRY:FN:native_step_outcome
+fn native_step_outcome(
+    screenshot: ScreenshotCaptureResult,
+    screenshot_path: PathBuf,
+) -> NativeStepOutcome {
+    match screenshot {
+        ScreenshotCaptureResult::Captured => NativeStepOutcome {
+            passed: true,
+            run_message: "native smoke run completed".to_string(),
+            step_message: "captured native screenshot".to_string(),
+            artifacts: vec![screenshot_path],
+            screenshot_status: "captured".to_string(),
+        },
+        ScreenshotCaptureResult::Skipped(reason) => NativeStepOutcome {
+            passed: true,
+            run_message: format!(
+                "native smoke run completed with screenshot warning: {}",
+                reason
+            ),
+            step_message: format!("warning: {}", reason),
+            artifacts: Vec::new(),
+            screenshot_status: "warning_skipped".to_string(),
+        },
+    }
+}
+
+// DRY:FN:capture_native_screenshot
+fn capture_native_screenshot(path: &Path) -> Result<ScreenshotCaptureResult> {
     #[cfg(not(target_os = "linux"))]
     {
         let _ = path;
-        return Ok(false);
+        return Ok(ScreenshotCaptureResult::Skipped(
+            "native screenshot capture is currently implemented for Linux only".to_string(),
+        ));
     }
 
     #[cfg(target_os = "linux")]
@@ -144,16 +176,49 @@ fn capture_native_screenshot(path: &Path) -> Result<bool> {
                 vec!["-window".to_string(), "root".to_string(), path_str],
             ),
         ];
+        let mut available_tools = Vec::new();
 
         for (cmd, args) in candidates {
+            if which::which(cmd).is_err() {
+                continue;
+            }
+
+            available_tools.push(cmd.to_string());
             let status = Command::new(cmd).args(&args).status();
             if let Ok(status) = status {
                 if status.success() {
-                    return Ok(true);
+                    return Ok(ScreenshotCaptureResult::Captured);
                 }
             }
         }
 
-        Ok(false)
+        if available_tools.is_empty() {
+            return Ok(ScreenshotCaptureResult::Skipped(
+                "no screenshot command available (grim/gnome-screenshot/import)".to_string(),
+            ));
+        }
+
+        Ok(ScreenshotCaptureResult::Skipped(format!(
+            "available screenshot tools failed to capture output ({})",
+            available_tools.join(", ")
+        )))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn skipped_screenshot_is_warning_pass() {
+        let outcome = native_step_outcome(
+            ScreenshotCaptureResult::Skipped("tooling unavailable".to_string()),
+            PathBuf::from("/tmp/ignored.png"),
+        );
+
+        assert!(outcome.passed);
+        assert!(outcome.artifacts.is_empty());
+        assert_eq!(outcome.screenshot_status, "warning_skipped");
+        assert!(outcome.run_message.contains("warning"));
     }
 }

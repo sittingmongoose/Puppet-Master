@@ -6,6 +6,10 @@ use std::path::PathBuf;
 
 use super::platform::{Platform, PlatformConfig};
 
+// DRY:DATA:DEFAULT_GUI_AUTOMATION_ARTIFACTS_DIR
+/// Shared default artifact directory for GUI automation outputs.
+pub const DEFAULT_GUI_AUTOMATION_ARTIFACTS_DIR: &str = ".puppet-master/evidence/gui-automation";
+
 // DRY:DATA:PuppetMasterConfig
 /// Top-level configuration for the Puppet Master.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -587,7 +591,7 @@ fn default_gui_automation_isolation() -> String {
 }
 
 fn default_gui_automation_artifacts() -> PathBuf {
-    PathBuf::from(".puppet-master/evidence/gui-automation")
+    PathBuf::from(DEFAULT_GUI_AUTOMATION_ARTIFACTS_DIR)
 }
 
 fn default_gui_automation_visual_threshold() -> f32 {
