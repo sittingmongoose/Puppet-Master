@@ -1,6 +1,7 @@
 use chrono::Utc;
 use puppet_master::app::{App, Message};
 use puppet_master::platforms::AuthTarget;
+use puppet_master::theme::AppTheme;
 use puppet_master::types::Platform;
 use puppet_master::views::doctor::{CheckCategory, DoctorCheckResult};
 use puppet_master::views::evidence::{EvidenceFilter, EvidenceItem, EvidenceItemType};
@@ -298,12 +299,14 @@ fn login_settings_metrics_and_interview_controls_work() {
     let _ = app.update(Message::SettingsRetentionDaysChanged("14".to_string()));
     let _ = app.update(Message::SettingsMinimizeToTrayToggled(false));
     let _ = app.update(Message::SettingsIntensiveLoggingToggled(true));
+    let _ = app.update(Message::SetTheme(AppTheme::Light));
     assert_eq!(app.settings_log_level, "debug");
     assert!(!app.settings_auto_scroll);
     assert!(!app.settings_show_timestamps);
     assert_eq!(app.settings_retention_days, 14);
     assert!(!app.minimize_to_tray);
     assert!(app.settings_intensive_logging);
+    assert_eq!(app.theme, AppTheme::Light);
 
     // Metrics controls
     let _ = app.update(Message::RefreshMetrics);
@@ -347,10 +350,12 @@ fn settings_changes_save_and_reload() {
     let _ = app.update(Message::SettingsRetentionDaysChanged("21".to_string()));
     let _ = app.update(Message::SettingsMinimizeToTrayToggled(false));
     let _ = app.update(Message::SettingsIntensiveLoggingToggled(true));
+    let _ = app.update(Message::SetTheme(AppTheme::Light));
     let _ = app.update(Message::SaveSettings);
 
     let raw = fs::read_to_string(&settings_path).expect("read settings");
     let json: Value = serde_json::from_str(&raw).expect("parse settings json");
+    assert_eq!(json.get("theme").and_then(|v| v.as_str()), Some("light"));
     assert_eq!(json.get("log_level").and_then(|v| v.as_str()), Some("warn"));
     assert_eq!(json.get("auto_scroll").and_then(|v| v.as_bool()), Some(false));
     assert_eq!(
@@ -368,6 +373,7 @@ fn settings_changes_save_and_reload() {
     );
 
     let reloaded = new_test_app();
+    assert_eq!(reloaded.theme, AppTheme::Light);
     assert_eq!(reloaded.settings_log_level, "warn");
     assert!(!reloaded.settings_auto_scroll);
     assert!(!reloaded.settings_show_timestamps);

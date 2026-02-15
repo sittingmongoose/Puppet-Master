@@ -155,7 +155,7 @@ pub fn view<'a>(
                     ButtonVariant::Secondary
                 }
             )
-            .on_press(Message::ToggleTheme),
+            .on_press(Message::SetTheme(AppTheme::Light)),
             styled_button(
                 theme,
                 if matches!(theme, AppTheme::Dark) {
@@ -169,7 +169,7 @@ pub fn view<'a>(
                     ButtonVariant::Secondary
                 }
             )
-            .on_press(Message::ToggleTheme),
+            .on_press(Message::SetTheme(AppTheme::Dark)),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),

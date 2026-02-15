@@ -436,6 +436,7 @@ pub enum Message {
 
     // Theme
     ToggleTheme,
+    SetTheme(AppTheme),
     ToggleMinimizeToTray,
 
     // Orchestrator controls
@@ -1276,13 +1277,11 @@ impl App {
             // Theme
             // ================================================================
             Message::ToggleTheme => {
-                self.theme = match self.theme {
-                    AppTheme::Light => AppTheme::Dark,
-                    AppTheme::Dark => AppTheme::Light,
-                };
-                // Update retro overlay for new theme
-                self.retro_overlay
-                    .update(self.theme.is_dark(), self.theme.ink());
+                self.apply_theme(self.theme.toggle());
+                Task::none()
+            }
+            Message::SetTheme(theme) => {
+                self.apply_theme(theme);
                 Task::none()
             }
             Message::ToggleMinimizeToTray => {
@@ -1344,6 +1343,7 @@ impl App {
             }
 
             Message::SettingsResetDefaults => {
+                self.apply_theme(AppTheme::Dark);
                 self.settings_log_level = "info".to_string();
                 self.settings_auto_scroll = true;
                 self.settings_show_timestamps = true;
@@ -1400,6 +1400,7 @@ impl App {
 
                 // Serialize settings
                 let settings = serde_json::json!({
+                    "theme": if self.theme.is_dark() { "dark" } else { "light" },
                     "log_level": self.settings_log_level,
                     "auto_scroll": self.settings_auto_scroll,
                     "show_timestamps": self.settings_show_timestamps,
@@ -6865,6 +6866,13 @@ impl App {
         }
     }
 
+    // DRY:FN:apply_theme
+    /// Apply theme and keep visual overlays in sync.
+    fn apply_theme(&mut self, theme: AppTheme) {
+        self.theme = theme;
+        self.retro_overlay.update(theme.is_dark(), theme.ink());
+    }
+
     /// Render the header bar
     fn render_header(&self) -> Element<'_, Message> {
         crate::widgets::header::simple_header(
@@ -7000,6 +7008,13 @@ impl App {
             if let Ok(content) = std::fs::read_to_string(&settings_file) {
                 if let Ok(json) = serde_json::from_str::<serde_json::Value>(&content) {
                     // Load settings from JSON
+                    if let Some(theme) = json.get("theme").and_then(|v| v.as_str()) {
+                        match theme.to_ascii_lowercase().as_str() {
+                            "light" => self.apply_theme(AppTheme::Light),
+                            "dark" => self.apply_theme(AppTheme::Dark),
+                            _ => {}
+                        }
+                    }
                     if let Some(log_level) = json.get("log_level").and_then(|v| v.as_str()) {
                         self.settings_log_level = log_level.to_string();
                     }
