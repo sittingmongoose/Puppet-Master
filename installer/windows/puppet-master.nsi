@@ -3,6 +3,11 @@
 !include "MUI2.nsh"
 !include "LogicLib.nsh"
 
+; Allow caller to override Cargo target dir (for custom target-dir config).
+!ifndef TARGET_DIR
+!define TARGET_DIR "..\..\puppet-master-rs\target"
+!endif
+
 Name "RWM Puppet Master"
 OutFile "RWM-Puppet-Master-${VERSION}-setup.exe"
 InstallDir "$PROGRAMFILES64\RWM Puppet Master"
@@ -43,13 +48,13 @@ Section "Install"
     SetOutPath $INSTDIR
     
     ; Copy the binary
-    File "..\..\puppet-master-rs\target\release\puppet-master.exe"
+    File "${TARGET_DIR}\release\puppet-master.exe"
     
     ; Verify the binary was copied
     ${If} ${FileExists} "$INSTDIR\puppet-master.exe"
         DetailPrint "✓ Binary installed successfully"
     ${Else}
-        MessageBox MB_OK|MB_ICONSTOP "Error: Binary not found at source path.$\r$\n$\r$\nExpected: ..\..\puppet-master-rs\target\release\puppet-master.exe"
+        MessageBox MB_OK|MB_ICONSTOP "Error: Binary not found at source path.$\r$\n$\r$\nExpected: ${TARGET_DIR}\release\puppet-master.exe"
         Abort "Installation failed - binary not found"
     ${EndIf}
     

@@ -99,10 +99,12 @@ jobs:
         shell: pwsh
         run: |
           cd puppet-master-rs
+          $targetDir = (cargo metadata --no-deps --format-version 1 | ConvertFrom-Json).target_directory
+          Write-Host "Using Cargo target directory: $targetDir"
           cargo build --release
           cd ../installer/windows
-          makensis /DVERSION="${{ steps.version.outputs.version }}" puppet-master.nsi
-          mkdir -p ../../dist/installers/win32-x64
+          makensis /DVERSION="${{ steps.version.outputs.version }}" /DTARGET_DIR="$targetDir" puppet-master.nsi
+          New-Item -ItemType Directory -Force -Path ../../dist/installers/win32-x64 | Out-Null
           Copy-Item "RWM-Puppet-Master-${{ steps.version.outputs.version }}-setup.exe" -Destination "../../dist/installers/win32-x64/"
 
       - name: Build installer (macOS)

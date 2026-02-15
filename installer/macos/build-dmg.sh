@@ -18,23 +18,30 @@ UNIVERSAL="${PM_MAC_UNIVERSAL:-1}"
 # Build the release binary (universal or arm64-only)
 cd ../../puppet-master-rs
 
+TARGET_DIR="${PM_TARGET_DIR:-}"
+if [ -z "${TARGET_DIR}" ]; then
+    TARGET_DIR="$(cargo metadata --no-deps --format-version 1 \
+        | python3 -c 'import json,sys; print(json.load(sys.stdin)["target_directory"])')"
+fi
+echo "Using Cargo target directory: ${TARGET_DIR}"
+
 if [ "${UNIVERSAL}" = "1" ]; then
     # Build for both architectures (universal)
     cargo build --release --target aarch64-apple-darwin
     cargo build --release --target x86_64-apple-darwin
 
     # Create universal binary
-    mkdir -p target/universal-release
+    mkdir -p "${TARGET_DIR}/universal-release"
     lipo -create \
-        target/aarch64-apple-darwin/release/puppet-master \
-        target/x86_64-apple-darwin/release/puppet-master \
-        -output target/universal-release/puppet-master
+        "${TARGET_DIR}/aarch64-apple-darwin/release/puppet-master" \
+        "${TARGET_DIR}/x86_64-apple-darwin/release/puppet-master" \
+        -output "${TARGET_DIR}/universal-release/puppet-master"
 
-    BIN_PATH="target/universal-release/puppet-master"
+    BIN_PATH="${TARGET_DIR}/universal-release/puppet-master"
 else
     # Arm64-only build (CI default on macos-14)
     cargo build --release --target aarch64-apple-darwin
-    BIN_PATH="target/aarch64-apple-darwin/release/puppet-master"
+    BIN_PATH="${TARGET_DIR}/aarch64-apple-darwin/release/puppet-master"
 fi
 
 cd ../installer/macos
@@ -46,7 +53,7 @@ mkdir -p "${BUNDLE_DIR}/Contents/MacOS"
 mkdir -p "${BUNDLE_DIR}/Contents/Resources"
 
 # Copy binary
-cp "../../puppet-master-rs/${BIN_PATH}" "${BUNDLE_DIR}/Contents/MacOS/"
+cp "${BIN_PATH}" "${BUNDLE_DIR}/Contents/MacOS/puppet-master"
 
 # Copy Info.plist
 cp Info.plist "${BUNDLE_DIR}/Contents/"

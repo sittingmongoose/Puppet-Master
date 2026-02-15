@@ -13,6 +13,14 @@ cd "$(dirname "$0")/../puppet-master-rs" || {
     exit 1
 }
 
+# Respect Cargo's configured target directory (from .cargo/config.toml or env override).
+TARGET_DIR="${PM_TARGET_DIR:-}"
+if [ -z "$TARGET_DIR" ]; then
+    TARGET_DIR="$(cargo metadata --no-deps --format-version 1 \
+        | python3 -c 'import json,sys; print(json.load(sys.stdin)["target_directory"])')"
+fi
+echo "Using Cargo target directory: $TARGET_DIR"
+
 # Build release binary (glibc — required for GTK/tray-icon support)
 echo "Building release binary..."
 cargo build --release || {
@@ -20,7 +28,7 @@ cargo build --release || {
     exit 1
 }
 
-BINARY="target/release/puppet-master"
+BINARY="${TARGET_DIR}/release/puppet-master"
 
 if [ ! -f "$BINARY" ]; then
     echo "Error: Binary not found at $BINARY"
@@ -186,7 +194,7 @@ rm -rf "$RPM_DIR"
 mkdir -p "$RPM_DIR"/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 
 # Use absolute path for RPM spec
-ABS_BINARY="$(pwd)/$BINARY"
+ABS_BINARY="$BINARY"
 ABS_DESKTOP="$DEB_DIR/usr/share/applications/puppet-master.desktop"
 
 cat > "$RPM_DIR/SPECS/puppet-master.spec" << EOF
