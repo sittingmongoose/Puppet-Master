@@ -8,6 +8,7 @@ use iced::font::{Font, Weight};
 use iced::widget::{Column, Container, Space, column, container, row, text};
 use iced::{Alignment, Border, Element, Length, Padding, Shadow, Vector};
 
+// DRY:WIDGET:panel
 /// Create a styled panel container with cross-hatch shadow and themed background
 ///
 /// This is the basic panel - uses the current theme's colors and provides
@@ -42,6 +43,7 @@ where
         })
 }
 
+// DRY:WIDGET:themed_panel
 /// Create a styled panel with themed background (light/dark)
 ///
 /// Uses the theme parameter to determine colors, shadows, and styling.
@@ -80,6 +82,7 @@ where
         })
 }
 
+// DRY:WIDGET:panel_with_title
 /// Create a panel with a title header
 ///
 /// The title is displayed in a bold font (Orbitron if available) with
@@ -132,6 +135,7 @@ where
     themed_panel(header_content, theme).into()
 }
 
+// DRY:WIDGET:panel_with_header
 /// Create a panel with title and header actions
 ///
 /// Displays a title on the left and header actions (buttons, icons) on the right.
@@ -199,6 +203,7 @@ where
     themed_panel(panel_content, theme).into()
 }
 
+// DRY:WIDGET:panel_with_inner_border
 /// Panel with dashed inner border decoration (6px inset visual)
 ///
 /// Creates a double-border effect with a faded inner border for emphasis.
@@ -238,6 +243,7 @@ where
     themed_panel(inner, theme)
 }
 
+// DRY:WIDGET:panel_with_crosshatch
 /// Panel with cross-hatch shadow effect (layered shadows at different offsets)
 ///
 /// Creates a more pronounced 3D effect with multiple shadow layers.
@@ -282,6 +288,7 @@ where
         })
 }
 
+// DRY:WIDGET:compact_panel
 /// Create a compact panel with reduced padding
 ///
 /// Useful for dense layouts or nested panels.
@@ -318,6 +325,7 @@ where
         })
 }
 
+// DRY:WIDGET:flat_panel
 /// Create a panel without shadow (flat appearance)
 ///
 /// Useful for nested content or when you want a subtle container.
@@ -356,6 +364,7 @@ where
 
 // ══ Legacy function kept for backward compatibility ═════════════════════
 
+// DRY:WIDGET:panel_with_header_legacy (deprecated -- use panel_with_title or panel_with_header)
 /// Create a panel with header section (legacy API)
 ///
 /// The header has a bold title with an underline separator.
@@ -408,6 +417,7 @@ where
 
 // ══ Legacy themed functions (updated to use tokens) ═════════════════════
 
+// DRY:WIDGET:themed_panel_with_header (deprecated -- use panel_with_title or panel_with_header)
 /// Create a themed panel with header (legacy API)
 ///
 /// This function is kept for backward compatibility. New code should use

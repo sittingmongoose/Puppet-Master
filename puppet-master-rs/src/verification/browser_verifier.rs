@@ -37,11 +37,13 @@ impl Drop for TempDirGuard {
     }
 }
 
+// DRY:DATA:BrowserVerifier
 /// Browser-based verifier powered by Playwright.
 pub struct BrowserVerifier {
     config: BrowserVerifierConfig,
 }
 
+// DRY:DATA:BrowserVerifierConfig
 /// Configuration for browser verifier.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -92,6 +94,7 @@ fn default_max_network_events() -> usize {
     200
 }
 
+// DRY:DATA:BrowserType
 /// Browser type for testing.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -114,6 +117,7 @@ impl std::fmt::Display for BrowserType {
     }
 }
 
+// DRY:DATA:BrowserStep
 /// A single browser step (optional; you can also rely on selectors/expected_content).
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -122,6 +126,7 @@ pub struct BrowserStep {
     pub action: BrowserAction,
 }
 
+// DRY:DATA:BrowserAction
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "camelCase")]
 pub enum BrowserAction {
@@ -184,6 +189,7 @@ impl Default for BrowserVerifierConfig {
 }
 
 impl BrowserVerifier {
+    // DRY:FN:new
     /// Create a new browser verifier with default configuration.
     pub fn new() -> Self {
         Self {
@@ -191,6 +197,7 @@ impl BrowserVerifier {
         }
     }
 
+    // DRY:FN:with_config
     /// Create a new browser verifier with custom configuration.
     pub fn with_config(config: BrowserVerifierConfig) -> Self {
         Self { config }
@@ -820,12 +827,14 @@ main()
   });
 "#;
 
+// DRY:DATA:BrowserVerifierBuilder
 /// Builder for browser verifier configuration
 pub struct BrowserVerifierBuilder {
     config: BrowserVerifierConfig,
 }
 
 impl BrowserVerifierBuilder {
+    // DRY:FN:new
     /// Create a new builder
     pub fn new() -> Self {
         Self {
@@ -833,42 +842,49 @@ impl BrowserVerifierBuilder {
         }
     }
 
+    // DRY:FN:url
     /// Set the URL
     pub fn url(mut self, url: impl Into<String>) -> Self {
         self.config.url = url.into();
         self
     }
 
+    // DRY:FN:add_selector
     /// Add a CSS selector to check
     pub fn add_selector(mut self, selector: impl Into<String>) -> Self {
         self.config.selectors.push(selector.into());
         self
     }
 
+    // DRY:FN:expected_content
     /// Set expected content
     pub fn expected_content(mut self, content: impl Into<String>) -> Self {
         self.config.expected_content = Some(content.into());
         self
     }
 
+    // DRY:FN:screenshot_on_failure
     /// Enable/disable screenshot on failure
     pub fn screenshot_on_failure(mut self, enabled: bool) -> Self {
         self.config.screenshot_on_failure = enabled;
         self
     }
 
+    // DRY:FN:browser
     /// Set browser type
     pub fn browser(mut self, browser: BrowserType) -> Self {
         self.config.browser = browser;
         self
     }
 
+    // DRY:FN:timeout_ms
     /// Set timeout in milliseconds
     pub fn timeout_ms(mut self, timeout: u64) -> Self {
         self.config.timeout_ms = timeout;
         self
     }
 
+    // DRY:FN:viewport
     /// Set viewport dimensions
     pub fn viewport(mut self, width: u32, height: u32) -> Self {
         self.config.viewport_width = width;
@@ -876,6 +892,7 @@ impl BrowserVerifierBuilder {
         self
     }
 
+    // DRY:FN:build
     /// Build the browser verifier
     pub fn build(self) -> BrowserVerifier {
         BrowserVerifier::with_config(self.config)

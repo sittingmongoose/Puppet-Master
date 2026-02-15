@@ -18,6 +18,7 @@ use anyhow::{Result, anyhow};
 use crossbeam_channel::Sender;
 use std::time::Instant;
 
+// DRY:DATA:ExecutionEngine
 /// Execution engine for running platform iterations with quota-aware failover
 #[derive(Debug)]
 pub struct ExecutionEngine {
@@ -391,6 +392,7 @@ fn fallback_chain_for(platform: Platform) -> &'static [Platform] {
     }
 }
 
+// DRY:DATA:IterationResult
 /// Result of an iteration execution
 #[derive(Debug, Clone)]
 pub struct IterationResult {

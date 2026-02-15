@@ -3,6 +3,7 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
+// DRY:DATA:PromptTemplate
 /// A prompt template with variables.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -23,6 +24,7 @@ pub struct PromptTemplate {
 }
 
 impl PromptTemplate {
+    // DRY:FN:new
     /// Creates a new prompt template.
     pub fn new(name: impl Into<String>, user_prompt_template: impl Into<String>) -> Self {
         Self {
@@ -34,24 +36,28 @@ impl PromptTemplate {
         }
     }
 
+    // DRY:FN:with_system_prompt
     /// Sets the system prompt and returns self for chaining.
     pub fn with_system_prompt(mut self, system_prompt: impl Into<String>) -> Self {
         self.system_prompt = Some(system_prompt.into());
         self
     }
 
+    // DRY:FN:with_variable
     /// Adds a required variable and returns self for chaining.
     pub fn with_variable(mut self, variable: impl Into<String>) -> Self {
         self.variables.push(variable.into());
         self
     }
 
+    // DRY:FN:with_description
     /// Sets the description and returns self for chaining.
     pub fn with_description(mut self, description: impl Into<String>) -> Self {
         self.description = Some(description.into());
         self
     }
 
+    // DRY:FN:render
     /// Renders the template with provided variables.
     pub fn render(&self, variables: &HashMap<String, String>) -> Result<String, String> {
         // Check for missing required variables
@@ -77,6 +83,7 @@ impl PromptTemplate {
         Ok(rendered)
     }
 
+    // DRY:FN:render_full
     /// Returns the full prompt (system + user).
     pub fn render_full(
         &self,
@@ -87,10 +94,12 @@ impl PromptTemplate {
     }
 }
 
+// DRY:DATA:PromptTemplates
 /// Collection of standard prompt templates.
 pub struct PromptTemplates;
 
 impl PromptTemplates {
+    // DRY:FN:architecture_review
     /// Returns the architecture review template.
     pub fn architecture_review() -> PromptTemplate {
         PromptTemplate::new(
@@ -116,6 +125,7 @@ Provide specific recommendations for improvement."#,
         .with_description("Review architecture documentation and provide feedback")
     }
 
+    // DRY:FN:interview
     /// Returns the requirements interview template.
     pub fn interview() -> PromptTemplate {
         PromptTemplate::new(
@@ -145,6 +155,7 @@ Format each question on a new line starting with "Q:"."#,
         .with_description("Generate interview questions for requirements gathering")
     }
 
+    // DRY:FN:inventory
     /// Returns the requirements inventory template.
     pub fn inventory() -> PromptTemplate {
         PromptTemplate::new(
@@ -181,6 +192,7 @@ For each requirement, provide:
         .with_description("Create an inventory of requirements from a document")
     }
 
+    // DRY:FN:prd_generation
     /// Returns the PRD generation template.
     pub fn prd_generation() -> PromptTemplate {
         PromptTemplate::new(
@@ -218,6 +230,7 @@ Format the output as structured JSON following the PRD schema."#,
         .with_description("Generate a structured PRD from requirements")
     }
 
+    // DRY:FN:test_plan
     /// Returns the test plan generation template.
     pub fn test_plan() -> PromptTemplate {
         PromptTemplate::new(
@@ -253,6 +266,7 @@ For each test case, specify:
         .with_description("Generate a comprehensive test plan")
     }
 
+    // DRY:FN:gap_analysis
     /// Returns the gap analysis template.
     pub fn gap_analysis() -> PromptTemplate {
         PromptTemplate::new(
@@ -282,6 +296,7 @@ For each gap, specify:
         .with_description("Analyze PRD for gaps and missing information")
     }
 
+    // DRY:FN:code_review
     /// Returns the code review template.
     pub fn code_review() -> PromptTemplate {
         PromptTemplate::new(
@@ -318,6 +333,7 @@ Format feedback as:
         .with_description("Review code changes and provide feedback")
     }
 
+    // DRY:FN:all
     /// Returns all standard templates as a collection.
     pub fn all() -> Vec<PromptTemplate> {
         vec![

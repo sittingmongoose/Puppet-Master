@@ -8,9 +8,11 @@ use anyhow::Result;
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
 
+// DRY:DATA:CriterionClassifier
 /// Classifies requirements into verification criteria.
 pub struct CriterionClassifier;
 
+// DRY:DATA:ClassifiedCriterion
 /// A classified verification criterion.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -36,6 +38,7 @@ pub struct ClassifiedCriterion {
     pub tags: Vec<String>,
 }
 
+// DRY:DATA:VerificationType
 /// Type of verification to perform.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -92,11 +95,13 @@ impl std::fmt::Display for VerificationType {
 }
 
 impl VerificationType {
+    // DRY:FN:is_automatable
     /// Returns whether this verification type can be automated.
     pub fn is_automatable(&self) -> bool {
         !matches!(self, Self::Manual | Self::CodeReview)
     }
 
+    // DRY:FN:typical_duration_seconds
     /// Returns the typical time to execute in seconds.
     pub fn typical_duration_seconds(&self) -> u32 {
         match self {
@@ -118,6 +123,7 @@ impl VerificationType {
     }
 }
 
+// DRY:DATA:ClassificationResult
 /// Classification result containing all classified criteria.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -135,6 +141,7 @@ pub struct ClassificationResult {
 }
 
 impl CriterionClassifier {
+    // DRY:FN:classify_requirements
     /// Classify requirements into verification criteria.
     pub fn classify_requirements(
         requirements: &ParsedRequirements,
@@ -154,6 +161,7 @@ impl CriterionClassifier {
         Self::build_result(criteria)
     }
 
+    // DRY:FN:classify_prd
     /// Classify a PRD into verification criteria.
     pub fn classify_prd(prd: &PRD) -> Result<ClassificationResult> {
         info!("Classifying PRD: {}", prd.metadata.name);

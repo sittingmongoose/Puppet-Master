@@ -12,6 +12,7 @@
 /// WGSL shader source for scanline effect
 pub const SCANLINE_SHADER: &str = include_str!("scanline.wgsl");
 
+// DRY:DATA:ScanlineUniforms
 /// Uniform data layout matching WGSL shader
 ///
 /// This struct must match the layout in scanline.wgsl exactly.

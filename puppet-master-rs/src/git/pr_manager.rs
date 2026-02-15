@@ -4,17 +4,20 @@ use anyhow::{Context, Result};
 use log::info;
 use std::path::PathBuf;
 
+// DRY:DATA:PrManager
 /// Manages pull request creation
 pub struct PrManager {
     repo_path: PathBuf,
 }
 
 impl PrManager {
+    // DRY:FN:new
     /// Create a new PR manager
     pub fn new(repo_path: PathBuf) -> Self {
         Self { repo_path }
     }
 
+    // DRY:FN:create_pr
     /// Create a pull request using gh CLI
     ///
     /// # Runtime Behavior
@@ -118,11 +121,13 @@ impl PrManager {
         }
     }
 
+    // DRY:FN:generate_pr_title
     /// Generate PR title from tier information
     pub fn generate_pr_title(tier_type: &str, tier_id: &str, title: &str) -> String {
         format!("[{}] {}: {}", tier_type.to_uppercase(), tier_id, title)
     }
 
+    // DRY:FN:generate_pr_body
     /// Generate PR body from tier information
     pub fn generate_pr_body(
         description: &str,
@@ -170,6 +175,7 @@ impl PrManager {
         Ok(output.status.success())
     }
 
+    // DRY:FN:preflight_check
     /// Run preflight checks before attempting PR creation
     ///
     /// Verifies:
@@ -227,6 +233,7 @@ impl PrManager {
         Ok(())
     }
 
+    // DRY:FN:build_pr_create_args
     /// Build gh pr create command arguments (for testing and validation)
     pub fn build_pr_create_args(title: &str, body: &str, base: &str, head: &str) -> Vec<String> {
         vec![
@@ -243,6 +250,7 @@ impl PrManager {
         ]
     }
 
+    // DRY:FN:list_prs
     /// List open PRs
     pub async fn list_prs(&self) -> Result<Vec<PrInfo>> {
         let output = tokio::process::Command::new("gh")
@@ -262,6 +270,7 @@ impl PrManager {
         Ok(prs)
     }
 
+    // DRY:FN:close_pr
     /// Close a PR
     pub async fn close_pr(&self, pr_number: u32) -> Result<bool> {
         let output = tokio::process::Command::new("gh")
@@ -275,6 +284,7 @@ impl PrManager {
     }
 }
 
+// DRY:DATA:PrResult
 /// Result of PR creation
 #[derive(Debug, Clone)]
 pub struct PrResult {
@@ -283,6 +293,7 @@ pub struct PrResult {
     pub message: String,
 }
 
+// DRY:DATA:PrInfo
 /// PR information
 #[derive(Debug, Clone, serde::Deserialize)]
 pub struct PrInfo {

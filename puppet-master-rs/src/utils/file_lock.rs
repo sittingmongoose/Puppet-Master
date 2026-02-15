@@ -11,6 +11,7 @@ use std::time::{Duration, Instant};
 #[cfg(unix)]
 use std::os::unix::io::AsRawFd;
 
+// DRY:DATA:FileLock
 /// Advisory file lock with timeout
 pub struct FileLock {
     lock_file: File,

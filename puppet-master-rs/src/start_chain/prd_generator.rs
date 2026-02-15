@@ -12,6 +12,7 @@ use std::path::Path;
 use std::sync::Arc;
 use std::time::{Duration, Instant};
 
+// DRY:DATA:PrdGenerator
 /// Generates PRD from parsed requirements
 pub struct PrdGenerator;
 
@@ -77,6 +78,7 @@ fn try_parse_json_value(text: &str) -> Option<serde_json::Value> {
 }
 
 impl PrdGenerator {
+    // DRY:FN:generate
     /// Generate a PRD from parsed requirements
     pub fn generate(project_name: &str, requirements: &ParsedRequirements) -> Result<PRD> {
         info!("Generating PRD for project: {}", project_name);
@@ -97,6 +99,7 @@ impl PrdGenerator {
         Ok(prd)
     }
 
+    // DRY:FN:generate_with_ai
     /// Generate a PRD from parsed requirements using an AI platform runner.
     ///
     /// Falls back to rule-based generation if execution or parsing fails.
@@ -402,6 +405,7 @@ impl PrdGenerator {
             .unwrap_or_else(|| "Project generated from requirements".to_string())
     }
 
+    // DRY:FN:save_prd
     /// Save PRD to file
     pub async fn save_prd(prd: &PRD, path: &std::path::Path) -> Result<()> {
         let json = serde_json::to_string_pretty(prd)?;

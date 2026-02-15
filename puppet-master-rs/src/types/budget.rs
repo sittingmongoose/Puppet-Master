@@ -6,6 +6,7 @@ use std::fmt;
 
 use super::platform::Platform;
 
+// DRY:DATA:BudgetInfo
 /// Budget information for a platform.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -44,6 +45,7 @@ fn default_warning() -> u8 {
 }
 
 impl BudgetInfo {
+    // DRY:FN:new
     /// Creates a new budget info.
     pub fn new(platform: Platform, limit: u64, period: impl Into<String>) -> Self {
         Self {
@@ -58,6 +60,7 @@ impl BudgetInfo {
         }
     }
 
+    // DRY:FN:percentage_used
     /// Returns the percentage of budget used.
     pub fn percentage_used(&self) -> f64 {
         if self.limit == 0 {
@@ -67,21 +70,25 @@ impl BudgetInfo {
         }
     }
 
+    // DRY:FN:remaining
     /// Returns remaining budget.
     pub fn remaining(&self) -> u64 {
         self.limit.saturating_sub(self.used)
     }
 
+    // DRY:FN:is_warning
     /// Returns whether the warning threshold has been exceeded.
     pub fn is_warning(&self) -> bool {
         self.percentage_used() >= self.warning_threshold as f64
     }
 
+    // DRY:FN:is_exceeded
     /// Returns whether the budget has been exceeded.
     pub fn is_exceeded(&self) -> bool {
         self.used >= self.limit
     }
 
+    // DRY:FN:update_status
     /// Updates the quota status based on current usage.
     pub fn update_status(&mut self) {
         self.exceeded = self.is_exceeded();
@@ -94,12 +101,14 @@ impl BudgetInfo {
         };
     }
 
+    // DRY:FN:add_usage
     /// Adds usage to this budget.
     pub fn add_usage(&mut self, amount: u64) {
         self.used = self.used.saturating_add(amount);
         self.update_status();
     }
 
+    // DRY:FN:reset
     /// Resets the budget usage.
     pub fn reset(&mut self) {
         self.used = 0;
@@ -108,6 +117,7 @@ impl BudgetInfo {
     }
 }
 
+// DRY:DATA:QuotaStatus
 /// Quota status indicator.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -136,6 +146,7 @@ impl fmt::Display for QuotaStatus {
     }
 }
 
+// DRY:DATA:UsageRecord
 /// Record of resource usage.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -178,6 +189,7 @@ pub struct UsageRecord {
 }
 
 impl UsageRecord {
+    // DRY:FN:new
     /// Creates a new usage record.
     pub fn new(platform: Platform, action: impl Into<String>, success: bool) -> Self {
         Self {
@@ -194,36 +206,42 @@ impl UsageRecord {
         }
     }
 
+    // DRY:FN:with_duration_ms
     /// Sets the duration.
     pub fn with_duration_ms(mut self, duration_ms: u64) -> Self {
         self.duration_ms = Some(duration_ms);
         self
     }
 
+    // DRY:FN:with_tokens
     /// Sets the tokens used.
     pub fn with_tokens(mut self, tokens: u64) -> Self {
         self.tokens = Some(tokens);
         self
     }
 
+    // DRY:FN:with_session_id
     /// Sets the session ID.
     pub fn with_session_id(mut self, session_id: impl Into<String>) -> Self {
         self.session_id = Some(session_id.into());
         self
     }
 
+    // DRY:FN:with_tier_id
     /// Sets the tier ID.
     pub fn with_tier_id(mut self, tier_id: impl Into<String>) -> Self {
         self.tier_id = Some(tier_id.into());
         self
     }
 
+    // DRY:FN:with_model
     /// Sets the model.
     pub fn with_model(mut self, model: impl Into<String>) -> Self {
         self.model = Some(model.into());
         self
     }
 
+    // DRY:FN:with_cost
     /// Sets the cost.
     pub fn with_cost(mut self, cost: f64) -> Self {
         self.cost = Some(cost);
@@ -231,6 +249,7 @@ impl UsageRecord {
     }
 }
 
+// DRY:DATA:BudgetTracker
 /// Budget tracker for managing quotas across multiple platforms and periods.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -263,11 +282,13 @@ impl Default for BudgetTracker {
 }
 
 impl BudgetTracker {
+    // DRY:FN:new
     /// Creates a new budget tracker.
     pub fn new() -> Self {
         Self::default()
     }
 
+    // DRY:FN:add_budget
     /// Adds a budget for a platform.
     pub fn add_budget(&mut self, budget: BudgetInfo) {
         self.budgets
@@ -276,6 +297,7 @@ impl BudgetTracker {
             .push(budget);
     }
 
+    // DRY:FN:record_usage
     /// Records usage.
     pub fn record_usage(&mut self, record: UsageRecord) {
         // Update budgets
@@ -297,11 +319,13 @@ impl BudgetTracker {
         }
     }
 
+    // DRY:FN:get_budgets
     /// Gets budgets for a specific platform.
     pub fn get_budgets(&self, platform: Platform) -> Option<&[BudgetInfo]> {
         self.budgets.get(&platform).map(|v| v.as_slice())
     }
 
+    // DRY:FN:is_exhausted
     /// Checks if any budget is exhausted for a platform.
     pub fn is_exhausted(&self, platform: Platform) -> bool {
         self.budgets
@@ -310,6 +334,7 @@ impl BudgetTracker {
             .unwrap_or(false)
     }
 
+    // DRY:FN:get_usage_in_period
     /// Gets the total usage for a platform in a time period.
     pub fn get_usage_in_period(&self, platform: Platform, since: DateTime<Utc>) -> u64 {
         self.usage_history
@@ -319,6 +344,7 @@ impl BudgetTracker {
             .sum()
     }
 
+    // DRY:FN:reset_platform
     /// Resets all budgets for a platform.
     pub fn reset_platform(&mut self, platform: Platform) {
         if let Some(budgets) = self.budgets.get_mut(&platform) {
@@ -329,6 +355,7 @@ impl BudgetTracker {
     }
 }
 
+// DRY:DATA:UsageStats
 /// Usage statistics summary.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -353,6 +380,7 @@ pub struct UsageStats {
 }
 
 impl UsageStats {
+    // DRY:FN:new
     /// Creates new usage stats for a platform.
     pub fn new(platform: Platform) -> Self {
         Self {
@@ -367,6 +395,7 @@ impl UsageStats {
         }
     }
 
+    // DRY:FN:update_from_record
     /// Updates statistics from a usage record.
     pub fn update_from_record(&mut self, record: &UsageRecord) {
         self.total_executions += 1;
@@ -391,6 +420,7 @@ impl UsageStats {
         }
     }
 
+    // DRY:FN:success_rate
     /// Returns success rate as a percentage.
     pub fn success_rate(&self) -> f64 {
         if self.total_executions == 0 {
@@ -401,6 +431,7 @@ impl UsageStats {
     }
 }
 
+// DRY:DATA:UsageAction
 /// Action type for usage tracking.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]

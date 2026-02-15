@@ -10,6 +10,7 @@ use iced::widget::{Space, column, container, pick_list, row, scrollable, text, t
 use iced::{Border, Element, Length};
 use std::collections::{HashMap, HashSet};
 
+// DRY:DATA:LedgerEntry
 /// Ledger entry
 #[derive(Debug, Clone)]
 pub struct LedgerEntry {
@@ -20,6 +21,7 @@ pub struct LedgerEntry {
     pub data: String,
 }
 
+// DRY:DATA:EventType
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum EventType {
     OrchestratorStarted,
@@ -90,6 +92,7 @@ impl std::fmt::Display for EventType {
     }
 }
 
+// DRY:DATA:LedgerFilter
 /// Ledger filter
 #[derive(Debug, Clone, Default)]
 pub struct LedgerFilter {
@@ -98,6 +101,7 @@ pub struct LedgerFilter {
     pub limit: usize,
 }
 
+// DRY:FN:ledger_view
 /// Event ledger view with type filtering and stats
 pub fn view<'a>(
     entries: &'a [LedgerEntry],

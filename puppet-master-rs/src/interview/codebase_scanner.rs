@@ -6,6 +6,7 @@
 use anyhow::Result;
 use std::path::Path;
 
+// DRY:FN:scan_project
 pub fn scan_project(root: &Path) -> Result<String> {
     let mut lines: Vec<String> = Vec::new();
 

@@ -1,3 +1,4 @@
+// DRY:DATA:tokens
 //! Design tokens matching the Tauri CSS design system
 //!
 //! This module provides constants for spacing, borders, radii, typography,
@@ -8,6 +9,7 @@ use iced::{Color, Shadow, Vector};
 /// Spacing scale (in pixels)
 ///
 /// Use these for consistent padding, margins, and gaps throughout the UI.
+// DRY:DATA:spacing
 pub mod spacing {
     pub const XXXS: f32 = 2.0;
     pub const XXS: f32 = 4.0;
@@ -22,6 +24,7 @@ pub mod spacing {
 /// Border widths
 ///
 /// The retro design emphasizes strong, visible borders.
+// DRY:DATA:borders
 pub mod borders {
     pub const THIN: f32 = 1.0;
     pub const MEDIUM: f32 = 2.0;
@@ -32,6 +35,7 @@ pub mod borders {
 ///
 /// The retro design typically uses 0 (sharp corners), but subtle rounding
 /// is available for special cases.
+// DRY:DATA:radii
 pub mod radii {
     pub const NONE: f32 = 0.0;
     pub const SM: f32 = 2.0;
@@ -43,6 +47,7 @@ pub mod radii {
 /// Font sizes
 ///
 /// Typography scale for consistent text sizing.
+// DRY:DATA:font_size
 pub mod font_size {
     pub const XS: f32 = 11.0;
     pub const SM: f32 = 13.0;
@@ -57,10 +62,12 @@ pub mod font_size {
 /// Shadow definitions
 ///
 /// The retro design uses hard, offset shadows (no blur) for a bold, flat look.
+// DRY:DATA:shadows
 pub mod shadows {
     use super::*;
 
     /// Panel shadow - used for major UI panels and cards
+    // DRY:HELPER:panel_shadow
     pub fn panel_shadow(ink: Color) -> Shadow {
         Shadow {
             color: ink,
@@ -70,6 +77,7 @@ pub mod shadows {
     }
 
     /// Button shadow - standard button depth
+    // DRY:HELPER:button_shadow
     pub fn button_shadow(ink: Color) -> Shadow {
         Shadow {
             color: ink,
@@ -79,6 +87,7 @@ pub mod shadows {
     }
 
     /// Button shadow when pressed - reduced depth for pressed state
+    // DRY:HELPER:button_shadow_pressed
     pub fn button_shadow_pressed(ink: Color) -> Shadow {
         Shadow {
             color: ink,
@@ -88,6 +97,7 @@ pub mod shadows {
     }
 
     /// Header shadow - subtle bottom shadow
+    // DRY:HELPER:header_shadow
     pub fn header_shadow(ink: Color) -> Shadow {
         Shadow {
             color: ink,
@@ -97,6 +107,7 @@ pub mod shadows {
     }
 
     /// No shadow
+    // DRY:HELPER:none
     pub fn none() -> Shadow {
         Shadow {
             color: Color::TRANSPARENT,
@@ -109,6 +120,7 @@ pub mod shadows {
 /// Layout constants
 ///
 /// Standard dimensions for major UI components.
+// DRY:DATA:layout
 pub mod layout {
     /// Height of the main header bar
     pub const HEADER_HEIGHT: f32 = 60.0;

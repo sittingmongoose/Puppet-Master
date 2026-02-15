@@ -11,6 +11,7 @@ use regex::Regex;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
+// DRY:DATA:PermissionPrompt
 /// A detected permission prompt
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PermissionPrompt {
@@ -30,6 +31,7 @@ pub struct PermissionPrompt {
     pub context: Option<Vec<String>>,
 }
 
+// DRY:DATA:PermissionType
 /// Type of permission being requested
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
@@ -77,6 +79,7 @@ struct PermissionPattern {
     suggested_response: Option<String>,
 }
 
+// DRY:DATA:PermissionDetector
 /// Permission prompt detector
 pub struct PermissionDetector {
     /// Platform-specific patterns
@@ -341,6 +344,7 @@ impl Default for PermissionDetector {
     }
 }
 
+// DRY:DATA:AutoResponsePolicy
 /// Auto-response policy for permission prompts
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum AutoResponsePolicy {

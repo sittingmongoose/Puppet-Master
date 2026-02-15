@@ -5,10 +5,12 @@ use async_trait::async_trait;
 use chrono::Utc;
 use std::path::PathBuf;
 
+// DRY:DATA:WorkingDirCheck
 /// Check if working directory exists
 pub struct WorkingDirCheck;
 
 impl WorkingDirCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }
@@ -54,10 +56,12 @@ impl DoctorCheck for WorkingDirCheck {
     }
 }
 
+// DRY:DATA:PrdFileCheck
 /// Check if PRD file exists
 pub struct PrdFileCheck;
 
 impl PrdFileCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }
@@ -123,10 +127,12 @@ impl DoctorCheck for PrdFileCheck {
     }
 }
 
+// DRY:DATA:StateDirectoryCheck
 /// Check if state directory exists
 pub struct StateDirectoryCheck;
 
 impl StateDirectoryCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }

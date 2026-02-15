@@ -10,6 +10,7 @@ use log::info;
 use std::process::Stdio;
 use tokio::process::Command;
 
+// DRY:DATA:AuthTarget — Target for auth actions: a Platform or GitHub
 /// Target for auth actions: a Platform or GitHub (gh CLI for general Git ops)
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum AuthTarget {
@@ -18,6 +19,7 @@ pub enum AuthTarget {
 }
 
 impl AuthTarget {
+    // DRY:FN:display_name — Human-readable name for an auth target
     pub fn display_name(&self) -> &'static str {
         match self {
             AuthTarget::Platform(Platform::Cursor) => "Cursor",
@@ -30,6 +32,7 @@ impl AuthTarget {
     }
 }
 
+// DRY:FN:spawn_login — Spawns interactive login for a platform
 /// Spawns login for a platform. For interactive logins (Claude, Copilot, Gemini),
 /// the CLI is launched and the user completes login in browser or terminal.
 pub async fn spawn_login(target: AuthTarget) -> Result<()> {
@@ -166,6 +169,7 @@ pub async fn spawn_login(target: AuthTarget) -> Result<()> {
     }
 }
 
+// DRY:FN:spawn_logout — Spawns logout for a platform where supported
 /// Spawns logout for a platform where supported.
 pub async fn spawn_logout(target: AuthTarget) -> Result<()> {
     // Claude has no logout subcommand — inform user to delete ~/.claude/ credentials

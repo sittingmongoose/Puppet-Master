@@ -13,6 +13,7 @@ use serde_json;
 use std::path::Path;
 use std::sync::{Arc, Mutex};
 
+// DRY:DATA:EventLedger
 /// Thread-safe event ledger
 #[derive(Clone)]
 pub struct EventLedger {
@@ -20,6 +21,7 @@ pub struct EventLedger {
 }
 
 impl EventLedger {
+    // DRY:FN:new
     /// Create a new event ledger
     pub fn new(path: impl AsRef<Path>) -> Result<Self> {
         let path = path.as_ref();
@@ -77,6 +79,7 @@ impl EventLedger {
         })
     }
 
+    // DRY:FN:insert_event
     /// Insert an event into the ledger
     pub fn insert_event(&self, event: PuppetMasterEvent) -> Result<String> {
         let conn = self.inner.lock().unwrap();
@@ -177,6 +180,7 @@ impl EventLedger {
         }
     }
 
+    // DRY:FN:query_events
     /// Query events with filters
     pub fn query_events(&self, filters: EventFilters) -> Result<Vec<EventRecord>> {
         let conn = self.inner.lock().unwrap();
@@ -244,6 +248,7 @@ impl EventLedger {
         Ok(records)
     }
 
+    // DRY:FN:count_events
     /// Count events matching filters
     pub fn count_events(&self, filters: EventFilters) -> Result<usize> {
         let conn = self.inner.lock().unwrap();
@@ -283,6 +288,7 @@ impl EventLedger {
         Ok(count as usize)
     }
 
+    // DRY:FN:save_snapshot
     /// Save state snapshot as a Custom event
     pub fn save_snapshot(&self, snapshot_id: &str, data: &str) -> Result<String> {
         let event = PuppetMasterEvent::Custom {
@@ -294,6 +300,7 @@ impl EventLedger {
         self.insert_event(event)
     }
 
+    // DRY:FN:load_snapshot
     /// Load latest state snapshot
     pub fn load_snapshot(&self) -> Result<Option<String>> {
         let conn = self.inner.lock().unwrap();
@@ -310,6 +317,7 @@ impl EventLedger {
     }
 }
 
+// DRY:DATA:EventFilters
 /// Event query filters
 #[derive(Debug, Default, Clone)]
 pub struct EventFilters {
@@ -322,6 +330,7 @@ pub struct EventFilters {
     pub limit: Option<usize>,
 }
 
+// DRY:DATA:EventRecord
 /// Event record from database
 #[derive(Debug, Clone)]
 pub struct EventRecord {
@@ -334,6 +343,7 @@ pub struct EventRecord {
 }
 
 impl EventRecord {
+    // DRY:FN:parse_event
     /// Parse the event data
     pub fn parse_event(&self) -> Result<PuppetMasterEvent> {
         serde_json::from_str(&self.data).context("Failed to parse event JSON")

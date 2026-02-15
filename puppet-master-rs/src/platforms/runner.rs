@@ -28,12 +28,14 @@ use tokio::process::Command;
 use tokio::sync::mpsc;
 use tokio::time::timeout;
 
+// DRY:DATA:ProcessRegistry
 /// Global process registry for tracking active child processes
 pub struct ProcessRegistry {
     pids: Arc<Mutex<HashSet<u32>>>,
 }
 
 impl ProcessRegistry {
+    // DRY:FN:new — Create a new process registry
     /// Create a new process registry
     pub fn new() -> Self {
         Self {
@@ -41,6 +43,7 @@ impl ProcessRegistry {
         }
     }
 
+    // DRY:FN:register — Register a process ID
     /// Register a process ID
     pub fn register(&self, pid: u32) {
         let mut pids = self.pids.lock().unwrap();
@@ -48,6 +51,7 @@ impl ProcessRegistry {
         debug!("Registered PID: {}", pid);
     }
 
+    // DRY:FN:unregister — Unregister a process ID
     /// Unregister a process ID
     pub fn unregister(&self, pid: u32) {
         let mut pids = self.pids.lock().unwrap();
@@ -55,12 +59,14 @@ impl ProcessRegistry {
         debug!("Unregistered PID: {}", pid);
     }
 
+    // DRY:FN:get_all — Get all registered PIDs
     /// Get all registered PIDs
     pub fn get_all(&self) -> Vec<u32> {
         let pids = self.pids.lock().unwrap();
         pids.iter().copied().collect()
     }
 
+    // DRY:FN:kill_all — Kill all registered processes
     /// Kill all registered processes
     pub fn kill_all(&self) {
         let pids = self.get_all();
@@ -99,6 +105,7 @@ impl Default for ProcessRegistry {
 static PROCESS_REGISTRY: once_cell::sync::Lazy<ProcessRegistry> =
     once_cell::sync::Lazy::new(ProcessRegistry::new);
 
+// DRY:DATA:CircuitBreaker — Circuit breaker for platform reliability
 /// Circuit breaker for platform reliability
 #[derive(Debug, Clone)]
 pub struct CircuitBreaker {
@@ -107,6 +114,7 @@ pub struct CircuitBreaker {
 }
 
 impl CircuitBreaker {
+    // DRY:FN:new — Create a new circuit breaker
     /// Create a new circuit breaker
     pub fn new(max_failures: u32) -> Self {
         Self {
@@ -115,18 +123,21 @@ impl CircuitBreaker {
         }
     }
 
+    // DRY:FN:is_open — Check if circuit is open (fail-fast)
     /// Check if circuit is open (fail-fast)
     pub fn is_open(&self) -> bool {
         let failures = self.consecutive_failures.lock().unwrap();
         *failures >= self.max_failures
     }
 
+    // DRY:FN:record_success — Record a success (reset failures)
     /// Record a success (reset failures)
     pub fn record_success(&self) {
         let mut failures = self.consecutive_failures.lock().unwrap();
         *failures = 0;
     }
 
+    // DRY:FN:record_failure — Record a failure
     /// Record a failure
     pub fn record_failure(&self) {
         let mut failures = self.consecutive_failures.lock().unwrap();
@@ -136,6 +147,7 @@ impl CircuitBreaker {
         }
     }
 
+    // DRY:FN:reset — Reset the circuit breaker
     /// Reset the circuit breaker
     pub fn reset(&self) {
         let mut failures = self.consecutive_failures.lock().unwrap();
@@ -143,6 +155,7 @@ impl CircuitBreaker {
     }
 }
 
+// DRY:DATA:BaseRunner — Base runner implementation with common logic
 /// Base runner implementation with common logic
 pub struct BaseRunner {
     /// Command to execute
@@ -168,6 +181,7 @@ pub struct BaseRunner {
 }
 
 impl BaseRunner {
+    // DRY:FN:new — Create a new base runner
     /// Create a new base runner
     pub fn new(command: String, platform: Platform) -> Self {
         // Use global singletons for health monitor, rate limiter, and quota manager
@@ -188,6 +202,7 @@ impl BaseRunner {
         }
     }
 
+    // DRY:FN:execute_command — Execute a command with args and collect output
     /// Execute a command with the given arguments
     ///
     /// # Arguments
@@ -465,6 +480,7 @@ impl BaseRunner {
         Ok(result)
     }
 
+    // DRY:FN:detect_line_type — Detect the type of output line based on content
     /// Detect the type of output line based on content
     pub fn detect_line_type(line: &str) -> OutputLineType {
         let line_lower = line.to_lowercase();
@@ -483,6 +499,7 @@ impl BaseRunner {
         }
     }
 
+    // DRY:FN:has_completion_signal — Parse completion signals from output
     /// Parse completion signals from output
     pub fn has_completion_signal(output: &[OutputLine]) -> bool {
         let complete_regex = Regex::new(r"<ralph>COMPLETE</ralph>").unwrap();
@@ -493,11 +510,13 @@ impl BaseRunner {
             .any(|line| complete_regex.is_match(&line.text) || gutter_regex.is_match(&line.text))
     }
 
+    // DRY:FN:is_command_available — Check if a command is available on PATH
     /// Check if a command is available on PATH
     pub async fn is_command_available(command: &str) -> bool {
         which::which(command).is_ok()
     }
 
+    // DRY:FN:find_available_command — Try fallback commands
     /// Try fallback commands
     pub async fn find_available_command(commands: &[&str]) -> Option<String> {
         for cmd in commands {
@@ -509,6 +528,7 @@ impl BaseRunner {
     }
 }
 
+// DRY:FN:cleanup_all_processes — Cleanup handler to kill all processes on shutdown
 /// Cleanup handler to kill all processes on shutdown
 pub fn cleanup_all_processes() {
     info!("Cleaning up all child processes...");

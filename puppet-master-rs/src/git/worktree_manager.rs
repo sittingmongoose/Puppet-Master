@@ -10,12 +10,14 @@ use std::path::PathBuf;
 use tokio::fs;
 use tokio::process::Command;
 
+// DRY:DATA:WorktreeManager
 /// Manages git worktrees for parallel task execution
 pub struct WorktreeManager {
     repo_root: PathBuf,
     worktree_base: PathBuf,
 }
 
+// DRY:DATA:WorktreeInfo
 /// Information about a worktree
 #[derive(Debug, Clone)]
 pub struct WorktreeInfo {
@@ -26,6 +28,7 @@ pub struct WorktreeInfo {
     pub is_active: bool,
 }
 
+// DRY:DATA:MergeResult
 /// Result of a merge operation
 #[derive(Debug, Clone)]
 pub struct MergeResult {
@@ -35,6 +38,7 @@ pub struct MergeResult {
 }
 
 impl WorktreeManager {
+    // DRY:FN:new
     /// Create a new worktree manager
     pub fn new(repo_root: PathBuf) -> Self {
         let worktree_base = repo_root.join(".puppet-master").join("worktrees");
@@ -44,6 +48,7 @@ impl WorktreeManager {
         }
     }
 
+    // DRY:FN:create_worktree
     /// Create a new worktree for a tier
     pub async fn create_worktree(&self, tier_id: &str, branch: &str) -> Result<WorktreeInfo> {
         info!(
@@ -93,6 +98,7 @@ impl WorktreeManager {
         })
     }
 
+    // DRY:FN:list_worktrees
     /// List all worktrees
     pub async fn list_worktrees(&self) -> Result<Vec<WorktreeInfo>> {
         debug!("Listing all worktrees");
@@ -155,6 +161,7 @@ impl WorktreeManager {
         Ok(worktrees)
     }
 
+    // DRY:FN:remove_worktree
     /// Remove a worktree (after merging)
     pub async fn remove_worktree(&self, tier_id: &str) -> Result<()> {
         info!("Removing worktree for tier '{}'", tier_id);
@@ -191,6 +198,7 @@ impl WorktreeManager {
         Ok(())
     }
 
+    // DRY:FN:merge_worktree
     /// Merge worktree changes back to target branch
     pub async fn merge_worktree(&self, tier_id: &str, target_branch: &str) -> Result<MergeResult> {
         info!(
@@ -279,6 +287,7 @@ impl WorktreeManager {
         })
     }
 
+    // DRY:FN:prune
     /// Clean up stale worktrees
     pub async fn prune(&self) -> Result<u32> {
         info!("Pruning stale worktrees");
@@ -314,16 +323,19 @@ impl WorktreeManager {
             .map(|s| s.to_string())
     }
 
+    // DRY:FN:get_worktree_path
     /// Get the path for a specific tier's worktree
     pub fn get_worktree_path(&self, tier_id: &str) -> PathBuf {
         self.worktree_base.join(tier_id)
     }
 
+    // DRY:FN:worktree_exists
     /// Check if a worktree exists for a tier
     pub async fn worktree_exists(&self, tier_id: &str) -> bool {
         self.get_worktree_path(tier_id).exists()
     }
 
+    // DRY:FN:detect_orphaned_worktrees
     /// Detect orphaned worktrees that are not tracked by git
     ///
     /// Returns worktree paths that exist in .puppet-master/worktrees but are not
@@ -425,6 +437,7 @@ impl WorktreeManager {
         }
     }
 
+    // DRY:FN:recover_orphaned_worktrees
     /// Recover from leaked/orphaned worktrees after a crash
     ///
     /// This safely removes orphaned worktrees that were created by Puppet Master

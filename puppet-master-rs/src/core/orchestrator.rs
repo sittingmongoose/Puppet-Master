@@ -120,6 +120,7 @@ impl SessionLifecycle for SessionTracker {
     }
 }
 
+// DRY:DATA:Orchestrator
 /// Main orchestrator
 pub struct Orchestrator {
     /// Configuration
@@ -189,6 +190,7 @@ pub struct Orchestrator {
 }
 
 impl Orchestrator {
+    // DRY:FN:new
     /// Create new orchestrator
     pub fn new(config: PuppetMasterConfig) -> Result<Self> {
         let (event_sender, event_receiver) = crossbeam_channel::unbounded();
@@ -403,6 +405,7 @@ impl Orchestrator {
         Ok(())
     }
 
+    // DRY:FN:logger_service
     /// Get the logger service for external access
     pub fn logger_service(&self) -> &LoggerService {
         &self.logger_service
@@ -2299,17 +2302,20 @@ impl Orchestrator {
         let _ = self.event_sender.send(event);
     }
 
+    // DRY:FN:event_receiver
     /// Get event receiver
     pub fn event_receiver(&self) -> &Receiver<OrchestratorEvent> {
         &self.event_receiver
     }
 
+    // DRY:FN:current_state
     /// Get current state
     pub fn current_state(&self) -> OrchestratorState {
         let sm = self.state_machine.lock().unwrap();
         sm.current_state()
     }
 
+    // DRY:FN:get_stats
     /// Get tier tree statistics
     pub fn get_stats(&self) -> crate::core::tier_node::TreeStats {
         let tree = self.tier_tree.lock().unwrap();

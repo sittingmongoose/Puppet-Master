@@ -6,11 +6,13 @@
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
 
+// DRY:DATA:GateEnforcer
 /// Gate enforcer for AGENTS.md rules
 pub struct GateEnforcer {
     rules: Vec<Rule>,
 }
 
+// DRY:DATA:Rule
 /// A gate enforcement rule
 #[derive(Debug, Clone)]
 pub struct Rule {
@@ -35,6 +37,7 @@ enum RuleCheck {
     _RegexMatch(String),
 }
 
+// DRY:DATA:EnforcementResult
 /// Result of enforcement
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct EnforcementResult {
@@ -47,6 +50,7 @@ pub struct EnforcementResult {
 }
 
 impl EnforcementResult {
+    // DRY:FN:passing
     /// Create a passing result with no violations
     pub fn passing() -> Self {
         Self {
@@ -56,6 +60,7 @@ impl EnforcementResult {
         }
     }
 
+    // DRY:FN:failing
     /// Create a failing result
     pub fn failing(violations: Vec<Violation>) -> Self {
         let passed = violations
@@ -69,6 +74,7 @@ impl EnforcementResult {
         }
     }
 
+    // DRY:FN:with_warning
     /// Add a warning
     pub fn with_warning(mut self, warning: String) -> Self {
         self.warnings.push(warning);
@@ -76,6 +82,7 @@ impl EnforcementResult {
     }
 }
 
+// DRY:DATA:Violation
 /// A single violation of AGENTS.md rules
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Violation {
@@ -91,6 +98,7 @@ pub struct Violation {
 }
 
 impl Violation {
+    // DRY:FN:new
     /// Create a new violation
     pub fn new(
         rule: impl Into<String>,
@@ -105,6 +113,7 @@ impl Violation {
         }
     }
 
+    // DRY:FN:with_location
     /// Add location information
     pub fn with_location(mut self, location: impl Into<String>) -> Self {
         self.location = Some(location.into());
@@ -112,6 +121,7 @@ impl Violation {
     }
 }
 
+// DRY:DATA:ViolationSeverity
 /// Severity level of a violation
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -125,6 +135,7 @@ pub enum ViolationSeverity {
 }
 
 impl GateEnforcer {
+    // DRY:FN:new
     /// Create a new gate enforcer with default rules
     pub fn new() -> Self {
         Self {
@@ -132,6 +143,7 @@ impl GateEnforcer {
         }
     }
 
+    // DRY:FN:with_rules
     /// Create with custom rules
     pub fn with_rules(rules: Vec<Rule>) -> Self {
         Self { rules }
@@ -162,6 +174,7 @@ impl GateEnforcer {
         ]
     }
 
+    // DRY:FN:for_tier
     /// Create gate enforcer with rules adjusted for tier level
     /// Higher tiers (phase/root) have stricter enforcement (Error vs Warning)
     pub fn for_tier(tier_id: &str) -> Self {
@@ -202,11 +215,13 @@ impl GateEnforcer {
         Self { rules }
     }
 
+    // DRY:FN:add_rule
     /// Add a custom rule
     pub fn add_rule(&mut self, rule: Rule) {
         self.rules.push(rule);
     }
 
+    // DRY:FN:enforce
     /// Enforce rules against AGENTS.md content
     pub fn enforce(
         &self,
@@ -332,6 +347,7 @@ impl GateEnforcer {
         Ok(result)
     }
 
+    // DRY:FN:quick_check
     /// Quick check - returns true if enforcement would pass
     pub fn quick_check(
         &self,
@@ -349,6 +365,7 @@ impl Default for GateEnforcer {
     }
 }
 
+// DRY:DATA:RuleBuilder
 /// Builder for creating custom rules
 pub struct RuleBuilder {
     name: String,
@@ -357,6 +374,7 @@ pub struct RuleBuilder {
 }
 
 impl RuleBuilder {
+    // DRY:FN:new
     /// Create a new rule builder
     pub fn new(name: impl Into<String>) -> Self {
         Self {
@@ -366,18 +384,21 @@ impl RuleBuilder {
         }
     }
 
+    // DRY:FN:description
     /// Set the description
     pub fn description(mut self, desc: impl Into<String>) -> Self {
         self.description = desc.into();
         self
     }
 
+    // DRY:FN:severity
     /// Set the severity
     pub fn severity(mut self, severity: ViolationSeverity) -> Self {
         self.severity = severity;
         self
     }
 
+    // DRY:FN:min_patterns
     /// Build a rule that checks for minimum patterns
     pub fn min_patterns(self, min: usize) -> Rule {
         Rule {
@@ -388,6 +409,7 @@ impl RuleBuilder {
         }
     }
 
+    // DRY:FN:min_failure_modes
     /// Build a rule that checks for minimum failure modes
     pub fn min_failure_modes(self, min: usize) -> Rule {
         Rule {
@@ -398,6 +420,7 @@ impl RuleBuilder {
         }
     }
 
+    // DRY:FN:section_exists
     /// Build a rule that checks for section existence
     pub fn section_exists(self, section: impl Into<String>) -> Rule {
         Rule {
@@ -408,6 +431,7 @@ impl RuleBuilder {
         }
     }
 
+    // DRY:FN:pattern_exists
     /// Build a rule that checks for pattern existence
     pub fn pattern_exists(self, pattern: impl Into<String>) -> Rule {
         Rule {

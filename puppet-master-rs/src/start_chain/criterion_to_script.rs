@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use std::path::PathBuf;
 
+// DRY:DATA:CriterionType
 /// Type of verification criterion.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum CriterionType {
@@ -22,6 +23,7 @@ pub enum CriterionType {
     CustomScript,
 }
 
+// DRY:DATA:VerificationCriterion
 /// A verification criterion to convert.
 #[derive(Debug, Clone)]
 pub struct VerificationCriterion {
@@ -38,6 +40,7 @@ pub struct VerificationCriterion {
 }
 
 impl VerificationCriterion {
+    // DRY:FN:new
     /// Creates a new verification criterion.
     pub fn new(
         id: impl Into<String>,
@@ -54,6 +57,7 @@ impl VerificationCriterion {
         }
     }
 
+    // DRY:FN:with_option
     /// Adds an option and returns self for chaining.
     pub fn with_option(mut self, key: impl Into<String>, value: impl Into<String>) -> Self {
         self.options.insert(key.into(), value.into());
@@ -61,6 +65,7 @@ impl VerificationCriterion {
     }
 }
 
+// DRY:DATA:GeneratedScript
 /// Generated script output.
 #[derive(Debug, Clone)]
 pub struct GeneratedScript {
@@ -72,6 +77,7 @@ pub struct GeneratedScript {
     pub script_type: ScriptType,
 }
 
+// DRY:DATA:ScriptType
 /// Type of generated script.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ScriptType {
@@ -84,6 +90,7 @@ pub enum ScriptType {
 }
 
 impl ScriptType {
+    // DRY:FN:extension
     /// Returns the file extension for this script type.
     pub fn extension(&self) -> &'static str {
         match self {
@@ -93,6 +100,7 @@ impl ScriptType {
         }
     }
 
+    // DRY:FN:shebang
     /// Returns the shebang line for this script type.
     pub fn shebang(&self) -> &'static str {
         match self {
@@ -103,6 +111,7 @@ impl ScriptType {
     }
 }
 
+// DRY:DATA:CriterionToScriptConverter
 /// Converts verification criteria to executable scripts.
 pub struct CriterionToScriptConverter {
     /// Output directory for scripts
@@ -112,6 +121,7 @@ pub struct CriterionToScriptConverter {
 }
 
 impl CriterionToScriptConverter {
+    // DRY:FN:new
     /// Creates a new converter.
     pub fn new(output_dir: PathBuf, preferred_type: ScriptType) -> Self {
         Self {
@@ -120,6 +130,7 @@ impl CriterionToScriptConverter {
         }
     }
 
+    // DRY:FN:convert
     /// Converts a criterion to a script.
     pub fn convert(&self, criterion: &VerificationCriterion) -> Result<GeneratedScript, String> {
         match criterion.criterion_type {

@@ -6,6 +6,7 @@ use std::path::PathBuf;
 
 use super::platform::{Platform, PlatformConfig};
 
+// DRY:DATA:PuppetMasterConfig
 /// Top-level configuration for the Puppet Master.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -65,6 +66,7 @@ pub struct PuppetMasterConfig {
     pub gui_automation: GuiAutomationConfig,
 }
 
+// DRY:DATA:OrchestratorConfig
 /// Orchestrator-specific configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -108,6 +110,7 @@ impl Default for OrchestratorConfig {
     }
 }
 
+// DRY:DATA:PathConfig
 /// Path configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -139,6 +142,7 @@ impl Default for PathConfig {
     }
 }
 
+// DRY:DATA:UiConfig
 /// UI configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -158,6 +162,7 @@ impl Default for UiConfig {
     }
 }
 
+// DRY:DATA:ProjectConfig
 /// Project-level configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -181,6 +186,7 @@ fn default_version() -> String {
     "1.0.0".to_string()
 }
 
+// DRY:DATA:TierConfigs
 /// Configuration container for all tiers.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -198,6 +204,7 @@ pub struct TierConfigs {
     pub iteration: TierConfig,
 }
 
+// DRY:DATA:TierConfig
 /// Configuration for a single tier level.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -253,6 +260,7 @@ fn default_max_iterations() -> u32 {
     3
 }
 
+// DRY:DATA:ModelLevel
 /// Model capability level.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -284,6 +292,7 @@ impl fmt::Display for ModelLevel {
     }
 }
 
+// DRY:DATA:Complexity
 /// Task complexity level.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -315,6 +324,7 @@ impl fmt::Display for Complexity {
     }
 }
 
+// DRY:DATA:TaskType
 /// Type of work being performed.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -352,6 +362,7 @@ impl fmt::Display for TaskType {
     }
 }
 
+// DRY:DATA:TaskFailureStyle
 /// How to handle task failures.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -370,6 +381,7 @@ impl Default for TaskFailureStyle {
     }
 }
 
+// DRY:DATA:BranchingConfig
 /// Git branching configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -420,6 +432,7 @@ fn default_naming_pattern() -> String {
     "rwm/{tier}/{id}".to_string()
 }
 
+// DRY:DATA:Granularity
 /// Branching granularity level.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -442,6 +455,7 @@ impl Default for Granularity {
     }
 }
 
+// DRY:DATA:PushPolicy
 /// When to push branches.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -462,6 +476,7 @@ impl Default for PushPolicy {
     }
 }
 
+// DRY:DATA:MergePolicy
 /// How to merge branches.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -480,6 +495,7 @@ impl Default for MergePolicy {
     }
 }
 
+// DRY:DATA:VerificationConfig
 /// Verification and gating configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -524,6 +540,7 @@ fn default_evidence_directory() -> PathBuf {
     PathBuf::from("evidence")
 }
 
+// DRY:DATA:GuiAutomationConfig
 /// GUI automation execution configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -577,6 +594,7 @@ fn default_gui_automation_visual_threshold() -> f32 {
     0.01
 }
 
+// DRY:DATA:MemoryConfig
 /// Memory and state file configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -626,6 +644,7 @@ fn default_prd_file() -> PathBuf {
     PathBuf::from("PRD.md")
 }
 
+// DRY:DATA:BudgetConfig
 /// Budget and quota configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -687,6 +706,7 @@ fn default_cooldown_hours() -> u32 {
     1
 }
 
+// DRY:DATA:BudgetEnforcementConfig
 /// Budget enforcement configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -731,6 +751,7 @@ fn default_hard_limit_percent() -> u8 {
     100
 }
 
+// DRY:DATA:LimitAction
 /// Action to take when budget limit is reached.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -751,6 +772,7 @@ impl Default for LimitAction {
     }
 }
 
+// DRY:DATA:LoggingConfig
 /// Logging configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -795,6 +817,7 @@ fn default_retention_days() -> u32 {
 // P2-T09: Escalation chain configuration
 // =============================================================================
 
+// DRY:DATA:EscalationTarget
 /// Default tier to escalate to when escalation is required.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -804,6 +827,7 @@ pub enum EscalationTarget {
     Subtask,
 }
 
+// DRY:DATA:EscalationChainKey
 /// Chain key used under `escalation.chains`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -816,6 +840,7 @@ pub enum EscalationChainKey {
     Error,
 }
 
+// DRY:DATA:EscalationChainAction
 /// Action to take for a given chain step.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
@@ -827,6 +852,7 @@ pub enum EscalationChainAction {
     Retry,
 }
 
+// DRY:DATA:EscalationChainStepConfig
 /// A single step in an escalation chain.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -846,6 +872,7 @@ pub struct EscalationChainStepConfig {
     pub notify: bool,
 }
 
+// DRY:DATA:EscalationChainsConfig
 /// Escalation chains configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -858,6 +885,7 @@ pub struct EscalationChainsConfig {
 // Interview configuration
 // =============================================================================
 
+// DRY:DATA:InterviewConfig
 /// Configuration for the interactive requirements interview.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -962,6 +990,7 @@ fn default_vision_provider() -> String {
     "codex".to_string()
 }
 
+// DRY:DATA:PlatformModelPair
 /// A platform + model pair for backup platform configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -1002,6 +1031,7 @@ mod tests {
     }
 }
 
+// DRY:DATA:ValidationError
 /// Validation error for configuration.
 #[derive(Debug, Clone, thiserror::Error)]
 pub enum ValidationError {

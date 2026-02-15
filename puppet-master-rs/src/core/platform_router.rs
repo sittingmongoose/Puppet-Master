@@ -14,6 +14,7 @@ use std::collections::HashMap;
 
 use super::complexity_classifier::{ClassificationResult, ModelLevel};
 
+// DRY:DATA:PlatformCapabilities
 /// Platform capabilities
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PlatformCapabilities {
@@ -42,6 +43,7 @@ impl Default for PlatformCapabilities {
     }
 }
 
+// DRY:DATA:RoutingDecision
 /// Platform routing decision
 #[derive(Debug, Clone)]
 pub struct RoutingDecision {
@@ -55,6 +57,7 @@ pub struct RoutingDecision {
     pub reason: String,
 }
 
+// DRY:DATA:PlatformRouterConfig
 /// Platform router configuration
 #[derive(Debug, Clone)]
 pub struct PlatformRouterConfig {
@@ -132,6 +135,7 @@ impl PlatformRouterConfig {
     }
 }
 
+// DRY:DATA:PlatformRouter
 /// Platform router
 pub struct PlatformRouter {
     config: PlatformRouterConfig,

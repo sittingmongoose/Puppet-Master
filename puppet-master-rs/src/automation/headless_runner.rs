@@ -17,6 +17,7 @@ use std::sync::atomic::AtomicBool;
 use std::time::Duration;
 
 impl HeadlessRunner {
+    // DRY:FN:run
     /// Execute a headless scenario run.
     pub fn run(
         spec: &GuiRunSpec,
@@ -28,10 +29,12 @@ impl HeadlessRunner {
     }
 }
 
+// DRY:DATA:HeadlessRunner
 /// Marker type for namespaced API.
 #[derive(Debug, Clone, Copy)]
 pub struct HeadlessRunner;
 
+// DRY:FN:run
 pub fn run(
     spec: &GuiRunSpec,
     _workspace_root: &Path,

@@ -82,10 +82,12 @@ const TOOL_SPECS: &[ToolSpec] = &[
     },
 ];
 
+// DRY:DATA:PlatformCompatibilityCheck
 /// Checks that installed CLIs are new enough / compatible with expected flags.
 pub struct PlatformCompatibilityCheck;
 
 impl PlatformCompatibilityCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }

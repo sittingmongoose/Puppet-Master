@@ -8,11 +8,13 @@ use std::process::{Command, Stdio};
 use std::thread;
 use std::time::Duration;
 
+// DRY:DATA:NativeRunner
 /// Marker type for native execution API.
 #[derive(Debug, Clone, Copy)]
 pub struct NativeRunner;
 
 impl NativeRunner {
+    // DRY:FN:run
     pub fn run(
         spec: &GuiRunSpec,
         workspace_root: &Path,
@@ -23,6 +25,7 @@ impl NativeRunner {
     }
 }
 
+// DRY:FN:run
 pub fn run(
     _spec: &GuiRunSpec,
     workspace_root: &Path,

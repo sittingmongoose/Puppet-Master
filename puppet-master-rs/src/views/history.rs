@@ -9,6 +9,7 @@ use chrono::{DateTime, Utc};
 use iced::widget::{Space, column, container, row, scrollable, text};
 use iced::{Border, Element, Length};
 
+// DRY:DATA:SessionInfo
 /// Session information
 #[derive(Debug, Clone)]
 pub struct SessionInfo {
@@ -25,6 +26,7 @@ pub struct SessionInfo {
     pub reasoning_effort: Option<String>,
 }
 
+// DRY:DATA:SessionStatus
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum SessionStatus {
     Running,
@@ -62,6 +64,7 @@ impl SessionStatus {
     }
 }
 
+// DRY:FN:history_view
 /// Execution history view with status filters and pagination
 pub fn view<'a>(
     sessions: &'a [SessionInfo],

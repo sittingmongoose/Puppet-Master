@@ -13,6 +13,7 @@ use crate::theme::{AppTheme, colors, fonts, tokens};
 use iced::widget::{Space, column, container, row, scrollable, text};
 use iced::{Background, Border, Color, Element, Length, Padding};
 
+// DRY:WIDGET:LineType
 /// Type of terminal output line
 #[derive(Debug, Clone, PartialEq)]
 pub enum LineType {
@@ -22,6 +23,7 @@ pub enum LineType {
     Info,
 }
 
+// DRY:WIDGET:TerminalLine
 /// A single terminal output line
 #[derive(Debug, Clone)]
 pub struct TerminalLine {
@@ -50,6 +52,7 @@ impl LineType {
     }
 }
 
+// DRY:WIDGET:terminal_output
 /// Render a terminal output panel
 pub fn terminal_output<'a, Message: 'a>(
     lines: &'a [TerminalLine],
@@ -128,6 +131,7 @@ pub fn terminal_output<'a, Message: 'a>(
     .into()
 }
 
+// DRY:WIDGET:terminal_compact
 /// Small terminal for inline display (e.g., in dashboard)
 pub fn terminal_compact<'a, Message: 'a>(
     lines: &'a [TerminalLine],
@@ -136,6 +140,7 @@ pub fn terminal_compact<'a, Message: 'a>(
     terminal_output(lines, theme, 200.0)
 }
 
+// DRY:WIDGET:terminal_large
 /// Large terminal for dedicated terminal view
 pub fn terminal_large<'a, Message: 'a>(
     lines: &'a [TerminalLine],

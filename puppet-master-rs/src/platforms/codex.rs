@@ -48,12 +48,14 @@ use async_trait::async_trait;
 use log::{debug, warn};
 use std::sync::Arc;
 
+// DRY:DATA:CodexRunner
 /// Codex CLI runner
 pub struct CodexRunner {
     base: Arc<BaseRunner>,
 }
 
 impl CodexRunner {
+    // DRY:FN:new — Create a new Codex runner
     /// Create a new Codex runner
     pub fn new() -> Self {
         let command = Platform::Codex.resolve_cli_command();

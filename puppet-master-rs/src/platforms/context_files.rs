@@ -1,5 +1,6 @@
 use std::path::{Path, PathBuf};
 
+// DRY:FN:format_prompt_attachments
 /// Formats `context_files` for platforms that accept file references inline in the prompt.
 ///
 /// For Gemini/Copilot we use `@path` tokens, which the CLI interprets as an attachment.
@@ -18,6 +19,7 @@ pub fn format_prompt_attachments(context_files: &[PathBuf], token_prefix: &str) 
     out
 }
 
+// DRY:FN:append_prompt_attachments
 pub fn append_prompt_attachments(prompt: &str, context_files: &[PathBuf], token_prefix: &str) -> String {
     let attachments = format_prompt_attachments(context_files, token_prefix);
     if attachments.is_empty() {
@@ -27,6 +29,7 @@ pub fn append_prompt_attachments(prompt: &str, context_files: &[PathBuf], token_
     }
 }
 
+// DRY:FN:context_file_parent_dirs
 /// Returns a conservative allow-list of directories derived from `context_files`.
 ///
 /// Many CLIs require directories for additional file access (e.g., `--add-dir`).
@@ -44,6 +47,7 @@ pub fn context_file_parent_dirs(context_files: &[PathBuf]) -> Vec<PathBuf> {
     dirs
 }
 
+// DRY:FN:has_image_extension
 pub fn has_image_extension(path: &Path) -> bool {
     let Some(ext) = path.extension().and_then(|e| e.to_str()) else {
         return false;

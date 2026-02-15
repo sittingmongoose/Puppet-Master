@@ -103,10 +103,12 @@ fn cli_check_from_specs(platform: Platform) -> CliCheck {
     )
 }
 
+// DRY:DATA:CursorCheck
 /// Cursor CLI check
 pub struct CursorCheck(CliCheck);
 
 impl CursorCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self(cli_check_from_specs(Platform::Cursor))
     }
@@ -122,10 +124,12 @@ impl DoctorCheck for CursorCheck {
     fn has_fix(&self) -> bool { true }
 }
 
+// DRY:DATA:CodexCheck
 /// Codex CLI check
 pub struct CodexCheck(CliCheck);
 
 impl CodexCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self(cli_check_from_specs(Platform::Codex))
     }
@@ -141,10 +145,12 @@ impl DoctorCheck for CodexCheck {
     fn has_fix(&self) -> bool { true }
 }
 
+// DRY:DATA:ClaudeCheck
 /// Claude Code CLI check
 pub struct ClaudeCheck(CliCheck);
 
 impl ClaudeCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self(cli_check_from_specs(Platform::Claude))
     }
@@ -160,10 +166,12 @@ impl DoctorCheck for ClaudeCheck {
     fn has_fix(&self) -> bool { true }
 }
 
+// DRY:DATA:GeminiCheck
 /// Gemini CLI check
 pub struct GeminiCheck(CliCheck);
 
 impl GeminiCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self(cli_check_from_specs(Platform::Gemini))
     }
@@ -179,10 +187,12 @@ impl DoctorCheck for GeminiCheck {
     fn has_fix(&self) -> bool { true }
 }
 
+// DRY:DATA:CopilotCheck
 /// Copilot CLI check
 pub struct CopilotCheck(CliCheck);
 
 impl CopilotCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self(cli_check_from_specs(Platform::Copilot))
     }

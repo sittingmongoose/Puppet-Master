@@ -9,6 +9,7 @@
 use crate::types::*;
 use serde::{Deserialize, Serialize};
 
+// DRY:DATA:EscalationEngine
 /// Escalation engine for handling failures
 #[derive(Debug)]
 pub struct EscalationEngine {
@@ -222,6 +223,7 @@ impl Default for EscalationEngine {
     }
 }
 
+// DRY:DATA:FailureType
 /// Type of failure
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum FailureType {

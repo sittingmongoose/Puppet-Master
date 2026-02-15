@@ -16,6 +16,7 @@ use super::reference_manager::ReferenceMaterial;
 /// Current state format version for migrations.
 const CURRENT_STATE_VERSION: u32 = 1;
 
+// DRY:DATA:InterviewPhase
 /// Interview phase lifecycle.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -38,6 +39,7 @@ impl std::fmt::Display for InterviewPhase {
     }
 }
 
+// DRY:DATA:InterviewQA
 /// A single question-answer pair in the interview history.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -50,6 +52,7 @@ pub struct InterviewQA {
     pub timestamp: String,
 }
 
+// DRY:DATA:Decision
 /// A key decision made during the interview.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -64,6 +67,7 @@ pub struct Decision {
     pub timestamp: String,
 }
 
+// DRY:DATA:InterviewState
 /// Full interview state that can be saved and restored.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -102,6 +106,7 @@ pub struct InterviewState {
     pub dynamic_phases: Vec<InterviewPhaseDefinition>,
 }
 
+// DRY:FN:create_state
 /// Creates a new interview state with sensible defaults.
 pub fn create_state(
     feature: &str,
@@ -134,6 +139,7 @@ fn state_path_at_output_dir(output_dir: &Path) -> PathBuf {
     output_dir.join("state.yaml")
 }
 
+// DRY:FN:load_state_at_output_dir
 /// Loads an existing interview state from YAML at the specified output directory.
 ///
 /// Returns `Ok(None)` if no state file exists. Returns an error if the
@@ -159,6 +165,7 @@ pub fn load_state_at_output_dir(output_dir: &Path) -> Result<Option<InterviewSta
     Ok(Some(state))
 }
 
+// DRY:FN:load_state
 /// Loads an existing interview state from YAML on disk using the default location.
 ///
 /// Returns `Ok(None)` if no state file exists. Returns an error if the
@@ -168,6 +175,7 @@ pub fn load_state(base_dir: &Path) -> Result<Option<InterviewState>> {
     load_state_at_output_dir(&output_dir)
 }
 
+// DRY:FN:save_state_at_output_dir
 /// Saves the interview state to YAML at the specified output directory.
 ///
 /// Creates parent directories as needed and updates the `updated_at` timestamp.
@@ -198,6 +206,7 @@ pub fn save_state_at_output_dir(state: &mut InterviewState, output_dir: &Path) -
     Ok(path)
 }
 
+// DRY:FN:save_state
 /// Saves the interview state to YAML on disk using the default location.
 ///
 /// Creates parent directories as needed and updates the `updated_at` timestamp.
@@ -206,6 +215,7 @@ pub fn save_state(state: &mut InterviewState, base_dir: &Path) -> Result<PathBuf
     save_state_at_output_dir(state, &output_dir)
 }
 
+// DRY:FN:clear_state_at_output_dir
 /// Removes the interview state file at the specified output directory.
 pub fn clear_state_at_output_dir(output_dir: &Path) -> Result<()> {
     let path = state_path_at_output_dir(output_dir);
@@ -217,12 +227,14 @@ pub fn clear_state_at_output_dir(output_dir: &Path) -> Result<()> {
     Ok(())
 }
 
+// DRY:FN:clear_state
 /// Removes the interview state file (cleanup after successful completion) using the default location.
 pub fn clear_state(base_dir: &Path) -> Result<()> {
     let output_dir = base_dir.join(".puppet-master").join("interview");
     clear_state_at_output_dir(&output_dir)
 }
 
+// DRY:FN:add_to_history
 /// Appends a question-answer pair to the state history.
 pub fn add_to_history(state: &mut InterviewState, question: &str, answer: &str) {
     state.history.push(InterviewQA {
@@ -232,6 +244,7 @@ pub fn add_to_history(state: &mut InterviewState, question: &str, answer: &str) 
     });
 }
 
+// DRY:FN:update_phase
 /// Updates the interview phase.
 pub fn update_phase(state: &mut InterviewState, phase: InterviewPhase) {
     state.phase = phase;

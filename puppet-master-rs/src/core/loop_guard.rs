@@ -9,6 +9,7 @@
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, VecDeque};
 
+// DRY:DATA:LoopGuardConfig
 /// Configuration for loop guard
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct LoopGuardConfig {
@@ -33,6 +34,7 @@ impl Default for LoopGuardConfig {
     }
 }
 
+// DRY:DATA:LoopGuardMessage
 /// Message structure for loop guard evaluation
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct LoopGuardMessage {
@@ -63,6 +65,7 @@ impl LoopGuardMessage {
     }
 }
 
+// DRY:DATA:LoopDetection
 /// Loop detection result
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum LoopDetection {
@@ -107,6 +110,7 @@ impl LoopDetection {
     }
 }
 
+// DRY:DATA:LoopGuard
 /// Loop guard for preventing infinite cycles
 pub struct LoopGuard {
     /// Configuration

@@ -5,6 +5,7 @@ use std::collections::HashMap;
 
 use crate::types::prd::PRD;
 
+// DRY:DATA:TraceabilityLink
 /// A link between a requirement and a PRD item.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -23,6 +24,7 @@ pub struct TraceabilityLink {
     pub test_criteria: Vec<String>,
 }
 
+// DRY:DATA:TraceabilityItemType
 /// Type of PRD item in traceability.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -35,6 +37,7 @@ pub enum TraceabilityItemType {
     Subtask,
 }
 
+// DRY:DATA:CoverageStatus
 /// Coverage status for a requirement.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -49,6 +52,7 @@ pub enum CoverageStatus {
     Verified,
 }
 
+// DRY:DATA:TraceabilityMatrix
 /// Traceability matrix for requirements coverage.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -64,6 +68,7 @@ pub struct TraceabilityMatrix {
 }
 
 impl TraceabilityMatrix {
+    // DRY:FN:new
     /// Creates a new empty traceability matrix.
     pub fn new() -> Self {
         Self {
@@ -73,6 +78,7 @@ impl TraceabilityMatrix {
         }
     }
 
+    // DRY:FN:add_link
     /// Adds a link between a requirement and a PRD item.
     pub fn add_link(&mut self, link: TraceabilityLink) {
         // Update forward mapping
@@ -90,6 +96,7 @@ impl TraceabilityMatrix {
         self.links.push(link);
     }
 
+    // DRY:FN:get_coverage
     /// Returns all PRD items covering a requirement.
     pub fn get_coverage(&self, requirement_id: &str) -> Vec<&TraceabilityLink> {
         self.links
@@ -98,6 +105,7 @@ impl TraceabilityMatrix {
             .collect()
     }
 
+    // DRY:FN:get_requirements_for_item
     /// Returns all requirements covered by a PRD item.
     pub fn get_requirements_for_item(&self, prd_item_id: &str) -> Vec<&TraceabilityLink> {
         self.links
@@ -106,6 +114,7 @@ impl TraceabilityMatrix {
             .collect()
     }
 
+    // DRY:FN:find_untested
     /// Finds all untested requirements.
     pub fn find_untested(&self) -> Vec<String> {
         let mut untested = Vec::new();
@@ -130,6 +139,7 @@ impl TraceabilityMatrix {
         untested
     }
 
+    // DRY:FN:find_uncovered
     /// Returns requirements with no PRD coverage.
     pub fn find_uncovered(&self, all_requirement_ids: &[String]) -> Vec<String> {
         all_requirement_ids
@@ -139,6 +149,7 @@ impl TraceabilityMatrix {
             .collect()
     }
 
+    // DRY:FN:coverage_status
     /// Calculates coverage status for a requirement.
     pub fn coverage_status(&self, requirement_id: &str) -> CoverageStatus {
         let links = self.get_coverage(requirement_id);
@@ -159,6 +170,7 @@ impl TraceabilityMatrix {
         }
     }
 
+    // DRY:FN:to_markdown
     /// Exports the matrix as a markdown table.
     pub fn to_markdown(&self) -> String {
         let mut md = String::from("# Requirements Traceability Matrix\n\n");
@@ -183,11 +195,13 @@ impl TraceabilityMatrix {
         md
     }
 
+    // DRY:FN:to_json
     /// Exports the matrix as JSON.
     pub fn to_json(&self) -> Result<String, String> {
         serde_json::to_string_pretty(self).map_err(|e| format!("Failed to serialize: {}", e))
     }
 
+    // DRY:FN:from_prd
     /// Builds a traceability matrix from a PRD.
     /// Note: This implementation assumes requirement IDs are embedded in descriptions or titles.
     /// For production use, you'd want a proper source_refs field in the PRD schema.
@@ -260,6 +274,7 @@ impl TraceabilityMatrix {
         matrix
     }
 
+    // DRY:FN:stats
     /// Returns coverage statistics.
     pub fn stats(&self, all_requirement_ids: &[String]) -> TraceabilityStats {
         let covered_count = all_requirement_ids
@@ -301,6 +316,7 @@ impl Default for TraceabilityMatrix {
     }
 }
 
+// DRY:DATA:TraceabilityStats
 /// Statistics about traceability coverage.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -318,6 +334,7 @@ pub struct TraceabilityStats {
 }
 
 impl TraceabilityStats {
+    // DRY:FN:coverage_percent
     /// Returns coverage percentage.
     pub fn coverage_percent(&self) -> f32 {
         if self.total_requirements == 0 {
@@ -326,6 +343,7 @@ impl TraceabilityStats {
         (self.covered_requirements as f32 / self.total_requirements as f32) * 100.0
     }
 
+    // DRY:FN:test_coverage_percent
     /// Returns test coverage percentage.
     pub fn test_coverage_percent(&self) -> f32 {
         if self.total_requirements == 0 {

@@ -22,6 +22,7 @@ static REQUIREMENT_SPACED_RE: Lazy<Regex> = Lazy::new(|| {
         .expect("valid requirement spaced regex")
 });
 
+// DRY:FN:extract_requirement_ids
 /// Extract requirement IDs from arbitrary text.
 ///
 /// Dedupe is stable (first occurrence wins) and IDs are normalized to uppercase.
@@ -49,6 +50,7 @@ pub fn extract_requirement_ids(text: &str) -> Vec<String> {
     ids
 }
 
+// DRY:FN:map_requirements_to_prd
 /// Build a mapping of requirement IDs to PRD item IDs where they are referenced.
 pub fn map_requirements_to_prd(
     prd: &PRD,
@@ -124,6 +126,7 @@ fn join_texts<'a, const N: usize>(parts: [Option<&'a str>; N]) -> String {
     out
 }
 
+// DRY:DATA:RequirementsInventory
 /// Lightweight inventory: requirement IDs + coverage mapping.
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -133,6 +136,7 @@ pub struct RequirementsInventory {
 }
 
 impl RequirementsInventory {
+    // DRY:FN:from_requirements_text
     pub fn from_requirements_text(requirements_text: &str) -> Self {
         Self {
             requirement_ids: extract_requirement_ids(requirements_text),
@@ -140,6 +144,7 @@ impl RequirementsInventory {
         }
     }
 
+    // DRY:FN:from_parsed_requirements
     pub fn from_parsed_requirements(parsed: &ParsedRequirements) -> Self {
         let mut combined = String::new();
         if let Some(desc) = &parsed.description {
@@ -156,11 +161,13 @@ impl RequirementsInventory {
         Self::from_requirements_text(&combined)
     }
 
+    // DRY:FN:with_prd_mapping
     pub fn with_prd_mapping(mut self, prd: &PRD) -> Self {
         self.requirement_to_prd_items = map_requirements_to_prd(prd, &self.requirement_ids);
         self
     }
 
+    // DRY:FN:build
     /// Build inventory from PRD and requirement IDs.
     pub fn build(prd: &PRD, requirement_ids: &[String]) -> Self {
         Self {
@@ -169,6 +176,7 @@ impl RequirementsInventory {
         }
     }
 
+    // DRY:FN:uncovered_requirement_ids
     pub fn uncovered_requirement_ids(&self) -> Vec<String> {
         self.requirement_ids
             .iter()

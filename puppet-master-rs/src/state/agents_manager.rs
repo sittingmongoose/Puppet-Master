@@ -11,6 +11,7 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 
+// DRY:DATA:AgentsManager
 /// Thread-safe AGENTS.md manager
 #[derive(Clone)]
 pub struct AgentsManager {
@@ -22,6 +23,7 @@ struct AgentsManagerInner {
 }
 
 impl AgentsManager {
+    // DRY:FN:new
     /// Create a new AGENTS.md manager
     pub fn new(root_path: impl AsRef<Path>) -> Self {
         Self {
@@ -31,6 +33,7 @@ impl AgentsManager {
         }
     }
 
+    // DRY:FN:get_agents_path
     /// Get the AGENTS.md path for a specific tier
     pub fn get_agents_path(&self, tier_id: &str) -> PathBuf {
         let inner = self.inner.lock().unwrap();
@@ -48,6 +51,7 @@ impl AgentsManager {
         path.join("AGENTS.md")
     }
 
+    // DRY:FN:load
     /// Load AGENTS.md for a tier
     pub fn load(&self, tier_id: &str) -> Result<AgentsDoc> {
         let path = self.get_agents_path(tier_id);
@@ -103,6 +107,7 @@ impl AgentsManager {
         Ok(doc)
     }
 
+    // DRY:FN:save
     /// Save AGENTS.md for a tier
     pub fn save(&self, tier_id: &str, doc: &AgentsDoc) -> Result<()> {
         let path = self.get_agents_path(tier_id);
@@ -176,6 +181,7 @@ impl AgentsManager {
         content
     }
 
+    // DRY:FN:append_pattern
     /// Append a pattern to the patterns section
     pub fn append_pattern(&self, tier_id: &str, pattern: String) -> Result<()> {
         let mut doc = self.load(tier_id)?;
@@ -184,6 +190,7 @@ impl AgentsManager {
         self.save(tier_id, &doc)
     }
 
+    // DRY:FN:append_failure
     /// Append a failure mode
     pub fn append_failure(&self, tier_id: &str, failure: String) -> Result<()> {
         let mut doc = self.load(tier_id)?;
@@ -192,6 +199,7 @@ impl AgentsManager {
         self.save(tier_id, &doc)
     }
 
+    // DRY:FN:append_do
     /// Append to do list
     pub fn append_do(&self, tier_id: &str, item: String) -> Result<()> {
         let mut doc = self.load(tier_id)?;
@@ -200,6 +208,7 @@ impl AgentsManager {
         self.save(tier_id, &doc)
     }
 
+    // DRY:FN:append_dont
     /// Append to don't list
     pub fn append_dont(&self, tier_id: &str, item: String) -> Result<()> {
         let mut doc = self.load(tier_id)?;
@@ -208,6 +217,7 @@ impl AgentsManager {
         self.save(tier_id, &doc)
     }
 
+    // DRY:FN:get_hierarchy
     /// Get all AGENTS.md in the hierarchy for a tier
     pub fn get_hierarchy(&self, tier_id: &str) -> Result<Vec<(String, AgentsDoc)>> {
         let parts: Vec<&str> = tier_id.split('.').collect();
@@ -229,6 +239,7 @@ impl AgentsManager {
         Ok(hierarchy)
     }
 
+    // DRY:FN:validate_with_enforcer
     /// Validate AGENTS.md with gate enforcer
     pub fn validate_with_enforcer(
         &self,
@@ -243,6 +254,7 @@ impl AgentsManager {
         enforcer.enforce(&content, &doc)
     }
 
+    // DRY:FN:merge_hierarchy
     /// Merge all learnings from hierarchy
     pub fn merge_hierarchy(&self, tier_id: &str) -> Result<AgentsDoc> {
         let hierarchy = self.get_hierarchy(tier_id)?;

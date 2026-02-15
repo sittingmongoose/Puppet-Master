@@ -8,9 +8,11 @@ use anyhow::Result;
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
 
+// DRY:DATA:TestPlanGenerator
 /// Generates test plans from requirements and PRD.
 pub struct TestPlanGenerator;
 
+// DRY:DATA:TestPlan
 /// A complete test plan.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -27,6 +29,7 @@ pub struct TestPlan {
     pub estimated_minutes: f64,
 }
 
+// DRY:DATA:TestSuite
 /// A test suite grouping related tests.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -45,6 +48,7 @@ pub struct TestSuite {
     pub tags: Vec<String>,
 }
 
+// DRY:DATA:TestCase
 /// An individual test case.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -73,6 +77,7 @@ pub struct TestCase {
     pub test_data: Option<String>,
 }
 
+// DRY:DATA:VerificationType
 /// Type of verification to perform.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -116,6 +121,7 @@ impl std::fmt::Display for VerificationType {
     }
 }
 
+// DRY:DATA:CoverageTargets
 /// Coverage targets for testing.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -162,6 +168,7 @@ impl Default for CoverageTargets {
 }
 
 impl TestPlanGenerator {
+    // DRY:FN:generate_from_requirements
     /// Generate a test plan from requirements.
     pub fn generate_from_requirements(requirements: &ParsedRequirements) -> Result<TestPlan> {
         info!("Generating test plan from requirements");
@@ -189,6 +196,7 @@ impl TestPlanGenerator {
         })
     }
 
+    // DRY:FN:generate_from_prd
     /// Generate a test plan from a PRD.
     pub fn generate_from_prd(prd: &PRD) -> Result<TestPlan> {
         info!("Generating test plan from PRD: {}", prd.metadata.name);
@@ -421,6 +429,7 @@ impl TestPlanGenerator {
         }
     }
 
+    // DRY:FN:merge_plans
     /// Merge multiple test plans.
     pub fn merge_plans(plans: Vec<TestPlan>) -> Result<TestPlan> {
         let mut merged_suites = Vec::new();

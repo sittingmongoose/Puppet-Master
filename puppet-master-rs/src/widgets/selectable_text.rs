@@ -10,6 +10,7 @@ use iced::Border;
 use iced::Length;
 use iced::widget::{TextInput, column, mouse_area, text_input};
 
+// DRY:WIDGET:selectable_text_input
 /// Build a single-line selectable/read-only text field.
 ///
 /// `on_interaction` should normally be a no-op message (e.g. `Message::None`).
@@ -21,6 +22,7 @@ pub fn selectable_text_input<'a, Message: Clone + 'a>(
     selectable_text_input_with_on_change(theme, value, move |_| on_interaction.clone())
 }
 
+// DRY:WIDGET:selectable_text_input_with_on_change
 /// Build a single-line selectable text field with editable callback support.
 pub fn selectable_text_input_with_on_change<'a, Message, F>(
     theme: &AppTheme,
@@ -67,6 +69,7 @@ where
         )
 }
 
+// DRY:WIDGET:selectable_text_field
 /// Build a selectable text field with built-in right-click context menu support.
 pub fn selectable_text_field<'a, F>(
     theme: &'a AppTheme,

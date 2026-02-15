@@ -9,6 +9,7 @@
 use anyhow::{Result, anyhow};
 use std::collections::{HashMap, HashSet};
 
+// DRY:DATA:DependencyNode
 /// Dependency node representing a task in the dependency graph
 #[derive(Debug, Clone)]
 pub struct DependencyNode {
@@ -22,6 +23,7 @@ pub struct DependencyNode {
     pub level: usize,
 }
 
+// DRY:DATA:DependencyGraph
 /// Complete dependency graph with execution levels
 #[derive(Debug, Clone)]
 pub struct DependencyGraph {
@@ -37,6 +39,7 @@ pub struct DependencyGraph {
     pub cycle_path: Option<Vec<String>>,
 }
 
+// DRY:DATA:DependencyAnalyzer
 /// Dependency analyzer for building execution graphs
 pub struct DependencyAnalyzer {
     // Stateless, could be functions but kept as struct for consistency
@@ -337,6 +340,7 @@ impl Default for DependencyAnalyzer {
     }
 }
 
+// DRY:DATA:ValidationResult
 /// Validation result
 #[derive(Debug, Clone)]
 pub struct ValidationResult {

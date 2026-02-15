@@ -54,12 +54,14 @@ use log::{debug, warn};
 use std::sync::Arc;
 use tokio::process::Command;
 
+// DRY:DATA:GeminiRunner — Gemini CLI runner
 /// Gemini CLI runner
 pub struct GeminiRunner {
     base: Arc<BaseRunner>,
 }
 
 impl GeminiRunner {
+    // DRY:FN:new — Create a new Gemini runner
     /// Create a new Gemini runner
     pub fn new() -> Self {
         let command = Platform::Gemini.resolve_cli_command();

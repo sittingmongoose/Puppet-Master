@@ -15,6 +15,7 @@ use super::reference_manager::{ReferenceManager, ReferenceMaterial};
 use super::research_engine::{ResearchConfig, ResearchEngine};
 use super::state::{self, Decision, InterviewPhase, InterviewState};
 
+// DRY:DATA:InterviewOrchestratorConfig
 /// Configuration for the interview orchestrator.
 pub struct InterviewOrchestratorConfig {
     /// The feature being planned.
@@ -47,6 +48,7 @@ pub struct InterviewOrchestratorConfig {
     pub research_config: Option<ResearchConfig>,
 }
 
+// DRY:DATA:TurnResult
 /// Result from a single interaction turn.
 #[derive(Debug, Clone)]
 pub struct TurnResult {
@@ -60,6 +62,7 @@ pub struct TurnResult {
     pub state: InterviewState,
 }
 
+// DRY:DATA:InterviewCompletionResult
 /// Result from completing the entire interview.
 #[derive(Debug, Clone)]
 pub struct InterviewCompletionResult {
@@ -81,6 +84,7 @@ pub struct InterviewCompletionResult {
     pub error: Option<String>,
 }
 
+// DRY:DATA:OrchestratorEvent
 /// Events emitted by the orchestrator for UI updates.
 #[derive(Debug, Clone)]
 pub enum OrchestratorEvent {
@@ -102,6 +106,7 @@ pub enum OrchestratorEvent {
     },
 }
 
+// DRY:DATA:InterviewOrchestrator
 /// Manages the full lifecycle of an interactive interview session.
 pub struct InterviewOrchestrator {
     pub config: InterviewOrchestratorConfig,
@@ -130,6 +135,7 @@ impl std::fmt::Debug for InterviewOrchestrator {
 }
 
 impl InterviewOrchestrator {
+    // DRY:FN:new
     /// Creates a new orchestrator with the given configuration.
     pub fn new(config: InterviewOrchestratorConfig) -> Self {
         let state = state::create_state(
@@ -164,6 +170,7 @@ impl InterviewOrchestrator {
         }
     }
 
+    // DRY:FN:on_event
     /// Registers an event handler. Returns a handler index that can be used
     /// to identify it (unsubscription is not currently needed).
     pub fn on_event<F>(&mut self, handler: F) -> usize
@@ -174,35 +181,42 @@ impl InterviewOrchestrator {
         self.event_handlers.len() - 1
     }
 
+    // DRY:FN:get_state
     /// Returns a reference to the current interview state.
     pub fn get_state(&self) -> &InterviewState {
         &self.state
     }
 
+    // DRY:FN:set_context_files
     /// Sets context file paths and persists them into state.
     pub fn set_context_files(&mut self, files: Vec<String>) {
         self.config.context_files = files.clone();
         self.state.context_files = files;
     }
 
+    // DRY:FN:context_files
     pub fn context_files(&self) -> &[String] {
         &self.state.context_files
     }
 
+    // DRY:FN:set_reference_materials
     /// Sets reference materials to persist in state (UI uses this to restore refs on resume).
     pub fn set_reference_materials(&mut self, materials: Vec<ReferenceMaterial>) {
         self.state.reference_materials = materials;
     }
 
+    // DRY:FN:reference_materials
     pub fn reference_materials(&self) -> &[ReferenceMaterial] {
         &self.state.reference_materials
     }
 
+    // DRY:FN:get_phase_manager
     /// Returns a reference to the phase manager for UI display.
     pub fn get_phase_manager(&self) -> &PhaseManager {
         &self.phase_manager
     }
 
+    // DRY:FN:set_state
     /// Replaces the current state (e.g. when resuming from a saved state).
     pub fn set_state(&mut self, state: InterviewState) {
         // Restore dynamic phases if any were saved
@@ -213,6 +227,7 @@ impl InterviewOrchestrator {
         self.state = state;
     }
 
+    // DRY:FN:current_system_prompt
     /// Returns the system prompt for the current phase.
     pub fn current_system_prompt(&self) -> String {
         let previous_docs: Vec<String> = self
@@ -240,6 +255,7 @@ impl InterviewOrchestrator {
         )
     }
 
+    // DRY:FN:initialize
     /// Initialises the interview and generates the initial system prompt.
     ///
     /// The caller is responsible for sending this prompt to the AI runner
@@ -265,6 +281,7 @@ impl InterviewOrchestrator {
         Ok(self.current_system_prompt())
     }
 
+    // DRY:FN:resume_from_state
     /// Resumes an interview from a previously saved state.
     ///
     /// This method loads the state and marks the orchestrator as initialized.
@@ -311,6 +328,7 @@ impl InterviewOrchestrator {
         Ok(self.current_system_prompt())
     }
 
+    // DRY:FN:process_ai_response
     /// Processes an AI response and returns a `TurnResult`.
     ///
     /// Call this after receiving raw text back from the AI platform.
@@ -370,6 +388,7 @@ impl InterviewOrchestrator {
         })
     }
 
+    // DRY:FN:send_user_response
     /// Records the user's answer to the last question.
     pub fn send_user_response(&mut self, answer: &str) -> Result<()> {
         let last_question = self
@@ -382,6 +401,7 @@ impl InterviewOrchestrator {
         Ok(())
     }
 
+    // DRY:FN:advance_phase
     /// Advances to the next domain phase.
     ///
     /// Writes the document for the completed phase, resets AI context,
@@ -494,6 +514,7 @@ impl InterviewOrchestrator {
         Ok(Some(self.current_system_prompt()))
     }
 
+    // DRY:FN:complete
     /// Completes the interview by writing the master document and JSON output.
     /// Optionally generates AGENTS.md and test strategy based on configuration.
     pub fn complete(&mut self) -> Result<InterviewCompletionResult> {
@@ -606,6 +627,7 @@ impl InterviewOrchestrator {
         })
     }
 
+    // DRY:FN:save_state
     /// Saves the current state to disk.
     pub fn save_state(&mut self) -> Result<PathBuf> {
         // Sync dynamic phases from PhaseManager to state before saving
@@ -615,6 +637,7 @@ impl InterviewOrchestrator {
         Ok(path)
     }
 
+    // DRY:FN:set_reference_context
     /// Sets the preloaded reference context content.
     ///
     /// This context will be included in all system prompts. Should be called
@@ -623,46 +646,55 @@ impl InterviewOrchestrator {
         self.config.context_content = Some(context);
     }
 
+    // DRY:FN:get_reference_context
     /// Retrieves the current reference context content, if any.
     pub fn get_reference_context(&self) -> Option<&String> {
         self.config.context_content.as_ref()
     }
 
+    // DRY:FN:cleanup
     /// Removes persisted state (cleanup after completion).
     pub fn cleanup(&self) -> Result<()> {
         state::clear_state_at_output_dir(&self.config.output_dir)
     }
 
+    // DRY:FN:failover_manager
     /// Returns a reference to the failover manager for quota checks.
     pub fn failover_manager(&self) -> &FailoverManager {
         &self.failover_manager
     }
 
+    // DRY:FN:failover_manager_mut
     /// Returns a mutable reference to the failover manager.
     pub fn failover_manager_mut(&mut self) -> &mut FailoverManager {
         &mut self.failover_manager
     }
 
+    // DRY:FN:phase_manager
     /// Returns a reference to the phase manager.
     pub fn phase_manager(&self) -> &PhaseManager {
         &self.phase_manager
     }
 
+    // DRY:FN:phase_manager_mut
     /// Returns a mutable reference to the phase manager.
     pub fn phase_manager_mut(&mut self) -> &mut PhaseManager {
         &mut self.phase_manager
     }
 
+    // DRY:FN:research_engine
     /// Returns a reference to the research engine, if configured.
     pub fn research_engine(&self) -> Option<&ResearchEngine> {
         self.research_engine.as_ref()
     }
 
+    // DRY:FN:research_engine_mut
     /// Returns a mutable reference to the research engine, if configured.
     pub fn research_engine_mut(&mut self) -> Option<&mut ResearchEngine> {
         self.research_engine.as_mut()
     }
 
+    // DRY:FN:get_research_context
     /// Gets the latest research context for the current phase, if available.
     pub fn get_research_context(&self) -> Option<String> {
         let phase_index = self.phase_manager.current_index();

@@ -10,6 +10,7 @@ use std::path::{Path, PathBuf};
 use crate::platforms::get_runner;
 use crate::types::{ExecutionRequest, Platform};
 
+// DRY:DATA:ResearchType
 /// Types of research that can be performed.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ResearchType {
@@ -28,6 +29,7 @@ impl std::fmt::Display for ResearchType {
     }
 }
 
+// DRY:DATA:ResearchConfig
 /// Configuration for research operations.
 #[derive(Debug, Clone)]
 pub struct ResearchConfig {
@@ -55,6 +57,7 @@ impl Default for ResearchConfig {
     }
 }
 
+// DRY:DATA:ResearchResult
 /// Result of a research operation.
 #[derive(Debug, Clone)]
 pub struct ResearchResult {
@@ -68,6 +71,7 @@ pub struct ResearchResult {
     pub success: bool,
 }
 
+// DRY:DATA:ResearchEngine
 /// Engine for performing AI-driven research.
 #[derive(Clone)]
 pub struct ResearchEngine {
@@ -76,6 +80,7 @@ pub struct ResearchEngine {
 }
 
 impl ResearchEngine {
+    // DRY:FN:new
     /// Creates a new research engine with the given configuration.
     pub fn new(config: ResearchConfig, base_dir: &Path) -> Self {
         let research_dir = base_dir.join(".puppet-master").join("research");
@@ -109,6 +114,7 @@ impl ResearchEngine {
         )
     }
 
+    // DRY:FN:save_research
     /// Saves research results to disk.
     pub fn save_research(
         &self,
@@ -141,6 +147,7 @@ impl ResearchEngine {
         Ok(path)
     }
 
+    // DRY:FN:load_latest_research
     /// Loads the most recent research notes for a given phase.
     pub fn load_latest_research(&self, phase_index: usize, phase_id: &str) -> Result<String> {
         let pre_filename = self.research_filename(phase_index, phase_id, ResearchType::PreQuestion);
@@ -186,6 +193,7 @@ impl ResearchEngine {
         Ok(combined)
     }
 
+    // DRY:FN:research_pre_question
     /// Performs pre-question research on a topic.
     ///
     /// Uses AI to research the topic, generate insights, and prepare
@@ -232,6 +240,7 @@ impl ResearchEngine {
         }
     }
 
+    // DRY:FN:research_post_answer
     /// Performs post-answer research to validate and deepen understanding.
     ///
     /// Uses AI to verify user answers, check for inconsistencies, and
@@ -362,11 +371,13 @@ Format your response as markdown with clear sections."#,
         }
     }
 
+    // DRY:FN:set_config
     /// Updates the research configuration.
     pub fn set_config(&mut self, config: ResearchConfig) {
         self.config = config;
     }
 
+    // DRY:FN:config
     /// Returns a reference to the current configuration.
     pub fn config(&self) -> &ResearchConfig {
         &self.config

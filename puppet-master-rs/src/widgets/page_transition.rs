@@ -7,6 +7,7 @@ use iced::{Color, Element};
 /// Animation duration in seconds
 const TRANSITION_DURATION: f32 = 0.25;
 
+// DRY:WIDGET:TransitionState
 /// Transition state for page animations
 #[derive(Debug, Clone)]
 pub struct TransitionState {
@@ -79,6 +80,7 @@ impl TransitionState {
     }
 }
 
+// DRY:WIDGET:fade_in
 /// Wrap content with fade-in transition effect
 ///
 /// Note: Since Iced doesn't natively support opacity on containers,
@@ -101,6 +103,7 @@ pub fn fade_in<'a, Message: 'a>(
     content
 }
 
+// DRY:WIDGET:fade_color
 /// Apply fade color to text based on transition state
 ///
 /// # Arguments

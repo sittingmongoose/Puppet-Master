@@ -2,6 +2,7 @@
 
 use serde::{Deserialize, Serialize};
 
+// DRY:DATA:InterviewPhaseDefinition
 /// Definition of a single interview phase.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -20,6 +21,7 @@ pub struct InterviewPhaseDefinition {
     pub max_questions: usize,
 }
 
+// DRY:DATA:PhaseManager
 /// Manages the ordered list of interview phases and the current position.
 pub struct PhaseManager {
     phases: Vec<InterviewPhaseDefinition>,
@@ -27,6 +29,7 @@ pub struct PhaseManager {
 }
 
 impl PhaseManager {
+    // DRY:FN:new
     /// Creates a new `PhaseManager` pre-populated with the 8 standard domain phases.
     pub fn new() -> Self {
         Self {
@@ -35,21 +38,25 @@ impl PhaseManager {
         }
     }
 
+    // DRY:FN:phases
     /// Returns a reference to all phase definitions.
     pub fn phases(&self) -> &[InterviewPhaseDefinition] {
         &self.phases
     }
 
+    // DRY:FN:current_index
     /// Returns the current phase index (0-based).
     pub fn current_index(&self) -> usize {
         self.current_index
     }
 
+    // DRY:FN:current_phase
     /// Returns the current phase definition, or `None` if all phases are done.
     pub fn current_phase(&self) -> Option<&InterviewPhaseDefinition> {
         self.phases.get(self.current_index)
     }
 
+    // DRY:FN:advance
     /// Advances to the next phase. Returns `true` if there is a next phase,
     /// `false` if all phases are complete.
     pub fn advance(&mut self) -> bool {
@@ -61,16 +68,19 @@ impl PhaseManager {
         }
     }
 
+    // DRY:FN:set_index
     /// Sets the current phase index directly (e.g. when resuming from saved state).
     pub fn set_index(&mut self, index: usize) {
         self.current_index = index.min(self.phases.len().saturating_sub(1));
     }
 
+    // DRY:FN:is_complete
     /// Returns `true` if all phases have been completed.
     pub fn is_complete(&self) -> bool {
         self.current_index >= self.phases.len()
     }
 
+    // DRY:FN:mark_current_complete
     /// Marks the current phase as complete and advances the index past the last phase
     /// if this was the final one.
     pub fn mark_current_complete(&mut self) {
@@ -79,11 +89,13 @@ impl PhaseManager {
         }
     }
 
+    // DRY:FN:total_phases
     /// Returns the total number of phases.
     pub fn total_phases(&self) -> usize {
         self.phases.len()
     }
 
+    // DRY:FN:add_dynamic_phase
     /// Adds a dynamic feature-specific phase to the end of the list.
     pub fn add_dynamic_phase(&mut self, id: &str, name: &str, description: &str) {
         self.phases.push(InterviewPhaseDefinition {
@@ -96,6 +108,7 @@ impl PhaseManager {
         });
     }
 
+    // DRY:FN:dynamic_phases
     /// Returns the dynamic phases (Phase 9+) as a Vec.
     pub fn dynamic_phases(&self) -> Vec<InterviewPhaseDefinition> {
         if self.phases.len() > 8 {
@@ -105,6 +118,7 @@ impl PhaseManager {
         }
     }
 
+    // DRY:FN:restore_dynamic_phases
     /// Restores dynamic phases from saved state.
     pub fn restore_dynamic_phases(&mut self, dynamic_phases: Vec<InterviewPhaseDefinition>) {
         // Remove any existing dynamic phases first

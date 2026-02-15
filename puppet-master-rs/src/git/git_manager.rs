@@ -8,6 +8,7 @@ use std::path::PathBuf;
 use tokio::fs::OpenOptions;
 use tokio::io::AsyncWriteExt;
 
+// DRY:DATA:GitManager
 /// Git manager handles all git operations via CLI
 #[derive(Clone)]
 pub struct GitManager {
@@ -16,6 +17,7 @@ pub struct GitManager {
 }
 
 impl GitManager {
+    // DRY:FN:new
     /// Create a new git manager for a repository
     pub fn new(repo_path: PathBuf) -> Self {
         let log_path = repo_path.join(".puppet-master").join("git-actions.log");
@@ -25,12 +27,14 @@ impl GitManager {
         }
     }
 
+    // DRY:FN:init
     /// Initialize git repository if not already initialized
     pub async fn init(&self) -> Result<GitResult> {
         info!("Initializing git repository at {:?}", self.repo_path);
         self.run_git_cmd(&["init"]).await
     }
 
+    // DRY:FN:status
     /// Get current status
     pub async fn status(&self) -> Result<GitStatus> {
         let result = self.run_git_cmd(&["status", "--porcelain"]).await?;
@@ -75,12 +79,14 @@ impl GitManager {
         })
     }
 
+    // DRY:FN:current_branch
     /// Get current branch name
     pub async fn current_branch(&self) -> Result<String> {
         let result = self.run_git_cmd(&["branch", "--show-current"]).await?;
         Ok(result.message.trim().to_string())
     }
 
+    // DRY:FN:branch_list
     /// List all branches
     pub async fn branch_list(&self) -> Result<Vec<String>> {
         let result = self.run_git_cmd(&["branch", "--list"]).await?;
@@ -92,6 +98,7 @@ impl GitManager {
         Ok(branches)
     }
 
+    // DRY:FN:create_branch
     /// Create a new branch
     pub async fn create_branch(&self, name: &str) -> Result<GitResult> {
         info!("Creating branch: {}", name);
@@ -100,6 +107,7 @@ impl GitManager {
         Ok(result)
     }
 
+    // DRY:FN:checkout
     /// Checkout existing branch
     pub async fn checkout(&self, branch: &str) -> Result<GitResult> {
         info!("Checking out branch: {}", branch);
@@ -108,6 +116,7 @@ impl GitManager {
         Ok(result)
     }
 
+    // DRY:FN:add
     /// Add files to staging
     pub async fn add(&self, paths: &[String]) -> Result<GitResult> {
         let mut args = vec!["add"];
@@ -120,6 +129,7 @@ impl GitManager {
         Ok(result)
     }
 
+    // DRY:FN:add_all
     /// Stage all changes (equivalent to `git add -A`).
     pub async fn add_all(&self) -> Result<GitResult> {
         debug!("Adding all changes");
@@ -128,6 +138,7 @@ impl GitManager {
         Ok(result)
     }
 
+    // DRY:FN:commit
     /// Commit staged changes
     pub async fn commit(&self, message: &str) -> Result<GitResult> {
         info!("Committing: {}", message);
@@ -136,6 +147,7 @@ impl GitManager {
         Ok(result)
     }
 
+    // DRY:FN:push
     /// Push to remote
     pub async fn push(&self, remote: &str, branch: &str) -> Result<GitResult> {
         info!("Pushing {} to {}", branch, remote);
@@ -145,6 +157,7 @@ impl GitManager {
         Ok(result)
     }
 
+    // DRY:FN:pull
     /// Pull from remote
     pub async fn pull(&self) -> Result<GitResult> {
         info!("Pulling from remote");
@@ -153,6 +166,7 @@ impl GitManager {
         Ok(result)
     }
 
+    // DRY:FN:reset
     /// Reset to a specific state
     pub async fn reset(&self, mode: &str, target: &str) -> Result<GitResult> {
         warn!("Resetting: {} to {}", mode, target);
@@ -162,6 +176,7 @@ impl GitManager {
         Ok(result)
     }
 
+    // DRY:FN:diff_files
     /// Get diff of modified files
     pub async fn diff_files(&self) -> Result<Vec<String>> {
         let result = self.run_git_cmd(&["diff", "--name-only"]).await?;
@@ -174,6 +189,7 @@ impl GitManager {
         Ok(files)
     }
 
+    // DRY:FN:get_head_sha
     /// Get HEAD commit SHA
     pub async fn get_head_sha(&self) -> Result<String> {
         let result = self.run_git_cmd(&["rev-parse", "HEAD"]).await?;

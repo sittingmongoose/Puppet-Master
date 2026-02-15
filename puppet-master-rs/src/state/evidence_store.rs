@@ -13,6 +13,7 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 
+// DRY:DATA:EvidenceStore
 /// Thread-safe evidence store
 #[derive(Clone)]
 pub struct EvidenceStore {
@@ -24,6 +25,7 @@ struct EvidenceStoreInner {
 }
 
 impl EvidenceStore {
+    // DRY:FN:new
     /// Create a new evidence store
     pub fn new(base_path: impl AsRef<Path>) -> Result<Self> {
         let base_path = base_path.as_ref().to_path_buf();
@@ -61,6 +63,7 @@ impl EvidenceStore {
         })
     }
 
+    // DRY:FN:store_evidence
     /// Store evidence and return the Evidence record
     pub fn store_evidence(
         &self,
@@ -127,6 +130,7 @@ impl EvidenceStore {
         })
     }
 
+    // DRY:FN:store_text
     /// Store text evidence
     pub fn store_text(
         &self,
@@ -145,6 +149,7 @@ impl EvidenceStore {
         )
     }
 
+    // DRY:FN:list_for_tier
     /// List all evidence for a tier
     pub fn list_for_tier(&self, tier_id: &str) -> Result<Vec<Evidence>> {
         let inner = self.inner.lock().unwrap();
@@ -193,6 +198,7 @@ impl EvidenceStore {
         Ok(evidence_list)
     }
 
+    // DRY:FN:list_all
     /// List all evidence across all types
     pub fn list_all(&self) -> Result<Vec<Evidence>> {
         let mut all = Vec::new();
@@ -213,6 +219,7 @@ impl EvidenceStore {
         Ok(all)
     }
 
+    // DRY:FN:list_by_type
     /// List evidence by type
     pub fn list_by_type(&self, evidence_type: EvidenceType) -> Result<Vec<Evidence>> {
         let inner = self.inner.lock().unwrap();
@@ -264,6 +271,7 @@ impl EvidenceStore {
         })
     }
 
+    // DRY:FN:get_evidence
     /// Get evidence by ID (searches for filename containing the id)
     pub fn get_evidence(&self, id: &str) -> Result<Option<Evidence>> {
         let inner = self.inner.lock().unwrap();
@@ -306,18 +314,21 @@ impl EvidenceStore {
         Ok(None)
     }
 
+    // DRY:FN:read_evidence
     /// Read evidence content
     pub fn read_evidence(&self, evidence: &Evidence) -> Result<Vec<u8>> {
         fs::read(&evidence.path)
             .with_context(|| format!("Failed to read evidence from {}", evidence.path.display()))
     }
 
+    // DRY:FN:read_evidence_text
     /// Read evidence as text
     pub fn read_evidence_text(&self, evidence: &Evidence) -> Result<String> {
         fs::read_to_string(&evidence.path)
             .with_context(|| format!("Failed to read evidence from {}", evidence.path.display()))
     }
 
+    // DRY:FN:delete_evidence
     /// Delete evidence
     pub fn delete_evidence(&self, evidence: &Evidence) -> Result<()> {
         fs::remove_file(&evidence.path).with_context(|| {

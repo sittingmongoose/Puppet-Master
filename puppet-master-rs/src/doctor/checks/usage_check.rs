@@ -7,14 +7,17 @@ use async_trait::async_trait;
 use chrono::Utc;
 use log::{debug, warn};
 
+// DRY:DATA:UsageCheck
 /// Checks platform usage quotas and warns about approaching limits
 pub struct UsageCheck;
 
 impl UsageCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }
 
+    // DRY:FN:check_all
     /// Check usage for all platforms
     pub async fn check_all(&self) -> Vec<UsageCheckResult> {
         let mut results = Vec::new();
@@ -24,6 +27,7 @@ impl UsageCheck {
         results
     }
 
+    // DRY:FN:check_platform
     /// Check usage for a specific platform by reading local usage data
     pub async fn check_platform(&self, platform: Platform) -> UsageCheckResult {
         debug!("Checking usage for platform: {}", platform);
@@ -82,6 +86,7 @@ impl Default for UsageCheck {
     }
 }
 
+// DRY:DATA:UsageCheckResult
 /// Result of a usage check for a specific platform
 #[derive(Debug, Clone)]
 pub struct UsageCheckResult {
@@ -91,6 +96,7 @@ pub struct UsageCheckResult {
     pub usage_percent: Option<f64>,
 }
 
+// DRY:DATA:UsageStatus
 /// Status of platform usage
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum UsageStatus {
@@ -105,6 +111,7 @@ pub enum UsageStatus {
 }
 
 impl UsageStatus {
+    // DRY:FN:from_percent
     /// Determine status from usage percentage
     #[allow(dead_code)]
     pub fn from_percent(percent: f64) -> Self {
@@ -117,6 +124,7 @@ impl UsageStatus {
         }
     }
 
+    // DRY:FN:is_problem
     /// Check if this status indicates a problem
     #[allow(dead_code)]
     pub fn is_problem(&self) -> bool {

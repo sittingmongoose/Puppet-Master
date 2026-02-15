@@ -11,11 +11,13 @@ use std::fs::OpenOptions;
 use std::io::Write;
 use std::path::PathBuf;
 
+// DRY:HELPER:ActivityLogger
 /// Activity logger for audit trail
 pub struct ActivityLogger {
     log_path: PathBuf,
 }
 
+// DRY:HELPER:ActivityEvent
 /// Single activity event
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ActivityEvent {
@@ -31,6 +33,7 @@ pub struct ActivityEvent {
 }
 
 impl ActivityEvent {
+    // DRY:HELPER:ActivityEvent::new
     /// Create a new activity event
     pub fn new(event_type: ActivityEventType, description: impl Into<String>) -> Self {
         Self {
@@ -41,18 +44,21 @@ impl ActivityEvent {
         }
     }
 
+    // DRY:HELPER:ActivityEvent::with_metadata
     /// Add metadata
     pub fn with_metadata(mut self, key: impl Into<String>, value: impl Into<String>) -> Self {
         self.metadata.insert(key.into(), value.into());
         self
     }
 
+    // DRY:HELPER:ActivityEvent::with_metadata_map
     /// Add multiple metadata entries
     pub fn with_metadata_map(mut self, metadata: HashMap<String, String>) -> Self {
         self.metadata.extend(metadata);
         self
     }
 
+    // DRY:HELPER:ActivityEvent::to_jsonl
     /// Convert to JSONL format
     pub fn to_jsonl(&self) -> Result<String> {
         let json = serde_json::to_string(self).context("Failed to serialize activity event")?;
@@ -60,6 +66,7 @@ impl ActivityEvent {
     }
 }
 
+// DRY:HELPER:ActivityEventType
 /// Types of activity events
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -140,11 +147,13 @@ impl std::fmt::Display for ActivityEventType {
 }
 
 impl ActivityLogger {
+    // DRY:HELPER:ActivityLogger::new
     /// Create a new activity logger
     pub fn new(log_path: PathBuf) -> Self {
         Self { log_path }
     }
 
+    // DRY:HELPER:ActivityLogger::log
     /// Log an activity event
     pub fn log(&self, event: ActivityEvent) -> Result<()> {
         // Create parent directory if needed
@@ -174,6 +183,7 @@ impl ActivityLogger {
         Ok(())
     }
 
+    // DRY:HELPER:ActivityLogger::log_simple
     /// Log a simple event with just type and description
     pub fn log_simple(
         &self,
@@ -184,6 +194,7 @@ impl ActivityLogger {
         self.log(event)
     }
 
+    // DRY:HELPER:ActivityLogger::log_with_metadata
     /// Log an event with metadata
     pub fn log_with_metadata(
         &self,
@@ -195,6 +206,7 @@ impl ActivityLogger {
         self.log(event)
     }
 
+    // DRY:HELPER:ActivityLogger::read_all
     /// Read all activity events from the log
     pub fn read_all(&self) -> Result<Vec<ActivityEvent>> {
         if !self.log_path.exists() {
@@ -226,6 +238,7 @@ impl ActivityLogger {
         Ok(events)
     }
 
+    // DRY:HELPER:ActivityLogger::read_range
     /// Read events within a time range
     pub fn read_range(
         &self,
@@ -240,6 +253,7 @@ impl ActivityLogger {
             .collect())
     }
 
+    // DRY:HELPER:ActivityLogger::read_by_type
     /// Read events of a specific type
     pub fn read_by_type(&self, event_type: ActivityEventType) -> Result<Vec<ActivityEvent>> {
         let all_events = self.read_all()?;
@@ -250,6 +264,7 @@ impl ActivityLogger {
             .collect())
     }
 
+    // DRY:HELPER:ActivityLogger::count_by_type
     /// Get event count by type
     pub fn count_by_type(&self) -> Result<HashMap<ActivityEventType, usize>> {
         let all_events = self.read_all()?;
@@ -262,6 +277,7 @@ impl ActivityLogger {
         Ok(counts)
     }
 
+    // DRY:HELPER:ActivityLogger::read_recent
     /// Get the most recent N events
     pub fn read_recent(&self, count: usize) -> Result<Vec<ActivityEvent>> {
         let mut events = self.read_all()?;
@@ -270,6 +286,7 @@ impl ActivityLogger {
         Ok(events)
     }
 
+    // DRY:HELPER:ActivityLogger::clear
     /// Clear the activity log
     pub fn clear(&self) -> Result<()> {
         if self.log_path.exists() {

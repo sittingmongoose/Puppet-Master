@@ -6,6 +6,7 @@
 use iced::Length;
 use iced::widget::{Svg, svg};
 
+// DRY:WIDGET:IconName
 /// Icon names matching our SVG files in assets/icons/
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum IconName {
@@ -51,6 +52,7 @@ pub enum IconName {
     Sun,
 }
 
+// DRY:WIDGET:IconSize
 /// Icon sizes for consistent scaling
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum IconSize {
@@ -128,6 +130,7 @@ fn icon_bytes(name: IconName) -> &'static [u8] {
     }
 }
 
+// DRY:WIDGET:icon
 /// Create an icon widget with default medium size
 ///
 /// # Example
@@ -140,6 +143,7 @@ pub fn icon<'a>(name: IconName) -> Svg<'a> {
     icon_sized(name, IconSize::default())
 }
 
+// DRY:WIDGET:icon_sized
 /// Create an icon widget with a specific size
 ///
 /// # Example
@@ -158,6 +162,7 @@ pub fn icon_sized<'a>(name: IconName, size: IconSize) -> Svg<'a> {
         .height(Length::Fixed(size_px))
 }
 
+// DRY:WIDGET:icon_custom
 /// Create an icon with custom width and height
 ///
 /// This is useful when you need precise control over icon dimensions.

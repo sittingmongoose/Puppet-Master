@@ -3,6 +3,7 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
+// DRY:DATA:CheckCategory
 /// Category of a doctor check.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
@@ -31,6 +32,7 @@ impl std::fmt::Display for CheckCategory {
     }
 }
 
+// DRY:DATA:CheckResult
 /// Result of a doctor check.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -50,6 +52,7 @@ pub struct CheckResult {
 }
 
 impl CheckResult {
+    // DRY:FN:pass
     /// Creates a passing check result.
     pub fn pass(message: impl Into<String>) -> Self {
         Self {
@@ -61,6 +64,7 @@ impl CheckResult {
         }
     }
 
+    // DRY:FN:fail
     /// Creates a failing check result.
     pub fn fail(message: impl Into<String>) -> Self {
         Self {
@@ -72,12 +76,14 @@ impl CheckResult {
         }
     }
 
+    // DRY:FN:with_details
     /// Sets detailed information.
     pub fn with_details(mut self, details: impl Into<String>) -> Self {
         self.details = Some(details.into());
         self
     }
 
+    // DRY:FN:with_fix
     /// Marks as fixable.
     pub fn with_fix(mut self) -> Self {
         self.can_fix = true;
@@ -109,6 +115,7 @@ pub trait DoctorCheck: Send + Sync {
     }
 }
 
+// DRY:DATA:FixResult
 /// Result of attempting to fix an issue.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -127,6 +134,7 @@ pub struct FixResult {
 }
 
 impl FixResult {
+    // DRY:FN:success
     /// Creates a successful fix result.
     pub fn success(message: impl Into<String>) -> Self {
         Self {
@@ -138,6 +146,7 @@ impl FixResult {
         }
     }
 
+    // DRY:FN:failure
     /// Creates a failed fix result.
     pub fn failure(message: impl Into<String>) -> Self {
         Self {
@@ -149,6 +158,7 @@ impl FixResult {
         }
     }
 
+    // DRY:FN:not_fixable
     /// Creates a not-fixable result.
     pub fn not_fixable() -> Self {
         Self {
@@ -160,6 +170,7 @@ impl FixResult {
         }
     }
 
+    // DRY:FN:with_step
     /// Adds a step to the fix result.
     pub fn with_step(mut self, step: impl Into<String>) -> Self {
         self.steps.push(step.into());

@@ -8,6 +8,7 @@ use crate::types::Platform;
 use log::{info, warn};
 use serde::{Deserialize, Serialize};
 
+// DRY:DATA:PlatformModelPair
 /// A platform + model pair used in the failover chain.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -17,6 +18,7 @@ pub struct PlatformModelPair {
 }
 
 impl PlatformModelPair {
+    // DRY:FN:new
     pub fn new(platform: Platform, model: impl Into<String>) -> Self {
         Self {
             platform,
@@ -25,6 +27,7 @@ impl PlatformModelPair {
     }
 }
 
+// DRY:DATA:FailoverManager
 /// Manages an ordered list of platform/model pairs for failover.
 #[derive(Clone)]
 pub struct FailoverManager {
@@ -33,6 +36,7 @@ pub struct FailoverManager {
 }
 
 impl FailoverManager {
+    // DRY:FN:new
     /// Creates a new manager with the primary platform first, followed by backups.
     pub fn new(primary: PlatformModelPair, backups: Vec<PlatformModelPair>) -> Self {
         let mut platforms = vec![primary];
@@ -43,11 +47,13 @@ impl FailoverManager {
         }
     }
 
+    // DRY:FN:get_current_platform
     /// Returns the currently active platform/model pair.
     pub fn get_current_platform(&self) -> &PlatformModelPair {
         &self.platforms[self.current_index]
     }
 
+    // DRY:FN:should_failover
     /// Returns `true` if the given remaining quota suggests a failover is needed.
     ///
     /// A simple heuristic: failover when remaining quota is zero or negative.
@@ -55,6 +61,7 @@ impl FailoverManager {
         quota_remaining <= 0
     }
 
+    // DRY:FN:failover
     /// Switches to the next platform in the failover chain.
     ///
     /// Returns the new platform if one is available, or `None` if all
@@ -75,26 +82,31 @@ impl FailoverManager {
         }
     }
 
+    // DRY:FN:is_exhausted
     /// Returns `true` if all platforms in the chain have been tried.
     pub fn is_exhausted(&self) -> bool {
         self.current_index + 1 >= self.platforms.len()
     }
 
+    // DRY:FN:current_index
     /// Returns the current index in the platform chain.
     pub fn current_index(&self) -> usize {
         self.current_index
     }
 
+    // DRY:FN:total_platforms
     /// Returns the total number of platforms (primary + backups).
     pub fn total_platforms(&self) -> usize {
         self.platforms.len()
     }
 
+    // DRY:FN:reset
     /// Resets to the primary platform.
     pub fn reset(&mut self) {
         self.current_index = 0;
     }
 
+    // DRY:FN:set_index
     /// Sets the current failover index (for syncing state after async operations).
     pub fn set_index(&mut self, index: usize) {
         if index < self.platforms.len() {
@@ -102,6 +114,7 @@ impl FailoverManager {
         }
     }
 
+    // DRY:FN:get_previous_platform
     /// Returns the previous platform pair before the current one.
     pub fn get_previous_platform(&self) -> Option<&PlatformModelPair> {
         if self.current_index > 0 {
@@ -112,6 +125,7 @@ impl FailoverManager {
     }
 }
 
+// DRY:FN:is_quota_error
 /// Checks if an error message indicates quota exhaustion or rate limiting.
 pub fn is_quota_error(error: &str) -> bool {
     let category = ErrorCategory::detect(error);

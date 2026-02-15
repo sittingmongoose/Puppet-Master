@@ -34,6 +34,7 @@ use crate::types::Platform;
 
 // ─── Spec Structs ───────────────────────────────────────────────────────────
 
+// DRY:DATA:PlatformSpec — Complete specification for a single AI platform
 /// Complete specification for a single AI platform's CLI, capabilities, and config.
 pub struct PlatformSpec {
     pub platform: Platform,
@@ -67,6 +68,7 @@ pub struct PlatformSpec {
 }
 
 /// Auth specification — SUBSCRIPTION AUTH ONLY, no API keys.
+// DRY:DATA:AuthSpec — Authentication specification for a platform
 pub struct AuthSpec {
     /// CLI binary for login (None if same as platform binary).
     pub login_command: Option<&'static str>,
@@ -86,6 +88,7 @@ pub struct AuthSpec {
 }
 
 /// How to discover models dynamically from this platform's CLI/SDK.
+// DRY:DATA:ModelDiscoverySpec — Model discovery specification for a platform
 pub struct ModelDiscoverySpec {
     /// CLI binary to run for model listing (None = no CLI discovery).
     pub cli_command: Option<&'static str>,
@@ -98,6 +101,7 @@ pub struct ModelDiscoverySpec {
 }
 
 /// Sub-agent / multi-agent capabilities.
+// DRY:DATA:SubagentSpec — Subagent specification for a platform
 pub struct SubagentSpec {
     pub invoke_method: &'static str,
     pub invoke_example: &'static str,
@@ -110,6 +114,7 @@ pub struct SubagentSpec {
 }
 
 /// Programmatic SDK for a platform.
+// DRY:DATA:SdkSpec — SDK specification for a platform
 pub struct SdkSpec {
     pub package_name: &'static str,
     pub package_manager: &'static str,
@@ -122,6 +127,7 @@ pub struct SdkSpec {
 }
 
 /// A fallback model definition (used when dynamic discovery is unavailable).
+// DRY:DATA:ModelSpec — Model specification entry
 pub struct ModelSpec {
     pub id: &'static str,
     pub display_name: &'static str,
@@ -131,6 +137,7 @@ pub struct ModelSpec {
 }
 
 /// Plan mode specification.
+// DRY:DATA:PlanModeSpec — Plan mode specification for a platform
 pub struct PlanModeSpec {
     pub cli_flag: &'static str,
     pub cli_flag_value: Option<&'static str>,
@@ -140,6 +147,7 @@ pub struct PlanModeSpec {
 }
 
 /// Effort/reasoning specification. NOT used for Cursor (model-name-based) or Gemini (unsupported).
+// DRY:DATA:EffortSpec — Effort/reasoning specification for a platform
 pub struct EffortSpec {
     pub levels: &'static [EffortLevel],
     pub cli_flag: Option<&'static str>,
@@ -148,12 +156,14 @@ pub struct EffortSpec {
     pub note: &'static str,
 }
 
+// DRY:DATA:EffortLevel — Single effort level entry
 pub struct EffortLevel {
     pub id: &'static str,
     pub display_name: &'static str,
 }
 
 /// Image/media processing support.
+// DRY:DATA:ImageSpec — Image/media processing specification
 pub struct ImageSpec {
     pub cli_flag: Option<&'static str>,
     pub supports_paste: bool,
@@ -163,6 +173,7 @@ pub struct ImageSpec {
 }
 
 /// Headless/non-interactive execution specification.
+// DRY:DATA:HeadlessSpec — Headless/CI operation specification
 pub struct HeadlessSpec {
     pub prompt_flag: &'static str,
     /// Subcommand for headless (e.g., "exec" for Codex).
@@ -176,6 +187,7 @@ pub struct HeadlessSpec {
 }
 
 /// Experimental features.
+// DRY:DATA:ExperimentalSpec — Experimental feature specification
 pub struct ExperimentalSpec {
     pub enable_command: Option<&'static str>,
     pub disable_command: Option<&'static str>,
@@ -186,6 +198,7 @@ pub struct ExperimentalSpec {
 }
 
 /// Platform install method.
+// DRY:DATA:InstallMethod — Installation method entry
 pub struct InstallMethod {
     pub method: &'static str,
     pub command: &'static str,
@@ -642,6 +655,7 @@ static COPILOT_SPEC: PlatformSpec = PlatformSpec {
 
 // ─── Lookup Functions ───────────────────────────────────────────────────────
 
+// DRY:FN:get_spec — Get the full spec for a single Platform
 /// Get the spec for a platform.
 pub fn get_spec(platform: Platform) -> &'static PlatformSpec {
     match platform {
@@ -656,6 +670,7 @@ pub fn get_spec(platform: Platform) -> &'static PlatformSpec {
 /// All platform specs as a static array.
 static ALL_SPECS: [&PlatformSpec; 5] = [&CLAUDE_SPEC, &CURSOR_SPEC, &CODEX_SPEC, &GEMINI_SPEC, &COPILOT_SPEC];
 
+// DRY:FN:all_specs — Get all platform specs
 /// Get all platform specs.
 pub fn all_specs() -> &'static [&'static PlatformSpec; 5] {
     &ALL_SPECS
@@ -663,51 +678,61 @@ pub fn all_specs() -> &'static [&'static PlatformSpec; 5] {
 
 // ─── Convenience API ────────────────────────────────────────────────────────
 
+// DRY:FN:supports_effort — Whether platform supports effort/reasoning levels
 /// Whether this platform supports effort/reasoning levels (separate from model selection).
 pub fn supports_effort(platform: Platform) -> bool {
     get_spec(platform).effort.is_some()
 }
 
+// DRY:FN:effort_levels_for — Get effort levels for a platform
 /// Get effort levels for a platform, if supported.
 pub fn effort_levels_for(platform: Platform) -> Option<&'static [EffortLevel]> {
     get_spec(platform).effort.as_ref().map(|e| e.levels)
 }
 
+// DRY:FN:supports_plan_mode — Whether platform supports plan mode
 /// Whether this platform supports plan mode.
 pub fn supports_plan_mode(platform: Platform) -> bool {
     get_spec(platform).plan_mode.is_some()
 }
 
+// DRY:FN:supports_images — Whether platform supports image/media processing
 /// Whether this platform supports image/media processing.
 pub fn supports_images(platform: Platform) -> bool {
     get_spec(platform).image_processing.is_some()
 }
 
+// DRY:FN:supports_experimental — Whether platform has experimental feature toggles
 /// Whether this platform has experimental feature toggles.
 pub fn supports_experimental(platform: Platform) -> bool {
     get_spec(platform).experimental.is_some()
 }
 
+// DRY:FN:supports_subagents — Whether platform supports sub-agents
 /// Whether this platform supports sub-agents / multi-agent execution.
 pub fn supports_subagents(platform: Platform) -> bool {
     get_spec(platform).subagent.is_some()
 }
 
+// DRY:FN:has_sdk — Whether platform has a programmatic SDK
 /// Whether this platform has a programmatic SDK.
 pub fn has_sdk(platform: Platform) -> bool {
     get_spec(platform).sdk.is_some()
 }
 
+// DRY:FN:reasoning_is_model_based — Whether reasoning is encoded in model names
 /// Whether reasoning is encoded in model names (true only for Cursor).
 pub fn reasoning_is_model_based(platform: Platform) -> bool {
     get_spec(platform).reasoning_is_model_based
 }
 
+// DRY:FN:has_auto_mode — Whether platform has auto model selection mode
 /// Whether this platform has an auto model selection mode (true only for Cursor).
 pub fn has_auto_mode(platform: Platform) -> bool {
     get_spec(platform).auto_mode.is_some()
 }
 
+// DRY:FN:install_methods_for — Get install methods filtered by OS
 /// Get install methods for a platform, filtered by OS.
 pub fn install_methods_for(platform: Platform, os: &str) -> Vec<&'static InstallMethod> {
     get_spec(platform)
@@ -717,16 +742,19 @@ pub fn install_methods_for(platform: Platform, os: &str) -> Vec<&'static Install
         .collect()
 }
 
+// DRY:FN:cli_binary_names — Get CLI binary names for a platform
 /// Get CLI binary names for a platform.
 pub fn cli_binary_names(platform: Platform) -> &'static [&'static str] {
     get_spec(platform).cli_binary_names
 }
 
+// DRY:FN:default_install_paths — Get default install paths for a platform
 /// Get default install paths for a platform.
 pub fn default_install_paths(platform: Platform) -> &'static [&'static str] {
     get_spec(platform).default_install_paths
 }
 
+// DRY:FN:fallback_model_ids — Get fallback model IDs when dynamic discovery fails
 /// Get fallback model IDs (used when dynamic discovery fails).
 pub fn fallback_model_ids(platform: Platform) -> Vec<&'static str> {
     get_spec(platform)
@@ -736,6 +764,7 @@ pub fn fallback_model_ids(platform: Platform) -> Vec<&'static str> {
         .collect()
 }
 
+// DRY:FN:default_model_for — Get the default model for a platform
 /// Get the default model for a platform.
 pub fn default_model_for(platform: Platform) -> Option<&'static str> {
     get_spec(platform)
@@ -745,6 +774,7 @@ pub fn default_model_for(platform: Platform) -> Option<&'static str> {
         .map(|m| m.id)
 }
 
+// DRY:FN:image_capable_platforms — Get all platforms that support images
 /// Get all platforms that support images (currently ALL 5).
 pub fn image_capable_platforms() -> Vec<Platform> {
     Platform::all()
@@ -754,6 +784,7 @@ pub fn image_capable_platforms() -> Vec<Platform> {
         .collect()
 }
 
+// DRY:FN:subagent_capable_platforms — Get all platforms that support sub-agents
 /// Get all platforms that support sub-agents.
 pub fn subagent_capable_platforms() -> Vec<Platform> {
     Platform::all()

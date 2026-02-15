@@ -5,10 +5,12 @@ use async_trait::async_trait;
 use chrono::Utc;
 use which::which;
 
+// DRY:DATA:GitInstalledCheck
 /// Check if git is installed
 pub struct GitInstalledCheck;
 
 impl GitInstalledCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }
@@ -70,10 +72,12 @@ impl DoctorCheck for GitInstalledCheck {
     }
 }
 
+// DRY:DATA:GitConfiguredCheck
 /// Check if git is configured
 pub struct GitConfiguredCheck;
 
 impl GitConfiguredCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }
@@ -148,10 +152,12 @@ impl DoctorCheck for GitConfiguredCheck {
     }
 }
 
+// DRY:DATA:GitRepoCheck
 /// Check if we're in a git repository
 pub struct GitRepoCheck;
 
 impl GitRepoCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }

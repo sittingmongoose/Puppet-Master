@@ -15,10 +15,12 @@ struct InternalSection {
     subsections: Vec<InternalSection>,
 }
 
+// DRY:DATA:RequirementsParser
 /// Parser for requirements files (markdown and plain text)
 pub struct RequirementsParser;
 
 impl RequirementsParser {
+    // DRY:FN:parse_file
     /// Parse a requirements file
     pub async fn parse_file(path: &Path) -> Result<ParsedRequirements> {
         // Check if file exists before trying to read it
@@ -57,6 +59,7 @@ impl RequirementsParser {
         }
     }
 
+    // DRY:FN:parse_markdown
     /// Parse markdown content
     pub fn parse_markdown(content: &str) -> Result<ParsedRequirements> {
         let mut current_section: Option<InternalSection> = None;
@@ -139,6 +142,7 @@ impl RequirementsParser {
         RequirementsSection::new(section.heading.clone(), content)
     }
 
+    // DRY:FN:parse_text
     /// Parse plain text content
     pub fn parse_text(content: &str) -> Result<ParsedRequirements> {
         // Sniff if content is actually markdown

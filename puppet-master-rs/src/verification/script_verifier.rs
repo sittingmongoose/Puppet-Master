@@ -11,6 +11,7 @@ use std::process::Stdio;
 use std::time::Duration;
 use tokio::process::Command;
 
+// DRY:DATA:ScriptVerifier
 /// Verifier that executes script files.
 pub struct ScriptVerifier;
 
@@ -33,6 +34,7 @@ struct ScriptSpec {
 }
 
 impl ScriptVerifier {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }

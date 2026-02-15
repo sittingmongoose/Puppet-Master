@@ -16,6 +16,7 @@ use std::collections::{HashMap, VecDeque};
 use std::fs;
 use std::path::{Path, PathBuf};
 
+// DRY:DATA:TierNode
 /// A single tier node in the hierarchy
 #[derive(Debug, Clone)]
 pub struct TierNode {
@@ -114,6 +115,7 @@ struct TestStrategyJson {
     pub items: Vec<TestStrategyItem>,
 }
 
+// DRY:DATA:TierTree
 /// Tier tree using arena-based storage
 #[derive(Debug, Clone)]
 pub struct TierTree {
@@ -567,6 +569,7 @@ impl Default for TierTree {
     }
 }
 
+// DRY:DATA:TreeStats
 /// Tree statistics
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TreeStats {

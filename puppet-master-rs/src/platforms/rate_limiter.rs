@@ -14,6 +14,7 @@ use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 use tokio::time::sleep;
 
+// DRY:DATA:RateLimiterConfig
 /// Rate limiter configuration for a platform
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RateLimiterConfig {
@@ -121,6 +122,7 @@ impl TokenBucket {
     }
 }
 
+// DRY:DATA:RateLimiter
 /// Rate limiter for managing API call rates
 pub struct RateLimiter {
     configs: Arc<Mutex<HashMap<Platform, RateLimiterConfig>>>,
@@ -234,6 +236,7 @@ impl Default for RateLimiter {
 static RATE_LIMITER: once_cell::sync::Lazy<RateLimiter> =
     once_cell::sync::Lazy::new(RateLimiter::new);
 
+// DRY:FN:global_rate_limiter
 /// Get the global rate limiter
 pub fn global_rate_limiter() -> &'static RateLimiter {
     &RATE_LIMITER

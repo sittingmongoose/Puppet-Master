@@ -9,6 +9,7 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
+// DRY:DATA:Complexity
 /// Task complexity level
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -37,6 +38,7 @@ impl std::fmt::Display for Complexity {
     }
 }
 
+// DRY:DATA:TaskType
 /// Task type classification
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -65,6 +67,7 @@ impl std::fmt::Display for TaskType {
     }
 }
 
+// DRY:DATA:ModelLevel
 /// Model level for platform routing
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub enum ModelLevel {
@@ -86,6 +89,7 @@ impl std::fmt::Display for ModelLevel {
     }
 }
 
+// DRY:DATA:ClassificationResult
 /// Classification result
 #[derive(Debug, Clone)]
 pub struct ClassificationResult {
@@ -97,6 +101,7 @@ pub struct ClassificationResult {
     pub model_level: ModelLevel,
 }
 
+// DRY:DATA:TaskInfo
 /// Task information for classification
 #[derive(Debug, Clone)]
 pub struct TaskInfo {
@@ -115,6 +120,7 @@ pub struct TaskInfo {
 /// Complexity routing matrix
 type ComplexityMatrix = HashMap<(Complexity, TaskType), ModelLevel>;
 
+// DRY:DATA:ComplexityClassifier
 /// Complexity classifier
 pub struct ComplexityClassifier {
     /// Routing matrix for model level selection

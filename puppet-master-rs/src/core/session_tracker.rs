@@ -15,6 +15,7 @@ use std::io::{BufWriter, Write};
 use std::path::PathBuf;
 use std::sync::Mutex;
 
+// DRY:DATA:SessionTracker
 /// Session tracker for managing active sessions
 #[derive(Debug)]
 pub struct SessionTracker {

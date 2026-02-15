@@ -7,6 +7,7 @@ use iced::widget::{Canvas, canvas, column, text};
 use iced::{Color, Element, Point, Rectangle};
 use std::f32::consts::PI;
 
+// DRY:WIDGET:BudgetSize
 /// Budget donut chart size
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum BudgetSize {
@@ -33,6 +34,7 @@ impl BudgetSize {
     }
 }
 
+// DRY:WIDGET:BudgetDonut
 /// Budget donut chart data
 #[derive(Debug)]
 pub struct BudgetDonut {
@@ -154,6 +156,7 @@ impl<Message> canvas::Program<Message> for BudgetDonut {
     }
 }
 
+// DRY:WIDGET:budget_donut
 /// Create a budget donut chart widget
 pub fn budget_donut<'a, Message>(
     used: f32,
@@ -170,6 +173,7 @@ where
     Canvas::new(donut).width(diameter).height(diameter).into()
 }
 
+// DRY:WIDGET:budget_donut_with_label
 /// Create a budget donut with label below
 pub fn budget_donut_with_label<'a, Message>(
     used: f32,

@@ -16,6 +16,7 @@ use chrono::{DateTime, Utc};
 use std::collections::HashMap;
 use std::path::PathBuf;
 
+// DRY:DATA:CheckpointManagerConfig
 /// Configuration for checkpoint manager
 #[derive(Debug, Clone)]
 pub struct CheckpointManagerConfig {
@@ -37,6 +38,7 @@ impl Default for CheckpointManagerConfig {
     }
 }
 
+// DRY:DATA:RecoveryInfo
 /// Recovery information for resumable runs
 #[derive(Debug, Clone)]
 pub struct RecoveryInfo {
@@ -48,6 +50,7 @@ pub struct RecoveryInfo {
     pub recoverable: bool,
 }
 
+// DRY:DATA:CheckpointManager
 /// High-level checkpoint manager with policy enforcement
 pub struct CheckpointManager {
     /// Configuration

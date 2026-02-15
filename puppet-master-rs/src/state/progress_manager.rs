@@ -13,6 +13,7 @@ use std::io::{BufRead, BufReader, Write};
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 
+// DRY:DATA:ProgressManager
 /// Thread-safe progress manager
 #[derive(Clone)]
 pub struct ProgressManager {
@@ -25,6 +26,7 @@ struct ProgressManagerInner {
 }
 
 impl ProgressManager {
+    // DRY:FN:new
     /// Create a new progress manager
     pub fn new(path: impl AsRef<Path>) -> Result<Self> {
         let path = path.as_ref().to_path_buf();
@@ -49,6 +51,7 @@ impl ProgressManager {
         })
     }
 
+    // DRY:FN:generate_session_id
     /// Generate a new session ID
     pub fn generate_session_id(&self) -> String {
         let mut inner = self.inner.lock().unwrap();
@@ -62,6 +65,7 @@ impl ProgressManager {
         )
     }
 
+    // DRY:FN:append_entry
     /// Append a progress entry
     pub fn append_entry(&self, entry: &ProgressEntry) -> Result<()> {
         let inner = self.inner.lock().unwrap();
@@ -109,6 +113,7 @@ impl ProgressManager {
         content
     }
 
+    // DRY:FN:read_entries
     /// Read all progress entries
     pub fn read_entries(&self) -> Result<Vec<ProgressEntry>> {
         let inner = self.inner.lock().unwrap();
@@ -206,6 +211,7 @@ impl ProgressManager {
         }
     }
 
+    // DRY:FN:get_item_entries
     /// Get entries for a specific item
     pub fn get_item_entries(&self, item_id: &str) -> Result<Vec<ProgressEntry>> {
         let entries = self.read_entries()?;

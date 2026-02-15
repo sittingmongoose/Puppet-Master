@@ -13,6 +13,7 @@ use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use which::which;
 
+// DRY:DATA:InstallationStatus
 /// Installation status for a CLI tool
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum InstallationStatus {
@@ -29,6 +30,7 @@ pub enum InstallationStatus {
     },
 }
 
+// DRY:DATA:InstallResult
 /// Result of an install attempt
 #[derive(Debug, Clone)]
 pub struct InstallResult {
@@ -37,12 +39,14 @@ pub struct InstallResult {
 }
 
 impl InstallResult {
+    // DRY:FN:success
     pub fn success(message: impl Into<String>) -> Self {
         Self {
             success: true,
             message: message.into(),
         }
     }
+    // DRY:FN:failure
     pub fn failure(message: impl Into<String>) -> Self {
         Self {
             success: false,
@@ -63,6 +67,7 @@ impl std::fmt::Display for InstallationStatus {
     }
 }
 
+// DRY:DATA:OperatingSystem
 /// Operating system detection
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum OperatingSystem {
@@ -77,6 +82,7 @@ pub enum OperatingSystem {
 }
 
 impl OperatingSystem {
+    // DRY:FN:detect
     /// Detect the current operating system
     pub fn detect() -> Self {
         #[cfg(target_os = "linux")]
@@ -93,12 +99,14 @@ impl OperatingSystem {
     }
 }
 
+// DRY:DATA:InstallationManager
 /// Installation manager for CLI tools
 pub struct InstallationManager {
     os: OperatingSystem,
 }
 
 impl InstallationManager {
+    // DRY:FN:new
     /// Create a new installation manager
     pub fn new() -> Self {
         Self {
@@ -106,6 +114,7 @@ impl InstallationManager {
         }
     }
 
+    // DRY:FN:check_installation
     /// Check installation status of a platform's CLI tool
     pub fn check_installation(&self, platform: Platform) -> InstallationStatus {
         // Try each CLI name in order until one is found
@@ -362,6 +371,7 @@ impl InstallationManager {
         version_str.lines().next().unwrap_or("").trim().to_string()
     }
 
+    // DRY:FN:get_installation_instructions
     /// Get installation instructions for a platform
     pub fn get_installation_instructions(&self, platform: Platform) -> String {
         match platform {
@@ -548,6 +558,7 @@ Verify installation:
         .to_string()
     }
 
+    // DRY:FN:check_all_platforms
     /// Check all platforms and return a summary
     pub fn check_all_platforms(&self) -> Vec<(Platform, InstallationStatus)> {
         Platform::all()
@@ -556,6 +567,7 @@ Verify installation:
             .collect()
     }
 
+    // DRY:FN:execute_install
     /// Execute the official install command for a platform.
     /// Spawns the install script/command; user may need to interact (e.g. confirm).
     pub fn execute_install(&self, platform: Platform) -> Result<InstallResult> {
@@ -727,6 +739,7 @@ Verify installation:
         }
     }
 
+    // DRY:FN:get_installation_report
     /// Get a formatted report of all platform installations
     pub fn get_installation_report(&self) -> String {
         let mut report = String::new();

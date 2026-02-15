@@ -59,12 +59,14 @@ use log::{debug, warn};
 use std::sync::Arc;
 use tokio::process::Command;
 
+// DRY:DATA:ClaudeRunner — Claude Code CLI runner
 /// Claude Code CLI runner
 pub struct ClaudeRunner {
     base: Arc<BaseRunner>,
 }
 
 impl ClaudeRunner {
+    // DRY:FN:new — Create a new Claude runner
     /// Create a new Claude runner
     pub fn new() -> Self {
         let command = Platform::Claude.resolve_cli_command();

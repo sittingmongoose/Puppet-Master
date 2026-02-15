@@ -54,12 +54,14 @@ use async_trait::async_trait;
 use log::warn;
 use std::sync::Arc;
 
+// DRY:DATA:CopilotRunner — GitHub Copilot CLI runner
 /// GitHub Copilot CLI runner
 pub struct CopilotRunner {
     base: Arc<BaseRunner>,
 }
 
 impl CopilotRunner {
+    // DRY:FN:new — Create a new Copilot runner
     /// Create a new Copilot runner
     pub fn new() -> Self {
         let command = Platform::Copilot.resolve_cli_command();

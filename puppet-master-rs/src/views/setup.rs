@@ -12,6 +12,7 @@ use iced::widget::{Space, column, container, row, scrollable, text};
 use iced::{Element, Length};
 use std::collections::HashMap;
 
+// DRY:DATA:PlatformStatus
 /// Platform installation status
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct PlatformStatus {
@@ -22,6 +23,7 @@ pub struct PlatformStatus {
     pub searched_paths: Vec<String>,
 }
 
+// DRY:FN:setup_view
 /// Setup wizard view
 pub fn view<'a>(
     platform_statuses: &'a [PlatformStatus],

@@ -85,12 +85,14 @@ fn tray_action_stream(
 // Re-use Toast types from widgets module
 pub use crate::widgets::{Toast, ToastManager, ToastType};
 
+// DRY:DATA:AuthActionKind
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum AuthActionKind {
     Login,
     Logout,
 }
 
+// DRY:DATA:GitInfoDisplay
 #[derive(Debug, Clone)]
 pub struct GitInfoDisplay {
     pub user_name: String,
@@ -99,6 +101,7 @@ pub struct GitInfoDisplay {
     pub current_branch: String,
 }
 
+// DRY:DATA:SelectableField
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum SelectableField {
     LoginAuthUrl(String),
@@ -118,12 +121,14 @@ pub enum SelectableField {
     InterviewQuestion(usize),
 }
 
+// DRY:DATA:ContextMenuTarget
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ContextMenuTarget {
     DashboardTerminal,
     SelectableField(SelectableField),
 }
 
+// DRY:DATA:ModalContent
 #[derive(Debug, Clone)]
 pub enum ModalContent {
     Confirm {
@@ -137,6 +142,7 @@ pub enum ModalContent {
     },
 }
 
+// DRY:DATA:AppCommand
 #[derive(Debug, Clone)]
 pub enum AppCommand {
     Start,
@@ -175,6 +181,7 @@ pub use crate::views::tiers::TierDisplayNode;
 // Wizard Types
 // ============================================================================
 
+// DRY:DATA:WizardTierConfig
 /// Configuration for a single tier in the wizard
 #[derive(Debug, Clone)]
 pub struct WizardTierConfig {
@@ -203,6 +210,7 @@ impl Default for WizardTierConfig {
 // Main App State
 // ============================================================================
 
+// DRY:DATA:App
 pub struct App {
     // Navigation
     pub current_page: Page,
@@ -420,6 +428,7 @@ pub struct App {
 // Message Enum
 // ============================================================================
 
+// DRY:DATA:Message
 #[derive(Debug, Clone)]
 pub enum Message {
     // Navigation
@@ -880,6 +889,7 @@ async fn load_git_info() -> Option<GitInfoDisplay> {
 // ============================================================================
 
 impl App {
+    // DRY:FN:new
     /// Create a new App instance with initial state
     pub fn new(shutdown: Arc<AtomicBool>) -> (Self, Task<Message>) {
         let mut app = Self {
@@ -1184,6 +1194,7 @@ impl App {
         (app, task)
     }
 
+    // DRY:FN:update
     /// Handle messages and update state
     pub fn update(&mut self, message: Message) -> Task<Message> {
         match message {
@@ -5685,6 +5696,7 @@ impl App {
         ))
     }
 
+    // DRY:FN:view
     /// Render the application UI
     pub fn view(&self) -> Element<'_, Message> {
         use crate::theme::tokens;
@@ -5946,6 +5958,7 @@ impl App {
         .into()
     }
 
+    // DRY:FN:theme
     /// Get the current theme
     pub fn theme(&self) -> Theme {
         match self.theme {
@@ -5954,6 +5967,7 @@ impl App {
         }
     }
 
+    // DRY:FN:subscription
     /// Set up subscriptions for events
     pub fn subscription(&self) -> Subscription<Message> {
         use iced::time;
@@ -7260,6 +7274,7 @@ impl App {
 // Entry Point
 // ============================================================================
 
+// DRY:FN:run
 /// Run the Iced application
 pub fn run(shutdown: Arc<AtomicBool>) -> Result<()> {
     // Create tray icon (keep manager alive for app lifetime)

@@ -9,6 +9,7 @@ use serde::Serialize;
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
+// DRY:DATA:DebugBundlePaths
 /// Output paths for persisted debug artifacts.
 #[derive(Debug, Clone)]
 pub struct DebugBundlePaths {
@@ -16,6 +17,7 @@ pub struct DebugBundlePaths {
     pub summary_path: PathBuf,
 }
 
+// DRY:DATA:DebugFeedCollector
 /// In-memory debug feed collector.
 #[derive(Debug, Default)]
 pub struct DebugFeedCollector {
@@ -24,6 +26,7 @@ pub struct DebugFeedCollector {
 }
 
 impl DebugFeedCollector {
+    // DRY:FN:new
     pub fn new(run_id: String) -> Self {
         Self {
             run_id,
@@ -31,6 +34,7 @@ impl DebugFeedCollector {
         }
     }
 
+    // DRY:FN:record_system
     pub fn record_system(&mut self, kind: &str, message: &str, payload: serde_json::Value) {
         self.events.push(DebugFeedEvent {
             run_id: self.run_id.clone(),
@@ -43,6 +47,7 @@ impl DebugFeedCollector {
         });
     }
 
+    // DRY:FN:record_step
     pub fn record_step(
         &mut self,
         step_id: &str,
@@ -61,6 +66,7 @@ impl DebugFeedCollector {
         });
     }
 
+    // DRY:FN:record_backend_event
     pub fn record_backend_event(&mut self, event: &PuppetMasterEvent) {
         let payload = serde_json::to_value(event).unwrap_or_else(|_| serde_json::json!({}));
         let kind = event_type_name(event).to_string();
@@ -75,6 +81,7 @@ impl DebugFeedCollector {
         });
     }
 
+    // DRY:FN:record_log_entry
     pub fn record_log_entry(&mut self, entry: &LogEntry) {
         self.events.push(DebugFeedEvent {
             run_id: self.run_id.clone(),
@@ -90,10 +97,12 @@ impl DebugFeedCollector {
         });
     }
 
+    // DRY:FN:events
     pub fn events(&self) -> &[DebugFeedEvent] {
         &self.events
     }
 
+    // DRY:FN:write_bundle
     pub fn write_bundle(&self, root: &Path) -> Result<DebugBundlePaths> {
         std::fs::create_dir_all(root)
             .with_context(|| format!("Failed to create debug root {}", root.display()))?;

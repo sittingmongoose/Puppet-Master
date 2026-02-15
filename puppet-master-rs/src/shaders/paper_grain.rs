@@ -12,6 +12,7 @@
 /// WGSL shader source for paper grain effect
 pub const PAPER_GRAIN_SHADER: &str = include_str!("paper_grain.wgsl");
 
+// DRY:DATA:PaperGrainUniforms
 /// Uniform data layout matching WGSL shader
 ///
 /// This struct must match the layout in paper_grain.wgsl exactly.

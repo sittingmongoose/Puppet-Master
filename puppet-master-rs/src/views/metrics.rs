@@ -10,6 +10,7 @@ use iced::widget::table::column as table_column;
 use iced::widget::{Space, column, container, row, scrollable, table, text};
 use iced::{Border, Element, Length, Pixels};
 
+// DRY:FN:metrics_view
 pub fn view<'a>(
     snapshot: &'a MetricsSnapshot,
     theme: &'a AppTheme,

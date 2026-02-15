@@ -8,6 +8,7 @@
 use crate::types::*;
 use serde::{Deserialize, Serialize};
 
+// DRY:DATA:WorkerReviewer
 /// Worker/Reviewer coordinator
 #[derive(Debug)]
 pub struct WorkerReviewer {
@@ -206,6 +207,7 @@ impl Default for WorkerReviewer {
     }
 }
 
+// DRY:DATA:ReviewCriteria
 /// Review criteria configuration
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ReviewCriteria {

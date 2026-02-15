@@ -10,6 +10,7 @@ use super::{
     RegexVerifier, ScriptVerifier,
 };
 
+// DRY:DATA:VerifierRegistry
 /// Registry of verifier implementations
 #[derive(Clone)]
 pub struct VerifierRegistry {
@@ -17,6 +18,7 @@ pub struct VerifierRegistry {
 }
 
 impl VerifierRegistry {
+    // DRY:FN:new
     /// Create a new empty registry
     pub fn new() -> Self {
         Self {
@@ -24,12 +26,14 @@ impl VerifierRegistry {
         }
     }
 
+    // DRY:FN:register
     /// Register a verifier
     pub fn register(&mut self, verifier: Arc<dyn Verifier>) {
         let verifier_type = verifier.verifier_type().to_string();
         self.verifiers.insert(verifier_type, verifier);
     }
 
+    // DRY:FN:register_defaults
     /// Register all default verifiers
     pub fn register_defaults(&mut self) {
         self.register(Arc::new(AIVerifier::new()));
@@ -41,11 +45,13 @@ impl VerifierRegistry {
         self.register(Arc::new(ScriptVerifier::new()));
     }
 
+    // DRY:FN:get
     /// Get a verifier by type
     pub fn get(&self, verifier_type: &str) -> Option<&Arc<dyn Verifier>> {
         self.verifiers.get(verifier_type)
     }
 
+    // DRY:FN:verify
     /// Verify a criterion using the appropriate verifier
     pub async fn verify(&self, criterion: &Criterion) -> Result<VerifierResult> {
         // Use verification_method string to determine verifier type
@@ -61,6 +67,7 @@ impl VerifierRegistry {
         Ok(verifier.verify(criterion).await)
     }
 
+    // DRY:FN:list_verifiers
     /// List all registered verifier types
     pub fn list_verifiers(&self) -> Vec<String> {
         self.verifiers.keys().cloned().collect()

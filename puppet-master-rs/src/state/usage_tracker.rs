@@ -14,6 +14,7 @@ use std::io::{BufRead, BufReader, Write};
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 
+// DRY:DATA:UsageTracker
 /// Thread-safe usage tracker
 #[derive(Clone)]
 pub struct UsageTracker {
@@ -25,6 +26,7 @@ struct UsageTrackerInner {
 }
 
 impl UsageTracker {
+    // DRY:FN:new
     /// Create a new usage tracker
     pub fn new(path: impl AsRef<Path>) -> Result<Self> {
         let path = path.as_ref().to_path_buf();
@@ -48,6 +50,7 @@ impl UsageTracker {
         })
     }
 
+    // DRY:FN:record
     /// Record a usage event
     pub fn record(&self, record: UsageRecord) -> Result<()> {
         let inner = self.inner.lock().unwrap();
@@ -79,6 +82,7 @@ impl UsageTracker {
         Ok(())
     }
 
+    // DRY:FN:read_all
     /// Read all usage records
     pub fn read_all(&self) -> Result<Vec<UsageRecord>> {
         let inner = self.inner.lock().unwrap();
@@ -110,6 +114,7 @@ impl UsageTracker {
         Ok(records)
     }
 
+    // DRY:FN:query_by_platform
     /// Query records by platform name
     pub fn query_by_platform(&self, platform: &str) -> Result<Vec<UsageRecord>> {
         let records = self.read_all()?;
@@ -119,6 +124,7 @@ impl UsageTracker {
             .collect())
     }
 
+    // DRY:FN:query_by_time_range
     /// Query records within a time range
     pub fn query_by_time_range(
         &self,
@@ -132,6 +138,7 @@ impl UsageTracker {
             .collect())
     }
 
+    // DRY:FN:get_stats
     /// Get aggregate statistics
     pub fn get_stats(&self) -> Result<LocalUsageStats> {
         let records = self.read_all()?;
@@ -171,6 +178,7 @@ impl UsageTracker {
         Ok(stats)
     }
 
+    // DRY:FN:get_platform_stats
     /// Get statistics for a specific platform
     pub fn get_platform_stats(&self, platform: &str) -> Result<PlatformStats> {
         let records = self.query_by_platform(platform)?;
@@ -193,6 +201,7 @@ impl UsageTracker {
     }
 }
 
+// DRY:DATA:LocalUsageStats
 /// Aggregate usage statistics (local to this module, not the type-level UsageStats)
 #[derive(Debug, Clone, Default)]
 pub struct LocalUsageStats {
@@ -205,6 +214,7 @@ pub struct LocalUsageStats {
 }
 
 impl LocalUsageStats {
+    // DRY:FN:avg_duration_ms
     /// Calculate average duration in milliseconds
     pub fn avg_duration_ms(&self) -> f64 {
         if self.total_requests == 0 {
@@ -214,6 +224,7 @@ impl LocalUsageStats {
         }
     }
 
+    // DRY:FN:success_rate
     /// Calculate success rate (0.0 - 1.0)
     pub fn success_rate(&self) -> f64 {
         if self.total_requests == 0 {
@@ -224,6 +235,7 @@ impl LocalUsageStats {
     }
 }
 
+// DRY:DATA:PlatformStats
 /// Platform-specific statistics
 #[derive(Debug, Clone, Default)]
 pub struct PlatformStats {
@@ -235,6 +247,7 @@ pub struct PlatformStats {
 }
 
 impl PlatformStats {
+    // DRY:FN:avg_duration_ms
     /// Calculate average duration
     pub fn avg_duration_ms(&self) -> f64 {
         if self.requests == 0 {
@@ -244,6 +257,7 @@ impl PlatformStats {
         }
     }
 
+    // DRY:FN:success_rate
     /// Calculate success rate
     pub fn success_rate(&self) -> f64 {
         if self.requests == 0 {

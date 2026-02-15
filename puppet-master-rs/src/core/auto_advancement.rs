@@ -10,6 +10,7 @@ use crate::core::tier_node::{TierNode, TierTree};
 use crate::types::*;
 use anyhow::{Result, anyhow};
 
+// DRY:DATA:AdvancementEngine
 /// Auto-advancement engine
 #[derive(Debug)]
 pub struct AdvancementEngine;

@@ -54,10 +54,12 @@ fn any_playwright_browser_dirs_exist(browsers_dir: &PathBuf) -> Result<Vec<Strin
     Ok(found)
 }
 
+// DRY:DATA:PlaywrightCheck
 /// Checks Playwright is installed and browsers are available.
 pub struct PlaywrightCheck;
 
 impl PlaywrightCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }

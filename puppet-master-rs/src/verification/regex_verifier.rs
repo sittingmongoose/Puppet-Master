@@ -8,10 +8,12 @@ use regex::Regex;
 use std::collections::HashMap;
 use std::path::PathBuf;
 
+// DRY:DATA:RegexVerifier
 /// Verifier that checks file content against regex patterns
 pub struct RegexVerifier;
 
 impl RegexVerifier {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }

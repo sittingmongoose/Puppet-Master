@@ -9,6 +9,7 @@ use crate::types::PuppetMasterEvent;
 use crossbeam_channel::{Receiver, Sender, unbounded};
 use std::sync::{Arc, Mutex};
 
+// DRY:HELPER:EventBus
 /// Thread-safe event bus for broadcasting events
 #[derive(Clone)]
 pub struct EventBus {
@@ -21,6 +22,7 @@ struct EventBusInner {
 }
 
 impl EventBus {
+    // DRY:HELPER:EventBus::new
     /// Create a new event bus
     pub fn new() -> Self {
         let (sender, _) = unbounded();
@@ -33,6 +35,7 @@ impl EventBus {
         }
     }
 
+    // DRY:HELPER:EventBus::emit
     /// Emit an event to all subscribers
     pub fn emit(&self, event: PuppetMasterEvent) {
         let inner = self.inner.lock().unwrap();
@@ -48,6 +51,7 @@ impl EventBus {
         log::trace!("Emitted event to {} subscribers", inner.subscribers.len());
     }
 
+    // DRY:HELPER:EventBus::subscribe
     /// Subscribe to events and get a receiver
     pub fn subscribe(&self) -> Receiver<PuppetMasterEvent> {
         let mut inner = self.inner.lock().unwrap();
@@ -66,6 +70,7 @@ impl EventBus {
         rx
     }
 
+    // DRY:HELPER:EventBus::subscriber_count
     /// Get the number of active subscribers
     pub fn subscriber_count(&self) -> usize {
         let inner = self.inner.lock().unwrap();
@@ -79,6 +84,7 @@ impl Default for EventBus {
     }
 }
 
+// DRY:HELPER:BroadcastEventBus
 // Better implementation using broadcast pattern
 /// Improved event bus with proper broadcast semantics
 #[derive(Clone)]
@@ -87,6 +93,7 @@ pub struct BroadcastEventBus {
 }
 
 impl BroadcastEventBus {
+    // DRY:HELPER:BroadcastEventBus::new
     /// Create a new broadcast event bus
     pub fn new() -> Self {
         Self {
@@ -94,6 +101,7 @@ impl BroadcastEventBus {
         }
     }
 
+    // DRY:HELPER:BroadcastEventBus::emit
     /// Emit an event to all subscribers
     pub fn emit(&self, event: PuppetMasterEvent) {
         let senders = self.senders.lock().unwrap();
@@ -109,6 +117,7 @@ impl BroadcastEventBus {
         log::trace!("Emitted event to {} subscribers", sent_count);
     }
 
+    // DRY:HELPER:BroadcastEventBus::subscribe
     /// Subscribe to events
     pub fn subscribe(&self) -> Receiver<PuppetMasterEvent> {
         let (tx, rx) = unbounded();
@@ -121,6 +130,7 @@ impl BroadcastEventBus {
         rx
     }
 
+    // DRY:HELPER:BroadcastEventBus::cleanup
     /// Clean up disconnected subscribers
     pub fn cleanup(&self) {
         let mut senders = self.senders.lock().unwrap();
@@ -139,6 +149,7 @@ impl BroadcastEventBus {
         log::debug!("Cleaned up subscribers, remaining: {}", senders.len());
     }
 
+    // DRY:HELPER:BroadcastEventBus::subscriber_count
     /// Get subscriber count
     pub fn subscriber_count(&self) -> usize {
         let senders = self.senders.lock().unwrap();

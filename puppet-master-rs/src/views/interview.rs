@@ -16,6 +16,7 @@ use crate::widgets::{
 use iced::widget::{Space, column, container, row, scrollable, text};
 use iced::{Background, Border, Element, Length};
 
+// DRY:FN:interview_view
 /// Interview view - Interactive requirements gathering interface
 pub fn view<'a>(
     active: bool,

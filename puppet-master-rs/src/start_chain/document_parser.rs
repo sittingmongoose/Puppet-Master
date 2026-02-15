@@ -8,6 +8,7 @@ use std::io::{Cursor, Read};
 use std::path::Path;
 use zip::ZipArchive;
 
+// DRY:DATA:ParsedDocument
 /// A parsed document with structured content.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -24,6 +25,7 @@ pub struct ParsedDocument {
 }
 
 impl ParsedDocument {
+    // DRY:FN:new
     /// Creates a new parsed document.
     pub fn new(title: impl Into<String>, raw_text: impl Into<String>) -> Self {
         Self {
@@ -34,11 +36,13 @@ impl ParsedDocument {
         }
     }
 
+    // DRY:FN:find_section
     /// Finds a section by title.
     pub fn find_section(&self, title: &str) -> Option<&DocumentSection> {
         self.sections.iter().find(|s| s.title == title)
     }
 
+    // DRY:FN:all_text
     /// Returns all text from the document.
     pub fn all_text(&self) -> String {
         let mut text = String::new();
@@ -50,6 +54,7 @@ impl ParsedDocument {
     }
 }
 
+// DRY:DATA:DocumentSection
 /// A section within a document.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -69,6 +74,7 @@ pub struct DocumentSection {
 }
 
 impl DocumentSection {
+    // DRY:FN:new
     /// Creates a new document section.
     pub fn new(title: impl Into<String>, level: usize, content: impl Into<String>) -> Self {
         Self {
@@ -80,6 +86,7 @@ impl DocumentSection {
         }
     }
 
+    // DRY:FN:all_text
     /// Returns all text from this section and subsections.
     pub fn all_text(&self) -> String {
         let mut text = self.content.clone();
@@ -91,6 +98,7 @@ impl DocumentSection {
     }
 }
 
+// DRY:DATA:ListItem
 /// A list item within a section.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -105,6 +113,7 @@ pub struct ListItem {
 }
 
 impl ListItem {
+    // DRY:FN:new
     /// Creates a new list item.
     pub fn new(text: impl Into<String>, level: usize) -> Self {
         Self {
@@ -114,6 +123,7 @@ impl ListItem {
         }
     }
 
+    // DRY:FN:numbered
     /// Creates a numbered list item.
     pub fn numbered(text: impl Into<String>, number: usize, level: usize) -> Self {
         Self {
@@ -124,10 +134,12 @@ impl ListItem {
     }
 }
 
+// DRY:DATA:DocumentParser
 /// Document parser for multiple formats.
 pub struct DocumentParser;
 
 impl DocumentParser {
+    // DRY:FN:parse_file
     /// Parses a file based on its extension, automatically detecting the format.
     ///
     /// Supported formats:
@@ -199,6 +211,7 @@ impl DocumentParser {
         Ok(doc)
     }
 
+    // DRY:FN:parse_docx
     /// Parses a DOCX (Microsoft Word OOXML) document.
     ///
     /// Extracts text content from document.xml, preserving heading structure
@@ -382,6 +395,7 @@ impl DocumentParser {
         }
     }
 
+    // DRY:FN:parse_pdf
     /// Parses a PDF document.
     ///
     /// Extracts text content from all pages, with best-effort structure detection.
@@ -494,6 +508,7 @@ impl DocumentParser {
         Ok(doc)
     }
 
+    // DRY:FN:parse_markdown
     /// Parses a markdown document.
     pub fn parse_markdown(content: &str) -> Result<ParsedDocument, String> {
         let lines: Vec<&str> = content.lines().collect();
@@ -543,6 +558,7 @@ impl DocumentParser {
         Ok(doc)
     }
 
+    // DRY:FN:parse_plain_text
     /// Parses plain text document (basic extraction).
     pub fn parse_plain_text(content: &str) -> Result<ParsedDocument, String> {
         let lines: Vec<&str> = content.lines().collect();

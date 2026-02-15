@@ -21,11 +21,13 @@ use std::os::unix::process::CommandExt;
 /// Global shutdown flag
 static SHUTDOWN_FLAG: AtomicBool = AtomicBool::new(false);
 
+// DRY:HELPER:is_shutting_down
 /// Check if shutdown has been requested
 pub fn is_shutting_down() -> bool {
     SHUTDOWN_FLAG.load(Ordering::Relaxed)
 }
 
+// DRY:HELPER:set_shutdown_flag
 /// Set the shutdown flag
 pub fn set_shutdown_flag() {
     SHUTDOWN_FLAG.store(true, Ordering::Relaxed);
@@ -34,6 +36,7 @@ pub fn set_shutdown_flag() {
 /// Global process registry (singleton)
 static GLOBAL_REGISTRY: Lazy<ProcessRegistry> = Lazy::new(ProcessRegistry::new);
 
+// DRY:DATA:ProcessRegistry
 /// Global process registry for tracking all spawned child processes
 #[derive(Clone)]
 pub struct ProcessRegistry {
@@ -203,6 +206,7 @@ impl Default for ProcessRegistry {
     }
 }
 
+// DRY:DATA:Signal
 /// Process signal
 #[derive(Debug, Clone, Copy)]
 pub enum Signal {
@@ -218,6 +222,7 @@ pub enum Signal {
     Hup,
 }
 
+// DRY:HELPER:graceful_shutdown
 /// Perform graceful shutdown of all processes
 ///
 /// This function:
@@ -243,6 +248,7 @@ pub async fn graceful_shutdown() {
     }
 }
 
+// DRY:HELPER:graceful_shutdown_sync
 /// Synchronous version of graceful shutdown
 pub fn graceful_shutdown_sync() {
     log::info!("Starting synchronous graceful shutdown sequence...");
@@ -260,6 +266,7 @@ pub fn graceful_shutdown_sync() {
     }
 }
 
+// DRY:HELPER:setup_signal_handlers
 /// Setup signal handlers for graceful shutdown
 ///
 /// Handles:
@@ -286,6 +293,7 @@ pub fn setup_signal_handlers() -> Result<()> {
     Ok(())
 }
 
+// DRY:DATA:ProcessDropGuard
 /// RAII guard that kills a process when dropped
 ///
 /// This guard automatically:
@@ -368,6 +376,7 @@ impl Drop for ProcessDropGuard {
     }
 }
 
+// DRY:HELPER:kill_process
 /// Kill a process with a specific signal
 pub fn kill_process(pid: u32, signal: Signal) -> Result<()> {
     #[cfg(unix)]
@@ -423,6 +432,7 @@ pub fn kill_process(pid: u32, signal: Signal) -> Result<()> {
     }
 }
 
+// DRY:HELPER:is_process_alive
 /// Check if a process is alive
 pub fn is_process_alive(pid: u32) -> bool {
     #[cfg(unix)]
@@ -449,11 +459,13 @@ pub fn is_process_alive(pid: u32) -> bool {
     }
 }
 
+// DRY:HELPER:is_process_running
 /// Legacy alias for backward compatibility
 pub fn is_process_running(pid: u32) -> bool {
     is_process_alive(pid)
 }
 
+// DRY:HELPER:wait_for_exit
 /// Wait for a process to exit with timeout
 ///
 /// Returns true if the process exited within the timeout, false otherwise
@@ -471,6 +483,7 @@ pub fn wait_for_exit(pid: u32, timeout: Duration) -> bool {
     false
 }
 
+// DRY:HELPER:kill_process_group
 /// Kill a process group (Unix only)
 ///
 /// On Unix, kills the entire process group by sending a signal to -pgid
@@ -502,6 +515,7 @@ pub fn kill_process_group(pid: u32, signal: Signal) -> Result<()> {
     Ok(())
 }
 
+// DRY:HELPER:kill_process_tree
 /// Kill a process tree (process and all its children)
 pub fn kill_process_tree(pid: u32, graceful_timeout: Duration) -> Result<()> {
     #[cfg(unix)]
@@ -564,6 +578,7 @@ fn kill_process_with_timeout(pid: u32, graceful_timeout: Duration) -> Result<()>
     Ok(())
 }
 
+// DRY:HELPER:spawn_tracked
 /// Spawn a tracked process with automatic registration and cleanup
 ///
 /// Returns the child process and a drop guard. The process will be:
@@ -590,6 +605,7 @@ pub fn spawn_tracked(cmd: &str, args: &[&str]) -> Result<(Child, ProcessDropGuar
     Ok((child, guard))
 }
 
+// DRY:HELPER:set_process_group
 /// Create a new process group for a command (Unix only)
 #[cfg(unix)]
 pub fn set_process_group(cmd: &mut Command) {

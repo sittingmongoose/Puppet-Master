@@ -8,6 +8,7 @@ use crate::widgets::*;
 use iced::widget::{column, container, pick_list, row, scrollable, text, text_editor};
 use iced::{Element, Length};
 
+// DRY:DATA:MemorySection
 /// Memory section for navigation
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum MemorySection {
@@ -49,6 +50,7 @@ impl std::fmt::Display for MemorySection {
     }
 }
 
+// DRY:FN:memory_view
 /// Memory/AGENTS.md viewer with section navigation
 pub fn view<'a>(
     memory_editor_content: &'a text_editor::Content,
@@ -130,6 +132,7 @@ pub fn view<'a>(
         .into()
 }
 
+// DRY:FN:filter_content
 pub fn filter_content(content: &str, section: &MemorySection) -> String {
     if section == &MemorySection::Full {
         return content.to_string();

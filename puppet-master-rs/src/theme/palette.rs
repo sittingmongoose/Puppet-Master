@@ -1,3 +1,4 @@
+// DRY:DATA:palette
 //! Semantic color palette
 //!
 //! Provides semantic color accessors that adapt to light/dark mode.
@@ -12,6 +13,7 @@ use iced::Color;
 /// This struct provides semantic names for colors, making it easier
 /// to reason about color usage in the UI. All colors are backed by
 /// the constants defined in `colors.rs`.
+// DRY:DATA:Palette
 #[derive(Debug, Clone, Copy)]
 pub struct Palette {
     // ── Backgrounds ──────────────────────────────────────────────────
@@ -93,6 +95,7 @@ pub struct Palette {
 
 impl Palette {
     /// Light mode palette
+    // DRY:FN:light
     pub fn light() -> Self {
         Self {
             background: PAPER_CREAM,
@@ -122,6 +125,7 @@ impl Palette {
     }
 
     /// Dark mode palette
+    // DRY:FN:dark
     pub fn dark() -> Self {
         Self {
             background: PAPER_DARK,
@@ -154,6 +158,7 @@ impl Palette {
     ///
     /// This provides the same functionality as `colors::status_color()`
     /// but through the palette API.
+    // DRY:FN:status_color
     pub fn status_color(&self, status: &str) -> Color {
         match status {
             "running" | "executing" | "planning" => self.status_running,

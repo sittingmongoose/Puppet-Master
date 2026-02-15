@@ -50,6 +50,7 @@ use tray_icon::{MouseButton, MouseButtonState};
 /// Embedded icon bytes - fallback if external file not found
 const ICON_BYTES: &[u8] = include_bytes!("../icons/icon.png");
 
+// DRY:DATA:TrayAction
 /// Actions that can be triggered from the system tray
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum TrayAction {
@@ -61,6 +62,7 @@ pub enum TrayAction {
     Quit,
 }
 
+// DRY:DATA:TrayManager
 /// System tray icon manager
 ///
 /// Manages the system tray icon, context menu, and user interactions.
@@ -84,6 +86,7 @@ pub struct TrayManager {
 }
 
 impl TrayManager {
+    // DRY:FN:new
     /// Create a new tray manager with the default embedded icon
     ///
     /// # Returns
@@ -190,6 +193,7 @@ impl TrayManager {
         Ok((manager, action_rx))
     }
 
+    // DRY:FN:update_status
     /// Update the status text in the tray menu
     ///
     /// # Arguments
@@ -352,6 +356,7 @@ impl Drop for TrayManager {
     }
 }
 
+// DRY:FN:create_tray_icon
 /// Create a tray icon with default settings
 ///
 /// This is a convenience function that creates a new TrayManager
@@ -385,6 +390,7 @@ pub fn create_tray_icon() -> Result<(TrayManager, Receiver<TrayAction>)> {
     TrayManager::new()
 }
 
+// DRY:FN:poll_tray_events
 /// Poll for tray events without blocking
 ///
 /// This is a helper function that attempts to receive a tray action

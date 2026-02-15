@@ -7,6 +7,7 @@ use std::sync::Arc;
 
 use super::checks::*;
 
+// DRY:DATA:DoctorReport
 /// Result of running all checks
 #[derive(Debug, Clone)]
 pub struct DoctorReport {
@@ -17,17 +18,20 @@ pub struct DoctorReport {
 }
 
 impl DoctorReport {
+    // DRY:FN:all_passed
     /// Check if all checks passed
     pub fn all_passed(&self) -> bool {
         self.failed == 0
     }
 
+    // DRY:FN:any_failed
     /// Check if any check failed
     pub fn any_failed(&self) -> bool {
         self.failed > 0
     }
 }
 
+// DRY:DATA:CheckReport
 /// Report for a single check
 #[derive(Debug, Clone)]
 pub struct CheckReport {
@@ -37,22 +41,26 @@ pub struct CheckReport {
     pub result: CheckResult,
 }
 
+// DRY:DATA:CheckRegistry
 /// Registry of health checks
 pub struct CheckRegistry {
     checks: Vec<Arc<dyn DoctorCheck>>,
 }
 
 impl CheckRegistry {
+    // DRY:FN:new
     /// Create a new empty registry
     pub fn new() -> Self {
         Self { checks: Vec::new() }
     }
 
+    // DRY:FN:register
     /// Register a check
     pub fn register(&mut self, check: Arc<dyn DoctorCheck>) {
         self.checks.push(check);
     }
 
+    // DRY:FN:register_defaults
     /// Register all default checks
     pub fn register_defaults(&mut self) {
         // CLI checks
@@ -89,6 +97,7 @@ impl CheckRegistry {
         self.register(Arc::new(wiring_check::WiringCheck::new()));
     }
 
+    // DRY:FN:run_all
     /// Run all checks
     pub async fn run_all(&self) -> Result<DoctorReport> {
         info!("Running {} health checks", self.checks.len());
@@ -127,6 +136,7 @@ impl CheckRegistry {
         })
     }
 
+    // DRY:FN:run_category
     /// Run checks for a specific category
     pub async fn run_category(&self, category: CheckCategory) -> Result<DoctorReport> {
         let mut reports = Vec::new();
@@ -167,6 +177,7 @@ impl CheckRegistry {
         })
     }
 
+    // DRY:FN:fix_all
     /// Attempt to fix all fixable issues
     pub async fn fix_all(
         &self,
@@ -185,6 +196,7 @@ impl CheckRegistry {
         Ok(fixes)
     }
 
+    // DRY:FN:run_check
     /// Run a single check by name
     pub async fn run_check(&self, name: &str) -> Result<Option<CheckReport>> {
         for check in &self.checks {
@@ -201,6 +213,7 @@ impl CheckRegistry {
         Ok(None)
     }
 
+    // DRY:FN:fix_check
     /// Attempt to fix a single check by name
     pub async fn fix_check(
         &self,
@@ -216,6 +229,7 @@ impl CheckRegistry {
         Ok(None)
     }
 
+    // DRY:FN:list_checks
     /// List all registered checks
     pub fn list_checks(&self) -> Vec<(String, CheckCategory, String)> {
         self.checks

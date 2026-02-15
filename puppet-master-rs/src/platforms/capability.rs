@@ -16,6 +16,7 @@ use std::process::Stdio;
 use std::sync::{Arc, Mutex};
 use tokio::process::Command;
 
+// DRY:DATA:CapabilityInfo
 /// Capability information for a platform
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CapabilityInfo {
@@ -66,6 +67,7 @@ impl CapabilityInfo {
     }
 }
 
+// DRY:DATA:CapabilityCache
 /// Cache for capability information
 pub struct CapabilityCache {
     cache: Arc<Mutex<HashMap<Platform, CapabilityInfo>>>,
@@ -229,11 +231,13 @@ impl Default for CapabilityCache {
 static CAPABILITY_CACHE: once_cell::sync::Lazy<CapabilityCache> =
     once_cell::sync::Lazy::new(CapabilityCache::new);
 
+// DRY:FN:global_cache
 /// Get the global capability cache
 pub fn global_cache() -> &'static CapabilityCache {
     &CAPABILITY_CACHE
 }
 
+// DRY:FN:is_available
 /// Check if a platform is available (convenience function)
 pub async fn is_available(platform: Platform) -> bool {
     match global_cache().get(platform).await {
@@ -242,6 +246,7 @@ pub async fn is_available(platform: Platform) -> bool {
     }
 }
 
+// DRY:FN:get_version
 /// Get version for a platform (convenience function)
 pub async fn get_version(platform: Platform) -> Option<String> {
     match global_cache().get(platform).await {
@@ -250,6 +255,7 @@ pub async fn get_version(platform: Platform) -> Option<String> {
     }
 }
 
+// DRY:FN:get_features
 /// Get features for a platform (convenience function)
 pub async fn get_features(platform: Platform) -> Vec<String> {
     match global_cache().get(platform).await {

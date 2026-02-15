@@ -41,6 +41,7 @@ impl QuotaUsageStats {
     }
 }
 
+// DRY:DATA:QuotaConfig
 /// Quota configuration for a platform
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct QuotaConfig {
@@ -137,6 +138,7 @@ impl QuotaConfig {
     }
 }
 
+// DRY:DATA:QuotaManager
 /// Quota manager for tracking and enforcing limits
 pub struct QuotaManager {
     configs: Arc<Mutex<HashMap<Platform, QuotaConfig>>>,
@@ -347,6 +349,7 @@ impl Default for QuotaManager {
 static QUOTA_MANAGER: once_cell::sync::Lazy<QuotaManager> =
     once_cell::sync::Lazy::new(QuotaManager::new);
 
+// DRY:FN:global_quota_manager
 /// Get the global quota manager
 pub fn global_quota_manager() -> &'static QuotaManager {
     &QUOTA_MANAGER

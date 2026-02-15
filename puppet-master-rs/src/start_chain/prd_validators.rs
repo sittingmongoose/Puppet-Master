@@ -5,6 +5,7 @@ use std::collections::HashSet;
 
 use crate::types::prd::PRD;
 
+// DRY:DATA:IssueSeverity
 /// Severity level of a validation issue.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -19,6 +20,7 @@ pub enum IssueSeverity {
     Low,
 }
 
+// DRY:DATA:ValidationIssue
 /// A validation issue found in the PRD.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -37,6 +39,7 @@ pub struct ValidationIssue {
 }
 
 impl ValidationIssue {
+    // DRY:FN:new
     /// Creates a new validation issue.
     pub fn new(
         severity: IssueSeverity,
@@ -53,6 +56,7 @@ impl ValidationIssue {
         }
     }
 
+    // DRY:FN:with_suggestion
     /// Adds a suggestion and returns self for chaining.
     pub fn with_suggestion(mut self, suggestion: impl Into<String>) -> Self {
         self.suggestion = Some(suggestion.into());
@@ -60,6 +64,7 @@ impl ValidationIssue {
     }
 }
 
+// DRY:DATA:ValidationResult
 /// Result of validation.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -73,6 +78,7 @@ pub struct ValidationResult {
 }
 
 impl ValidationResult {
+    // DRY:FN:new
     /// Creates a new validation result.
     pub fn new(passed: bool, issues: Vec<ValidationIssue>, items_validated: usize) -> Self {
         Self {
@@ -82,6 +88,7 @@ impl ValidationResult {
         }
     }
 
+    // DRY:FN:count_by_severity
     /// Counts issues by severity.
     pub fn count_by_severity(&self, severity: IssueSeverity) -> usize {
         self.issues
@@ -90,6 +97,7 @@ impl ValidationResult {
             .count()
     }
 
+    // DRY:FN:critical_issues
     /// Returns critical issues.
     pub fn critical_issues(&self) -> Vec<&ValidationIssue> {
         self.issues
@@ -99,10 +107,12 @@ impl ValidationResult {
     }
 }
 
+// DRY:DATA:CoverageValidator
 /// Validator for requirements coverage.
 pub struct CoverageValidator;
 
 impl CoverageValidator {
+    // DRY:FN:validate
     /// Validates that all requirements have corresponding PRD items.
     /// Note: This implementation checks if requirement IDs appear in PRD item titles/descriptions.
     pub fn validate(prd: &PRD, requirement_ids: &[String]) -> ValidationResult {
@@ -174,10 +184,12 @@ impl CoverageValidator {
     }
 }
 
+// DRY:DATA:QualityValidator
 /// Validator for PRD item quality.
 pub struct QualityValidator;
 
 impl QualityValidator {
+    // DRY:FN:validate
     /// Validates that PRD items have acceptance criteria and proper structure.
     pub fn validate(prd: &PRD) -> ValidationResult {
         let mut issues = Vec::new();
@@ -340,6 +352,7 @@ impl QualityValidator {
     }
 }
 
+// DRY:DATA:AiGapValidator
 /// AI gap validator - uses a platform CLI to detect semantic gaps between the source
 /// requirements and the PRD.
 ///
@@ -349,6 +362,7 @@ pub struct AiGapValidator {
     config: AiGapValidatorConfig,
 }
 
+// DRY:DATA:AiGapValidatorConfig
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AiGapValidatorConfig {
@@ -415,10 +429,12 @@ struct AiGap {
 }
 
 impl AiGapValidator {
+    // DRY:FN:new
     pub fn new(config: AiGapValidatorConfig) -> Self {
         Self { config }
     }
 
+    // DRY:FN:validate
     pub async fn validate(&self, prd: &PRD, requirements_text: &str) -> ValidationResult {
         if !self.config.enabled {
             return ValidationResult::new(true, Vec::new(), 0);
@@ -689,10 +705,12 @@ fn push_json_output_args(args: &mut Vec<String>, platform: crate::types::Platfor
     }
 }
 
+// DRY:DATA:NoManualValidator
 /// Validator to ensure no manual verification steps.
 pub struct NoManualValidator;
 
 impl NoManualValidator {
+    // DRY:FN:validate
     /// Validates that all acceptance criteria are automatable.
     pub fn validate(prd: &PRD) -> ValidationResult {
         let mut issues = Vec::new();
@@ -742,10 +760,12 @@ impl NoManualValidator {
     }
 }
 
+// DRY:DATA:CompositeValidator
 /// Combined validator that runs all validators.
 pub struct CompositeValidator;
 
 impl CompositeValidator {
+    // DRY:FN:validate
     /// Runs all synchronous validators and combines results.
     pub fn validate(prd: &PRD, requirement_ids: &[String]) -> ValidationResult {
         let coverage_result = CoverageValidator::validate(prd, requirement_ids);
@@ -765,6 +785,7 @@ impl CompositeValidator {
         ValidationResult::new(passed, all_issues, total_items)
     }
 
+    // DRY:FN:validate_with_ai
     /// Runs all validators including optional AI gap detection.
     pub async fn validate_with_ai(
         prd: &PRD,

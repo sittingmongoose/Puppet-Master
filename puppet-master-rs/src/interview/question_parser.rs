@@ -6,6 +6,7 @@
 use log::debug;
 use serde::{Deserialize, Serialize};
 
+// DRY:DATA:StructuredMarkers
 /// Marker strings used to detect structured output from the AI.
 pub struct StructuredMarkers;
 
@@ -17,6 +18,7 @@ pub const STRUCTURED_MARKERS: StructuredMarkersData = StructuredMarkersData {
     phase_complete_end: "<<<END_PM_PHASE_COMPLETE>>>",
 };
 
+// DRY:DATA:StructuredMarkersData
 /// Data holder for structured marker strings.
 pub struct StructuredMarkersData {
     pub question_start: &'static str,
@@ -25,6 +27,7 @@ pub struct StructuredMarkersData {
     pub phase_complete_end: &'static str,
 }
 
+// DRY:DATA:StructuredQuestion
 /// A structured multiple-choice question extracted from an AI response.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -39,6 +42,7 @@ pub struct StructuredQuestion {
     pub multi_select: bool,
 }
 
+// DRY:DATA:QuestionOption
 /// A single option within a structured question.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -49,6 +53,7 @@ pub struct QuestionOption {
     pub description: String,
 }
 
+// DRY:DATA:PhaseCompletion
 /// Data extracted when the AI signals that a phase is complete.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -63,6 +68,7 @@ pub struct PhaseCompletion {
     pub open_items: Vec<String>,
 }
 
+// DRY:DATA:ParsedAIResponse
 /// The result of parsing an AI response for structured data.
 #[derive(Debug, Clone)]
 pub struct ParsedAIResponse {
@@ -76,6 +82,7 @@ pub struct ParsedAIResponse {
     pub phase_completion: Option<PhaseCompletion>,
 }
 
+// DRY:FN:parse_ai_response
 /// Parses an AI response string for structured question and phase-completion markers.
 pub fn parse_ai_response(response_text: &str) -> ParsedAIResponse {
     let mut text = response_text.to_string();

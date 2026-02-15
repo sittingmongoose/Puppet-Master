@@ -6,6 +6,7 @@
 use super::phase_manager::PhaseManager;
 use super::state::InterviewState;
 
+// DRY:DATA:ValidationSeverity
 /// Severity of a validation issue.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ValidationSeverity {
@@ -15,6 +16,7 @@ pub enum ValidationSeverity {
     Warning,
 }
 
+// DRY:DATA:ValidationIssue
 /// A single validation issue found during completion checks.
 #[derive(Debug, Clone)]
 pub struct ValidationIssue {
@@ -26,6 +28,7 @@ pub struct ValidationIssue {
     pub severity: ValidationSeverity,
 }
 
+// DRY:DATA:ValidationResult
 /// Result of running completion validation.
 #[derive(Debug, Clone)]
 pub struct ValidationResult {
@@ -36,6 +39,7 @@ pub struct ValidationResult {
 }
 
 impl ValidationResult {
+    // DRY:FN:errors
     /// Returns only the error-level issues.
     pub fn errors(&self) -> Vec<&ValidationIssue> {
         self.issues
@@ -44,6 +48,7 @@ impl ValidationResult {
             .collect()
     }
 
+    // DRY:FN:warnings
     /// Returns only the warning-level issues.
     pub fn warnings(&self) -> Vec<&ValidationIssue> {
         self.issues
@@ -52,6 +57,7 @@ impl ValidationResult {
             .collect()
     }
 
+    // DRY:FN:first_issue_phase_index
     /// Finds the index of the first phase with issues, if any.
     pub fn first_issue_phase_index(&self, phase_manager: &PhaseManager) -> Option<usize> {
         // Extract phase IDs from error issues
@@ -67,6 +73,7 @@ impl ValidationResult {
     }
 }
 
+// DRY:FN:validate_completion
 /// Validates that an interview is complete and has zero gaps.
 pub fn validate_completion(
     state: &InterviewState,

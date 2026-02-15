@@ -4,6 +4,7 @@ use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
+// DRY:DATA:GitResult
 /// Result of a git operation.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -26,6 +27,7 @@ pub struct GitResult {
 }
 
 impl GitResult {
+    // DRY:FN:success
     /// Creates a new successful git result.
     pub fn success(message: impl Into<String>) -> Self {
         Self {
@@ -38,6 +40,7 @@ impl GitResult {
         }
     }
 
+    // DRY:FN:failure
     /// Creates a new failed git result.
     pub fn failure(message: impl Into<String>) -> Self {
         Self {
@@ -50,18 +53,21 @@ impl GitResult {
         }
     }
 
+    // DRY:FN:with_commit_sha
     /// Sets the commit SHA.
     pub fn with_commit_sha(mut self, sha: impl Into<String>) -> Self {
         self.commit_sha = Some(sha.into());
         self
     }
 
+    // DRY:FN:with_branch
     /// Sets the branch.
     pub fn with_branch(mut self, branch: impl Into<String>) -> Self {
         self.branch = Some(branch.into());
         self
     }
 
+    // DRY:FN:with_files
     /// Sets the files.
     pub fn with_files(mut self, files: Vec<PathBuf>) -> Self {
         self.files = files;
@@ -69,6 +75,7 @@ impl GitResult {
     }
 }
 
+// DRY:DATA:GitStatus
 /// Status of the git repository.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -98,6 +105,7 @@ pub struct GitStatus {
 }
 
 impl GitStatus {
+    // DRY:FN:new
     /// Creates a new git status.
     pub fn new(branch: impl Into<String>) -> Self {
         Self {
@@ -113,12 +121,14 @@ impl GitStatus {
         }
     }
 
+    // DRY:FN:has_changes
     /// Returns whether there are any changes.
     pub fn has_changes(&self) -> bool {
         self.staged_count > 0 || self.unstaged_count > 0 || self.untracked_count > 0
     }
 }
 
+// DRY:DATA:BranchStrategy
 /// Branch strategy for organizing work.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
@@ -150,6 +160,7 @@ impl std::fmt::Display for BranchStrategy {
     }
 }
 
+// DRY:DATA:GitConfig
 /// Git configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -191,6 +202,7 @@ impl Default for GitConfig {
     }
 }
 
+// DRY:DATA:CommitPolicy
 /// When to create commits.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]

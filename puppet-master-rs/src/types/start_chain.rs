@@ -4,6 +4,7 @@ use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
+// DRY:DATA:ParsedRequirements
 /// Parsed requirements from user input.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -20,6 +21,7 @@ pub struct ParsedRequirements {
 }
 
 impl ParsedRequirements {
+    // DRY:FN:new
     /// Creates new parsed requirements.
     pub fn new(project_name: impl Into<String>) -> Self {
         Self {
@@ -30,12 +32,14 @@ impl ParsedRequirements {
         }
     }
 
+    // DRY:FN:with_description
     /// Sets the description.
     pub fn with_description(mut self, description: impl Into<String>) -> Self {
         self.description = Some(description.into());
         self
     }
 
+    // DRY:FN:with_section
     /// Adds a section.
     pub fn with_section(mut self, section: RequirementsSection) -> Self {
         self.sections.push(section);
@@ -43,6 +47,7 @@ impl ParsedRequirements {
     }
 }
 
+// DRY:DATA:RequirementsSection
 /// A section of requirements.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -60,6 +65,7 @@ pub struct RequirementsSection {
 }
 
 impl RequirementsSection {
+    // DRY:FN:new
     /// Creates a new requirements section.
     pub fn new(title: impl Into<String>, content: impl Into<String>) -> Self {
         Self {
@@ -70,12 +76,14 @@ impl RequirementsSection {
         }
     }
 
+    // DRY:FN:with_type
     /// Sets the section type.
     pub fn with_type(mut self, section_type: impl Into<String>) -> Self {
         self.section_type = Some(section_type.into());
         self
     }
 
+    // DRY:FN:with_priority
     /// Sets the priority.
     pub fn with_priority(mut self, priority: super::prd::Priority) -> Self {
         self.priority = Some(priority);
@@ -83,6 +91,7 @@ impl RequirementsSection {
     }
 }
 
+// DRY:DATA:ProjectInfo
 /// Project information for start chain.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -109,6 +118,7 @@ pub struct ProjectInfo {
 }
 
 impl ProjectInfo {
+    // DRY:FN:new
     /// Creates new project info.
     pub fn new(name: impl Into<String>, path: PathBuf) -> Self {
         Self {
@@ -122,18 +132,21 @@ impl ProjectInfo {
         }
     }
 
+    // DRY:FN:with_description
     /// Sets the description.
     pub fn with_description(mut self, description: impl Into<String>) -> Self {
         self.description = Some(description.into());
         self
     }
 
+    // DRY:FN:with_prd
     /// Marks as having a PRD.
     pub fn with_prd(mut self) -> Self {
         self.has_prd = true;
         self
     }
 
+    // DRY:FN:with_agents
     /// Marks as having AGENTS.md.
     pub fn with_agents(mut self) -> Self {
         self.has_agents = true;
@@ -141,6 +154,7 @@ impl ProjectInfo {
     }
 }
 
+// DRY:DATA:AgentsDoc
 /// AGENTS.md documentation structure.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -157,6 +171,7 @@ pub struct AgentsDoc {
 }
 
 impl AgentsDoc {
+    // DRY:FN:new
     /// Creates a new agents document.
     pub fn new(project_name: impl Into<String>) -> Self {
         Self {
@@ -167,6 +182,7 @@ impl AgentsDoc {
         }
     }
 
+    // DRY:FN:with_agent
     /// Adds an agent.
     pub fn with_agent(mut self, agent: AgentDefinition) -> Self {
         self.agents.push(agent);
@@ -174,6 +190,7 @@ impl AgentsDoc {
     }
 }
 
+// DRY:DATA:AgentDefinition
 /// Definition of an agent.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -196,6 +213,7 @@ pub struct AgentDefinition {
 }
 
 impl AgentDefinition {
+    // DRY:FN:new
     /// Creates a new agent definition.
     pub fn new(
         name: impl Into<String>,
@@ -212,18 +230,21 @@ impl AgentDefinition {
         }
     }
 
+    // DRY:FN:with_capability
     /// Adds a capability.
     pub fn with_capability(mut self, capability: impl Into<String>) -> Self {
         self.capabilities.push(capability.into());
         self
     }
 
+    // DRY:FN:with_platform
     /// Sets the platform.
     pub fn with_platform(mut self, platform: super::platform::Platform) -> Self {
         self.platform = Some(platform);
         self
     }
 
+    // DRY:FN:with_model
     /// Sets the model.
     pub fn with_model(mut self, model: impl Into<String>) -> Self {
         self.model = Some(model.into());
@@ -231,6 +252,7 @@ impl AgentDefinition {
     }
 }
 
+// DRY:DATA:ProgressEntry
 /// Progress tracking entry.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -249,6 +271,7 @@ pub struct ProgressEntry {
 }
 
 impl ProgressEntry {
+    // DRY:FN:new
     /// Creates a new progress entry.
     pub fn new(item_id: impl Into<String>, status: super::prd::ItemStatus, progress: f64) -> Self {
         Self {
@@ -260,6 +283,7 @@ impl ProgressEntry {
         }
     }
 
+    // DRY:FN:with_message
     /// Sets the message.
     pub fn with_message(mut self, message: impl Into<String>) -> Self {
         self.message = Some(message.into());

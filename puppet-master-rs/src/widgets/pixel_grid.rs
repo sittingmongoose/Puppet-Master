@@ -12,6 +12,7 @@ use iced::{Color, Element, Length, Point, Rectangle, Renderer, Size, Theme};
 // Pixel Grid Overlay
 // ============================================================================
 
+// DRY:WIDGET:PixelGrid
 /// Pixel grid overlay canvas widget
 ///
 /// Draws a subtle grid pattern with configurable spacing and opacity,
@@ -123,6 +124,7 @@ fn draw_pixel_grid(frame: &mut Frame, size: Size, base_color: Color, opacity: f3
 // Scanline Overlay
 // ============================================================================
 
+// DRY:WIDGET:ScanlineOverlay
 /// Scanline overlay canvas widget
 ///
 /// Draws alternating horizontal lines to simulate CRT monitor scanlines,
@@ -226,6 +228,7 @@ fn draw_scanlines(frame: &mut Frame, size: Size, base_color: Color, opacity: f32
 // Combined Overlay
 // ============================================================================
 
+// DRY:WIDGET:RetroOverlay
 /// Combined pixel grid and scanline overlay
 ///
 /// Provides both effects in a single widget for convenience.
@@ -282,6 +285,7 @@ impl RetroOverlay {
 // Convenience Functions
 // ============================================================================
 
+// DRY:WIDGET:pixel_grid_overlay
 /// Create a pixel grid overlay canvas widget
 pub fn pixel_grid_overlay<'a, Message: 'a>(grid: &'a PixelGrid) -> Element<'a, Message> {
     Canvas::new(grid)
@@ -290,6 +294,7 @@ pub fn pixel_grid_overlay<'a, Message: 'a>(grid: &'a PixelGrid) -> Element<'a, M
         .into()
 }
 
+// DRY:WIDGET:scanline_overlay
 /// Create a scanline overlay canvas widget
 pub fn scanline_overlay<'a, Message: 'a>(scanlines: &'a ScanlineOverlay) -> Element<'a, Message> {
     Canvas::new(scanlines)
@@ -298,6 +303,7 @@ pub fn scanline_overlay<'a, Message: 'a>(scanlines: &'a ScanlineOverlay) -> Elem
         .into()
 }
 
+// DRY:WIDGET:retro_overlay
 /// Create a combined retro overlay with both pixel grid and scanlines
 ///
 /// Returns a stack of the two overlays for use with `iced::widget::stack`

@@ -8,6 +8,7 @@ use crate::widgets::*;
 use iced::widget::{Space, column, container, row, scrollable, text, text_editor};
 use iced::{Border, Element, Length};
 
+// DRY:DATA:TierDisplayNode
 /// Tier display node for tree rendering
 #[derive(Debug, Clone)]
 pub struct TierDisplayNode {
@@ -22,6 +23,7 @@ pub struct TierDisplayNode {
     pub iteration_count: usize,
 }
 
+// DRY:DATA:TierNodeType
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum TierNodeType {
     Phase,
@@ -56,6 +58,7 @@ fn status_to_color(status: &str) -> iced::Color {
     }
 }
 
+// DRY:FN:tiers_view
 /// Tier hierarchy viewer with expandable nodes
 pub fn view<'a>(
     tree: &'a [TierDisplayNode],
@@ -282,6 +285,7 @@ pub fn view<'a>(
         .into()
 }
 
+// DRY:DATA:TierDetails
 /// Tier details panel
 #[derive(Debug, Clone)]
 pub struct TierDetails {

@@ -18,6 +18,7 @@ use std::io::Write;
 use std::path::Path;
 use std::sync::{Arc, Mutex};
 
+// DRY:DATA:PlatformMetrics
 /// Aggregate metrics for a platform.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -45,6 +46,7 @@ pub struct PlatformMetrics {
 }
 
 impl PlatformMetrics {
+    // DRY:FN:new
     pub fn new(platform: Platform) -> Self {
         Self {
             platform,
@@ -63,6 +65,7 @@ impl PlatformMetrics {
         }
     }
 
+    // DRY:FN:success_rate
     pub fn success_rate(&self) -> f64 {
         if self.iterations == 0 {
             0.0
@@ -71,6 +74,7 @@ impl PlatformMetrics {
         }
     }
 
+    // DRY:FN:avg_latency_ms
     pub fn avg_latency_ms(&self) -> f64 {
         if self.iterations == 0 {
             0.0
@@ -79,6 +83,7 @@ impl PlatformMetrics {
         }
     }
 
+    // DRY:FN:escalation_rate
     pub fn escalation_rate(&self) -> f64 {
         if self.iterations == 0 {
             0.0
@@ -88,6 +93,7 @@ impl PlatformMetrics {
     }
 }
 
+// DRY:DATA:SubtaskMetrics
 /// Aggregate metrics for a (sub)task/tier.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -120,6 +126,7 @@ pub struct SubtaskMetrics {
 }
 
 impl SubtaskMetrics {
+    // DRY:FN:new
     pub fn new(subtask_id: String) -> Self {
         Self {
             subtask_id,
@@ -141,6 +148,7 @@ impl SubtaskMetrics {
         }
     }
 
+    // DRY:FN:success_rate
     pub fn success_rate(&self) -> f64 {
         if self.iterations == 0 {
             0.0
@@ -149,6 +157,7 @@ impl SubtaskMetrics {
         }
     }
 
+    // DRY:FN:avg_latency_ms
     pub fn avg_latency_ms(&self) -> f64 {
         if self.iterations == 0 {
             0.0
@@ -157,6 +166,7 @@ impl SubtaskMetrics {
         }
     }
 
+    // DRY:FN:escalation_rate
     pub fn escalation_rate(&self) -> f64 {
         if self.iterations == 0 {
             0.0
@@ -166,6 +176,7 @@ impl SubtaskMetrics {
     }
 }
 
+// DRY:DATA:OverallMetrics
 /// Totals across all platforms and subtasks.
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -185,6 +196,7 @@ pub struct OverallMetrics {
 }
 
 impl OverallMetrics {
+    // DRY:FN:success_rate
     pub fn success_rate(&self) -> f64 {
         if self.iterations == 0 {
             0.0
@@ -193,6 +205,7 @@ impl OverallMetrics {
         }
     }
 
+    // DRY:FN:avg_latency_ms
     pub fn avg_latency_ms(&self) -> f64 {
         if self.iterations == 0 {
             0.0
@@ -201,6 +214,7 @@ impl OverallMetrics {
         }
     }
 
+    // DRY:FN:escalation_rate
     pub fn escalation_rate(&self) -> f64 {
         if self.iterations == 0 {
             0.0
@@ -210,6 +224,7 @@ impl OverallMetrics {
     }
 }
 
+// DRY:DATA:MetricsSnapshot
 /// A serializable snapshot of the current metrics.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -299,6 +314,7 @@ struct MetricsCollectorInner {
     last_platform_by_item: HashMap<String, Platform>,
 }
 
+// DRY:DATA:MetricsCollector
 /// Thread-safe metrics collector.
 #[derive(Clone, Default)]
 pub struct MetricsCollector {
@@ -306,10 +322,12 @@ pub struct MetricsCollector {
 }
 
 impl MetricsCollector {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self::default()
     }
 
+    // DRY:FN:record_event
     /// Record a `PuppetMasterEvent` and update aggregates.
     pub fn record_event(&self, event: &PuppetMasterEvent) {
         let mut inner = self.inner.lock().unwrap();
@@ -489,6 +507,7 @@ impl MetricsCollector {
         }
     }
 
+    // DRY:FN:record_usage
     /// Record a usage record (tokens/cost) and attribute it to a tier/subtask if possible.
     pub fn record_usage(&self, record: &UsageRecord) {
         let mut inner = self.inner.lock().unwrap();
@@ -520,6 +539,7 @@ impl MetricsCollector {
         }
     }
 
+    // DRY:FN:snapshot
     /// Get a serializable snapshot of current metrics.
     pub fn snapshot(&self) -> MetricsSnapshot {
         let inner = self.inner.lock().unwrap();
@@ -563,6 +583,7 @@ impl MetricsCollector {
         }
     }
 
+    // DRY:FN:export_json
     /// Export a snapshot as pretty JSON.
     pub fn export_json(&self, path: impl AsRef<Path>) -> Result<()> {
         let path = path.as_ref();
@@ -583,6 +604,7 @@ impl MetricsCollector {
         Ok(())
     }
 
+    // DRY:FN:export_csv
     /// Export a snapshot as a single CSV file.
     ///
     /// The CSV includes both platform and subtask rows, distinguished by `kind`.

@@ -13,6 +13,7 @@ use anyhow::{Context, Result};
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 
+// DRY:DATA:ConfigManager
 /// Thread-safe configuration manager
 #[derive(Clone)]
 pub struct ConfigManager {
@@ -25,6 +26,7 @@ struct ConfigManagerInner {
 }
 
 impl ConfigManager {
+    // DRY:FN:new
     /// Create a new config manager with default configuration
     pub fn new() -> Self {
         Self {
@@ -35,6 +37,7 @@ impl ConfigManager {
         }
     }
 
+    // DRY:FN:load
     /// Load configuration from a file
     pub fn load(path: impl AsRef<Path>) -> Result<Self> {
         let path = path.as_ref();
@@ -71,6 +74,7 @@ impl ConfigManager {
         })
     }
 
+    // DRY:FN:discover
     /// Discover and load configuration file
     ///
     /// Searches in order:
@@ -169,6 +173,7 @@ impl ConfigManager {
         }
     }
 
+    // DRY:FN:save
     /// Save configuration to file
     /// If no config path is set, saves to workspace directory
     pub fn save(&self) -> Result<()> {
@@ -197,6 +202,7 @@ impl ConfigManager {
         Ok(())
     }
 
+    // DRY:FN:save_to
     /// Save configuration to a specific path
     pub fn save_to(&self, path: impl AsRef<Path>) -> Result<()> {
         let mut inner = self.inner.lock().unwrap();
@@ -220,12 +226,14 @@ impl ConfigManager {
         Ok(())
     }
 
+    // DRY:FN:get_config
     /// Get a clone of the configuration
     pub fn get_config(&self) -> PuppetMasterConfig {
         let inner = self.inner.lock().unwrap();
         inner.config.clone()
     }
 
+    // DRY:FN:set_config
     /// Update the configuration
     pub fn set_config(&self, config: PuppetMasterConfig) -> Result<()> {
         // Validate before setting
@@ -246,12 +254,14 @@ impl ConfigManager {
         Ok(())
     }
 
+    // DRY:FN:config_path
     /// Get the config file path
     pub fn config_path(&self) -> Option<PathBuf> {
         let inner = self.inner.lock().unwrap();
         inner.config_path.clone()
     }
 
+    // DRY:FN:merge
     /// Merge with another configuration (other takes precedence)
     pub fn merge(&self, other: PuppetMasterConfig) -> Result<()> {
         let mut inner = self.inner.lock().unwrap();
@@ -264,6 +274,7 @@ impl ConfigManager {
         Ok(())
     }
 
+    // DRY:FN:apply_overrides
     /// Apply configuration overrides to the current configuration
     ///
     /// This modifies the configuration in-place with the specified overrides.

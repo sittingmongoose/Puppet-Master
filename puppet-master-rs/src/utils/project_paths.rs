@@ -6,6 +6,7 @@
 use anyhow::{Context, Result};
 use std::path::{Path, PathBuf};
 
+// DRY:HELPER:derive_project_root
 /// Derive the project root directory from a config file path
 ///
 /// Walks up the directory tree from the config file location to find
@@ -54,6 +55,7 @@ pub fn derive_project_root(config_path: &Path) -> Result<PathBuf> {
     }
 }
 
+// DRY:HELPER:resolve_under_project_root
 /// Resolve a relative path under the project root
 ///
 /// Takes a project root and a relative path, and returns the absolute path.
@@ -68,6 +70,7 @@ pub fn resolve_under_project_root(root: &Path, relative: &str) -> PathBuf {
     }
 }
 
+// DRY:HELPER:resolve_working_directory
 /// Resolve the working directory from configuration
 ///
 /// Returns the configured working directory, or the project root if not specified.
@@ -84,6 +87,7 @@ pub fn resolve_working_directory(config: &crate::types::PuppetMasterConfig) -> P
     }
 }
 
+// DRY:HELPER:puppet_master_dir
 /// Get the .puppet-master directory path
 ///
 /// Returns the path to the .puppet-master directory in the project root.
@@ -91,6 +95,7 @@ pub fn puppet_master_dir(root: &Path) -> PathBuf {
     root.join(".puppet-master")
 }
 
+// DRY:HELPER:evidence_dir
 /// Get the evidence directory path
 ///
 /// Returns the path where evidence files are stored.
@@ -98,6 +103,7 @@ pub fn evidence_dir(root: &Path) -> PathBuf {
     puppet_master_dir(root).join("evidence")
 }
 
+// DRY:HELPER:logs_dir
 /// Get the logs directory path
 ///
 /// Returns the path where log files are stored.
@@ -105,6 +111,7 @@ pub fn logs_dir(root: &Path) -> PathBuf {
     puppet_master_dir(root).join("logs")
 }
 
+// DRY:HELPER:checkpoints_dir
 /// Get the checkpoints directory path
 ///
 /// Returns the path where checkpoint/state files are stored.
@@ -112,6 +119,7 @@ pub fn checkpoints_dir(root: &Path) -> PathBuf {
     puppet_master_dir(root).join("checkpoints")
 }
 
+// DRY:HELPER:usage_dir
 /// Get the usage directory path
 ///
 /// Returns the path where usage tracking files are stored.
@@ -119,6 +127,7 @@ pub fn usage_dir(root: &Path) -> PathBuf {
     puppet_master_dir(root).join("usage")
 }
 
+// DRY:HELPER:agents_dir
 /// Get the agents directory path
 ///
 /// Returns the path where agent-specific data is stored.
@@ -126,6 +135,7 @@ pub fn agents_dir(root: &Path) -> PathBuf {
     puppet_master_dir(root).join("agents")
 }
 
+// DRY:HELPER:memory_dir
 /// Get the memory/state directory path
 ///
 /// Returns the path where memory and state files are stored.
@@ -133,6 +143,7 @@ pub fn memory_dir(root: &Path) -> PathBuf {
     puppet_master_dir(root).join("memory")
 }
 
+// DRY:HELPER:backups_dir
 /// Get the backups directory path
 ///
 /// Returns the path where backup files are stored.
@@ -140,6 +151,7 @@ pub fn backups_dir(root: &Path) -> PathBuf {
     puppet_master_dir(root).join("backups")
 }
 
+// DRY:HELPER:initialize_puppet_master_dirs
 /// Initialize the .puppet-master directory structure
 ///
 /// Creates all necessary subdirectories if they don't exist.
@@ -163,6 +175,7 @@ pub fn initialize_puppet_master_dirs(root: &Path) -> Result<()> {
     Ok(())
 }
 
+// DRY:HELPER:is_within_project_root
 /// Check if a path is within the project root
 ///
 /// Returns true if the given path is a descendant of the project root.
@@ -173,6 +186,7 @@ pub fn is_within_project_root(root: &Path, path: &Path) -> bool {
         .unwrap_or(false)
 }
 
+// DRY:HELPER:get_relative_to_root
 /// Get relative path from project root
 ///
 /// Returns the path relative to the project root, or None if not within root.
@@ -180,6 +194,7 @@ pub fn get_relative_to_root(root: &Path, path: &Path) -> Option<PathBuf> {
     path.strip_prefix(root).ok().map(|p| p.to_path_buf())
 }
 
+// DRY:HELPER:resolve_paths_under_root
 /// Resolve a list of paths under the project root
 ///
 /// Convenience function to resolve multiple paths at once.

@@ -1,8 +1,10 @@
+// DRY:DATA:styles
 use crate::theme::{AppTheme, colors, tokens};
 use iced::widget::{button, container, progress_bar, scrollable, text_input};
 use iced::{Border, Color, Shadow, Vector};
 
 /// Button variant for styling
+// DRY:DATA:ButtonVariant
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ButtonVariant {
     Primary,   // Acid lime
@@ -14,6 +16,7 @@ pub enum ButtonVariant {
 }
 
 impl ButtonVariant {
+    // DRY:FN:style
     pub fn style(&self, theme: &AppTheme) -> button::Style {
         let (bg, text_color, border_color) = match self {
             ButtonVariant::Primary => (colors::ACID_LIME, colors::INK_BLACK, colors::INK_BLACK),
@@ -47,6 +50,7 @@ impl ButtonVariant {
 }
 
 /// Panel style (container with cross-hatch shadow)
+// DRY:HELPER:panel_style
 pub fn panel_style(theme: &AppTheme) -> container::Style {
     container::Style {
         background: Some(iced::Background::Color(theme.paper())),
@@ -66,6 +70,7 @@ pub fn panel_style(theme: &AppTheme) -> container::Style {
 }
 
 /// Header style
+// DRY:HELPER:header_style
 pub fn header_style(theme: &AppTheme) -> container::Style {
     container::Style {
         background: Some(iced::Background::Color(theme.paper())),
@@ -85,6 +90,7 @@ pub fn header_style(theme: &AppTheme) -> container::Style {
 }
 
 /// Text input style
+// DRY:HELPER:text_input_style
 pub fn text_input_style(theme: &AppTheme) -> text_input::Style {
     text_input::Style {
         background: iced::Background::Color(theme.paper()),
@@ -101,6 +107,7 @@ pub fn text_input_style(theme: &AppTheme) -> text_input::Style {
 }
 
 /// Text input focused style
+// DRY:HELPER:text_input_focused_style
 pub fn text_input_focused_style(theme: &AppTheme) -> text_input::Style {
     text_input::Style {
         background: iced::Background::Color(theme.paper()),
@@ -117,6 +124,7 @@ pub fn text_input_focused_style(theme: &AppTheme) -> text_input::Style {
 }
 
 /// Progress bar style
+// DRY:HELPER:progress_bar_style
 pub fn progress_bar_style(theme: &AppTheme, fill_color: Color) -> progress_bar::Style {
     progress_bar::Style {
         background: iced::Background::Color(if theme.is_dark() {
@@ -134,6 +142,7 @@ pub fn progress_bar_style(theme: &AppTheme, fill_color: Color) -> progress_bar::
 }
 
 /// Nav button style (active state)
+// DRY:HELPER:nav_active_style
 pub fn nav_active_style(theme: &AppTheme) -> button::Style {
     button::Style {
         background: Some(iced::Background::Color(theme.ink())),
@@ -149,6 +158,7 @@ pub fn nav_active_style(theme: &AppTheme) -> button::Style {
 }
 
 /// Nav button style (inactive state)
+// DRY:HELPER:nav_inactive_style
 pub fn nav_inactive_style(theme: &AppTheme) -> button::Style {
     button::Style {
         background: Some(iced::Background::Color(theme.paper())),
@@ -164,6 +174,7 @@ pub fn nav_inactive_style(theme: &AppTheme) -> button::Style {
 }
 
 /// Modal backdrop style
+// DRY:HELPER:modal_backdrop_style
 pub fn modal_backdrop_style(theme: &AppTheme) -> container::Style {
     container::Style {
         background: Some(iced::Background::Color(if theme.is_dark() {
@@ -183,6 +194,7 @@ pub fn modal_backdrop_style(theme: &AppTheme) -> container::Style {
 ///
 /// This function handles Active, Hovered, Pressed, and Disabled states
 /// using the variant to determine colors.
+// DRY:HELPER:button_styled
 pub fn button_styled(
     variant: ButtonVariant,
     theme: &AppTheme,
@@ -331,6 +343,7 @@ fn button_style_for_status(
 /// Navigation button style with active state detection
 ///
 /// Use this for sidebar navigation buttons that need to show active state.
+// DRY:HELPER:nav_button_styled
 pub fn nav_button_styled(
     is_active: bool,
     theme: &AppTheme,
@@ -412,6 +425,7 @@ fn nav_button_style_for_status(
 /// Container panel with shadow and border
 ///
 /// Updated version of panel_style using tokens
+// DRY:HELPER:container_panel_styled
 pub fn container_panel_styled(theme: &AppTheme) -> impl Fn(&iced::Theme) -> container::Style {
     let theme = *theme;
     move |_| {
@@ -431,6 +445,7 @@ pub fn container_panel_styled(theme: &AppTheme) -> impl Fn(&iced::Theme) -> cont
 }
 
 /// Container for elevated surfaces (modals, cards)
+// DRY:HELPER:container_elevated_styled
 pub fn container_elevated_styled(theme: &AppTheme) -> impl Fn(&iced::Theme) -> container::Style {
     let theme = *theme;
     move |_| {
@@ -450,6 +465,7 @@ pub fn container_elevated_styled(theme: &AppTheme) -> impl Fn(&iced::Theme) -> c
 }
 
 /// Text input with focus and error states
+// DRY:HELPER:text_input_styled
 pub fn text_input_styled(
     has_error: bool,
     theme: &AppTheme,
@@ -530,6 +546,7 @@ fn text_input_style_for_status(
 }
 
 /// Scrollable style with themed scrollbar
+// DRY:HELPER:scrollable_styled
 pub fn scrollable_styled(
     theme: &AppTheme,
 ) -> impl Fn(&iced::Theme, scrollable::Status) -> scrollable::Style {
@@ -705,6 +722,7 @@ pub fn scrollable_styled(
 }
 
 /// Progress bar with custom fill color
+// DRY:HELPER:progress_bar_styled
 pub fn progress_bar_styled(
     fill_color: Color,
     theme: &AppTheme,
@@ -729,6 +747,7 @@ pub fn progress_bar_styled(
 }
 
 /// Toast notification style
+// DRY:HELPER:container_toast_styled
 pub fn container_toast_styled(
     variant: ToastVariant,
     theme: &AppTheme,
@@ -758,6 +777,7 @@ pub fn container_toast_styled(
 }
 
 /// Toast variant for styled notifications
+// DRY:DATA:ToastVariant
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ToastVariant {
     Info,

@@ -9,6 +9,7 @@ use iced::widget::{Space, column, container, row, scrollable, text};
 use iced::{Border, Element, Length};
 use std::path::PathBuf;
 
+// DRY:DATA:ProjectInfo
 /// Project information
 #[derive(Debug, Clone)]
 pub struct ProjectInfo {
@@ -19,6 +20,7 @@ pub struct ProjectInfo {
     pub pinned: bool,
 }
 
+// DRY:DATA:ProjectStatus
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ProjectStatus {
     Idle,
@@ -29,6 +31,7 @@ pub enum ProjectStatus {
     Error,
 }
 
+// DRY:FN:projects_view
 /// Projects view with create form support
 pub fn view<'a>(
     projects: &'a [ProjectInfo],

@@ -4,6 +4,7 @@ use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use std::fmt;
 
+// DRY:DATA:OrchestratorState
 /// Top-level orchestrator state.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -41,6 +42,7 @@ impl fmt::Display for OrchestratorState {
     }
 }
 
+// DRY:DATA:TierState
 /// State of an individual tier (phase, task, subtask, or iteration).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -91,6 +93,7 @@ impl fmt::Display for TierState {
 }
 
 impl TierState {
+    // DRY:FN:is_complete
     /// Returns whether this state represents completion (success or failure).
     pub fn is_complete(&self) -> bool {
         matches!(
@@ -99,6 +102,7 @@ impl TierState {
         )
     }
 
+    // DRY:FN:is_active
     /// Returns whether this state represents active execution.
     pub fn is_active(&self) -> bool {
         matches!(
@@ -107,17 +111,20 @@ impl TierState {
         )
     }
 
+    // DRY:FN:is_success
     /// Returns whether this state represents a successful outcome.
     pub fn is_success(&self) -> bool {
         matches!(self, Self::Passed)
     }
 
+    // DRY:FN:is_failure
     /// Returns whether this state represents a failure outcome.
     pub fn is_failure(&self) -> bool {
         matches!(self, Self::Failed | Self::Escalated)
     }
 }
 
+// DRY:DATA:TierType
 /// Type of execution tier in the hierarchy.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -143,6 +150,7 @@ impl fmt::Display for TierType {
     }
 }
 
+// DRY:DATA:OrchestratorContext
 /// Context information for the orchestrator's current execution state.
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -181,35 +189,41 @@ pub struct OrchestratorContext {
 }
 
 impl OrchestratorContext {
+    // DRY:FN:new
     /// Creates a new empty context.
     pub fn new() -> Self {
         Self::default()
     }
 
+    // DRY:FN:with_phase_id
     /// Sets the current phase ID.
     pub fn with_phase_id(mut self, id: impl Into<String>) -> Self {
         self.current_phase_id = Some(id.into());
         self
     }
 
+    // DRY:FN:with_task_id
     /// Sets the current task ID.
     pub fn with_task_id(mut self, id: impl Into<String>) -> Self {
         self.current_task_id = Some(id.into());
         self
     }
 
+    // DRY:FN:with_subtask_id
     /// Sets the current subtask ID.
     pub fn with_subtask_id(mut self, id: impl Into<String>) -> Self {
         self.current_subtask_id = Some(id.into());
         self
     }
 
+    // DRY:FN:with_iteration_id
     /// Sets the current iteration ID.
     pub fn with_iteration_id(mut self, id: impl Into<String>) -> Self {
         self.current_iteration_id = Some(id.into());
         self
     }
 
+    // DRY:FN:clear_tiers
     /// Clears all tier IDs.
     pub fn clear_tiers(&mut self) {
         self.current_phase_id = None;
@@ -218,6 +232,7 @@ impl OrchestratorContext {
         self.current_iteration_id = None;
     }
 
+    // DRY:FN:active_tier_type
     /// Returns the deepest active tier type.
     pub fn active_tier_type(&self) -> Option<TierType> {
         if self.current_iteration_id.is_some() {
@@ -234,6 +249,7 @@ impl OrchestratorContext {
     }
 }
 
+// DRY:DATA:StateTransition
 /// Represents a state transition with metadata.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -257,6 +273,7 @@ pub struct StateTransition {
 }
 
 impl StateTransition {
+    // DRY:FN:new
     /// Creates a new state transition.
     pub fn new(from: impl Into<String>, to: impl Into<String>) -> Self {
         Self {
@@ -268,12 +285,14 @@ impl StateTransition {
         }
     }
 
+    // DRY:FN:with_trigger
     /// Sets the trigger/reason for the transition.
     pub fn with_trigger(mut self, trigger: impl Into<String>) -> Self {
         self.trigger = Some(trigger.into());
         self
     }
 
+    // DRY:FN:with_metadata
     /// Adds metadata to the transition.
     pub fn with_metadata(mut self, key: String, value: serde_json::Value) -> Self {
         self.metadata.insert(key, value);
@@ -281,6 +300,7 @@ impl StateTransition {
     }
 }
 
+// DRY:DATA:AdvancementResult
 /// Result of auto-advancement evaluation.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -297,6 +317,7 @@ pub struct AdvancementResult {
 }
 
 impl AdvancementResult {
+    // DRY:FN:new
     /// Creates a new advancement result.
     pub fn new(should_advance: bool, reason: impl Into<String>) -> Self {
         Self {
@@ -307,6 +328,7 @@ impl AdvancementResult {
         }
     }
 
+    // DRY:FN:with_confidence
     /// Sets the confidence score.
     pub fn with_confidence(mut self, confidence: f64) -> Self {
         self.confidence = confidence.clamp(0.0, 1.0);
@@ -314,6 +336,7 @@ impl AdvancementResult {
     }
 }
 
+// DRY:DATA:EscalationAction
 /// Action to take when escalating a tier.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -412,6 +435,7 @@ mod tests {
     }
 }
 
+// DRY:DATA:IterationContext
 /// Context for an iteration execution.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -443,6 +467,7 @@ pub struct IterationContext {
     pub subagent_enabled: bool,
 }
 
+// DRY:DATA:SessionInfo
 /// Information about a session.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -458,6 +483,7 @@ pub struct SessionInfo {
     pub process_id: Option<u32>,
 }
 
+// DRY:DATA:SessionState
 /// State of a session.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]

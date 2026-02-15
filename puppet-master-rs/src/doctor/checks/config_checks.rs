@@ -5,10 +5,12 @@ use async_trait::async_trait;
 use chrono::Utc;
 use std::path::PathBuf;
 
+// DRY:DATA:ConfigFileCheck
 /// Check if config file exists
 pub struct ConfigFileCheck;
 
 impl ConfigFileCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }
@@ -61,10 +63,12 @@ impl DoctorCheck for ConfigFileCheck {
     }
 }
 
+// DRY:DATA:ConfigValidCheck
 /// Check if config file is valid YAML
 pub struct ConfigValidCheck;
 
 impl ConfigValidCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }

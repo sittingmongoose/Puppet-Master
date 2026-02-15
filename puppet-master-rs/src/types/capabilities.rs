@@ -6,6 +6,7 @@ use std::collections::HashMap;
 
 use super::platform::Platform;
 
+// DRY:DATA:FeatureFlag
 /// Feature flags representing platform capabilities.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -33,6 +34,7 @@ pub enum FeatureFlag {
 }
 
 impl FeatureFlag {
+    // DRY:FN:name
     /// Returns a human-readable name for this feature.
     pub fn name(&self) -> &'static str {
         match self {
@@ -49,6 +51,7 @@ impl FeatureFlag {
         }
     }
 
+    // DRY:FN:description
     /// Returns a description of this feature.
     pub fn description(&self) -> &'static str {
         match self {
@@ -66,6 +69,7 @@ impl FeatureFlag {
     }
 }
 
+// DRY:DATA:QuotaInfo
 /// Quota information for API usage limits.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -93,6 +97,7 @@ fn default_quota_unit() -> String {
 }
 
 impl QuotaInfo {
+    // DRY:FN:new
     /// Creates a new quota info.
     pub fn new(limit: u64, used: u64) -> Self {
         let remaining = limit.saturating_sub(used);
@@ -105,6 +110,7 @@ impl QuotaInfo {
         }
     }
 
+    // DRY:FN:usage_percent
     /// Returns the usage percentage.
     pub fn usage_percent(&self) -> f32 {
         if self.limit == 0 {
@@ -113,17 +119,20 @@ impl QuotaInfo {
         (self.used as f32 / self.limit as f32) * 100.0
     }
 
+    // DRY:FN:is_exhausted
     /// Checks if the quota is exhausted.
     pub fn is_exhausted(&self) -> bool {
         self.remaining == 0
     }
 
+    // DRY:FN:above_threshold
     /// Checks if usage is above the given threshold percentage.
     pub fn above_threshold(&self, threshold_percent: f32) -> bool {
         self.usage_percent() >= threshold_percent
     }
 }
 
+// DRY:DATA:CooldownInfo
 /// Cooldown status for rate limiting.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -143,6 +152,7 @@ pub struct CooldownInfo {
 }
 
 impl CooldownInfo {
+    // DRY:FN:inactive
     /// Creates a new inactive cooldown.
     pub fn inactive() -> Self {
         Self {
@@ -153,6 +163,7 @@ impl CooldownInfo {
         }
     }
 
+    // DRY:FN:active
     /// Creates a new active cooldown.
     pub fn active(remaining_seconds: u64, reason: impl Into<String>) -> Self {
         let expires_at = Utc::now() + chrono::Duration::seconds(remaining_seconds as i64);
@@ -165,6 +176,7 @@ impl CooldownInfo {
     }
 }
 
+// DRY:DATA:AuthStatus
 /// Authentication status for a platform.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -179,6 +191,7 @@ pub enum AuthStatus {
     Error,
 }
 
+// DRY:DATA:PlatformCapabilities
 /// Platform capabilities and feature detection.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -213,6 +226,7 @@ pub struct PlatformCapabilities {
 }
 
 impl PlatformCapabilities {
+    // DRY:FN:new
     /// Creates a new capabilities record.
     pub fn new(platform: Platform, models: Vec<String>) -> Self {
         Self {
@@ -227,16 +241,19 @@ impl PlatformCapabilities {
         }
     }
 
+    // DRY:FN:has_feature
     /// Checks if a feature is supported.
     pub fn has_feature(&self, feature: FeatureFlag) -> bool {
         self.features.contains(&feature)
     }
 
+    // DRY:FN:has_model
     /// Checks if a model is available.
     pub fn has_model(&self, model: &str) -> bool {
         self.models.iter().any(|m| m == model)
     }
 
+    // DRY:FN:is_ready
     /// Checks if the platform is ready for use.
     pub fn is_ready(&self) -> bool {
         self.auth_status == AuthStatus::Authenticated
@@ -244,6 +261,7 @@ impl PlatformCapabilities {
             && self.quota_info.as_ref().map_or(true, |q| !q.is_exhausted())
     }
 
+    // DRY:FN:ready_status
     /// Returns a reason if the platform is not ready.
     pub fn ready_status(&self) -> Result<(), String> {
         if self.auth_status != AuthStatus::Authenticated {

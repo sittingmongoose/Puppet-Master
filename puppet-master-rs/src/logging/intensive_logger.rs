@@ -12,12 +12,14 @@ use std::io::Write;
 use std::path::PathBuf;
 use std::time::Instant;
 
+// DRY:HELPER:IntensiveLogger
 /// Intensive logger for verbose debugging
 pub struct IntensiveLogger {
     log_path: PathBuf,
     enabled: bool,
 }
 
+// DRY:HELPER:IntensiveLogEntry
 /// Intensive log entry with detailed context
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct IntensiveLogEntry {
@@ -45,6 +47,7 @@ pub struct IntensiveLogEntry {
     pub context: HashMap<String, String>,
 }
 
+// DRY:HELPER:LogLevel
 /// Log levels for intensive logging
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -74,6 +77,7 @@ impl std::fmt::Display for LogLevel {
 }
 
 impl IntensiveLogEntry {
+    // DRY:HELPER:IntensiveLogEntry::new
     /// Create a new intensive log entry
     pub fn new(
         module: impl Into<String>,
@@ -94,42 +98,49 @@ impl IntensiveLogEntry {
         }
     }
 
+    // DRY:HELPER:IntensiveLogEntry::with_arg
     /// Add an argument
     pub fn with_arg(mut self, key: impl Into<String>, value: impl Into<String>) -> Self {
         self.args.insert(key.into(), value.into());
         self
     }
 
+    // DRY:HELPER:IntensiveLogEntry::with_args
     /// Add multiple arguments
     pub fn with_args(mut self, args: HashMap<String, String>) -> Self {
         self.args.extend(args);
         self
     }
 
+    // DRY:HELPER:IntensiveLogEntry::with_result
     /// Add result
     pub fn with_result(mut self, result: impl Into<String>) -> Self {
         self.result = Some(result.into());
         self
     }
 
+    // DRY:HELPER:IntensiveLogEntry::with_duration
     /// Add duration
     pub fn with_duration(mut self, duration_ms: u64) -> Self {
         self.duration_ms = Some(duration_ms);
         self
     }
 
+    // DRY:HELPER:IntensiveLogEntry::with_context
     /// Add context
     pub fn with_context(mut self, key: impl Into<String>, value: impl Into<String>) -> Self {
         self.context.insert(key.into(), value.into());
         self
     }
 
+    // DRY:HELPER:IntensiveLogEntry::with_context_map
     /// Add multiple context entries
     pub fn with_context_map(mut self, context: HashMap<String, String>) -> Self {
         self.context.extend(context);
         self
     }
 
+    // DRY:HELPER:IntensiveLogEntry::to_jsonl
     /// Convert to JSONL format
     pub fn to_jsonl(&self) -> Result<String> {
         let json =
@@ -139,28 +150,33 @@ impl IntensiveLogEntry {
 }
 
 impl IntensiveLogger {
+    // DRY:HELPER:IntensiveLogger::new
     /// Create a new intensive logger
     pub fn new(log_path: PathBuf, enabled: bool) -> Self {
         Self { log_path, enabled }
     }
 
+    // DRY:HELPER:IntensiveLogger::is_enabled
     /// Check if intensive logging is enabled
     pub fn is_enabled(&self) -> bool {
         self.enabled
     }
 
+    // DRY:HELPER:IntensiveLogger::enable
     /// Enable intensive logging
     pub fn enable(&mut self) {
         self.enabled = true;
         log::info!("Intensive logging enabled");
     }
 
+    // DRY:HELPER:IntensiveLogger::disable
     /// Disable intensive logging
     pub fn disable(&mut self) {
         self.enabled = false;
         log::info!("Intensive logging disabled");
     }
 
+    // DRY:HELPER:IntensiveLogger::log
     /// Log an entry
     pub fn log(&self, entry: IntensiveLogEntry) -> Result<()> {
         if !self.enabled {
@@ -188,6 +204,7 @@ impl IntensiveLogger {
         Ok(())
     }
 
+    // DRY:HELPER:IntensiveLogger::log_simple
     /// Log a simple message
     pub fn log_simple(
         &self,
@@ -200,6 +217,7 @@ impl IntensiveLogger {
         self.log(entry)
     }
 
+    // DRY:HELPER:IntensiveLogger::log_call
     /// Log a function call with arguments
     pub fn log_call(
         &self,
@@ -212,6 +230,7 @@ impl IntensiveLogger {
         self.log(entry)
     }
 
+    // DRY:HELPER:IntensiveLogger::log_result
     /// Log a function result
     pub fn log_result(
         &self,
@@ -226,6 +245,7 @@ impl IntensiveLogger {
         self.log(entry)
     }
 
+    // DRY:HELPER:IntensiveLogger::log_state_transition
     /// Log a state transition
     pub fn log_state_transition(
         &self,
@@ -243,6 +263,7 @@ impl IntensiveLogger {
         self.log(entry)
     }
 
+    // DRY:HELPER:IntensiveLogger::log_cli_invocation
     /// Log a CLI invocation
     pub fn log_cli_invocation(
         &self,
@@ -261,6 +282,7 @@ impl IntensiveLogger {
         self.log(entry)
     }
 
+    // DRY:HELPER:IntensiveLogger::log_file_operation
     /// Log a file operation
     pub fn log_file_operation(
         &self,
@@ -282,6 +304,7 @@ impl IntensiveLogger {
         self.log(entry)
     }
 
+    // DRY:HELPER:IntensiveLogger::read_all
     /// Read all log entries
     pub fn read_all(&self) -> Result<Vec<IntensiveLogEntry>> {
         if !self.log_path.exists() {
@@ -313,6 +336,7 @@ impl IntensiveLogger {
         Ok(entries)
     }
 
+    // DRY:HELPER:IntensiveLogger::read_by_module
     /// Read entries by module
     pub fn read_by_module(&self, module: &str) -> Result<Vec<IntensiveLogEntry>> {
         let all_entries = self.read_all()?;
@@ -322,6 +346,7 @@ impl IntensiveLogger {
             .collect())
     }
 
+    // DRY:HELPER:IntensiveLogger::read_by_level
     /// Read entries by level
     pub fn read_by_level(&self, level: LogLevel) -> Result<Vec<IntensiveLogEntry>> {
         let all_entries = self.read_all()?;
@@ -331,6 +356,7 @@ impl IntensiveLogger {
             .collect())
     }
 
+    // DRY:HELPER:IntensiveLogger::read_recent
     /// Read recent entries
     pub fn read_recent(&self, count: usize) -> Result<Vec<IntensiveLogEntry>> {
         let mut entries = self.read_all()?;
@@ -339,6 +365,7 @@ impl IntensiveLogger {
         Ok(entries)
     }
 
+    // DRY:HELPER:IntensiveLogger::clear
     /// Clear the log
     pub fn clear(&self) -> Result<()> {
         if self.log_path.exists() {
@@ -350,6 +377,7 @@ impl IntensiveLogger {
     }
 }
 
+// DRY:HELPER:FunctionTimer
 /// Timer for measuring function execution
 pub struct FunctionTimer {
     module: String,
@@ -358,6 +386,7 @@ pub struct FunctionTimer {
 }
 
 impl FunctionTimer {
+    // DRY:HELPER:FunctionTimer::new
     /// Start a new timer
     pub fn new(module: impl Into<String>, function: impl Into<String>) -> Self {
         Self {
@@ -367,6 +396,7 @@ impl FunctionTimer {
         }
     }
 
+    // DRY:HELPER:FunctionTimer::stop
     /// Stop the timer and return duration in milliseconds
     pub fn stop(self) -> (String, String, u64) {
         let duration_ms = self.start.elapsed().as_millis() as u64;

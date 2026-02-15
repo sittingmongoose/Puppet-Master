@@ -12,6 +12,7 @@ use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::{Path, PathBuf};
 
+// DRY:DATA:InterviewStatus
 /// Interview status derived from project state
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum InterviewStatus {
@@ -25,6 +26,7 @@ pub enum InterviewStatus {
     Complete,
 }
 
+// DRY:DATA:OrchestratorStatus
 /// Orchestrator status derived from project state
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum OrchestratorStatus {
@@ -38,6 +40,7 @@ pub enum OrchestratorStatus {
     Failed,
 }
 
+// DRY:DATA:ProjectStatus
 /// Dynamic project status based on .puppet-master/ inspection
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ProjectStatus {
@@ -62,6 +65,7 @@ pub struct ProjectStatus {
 }
 
 impl ProjectStatus {
+    // DRY:FN:unknown
     /// Create a default "unknown" status
     pub fn unknown(path: PathBuf) -> Self {
         Self {
@@ -77,6 +81,7 @@ impl ProjectStatus {
         }
     }
 
+    // DRY:FN:summary
     /// Get a human-readable status summary
     pub fn summary(&self) -> String {
         let interview = match self.interview_status {
@@ -104,6 +109,7 @@ impl ProjectStatus {
     }
 }
 
+// DRY:DATA:ProjectStatusInspector
 /// Project status inspector
 pub struct ProjectStatusInspector {
     project_root: PathBuf,
@@ -111,6 +117,7 @@ pub struct ProjectStatusInspector {
 }
 
 impl ProjectStatusInspector {
+    // DRY:FN:new
     /// Create a new status inspector for a project
     pub fn new(project_root: PathBuf) -> Self {
         let puppet_master_dir = project_root.join(".puppet-master");
@@ -120,6 +127,7 @@ impl ProjectStatusInspector {
         }
     }
 
+    // DRY:FN:inspect
     /// Inspect the project and determine its current status
     pub fn inspect(&self) -> Result<ProjectStatus> {
         // Check if .puppet-master directory exists
@@ -370,6 +378,7 @@ impl ProjectStatusInspector {
         Ok((None, None, None))
     }
 
+    // DRY:FN:puppet_master_dir
     /// Get the .puppet-master directory path
     pub fn puppet_master_dir(&self) -> &Path {
         &self.puppet_master_dir

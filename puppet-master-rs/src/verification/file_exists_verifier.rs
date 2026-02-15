@@ -7,10 +7,12 @@ use log::debug;
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
+// DRY:DATA:FileExistsVerifier
 /// Verifier that checks file existence
 pub struct FileExistsVerifier;
 
 impl FileExistsVerifier {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }

@@ -13,6 +13,7 @@ use regex::Regex;
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 
+// DRY:DATA:ParsedOutput
 /// Parsed output from a platform CLI execution
 #[derive(Debug, Clone)]
 pub struct ParsedOutput {
@@ -87,6 +88,7 @@ impl ParsedOutput {
     }
 }
 
+// DRY:DATA:CompletionSignal
 /// Completion signal types
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum CompletionSignal {
@@ -110,6 +112,7 @@ impl CompletionSignal {
     }
 }
 
+// DRY:DATA:TestResults
 /// Test results extracted from tool output (best-effort)
 #[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
 pub struct TestResults {
@@ -118,6 +121,7 @@ pub struct TestResults {
     pub skipped: Option<u32>,
 }
 
+// DRY:DATA:TokenUsage
 /// Token usage statistics
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct TokenUsage {
@@ -155,6 +159,7 @@ impl TokenUsage {
     }
 }
 
+// DRY:DATA:PlatformError
 /// Platform execution error
 #[derive(Debug, Clone)]
 pub struct PlatformError {
@@ -179,6 +184,7 @@ impl PlatformError {
     }
 }
 
+// DRY:DATA:ErrorCategory
 /// Error category classification
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum ErrorCategory {
@@ -257,6 +263,7 @@ pub trait OutputParser: Send + Sync {
     fn platform(&self) -> Platform;
 }
 
+// DRY:DATA:ParsingUtils
 /// Common parsing utilities
 pub struct ParsingUtils;
 
@@ -711,6 +718,7 @@ impl ParsingUtils {
 // Platform-specific parsers
 // ============================================================================
 
+// DRY:DATA:CursorOutputParser
 /// Cursor output parser
 pub struct CursorOutputParser;
 
@@ -776,6 +784,7 @@ impl OutputParser for CursorOutputParser {
     }
 }
 
+// DRY:DATA:ClaudeOutputParser
 /// Claude output parser
 pub struct ClaudeOutputParser;
 
@@ -843,6 +852,7 @@ impl OutputParser for ClaudeOutputParser {
     }
 }
 
+// DRY:DATA:CodexOutputParser
 /// Codex output parser
 pub struct CodexOutputParser;
 
@@ -908,6 +918,7 @@ impl OutputParser for CodexOutputParser {
     }
 }
 
+// DRY:DATA:GeminiOutputParser
 /// Gemini output parser
 pub struct GeminiOutputParser;
 
@@ -963,6 +974,7 @@ impl OutputParser for GeminiOutputParser {
     }
 }
 
+// DRY:DATA:CopilotOutputParser
 /// Copilot output parser
 pub struct CopilotOutputParser;
 
@@ -1017,6 +1029,7 @@ impl OutputParser for CopilotOutputParser {
     }
 }
 
+// DRY:FN:create_parser
 /// Creates an output parser for a given platform
 pub fn create_parser(platform: Platform) -> Box<dyn OutputParser> {
     match platform {

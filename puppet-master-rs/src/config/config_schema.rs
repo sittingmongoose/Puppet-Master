@@ -8,6 +8,7 @@
 
 use crate::types::{PuppetMasterConfig, ValidationError};
 
+// DRY:FN:validate_config
 /// Validate a configuration
 pub fn validate_config(config: &PuppetMasterConfig) -> Vec<ValidationError> {
     let mut errors = Vec::new();

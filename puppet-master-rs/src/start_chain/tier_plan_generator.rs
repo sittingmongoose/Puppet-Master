@@ -8,9 +8,11 @@ use anyhow::{Context, Result};
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
 
+// DRY:DATA:TierPlanGenerator
 /// Generates tiered execution plans from a PRD.
 pub struct TierPlanGenerator;
 
+// DRY:DATA:TierPlan
 /// A complete tier execution plan.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -29,6 +31,7 @@ pub struct TierPlan {
     pub critical_path: Vec<String>,
 }
 
+// DRY:DATA:PhasePlan
 /// A phase within an execution plan.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -53,6 +56,7 @@ fn default_priority() -> u32 {
     5
 }
 
+// DRY:DATA:TaskPlan
 /// A task within a phase plan.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -81,6 +85,7 @@ fn default_complexity() -> u32 {
     3
 }
 
+// DRY:DATA:SubtaskPlan
 /// A subtask within a task plan.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -106,6 +111,7 @@ fn default_retry_strategy() -> String {
 }
 
 impl TierPlanGenerator {
+    // DRY:FN:generate
     /// Generate a tier plan from a PRD.
     pub fn generate(prd: &PRD) -> Result<TierPlan> {
         info!("Generating tier plan for PRD: {}", prd.metadata.name);

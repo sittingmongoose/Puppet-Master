@@ -9,6 +9,7 @@ use crate::widgets::*;
 use iced::widget::{Space, column, container, row, scrollable, text};
 use iced::{Element, Length};
 
+// DRY:FN:evidence_detail_view
 /// Evidence detail view
 pub fn view<'a>(
     item: &'a EvidenceItem,

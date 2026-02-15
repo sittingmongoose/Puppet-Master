@@ -8,6 +8,7 @@ use crate::widgets::*;
 use iced::widget::{Space, column, container, pick_list, row, scrollable, text};
 use iced::{Element, Length};
 
+// DRY:DATA:LogLevel
 /// Log level options
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum LogLevel {
@@ -48,6 +49,7 @@ impl std::fmt::Display for LogLevel {
     }
 }
 
+// DRY:DATA:AutoScroll
 /// Auto-scroll options
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum AutoScroll {
@@ -70,6 +72,7 @@ impl std::fmt::Display for AutoScroll {
     }
 }
 
+// DRY:FN:settings_view
 /// Settings view with multiple sections
 pub fn view<'a>(
     theme: &'a AppTheme,

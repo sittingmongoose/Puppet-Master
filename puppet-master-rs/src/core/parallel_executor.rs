@@ -14,6 +14,7 @@ use tokio::task::JoinHandle;
 
 use super::dependency_analyzer::DependencyAnalyzer;
 
+// DRY:DATA:ParallelExecutorConfig
 /// Configuration for parallel executor
 #[derive(Debug, Clone)]
 pub struct ParallelExecutorConfig {
@@ -35,6 +36,7 @@ impl Default for ParallelExecutorConfig {
     }
 }
 
+// DRY:DATA:SubtaskResult
 /// Result of a single subtask execution
 #[derive(Debug, Clone)]
 pub struct SubtaskResult {
@@ -52,6 +54,7 @@ pub struct SubtaskResult {
     pub output: Option<String>,
 }
 
+// DRY:DATA:ParallelExecutionResult
 /// Result of parallel execution
 #[derive(Debug, Clone)]
 pub struct ParallelExecutionResult {
@@ -69,6 +72,7 @@ pub struct ParallelExecutionResult {
     pub failed_count: usize,
 }
 
+// DRY:DATA:ParallelExecutor
 /// Parallel executor for running subtasks concurrently
 pub struct ParallelExecutor {
     config: ParallelExecutorConfig,

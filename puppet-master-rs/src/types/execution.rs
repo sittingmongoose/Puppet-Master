@@ -8,6 +8,7 @@ use std::time::Duration;
 
 use super::platform::Platform;
 
+// DRY:DATA:ExecutionRequest
 /// Request to execute a task with an AI agent.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -70,6 +71,7 @@ fn default_true() -> bool {
 }
 
 impl ExecutionRequest {
+    // DRY:FN:new
     /// Creates a new execution request with minimal parameters.
     pub fn new(
         platform: Platform,
@@ -95,54 +97,63 @@ impl ExecutionRequest {
         }
     }
 
+    // DRY:FN:with_timeout
     /// Sets the timeout.
     pub fn with_timeout(mut self, timeout: Duration) -> Self {
         self.timeout_ms = Some(timeout.as_millis() as u64);
         self
     }
 
+    // DRY:FN:with_hard_timeout
     /// Sets the hard timeout.
     pub fn with_hard_timeout(mut self, timeout: Duration) -> Self {
         self.hard_timeout_ms = Some(timeout.as_millis() as u64);
         self
     }
 
+    // DRY:FN:with_plan_mode
     /// Enables plan mode.
     pub fn with_plan_mode(mut self, enabled: bool) -> Self {
         self.plan_mode = enabled;
         self
     }
 
+    // DRY:FN:with_reasoning_effort
     /// Sets reasoning effort.
     pub fn with_reasoning_effort(mut self, effort: impl Into<String>) -> Self {
         self.reasoning_effort = Some(effort.into());
         self
     }
 
+    // DRY:FN:with_session_id
     /// Sets the session ID.
     pub fn with_session_id(mut self, session_id: impl Into<String>) -> Self {
         self.session_id = Some(session_id.into());
         self
     }
 
+    // DRY:FN:with_extra_args
     /// Adds extra CLI arguments.
     pub fn with_extra_args(mut self, args: Vec<String>) -> Self {
         self.extra_args = args;
         self
     }
 
+    // DRY:FN:with_context_files
     /// Adds context files.
     pub fn with_context_files(mut self, files: Vec<PathBuf>) -> Self {
         self.context_files = files;
         self
     }
 
+    // DRY:FN:with_env
     /// Adds an environment variable.
     pub fn with_env(mut self, key: impl Into<String>, value: impl Into<String>) -> Self {
         self.env_vars.insert(key.into(), value.into());
         self
     }
 
+    // DRY:FN:with_sdk
     /// Enable SDK-based execution.
     pub fn with_sdk(mut self, enabled: bool) -> Self {
         self.use_sdk = enabled;
@@ -150,6 +161,7 @@ impl ExecutionRequest {
     }
 }
 
+// DRY:DATA:ExecutionResult
 /// Result of an execution.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -211,6 +223,7 @@ pub struct ExecutionResult {
 }
 
 impl ExecutionResult {
+    // DRY:FN:success
     /// Creates a new successful execution result.
     pub fn success() -> Self {
         Self {
@@ -231,6 +244,7 @@ impl ExecutionResult {
         }
     }
 
+    // DRY:FN:failure
     /// Creates a new failed execution result.
     pub fn failure(error: impl Into<String>) -> Self {
         Self {
@@ -251,30 +265,35 @@ impl ExecutionResult {
         }
     }
 
+    // DRY:FN:with_output
     /// Sets the output.
     pub fn with_output(mut self, output: impl Into<String>) -> Self {
         self.output = Some(output.into());
         self
     }
 
+    // DRY:FN:with_duration
     /// Sets the duration.
     pub fn with_duration(mut self, duration: Duration) -> Self {
         self.duration_ms = Some(duration.as_millis() as u64);
         self
     }
 
+    // DRY:FN:with_files_changed
     /// Sets files changed.
     pub fn with_files_changed(mut self, files: Vec<PathBuf>) -> Self {
         self.files_changed = files;
         self
     }
 
+    // DRY:FN:with_completion_signal
     /// Sets the completion signal.
     pub fn with_completion_signal(mut self, signal: CompletionSignal) -> Self {
         self.completion_signal = signal;
         self
     }
 
+    // DRY:FN:with_timestamps
     /// Sets timestamps.
     pub fn with_timestamps(mut self, started: DateTime<Utc>, completed: DateTime<Utc>) -> Self {
         self.started_at = Some(started);
@@ -282,6 +301,7 @@ impl ExecutionResult {
         self
     }
 
+    // DRY:FN:with_git_commit
     /// Sets the git commit.
     pub fn with_git_commit(mut self, commit: impl Into<String>) -> Self {
         self.git_commit = Some(commit.into());
@@ -289,6 +309,7 @@ impl ExecutionResult {
     }
 }
 
+// DRY:DATA:CompletionSignal
 /// Completion signal from agent output.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -326,6 +347,7 @@ impl std::fmt::Display for CompletionSignal {
     }
 }
 
+// DRY:DATA:ExecutionMode
 /// Execution mode for AI platforms.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -344,6 +366,7 @@ impl Default for ExecutionMode {
     }
 }
 
+// DRY:DATA:ReasoningEffort
 /// Reasoning effort level (for Claude/Gemini).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -372,6 +395,7 @@ impl std::fmt::Display for ReasoningEffort {
     }
 }
 
+// DRY:DATA:ExecutionStatus
 /// Status of an execution.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -409,6 +433,7 @@ impl std::fmt::Display for ExecutionStatus {
     }
 }
 
+// DRY:DATA:OutputLine
 /// A line of output from execution.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -422,6 +447,7 @@ pub struct OutputLine {
 }
 
 impl OutputLine {
+    // DRY:FN:new
     /// Creates a new output line.
     pub fn new(text: impl Into<String>, line_type: super::events::OutputLineType) -> Self {
         Self {
@@ -432,6 +458,7 @@ impl OutputLine {
     }
 }
 
+// DRY:DATA:ReviewResult
 /// Review result from worker reviewer.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -450,6 +477,7 @@ pub struct ReviewResult {
 }
 
 impl ReviewResult {
+    // DRY:FN:new
     /// Creates a new review result.
     pub fn new(passed: bool, verdict: impl Into<String>, reasoning: impl Into<String>) -> Self {
         Self {
@@ -462,6 +490,7 @@ impl ReviewResult {
     }
 }
 
+// DRY:DATA:Role
 /// Role of an agent or reviewer.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -484,6 +513,7 @@ impl std::fmt::Display for Role {
     }
 }
 
+// DRY:DATA:VerificationMethod
 /// Verification method type.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -519,6 +549,7 @@ pub trait Verifier: Send + Sync {
     fn verifier_type(&self) -> &str;
 }
 
+// DRY:DATA:VerifierResult
 /// Result of a verification.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -535,6 +566,7 @@ pub struct VerifierResult {
 }
 
 impl VerifierResult {
+    // DRY:FN:success
     /// Creates a new successful verification result.
     pub fn success(message: impl Into<String>) -> Self {
         Self {
@@ -545,6 +577,7 @@ impl VerifierResult {
         }
     }
 
+    // DRY:FN:failure
     /// Creates a new failed verification result.
     pub fn failure(message: impl Into<String>) -> Self {
         Self {
@@ -555,6 +588,7 @@ impl VerifierResult {
         }
     }
 
+    // DRY:FN:with_evidence
     /// Sets the evidence.
     pub fn with_evidence(mut self, evidence: super::prd::Evidence) -> Self {
         self.evidence = Some(evidence);
@@ -562,6 +596,7 @@ impl VerifierResult {
     }
 }
 
+// DRY:DATA:EvidenceType
 /// Type of evidence data.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -593,6 +628,7 @@ impl std::fmt::Display for EvidenceType {
     }
 }
 
+// DRY:DATA:EvidenceData
 /// Evidence data container.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -609,6 +645,7 @@ pub struct EvidenceData {
 }
 
 impl EvidenceData {
+    // DRY:FN:text
     /// Creates new text evidence.
     pub fn text(content: impl Into<String>) -> Self {
         Self {
@@ -619,6 +656,7 @@ impl EvidenceData {
         }
     }
 
+    // DRY:FN:file
     /// Creates new file evidence.
     pub fn file(path: PathBuf, content: impl Into<String>) -> Self {
         Self {
@@ -630,6 +668,7 @@ impl EvidenceData {
     }
 }
 
+// DRY:DATA:ProcessInfo
 /// Information about a running process.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -666,6 +705,7 @@ pub struct ProcessInfo {
 }
 
 impl ProcessInfo {
+    // DRY:FN:new
     /// Creates a new process info.
     pub fn new(
         pid: u32,
@@ -687,6 +727,7 @@ impl ProcessInfo {
         }
     }
 
+    // DRY:FN:is_timed_out
     /// Returns whether the process has timed out.
     pub fn is_timed_out(&self) -> bool {
         if let Some(timeout) = self.timeout {
@@ -700,6 +741,7 @@ impl ProcessInfo {
         }
     }
 
+    // DRY:FN:elapsed
     /// Returns the elapsed time since the process started.
     pub fn elapsed(&self) -> Duration {
         Utc::now()

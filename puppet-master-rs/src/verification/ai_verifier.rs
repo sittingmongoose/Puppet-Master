@@ -18,11 +18,13 @@ use std::str::FromStr;
 use std::time::{Duration, Instant};
 use tokio::process::Command;
 
+// DRY:DATA:AIVerifier
 /// AI-based verifier using platform CLI
 pub struct AIVerifier {
     config: AIVerifierConfig,
 }
 
+// DRY:DATA:AIVerifierConfig
 /// Configuration for AI verifier
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AIVerifierConfig {
@@ -51,6 +53,7 @@ impl Default for AIVerifierConfig {
 }
 
 impl AIVerifier {
+    // DRY:FN:new
     /// Create a new AI verifier with default configuration
     pub fn new() -> Self {
         Self {
@@ -58,6 +61,7 @@ impl AIVerifier {
         }
     }
 
+    // DRY:FN:with_config
     /// Create a new AI verifier with custom configuration
     pub fn with_config(config: AIVerifierConfig) -> Self {
         Self { config }

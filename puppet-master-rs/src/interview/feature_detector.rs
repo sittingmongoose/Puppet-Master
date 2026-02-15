@@ -3,6 +3,7 @@
 use super::state::InterviewState;
 use log::debug;
 
+// DRY:DATA:DetectedFeature
 /// A detected feature that warrants its own dedicated interview phase.
 #[derive(Debug, Clone)]
 pub struct DetectedFeature {
@@ -16,6 +17,7 @@ pub struct DetectedFeature {
     pub confidence: f32,
 }
 
+// DRY:FN:detect_features_from_state
 /// Analyzes interview state to detect major features requiring dedicated phases.
 ///
 /// This is called after the 8 standard phases complete, before final document generation.

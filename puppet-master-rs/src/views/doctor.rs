@@ -12,6 +12,7 @@ use iced::widget::{Checkbox, Space, column, container, row, scrollable, text, te
 use iced::{Alignment, Background, Border, Color, Element, Length};
 use std::collections::{HashMap, HashSet};
 
+// DRY:DATA:DoctorCheckResult
 /// Doctor check result
 #[derive(Debug, Clone)]
 pub struct DoctorCheckResult {
@@ -41,6 +42,7 @@ impl DoctorCheckResult {
     }
 }
 
+// DRY:DATA:CheckStatus
 /// Check status
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum CheckStatus {
@@ -70,6 +72,7 @@ impl CheckStatus {
     }
 }
 
+// DRY:DATA:CheckCategory
 /// Check category
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum CheckCategory {
@@ -105,6 +108,7 @@ impl CheckCategory {
     }
 }
 
+// DRY:FN:doctor_view
 /// Doctor system health check view
 pub fn view<'a>(
     results: &'a [DoctorCheckResult],

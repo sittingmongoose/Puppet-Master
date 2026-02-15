@@ -10,6 +10,7 @@ use iced::widget::{Space, column, container, row, scrollable, text, text_editor}
 use iced::{Border, Element, Length};
 use std::path::PathBuf;
 
+// DRY:DATA:EvidenceItem
 /// Evidence item for display
 #[derive(Debug, Clone)]
 pub struct EvidenceItem {
@@ -21,6 +22,7 @@ pub struct EvidenceItem {
     pub path: PathBuf,
 }
 
+// DRY:DATA:EvidenceItemType
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum EvidenceItemType {
     TestLog,
@@ -83,6 +85,7 @@ impl std::fmt::Display for EvidenceItemType {
     }
 }
 
+// DRY:DATA:EvidenceFilter
 /// Evidence filter
 #[derive(Debug, Clone, Default)]
 pub struct EvidenceFilter {
@@ -90,6 +93,7 @@ pub struct EvidenceFilter {
     pub tier_id: Option<String>,
 }
 
+// DRY:FN:evidence_view
 /// Evidence browser view with 3-column layout
 pub fn view<'a>(
     items: &'a [EvidenceItem],

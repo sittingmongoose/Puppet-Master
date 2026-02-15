@@ -28,6 +28,7 @@ use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use tokio::sync::Mutex;
 
+// DRY:DATA:UsageEvent
 /// Usage event record
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct UsageEvent {
@@ -122,6 +123,7 @@ impl UsageEvent {
     }
 }
 
+// DRY:DATA:UsageSummary
 /// Usage summary for a platform
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct UsageSummary {
@@ -137,6 +139,7 @@ pub struct UsageSummary {
     pub success_rate: f64,
 }
 
+// DRY:DATA:QuotaInfo
 /// Quota information parsed from errors
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct QuotaInfo {
@@ -149,6 +152,7 @@ pub struct QuotaInfo {
     pub exhausted: bool,
 }
 
+// DRY:DATA:PlanInfo
 /// Detected plan/tier information
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PlanInfo {
@@ -157,6 +161,7 @@ pub struct PlanInfo {
     pub detected_from: PlanDetectionSource,
 }
 
+// DRY:DATA:PlanDetectionSource
 #[derive(Debug, Clone, Copy, Serialize, Deserialize)]
 pub enum PlanDetectionSource {
     QuotaLimits,
@@ -165,6 +170,7 @@ pub enum PlanDetectionSource {
     ManualConfig,
 }
 
+// DRY:DATA:UsageTracker
 /// Usage tracker
 pub struct UsageTracker {
     /// Path to usage log file

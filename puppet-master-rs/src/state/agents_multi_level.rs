@@ -9,12 +9,14 @@ use anyhow::{Context, Result};
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
+// DRY:DATA:MultiLevelLoader
 /// Multi-level AGENTS.md loader
 pub struct MultiLevelLoader {
     _root_path: PathBuf,
     manager: AgentsManager,
 }
 
+// DRY:DATA:MergedAgents
 /// Merged agents from multiple hierarchy levels
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct MergedAgents {
@@ -30,6 +32,7 @@ pub struct MergedAgents {
     pub source_levels: Vec<String>,
 }
 
+// DRY:DATA:AgentEntry
 /// Single agent entry with source tracking
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AgentEntry {
@@ -42,6 +45,7 @@ pub struct AgentEntry {
 }
 
 impl MergedAgents {
+    // DRY:FN:new
     /// Create an empty merged agents structure
     pub fn new() -> Self {
         Self {
@@ -53,17 +57,20 @@ impl MergedAgents {
         }
     }
 
+    // DRY:FN:total_entries
     /// Get total number of entries
     pub fn total_entries(&self) -> usize {
         self.patterns.len() + self.failure_modes.len() + self.do_rules.len() + self.dont_rules.len()
     }
 
+    // DRY:FN:sort_by_priority
     /// Sort entries by priority (root first, then down the hierarchy)
     pub fn sort_by_priority(&mut self) {
         self.patterns.sort_by_key(|e| e.priority);
         self.failure_modes.sort_by_key(|e| e.priority);
     }
 
+    // DRY:FN:deduplicate
     /// Deduplicate entries (remove exact duplicates, keeping highest priority)
     pub fn deduplicate(&mut self) {
         // Deduplicate patterns
@@ -109,6 +116,7 @@ impl Default for MergedAgents {
 }
 
 impl MultiLevelLoader {
+    // DRY:FN:new
     /// Create a new multi-level loader
     pub fn new(root_path: PathBuf) -> Self {
         let manager = AgentsManager::new(&root_path);
@@ -118,6 +126,7 @@ impl MultiLevelLoader {
         }
     }
 
+    // DRY:FN:load
     /// Load and merge AGENTS.md for a specific tier
     pub fn load(&self, tier_id: &str) -> Result<MergedAgents> {
         let mut merged = MergedAgents::new();
@@ -227,18 +236,21 @@ impl MultiLevelLoader {
         tier_id.split('.').count() as u32
     }
 
+    // DRY:FN:load_single_level
     /// Load only from a specific level (no merging)
     pub fn load_single_level(&self, tier_id: &str) -> Result<AgentsDoc> {
         let tier_to_load = if tier_id == "root" { "" } else { tier_id };
         self.manager.load(tier_to_load)
     }
 
+    // DRY:FN:save
     /// Save AGENTS.md for a tier
     pub fn save(&self, tier_id: &str, doc: &AgentsDoc) -> Result<()> {
         let tier_to_save = if tier_id == "root" { "" } else { tier_id };
         self.manager.save(tier_to_save, doc)
     }
 
+    // DRY:FN:format_merged
     /// Format merged agents back into markdown
     pub fn format_merged(&self, merged: &MergedAgents) -> String {
         let mut content = String::new();

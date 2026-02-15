@@ -8,11 +8,13 @@ use chrono::{DateTime, Utc};
 use std::fs;
 use std::path::{Path, PathBuf};
 
+// DRY:DATA:ArchiveManager
 /// Archive manager for AGENTS.md versions
 pub struct ArchiveManager {
     archive_dir: PathBuf,
 }
 
+// DRY:DATA:ArchiveEntry
 /// Single archive entry representing a snapshot of AGENTS.md
 #[derive(Debug, Clone)]
 pub struct ArchiveEntry {
@@ -27,11 +29,13 @@ pub struct ArchiveEntry {
 }
 
 impl ArchiveManager {
+    // DRY:FN:new
     /// Create a new archive manager
     pub fn new(archive_dir: PathBuf) -> Self {
         Self { archive_dir }
     }
 
+    // DRY:FN:archive
     /// Archive the current AGENTS.md content
     pub fn archive(&self, agents_content: &str, tier_id: &str) -> Result<ArchiveEntry> {
         // Create archive directory if it doesn't exist
@@ -70,6 +74,7 @@ impl ArchiveManager {
         })
     }
 
+    // DRY:FN:list_archives
     /// List all archives, optionally filtered by tier
     pub fn list_archives(&self, tier_filter: Option<&str>) -> Result<Vec<ArchiveEntry>> {
         if !self.archive_dir.exists() {
@@ -148,6 +153,7 @@ impl ArchiveManager {
         })
     }
 
+    // DRY:FN:restore
     /// Restore content from an archive entry
     pub fn restore(&self, entry: &ArchiveEntry) -> Result<String> {
         if !entry.file_path.exists() {
@@ -163,6 +169,7 @@ impl ArchiveManager {
             .with_context(|| format!("Failed to read archive file {}", entry.file_path.display()))
     }
 
+    // DRY:FN:cleanup
     /// Clean up old archives, keeping only the most recent N entries per tier
     pub fn cleanup(&self, keep_per_tier: usize) -> Result<u32> {
         let all_archives = self.list_archives(None)?;
@@ -213,6 +220,7 @@ impl ArchiveManager {
         Ok(removed_count)
     }
 
+    // DRY:FN:total_size
     /// Get the total size of all archives in bytes
     pub fn total_size(&self) -> Result<u64> {
         if !self.archive_dir.exists() {

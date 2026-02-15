@@ -24,6 +24,7 @@ use std::future::Future;
 use std::sync::Arc;
 use tokio::sync::RwLock;
 
+// DRY:DATA:CircuitState
 /// Circuit breaker state
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum CircuitState {
@@ -45,6 +46,7 @@ impl std::fmt::Display for CircuitState {
     }
 }
 
+// DRY:DATA:CircuitBreakerConfig
 /// Configuration for circuit breaker
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CircuitBreakerConfig {
@@ -105,6 +107,7 @@ impl CircuitBreakerState {
     }
 }
 
+// DRY:DATA:CircuitBreaker
 /// Circuit breaker for platform operations
 pub struct CircuitBreaker {
     /// Platform this circuit breaker protects
@@ -314,6 +317,7 @@ impl CircuitBreaker {
     }
 }
 
+// DRY:DATA:CircuitBreakerInfo
 /// Circuit breaker information snapshot
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CircuitBreakerInfo {
@@ -327,6 +331,7 @@ pub struct CircuitBreakerInfo {
     pub last_state_change: DateTime<Utc>,
 }
 
+// DRY:DATA:CircuitBreakerManager
 /// Manager for all platform circuit breakers
 pub struct CircuitBreakerManager {
     breakers: Arc<RwLock<HashMap<Platform, CircuitBreaker>>>,

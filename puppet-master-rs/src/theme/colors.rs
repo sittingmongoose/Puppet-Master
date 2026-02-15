@@ -1,3 +1,4 @@
+// DRY:DATA:colors
 use iced::Color;
 
 // ── Base Colors ──────────────────────────────────────────────────────
@@ -34,6 +35,7 @@ pub const BACKDROP_LIGHT: Color = Color::from_rgba(0.102, 0.102, 0.102, 0.7);
 pub const BACKDROP_DARK: Color = Color::from_rgba(0.102, 0.102, 0.102, 0.8);
 
 /// Get status color for a given status string
+// DRY:HELPER:status_color
 pub fn status_color(status: &str) -> Color {
     match status {
         "running" | "executing" | "planning" => STATUS_RUNNING,

@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::path::PathBuf;
 
+// DRY:DATA:EvidenceType
 /// Type of evidence collected during verification.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -28,6 +29,7 @@ pub enum EvidenceType {
 }
 
 impl EvidenceType {
+    // DRY:FN:name
     /// Returns a human-readable name for this evidence type.
     pub fn name(&self) -> &str {
         match self {
@@ -43,6 +45,7 @@ impl EvidenceType {
     }
 }
 
+// DRY:DATA:StoredEvidence
 /// Stored evidence record linking to artifacts.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -76,6 +79,7 @@ pub struct StoredEvidence {
 }
 
 impl StoredEvidence {
+    // DRY:FN:new
     /// Creates a new evidence record.
     pub fn new(
         id: impl Into<String>,
@@ -95,18 +99,21 @@ impl StoredEvidence {
         }
     }
 
+    // DRY:FN:with_metadata
     /// Adds metadata and returns self for chaining.
     pub fn with_metadata(mut self, key: impl Into<String>, value: impl Into<String>) -> Self {
         self.metadata.insert(key.into(), value.into());
         self
     }
 
+    // DRY:FN:with_description
     /// Sets description and returns self for chaining.
     pub fn with_description(mut self, description: impl Into<String>) -> Self {
         self.description = Some(description.into());
         self
     }
 
+    // DRY:FN:with_file_size
     /// Sets file size and returns self for chaining.
     pub fn with_file_size(mut self, size: u64) -> Self {
         self.file_size = Some(size);
@@ -114,6 +121,7 @@ impl StoredEvidence {
     }
 }
 
+// DRY:DATA:VerifierResult
 /// Individual verifier result within a gate report.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -134,6 +142,7 @@ pub struct VerifierResult {
 }
 
 impl VerifierResult {
+    // DRY:FN:new
     /// Creates a new verifier result.
     pub fn new(verifier_name: impl Into<String>, passed: bool) -> Self {
         Self {
@@ -144,12 +153,14 @@ impl VerifierResult {
         }
     }
 
+    // DRY:FN:with_output
     /// Sets output and returns self for chaining.
     pub fn with_output(mut self, output: impl Into<String>) -> Self {
         self.output = Some(output.into());
         self
     }
 
+    // DRY:FN:with_duration
     /// Sets duration and returns self for chaining.
     pub fn with_duration(mut self, duration_ms: u64) -> Self {
         self.duration_ms = Some(duration_ms);
@@ -157,6 +168,7 @@ impl VerifierResult {
     }
 }
 
+// DRY:DATA:GateReportEvidence
 /// Evidence from a gate verification run.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -186,6 +198,7 @@ pub struct GateReportEvidence {
 }
 
 impl GateReportEvidence {
+    // DRY:FN:new
     /// Creates a new gate report evidence.
     pub fn new(
         gate_id: impl Into<String>,
@@ -204,16 +217,19 @@ impl GateReportEvidence {
         }
     }
 
+    // DRY:FN:passed_count
     /// Returns the number of passed verifiers.
     pub fn passed_count(&self) -> usize {
         self.verifier_results.iter().filter(|v| v.passed).count()
     }
 
+    // DRY:FN:failed_count
     /// Returns the number of failed verifiers.
     pub fn failed_count(&self) -> usize {
         self.verifier_results.iter().filter(|v| !v.passed).count()
     }
 
+    // DRY:FN:pass_rate
     /// Returns the pass rate as a percentage.
     pub fn pass_rate(&self) -> f32 {
         if self.verifier_results.is_empty() {
@@ -223,6 +239,7 @@ impl GateReportEvidence {
     }
 }
 
+// DRY:DATA:EvidenceCollection
 /// Collection of evidence for a specific item or phase.
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -236,6 +253,7 @@ pub struct EvidenceCollection {
 }
 
 impl EvidenceCollection {
+    // DRY:FN:new
     /// Creates a new empty collection.
     pub fn new() -> Self {
         Self {
@@ -244,11 +262,13 @@ impl EvidenceCollection {
         }
     }
 
+    // DRY:FN:add
     /// Adds evidence to the collection.
     pub fn add(&mut self, evidence: StoredEvidence) {
         self.evidence.push(evidence);
     }
 
+    // DRY:FN:for_item
     /// Returns evidence for a specific item.
     pub fn for_item(&self, item_id: &str) -> Vec<&StoredEvidence> {
         self.evidence
@@ -257,6 +277,7 @@ impl EvidenceCollection {
             .collect()
     }
 
+    // DRY:FN:by_type
     /// Returns evidence of a specific type.
     pub fn by_type(&self, evidence_type: &EvidenceType) -> Vec<&StoredEvidence> {
         self.evidence

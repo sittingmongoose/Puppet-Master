@@ -9,6 +9,7 @@ use std::collections::HashMap;
 use std::env;
 use std::sync::{Arc, Mutex};
 
+// DRY:DATA:SecretsManager
 /// Thread-safe secrets manager
 #[derive(Clone)]
 pub struct SecretsManager {
@@ -20,6 +21,7 @@ struct SecretsManagerInner {
 }
 
 impl SecretsManager {
+    // DRY:FN:new
     /// Create a new secrets manager.
     ///
     /// Subscription/browser auth is the default policy, so we do not preload

@@ -5,6 +5,7 @@
 
 use std::collections::HashMap;
 
+// DRY:WIDGET:TooltipVariant
 /// Tooltip variant - Expert (concise, technical) or ELI5 (friendly, detailed)
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum TooltipVariant {
@@ -12,6 +13,7 @@ pub enum TooltipVariant {
     Eli5,
 }
 
+// DRY:WIDGET:TooltipEntry
 /// Tooltip text entry with both Expert and ELI5 variants
 #[derive(Debug, Clone)]
 pub struct TooltipEntry {
@@ -32,6 +34,7 @@ impl TooltipEntry {
     }
 }
 
+// DRY:WIDGET:get_tooltip
 /// Get tooltip text for a given key and variant
 pub fn get_tooltip(key: &str, variant: TooltipVariant) -> Option<&'static str> {
     TOOLTIPS.get(key).map(|entry| entry.get(variant))

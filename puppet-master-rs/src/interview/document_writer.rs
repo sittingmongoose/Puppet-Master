@@ -10,9 +10,11 @@ use std::path::{Path, PathBuf};
 use super::phase_manager::InterviewPhaseDefinition;
 use super::state::{Decision, InterviewQA};
 
+// DRY:DATA:DocumentWriter
 /// Writes interview output documents.
 pub struct DocumentWriter;
 
+// DRY:DATA:CompletedPhase
 /// A completed phase with its associated data, used for master document generation.
 #[derive(Debug, Clone)]
 pub struct CompletedPhase {
@@ -58,6 +60,7 @@ struct JsonPhase {
 }
 
 impl DocumentWriter {
+    // DRY:FN:write_phase_document
     /// Writes a markdown document for a single completed phase.
     ///
     /// Returns the path to the written file.
@@ -124,6 +127,7 @@ impl DocumentWriter {
         Ok(path)
     }
 
+    // DRY:FN:write_master_document
     /// Writes the master requirements document that references all phase documents.
     pub fn write_master_document(
         all_phases: &[CompletedPhase],
@@ -176,6 +180,7 @@ impl DocumentWriter {
         Ok(path)
     }
 
+    // DRY:FN:write_json_output
     /// Writes a structured JSON output file compatible with the Ralph loop.
     pub fn write_json_output(
         all_phases: &[CompletedPhase],

@@ -18,6 +18,7 @@ use crate::widgets::{
 use iced::widget::{Space, column, row, text};
 use iced::{Alignment, Element, Length};
 
+// DRY:WIDGET:InterviewPanelData
 /// Data required to render the interview panel
 #[derive(Debug, Clone)]
 pub struct InterviewPanelData {
@@ -72,6 +73,7 @@ impl InterviewPanelData {
     }
 }
 
+// DRY:WIDGET:interview_panel
 /// Render the interview side panel
 ///
 /// This function creates a compact panel showing interview progress with:
@@ -177,6 +179,7 @@ where
     panel_with_header(theme, "Interview in Progress", Space::new(), content)
 }
 
+// DRY:WIDGET:interview_panel_compact
 /// Compact variant of the interview panel (minimal info)
 ///
 /// Shows only the most essential information:
@@ -240,6 +243,7 @@ where
     panel_with_header(theme, "Interview", Space::new(), content)
 }
 
+// DRY:WIDGET:interview_panel_data_from_state
 /// Create interview panel data from interview state components
 ///
 /// Helper function to construct `InterviewPanelData` from common state variables.

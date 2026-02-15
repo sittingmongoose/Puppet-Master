@@ -11,6 +11,7 @@ use std::io::Read;
 use std::path::{Path, PathBuf};
 use std::time::Duration;
 
+// DRY:DATA:ReferenceType
 /// Types of reference materials that can be provided.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "snake_case")]
@@ -25,6 +26,7 @@ pub enum ReferenceType {
     Directory(PathBuf),
 }
 
+// DRY:DATA:ReferenceMaterial
 /// A single reference material item.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -47,6 +49,7 @@ struct ImageMetadata {
     hash: String,
 }
 
+// DRY:DATA:ReferenceManager
 /// Manages a collection of reference materials for the interview.
 pub struct ReferenceManager {
     materials: Vec<ReferenceMaterial>,
@@ -65,6 +68,7 @@ pub struct ReferenceManager {
 }
 
 impl ReferenceManager {
+    // DRY:FN:new
     /// Creates a new empty reference manager.
     pub fn new() -> Self {
         Self {
@@ -78,36 +82,42 @@ impl ReferenceManager {
         }
     }
 
+    // DRY:FN:with_max_file_size
     /// Sets the maximum file size to include (in bytes).
     pub fn with_max_file_size(mut self, size: usize) -> Self {
         self.max_file_size = size;
         self
     }
 
+    // DRY:FN:with_max_directory_files
     /// Sets the maximum number of files to include from directories.
     pub fn with_max_directory_files(mut self, count: usize) -> Self {
         self.max_directory_files = count;
         self
     }
 
+    // DRY:FN:with_http_timeout_secs
     /// Sets the HTTP timeout for URL fetching (in seconds).
     pub fn with_http_timeout_secs(mut self, secs: u64) -> Self {
         self.http_timeout_secs = secs;
         self
     }
 
+    // DRY:FN:with_max_url_size
     /// Sets the maximum size for fetched URL content (in bytes).
     pub fn with_max_url_size(mut self, size: usize) -> Self {
         self.max_url_size = size;
         self
     }
 
+    // DRY:FN:with_max_ocr_image_size
     /// Sets the maximum image size for OCR processing (in bytes).
     pub fn with_max_ocr_image_size(mut self, size: usize) -> Self {
         self.max_ocr_image_size = size;
         self
     }
 
+    // DRY:FN:with_ocr_timeout_secs
     /// Sets the OCR operation timeout (in seconds).
     pub fn with_ocr_timeout_secs(mut self, secs: u64) -> Self {
         self.ocr_timeout_secs = secs;
@@ -124,6 +134,7 @@ impl ReferenceManager {
             .collect()
     }
 
+    // DRY:FN:derive_context_files
     /// Derives context file paths from reference materials for platform runners.
     ///
     /// We include:
@@ -176,17 +187,20 @@ impl ReferenceManager {
         out
     }
 
+    // DRY:FN:add
     /// Adds a new reference material.
     pub fn add(&mut self, material: ReferenceMaterial) {
         debug!("Added reference material: {:?}", material.ref_type);
         self.materials.push(material);
     }
 
+    // DRY:FN:materials
     /// Returns all reference materials.
     pub fn materials(&self) -> &[ReferenceMaterial] {
         &self.materials
     }
 
+    // DRY:FN:load_context
     /// Loads content from all reference materials into a single context string.
     ///
     /// Reads files, lists directories, and includes snippets with safe error handling.
@@ -843,6 +857,7 @@ impl ReferenceManager {
         }
     }
 
+    // DRY:FN:clear
     /// Clears all reference materials.
     pub fn clear(&mut self) {
         info!("Cleared all reference materials");

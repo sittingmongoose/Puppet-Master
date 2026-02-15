@@ -21,6 +21,7 @@ pub mod breakpoints {
     pub const DESKTOP_LG: f32 = 1440.0;
 }
 
+// DRY:WIDGET:LayoutSize
 /// Layout size information for responsive design
 ///
 /// Wraps Iced's `Size` type to provide convenient access to width/height
@@ -61,6 +62,7 @@ impl LayoutSize {
     }
 }
 
+// DRY:WIDGET:Device
 /// Device category based on window width
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Device {
@@ -109,6 +111,7 @@ impl Device {
     }
 }
 
+// DRY:WIDGET:responsive_columns
 /// Create a responsive column layout that adapts to window width
 ///
 /// # Arguments
@@ -187,6 +190,7 @@ fn two_column_layout<'a, Message: 'a>(
         .into()
 }
 
+// DRY:WIDGET:responsive_grid
 /// Create a responsive grid layout with variable column count
 ///
 /// # Arguments
@@ -249,6 +253,7 @@ fn grid_layout<'a, Message: 'a>(
     grid_row.into()
 }
 
+// DRY:WIDGET:column_count_for_width
 /// Get recommended column count based on window width
 pub fn column_count_for_width(window_width: f32) -> usize {
     let device = Device::from_width(window_width);
@@ -260,11 +265,13 @@ pub fn column_count_for_width(window_width: f32) -> usize {
     }
 }
 
+// DRY:WIDGET:is_compact_layout
 /// Check if layout should be compact (single column) for given width
 pub fn is_compact_layout(window_width: f32) -> bool {
     window_width < breakpoints::DESKTOP
 }
 
+// DRY:WIDGET:is_expanded_layout
 /// Check if layout should be expanded (multi-column) for given width
 pub fn is_expanded_layout(window_width: f32) -> bool {
     window_width >= breakpoints::DESKTOP

@@ -12,6 +12,7 @@ use std::process::Stdio;
 use std::time::Duration;
 use tokio::process::Command;
 
+// DRY:DATA:CommandVerifier
 /// Verifier that executes shell commands.
 pub struct CommandVerifier;
 
@@ -36,6 +37,7 @@ struct CommandSpec {
 }
 
 impl CommandVerifier {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }

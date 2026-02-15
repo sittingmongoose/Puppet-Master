@@ -13,6 +13,7 @@ use std::process::Command;
 // Top-level GUI Config
 // ============================================================================
 
+// DRY:DATA:GuiConfig
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct GuiConfig {
@@ -33,6 +34,7 @@ pub struct GuiConfig {
 // Tab 0: Project Config (basic info, not heavily edited in UI but displayed)
 // ============================================================================
 
+// DRY:DATA:ProjectConfig
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct ProjectConfig {
@@ -66,6 +68,7 @@ fn default_version() -> String {
 // Tab 1: Tiers Config (4 tiers: phase, task, subtask, iteration)
 // ============================================================================
 
+// DRY:DATA:TiersConfig
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct TiersConfig {
@@ -75,6 +78,7 @@ pub struct TiersConfig {
     pub iteration: TierConfig,
 }
 
+// DRY:DATA:TierConfig
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct TierConfig {
@@ -125,6 +129,7 @@ fn default_task_failure_style() -> String {
 // Tab 2: Branching Config
 // ============================================================================
 
+// DRY:DATA:BranchingConfig
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct BranchingConfig {
@@ -165,6 +170,7 @@ fn default_granularity() -> String {
 // Tab 3: Verification Config
 // ============================================================================
 
+// DRY:DATA:VerificationConfig
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct VerificationConfig {
@@ -198,6 +204,7 @@ fn default_evidence_directory() -> String {
 // Tab 3b: GUI Automation Config
 // ============================================================================
 
+// DRY:DATA:GuiAutomationGuiConfig
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GuiAutomationGuiConfig {
@@ -249,6 +256,7 @@ fn default_gui_automation_visual_threshold() -> f32 {
 // Tab 4: Memory Config
 // ============================================================================
 
+// DRY:DATA:MemoryConfig
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct MemoryConfig {
@@ -289,6 +297,7 @@ fn default_prd_file() -> String {
 // Tab 5: Budgets Config (per-platform budgets)
 // ============================================================================
 
+// DRY:DATA:BudgetsConfig
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct BudgetsConfig {
@@ -299,6 +308,7 @@ pub struct BudgetsConfig {
     pub copilot: PlatformBudget,
 }
 
+// DRY:DATA:PlatformBudget
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PlatformBudget {
@@ -339,6 +349,7 @@ fn default_max_calls_per_day() -> u32 {
 // Tab 6: Advanced Config
 // ============================================================================
 
+// DRY:DATA:AdvancedConfig
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct AdvancedConfig {
@@ -421,7 +432,7 @@ fn default_parallel_iterations() -> u32 {
     1
 }
 
-/// DRY:DATA:INSTALL_SCOPE — Installation scope for platform CLIs
+// DRY:DATA:InstallScope — Installation scope for platform CLIs
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "lowercase")]
 pub enum InstallScope {
@@ -446,6 +457,7 @@ impl std::fmt::Display for InstallScope {
     }
 }
 
+// DRY:DATA:CliPaths
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct CliPaths {
@@ -461,6 +473,7 @@ pub struct CliPaths {
     pub copilot: String,
 }
 
+// DRY:DATA:RateLimits
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct RateLimits {
@@ -471,6 +484,7 @@ pub struct RateLimits {
     pub copilot: RateLimit,
 }
 
+// DRY:DATA:RateLimit
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct RateLimit {
@@ -497,6 +511,7 @@ fn default_cooldown_ms() -> u64 {
     1000
 }
 
+// DRY:DATA:ExecutionConfig
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct ExecutionConfig {
@@ -518,6 +533,7 @@ fn default_max_parallel_tasks() -> u32 {
     3
 }
 
+// DRY:DATA:CheckpointingConfig
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct CheckpointingConfig {
@@ -553,6 +569,7 @@ fn default_max_checkpoints() -> u32 {
     10
 }
 
+// DRY:DATA:LoopGuardConfig
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct LoopGuardConfig {
@@ -578,6 +595,7 @@ fn default_max_repetitions() -> u32 {
     3
 }
 
+// DRY:DATA:NetworkConfig
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct NetworkConfig {
@@ -607,6 +625,7 @@ fn default_allowed_origins() -> String {
 // Tab 7: Interview Config
 // ============================================================================
 
+// DRY:DATA:InterviewGuiConfig
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct InterviewGuiConfig {
@@ -659,6 +678,7 @@ impl Default for InterviewGuiConfig {
     }
 }
 
+// DRY:DATA:BackupPlatformEntry
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct BackupPlatformEntry {
@@ -702,6 +722,7 @@ fn default_true_interview() -> bool {
 // Git Info (for branching tab)
 // ============================================================================
 
+// DRY:DATA:GitInfo
 #[derive(Debug, Clone, Default)]
 pub struct GitInfo {
     pub current_branch: String,
@@ -715,6 +736,7 @@ pub struct GitInfo {
 // Load/Save Functions
 // ============================================================================
 
+// DRY:FN:load_config
 /// Load config from a YAML file
 pub fn load_config(path: &Path) -> Result<GuiConfig> {
     // Check if file exists, return default if not
@@ -735,6 +757,7 @@ pub fn load_config(path: &Path) -> Result<GuiConfig> {
     Ok(config)
 }
 
+// DRY:FN:save_config
 /// Save config to a YAML file
 pub fn save_config(path: &Path, config: &GuiConfig) -> Result<()> {
     // Ensure parent directory exists
@@ -752,6 +775,7 @@ pub fn save_config(path: &Path, config: &GuiConfig) -> Result<()> {
     Ok(())
 }
 
+// DRY:FN:get_git_info
 /// Get git information for the current repository
 pub fn get_git_info() -> GitInfo {
     let mut info = GitInfo::default();
@@ -807,8 +831,8 @@ pub fn get_git_info() -> GitInfo {
     info
 }
 
-/// Build the initial model map for all platforms using platform_specs fallback data.
 // DRY:FN:build_model_map — Builds HashMap<platform_name, Vec<model_id>> from platform_specs fallback data
+/// Build the initial model map for all platforms using platform_specs fallback data.
 pub fn build_model_map() -> HashMap<String, Vec<String>> {
     use crate::platforms::platform_specs;
     use crate::types::Platform;

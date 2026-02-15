@@ -8,9 +8,11 @@ use log::info;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
+// DRY:DATA:StructureDetector
 /// Detects document structure from markdown or text.
 pub struct StructureDetector;
 
+// DRY:DATA:DocumentStructure
 /// Detected document structure.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -23,6 +25,7 @@ pub struct DocumentStructure {
     pub statistics: DocumentStatistics,
 }
 
+// DRY:DATA:Section
 /// A section in the document.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -48,6 +51,7 @@ pub struct Section {
     pub links: Vec<Link>,
 }
 
+// DRY:DATA:ListItem
 /// A list item (bullet or numbered).
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -62,6 +66,7 @@ pub struct ListItem {
     pub line_number: usize,
 }
 
+// DRY:DATA:ListType
 /// Type of list.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -84,6 +89,7 @@ impl std::fmt::Display for ListType {
     }
 }
 
+// DRY:DATA:CodeBlock
 /// A code block.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -97,6 +103,7 @@ pub struct CodeBlock {
     pub line_number: usize,
 }
 
+// DRY:DATA:Link
 /// A link in the document.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -109,6 +116,7 @@ pub struct Link {
     pub line_number: usize,
 }
 
+// DRY:DATA:DocumentStatistics
 /// Document statistics.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -128,6 +136,7 @@ pub struct DocumentStatistics {
 }
 
 impl StructureDetector {
+    // DRY:FN:detect_markdown
     /// Detect structure from markdown content.
     pub fn detect_markdown(content: &str) -> Result<DocumentStructure> {
         info!("Detecting markdown structure");
@@ -239,6 +248,7 @@ impl StructureDetector {
         })
     }
 
+    // DRY:FN:detect_text
     /// Detect structure from plain text content.
     pub fn detect_text(content: &str) -> Result<DocumentStructure> {
         info!("Detecting text structure");

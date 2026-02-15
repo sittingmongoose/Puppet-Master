@@ -1,3 +1,4 @@
+// DRY:DATA:fonts
 //! Custom font loading and constants
 //!
 //! This module provides compile-time embedded fonts for the application:
@@ -85,6 +86,7 @@ pub const FONT_MONO: Font = Font::MONOSPACE;
 ///     // ... other startup tasks
 /// ]);
 /// ```
+// DRY:HELPER:load_fonts
 pub fn load_fonts() -> Vec<iced::Task<()>> {
     vec![
         // Load Orbitron fonts (display/headings)
@@ -102,6 +104,7 @@ pub fn load_fonts() -> Vec<iced::Task<()>> {
 // ============================================================================
 
 /// Create a display font with optional bold weight
+// DRY:HELPER:display_font
 pub fn display_font(bold: bool) -> Font {
     if bold {
         FONT_DISPLAY_BOLD
@@ -111,6 +114,7 @@ pub fn display_font(bold: bool) -> Font {
 }
 
 /// Create a UI font with specified weight
+// DRY:DATA:UIWeight
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum UIWeight {
     Regular,
@@ -118,6 +122,7 @@ pub enum UIWeight {
     Bold,
 }
 
+// DRY:HELPER:ui_font
 pub fn ui_font(weight: UIWeight) -> Font {
     match weight {
         UIWeight::Regular => FONT_UI,

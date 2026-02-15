@@ -15,6 +15,7 @@ use std::sync::{Arc, Mutex};
 
 const MAX_BACKUPS: usize = 5;
 
+// DRY:DATA:PrdManager
 /// Thread-safe PRD manager
 #[derive(Clone)]
 pub struct PrdManager {
@@ -27,6 +28,7 @@ struct PrdManagerInner {
 }
 
 impl PrdManager {
+    // DRY:FN:new
     /// Create a new PRD manager and load from file
     pub fn new(path: impl AsRef<Path>) -> Result<Self> {
         let path = path.as_ref().to_path_buf();
@@ -37,6 +39,7 @@ impl PrdManager {
         })
     }
 
+    // DRY:FN:new_with_prd
     /// Create a new PRD manager with a new PRD (doesn't save)
     pub fn new_with_prd(path: impl AsRef<Path>, prd: PRD) -> Self {
         Self {
@@ -65,6 +68,7 @@ impl PrdManager {
             .with_context(|| format!("Failed to parse PRD JSON from {}", path.display()))
     }
 
+    // DRY:FN:save
     /// Save PRD to file with atomic write and backup
     pub fn save(&self) -> Result<()> {
         let inner = self.inner.lock().unwrap();
@@ -112,12 +116,14 @@ impl PrdManager {
         Ok(())
     }
 
+    // DRY:FN:get_prd
     /// Get a clone of the entire PRD
     pub fn get_prd(&self) -> PRD {
         let inner = self.inner.lock().unwrap();
         inner.prd.clone()
     }
 
+    // DRY:FN:find_item
     /// Find any item (Phase, Task, or Subtask) by ID
     pub fn find_item(&self, id: &str) -> Option<ItemType> {
         let inner = self.inner.lock().unwrap();
@@ -143,6 +149,7 @@ impl PrdManager {
         None
     }
 
+    // DRY:FN:update_status
     /// Update the status of any item by ID
     pub fn update_status(&self, id: &str, new_status: ItemStatus) -> Result<()> {
         let mut inner = self.inner.lock().unwrap();
@@ -191,6 +198,7 @@ impl PrdManager {
         Ok(())
     }
 
+    // DRY:FN:get_next_pending
     /// Get the next pending item (phase, task, or subtask)
     pub fn get_next_pending(&self) -> Option<(String, ItemType)> {
         let inner = self.inner.lock().unwrap();
@@ -281,6 +289,7 @@ impl PrdManager {
         None
     }
 
+    // DRY:FN:add_phase
     /// Add a new phase
     pub fn add_phase(&self, phase: Phase) -> Result<()> {
         let mut inner = self.inner.lock().unwrap();
@@ -295,6 +304,7 @@ impl PrdManager {
         Ok(())
     }
 
+    // DRY:FN:add_task
     /// Add a new task to a phase
     pub fn add_task(&self, phase_id: &str, task: Task) -> Result<()> {
         let mut inner = self.inner.lock().unwrap();
@@ -316,6 +326,7 @@ impl PrdManager {
         Ok(())
     }
 
+    // DRY:FN:add_subtask
     /// Add a new subtask to a task
     pub fn add_subtask(&self, task_id: &str, subtask: Subtask) -> Result<()> {
         let mut inner = self.inner.lock().unwrap();
@@ -337,6 +348,7 @@ impl PrdManager {
     }
 }
 
+// DRY:DATA:ItemType
 /// Enum to represent any item type
 #[derive(Debug, Clone)]
 pub enum ItemType {
@@ -346,6 +358,7 @@ pub enum ItemType {
 }
 
 impl ItemType {
+    // DRY:FN:id
     pub fn id(&self) -> &str {
         match self {
             ItemType::Phase(p) => &p.id,
@@ -354,6 +367,7 @@ impl ItemType {
         }
     }
 
+    // DRY:FN:name
     pub fn name(&self) -> &str {
         match self {
             ItemType::Phase(p) => &p.title,
@@ -362,6 +376,7 @@ impl ItemType {
         }
     }
 
+    // DRY:FN:status
     pub fn status(&self) -> ItemStatus {
         match self {
             ItemType::Phase(p) => p.status,

@@ -11,6 +11,7 @@ use std::path::{Path, PathBuf};
 
 use super::document_writer::CompletedPhase;
 
+// DRY:DATA:TechnologyEntry
 /// A single technology entry with its version information.
 #[derive(Debug, Clone)]
 pub struct TechnologyEntry {
@@ -22,6 +23,7 @@ pub struct TechnologyEntry {
     pub notes: String,
 }
 
+// DRY:DATA:TechCategory
 /// Category grouping for technologies.
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum TechCategory {
@@ -46,6 +48,7 @@ impl TechCategory {
     }
 }
 
+// DRY:DATA:TechnologyExtractor
 /// Extracts technology entries from decisions and Q&A history.
 pub struct TechnologyExtractor {
     /// Known technology patterns for categorization.
@@ -58,6 +61,7 @@ struct TechPattern {
 }
 
 impl TechnologyExtractor {
+    // DRY:FN:new
     /// Creates a new extractor with default patterns.
     pub fn new() -> Self {
         Self {
@@ -65,6 +69,7 @@ impl TechnologyExtractor {
         }
     }
 
+    // DRY:FN:extract
     /// Extracts all technology entries from completed phases.
     ///
     /// Focuses on the Architecture & Technology phase but also scans other
@@ -165,6 +170,7 @@ impl Default for TechnologyExtractor {
     }
 }
 
+// DRY:FN:write_technology_matrix
 /// Writes the technology matrix document to disk.
 pub fn write_technology_matrix(phases: &[CompletedPhase], output_dir: &Path) -> Result<PathBuf> {
     let extractor = TechnologyExtractor::new();

@@ -141,6 +141,7 @@ fn get_default_workspace() -> PathBuf {
     }
 }
 
+// DRY:FN:default_config
 /// Create a default configuration
 pub fn default_config() -> PuppetMasterConfig {
     // Use platform-appropriate working directory
@@ -331,12 +332,14 @@ fn default_ui() -> UiConfig {
     }
 }
 
+// DRY:FN:default_platform_config
 /// Get default config for a specific platform
 pub fn default_platform_config(platform: &str) -> Option<PlatformConfig> {
     let platforms = default_platforms();
     platforms.get(platform).cloned()
 }
 
+// DRY:FN:default_tier_config
 /// Get default tier configuration
 pub fn default_tier_config(tier: &str) -> Option<TierConfig> {
     let tiers = default_tiers();

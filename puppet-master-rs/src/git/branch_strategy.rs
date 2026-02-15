@@ -6,6 +6,7 @@ use log::info;
 
 use super::GitManager;
 
+// DRY:DATA:BranchStrategyManager
 /// Manages branching strategy for tiers
 pub struct BranchStrategyManager {
     strategy: BranchStrategy,
@@ -13,11 +14,13 @@ pub struct BranchStrategyManager {
 }
 
 impl BranchStrategyManager {
+    // DRY:FN:new
     /// Create a new branch strategy manager
     pub fn new(strategy: BranchStrategy, git: GitManager) -> Self {
         Self { strategy, git }
     }
 
+    // DRY:FN:ensure_branch
     /// Ensure the appropriate branch exists and is checked out for a tier
     pub async fn ensure_branch(&self, tier_type: TierType, tier_id: &str) -> Result<String> {
         let branch_name = self.generate_branch_name(tier_type, tier_id);
@@ -37,6 +40,7 @@ impl BranchStrategyManager {
         Ok(branch_name)
     }
 
+    // DRY:FN:generate_branch_name
     /// Generate branch name based on strategy and tier information
     pub fn generate_branch_name(&self, tier_type: TierType, tier_id: &str) -> String {
         match self.strategy {
@@ -99,6 +103,7 @@ impl BranchStrategyManager {
         }
     }
 
+    // DRY:FN:merge_branch
     /// Merge branch according to strategy
     pub async fn merge_branch(&self, source_branch: &str, merge_type: &str) -> Result<()> {
         info!("Merging {} using {} strategy", source_branch, merge_type);

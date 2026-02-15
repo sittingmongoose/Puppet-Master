@@ -13,6 +13,7 @@ use std::path::Path;
 
 use super::document_writer::CompletedPhase;
 
+// DRY:DATA:CoverageLevel
 /// Test coverage levels.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum CoverageLevel {
@@ -34,6 +35,7 @@ impl std::fmt::Display for CoverageLevel {
     }
 }
 
+// DRY:DATA:TestStrategyConfig
 /// Configuration for test strategy generation.
 #[derive(Debug, Clone)]
 pub struct TestStrategyConfig {
@@ -58,6 +60,7 @@ impl Default for TestStrategyConfig {
     }
 }
 
+// DRY:DATA:TestStrategyJson
 /// Machine-readable test strategy schema (Part 7.1 spec).
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -72,6 +75,7 @@ pub struct TestStrategyJson {
     pub items: Vec<TestItem>,
 }
 
+// DRY:DATA:TestItem
 /// A single test item with verification details (Part 7.1 spec).
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -92,6 +96,7 @@ pub struct TestItem {
     pub verification_command: String,
 }
 
+// DRY:FN:generate_test_strategy_markdown
 /// Generates a test strategy document from interview results.
 pub fn generate_test_strategy_markdown(
     project_name: &str,
@@ -234,6 +239,7 @@ pub fn generate_test_strategy_markdown(
     Ok(content)
 }
 
+// DRY:FN:generate_test_strategy_json
 /// Generates machine-readable test strategy JSON (Part 7.1 spec).
 pub fn generate_test_strategy_json(
     project_name: &str,
@@ -374,6 +380,7 @@ fn generate_verification_command(test_type: &str, phase_id: &str) -> String {
     }
 }
 
+// DRY:FN:generate_playwright_config
 /// Generates a basic Playwright configuration template (Part 2.10 spec).
 pub fn generate_playwright_config() -> String {
     r#"import { defineConfig, devices } from '@playwright/test';
@@ -454,6 +461,7 @@ export default defineConfig({
     .to_string()
 }
 
+// DRY:FN:write_test_strategy
 /// Writes the test strategy documents to disk.
 ///
 /// This generates three files as per Part 2.10 spec:

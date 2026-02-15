@@ -8,9 +8,11 @@ use anyhow::Result;
 use log::{debug, info, warn};
 use serde::{Deserialize, Serialize};
 
+// DRY:DATA:ValidationGate
 /// Validates PRD quality.
 pub struct ValidationGate;
 
+// DRY:DATA:ValidationResult
 /// Result of PRD validation.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -27,6 +29,7 @@ pub struct ValidationResult {
     pub checks: Vec<CheckResult>,
 }
 
+// DRY:DATA:ValidationError
 /// A validation error (blocking).
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -41,6 +44,7 @@ pub struct ValidationError {
     pub severity: Severity,
 }
 
+// DRY:DATA:ValidationWarning
 /// A validation warning (non-blocking).
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -56,6 +60,7 @@ pub struct ValidationWarning {
     pub suggestion: Option<String>,
 }
 
+// DRY:DATA:Severity
 /// Severity level.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -84,6 +89,7 @@ impl std::fmt::Display for Severity {
     }
 }
 
+// DRY:DATA:CheckResult
 /// Result of an individual validation check.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -100,6 +106,7 @@ pub struct CheckResult {
 }
 
 impl ValidationGate {
+    // DRY:FN:validate
     /// Validate a PRD.
     pub fn validate(prd: &PRD) -> Result<ValidationResult> {
         info!("Validating PRD: {}", prd.metadata.name);
@@ -576,6 +583,7 @@ impl ValidationGate {
             .min(100.0)
     }
 
+    // DRY:FN:format_report
     /// Generate a validation report.
     pub fn format_report(result: &ValidationResult) -> String {
         let mut report = String::from("# PRD Validation Report\n\n");

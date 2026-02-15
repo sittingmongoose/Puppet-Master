@@ -15,6 +15,7 @@ use tokio::io::{AsyncBufReadExt, BufReader};
 use tokio::process::Command;
 use tokio::time::timeout;
 
+// DRY:DATA:SpawnConfig
 /// Configuration for process spawning
 #[derive(Debug, Clone)]
 pub struct SpawnConfig {
@@ -42,6 +43,7 @@ impl Default for SpawnConfig {
     }
 }
 
+// DRY:DATA:SpawnResult
 /// Result of process execution
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SpawnResult {
@@ -57,6 +59,7 @@ pub struct SpawnResult {
     pub timed_out: bool,
 }
 
+// DRY:DATA:ProcessAudit
 /// Audit trail for process execution
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ProcessAudit {
@@ -80,6 +83,7 @@ pub struct ProcessAudit {
     pub duration_ms: Option<u64>,
 }
 
+// DRY:DATA:FreshSpawn
 /// Fresh process spawner
 pub struct FreshSpawn {
     config: SpawnConfig,

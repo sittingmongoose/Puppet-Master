@@ -10,6 +10,7 @@ use crate::app::Message;
 use crate::theme::{AppTheme, tokens};
 use crate::widgets::{ButtonVariant, header::Page, styled_button, themed_panel};
 
+// DRY:FN:not_found_view
 /// Render the not found view
 pub fn view<'a>(
     theme: &'a AppTheme,

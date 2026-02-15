@@ -12,6 +12,7 @@ use crate::theme::{AppTheme, colors, fonts, tokens};
 use iced::widget::{Button, button, text};
 use iced::{Background, Border, Color, Shadow, Vector};
 
+// DRY:WIDGET:ButtonVariant
 /// Button color variant
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ButtonVariant {
@@ -29,6 +30,7 @@ pub enum ButtonVariant {
     Ghost,
 }
 
+// DRY:WIDGET:ButtonSize
 /// Button size variant
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ButtonSize {
@@ -137,6 +139,7 @@ impl ButtonVariant {
     }
 }
 
+// DRY:WIDGET:styled_button
 /// Create a styled button with custom variant
 ///
 /// # Arguments
@@ -157,6 +160,7 @@ pub fn styled_button<'a, Message: Clone + 'a>(
     styled_button_sized(theme, label, variant, ButtonSize::Medium)
 }
 
+// DRY:WIDGET:styled_button_sized
 /// Create a styled button with custom variant and size
 ///
 /// # Arguments
@@ -216,6 +220,7 @@ fn lighten_color(color: Color, amount: f32) -> Color {
 
 // ── Convenience functions for common button types ────────────────────────
 
+// DRY:WIDGET:primary_button
 /// Create a primary button (Acid Lime)
 pub fn primary_button<'a, Message: Clone + 'a>(
     theme: &AppTheme,
@@ -224,6 +229,7 @@ pub fn primary_button<'a, Message: Clone + 'a>(
     styled_button(theme, label, ButtonVariant::Primary)
 }
 
+// DRY:WIDGET:secondary_button
 /// Create a secondary button (Paper)
 pub fn secondary_button<'a, Message: Clone + 'a>(
     theme: &AppTheme,
@@ -232,6 +238,7 @@ pub fn secondary_button<'a, Message: Clone + 'a>(
     styled_button(theme, label, ButtonVariant::Secondary)
 }
 
+// DRY:WIDGET:danger_button
 /// Create a danger button (Hot Magenta)
 pub fn danger_button<'a, Message: Clone + 'a>(
     theme: &AppTheme,
@@ -240,6 +247,7 @@ pub fn danger_button<'a, Message: Clone + 'a>(
     styled_button(theme, label, ButtonVariant::Danger)
 }
 
+// DRY:WIDGET:warning_button
 /// Create a warning button (Safety Orange)
 pub fn warning_button<'a, Message: Clone + 'a>(
     theme: &AppTheme,
@@ -248,11 +256,13 @@ pub fn warning_button<'a, Message: Clone + 'a>(
     styled_button(theme, label, ButtonVariant::Warning)
 }
 
+// DRY:WIDGET:info_button
 /// Create an info button (Electric Blue)
 pub fn info_button<'a, Message: Clone + 'a>(theme: &AppTheme, label: &str) -> Button<'a, Message> {
     styled_button(theme, label, ButtonVariant::Info)
 }
 
+// DRY:WIDGET:ghost_button
 /// Create a ghost button (Transparent)
 pub fn ghost_button<'a, Message: Clone + 'a>(theme: &AppTheme, label: &str) -> Button<'a, Message> {
     styled_button(theme, label, ButtonVariant::Ghost)

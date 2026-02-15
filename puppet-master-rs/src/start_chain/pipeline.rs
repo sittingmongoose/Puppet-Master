@@ -16,6 +16,7 @@ use std::path::PathBuf;
 use std::sync::Arc;
 use tokio::sync::mpsc;
 
+// DRY:DATA:StartChainParams
 /// Parameters for running the start chain pipeline.
 #[derive(Debug, Clone)]
 pub struct StartChainParams {
@@ -38,6 +39,7 @@ pub struct StartChainParams {
 }
 
 impl StartChainParams {
+    // DRY:FN:new
     /// Create new parameters with default settings.
     pub fn new(project_name: impl Into<String>, requirements: RequirementsInput) -> Self {
         Self {
@@ -52,6 +54,7 @@ impl StartChainParams {
         }
     }
 
+    // DRY:FN:with_ai
     /// Enable AI PRD generation.
     pub fn with_ai(mut self, platform: impl Into<String>, model: impl Into<String>) -> Self {
         self.use_ai = true;
@@ -60,6 +63,7 @@ impl StartChainParams {
         self
     }
 
+    // DRY:FN:with_ai_validation
     /// Enable AI-based validation.
     pub fn with_ai_validation(mut self, config: AiGapValidatorConfig) -> Self {
         self.validate_with_ai = true;
@@ -67,12 +71,14 @@ impl StartChainParams {
         self
     }
 
+    // DRY:FN:with_evidence
     /// Enable evidence saving.
     pub fn with_evidence(mut self) -> Self {
         self.save_evidence = true;
         self
     }
 
+    // DRY:FN:validate
     /// Validate parameters.
     pub fn validate(&self) -> Result<()> {
         if self.project_name.trim().is_empty() {
@@ -100,6 +106,7 @@ impl StartChainParams {
     }
 }
 
+// DRY:DATA:RequirementsInput
 /// Requirements input source.
 #[derive(Debug, Clone)]
 pub enum RequirementsInput {
@@ -109,6 +116,7 @@ pub enum RequirementsInput {
     File(PathBuf),
 }
 
+// DRY:DATA:StartChainResult
 /// Result of the start chain pipeline.
 #[derive(Debug)]
 pub struct StartChainResult {
@@ -126,6 +134,7 @@ pub struct StartChainResult {
     pub evidence_ids: Vec<String>,
 }
 
+// DRY:DATA:StartChainPipeline
 /// Start chain pipeline orchestrator.
 pub struct StartChainPipeline {
     config: Arc<PuppetMasterConfig>,
@@ -136,6 +145,7 @@ pub struct StartChainPipeline {
 }
 
 impl StartChainPipeline {
+    // DRY:FN:new
     /// Create a new start chain pipeline with configuration.
     pub fn new(config: Arc<PuppetMasterConfig>) -> Self {
         Self {
@@ -147,30 +157,35 @@ impl StartChainPipeline {
         }
     }
 
+    // DRY:FN:with_platform_registry
     /// Set platform registry for AI execution.
     pub fn with_platform_registry(mut self, registry: Arc<PlatformRegistry>) -> Self {
         self.platform_registry = Some(registry);
         self
     }
 
+    // DRY:FN:with_evidence_store
     /// Set evidence store for saving evidence.
     pub fn with_evidence_store(mut self, store: Arc<EvidenceStore>) -> Self {
         self.evidence_store = Some(store);
         self
     }
 
+    // DRY:FN:with_usage_tracker
     /// Set usage tracker for tracking AI usage.
     pub fn with_usage_tracker(mut self, tracker: Arc<UsageTracker>) -> Self {
         self.usage_tracker = Some(tracker);
         self
     }
 
+    // DRY:FN:with_event_tx
     /// Set event transmitter for progress updates.
     pub fn with_event_tx(mut self, tx: mpsc::UnboundedSender<PuppetMasterEvent>) -> Self {
         self.event_tx = Some(tx);
         self
     }
 
+    // DRY:FN:run
     /// Run the pipeline.
     pub async fn run(&self, params: StartChainParams) -> Result<StartChainResult> {
         // Validate parameters

@@ -8,6 +8,7 @@ use anyhow::{Result, anyhow};
 use log::{debug, info};
 use serde::{Deserialize, Serialize};
 
+// DRY:DATA:InjectorConfig
 /// Configuration for acceptance criteria injection.
 #[derive(Debug, Clone)]
 pub struct InjectorConfig {
@@ -35,6 +36,7 @@ impl Default for InjectorConfig {
     }
 }
 
+// DRY:DATA:InjectionResult
 /// Result of injection operation.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -49,17 +51,20 @@ pub struct InjectionResult {
     pub criteria_converted: usize,
 }
 
+// DRY:DATA:AcceptanceCriteriaInjector
 /// Injects machine-verifiable acceptance criteria into a PRD.
 pub struct AcceptanceCriteriaInjector {
     config: InjectorConfig,
 }
 
 impl AcceptanceCriteriaInjector {
+    // DRY:FN:new
     /// Create a new injector with the given configuration.
     pub fn new(config: InjectorConfig) -> Self {
         Self { config }
     }
 
+    // DRY:FN:default
     /// Create an injector with default configuration.
     pub fn default() -> Self {
         Self {
@@ -67,6 +72,7 @@ impl AcceptanceCriteriaInjector {
         }
     }
 
+    // DRY:FN:inject
     /// Inject acceptance criteria into all subtasks in the PRD.
     ///
     /// This method modifies the PRD in place, ensuring every subtask has

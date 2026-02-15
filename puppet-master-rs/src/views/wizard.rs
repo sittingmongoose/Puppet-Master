@@ -23,6 +23,7 @@ const REASONING_EFFORTS: &[&str] = &["low", "medium", "high"];
 const INTERVIEW_REASONING_LEVELS: &[&str] = &["low", "medium", "high", "max"];
 const OUTPUT_FORMATS: &[&str] = &["markdown", "json", "yaml"];
 
+// DRY:FN:wizard_view
 /// Requirements wizard view - 8-step process (0, 1-6 renamed to 0-8) matching enhanced flow
 pub fn view<'a>(
     step: usize,

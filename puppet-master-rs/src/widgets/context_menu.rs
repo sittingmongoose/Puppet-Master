@@ -6,11 +6,13 @@ use crate::widgets::styled_button::{ButtonSize, ButtonVariant, styled_button_siz
 use iced::Element;
 use iced::widget::row;
 
+// DRY:WIDGET:ContextMenuOptions
 #[derive(Debug, Clone, Copy, Default)]
 pub struct ContextMenuOptions {
     pub show_select_all: bool,
 }
 
+// DRY:WIDGET:context_menu_actions
 pub fn context_menu_actions<'a>(
     theme: &'a AppTheme,
     options: ContextMenuOptions,

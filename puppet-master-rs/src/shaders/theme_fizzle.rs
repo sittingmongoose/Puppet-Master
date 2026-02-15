@@ -12,6 +12,7 @@
 /// WGSL shader source for theme fizzle effect
 pub const THEME_FIZZLE_SHADER: &str = include_str!("theme_fizzle.wgsl");
 
+// DRY:DATA:ThemeFizzleUniforms
 /// Uniform data layout matching WGSL shader
 ///
 /// This struct must match the layout in theme_fizzle.wgsl exactly.

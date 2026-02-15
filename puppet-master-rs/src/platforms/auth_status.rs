@@ -11,6 +11,7 @@ use std::collections::HashMap;
 use std::process::Stdio;
 use tokio::process::Command;
 
+// DRY:DATA:AuthStatusChecker
 /// Authentication status checker for platforms
 pub struct AuthStatusChecker {
     /// Timeout for auth check commands (in seconds)
@@ -250,6 +251,7 @@ impl Default for AuthStatusChecker {
     }
 }
 
+// DRY:DATA:AuthCheckResult
 /// Result of an authentication check
 #[derive(Debug, Clone)]
 pub struct AuthCheckResult {

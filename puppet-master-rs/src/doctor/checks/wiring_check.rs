@@ -36,10 +36,12 @@ async fn file_contains(path: &Path, needle: &str) -> Result<bool, String> {
     Ok(content.contains(needle))
 }
 
+// DRY:DATA:WiringCheck
 /// Smoke-checks that the core runtime wiring exists and is callable.
 pub struct WiringCheck;
 
 impl WiringCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }

@@ -11,11 +11,13 @@ use std::fs::OpenOptions;
 use std::io::Write;
 use std::path::PathBuf;
 
+// DRY:HELPER:ErrorLogger
 /// Error logger for structured error recording
 pub struct ErrorLogger {
     log_path: PathBuf,
 }
 
+// DRY:HELPER:ErrorRecord
 /// Single error record
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ErrorRecord {
@@ -35,6 +37,7 @@ pub struct ErrorRecord {
     pub severity: ErrorSeverity,
 }
 
+// DRY:HELPER:ErrorCategory
 /// Categories of errors
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -69,6 +72,7 @@ impl std::fmt::Display for ErrorCategory {
     }
 }
 
+// DRY:HELPER:ErrorSeverity
 /// Error severity levels
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -95,6 +99,7 @@ impl std::fmt::Display for ErrorSeverity {
 }
 
 impl ErrorRecord {
+    // DRY:HELPER:ErrorRecord::new
     /// Create a new error record
     pub fn new(
         error_type: ErrorCategory,
@@ -111,24 +116,28 @@ impl ErrorRecord {
         }
     }
 
+    // DRY:HELPER:ErrorRecord::with_context
     /// Add context information
     pub fn with_context(mut self, key: impl Into<String>, value: impl Into<String>) -> Self {
         self.context.insert(key.into(), value.into());
         self
     }
 
+    // DRY:HELPER:ErrorRecord::with_context_map
     /// Add multiple context entries
     pub fn with_context_map(mut self, context: HashMap<String, String>) -> Self {
         self.context.extend(context);
         self
     }
 
+    // DRY:HELPER:ErrorRecord::with_stack_trace
     /// Add stack trace
     pub fn with_stack_trace(mut self, stack_trace: impl Into<String>) -> Self {
         self.stack_trace = Some(stack_trace.into());
         self
     }
 
+    // DRY:HELPER:ErrorRecord::to_jsonl
     /// Convert to JSONL format
     pub fn to_jsonl(&self) -> Result<String> {
         let json = serde_json::to_string(self).context("Failed to serialize error record")?;
@@ -137,11 +146,13 @@ impl ErrorRecord {
 }
 
 impl ErrorLogger {
+    // DRY:HELPER:ErrorLogger::new
     /// Create a new error logger
     pub fn new(log_path: PathBuf) -> Self {
         Self { log_path }
     }
 
+    // DRY:HELPER:ErrorLogger::log_error
     /// Log an error
     pub fn log_error(
         &self,
@@ -154,6 +165,7 @@ impl ErrorLogger {
         self.log(record)
     }
 
+    // DRY:HELPER:ErrorLogger::log
     /// Log an error record
     pub fn log(&self, record: ErrorRecord) -> Result<()> {
         // Create parent directory if needed
@@ -184,6 +196,7 @@ impl ErrorLogger {
         Ok(())
     }
 
+    // DRY:HELPER:ErrorLogger::get_recent_errors
     /// Get recent errors
     pub fn get_recent_errors(&self, count: usize) -> Result<Vec<ErrorRecord>> {
         let mut errors = self.read_all()?;
@@ -192,6 +205,7 @@ impl ErrorLogger {
         Ok(errors)
     }
 
+    // DRY:HELPER:ErrorLogger::get_errors_by_category
     /// Get errors by category
     pub fn get_errors_by_category(&self, category: ErrorCategory) -> Result<Vec<ErrorRecord>> {
         let all_errors = self.read_all()?;
@@ -201,6 +215,7 @@ impl ErrorLogger {
             .collect())
     }
 
+    // DRY:HELPER:ErrorLogger::get_errors_by_severity
     /// Get errors by severity
     pub fn get_errors_by_severity(&self, severity: ErrorSeverity) -> Result<Vec<ErrorRecord>> {
         let all_errors = self.read_all()?;
@@ -210,6 +225,7 @@ impl ErrorLogger {
             .collect())
     }
 
+    // DRY:HELPER:ErrorLogger::read_all
     /// Read all error records
     pub fn read_all(&self) -> Result<Vec<ErrorRecord>> {
         if !self.log_path.exists() {
@@ -241,6 +257,7 @@ impl ErrorLogger {
         Ok(records)
     }
 
+    // DRY:HELPER:ErrorLogger::read_range
     /// Read errors within a time range
     pub fn read_range(&self, start: DateTime<Utc>, end: DateTime<Utc>) -> Result<Vec<ErrorRecord>> {
         let all_errors = self.read_all()?;
@@ -251,6 +268,7 @@ impl ErrorLogger {
             .collect())
     }
 
+    // DRY:HELPER:ErrorLogger::count_by_category
     /// Get error count by category
     pub fn count_by_category(&self) -> Result<HashMap<ErrorCategory, usize>> {
         let all_errors = self.read_all()?;
@@ -263,6 +281,7 @@ impl ErrorLogger {
         Ok(counts)
     }
 
+    // DRY:HELPER:ErrorLogger::count_by_severity
     /// Get error count by severity
     pub fn count_by_severity(&self) -> Result<HashMap<ErrorSeverity, usize>> {
         let all_errors = self.read_all()?;
@@ -275,6 +294,7 @@ impl ErrorLogger {
         Ok(counts)
     }
 
+    // DRY:HELPER:ErrorLogger::clear
     /// Clear the error log
     pub fn clear(&self) -> Result<()> {
         if self.log_path.exists() {

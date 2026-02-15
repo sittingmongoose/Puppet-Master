@@ -4,6 +4,7 @@ use crate::theme::colors;
 use iced::Color;
 use iced::widget::{Text, text};
 
+// DRY:WIDGET:IconName
 /// Icon name enum
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum IconName {
@@ -157,6 +158,7 @@ impl IconName {
     }
 }
 
+// DRY:WIDGET:icon
 /// Create an icon widget with default size
 ///
 /// # Example
@@ -168,6 +170,7 @@ pub fn icon<'a>(name: IconName) -> Text<'a> {
     text(name.symbol()).size(name.default_size())
 }
 
+// DRY:WIDGET:icon_with_size
 /// Create an icon widget with custom size
 ///
 /// # Example
@@ -178,6 +181,7 @@ pub fn icon_with_size<'a>(name: IconName, size: f32) -> Text<'a> {
     text(name.symbol()).size(size)
 }
 
+// DRY:WIDGET:icon_with_color
 /// Create a colored icon
 ///
 /// # Example
@@ -188,45 +192,55 @@ pub fn icon_with_color<'a>(name: IconName, color: Color) -> Text<'a> {
     text(name.symbol()).size(name.default_size()).color(color)
 }
 
+// DRY:WIDGET:icon_styled
 /// Create an icon with custom size and color
 pub fn icon_styled<'a>(name: IconName, size: f32, color: Color) -> Text<'a> {
     text(name.symbol()).size(size).color(color)
 }
 
+// DRY:WIDGET:cursor_icon
 /// Platform icon helpers
 pub fn cursor_icon<'a>() -> Text<'a> {
     icon(IconName::Cursor)
 }
 
+// DRY:WIDGET:codex_icon
 pub fn codex_icon<'a>() -> Text<'a> {
     icon(IconName::Codex)
 }
 
+// DRY:WIDGET:claude_icon
 pub fn claude_icon<'a>() -> Text<'a> {
     icon(IconName::Claude)
 }
 
+// DRY:WIDGET:gemini_icon
 pub fn gemini_icon<'a>() -> Text<'a> {
     icon(IconName::Gemini)
 }
 
+// DRY:WIDGET:copilot_icon
 pub fn copilot_icon<'a>() -> Text<'a> {
     icon(IconName::Copilot)
 }
 
+// DRY:WIDGET:success_icon
 /// Status icon helpers with default colors
 pub fn success_icon<'a>() -> Text<'a> {
     icon_with_color(IconName::Check, colors::ACID_LIME)
 }
 
+// DRY:WIDGET:error_icon
 pub fn error_icon<'a>() -> Text<'a> {
     icon_with_color(IconName::Cross, colors::HOT_MAGENTA)
 }
 
+// DRY:WIDGET:warning_icon
 pub fn warning_icon<'a>() -> Text<'a> {
     icon_with_color(IconName::Warning, colors::SAFETY_ORANGE)
 }
 
+// DRY:WIDGET:info_icon
 pub fn info_icon<'a>() -> Text<'a> {
     icon_with_color(IconName::Info, colors::ELECTRIC_BLUE)
 }

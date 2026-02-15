@@ -8,6 +8,7 @@ use iced::widget::{button, column, container, row, stack, text};
 use iced::{Alignment, Border, Color, Element, Length, Padding, Shadow, Vector};
 use std::time::{Duration, Instant};
 
+// DRY:WIDGET:ToastType
 /// Toast notification type with associated colors
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ToastType {
@@ -49,6 +50,7 @@ impl ToastType {
     }
 }
 
+// DRY:WIDGET:Toast
 /// A single toast notification
 #[derive(Debug, Clone)]
 pub struct Toast {
@@ -84,6 +86,7 @@ impl Toast {
     }
 }
 
+// DRY:WIDGET:ToastManager
 /// Toast manager to handle multiple toasts
 #[derive(Debug, Clone)]
 pub struct ToastManager {
@@ -238,6 +241,7 @@ where
         .into()
 }
 
+// DRY:WIDGET:toast_overlay
 /// Create a toast overlay showing all active toasts
 ///
 /// Toasts are stacked at the bottom-right corner with 8px vertical spacing.
@@ -292,6 +296,7 @@ where
     stack![content, positioned_toasts].into()
 }
 
+// DRY:WIDGET:update_toast_manager
 /// Helper to create a toast manager message handler
 /// This should be called periodically (e.g., via subscription) to remove expired toasts
 pub fn update_toast_manager(manager: &mut ToastManager) {

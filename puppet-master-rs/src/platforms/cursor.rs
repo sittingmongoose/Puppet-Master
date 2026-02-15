@@ -51,6 +51,7 @@ use tokio::process::Command;
 
 const LARGE_PROMPT_THRESHOLD: usize = 32 * 1024; // 32KB
 
+// DRY:DATA:CursorRunner — Cursor CLI runner
 /// Cursor CLI runner
 pub struct CursorRunner {
     base: Arc<BaseRunner>,
@@ -58,6 +59,7 @@ pub struct CursorRunner {
 }
 
 impl CursorRunner {
+    // DRY:FN:new — Create a new Cursor runner
     /// Create a new Cursor runner
     pub fn new() -> Self {
         let command = Platform::Cursor.resolve_cli_command();

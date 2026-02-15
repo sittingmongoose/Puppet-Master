@@ -30,6 +30,7 @@ struct RegistryEntry {
     name: String,
 }
 
+// DRY:DATA:PlatformRegistry
 /// Central registry for platform runners
 pub struct PlatformRegistry {
     /// Registered runners
@@ -302,6 +303,7 @@ impl Default for PlatformRegistry {
     }
 }
 
+// DRY:DATA:PlatformInfo
 /// Platform information
 #[derive(Debug, Clone)]
 pub struct PlatformInfo {
@@ -317,6 +319,7 @@ pub struct PlatformInfo {
 static REGISTRY: once_cell::sync::Lazy<Arc<tokio::sync::Mutex<Option<PlatformRegistry>>>> =
     once_cell::sync::Lazy::new(|| Arc::new(tokio::sync::Mutex::new(None)));
 
+// DRY:FN:init_global_registry
 /// Initialize the global platform registry
 pub async fn init_global_registry() -> Result<()> {
     let mut registry = REGISTRY.lock().await;
@@ -329,6 +332,7 @@ pub async fn init_global_registry() -> Result<()> {
     Ok(())
 }
 
+// DRY:FN:global_registry
 /// Get the global platform registry
 pub async fn global_registry() -> Result<Arc<PlatformRegistry>> {
     // Ensure registry is initialized
@@ -349,6 +353,7 @@ pub async fn global_registry() -> Result<Arc<PlatformRegistry>> {
     }
 }
 
+// DRY:FN:get_runner
 /// Get a runner from the global registry
 pub async fn get_runner(platform: Platform) -> Result<Arc<dyn PlatformRunner>> {
     let registry = global_registry().await?;
@@ -358,6 +363,7 @@ pub async fn get_runner(platform: Platform) -> Result<Arc<dyn PlatformRunner>> {
         .context(format!("Platform {} not registered", platform))
 }
 
+// DRY:FN:list_available_platforms
 /// List all available platforms from global registry
 pub async fn list_available_platforms() -> Result<Vec<Platform>> {
     let registry = global_registry().await?;

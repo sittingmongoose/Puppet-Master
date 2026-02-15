@@ -6,6 +6,7 @@ use crate::theme::tokens::{borders, shadows, spacing};
 use iced::widget::{Space, button, column, container, row, rule, text};
 use iced::{Background, Border, Color, Element, Length, Padding, Shadow, Vector};
 
+// DRY:WIDGET:Page
 /// Application page enum
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Page {
@@ -77,6 +78,7 @@ impl std::fmt::Display for Page {
     }
 }
 
+// DRY:WIDGET:header
 /// Create navigation header with logo and styled navigation
 ///
 /// # Arguments
@@ -389,6 +391,7 @@ where
         .into()
 }
 
+// DRY:WIDGET:simple_header
 /// Simple header without project selector
 pub fn simple_header<'a, Message>(
     current_page: Page,

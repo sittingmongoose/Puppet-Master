@@ -5,12 +5,14 @@ use crate::theme::{AppTheme, colors, tokens};
 use iced::Element;
 use iced::widget::{container, text};
 
+// DRY:WIDGET:AuthState
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum AuthState {
     Authenticated,
     NotAuthenticated,
 }
 
+// DRY:WIDGET:auth_status_chip
 pub fn auth_status_chip<'a>(_theme: &'a AppTheme, state: AuthState) -> Element<'a, Message> {
     let (label, background) = match state {
         AuthState::Authenticated => ("Authenticated", colors::ACID_LIME),

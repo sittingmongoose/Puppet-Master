@@ -16,6 +16,7 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
 
+// DRY:HELPER:LogLevel
 /// Log level filter
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum LogLevel {
@@ -27,6 +28,7 @@ pub enum LogLevel {
 }
 
 impl LogLevel {
+    // DRY:HELPER:LogLevel::from_str
     pub fn from_str(s: &str) -> Option<Self> {
         match s.to_lowercase().as_str() {
             "trace" => Some(Self::Trace),
@@ -39,6 +41,7 @@ impl LogLevel {
     }
 }
 
+// DRY:HELPER:LogEntry
 /// Log entry
 #[derive(Debug, Clone)]
 pub struct LogEntry {
@@ -48,6 +51,7 @@ pub struct LogEntry {
     pub raw: String,
 }
 
+// DRY:HELPER:LogStreamer
 /// Log streamer for watching JSONL files
 pub struct LogStreamer {
     path: PathBuf,
@@ -59,6 +63,7 @@ pub struct LogStreamer {
 }
 
 impl LogStreamer {
+    // DRY:HELPER:LogStreamer::new
     /// Create a new log streamer
     pub fn new<F>(path: impl AsRef<Path>, min_level: LogLevel, callback: F) -> Result<Self>
     where
@@ -102,6 +107,7 @@ impl LogStreamer {
         })
     }
 
+    // DRY:HELPER:LogStreamer::stream
     /// Start streaming logs (blocking)
     pub fn stream(&mut self) -> Result<()> {
         // Read any existing new lines first
@@ -204,12 +210,14 @@ impl LogStreamer {
         }
     }
 
+    // DRY:HELPER:LogStreamer::spawn
     /// Spawn streaming in a background thread
     pub fn spawn(mut self) -> thread::JoinHandle<Result<()>> {
         thread::spawn(move || self.stream())
     }
 }
 
+// DRY:HELPER:spawn_log_streamer
 /// Create a log streamer and spawn it in a background thread
 pub fn spawn_log_streamer<F>(
     path: impl AsRef<Path>,

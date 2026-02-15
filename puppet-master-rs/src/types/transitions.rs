@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 
 use super::state::{OrchestratorState, TierState};
 
+// DRY:DATA:TransitionTrigger
 /// Trigger that caused a state transition.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -30,6 +31,7 @@ pub enum TransitionTrigger {
 }
 
 impl TransitionTrigger {
+    // DRY:FN:description
     /// Returns a human-readable description.
     pub fn description(&self) -> &'static str {
         match self {
@@ -46,6 +48,7 @@ impl TransitionTrigger {
     }
 }
 
+// DRY:DATA:TransitionAction
 /// Action to take during a state transition.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -69,6 +72,7 @@ pub enum TransitionAction {
 }
 
 impl TransitionAction {
+    // DRY:FN:description
     /// Returns a human-readable description.
     pub fn description(&self) -> &'static str {
         match self {
@@ -84,6 +88,7 @@ impl TransitionAction {
     }
 }
 
+// DRY:DATA:OrchestratorTransition
 /// Orchestrator-level state transition.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -110,6 +115,7 @@ pub struct OrchestratorTransition {
 }
 
 impl OrchestratorTransition {
+    // DRY:FN:new
     /// Creates a new orchestrator transition.
     pub fn new(
         from_state: OrchestratorState,
@@ -126,18 +132,21 @@ impl OrchestratorTransition {
         }
     }
 
+    // DRY:FN:with_reason
     /// Sets the reason and returns self for chaining.
     pub fn with_reason(mut self, reason: impl Into<String>) -> Self {
         self.reason = Some(reason.into());
         self
     }
 
+    // DRY:FN:with_action
     /// Adds an action and returns self for chaining.
     pub fn with_action(mut self, action: TransitionAction) -> Self {
         self.actions.push(action);
         self
     }
 
+    // DRY:FN:is_valid
     /// Checks if this is a valid transition.
     pub fn is_valid(&self) -> bool {
         // Implement state machine rules
@@ -159,6 +168,7 @@ impl OrchestratorTransition {
     }
 }
 
+// DRY:DATA:TierTransition
 /// Tier-level state transition.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -192,6 +202,7 @@ pub struct TierTransition {
 }
 
 impl TierTransition {
+    // DRY:FN:new
     /// Creates a new tier transition.
     pub fn new(
         tier_id: impl Into<String>,
@@ -211,24 +222,28 @@ impl TierTransition {
         }
     }
 
+    // DRY:FN:with_reason
     /// Sets the reason and returns self for chaining.
     pub fn with_reason(mut self, reason: impl Into<String>) -> Self {
         self.reason = Some(reason.into());
         self
     }
 
+    // DRY:FN:with_action
     /// Adds an action and returns self for chaining.
     pub fn with_action(mut self, action: TransitionAction) -> Self {
         self.actions.push(action);
         self
     }
 
+    // DRY:FN:with_duration
     /// Sets the duration and returns self for chaining.
     pub fn with_duration(mut self, duration_ms: u64) -> Self {
         self.duration_ms = Some(duration_ms);
         self
     }
 
+    // DRY:FN:is_valid
     /// Checks if this is a valid transition.
     pub fn is_valid(&self) -> bool {
         // Implement state machine rules
@@ -249,6 +264,7 @@ impl TierTransition {
     }
 }
 
+// DRY:DATA:TransitionHistory
 /// Transition history for tracking state changes.
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -261,21 +277,25 @@ pub struct TransitionHistory {
 }
 
 impl TransitionHistory {
+    // DRY:FN:new
     /// Creates a new empty history.
     pub fn new() -> Self {
         Self::default()
     }
 
+    // DRY:FN:record_orchestrator
     /// Records an orchestrator transition.
     pub fn record_orchestrator(&mut self, transition: OrchestratorTransition) {
         self.orchestrator_transitions.push(transition);
     }
 
+    // DRY:FN:record_tier
     /// Records a tier transition.
     pub fn record_tier(&mut self, transition: TierTransition) {
         self.tier_transitions.push(transition);
     }
 
+    // DRY:FN:for_tier
     /// Returns transitions for a specific tier.
     pub fn for_tier(&self, tier_id: &str) -> Vec<&TierTransition> {
         self.tier_transitions
@@ -284,6 +304,7 @@ impl TransitionHistory {
             .collect()
     }
 
+    // DRY:FN:current_orchestrator_state
     /// Returns the most recent orchestrator state.
     pub fn current_orchestrator_state(&self) -> Option<OrchestratorState> {
         self.orchestrator_transitions
@@ -291,6 +312,7 @@ impl TransitionHistory {
             .map(|t| t.to_state.clone())
     }
 
+    // DRY:FN:current_tier_state
     /// Returns the most recent tier state.
     pub fn current_tier_state(&self, tier_id: &str) -> Option<TierState> {
         self.tier_transitions

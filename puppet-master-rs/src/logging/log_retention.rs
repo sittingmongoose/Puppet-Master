@@ -9,11 +9,13 @@ use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::{Path, PathBuf};
 
+// DRY:HELPER:LogRetentionManager
 /// Log retention manager
 pub struct LogRetentionManager {
     config: RetentionConfig,
 }
 
+// DRY:HELPER:RetentionConfig
 /// Retention policy configuration
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct RetentionConfig {
@@ -38,6 +40,7 @@ impl Default for RetentionConfig {
     }
 }
 
+// DRY:HELPER:CleanupResult
 /// Result of a cleanup operation
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CleanupResult {
@@ -50,6 +53,7 @@ pub struct CleanupResult {
 }
 
 impl CleanupResult {
+    // DRY:HELPER:CleanupResult::empty
     /// Create an empty result
     pub fn empty() -> Self {
         Self {
@@ -59,6 +63,7 @@ impl CleanupResult {
         }
     }
 
+    // DRY:HELPER:CleanupResult::add
     /// Add to this result
     pub fn add(&mut self, other: &CleanupResult) {
         self.files_removed += other.files_removed;
@@ -66,6 +71,7 @@ impl CleanupResult {
         self.files_kept += other.files_kept;
     }
 
+    // DRY:HELPER:CleanupResult::total_files
     /// Get total files processed
     pub fn total_files(&self) -> u32 {
         self.files_removed + self.files_kept
@@ -82,16 +88,19 @@ struct FileInfo {
 }
 
 impl LogRetentionManager {
+    // DRY:HELPER:LogRetentionManager::new
     /// Create a new retention manager
     pub fn new(config: RetentionConfig) -> Self {
         Self { config }
     }
 
+    // DRY:HELPER:LogRetentionManager::with_defaults
     /// Create with default configuration
     pub fn with_defaults() -> Self {
         Self::new(RetentionConfig::default())
     }
 
+    // DRY:HELPER:LogRetentionManager::cleanup
     /// Clean up logs in a directory
     pub fn cleanup(&self, log_dir: impl AsRef<Path>) -> Result<CleanupResult> {
         let log_dir = log_dir.as_ref();
@@ -241,6 +250,7 @@ impl LogRetentionManager {
         Ok(())
     }
 
+    // DRY:HELPER:LogRetentionManager::get_stats
     /// Get current log directory statistics
     pub fn get_stats(&self, log_dir: impl AsRef<Path>) -> Result<LogStats> {
         let log_dir = log_dir.as_ref();
@@ -268,6 +278,7 @@ impl LogRetentionManager {
         })
     }
 
+    // DRY:HELPER:LogRetentionManager::needs_cleanup
     /// Check if cleanup is needed
     pub fn needs_cleanup(&self, log_dir: impl AsRef<Path>) -> Result<bool> {
         let stats = self.get_stats(log_dir)?;
@@ -296,6 +307,7 @@ impl LogRetentionManager {
     }
 }
 
+// DRY:HELPER:LogStats
 /// Statistics about log files
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct LogStats {

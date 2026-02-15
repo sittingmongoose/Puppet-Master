@@ -11,11 +11,13 @@ use std::fs::OpenOptions;
 use std::io::Write;
 use std::path::PathBuf;
 
+// DRY:HELPER:IterationLogger
 /// Iteration logger for detailed execution tracking
 pub struct IterationLogger {
     log_dir: PathBuf,
 }
 
+// DRY:HELPER:IterationLog
 /// Complete log for a single iteration
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct IterationLog {
@@ -55,6 +57,7 @@ pub struct IterationLog {
     pub success: bool,
 }
 
+// DRY:HELPER:TokenUsage
 /// Token usage statistics
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TokenUsage {
@@ -70,6 +73,7 @@ pub struct TokenUsage {
 }
 
 impl TokenUsage {
+    // DRY:HELPER:TokenUsage::new
     /// Create new token usage
     pub fn new(input_tokens: u64, output_tokens: u64) -> Self {
         Self {
@@ -80,6 +84,7 @@ impl TokenUsage {
         }
     }
 
+    // DRY:HELPER:TokenUsage::with_cost
     /// Add cost estimate
     pub fn with_cost(mut self, cost: f64) -> Self {
         self.estimated_cost = Some(cost);
@@ -88,6 +93,7 @@ impl TokenUsage {
 }
 
 impl IterationLog {
+    // DRY:HELPER:IterationLog::new
     /// Create a new iteration log
     pub fn new(
         session_id: impl Into<String>,
@@ -114,64 +120,75 @@ impl IterationLog {
         }
     }
 
+    // DRY:HELPER:IterationLog::with_prompt_size
     /// Set prompt size
     pub fn with_prompt_size(mut self, size: usize) -> Self {
         self.prompt_size = size;
         self
     }
 
+    // DRY:HELPER:IterationLog::with_response_size
     /// Set response size
     pub fn with_response_size(mut self, size: usize) -> Self {
         self.response_size = size;
         self
     }
 
+    // DRY:HELPER:IterationLog::with_duration
     /// Set duration
     pub fn with_duration(mut self, duration_ms: u64) -> Self {
         self.duration_ms = duration_ms;
         self
     }
 
+    // DRY:HELPER:IterationLog::with_exit_code
     /// Set exit code
     pub fn with_exit_code(mut self, code: i32) -> Self {
         self.exit_code = Some(code);
         self
     }
 
+    // DRY:HELPER:IterationLog::with_completion_signal
     /// Set completion signal
     pub fn with_completion_signal(mut self, signal: impl Into<String>) -> Self {
         self.completion_signal = Some(signal.into());
         self
     }
 
+    // DRY:HELPER:IterationLog::add_file_changed
     /// Add a changed file
     pub fn add_file_changed(&mut self, file: impl Into<String>) {
         self.files_changed.push(file.into());
     }
 
+    // DRY:HELPER:IterationLog::with_files_changed
     /// Set files changed
     pub fn with_files_changed(mut self, files: Vec<String>) -> Self {
         self.files_changed = files;
         self
     }
 
+    // DRY:HELPER:IterationLog::with_token_usage
     /// Set token usage
     pub fn with_token_usage(mut self, usage: TokenUsage) -> Self {
         self.token_usage = Some(usage);
         self
     }
 
+    // DRY:HELPER:IterationLog::add_error
     /// Add an error
     pub fn add_error(&mut self, error: impl Into<String>) {
         self.errors.push(error.into());
     }
 
+    // DRY:HELPER:IterationLog::with_errors
     /// Set errors
     pub fn with_errors(mut self, errors: Vec<String>) -> Self {
         self.errors = errors;
         self
     }
 
+    // DRY:HELPER:IterationLog::complete
     /// Mark as complete
     pub fn complete(mut self, success: bool) -> Self {
         self.ended_at = Some(Utc::now());
@@ -182,6 +199,7 @@ impl IterationLog {
         self
     }
 
+    // DRY:HELPER:IterationLog::to_jsonl
     /// Convert to JSONL format
     pub fn to_jsonl(&self) -> Result<String> {
         let json = serde_json::to_string(self).context("Failed to serialize iteration log")?;
@@ -190,11 +208,13 @@ impl IterationLog {
 }
 
 impl IterationLogger {
+    // DRY:HELPER:IterationLogger::new
     /// Create a new iteration logger
     pub fn new(log_dir: PathBuf) -> Self {
         Self { log_dir }
     }
 
+    // DRY:HELPER:IterationLogger::log
     /// Log an iteration
     pub fn log(&self, iteration_log: &IterationLog) -> Result<()> {
         // Create log directory if needed
@@ -231,6 +251,7 @@ impl IterationLogger {
         Ok(())
     }
 
+    // DRY:HELPER:IterationLogger::read_session
     /// Read all iterations for a session
     pub fn read_session(&self, session_id: &str) -> Result<Vec<IterationLog>> {
         let log_file = self.log_dir.join(format!("{}.jsonl", session_id));
@@ -264,6 +285,7 @@ impl IterationLogger {
         Ok(logs)
     }
 
+    // DRY:HELPER:IterationLogger::read_iteration
     /// Read a specific iteration
     pub fn read_iteration(
         &self,
@@ -276,6 +298,7 @@ impl IterationLogger {
             .find(|log| log.iteration_id == iteration_id))
     }
 
+    // DRY:HELPER:IterationLogger::session_stats
     /// Get statistics for a session
     pub fn session_stats(&self, session_id: &str) -> Result<SessionStats> {
         let logs = self.read_session(session_id)?;
@@ -314,6 +337,7 @@ impl IterationLogger {
         })
     }
 
+    // DRY:HELPER:IterationLogger::list_sessions
     /// List all sessions with iteration logs
     pub fn list_sessions(&self) -> Result<Vec<String>> {
         if !self.log_dir.exists() {
@@ -338,6 +362,7 @@ impl IterationLogger {
         Ok(sessions)
     }
 
+    // DRY:HELPER:IterationLogger::delete_session
     /// Delete logs for a session
     pub fn delete_session(&self, session_id: &str) -> Result<()> {
         let log_file = self.log_dir.join(format!("{}.jsonl", session_id));
@@ -351,6 +376,7 @@ impl IterationLogger {
     }
 }
 
+// DRY:HELPER:SessionStats
 /// Statistics for a session
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SessionStats {

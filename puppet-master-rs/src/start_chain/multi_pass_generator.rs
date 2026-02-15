@@ -12,6 +12,7 @@ use std::path::Path;
 use std::sync::Arc;
 use std::time::{Duration, Instant};
 
+// DRY:DATA:MultiPassConfig
 /// Configuration for multi-pass generation.
 #[derive(Debug, Clone)]
 pub struct MultiPassConfig {
@@ -36,6 +37,7 @@ impl Default for MultiPassConfig {
     }
 }
 
+// DRY:DATA:PassResult
 /// Result of a generation pass.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -57,6 +59,7 @@ pub struct PassResult {
 }
 
 impl PassResult {
+    // DRY:FN:new
     /// Creates a new pass result.
     pub fn new(pass_number: usize, description: impl Into<String>) -> Self {
         Self {
@@ -71,6 +74,7 @@ impl PassResult {
     }
 }
 
+// DRY:DATA:MultiPassGenerator
 /// Multi-pass PRD generator.
 pub struct MultiPassGenerator {
     config: MultiPassConfig,
@@ -78,6 +82,7 @@ pub struct MultiPassGenerator {
 }
 
 impl MultiPassGenerator {
+    // DRY:FN:new
     /// Creates a new multi-pass generator with default configuration.
     pub fn new() -> Self {
         Self {
@@ -86,6 +91,7 @@ impl MultiPassGenerator {
         }
     }
 
+    // DRY:FN:with_config
     /// Creates a new multi-pass generator with custom configuration.
     pub fn with_config(config: MultiPassConfig) -> Self {
         Self {
@@ -94,6 +100,7 @@ impl MultiPassGenerator {
         }
     }
 
+    // DRY:FN:generate_with_ai
     /// Runs all generation passes using AI, producing an improved PRD.
     pub async fn generate_with_ai(
         &mut self,
@@ -425,6 +432,7 @@ Return ONLY the final PRD as a single JSON object (camelCase), no markdown fence
         phase_count + task_count + subtask_count
     }
 
+    // DRY:FN:generate
     /// Runs all generation passes on the PRD.
     pub fn generate(&mut self, initial_prd: &PRD) -> Result<PRD, String> {
         let mut current_prd = initial_prd.clone();
@@ -605,11 +613,13 @@ Return ONLY the final PRD as a single JSON object (camelCase), no markdown fence
         issues
     }
 
+    // DRY:FN:pass_results
     /// Returns the results from all passes.
     pub fn pass_results(&self) -> &[PassResult] {
         &self.pass_results
     }
 
+    // DRY:FN:summary
     /// Returns a summary of the generation process.
     pub fn summary(&self) -> GenerationSummary {
         GenerationSummary {
@@ -629,6 +639,7 @@ impl Default for MultiPassGenerator {
     }
 }
 
+// DRY:DATA:GenerationSummary
 /// Summary of multi-pass generation.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]

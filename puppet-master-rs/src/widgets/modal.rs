@@ -6,6 +6,7 @@ use crate::theme::{AppTheme, colors};
 use iced::widget::{button, column, container, row, scrollable, stack, text};
 use iced::{Alignment, Border, Color, Element, Length, Padding, Shadow, Vector};
 
+// DRY:WIDGET:ModalSize
 /// Modal size variant
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ModalSize {
@@ -34,6 +35,7 @@ impl ModalSize {
     }
 }
 
+// DRY:WIDGET:ModalData
 /// Modal data structure
 #[derive(Debug, Clone)]
 pub struct ModalData {
@@ -44,6 +46,7 @@ pub struct ModalData {
     pub cancel_label: Option<String>,
 }
 
+// DRY:WIDGET:modal_overlay
 /// Create a modal overlay
 ///
 /// Displays a centered modal panel with dark backdrop, header with close button,
@@ -317,6 +320,7 @@ where
     stack![content, backdrop].into()
 }
 
+// DRY:WIDGET:confirm_modal
 /// Simple confirmation modal
 ///
 /// A convenience function to create a standard confirmation dialog.
@@ -368,6 +372,7 @@ where
     )
 }
 
+// DRY:WIDGET:error_modal
 /// Error modal
 ///
 /// A convenience function to display an error message.

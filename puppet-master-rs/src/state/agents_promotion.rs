@@ -8,6 +8,7 @@ use anyhow::{Context, Result};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
+// DRY:DATA:PromotionConfig
 /// Promotion engine configuration
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PromotionConfig {
@@ -32,6 +33,7 @@ impl Default for PromotionConfig {
     }
 }
 
+// DRY:DATA:PromotionEngine
 /// Promotion engine for agent learnings
 pub struct PromotionEngine {
     config: PromotionConfig,
@@ -73,6 +75,7 @@ impl UsageStats {
     }
 }
 
+// DRY:DATA:PromotionCandidate
 /// Candidate for promotion to a higher tier
 #[derive(Debug, Clone)]
 pub struct PromotionCandidate {
@@ -91,6 +94,7 @@ pub struct PromotionCandidate {
 }
 
 impl PromotionEngine {
+    // DRY:FN:new
     /// Create a new promotion engine
     pub fn new(config: PromotionConfig) -> Self {
         Self {
@@ -99,11 +103,13 @@ impl PromotionEngine {
         }
     }
 
+    // DRY:FN:with_defaults
     /// Create with default configuration
     pub fn with_defaults() -> Self {
         Self::new(PromotionConfig::default())
     }
 
+    // DRY:FN:record_usage
     /// Record usage of an agent entry
     pub fn record_usage(
         &mut self,
@@ -140,6 +146,7 @@ impl PromotionEngine {
         Ok(())
     }
 
+    // DRY:FN:evaluate
     /// Evaluate which entries should be promoted
     pub fn evaluate(&self, entries: &[AgentDefinition]) -> Vec<PromotionCandidate> {
         let mut candidates = Vec::new();
@@ -202,6 +209,7 @@ impl PromotionEngine {
         parts[..parts.len() - 1].join(".")
     }
 
+    // DRY:FN:promote
     /// Promote a candidate by copying it to the target tier
     pub fn promote(
         &self,
@@ -231,6 +239,7 @@ impl PromotionEngine {
         Ok(())
     }
 
+    // DRY:FN:get_stats
     /// Get usage statistics for an entry
     pub fn get_stats(&self, entry_text: &str) -> Option<(u32, f64)> {
         self.usage_tracker
@@ -239,11 +248,13 @@ impl PromotionEngine {
             .map(|stats| (stats.count, stats.success_rate()))
     }
 
+    // DRY:FN:clear_stats
     /// Clear all usage statistics
     pub fn clear_stats(&mut self) {
         self.usage_tracker.usage.clear();
     }
 
+    // DRY:FN:export_stats
     /// Export usage statistics for persistence
     pub fn export_stats(&self) -> HashMap<String, (u32, u32, u32, String)> {
         self.usage_tracker
@@ -263,6 +274,7 @@ impl PromotionEngine {
             .collect()
     }
 
+    // DRY:FN:import_stats
     /// Import usage statistics from persistence
     pub fn import_stats(&mut self, data: HashMap<String, (u32, u32, u32, String)>) {
         for (key, (count, successes, failures, source_tier)) in data {

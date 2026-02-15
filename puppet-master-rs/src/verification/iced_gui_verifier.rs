@@ -34,10 +34,12 @@ struct IcedGuiCriterionSpec {
     workspace_isolation: Option<String>,
 }
 
+// DRY:DATA:IcedGuiVerifier
 /// Verifier implementation for Iced GUI automation.
 pub struct IcedGuiVerifier;
 
 impl IcedGuiVerifier {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }

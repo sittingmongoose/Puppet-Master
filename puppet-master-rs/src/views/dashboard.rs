@@ -20,6 +20,7 @@ use iced::widget::{Space, column, container, mouse_area, row, text, text_editor}
 use iced::{Background, Border, Element, Length};
 use std::collections::HashMap;
 
+// DRY:DATA:CurrentItem
 /// Current item being processed
 #[derive(Debug, Clone)]
 pub struct CurrentItem {
@@ -37,6 +38,7 @@ pub struct CurrentItem {
     pub reasoning_effort: Option<String>,
 }
 
+// DRY:DATA:ProgressState
 /// Progress state for all tiers
 #[derive(Debug, Clone)]
 pub struct ProgressState {
@@ -49,6 +51,7 @@ pub struct ProgressState {
     pub overall_percent: f32,
 }
 
+// DRY:DATA:OutputLine
 /// Output line with type classification
 #[derive(Debug, Clone)]
 pub struct OutputLine {
@@ -57,6 +60,7 @@ pub struct OutputLine {
     pub text: String,
 }
 
+// DRY:DATA:OutputType
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum OutputType {
     Stdout,
@@ -76,6 +80,7 @@ impl OutputType {
     }
 }
 
+// DRY:DATA:BudgetDisplayInfo
 /// Budget information for display
 #[derive(Debug, Clone)]
 pub struct BudgetDisplayInfo {
@@ -96,6 +101,7 @@ fn status_from_str(s: &str) -> Status {
     }
 }
 
+// DRY:FN:dashboard_view
 /// Dashboard view - main orchestration interface
 pub fn view<'a>(
     status: &'a str,

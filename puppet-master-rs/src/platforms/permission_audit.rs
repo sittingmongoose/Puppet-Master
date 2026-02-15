@@ -20,6 +20,7 @@ use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use tokio::sync::Mutex;
 
+// DRY:DATA:PermissionAction
 /// Permission event type
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(rename_all = "snake_case")]
@@ -51,6 +52,7 @@ impl std::fmt::Display for PermissionAction {
     }
 }
 
+// DRY:DATA:PermissionEvent
 /// Permission event details
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PermissionEvent {
@@ -139,6 +141,7 @@ impl PermissionEvent {
     }
 }
 
+// DRY:DATA:AuditQuery
 /// Query parameters for audit log
 #[derive(Debug, Clone, Default)]
 pub struct AuditQuery {
@@ -257,6 +260,7 @@ impl AuditQuery {
     }
 }
 
+// DRY:DATA:PermissionAudit
 /// Permission audit logger
 pub struct PermissionAudit {
     /// Path to audit log file
@@ -528,6 +532,7 @@ impl PermissionAudit {
     }
 }
 
+// DRY:DATA:ApprovalStats
 /// Approval statistics
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ApprovalStats {
@@ -538,6 +543,7 @@ pub struct ApprovalStats {
     pub by_action: std::collections::HashMap<PermissionAction, ActionStats>,
 }
 
+// DRY:DATA:ActionStats
 /// Statistics per action type
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ActionStats {

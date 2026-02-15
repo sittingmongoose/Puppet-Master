@@ -10,6 +10,7 @@ use iced::mouse;
 use iced::widget::{Canvas, Container, canvas, container, row, text};
 use iced::{Border, Color, Element, Point, Rectangle, Theme as IcedTheme};
 
+// DRY:WIDGET:Status
 /// Status state enum
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Status {
@@ -117,6 +118,7 @@ impl<Message> canvas::Program<Message> for StatusDotState {
     }
 }
 
+// DRY:WIDGET:status_dot
 /// Create a small status dot indicator (12px diameter circle)
 ///
 /// Uses canvas for crisp, pixel-perfect rendering.
@@ -134,6 +136,7 @@ pub fn status_dot<'a, Message: 'a>(theme: &AppTheme, status: &str) -> Element<'a
     status_dot_typed(theme, status_enum)
 }
 
+// DRY:WIDGET:status_dot_typed
 /// Create a status dot with typed Status enum
 pub fn status_dot_typed<'a, Message: 'a>(theme: &AppTheme, status: Status) -> Element<'a, Message> {
     let color = status.color();
@@ -152,6 +155,7 @@ pub fn status_dot_typed<'a, Message: 'a>(theme: &AppTheme, status: Status) -> El
         .into()
 }
 
+// DRY:WIDGET:status_badge
 /// Create a status badge with colored dot and label
 ///
 /// # Arguments
@@ -172,6 +176,7 @@ pub fn status_badge<'a, Message: 'a + Clone>(
     status_badge_typed(theme, status_enum, label)
 }
 
+// DRY:WIDGET:status_badge_typed
 /// Create a status badge with typed Status enum
 pub fn status_badge_typed<'a, Message: 'a + Clone>(
     theme: &AppTheme,
@@ -205,6 +210,7 @@ pub fn status_badge_typed<'a, Message: 'a + Clone>(
         .into()
 }
 
+// DRY:WIDGET:status_badge_with_text
 /// Create a status badge with custom text (solid color, no dot)
 ///
 /// # Arguments
@@ -244,6 +250,7 @@ pub fn status_badge_with_text<'a, Message: 'a>(
     .into()
 }
 
+// DRY:WIDGET:pulsing_status_dot
 /// Pulsing status dot for running state
 ///
 /// Note: Animation is handled by the parent view via subscriptions
@@ -314,6 +321,7 @@ mod tests {
 // These functions maintain the old API for existing code while using the new
 // theme-aware implementations internally.
 
+// DRY:WIDGET:status_dot_legacy (deprecated -- use status_dot)
 /// Legacy API: Create a small status dot indicator using default light theme
 ///
 /// **Note**: This is kept for backward compatibility. New code should use
@@ -337,6 +345,7 @@ where
     Container::new(canvas_widget).width(12.0).height(12.0)
 }
 
+// DRY:WIDGET:status_badge_legacy (deprecated -- use status_badge)
 /// Legacy API: Create a status badge with label using default light theme
 ///
 /// **Note**: This is kept for backward compatibility. New code should use
@@ -373,6 +382,7 @@ pub fn status_badge_legacy<'a, Message: 'a + Clone>(
         })
 }
 
+// DRY:WIDGET:pulsing_status_dot_legacy (deprecated -- use pulsing_status_dot)
 /// Legacy API: Pulsing status dot for running state using default light theme
 ///
 /// **Note**: This is kept for backward compatibility. New code should use

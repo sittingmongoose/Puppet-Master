@@ -11,6 +11,7 @@ use iced::mouse;
 use iced::widget::{Canvas, canvas, container, row, text};
 use iced::{Border, Color, Element, Length, Point, Rectangle, Size, Theme as IcedTheme};
 
+// DRY:WIDGET:ProgressVariant
 /// Progress bar color variant
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ProgressVariant {
@@ -36,6 +37,7 @@ impl ProgressVariant {
     }
 }
 
+// DRY:WIDGET:ProgressSize
 /// Progress bar size variant
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ProgressSize {
@@ -229,6 +231,7 @@ impl<Message> canvas::Program<Message> for ProgressBarState {
     }
 }
 
+// DRY:WIDGET:animated_progress_bar
 /// Create a styled progress bar with theme-aware styling and animations
 ///
 /// # Arguments
@@ -283,6 +286,7 @@ pub fn animated_progress_bar<'a, Message: 'a>(
     themed_container.into()
 }
 
+// DRY:WIDGET:styled_progress_bar
 /// Create a styled progress bar without animations (time = 0.0)
 ///
 /// # Arguments
@@ -309,6 +313,7 @@ pub fn styled_progress_bar<'a, Message: 'a>(
     animated_progress_bar(theme, progress, variant, size, 0.0)
 }
 
+// DRY:WIDGET:animated_progress_bar_with_label
 /// Create a progress bar with percentage label and animations
 ///
 /// # Arguments
@@ -349,6 +354,7 @@ pub fn animated_progress_bar_with_label<'a, Message: 'a>(
     .into()
 }
 
+// DRY:WIDGET:progress_bar_with_label
 /// Create a progress bar with percentage label
 ///
 /// # Arguments
@@ -377,6 +383,7 @@ pub fn progress_bar_with_label<'a, Message: 'a>(
 
 // ── Convenience functions for common progress bar types ──────────────────
 
+// DRY:WIDGET:default_progress_bar
 /// Create a default blue progress bar
 pub fn default_progress_bar<'a, Message: 'a>(
     theme: &AppTheme,
@@ -392,6 +399,7 @@ pub fn default_progress_bar<'a, Message: 'a>(
     )
 }
 
+// DRY:WIDGET:success_progress_bar
 /// Create a success (lime) progress bar
 pub fn success_progress_bar<'a, Message: 'a>(
     theme: &AppTheme,
@@ -407,6 +415,7 @@ pub fn success_progress_bar<'a, Message: 'a>(
     )
 }
 
+// DRY:WIDGET:warning_progress_bar
 /// Create a warning (orange) progress bar
 pub fn warning_progress_bar<'a, Message: 'a>(
     theme: &AppTheme,
@@ -422,6 +431,7 @@ pub fn warning_progress_bar<'a, Message: 'a>(
     )
 }
 
+// DRY:WIDGET:error_progress_bar
 /// Create an error (magenta) progress bar
 pub fn error_progress_bar<'a, Message: 'a>(
     theme: &AppTheme,
@@ -437,6 +447,7 @@ pub fn error_progress_bar<'a, Message: 'a>(
     )
 }
 
+// DRY:WIDGET:auto_color_progress_bar
 /// Create a progress bar that auto-selects color based on percentage
 ///
 /// - Blue: < 80%
@@ -488,6 +499,7 @@ mod tests {
 // The old API used (value, max, variant, size) without theme parameter.
 // These functions maintain that signature using the default light theme.
 
+// DRY:WIDGET:styled_progress_bar_legacy (deprecated -- use styled_progress_bar)
 /// Legacy API: Create a styled progress bar with value/max range
 ///
 /// **Note**: This is kept for backward compatibility. New code should use

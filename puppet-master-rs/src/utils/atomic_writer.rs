@@ -10,6 +10,7 @@ use std::fs;
 use std::io::Write;
 use std::path::{Path, PathBuf};
 
+// DRY:DATA:AtomicWriter
 /// Atomic file writer utility
 pub struct AtomicWriter;
 

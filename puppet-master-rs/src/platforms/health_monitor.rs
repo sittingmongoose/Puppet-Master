@@ -14,6 +14,7 @@ use std::collections::HashMap;
 use std::sync::Arc;
 use tokio::sync::RwLock;
 
+// DRY:DATA:HealthMonitor
 /// Health monitoring system for all platforms
 #[derive(Clone)]
 pub struct HealthMonitor {
@@ -202,6 +203,7 @@ impl Default for HealthMonitor {
     }
 }
 
+// DRY:DATA:PlatformHealth
 /// Health status for a single platform
 #[derive(Debug, Clone)]
 pub struct PlatformHealth {
@@ -273,6 +275,7 @@ impl PlatformHealth {
     }
 }
 
+// DRY:DATA:HealthConfig
 /// Configuration for health monitoring
 #[derive(Debug, Clone)]
 pub struct HealthConfig {

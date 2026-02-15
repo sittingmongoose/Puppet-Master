@@ -13,9 +13,11 @@ use std::path::Path;
 use std::sync::Arc;
 use std::time::{Duration, Instant};
 
+// DRY:DATA:RequirementsInterviewer
 /// Interactive requirements interviewer.
 pub struct RequirementsInterviewer;
 
+// DRY:DATA:InterviewQuestion
 /// An interview question to gather more information.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -36,6 +38,7 @@ pub struct InterviewQuestion {
     pub required: bool,
 }
 
+// DRY:DATA:QuestionCategory
 /// Category of interview question.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -79,6 +82,7 @@ impl std::fmt::Display for QuestionCategory {
     }
 }
 
+// DRY:DATA:Importance
 /// Importance level of a question.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -101,6 +105,7 @@ impl std::fmt::Display for Importance {
     }
 }
 
+// DRY:DATA:InterviewResult
 /// Result of an interview session.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -264,6 +269,7 @@ fn infer_importance(idx: usize) -> Importance {
 }
 
 impl RequirementsInterviewer {
+    // DRY:FN:generate_questions
     /// Generate interview questions from parsed requirements.
     pub fn generate_questions(requirements: &ParsedRequirements) -> Result<InterviewResult> {
         info!(
@@ -313,6 +319,7 @@ impl RequirementsInterviewer {
         })
     }
 
+    // DRY:FN:interview_with_ai
     /// Generate interview questions using an AI platform runner.
     ///
     /// Falls back to rule-based generation if execution or parsing fails.
@@ -719,6 +726,7 @@ impl RequirementsInterviewer {
         ]
     }
 
+    // DRY:FN:format_as_prompt
     /// Format questions as a prompt for the AI.
     pub fn format_as_prompt(result: &InterviewResult) -> String {
         let mut prompt = String::from("# Requirements Clarification Questions\n\n");

@@ -10,6 +10,7 @@ use crate::types::*;
 use anyhow::{Result, anyhow};
 use chrono::{DateTime, Utc};
 
+// DRY:DATA:StateTransition
 /// State transition record for state machines
 #[derive(Debug, Clone)]
 pub struct StateTransition<S: Clone> {
@@ -34,6 +35,7 @@ impl<S: Clone> StateTransition<S> {
 // Orchestrator State Machine
 // ============================================================================
 
+// DRY:DATA:OrchestratorStateMachine
 /// Main orchestrator state machine
 ///
 /// State flow: Idle → Planning → Executing ⇄ Paused → Complete/Error
@@ -146,6 +148,7 @@ impl Default for OrchestratorStateMachine {
     }
 }
 
+// DRY:DATA:OrchestratorEvent
 /// Orchestrator events
 #[derive(Debug, Clone)]
 pub enum OrchestratorEvent {
@@ -193,6 +196,7 @@ pub enum OrchestratorEvent {
 // Tier State Machine
 // ============================================================================
 
+// DRY:DATA:TierStateMachine
 /// Tier execution state machine
 ///
 /// State flow: Pending → Planning → Running → Gating → Passed/Failed/Escalated
@@ -367,6 +371,7 @@ impl TierStateMachine {
     }
 }
 
+// DRY:DATA:TierEvent
 /// Tier events
 #[derive(Debug, Clone)]
 pub enum TierEvent {

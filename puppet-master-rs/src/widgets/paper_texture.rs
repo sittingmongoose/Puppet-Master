@@ -7,6 +7,7 @@ use iced::mouse;
 use iced::widget::canvas::{self, Cache, Canvas, Frame, Geometry, Path, Stroke};
 use iced::{Color, Element, Length, Point, Rectangle, Renderer, Theme};
 
+// DRY:WIDGET:PaperTexture
 /// Paper texture canvas widget state
 pub struct PaperTexture {
     cache: Cache,
@@ -79,6 +80,7 @@ fn draw_paper_texture(frame: &mut Frame, bounds: Rectangle, is_dark: bool) {
     }
 }
 
+// DRY:WIDGET:paper_texture
 /// Create a canvas widget with paper texture
 ///
 /// # Arguments

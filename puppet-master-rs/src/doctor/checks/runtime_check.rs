@@ -9,12 +9,14 @@ use log::{debug, warn};
 use std::fs;
 use std::path::PathBuf;
 
+// DRY:DATA:RuntimeCheck
 /// Checks runtime environment (disk space, memory, permissions, etc.)
 pub struct RuntimeCheck {
     working_dir: PathBuf,
 }
 
 impl RuntimeCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         // Use the same workspace logic as default_paths() to avoid permission issues
         let working_dir = if cfg!(windows) {
@@ -52,12 +54,14 @@ impl RuntimeCheck {
         Self { working_dir }
     }
 
+    // DRY:FN:with_working_dir
     /// Create with a specific working directory
     #[allow(dead_code)]
     pub fn with_working_dir(working_dir: PathBuf) -> Self {
         Self { working_dir }
     }
 
+    // DRY:FN:check
     /// Run all runtime checks
     pub fn check(&self) -> RuntimeCheckResult {
         let mut checks = Vec::new();
@@ -297,6 +301,7 @@ impl Default for RuntimeCheck {
     }
 }
 
+// DRY:DATA:RuntimeCheckResult
 /// Result of runtime environment checks
 #[derive(Debug, Clone)]
 pub struct RuntimeCheckResult {
@@ -304,6 +309,7 @@ pub struct RuntimeCheckResult {
     pub overall_pass: bool,
 }
 
+// DRY:DATA:RuntimeItem
 /// A single runtime check item
 #[derive(Debug, Clone)]
 pub struct RuntimeItem {

@@ -11,6 +11,7 @@ use crate::theme::{AppTheme, colors, fonts, tokens};
 use iced::widget::{TextInput, column, text, text_input};
 use iced::{Border, Color, Element};
 
+// DRY:WIDGET:InputVariant
 /// Input field variant
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum InputVariant {
@@ -22,6 +23,7 @@ pub enum InputVariant {
     Error,
 }
 
+// DRY:WIDGET:InputSize
 /// Input field size
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum InputSize {
@@ -72,6 +74,7 @@ impl InputVariant {
     }
 }
 
+// DRY:WIDGET:styled_text_input
 /// Create a styled text input field
 ///
 /// # Arguments
@@ -98,6 +101,7 @@ pub fn styled_text_input<'a, Message: Clone + 'a>(
     )
 }
 
+// DRY:WIDGET:styled_text_input_with_variant
 /// Create a styled text input with custom variant and size
 ///
 /// # Arguments
@@ -160,6 +164,7 @@ pub fn styled_text_input_with_variant<'a, Message: Clone + 'a>(
         )
 }
 
+// DRY:WIDGET:labeled_input
 /// Create a labeled text input with label above the field
 ///
 /// # Arguments
@@ -197,6 +202,7 @@ pub fn labeled_input<'a, Message: Clone + 'a>(
     .into()
 }
 
+// DRY:WIDGET:labeled_input_with_error
 /// Create a labeled text input with error state
 ///
 /// # Arguments
@@ -254,6 +260,7 @@ pub fn labeled_input_with_error<'a, Message: Clone + 'a>(
     col.into()
 }
 
+// DRY:WIDGET:code_input
 /// Create a code input (monospace font)
 ///
 /// # Arguments
@@ -280,6 +287,7 @@ pub fn code_input<'a, Message: Clone + 'a>(
     )
 }
 
+// DRY:WIDGET:small_input
 /// Create a small text input
 pub fn small_input<'a, Message: Clone + 'a>(
     theme: &AppTheme,
@@ -295,6 +303,7 @@ pub fn small_input<'a, Message: Clone + 'a>(
     )
 }
 
+// DRY:WIDGET:large_input
 /// Create a large text input
 pub fn large_input<'a, Message: Clone + 'a>(
     theme: &AppTheme,

@@ -6,6 +6,7 @@ use iced::widget::canvas::{Cache, Geometry, Path, Stroke};
 use iced::widget::{Canvas, canvas};
 use iced::{Color, Element, Point, Rectangle};
 
+// DRY:WIDGET:UsageData
 /// Platform usage data point
 #[derive(Debug, Clone)]
 pub struct UsageData {
@@ -14,6 +15,7 @@ pub struct UsageData {
     pub color: Color,
 }
 
+// DRY:WIDGET:UsageChart
 /// Usage bar chart
 #[derive(Debug)]
 pub struct UsageChart {
@@ -128,6 +130,7 @@ impl<Message> canvas::Program<Message> for UsageChart {
     }
 }
 
+// DRY:WIDGET:usage_chart
 /// Create a usage bar chart widget from hourly data
 ///
 /// Accepts &[(String, usize)] data and an AppTheme reference (matching caller signatures).

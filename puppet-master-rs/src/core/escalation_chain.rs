@@ -6,6 +6,7 @@
 use crate::types::{EscalationChainKey, EscalationChainStepConfig, EscalationTarget, TierType};
 use anyhow::{Result, anyhow};
 
+// DRY:DATA:EscalationChainFailureType
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum EscalationChainFailureType {
     TestFailure,
@@ -15,12 +16,14 @@ pub enum EscalationChainFailureType {
     Error,
 }
 
+// DRY:DATA:EscalationChainSelection
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct EscalationChainSelection {
     pub step: EscalationChainStepConfig,
     pub index: usize,
 }
 
+// DRY:FN:map_failure_type_to_chain_key
 /// Map an internal failure type to the config key used in `escalation.chains`.
 pub fn map_failure_type_to_chain_key(
     failure_type: EscalationChainFailureType,
@@ -34,6 +37,7 @@ pub fn map_failure_type_to_chain_key(
     }
 }
 
+// DRY:FN:select_escalation_chain_step
 /// Select the escalation-chain step for a given 1-based attempt number.
 ///
 /// Deterministic selection rules:
@@ -85,6 +89,7 @@ pub fn select_escalation_chain_step(
     })
 }
 
+// DRY:FN:to_tier_type
 /// Normalize configured tier target into a TierType.
 pub fn to_tier_type(value: Option<EscalationTarget>) -> Option<TierType> {
     match value {

@@ -13,6 +13,7 @@ use std::time::Instant;
 
 use super::verifier::VerifierRegistry;
 
+// DRY:DATA:GateRunConfig
 /// Configuration for gate execution.
 #[derive(Debug, Clone)]
 pub struct GateRunConfig {
@@ -37,6 +38,7 @@ impl Default for GateRunConfig {
     }
 }
 
+// DRY:DATA:GateRunner
 /// Gate runner executes verification gates.
 pub struct GateRunner {
     registry: VerifierRegistry,
@@ -46,6 +48,7 @@ pub struct GateRunner {
 }
 
 impl GateRunner {
+    // DRY:FN:new
     /// Create a new gate runner with default verifiers registered.
     pub fn new(config: GateRunConfig) -> Self {
         let mut registry = VerifierRegistry::new();
@@ -59,6 +62,7 @@ impl GateRunner {
         }
     }
 
+    // DRY:FN:with_registry
     /// Create gate runner with custom verifier registry.
     pub fn with_registry(registry: VerifierRegistry, config: GateRunConfig) -> Self {
         Self {
@@ -69,6 +73,7 @@ impl GateRunner {
         }
     }
 
+    // DRY:FN:with_integration
     /// Create gate runner wired to an EvidenceStore + EventBus.
     pub fn with_integration(
         registry: VerifierRegistry,
@@ -84,6 +89,7 @@ impl GateRunner {
         }
     }
 
+    // DRY:FN:run_gate
     /// Run a gate for a tier.
     pub async fn run_gate(
         &self,

@@ -12,6 +12,7 @@ use std::path::Path;
 
 use super::document_writer::CompletedPhase;
 
+// DRY:FN:generate_agents_md
 /// Generates AGENTS.md content from completed interview phases.
 ///
 /// This follows the spec from Part 2.9:
@@ -279,6 +280,7 @@ pub fn generate_agents_md(
     Ok(content)
 }
 
+// DRY:FN:write_agents_md
 /// Writes the AGENTS.md file to disk.
 pub fn write_agents_md(
     project_name: &str,

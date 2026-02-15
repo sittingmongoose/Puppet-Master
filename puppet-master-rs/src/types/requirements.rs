@@ -4,6 +4,7 @@ use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
+// DRY:DATA:RequirementsSource
 /// Source format of requirements documentation.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -21,6 +22,7 @@ pub enum RequirementsSource {
 }
 
 impl RequirementsSource {
+    // DRY:FN:extension
     /// Returns the typical file extension for this source type.
     pub fn extension(&self) -> Option<&'static str> {
         match self {
@@ -33,6 +35,7 @@ impl RequirementsSource {
     }
 }
 
+// DRY:DATA:RequirementPriority
 /// Priority level of a requirement.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -53,6 +56,7 @@ impl Default for RequirementPriority {
     }
 }
 
+// DRY:DATA:ParsedRequirement
 /// A parsed requirement from the source documentation.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -84,6 +88,7 @@ pub struct ParsedRequirement {
 }
 
 impl ParsedRequirement {
+    // DRY:FN:new
     /// Creates a new requirement with the given id, title, and description.
     pub fn new(
         id: impl Into<String>,
@@ -101,18 +106,21 @@ impl ParsedRequirement {
         }
     }
 
+    // DRY:FN:with_priority
     /// Sets the priority and returns self for chaining.
     pub fn with_priority(mut self, priority: RequirementPriority) -> Self {
         self.priority = priority;
         self
     }
 
+    // DRY:FN:with_source_location
     /// Sets the source location and returns self for chaining.
     pub fn with_source_location(mut self, location: impl Into<String>) -> Self {
         self.source_location = Some(location.into());
         self
     }
 
+    // DRY:FN:with_tag
     /// Adds a tag and returns self for chaining.
     pub fn with_tag(mut self, tag: impl Into<String>) -> Self {
         self.tags.push(tag.into());
@@ -120,6 +128,7 @@ impl ParsedRequirement {
     }
 }
 
+// DRY:DATA:RequirementsSection
 /// A hierarchical section of requirements.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -137,6 +146,7 @@ pub struct RequirementsSection {
 }
 
 impl RequirementsSection {
+    // DRY:FN:new
     /// Creates a new empty section with the given title.
     pub fn new(title: impl Into<String>) -> Self {
         Self {
@@ -146,6 +156,7 @@ impl RequirementsSection {
         }
     }
 
+    // DRY:FN:total_requirements
     /// Returns the total count of requirements in this section and all subsections.
     pub fn total_requirements(&self) -> usize {
         self.requirements.len()
@@ -156,6 +167,7 @@ impl RequirementsSection {
                 .sum::<usize>()
     }
 
+    // DRY:FN:all_requirements
     /// Flattens all requirements from this section and subsections.
     pub fn all_requirements(&self) -> Vec<&ParsedRequirement> {
         let mut all = Vec::new();
@@ -167,6 +179,7 @@ impl RequirementsSection {
     }
 }
 
+// DRY:DATA:RequirementsStats
 /// Statistics about requirements.
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -186,6 +199,7 @@ pub struct RequirementsStats {
     pub tested_count: usize,
 }
 
+// DRY:DATA:RequirementsInventory
 /// Complete inventory of requirements from all sources.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -202,6 +216,7 @@ pub struct RequirementsInventory {
 }
 
 impl RequirementsInventory {
+    // DRY:FN:new
     /// Creates a new inventory from requirements.
     pub fn new(items: Vec<ParsedRequirement>) -> Self {
         let stats = Self::calculate_stats(&items);
@@ -229,6 +244,7 @@ impl RequirementsInventory {
         }
     }
 
+    // DRY:FN:by_priority
     /// Returns requirements with the given priority.
     pub fn by_priority(&self, priority: RequirementPriority) -> Vec<&ParsedRequirement> {
         self.items
@@ -237,6 +253,7 @@ impl RequirementsInventory {
             .collect()
     }
 
+    // DRY:FN:find_by_id
     /// Finds a requirement by ID.
     pub fn find_by_id(&self, id: &str) -> Option<&ParsedRequirement> {
         self.items.iter().find(|r| r.id == id)

@@ -17,6 +17,7 @@ use iced::widget::{
 use iced::{Alignment, Border, Element, Length};
 use std::collections::HashMap;
 
+// DRY:FN:config_view
 /// Configuration editor view with 8 functional tabs
 pub fn view<'a>(
     gui_config: &'a GuiConfig,

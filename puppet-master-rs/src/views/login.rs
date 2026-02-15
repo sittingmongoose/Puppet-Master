@@ -12,6 +12,7 @@ use iced::widget::{column, container, row, scrollable, text, text_editor};
 use iced::{Alignment, Element, Length};
 use std::collections::HashMap;
 
+// DRY:DATA:AuthStatus
 /// Authentication status for a platform
 #[derive(Debug, Clone)]
 pub struct AuthStatus {
@@ -21,6 +22,7 @@ pub struct AuthStatus {
     pub hint: String,
 }
 
+// DRY:DATA:AuthMethod
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum AuthMethod {
     EnvVar,
@@ -117,6 +119,7 @@ fn get_platform_defs() -> Vec<PlatformDef> {
     ]
 }
 
+// DRY:FN:login_view
 /// Platform authentication status view
 pub fn view<'a>(
     auth_status: &'a HashMap<String, AuthStatus>,

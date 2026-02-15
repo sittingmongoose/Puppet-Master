@@ -3,6 +3,7 @@
 use crate::app::Message;
 use crate::widgets::Page;
 
+// DRY:DATA:ActionDefinition
 /// Declarative action definition used by CLI/MCP listing.
 #[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -11,6 +12,7 @@ pub struct ActionDefinition {
     pub description: &'static str,
 }
 
+// DRY:FN:list_actions
 /// Return all stable action IDs exposed to automation.
 pub fn list_actions() -> Vec<ActionDefinition> {
     vec![
@@ -121,6 +123,7 @@ pub fn list_actions() -> Vec<ActionDefinition> {
     ]
 }
 
+// DRY:FN:resolve_action
 /// Resolve a stable action ID to a concrete app message.
 pub fn resolve_action(action_id: &str) -> Option<Message> {
     Some(match action_id {
@@ -154,6 +157,7 @@ pub fn resolve_action(action_id: &str) -> Option<Message> {
     })
 }
 
+// DRY:FN:resolve_from_text
 /// Best-effort text lookup for selector-based targeting.
 pub fn resolve_from_text(text: &str) -> Option<Message> {
     let key = text.trim().to_lowercase();

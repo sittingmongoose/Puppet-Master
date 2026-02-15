@@ -8,6 +8,7 @@
 use crate::types::{OrchestratorState, TierState};
 use std::collections::HashMap;
 
+// DRY:DATA:OrchestratorTransition
 /// Orchestrator state transition
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct OrchestratorTransition {
@@ -17,6 +18,7 @@ pub struct OrchestratorTransition {
     pub to: OrchestratorState,
 }
 
+// DRY:DATA:TierTransition
 /// Tier state transition
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct TierTransition {
@@ -26,6 +28,7 @@ pub struct TierTransition {
     pub to: TierState,
 }
 
+// DRY:DATA:StateTransitions
 /// State transition tables
 pub struct StateTransitions {
     /// Valid orchestrator transitions
@@ -303,26 +306,31 @@ use std::sync::OnceLock;
 
 static TRANSITIONS: OnceLock<StateTransitions> = OnceLock::new();
 
+// DRY:FN:get_transitions
 /// Get global state transitions instance
 pub fn get_transitions() -> &'static StateTransitions {
     TRANSITIONS.get_or_init(|| StateTransitions::new())
 }
 
+// DRY:FN:can_transition_orchestrator
 /// Check if orchestrator transition is valid (convenience function)
 pub fn can_transition_orchestrator(from: OrchestratorState, to: OrchestratorState) -> bool {
     get_transitions().is_valid_orchestrator_transition(from, to)
 }
 
+// DRY:FN:can_transition_tier
 /// Check if tier transition is valid (convenience function)
 pub fn can_transition_tier(from: TierState, to: TierState) -> bool {
     get_transitions().is_valid_tier_transition(from, to)
 }
 
+// DRY:FN:get_valid_next_orchestrator_states
 /// Get valid next orchestrator states (convenience function)
 pub fn get_valid_next_orchestrator_states(from: OrchestratorState) -> Vec<OrchestratorState> {
     get_transitions().get_valid_orchestrator_states(from)
 }
 
+// DRY:FN:get_valid_next_tier_states
 /// Get valid next tier states (convenience function)
 pub fn get_valid_next_tier_states(from: TierState) -> Vec<TierState> {
     get_transitions().get_valid_tier_states(from)

@@ -14,6 +14,7 @@ use std::collections::HashMap;
 use std::fs;
 use std::path::PathBuf;
 
+// DRY:DATA:Checkpoint
 /// Complete checkpoint state that can be saved/loaded
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Checkpoint {
@@ -33,6 +34,7 @@ pub struct Checkpoint {
     pub metadata: CheckpointMetadata,
 }
 
+// DRY:DATA:CurrentPosition
 /// Current execution position
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CurrentPosition {
@@ -46,6 +48,7 @@ pub struct CurrentPosition {
     pub iteration: u32,
 }
 
+// DRY:DATA:CheckpointMetadata
 /// Checkpoint metadata for display
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CheckpointMetadata {
@@ -59,6 +62,7 @@ pub struct CheckpointMetadata {
     pub iterations_run: usize,
 }
 
+// DRY:DATA:TierContext
 /// Tier execution context (matches TierStateMachine internal state)
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TierContext {
@@ -76,6 +80,7 @@ pub struct TierContext {
     pub last_error: Option<String>,
 }
 
+// DRY:DATA:StatePersistence
 /// State persistence manager
 pub struct StatePersistence {
     /// Directory for checkpoint storage
@@ -260,6 +265,7 @@ impl StatePersistence {
     }
 }
 
+// DRY:DATA:CheckpointSummary
 /// Summary of a checkpoint for listing
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CheckpointSummary {

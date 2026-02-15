@@ -6,6 +6,7 @@
 
 use super::question_parser::STRUCTURED_MARKERS;
 
+// DRY:DATA:PromptConfig
 /// Configuration passed to the prompt generator.
 pub struct PromptConfig {
     /// The feature being planned.
@@ -110,6 +111,7 @@ const DOMAIN_TEMPLATES: [DomainTemplate; 8] = [
     },
 ];
 
+// DRY:FN:generate_system_prompt
 /// Generates the system prompt for a given interview phase.
 ///
 /// # Arguments
@@ -261,11 +263,13 @@ pub fn generate_system_prompt(
     parts.join("\n")
 }
 
+// DRY:FN:domain_phase_names
 /// Returns the phase domain names for listing purposes.
 pub fn domain_phase_names() -> Vec<&'static str> {
     DOMAIN_TEMPLATES.iter().map(|d| d.name).collect()
 }
 
+// DRY:FN:domain_phase_id
 /// Returns a stable identifier for a domain phase index (e.g. `"scope_goals"`).
 pub fn domain_phase_id(index: usize) -> &'static str {
     match index {

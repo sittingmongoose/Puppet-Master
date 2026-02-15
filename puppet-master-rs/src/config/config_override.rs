@@ -8,6 +8,7 @@ use std::collections::HashMap;
 
 use crate::types::{Platform, PuppetMasterConfig};
 
+// DRY:DATA:StartChainOverride
 /// Start chain override configuration
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct StartChainOverride {
@@ -28,6 +29,7 @@ pub struct StartChainOverride {
     pub force_step_order: Option<Vec<String>>,
 }
 
+// DRY:DATA:ValidatorOverride
 /// Validator override specification
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ValidatorOverride {
@@ -41,6 +43,7 @@ pub struct ValidatorOverride {
     pub config: serde_json::Value,
 }
 
+// DRY:DATA:ConfigOverride
 /// Configuration override for runtime modifications
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct ConfigOverride {
@@ -69,6 +72,7 @@ pub struct ConfigOverride {
     pub path_overrides: Option<HashMap<String, String>>,
 }
 
+// DRY:DATA:PlatformOverride
 /// Platform-specific configuration overrides
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PlatformOverride {
@@ -93,6 +97,7 @@ pub struct PlatformOverride {
     pub timeout_seconds: Option<u32>,
 }
 
+// DRY:DATA:TierOverride
 /// Tier configuration overrides
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TierOverride {
@@ -113,6 +118,7 @@ pub struct TierOverride {
     pub global_timeout_ms: Option<u64>,
 }
 
+// DRY:DATA:BudgetOverride
 /// Budget configuration overrides
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BudgetOverride {
@@ -133,6 +139,7 @@ pub struct BudgetOverride {
     pub disable_enforcement: bool,
 }
 
+// DRY:DATA:LoggingOverride
 /// Logging configuration overrides
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct LoggingOverride {
@@ -149,6 +156,7 @@ pub struct LoggingOverride {
     pub retention_days: Option<u32>,
 }
 
+// DRY:DATA:VerificationOverride
 /// Verification configuration overrides
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct VerificationOverride {
@@ -165,6 +173,7 @@ pub struct VerificationOverride {
     pub timeout_seconds: Option<u32>,
 }
 
+// DRY:FN:apply_overrides
 /// Apply configuration overrides to a base configuration
 ///
 /// Modifies the base configuration in-place with the specified overrides.

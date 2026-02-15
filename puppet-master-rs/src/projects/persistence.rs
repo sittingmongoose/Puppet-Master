@@ -9,6 +9,7 @@ use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::{Path, PathBuf};
 
+// DRY:DATA:KnownProject
 /// A known project entry with metadata
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct KnownProject {
@@ -29,6 +30,7 @@ pub struct KnownProject {
 }
 
 impl KnownProject {
+    // DRY:FN:new
     /// Create a new known project entry
     pub fn new(name: String, path: PathBuf) -> Self {
         let now = Utc::now();
@@ -42,17 +44,20 @@ impl KnownProject {
         }
     }
 
+    // DRY:FN:touch
     /// Update the last accessed timestamp
     pub fn touch(&mut self) {
         self.last_accessed = Utc::now();
     }
 
+    // DRY:FN:exists
     /// Check if the project directory still exists
     pub fn exists(&self) -> bool {
         self.path.exists() && self.path.is_dir()
     }
 }
 
+// DRY:DATA:ProjectsPersistence
 /// Projects persistence manager
 pub struct ProjectsPersistence {
     /// Path to the projects.json file
@@ -60,6 +65,7 @@ pub struct ProjectsPersistence {
 }
 
 impl ProjectsPersistence {
+    // DRY:FN:new
     /// Create a new projects persistence manager
     ///
     /// Uses the app data directory structure:
@@ -120,6 +126,7 @@ impl ProjectsPersistence {
         }
     }
 
+    // DRY:FN:load
     /// Load the list of known projects
     pub fn load(&self) -> Result<Vec<KnownProject>> {
         if !self.storage_path.exists() {
@@ -136,6 +143,7 @@ impl ProjectsPersistence {
         Ok(projects)
     }
 
+    // DRY:FN:save
     /// Save the list of known projects
     pub fn save(&self, projects: &[KnownProject]) -> Result<()> {
         let json = serde_json::to_string_pretty(projects)
@@ -150,6 +158,7 @@ impl ProjectsPersistence {
         Ok(())
     }
 
+    // DRY:FN:add_or_update
     /// Add or update a project in the known projects list
     ///
     /// If the project already exists (by path), updates its last_accessed time.
@@ -173,6 +182,7 @@ impl ProjectsPersistence {
         Ok(())
     }
 
+    // DRY:FN:remove
     /// Remove a project by path
     pub fn remove(&self, path: &Path) -> Result<bool> {
         let mut projects = self.load()?;
@@ -188,6 +198,7 @@ impl ProjectsPersistence {
         }
     }
 
+    // DRY:FN:set_pinned
     /// Pin or unpin a project
     pub fn set_pinned(&self, path: &Path, pinned: bool) -> Result<bool> {
         let mut projects = self.load()?;
@@ -201,6 +212,7 @@ impl ProjectsPersistence {
         }
     }
 
+    // DRY:FN:set_notes
     /// Update the notes for a project
     pub fn set_notes(&self, path: &Path, notes: Option<String>) -> Result<bool> {
         let mut projects = self.load()?;
@@ -214,6 +226,7 @@ impl ProjectsPersistence {
         }
     }
 
+    // DRY:FN:get_sorted
     /// Get projects sorted by most recently accessed (pinned first)
     pub fn get_sorted(&self) -> Result<Vec<KnownProject>> {
         let mut projects = self.load()?;
@@ -228,6 +241,7 @@ impl ProjectsPersistence {
         Ok(projects)
     }
 
+    // DRY:FN:cleanup_missing
     /// Clean up projects that no longer exist on disk
     pub fn cleanup_missing(&self) -> Result<usize> {
         let mut projects = self.load()?;
@@ -243,6 +257,7 @@ impl ProjectsPersistence {
         Ok(removed_count)
     }
 
+    // DRY:FN:storage_path
     /// Get the storage path (for debugging/info)
     pub fn storage_path(&self) -> &Path {
         &self.storage_path

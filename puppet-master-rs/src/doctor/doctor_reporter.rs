@@ -3,10 +3,12 @@
 use super::check_registry::{CheckReport, DoctorReport};
 use crate::types::CheckCategory;
 
+// DRY:DATA:DoctorReporter
 /// Formats doctor check results for display
 pub struct DoctorReporter;
 
 impl DoctorReporter {
+    // DRY:FN:format_text
     /// Generate a text report
     pub fn format_text(report: &DoctorReport) -> String {
         let mut output = String::new();
@@ -76,6 +78,7 @@ impl DoctorReporter {
         output
     }
 
+    // DRY:FN:format_json
     /// Generate a JSON report
     pub fn format_json(report: &DoctorReport) -> Result<String, serde_json::Error> {
         serde_json::to_string_pretty(&serde_json::json!({
@@ -99,6 +102,7 @@ impl DoctorReporter {
         }))
     }
 
+    // DRY:FN:format_markdown
     /// Generate a markdown report
     pub fn format_markdown(report: &DoctorReport) -> String {
         let mut output = String::new();

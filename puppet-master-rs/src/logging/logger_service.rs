@@ -18,6 +18,7 @@ use super::{
     IterationLogger, LogLevel,
 };
 
+// DRY:HELPER:LoggerService
 /// Central logging service combining all loggers
 #[derive(Clone)]
 pub struct LoggerService {
@@ -31,6 +32,7 @@ struct LoggerServiceInner {
     intensive_logger: IntensiveLogger,
 }
 
+// DRY:HELPER:ServiceLogLevel
 /// Log levels for the unified logging interface
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum ServiceLogLevel {
@@ -86,6 +88,7 @@ impl From<ServiceLogLevel> for ErrorSeverity {
 }
 
 impl LoggerService {
+    // DRY:HELPER:LoggerService::new
     /// Create a new logger service
     pub fn new(puppet_master_dir: PathBuf, intensive_enabled: bool) -> Self {
         let logs_dir = puppet_master_dir.join("logs");
@@ -105,30 +108,35 @@ impl LoggerService {
         }
     }
 
+    // DRY:HELPER:LoggerService::set_iteration_logger
     /// Set the iteration logger
     pub fn set_iteration_logger(&self, iteration_logger: IterationLogger) {
         let mut inner = self.inner.lock().unwrap();
         inner.iteration_logger = Some(iteration_logger);
     }
 
+    // DRY:HELPER:LoggerService::enable_intensive_logging
     /// Enable intensive logging
     pub fn enable_intensive_logging(&self) {
         let mut inner = self.inner.lock().unwrap();
         inner.intensive_logger.enable();
     }
 
+    // DRY:HELPER:LoggerService::disable_intensive_logging
     /// Disable intensive logging
     pub fn disable_intensive_logging(&self) {
         let mut inner = self.inner.lock().unwrap();
         inner.intensive_logger.disable();
     }
 
+    // DRY:HELPER:LoggerService::is_intensive_enabled
     /// Check if intensive logging is enabled
     pub fn is_intensive_enabled(&self) -> bool {
         let inner = self.inner.lock().unwrap();
         inner.intensive_logger.is_enabled()
     }
 
+    // DRY:HELPER:LoggerService::log
     /// Log a message
     pub fn log(
         &self,
@@ -179,6 +187,7 @@ impl LoggerService {
         Ok(())
     }
 
+    // DRY:HELPER:LoggerService::log_activity
     /// Log an activity event
     pub fn log_activity(
         &self,
@@ -189,6 +198,7 @@ impl LoggerService {
         inner.activity_logger.log_simple(event_type, description)
     }
 
+    // DRY:HELPER:LoggerService::log_activity_with_metadata
     /// Log an activity event with metadata
     pub fn log_activity_with_metadata(
         &self,
@@ -202,6 +212,7 @@ impl LoggerService {
             .log_with_metadata(event_type, description, metadata)
     }
 
+    // DRY:HELPER:LoggerService::log_error
     /// Log an error
     pub fn log_error(
         &self,
@@ -213,6 +224,7 @@ impl LoggerService {
         inner.error_logger.log_error(category, message, context)
     }
 
+    // DRY:HELPER:LoggerService::log_state_transition
     /// Log a state transition (intensive mode only)
     pub fn log_state_transition(
         &self,
@@ -226,6 +238,7 @@ impl LoggerService {
             .log_state_transition(from_state, to_state, reason)
     }
 
+    // DRY:HELPER:LoggerService::log_cli_invocation
     /// Log a CLI invocation (intensive mode only)
     pub fn log_cli_invocation(
         &self,
@@ -239,6 +252,7 @@ impl LoggerService {
             .log_cli_invocation(platform, command, args)
     }
 
+    // DRY:HELPER:LoggerService::log_file_operation
     /// Log a file operation (intensive mode only)
     pub fn log_file_operation(
         &self,
@@ -252,18 +266,21 @@ impl LoggerService {
             .log_file_operation(operation, path, details)
     }
 
+    // DRY:HELPER:LoggerService::get_recent_activities
     /// Get recent activity events
     pub fn get_recent_activities(&self, count: usize) -> Result<Vec<super::ActivityEvent>> {
         let inner = self.inner.lock().unwrap();
         inner.activity_logger.read_recent(count)
     }
 
+    // DRY:HELPER:LoggerService::get_recent_errors
     /// Get recent errors
     pub fn get_recent_errors(&self, count: usize) -> Result<Vec<super::ErrorRecord>> {
         let inner = self.inner.lock().unwrap();
         inner.error_logger.get_recent_errors(count)
     }
 
+    // DRY:HELPER:LoggerService::get_errors_by_category
     /// Get errors by category
     pub fn get_errors_by_category(
         &self,
@@ -273,12 +290,14 @@ impl LoggerService {
         inner.error_logger.get_errors_by_category(category)
     }
 
+    // DRY:HELPER:LoggerService::get_error_counts_by_category
     /// Get error counts by category
     pub fn get_error_counts_by_category(&self) -> Result<HashMap<ErrorCategory, usize>> {
         let inner = self.inner.lock().unwrap();
         inner.error_logger.count_by_category()
     }
 
+    // DRY:HELPER:LoggerService::get_error_counts_by_severity
     /// Get error counts by severity
     pub fn get_error_counts_by_severity(&self) -> Result<HashMap<ErrorSeverity, usize>> {
         let inner = self.inner.lock().unwrap();
@@ -305,6 +324,7 @@ impl LoggerService {
     }
 }
 
+// DRY:HELPER:LoggerServiceBuilder
 /// Builder for creating a logger service
 pub struct LoggerServiceBuilder {
     puppet_master_dir: PathBuf,
@@ -313,6 +333,7 @@ pub struct LoggerServiceBuilder {
 }
 
 impl LoggerServiceBuilder {
+    // DRY:HELPER:LoggerServiceBuilder::new
     /// Create a new builder
     pub fn new(puppet_master_dir: PathBuf) -> Self {
         Self {
@@ -322,18 +343,21 @@ impl LoggerServiceBuilder {
         }
     }
 
+    // DRY:HELPER:LoggerServiceBuilder::with_intensive_logging
     /// Enable intensive logging
     pub fn with_intensive_logging(mut self, enabled: bool) -> Self {
         self.intensive_enabled = enabled;
         self
     }
 
+    // DRY:HELPER:LoggerServiceBuilder::with_iteration_logger
     /// Set iteration logger
     pub fn with_iteration_logger(mut self, logger: IterationLogger) -> Self {
         self.iteration_logger = Some(logger);
         self
     }
 
+    // DRY:HELPER:LoggerServiceBuilder::build
     /// Build the logger service
     pub fn build(self) -> LoggerService {
         let service = LoggerService::new(self.puppet_master_dir, self.intensive_enabled);

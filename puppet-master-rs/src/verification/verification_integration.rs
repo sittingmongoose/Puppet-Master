@@ -9,6 +9,7 @@ use std::path::Path;
 
 use super::{GateRunner, VerifierRegistry};
 
+// DRY:DATA:VerificationIntegration
 /// Wires verification components together.
 pub struct VerificationIntegration {
     gate_runner: GateRunner,
@@ -17,6 +18,7 @@ pub struct VerificationIntegration {
 }
 
 impl VerificationIntegration {
+    // DRY:FN:new
     /// Create a new integration rooted at the repo root.
     pub fn new(repo_root: impl AsRef<Path>, config: GateRunConfig) -> Result<Self> {
         let repo_root = repo_root.as_ref();
@@ -46,14 +48,17 @@ impl VerificationIntegration {
         })
     }
 
+    // DRY:FN:evidence_store
     pub fn evidence_store(&self) -> &EvidenceStore {
         &self.evidence_store
     }
 
+    // DRY:FN:event_bus
     pub fn event_bus(&self) -> &BroadcastEventBus {
         &self.event_bus
     }
 
+    // DRY:FN:run_gate
     pub async fn run_gate(
         &self,
         gate_type: &str,

@@ -2,10 +2,12 @@
 
 use crate::types::{ItemStatus, TierType};
 
+// DRY:DATA:CommitFormatter
 /// Formats commit messages according to RWM conventions
 pub struct CommitFormatter;
 
 impl CommitFormatter {
+    // DRY:FN:format_commit
     /// Format a commit message for a tier
     ///
     /// Format: `ralph: [TIER_TYPE] {id}: {title} - {status}`
@@ -32,6 +34,7 @@ impl CommitFormatter {
         )
     }
 
+    // DRY:FN:format_gate_commit
     /// Format a gate commit message
     pub fn format_gate_commit(tier_type: TierType, id: &str, passed: bool) -> String {
         let tier_str = match tier_type {
@@ -46,6 +49,7 @@ impl CommitFormatter {
         format!("ralph: [{}] {} gate {}", tier_str, id, result)
     }
 
+    // DRY:FN:format_iteration_commit
     /// Format an iteration commit message
     pub fn format_iteration_commit(subtask_id: &str, iteration: u32, success: bool) -> String {
         let result = if success { "completed" } else { "attempted" };
@@ -55,11 +59,13 @@ impl CommitFormatter {
         )
     }
 
+    // DRY:FN:format_checkpoint_commit
     /// Format a checkpoint commit
     pub fn format_checkpoint_commit(description: &str) -> String {
         format!("ralph: [CHECKPOINT] {}", Self::sanitize_title(description))
     }
 
+    // DRY:FN:format_rollback_commit
     /// Format a rollback commit
     pub fn format_rollback_commit(target: &str, reason: &str) -> String {
         format!(
@@ -81,6 +87,7 @@ impl CommitFormatter {
             .collect()
     }
 
+    // DRY:FN:format_commit_body
     /// Generate detailed commit body
     pub fn format_commit_body(files_changed: &[String], notes: Option<&str>) -> String {
         let mut body = String::new();
@@ -100,6 +107,7 @@ impl CommitFormatter {
         body
     }
 
+    // DRY:FN:format_full_commit
     /// Generate full commit message with body
     pub fn format_full_commit(
         tier_type: TierType,

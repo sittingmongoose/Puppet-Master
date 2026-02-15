@@ -8,6 +8,7 @@ use crate::widgets::*;
 use iced::widget::{Space, column, container, pick_list, row, scrollable, text};
 use iced::{Border, Element, Length};
 
+// DRY:DATA:CategoryCoverage
 /// Test category breakdown
 #[derive(Debug, Clone, Default)]
 pub struct CategoryCoverage {
@@ -16,6 +17,7 @@ pub struct CategoryCoverage {
     pub test_count: usize,
 }
 
+// DRY:DATA:RequirementCoverage
 /// Requirement coverage information
 #[derive(Debug, Clone)]
 pub struct RequirementCoverage {
@@ -26,6 +28,7 @@ pub struct RequirementCoverage {
     pub tier_ids: Vec<String>,
 }
 
+// DRY:FN:coverage_view
 /// Coverage analysis view with category breakdown
 pub fn view<'a>(
     overall_percent: f32,

@@ -8,6 +8,7 @@ use super::platform::Platform;
 use super::prd::GateReport;
 use super::state::{OrchestratorState, TierState, TierType};
 
+// DRY:DATA:PuppetMasterEvent
 /// Events emitted by the Puppet Master orchestrator.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "camelCase")]
@@ -312,6 +313,7 @@ pub enum PuppetMasterEvent {
 }
 
 impl PuppetMasterEvent {
+    // DRY:FN:timestamp
     /// Returns the timestamp of this event.
     pub fn timestamp(&self) -> DateTime<Utc> {
         match self {
@@ -357,6 +359,7 @@ impl PuppetMasterEvent {
         }
     }
 
+    // DRY:FN:is_error
     /// Returns whether this event represents an error.
     pub fn is_error(&self) -> bool {
         matches!(
@@ -367,11 +370,13 @@ impl PuppetMasterEvent {
         )
     }
 
+    // DRY:FN:is_state_change
     /// Returns whether this event represents a state change.
     pub fn is_state_change(&self) -> bool {
         matches!(self, Self::StateChanged { .. } | Self::TierChanged { .. })
     }
 
+    // DRY:FN:log
     /// Creates a log event.
     pub fn log(level: LogLevel, message: impl Into<String>, source: impl Into<String>) -> Self {
         Self::Log {
@@ -382,6 +387,7 @@ impl PuppetMasterEvent {
         }
     }
 
+    // DRY:FN:error
     /// Creates an error event.
     pub fn error(message: impl Into<String>, source: impl Into<String>) -> Self {
         Self::Error {
@@ -392,6 +398,7 @@ impl PuppetMasterEvent {
         }
     }
 
+    // DRY:FN:progress
     /// Creates a progress update event.
     pub fn progress(phase: f64, task: f64, subtask: f64, iteration: f64, overall: f64) -> Self {
         Self::Progress {
@@ -405,6 +412,7 @@ impl PuppetMasterEvent {
     }
 }
 
+// DRY:DATA:LogLevel
 /// Log level for log events.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -448,6 +456,7 @@ impl std::str::FromStr for LogLevel {
     }
 }
 
+// DRY:DATA:OutputLineType
 /// Type of output line.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]

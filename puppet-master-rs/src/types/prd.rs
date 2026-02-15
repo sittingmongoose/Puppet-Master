@@ -8,6 +8,7 @@ use std::path::PathBuf;
 use super::platform::Platform;
 use super::state::TierState;
 
+// DRY:DATA:PRD
 /// Product Requirements Document - the top-level work queue structure.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -19,6 +20,7 @@ pub struct PRD {
     pub phases: Vec<Phase>,
 }
 
+// DRY:DATA:PRDMetadata
 /// Metadata about the PRD and overall project progress.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -67,6 +69,7 @@ fn default_version() -> String {
     "1.0.0".to_string()
 }
 
+// DRY:DATA:Phase
 /// A phase - top-level organizational unit.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -118,6 +121,7 @@ pub struct Phase {
     pub dependencies: Vec<String>,
 }
 
+// DRY:DATA:Task
 /// A task within a phase.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -161,6 +165,7 @@ pub struct Task {
     pub task_type: Option<String>,
 }
 
+// DRY:DATA:Subtask
 /// A subtask within a task.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -207,6 +212,7 @@ pub struct Subtask {
     pub iteration_records: Vec<Iteration>,
 }
 
+// DRY:DATA:Iteration
 /// An individual iteration/attempt of a subtask.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -267,6 +273,7 @@ pub struct Iteration {
     pub error_message: Option<String>,
 }
 
+// DRY:DATA:ItemStatus
 /// Item status enum - comprehensive status tracking.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -317,6 +324,7 @@ impl std::fmt::Display for ItemStatus {
 }
 
 impl ItemStatus {
+    // DRY:FN:is_complete
     /// Returns whether this status represents completion.
     pub fn is_complete(&self) -> bool {
         matches!(
@@ -325,22 +333,26 @@ impl ItemStatus {
         )
     }
 
+    // DRY:FN:is_active
     /// Returns whether this status represents active work.
     pub fn is_active(&self) -> bool {
         matches!(self, Self::Planning | Self::Running | Self::Gating)
     }
 
+    // DRY:FN:is_success
     /// Returns whether this status represents success.
     pub fn is_success(&self) -> bool {
         matches!(self, Self::Passed)
     }
 
+    // DRY:FN:is_failure
     /// Returns whether this status represents failure.
     pub fn is_failure(&self) -> bool {
         matches!(self, Self::Failed | Self::Escalated)
     }
 }
 
+// DRY:DATA:Evidence
 /// Evidence collected during execution.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -363,6 +375,7 @@ pub struct Evidence {
     pub metadata: HashMap<String, String>,
 }
 
+// DRY:DATA:GateReport
 /// Gate report from verification/validation.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -389,6 +402,7 @@ pub struct GateReport {
     pub reviewer_notes: Option<String>,
 }
 
+// DRY:DATA:Criterion
 /// Success criterion for validation.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -416,6 +430,7 @@ pub struct Criterion {
     pub actual: Option<String>,
 }
 
+// DRY:DATA:CriterionType
 /// Type of criterion for classification.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -444,6 +459,7 @@ impl std::fmt::Display for CriterionType {
     }
 }
 
+// DRY:DATA:CriterionResult
 /// Result of evaluating a single criterion.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -458,6 +474,7 @@ pub struct CriterionResult {
     pub timestamp: DateTime<Utc>,
 }
 
+// DRY:DATA:GateResult
 /// Result of a gate evaluation.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -474,6 +491,7 @@ pub struct GateResult {
     pub timestamp: DateTime<Utc>,
 }
 
+// DRY:DATA:GateDecision
 /// Decision made by a gate.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -499,6 +517,7 @@ impl std::fmt::Display for GateDecision {
     }
 }
 
+// DRY:DATA:TestResult
 /// Result of running a test.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -517,6 +536,7 @@ pub struct TestResult {
     pub timestamp: DateTime<Utc>,
 }
 
+// DRY:DATA:TestPlan
 /// Test plan containing a collection of tests to execute.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -530,6 +550,7 @@ pub struct TestPlan {
     pub timeout_seconds: u64,
 }
 
+// DRY:DATA:Priority
 /// Priority level for tasks/items.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
 #[serde(rename_all = "lowercase")]
@@ -562,6 +583,7 @@ impl std::fmt::Display for Priority {
 }
 
 impl PRD {
+    // DRY:FN:new
     /// Creates a new empty PRD.
     pub fn new(name: impl Into<String>) -> Self {
         Self {
@@ -581,6 +603,7 @@ impl PRD {
         }
     }
 
+    // DRY:FN:update_metadata
     /// Recalculates metadata based on current phases/tasks/subtasks.
     pub fn update_metadata(&mut self) {
         self.metadata.total_tasks = self.phases.iter().map(|p| p.tasks.len() as u32).sum();
@@ -603,16 +626,19 @@ impl PRD {
         self.metadata.updated_at = Some(Utc::now());
     }
 
+    // DRY:FN:find_phase
     /// Finds a phase by ID.
     pub fn find_phase(&self, phase_id: &str) -> Option<&Phase> {
         self.phases.iter().find(|p| p.id == phase_id)
     }
 
+    // DRY:FN:find_phase_mut
     /// Finds a phase by ID (mutable).
     pub fn find_phase_mut(&mut self, phase_id: &str) -> Option<&mut Phase> {
         self.phases.iter_mut().find(|p| p.id == phase_id)
     }
 
+    // DRY:FN:find_task
     /// Finds a task by ID across all phases.
     pub fn find_task(&self, task_id: &str) -> Option<&Task> {
         self.phases
@@ -621,6 +647,7 @@ impl PRD {
             .find(|t| t.id == task_id)
     }
 
+    // DRY:FN:find_subtask
     /// Finds a subtask by ID across all tasks.
     pub fn find_subtask(&self, subtask_id: &str) -> Option<&Subtask> {
         self.phases

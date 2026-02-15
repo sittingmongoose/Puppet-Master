@@ -6,6 +6,7 @@ use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
+// DRY:DATA:ClonedWorkspace
 /// Ephemeral cloned workspace metadata.
 #[derive(Debug, Clone)]
 pub struct ClonedWorkspace {
@@ -14,6 +15,7 @@ pub struct ClonedWorkspace {
 }
 
 impl ClonedWorkspace {
+    // DRY:FN:cleanup
     pub fn cleanup(&self) -> Result<()> {
         if self.clone_root.exists() {
             std::fs::remove_dir_all(&self.clone_root).with_context(|| {
@@ -27,6 +29,7 @@ impl ClonedWorkspace {
     }
 }
 
+// DRY:FN:create_ephemeral_clone
 /// Create an ephemeral clone using platform-native copy semantics.
 pub fn create_ephemeral_clone(original_root: &Path, run_id: &str) -> Result<ClonedWorkspace> {
     if !original_root.exists() {
@@ -71,6 +74,7 @@ pub fn create_ephemeral_clone(original_root: &Path, run_id: &str) -> Result<Clon
     })
 }
 
+// DRY:FN:ensure_path_within
 /// Ensure a candidate path stays within a root.
 pub fn ensure_path_within(root: &Path, candidate: &Path) -> Result<()> {
     let canonical_root = root
@@ -101,6 +105,7 @@ pub fn ensure_path_within(root: &Path, candidate: &Path) -> Result<()> {
     Ok(())
 }
 
+// DRY:FN:build_artifact_manifest
 /// Build manifest (hash + metadata) for all artifacts under root.
 pub fn build_artifact_manifest(root: &Path) -> Result<ArtifactManifest> {
     let mut entries = Vec::new();

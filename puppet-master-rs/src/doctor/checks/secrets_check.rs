@@ -10,14 +10,17 @@ use chrono::Utc;
 use log::debug;
 use std::env;
 
+// DRY:DATA:SecretsCheck
 /// Validates that required secrets/env vars are set for each platform
 pub struct SecretsCheck;
 
 impl SecretsCheck {
+    // DRY:FN:new
     pub fn new() -> Self {
         Self
     }
 
+    // DRY:FN:check_all
     /// Check all platforms
     pub fn check_all(&self) -> Vec<SecretCheckResult> {
         Platform::all()
@@ -26,6 +29,7 @@ impl SecretsCheck {
             .collect()
     }
 
+    // DRY:FN:check_platform
     /// Check secrets for a specific platform
     pub fn check_platform(&self, platform: Platform) -> SecretCheckResult {
         debug!("Checking secrets for platform: {}", platform);
@@ -107,6 +111,7 @@ impl Default for SecretsCheck {
     }
 }
 
+// DRY:DATA:SecretCheckResult
 /// Result of checking secrets for a platform
 #[derive(Debug, Clone)]
 pub struct SecretCheckResult {
@@ -115,6 +120,7 @@ pub struct SecretCheckResult {
     pub _overall_status: SecretStatus,
 }
 
+// DRY:DATA:EnvVarStatus
 /// Status of an environment variable
 #[derive(Debug, Clone)]
 pub struct EnvVarStatus {
@@ -124,6 +130,7 @@ pub struct EnvVarStatus {
     pub description: String,
 }
 
+// DRY:DATA:SecretStatus
 /// Overall status of secrets for a platform
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum SecretStatus {
@@ -136,6 +143,7 @@ pub enum SecretStatus {
 }
 
 impl SecretStatus {
+    // DRY:FN:is_problem
     /// Check if this status indicates a problem
     #[allow(dead_code)]
     pub fn is_problem(&self) -> bool {

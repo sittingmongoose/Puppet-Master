@@ -3,6 +3,7 @@
 use crate::start_chain::TierPlan;
 use crate::types::PRD;
 
+// DRY:FN:format_prd_to_markdown
 /// Format a PRD into markdown text.
 pub fn format_prd_to_markdown(prd: &PRD) -> String {
     let mut output = String::new();
@@ -100,6 +101,7 @@ pub fn format_prd_to_markdown(prd: &PRD) -> String {
     output
 }
 
+// DRY:FN:format_tier_plan_to_markdown
 /// Format a TierPlan into markdown text.
 pub fn format_tier_plan_to_markdown(tier_plan: &TierPlan) -> String {
     let mut output = String::new();

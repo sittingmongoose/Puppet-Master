@@ -8,6 +8,7 @@ use crate::widgets::tooltips::{TooltipVariant, get_tooltip};
 use iced::widget::{container, text, tooltip};
 use iced::{Border, Element, Padding};
 
+// DRY:WIDGET:help_tooltip
 /// Create a help tooltip widget with a '?' icon
 ///
 /// # Arguments
@@ -65,6 +66,7 @@ pub fn help_tooltip<'a, Message: 'a>(
         .into()
 }
 
+// DRY:WIDGET:interaction_mode_to_variant
 /// Helper to convert interaction_mode string to TooltipVariant
 pub fn interaction_mode_to_variant(interaction_mode: &str) -> TooltipVariant {
     match interaction_mode.to_lowercase().as_str() {

@@ -6,6 +6,7 @@ use crate::widgets::styled_button::{ButtonVariant, styled_button};
 use iced::widget::{Row, Space, row, text};
 use iced::{Alignment, Element, Length};
 
+// DRY:WIDGET:RefreshStyle
 #[derive(Debug, Clone, Copy)]
 pub enum RefreshStyle {
     Uppercase(ButtonVariant),
@@ -27,6 +28,7 @@ impl RefreshStyle {
     }
 }
 
+// DRY:WIDGET:page_header
 pub fn page_header<'a>(
     title: &'a str,
     theme: &'a AppTheme,
@@ -45,6 +47,7 @@ pub fn page_header<'a>(
     .into()
 }
 
+// DRY:WIDGET:refresh_button
 pub fn refresh_button<'a>(
     theme: &'a AppTheme,
     msg: Message,

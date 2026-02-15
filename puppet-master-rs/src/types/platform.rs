@@ -5,6 +5,7 @@ use std::fmt;
 use std::str::FromStr;
 use thiserror::Error;
 
+// DRY:DATA:Platform
 /// Supported AI assistant platforms.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -22,6 +23,7 @@ pub enum Platform {
 }
 
 impl Platform {
+    // DRY:FN:all
     /// Returns all available platforms.
     pub fn all() -> &'static [Platform] {
         &[
@@ -33,6 +35,7 @@ impl Platform {
         ]
     }
 
+    // DRY:FN:default_cli_name
     /// Returns the default CLI binary name for this platform.
     pub fn default_cli_name(&self) -> &'static str {
         match self {
@@ -65,26 +68,31 @@ impl Platform {
             .to_string()
     }
 
+    // DRY:FN:supports_plan_mode
     /// Returns whether this platform supports plan mode.
     pub fn supports_plan_mode(&self) -> bool {
         crate::platforms::platform_specs::supports_plan_mode(*self)
     }
 
+    // DRY:FN:supports_reasoning_effort
     /// Returns whether this platform supports reasoning effort.
     pub fn supports_reasoning_effort(&self) -> bool {
         crate::platforms::platform_specs::supports_effort(*self)
     }
 
+    // DRY:FN:reasoning_is_model_based
     /// Returns whether reasoning is encoded in model names (true only for Cursor).
     pub fn reasoning_is_model_based(&self) -> bool {
         crate::platforms::platform_specs::reasoning_is_model_based(*self)
     }
 
+    // DRY:FN:has_auto_mode
     /// Returns whether this platform has an auto model selection mode (true only for Cursor).
     pub fn has_auto_mode(&self) -> bool {
         crate::platforms::platform_specs::has_auto_mode(*self)
     }
 
+    // DRY:FN:from_str_loose
     /// Parse from string, returning `None` instead of `Err` for convenience.
     pub fn from_str_loose(s: &str) -> Option<Platform> {
         s.parse().ok()
@@ -103,6 +111,7 @@ impl fmt::Display for Platform {
     }
 }
 
+// DRY:DATA:UnknownPlatformError
 /// Error type for platform parsing.
 #[derive(Debug, Error)]
 #[error("Unknown platform: {0}")]
@@ -123,6 +132,7 @@ impl FromStr for Platform {
     }
 }
 
+// DRY:DATA:CliPaths
 /// CLI paths for each platform.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -161,6 +171,7 @@ impl Default for CliPaths {
 }
 
 impl CliPaths {
+    // DRY:FN:get
     /// Gets the CLI path for a specific platform.
     pub fn get(&self, platform: Platform) -> Option<&str> {
         match platform {
@@ -172,6 +183,7 @@ impl CliPaths {
         }
     }
 
+    // DRY:FN:set
     /// Sets the CLI path for a specific platform.
     pub fn set(&mut self, platform: Platform, path: String) {
         match platform {
@@ -202,6 +214,7 @@ impl crate::config::gui_config::CliPaths {
     }
 }
 
+// DRY:DATA:PlatformConfig
 /// Platform-specific configuration.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -264,6 +277,7 @@ pub struct PlatformConfig {
 }
 
 impl PlatformConfig {
+    // DRY:FN:new
     /// Creates a new platform configuration.
     pub fn new(platform: Platform, model: impl Into<String>) -> Self {
         let platform_name = format!("{:?}", platform);
@@ -294,24 +308,28 @@ impl PlatformConfig {
         }
     }
 
+    // DRY:FN:with_reasoning_effort
     /// Sets the reasoning effort level.
     pub fn with_reasoning_effort(mut self, effort: impl Into<String>) -> Self {
         self.reasoning_effort = Some(effort.into());
         self
     }
 
+    // DRY:FN:with_plan_mode
     /// Enables plan mode.
     pub fn with_plan_mode(mut self, enabled: bool) -> Self {
         self.plan_mode = enabled;
         self
     }
 
+    // DRY:FN:with_cli_path
     /// Sets a custom CLI path.
     pub fn with_cli_path(mut self, path: impl Into<String>) -> Self {
         self.cli_path = Some(path.into());
         self
     }
 
+    // DRY:FN:with_extra_args
     /// Adds extra arguments.
     pub fn with_extra_args(mut self, args: Vec<String>) -> Self {
         self.extra_args = args;
