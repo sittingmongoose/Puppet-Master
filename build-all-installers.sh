@@ -1,11 +1,11 @@
 #!/bin/bash
 # Quick Build Script for All Platform Installers
-# RWM Puppet Master v0.1.1
+# RWM Puppet Master - Rust-only Build System
 
 set -euo pipefail
 
-VERSION="0.1.1"
 PROJECT_ROOT="$(cd "$(dirname "$0")" && pwd)"
+VERSION=$(grep -m1 "^version" "${PROJECT_ROOT}/puppet-master-rs/Cargo.toml" | cut -d'"' -f2)
 
 echo "🚀 RWM Puppet Master Installer Build System"
 echo "Version: ${VERSION}"

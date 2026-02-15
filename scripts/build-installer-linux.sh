@@ -1,136 +1,78 @@
 #!/bin/bash
-# Build installer script for Linux
+# Build installer script for Linux (Rust/Iced)
 # Usage: ./scripts/build-installer-linux.sh
 
 set -euo pipefail
 
-echo "=== Puppet Master Linux Installer Build ==="
+echo "=== Puppet Master Linux Installer Build (Rust/Iced) ==="
 echo ""
 
-# Check Node.js
-echo "Checking Node.js..."
-if ! command -v node &> /dev/null; then
-    echo "  ERROR: Node.js not found. Please install Node.js 20+ from https://nodejs.org/" >&2
+# Check Rust/Cargo
+echo "Checking Rust/Cargo..."
+if ! command -v cargo &> /dev/null; then
+    echo "  ERROR: cargo not found. Please install Rust from https://rustup.rs/" >&2
     exit 1
 fi
 
-NODE_VERSION=$(node --version)
-echo "  Node.js: $NODE_VERSION"
+CARGO_VERSION=$(cargo --version)
+echo "  Cargo: $CARGO_VERSION"
 
-# Check if version is 20+
-NODE_MAJOR=$(echo "$NODE_VERSION" | sed 's/^v\([0-9]*\).*/\1/')
-if [ "$NODE_MAJOR" -lt 20 ]; then
-    echo "  ERROR: Node.js 20+ required (found $NODE_VERSION)" >&2
-    exit 1
+# Check dpkg (for DEB packages)
+echo "Checking dpkg..."
+if ! command -v dpkg &> /dev/null; then
+    echo "  WARNING: dpkg not found. DEB packages will not be created." >&2
+    echo "  Install with: sudo apt-get install dpkg" >&2
 fi
 
-# Check npm
-echo "Checking npm..."
-if ! command -v npm &> /dev/null; then
-    echo "  ERROR: npm not found. npm should come with Node.js." >&2
-    exit 1
+# Check rpmbuild (for RPM packages)
+echo "Checking rpmbuild..."
+if ! command -v rpmbuild &> /dev/null; then
+    echo "  WARNING: rpmbuild not found. RPM packages will not be created." >&2
+    echo "  Install with: sudo apt-get install rpm" >&2
 fi
-
-NPM_VERSION=$(npm --version)
-echo "  npm: $NPM_VERSION"
-
-# Check Go (required for nfpm)
-echo "Checking Go..."
-if ! command -v go &> /dev/null; then
-    echo "  Go not found. Attempting to install nfpm via npm..." >&2
-    # Try to install nfpm via npm if available
-    if command -v npm &> /dev/null; then
-        echo "  Installing nfpm via npm..." >&2
-        npm install -g @goreleaser/nfpm || {
-            echo "  ERROR: Failed to install nfpm. Please install Go:" >&2
-            echo "    sudo apt-get install golang-go  # Debian/Ubuntu" >&2
-            echo "    sudo yum install golang         # RHEL/CentOS" >&2
-            echo "    Or download from https://go.dev/dl/" >&2
-            exit 1
-        }
-    else
-        echo "  ERROR: Go not found and npm unavailable. Please install Go:" >&2
-        echo "    sudo apt-get install golang-go  # Debian/Ubuntu" >&2
-        echo "    sudo yum install golang         # RHEL/CentOS" >&2
-        exit 1
-    fi
-else
-    GO_VERSION=$(go version)
-    echo "  Go: $GO_VERSION"
-fi
-
-# Check nfpm
-echo "Checking nfpm..."
-if ! command -v nfpm &> /dev/null; then
-    echo "  nfpm not found. Installing..."
-    if command -v go &> /dev/null; then
-        go install github.com/goreleaser/nfpm/v2/cmd/nfpm@latest
-        # Add Go bin to PATH if not already there
-        export PATH="$PATH:$(go env GOPATH)/bin"
-        if ! command -v nfpm &> /dev/null; then
-            echo "  ERROR: nfpm installation failed or not in PATH" >&2
-            echo "  Please add $(go env GOPATH)/bin to your PATH" >&2
-            exit 1
-        fi
-    else
-        echo "  ERROR: nfpm not found and Go not available" >&2
-        exit 1
-    fi
-fi
-
-NFPM_VERSION=$(nfpm --version 2>&1 | head -n1 || echo "unknown")
-echo "  nfpm: $NFPM_VERSION"
 
 # Get repository root
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
 
+# Extract version from Cargo.toml
+echo ""
+echo "Extracting version from puppet-master-rs/Cargo.toml..."
+VERSION=$(grep '^version = ' puppet-master-rs/Cargo.toml | head -n1 | sed 's/version = "\(.*\)"/\1/')
+if [ -z "$VERSION" ]; then
+    echo "  ERROR: Could not extract version from Cargo.toml" >&2
+    exit 1
+fi
+echo "  Version: $VERSION"
+
 echo ""
 echo "=== Building Installer ==="
 echo ""
 
-# Install dependencies
-echo "Installing dependencies..."
-npm_config_update_notifier=false npm ci
-
-echo "Installing GUI dependencies..."
-npm_config_update_notifier=false npm --prefix src/gui/react install
-
-# Build TypeScript
-echo "Building TypeScript..."
-npm run build
-
-# Build GUI
-echo "Building GUI..."
-npm run gui:build
-
-# Build installer
-echo "Building Linux installer..."
-npm run build:linux
-
-# Cleanup test artifacts
-rm -rf .test-cache .test-quota .test-quota-* 2>/dev/null || true
+# Call the existing Linux installer script
+echo "Invoking scripts/build-linux-installer.sh $VERSION..."
+bash scripts/build-linux-installer.sh "$VERSION"
 
 # Verify output
 echo ""
 echo "=== Build Complete ==="
-DEB_FILE=$(find dist/installers/linux-x64 -name "*.deb" 2>/dev/null | head -n1)
-RPM_FILE=$(find dist/installers/linux-x64 -name "*.rpm" 2>/dev/null | head -n1)
+DEB_FILE="installer/linux/puppet-master_${VERSION}_amd64.deb"
+RPM_FILE="installer/linux/puppet-master-${VERSION}-1.x86_64.rpm"
 
-if [ -n "$DEB_FILE" ]; then
+if [ -f "$DEB_FILE" ]; then
     DEB_SIZE=$(du -h "$DEB_FILE" | cut -f1)
     echo "DEB package created: $DEB_FILE"
     echo "Size: $DEB_SIZE"
+else
+    echo "WARNING: DEB package not found at $DEB_FILE" >&2
 fi
 
-if [ -n "$RPM_FILE" ]; then
+if [ -f "$RPM_FILE" ]; then
     RPM_SIZE=$(du -h "$RPM_FILE" | cut -f1)
     echo "RPM package created: $RPM_FILE"
     echo "Size: $RPM_SIZE"
-fi
-
-if [ -z "$DEB_FILE" ] && [ -z "$RPM_FILE" ]; then
-    echo "WARNING: Installer files not found in dist/installers/linux-x64/" >&2
+else
+    echo "Note: RPM package not found at $RPM_FILE (rpmbuild may not be available)"
 fi
 
 echo ""

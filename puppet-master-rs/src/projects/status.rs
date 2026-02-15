@@ -198,18 +198,15 @@ impl ProjectStatusInspector {
             .filter(|path| path.is_file() && path.extension().map_or(false, |e| e == "json"))
             .collect();
 
-        checkpoint_files.sort_by_key(|path| {
-            fs::metadata(path)
-                .and_then(|meta| meta.modified())
-                .ok()
-        });
+        checkpoint_files
+            .sort_by_key(|path| fs::metadata(path).and_then(|meta| meta.modified()).ok());
 
         let Some(latest_checkpoint) = checkpoint_files.last() else {
             return Ok(OrchestratorStatus::Idle);
         };
 
-        let content = fs::read_to_string(latest_checkpoint)
-            .context("Failed to read checkpoint file")?;
+        let content =
+            fs::read_to_string(latest_checkpoint).context("Failed to read checkpoint file")?;
 
         #[derive(Deserialize)]
         struct CheckpointStatus {
@@ -217,8 +214,8 @@ impl ProjectStatusInspector {
             orchestrator_state: Option<String>,
         }
 
-        let checkpoint: CheckpointStatus = serde_json::from_str(&content)
-            .context("Failed to parse checkpoint")?;
+        let checkpoint: CheckpointStatus =
+            serde_json::from_str(&content).context("Failed to parse checkpoint")?;
 
         let Some(state) = checkpoint.orchestrator_state else {
             return Ok(OrchestratorStatus::Idle);
@@ -226,7 +223,9 @@ impl ProjectStatusInspector {
 
         match state.as_str() {
             "idle" | "Idle" | "" => Ok(OrchestratorStatus::Idle),
-            "planning" | "Planning" | "executing" | "Executing" => Ok(OrchestratorStatus::Executing),
+            "planning" | "Planning" | "executing" | "Executing" => {
+                Ok(OrchestratorStatus::Executing)
+            }
             "paused" | "Paused" => Ok(OrchestratorStatus::Paused),
             "error" | "Error" => Ok(OrchestratorStatus::Failed),
             "complete" | "Complete" => Ok(OrchestratorStatus::Idle),
@@ -259,11 +258,9 @@ impl ProjectStatusInspector {
         let last_checkpoint = checkpoint_files
             .iter()
             .filter_map(|path| {
-                fs::metadata(path).ok().and_then(|meta| {
-                    meta.modified()
-                        .ok()
-                        .map(|time| DateTime::<Utc>::from(time))
-                })
+                fs::metadata(path)
+                    .ok()
+                    .and_then(|meta| meta.modified().ok().map(|time| DateTime::<Utc>::from(time)))
             })
             .max();
 
@@ -315,15 +312,12 @@ impl ProjectStatusInspector {
             .filter(|path| path.is_file() && path.extension().map_or(false, |e| e == "json"))
             .collect();
 
-        checkpoint_files.sort_by_key(|path| {
-            fs::metadata(path)
-                .and_then(|meta| meta.modified())
-                .ok()
-        });
+        checkpoint_files
+            .sort_by_key(|path| fs::metadata(path).and_then(|meta| meta.modified()).ok());
 
         if let Some(latest_checkpoint) = checkpoint_files.last() {
-            let content = fs::read_to_string(latest_checkpoint)
-                .context("Failed to read checkpoint file")?;
+            let content =
+                fs::read_to_string(latest_checkpoint).context("Failed to read checkpoint file")?;
 
             #[derive(Deserialize)]
             struct CheckpointData {
@@ -345,8 +339,8 @@ impl ProjectStatusInspector {
                 total_subtasks: Option<usize>,
             }
 
-            let checkpoint: CheckpointData = serde_json::from_str(&content)
-                .context("Failed to parse checkpoint")?;
+            let checkpoint: CheckpointData =
+                serde_json::from_str(&content).context("Failed to parse checkpoint")?;
 
             let phase = checkpoint
                 .current_position

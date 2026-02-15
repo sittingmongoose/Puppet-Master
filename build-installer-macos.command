@@ -9,7 +9,7 @@ echo "========================================"
 echo "Puppet Master macOS Installer Builder"
 echo "========================================"
 echo ""
-echo "This will build the macOS installer (.pkg)"
+echo "This will build the macOS installer (.dmg)"
 echo ""
 
 # Get the directory where this script is located

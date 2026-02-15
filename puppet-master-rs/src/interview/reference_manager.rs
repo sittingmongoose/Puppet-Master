@@ -260,7 +260,7 @@ impl ReferenceManager {
                 },
                 ReferenceType::Image(path) => {
                     context.push_str(&format!("**Image:** {}\n\n", path.display()));
-                    
+
                     // Check if file exists
                     if path.exists() {
                         // Extract comprehensive metadata
@@ -274,13 +274,14 @@ impl ReferenceManager {
                                      - Type: {}\n",
                                     metadata.filename, metadata.size_bytes, metadata.mime_type
                                 ));
-                                
+
                                 if let Some((width, height)) = metadata.dimensions {
-                                    context.push_str(&format!("- Dimensions: {}x{}\n", width, height));
+                                    context
+                                        .push_str(&format!("- Dimensions: {}x{}\n", width, height));
                                 }
-                                
+
                                 context.push_str(&format!("- Hash: {}\n\n", metadata.hash));
-                                
+
                                 // Try OCR extraction (best effort)
                                 match self.extract_image_text_async(path) {
                                     Ok(text) if !text.trim().is_empty() => {
@@ -295,7 +296,11 @@ impl ReferenceManager {
                                         );
                                     }
                                     Err(e) => {
-                                        debug!("OCR extraction failed for {}: {}", path.display(), e);
+                                        debug!(
+                                            "OCR extraction failed for {}: {}",
+                                            path.display(),
+                                            e
+                                        );
                                         context.push_str(&format!(
                                             "*Note: OCR not available ({})*\n\n",
                                             e
@@ -730,15 +735,15 @@ impl ReferenceManager {
     /// Best effort: dimensions (requires valid image format)
     fn extract_image_metadata(&self, path: &Path) -> Result<ImageMetadata> {
         let metadata = fs::metadata(path).context("Failed to read file metadata")?;
-        
+
         let filename = path
             .file_name()
             .and_then(|n| n.to_str())
             .unwrap_or("unknown")
             .to_string();
-        
+
         let size_bytes = metadata.len();
-        
+
         // Determine MIME type from extension
         let mime_type = path
             .extension()
@@ -755,17 +760,17 @@ impl ReferenceManager {
             })
             .unwrap_or("image/unknown")
             .to_string();
-        
+
         // Compute hash
         let mut file = fs::File::open(path).context("Failed to open file for hashing")?;
         let mut buffer = Vec::new();
         file.read_to_end(&mut buffer)
             .context("Failed to read file for hashing")?;
         let hash = format!("{:x}", md5::compute(&buffer));
-        
+
         // Try to extract dimensions using image crate
         let dimensions = image::image_dimensions(path).ok();
-        
+
         Ok(ImageMetadata {
             filename,
             size_bytes,
@@ -803,7 +808,7 @@ impl ReferenceManager {
         let timeout_duration = Duration::from_secs(self.ocr_timeout_secs);
         let path_owned = path.to_owned();
         let tesseract_path_owned = tesseract_path.to_owned();
-        
+
         // Block on async runtime to execute with timeout
         let output = tokio::runtime::Runtime::new()
             .context("Failed to create tokio runtime")?
@@ -1100,10 +1105,10 @@ mod tests {
             let png_data = vec![
                 137, 80, 78, 71, 13, 10, 26, 10, // PNG signature
                 0, 0, 0, 13, 73, 72, 68, 82, // IHDR chunk
-                0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 0, 0, 0, 144, 119, 83, 222,
-                0, 0, 0, 12, 73, 68, 65, 84, // IDAT chunk
-                8, 215, 99, 248, 255, 255, 63, 0, 5, 254, 2, 254, 167, 53, 129, 132,
-                0, 0, 0, 0, 73, 69, 78, 68, 174, 66, 96, 130, // IEND chunk
+                0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 0, 0, 0, 144, 119, 83, 222, 0, 0, 0, 12, 73, 68, 65,
+                84, // IDAT chunk
+                8, 215, 99, 248, 255, 255, 63, 0, 5, 254, 2, 254, 167, 53, 129, 132, 0, 0, 0, 0,
+                73, 69, 78, 68, 174, 66, 96, 130, // IEND chunk
             ];
             let mut file = std::fs::File::create(&test_image).unwrap();
             file.write_all(&png_data).unwrap();
@@ -1141,28 +1146,31 @@ mod tests {
     fn test_vision_capable_platforms() {
         // Test that we can query vision-capable platforms
         let platforms = ReferenceManager::get_vision_capable_platforms();
-        
+
         // Should return a non-empty list
-        assert!(!platforms.is_empty(), "Should have at least one vision-capable platform");
-        
+        assert!(
+            !platforms.is_empty(),
+            "Should have at least one vision-capable platform"
+        );
+
         // Should include cursor (our default preference)
         assert!(
             platforms.contains(&"cursor".to_string()),
             "Cursor should be vision-capable"
         );
-        
+
         // Should also include other known vision platforms
         assert!(
             platforms.contains(&"claude".to_string()),
             "Claude should be vision-capable"
         );
-        
+
         // Codex supports image attachments via --image
         assert!(
             platforms.contains(&"codex".to_string()),
             "Codex should be vision-capable"
         );
-        
+
         // All returned platforms should be lowercase
         for platform in &platforms {
             assert_eq!(platform, &platform.to_lowercase());

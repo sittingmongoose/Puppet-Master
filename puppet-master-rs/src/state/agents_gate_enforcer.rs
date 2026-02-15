@@ -180,11 +180,11 @@ impl GateEnforcer {
     pub fn for_tier(tier_id: &str) -> Self {
         let tier_parts: Vec<&str> = tier_id.split('.').collect();
         let tier_level = tier_parts.len();
-        
+
         // phase (1 part) or root (0 parts) = high tier
         // task (2 parts) or subtask (3+ parts) = low tier
         let is_high_tier = tier_level <= 1;
-        
+
         let rules = if is_high_tier {
             // High tier: promote critical rules to Error level
             vec![
@@ -211,7 +211,7 @@ impl GateEnforcer {
             // Low tier: keep as warnings
             Self::default_rules()
         };
-        
+
         Self { rules }
     }
 
@@ -581,7 +581,12 @@ mod tests {
         // Should pass (warnings don't block)
         assert!(result.passed);
         assert!(!result.violations.is_empty());
-        assert!(result.violations.iter().all(|v| v.severity != ViolationSeverity::Error));
+        assert!(
+            result
+                .violations
+                .iter()
+                .all(|v| v.severity != ViolationSeverity::Error)
+        );
     }
 
     #[test]
@@ -597,7 +602,12 @@ mod tests {
 
         // Should fail (errors block)
         assert!(!result.passed);
-        assert!(result.violations.iter().any(|v| v.severity == ViolationSeverity::Error));
+        assert!(
+            result
+                .violations
+                .iter()
+                .any(|v| v.severity == ViolationSeverity::Error)
+        );
     }
 
     #[test]
@@ -633,7 +643,10 @@ mod tests {
 
         // Check that phase and root have error-level rules
         let has_errors = |enforcer: &GateEnforcer| {
-            enforcer.rules.iter().any(|r| r.severity == ViolationSeverity::Error)
+            enforcer
+                .rules
+                .iter()
+                .any(|r| r.severity == ViolationSeverity::Error)
         };
 
         assert!(!has_errors(&subtask), "Subtask should use warnings");

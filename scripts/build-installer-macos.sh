@@ -1,38 +1,21 @@
 #!/bin/bash
-# Build installer script for macOS
+# Build installer script for macOS (Rust/Iced)
 # Usage: ./scripts/build-installer-macos.sh
 
 set -euo pipefail
 
-echo "=== Puppet Master macOS Installer Build ==="
+echo "=== Puppet Master macOS Installer Build (Rust/Iced) ==="
 echo ""
 
-# Check Node.js
-echo "Checking Node.js..."
-if ! command -v node &> /dev/null; then
-    echo "  ERROR: Node.js not found. Please install Node.js 20+ from https://nodejs.org/" >&2
+# Check Rust/Cargo
+echo "Checking Rust/Cargo..."
+if ! command -v cargo &> /dev/null; then
+    echo "  ERROR: cargo not found. Please install Rust from https://rustup.rs/" >&2
     exit 1
 fi
 
-NODE_VERSION=$(node --version)
-echo "  Node.js: $NODE_VERSION"
-
-# Check if version is 20+
-NODE_MAJOR=$(echo "$NODE_VERSION" | sed 's/^v\([0-9]*\).*/\1/')
-if [ "$NODE_MAJOR" -lt 20 ]; then
-    echo "  ERROR: Node.js 20+ required (found $NODE_VERSION)" >&2
-    exit 1
-fi
-
-# Check npm
-echo "Checking npm..."
-if ! command -v npm &> /dev/null; then
-    echo "  ERROR: npm not found. npm should come with Node.js." >&2
-    exit 1
-fi
-
-NPM_VERSION=$(npm --version)
-echo "  npm: $NPM_VERSION"
+CARGO_VERSION=$(cargo --version)
+echo "  Cargo: $CARGO_VERSION"
 
 # Check Xcode Command Line Tools
 echo "Checking Xcode Command Line Tools..."
@@ -43,14 +26,6 @@ if ! xcode-select -p &> /dev/null; then
 fi
 echo "  Xcode Command Line Tools: installed"
 
-# Check pkgbuild
-echo "Checking pkgbuild..."
-if ! command -v pkgbuild &> /dev/null; then
-    echo "  ERROR: pkgbuild not found. This should come with Xcode Command Line Tools." >&2
-    exit 1
-fi
-echo "  pkgbuild: available"
-
 # Check hdiutil
 echo "Checking hdiutil..."
 if ! command -v hdiutil &> /dev/null; then
@@ -59,46 +34,46 @@ if ! command -v hdiutil &> /dev/null; then
 fi
 echo "  hdiutil: available"
 
+# Check codesign
+echo "Checking codesign..."
+if ! command -v codesign &> /dev/null; then
+    echo "  ERROR: codesign not found. This should come with macOS." >&2
+    exit 1
+fi
+echo "  codesign: available"
+
 # Get repository root
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
+
+# Extract version from Cargo.toml
+echo ""
+echo "Extracting version from puppet-master-rs/Cargo.toml..."
+VERSION=$(grep '^version = ' puppet-master-rs/Cargo.toml | head -n1 | sed 's/version = "\(.*\)"/\1/')
+if [ -z "$VERSION" ]; then
+    echo "  ERROR: Could not extract version from Cargo.toml" >&2
+    exit 1
+fi
+echo "  Version: $VERSION"
 
 echo ""
 echo "=== Building Installer ==="
 echo ""
 
-# Install dependencies
-echo "Installing dependencies..."
-npm_config_update_notifier=false npm ci
-
-echo "Installing GUI dependencies..."
-npm_config_update_notifier=false npm --prefix src/gui/react install
-
-# Build TypeScript
-echo "Building TypeScript..."
-npm run build
-
-# Build GUI
-echo "Building GUI..."
-npm run gui:build
-
-# Build installer
-echo "Building macOS installer..."
-npm run build:mac
-
-# Cleanup test artifacts
-rm -rf .test-cache .test-quota .test-quota-* 2>/dev/null || true
+# Call the existing macOS DMG builder
+echo "Invoking installer/macos/build-dmg.sh $VERSION..."
+bash installer/macos/build-dmg.sh "$VERSION"
 
 # Verify output
 echo ""
 echo "=== Build Complete ==="
-INSTALLER=$(find dist/installers/darwin-arm64 -name "*.dmg" 2>/dev/null | head -n1)
-if [ -n "$INSTALLER" ]; then
-    INSTALLER_SIZE=$(du -h "$INSTALLER" | cut -f1)
-    echo "Installer created: $INSTALLER"
-    echo "Size: $INSTALLER_SIZE"
+DMG_FILE="installer/macos/RWM-Puppet-Master-${VERSION}.dmg"
+if [ -f "$DMG_FILE" ]; then
+    DMG_SIZE=$(du -h "$DMG_FILE" | cut -f1)
+    echo "DMG installer created: $DMG_FILE"
+    echo "Size: $DMG_SIZE"
 else
-    echo "WARNING: Installer file not found in dist/installers/darwin-arm64/" >&2
+    echo "WARNING: DMG file not found at $DMG_FILE" >&2
 fi
 
 echo ""

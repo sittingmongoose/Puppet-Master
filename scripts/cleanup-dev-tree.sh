@@ -41,9 +41,6 @@ paths=(
   "installer-work"
   "dist"
   "coverage"
-  "src-tauri/target"
-  "src/gui/react/dist"
-  "src/gui/react/coverage"
   ".test-cache"
 )
 
@@ -54,7 +51,7 @@ done < <(find . -maxdepth 1 -type d -name ".test-*" -print0 2>/dev/null || true)
 
 # Optional huge directories.
 if [[ "$WITH_NODE_MODULES" == "1" ]]; then
-  paths+=("node_modules" "src/gui/react/node_modules")
+  paths+=("node_modules")
 fi
 
 for p in "${paths[@]}"; do

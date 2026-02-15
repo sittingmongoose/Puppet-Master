@@ -345,10 +345,8 @@ impl WorktreeManager {
 
         // Get list of worktrees tracked by git
         let git_worktrees = self.list_worktrees().await?;
-        let git_worktree_paths: std::collections::HashSet<PathBuf> = git_worktrees
-            .into_iter()
-            .map(|w| w.path)
-            .collect();
+        let git_worktree_paths: std::collections::HashSet<PathBuf> =
+            git_worktrees.into_iter().map(|w| w.path).collect();
 
         // Scan the worktree base directory
         let mut orphaned = Vec::new();
@@ -401,7 +399,10 @@ impl WorktreeManager {
         // Check if it has a .git file (worktrees have .git files, not directories)
         let git_file = worktree_path.join(".git");
         if !git_file.exists() {
-            debug!("Worktree {:?} has no .git file, safe to remove", worktree_path);
+            debug!(
+                "Worktree {:?} has no .git file, safe to remove",
+                worktree_path
+            );
             return true;
         }
 
@@ -416,7 +417,10 @@ impl WorktreeManager {
             Ok(output) => {
                 if !output.status.success() {
                     // Git command failed, worktree might be corrupted
-                    debug!("Git status failed for {:?}, considering safe to prune", worktree_path);
+                    debug!(
+                        "Git status failed for {:?}, considering safe to prune",
+                        worktree_path
+                    );
                     return true;
                 }
 
@@ -425,7 +429,10 @@ impl WorktreeManager {
                     debug!("Worktree {:?} has no uncommitted changes", worktree_path);
                     true
                 } else {
-                    warn!("Worktree {:?} has uncommitted changes, not safe to prune", worktree_path);
+                    warn!(
+                        "Worktree {:?} has uncommitted changes, not safe to prune",
+                        worktree_path
+                    );
                     warn!("Changes:\n{}", stdout);
                     false
                 }
@@ -463,10 +470,7 @@ impl WorktreeManager {
 
         for worktree_path in orphaned {
             if !self.is_safe_to_prune(&worktree_path).await {
-                warn!(
-                    "Skipping worktree {:?} - not safe to prune",
-                    worktree_path
-                );
+                warn!("Skipping worktree {:?} - not safe to prune", worktree_path);
                 continue;
             }
 
@@ -491,7 +495,10 @@ impl WorktreeManager {
 
                     match fs::remove_dir_all(&worktree_path).await {
                         Ok(_) => {
-                            info!("Successfully removed worktree directory: {:?}", worktree_path);
+                            info!(
+                                "Successfully removed worktree directory: {:?}",
+                                worktree_path
+                            );
                             recovered += 1;
                         }
                         Err(e) => {
@@ -508,7 +515,10 @@ impl WorktreeManager {
             let _ = self.prune().await;
         }
 
-        info!("Worktree recovery complete: {} worktree(s) removed", recovered);
+        info!(
+            "Worktree recovery complete: {} worktree(s) removed",
+            recovered
+        );
         Ok(recovered)
     }
 }
@@ -688,7 +698,9 @@ mod tests {
         // Create an orphaned worktree directory (not tracked by git)
         let orphan_path = manager.worktree_base.join("orphan-tier");
         fs::create_dir_all(&orphan_path).await.unwrap();
-        fs::write(orphan_path.join("test.txt"), b"orphan").await.unwrap();
+        fs::write(orphan_path.join("test.txt"), b"orphan")
+            .await
+            .unwrap();
 
         // Detect orphaned worktrees
         let orphaned = manager.detect_orphaned_worktrees().await.unwrap();
@@ -759,7 +771,9 @@ mod tests {
         // Create an orphaned worktree directory (no .git, so safe to prune)
         let orphan_path = manager.worktree_base.join("orphan-tier");
         fs::create_dir_all(&orphan_path).await.unwrap();
-        fs::write(orphan_path.join("test.txt"), b"orphan").await.unwrap();
+        fs::write(orphan_path.join("test.txt"), b"orphan")
+            .await
+            .unwrap();
 
         // Recover orphaned worktrees
         let recovered = manager.recover_orphaned_worktrees().await.unwrap();

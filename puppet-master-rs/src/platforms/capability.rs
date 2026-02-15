@@ -224,7 +224,6 @@ impl CapabilityCache {
 
         features
     }
-
 }
 
 impl Default for CapabilityCache {

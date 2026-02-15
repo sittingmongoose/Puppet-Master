@@ -21,12 +21,12 @@ impl PrManager {
     /// Create a pull request using gh CLI
     ///
     /// # Runtime Behavior
-    /// 
+    ///
     /// This method performs preflight checks before attempting PR creation:
     /// - Verifies gh CLI is installed
     /// - Verifies gh is authenticated with GitHub
-    /// 
-    /// If preflight checks fail, returns `Ok(PrResult)` with `success: false` 
+    ///
+    /// If preflight checks fail, returns `Ok(PrResult)` with `success: false`
     /// and an actionable error message. **Never panics or crashes**.
     ///
     /// # Arguments
@@ -51,7 +51,7 @@ impl PrManager {
     ///     "main",
     ///     "feature/auth"
     /// ).await.unwrap();
-    /// 
+    ///
     /// if result.success {
     ///     println!("PR created: {:?}", result.pr_url);
     /// } else {
@@ -443,10 +443,13 @@ mod tests {
             pr_url: Some("https://github.com/user/repo/pull/123".to_string()),
             message: "PR created successfully".to_string(),
         };
-        
+
         assert!(result.success);
         assert!(result.pr_url.is_some());
-        assert_eq!(result.pr_url.unwrap(), "https://github.com/user/repo/pull/123");
+        assert_eq!(
+            result.pr_url.unwrap(),
+            "https://github.com/user/repo/pull/123"
+        );
         assert!(result.message.contains("successfully"));
     }
 
@@ -457,7 +460,7 @@ mod tests {
             pr_url: None,
             message: "Preflight check failed: gh CLI not found".to_string(),
         };
-        
+
         assert!(!result.success);
         assert!(result.pr_url.is_none());
         assert!(result.message.contains("Preflight check failed"));
@@ -469,7 +472,7 @@ mod tests {
             "[TASK] TK-001: Feature",
             "Multi-line\ndescription\nwith special chars: &<>\"'",
             "main",
-            "feature/tk-001"
+            "feature/tk-001",
         );
 
         assert_eq!(args[0], "pr");
@@ -553,16 +556,14 @@ mod e2e_tests {
 
         // Attempt to create PR - should not crash regardless of gh availability
         let result = manager
-            .create_pr(
-                "Test PR",
-                "Test body",
-                "main",
-                "test-branch"
-            )
+            .create_pr("Test PR", "Test body", "main", "test-branch")
             .await;
 
         // Should return Ok with a PrResult, not crash with Err
-        assert!(result.is_ok(), "create_pr should return Ok(PrResult), not crash");
+        assert!(
+            result.is_ok(),
+            "create_pr should return Ok(PrResult), not crash"
+        );
 
         let pr_result = result.unwrap();
 
@@ -577,7 +578,7 @@ mod e2e_tests {
                 "PrResult.pr_url should be None when PR creation fails"
             );
             assert!(
-                pr_result.message.contains("Preflight check failed") 
+                pr_result.message.contains("Preflight check failed")
                     || pr_result.message.contains("gh CLI"),
                 "Message should indicate why PR creation failed: {}",
                 pr_result.message
@@ -593,7 +594,7 @@ mod e2e_tests {
         let manager = PrManager::new(temp_dir);
 
         let result = manager.is_gh_available().await;
-        
+
         // Should complete without panic
         assert!(result.is_ok(), "is_gh_available should not panic");
 
@@ -622,7 +623,10 @@ mod e2e_tests {
 
         if is_gh_ready() {
             // If gh is ready, we should get a result (empty list or actual PRs)
-            assert!(result.is_ok(), "list_prs should work when gh is authenticated");
+            assert!(
+                result.is_ok(),
+                "list_prs should work when gh is authenticated"
+            );
         } else {
             // If gh is not ready, should return empty list or error gracefully
             // Either Ok(empty vec) or Err is acceptable

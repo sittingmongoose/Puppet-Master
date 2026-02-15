@@ -188,18 +188,14 @@ pub fn format_tier_plan_to_markdown(tier_plan: &TierPlan) -> String {
                             subtask.name,
                             subtask.subtask_id
                         ));
-                        output.push_str(&format!(
-                            "  - Max Iterations: {}\n",
-                            subtask.max_iterations
-                        ));
+                        output
+                            .push_str(&format!("  - Max Iterations: {}\n", subtask.max_iterations));
                         output.push_str(&format!(
                             "  - Hours/Iteration: {:.1}\n",
                             subtask.estimated_hours_per_iteration
                         ));
-                        output.push_str(&format!(
-                            "  - Retry Strategy: {}\n",
-                            subtask.retry_strategy
-                        ));
+                        output
+                            .push_str(&format!("  - Retry Strategy: {}\n", subtask.retry_strategy));
 
                         if !subtask.verification_criteria.is_empty() {
                             output.push_str("  - Verification:\n");

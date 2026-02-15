@@ -80,7 +80,10 @@ impl ClaudeRunner {
         debug!("Discovering Claude models via CLI");
 
         // Try to get model list from help or config
-        let output = Command::new(&self.base.command).arg("--help").output().await?;
+        let output = Command::new(&self.base.command)
+            .arg("--help")
+            .output()
+            .await?;
 
         if output.status.success() {
             let help_text = String::from_utf8_lossy(&output.stdout);

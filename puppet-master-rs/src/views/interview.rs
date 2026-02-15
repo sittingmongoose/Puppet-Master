@@ -340,7 +340,7 @@ pub fn view<'a>(
 
     let add_link_btn = styled_button(theme, "ADD LINK", ButtonVariant::Primary)
         .on_press(Message::InterviewAddReferenceLink);
-    
+
     // Responsive layout: stack buttons vertically on mobile
     let button_layout: Element<'_, Message> = if size.is_mobile() {
         column![add_file_btn, add_image_btn, add_dir_btn]
@@ -527,11 +527,13 @@ pub fn view<'a>(
         );
 
         for (idx, answer) in answers.iter().enumerate() {
-            let question = questions.get(idx).map(|s| s.as_str()).unwrap_or("<no question>");
-            
-            let mut qa_column = column![]
-                .spacing(tokens::spacing::XS);
-            
+            let question = questions
+                .get(idx)
+                .map(|s| s.as_str())
+                .unwrap_or("<no question>");
+
+            let mut qa_column = column![].spacing(tokens::spacing::XS);
+
             // Question label
             qa_column = qa_column.push(
                 text(format!("Q{}", idx + 1))
@@ -539,7 +541,7 @@ pub fn view<'a>(
                     .size(tokens::font_size::XS)
                     .color(theme.accent()),
             );
-            
+
             // Selectable question text
             qa_column = qa_column.push(selectable_text_field(
                 theme,
@@ -550,7 +552,7 @@ pub fn view<'a>(
                     Message::SelectableFieldChanged(SelectableField::InterviewQuestion(idx), value)
                 },
             ));
-            
+
             // Answer label
             qa_column = qa_column.push(
                 text(format!("A{}", idx + 1))
@@ -558,7 +560,7 @@ pub fn view<'a>(
                     .size(tokens::font_size::XS)
                     .color(theme.success()),
             );
-            
+
             // Selectable answer text
             qa_column = qa_column.push(selectable_text_field(
                 theme,
@@ -569,7 +571,7 @@ pub fn view<'a>(
                     Message::SelectableFieldChanged(SelectableField::InterviewAnswer(idx), value)
                 },
             ));
-            
+
             history_list = history_list.push(
                 container(qa_column)
                     .padding(tokens::spacing::SM)

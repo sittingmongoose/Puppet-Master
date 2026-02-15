@@ -5,9 +5,9 @@
 
 #![allow(dead_code)]
 
-use puppet_master::widgets::icon::{IconName, IconSize, icon_sized};
 use iced::widget::{Space, button, column, container, row, text};
 use iced::{Element, Length, Padding};
+use puppet_master::widgets::icon::{IconName, IconSize, icon_sized};
 
 /// Example: Navigation sidebar with icons
 fn navigation_menu<'a>() -> Element<'a, Message> {

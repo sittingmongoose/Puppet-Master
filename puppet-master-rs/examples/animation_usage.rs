@@ -6,13 +6,13 @@
 //! - Responsive layout
 //! - Design token spacing
 
+use iced::widget::{column, container, row, text};
+use iced::{Element, Length};
 use puppet_master::app::Message;
 use puppet_master::theme::{AppTheme, tokens};
 use puppet_master::widgets::{
     ProgressSize, ProgressVariant, TransitionState, animated_progress_bar, fade_color,
 };
-use iced::widget::{column, container, row, text};
-use iced::{Element, Length};
 
 /// Example view demonstrating all new features
 pub fn example_view<'a>(

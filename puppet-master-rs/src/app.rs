@@ -5701,7 +5701,20 @@ impl App {
 
         // Wrap in Responsive widget to get available size
         Responsive::new(move |size| {
-            let layout_size = LayoutSize::from_iced(size);
+            // `Responsive` can occasionally report transient 0/NaN values during startup
+            // on some platforms. Fall back to tracked window dimensions to avoid
+            // collapsing the whole UI tree to 0px.
+            let width = if size.width.is_finite() && size.width > 1.0 {
+                size.width
+            } else {
+                self.window_width.max(1.0)
+            };
+            let height = if size.height.is_finite() && size.height > 1.0 {
+                size.height
+            } else {
+                self.window_height.max(1.0)
+            };
+            let layout_size = LayoutSize { width, height };
 
             // Build interview panel data if interview is active
             let interview_panel_data = self.build_interview_panel_data();
@@ -5916,18 +5929,24 @@ impl App {
             };
 
             // Build the full layout (header + content constrained to same width as content boxes)
-            // Use effective max width: full width on small screens, max 1200px on large screens
-            let effective_max_width = layout_size.width.min(tokens::layout::MAX_CONTENT_WIDTH);
+            // Use effective max width: full width on small screens, max 1200px on large screens.
+            let measured_width = layout_size.width.max(1.0);
+            let effective_max_width = measured_width.min(tokens::layout::MAX_CONTENT_WIDTH);
             let main_layout = column![self.render_header(), content].spacing(0);
             let constrained = container(main_layout)
-                .width(Length::Shrink)
+                .width(Length::Fill)
                 .height(Length::Fill)
                 .max_width(effective_max_width);
 
-            // Wrap in full-size container for overlays (center the constrained content horizontally)
+            // Wrap in full-size container for overlays (center constrained content horizontally)
+            let base_bg = self.theme.paper();
             let base = container(constrained)
                 .width(iced::Length::Fill)
                 .height(iced::Length::Fill)
+                .style(move |_theme: &iced::Theme| iced::widget::container::Style {
+                    background: Some(iced::Background::Color(base_bg)),
+                    ..iced::widget::container::Style::default()
+                })
                 .align_x(iced::Alignment::Center);
 
             // Layer with retro overlay effects (pixel grid and scanlines)

@@ -613,13 +613,13 @@ impl Orchestrator {
     /// Create pull request for completed tier
     ///
     /// # Graceful Error Handling
-    /// 
+    ///
     /// This method handles PR creation failures gracefully:
     /// - Runs preflight checks via `PrManager::create_pr()`
     /// - If preflight fails (gh not installed/authenticated), logs warning and continues
     /// - If PR creation fails, logs warning and continues
     /// - **Never panics or crashes** - always returns `Ok(())`
-    /// 
+    ///
     /// This ensures the orchestrator can continue operating even in environments
     /// without gh CLI (CI/headless) or without GitHub authentication.
     ///
@@ -630,7 +630,7 @@ impl Orchestrator {
     /// # Example Behavior
     /// ```text
     /// Without gh CLI:
-    ///   WARN: Failed to create PR for tier TK-001: Preflight check failed: 
+    ///   WARN: Failed to create PR for tier TK-001: Preflight check failed:
     ///         gh CLI not found. Install from https://cli.github.com/
     ///   → Orchestrator continues normally
     ///
@@ -1142,7 +1142,7 @@ impl Orchestrator {
             for node in tree.iter_dfs() {
                 let state = node.state_machine.current_state();
                 let iteration_count = node.state_machine.current_iteration();
-                
+
                 // Sum all iterations across all nodes
                 total_iterations += iteration_count as usize;
 
@@ -1182,7 +1182,13 @@ impl Orchestrator {
                 iteration: current_iteration,
             };
 
-            (orchestrator_state, tier_states, stats, current_position, total_iterations)
+            (
+                orchestrator_state,
+                tier_states,
+                stats,
+                current_position,
+                total_iterations,
+            )
         };
 
         let metadata = CheckpointMetadata {
@@ -2416,7 +2422,7 @@ impl Orchestrator {
             for node in tree.iter_dfs() {
                 let state = node.state_machine.current_state();
                 let iteration_count = node.state_machine.current_iteration();
-                
+
                 // Sum all iterations across all nodes
                 total_iterations += iteration_count as usize;
 
@@ -3169,7 +3175,7 @@ PATTERN: Use Result<T, E> for error handling
 
     // NOTE: Checkpoint metadata population (CurrentPosition and iterations_run) is tested
     // through integration tests and verified manually. The logic:
-    // 1. CurrentPosition is populated by finding active tiers (state.is_active()) 
+    // 1. CurrentPosition is populated by finding active tiers (state.is_active())
     //    and capturing phase_id/task_id/subtask_id based on tier_type
     // 2. iterations_run is the sum of node.state_machine.current_iteration() across all nodes
     // This implementation is in checkpoint_if_needed() and create_checkpoint() methods.

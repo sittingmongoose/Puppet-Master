@@ -77,49 +77,53 @@ pub fn view<'a>(
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
             if size.is_mobile() {
                 // Stack form fields vertically on mobile
-                Element::from(column![
-                    text("Project Name:")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink()),
-                    styled_text_input(theme, "My Project", new_project_name)
-                        .on_input(Message::NewProjectNameChanged),
-                    text("Working Directory:")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink()),
-                    styled_text_input(theme, "/path/to/project", new_project_path)
-                        .on_input(Message::NewProjectPathChanged),
-                    styled_button(theme, "Browse", ButtonVariant::Ghost)
-                        .on_press(Message::BrowseNewProjectPath),
-                ]
-                .spacing(tokens::spacing::SM))
-            } else {
-                // Horizontal layout for desktop
-                Element::from(column![
-                    row![
+                Element::from(
+                    column![
                         text("Project Name:")
                             .size(tokens::font_size::BASE)
-                            .width(Length::Fixed(150.0))
                             .color(theme.ink()),
                         styled_text_input(theme, "My Project", new_project_name)
                             .on_input(Message::NewProjectNameChanged),
-                    ]
-                    .spacing(tokens::spacing::MD)
-                    .align_y(iced::Alignment::Center),
-                    Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                    row![
                         text("Working Directory:")
                             .size(tokens::font_size::BASE)
-                            .width(Length::Fixed(150.0))
                             .color(theme.ink()),
                         styled_text_input(theme, "/path/to/project", new_project_path)
                             .on_input(Message::NewProjectPathChanged),
                         styled_button(theme, "Browse", ButtonVariant::Ghost)
                             .on_press(Message::BrowseNewProjectPath),
                     ]
-                    .spacing(tokens::spacing::SM)
-                    .align_y(iced::Alignment::Center),
-                ]
-                .spacing(tokens::spacing::SM))
+                    .spacing(tokens::spacing::SM),
+                )
+            } else {
+                // Horizontal layout for desktop
+                Element::from(
+                    column![
+                        row![
+                            text("Project Name:")
+                                .size(tokens::font_size::BASE)
+                                .width(Length::Fixed(150.0))
+                                .color(theme.ink()),
+                            styled_text_input(theme, "My Project", new_project_name)
+                                .on_input(Message::NewProjectNameChanged),
+                        ]
+                        .spacing(tokens::spacing::MD)
+                        .align_y(iced::Alignment::Center),
+                        Space::new().height(Length::Fixed(tokens::spacing::SM)),
+                        row![
+                            text("Working Directory:")
+                                .size(tokens::font_size::BASE)
+                                .width(Length::Fixed(150.0))
+                                .color(theme.ink()),
+                            styled_text_input(theme, "/path/to/project", new_project_path)
+                                .on_input(Message::NewProjectPathChanged),
+                            styled_button(theme, "Browse", ButtonVariant::Ghost)
+                                .on_press(Message::BrowseNewProjectPath),
+                        ]
+                        .spacing(tokens::spacing::SM)
+                        .align_y(iced::Alignment::Center),
+                    ]
+                    .spacing(tokens::spacing::SM),
+                )
             },
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
             text("PRD file: prd.json (auto)")

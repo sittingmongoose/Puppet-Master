@@ -6,6 +6,4 @@ pub mod persistence;
 pub mod status;
 
 pub use persistence::{KnownProject, ProjectsPersistence};
-pub use status::{
-    InterviewStatus, OrchestratorStatus, ProjectStatus, ProjectStatusInspector,
-};
+pub use status::{InterviewStatus, OrchestratorStatus, ProjectStatus, ProjectStatusInspector};

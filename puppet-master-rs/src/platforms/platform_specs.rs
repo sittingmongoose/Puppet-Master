@@ -212,9 +212,21 @@ static CLAUDE_SPEC: PlatformSpec = PlatformSpec {
     display_name: "Claude Code",
     cli_binary_names: &["claude"],
     install_methods: &[
-        InstallMethod { method: "curl", command: "curl -fsSL https://claude.ai/install.sh | bash", os: &["linux", "macos"] },
-        InstallMethod { method: "brew", command: "brew install --cask claude-code", os: &["macos"] },
-        InstallMethod { method: "winget", command: "winget install Anthropic.ClaudeCode", os: &["windows"] },
+        InstallMethod {
+            method: "curl",
+            command: "curl -fsSL https://claude.ai/install.sh | bash",
+            os: &["linux", "macos"],
+        },
+        InstallMethod {
+            method: "brew",
+            command: "brew install --cask claude-code",
+            os: &["macos"],
+        },
+        InstallMethod {
+            method: "winget",
+            command: "winget install Anthropic.ClaudeCode",
+            os: &["windows"],
+        },
     ],
     default_install_paths: &[
         "~/.local/bin/claude",
@@ -235,9 +247,27 @@ static CLAUDE_SPEC: PlatformSpec = PlatformSpec {
         credentials_path: Some("~/.claude"),
     },
     fallback_models: &[
-        ModelSpec { id: "sonnet", display_name: "Claude Sonnet 4.5", supports_effort: true, supports_vision: true, is_default: true },
-        ModelSpec { id: "opus", display_name: "Claude Opus 4.6", supports_effort: true, supports_vision: true, is_default: false },
-        ModelSpec { id: "haiku", display_name: "Claude Haiku 4.5", supports_effort: true, supports_vision: true, is_default: false },
+        ModelSpec {
+            id: "sonnet",
+            display_name: "Claude Sonnet 4.5",
+            supports_effort: true,
+            supports_vision: true,
+            is_default: true,
+        },
+        ModelSpec {
+            id: "opus",
+            display_name: "Claude Opus 4.6",
+            supports_effort: true,
+            supports_vision: true,
+            is_default: false,
+        },
+        ModelSpec {
+            id: "haiku",
+            display_name: "Claude Haiku 4.5",
+            supports_effort: true,
+            supports_vision: true,
+            is_default: false,
+        },
     ],
     model_discovery: ModelDiscoverySpec {
         cli_command: None, // Claude model list is relatively stable — use fallback
@@ -255,9 +285,18 @@ static CLAUDE_SPEC: PlatformSpec = PlatformSpec {
     }),
     effort: Some(EffortSpec {
         levels: &[
-            EffortLevel { id: "low", display_name: "Low" },
-            EffortLevel { id: "medium", display_name: "Medium" },
-            EffortLevel { id: "high", display_name: "High" },
+            EffortLevel {
+                id: "low",
+                display_name: "Low",
+            },
+            EffortLevel {
+                id: "medium",
+                display_name: "Medium",
+            },
+            EffortLevel {
+                id: "high",
+                display_name: "High",
+            },
         ],
         cli_flag: None, // NOT a CLI flag — set as env var
         env_var: Some("CLAUDE_CODE_EFFORT_LEVEL"),
@@ -302,13 +341,18 @@ static CURSOR_SPEC: PlatformSpec = PlatformSpec {
     display_name: "Cursor CLI",
     cli_binary_names: &["agent"],
     install_methods: &[
-        InstallMethod { method: "curl", command: "curl https://cursor.com/install -fsS | bash", os: &["linux", "macos"] },
-        InstallMethod { method: "powershell", command: "irm 'https://cursor.com/install?win32=true' | iex", os: &["windows"] },
+        InstallMethod {
+            method: "curl",
+            command: "curl https://cursor.com/install -fsS | bash",
+            os: &["linux", "macos"],
+        },
+        InstallMethod {
+            method: "powershell",
+            command: "irm 'https://cursor.com/install?win32=true' | iex",
+            os: &["windows"],
+        },
     ],
-    default_install_paths: &[
-        "~/.local/bin/agent",
-        "/usr/local/bin/agent",
-    ],
+    default_install_paths: &["~/.local/bin/agent", "/usr/local/bin/agent"],
     auth: AuthSpec {
         login_command: Some("agent"),
         login_args: &["login"],
@@ -323,10 +367,34 @@ static CURSOR_SPEC: PlatformSpec = PlatformSpec {
         credentials_path: None,
     },
     fallback_models: &[
-        ModelSpec { id: "auto", display_name: "Auto (recommended)", supports_effort: false, supports_vision: true, is_default: true },
-        ModelSpec { id: "sonnet-4.5-thinking", display_name: "Sonnet 4.5 Thinking", supports_effort: false, supports_vision: true, is_default: false },
-        ModelSpec { id: "sonnet-4.5", display_name: "Sonnet 4.5", supports_effort: false, supports_vision: true, is_default: false },
-        ModelSpec { id: "gpt-4.1", display_name: "GPT-4.1", supports_effort: false, supports_vision: true, is_default: false },
+        ModelSpec {
+            id: "auto",
+            display_name: "Auto (recommended)",
+            supports_effort: false,
+            supports_vision: true,
+            is_default: true,
+        },
+        ModelSpec {
+            id: "sonnet-4.5-thinking",
+            display_name: "Sonnet 4.5 Thinking",
+            supports_effort: false,
+            supports_vision: true,
+            is_default: false,
+        },
+        ModelSpec {
+            id: "sonnet-4.5",
+            display_name: "Sonnet 4.5",
+            supports_effort: false,
+            supports_vision: true,
+            is_default: false,
+        },
+        ModelSpec {
+            id: "gpt-4.1",
+            display_name: "GPT-4.1",
+            supports_effort: false,
+            supports_vision: true,
+            is_default: false,
+        },
     ],
     model_discovery: ModelDiscoverySpec {
         cli_command: Some("agent"),
@@ -373,9 +441,11 @@ static CODEX_SPEC: PlatformSpec = PlatformSpec {
     platform: Platform::Codex,
     display_name: "Codex CLI",
     cli_binary_names: &["codex"],
-    install_methods: &[
-        InstallMethod { method: "npm", command: "npm install -g @openai/codex", os: &["linux", "macos", "windows"] },
-    ],
+    install_methods: &[InstallMethod {
+        method: "npm",
+        command: "npm install -g @openai/codex",
+        os: &["linux", "macos", "windows"],
+    }],
     default_install_paths: &[
         "~/.npm-global/bin/codex",
         "/usr/local/bin/codex",
@@ -394,9 +464,13 @@ static CODEX_SPEC: PlatformSpec = PlatformSpec {
         uses_browser_auth: true,
         credentials_path: None,
     },
-    fallback_models: &[
-        ModelSpec { id: "gpt-5.3-codex", display_name: "GPT-5.3 Codex", supports_effort: true, supports_vision: true, is_default: true },
-    ],
+    fallback_models: &[ModelSpec {
+        id: "gpt-5.3-codex",
+        display_name: "GPT-5.3 Codex",
+        supports_effort: true,
+        supports_vision: true,
+        is_default: true,
+    }],
     model_discovery: ModelDiscoverySpec {
         cli_command: None, // Use SDK for discovery
         cli_args: &[],
@@ -413,10 +487,22 @@ static CODEX_SPEC: PlatformSpec = PlatformSpec {
     }),
     effort: Some(EffortSpec {
         levels: &[
-            EffortLevel { id: "low", display_name: "Low" },
-            EffortLevel { id: "medium", display_name: "Medium" },
-            EffortLevel { id: "high", display_name: "High" },
-            EffortLevel { id: "xhigh", display_name: "Extra High" },
+            EffortLevel {
+                id: "low",
+                display_name: "Low",
+            },
+            EffortLevel {
+                id: "medium",
+                display_name: "Medium",
+            },
+            EffortLevel {
+                id: "high",
+                display_name: "High",
+            },
+            EffortLevel {
+                id: "xhigh",
+                display_name: "Extra High",
+            },
         ],
         cli_flag: Some("-c model_reasoning_effort=<level>"),
         env_var: None,
@@ -476,13 +562,18 @@ static GEMINI_SPEC: PlatformSpec = PlatformSpec {
     display_name: "Gemini CLI",
     cli_binary_names: &["gemini"],
     install_methods: &[
-        InstallMethod { method: "npm", command: "npm install -g @google/gemini-cli", os: &["linux", "macos", "windows"] },
-        InstallMethod { method: "brew", command: "brew install gemini-cli", os: &["macos"] },
+        InstallMethod {
+            method: "npm",
+            command: "npm install -g @google/gemini-cli",
+            os: &["linux", "macos", "windows"],
+        },
+        InstallMethod {
+            method: "brew",
+            command: "brew install gemini-cli",
+            os: &["macos"],
+        },
     ],
-    default_install_paths: &[
-        "~/.npm-global/bin/gemini",
-        "/usr/local/bin/gemini",
-    ],
+    default_install_paths: &["~/.npm-global/bin/gemini", "/usr/local/bin/gemini"],
     auth: AuthSpec {
         login_command: None, // Interactive on first run — "Login with Google"
         login_args: &[],
@@ -497,8 +588,20 @@ static GEMINI_SPEC: PlatformSpec = PlatformSpec {
         credentials_path: Some("~/.gemini"),
     },
     fallback_models: &[
-        ModelSpec { id: "gemini-2.5-pro", display_name: "Gemini 2.5 Pro", supports_effort: false, supports_vision: true, is_default: true },
-        ModelSpec { id: "gemini-2.5-flash", display_name: "Gemini 2.5 Flash", supports_effort: false, supports_vision: true, is_default: false },
+        ModelSpec {
+            id: "gemini-2.5-pro",
+            display_name: "Gemini 2.5 Pro",
+            supports_effort: false,
+            supports_vision: true,
+            is_default: true,
+        },
+        ModelSpec {
+            id: "gemini-2.5-flash",
+            display_name: "Gemini 2.5 Flash",
+            supports_effort: false,
+            supports_vision: true,
+            is_default: false,
+        },
     ],
     model_discovery: ModelDiscoverySpec {
         cli_command: None,
@@ -553,14 +656,23 @@ static COPILOT_SPEC: PlatformSpec = PlatformSpec {
     display_name: "GitHub Copilot CLI",
     cli_binary_names: &["copilot"],
     install_methods: &[
-        InstallMethod { method: "npm", command: "npm install -g @github/copilot", os: &["linux", "macos", "windows"] },
-        InstallMethod { method: "brew", command: "brew install copilot-cli", os: &["macos"] },
-        InstallMethod { method: "winget", command: "winget install GitHub.Copilot", os: &["windows"] },
+        InstallMethod {
+            method: "npm",
+            command: "npm install -g @github/copilot",
+            os: &["linux", "macos", "windows"],
+        },
+        InstallMethod {
+            method: "brew",
+            command: "brew install copilot-cli",
+            os: &["macos"],
+        },
+        InstallMethod {
+            method: "winget",
+            command: "winget install GitHub.Copilot",
+            os: &["windows"],
+        },
     ],
-    default_install_paths: &[
-        "~/.npm-global/bin/copilot",
-        "/usr/local/bin/copilot",
-    ],
+    default_install_paths: &["~/.npm-global/bin/copilot", "/usr/local/bin/copilot"],
     auth: AuthSpec {
         login_command: Some("copilot"),
         login_args: &["login"],
@@ -575,9 +687,27 @@ static COPILOT_SPEC: PlatformSpec = PlatformSpec {
         credentials_path: None,
     },
     fallback_models: &[
-        ModelSpec { id: "claude-sonnet-4.5", display_name: "Claude Sonnet 4.5", supports_effort: false, supports_vision: true, is_default: true },
-        ModelSpec { id: "claude-sonnet-4", display_name: "Claude Sonnet 4", supports_effort: false, supports_vision: true, is_default: false },
-        ModelSpec { id: "gpt-5", display_name: "GPT-5", supports_effort: true, supports_vision: true, is_default: false },
+        ModelSpec {
+            id: "claude-sonnet-4.5",
+            display_name: "Claude Sonnet 4.5",
+            supports_effort: false,
+            supports_vision: true,
+            is_default: true,
+        },
+        ModelSpec {
+            id: "claude-sonnet-4",
+            display_name: "Claude Sonnet 4",
+            supports_effort: false,
+            supports_vision: true,
+            is_default: false,
+        },
+        ModelSpec {
+            id: "gpt-5",
+            display_name: "GPT-5",
+            supports_effort: true,
+            supports_vision: true,
+            is_default: false,
+        },
     ],
     model_discovery: ModelDiscoverySpec {
         cli_command: None, // Use SDK for discovery
@@ -595,10 +725,22 @@ static COPILOT_SPEC: PlatformSpec = PlatformSpec {
     }),
     effort: Some(EffortSpec {
         levels: &[
-            EffortLevel { id: "low", display_name: "Low" },
-            EffortLevel { id: "medium", display_name: "Medium" },
-            EffortLevel { id: "high", display_name: "High" },
-            EffortLevel { id: "xhigh", display_name: "Extra High" },
+            EffortLevel {
+                id: "low",
+                display_name: "Low",
+            },
+            EffortLevel {
+                id: "medium",
+                display_name: "Medium",
+            },
+            EffortLevel {
+                id: "high",
+                display_name: "High",
+            },
+            EffortLevel {
+                id: "xhigh",
+                display_name: "Extra High",
+            },
         ],
         cli_flag: None,
         env_var: None,
@@ -668,7 +810,13 @@ pub fn get_spec(platform: Platform) -> &'static PlatformSpec {
 }
 
 /// All platform specs as a static array.
-static ALL_SPECS: [&PlatformSpec; 5] = [&CLAUDE_SPEC, &CURSOR_SPEC, &CODEX_SPEC, &GEMINI_SPEC, &COPILOT_SPEC];
+static ALL_SPECS: [&PlatformSpec; 5] = [
+    &CLAUDE_SPEC,
+    &CURSOR_SPEC,
+    &CODEX_SPEC,
+    &GEMINI_SPEC,
+    &COPILOT_SPEC,
+];
 
 // DRY:FN:all_specs — Get all platform specs
 /// Get all platform specs.
@@ -808,13 +956,19 @@ pub fn display_name_for(platform: Platform) -> &'static str {
 
 /// DRY:FN:experimental_cli_flag — Get the CLI flag for experimental features (if any)
 pub fn experimental_cli_flag(platform: Platform) -> Option<&'static str> {
-    get_spec(platform).experimental.as_ref().and_then(|e| e.cli_flag)
+    get_spec(platform)
+        .experimental
+        .as_ref()
+        .and_then(|e| e.cli_flag)
 }
 // DRY:FN:experimental_settings_path
 
 /// DRY:FN:experimental_settings_path — Get settings path for experimental features (if any)
 pub fn experimental_settings_path(platform: Platform) -> Option<&'static str> {
-    get_spec(platform).experimental.as_ref().and_then(|e| e.settings_path)
+    get_spec(platform)
+        .experimental
+        .as_ref()
+        .and_then(|e| e.settings_path)
 }
 // DRY:FN:subagent_env_vars
 
@@ -875,7 +1029,11 @@ mod tests {
     fn test_fallback_models_not_empty() {
         for platform in Platform::all() {
             let models = fallback_model_ids(*platform);
-            assert!(!models.is_empty(), "{:?} should have fallback models", platform);
+            assert!(
+                !models.is_empty(),
+                "{:?} should have fallback models",
+                platform
+            );
         }
     }
 
@@ -990,7 +1148,10 @@ mod tests {
 
     #[test]
     fn test_experimental_cli_flag() {
-        assert_eq!(experimental_cli_flag(Platform::Copilot), Some("--experimental"));
+        assert_eq!(
+            experimental_cli_flag(Platform::Copilot),
+            Some("--experimental")
+        );
         assert_eq!(experimental_cli_flag(Platform::Codex), None);
         assert_eq!(experimental_cli_flag(Platform::Claude), None);
         assert_eq!(experimental_cli_flag(Platform::Gemini), None);
@@ -999,7 +1160,10 @@ mod tests {
 
     #[test]
     fn test_experimental_settings_path() {
-        assert_eq!(experimental_settings_path(Platform::Gemini), Some("~/.gemini/settings.json"));
+        assert_eq!(
+            experimental_settings_path(Platform::Gemini),
+            Some("~/.gemini/settings.json")
+        );
         assert_eq!(experimental_settings_path(Platform::Copilot), None);
         assert_eq!(experimental_settings_path(Platform::Codex), None);
         assert_eq!(experimental_settings_path(Platform::Claude), None);
@@ -1010,7 +1174,10 @@ mod tests {
     fn test_subagent_env_vars() {
         let claude_vars = subagent_env_vars(Platform::Claude);
         assert_eq!(claude_vars.len(), 1);
-        assert_eq!(claude_vars[0], ("CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS", "1"));
+        assert_eq!(
+            claude_vars[0],
+            ("CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS", "1")
+        );
 
         let codex_vars = subagent_env_vars(Platform::Codex);
         assert!(codex_vars.is_empty()); // Built-in, no env var needed

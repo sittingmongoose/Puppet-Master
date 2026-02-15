@@ -509,13 +509,9 @@ mod tests {
 
         // 5 uses, 4 successes = 80% success rate
         for _ in 0..4 {
-            engine
-                .record_usage("Good Pattern", tier_id, true)
-                .unwrap();
+            engine.record_usage("Good Pattern", tier_id, true).unwrap();
         }
-        engine
-            .record_usage("Good Pattern", tier_id, false)
-            .unwrap();
+        engine.record_usage("Good Pattern", tier_id, false).unwrap();
 
         let entries = vec![AgentDefinition::new(
             "Good Pattern",

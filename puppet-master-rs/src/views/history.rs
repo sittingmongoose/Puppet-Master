@@ -4,8 +4,8 @@
 
 use crate::app::Message;
 use crate::theme::{AppTheme, fonts, tokens};
-use crate::widgets::*;
 use crate::widgets::status_badge::status_badge_with_text;
+use crate::widgets::*;
 use chrono::{DateTime, Utc};
 use iced::widget::{Space, column, container, row, scrollable, text};
 use iced::{Element, Length};
@@ -111,7 +111,7 @@ pub fn view<'a>(
                 ButtonVariant::Primary
             } else {
                 ButtonVariant::Secondary
-            }
+            },
         )
         .on_press(Message::HistoryFilterChanged(None))
         .into(),

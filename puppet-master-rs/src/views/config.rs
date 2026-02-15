@@ -420,8 +420,7 @@ fn tier_card<'a>(
                 .align_y(Alignment::Center),
                 row![
                     model_picker,
-                    styled_button(theme, "Refresh", ButtonVariant::Ghost)
-                        .on_press(refresh_message),
+                    styled_button(theme, "Refresh", ButtonVariant::Ghost).on_press(refresh_message),
                 ]
                 .spacing(tokens::spacing::XS)
             ]

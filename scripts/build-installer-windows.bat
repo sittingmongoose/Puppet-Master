@@ -1,31 +1,20 @@
 @echo off
-REM Build installer script for Windows (Batch fallback)
+REM Build installer script for Windows (Batch - Rust/Iced)
 REM Usage: scripts\build-installer-windows.bat
 
-echo === Puppet Master Windows Installer Build ===
+echo === Puppet Master Windows Installer Build (Rust/Iced) ===
 echo.
 
-REM Check Node.js
-echo Checking Node.js...
-where node >nul 2>&1
+REM Check Rust/Cargo
+echo Checking Rust/Cargo...
+where cargo >nul 2>&1
 if %ERRORLEVEL% NEQ 0 (
-    echo   ERROR: Node.js not found. Please install Node.js 20+ from https://nodejs.org/
+    echo   ERROR: cargo not found. Please install Rust from https://rustup.rs/
     exit /b 1
 )
 
-for /f "tokens=*" %%i in ('node --version') do set NODE_VERSION=%%i
-echo   Node.js: %NODE_VERSION%
-
-REM Check npm
-echo Checking npm...
-where npm >nul 2>&1
-if %ERRORLEVEL% NEQ 0 (
-    echo   ERROR: npm not found. npm should come with Node.js.
-    exit /b 1
-)
-
-for /f "tokens=*" %%i in ('npm --version') do set NPM_VERSION=%%i
-echo   npm: %NPM_VERSION%
+for /f "tokens=*" %%i in ('cargo --version') do set CARGO_VERSION=%%i
+echo   Cargo: %CARGO_VERSION%
 
 REM Check NSIS
 echo Checking NSIS...
@@ -50,8 +39,7 @@ if %NSIS_OK%==0 (
     echo     1. Download from https://nsis.sourceforge.io/Download
     echo     2. Or install Chocolatey and run: choco install nsis
     echo.
-    echo   If NSIS is already installed, add its folder (e.g. C:\Program Files ^(x86^)\NSIS^) to your PATH,
-    echo   or set MAKENSIS_PATH to the full path of makensis.exe and try again.
+    echo   If NSIS is already installed, add its folder to your PATH.
     echo   Restart the terminal after installing NSIS so PATH updates are picked up.
     exit /b 1
 )
@@ -62,62 +50,58 @@ REM Get repository root
 cd /d "%~dp0\.."
 set REPO_ROOT=%CD%
 
+REM Extract version from Cargo.toml
+echo.
+echo Extracting version from puppet-master-rs\Cargo.toml...
+for /f "tokens=3 delims= =""" %%v in ('findstr /r "^version = " puppet-master-rs\Cargo.toml') do set VERSION=%%v
+if "%VERSION%"=="" (
+    echo   ERROR: Could not extract version from Cargo.toml
+    exit /b 1
+)
+echo   Version: %VERSION%
+
 echo.
 echo === Building Installer ===
 echo.
 
-REM Install dependencies
-echo Installing dependencies...
-call npm ci
+REM Build Rust binary
+echo Building Rust binary...
+cd puppet-master-rs
+cargo build --release
 if %ERRORLEVEL% NEQ 0 (
-    echo   ERROR: npm ci failed
+    echo   ERROR: Cargo build failed
+    exit /b 1
+)
+cd ..
+
+REM Verify binary exists
+if not exist "puppet-master-rs\target\release\puppet-master.exe" (
+    echo   ERROR: Binary not found at puppet-master-rs\target\release\puppet-master.exe
     exit /b 1
 )
 
-REM Install GUI dependencies
-echo Installing GUI dependencies...
-call npm --prefix src/gui/react install
+REM Build installer with NSIS
+echo Building Windows installer with NSIS...
+cd installer\windows
+if defined MAKENSIS_PATH (
+    "%MAKENSIS_PATH%" /DVERSION=%VERSION% puppet-master.nsi
+) else (
+    makensis /DVERSION=%VERSION% puppet-master.nsi
+)
 if %ERRORLEVEL% NEQ 0 (
-    echo   ERROR: GUI dependency install failed
+    echo   ERROR: NSIS build failed
     exit /b 1
 )
-
-REM Build TypeScript
-echo Building TypeScript...
-call npm run build
-if %ERRORLEVEL% NEQ 0 (
-    echo   ERROR: TypeScript build failed
-    exit /b 1
-)
-
-REM Build GUI
-echo Building GUI...
-call npm run gui:build
-if %ERRORLEVEL% NEQ 0 (
-    echo   ERROR: GUI build failed
-    exit /b 1
-)
-
-REM Build installer
-echo Building Windows installer...
-call npm run build:win
-if %ERRORLEVEL% NEQ 0 (
-    echo   ERROR: Installer build failed
-    exit /b 1
-)
-
-REM Cleanup test artifacts
-if exist ".test-cache" rmdir /s /q ".test-cache"
-if exist ".test-quota" del /q ".test-quota"
-del .test-quota-* 2>nul
+cd ..\..
 
 REM Verify output
 echo.
 echo === Build Complete ===
-if exist "dist\installers\win32-x64\*.exe" (
-    echo Installer created in dist\installers\win32-x64\
+if exist "installer\windows\RWM-Puppet-Master-%VERSION%-setup.exe" (
+    echo Installer created: installer\windows\RWM-Puppet-Master-%VERSION%-setup.exe
+    for %%A in ("installer\windows\RWM-Puppet-Master-%VERSION%-setup.exe") do echo Size: %%~zA bytes
 ) else (
-    echo WARNING: Installer file not found in dist\installers\win32-x64\
+    echo WARNING: Installer file not found at installer\windows\RWM-Puppet-Master-%VERSION%-setup.exe
 )
 
 echo.

@@ -326,7 +326,10 @@ mod tests {
             "Test prompt".to_string(),
             PathBuf::from("/tmp"),
         )
-        .with_context_files(vec![PathBuf::from("/tmp/ref.png"), PathBuf::from("/tmp/ref.txt")]);
+        .with_context_files(vec![
+            PathBuf::from("/tmp/ref.png"),
+            PathBuf::from("/tmp/ref.txt"),
+        ]);
 
         let args = runner.build_args(&request);
 

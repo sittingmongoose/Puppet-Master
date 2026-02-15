@@ -268,7 +268,7 @@ impl PromptBuilder {
             .join(".puppet-master")
             .join("interview")
             .join("requirements-complete.md");
-        
+
         // Try interview/ subdirectory first (current location), then fall back to root .puppet-master/ (legacy)
         let test_strategy_path_interview = workspace
             .join(".puppet-master")

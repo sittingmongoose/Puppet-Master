@@ -255,10 +255,10 @@ mod tests {
     fn test_dynamic_phases_extraction() {
         let mut pm = PhaseManager::new();
         assert_eq!(pm.dynamic_phases().len(), 0);
-        
+
         pm.add_dynamic_phase("feature_auth", "Authentication", "Auth deep dive");
         pm.add_dynamic_phase("feature_api", "API", "API design");
-        
+
         let dynamic = pm.dynamic_phases();
         assert_eq!(dynamic.len(), 2);
         assert_eq!(dynamic[0].id, "feature_auth");
@@ -268,15 +268,15 @@ mod tests {
     #[test]
     fn test_restore_dynamic_phases() {
         let mut pm = PhaseManager::new();
-        
+
         // Add some dynamic phases
         pm.add_dynamic_phase("feature_auth", "Authentication", "Auth deep dive");
         pm.add_dynamic_phase("feature_api", "API", "API design");
-        
+
         // Extract them
         let dynamic = pm.dynamic_phases();
         assert_eq!(pm.total_phases(), 10);
-        
+
         // Create a new phase manager and restore
         let mut pm2 = PhaseManager::new();
         assert_eq!(pm2.total_phases(), 8);

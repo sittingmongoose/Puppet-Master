@@ -946,13 +946,9 @@ fn step5_configure_tiers<'a>(
                                     .iter()
                                     .find(|m| m.as_str() == config.model.as_str())
                                     .cloned();
-                                pick_list(
-                                    models_list.as_slice(),
-                                    selected,
-                                    move |m: String| {
-                                        Message::WizardTierModelChanged(tier.to_string(), m)
-                                    },
-                                )
+                                pick_list(models_list.as_slice(), selected, move |m: String| {
+                                    Message::WizardTierModelChanged(tier.to_string(), m)
+                                })
                                 .width(Length::Fixed(300.0))
                                 .into()
                             } else {
@@ -982,14 +978,9 @@ fn step5_configure_tiers<'a>(
                             .size(tokens::font_size::BASE)
                             .color(theme.ink())
                             .width(Length::Fixed(150.0)),
-                        pick_list(
-                            effort_options,
-                            selected_effort,
-                            move |e: String| Message::WizardTierReasoningChanged(
-                                tier.to_string(),
-                                e
-                            )
-                        )
+                        pick_list(effort_options, selected_effort, move |e: String| {
+                            Message::WizardTierReasoningChanged(tier.to_string(), e)
+                        })
                         .width(Length::Fixed(200.0)),
                     ]
                     .spacing(tokens::spacing::SM)
@@ -1051,10 +1042,7 @@ fn step5_configure_tiers<'a>(
                 .align_y(iced::Alignment::Center),
             );
 
-            let tier_panel = themed_panel(
-                container(tier_col).padding(tokens::spacing::MD),
-                theme,
-            );
+            let tier_panel = themed_panel(container(tier_col).padding(tokens::spacing::MD), theme);
 
             tier_sections = tier_sections.push(tier_panel);
         }

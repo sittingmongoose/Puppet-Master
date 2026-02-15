@@ -7,9 +7,9 @@
 //! 4. Resume: loading state restores dynamic phases correctly
 
 use puppet_master::interview::{
-    create_state, detect_features_from_state, load_state_at_output_dir, save_state_at_output_dir,
     Decision, InterviewOrchestrator, InterviewOrchestratorConfig, InterviewPhaseDefinition,
-    PhaseManager, PlatformModelPair,
+    PhaseManager, PlatformModelPair, create_state, detect_features_from_state,
+    load_state_at_output_dir, save_state_at_output_dir,
 };
 use puppet_master::types::Platform;
 use tempfile::TempDir;
@@ -97,7 +97,11 @@ fn test_dynamic_phase_persistence() {
     );
 
     // Verify phase IDs match
-    for (original, loaded) in state.dynamic_phases.iter().zip(&loaded_state.dynamic_phases) {
+    for (original, loaded) in state
+        .dynamic_phases
+        .iter()
+        .zip(&loaded_state.dynamic_phases)
+    {
         assert_eq!(original.id, loaded.id, "Phase IDs should match");
         assert_eq!(original.name, loaded.name, "Phase names should match");
         assert_eq!(
@@ -186,7 +190,11 @@ fn test_orchestrator_dynamic_phase_resume() {
 
     // Verify phase manager has correct total
     let pm = orch.get_phase_manager();
-    assert_eq!(pm.total_phases(), 10, "Should have 8 core + 2 dynamic phases");
+    assert_eq!(
+        pm.total_phases(),
+        10,
+        "Should have 8 core + 2 dynamic phases"
+    );
     assert_eq!(pm.current_index(), 8, "Should be at first dynamic phase");
 
     // Verify current phase is the dynamic one

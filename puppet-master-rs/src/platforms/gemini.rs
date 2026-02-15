@@ -74,7 +74,10 @@ impl GeminiRunner {
     async fn discover_models_from_cli(&self) -> Result<Vec<String>> {
         debug!("Discovering Gemini models via CLI");
 
-        let output = Command::new(&self.base.command).arg("models").output().await?;
+        let output = Command::new(&self.base.command)
+            .arg("models")
+            .output()
+            .await?;
 
         if !output.status.success() {
             return Err(anyhow!("Failed to discover models"));
@@ -202,13 +205,13 @@ impl PlatformRunner for GeminiRunner {
         // Allow Gemini access to referenced attachment locations (max 5)
         // DRY:FN:gemini_working_dir — Pass working directory via --include-directories
         let mut dirs = context_file_parent_dirs(&request.context_files);
-        
+
         // Add working directory if different from CWD
         let cwd = std::env::current_dir().unwrap_or_default();
         if request.working_directory != cwd {
             dirs.push(request.working_directory.clone());
         }
-        
+
         if !dirs.is_empty() {
             let include = dirs
                 .into_iter()

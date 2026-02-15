@@ -185,12 +185,18 @@ main();
         plan_mode: bool,
         reasoning_effort: Option<&str>,
     ) -> Result<SdkExecutionResult> {
-        let escaped_prompt = prompt.replace('\\', "\\\\").replace('`', "\\`").replace('$', "\\$");
+        let escaped_prompt = prompt
+            .replace('\\', "\\\\")
+            .replace('`', "\\`")
+            .replace('$', "\\$");
         let escaped_model = model.replace('\\', "\\\\").replace('"', "\\\"");
-        let escaped_effort = reasoning_effort
-            .map(|v| v.replace('\\', "\\\\").replace('"', "\\\""));
+        let escaped_effort = reasoning_effort.map(|v| v.replace('\\', "\\\\").replace('"', "\\\""));
         let working_dir_str = working_dir.to_string_lossy();
-        let approval_policy = if plan_mode { "on-request" } else { "on-request" };
+        let approval_policy = if plan_mode {
+            "on-request"
+        } else {
+            "on-request"
+        };
         let sandbox_mode = if plan_mode {
             "read-only"
         } else {
@@ -201,7 +207,8 @@ main();
             .map(|value| format!("modelReasoningEffort: \"{value}\","))
             .unwrap_or_default();
 
-        let script = format!(r#"
+        let script = format!(
+            r#"
 const {{ Codex }} = require('@openai/codex-sdk');
 async function main() {{
     const client = new Codex();
@@ -219,9 +226,11 @@ async function main() {{
 main().catch(e => {{
     console.log(JSON.stringify({{ success: false, output: e.message, exit_code: 1 }}));
 }});
-"#);
+"#
+        );
 
-        self.run_node_script_raw(&script, "Codex SDK execution").await
+        self.run_node_script_raw(&script, "Codex SDK execution")
+            .await
     }
 
     /// Execute prompt via Copilot SDK (@github/copilot-sdk)
@@ -231,11 +240,15 @@ main().catch(e => {{
         model: &str,
         working_dir: &std::path::Path,
     ) -> Result<SdkExecutionResult> {
-        let escaped_prompt = prompt.replace('\\', "\\\\").replace('`', "\\`").replace('$', "\\$");
+        let escaped_prompt = prompt
+            .replace('\\', "\\\\")
+            .replace('`', "\\`")
+            .replace('$', "\\$");
         let escaped_model = model.replace('\\', "\\\\").replace('"', "\\\"");
         let working_dir_str = working_dir.to_string_lossy();
 
-        let script = format!(r#"
+        let script = format!(
+            r#"
 const sdk = require('@github/copilot-sdk');
 async function main() {{
     const client = new sdk.CopilotClient({{
@@ -249,9 +262,11 @@ async function main() {{
 main().catch(e => {{
     console.log(JSON.stringify({{ success: false, output: e.message, exit_code: 1 }}));
 }});
-"#);
+"#
+        );
 
-        self.run_node_script_raw(&script, "Copilot SDK execution").await
+        self.run_node_script_raw(&script, "Copilot SDK execution")
+            .await
     }
 
     /// Run a Node.js script and parse JSON execution result.
@@ -287,7 +302,10 @@ main().catch(e => {{
         Ok(SdkExecutionResult {
             success: output.status.success(),
             output: trimmed.to_string(),
-            exit_code: output.status.code().unwrap_or(if output.status.success() { 0 } else { 1 }),
+            exit_code: output
+                .status
+                .code()
+                .unwrap_or(if output.status.success() { 0 } else { 1 }),
         })
     }
 

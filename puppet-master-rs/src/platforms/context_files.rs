@@ -20,7 +20,11 @@ pub fn format_prompt_attachments(context_files: &[PathBuf], token_prefix: &str) 
 }
 
 // DRY:FN:append_prompt_attachments
-pub fn append_prompt_attachments(prompt: &str, context_files: &[PathBuf], token_prefix: &str) -> String {
+pub fn append_prompt_attachments(
+    prompt: &str,
+    context_files: &[PathBuf],
+    token_prefix: &str,
+) -> String {
     let attachments = format_prompt_attachments(context_files, token_prefix);
     if attachments.is_empty() {
         prompt.to_string()

@@ -1,36 +1,19 @@
 #!/usr/bin/env pwsh
-# Build installer script for Windows
+# Build installer script for Windows (Rust/Iced)
 # Usage: .\scripts\build-installer-windows.ps1
 
 $ErrorActionPreference = "Stop"
 
-Write-Host "=== Puppet Master Windows Installer Build ===" -ForegroundColor Cyan
+Write-Host "=== Puppet Master Windows Installer Build (Rust/Iced) ===" -ForegroundColor Cyan
 Write-Host ""
 
-# Check Node.js
-Write-Host "Checking Node.js..." -ForegroundColor Yellow
+# Check Rust/Cargo
+Write-Host "Checking Rust/Cargo..." -ForegroundColor Yellow
 try {
-    $nodeVersion = node --version
-    Write-Host "  Node.js: $nodeVersion" -ForegroundColor Green
-    
-    # Check if version is 20+
-    $majorVersion = [int]($nodeVersion -replace '^v(\d+)\..*', '$1')
-    if ($majorVersion -lt 20) {
-        Write-Host "  ERROR: Node.js 20+ required (found $nodeVersion)" -ForegroundColor Red
-        exit 1
-    }
+    $cargoVersion = cargo --version
+    Write-Host "  Cargo: $cargoVersion" -ForegroundColor Green
 } catch {
-    Write-Host "  ERROR: Node.js not found. Please install Node.js 20+ from https://nodejs.org/" -ForegroundColor Red
-    exit 1
-}
-
-# Check npm
-Write-Host "Checking npm..." -ForegroundColor Yellow
-try {
-    $npmVersion = npm --version
-    Write-Host "  npm: $npmVersion" -ForegroundColor Green
-} catch {
-    Write-Host "  ERROR: npm not found. npm should come with Node.js." -ForegroundColor Red
+    Write-Host "  ERROR: cargo not found. Please install Rust from https://rustup.rs/" -ForegroundColor Red
     exit 1
 }
 
@@ -100,64 +83,62 @@ Write-Host "  NSIS found: $nsisPath" -ForegroundColor Green
 $repoRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $repoRoot
 
+# Extract version from Cargo.toml
+Write-Host ""
+Write-Host "Extracting version from puppet-master-rs\Cargo.toml..." -ForegroundColor Yellow
+$cargoTomlContent = Get-Content "puppet-master-rs\Cargo.toml" -Raw
+if ($cargoTomlContent -match 'version\s*=\s*"([^"]+)"') {
+    $version = $matches[1]
+    Write-Host "  Version: $version" -ForegroundColor Green
+} else {
+    Write-Host "  ERROR: Could not extract version from Cargo.toml" -ForegroundColor Red
+    exit 1
+}
+
 Write-Host ""
 Write-Host "=== Building Installer ===" -ForegroundColor Cyan
 Write-Host ""
 
-# Install dependencies
-Write-Host "Installing dependencies..." -ForegroundColor Yellow
-$env:npm_config_update_notifier = "false"
-npm ci
+# Build Rust binary
+Write-Host "Building Rust binary..." -ForegroundColor Yellow
+Set-Location "puppet-master-rs"
+cargo build --release
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "  ERROR: npm ci failed" -ForegroundColor Red
+    Write-Host "  ERROR: Cargo build failed" -ForegroundColor Red
+    exit 1
+}
+Set-Location ".."
+
+# Verify binary exists
+if (-not (Test-Path "puppet-master-rs\target\release\puppet-master.exe")) {
+    Write-Host "  ERROR: Binary not found at puppet-master-rs\target\release\puppet-master.exe" -ForegroundColor Red
     exit 1
 }
 
-# Install GUI dependencies
-Write-Host "Installing GUI dependencies..." -ForegroundColor Yellow
-npm --prefix src/gui/react install
+# Build installer with NSIS
+Write-Host "Building Windows installer with NSIS..." -ForegroundColor Yellow
+Set-Location "installer\windows"
+if ($nsisPath) {
+    & $nsisPath "/DVERSION=$version" "puppet-master.nsi"
+} else {
+    makensis "/DVERSION=$version" "puppet-master.nsi"
+}
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "  ERROR: GUI dependency install failed" -ForegroundColor Red
+    Write-Host "  ERROR: NSIS build failed" -ForegroundColor Red
     exit 1
 }
-
-# Build TypeScript
-Write-Host "Building TypeScript..." -ForegroundColor Yellow
-npm run build
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "  ERROR: TypeScript build failed" -ForegroundColor Red
-    exit 1
-}
-
-# Build GUI
-Write-Host "Building GUI..." -ForegroundColor Yellow
-npm run gui:build
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "  ERROR: GUI build failed" -ForegroundColor Red
-    exit 1
-}
-
-# Build installer
-Write-Host "Building Windows installer..." -ForegroundColor Yellow
-npm run build:win
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "  ERROR: Installer build failed" -ForegroundColor Red
-    exit 1
-}
-
-# Cleanup test artifacts
-if (Test-Path ".test-cache") { Remove-Item -Recurse -Force ".test-cache" }
-Get-ChildItem -Path "." -Filter ".test-quota*" -Force -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
+Set-Location "..\..\"
 
 # Verify output
 Write-Host ""
 Write-Host "=== Build Complete ===" -ForegroundColor Green
-$installerPath = Get-ChildItem -Path "dist\installers\win32-x64" -Filter "*.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
-if ($installerPath) {
-    Write-Host "Installer created: $($installerPath.FullName)" -ForegroundColor Green
-    Write-Host "Size: $([math]::Round($installerPath.Length / 1MB, 2)) MB" -ForegroundColor Green
+$installerFile = "installer\windows\RWM-Puppet-Master-$version-setup.exe"
+if (Test-Path $installerFile) {
+    $fileSize = [math]::Round((Get-Item $installerFile).Length / 1MB, 2)
+    Write-Host "Installer created: $installerFile" -ForegroundColor Green
+    Write-Host "Size: $fileSize MB" -ForegroundColor Green
 } else {
-    Write-Host "WARNING: Installer file not found in dist\installers\win32-x64\" -ForegroundColor Yellow
+    Write-Host "WARNING: Installer file not found at $installerFile" -ForegroundColor Yellow
 }
 
 Write-Host ""

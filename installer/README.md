@@ -32,8 +32,7 @@ installer/
 - Targets: `rustup target add aarch64-apple-darwin x86_64-apple-darwin`
 
 **Linux:**
-- musl target: `rustup target add x86_64-unknown-linux-musl`
-- musl-tools: `apt install musl-tools` (Debian/Ubuntu)
+- glibc build toolchain (`build-essential`, `pkg-config`)
 - dpkg-deb for .deb packages (pre-installed on Debian/Ubuntu)
 - rpmbuild for .rpm packages (optional): `apt install rpm`
 
@@ -71,11 +70,11 @@ Output:
 - `installer/linux/puppet-master_0.1.1_amd64.deb`
 - `installer/linux/puppet-master-0.1.1-1.x86_64.rpm` (if rpmbuild available)
 
-The Linux binary is statically linked using musl, requiring no external dependencies.
+The Linux installer packages a release binary built from `puppet-master-rs` (glibc target).
 
 ## Binary Features
 
-- **Fully static Linux binary** (no libc dependency)
+- **Native Linux binary package** (.deb and optional .rpm)
 - **Universal macOS binary** (Intel + Apple Silicon)
 - **Windows native binary** (MSVC runtime)
 - **GUI with system tray** (iced + tray-icon)
@@ -139,13 +138,11 @@ sudo rpm -i puppet-master-0.1.1-1.x86_64.rpm
 
 ## Verification
 
-Check static linking on Linux:
+Check package metadata and contents:
 ```bash
-file /tmp/puppet-master-build/x86_64-unknown-linux-musl/release/puppet-master
-ldd /tmp/puppet-master-build/x86_64-unknown-linux-musl/release/puppet-master
+dpkg-deb --info installer/linux/puppet-master_0.1.1_amd64.deb
+dpkg-deb --contents installer/linux/puppet-master_0.1.1_amd64.deb
 ```
-
-Should show: "statically linked" and "not a dynamic executable"
 
 ## Project Info
 

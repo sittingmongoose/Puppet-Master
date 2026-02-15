@@ -188,33 +188,32 @@ fn default_orchestrator() -> OrchestratorConfig {
 fn default_platforms() -> HashMap<String, PlatformConfig> {
     let mut platforms = HashMap::new();
     // DRY:FN:platform_default_config_from_specs — Build platform defaults from platform_specs.
-    let mk = |platform: Platform,
-              enabled: bool,
-              priority: u32,
-              max_tokens: u32,
-              temperature: f32| PlatformConfig {
-        platform,
-        model: platform_specs::default_model_for(platform)
-            .unwrap_or_else(|| platform.default_cli_name())
-            .to_string(),
-        name: platform_specs::display_name_for(platform).to_string(),
-        executable: platform_specs::cli_binary_names(platform)
-            .first()
-            .copied()
-            .unwrap_or_else(|| platform.default_cli_name())
-            .to_string(),
-        reasoning_effort: None,
-        plan_mode: false,
-        cli_path: None,
-        extra_args: Vec::new(),
-        enabled,
-        api_key_env: None,
-        max_tokens: Some(max_tokens),
-        temperature: Some(temperature),
-        available: false,
-        priority,
-        quota: None,
-    };
+    let mk =
+        |platform: Platform, enabled: bool, priority: u32, max_tokens: u32, temperature: f32| {
+            PlatformConfig {
+                platform,
+                model: platform_specs::default_model_for(platform)
+                    .unwrap_or_else(|| platform.default_cli_name())
+                    .to_string(),
+                name: platform_specs::display_name_for(platform).to_string(),
+                executable: platform_specs::cli_binary_names(platform)
+                    .first()
+                    .copied()
+                    .unwrap_or_else(|| platform.default_cli_name())
+                    .to_string(),
+                reasoning_effort: None,
+                plan_mode: false,
+                cli_path: None,
+                extra_args: Vec::new(),
+                enabled,
+                api_key_env: None,
+                max_tokens: Some(max_tokens),
+                temperature: Some(temperature),
+                available: false,
+                priority,
+                quota: None,
+            }
+        };
 
     platforms.insert(
         Platform::Claude.to_string(),

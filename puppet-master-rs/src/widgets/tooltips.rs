@@ -443,8 +443,8 @@ static TOOLTIPS: Lazy<HashMap<&'static str, TooltipEntry>> = Lazy::new(|| {
         "memory.prd_file",
         TooltipEntry::new(
             "Path to prd.json work queue",
-            "The PRD/work-queue file the orchestrator reads to decide what to do next."
-        )
+            "The PRD/work-queue file the orchestrator reads to decide what to do next.",
+        ),
     );
 
     map.insert(
@@ -467,40 +467,40 @@ static TOOLTIPS: Lazy<HashMap<&'static str, TooltipEntry>> = Lazy::new(|| {
         "checkpointing.interval_seconds",
         TooltipEntry::new(
             "Seconds between automatic checkpoints",
-            "How often to write checkpoint files. Smaller numbers = safer but more disk writes."
-        )
+            "How often to write checkpoint files. Smaller numbers = safer but more disk writes.",
+        ),
     );
 
     map.insert(
         "checkpointing.max_checkpoints",
         TooltipEntry::new(
             "How many checkpoints to keep",
-            "Older checkpoints beyond this count are deleted to avoid filling disk."
-        )
+            "Older checkpoints beyond this count are deleted to avoid filling disk.",
+        ),
     );
 
     map.insert(
         "checkpointing.on_subtask_complete",
         TooltipEntry::new(
             "Checkpoint on subtask completion",
-            "When enabled, write a checkpoint every time a subtask completes successfully."
-        )
+            "When enabled, write a checkpoint every time a subtask completes successfully.",
+        ),
     );
 
     map.insert(
         "checkpointing.on_shutdown",
         TooltipEntry::new(
             "Checkpoint on shutdown",
-            "When enabled, write a checkpoint when the orchestrator shuts down cleanly."
-        )
+            "When enabled, write a checkpoint when the orchestrator shuts down cleanly.",
+        ),
     );
 
     map.insert(
         "loop_guard.enabled",
         TooltipEntry::new(
             "Enable loop detection",
-            "Detect repeated failures/retries and stop the run before it burns unlimited quota."
-        )
+            "Detect repeated failures/retries and stop the run before it burns unlimited quota.",
+        ),
     );
 
     map.insert(

@@ -94,34 +94,38 @@ pub fn view<'a>(
 
     // Header with action buttons - responsive button sizing
     let header_row: Element<Message> = if size.is_mobile() {
-        Element::from(column![
-            text("Settings")
-                .size(tokens::font_size::DISPLAY)
-                .font(crate::theme::fonts::FONT_DISPLAY)
-                .color(theme.ink()),
+        Element::from(
+            column![
+                text("Settings")
+                    .size(tokens::font_size::DISPLAY)
+                    .font(crate::theme::fonts::FONT_DISPLAY)
+                    .color(theme.ink()),
+                row![
+                    styled_button(theme, "RESET TO DEFAULTS", ButtonVariant::Warning)
+                        .on_press(Message::SettingsResetDefaults),
+                    styled_button(theme, "SAVE CHANGES", ButtonVariant::Primary)
+                        .on_press(Message::SaveSettings),
+                ]
+                .spacing(tokens::spacing::SM),
+            ]
+            .spacing(tokens::spacing::SM),
+        )
+    } else {
+        Element::from(
             row![
+                text("Settings")
+                    .size(tokens::font_size::DISPLAY)
+                    .font(crate::theme::fonts::FONT_DISPLAY)
+                    .color(theme.ink()),
+                Space::new().width(Length::Fill),
                 styled_button(theme, "RESET TO DEFAULTS", ButtonVariant::Warning)
                     .on_press(Message::SettingsResetDefaults),
                 styled_button(theme, "SAVE CHANGES", ButtonVariant::Primary)
                     .on_press(Message::SaveSettings),
             ]
-            .spacing(tokens::spacing::SM),
-        ]
-        .spacing(tokens::spacing::SM))
-    } else {
-        Element::from(row![
-            text("Settings")
-                .size(tokens::font_size::DISPLAY)
-                .font(crate::theme::fonts::FONT_DISPLAY)
-                .color(theme.ink()),
-            Space::new().width(Length::Fill),
-            styled_button(theme, "RESET TO DEFAULTS", ButtonVariant::Warning)
-                .on_press(Message::SettingsResetDefaults),
-            styled_button(theme, "SAVE CHANGES", ButtonVariant::Primary)
-                .on_press(Message::SaveSettings),
-        ]
-        .spacing(tokens::spacing::SM)
-        .align_y(iced::Alignment::Center))
+            .spacing(tokens::spacing::SM)
+            .align_y(iced::Alignment::Center),
+        )
     };
 
     content = content.push(header_row);

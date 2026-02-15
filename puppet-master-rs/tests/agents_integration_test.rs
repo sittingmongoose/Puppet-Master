@@ -88,7 +88,10 @@ fn test_full_agents_lifecycle() {
     );
     assert_eq!(top_candidate.source_tier, tier_id);
     assert_eq!(top_candidate.target_tier, parent_tier);
-    assert!(top_candidate.score >= 0.65, "Promotion score should meet threshold");
+    assert!(
+        top_candidate.score >= 0.65,
+        "Promotion score should meet threshold"
+    );
     assert_eq!(top_candidate.usage_count, 10);
     assert_eq!(top_candidate.success_rate, 1.0);
 

@@ -35,7 +35,8 @@ impl CliCheck {
             },
             Err(_) => {
                 // Include searched paths from platform_specs
-                let searched = crate::platforms::platform_specs::default_install_paths(self.platform);
+                let searched =
+                    crate::platforms::platform_specs::default_install_paths(self.platform);
                 let details = if searched.is_empty() {
                     self.install_instructions.clone()
                 } else {
@@ -116,12 +117,24 @@ impl CursorCheck {
 
 #[async_trait]
 impl DoctorCheck for CursorCheck {
-    fn name(&self) -> &str { "cursor-cli" }
-    fn category(&self) -> CheckCategory { CheckCategory::Cli }
-    fn description(&self) -> &str { "Check if Cursor CLI is available" }
-    async fn run(&self) -> CheckResult { self.0.check_cli().await }
-    async fn fix(&self, dry_run: bool) -> Option<FixResult> { self.0.fix_cli(dry_run).await }
-    fn has_fix(&self) -> bool { true }
+    fn name(&self) -> &str {
+        "cursor-cli"
+    }
+    fn category(&self) -> CheckCategory {
+        CheckCategory::Cli
+    }
+    fn description(&self) -> &str {
+        "Check if Cursor CLI is available"
+    }
+    async fn run(&self) -> CheckResult {
+        self.0.check_cli().await
+    }
+    async fn fix(&self, dry_run: bool) -> Option<FixResult> {
+        self.0.fix_cli(dry_run).await
+    }
+    fn has_fix(&self) -> bool {
+        true
+    }
 }
 
 // DRY:DATA:CodexCheck
@@ -137,12 +150,24 @@ impl CodexCheck {
 
 #[async_trait]
 impl DoctorCheck for CodexCheck {
-    fn name(&self) -> &str { "codex-cli" }
-    fn category(&self) -> CheckCategory { CheckCategory::Cli }
-    fn description(&self) -> &str { "Check if Codex CLI is available" }
-    async fn run(&self) -> CheckResult { self.0.check_cli().await }
-    async fn fix(&self, dry_run: bool) -> Option<FixResult> { self.0.fix_cli(dry_run).await }
-    fn has_fix(&self) -> bool { true }
+    fn name(&self) -> &str {
+        "codex-cli"
+    }
+    fn category(&self) -> CheckCategory {
+        CheckCategory::Cli
+    }
+    fn description(&self) -> &str {
+        "Check if Codex CLI is available"
+    }
+    async fn run(&self) -> CheckResult {
+        self.0.check_cli().await
+    }
+    async fn fix(&self, dry_run: bool) -> Option<FixResult> {
+        self.0.fix_cli(dry_run).await
+    }
+    fn has_fix(&self) -> bool {
+        true
+    }
 }
 
 // DRY:DATA:ClaudeCheck
@@ -158,12 +183,24 @@ impl ClaudeCheck {
 
 #[async_trait]
 impl DoctorCheck for ClaudeCheck {
-    fn name(&self) -> &str { "claude-cli" }
-    fn category(&self) -> CheckCategory { CheckCategory::Cli }
-    fn description(&self) -> &str { "Check if Claude Code CLI is available" }
-    async fn run(&self) -> CheckResult { self.0.check_cli().await }
-    async fn fix(&self, dry_run: bool) -> Option<FixResult> { self.0.fix_cli(dry_run).await }
-    fn has_fix(&self) -> bool { true }
+    fn name(&self) -> &str {
+        "claude-cli"
+    }
+    fn category(&self) -> CheckCategory {
+        CheckCategory::Cli
+    }
+    fn description(&self) -> &str {
+        "Check if Claude Code CLI is available"
+    }
+    async fn run(&self) -> CheckResult {
+        self.0.check_cli().await
+    }
+    async fn fix(&self, dry_run: bool) -> Option<FixResult> {
+        self.0.fix_cli(dry_run).await
+    }
+    fn has_fix(&self) -> bool {
+        true
+    }
 }
 
 // DRY:DATA:GeminiCheck
@@ -179,12 +216,24 @@ impl GeminiCheck {
 
 #[async_trait]
 impl DoctorCheck for GeminiCheck {
-    fn name(&self) -> &str { "gemini-cli" }
-    fn category(&self) -> CheckCategory { CheckCategory::Cli }
-    fn description(&self) -> &str { "Check if Gemini CLI is available" }
-    async fn run(&self) -> CheckResult { self.0.check_cli().await }
-    async fn fix(&self, dry_run: bool) -> Option<FixResult> { self.0.fix_cli(dry_run).await }
-    fn has_fix(&self) -> bool { true }
+    fn name(&self) -> &str {
+        "gemini-cli"
+    }
+    fn category(&self) -> CheckCategory {
+        CheckCategory::Cli
+    }
+    fn description(&self) -> &str {
+        "Check if Gemini CLI is available"
+    }
+    async fn run(&self) -> CheckResult {
+        self.0.check_cli().await
+    }
+    async fn fix(&self, dry_run: bool) -> Option<FixResult> {
+        self.0.fix_cli(dry_run).await
+    }
+    fn has_fix(&self) -> bool {
+        true
+    }
 }
 
 // DRY:DATA:CopilotCheck
@@ -200,10 +249,22 @@ impl CopilotCheck {
 
 #[async_trait]
 impl DoctorCheck for CopilotCheck {
-    fn name(&self) -> &str { "copilot-cli" }
-    fn category(&self) -> CheckCategory { CheckCategory::Cli }
-    fn description(&self) -> &str { "Check if GitHub Copilot CLI is available" }
-    async fn run(&self) -> CheckResult { self.0.check_cli().await }
-    async fn fix(&self, dry_run: bool) -> Option<FixResult> { self.0.fix_cli(dry_run).await }
-    fn has_fix(&self) -> bool { true }
+    fn name(&self) -> &str {
+        "copilot-cli"
+    }
+    fn category(&self) -> CheckCategory {
+        CheckCategory::Cli
+    }
+    fn description(&self) -> &str {
+        "Check if GitHub Copilot CLI is available"
+    }
+    async fn run(&self) -> CheckResult {
+        self.0.check_cli().await
+    }
+    async fn fix(&self, dry_run: bool) -> Option<FixResult> {
+        self.0.fix_cli(dry_run).await
+    }
+    fn has_fix(&self) -> bool {
+        true
+    }
 }

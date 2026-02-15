@@ -173,8 +173,8 @@
 
 #[cfg(test)]
 use puppet_master::shaders::{
-    PAPER_GRAIN_SHADER, PaperGrainUniforms, SCANLINE_SHADER, ScanlineUniforms,
-    THEME_FIZZLE_SHADER, ThemeFizzleUniforms,
+    PAPER_GRAIN_SHADER, PaperGrainUniforms, SCANLINE_SHADER, ScanlineUniforms, THEME_FIZZLE_SHADER,
+    ThemeFizzleUniforms,
 };
 
 fn main() {}

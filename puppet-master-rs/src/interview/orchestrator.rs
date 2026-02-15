@@ -221,7 +221,8 @@ impl InterviewOrchestrator {
     pub fn set_state(&mut self, state: InterviewState) {
         // Restore dynamic phases if any were saved
         if !state.dynamic_phases.is_empty() {
-            self.phase_manager.restore_dynamic_phases(state.dynamic_phases.clone());
+            self.phase_manager
+                .restore_dynamic_phases(state.dynamic_phases.clone());
         }
         self.phase_manager.set_index(state.current_domain_phase);
         self.state = state;
@@ -929,9 +930,11 @@ mod tests {
         orch.initialize().unwrap();
 
         // Seed multiple auth signals so feature detection exceeds the threshold (>=2).
-        orch.process_ai_response("Do you need authentication?").unwrap();
+        orch.process_ai_response("Do you need authentication?")
+            .unwrap();
         orch.send_user_response("Yes: OAuth2 login").unwrap();
-        orch.process_ai_response("Any other auth requirements?").unwrap();
+        orch.process_ai_response("Any other auth requirements?")
+            .unwrap();
         orch.send_user_response("SSO authentication").unwrap();
 
         // Complete all 8 standard phases.
@@ -966,11 +969,12 @@ mod tests {
         }
 
         assert!(orch.get_phase_manager().total_phases() > 8);
-        assert!(orch
-            .get_phase_manager()
-            .phases()
-            .iter()
-            .any(|p| p.id == "feature-auth"));
+        assert!(
+            orch.get_phase_manager()
+                .phases()
+                .iter()
+                .any(|p| p.id == "feature-auth")
+        );
 
         // Verify YAML persistence includes the dynamic phase definitions.
         let loaded = state::load_state(dir.path()).unwrap().unwrap();
@@ -980,10 +984,12 @@ mod tests {
         let mut orch2 = InterviewOrchestrator::new(test_config(dir.path()));
         orch2.set_state(loaded);
         assert!(orch2.get_phase_manager().total_phases() > 8);
-        assert!(orch2
-            .get_phase_manager()
-            .phases()
-            .iter()
-            .any(|p| p.id == "feature-auth"));
+        assert!(
+            orch2
+                .get_phase_manager()
+                .phases()
+                .iter()
+                .any(|p| p.id == "feature-auth")
+        );
     }
 }

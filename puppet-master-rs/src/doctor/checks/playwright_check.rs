@@ -114,7 +114,10 @@ impl DoctorCheck for PlaywrightCheck {
                         .stderr(Stdio::piped())
                         .kill_on_drop(true);
 
-                    timeout(Duration::from_secs(10), cmd2.output()).await.ok().and_then(|r| r.ok())
+                    timeout(Duration::from_secs(10), cmd2.output())
+                        .await
+                        .ok()
+                        .and_then(|r| r.ok())
                 }
             }
         };
@@ -253,9 +256,11 @@ impl DoctorCheck for PlaywrightCheck {
             steps.push("Would check if package-lock.json exists".to_string());
             steps.push("Would run: npm ci (or npm install if no package-lock.json)".to_string());
             steps.push("Would run: npx playwright install".to_string());
-            
+
             #[cfg(target_os = "linux")]
-            steps.push("Would run: npx playwright install --with-deps (on Linux, best-effort)".to_string());
+            steps.push(
+                "Would run: npx playwright install --with-deps (on Linux, best-effort)".to_string(),
+            );
 
             return Some(
                 FixResult::success("Dry run: would install Playwright dependencies and browsers")
@@ -300,15 +305,13 @@ impl DoctorCheck for PlaywrightCheck {
             Ok(Err(e)) => {
                 steps.push(format!("Failed to execute npm: {e}"));
                 return Some(
-                    FixResult::failure("Failed to execute npm command")
-                        .with_step(steps.join("\n")),
+                    FixResult::failure("Failed to execute npm command").with_step(steps.join("\n")),
                 );
             }
             Err(_) => {
                 steps.push("npm command timed out after 120 seconds".to_string());
                 return Some(
-                    FixResult::failure("npm command timed out")
-                        .with_step(steps.join("\n")),
+                    FixResult::failure("npm command timed out").with_step(steps.join("\n")),
                 );
             }
         }
@@ -344,8 +347,7 @@ impl DoctorCheck for PlaywrightCheck {
             Err(_) => {
                 steps.push("playwright install command timed out after 300 seconds".to_string());
                 return Some(
-                    FixResult::failure("playwright install timed out")
-                        .with_step(steps.join("\n")),
+                    FixResult::failure("playwright install timed out").with_step(steps.join("\n")),
                 );
             }
         }
@@ -353,7 +355,9 @@ impl DoctorCheck for PlaywrightCheck {
         // Step 4: On Linux, try to install system dependencies (best-effort)
         #[cfg(target_os = "linux")]
         {
-            steps.push("Attempting to install system dependencies on Linux (best-effort)".to_string());
+            steps.push(
+                "Attempting to install system dependencies on Linux (best-effort)".to_string(),
+            );
             let mut deps_cmd = Command::new("npx");
             deps_cmd
                 .args(&["playwright", "install", "--with-deps"])
@@ -367,7 +371,10 @@ impl DoctorCheck for PlaywrightCheck {
                     steps.push("Successfully installed system dependencies".to_string());
                 }
                 Ok(Ok(_)) => {
-                    steps.push("System dependencies installation failed (non-critical, continuing)".to_string());
+                    steps.push(
+                        "System dependencies installation failed (non-critical, continuing)"
+                            .to_string(),
+                    );
                 }
                 Ok(Err(_)) | Err(_) => {
                     steps.push("Could not install system dependencies (non-critical)".to_string());
