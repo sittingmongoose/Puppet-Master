@@ -2,7 +2,7 @@
 
 use crate::theme::AppTheme;
 use crate::theme::fonts::{FONT_DISPLAY_BOLD, FONT_UI, FONT_UI_BOLD};
-use crate::theme::tokens::{borders, shadows, spacing};
+use crate::theme::tokens::{borders, layout, shadows, spacing};
 use iced::widget::{Space, button, column, container, row, rule, text};
 use iced::{Background, Border, Color, Element, Length, Padding, Shadow, Vector};
 
@@ -150,8 +150,8 @@ where
         Page::Settings,
     ];
 
-    // Build navigation buttons row
-    let mut nav_buttons = row![].spacing(4).align_y(iced::Alignment::Center);
+    // Build navigation buttons row (token spacing between buttons)
+    let mut nav_buttons = row![].spacing(spacing::SM).align_y(iced::Alignment::Center);
 
     for page in nav_pages {
         let is_active = page == current_page;
@@ -254,21 +254,32 @@ where
         nav_buttons = nav_buttons.push(btn);
     }
 
-    // Build the full header row (XL spacing between logo and nav for visual separation)
-    let mut header_row = row![].spacing(spacing::XL).align_y(iced::Alignment::Center);
+    // Build the full header row: fixed height so Fill-height children can align top/bottom
+    let mut header_row = row![]
+        .spacing(spacing::SM)
+        .align_y(iced::Alignment::Center)
+        .height(Length::Fixed(layout::HEADER_HEIGHT));
 
     // Left: Logo
     header_row = header_row.push(logo);
 
-    // Center: Navigation buttons
-    header_row = header_row.push(nav_buttons);
+    // Large fixed gap so nav buttons sit clearly to the right of the logo
+    header_row = header_row.push(Space::new().width(Length::Fixed(layout::HEADER_LOGO_NAV_GAP)));
+
+    // Nav buttons at bottom of header row (lower than theme button)
+    header_row = header_row.push(
+        container(nav_buttons)
+            .height(Length::Fill)
+            .align_y(iced::Alignment::End)
+            .center_x(Length::Shrink),
+    );
 
     // Flexible spacer to push right section to the end
     header_row = header_row.push(Space::new().width(Length::Fill));
 
-    // Right section: Project name and theme toggle
+    // Right section: Project name (top-aligned) and theme toggle (top-right)
 
-    // Project selector (if callback provided)
+    // Project selector (if callback provided) — top-aligned with theme button
     if let Some(_project_callback) = on_project_select {
         if let Some(proj_name) = project_name {
             let project_btn = button(text(proj_name).font(FONT_UI_BOLD).size(13))
@@ -309,11 +320,15 @@ where
                     },
                 });
 
-            header_row = header_row.push(project_btn);
+            header_row = header_row.push(
+                container(project_btn)
+                    .height(Length::Fill)
+                    .align_y(iced::Alignment::Start),
+            );
         }
     }
 
-    // Theme toggle - outline style like other header buttons, "LIGHT MODE" / "DARK MODE" label
+    // Theme toggle — top-right: outline style like other header buttons
     let theme_label = if theme.is_dark() {
         "LIGHT MODE"
     } else {
@@ -369,11 +384,15 @@ where
             },
         });
 
-    header_row = header_row.push(theme_btn);
+    header_row = header_row.push(
+        container(theme_btn)
+            .height(Length::Fill)
+            .align_y(iced::Alignment::Start),
+    );
 
     // Wrap in container with header style: sticky top, paper cream bg, 3px bottom border, cross-hatch shadow
     container(header_row)
-        .padding(Padding::from([12, 24])) // vertical, horizontal padding
+        .padding(Padding::from([12, 32])) // vertical, horizontal (32 = spacing::XL)
         .width(Length::Fill)
         .style(move |_theme: &iced::Theme| container::Style {
             background: Some(Background::Color(paper_color)),
