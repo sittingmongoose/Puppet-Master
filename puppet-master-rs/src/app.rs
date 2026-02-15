@@ -7,7 +7,7 @@ use chrono::{DateTime, Utc};
 use iced::{Element, Subscription, Task, Theme, widget::text_editor, window};
 use std::collections::{HashMap, HashSet};
 use std::hash::{Hash, Hasher};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
@@ -6654,10 +6654,16 @@ impl App {
     // DRY:FN:active_config_base_dir
     /// Resolve the active base directory used for config read/write operations.
     fn active_config_base_dir(&self) -> PathBuf {
-        self.current_project
-            .as_ref()
-            .map(|p| p.path.clone())
-            .unwrap_or_else(|| std::env::current_dir().unwrap_or_else(|_| PathBuf::from(".")))
+        if let Some(project) = &self.current_project {
+            return project.path.clone();
+        }
+
+        let cwd = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
+        if Self::has_config_file_in_dir(&cwd) || Self::is_directory_writable(&cwd) {
+            return cwd;
+        }
+
+        crate::config::default_config::default_workspace_dir()
     }
 
     // DRY:FN:active_config_path
@@ -6670,7 +6676,7 @@ impl App {
     /// Build a starter GUI config template contextualized to the active project path.
     fn build_default_gui_config_template(
         &self,
-        base_dir: &std::path::Path,
+        base_dir: &Path,
     ) -> crate::config::gui_config::GuiConfig {
         let mut config = crate::config::gui_config::GuiConfig::default();
         config.project.working_directory = base_dir.display().to_string();
@@ -6720,6 +6726,43 @@ impl App {
         self.config_error = None;
         self.config_is_dirty = false;
         Ok(true)
+    }
+
+    // DRY:FN:has_config_file_in_dir
+    /// Check whether a directory already contains a recognized config file.
+    fn has_config_file_in_dir(dir: &Path) -> bool {
+        ["pm-config.yaml", "puppet-master.yaml", ".puppet-master.yaml"]
+            .iter()
+            .any(|name| dir.join(name).exists())
+    }
+
+    // DRY:FN:is_directory_writable
+    /// Probe whether a directory is writable by creating a short-lived file.
+    fn is_directory_writable(dir: &Path) -> bool {
+        if std::fs::create_dir_all(dir).is_err() {
+            return false;
+        }
+
+        let probe = dir.join(format!(
+            ".pm-write-probe-{}-{}",
+            std::process::id(),
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .map(|d| d.as_nanos())
+                .unwrap_or(0)
+        ));
+
+        match std::fs::OpenOptions::new()
+            .create_new(true)
+            .write(true)
+            .open(&probe)
+        {
+            Ok(_) => {
+                let _ = std::fs::remove_file(&probe);
+                true
+            }
+            Err(_) => false,
+        }
     }
 
     /// Add a toast notification

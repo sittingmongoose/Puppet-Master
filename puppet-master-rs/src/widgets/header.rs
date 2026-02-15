@@ -260,8 +260,8 @@ where
         .align_y(iced::Alignment::Center)
         .height(Length::Fixed(layout::HEADER_HEIGHT));
 
-    // Left: Logo
-    header_row = header_row.push(logo);
+    // Left: Logo (container with Shrink so full "RWM PUPPET MASTER" is not clipped)
+    header_row = header_row.push(container(logo).width(Length::Shrink));
 
     // Large fixed gap so nav buttons sit clearly to the right of the logo
     header_row = header_row.push(Space::new().width(Length::Fixed(layout::HEADER_LOGO_NAV_GAP)));
@@ -391,8 +391,15 @@ where
     );
 
     // Wrap in container with header style: sticky top, paper cream bg, 3px bottom border, cross-hatch shadow
+    // Asymmetric padding: logo further left (smaller left), theme further right (larger right)
     container(header_row)
-        .padding(Padding::from([12, 32])) // vertical, horizontal (32 = spacing::XL)
+        .padding(
+            Padding::ZERO
+                .top(12.0)
+                .bottom(12.0)
+                .left(spacing::LG)
+                .right(spacing::XXL),
+        )
         .width(Length::Fill)
         .style(move |_theme: &iced::Theme| container::Style {
             background: Some(Background::Color(paper_color)),

@@ -7,8 +7,9 @@ use crate::types::*;
 use std::collections::HashMap;
 use std::path::PathBuf;
 
-/// Get the default workspace directory for the current platform
-fn get_default_workspace() -> PathBuf {
+// DRY:FN:default_workspace_dir
+/// Get the default workspace directory for the current platform.
+pub fn default_workspace_dir() -> PathBuf {
     // When installed system-wide (Program Files on Windows, /usr/bin on Linux),
     // use user's local data directory to avoid permission issues.
     // On macOS and when running from source, use current directory.
@@ -145,7 +146,7 @@ fn get_default_workspace() -> PathBuf {
 /// Create a default configuration
 pub fn default_config() -> PuppetMasterConfig {
     // Use platform-appropriate working directory
-    let working_directory = get_default_workspace();
+    let working_directory = default_workspace_dir();
 
     PuppetMasterConfig {
         project: ProjectConfig {
@@ -307,7 +308,7 @@ fn default_tiers() -> TierConfigs {
 }
 
 fn default_paths() -> PathConfig {
-    let workspace = get_default_workspace();
+    let workspace = default_workspace_dir();
 
     PathConfig {
         workspace: workspace.clone(),
@@ -399,5 +400,12 @@ mod tests {
 
         // Phase should have longer timeout than subtasks
         assert!(config.tiers.phase.timeout_ms.unwrap() > config.tiers.subtask.timeout_ms.unwrap());
+    }
+
+    #[test]
+    fn test_default_workspace_dir_exists() {
+        let workspace = default_workspace_dir();
+        assert!(workspace.exists());
+        assert!(workspace.is_dir());
     }
 }
