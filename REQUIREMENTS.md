@@ -8,7 +8,7 @@
 
 ## 1. Executive Summary
 
-**RWM Puppet Master** is a CLI orchestrator that scales the Ralph Wiggum Method (RWM) into a four-tier workflow: Phase → Task → Subtask → Iteration. It coordinates multiple AI CLI platforms (Cursor, Codex, Claude Code) without using any APIs, relying exclusively on CLI invocations. The system spawns fresh agents per iteration, uses file-based memory layers (`prd.json`, `progress.txt`, `AGENTS.md`) plus git as durable state, and provides both a browser GUI and CLI interface for control.
+**RWM Puppet Master** is a native Rust/Iced desktop application and CLI orchestrator that scales the Ralph Wiggum Method (RWM) into a four-tier workflow: Phase → Task → Subtask → Iteration. It coordinates five AI CLI platforms (Cursor, Codex, Claude Code, Gemini, GitHub Copilot) without using any APIs, relying exclusively on CLI invocations. The system spawns fresh agents per iteration, uses file-based memory layers (`prd.json`, `progress.txt`, `AGENTS.md`) plus git as durable state, and provides both a native desktop GUI (Rust/Iced) and CLI interface for control.
 
 ### Core Principles (from RWM)
 
@@ -66,7 +66,7 @@
 
 ### 3.2 Platform vs Model Distinction
 
-**Platform** = the CLI tool (Cursor, Codex, Claude Code)  
+**Platform** = the CLI tool (Cursor, Codex, Claude Code, Gemini, GitHub Copilot)  
 **Model** = the underlying LLM (e.g., opus-4.5, sonnet-4.5-thinking, gpt-5.2-high, grok-code)
 
 Configuration MUST allow specifying BOTH independently per tier.
@@ -280,13 +280,13 @@ At each gate (Task, Phase), the assigned platform MUST:
 
 **Acceptance Criteria:**
 - Product truth, UX/behavior constraints
-- May include manual or browser verification
+- May include manual verification
 - Example: "Filter dropdown shows All, Active, Completed options"
 
 **Tests:**
 - Executable evidence
 - Unit/integration/e2e, typecheck, lint, build, scripted checks
-- Example: `npm test passes`, `npm run typecheck passes`
+- Example: `cargo test passes`, `cargo check passes`
 
 **Requirements:**
 - Generate BOTH where appropriate
@@ -327,28 +327,19 @@ At each gate (Task, Phase), the assigned platform MUST:
 
 ---
 
-## 10. Browser Verification Requirements
+## 10. External Verification Requirements
 
-### 10.1 Browser Adapter Layer
+### 10.1 Verification Adapter Layer
 
-Puppet Master must support browser-based verification through an adapter layer.
+Puppet Master supports external verification through a configurable adapter layer. Browser-based verification (e.g., via Playwright MCP or similar tools) may be configured as an optional verifier plugin. No specific browser adapter is bundled.
 
-**Primary adapter:** amp-skills dev-browser
-- Playwright-based
-- Persistent sessions
-- ARIA snapshots for AI verification
+### 10.2 External Verification Syntax
 
-**Fallback adapters:**
-- playwright-mcp
-- browser-use-cli
-
-### 10.2 Browser Verification Syntax
-
-Acceptance criteria may include tokens:
-- `BROWSER_VERIFY:<scenario-name>`
+Acceptance criteria may include tokens for external verification:
+- `BROWSER_VERIFY:<scenario-name>` — delegates to a configured external verifier
 - Example: `BROWSER_VERIFY:login-success`
 
-Puppet Master maps these to the configured browser adapter.
+Puppet Master maps these to the configured verification adapter (if any).
 
 ---
 
@@ -385,17 +376,21 @@ Full Start Chain: Requirements → PRD → Architecture → Plan → Execute
 
 ---
 
-## 12. GUI Requirements
+## 12. GUI Requirements (Rust/Iced Native Desktop)
+
+> The GUI is built with Rust and the [Iced](https://iced.rs) framework as a native desktop application. There are no web technologies (no React, no Tailwind, no Electron). See `puppet-master-rs/src/views/` for view implementations and `puppet-master-rs/src/widgets/` for reusable components.
 
 ### 12.1 Core Screens
 
 1. **Dashboard** - Central status and controls
 2. **Project Select** - Choose/create project
 3. **Start Chain Wizard** - Step-through requirements to execution
-4. **Configuration** - Tier/branch/verification settings
+4. **Configuration** - Tier/branch/verification settings (tier cards, model picker, effort picker)
 5. **Phase/Task/Subtask Views** - Hierarchical navigation
 6. **Evidence Viewer** - Gate reports, screenshots, logs
-7. **Doctor** - Dependency checker and installer
+7. **Doctor** - Platform health checks, dependency checker and installer
+8. **Setup** - Platform installation and login wizard
+9. **Interview** - Interview orchestrator and phase management
 
 ### 12.2 Required Controls
 
@@ -412,6 +407,10 @@ Full Start Chain: Requirements → PRD → Architecture → Plan → Execute
 - Tests status + evidence
 - Last N commits
 - Errors/logs
+
+### 12.4 Widget Library
+
+Reusable Iced widgets are in `puppet-master-rs/src/widgets/`. See `docs/gui-widget-catalog.md` for the full catalog. Key widgets include: `styled_button`, `page_header`, `status_badge`, `modal_overlay`, `toast_overlay`, `auth_status_chip`, `styled_text_input`.
 
 ---
 
@@ -430,7 +429,7 @@ puppet-master doctor                     # Check dependencies
 puppet-master install                    # Install dependencies
 puppet-master replan [--phase <id>]      # Regenerate plans
 puppet-master reopen <item-id> --reason "..." # Reopen completed item
-puppet-master gui                        # Launch web GUI
+puppet-master gui                        # Launch native desktop GUI
 ```
 
 ### 13.2 CLI Flags
@@ -469,10 +468,9 @@ All commands support:
 
 | Check | Description |
 |-------|-------------|
-| CLI Tools | cursor-agent, codex, claude installed and accessible |
+| CLI Tools | cursor-agent, codex, claude, gemini, copilot installed and accessible |
 | Git | git installed, repo initialized, credentials configured |
-| Node/Python | Required runtimes available |
-| Browser Tools | dev-browser/Playwright available |
+| Runtimes | Required runtimes available (Rust toolchain for Puppet Master itself) |
 | Project Setup | Config exists, state files valid |
 
 ### 15.2 Installation Capabilities
@@ -556,7 +554,6 @@ branching:
   auto_pr: true
 
 verification:
-  browser_adapter: "dev-browser"
   screenshot_on_failure: true
   evidence_directory: ".puppet-master/evidence"
 
@@ -637,7 +634,7 @@ Detect when agent is stuck:
 ## 21. Success Criteria for Puppet Master Itself
 
 1. Can execute Start Chain from raw requirements to running execution
-2. Can coordinate all three platforms (Cursor, Codex, Claude Code) via CLI
+2. Can coordinate all five platforms (Cursor, Codex, Claude Code, Gemini, GitHub Copilot) via CLI
 3. Spawns fresh agent per iteration (verified by process ID tracking)
 4. Maintains memory layers correctly (progress.txt, AGENTS.md, prd.json, git)
 5. Gates progression on BOTH acceptance criteria AND tests
@@ -913,7 +910,7 @@ AGENTS.md MUST follow this structured format:
 ## Testing
 - Run tests: `[command]`
 - Test database: `[setup notes]`
-- Browser tests: `[requirements]`
+- External verification: `[requirements]`
 
 ## Directory Structure
 - `[dir1]/` - [purpose]
@@ -999,11 +996,11 @@ Acceptance criteria and test plans use verifier tokens:
 
 | Token | Description | Example |
 |-------|-------------|---------|
-| `TEST:<command>` | Run test command | `TEST:npm test` |
-| `CLI_VERIFY:<command>` | Run CLI command, check exit code | `CLI_VERIFY:npm run typecheck` |
-| `BROWSER_VERIFY:<scenario>` | Execute browser scenario | `BROWSER_VERIFY:login-success` |
-| `FILE_VERIFY:<path>:<rule>` | Check file exists/matches | `FILE_VERIFY:src/auth.ts:exists` |
-| `REGEX_VERIFY:<path>:<pattern>` | Check file contains pattern | `REGEX_VERIFY:package.json:"version": "1.` |
+| `TEST:<command>` | Run test command | `TEST:cargo test` |
+| `CLI_VERIFY:<command>` | Run CLI command, check exit code | `CLI_VERIFY:cargo check` |
+| `BROWSER_VERIFY:<scenario>` | Execute external browser scenario (if configured) | `BROWSER_VERIFY:login-success` |
+| `FILE_VERIFY:<path>:<rule>` | Check file exists/matches | `FILE_VERIFY:src/auth.rs:exists` |
+| `REGEX_VERIFY:<path>:<pattern>` | Check file contains pattern | `REGEX_VERIFY:Cargo.toml:version = "1.` |
 | `PERF_VERIFY:<metric>:<threshold>` | Check performance metric | `PERF_VERIFY:build-time:<30s` |
 | `MANUAL_VERIFY:<description>` | Flag for human review | `MANUAL_VERIFY:UI looks correct` |
 | `AI_VERIFY:<prompt>` | AI-based verification (fallback) | `AI_VERIFY:Does the code handle errors?` |
@@ -1012,25 +1009,25 @@ Acceptance criteria and test plans use verifier tokens:
 
 Each verifier type has a handler:
 
-```typescript
-interface Verifier {
-  type: string;
-  execute(target: string, options?: string): Promise<VerifierResult>;
+```rust
+trait Verifier {
+    fn verifier_type(&self) -> &str;
+    async fn execute(&self, target: &str, options: Option<&str>) -> VerifierResult;
 }
 
-interface VerifierResult {
-  passed: boolean;
-  evidence: Evidence;
-  output: string;
-  duration_ms: number;
-  error?: string;
+struct VerifierResult {
+    passed: bool,
+    evidence: Evidence,
+    output: String,
+    duration_ms: u64,
+    error: Option<String>,
 }
 
-interface Evidence {
-  type: 'log' | 'screenshot' | 'file' | 'metric';
-  path: string;
-  summary: string;
-  timestamp: string;
+struct Evidence {
+    kind: EvidenceKind, // Log, Screenshot, File, Metric
+    path: String,
+    summary: String,
+    timestamp: String,
 }
 ```
 
@@ -1046,10 +1043,8 @@ All verifier runs produce evidence stored in: `.puppet-master/evidence/`
 ├── screenshots/
 │   ├── ST-001-001-001-login-success.png
 │   └── TK-001-001-gate-final.png
-├── browser-traces/
-│   └── ST-001-001-001-trace.zip
 ├── file-snapshots/
-│   └── ST-001-001-001-auth.ts.snapshot
+│   └── ST-001-001-001-auth.rs.snapshot
 └── metrics/
     └── ST-001-001-001-perf.json
 ```
@@ -1065,24 +1060,17 @@ Gate reports MUST include:
   "verifiers_run": [
     {
       "type": "TEST",
-      "target": "npm test",
+      "target": "cargo test",
       "passed": true,
       "evidence_path": ".puppet-master/evidence/test-logs/TK-001-001-test.log",
       "summary": "15 tests passed, 0 failed"
     },
     {
       "type": "CLI_VERIFY",
-      "target": "npm run typecheck",
+      "target": "cargo check",
       "passed": true,
       "evidence_path": ".puppet-master/evidence/test-logs/TK-001-001-typecheck.log",
-      "summary": "No TypeScript errors"
-    },
-    {
-      "type": "BROWSER_VERIFY",
-      "target": "login-flow",
-      "passed": true,
-      "evidence_path": ".puppet-master/evidence/screenshots/TK-001-001-login.png",
-      "summary": "Login flow completed successfully"
+      "summary": "No compilation errors"
     }
   ],
   "overall_passed": true
@@ -1114,37 +1102,37 @@ When a verifier fails, the failure info feeds into:
 
 Each platform runner MUST implement this contract:
 
-```typescript
-interface PlatformRunnerContract {
-  // Identity
-  readonly platform: 'cursor' | 'codex' | 'claude';
-  
-  // Spawning
-  spawnFreshProcess(request: ExecutionRequest): Promise<RunningProcess>;
-  
-  // MUST NOT reuse sessions by default
-  readonly sessionReuseAllowed: boolean; // Default: false
-  
-  // State isolation
-  prepareWorkingDirectory(path: string): Promise<void>;
-  cleanupAfterExecution(pid: number): Promise<void>;
-  
-  // Context files (ONLY these may be passed)
-  readonly allowedContextFiles: string[];
-  // Default: ['progress.txt', 'AGENTS.md', 'prd.json', '.puppet-master/plans/*']
-  
-  // Timeouts
-  readonly defaultTimeout: number; // milliseconds
-  readonly hardTimeout: number;    // kill after this
-  
-  // Kill semantics
-  terminateProcess(pid: number): Promise<void>;      // SIGTERM
-  forceKillProcess(pid: number): Promise<void>;      // SIGKILL
-  
-  // Logs
-  captureStdout(pid: number): AsyncIterable<string>;
-  captureStderr(pid: number): AsyncIterable<string>;
-  getTranscript(pid: number): Promise<string>;
+```rust
+trait PlatformRunnerContract {
+    // Identity
+    fn platform(&self) -> Platform; // Cursor, Codex, Claude, Gemini, Copilot
+
+    // Spawning
+    async fn spawn_fresh_process(&self, request: &ExecutionRequest) -> Result<RunningProcess>;
+
+    // MUST NOT reuse sessions by default
+    fn session_reuse_allowed(&self) -> bool; // Default: false
+
+    // State isolation
+    async fn prepare_working_directory(&self, path: &str) -> Result<()>;
+    async fn cleanup_after_execution(&self, pid: u32) -> Result<()>;
+
+    // Context files (ONLY these may be passed)
+    fn allowed_context_files(&self) -> &[&str];
+    // Default: ["progress.txt", "AGENTS.md", "prd.json", ".puppet-master/plans/*"]
+
+    // Timeouts
+    fn default_timeout_ms(&self) -> u64;
+    fn hard_timeout_ms(&self) -> u64; // kill after this
+
+    // Kill semantics
+    async fn terminate_process(&self, pid: u32) -> Result<()>;  // SIGTERM
+    async fn force_kill_process(&self, pid: u32) -> Result<()>; // SIGKILL
+
+    // Logs
+    fn capture_stdout(&self, pid: u32) -> impl Stream<Item = String>;
+    fn capture_stderr(&self, pid: u32) -> impl Stream<Item = String>;
+    async fn get_transcript(&self, pid: u32) -> Result<String>;
 }
 ```
 
@@ -1357,7 +1345,7 @@ Example: `PM-2026-01-10-14-00-00-001`
 ## [ISO_TIMESTAMP] - [ITEM_ID]
 
 **Session:** [session_id]
-**Platform:** [cursor|codex|claude]
+**Platform:** [cursor|codex|claude|gemini|copilot]
 **Duration:** [Xm Ys]
 **Status:** [SUCCESS | FAILED | PARTIAL]
 
@@ -1365,10 +1353,10 @@ Example: `PM-2026-01-10-14-00-00-001`
 - [accomplishment]
 
 ### Files Changed
-- `path/to/file.ts` - [description]
+- `path/to/file.rs` - [description]
 
 ### Tests Run
-- `npm test` - PASSED
+- `cargo test` - PASSED
 
 ### Learnings for Future Iterations
 - [learning]
@@ -1696,30 +1684,9 @@ Example: `PM-2026-01-10-14-00-00-001`
 
 ---
 
-## Appendix B: Browser Verification Adapter Research
+## Appendix B: External Verification Adapter Research
 
-### amp-skills dev-browser
-
-- Playwright-based
-- Persistent browser sessions
-- Named pages (e.g., "checkout", "login")
-- ARIA snapshots for AI-friendly element discovery
-- Cross-connection ref persistence
-- Server mode with headless option
-
-### browser-use-cli
-
-- CLI wrapper for browser automation
-- Session management
-- Screenshot capabilities
-
-### playwright-mcp
-
-- MCP server exposing Playwright
-- Tool-based interaction
-- Cross-platform
-
-**Recommendation:** Primary adapter should be amp-skills dev-browser for richest feature set; others as fallbacks.
+> Browser-based verification is supported as an optional plugin via external tools. No specific adapter is bundled with Puppet Master. Potential adapters include MCP-based Playwright servers or other CLI-driven browser automation tools. Configuration is via the verification adapter plugin system.
 
 ---
 
@@ -1782,7 +1749,7 @@ The [codex-weave](https://github.com/rosem/codex-weave) repository implements a 
 4. **Plugin Architecture**: Extensible via plugins
    - Tool providers
    - Output formatters
-   - Applicable to: Verifier plugins, browser adapters
+   - Applicable to: Verifier plugins, verification adapters
 
 ### What We're Adopting
 
@@ -2041,25 +2008,27 @@ Generate a structured PRD (prd.json) from the requirements above.
 
 Generate valid JSON matching this schema:
 
-```typescript
-interface PRD {
-  project: string;
-  version: string;
-  createdAt: string;
-  updatedAt: string;
-  branchName: string;
-  description: string;
+```json5
+// PRD JSON schema (TypeScript-style for readability)
+// prd.json must match this structure
+{
+  "project": "string",
+  "version": "string",
+  "createdAt": "string",
+  "updatedAt": "string",
+  "branchName": "string",
+  "description": "string",
   
-  phases: Phase[];
+  "phases": ["Phase[]"],
   
-  metadata: {
-    totalPhases: number;
-    completedPhases: number;
-    totalTasks: number;
-    completedTasks: number;
-    totalSubtasks: number;
-    completedSubtasks: number;
-  };
+  "metadata": {
+    "totalPhases": "number",
+    "completedPhases": "number",
+    "totalTasks": "number",
+    "completedTasks": "number",
+    "totalSubtasks": "number",
+    "completedSubtasks": "number"
+  }
 }
 ```
 

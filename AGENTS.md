@@ -1,34 +1,72 @@
 # AGENTS.md - RWM Puppet Master
-Always use the Context7 MCP.  You need to take your time and be careful as this is something you can mess up easily and cause a lot of issues if you arent careful.
+
+Always use the Context7 MCP. You need to take your time and be careful as this is something you can mess up easily and cause a lot of issues if you aren't careful.
+
 > Long-term memory for AI agents working on this project.
 > Updated as patterns emerge and gotchas are discovered.
 
 ---
 
+## Table of Contents
+
+1. [Project Overview](#project-overview)
+2. [Context7 MCP](#context7-mcp)
+3. [Architecture Notes](#architecture-notes)
+4. [Codebase Patterns](#codebase-patterns)
+5. [DRY Method](#dry-method--reuse-first)
+6. [Tooling Rules](#tooling-rules)
+7. [Pre-Completion Checklist](#pre-completion-verification-checklist)
+8. [Common Failure Modes](#common-failure-modes)
+9. [DO / DON'T](#do)
+10. [Testing](#testing)
+11. [Directory Structure](#directory-structure)
+12. [Configuration](#configuration)
+13. [Platform CLI Commands](#platform-cli-commands)
+14. [Usage Tracking](#usage-tracking--plan-detection)
+15. [Completion Signals](#completion-signals)
+
+---
+
 ## Project Overview
 
-RWM Puppet Master is a CLI orchestrator implementing the Ralph Wiggum Method - a four-tier hierarchical approach to AI-assisted development. The system coordinates multiple AI CLI platforms (Cursor, Codex, Claude Code, Gemini, GitHub Copilot) without using APIs, relying exclusively on CLI invocations.
+RWM Puppet Master is a **Rust/Iced desktop orchestrator** implementing the Ralph Wiggum Method — a four-tier hierarchical approach to AI-assisted development. The system coordinates 5 AI CLI platforms (Cursor, Codex, Claude Code, Gemini, GitHub Copilot) without using APIs, relying exclusively on CLI invocations.
 
-> **NOTE: Rewrite in Progress** — The codebase was rewritten from Tauri/TypeScript to **Rust/Iced** (`puppet-master-rs/`). The Rust codebase is the active development target. Some sections below still reference the old TypeScript patterns for reference, but all new work should be in Rust.
+The codebase is **pure Rust/Iced** in `puppet-master-rs/`.
 
 ### Key Concepts
 - **Four Tiers**: Phase → Task → Subtask → Iteration
 - **CLI-Only**: No API calls, only CLI invocations
-- **Fresh Agents**: Every iteration spawns a new process (CU-P2-T12: no session resume, no cloud handoff)
+- **Fresh Agents**: Every iteration spawns a new process (no session resume, no cloud handoff)
 - **Verification Gates**: Automated checks between tiers
 - **Memory Layers**: progress.txt (short-term), AGENTS.md (long-term), prd.json (work queue)
 
 ---
 
+## Context7 MCP
+
+**Always use Context7** when working with external libraries or frameworks to get up-to-date documentation.
+
+**How to use:**
+1. Call `resolve-library-id` first with the library name to get the Context7-compatible ID
+2. Then call `query-docs` with the resolved ID and your specific question
+3. Maximum 3 calls per question — use the best result you have after that
+
+**When to use:**
+- Looking up API docs for any dependency (iced, tokio, serde, rusqlite, etc.)
+- Checking current best practices for a library
+- Verifying function signatures or usage patterns
+
+---
+
 ## Architecture Notes
 
-> **The active codebase is `puppet-master-rs/` (Rust/Iced).** All paths below are relative to `puppet-master-rs/src/`.
+All paths below are relative to `puppet-master-rs/src/`.
 
-### Module Responsibilities (Rust/Iced)
+### Module Responsibilities
 
 | Module | Purpose |
 |--------|---------|
-| `src/app.rs` | Main app state, Message enum, update/view logic (~4700 lines) |
+| `src/app.rs` | Main app state, Message enum, update/view logic |
 | `src/views/` | Iced view functions (config, setup, doctor, wizard, interview, etc.) |
 | `src/widgets/` | Reusable Iced UI components (see `docs/gui-widget-catalog.md`) |
 | `src/platforms/` | Platform runners, auth, detection, capability, **platform_specs.rs** |
@@ -56,19 +94,6 @@ All platform data is in `src/platforms/platform_specs.rs`. **Never hardcode plat
 
 **CRITICAL: Subscription auth ONLY — NO API keys.** API keys are expensive and don't go towards subscriptions.
 
-### Legacy Module Responsibilities (TypeScript — for reference only)
-
-| Module | Purpose |
-|--------|---------|
-| `src/cli/` | CLI entry points and commands |
-| `src/core/` | State machines, orchestrator, execution engine |
-| `src/platforms/` | Platform runners, capability discovery |
-| `src/verification/` | Verifiers, gate runner |
-| `src/memory/` | State file managers |
-| `src/git/` | Git operations, branch strategies |
-| `src/types/` | Type definitions |
-| `src/utils/` | Shared utilities |
-
 ### State Machine Flow
 ```
 Orchestrator: IDLE → PLANNING → EXECUTING → COMPLETE
@@ -91,15 +116,12 @@ Tier:         PENDING → PLANNING → RUNNING → GATING → PASSED
 **CU-P2-T12: Process Isolation Policy**
 - Puppet Master spawns a completely fresh process for each iteration
 - Never uses `agent resume` or session continuation features
-- Never uses cloud handoff (`&` command) or any stateful session features
-- Rationale: Determinism, isolation, and reproducibility require stateless execution
-- Each iteration must be independent and reproducible without session dependencies
+- Never uses cloud handoff or any stateful session features
+- Each iteration must be independent and reproducible
 
 ---
 
 ## Codebase Patterns
-
-### Rust/Iced Patterns (Active Codebase)
 
 **Platform data — always use platform_specs:**
 ```rust
@@ -130,75 +152,6 @@ let btn = button(text("Save")).style(|_| { ... });
 ```rust
 // DRY:FN:my_helper — What it does
 pub fn my_helper() { ... }
-```
-
-### Legacy TypeScript Patterns (Reference Only)
-
-### ESM Import Pattern
-```typescript
-// Always use .js extension for local imports
-import { ConfigManager } from './config-manager.js';
-import type { Platform } from '../types/index.js';
-```
-
-### Type-only Exports in ESM (NodeNext)
-When re-exporting types (like `Platform`), use `export type`:
-```typescript
-// CORRECT - types must use type-only exports
-export type { Platform } from './config.js';
-import type { Platform } from '../types/index.js';
-
-// WRONG - Platform is NOT a runtime value
-export { Platform } from './config.js';
-import { Platform } from '../types/index.js';
-```
-
-### Barrel Export Pattern
-```typescript
-// src/types/index.ts
-// Use type-only re-exports for type aliases
-export type { Platform, TierConfig } from './config.js';
-// Use regular re-exports for interfaces, classes, and runtime values
-export { ConfigManager } from './config-manager.js';
-export * from './state.js';  // OK if state.js has no type-only exports to leak
-```
-
-### State Machine Pattern
-```typescript
-class TierStateMachine {
-  send(event: TierEvent): boolean {
-    const nextState = getNextTierState(this.state, event.type);
-    if (nextState) {
-      this.state = nextState;
-      this.onTransition?.(event);
-      return true;
-    }
-    return false;
-  }
-}
-```
-
-### Manager Class Pattern
-```typescript
-class PrdManager {
-  constructor(private filePath: string) {}
-  
-  async load(): Promise<PRD> { /* ... */ }
-  async save(prd: PRD): Promise<void> { /* ... */ }
-  async updateItemStatus(id: string, status: ItemStatus): Promise<void> { /* ... */ }
-}
-```
-
-### Verifier Pattern
-```typescript
-class RegexVerifier implements Verifier {
-  readonly type = 'regex';
-  
-  async verify(criterion: Criterion): Promise<VerifierResult> {
-    // Implementation
-    return { passed, summary, durationMs };
-  }
-}
 ```
 
 ### DRY Method — Reuse-First (Rust/Iced)
@@ -265,31 +218,12 @@ pub fn my_new_helper() { ... }
 
 ## Tooling Rules
 
-### Vitest (NOT Jest)
-```typescript
-// Correct
-import { describe, it, expect, vi } from 'vitest';
-
-// Wrong
-import { describe, it, expect, jest } from '@jest/globals';
-```
-
-### TypeScript Strict Mode
-- All `strict` options enabled
-- No implicit `any`
-- No unused variables (prefix with `_` if intentional)
-
-### ESLint Configuration
-- Uses `@typescript-eslint/parser`
-- Extends `eslint:recommended` and `plugin:@typescript-eslint/recommended`
-- Args ignore pattern: `^_`
-
 ### Git Commit Format
 ```
 ralph: [tier/scope] [item-id] [summary]
 
 Examples:
-ralph: PH0-T01 initialize TypeScript project
+ralph: PH0-T01 initialize Rust project
 ralph: complete ST-001-001-001 - implement ConfigManager  
 ralph: task-gate TK-001-001 - PASS
 ```
@@ -310,18 +244,12 @@ yarn-error.log*
 
 **BEFORE updating the Task Status Log, you MUST verify compliance with ALL rules by checking this checklist.**
 
-> **Determine which stack you're working in first:**
-> - **Rust/Iced** (primary): Code in `puppet-master-rs/` — use the Rust checklist
-> - **Legacy TypeScript**: Code in `src/` — use the TypeScript checklist
-
-### Rust/Iced Checklist (puppet-master-rs/)
-
 1. **Compilation**
    - [ ] `cd puppet-master-rs && cargo check` passes with no errors
    - [ ] `cargo test` passes (all existing + new tests)
    - [ ] No new warnings introduced (check `cargo check 2>&1 | grep warning`)
 
-2. **DRY Method** (see DRY Method section below)
+2. **DRY Method**
    - [ ] Checked `docs/gui-widget-catalog.md` before creating new UI components
    - [ ] Checked `src/platforms/platform_specs.rs` before hardcoding platform data
    - [ ] Used `platform_specs::` functions instead of duplicating platform info
@@ -349,31 +277,8 @@ yarn-error.log*
    - [ ] Canonical documents not deleted/simplified
    - [ ] No API keys or secrets in code (subscription auth ONLY)
    - [ ] Task scope strictly followed
-
-### Legacy TypeScript Checklist (src/)
-
-> Only use this if working on the legacy TypeScript codebase (`src/`), NOT `puppet-master-rs/`.
-
-1. **ESM Import Patterns**
-   - [ ] All local imports use `.js` extension
-   - [ ] Type-only exports use `export type` and `import type`
-
-2. **Tooling**
-   - [ ] Using Vitest (NOT Jest patterns)
-   - [ ] `npm run typecheck` passes
-   - [ ] `npm run build` passes
-
-3. **Testing**
-   - [ ] Tests written for new code
-   - [ ] All required tests pass
-
-### Universal Checklist (both stacks)
-
-1. **DO/DON'T** — See DO and DON'T sections below
-2. **Gitignore** — Specific `.log` patterns (not blanket `*.log`), evidence logs tracked
-3. **Git commit format** followed (if committing)
-4. **Referenced documentation sections** read FIRST
-5. **Task scope** strictly followed
+   - [ ] Gitignore uses specific `.log` patterns (not blanket `*.log`)
+   - [ ] Git commit format followed
 
 **After completing this checklist, proceed to update the Task Status Log.**
 
@@ -429,18 +334,6 @@ platform_specs::supports_effort(platform)
 **Cause**: Not checking `docs/gui-widget-catalog.md` first
 **Fix**: Search `grep -r "DRY:WIDGET" puppet-master-rs/src/widgets/`
 
-### Legacy TypeScript Failures
-
-#### Import Extension Missing
-**Symptom**: `ERR_MODULE_NOT_FOUND` at runtime
-**Fix**: Add `.js` to all local imports
-
-#### Jest Instead of Vitest
-**Symptom**: `jest is not defined`
-**Fix**: Use `vi.fn()` not `jest.fn()`
-
-### Both Stacks
-
 #### Session Reuse
 **Symptom**: Agent behavior inconsistent, context pollution
 **Fix**: Always spawn new process per iteration
@@ -449,37 +342,24 @@ platform_specs::supports_effort(platform)
 
 ## DO
 
-### Both Stacks
 - ✅ Spawn fresh process for each iteration (no session reuse)
-- ✅ Run tests after each change
+- ✅ Run tests after each change (`cargo check` and `cargo test`)
 - ✅ Follow the task scope exactly
 - ✅ Update Task Status Log after completing any task
 - ✅ Use specific `.log` patterns in gitignore (not `*.log`)
 - ✅ Use Session ID format `PM-YYYY-MM-DD-HH-MM-SS-NNN`
 - ✅ Save evidence for verification results
 - ✅ Use subscription auth ONLY — NO API keys for platform access
-
-### Rust/Iced (puppet-master-rs/)
 - ✅ Check `docs/gui-widget-catalog.md` and `src/widgets/` before creating new UI
 - ✅ Use `platform_specs::` functions for ALL platform data (models, CLI, auth, capabilities)
 - ✅ Tag reusable code with `// DRY:WIDGET:`, `// DRY:DATA:`, `// DRY:FN:`, `// DRY:HELPER:`
-- ✅ Run `cargo check` and `cargo test` after changes
 - ✅ Import platform specs as `use crate::platforms::platform_specs;`
 - ✅ Declare new modules in parent `mod.rs`
-
-### Legacy TypeScript (src/)
-- ✅ Use `.js` extension in all local imports
-- ✅ Use `import type` and `export type` for type aliases (like Platform)
-- ✅ Use Vitest for testing
-- ✅ Follow barrel export pattern (type-only for types)
-- ✅ Use discriminated unions for events
-- ✅ Use async/await for file operations
 
 ---
 
 ## DON'T
 
-### Both Stacks
 - ❌ Reuse sessions or processes
 - ❌ Use "Thread" terminology (use "Session")
 - ❌ Call APIs directly (CLI only — subscription auth, NOT API keys)
@@ -488,25 +368,14 @@ platform_specs::supports_effort(platform)
 - ❌ Ignore test failures
 - ❌ Use blanket `*.log` in gitignore (evidence logs are tracked!)
 - ❌ Ignore `.puppet-master/` directory in gitignore
-
-### Rust/Iced (puppet-master-rs/)
 - ❌ Hardcode platform data (models, CLI commands, auth, capabilities) — use `platform_specs`
 - ❌ Re-implement existing widget patterns without checking `docs/gui-widget-catalog.md`
 - ❌ Duplicate effort/reasoning/image checks — use `platform_specs::supports_effort()` etc.
 - ❌ Use API keys for platform auth — subscription-only (OAuth/browser login)
 
-### Legacy TypeScript (src/)
-- ❌ Use Jest patterns (`jest.fn()`, `jest.mock()`)
-- ❌ Omit `.js` extension in imports
-- ❌ Use `import { Platform }` for type aliases (use `import type`)
-- ❌ Use `exec()` for process spawning (use `spawn()`)
-- ❌ Skip file locking for shared files
-
 ---
 
 ## Testing
-
-### Rust/Iced (puppet-master-rs/) — Primary
 
 **Test location:** In-file `#[cfg(test)] mod tests` blocks, or `puppet-master-rs/tests/` for integration tests.
 
@@ -531,15 +400,6 @@ mod tests {
         assert!(!platform_specs::supports_effort(Platform::Gemini));
     }
 }
-```
-
-### Legacy TypeScript (src/) — Reference Only
-
-**Test commands:**
-```bash
-npm test                    # Run all tests
-npm test -- -t "pattern"    # Run specific tests
-npm run test:coverage       # With coverage
 ```
 
 ---
@@ -590,11 +450,12 @@ puppet-master/
 ├── .puppet-master/              # Runtime data (capabilities, evidence, usage, logs)
 ├── docs/
 │   └── gui-widget-catalog.md    # Widget reuse catalog (check before creating new UI)
+├── Reference/                   # Design docs, research, GUI concept images
+├── scripts/                     # Build, test, and maintenance scripts
 ├── AGENTS.md                    # ⭐ This file — agent instructions (read FIRST)
-├── PLATFORM_SPECS_PLAN.md       # Platform specs refactor plan
-├── src/                         # Legacy TypeScript code (reference only)
-├── src-tauri/                   # Legacy Tauri wrapper (reference only)
-└── config.yaml                  # Configuration
+├── REQUIREMENTS.md              # Project requirements specification
+├── README.md                    # Project overview and quick start
+└── STATE_FILES.md               # State file format specification
 ```
 
 ---
@@ -613,18 +474,6 @@ Each tier selects a platform, model, and optional effort level. Models are fetch
 - Claude: effort via `CLAUDE_CODE_EFFORT_LEVEL` env var (low/medium/high)
 - Codex/Copilot: effort levels Low/Medium/High/Extra High
 - ALL 5 platforms support images
-
-### Legacy Config Format (Reference)
-```yaml
-tiers:
-  phase:
-    platform: cursor | codex | claude | gemini | copilot
-    model: string       # Dynamic — fetched from platform CLI, cached
-    maxIterations: number
-  task: ...
-  subtask: ...
-  iteration: ...
-```
 
 ---
 
@@ -692,58 +541,13 @@ codex exec "prompt" [flags]
 - Higher-precedence locations override lower. Explicit CLI/SDK options override all
 
 **CI / headless authentication:**
-- `codex exec` reuses saved CLI auth by default. For CI/headless, provide credentials explicitly:
-  - **`CODEX_API_KEY`** env var (supported for `codex exec` only): set as secret in CI jobs
-  - **`codex login --device-auth`**: device-code flow when browser login is not possible (e.g. SSH, headless)
-- CLI auto-switches to device-code login when headless is detected (Codex 0.81+)
+- `codex exec` reuses saved CLI auth by default
+- `CODEX_API_KEY` env var for CI/headless
+- `codex login --device-auth` for device-code flow (SSH, headless)
 
-**Web search:**
-- `--search` enables web search. When enabled, cached `web_search` is the default client behavior (Codex 0.92+)
-
-**Slash commands (interactive mode only, not used by Puppet Master):**
-- `/model` - Switch model mid-session
-- `/approvals` - Update approval rules
-- `/status` - Show session configuration and token usage
-- `/review` - Run code review
-- `/plan` - Generate implementation plan
-- `/diff` - Show Git diff
-- `/compact` - Summarize conversation to free tokens
-- `/fork` - Fork conversation into new thread
-- `/resume` - Resume saved conversation
-- `/new` - Start new conversation
-- `/exit` or `/quit` - Exit CLI
-
-**Codex SDK (`@openai/codex-sdk`):**
-- TypeScript SDK for programmatic control
-- **VERIFIED CLI-based**: SDK wraps the bundled `codex` binary and spawns CLI processes internally
-- SDK exchanges JSONL events over stdin/stdout with the CLI process
-- **Respects "CLI only" constraint**: ✅ SDK is CLI-based, not API-based
-- **Uses subscription account**: SDK spawns CLI processes which use OpenAI subscription account (ChatGPT/Codex plan), NOT pay-per-use API calls
-- **Current implementation**: CodexRunner uses SDK instead of direct CLI spawn
-- **Fresh process requirement**: Each iteration creates a NEW thread via `codexClient.startThread()`, ensuring fresh process per iteration
-- **Benefits**: Better TypeScript integration, structured event handling, built-in timeout support via AbortSignal
-- **Note**: The constraint is about using subscription-based access (via CLI) rather than direct API calls that charge per-use. SDK qualifies because it uses CLI internally.
-
-**Codex MCP Server (`codex mcp-server`):**
-- Runs Codex CLI as long-running MCP server process
-- **MCP Server is CLI-based**: Running `codex mcp-server` is a CLI invocation ✅ Acceptable
-- Exposes two tools: `codex()` (start session) and `codex-reply()` (continue session)
-- **However**: OpenAI Agents SDK that orchestrates MCP servers uses OpenAI API ❌ Violates constraint
-- **Key distinction**:
-  - Using `codex mcp-server` directly (CLI-based) ✅ Acceptable
-  - Using OpenAI Agents SDK to orchestrate (uses OpenAI API) ❌ Violates constraint
-- **For Puppet Master**: Could potentially use MCP server directly without Agents SDK
-- **Current decision**: Continue with `codex exec` for simplicity and consistency with fresh-process-per-iteration model
-
-**Puppet Master implementation:**
-- Uses `@openai/codex-sdk` (SDK spawns CLI processes internally - CLI-based ✅)
-- Each iteration creates a NEW thread via `codexClient.startThread()` (fresh process requirement)
-- Thread options: `approvalPolicy: 'never'`, `sandboxMode: 'workspace-write'`, `workingDirectory`, `model`
-- Optional: `skipGitRepoCheck` (from `ExecutionRequest`), `additionalDirectories` (from `includeDirectories`), `modelReasoningEffort` (from `reasoningEffort`, mapped to SDK: low/medium/high/xhigh)
-- Timeout handling via `AbortSignal` in `TurnOptions`
-- SDK provides structured `Turn` results with `finalResponse`, `items`, `usage` (token counts)
-- Legacy `buildArgs()` method still available for fallback but not used with SDK
-- Config file (`~/.codex/config.toml`) is respected but explicit thread options override it
+**Puppet Master policy:**
+- Uses `codex exec` with fresh process per iteration
+- No session resume, no interactive slash commands
 
 ### Claude Code
 ```bash
@@ -801,297 +605,71 @@ gemini -p "prompt" --output-format json --approval-mode yolo [--model <model>] [
 
 **Authentication:**
 - OAuth via `gemini` first run (interactive mode)
-- `GEMINI_API_KEY` environment variable (headless/automation)
-- `GOOGLE_API_KEY` environment variable (alternative to GEMINI_API_KEY)
-- Vertex AI via `GOOGLE_APPLICATION_CREDENTIALS` (service account JSON path)
-- `GOOGLE_CLOUD_PROJECT` environment variable (for Vertex AI)
-- `GOOGLE_CLOUD_LOCATION` environment variable (for Vertex AI, optional)
+- `GEMINI_API_KEY` or `GOOGLE_API_KEY` env var (headless/automation)
+- Vertex AI via `GOOGLE_APPLICATION_CREDENTIALS` (service account)
 
-**Configuration (Hierarchical Settings):**
-- System defaults: Built into Gemini CLI
-- User settings: `~/.gemini/settings.json` (highest precedence for user-level config)
-- Project settings: `.gemini/settings.json` or project root (project-specific overrides)
-- Environment variable substitution: `${VAR_NAME}` syntax in settings.json
-- Preview features: `general.previewFeatures: true` enables preview models
-- Settings schema: https://raw.githubusercontent.com/google-gemini/gemini-cli/main/schemas/settings.schema.json
-
-**Context Files (GEMINI.md):**
-- Hierarchical loading: Scans up to 200 directories from project root
-- Global: `~/.gemini/GEMINI.md` (user-level instructions)
-- Project: `.gemini/GEMINI.md` or `GEMINI.md` in project root
-- Sub-directory: Local `GEMINI.md` files in subdirectories
-- Modular imports: `@import` directive for including other files
-- `.geminiignore` - File exclusion patterns (similar to `.gitignore`)
-
-**Output formats:**
-- `text` (default) - Human-readable output
-- `json` - Single JSON object with `{response, stats, error?}`
-  - `response`: Main AI-generated content
-  - `stats`: Usage statistics (models, tools, files, tokens)
-  - `error`: Error object if present
-- `stream-json` - JSONL events (one JSON object per line) with types:
-  - `init` - Initialization event
-  - `message` - Message content
-  - `tool_use` - Tool invocation
-  - `tool_result` - Tool execution result
-  - `error` - Error event
-  - `result` - Final result event
-
-**Session management:**
-- Automatic session saving to `~/.gemini/tmp/<project_hash>/chats/`
-- `--resume` to continue previous session
-- `--list-sessions` to view available sessions
-- `--delete-session <id>` to remove sessions
-- Note: Puppet Master spawns fresh processes, so session resume is not used
-
-**Extensions and Extensibility:**
-- Extensions: Custom prompts, MCP server configs, commands (via `gemini-extension.json`)
-- Hooks: Event-driven scripting (`SessionStart`, `BeforeTool`, `AfterModel`, etc.)
-- MCP Servers: Model Context Protocol integration for external tools and resources
-- Agent Skills: Self-contained directories with instructions and scripts (experimental)
-- Custom commands: Slash commands and at-commands for specialized workflows
-
-**Installation:**
-- `npm install -g @google/gemini-cli` - Global npm installation
-- `npx @google/gemini-cli` - One-off usage without installation
-- `brew install gemini-cli` - Homebrew (macOS)
-- Docker: Official images available (see Gemini CLI documentation)
+**Puppet Master policy:**
+- Fresh process per iteration (no `--resume`)
+- Uses `--output-format json --approval-mode yolo` for automation
 
 ### GitHub Copilot
 ```bash
-copilot -p "prompt" --allow-all-tools [--allow-all-paths] [--allow-all-urls] [--allow-url <domain>] [--silent] [--stream off]
+copilot -p "prompt" --allow-all-tools [--allow-all-paths] [--allow-all-urls] [--silent] [--stream off]
 ```
 
 **Key capabilities:**
-- `copilot -p "prompt"` or `copilot --prompt "prompt"` - Programmatic mode with prompt
-- `copilot` (no flags) - Interactive mode (default)
-- `--allow-all-tools` - Auto-approve all tools without manual approval
-- `--allow-tool <spec>` - Allow specific tool without approval
-- `--deny-tool <spec>` - Prevent specific tool usage (takes precedence)
-- Tool specifications: `'shell(COMMAND)'`, `'write'`, `'MCP_SERVER_NAME'`
-- Model selection: `/model` command (interactive only, not programmatic)
+- `copilot -p "prompt"` — Programmatic mode with prompt
+- `--allow-all-tools` — Auto-approve all tools without manual approval
+- `--allow-tool <spec>` / `--deny-tool <spec>` — Fine-grained tool control
+- Tool specs: `'shell(COMMAND)'`, `'write'`, `'MCP_SERVER_NAME'`
+- `--allow-all-paths` — Disable path verification
+- `--allow-all-urls` / `--allow-url <domain>` — URL access control
 - Default model: Claude Sonnet 4.5
 - Output format: Text-based (no JSON output)
 
-**Keyboard shortcuts:**
-- Global: `@` (mention files), `Esc` (cancel), `!` (shell bypass), `Ctrl+C` (cancel/exit), `Ctrl+D` (shutdown), `Ctrl+L` (clear screen)
-- Timeline: `Ctrl+O` (expand/collapse all), `Ctrl+R` (expand/collapse recent)
-- Motion: `Ctrl+A/E` (beginning/end of line), `Ctrl+H/W/U/K` (delete operations), `Meta+←/→` (word movement), `↑/↓` (command history)
-
-**Slash commands (interactive mode):**
-- `/add-dir <directory>` - Add directory to allowed list for file access
-- `/agent` - Browse and select from available agents
-- `/clear`, `/new` - Clear conversation history
-- `/compact` - Summarize conversation history to reduce context usage
-- `/context` - Show context window token usage and visualization
-- `/cwd`, `/cd [directory]` - Change working directory or show current
-- `/delegate <prompt>` - Delegate changes to remote repository with AI-generated PR
-- `/exit`, `/quit` - Exit the CLI
-- `/share [file|gist] [path]` - Share session to markdown file or GitHub gist
-- `/feedback` - Provide feedback about the CLI
-- `/help` - Show help for interactive commands
-- `/list-dirs` - Display all allowed directories for file access
-- `/login` - Log in to Copilot
-- `/logout` - Log out of Copilot
-- `/mcp [show|add|edit|delete|disable|enable] [server-name]` - Manage MCP server configuration
-- `/model`, `/models [model]` - Select AI model to use
-- `/plan [prompt]` - Create an implementation plan before coding
-- `/plugin [marketplace|install|uninstall|update|list] [args...]` - Manage plugins
-- `/rename <name>` - Rename the current session
-- `/reset-allowed-tools` - Reset the list of allowed tools
-- `/resume [sessionId]` - Switch to a different session
-- `/review [prompt]` - Run code review agent to analyze changes
-- `/session [checkpoints [n]|files|plan|rename <name>]` - Show session info and workspace summary
-- `/skills [list|info|add|remove|reload] [args...]` - Manage skills
-- `/terminal-setup` - Configure terminal for multiline input support
-- `/theme [show|set|list] [auto|dark|light]` - View or configure terminal theme
-- `/usage` - Display session usage metrics and statistics
-- `/user [show|list|switch]` - Manage GitHub user list
-
-**Approval options:**
-- `--allow-all-tools` - Allow all tools automatically
-- `--allow-tool 'shell(git)'` - Allow specific shell command
-- `--allow-tool 'write'` - Allow file modification tools
-- `--allow-tool 'My-MCP-Server'` - Allow all tools from MCP server
-- `--deny-tool 'shell(rm)'` - Prevent specific tool (takes precedence)
-
-**Security:**
-- Trusted directories: `trusted_folders` in `~/.copilot/config.json`
-- Directory trust prompt on first launch
-- Path permissions: Control directory/file access (default: current working directory, subdirectories, system temp)
-  - `--allow-all-paths` - Disable path verification (documented flag)
-  - Path detection limitations: Complex shell constructs, custom env vars, symlinks
-- URL permissions: Control external URL access (default: all require approval)
-  - `--allow-all-urls` - Disable URL verification
-  - `--allow-url <domain>` - Pre-approve specific domain (e.g., `--allow-url github.com`)
-  - URL detection limitations: URLs in file contents, obfuscated URLs, HTTP/HTTPS treated separately
-- Tool approval system for file modifications and shell commands
-- Risk mitigation: Use in restricted environments (VM, container)
-
-**Context files (custom instructions):**
-Copilot respects instructions from these locations (in order):
-- `CLAUDE.md` (in project root and cwd)
-- `GEMINI.md` (in project root and cwd)
-- `AGENTS.md` (in git root & cwd)
-- `.github/instructions/**/*.instructions.md` (in git root & cwd)
-- `.github/copilot-instructions.md` (repository-wide)
-- `$HOME/.copilot/copilot-instructions.md` (user-level)
-- `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` (additional directories via env var)
-
-**Default custom agents:**
-- Explore: Quick codebase analysis without adding to main context
-- Task: Execute commands (tests, builds) with brief summaries on success
-- Plan: Analyze dependencies and structure to create implementation plans
-- Code-review: Review changes focusing on genuine issues, minimizing noise
-
-**Context management:**
-- `/usage` - View session statistics (premium requests, duration, lines edited, token usage per model)
-- `/context` - Visual overview of current token usage
-- `/compact` - Manually compress conversation history to free context space
-- Automatic compression: Triggers at 95% of token limit
-- Warning: Displayed when less than 20% of token limit remaining
-
-**File mentions and shell:**
-- `@path/to/file` - Include file contents in prompt context
-- `!command` - Execute shell command directly, bypassing Copilot
-
-**Customization:**
-- Custom instructions for project context
-- MCP servers for additional data sources and tools
-- Custom agents for specialized tasks
-- Hooks for validation, logging, security scanning
-- Skills for enhanced specialized task performance
-
 **Authentication:**
 - GitHub authentication via `/login` command
-- `GH_TOKEN` or `GITHUB_TOKEN` environment variable with "Copilot Requests" permission
+- `GH_TOKEN` or `GITHUB_TOKEN` env var with "Copilot Requests" permission
 - Requires GitHub Copilot Pro, Pro+, Business, or Enterprise plan
-- Organization policy must enable Copilot CLI
 
-**Model usage:**
-- Default: Claude Sonnet 4.5 (GitHub reserves right to change)
-- Change via `/model` slash command (interactive mode)
-- Premium requests quota: Each prompt reduces monthly quota by model multiplier
-- Model availability depends on subscription tier and region
-
-**Command-line options:**
-- `--resume` - Cycle through and resume local and remote interactive sessions
-- `--continue` - Quickly resume the most recently closed local session
-- `--agent=<agent-name>` - Specify custom agent to use (e.g., `--agent=refactor-agent`)
-
-**Note:** Flag `--allow-all-paths` is documented in official docs for disabling path verification. Flags `--silent` and `--stream off` are used in our implementation but may be undocumented features.
+**Puppet Master policy:**
+- Fresh process per iteration (no `--resume`, no `--continue`)
+- Uses `--allow-all-tools --allow-all-paths` for automation
 
 ---
 
 ## Usage Tracking & Plan Detection
 
-### Overview
+Puppet Master integrates platform-reported usage data for quota visibility:
 
-Puppet Master integrates platform-reported usage data from multiple sources to provide accurate quota visibility and plan detection:
+| Platform | Usage Source | Plan Detection |
+|----------|-------------|----------------|
+| Claude | Admin API (`/v1/organizations/usage_report/claude_code`) | `customer_type` + `subscription_type` fields |
+| Copilot | GitHub REST API (`/orgs/{org}/copilot/metrics`) | Infers from premium requests limit |
+| Gemini | Cloud Quotas API (`cloudquotas.googleapis.com`) | Infers from quota limits |
+| Codex | Error message parsing only | Manual config or quota inference |
+| Cursor | No API available | Manual config or `autoModeUnlimited` detection |
 
-1. **Platform APIs** (most reliable): Claude Admin API, GitHub Copilot Metrics API, Gemini Cloud Quotas API
-2. **Error Message Parsing**: Extracts quota/reset information from platform error messages
-3. **CLI Command Parsing**: Parses `/stats`, `/status`, `/cost` command outputs
-4. **Manual Configuration**: For platforms without APIs (Cursor, Codex)
+### Plan Mode Support
 
-### Usage Tracking APIs
-
-#### Claude Code
-- **API**: `GET /v1/organizations/usage_report/claude_code` (Claude Admin API)
-- **Requirements**: `ANTHROPIC_API_KEY` with admin permissions
-- **Provides**: Request counts, token usage, quota limits, reset times, customer_type, subscription_type
-- **CLI Commands**: `/cost` (API token usage), `/stats` (usage patterns for subscribers)
-
-#### GitHub Copilot
-- **API**: `GET /orgs/{org}/copilot/metrics` (GitHub REST API)
-- **Requirements**: `GITHUB_TOKEN` or `GH_TOKEN` with `copilot:read` scope, organization access, 5+ members with active licenses
-- **Provides**: Premium requests used/limit, monthly reset (1st at 00:00:00 UTC)
-- **Limitation**: Organization-level only
-
-#### Gemini
-- **API**: `https://cloudquotas.googleapis.com` (Google Cloud Quotas API)
-- **Requirements**: `GOOGLE_CLOUD_PROJECT`, `GOOGLE_APPLICATION_CREDENTIALS` or ADC
-- **Provides**: Quota limits, usage counts, reset times
-- **CLI Command**: `/stats` (per-model usage, tokens, tool stats, file modifications)
-
-#### Plan Mode Support Across Platforms
-
-**Summary of plan mode capabilities (verified January 2026):**
-
-| Platform | Plan Mode Support | Implementation |
-|----------|------------------|----------------|
-| **Cursor** | ✅ Native flag | `--mode=plan` (with fallback to prompt preamble if unsupported) |
-| **Claude Code** | ✅ Native flag | `--permission-mode plan` (works in both interactive and print modes) |
-| **Gemini** | ✅ Native flag | `--approval-mode plan` (requires `experimental.plan: true` in settings) |
-| **Codex** | ❌ No flag | Uses prompt preamble (no CLI flag available) |
-| **Copilot** | ❌ No flag | Uses prompt preamble (no CLI flag available) |
-
-**Research sources:**
-- Claude Code: https://code.claude.com/docs/en/cli-reference (verified `--permission-mode plan`)
-- Gemini: Code implementation verified (requires experimental.plan setting)
-- Codex: No plan mode flag found in official documentation
-- Copilot: No plan mode flag found in official documentation
-
-**Implementation notes:**
-- Platforms with native flags use CLI flags when `planMode: true` is requested
-- Platforms without native flags use prompt preamble for consistent behavior
-- All platforms provide read-only/planning behavior when plan mode is enabled
-
-#### Codex
-- **API**: None (no programmatic API)
-- **CLI Command**: `/status` (token usage: Input/Output/Total)
-- **Error Parsing**: "You've reached your 5-hour message limit. Try again in 3h 42m."
-- **SDK**: `Turn.usage` object provides token counts
-
-#### Cursor
-- **API**: None (no programmatic API)
-- **Status Command**: `agent status` (auth only, not usage)
-- **Dashboard**: `cursor.com/dashboard?tab=usage` (web only)
-- **Manual Config**: `autoModeUnlimited` flag for grandfathered plans
+| Platform | Plan Mode | Implementation |
+|----------|-----------|----------------|
+| Cursor | ✅ Native | `--mode=plan` |
+| Claude Code | ✅ Native | `--permission-mode plan` |
+| Gemini | ✅ Native | `--approval-mode plan` (requires `experimental.plan: true`) |
+| Codex | ❌ | Prompt preamble fallback |
+| Copilot | ❌ | Prompt preamble fallback |
 
 ### Error Message Parsing
+- **Codex**: `"You've reached your 5-hour message limit. Try again in 3h 42m."` → Extracts reset time
+- **Gemini**: `"Your quota will reset after 8h44m7s."` → Extracts reset time
+- **Claude**: Rate limit errors (429, 413, 503, 529) with `Retry-After` header
 
-Puppet Master parses platform error messages to extract quota/reset information:
-
-- **Codex**: `"You've reached your 5-hour message limit. Try again in 3h 42m."` → Extracts limit hours and reset time
-- **Gemini**: `"Your quota will reset after 8h44m7s."` → Extracts reset time (hours/minutes/seconds)
-- **Claude**: Rate limit errors (429, 413, 503, 529) with `Retry-After` header or reset time in body
-
-### Plan Detection
-
-Plan detection identifies subscription tiers to understand quota limits:
-
-- **Claude**: Uses Usage Report API `customer_type` and `subscription_type` fields
-- **Copilot**: Infers tier from premium requests limit (free/pro/team/enterprise)
-- **Gemini**: Infers tier from quota limits via Cloud Quotas API
-- **Codex**: Manual config or quota inference from error messages
-- **Cursor**: Manual config or `autoModeUnlimited` flag detection
-
-### Integration
-
-Usage tracking is integrated into:
-- **QuotaManager**: Merges platform-reported usage with internal UsageTracker data
-- **Usage CLI Command**: `puppet-master usage [platform]` displays platform-reported data
-- **Doctor Checks**: `UsageQuotaCheck` uses platform-reported usage for warnings
-
-### Configuration
-
-Usage tracking uses environment variables:
-- `ANTHROPIC_API_KEY` - Claude Admin API access
-- `GITHUB_TOKEN` or `GH_TOKEN` - GitHub Copilot Metrics API access
-- `GOOGLE_CLOUD_PROJECT` - Gemini Cloud Quotas API project
-- `GOOGLE_APPLICATION_CREDENTIALS` - Gemini service account credentials
-
-Manual plan configuration (for Cursor/Codex):
-```yaml
-# In config.yaml (future enhancement)
-plan_detection:
-  cursor:
-    tier: "pro"  # free, pro, team, enterprise
-    customerType: "individual"
-  codex:
-    tier: "plus"  # free, plus, team, enterprise
-```
+### Environment Variables
+- `ANTHROPIC_API_KEY` — Claude Admin API access
+- `GITHUB_TOKEN` / `GH_TOKEN` — GitHub Copilot Metrics API
+- `GOOGLE_CLOUD_PROJECT` — Gemini Cloud Quotas API
+- `GOOGLE_APPLICATION_CREDENTIALS` — Gemini service account credentials
 
 ---
 
@@ -1111,7 +689,8 @@ Agents should emit these signals to indicate status:
 | Date | Change |
 |------|--------|
 | 2026-01-11 | Initial creation for BUILD_QUEUE generation |
-| 2026-02-14 | Major update: Added Rust/Iced architecture, 5 platforms (was 3), DRY Method with tagging convention, platform_specs as single source of truth, subscription-only auth policy, updated checklists for Rust |
+| 2026-02-14 | Major update: Added Rust/Iced architecture, 5 platforms, DRY Method, platform_specs, subscription-only auth |
+| 2026-07-23 | Cleanup: Removed all legacy TypeScript sections, condensed platform CLI docs, added Context7 MCP section, added TOC |
 
 ---
 

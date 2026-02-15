@@ -1,62 +1,87 @@
 # RWM Puppet Master
 
-RWM Puppet Master is a **Rust/Iced desktop orchestrator** for the Ralph Wiggum Method (Phase -> Task -> Subtask -> Iteration).
-It coordinates external AI platform CLIs (Cursor, Codex, Claude Code, Gemini, GitHub Copilot) without direct LLM API calls.
+A Rust/Iced desktop orchestrator that coordinates multiple AI coding CLI platforms using the Ralph Wiggum Method.
 
-## Current Architecture
+---
 
-- Active app: `puppet-master-rs/` (Rust 2024 + Iced)
-- Installer pipelines: `installer/windows`, `installer/macos`, `installer/linux`
-- Cross-platform build helpers: `scripts/build-installer-*.{sh,bat,ps1}`
+## What is this?
 
-Legacy TypeScript CLI/web/Tauri layers have been removed from the active codebase.
+Puppet Master orchestrates 5 AI CLI platforms (Cursor, Codex, Claude Code, Gemini, GitHub Copilot) through a four-tier hierarchical workflow: **Phase → Task → Subtask → Iteration**. It spawns fresh CLI processes for each iteration, uses file-based memory (`progress.txt`, `AGENTS.md`, `prd.json`), and enforces verification gates between tiers. No API keys needed — uses subscription-based CLI auth only.
 
-## Prerequisites
+## Key Features
 
-- Rust toolchain (stable)
-- Platform packaging tools:
-  - Windows: NSIS (`makensis`)
-  - macOS: Xcode command line tools
-  - Linux: `dpkg-deb` (`dpkg` package), optional `rpmbuild` (`rpm` package)
+- **5-platform CLI orchestration** — Cursor, Codex, Claude Code, Gemini, GitHub Copilot
+- **Four-tier hierarchical workflow** — Phase → Task → Subtask → Iteration
+- **Native Rust/Iced desktop GUI** — fast, cross-platform UI
+- **Fresh process isolation** per iteration — deterministic and reproducible
+- **Automated verification gates** between tiers
+- **File-based memory layers** — `progress.txt`, `AGENTS.md`, `prd.json`
+- **DRY code tagging system** for agent discoverability (`DRY:WIDGET`, `DRY:FN`, etc.)
+- **Platform capability auto-detection** — models, auth, effort/reasoning support
+- **Cross-platform installers** — Windows (NSIS), macOS (.app), Linux (.deb)
 
-## Run the App (Development)
+## Quick Start
 
 ```bash
+# Prerequisites: Rust toolchain (stable)
 cd puppet-master-rs
 cargo run
 ```
 
 ## Build Installers
 
-### Convenience wrappers (repo root)
+Build scripts are in the repo root. Each builds for the target platform:
 
 ```bash
+# Linux (.deb)
 ./build-installer-linux.sh
+
+# macOS (.app bundle)
 ./build-installer-macos.command
+
+# Windows (NSIS installer)
 build-installer-windows.bat
+
+# All platforms at once
+./build-all-installers.sh
 ```
 
-### Script entry points
+**Platform packaging prerequisites:**
 
-```bash
-./scripts/build-installer-linux.sh
-./scripts/build-installer-macos.sh
-# Windows PowerShell
-./scripts/build-installer-windows.ps1
-```
+| Platform | Requirement |
+|----------|-------------|
+| Windows  | NSIS (`makensis`) |
+| macOS    | Xcode command-line tools |
+| Linux    | `dpkg-deb` (from `dpkg`), optional `rpmbuild` |
 
-### NPM convenience scripts (optional)
+## Architecture
 
-```bash
-npm run build:linux:iced
-npm run build:mac:iced
-npm run build:win:iced
-```
+The active codebase lives in **`puppet-master-rs/`** (Rust 2024 + Iced).
+
+| Module | Purpose |
+|--------|---------|
+| `src/app.rs` | Main app state, Message enum, update/view logic |
+| `src/views/` | Iced view functions (config, setup, doctor, wizard, interview) |
+| `src/widgets/` | Reusable Iced UI components |
+| `src/platforms/` | Platform runners, auth, detection, capability |
+| `src/platforms/platform_specs.rs` | **Single source of truth** for all platform CLI data |
+| `src/core/` | State machines, orchestrator, execution engine |
+| `src/config/` | GUI config, app settings |
+| `src/types/` | Type definitions (Platform enum, PlatformConfig) |
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| [`AGENTS.md`](AGENTS.md) | AI agent instructions, conventions, and project rules |
+| [`REQUIREMENTS.md`](REQUIREMENTS.md) | Design specification |
+| [`docs/gui-widget-catalog.md`](docs/gui-widget-catalog.md) | Reusable widget catalog |
+| [`STATE_FILES.md`](STATE_FILES.md) | State file management spec |
 
 ## CI
 
-Installer CI is defined in:
+Installer CI is defined in [`.github/workflows/build-installers.yml`](.github/workflows/build-installers.yml). It builds and smoke-tests installers for Windows, macOS, and Linux.
 
-- `.github/workflows/build-installers.yml`
+## For AI Agents
 
-It builds and smoke-tests installers for Windows, macOS, and Linux from `puppet-master-rs`.
+Start by reading **[`AGENTS.md`](AGENTS.md)** — it contains all conventions, patterns, and rules for this project.
