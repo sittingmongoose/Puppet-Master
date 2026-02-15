@@ -137,7 +137,7 @@ pub fn view<'a>(
     // Platform Selection Panel (toggleable)
     // ═══════════════════════════════════════════════════════════════════
     if platform_selector_visible {
-        let platform_panel = view_platform_selector(selected_platforms, theme, size);
+        let platform_panel = view_platform_selector(results, selected_platforms, theme, size);
         content = content.push(platform_panel);
     }
 
@@ -290,6 +290,7 @@ fn view_header<'a>(
 // ═══════════════════════════════════════════════════════════════════════
 
 fn view_platform_selector<'a>(
+    results: &'a [DoctorCheckResult],
     selected_platforms: &'a [Platform],
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
@@ -317,7 +318,7 @@ fn view_platform_selector<'a>(
     // Platform cards in responsive grid
     let platform_cards: Vec<Element<'a, Message>> = all_platforms
         .iter()
-        .map(|platform| view_platform_card(*platform, selected_platforms, theme))
+        .map(|platform| view_platform_card(*platform, results, selected_platforms, theme))
         .collect();
 
     let platform_grid = responsive_grid(size.width, platform_cards, tokens::spacing::MD);
@@ -357,16 +358,19 @@ fn view_platform_selector<'a>(
 
 fn view_platform_card<'a>(
     platform: Platform,
+    results: &'a [DoctorCheckResult],
     selected_platforms: &'a [Platform],
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let is_selected = selected_platforms.contains(&platform);
     // DRY: use platform_specs for display name instead of hardcoding
     let platform_name = platform_specs::display_name_for(platform);
-
-    // For this example, we'll assume all platforms are "Not Installed" unless checked passes
-    // In a real implementation, this would check against actual installation status
-    let is_installed = false; // Placeholder
+    let cli_check_name = format!("{}-cli", platform);
+    let is_installed = results
+        .iter()
+        .find(|check| check.name == cli_check_name)
+        .map(|check| check.passed)
+        .unwrap_or(false);
 
     let theme_copy = *theme;
 
