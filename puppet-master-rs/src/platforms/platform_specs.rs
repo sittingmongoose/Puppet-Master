@@ -229,9 +229,23 @@ static CLAUDE_SPEC: PlatformSpec = PlatformSpec {
         },
     ],
     default_install_paths: &[
+        // Linux/macOS — curl installer puts binary here
         "~/.local/bin/claude",
         "/usr/local/bin/claude",
         "~/.nix-profile/bin/claude",
+        // macOS Homebrew
+        "/opt/homebrew/bin/claude",
+        // Linux Homebrew
+        "/home/linuxbrew/.linuxbrew/bin/claude",
+        // nvm-managed node (Mac had claude in nvm bin)
+        "~/.nvm/current/bin/claude",
+        // Snap
+        "/snap/bin/claude",
+        // Windows — winget / manual install
+        "~/AppData/Local/Microsoft/WinGet/Links/claude.exe",
+        "~/.local/bin/claude.exe",
+        "~/AppData/Roaming/npm/claude.cmd",
+        "~/AppData/Roaming/npm/claude",
     ],
     auth: AuthSpec {
         login_command: None, // Interactive browser-based — no CLI subcommand
@@ -339,7 +353,7 @@ static CLAUDE_SPEC: PlatformSpec = PlatformSpec {
 static CURSOR_SPEC: PlatformSpec = PlatformSpec {
     platform: Platform::Cursor,
     display_name: "Cursor CLI",
-    cli_binary_names: &["agent"],
+    cli_binary_names: &["agent", "cursor-agent"],
     install_methods: &[
         InstallMethod {
             method: "curl",
@@ -352,7 +366,25 @@ static CURSOR_SPEC: PlatformSpec = PlatformSpec {
             os: &["windows"],
         },
     ],
-    default_install_paths: &["~/.local/bin/agent", "/usr/local/bin/agent"],
+    default_install_paths: &[
+        // Linux/macOS — curl installer
+        "~/.local/bin/agent",
+        "~/.local/bin/cursor-agent",
+        "/usr/local/bin/agent",
+        "/usr/local/bin/cursor-agent",
+        // macOS Homebrew
+        "/opt/homebrew/bin/agent",
+        "/opt/homebrew/bin/cursor-agent",
+        // Linux Homebrew
+        "/home/linuxbrew/.linuxbrew/bin/agent",
+        // Windows — cursor-agent installer puts it here
+        "~/AppData/Local/cursor-agent/agent.cmd",
+        "~/AppData/Local/cursor-agent/agent.exe",
+        "~/AppData/Local/Microsoft/WinGet/Links/agent.exe",
+        "~/.local/bin/agent.exe",
+        "~/.local/bin/cursor-agent.exe",
+        "~/AppData/Roaming/npm/agent.cmd",
+    ],
     auth: AuthSpec {
         login_command: Some("agent"),
         login_args: &["login"],
@@ -441,15 +473,35 @@ static CODEX_SPEC: PlatformSpec = PlatformSpec {
     platform: Platform::Codex,
     display_name: "Codex CLI",
     cli_binary_names: &["codex"],
-    install_methods: &[InstallMethod {
-        method: "npm",
-        command: "npm install -g @openai/codex",
-        os: &["linux", "macos", "windows"],
-    }],
+    install_methods: &[
+        InstallMethod {
+            method: "npm",
+            command: "npm install -g @openai/codex",
+            os: &["linux", "macos", "windows"],
+        },
+        InstallMethod {
+            method: "brew",
+            command: "brew install --cask codex",
+            os: &["macos"],
+        },
+    ],
     default_install_paths: &[
+        // npm global — varies by npm prefix config
         "~/.npm-global/bin/codex",
         "/usr/local/bin/codex",
         "~/.local/share/npm/bin/codex",
+        "~/.local/bin/codex",
+        "/usr/bin/codex",
+        // macOS Homebrew
+        "/opt/homebrew/bin/codex",
+        // Linux Homebrew
+        "/home/linuxbrew/.linuxbrew/bin/codex",
+        // nvm-managed node
+        "~/.nvm/current/bin/codex",
+        // Windows npm global
+        "~/AppData/Roaming/npm/codex.cmd",
+        "~/AppData/Roaming/npm/codex",
+        "~/AppData/Local/Microsoft/WinGet/Links/codex.exe",
     ],
     auth: AuthSpec {
         login_command: Some("codex"),
@@ -573,7 +625,23 @@ static GEMINI_SPEC: PlatformSpec = PlatformSpec {
             os: &["macos"],
         },
     ],
-    default_install_paths: &["~/.npm-global/bin/gemini", "/usr/local/bin/gemini"],
+    default_install_paths: &[
+        // npm global — varies by npm prefix
+        "~/.npm-global/bin/gemini",
+        "/usr/local/bin/gemini",
+        "~/.local/bin/gemini",
+        "/usr/bin/gemini",
+        "~/.local/share/npm/bin/gemini",
+        // macOS Homebrew
+        "/opt/homebrew/bin/gemini",
+        // Linux Homebrew
+        "/home/linuxbrew/.linuxbrew/bin/gemini",
+        // nvm-managed node
+        "~/.nvm/current/bin/gemini",
+        // Windows npm global
+        "~/AppData/Roaming/npm/gemini.cmd",
+        "~/AppData/Roaming/npm/gemini",
+    ],
     auth: AuthSpec {
         login_command: None, // Interactive on first run — "Login with Google"
         login_args: &[],
@@ -672,17 +740,34 @@ static COPILOT_SPEC: PlatformSpec = PlatformSpec {
             os: &["windows"],
         },
     ],
-    default_install_paths: &["~/.npm-global/bin/copilot", "/usr/local/bin/copilot"],
+    default_install_paths: &[
+        // npm global
+        "~/.npm-global/bin/copilot",
+        "/usr/local/bin/copilot",
+        "~/.local/bin/copilot",
+        "/usr/bin/copilot",
+        "~/.local/share/npm/bin/copilot",
+        // macOS Homebrew (Caskroom install)
+        "/opt/homebrew/bin/copilot",
+        // Linux Homebrew
+        "/home/linuxbrew/.linuxbrew/bin/copilot",
+        // nvm-managed node
+        "~/.nvm/current/bin/copilot",
+        // Windows
+        "~/AppData/Roaming/npm/copilot.cmd",
+        "~/AppData/Roaming/npm/copilot",
+        "~/AppData/Local/Microsoft/WinGet/Links/copilot.exe",
+    ],
     auth: AuthSpec {
         login_command: Some("copilot"),
         login_args: &["login"],
         login_is_interactive: true,
-        login_needs_terminal: true,
-        logout_command: None, // Interactive — uses /logout slash command
+        login_needs_terminal: true, // OAuth device flow prints one-time code; requires visible terminal
+        logout_command: None, // No `copilot logout` subcommand — use /logout in interactive session
         logout_args: &[],
-        status_command: Some("gh"), // Fall back to gh auth status
-        status_args: &["auth", "status"],
-        status_success_patterns: &["Logged in"],
+        status_command: None, // Copilot has no reliable non-interactive auth status command
+        status_args: &[],
+        status_success_patterns: &[],
         uses_browser_auth: true,
         credentials_path: None,
     },
@@ -1131,7 +1216,7 @@ mod tests {
 
     #[test]
     fn test_cli_binary_names() {
-        assert_eq!(cli_binary_names(Platform::Cursor), &["agent"]);
+        assert_eq!(cli_binary_names(Platform::Cursor), &["agent", "cursor-agent"]);
         assert_eq!(cli_binary_names(Platform::Codex), &["codex"]);
         assert_eq!(cli_binary_names(Platform::Claude), &["claude"]);
         assert_eq!(cli_binary_names(Platform::Gemini), &["gemini"]);

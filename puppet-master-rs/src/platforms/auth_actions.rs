@@ -33,11 +33,13 @@ impl AuthTarget {
 }
 
 // DRY:FN:spawn_login — Spawns interactive login for a platform
-/// Spawns login for a platform. For interactive logins (Claude, Copilot, Gemini),
-/// the CLI is launched and the user completes login in browser or terminal.
+/// Spawns login for a platform. For interactive/device-flow logins (Claude, Copilot, Gemini),
+/// the CLI is launched in a terminal so the user can see prompts and complete auth.
 pub async fn spawn_login(target: AuthTarget) -> Result<()> {
-    // Claude, Gemini, and Copilot require interactive terminal for login
+    // Claude, Gemini, and Copilot require a visible terminal for login UX
     // (Claude has no `auth login` subcommand — browser-based login on interactive launch)
+    // (Gemini has no `auth login` — interactive "Login with Google" on first run)
+    // (Copilot uses OAuth device flow and prints a one-time code in terminal output)
     if matches!(
         target,
         AuthTarget::Platform(Platform::Claude)

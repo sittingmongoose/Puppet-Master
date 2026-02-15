@@ -73,14 +73,27 @@ impl SdkBridge {
             sdk.package_name
         );
 
-        let output = tokio::process::Command::new(&self.node_path)
+        let mut cmd = self.node_command_with_global_path();
+        let output = cmd
             .args(["-e", &script])
             .stdout(Stdio::null())
             .stderr(Stdio::null())
             .output()
             .await;
 
-        matches!(output, Ok(o) if o.status.success())
+        if matches!(output, Ok(o) if o.status.success()) {
+            return true;
+        }
+
+        // Fallback: check global npm package list
+        let npm_output = tokio::process::Command::new("npm")
+            .args(["list", "-g", sdk.package_name, "--depth=0"])
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .output()
+            .await;
+
+        matches!(npm_output, Ok(o) if o.status.success())
     }
 
     /// List models from Copilot SDK.
@@ -273,7 +286,8 @@ main().catch(e => {{
     async fn run_node_script_raw(&self, script: &str, context: &str) -> Result<SdkExecutionResult> {
         debug!("Running {}", context);
 
-        let output = tokio::process::Command::new(&self.node_path)
+        let mut cmd = self.node_command_with_global_path();
+        let output = cmd
             .args(["-e", script])
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
@@ -313,7 +327,8 @@ main().catch(e => {{
     async fn run_node_script(&self, script: &str, context: &str) -> Result<Vec<String>> {
         debug!("Running {}", context);
 
-        let output = tokio::process::Command::new(&self.node_path)
+        let mut cmd = self.node_command_with_global_path();
+        let output = cmd
             .args(["-e", script])
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
@@ -340,6 +355,43 @@ main().catch(e => {{
 
         info!("{} found {} model(s)", context, models.len());
         Ok(models)
+    }
+
+    // DRY:FN:node_command_with_global_path — Spawn node with NODE_PATH including npm global root.
+    fn node_command_with_global_path(&self) -> tokio::process::Command {
+        let mut command = tokio::process::Command::new(&self.node_path);
+        if let Some(global_root) = self.npm_global_root() {
+            let sep = if cfg!(target_os = "windows") {
+                ";"
+            } else {
+                ":"
+            };
+            let merged = match std::env::var("NODE_PATH") {
+                Ok(existing) if !existing.trim().is_empty() => {
+                    format!("{}{}{}", existing, sep, global_root)
+                }
+                _ => global_root,
+            };
+            command.env("NODE_PATH", merged);
+        }
+        command
+    }
+
+    // DRY:FN:npm_global_root — Resolve npm global module root directory.
+    fn npm_global_root(&self) -> Option<String> {
+        let output = std::process::Command::new("npm")
+            .args(["root", "-g"])
+            .stdout(Stdio::piped())
+            .stderr(Stdio::null())
+            .output()
+            .ok()?;
+
+        if !output.status.success() {
+            return None;
+        }
+
+        let root = String::from_utf8_lossy(&output.stdout).trim().to_string();
+        if root.is_empty() { None } else { Some(root) }
     }
 }
 

@@ -72,6 +72,7 @@ impl CheckRegistry {
 
         // Git checks
         self.register(Arc::new(git_checks::GitInstalledCheck::new()));
+        self.register(Arc::new(git_checks::GitHubCliCheck::new()));
         self.register(Arc::new(git_checks::GitConfiguredCheck::new()));
         self.register(Arc::new(git_checks::GitRepoCheck::new()));
 
@@ -88,6 +89,13 @@ impl CheckRegistry {
         self.register(Arc::new(usage_check::UsageCheck::new()));
         self.register(Arc::new(secrets_check::SecretsCheck::new()));
         self.register(Arc::new(runtime_check::RuntimeCheck::new()));
+        self.register(Arc::new(sdk_checks::NodeRuntimeCheck::new()));
+        self.register(Arc::new(sdk_checks::PlatformSdkCheck::new(
+            crate::types::Platform::Codex,
+        )));
+        self.register(Arc::new(sdk_checks::PlatformSdkCheck::new(
+            crate::types::Platform::Copilot,
+        )));
 
         // Additional checks
         self.register(Arc::new(playwright_check::PlaywrightCheck::new()));

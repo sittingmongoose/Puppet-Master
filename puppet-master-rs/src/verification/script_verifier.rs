@@ -65,6 +65,7 @@ impl ScriptVerifier {
             "python" | "py" => Some("python3"),
             "node" | "js" | "javascript" => Some("node"),
             "ruby" | "rb" => Some("ruby"),
+            "cmd" | "bat" | "batch" => Some("cmd"),
             _ => None,
         }
     }
@@ -89,6 +90,7 @@ impl ScriptVerifier {
             "py" | "python" => "python3".to_string(),
             "js" | "mjs" | "cjs" | "ts" => "node".to_string(),
             "rb" => "ruby".to_string(),
+            "bat" | "cmd" => "cmd".to_string(),
             "" => "sh".to_string(),
             _ => return Err(format!("Unsupported script extension: {extension}")),
         })
@@ -96,9 +98,12 @@ impl ScriptVerifier {
 
     async fn execute(interpreter: &str, spec: &ScriptSpec) -> Result<std::process::Output, String> {
         let mut cmd = Command::new(interpreter);
-        cmd.arg(&spec.path)
-            .args(&spec.args)
-            .stdin(Stdio::null())
+        if interpreter == "cmd" {
+            cmd.arg("/C").arg(&spec.path).args(&spec.args);
+        } else {
+            cmd.arg(&spec.path).args(&spec.args);
+        }
+        cmd.stdin(Stdio::null())
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
             .kill_on_drop(true);
@@ -230,20 +235,39 @@ impl Verifier for ScriptVerifier {
 mod tests {
     use super::*;
     use std::io::Write;
+    #[cfg(unix)]
     use std::os::unix::fs::PermissionsExt;
+    #[cfg(windows)]
+    use tempfile::tempdir;
+    #[cfg(unix)]
     use tempfile::NamedTempFile;
 
     #[tokio::test]
     async fn test_script_verifier_success() {
+        #[cfg(unix)]
         let mut temp_file = NamedTempFile::new().unwrap();
+        #[cfg(unix)]
         write!(temp_file, "#!/bin/sh\necho 'test'\nexit 0\n").unwrap();
 
-        // Make executable.
-        let mut perms = std::fs::metadata(temp_file.path()).unwrap().permissions();
-        perms.set_mode(0o755);
-        std::fs::set_permissions(temp_file.path(), perms).unwrap();
+        #[cfg(unix)]
+        {
+            // Make executable.
+            let mut perms = std::fs::metadata(temp_file.path()).unwrap().permissions();
+            perms.set_mode(0o755);
+            std::fs::set_permissions(temp_file.path(), perms).unwrap();
+        }
 
+        #[cfg(unix)]
         let path = temp_file.path().to_string_lossy().to_string();
+
+        #[cfg(windows)]
+        let temp_dir = tempdir().unwrap();
+        #[cfg(windows)]
+        let script_path = temp_dir.path().join("ok.bat");
+        #[cfg(windows)]
+        std::fs::write(&script_path, "@echo off\r\necho test\r\nexit /b 0\r\n").unwrap();
+        #[cfg(windows)]
+        let path = script_path.to_string_lossy().to_string();
 
         let verifier = ScriptVerifier::new();
         let criterion = Criterion {
@@ -273,10 +297,18 @@ mod tests {
             ScriptVerifier::get_interpreter("test.js", None).unwrap(),
             "node"
         );
+        assert_eq!(
+            ScriptVerifier::get_interpreter("test.bat", None).unwrap(),
+            "cmd"
+        );
         assert!(ScriptVerifier::get_interpreter("test.unknown", None).is_err());
         assert_eq!(
             ScriptVerifier::get_interpreter("test.unknown", Some("bash")).unwrap(),
             "bash"
+        );
+        assert_eq!(
+            ScriptVerifier::get_interpreter("test.unknown", Some("batch")).unwrap(),
+            "cmd"
         );
     }
 }

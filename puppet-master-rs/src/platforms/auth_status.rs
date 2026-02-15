@@ -8,6 +8,7 @@ use crate::types::Platform;
 use anyhow::{Result, anyhow};
 use log::debug;
 use std::collections::HashMap;
+use std::path::{Path, PathBuf};
 use std::process::Stdio;
 use tokio::process::Command;
 
@@ -188,29 +189,48 @@ impl AuthStatusChecker {
             }
         }
 
-        // Copilot CLI uses GitHub auth. Check `gh auth status` as a fallback
-        // because GitHub auth underpins Copilot session auth.
-        if let Ok(output) = self.run_command("gh", &["auth", "status"]).await {
-            if output.status.success() {
-                return AuthCheckResult::authenticated(
-                    "GitHub CLI is authenticated (Copilot uses GitHub auth)",
-                );
-            }
+        // Copilot CLI uses GitHub auth under the hood, but we only treat GH auth
+        // as a proxy when the Copilot CLI itself is installed.
+        let gh_authenticated = if let Ok(output) = self.run_command("gh", &["auth", "status"]).await
+        {
+            output.status.success()
+        } else {
+            false
+        };
+
+        Self::copilot_auth_result(copilot_cli_installed, gh_authenticated)
+    }
+
+    // DRY:FN:copilot_auth_result — Policy for Copilot auth state derived from Copilot CLI + GH auth.
+    fn copilot_auth_result(copilot_cli_installed: bool, gh_authenticated: bool) -> AuthCheckResult {
+        if !copilot_cli_installed {
+            return AuthCheckResult::not_authenticated(
+                "Copilot CLI is not installed. Install Copilot CLI, then run 'copilot login'.",
+            );
         }
 
-        if copilot_cli_installed {
-            AuthCheckResult::not_authenticated(
-                "Copilot CLI installed but not authenticated. Run 'copilot login' (or use /login interactively; GH_TOKEN/GITHUB_TOKEN also supported).",
+        if gh_authenticated {
+            return AuthCheckResult::authenticated(
+                "Copilot CLI detected; authentication inferred from active GitHub auth (proxy signal).",
             )
-        } else {
-            AuthCheckResult::not_authenticated(
-                "Not authenticated. Install Copilot CLI, then run 'copilot login' (or use /login interactively; GH_TOKEN/GITHUB_TOKEN also supported).",
-            )
+            .with_details(
+                "Copilot CLI does not currently expose a reliable non-interactive auth status command; this check is heuristic.",
+            );
         }
+
+        AuthCheckResult::not_authenticated(
+            "Copilot CLI installed but no active GitHub auth detected. Run 'copilot login' (or use /login interactively; GH_TOKEN/GITHUB_TOKEN also supported).",
+        )
     }
 
     /// Check GitHub CLI authentication (separate from Copilot for general Git operations)
     pub async fn check_github(&self) -> AuthCheckResult {
+        if self.run_command("gh", &["--version"]).await.is_err() {
+            return AuthCheckResult::not_authenticated(
+                "GitHub CLI is not installed or not discoverable. Install 'gh', then run 'gh auth login'.",
+            );
+        }
+
         if let Ok(output) = self.run_command("gh", &["auth", "status"]).await {
             let stdout = String::from_utf8_lossy(&output.stdout);
             let stderr = String::from_utf8_lossy(&output.stderr);
@@ -221,16 +241,23 @@ impl AuthStatusChecker {
             {
                 return AuthCheckResult::authenticated("GitHub CLI is authenticated");
             }
+
+            return AuthCheckResult::not_authenticated(
+                "GitHub CLI is installed but not authenticated. Run 'gh auth login'.",
+            );
         }
 
-        AuthCheckResult::not_authenticated("Run 'gh auth login' for GitHub authentication.")
+        AuthCheckResult::not_authenticated(
+            "GitHub CLI is installed, but auth status could not be determined. Run 'gh auth status' or 'gh auth login'.",
+        )
     }
 
     /// Runs a command with timeout
     async fn run_command(&self, program: &str, args: &[&str]) -> Result<std::process::Output> {
         let timeout = tokio::time::Duration::from_secs(self.timeout_secs);
+        let resolved_program = self.resolve_program(program);
 
-        let future = Command::new(program)
+        let future = Command::new(&resolved_program)
             .args(args)
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
@@ -244,6 +271,31 @@ impl AuthStatusChecker {
                 self.timeout_secs
             )),
         }
+    }
+
+    // DRY:FN:resolve_program — Resolve executable path via PATH + known fallback dirs.
+    fn resolve_program(&self, program: &str) -> PathBuf {
+        let path = Path::new(program);
+        if path.is_absolute() || program.contains(std::path::MAIN_SEPARATOR) {
+            return path.to_path_buf();
+        }
+
+        if let Ok(found) = which::which(program) {
+            return found;
+        }
+
+        for dir in crate::platforms::path_utils::get_fallback_directories() {
+            let candidate = dir.join(program);
+            if let Some(found) = crate::platforms::path_utils::check_executable_exists(&candidate) {
+                return found;
+            }
+        }
+
+        if let Some(found) = crate::platforms::path_utils::find_in_shell_path(program) {
+            return found;
+        }
+
+        path.to_path_buf()
     }
 }
 
@@ -345,5 +397,51 @@ mod tests {
             Ok(platforms) => assert!(platforms.len() <= 5),
             Err(_) => {} // Timeout is acceptable in test environment
         }
+    }
+
+    #[test]
+    fn test_copilot_auth_policy_cli_missing_even_if_gh_authenticated() {
+        let result = AuthStatusChecker::copilot_auth_result(false, true);
+        assert!(!result.authenticated);
+        assert!(result.message.to_lowercase().contains("not installed"));
+    }
+
+    #[test]
+    fn test_copilot_auth_policy_proxy_when_cli_and_gh_authenticated() {
+        let result = AuthStatusChecker::copilot_auth_result(true, true);
+        assert!(result.authenticated);
+        assert!(result.message.to_lowercase().contains("proxy"));
+        assert!(result.details.is_some());
+        assert!(
+            result
+                .details
+                .as_deref()
+                .unwrap_or_default()
+                .to_lowercase()
+                .contains("heuristic")
+        );
+    }
+
+    #[test]
+    fn test_copilot_auth_policy_not_authenticated_when_cli_without_gh_auth() {
+        let result = AuthStatusChecker::copilot_auth_result(true, false);
+        assert!(!result.authenticated);
+        assert!(result.message.to_lowercase().contains("no active github auth"));
+    }
+
+    #[test]
+    fn test_resolve_program_keeps_explicit_path() {
+        let checker = AuthStatusChecker::new();
+        let explicit = if cfg!(windows) { "C:\\Windows" } else { "/bin/sh" };
+        let resolved = checker.resolve_program(explicit);
+        assert_eq!(resolved, std::path::PathBuf::from(explicit));
+    }
+
+    #[test]
+    fn test_resolve_program_returns_input_when_missing() {
+        let checker = AuthStatusChecker::new();
+        let missing = "__definitely_missing_auth_status_test_binary__";
+        let resolved = checker.resolve_program(missing);
+        assert_eq!(resolved, std::path::PathBuf::from(missing));
     }
 }

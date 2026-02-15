@@ -29,6 +29,7 @@ pub mod gemini;
 pub mod health_monitor;
 pub mod model_catalog;
 pub mod output_parser;
+pub mod path_utils;
 pub mod permission_audit;
 pub mod permission_detector;
 pub mod platform_detector;

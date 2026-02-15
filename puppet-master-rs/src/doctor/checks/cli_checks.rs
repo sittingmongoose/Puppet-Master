@@ -25,35 +25,77 @@ impl CliCheck {
     }
 
     async fn check_cli(&self) -> CheckResult {
-        match which(&self.command) {
-            Ok(path) => CheckResult {
+        // Step 1: Try which (system PATH)
+        if let Ok(path) = which(&self.command) {
+            return CheckResult {
                 passed: true,
                 message: format!("{} found at {:?}", self.name, path),
                 details: None,
                 can_fix: false,
                 timestamp: Utc::now(),
-            },
-            Err(_) => {
-                // Include searched paths from platform_specs
-                let searched =
-                    crate::platforms::platform_specs::default_install_paths(self.platform);
-                let details = if searched.is_empty() {
-                    self.install_instructions.clone()
-                } else {
-                    format!(
-                        "{}\nSearched: {}",
-                        self.install_instructions,
-                        searched.join(", ")
-                    )
-                };
-                CheckResult {
-                    passed: false,
-                    message: format!("{} not found in PATH", self.name),
-                    details: Some(details),
-                    can_fix: true,
+            };
+        }
+
+        // Step 2: Search fallback directories
+        let fallback_dirs = crate::platforms::path_utils::get_fallback_directories();
+        for dir in &fallback_dirs {
+            let candidate = dir.join(&self.command);
+            if let Some(found) = crate::platforms::path_utils::check_executable_exists(&candidate) {
+                return CheckResult {
+                    passed: true,
+                    message: format!("{} found at {:?} (fallback)", self.name, found),
+                    details: None,
+                    can_fix: false,
                     timestamp: Utc::now(),
-                }
+                };
             }
+        }
+
+        // Step 3: Search platform_specs default install paths with expand_home
+        let install_paths =
+            crate::platforms::platform_specs::default_install_paths(self.platform);
+        for install_path in install_paths {
+            let expanded = crate::platforms::path_utils::expand_home(install_path);
+            let path = std::path::PathBuf::from(&expanded);
+            if let Some(found) = crate::platforms::path_utils::check_executable_exists(&path) {
+                return CheckResult {
+                    passed: true,
+                    message: format!("{} found at {:?} (default install path)", self.name, found),
+                    details: None,
+                    can_fix: false,
+                    timestamp: Utc::now(),
+                };
+            }
+        }
+
+        // Step 4: Try shell profile PATH parsing
+        if let Some(found) = crate::platforms::path_utils::find_in_shell_path(&self.command) {
+            return CheckResult {
+                passed: true,
+                message: format!("{} found at {:?} (shell PATH)", self.name, found),
+                details: None,
+                can_fix: false,
+                timestamp: Utc::now(),
+            };
+        }
+
+        // Not found anywhere
+        let searched = install_paths;
+        let details = if searched.is_empty() {
+            self.install_instructions.clone()
+        } else {
+            format!(
+                "{}\nSearched: {}",
+                self.install_instructions,
+                searched.join(", ")
+            )
+        };
+        CheckResult {
+            passed: false,
+            message: format!("{} not found in PATH", self.name),
+            details: Some(details),
+            can_fix: true,
+            timestamp: Utc::now(),
         }
     }
 

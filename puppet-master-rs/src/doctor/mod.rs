@@ -8,6 +8,7 @@
 //! - Network connectivity
 
 mod check_registry;
+pub mod check_targeting;
 mod checks;
 mod doctor_reporter;
 mod installation_manager;

@@ -4,6 +4,7 @@
 //! platform filtering, summary statistics, and fix suggestions.
 
 use crate::app::Message;
+use crate::doctor::check_targeting;
 use crate::platforms::platform_specs;
 use crate::theme::{AppTheme, colors, tokens};
 use crate::types::Platform;
@@ -129,7 +130,7 @@ pub fn view<'a>(
     // ═══════════════════════════════════════════════════════════════════
     // Header Section
     // ═══════════════════════════════════════════════════════════════════
-    let header = view_header(results, running, fixing, theme);
+    let header = view_header(results, running, fixing, selected_platforms, theme);
     content = content.push(header);
 
     // ═══════════════════════════════════════════════════════════════════
@@ -144,7 +145,7 @@ pub fn view<'a>(
     // Summary Panel
     // ═══════════════════════════════════════════════════════════════════
     if !results.is_empty() {
-        let summary = view_summary(results, theme);
+        let summary = view_summary(results, selected_platforms, theme);
         content = content.push(summary);
     }
 
@@ -204,15 +205,38 @@ pub fn view<'a>(
 // Header Section
 // ═══════════════════════════════════════════════════════════════════════
 
+// DRY:FN:doctor_platform_selector_label
+fn doctor_platform_selector_label(selected_platforms: &[Platform]) -> String {
+    if selected_platforms.is_empty() {
+        "SELECT PLATFORMS (ALL)".to_string()
+    } else {
+        format!("SELECT PLATFORMS ({})", selected_platforms.len())
+    }
+}
+
+// DRY:FN:doctor_install_button_label
+fn doctor_install_button_label(selected_platforms: &[Platform], check_count: usize) -> String {
+    if selected_platforms.is_empty() {
+        format!("INSTALL ALL MISSING ({})", check_count)
+    } else {
+        format!("INSTALL SELECTED MISSING ({})", check_count)
+    }
+}
+
 fn view_header<'a>(
     results: &'a [DoctorCheckResult],
     running: bool,
     _fixing: &'a HashSet<String>,
+    selected_platforms: &'a [Platform],
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let failed_fixable_count = results
         .iter()
-        .filter(|r| !r.passed && r.fix_available)
+        .filter(|r| {
+            !r.passed
+                && r.fix_available
+                && check_targeting::should_include_in_bulk_install(&r.name, selected_platforms)
+        })
         .count();
 
     let mut actions = row![]
@@ -221,13 +245,17 @@ fn view_header<'a>(
 
     // SELECT PLATFORMS button (toggles visibility)
     actions = actions.push(
-        styled_button(theme, "SELECT PLATFORMS", ButtonVariant::Ghost)
-            .on_press(Message::ToggleDoctorPlatformSelector),
+        styled_button(
+            theme,
+            &doctor_platform_selector_label(selected_platforms),
+            ButtonVariant::Ghost,
+        )
+        .on_press(Message::ToggleDoctorPlatformSelector),
     );
 
-    // INSTALL ALL MISSING button (only if there are failed fixable checks)
+    // INSTALL button (all or selected, depending on platform selection)
     if failed_fixable_count > 0 {
-        let install_label = format!("INSTALL ALL MISSING ({})", failed_fixable_count);
+        let install_label = doctor_install_button_label(selected_platforms, failed_fixable_count);
         actions = actions.push(
             styled_button(theme, &install_label, ButtonVariant::Info)
                 .on_press(Message::InstallAllMissing),
@@ -279,9 +307,11 @@ fn view_platform_selector<'a>(
     );
 
     grid = grid.push(
-        text("Select which platforms to check. Only checks for selected platforms will be run.")
-            .size(tokens::font_size::SM)
-            .color(theme.ink_faded()),
+        text(
+            "Only platform-specific checks/install actions follow selection. Global environment checks still run.",
+        )
+        .size(tokens::font_size::SM)
+        .color(theme.ink_faded()),
     );
 
     // Platform cards in responsive grid
@@ -391,7 +421,11 @@ fn view_platform_card<'a>(
 // Summary Panel
 // ═══════════════════════════════════════════════════════════════════════
 
-fn view_summary<'a>(results: &'a [DoctorCheckResult], theme: &'a AppTheme) -> Element<'a, Message> {
+fn view_summary<'a>(
+    results: &'a [DoctorCheckResult],
+    selected_platforms: &'a [Platform],
+    theme: &'a AppTheme,
+) -> Element<'a, Message> {
     let passed = results.iter().filter(|r| r.passed).count();
     let failed = results
         .iter()
@@ -445,10 +479,12 @@ fn view_summary<'a>(results: &'a [DoctorCheckResult], theme: &'a AppTheme) -> El
 
     // Help text if failures exist
     if failed > 0 {
-        content = content.push(
-            text("Use Install all missing above to install platform CLIs for you. Run puppet-master init in a project for project checks.")
-                .size(tokens::font_size::SM)
-        );
+        let help_text = if selected_platforms.is_empty() {
+            "Use Install all missing above to install dependencies. Run puppet-master init in a project for project checks."
+        } else {
+            "Use Install selected missing above to install dependencies only for selected platforms."
+        };
+        content = content.push(text(help_text).size(tokens::font_size::SM));
     }
 
     themed_panel(container(content).padding(tokens::spacing::MD), theme).into()

@@ -266,9 +266,10 @@ where
     // Large fixed gap so nav buttons sit clearly to the right of the logo
     header_row = header_row.push(Space::new().width(Length::Fixed(layout::HEADER_LOGO_NAV_GAP)));
 
-    // Nav buttons at bottom of header row (lower than theme button)
+    // Nav buttons at bottom of header row (lower than theme button); Shrink so Ledger is not clipped
     header_row = header_row.push(
         container(nav_buttons)
+            .width(Length::Shrink)
             .height(Length::Fill)
             .align_y(iced::Alignment::End)
             .center_x(Length::Shrink),
@@ -386,13 +387,15 @@ where
 
     header_row = header_row.push(
         container(theme_btn)
+            .width(Length::Shrink)
             .height(Length::Fill)
-            .align_y(iced::Alignment::Start),
+            .align_y(iced::Alignment::Start)
+            .padding(Padding::ZERO.top(2.0)),
     );
 
-    // Wrap in container with header style: sticky top, paper cream bg, 3px bottom border, cross-hatch shadow
+    // Inner header box: sticky top, paper cream bg, 3px bottom border, cross-hatch shadow
     // Asymmetric padding: logo further left (smaller left), theme further right (larger right)
-    container(header_row)
+    let inner_header = container(header_row)
         .padding(
             Padding::ZERO
                 .top(12.0)
@@ -415,7 +418,12 @@ where
             },
             text_color: Some(ink_color),
             snap: container::Style::default().snap,
-        })
+        });
+
+    // Outer wrapper: top padding so header box is not flush with window
+    container(inner_header)
+        .padding(Padding::ZERO.top(layout::HEADER_TOP_PADDING))
+        .width(Length::Fill)
         .into()
 }
 

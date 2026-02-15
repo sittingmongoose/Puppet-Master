@@ -1211,45 +1211,8 @@ impl App {
                 // Auto-load data when navigating to certain pages
                 match page {
                     Page::Login => {
-                        // Load auth status
-                        return Task::perform(
-                            async {
-                                let checker = crate::platforms::AuthStatusChecker::new();
-                                let mut map: HashMap<String, AuthStatus> = HashMap::new();
-                                for platform in crate::types::Platform::all() {
-                                    let result = checker.check_platform(*platform).await;
-                                    let name = format!("{:?}", platform);
-                                    map.insert(
-                                        name.clone(),
-                                        AuthStatus {
-                                            platform: name,
-                                            authenticated: result.authenticated,
-                                            method: if result
-                                                .message
-                                                .contains("environment variable")
-                                            {
-                                                crate::views::login::AuthMethod::EnvVar
-                                            } else {
-                                                crate::views::login::AuthMethod::CliLogin
-                                            },
-                                            hint: result.message.clone(),
-                                        },
-                                    );
-                                }
-                                let gh = checker.check_github().await;
-                                map.insert(
-                                    "GitHub".to_string(),
-                                    AuthStatus {
-                                        platform: "GitHub".to_string(),
-                                        authenticated: gh.authenticated,
-                                        method: crate::views::login::AuthMethod::CliLogin,
-                                        hint: gh.message.clone(),
-                                    },
-                                );
-                                map
-                            },
-                            Message::AuthStatusReceived,
-                        );
+                        // Load auth and git data together.
+                        return self.update(Message::LoadLogin);
                     }
                     Page::Doctor => {
                         // Auto-run checks if no results yet
@@ -3004,18 +2967,35 @@ impl App {
             // ================================================================
             Message::RunAllChecks => {
                 self.doctor_running = true;
-                self.add_toast(ToastType::Info, "Running all checks...".to_string());
+                if self.doctor_selected_platforms.is_empty() {
+                    self.add_toast(ToastType::Info, "Running all checks...".to_string());
+                } else {
+                    self.add_toast(
+                        ToastType::Info,
+                        format!(
+                            "Running checks for {} selected platform(s)...",
+                            self.doctor_selected_platforms.len()
+                        ),
+                    );
+                }
+                let selected_platforms = self.doctor_selected_platforms.clone();
 
                 Task::perform(
                     async {
                         let registry = crate::doctor::CheckRegistry::default();
                         registry.run_all().await
                     },
-                    |res| match res {
+                    move |res| match res {
                         Ok(report) => {
                             let results = report
                                 .checks
                                 .into_iter()
+                                .filter(|check| {
+                                    crate::doctor::check_targeting::should_include_in_doctor_results(
+                                        &check.name,
+                                        &selected_platforms,
+                                    )
+                                })
                                 .map(|check| DoctorCheckResult {
                                     category: match check.category {
                                         crate::types::CheckCategory::Cli => {
@@ -3241,28 +3221,47 @@ impl App {
             }
 
             Message::InstallAllMissing => {
-                // Collect all failed checks that have fixes available
+                let selected_platforms = self.doctor_selected_platforms.clone();
+                let using_platform_selection = !selected_platforms.is_empty();
+
+                // Collect failed checks that have fixes available and match install scope
                 let fixable_checks: Vec<String> = self
                     .doctor_results
                     .iter()
-                    .filter(|r| !r.passed && r.fix_available)
+                    .filter(|r| {
+                        !r.passed
+                            && r.fix_available
+                            && crate::doctor::check_targeting::should_include_in_bulk_install(
+                                &r.name,
+                                &selected_platforms,
+                            )
+                    })
                     .map(|r| r.name.clone())
                     .collect();
 
                 if fixable_checks.is_empty() {
                     self.add_toast(
                         ToastType::Info,
-                        "No failed checks with fixes available".to_string(),
+                        if using_platform_selection {
+                            "No failed checks with fixes available for selected platforms"
+                                .to_string()
+                        } else {
+                            "No failed checks with fixes available".to_string()
+                        },
                     );
                     return Task::none();
                 }
 
                 self.add_toast(
                     ToastType::Info,
-                    format!(
-                        "Installing {} missing dependencies...",
-                        fixable_checks.len()
-                    ),
+                    if using_platform_selection {
+                        format!(
+                            "Installing {} selected missing dependencies...",
+                            fixable_checks.len()
+                        )
+                    } else {
+                        format!("Installing {} missing dependencies...", fixable_checks.len())
+                    },
                 );
 
                 // Mark all as fixing
@@ -3993,6 +3992,18 @@ impl App {
                     "Detecting platform installations...".to_string(),
                 );
                 let cli_paths = self.gui_config.advanced.cli_paths.clone();
+                let project_dir = if self.gui_config.advanced.install_scope
+                    == InstallScope::ProjectLocal
+                {
+                    let wd = &self.gui_config.project.working_directory;
+                    if wd.is_empty() {
+                        None
+                    } else {
+                        Some(std::path::PathBuf::from(wd))
+                    }
+                } else {
+                    None
+                };
 
                 Task::perform(
                     async move {
@@ -4008,6 +4019,7 @@ impl App {
                                 PlatformDetector::detect_platform_with_custom_paths_trace(
                                     platform,
                                     cli_paths.get(platform),
+                                    project_dir.as_deref(),
                                 )
                                 .await;
 
@@ -4958,7 +4970,20 @@ impl App {
 
             Message::PlatformLoginComplete(target, res) => {
                 self.login_in_progress.remove(&target);
+                let terminal_login = matches!(
+                    target,
+                    crate::platforms::AuthTarget::Platform(crate::types::Platform::Claude)
+                        | crate::platforms::AuthTarget::Platform(crate::types::Platform::Gemini)
+                        | crate::platforms::AuthTarget::Platform(crate::types::Platform::Copilot)
+                );
                 match &res {
+                    Ok(()) if terminal_login => self.add_toast(
+                        ToastType::Info,
+                        format!(
+                            "{} login flow launched in a terminal. Complete auth there; status will refresh automatically.",
+                            target.display_name()
+                        ),
+                    ),
                     Ok(()) => self.add_toast(
                         ToastType::Success,
                         format!("{} login completed", target.display_name()),
@@ -4968,7 +4993,7 @@ impl App {
                         format!("{} login failed: {}", target.display_name(), e),
                     ),
                 }
-                Task::perform(
+                let refresh_now = Task::perform(
                     async {
                         let checker = crate::platforms::AuthStatusChecker::new();
                         let mut map: HashMap<String, AuthStatus> = HashMap::new();
@@ -5002,7 +5027,22 @@ impl App {
                         map
                     },
                     Message::AuthStatusReceived,
-                )
+                );
+
+                let mut tasks = vec![refresh_now];
+                if terminal_login && res.is_ok() {
+                    // Terminal-launched flows complete outside the app process; poll briefly.
+                    for delay_secs in [5_u64, 15, 30] {
+                        tasks.push(Task::perform(
+                            async move {
+                                tokio::time::sleep(std::time::Duration::from_secs(delay_secs)).await;
+                            },
+                            |_| Message::RefreshAuthStatus,
+                        ));
+                    }
+                }
+
+                Task::batch(tasks)
             }
 
             Message::PlatformLogout(target) => {
@@ -5021,7 +5061,16 @@ impl App {
 
             Message::PlatformLogoutComplete(target, res) => {
                 self.login_in_progress.remove(&target);
+                let terminal_logout = matches!(
+                    target,
+                    crate::platforms::AuthTarget::Platform(crate::types::Platform::Copilot)
+                );
                 match &res {
+                    Ok(()) if terminal_logout => self.add_toast(
+                        ToastType::Info,
+                        "Copilot logout terminal opened. Run '/logout' there; status will refresh automatically."
+                            .to_string(),
+                    ),
                     Ok(()) => self.add_toast(
                         ToastType::Success,
                         format!("{} logout completed", target.display_name()),
@@ -5031,7 +5080,7 @@ impl App {
                         format!("{} logout failed: {}", target.display_name(), e),
                     ),
                 }
-                Task::perform(
+                let refresh_now = Task::perform(
                     async {
                         let checker = crate::platforms::AuthStatusChecker::new();
                         let mut map: HashMap<String, AuthStatus> = HashMap::new();
@@ -5065,7 +5114,21 @@ impl App {
                         map
                     },
                     Message::AuthStatusReceived,
-                )
+                );
+
+                let mut tasks = vec![refresh_now];
+                if terminal_logout && res.is_ok() {
+                    for delay_secs in [5_u64, 15, 30] {
+                        tasks.push(Task::perform(
+                            async move {
+                                tokio::time::sleep(std::time::Duration::from_secs(delay_secs)).await;
+                            },
+                            |_| Message::RefreshAuthStatus,
+                        ));
+                    }
+                }
+
+                Task::batch(tasks)
             }
 
             Message::RefreshAuthStatus => Task::perform(
@@ -5110,27 +5173,9 @@ impl App {
             ),
 
             Message::GitInfoForLoginLoaded(git_info) => {
-                let has_git_info = git_info.is_some();
                 self.git_info = git_info;
-
-                // Also check GitHub auth status
-                if has_git_info {
-                    Task::perform(
-                        async {
-                            let checker = crate::platforms::AuthStatusChecker::new();
-                            let gh = checker.check_github().await;
-                            if gh.authenticated {
-                                Some("authenticated".to_string())
-                            } else {
-                                Some("not_authenticated".to_string())
-                            }
-                        },
-                        |_status| Message::RefreshAuthStatus,
-                    )
-                } else {
-                    self.github_auth_status = None;
-                    Task::none()
-                }
+                // Keep GitHub auth independent from repo detection.
+                Task::done(Message::RefreshAuthStatus)
             }
 
             Message::SetupInstall(platform) => {

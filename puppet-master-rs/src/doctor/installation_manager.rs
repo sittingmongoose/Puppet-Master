@@ -193,116 +193,16 @@ impl InstallationManager {
         None
     }
 
-    /// Get fallback directories to search for executables
+    /// Get fallback directories to search for executables.
+    /// Delegates to `path_utils::get_fallback_directories`.
     fn get_fallback_directories(&self) -> Vec<PathBuf> {
-        let mut dirs = Vec::new();
-
-        #[cfg(not(target_os = "windows"))]
-        {
-            // Unix-like systems (Linux, macOS)
-            dirs.push(PathBuf::from("/usr/local/bin"));
-            dirs.push(PathBuf::from("/usr/bin"));
-            dirs.push(PathBuf::from("/bin"));
-
-            // macOS specific
-            #[cfg(target_os = "macos")]
-            {
-                dirs.push(PathBuf::from("/opt/homebrew/bin"));
-                dirs.push(PathBuf::from("/opt/local/bin"));
-            }
-
-            // Linux specific
-            #[cfg(target_os = "linux")]
-            {
-                dirs.push(PathBuf::from("/home/linuxbrew/.linuxbrew/bin"));
-                dirs.push(PathBuf::from("/snap/bin"));
-            }
-
-            // User-local directories
-            if let Some(home) = std::env::var_os("HOME") {
-                let home_path = PathBuf::from(home);
-                dirs.push(home_path.join(".cargo/bin"));
-                dirs.push(home_path.join(".local/bin"));
-                dirs.push(home_path.join("bin"));
-                dirs.push(home_path.join(".npm-global/bin"));
-                dirs.push(home_path.join(".node_modules/bin"));
-            }
-        }
-
-        #[cfg(target_os = "windows")]
-        {
-            // Windows specific directories
-            if let Some(program_files) = std::env::var_os("ProgramFiles") {
-                dirs.push(PathBuf::from(program_files));
-            }
-            if let Some(program_files_x86) = std::env::var_os("ProgramFiles(x86)") {
-                dirs.push(PathBuf::from(program_files_x86));
-            }
-            if let Some(local_app_data) = std::env::var_os("LOCALAPPDATA") {
-                let local = PathBuf::from(local_app_data);
-                dirs.push(local.join("Programs"));
-            }
-            if let Some(app_data) = std::env::var_os("APPDATA") {
-                dirs.push(PathBuf::from(app_data));
-            }
-            if let Some(user_profile) = std::env::var_os("USERPROFILE") {
-                let user_path = PathBuf::from(user_profile);
-                dirs.push(user_path.join(".cargo\\bin"));
-                dirs.push(user_path.join("AppData\\Local\\Programs"));
-            }
-        }
-
-        dirs
+        crate::platforms::path_utils::get_fallback_directories()
     }
 
-    /// Try to find executable by expanding shell PATH from profile files
+    /// Try to find executable by expanding shell PATH from profile files.
+    /// Delegates to `path_utils::find_in_shell_path`.
     fn find_in_shell_path(&self, cli_name: &str) -> Option<PathBuf> {
-        #[cfg(not(target_os = "windows"))]
-        {
-            // Try to source shell profiles and extract PATH
-            let home = std::env::var("HOME").ok()?;
-            let shell_profiles = vec![
-                format!("{}/.bashrc", home),
-                format!("{}/.bash_profile", home),
-                format!("{}/.zshrc", home),
-                format!("{}/.profile", home),
-            ];
-
-            for profile in shell_profiles {
-                if let Ok(content) = std::fs::read_to_string(&profile) {
-                    // Look for PATH exports in the profile
-                    for line in content.lines() {
-                        if line.trim_start().starts_with("export PATH=")
-                            || line.trim_start().starts_with("PATH=")
-                        {
-                            // Extract paths from the line
-                            if let Some(paths_str) = line.split('=').nth(1) {
-                                // Parse PATH entries
-                                for path_entry in paths_str.split(':') {
-                                    let path_entry =
-                                        path_entry.trim().trim_matches('"').trim_matches('\'');
-                                    // Expand $HOME or ~
-                                    let expanded =
-                                        path_entry.replace("$HOME", &home).replace('~', &home);
-
-                                    let exe_path = PathBuf::from(expanded).join(cli_name);
-                                    if exe_path.exists() && exe_path.is_file() {
-                                        debug!(
-                                            "Found {} in shell PATH: {}",
-                                            cli_name,
-                                            exe_path.display()
-                                        );
-                                        return Some(exe_path);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        None
+        crate::platforms::path_utils::find_in_shell_path(cli_name)
     }
 
     /// Get version from an executable path

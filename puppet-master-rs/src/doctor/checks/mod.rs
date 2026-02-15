@@ -6,6 +6,7 @@ pub mod git_checks;
 pub mod project_checks;
 pub mod runtime_check;
 pub mod secrets_check;
+pub mod sdk_checks;
 pub mod usage_check;
 
 // Missing checks ported from TypeScript

@@ -123,10 +123,13 @@ pub mod shadows {
 // DRY:DATA:layout
 pub mod layout {
     /// Height of the main header bar
-    pub const HEADER_HEIGHT: f32 = 60.0;
+    pub const HEADER_HEIGHT: f32 = 72.0;
 
     /// Gap between logo and nav buttons in the header (keeps nav clearly right of logo)
-    pub const HEADER_LOGO_NAV_GAP: f32 = 88.0;
+    pub const HEADER_LOGO_NAV_GAP: f32 = 80.0;
+
+    /// Padding above the header bar (gap between window top and header box)
+    pub const HEADER_TOP_PADDING: f32 = 8.0;
 
     /// Width of the sidebar navigation
     pub const SIDEBAR_WIDTH: f32 = 220.0;
