@@ -26,10 +26,12 @@ pub struct HealthMonitor {
 }
 
 impl HealthMonitor {
+    // DRY:FN:new
     /// Creates a new health monitor with default configuration
     pub fn new() -> Self {
         Self::with_config(HealthConfig::default())
     }
+    // DRY:FN:with_config
 
     /// Creates a new health monitor with custom configuration
     pub fn with_config(config: HealthConfig) -> Self {
@@ -236,6 +238,7 @@ pub struct PlatformHealth {
 }
 
 impl PlatformHealth {
+    // DRY:FN:new
     /// Creates a new platform health status
     pub fn new(platform: Platform) -> Self {
         Self {
@@ -250,6 +253,7 @@ impl PlatformHealth {
             last_failure: None,
         }
     }
+    // DRY:FN:success_rate
 
     /// Gets success rate as percentage (0-100)
     pub fn success_rate(&self) -> f64 {
@@ -263,11 +267,13 @@ impl PlatformHealth {
             0.0 // No data yet
         }
     }
+    // DRY:FN:is_healthy
 
     /// Checks if platform is healthy (available and no open circuit breaker)
     pub fn is_healthy(&self) -> bool {
         self.available && !self.circuit_breaker_open
     }
+    // DRY:FN:time_since_last_check
 
     /// Gets time since last check
     pub fn time_since_last_check(&self) -> Duration {
@@ -300,6 +306,7 @@ impl Default for HealthConfig {
 }
 
 impl HealthConfig {
+    // DRY:FN:new
     /// Creates a new health configuration
     pub fn new(
         circuit_breaker_threshold: u32,

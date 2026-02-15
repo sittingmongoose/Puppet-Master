@@ -5,7 +5,7 @@
 
 #![allow(dead_code)]
 
-use crate::widgets::icon::{IconName, IconSize, icon, icon_sized};
+use puppet_master::widgets::icon::{IconName, IconSize, icon_sized};
 use iced::widget::{Space, button, column, container, row, text};
 use iced::{Element, Length, Padding};
 
@@ -26,7 +26,7 @@ fn navigation_menu<'a>() -> Element<'a, Message> {
     .into()
 }
 
-fn nav_item<'a>(icon_name: IconName, label: &'a str, active: bool) -> Element<'a, Message> {
+fn nav_item<'a>(icon_name: IconName, label: &'a str, _active: bool) -> Element<'a, Message> {
     let icon_widget = icon_sized(icon_name, IconSize::Medium);
     let text_widget = text(label).size(14);
 
@@ -46,7 +46,7 @@ fn action_toolbar<'a>() -> Element<'a, Message> {
         action_button(IconName::Play, "Start", Message::Start),
         action_button(IconName::Pause, "Pause", Message::Pause),
         action_button(IconName::Stop, "Stop", Message::Stop),
-        Space::with_width(Length::Fixed(16.0)),
+        Space::new().width(Length::Fixed(16.0)),
         // Icon-only buttons for secondary actions
         icon_button(IconName::Refresh, Message::Refresh),
         icon_button(IconName::Upload, Message::Upload),
@@ -101,7 +101,7 @@ fn status_messages<'a>() -> Element<'a, Message> {
 fn status_message<'a>(
     icon_name: IconName,
     message: &'a str,
-    status_type: StatusType,
+    _status_type: StatusType,
 ) -> Element<'a, Message> {
     let icon_widget = icon_sized(icon_name, IconSize::Small);
     let text_widget = text(message).size(14);
@@ -170,7 +170,7 @@ fn inline_icon_text<'a>() -> Element<'a, Message> {
         text("Status:"),
         icon_sized(IconName::Check, IconSize::Small),
         text("Connected"),
-        Space::with_width(Length::Fixed(20.0)),
+        Space::new().width(Length::Fixed(20.0)),
         text("Mode:"),
         icon_sized(IconName::Moon, IconSize::Small),
         text("Dark"),
@@ -237,7 +237,7 @@ fn setting_row<'a>(icon_name: IconName, label: &'a str) -> Element<'a, Message> 
         row![
             icon_sized(icon_name, IconSize::Medium),
             text(label).size(14),
-            Space::with_width(Length::Fill),
+            Space::new().width(Length::Fill),
             icon_sized(IconName::Expand, IconSize::Small),
         ]
         .spacing(12)
@@ -296,6 +296,8 @@ enum StatusType {
     Error,
     Info,
 }
+
+fn main() {}
 
 // Usage recommendations:
 //

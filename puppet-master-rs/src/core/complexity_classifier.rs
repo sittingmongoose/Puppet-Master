@@ -128,17 +128,20 @@ pub struct ComplexityClassifier {
 }
 
 impl ComplexityClassifier {
+    // DRY:FN:new
     /// Create new classifier with default routing matrix
     pub fn new() -> Self {
         Self {
             matrix: Self::default_matrix(),
         }
     }
+    // DRY:FN:with_matrix
 
     /// Create with custom routing matrix
     pub fn with_matrix(matrix: ComplexityMatrix) -> Self {
         Self { matrix }
     }
+    // DRY:FN:classify
 
     /// Classify a task
     pub fn classify(&self, task: &TaskInfo) -> ClassificationResult {

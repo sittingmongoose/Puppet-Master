@@ -538,6 +538,7 @@ impl std::fmt::Display for VerificationMethod {
         }
     }
 }
+// DRY:DATA:Verifier
 
 /// Verifier trait for implementing verification logic.
 #[async_trait]

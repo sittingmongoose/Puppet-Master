@@ -29,6 +29,7 @@ pub struct CapabilityInfo {
 }
 
 impl CapabilityInfo {
+    // DRY:FN:unavailable
     /// Create a new capability info (unavailable)
     pub fn unavailable(platform: Platform, command: String) -> Self {
         Self {
@@ -40,6 +41,7 @@ impl CapabilityInfo {
             discovered_at: Utc::now(),
         }
     }
+    // DRY:FN:available
 
     /// Create a new capability info (available)
     pub fn available(
@@ -57,6 +59,7 @@ impl CapabilityInfo {
             discovered_at: Utc::now(),
         }
     }
+    // DRY:FN:is_valid
 
     /// Check if this capability info is still valid (based on TTL)
     pub fn is_valid(&self, ttl_secs: u64) -> bool {
@@ -75,10 +78,12 @@ pub struct CapabilityCache {
 }
 
 impl CapabilityCache {
+    // DRY:FN:new
     /// Create a new capability cache with 1-hour TTL
     pub fn new() -> Self {
         Self::with_ttl(3600)
     }
+    // DRY:FN:with_ttl
 
     /// Create a new capability cache with custom TTL
     pub fn with_ttl(ttl_secs: u64) -> Self {
@@ -125,6 +130,7 @@ impl CapabilityCache {
 
         Ok(info)
     }
+    // DRY:FN:clear
 
     /// Clear the cache
     pub fn clear(&self) {

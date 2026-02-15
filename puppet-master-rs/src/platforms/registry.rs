@@ -44,6 +44,7 @@ pub struct PlatformRegistry {
 }
 
 impl PlatformRegistry {
+    // DRY:FN:new
     /// Create a new platform registry
     pub fn new() -> Self {
         Self {
@@ -85,11 +86,13 @@ impl PlatformRegistry {
 
         Ok(())
     }
+    // DRY:FN:model_catalog
 
     /// Get the model catalog manager
     pub fn model_catalog(&self) -> Arc<ModelCatalogManager> {
         Arc::clone(&self.model_catalog)
     }
+    // DRY:FN:get_platform_models
 
     /// Get available models for a platform
     pub fn get_platform_models(&self, platform: Platform) -> Vec<String> {
@@ -278,11 +281,13 @@ impl PlatformRegistry {
         let result = self.auth_checker.check_platform(platform).await;
         result.authenticated
     }
+    // DRY:FN:health_monitor
 
     /// Get health monitor
     pub fn health_monitor(&self) -> Arc<HealthMonitor> {
         Arc::clone(&self.health_monitor)
     }
+    // DRY:FN:auth_checker
 
     /// Get auth checker
     pub fn auth_checker(&self) -> Arc<AuthStatusChecker> {

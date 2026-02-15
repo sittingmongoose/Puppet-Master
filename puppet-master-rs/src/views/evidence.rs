@@ -34,6 +34,7 @@ pub enum EvidenceItemType {
 }
 
 impl EvidenceItemType {
+    // DRY:FN:as_str
     pub fn as_str(&self) -> &str {
         match self {
             EvidenceItemType::TestLog => "Test Log",
@@ -44,6 +45,7 @@ impl EvidenceItemType {
             EvidenceItemType::GateReport => "Gate Report",
         }
     }
+    // DRY:FN:icon
 
     pub fn icon(&self) -> &str {
         match self {
@@ -55,6 +57,7 @@ impl EvidenceItemType {
             EvidenceItemType::GateReport => "RPT",
         }
     }
+    // DRY:FN:color
 
     pub fn color(&self) -> iced::Color {
         match self {
@@ -66,6 +69,7 @@ impl EvidenceItemType {
             EvidenceItemType::GateReport => iced::Color::from_rgb(0.2, 0.8, 0.8),
         }
     }
+    // DRY:FN:all
 
     pub fn all() -> Vec<Self> {
         vec![

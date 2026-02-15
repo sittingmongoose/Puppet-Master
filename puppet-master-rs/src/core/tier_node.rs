@@ -45,6 +45,7 @@ pub struct TierNode {
 }
 
 impl TierNode {
+    // DRY:FN:new
     /// Create new tier node
     pub fn new(
         index: usize,
@@ -70,16 +71,19 @@ impl TierNode {
             dependencies: Vec::new(),
         }
     }
+    // DRY:FN:is_leaf
 
     /// Check if this is a leaf node (has no children)
     pub fn is_leaf(&self) -> bool {
         self.children.is_empty()
     }
+    // DRY:FN:is_root
 
     /// Check if this is a root node (has no parent)
     pub fn is_root(&self) -> bool {
         self.parent.is_none()
     }
+    // DRY:FN:depth
 
     /// Get depth level (0 for root, 1 for children of root, etc.)
     pub fn depth(&self) -> usize {
@@ -128,6 +132,7 @@ pub struct TierTree {
 }
 
 impl TierTree {
+    // DRY:FN:new
     /// Create empty tier tree
     pub fn new() -> Self {
         Self {
@@ -136,6 +141,7 @@ impl TierTree {
             roots: Vec::new(),
         }
     }
+    // DRY:FN:add_node
 
     /// Add a new node to the tree
     pub fn add_node(
@@ -180,11 +186,13 @@ impl TierTree {
 
         Ok(index)
     }
+    // DRY:FN:find_by_id
 
     /// Find node by ID
     pub fn find_by_id(&self, id: &str) -> Option<&TierNode> {
         self.id_to_index.get(id).map(|&idx| &self.nodes[idx])
     }
+    // DRY:FN:find_by_id_mut
 
     /// Find mutable node by ID
     pub fn find_by_id_mut(&mut self, id: &str) -> Option<&mut TierNode> {
@@ -193,26 +201,31 @@ impl TierTree {
             .copied()
             .map(|idx| &mut self.nodes[idx])
     }
+    // DRY:FN:find_index_by_id
 
     /// Find node index by ID
     pub fn find_index_by_id(&self, id: &str) -> Option<usize> {
         self.id_to_index.get(id).copied()
     }
+    // DRY:FN:get_node
 
     /// Get node by index
     pub fn get_node(&self, index: usize) -> Option<&TierNode> {
         self.nodes.get(index)
     }
+    // DRY:FN:get_node_mut
 
     /// Get mutable node by index
     pub fn get_node_mut(&mut self, index: usize) -> Option<&mut TierNode> {
         self.nodes.get_mut(index)
     }
+    // DRY:FN:roots
 
     /// Get all root nodes
     pub fn roots(&self) -> &[usize] {
         &self.roots
     }
+    // DRY:FN:get_children
 
     /// Get children of a node
     pub fn get_children(&self, node_id: &str) -> Vec<&TierNode> {
@@ -226,6 +239,7 @@ impl TierTree {
             Vec::new()
         }
     }
+    // DRY:FN:get_path
 
     /// Get path from root to node (list of IDs)
     pub fn get_path(&self, node_id: &str) -> Vec<String> {
@@ -248,6 +262,7 @@ impl TierTree {
         path.reverse();
         path
     }
+    // DRY:FN:get_path_string
 
     /// Get path string (e.g., "Phase 1 > Task 1.1 > Subtask 1.1.1")
     pub fn get_path_string(&self, node_id: &str) -> String {
@@ -258,6 +273,7 @@ impl TierTree {
             .collect::<Vec<_>>()
             .join(" > ")
     }
+    // DRY:FN:get_next_pending
 
     /// Get next pending leaf node (DFS order)
     pub fn get_next_pending(&self) -> Option<&TierNode> {
@@ -287,6 +303,7 @@ impl TierTree {
 
         None
     }
+    // DRY:FN:iter_dfs
 
     /// Iterate all nodes in DFS order
     pub fn iter_dfs(&self) -> impl Iterator<Item = &TierNode> {
@@ -305,6 +322,7 @@ impl TierTree {
 
         result.into_iter()
     }
+    // DRY:FN:iter_bfs
 
     /// Iterate all nodes in BFS order
     pub fn iter_bfs(&self) -> impl Iterator<Item = &TierNode> {
@@ -322,11 +340,13 @@ impl TierTree {
 
         result.into_iter()
     }
+    // DRY:FN:get_leaves
 
     /// Get all leaf nodes (subtasks)
     pub fn get_leaves(&self) -> Vec<&TierNode> {
         self.nodes.iter().filter(|n| n.is_leaf()).collect()
     }
+    // DRY:FN:all_children_passed
 
     /// Check if all children of a node have passed
     pub fn all_children_passed(&self, node_id: &str) -> bool {
@@ -340,6 +360,7 @@ impl TierTree {
             .iter()
             .all(|child| child.state_machine.current_state() == TierState::Passed)
     }
+    // DRY:FN:count_by_state
 
     /// Count nodes by state
     pub fn count_by_state(&self, state: TierState) -> usize {
@@ -348,6 +369,7 @@ impl TierTree {
             .filter(|n| n.state_machine.current_state() == state)
             .count()
     }
+    // DRY:FN:get_stats
 
     /// Get summary statistics
     pub fn get_stats(&self) -> TreeStats {
@@ -447,11 +469,13 @@ impl TierTree {
 
         None
     }
+    // DRY:FN:from_prd
 
     /// Build tree from PRD data
     pub fn from_prd(prd: &PRD, max_iterations: u32) -> Result<Self> {
         Self::from_prd_with_base_path(prd, max_iterations, None)
     }
+    // DRY:FN:from_prd_with_base_path
 
     /// Build tree from PRD data with optional base path for test strategy loading
     pub fn from_prd_with_base_path(

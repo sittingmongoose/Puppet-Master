@@ -2,7 +2,6 @@
 
 use puppet_master::start_chain::DocumentParser;
 use std::io::{Cursor, Write};
-use std::path::Path;
 use tempfile::NamedTempFile;
 use zip::ZipWriter;
 

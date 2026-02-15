@@ -38,6 +38,7 @@ pub enum EventType {
 }
 
 impl EventType {
+    // DRY:FN:as_str
     pub fn as_str(&self) -> &str {
         match self {
             EventType::OrchestratorStarted => "Orchestrator Started",
@@ -53,6 +54,7 @@ impl EventType {
             EventType::StateSnapshot => "State Snapshot",
         }
     }
+    // DRY:FN:color
 
     pub fn color(&self) -> iced::Color {
         match self {
@@ -68,6 +70,7 @@ impl EventType {
             }
         }
     }
+    // DRY:FN:all
 
     pub fn all() -> Vec<Self> {
         vec![

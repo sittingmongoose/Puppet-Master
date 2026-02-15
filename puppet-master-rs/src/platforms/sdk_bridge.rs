@@ -14,6 +14,7 @@ use serde::Deserialize;
 use std::path::PathBuf;
 use std::process::Stdio;
 use which::which;
+// DRY:DATA:SdkExecutionResult
 
 /// Result from SDK-based execution
 /// DRY:DATA:sdk_execution_result — Structured result from SDK task execution
@@ -26,6 +27,7 @@ pub struct SdkExecutionResult {
     /// Exit code (0 = success)
     pub exit_code: i32,
 }
+// DRY:DATA:SdkBridge
 
 /// DRY:FN:sdk_bridge — Bridge to Node.js SDKs for model listing and programmatic control
 pub struct SdkBridge {
@@ -33,11 +35,13 @@ pub struct SdkBridge {
 }
 
 impl SdkBridge {
+    // DRY:FN:new
     /// Creates a new SDK bridge, detecting Node.js automatically.
     pub fn new() -> Option<Self> {
         let node_path = which("node").ok()?;
         Some(Self { node_path })
     }
+    // DRY:FN:with_node_path
 
     /// Creates a bridge with a specific Node.js path.
     pub fn with_node_path(node_path: PathBuf) -> Option<Self> {
@@ -47,6 +51,7 @@ impl SdkBridge {
             None
         }
     }
+    // DRY:FN:is_available
 
     /// Whether the SDK bridge is available (Node.js found).
     /// DRY:FN:sdk_bridge_available — Check if Node.js is available for SDK calls

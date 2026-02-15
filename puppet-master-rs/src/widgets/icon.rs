@@ -67,6 +67,7 @@ pub enum IconSize {
 }
 
 impl IconSize {
+    // DRY:WIDGET:pixels
     /// Get the size in pixels
     pub fn pixels(&self) -> f32 {
         match self {

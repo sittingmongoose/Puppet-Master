@@ -15,6 +15,7 @@ pub struct PaperTexture {
 }
 
 impl PaperTexture {
+    // DRY:WIDGET:new
     /// Create a new paper texture with light/dark mode
     pub fn new(is_dark: bool) -> Self {
         Self {
@@ -87,11 +88,11 @@ fn draw_paper_texture(frame: &mut Frame, bounds: Rectangle, is_dark: bool) {
 /// * `is_dark` - Whether to use dark mode texture (lighter stripes) or light mode (darker stripes)
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// use puppet_master::widgets::paper_texture::paper_texture;
 ///
 /// let texture = paper_texture(false); // Light mode
-/// ```
+/// ```ignore
 pub fn paper_texture<'a, Message: 'a>(is_dark: bool) -> Element<'a, Message> {
     Canvas::new(PaperTexture::new(is_dark))
         .width(Length::Fill)

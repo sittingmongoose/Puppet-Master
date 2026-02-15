@@ -19,10 +19,12 @@ pub struct AuthStatusChecker {
 }
 
 impl AuthStatusChecker {
+    // DRY:FN:new
     /// Creates a new auth status checker with default timeout
     pub fn new() -> Self {
         Self { timeout_secs: 10 }
     }
+    // DRY:FN:with_timeout
 
     /// Creates a new auth status checker with custom timeout
     pub fn with_timeout(timeout_secs: u64) -> Self {
@@ -269,6 +271,7 @@ pub struct AuthCheckResult {
 }
 
 impl AuthCheckResult {
+    // DRY:FN:authenticated
     /// Creates an authenticated result
     pub fn authenticated(message: impl Into<String>) -> Self {
         Self {
@@ -278,6 +281,7 @@ impl AuthCheckResult {
             checked_at: chrono::Utc::now(),
         }
     }
+    // DRY:FN:not_authenticated
 
     /// Creates a not authenticated result
     pub fn not_authenticated(message: impl Into<String>) -> Self {
@@ -288,6 +292,7 @@ impl AuthCheckResult {
             checked_at: chrono::Utc::now(),
         }
     }
+    // DRY:FN:with_details
 
     /// Adds details to the result
     pub fn with_details(mut self, details: impl Into<String>) -> Self {

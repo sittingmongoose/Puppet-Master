@@ -26,6 +26,7 @@ pub enum ProgressVariant {
 }
 
 impl ProgressVariant {
+    // DRY:WIDGET:color
     /// Get the fill color for this variant
     pub fn color(&self) -> Color {
         match self {
@@ -50,6 +51,7 @@ pub enum ProgressSize {
 }
 
 impl ProgressSize {
+    // DRY:WIDGET:height
     /// Get the height for this size
     pub fn height(&self) -> f32 {
         match self {

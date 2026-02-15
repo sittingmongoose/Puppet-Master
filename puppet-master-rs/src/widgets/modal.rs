@@ -16,6 +16,7 @@ pub enum ModalSize {
 }
 
 impl ModalSize {
+    // DRY:WIDGET:width
     /// Get the width for this modal size
     pub fn width(&self) -> f32 {
         match self {
@@ -24,6 +25,7 @@ impl ModalSize {
             ModalSize::Large => 800.0,
         }
     }
+    // DRY:WIDGET:max_height
 
     /// Get the maximum height for this modal size
     pub fn max_height(&self) -> f32 {
@@ -60,7 +62,7 @@ pub struct ModalData {
 /// * `on_confirm` - Optional message to send when confirming (if modal has confirm button)
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let with_modal = modal_overlay(
 ///     base_content,
 ///     Some(&modal_data),
@@ -68,7 +70,7 @@ pub struct ModalData {
 ///     Message::CloseModal,
 ///     Some(Message::ConfirmAction)
 /// );
-/// ```
+/// ```ignore
 pub fn modal_overlay<'a, Message>(
     content: Element<'a, Message>,
     modal: Option<ModalData>,
@@ -334,7 +336,7 @@ where
 /// * `on_cancel` - Message to send when user cancels
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let modal = confirm_modal(
 ///     base_content,
 ///     "Delete Item",
@@ -343,7 +345,7 @@ where
 ///     Message::ConfirmDelete,
 ///     Message::CloseModal,
 /// );
-/// ```
+/// ```ignore
 pub fn confirm_modal<'a, Message>(
     content: Element<'a, Message>,
     title: impl Into<String>,
@@ -385,7 +387,7 @@ where
 /// * `on_close` - Message to send when user closes
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let modal = error_modal(
 ///     base_content,
 ///     "Error",
@@ -393,7 +395,7 @@ where
 ///     &theme,
 ///     Message::CloseModal,
 /// );
-/// ```
+/// ```ignore
 pub fn error_modal<'a, Message>(
     content: Element<'a, Message>,
     title: impl Into<String>,

@@ -23,6 +23,7 @@ pub use headless_runner::HeadlessRunner;
 pub use native_runner::NativeRunner;
 pub use workspace_clone::{ClonedWorkspace, build_artifact_manifest, ensure_path_within};
 
+// DRY:DATA:GuiRunMode — GUI automation execution modes
 /// Automation execution mode.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -48,6 +49,7 @@ impl std::fmt::Display for GuiRunMode {
     }
 }
 
+// DRY:DATA:WorkspaceIsolation — Workspace isolation strategies for automation specs
 /// Workspace isolation behavior.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -63,6 +65,7 @@ impl Default for WorkspaceIsolation {
     }
 }
 
+// DRY:DATA:GuiSelector — Selector definitions usable by automation steps
 /// Selector abstraction used by automation steps.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "camelCase")]
@@ -73,6 +76,7 @@ pub enum GuiSelector {
     RegexText { pattern: String },
 }
 
+// DRY:DATA:GuiAction — Step action definitions for GUI automation
 /// Step action.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "camelCase")]
@@ -85,6 +89,7 @@ pub enum GuiAction {
     Snapshot { label: String },
 }
 
+// DRY:DATA:GuiAssertion — Assertion variants for validating automation steps
 /// Assertions evaluated after a step.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "camelCase")]
@@ -95,6 +100,7 @@ pub enum GuiAssertion {
     OutputContains { text: String },
 }
 
+// DRY:DATA:GuiStep — Single step declaration for automation scenarios
 /// Single scenario step.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -107,6 +113,7 @@ pub struct GuiStep {
     pub timeout_ms: Option<u64>,
 }
 
+// DRY:DATA:GuiStepResult — Result produced by a single automation step
 /// Per-step execution result.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -120,6 +127,7 @@ pub struct GuiStepResult {
     pub artifacts: Vec<PathBuf>,
 }
 
+// DRY:DATA:ArtifactManifestEntry — Metadata entry describing automation artifacts
 /// Artifact entry metadata.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -130,6 +138,7 @@ pub struct ArtifactManifestEntry {
     pub bytes: u64,
 }
 
+// DRY:DATA:ArtifactManifest — Manifest that lists automation artifacts
 /// Artifact manifest.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -139,6 +148,7 @@ pub struct ArtifactManifest {
     pub entries: Vec<ArtifactManifestEntry>,
 }
 
+// DRY:DATA:DebugSource — Categories of automation debug feed events
 /// Debug feed source kind.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -149,6 +159,7 @@ pub enum DebugSource {
     System,
 }
 
+// DRY:DATA:DebugFeedEvent — Event emitted to the automation debug feed
 /// Single debug feed event.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -164,6 +175,7 @@ pub struct DebugFeedEvent {
     pub timestamp: DateTime<Utc>,
 }
 
+// DRY:DATA:GuiRunSpec — Full specification for running GUI automation
 /// Complete automation run specification.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -210,6 +222,7 @@ impl Default for GuiRunSpec {
     }
 }
 
+// DRY:DATA:GuiRunResult — Captured results emitted by GUI automation runs
 /// Final run result.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -267,6 +280,7 @@ fn run_artifact_root(spec: &GuiRunSpec) -> PathBuf {
         .join(&spec.run_id)
 }
 
+// DRY:FN:run_gui_automation — Execute a GUI automation run using the configured mode
 /// Execute a GUI automation run using the configured mode.
 pub fn run_gui_automation(mut spec: GuiRunSpec) -> Result<GuiRunResult> {
     normalize_run_id(&mut spec);
@@ -409,6 +423,7 @@ pub fn run_gui_automation(mut spec: GuiRunSpec) -> Result<GuiRunResult> {
     })
 }
 
+// DRY:DATA:RunnerOutcome — Shared helper result for automation runners
 /// Runner outcome helper shared by headless/native runners.
 #[derive(Debug, Clone)]
 pub struct RunnerOutcome {

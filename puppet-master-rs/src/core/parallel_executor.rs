@@ -80,6 +80,7 @@ pub struct ParallelExecutor {
 }
 
 impl ParallelExecutor {
+    // DRY:FN:new
     /// Create new parallel executor
     pub fn new(config: ParallelExecutorConfig) -> Self {
         Self {
@@ -87,6 +88,7 @@ impl ParallelExecutor {
             analyzer: DependencyAnalyzer::new(),
         }
     }
+    // DRY:FN:with_defaults
 
     /// Create with default configuration
     pub fn with_defaults() -> Self {
@@ -242,6 +244,7 @@ impl ParallelExecutor {
 
         Ok(results)
     }
+    // DRY:FN:config
 
     /// Get configuration
     pub fn config(&self) -> &ParallelExecutorConfig {

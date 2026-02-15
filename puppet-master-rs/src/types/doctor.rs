@@ -90,6 +90,7 @@ impl CheckResult {
         self
     }
 }
+// DRY:DATA:DoctorCheck
 
 /// A doctor check definition.
 #[async_trait::async_trait]

@@ -62,6 +62,7 @@ impl Default for ParsedOutput {
 }
 
 impl ParsedOutput {
+    // DRY:FN:new
     /// Creates a new parsed output with raw response
     pub fn new(raw_response: String) -> Self {
         Self {
@@ -69,17 +70,20 @@ impl ParsedOutput {
             ..Default::default()
         }
     }
+    // DRY:FN:with_completion_signal
 
     /// Sets the completion signal
     pub fn with_completion_signal(mut self, signal: CompletionSignal) -> Self {
         self.completion_signal = Some(signal);
         self
     }
+    // DRY:FN:add_error
 
     /// Adds an error
     pub fn add_error(&mut self, error: PlatformError) {
         self.errors.push(error);
     }
+    // DRY:FN:with_token_usage
 
     /// Sets token usage
     pub fn with_token_usage(mut self, usage: TokenUsage) -> Self {
@@ -100,6 +104,7 @@ pub enum CompletionSignal {
 }
 
 impl CompletionSignal {
+    // DRY:FN:detect
     /// Detects completion signal in text
     pub fn detect(text: &str) -> Option<Self> {
         if text.contains("<ralph>COMPLETE</ralph>") {
@@ -142,6 +147,7 @@ pub struct TokenUsage {
 }
 
 impl TokenUsage {
+    // DRY:FN:new
     /// Creates token usage from individual counts
     pub fn new(input: u64, output: u64) -> Self {
         Self {
@@ -152,6 +158,7 @@ impl TokenUsage {
             cache_creation_tokens: None,
         }
     }
+    // DRY:FN:is_empty
 
     /// Checks if usage is empty (no tokens recorded)
     pub fn is_empty(&self) -> bool {
@@ -174,6 +181,7 @@ pub struct PlatformError {
 }
 
 impl PlatformError {
+    // DRY:FN:new
     /// Creates a new platform error
     pub fn new(message: impl Into<String>, category: ErrorCategory, recoverable: bool) -> Self {
         Self {
@@ -214,6 +222,7 @@ pub enum ErrorCategory {
 }
 
 impl ErrorCategory {
+    // DRY:FN:detect
     /// Detects error category from error message text
     pub fn detect(message: &str) -> Self {
         let msg_lower = message.to_lowercase();
@@ -247,12 +256,14 @@ impl ErrorCategory {
             Self::Unknown
         }
     }
+    // DRY:FN:is_recoverable
 
     /// Checks if error category is recoverable
     pub fn is_recoverable(&self) -> bool {
         matches!(self, Self::RateLimit | Self::NetworkError | Self::ToolError)
     }
 }
+// DRY:DATA:OutputParser
 
 /// Output parser trait for platform-specific parsing
 pub trait OutputParser: Send + Sync {
@@ -268,6 +279,7 @@ pub trait OutputParser: Send + Sync {
 pub struct ParsingUtils;
 
 impl ParsingUtils {
+    // DRY:FN:extract_file_paths
     /// Extracts file paths from text using common patterns
     pub fn extract_file_paths(text: &str) -> Vec<String> {
         let mut paths = HashSet::new();
@@ -298,6 +310,7 @@ impl ParsingUtils {
 
         paths.into_iter().collect()
     }
+    // DRY:FN:try_parse_json
 
     /// Attempts to parse JSON from text
     pub fn try_parse_json(text: &str) -> Option<serde_json::Value> {
@@ -325,6 +338,7 @@ impl ParsingUtils {
 
         None
     }
+    // DRY:FN:extract_learnings
 
     /// Extracts learnings/insights from output (best-effort)
     pub fn extract_learnings(text: &str) -> Vec<String> {
@@ -343,6 +357,7 @@ impl ParsingUtils {
             ],
         )
     }
+    // DRY:FN:extract_files_changed
 
     /// Extracts a files-changed list from output (best-effort)
     pub fn extract_files_changed(text: &str) -> Vec<String> {
@@ -408,6 +423,7 @@ impl ParsingUtils {
 
         files.into_iter().collect()
     }
+    // DRY:FN:extract_test_results
 
     /// Extracts test results (passed/failed/skipped) from output (best-effort)
     pub fn extract_test_results(text: &str) -> Option<TestResults> {
@@ -455,6 +471,7 @@ impl ParsingUtils {
             None
         }
     }
+    // DRY:FN:extract_token_usage_from_text
 
     /// Extracts token usage from plain text (best-effort)
     pub fn extract_token_usage_from_text(text: &str) -> Option<TokenUsage> {
@@ -492,6 +509,7 @@ impl ParsingUtils {
             None
         }
     }
+    // DRY:FN:extract_stack_traces
 
     /// Extracts stack traces as standalone blocks (best-effort)
     pub fn extract_stack_traces(stdout: &str, stderr: &str) -> Vec<String> {
@@ -506,6 +524,7 @@ impl ParsingUtils {
         }
         traces
     }
+    // DRY:FN:extract_errors
 
     /// Extracts errors from stdout and stderr (best-effort)
     pub fn extract_errors(stdout: &str, stderr: &str) -> Vec<PlatformError> {
@@ -707,6 +726,7 @@ impl ParsingUtils {
         }
         None
     }
+    // DRY:FN:dedupe_preserve_order
 
     pub fn dedupe_preserve_order(items: &mut Vec<String>) {
         let mut seen = HashSet::new();

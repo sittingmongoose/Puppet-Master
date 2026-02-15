@@ -30,6 +30,7 @@ pub struct SessionTracker {
 }
 
 impl SessionTracker {
+    // DRY:FN:new
     /// Create new session tracker
     pub fn new(log_path: PathBuf) -> Result<Self> {
         // Ensure parent directory exists
@@ -51,6 +52,7 @@ impl SessionTracker {
             sequence_counter: Mutex::new(HashMap::new()),
         })
     }
+    // DRY:FN:generate_session_id
 
     /// Generate new session ID: PM-YYYY-MM-DD-HH-MM-SS-NNN
     pub fn generate_session_id(&self) -> String {
@@ -65,6 +67,7 @@ impl SessionTracker {
 
         format!("PM-{}-{:03}", timestamp, sequence)
     }
+    // DRY:FN:start_session
 
     /// Start a new session
     pub fn start_session(
@@ -103,6 +106,7 @@ impl SessionTracker {
 
         Ok(session_id)
     }
+    // DRY:FN:complete_session
 
     /// Complete a session
     pub fn complete_session(&self, session_id: &str) -> Result<()> {
@@ -123,6 +127,7 @@ impl SessionTracker {
 
         Ok(())
     }
+    // DRY:FN:stop_session
 
     /// Stop a session (user-initiated)
     pub fn stop_session(&self, session_id: &str) -> Result<()> {
@@ -143,6 +148,7 @@ impl SessionTracker {
 
         Ok(())
     }
+    // DRY:FN:fail_session
 
     /// Fail a session
     pub fn fail_session(&self, session_id: &str, error: String) -> Result<()> {
@@ -164,12 +170,14 @@ impl SessionTracker {
 
         Ok(())
     }
+    // DRY:FN:get_session
 
     /// Get session info
     pub fn get_session(&self, session_id: &str) -> Option<SessionInfo> {
         let sessions = self.active_sessions.lock().unwrap();
         sessions.get(session_id).cloned()
     }
+    // DRY:FN:get_active_sessions
 
     /// Get all active sessions
     pub fn get_active_sessions(&self) -> Vec<SessionInfo> {
@@ -180,12 +188,14 @@ impl SessionTracker {
             .cloned()
             .collect()
     }
+    // DRY:FN:get_all_sessions
 
     /// Get all sessions
     pub fn get_all_sessions(&self) -> Vec<SessionInfo> {
         let sessions = self.active_sessions.lock().unwrap();
         sessions.values().cloned().collect()
     }
+    // DRY:FN:cleanup_sessions
 
     /// Remove completed/failed sessions from active list
     pub fn cleanup_sessions(&self) {
@@ -203,6 +213,7 @@ impl SessionTracker {
         }
         Ok(())
     }
+    // DRY:FN:log_path
 
     /// Get log file path
     pub fn log_path(&self) -> &PathBuf {

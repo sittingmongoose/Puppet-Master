@@ -33,6 +33,7 @@ pub struct TerminalLine {
 }
 
 impl LineType {
+    // DRY:WIDGET:color
     pub fn color(&self) -> Color {
         match self {
             LineType::Stdout => colors::ACID_LIME,
@@ -41,6 +42,7 @@ impl LineType {
             LineType::Info => Color::from_rgb(0.6, 0.6, 0.6),
         }
     }
+    // DRY:WIDGET:prefix
 
     pub fn prefix(&self) -> &'static str {
         match self {

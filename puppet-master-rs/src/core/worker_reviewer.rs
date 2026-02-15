@@ -21,6 +21,7 @@ pub struct WorkerReviewer {
 }
 
 impl WorkerReviewer {
+    // DRY:FN:new
     /// Create new worker/reviewer coordinator
     pub fn new(enabled: bool, max_review_cycles: u32, criteria: ReviewCriteria) -> Self {
         Self {
@@ -29,6 +30,7 @@ impl WorkerReviewer {
             criteria,
         }
     }
+    // DRY:FN:with_defaults
 
     /// Create with defaults
     pub fn with_defaults() -> Self {
@@ -44,11 +46,13 @@ impl WorkerReviewer {
             },
         )
     }
+    // DRY:FN:is_enabled
 
     /// Check if review is enabled
     pub fn is_enabled(&self) -> bool {
         self.enabled
     }
+    // DRY:FN:should_review
 
     /// Determine if work should go to reviewer
     pub fn should_review(&self, signal: &CompletionSignal, cycle: u32) -> bool {
@@ -62,6 +66,7 @@ impl WorkerReviewer {
 
         matches!(signal, CompletionSignal::Complete)
     }
+    // DRY:FN:build_review_prompt
 
     /// Build reviewer prompt
     pub fn build_review_prompt(
@@ -133,6 +138,7 @@ impl WorkerReviewer {
 
         prompt
     }
+    // DRY:FN:parse_review_result
 
     /// Parse review result from completion signal
     pub fn parse_review_result(&self, signal: &CompletionSignal) -> ReviewResult {
@@ -154,6 +160,7 @@ impl WorkerReviewer {
             ),
         }
     }
+    // DRY:FN:build_revision_prompt
 
     /// Build worker revision prompt
     pub fn build_revision_prompt(
@@ -189,11 +196,13 @@ impl WorkerReviewer {
 
         prompt
     }
+    // DRY:FN:is_max_cycles_reached
 
     /// Check if max review cycles reached
     pub fn is_max_cycles_reached(&self, cycle: u32) -> bool {
         cycle >= self.max_review_cycles
     }
+    // DRY:FN:criteria
 
     /// Get review criteria
     pub fn criteria(&self) -> &ReviewCriteria {

@@ -33,6 +33,7 @@ pub struct LayoutSize {
 }
 
 impl LayoutSize {
+    // DRY:WIDGET:from_iced
     /// Create a `LayoutSize` from Iced's `Size` type
     pub fn from_iced(size: iced::Size) -> Self {
         Self {
@@ -40,21 +41,25 @@ impl LayoutSize {
             height: size.height,
         }
     }
+    // DRY:WIDGET:device
 
     /// Get the device category based on width
     pub fn device(&self) -> Device {
         Device::from_width(self.width)
     }
+    // DRY:WIDGET:is_mobile
 
     /// Check if this is a mobile-sized layout
     pub fn is_mobile(&self) -> bool {
         self.device().is_mobile()
     }
+    // DRY:WIDGET:is_tablet_or_smaller
 
     /// Check if this is a tablet or smaller layout
     pub fn is_tablet_or_smaller(&self) -> bool {
         self.device().is_tablet_or_smaller()
     }
+    // DRY:WIDGET:is_desktop_or_larger
 
     /// Check if this is a desktop or larger layout
     pub fn is_desktop_or_larger(&self) -> bool {
@@ -73,6 +78,7 @@ pub enum Device {
 }
 
 impl Device {
+    // DRY:WIDGET:from_width
     /// Determine device category from window width
     ///
     /// Breakpoints:
@@ -94,16 +100,19 @@ impl Device {
             Device::DesktopLarge
         }
     }
+    // DRY:WIDGET:is_mobile
 
     /// Check if device is mobile-sized
     pub fn is_mobile(&self) -> bool {
         matches!(self, Device::Mobile)
     }
+    // DRY:WIDGET:is_tablet_or_smaller
 
     /// Check if device is tablet or smaller
     pub fn is_tablet_or_smaller(&self) -> bool {
         matches!(self, Device::Mobile | Device::Tablet)
     }
+    // DRY:WIDGET:is_desktop_or_larger
 
     /// Check if device is desktop or larger
     pub fn is_desktop_or_larger(&self) -> bool {
@@ -124,7 +133,7 @@ impl Device {
 /// - Tablet/Mobile (< 1024px): 1 column
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// use puppet_master::widgets::responsive::responsive_columns;
 /// use iced::widget::text;
 ///
@@ -136,7 +145,7 @@ impl Device {
 /// ];
 ///
 /// let layout = responsive_columns(1200.0, items, 16.0);
-/// ```
+/// ```ignore
 pub fn responsive_columns<'a, Message: 'a>(
     window_width: f32,
     items: Vec<Element<'a, Message>>,

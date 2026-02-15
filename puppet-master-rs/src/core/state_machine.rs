@@ -21,6 +21,7 @@ pub struct StateTransition<S: Clone> {
 }
 
 impl<S: Clone> StateTransition<S> {
+    // DRY:FN:new
     pub fn new(from_state: S, to_state: S, event: impl Into<String>) -> Self {
         Self {
             from_state,
@@ -46,6 +47,7 @@ pub struct OrchestratorStateMachine {
 }
 
 impl OrchestratorStateMachine {
+    // DRY:FN:new
     /// Create new orchestrator state machine in Idle state
     pub fn new() -> Self {
         Self {
@@ -53,16 +55,19 @@ impl OrchestratorStateMachine {
             history: Vec::new(),
         }
     }
+    // DRY:FN:current_state
 
     /// Get current state
     pub fn current_state(&self) -> OrchestratorState {
         self.current_state
     }
+    // DRY:FN:history
 
     /// Get transition history
     pub fn history(&self) -> &[StateTransition<OrchestratorState>] {
         &self.history
     }
+    // DRY:FN:send
 
     /// Send event to state machine, triggering transition if valid
     pub fn send(&mut self, event: OrchestratorEvent) -> Result<OrchestratorState> {
@@ -120,21 +125,25 @@ impl OrchestratorStateMachine {
         self.history.push(transition);
         self.current_state = new_state;
     }
+    // DRY:FN:is_executing
 
     /// Check if currently in executing state
     pub fn is_executing(&self) -> bool {
         self.current_state == OrchestratorState::Executing
     }
+    // DRY:FN:is_paused
 
     /// Check if currently paused
     pub fn is_paused(&self) -> bool {
         self.current_state == OrchestratorState::Paused
     }
+    // DRY:FN:is_complete
 
     /// Check if complete
     pub fn is_complete(&self) -> bool {
         self.current_state == OrchestratorState::Complete
     }
+    // DRY:FN:is_error
 
     /// Check if in error state
     pub fn is_error(&self) -> bool {
@@ -212,6 +221,7 @@ pub struct TierStateMachine {
 }
 
 impl TierStateMachine {
+    // DRY:FN:new
     /// Create new tier state machine
     pub fn new(tier_id: String, tier_type: TierType, max_iterations: u32) -> Self {
         Self {
@@ -223,41 +233,49 @@ impl TierStateMachine {
             history: Vec::new(),
         }
     }
+    // DRY:FN:current_state
 
     /// Get current state
     pub fn current_state(&self) -> TierState {
         self.current_state
     }
+    // DRY:FN:current_iteration
 
     /// Get current iteration (0-based, increments when starting iteration)
     pub fn current_iteration(&self) -> u32 {
         self.current_iteration
     }
+    // DRY:FN:max_iterations
 
     /// Get max iterations
     pub fn max_iterations(&self) -> u32 {
         self.max_iterations
     }
+    // DRY:FN:tier_id
 
     /// Get tier ID
     pub fn tier_id(&self) -> &str {
         &self.tier_id
     }
+    // DRY:FN:tier_type
 
     /// Get tier type
     pub fn tier_type(&self) -> TierType {
         self.tier_type
     }
+    // DRY:FN:history
 
     /// Get transition history
     pub fn history(&self) -> &[StateTransition<TierState>] {
         &self.history
     }
+    // DRY:FN:is_max_iterations_reached
 
     /// Check if max iterations reached
     pub fn is_max_iterations_reached(&self) -> bool {
         self.current_iteration >= self.max_iterations
     }
+    // DRY:FN:send
 
     /// Send event to state machine
     pub fn send(&mut self, event: TierEvent) -> Result<TierState> {
@@ -347,21 +365,25 @@ impl TierStateMachine {
         self.history.push(transition);
         self.current_state = new_state;
     }
+    // DRY:FN:is_terminal
 
     /// Check if tier is in a terminal state
     pub fn is_terminal(&self) -> bool {
         matches!(self.current_state, TierState::Passed | TierState::Failed)
     }
+    // DRY:FN:is_running
 
     /// Check if tier is running
     pub fn is_running(&self) -> bool {
         matches!(self.current_state, TierState::Running | TierState::Retrying)
     }
+    // DRY:FN:needs_escalation
 
     /// Check if tier needs escalation
     pub fn needs_escalation(&self) -> bool {
         self.current_state == TierState::Escalated
     }
+    // DRY:FN:reset
 
     /// Reset to pending state (clears iteration count)
     pub fn reset(&mut self) -> Result<()> {

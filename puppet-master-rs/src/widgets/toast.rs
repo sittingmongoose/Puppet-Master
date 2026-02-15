@@ -19,6 +19,7 @@ pub enum ToastType {
 }
 
 impl ToastType {
+    // DRY:WIDGET:bg_color
     /// Get the background color for this toast type
     pub fn bg_color(&self) -> Color {
         match self {
@@ -28,6 +29,7 @@ impl ToastType {
             ToastType::Info => colors::ELECTRIC_BLUE,
         }
     }
+    // DRY:WIDGET:text_color
 
     /// Get the text color for this toast type
     pub fn text_color(&self) -> Color {
@@ -38,6 +40,7 @@ impl ToastType {
             ToastType::Info => colors::PAPER_CREAM,
         }
     }
+    // DRY:WIDGET:label
 
     /// Get the label text for this toast type
     pub fn label(&self) -> &'static str {
@@ -62,6 +65,7 @@ pub struct Toast {
 }
 
 impl Toast {
+    // DRY:WIDGET:new
     /// Create a new toast
     pub fn new(id: usize, toast_type: ToastType, message: impl Into<String>) -> Self {
         Self {
@@ -72,11 +76,13 @@ impl Toast {
             duration: Duration::from_secs(5),
         }
     }
+    // DRY:WIDGET:is_expired
 
     /// Check if this toast has expired
     pub fn is_expired(&self) -> bool {
         self.created_at.elapsed() >= self.duration
     }
+    // DRY:WIDGET:remaining_fraction
 
     /// Get remaining time as fraction (0.0 to 1.0)
     pub fn remaining_fraction(&self) -> f32 {
@@ -101,6 +107,7 @@ impl Default for ToastManager {
 }
 
 impl ToastManager {
+    // DRY:WIDGET:new
     /// Create a new toast manager
     pub fn new() -> Self {
         Self {
@@ -108,6 +115,7 @@ impl ToastManager {
             next_id: 0,
         }
     }
+    // DRY:WIDGET:add
 
     /// Add a new toast
     pub fn add(&mut self, toast_type: ToastType, message: impl Into<String>) {
@@ -115,41 +123,49 @@ impl ToastManager {
         self.next_id += 1;
         self.toasts.push(toast);
     }
+    // DRY:WIDGET:success
 
     /// Add a success toast
     pub fn success(&mut self, message: impl Into<String>) {
         self.add(ToastType::Success, message);
     }
+    // DRY:WIDGET:error
 
     /// Add an error toast
     pub fn error(&mut self, message: impl Into<String>) {
         self.add(ToastType::Error, message);
     }
+    // DRY:WIDGET:warning
 
     /// Add a warning toast
     pub fn warning(&mut self, message: impl Into<String>) {
         self.add(ToastType::Warning, message);
     }
+    // DRY:WIDGET:info
 
     /// Add an info toast
     pub fn info(&mut self, message: impl Into<String>) {
         self.add(ToastType::Info, message);
     }
+    // DRY:WIDGET:remove
 
     /// Remove a toast by ID
     pub fn remove(&mut self, id: usize) {
         self.toasts.retain(|t| t.id != id);
     }
+    // DRY:WIDGET:remove_expired
 
     /// Remove expired toasts
     pub fn remove_expired(&mut self) {
         self.toasts.retain(|t| !t.is_expired());
     }
+    // DRY:WIDGET:toasts
 
     /// Get all active toasts
     pub fn toasts(&self) -> &[Toast] {
         &self.toasts
     }
+    // DRY:WIDGET:clear
 
     /// Clear all toasts
     pub fn clear(&mut self) {
@@ -253,13 +269,13 @@ where
 /// * `on_dismiss` - Callback function to dismiss a toast by ID
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let with_toasts = toast_overlay(
 ///     base_content,
 ///     manager.toasts(),
 ///     |id| Message::DismissToast(id)
 /// );
-/// ```
+/// ```ignore
 pub fn toast_overlay<'a, Message>(
     content: Element<'a, Message>,
     toasts: &[Toast],

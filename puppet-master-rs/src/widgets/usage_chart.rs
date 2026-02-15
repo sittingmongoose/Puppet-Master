@@ -26,6 +26,7 @@ pub struct UsageChart {
 }
 
 impl UsageChart {
+    // DRY:WIDGET:new
     /// Create a new usage chart
     pub fn new(data: Vec<UsageData>, width: f32, height: f32) -> Self {
         Self {

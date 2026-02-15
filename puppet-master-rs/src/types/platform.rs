@@ -38,14 +38,12 @@ impl Platform {
     // DRY:FN:default_cli_name
     /// Returns the default CLI binary name for this platform.
     pub fn default_cli_name(&self) -> &'static str {
-        match self {
-            Platform::Cursor => "agent",
-            Platform::Codex => "codex",
-            Platform::Claude => "claude",
-            Platform::Gemini => "gemini",
-            Platform::Copilot => "copilot",
-        }
+        crate::platforms::platform_specs::cli_binary_names(*self)
+            .first()
+            .copied()
+            .expect("platform_specs must define at least one CLI binary name")
     }
+    // DRY:FN:resolve_cli_command
 
     /// DRY:FN:resolve_cli_command — Resolve the best available CLI command using platform_specs.
     pub fn resolve_cli_command(&self) -> String {
@@ -197,6 +195,7 @@ impl CliPaths {
 }
 
 impl crate::config::gui_config::CliPaths {
+    // DRY:FN:get
     /// DRY:FN:gui_cli_paths_get — Compatibility accessor for GUI CLI paths.
     pub fn get(&self, platform: Platform) -> Option<&str> {
         let path = match platform {

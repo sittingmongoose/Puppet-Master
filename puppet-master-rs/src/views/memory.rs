@@ -21,6 +21,7 @@ pub enum MemorySection {
 }
 
 impl MemorySection {
+    // DRY:FN:as_str
     pub fn as_str(&self) -> &str {
         match self {
             MemorySection::Overview => "Overview",
@@ -31,6 +32,7 @@ impl MemorySection {
             MemorySection::Full => "Full Document",
         }
     }
+    // DRY:FN:all
 
     pub fn all() -> Vec<Self> {
         vec![

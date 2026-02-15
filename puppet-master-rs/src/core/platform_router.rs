@@ -142,15 +142,18 @@ pub struct PlatformRouter {
 }
 
 impl PlatformRouter {
+    // DRY:FN:new
     /// Create new platform router
     pub fn new(config: PlatformRouterConfig) -> Self {
         Self { config }
     }
+    // DRY:FN:with_defaults
 
     /// Create with default configuration
     pub fn with_defaults() -> Self {
         Self::new(PlatformRouterConfig::default())
     }
+    // DRY:FN:route
 
     /// Route a task to the best available platform
     ///
@@ -257,11 +260,13 @@ impl PlatformRouter {
             reason,
         })
     }
+    // DRY:FN:update_capabilities
 
     /// Update platform capabilities
     pub fn update_capabilities(&mut self, platform: Platform, capabilities: PlatformCapabilities) {
         self.config.capabilities.insert(platform, capabilities);
     }
+    // DRY:FN:is_platform_available
 
     /// Check if platform is available
     pub fn is_platform_available(&self, platform: Platform) -> bool {
@@ -271,6 +276,7 @@ impl PlatformRouter {
             .map(|c| c.available)
             .unwrap_or(false)
     }
+    // DRY:FN:get_health_score
 
     /// Get platform health score
     pub fn get_health_score(&self, platform: Platform) -> u8 {

@@ -20,6 +20,7 @@ pub struct EscalationEngine {
 }
 
 impl EscalationEngine {
+    // DRY:FN:new
     /// Create new escalation engine
     pub fn new(max_self_fix_attempts: u32, max_kick_down_attempts: u32) -> Self {
         Self {
@@ -27,11 +28,13 @@ impl EscalationEngine {
             max_kick_down_attempts,
         }
     }
+    // DRY:FN:with_defaults
 
     /// Create with default settings
     pub fn with_defaults() -> Self {
         Self::new(2, 1)
     }
+    // DRY:FN:determine_action
 
     /// Determine escalation action based on failure context
     pub fn determine_action(
@@ -98,6 +101,7 @@ impl EscalationEngine {
             }
         }
     }
+    // DRY:FN:classify_failure
 
     /// Classify failure from completion signal
     pub fn classify_failure(&self, signal: &CompletionSignal) -> FailureType {
@@ -141,6 +145,7 @@ impl EscalationEngine {
             FailureType::Unknown
         }
     }
+    // DRY:FN:build_escalation_prompt
 
     /// Build escalation prompt
     pub fn build_escalation_prompt(
@@ -204,6 +209,7 @@ impl EscalationEngine {
 
         prompt
     }
+    // DRY:FN:should_auto_retry
 
     /// Check if should auto-retry
     pub fn should_auto_retry(&self, failure_type: &FailureType) -> bool {

@@ -13,6 +13,7 @@ use std::path::{Path, PathBuf};
 use std::process::Stdio;
 use tokio::process::Command;
 use which::which;
+// DRY:DATA:PlatformDetector
 
 /// Platform detector for finding installed CLI tools
 pub struct PlatformDetector;
@@ -301,6 +302,7 @@ impl PlatformDetector {
         name.eq_ignore_ascii_case("gh") || name.eq_ignore_ascii_case("gh.exe")
     }
 }
+// DRY:DATA:PlatformDetectionTrace
 
 /// Detection trace data for setup UI and diagnostics.
 #[derive(Debug, Clone)]
@@ -310,6 +312,7 @@ pub struct PlatformDetectionTrace {
     /// All path probes used during detection, including misses.
     pub searched_paths: Vec<String>,
 }
+// DRY:DATA:DetectedPlatform
 
 /// Information about a detected platform
 #[derive(Debug, Clone)]
@@ -334,15 +337,18 @@ pub struct DetectedPlatform {
 }
 
 impl DetectedPlatform {
+    // DRY:FN:semver_version
     /// Parses version as semver
     pub fn semver_version(&self) -> Option<Version> {
         self.version.as_ref().and_then(|v| Version::parse(v).ok())
     }
+    // DRY:FN:executable_path
 
     /// Gets the executable path as a string
     pub fn executable_path(&self) -> String {
         self.cli_path.to_string_lossy().to_string()
     }
+    // DRY:FN:meets_minimum_version
 
     /// Checks if version meets minimum requirement
     pub fn meets_minimum_version(&self, minimum: &str) -> bool {
@@ -354,6 +360,7 @@ impl DetectedPlatform {
         false
     }
 }
+// DRY:DATA:InstallationStatus
 
 /// Platform installation status
 #[derive(Debug, Clone)]
@@ -375,6 +382,7 @@ pub struct InstallationStatus {
 }
 
 impl InstallationStatus {
+    // DRY:FN:from_detected
     /// Creates status for a detected platform
     pub fn from_detected(detected: &DetectedPlatform) -> Self {
         Self {
@@ -385,6 +393,7 @@ impl InstallationStatus {
             recommendations: Vec::new(),
         }
     }
+    // DRY:FN:not_installed
 
     /// Creates status for a not-installed platform
     pub fn not_installed(platform: Platform) -> Self {

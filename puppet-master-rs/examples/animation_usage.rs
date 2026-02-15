@@ -6,9 +6,9 @@
 //! - Responsive layout
 //! - Design token spacing
 
-use crate::app::Message;
-use crate::theme::{AppTheme, tokens};
-use crate::widgets::{
+use puppet_master::app::Message;
+use puppet_master::theme::{AppTheme, tokens};
+use puppet_master::widgets::{
     ProgressSize, ProgressVariant, TransitionState, animated_progress_bar, fade_color,
 };
 use iced::widget::{column, container, row, text};
@@ -84,7 +84,7 @@ pub fn example_view<'a>(
     // PART 3: Responsive Layout
     // ═══════════════════════════════════════════════════════════════════════
 
-    let responsive_section = if window_width < 768.0 {
+    let responsive_section: Element<'a, Message> = if window_width < 768.0 {
         // Mobile: Single column, compact spacing
         column![
             text("Mobile Layout")
@@ -230,6 +230,8 @@ The subscription system automatically handles timing:
 You don't need to do anything special - just pass `self.animation_time`
 to animated widgets and they handle the rest!
 */
+
+fn main() {}
 
 #[cfg(test)]
 mod tests {

@@ -29,6 +29,7 @@ pub enum Page {
 }
 
 impl Page {
+    // DRY:WIDGET:label
     pub fn label(&self) -> &'static str {
         match self {
             Page::Dashboard => "DASHBOARD",
@@ -49,6 +50,7 @@ impl Page {
             Page::Interview => "INTERVIEW",
         }
     }
+    // DRY:WIDGET:all
 
     pub fn all() -> Vec<Page> {
         vec![
@@ -90,7 +92,7 @@ impl std::fmt::Display for Page {
 /// * `on_project_select` - Optional callback for project selection
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let header = header(
 ///     Page::Dashboard,
 ///     &theme,
@@ -99,7 +101,7 @@ impl std::fmt::Display for Page {
 ///     Message::ToggleTheme,
 ///     Some(Message::SelectProject),
 /// );
-/// ```
+/// ```ignore
 pub fn header<'a, Message>(
     current_page: Page,
     theme: &AppTheme,

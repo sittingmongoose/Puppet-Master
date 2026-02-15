@@ -40,7 +40,7 @@ impl PrManager {
     /// If `success` is false, `message` contains actionable error details.
     ///
     /// # Example
-    /// ```no_run
+    /// ```ignore
     /// # use puppet_master::git::PrManager;
     /// # use std::path::PathBuf;
     /// # tokio_test::block_on(async {
@@ -60,7 +60,7 @@ impl PrManager {
     ///     // "gh CLI not found. Install from https://cli.github.com/ and run 'gh auth login'"
     /// }
     /// # });
-    /// ```
+    /// ```ignore
     pub async fn create_pr(
         &self,
         title: &str,

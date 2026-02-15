@@ -31,6 +31,7 @@ pub struct ExecutionEngine {
 }
 
 impl ExecutionEngine {
+    // DRY:FN:new
     /// Create new execution engine
     pub fn new(
         event_sender: Sender<OrchestratorEvent>,

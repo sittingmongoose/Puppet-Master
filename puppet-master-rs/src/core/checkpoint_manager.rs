@@ -62,6 +62,7 @@ pub struct CheckpointManager {
 }
 
 impl CheckpointManager {
+    // DRY:FN:new
     /// Create new checkpoint manager
     pub fn new(config: CheckpointManagerConfig) -> Self {
         let persistence = StatePersistence::new(
@@ -137,6 +138,7 @@ impl CheckpointManager {
     pub async fn get_latest(&self) -> Result<Option<Checkpoint>> {
         self.persistence.get_latest_checkpoint().await
     }
+    // DRY:FN:should_auto_checkpoint
 
     /// Check if auto-checkpoint should be created
     ///
@@ -200,6 +202,7 @@ impl CheckpointManager {
 
         Ok(None)
     }
+    // DRY:FN:get_recovery_suggestions
 
     /// Get recovery suggestions for a checkpoint
     pub fn get_recovery_suggestions(&self, checkpoint: &Checkpoint) -> Vec<String> {
@@ -260,11 +263,13 @@ impl CheckpointManager {
 
         suggestions
     }
+    // DRY:FN:update_last_checkpoint_time
 
     /// Update last checkpoint time (for tracking)
     pub fn update_last_checkpoint_time(&mut self) {
         self.last_checkpoint = Some(Utc::now());
     }
+    // DRY:FN:time_since_last_checkpoint
 
     /// Get time since last checkpoint
     pub fn time_since_last_checkpoint(&self) -> Option<i64> {

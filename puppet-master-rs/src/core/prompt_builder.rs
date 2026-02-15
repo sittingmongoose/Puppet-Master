@@ -24,6 +24,7 @@ pub struct PromptBuilder {
 }
 
 impl PromptBuilder {
+    // DRY:FN:new
     /// Create new prompt builder
     pub fn new() -> Self {
         Self {
@@ -32,24 +33,28 @@ impl PromptBuilder {
             prd_path: None,
         }
     }
+    // DRY:FN:with_agents_path
 
     /// Set AGENTS.md path
     pub fn with_agents_path(mut self, path: std::path::PathBuf) -> Self {
         self.agents_path = Some(path);
         self
     }
+    // DRY:FN:with_progress_path
 
     /// Set progress.txt path
     pub fn with_progress_path(mut self, path: std::path::PathBuf) -> Self {
         self.progress_path = Some(path);
         self
     }
+    // DRY:FN:with_prd_path
 
     /// Set PRD path
     pub fn with_prd_path(mut self, path: std::path::PathBuf) -> Self {
         self.prd_path = Some(path);
         self
     }
+    // DRY:FN:build_prompt
 
     /// Build prompt for iteration
     pub fn build_prompt(
@@ -169,6 +174,7 @@ impl PromptBuilder {
 
         Ok(prompt)
     }
+    // DRY:FN:build_simple_prompt
 
     /// Build simple prompt without full context (for testing or minimal mode)
     pub fn build_simple_prompt(
@@ -319,6 +325,7 @@ impl PromptBuilder {
             Ok(Some(sections.join("\n")))
         }
     }
+    // DRY:FN:build_gate_prompt
 
     /// Build gate validation prompt
     pub fn build_gate_prompt(

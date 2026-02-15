@@ -3,11 +3,12 @@
 //! Displays past orchestration sessions with filtering and details.
 
 use crate::app::Message;
-use crate::theme::{AppTheme, colors, fonts, tokens};
+use crate::theme::{AppTheme, fonts, tokens};
 use crate::widgets::*;
+use crate::widgets::status_badge::status_badge_with_text;
 use chrono::{DateTime, Utc};
 use iced::widget::{Space, column, container, row, scrollable, text};
-use iced::{Border, Element, Length};
+use iced::{Element, Length};
 
 // DRY:DATA:SessionInfo
 /// Session information
@@ -36,6 +37,7 @@ pub enum SessionStatus {
 }
 
 impl SessionStatus {
+    // DRY:FN:as_str
     pub fn as_str(&self) -> &str {
         match self {
             SessionStatus::Running => "Running",
@@ -45,15 +47,7 @@ impl SessionStatus {
         }
     }
 
-    pub fn color(&self) -> iced::Color {
-        match self {
-            SessionStatus::Running => colors::ELECTRIC_BLUE,
-            SessionStatus::Completed => colors::ACID_LIME,
-            SessionStatus::Failed => colors::HOT_MAGENTA,
-            SessionStatus::Cancelled => colors::SAFETY_ORANGE,
-        }
-    }
-
+    // DRY:FN:all
     pub fn all() -> Vec<Self> {
         vec![
             Self::Running,
@@ -227,24 +221,14 @@ pub fn view<'a>(
 
             let session_card = column![
                 row![
-                    container(
-                        text(session.status.as_str())
-                            .size(tokens::font_size::SM)
-                            .color(colors::INK_BLACK)
-                    )
+                    container(status_badge_with_text(
+                        theme,
+                        session.status.as_str(),
+                        session.status.as_str()
+                    ))
                     .padding(tokens::spacing::SM)
                     .width(Length::Fixed(110.0))
-                    .style(move |_theme: &iced::Theme| {
-                        iced::widget::container::Style {
-                            background: Some(iced::Background::Color(session.status.color())),
-                            border: Border {
-                                color: colors::INK_BLACK,
-                                width: tokens::borders::MEDIUM,
-                                radius: tokens::radii::NONE.into(),
-                            },
-                            ..Default::default()
-                        }
-                    }),
+                    .center_x(Length::Shrink),
                     column![
                         text(&session.id)
                             .size(tokens::font_size::MD)

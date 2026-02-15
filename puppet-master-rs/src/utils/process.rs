@@ -50,11 +50,13 @@ impl ProcessRegistry {
             pids: Arc::new(Mutex::new(HashSet::new())),
         }
     }
+    // DRY:HELPER:global
 
     /// Get the global process registry singleton
     pub fn global() -> &'static ProcessRegistry {
         &GLOBAL_REGISTRY
     }
+    // DRY:HELPER:register
 
     /// Register a process ID
     pub fn register(&self, pid: u32) {
@@ -62,6 +64,7 @@ impl ProcessRegistry {
         pids.insert(pid);
         log::debug!("Registered process {}", pid);
     }
+    // DRY:HELPER:unregister
 
     /// Unregister a process ID
     pub fn unregister(&self, pid: u32) {
@@ -69,12 +72,14 @@ impl ProcessRegistry {
         pids.remove(&pid);
         log::debug!("Unregistered process {}", pid);
     }
+    // DRY:HELPER:active_pids
 
     /// Get all active PIDs
     pub fn active_pids(&self) -> Vec<u32> {
         let pids = self.pids.lock().unwrap();
         pids.iter().copied().collect()
     }
+    // DRY:HELPER:kill_all
 
     /// Kill all registered processes immediately (no grace period)
     pub fn kill_all(&self) -> Result<()> {
@@ -94,6 +99,7 @@ impl ProcessRegistry {
 
         Ok(())
     }
+    // DRY:HELPER:kill_all_graceful
 
     /// Kill all registered processes gracefully with timeout
     pub fn kill_all_graceful(&self, timeout: Duration) -> Result<()> {
@@ -183,16 +189,19 @@ impl ProcessRegistry {
         );
         Ok(())
     }
+    // DRY:HELPER:register_pid
 
     /// Legacy method for backward compatibility
     pub fn register_pid(&self, pid: u32) {
         self.register(pid);
     }
+    // DRY:HELPER:unregister_pid
 
     /// Legacy method for backward compatibility
     pub fn unregister_pid(&self, pid: u32) {
         self.unregister(pid);
     }
+    // DRY:HELPER:get_pids
 
     /// Legacy method for backward compatibility
     pub fn get_pids(&self) -> Vec<u32> {
@@ -308,6 +317,7 @@ pub struct ProcessDropGuard {
 }
 
 impl ProcessDropGuard {
+    // DRY:HELPER:new
     /// Create a new drop guard for the given PID
     pub fn new(pid: u32) -> Self {
         let registry = ProcessRegistry::global();
@@ -319,6 +329,7 @@ impl ProcessDropGuard {
             grace_period: Duration::from_millis(500),
         }
     }
+    // DRY:HELPER:with_grace_period
 
     /// Create a new drop guard with a custom grace period
     pub fn with_grace_period(pid: u32, grace_period: Duration) -> Self {
@@ -331,11 +342,13 @@ impl ProcessDropGuard {
             grace_period,
         }
     }
+    // DRY:HELPER:pid
 
     /// Get the process ID
     pub fn pid(&self) -> u32 {
         self.pid
     }
+    // DRY:HELPER:disarm
 
     /// Explicitly disarm the guard without killing the process
     pub fn disarm(self) {

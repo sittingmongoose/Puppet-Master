@@ -36,6 +36,7 @@ pub enum InputSize {
 }
 
 impl InputSize {
+    // DRY:WIDGET:padding
     /// Get padding for this size
     pub fn padding(&self) -> u16 {
         match self {
@@ -44,6 +45,7 @@ impl InputSize {
             InputSize::Large => 12,
         }
     }
+    // DRY:WIDGET:font_size
 
     /// Get font size for this input size
     pub fn font_size(&self) -> f32 {

@@ -46,10 +46,12 @@ pub struct DependencyAnalyzer {
 }
 
 impl DependencyAnalyzer {
+    // DRY:FN:new
     /// Create new analyzer
     pub fn new() -> Self {
         Self {}
     }
+    // DRY:FN:build_graph
 
     /// Build dependency graph from task dependencies
     ///
@@ -129,6 +131,7 @@ impl DependencyAnalyzer {
             cycle_path: None,
         })
     }
+    // DRY:FN:get_parallelizable_groups
 
     /// Get parallelizable groups (tasks that can run concurrently)
     ///
@@ -141,6 +144,7 @@ impl DependencyAnalyzer {
         let graph = self.build_graph(dependencies)?;
         Ok(graph.levels)
     }
+    // DRY:FN:topological_sort
 
     /// Perform topological sort
     ///
@@ -152,6 +156,7 @@ impl DependencyAnalyzer {
         let graph = self.build_graph(dependencies)?;
         Ok(graph.levels.into_iter().flatten().collect())
     }
+    // DRY:FN:is_ready_to_execute
 
     /// Check if task is ready to execute given completed tasks
     ///
@@ -167,6 +172,7 @@ impl DependencyAnalyzer {
     ) -> bool {
         dependencies.iter().all(|dep| completed.contains(dep))
     }
+    // DRY:FN:get_ready_tasks
 
     /// Get tasks ready to execute
     ///
@@ -190,6 +196,7 @@ impl DependencyAnalyzer {
             .map(|(id, _)| id.clone())
             .collect()
     }
+    // DRY:FN:validate
 
     /// Validate dependencies without building full graph
     ///

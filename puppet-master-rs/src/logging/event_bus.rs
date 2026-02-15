@@ -86,6 +86,7 @@ impl Default for EventBus {
 
 // DRY:HELPER:BroadcastEventBus
 // Better implementation using broadcast pattern
+// DRY:HELPER:BroadcastEventBus
 /// Improved event bus with proper broadcast semantics
 #[derive(Clone)]
 pub struct BroadcastEventBus {

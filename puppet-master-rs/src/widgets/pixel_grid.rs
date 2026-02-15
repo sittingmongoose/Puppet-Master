@@ -25,6 +25,7 @@ pub struct PixelGrid {
 }
 
 impl PixelGrid {
+    // DRY:WIDGET:new
     /// Create a new pixel grid overlay
     ///
     /// # Arguments
@@ -39,6 +40,7 @@ impl PixelGrid {
             opacity,
         }
     }
+    // DRY:WIDGET:update
 
     /// Update the grid parameters (useful for theme changes)
     pub fn update(&mut self, line_color: Color, opacity: f32, grid_spacing: f32) {
@@ -53,6 +55,7 @@ impl PixelGrid {
             self.cache.clear();
         }
     }
+    // DRY:WIDGET:clear_cache
 
     /// Clear the cache (call when window resizes)
     pub fn clear_cache(&mut self) {
@@ -137,6 +140,7 @@ pub struct ScanlineOverlay {
 }
 
 impl ScanlineOverlay {
+    // DRY:WIDGET:new
     /// Create a new scanline overlay
     ///
     /// # Arguments
@@ -151,6 +155,7 @@ impl ScanlineOverlay {
             opacity,
         }
     }
+    // DRY:WIDGET:update
 
     /// Update the scanline parameters (useful for theme changes)
     pub fn update(&mut self, line_color: Color, opacity: f32, spacing: f32) {
@@ -165,6 +170,7 @@ impl ScanlineOverlay {
             self.cache.clear();
         }
     }
+    // DRY:WIDGET:clear_cache
 
     /// Clear the cache (call when window resizes)
     pub fn clear_cache(&mut self) {
@@ -238,6 +244,7 @@ pub struct RetroOverlay {
 }
 
 impl RetroOverlay {
+    // DRY:WIDGET:new
     /// Create a new combined retro overlay with theme-aware defaults
     ///
     /// # Arguments
@@ -254,6 +261,7 @@ impl RetroOverlay {
             scanlines: ScanlineOverlay::new(ink_color, scanline_opacity, 2.0),
         }
     }
+    // DRY:WIDGET:update
 
     /// Update for theme changes
     pub fn update(&mut self, is_dark: bool, ink_color: Color) {
@@ -263,17 +271,20 @@ impl RetroOverlay {
         self.pixel_grid.update(ink_color, grid_opacity, 3.0);
         self.scanlines.update(ink_color, scanline_opacity, 2.0);
     }
+    // DRY:WIDGET:clear_cache
 
     /// Clear caches (call when window resizes)
     pub fn clear_cache(&mut self) {
         self.pixel_grid.clear_cache();
         self.scanlines.clear_cache();
     }
+    // DRY:WIDGET:pixel_grid
 
     /// Get the pixel grid reference
     pub fn pixel_grid(&self) -> &PixelGrid {
         &self.pixel_grid
     }
+    // DRY:WIDGET:scanlines
 
     /// Get the scanlines reference
     pub fn scanlines(&self) -> &ScanlineOverlay {

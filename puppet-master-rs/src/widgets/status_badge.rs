@@ -28,6 +28,7 @@ pub enum Status {
 }
 
 impl Status {
+    // DRY:WIDGET:color
     /// Get the color for this status
     pub fn color(&self) -> Color {
         match self {
@@ -40,6 +41,7 @@ impl Status {
             Status::Warning => colors::STATUS_PAUSED,
         }
     }
+    // DRY:WIDGET:label
 
     /// Get label text for this status
     pub fn label(&self) -> &'static str {
@@ -57,6 +59,7 @@ impl Status {
             Status::Warning => "Warning",
         }
     }
+    // DRY:WIDGET:should_pulse
 
     /// Check if this status should pulse/animate
     pub fn should_pulse(&self) -> bool {

@@ -32,6 +32,7 @@ pub enum TierNodeType {
 }
 
 impl TierNodeType {
+    // DRY:FN:icon
     pub fn icon(&self) -> &str {
         match self {
             TierNodeType::Phase => "PH",
@@ -39,6 +40,7 @@ impl TierNodeType {
             TierNodeType::Subtask => "ST",
         }
     }
+    // DRY:FN:color
 
     pub fn color(&self) -> iced::Color {
         match self {

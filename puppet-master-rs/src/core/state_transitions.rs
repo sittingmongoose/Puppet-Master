@@ -42,6 +42,7 @@ pub struct StateTransitions {
 }
 
 impl StateTransitions {
+    // DRY:FN:new
     /// Create new state transition tables
     pub fn new() -> Self {
         let orchestrator_transitions = Self::orchestrator_transition_table();
@@ -72,6 +73,7 @@ impl StateTransitions {
             tier_lookup,
         }
     }
+    // DRY:FN:is_valid_orchestrator_transition
 
     /// Check if orchestrator transition is valid
     pub fn is_valid_orchestrator_transition(
@@ -84,6 +86,7 @@ impl StateTransitions {
             .map(|valid_states| valid_states.contains(&to))
             .unwrap_or(false)
     }
+    // DRY:FN:is_valid_tier_transition
 
     /// Check if tier transition is valid
     pub fn is_valid_tier_transition(&self, from: TierState, to: TierState) -> bool {
@@ -92,6 +95,7 @@ impl StateTransitions {
             .map(|valid_states| valid_states.contains(&to))
             .unwrap_or(false)
     }
+    // DRY:FN:get_valid_orchestrator_states
 
     /// Get valid next orchestrator states from current state
     pub fn get_valid_orchestrator_states(&self, from: OrchestratorState) -> Vec<OrchestratorState> {
@@ -100,6 +104,7 @@ impl StateTransitions {
             .cloned()
             .unwrap_or_default()
     }
+    // DRY:FN:get_valid_tier_states
 
     /// Get valid next tier states from current state
     pub fn get_valid_tier_states(&self, from: TierState) -> Vec<TierState> {

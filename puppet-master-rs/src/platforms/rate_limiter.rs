@@ -27,6 +27,7 @@ pub struct RateLimiterConfig {
 }
 
 impl RateLimiterConfig {
+    // DRY:FN:unlimited
     /// Create unlimited rate limiter config
     pub fn unlimited(platform: Platform) -> Self {
         Self {
@@ -35,6 +36,7 @@ impl RateLimiterConfig {
             refill_interval_ms: 1,
         }
     }
+    // DRY:FN:default_for_platform
 
     /// Create default rate limiter config for a platform
     pub fn default_for_platform(platform: Platform) -> Self {
@@ -130,6 +132,7 @@ pub struct RateLimiter {
 }
 
 impl RateLimiter {
+    // DRY:FN:new
     /// Create a new rate limiter
     pub fn new() -> Self {
         let mut configs = HashMap::new();
@@ -152,6 +155,7 @@ impl RateLimiter {
             buckets: Arc::new(Mutex::new(buckets)),
         }
     }
+    // DRY:FN:set_config
 
     /// Set rate limiter config for a platform
     pub fn set_config(&self, config: RateLimiterConfig) {
@@ -166,6 +170,7 @@ impl RateLimiter {
             TokenBucket::new(config.max_calls_per_minute as f64, refill_rate),
         );
     }
+    // DRY:FN:get_config
 
     /// Get rate limiter config for a platform
     pub fn get_config(&self, platform: Platform) -> RateLimiterConfig {
@@ -199,6 +204,7 @@ impl RateLimiter {
             sleep(wait_time).await;
         }
     }
+    // DRY:FN:try_acquire
 
     /// Try to acquire permission without blocking
     pub fn try_acquire(&self, platform: Platform) -> bool {
@@ -206,6 +212,7 @@ impl RateLimiter {
         let bucket = buckets.get_mut(&platform).unwrap();
         bucket.try_consume()
     }
+    // DRY:FN:reset
 
     /// Reset rate limiter for a platform
     pub fn reset(&self, platform: Platform) {
@@ -215,6 +222,7 @@ impl RateLimiter {
             bucket.last_refill = Instant::now();
         }
     }
+    // DRY:FN:reset_all
 
     /// Reset all rate limiters
     pub fn reset_all(&self) {

@@ -87,6 +87,7 @@ pub struct PermissionDetector {
 }
 
 impl PermissionDetector {
+    // DRY:FN:new
     /// Create a new permission detector
     pub fn new() -> Self {
         let mut detector = Self {
@@ -238,6 +239,7 @@ impl PermissionDetector {
 
         self.patterns.insert(Platform::Copilot, patterns);
     }
+    // DRY:FN:detect
 
     /// Detect permission prompts in output
     pub fn detect(&self, platform: Platform, output: &str) -> Option<PermissionPrompt> {
@@ -262,6 +264,7 @@ impl PermissionDetector {
 
         None
     }
+    // DRY:FN:detect_in_lines
 
     /// Detect permission prompts in multiple lines
     pub fn detect_in_lines(&self, platform: Platform, lines: &[String]) -> Vec<PermissionPrompt> {
@@ -304,6 +307,7 @@ impl PermissionDetector {
             || output_lower.contains("(yes/no)")
             || output_lower.contains("[yes/no]")
     }
+    // DRY:FN:extract_options
 
     /// Extract response options from prompt
     pub fn extract_options(&self, prompt: &str) -> Vec<String> {
@@ -331,6 +335,7 @@ impl PermissionDetector {
 
         options
     }
+    // DRY:FN:supported_platforms
 
     /// Get all supported platforms
     pub fn supported_platforms(&self) -> Vec<Platform> {
@@ -359,6 +364,7 @@ pub enum AutoResponsePolicy {
 }
 
 impl AutoResponsePolicy {
+    // DRY:FN:determine_response
     /// Determine response based on policy
     pub fn determine_response(&self, prompt: &PermissionPrompt) -> Option<String> {
         match self {

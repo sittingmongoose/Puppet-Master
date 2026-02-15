@@ -15,6 +15,7 @@ use std::path::{Path, PathBuf};
 pub struct AtomicWriter;
 
 impl AtomicWriter {
+    // DRY:HELPER:write
     /// Write data atomically to a file
     ///
     /// This writes to a temporary file in the same directory, then atomically
@@ -58,6 +59,7 @@ impl AtomicWriter {
 
         Ok(())
     }
+    // DRY:HELPER:write_with_backup
 
     /// Write data atomically with a backup of the existing file
     pub fn write_with_backup(path: impl AsRef<Path>, data: &[u8]) -> Result<()> {
@@ -91,11 +93,13 @@ impl AtomicWriter {
         backup.push(".bak");
         PathBuf::from(backup)
     }
+    // DRY:HELPER:write_string
 
     /// Write string data atomically
     pub fn write_string(path: impl AsRef<Path>, content: &str) -> Result<()> {
         Self::write(path, content.as_bytes())
     }
+    // DRY:HELPER:write_json
 
     /// Write JSON data atomically
     pub fn write_json<T: serde::Serialize>(path: impl AsRef<Path>, value: &T) -> Result<()> {

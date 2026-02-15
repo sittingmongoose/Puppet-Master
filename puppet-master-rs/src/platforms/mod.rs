@@ -76,6 +76,7 @@ pub use registry::{
 pub use runner::BaseRunner;
 pub use usage_tracker::{PlanInfo, QuotaInfo, UsageEvent, UsageSummary, UsageTracker};
 
+// DRY:DATA:PlatformRunner — Interface for platform-specific execution runners
 /// Trait for platform-specific AI execution
 ///
 /// All platform runners must implement this trait to provide consistent
@@ -122,6 +123,7 @@ pub trait PlatformRunner: Send + Sync {
     fn build_args(&self, request: &ExecutionRequest) -> Vec<String>;
 }
 
+// DRY:FN:create_runner — Factory for PlatformRunner instances
 /// Factory function to create a platform runner
 ///
 /// # Arguments

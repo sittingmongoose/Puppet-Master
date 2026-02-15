@@ -28,6 +28,7 @@ const LOG_LEVELS: [LogLevel; 5] = [
 ];
 
 impl LogLevel {
+    // DRY:FN:as_str
     pub fn as_str(&self) -> &str {
         match self {
             LogLevel::Error => "Error",
@@ -37,6 +38,7 @@ impl LogLevel {
             LogLevel::Trace => "Trace",
         }
     }
+    // DRY:FN:all
 
     pub fn all() -> &'static [Self] {
         &LOG_LEVELS
@@ -58,6 +60,7 @@ pub enum AutoScroll {
 }
 
 impl AutoScroll {
+    // DRY:FN:as_str
     pub fn as_str(&self) -> &str {
         match self {
             AutoScroll::Enabled => "Enabled",

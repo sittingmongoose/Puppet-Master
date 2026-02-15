@@ -17,6 +17,7 @@ pub enum BudgetSize {
 }
 
 impl BudgetSize {
+    // DRY:WIDGET:diameter
     pub fn diameter(&self) -> f32 {
         match self {
             BudgetSize::Small => 80.0,
@@ -24,6 +25,7 @@ impl BudgetSize {
             BudgetSize::Large => 160.0,
         }
     }
+    // DRY:WIDGET:ring_width
 
     pub fn ring_width(&self) -> f32 {
         match self {
@@ -46,6 +48,7 @@ pub struct BudgetDonut {
 }
 
 impl BudgetDonut {
+    // DRY:WIDGET:new
     /// Create a new budget donut chart
     pub fn new(used: f32, limit: f32, platform_name: impl Into<String>, size: BudgetSize) -> Self {
         Self {

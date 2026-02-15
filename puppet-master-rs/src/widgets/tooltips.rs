@@ -25,6 +25,7 @@ impl TooltipEntry {
     pub const fn new(expert: &'static str, eli5: &'static str) -> Self {
         Self { expert, eli5 }
     }
+    // DRY:WIDGET:get
 
     pub fn get(&self, variant: TooltipVariant) -> &'static str {
         match variant {

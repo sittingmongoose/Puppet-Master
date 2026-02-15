@@ -19,6 +19,7 @@ use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::path::PathBuf;
+// DRY:DATA:ModelInfo
 
 /// Model information
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -44,6 +45,7 @@ pub struct ModelInfo {
     /// Additional notes
     pub notes: Option<String>,
 }
+// DRY:DATA:ModelProvider
 
 /// Model provider
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -71,6 +73,7 @@ impl std::fmt::Display for ModelProvider {
         }
     }
 }
+// DRY:DATA:ModelCatalog
 
 /// Model catalog for a platform
 #[derive(Debug, Clone)]
@@ -99,16 +102,19 @@ impl ModelCatalog {
     fn set_default(&mut self, model_id: impl Into<String>) {
         self.default_model = Some(model_id.into());
     }
+    // DRY:FN:get_models
 
     /// Get all models
     pub fn get_models(&self) -> &[ModelInfo] {
         &self.models
     }
+    // DRY:FN:get_model
 
     /// Get a specific model by ID
     pub fn get_model(&self, id: &str) -> Option<&ModelInfo> {
         self.models.iter().find(|m| m.id == id)
     }
+    // DRY:FN:get_default
 
     /// Get default model
     pub fn get_default(&self) -> Option<&ModelInfo> {
@@ -116,6 +122,7 @@ impl ModelCatalog {
             .as_ref()
             .and_then(|id| self.get_model(id))
     }
+    // DRY:FN:get_by_provider
 
     /// Get models by provider
     pub fn get_by_provider(&self, provider: ModelProvider) -> Vec<&ModelInfo> {
@@ -124,22 +131,26 @@ impl ModelCatalog {
             .filter(|m| m.provider == provider)
             .collect()
     }
+    // DRY:FN:get_vision_models
 
     /// Get models supporting vision
     pub fn get_vision_models(&self) -> Vec<&ModelInfo> {
         self.models.iter().filter(|m| m.supports_vision).collect()
     }
+    // DRY:FN:get_tool_models
 
     /// Get models supporting tools
     pub fn get_tool_models(&self) -> Vec<&ModelInfo> {
         self.models.iter().filter(|m| m.supports_tools).collect()
     }
+    // DRY:FN:platform
 
     /// Get platform
     pub fn platform(&self) -> Platform {
         self.platform
     }
 }
+// DRY:DATA:ModelCatalogManager
 
 /// Model catalog manager
 pub struct ModelCatalogManager {
@@ -147,6 +158,7 @@ pub struct ModelCatalogManager {
 }
 
 impl ModelCatalogManager {
+    // DRY:FN:new
     /// Create a new model catalog manager
     pub fn new() -> Self {
         let mut manager = Self {
@@ -216,11 +228,13 @@ impl ModelCatalogManager {
     fn init_copilot_catalog(&mut self) {
         self.init_catalog_from_specs(Platform::Copilot);
     }
+    // DRY:FN:get_catalog
 
     /// Get catalog for a platform
     pub fn get_catalog(&self, platform: Platform) -> Option<&ModelCatalog> {
         self.catalogs.get(&platform)
     }
+    // DRY:FN:get_models
 
     /// Get models for a platform
     pub fn get_models(&self, platform: Platform) -> Vec<&ModelInfo> {
@@ -229,6 +243,7 @@ impl ModelCatalogManager {
             .map(|c| c.get_models().iter().collect())
             .unwrap_or_default()
     }
+    // DRY:FN:get_model
 
     /// Get a specific model
     pub fn get_model(&self, platform: Platform, model_id: &str) -> Option<&ModelInfo> {
@@ -236,16 +251,19 @@ impl ModelCatalogManager {
             .get(&platform)
             .and_then(|c| c.get_model(model_id))
     }
+    // DRY:FN:get_default_model
 
     /// Get default model for a platform
     pub fn get_default_model(&self, platform: Platform) -> Option<&ModelInfo> {
         self.catalogs.get(&platform).and_then(|c| c.get_default())
     }
+    // DRY:FN:platforms
 
     /// Get all platforms with catalogs
     pub fn platforms(&self) -> Vec<Platform> {
         self.catalogs.keys().copied().collect()
     }
+    // DRY:FN:get_all_models
 
     /// Get all models across all platforms
     pub fn get_all_models(&self) -> HashMap<Platform, Vec<&ModelInfo>> {
@@ -307,21 +325,25 @@ impl Default for ModelCatalogManager {
 /// Global model catalog manager
 static CATALOG_MANAGER: once_cell::sync::Lazy<ModelCatalogManager> =
     once_cell::sync::Lazy::new(ModelCatalogManager::new);
+// DRY:FN:global_catalog
 
 /// Get the global model catalog manager
 pub fn global_catalog() -> &'static ModelCatalogManager {
     &CATALOG_MANAGER
 }
+// DRY:FN:get_models
 
 /// Get models for a platform
 pub fn get_models(platform: Platform) -> Vec<&'static ModelInfo> {
     global_catalog().get_models(platform)
 }
+// DRY:FN:get_model
 
 /// Get a specific model
 pub fn get_model(platform: Platform, model_id: &str) -> Option<&'static ModelInfo> {
     global_catalog().get_model(platform, model_id)
 }
+// DRY:FN:get_default_model
 
 /// Get default model for a platform
 pub fn get_default_model(platform: Platform) -> Option<&'static ModelInfo> {
@@ -329,6 +351,7 @@ pub fn get_default_model(platform: Platform) -> Option<&'static ModelInfo> {
 }
 
 // ─── Dynamic Model Cache ──────────────────────────────────────────────────
+// DRY:DATA:ModelSource
 
 /// How a model list was obtained.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -342,6 +365,7 @@ pub enum ModelSource {
     /// Fetched via SDK bridge (Node.js SDK).
     Sdk,
 }
+// DRY:DATA:CachedModelList
 
 /// A cached list of models for a single platform.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -353,6 +377,7 @@ pub struct CachedModelList {
 }
 
 impl CachedModelList {
+    // DRY:FN:from_fallback
     /// Create a fallback list from platform_specs.
     pub fn from_fallback(platform: Platform) -> Self {
         let spec = platform_specs::get_spec(platform);
@@ -373,6 +398,7 @@ impl CachedModelList {
             source: ModelSource::Fallback,
         }
     }
+    // DRY:FN:is_stale
 
     /// Whether the cache is stale based on the platform's configured TTL.
     pub fn is_stale(&self, platform: Platform) -> bool {
@@ -403,6 +429,7 @@ fn cache_file_path() -> Option<PathBuf> {
             .join("model_cache.json")
     })
 }
+// DRY:FN:load_persistent_cache
 
 /// Load cached models from disk for all platforms.
 pub fn load_persistent_cache() -> HashMap<Platform, CachedModelList> {
@@ -424,6 +451,7 @@ pub fn load_persistent_cache() -> HashMap<Platform, CachedModelList> {
     }
     result
 }
+// DRY:FN:save_persistent_cache
 
 /// Save cached models to disk.
 pub fn save_persistent_cache(cache: &HashMap<Platform, CachedModelList>) {
@@ -443,6 +471,7 @@ pub fn save_persistent_cache(cache: &HashMap<Platform, CachedModelList>) {
         let _ = std::fs::write(&path, json);
     }
 }
+// DRY:FN:refresh_models_blocking
 
 /// Attempt to discover models from a platform CLI (blocking — call from async).
 pub fn refresh_models_blocking(platform: Platform) -> CachedModelList {
@@ -519,6 +548,7 @@ fn refresh_models_cli_blocking(platform: Platform) -> CachedModelList {
         }
     }
 }
+// DRY:FN:refresh_models_with_sdk_fallback
 
 /// DRY:FN:refresh_models_via_sdk — Attempt model discovery via Node.js SDK bridge.
 /// Falls back to CLI discovery or platform_specs fallback if SDK is unavailable.
@@ -567,6 +597,7 @@ pub fn refresh_models_with_sdk_fallback(platform: Platform) -> CachedModelList {
         }
     }
 }
+// DRY:FN:build_model_map_from_specs
 
 /// Build the initial model map for all platforms using platform_specs fallback data.
 /// Replaces the old hardcoded `gui_config::build_model_map()`.

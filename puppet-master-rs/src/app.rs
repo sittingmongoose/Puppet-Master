@@ -2300,13 +2300,7 @@ impl App {
 
             Message::RefreshModelsComplete(platform, result) => {
                 self.model_refresh_loading.insert(platform, false);
-                let platform_key = match platform {
-                    crate::types::Platform::Cursor => "cursor",
-                    crate::types::Platform::Codex => "codex",
-                    crate::types::Platform::Claude => "claude",
-                    crate::types::Platform::Gemini => "gemini",
-                    crate::types::Platform::Copilot => "copilot",
-                };
+                let platform_key = platform.to_string();
                 match result {
                     Ok(models) => {
                         let cached = crate::platforms::model_catalog::CachedModelList {
@@ -2316,11 +2310,11 @@ impl App {
                             source: crate::platforms::model_catalog::ModelSource::Dynamic,
                         };
                         self.model_cache.insert(platform, cached);
-                        self.config_models.insert(platform_key.to_string(), models);
+                        self.config_models.insert(platform_key.clone(), models);
                         // Persist cache
                         crate::platforms::model_catalog::save_persistent_cache(&self.model_cache);
                         // Update tier_model_lists for any tier using this platform
-                        self.update_tier_model_lists_for_platform(platform_key);
+                        self.update_tier_model_lists_for_platform(&platform_key);
                     }
                     Err(e) => {
                         self.add_toast(

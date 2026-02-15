@@ -27,6 +27,7 @@ impl Default for TransitionState {
 }
 
 impl TransitionState {
+    // DRY:WIDGET:start
     /// Start a new transition
     pub fn start() -> Self {
         Self {
@@ -34,6 +35,7 @@ impl TransitionState {
             active: true,
         }
     }
+    // DRY:WIDGET:update
 
     /// Update transition progress
     ///
@@ -57,6 +59,7 @@ impl TransitionState {
             false
         }
     }
+    // DRY:WIDGET:opacity
 
     /// Get the current opacity for fade-in effect
     /// Uses ease-out cubic easing for smooth animation
@@ -69,6 +72,7 @@ impl TransitionState {
         let t = self.progress.clamp(0.0, 1.0);
         1.0 - (1.0 - t).powi(3)
     }
+    // DRY:WIDGET:inverse_opacity
 
     /// Get the inverse opacity for fade-out effect
     pub fn inverse_opacity(&self) -> f32 {

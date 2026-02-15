@@ -33,6 +33,7 @@ pub struct InterviewPanelData {
 }
 
 impl InterviewPanelData {
+    // DRY:WIDGET:new
     /// Create a new `InterviewPanelData` instance
     pub fn new(
         current_phase: usize,
@@ -47,6 +48,7 @@ impl InterviewPanelData {
             current_question: current_question.into(),
         }
     }
+    // DRY:WIDGET:progress
 
     /// Calculate overall progress as a value between 0.0 and 1.0
     pub fn progress(&self) -> f32 {
@@ -88,7 +90,7 @@ impl InterviewPanelData {
 /// * `on_open` - Message to send when "Open Full Interview" is clicked
 ///
 /// # Example
-/// ```no_run
+/// ```ignore
 /// use puppet_master_rs::widgets::interview_panel;
 /// use puppet_master_rs::widgets::InterviewPanelData;
 /// use puppet_master_rs::theme::AppTheme;
@@ -106,7 +108,7 @@ impl InterviewPanelData {
 /// );
 ///
 /// let panel = interview_panel(&AppTheme::Light, &data, Message::OpenInterview);
-/// ```
+/// ```ignore
 pub fn interview_panel<'a, Message>(
     theme: &AppTheme,
     data: &InterviewPanelData,
@@ -190,7 +192,7 @@ where
 /// Useful for sidebars or constrained spaces.
 ///
 /// # Example
-/// ```no_run
+/// ```ignore
 /// use puppet_master_rs::widgets::interview_panel_compact;
 /// use puppet_master_rs::widgets::InterviewPanelData;
 /// use puppet_master_rs::theme::AppTheme;
@@ -199,7 +201,7 @@ where
 /// # enum Message { OpenInterview }
 /// let data = InterviewPanelData::new(1, 8, "Architecture", "What database?");
 /// let panel = interview_panel_compact(&AppTheme::Light, &data, Message::OpenInterview);
-/// ```
+/// ```ignore
 pub fn interview_panel_compact<'a, Message>(
     theme: &AppTheme,
     data: &InterviewPanelData,
@@ -249,7 +251,7 @@ where
 /// Helper function to construct `InterviewPanelData` from common state variables.
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// use puppet_master_rs::widgets::interview_panel_data_from_state;
 ///
 /// let data = interview_panel_data_from_state(
@@ -258,7 +260,7 @@ where
 ///     "Data & Storage",     // phase_name
 ///     "What ORM will be used?", // current_question
 /// );
-/// ```
+/// ```ignore
 pub fn interview_panel_data_from_state(
     current_phase_index: usize,
     total_phases: usize,

@@ -90,10 +90,12 @@ pub struct FreshSpawn {
 }
 
 impl FreshSpawn {
+    // DRY:FN:new
     /// Create new spawner with configuration
     pub fn new(config: SpawnConfig) -> Self {
         Self { config }
     }
+    // DRY:FN:with_defaults
 
     /// Create with default configuration
     pub fn with_defaults() -> Self {
@@ -228,6 +230,7 @@ impl FreshSpawn {
 
         Ok((result, audit))
     }
+    // DRY:FN:config
 
     /// Get configuration
     pub fn config(&self) -> &SpawnConfig {

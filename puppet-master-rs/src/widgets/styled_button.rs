@@ -43,6 +43,7 @@ pub enum ButtonSize {
 }
 
 impl ButtonSize {
+    // DRY:WIDGET:padding_x
     /// Get horizontal padding for this size
     pub fn padding_x(&self) -> u16 {
         match self {
@@ -51,6 +52,7 @@ impl ButtonSize {
             ButtonSize::Large => 32,
         }
     }
+    // DRY:WIDGET:padding_y
 
     /// Get vertical padding for this size
     pub fn padding_y(&self) -> u16 {
@@ -60,6 +62,7 @@ impl ButtonSize {
             ButtonSize::Large => 16,
         }
     }
+    // DRY:WIDGET:font_size
 
     /// Get font size for this button size
     pub fn font_size(&self) -> f32 {

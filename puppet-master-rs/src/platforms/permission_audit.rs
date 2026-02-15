@@ -87,6 +87,7 @@ pub struct PermissionEvent {
 }
 
 impl PermissionEvent {
+    // DRY:FN:new
     /// Create a new permission event
     pub fn new(platform: Platform, action: PermissionAction, approved: bool) -> Self {
         Self {
@@ -103,36 +104,42 @@ impl PermissionEvent {
             session_id: None,
         }
     }
+    // DRY:FN:with_tool
 
     /// Set tool name
     pub fn with_tool(mut self, tool_name: impl Into<String>) -> Self {
         self.tool_name = Some(tool_name.into());
         self
     }
+    // DRY:FN:with_details
 
     /// Set details
     pub fn with_details(mut self, details: impl Into<String>) -> Self {
         self.details = Some(details.into());
         self
     }
+    // DRY:FN:with_file_path
 
     /// Set file path
     pub fn with_file_path(mut self, path: impl Into<String>) -> Self {
         self.file_path = Some(path.into());
         self
     }
+    // DRY:FN:with_command
 
     /// Set command
     pub fn with_command(mut self, command: impl Into<String>) -> Self {
         self.command = Some(command.into());
         self
     }
+    // DRY:FN:with_user
 
     /// Set user
     pub fn with_user(mut self, user: impl Into<String>) -> Self {
         self.user = Some(user.into());
         self
     }
+    // DRY:FN:with_session_id
 
     /// Set session ID
     pub fn with_session_id(mut self, session_id: impl Into<String>) -> Self {
@@ -164,28 +171,33 @@ pub struct AuditQuery {
 }
 
 impl AuditQuery {
+    // DRY:FN:new
     /// Create a new empty query
     pub fn new() -> Self {
         Self::default()
     }
+    // DRY:FN:platform
 
     /// Filter by platform
     pub fn platform(mut self, platform: Platform) -> Self {
         self.platform = Some(platform);
         self
     }
+    // DRY:FN:action
 
     /// Filter by action
     pub fn action(mut self, action: PermissionAction) -> Self {
         self.action = Some(action);
         self
     }
+    // DRY:FN:approved
 
     /// Filter by approval status
     pub fn approved(mut self, approved: bool) -> Self {
         self.approved = Some(approved);
         self
     }
+    // DRY:FN:time_range
 
     /// Filter by time range
     pub fn time_range(mut self, start: DateTime<Utc>, end: DateTime<Utc>) -> Self {
@@ -193,18 +205,21 @@ impl AuditQuery {
         self.end_time = Some(end);
         self
     }
+    // DRY:FN:tool_name
 
     /// Filter by tool name
     pub fn tool_name(mut self, tool_name: impl Into<String>) -> Self {
         self.tool_name = Some(tool_name.into());
         self
     }
+    // DRY:FN:session_id
 
     /// Filter by session ID
     pub fn session_id(mut self, session_id: impl Into<String>) -> Self {
         self.session_id = Some(session_id.into());
         self
     }
+    // DRY:FN:limit
 
     /// Limit number of results
     pub fn limit(mut self, limit: usize) -> Self {
@@ -270,6 +285,7 @@ pub struct PermissionAudit {
 }
 
 impl PermissionAudit {
+    // DRY:FN:new
     /// Create a new permission audit logger
     pub fn new(base_dir: impl AsRef<Path>) -> Result<Self> {
         let audit_dir = base_dir.as_ref().join(".puppet-master").join("audit");
@@ -282,6 +298,7 @@ impl PermissionAudit {
             file_handle: Arc::new(Mutex::new(None)),
         })
     }
+    // DRY:FN:default_location
 
     /// Get default audit logger (in home directory)
     pub fn default_location() -> Result<Self> {
@@ -553,6 +570,7 @@ pub struct ActionStats {
 }
 
 impl ApprovalStats {
+    // DRY:FN:approval_rate
     /// Get approval rate (0.0 to 1.0)
     pub fn approval_rate(&self) -> f64 {
         if self.total_events == 0 {

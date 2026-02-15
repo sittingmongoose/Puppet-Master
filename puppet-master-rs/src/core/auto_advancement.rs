@@ -16,10 +16,12 @@ use anyhow::{Result, anyhow};
 pub struct AdvancementEngine;
 
 impl AdvancementEngine {
+    // DRY:FN:new
     /// Create new advancement engine
     pub fn new() -> Self {
         Self
     }
+    // DRY:FN:determine_advancement
 
     /// Determine next action after completing a tier
     pub fn determine_advancement(
@@ -180,11 +182,13 @@ impl AdvancementEngine {
             false
         }
     }
+    // DRY:FN:get_next_executable
 
     /// Get next tier to execute (finds first pending subtask)
     pub fn get_next_executable(&self, tree: &TierTree) -> Option<String> {
         tree.get_next_pending().map(|node| node.id.clone())
     }
+    // DRY:FN:is_complete
 
     /// Check if orchestration is complete
     pub fn is_complete(&self, tree: &TierTree) -> bool {

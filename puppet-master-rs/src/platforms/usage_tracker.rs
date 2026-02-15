@@ -59,6 +59,7 @@ pub struct UsageEvent {
 }
 
 impl UsageEvent {
+    // DRY:FN:new
     /// Create a new usage event
     pub fn new(platform: Platform) -> Self {
         Self {
@@ -76,12 +77,14 @@ impl UsageEvent {
             session_id: None,
         }
     }
+    // DRY:FN:with_model
 
     /// Set model
     pub fn with_model(mut self, model: impl Into<String>) -> Self {
         self.model = Some(model.into());
         self
     }
+    // DRY:FN:with_tokens
 
     /// Set tokens
     pub fn with_tokens(mut self, input: u64, output: u64) -> Self {
@@ -90,18 +93,21 @@ impl UsageEvent {
         self.total_tokens = input + output;
         self
     }
+    // DRY:FN:with_duration
 
     /// Set duration
     pub fn with_duration(mut self, duration_ms: u64) -> Self {
         self.duration_ms = duration_ms;
         self
     }
+    // DRY:FN:with_success
 
     /// Set success
     pub fn with_success(mut self, success: bool) -> Self {
         self.success = success;
         self
     }
+    // DRY:FN:with_error
 
     /// Set error
     pub fn with_error(mut self, error: impl Into<String>) -> Self {
@@ -109,12 +115,14 @@ impl UsageEvent {
         self.success = false;
         self
     }
+    // DRY:FN:with_rate_limited
 
     /// Set rate limited
     pub fn with_rate_limited(mut self, rate_limited: bool) -> Self {
         self.rate_limited = rate_limited;
         self
     }
+    // DRY:FN:with_session_id
 
     /// Set session ID
     pub fn with_session_id(mut self, session_id: impl Into<String>) -> Self {
@@ -180,6 +188,7 @@ pub struct UsageTracker {
 }
 
 impl UsageTracker {
+    // DRY:FN:new
     /// Create a new usage tracker
     pub fn new(base_dir: impl AsRef<Path>) -> Result<Self> {
         let usage_dir = base_dir.as_ref().join(".puppet-master").join("usage");
@@ -192,6 +201,7 @@ impl UsageTracker {
             file_handle: Arc::new(Mutex::new(None)),
         })
     }
+    // DRY:FN:default_location
 
     /// Get default usage tracker (in home directory)
     pub fn default_location() -> Result<Self> {
@@ -337,6 +347,7 @@ impl UsageTracker {
 
         Ok(events)
     }
+    // DRY:FN:parse_codex_error
 
     /// Parse Codex error for quota info
     pub fn parse_codex_error(&self, error: &str) -> Option<QuotaInfo> {
@@ -367,6 +378,7 @@ impl UsageTracker {
             exhausted: true,
         })
     }
+    // DRY:FN:parse_gemini_error
 
     /// Parse Gemini error for quota info
     pub fn parse_gemini_error(&self, error: &str) -> Option<QuotaInfo> {
@@ -395,6 +407,7 @@ impl UsageTracker {
             exhausted: true,
         })
     }
+    // DRY:FN:detect_plan_from_quota
 
     /// Detect plan from quota info
     pub fn detect_plan_from_quota(&self, quota: &QuotaInfo) -> Option<PlanInfo> {

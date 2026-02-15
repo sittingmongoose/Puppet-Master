@@ -90,6 +90,7 @@ pub struct StatePersistence {
 }
 
 impl StatePersistence {
+    // DRY:FN:new
     /// Create new state persistence manager
     ///
     /// # Arguments

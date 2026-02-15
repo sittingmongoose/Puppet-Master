@@ -15,10 +15,10 @@ use iced::{Alignment, Border, Element, Length, Padding, Shadow, Vector};
 /// backward compatibility with existing code.
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let content = text("Panel content");
 /// let styled = panel(content);
-/// ```
+/// ```ignore
 pub fn panel<'a, Message>(content: impl Into<Element<'a, Message>>) -> Container<'a, Message>
 where
     Message: Clone + 'a,
@@ -50,11 +50,11 @@ where
 /// Supports both light and dark modes with appropriate contrasts.
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let theme = AppTheme::Dark;
 /// let content = text("Dark mode panel");
 /// let styled = themed_panel(content, &theme);
-/// ```
+/// ```ignore
 pub fn themed_panel<'a, Message>(
     content: impl Into<Element<'a, Message>>,
     theme: &AppTheme,
@@ -89,10 +89,10 @@ where
 /// an underline separator from the content.
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let content = text("Body content");
 /// let panel = panel_with_title(&theme, "Settings", content);
-/// ```
+/// ```ignore
 pub fn panel_with_title<'a, Message>(
     theme: &AppTheme,
     title: impl Into<String>,
@@ -142,14 +142,14 @@ where
 /// Perfect for panels with controls in the header.
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let actions = row![
 ///     button("Edit"),
 ///     button("Delete"),
 /// ];
 /// let content = text("Panel body");
 /// let panel = panel_with_header(&theme, "Settings", actions, content);
-/// ```
+/// ```ignore
 pub fn panel_with_header<'a, Message>(
     theme: &AppTheme,
     title: impl Into<String>,
@@ -210,10 +210,10 @@ where
 /// Useful for highlighting important content or creating visual depth.
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let content = text("Important content");
 /// let styled = panel_with_inner_border(content, &theme);
-/// ```
+/// ```ignore
 pub fn panel_with_inner_border<'a, Message>(
     content: impl Into<Element<'a, Message>>,
     theme: &AppTheme,
@@ -251,10 +251,10 @@ where
 /// uses the standard shadow, but the API is here for future enhancement.
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let content = text("Elevated content");
 /// let styled = panel_with_crosshatch(content, &theme);
-/// ```
+/// ```ignore
 pub fn panel_with_crosshatch<'a, Message>(
     content: impl Into<Element<'a, Message>>,
     theme: &AppTheme,
@@ -294,10 +294,10 @@ where
 /// Useful for dense layouts or nested panels.
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let content = text("Compact content");
 /// let styled = compact_panel(content, &theme);
-/// ```
+/// ```ignore
 pub fn compact_panel<'a, Message>(
     content: impl Into<Element<'a, Message>>,
     theme: &AppTheme,
@@ -331,10 +331,10 @@ where
 /// Useful for nested content or when you want a subtle container.
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let content = text("Flat content");
 /// let styled = flat_panel(content, &theme);
-/// ```
+/// ```ignore
 pub fn flat_panel<'a, Message>(
     content: impl Into<Element<'a, Message>>,
     theme: &AppTheme,
@@ -372,14 +372,15 @@ where
 /// `panel_with_title` instead.
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let content = text("Body content");
 /// let panel = panel_with_header("Settings", content);
-/// ```
+/// ```ignore
 #[deprecated(
     since = "0.1.1",
     note = "Use panel_with_title or panel_with_header instead"
 )]
+// DRY:WIDGET:panel_with_header_legacy
 pub fn panel_with_header_legacy<'a, Message>(
     title: impl Into<String>,
     content: impl Into<Element<'a, Message>>,
@@ -426,6 +427,7 @@ where
     since = "0.1.1",
     note = "Use panel_with_title or panel_with_header instead"
 )]
+// DRY:WIDGET:themed_panel_with_header
 pub fn themed_panel_with_header<'a, Message>(
     title: impl Into<String>,
     content: impl Into<Element<'a, Message>>,

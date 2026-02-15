@@ -49,6 +49,7 @@ pub struct LoopGuardMessage {
 }
 
 impl LoopGuardMessage {
+    // DRY:FN:new
     /// Create new message
     pub fn new(
         kind: impl Into<String>,
@@ -82,15 +83,18 @@ pub enum LoopDetection {
 }
 
 impl LoopDetection {
+    // DRY:FN:is_blocked
     /// Check if message is blocked
     pub fn is_blocked(&self) -> bool {
         !matches!(self, Self::Allowed)
     }
+    // DRY:FN:is_allowed
 
     /// Check if message is allowed
     pub fn is_allowed(&self) -> bool {
         matches!(self, Self::Allowed)
     }
+    // DRY:FN:reason
 
     /// Get reason for blocking
     pub fn reason(&self) -> Option<String> {
@@ -122,6 +126,7 @@ pub struct LoopGuard {
 }
 
 impl LoopGuard {
+    // DRY:FN:new
     /// Create new loop guard
     pub fn new(config: LoopGuardConfig) -> Self {
         Self {
@@ -130,11 +135,13 @@ impl LoopGuard {
             recent_hashes: VecDeque::new(),
         }
     }
+    // DRY:FN:default_config
 
     /// Create with default configuration
     pub fn default_config() -> Self {
         Self::new(LoopGuardConfig::default())
     }
+    // DRY:FN:check
 
     /// Check if a message should be allowed
     ///
@@ -185,6 +192,7 @@ impl LoopGuard {
 
         LoopDetection::Allowed
     }
+    // DRY:FN:would_allow
 
     /// Check if message would be allowed (without modifying state)
     pub fn would_allow(&self, message: &LoopGuardMessage) -> bool {
@@ -205,17 +213,20 @@ impl LoopGuard {
 
         *count < self.config.max_repetitions
     }
+    // DRY:FN:get_count
 
     /// Get current count for a specific message
     pub fn get_count(&self, message: &LoopGuardMessage) -> usize {
         let hash = self.hash_message(message);
         *self.message_counts.get(&hash).unwrap_or(&0)
     }
+    // DRY:FN:unique_message_count
 
     /// Get total number of unique messages tracked
     pub fn unique_message_count(&self) -> usize {
         self.message_counts.len()
     }
+    // DRY:FN:reset
 
     /// Reset the message history (call when switching contexts)
     pub fn reset(&mut self) {

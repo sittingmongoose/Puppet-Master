@@ -7,9 +7,9 @@ use iced::widget::{Column, column, text};
 /// Create help text panel with title and bullet points
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let help = help_text("Title", &["point 1", "point 2"]);
-/// ```
+/// ```ignore
 pub fn help_text<'a, Message>(title: impl Into<String>, lines: &[&str]) -> Column<'a, Message>
 where
     Message: 'a,

@@ -119,6 +119,7 @@ pub struct CircuitBreaker {
 }
 
 impl CircuitBreaker {
+    // DRY:FN:new
     /// Create a new circuit breaker
     pub fn new(platform: Platform, config: CircuitBreakerConfig) -> Self {
         Self {
@@ -127,6 +128,7 @@ impl CircuitBreaker {
             state: Arc::new(RwLock::new(CircuitBreakerState::new())),
         }
     }
+    // DRY:FN:with_defaults
 
     /// Create with default configuration
     pub fn with_defaults(platform: Platform) -> Self {
@@ -338,6 +340,7 @@ pub struct CircuitBreakerManager {
 }
 
 impl CircuitBreakerManager {
+    // DRY:FN:new
     /// Create a new circuit breaker manager
     pub fn new() -> Self {
         let mut breakers = HashMap::new();

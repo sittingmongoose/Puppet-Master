@@ -797,22 +797,26 @@ pub fn subagent_capable_platforms() -> Vec<Platform> {
 /// Static list of all platform ID strings for use in pick-lists and dropdowns.
 /// DRY:FN:platform_id_strs — single source of truth for platform ID strings in UI.
 pub const PLATFORM_ID_STRS: &[&str] = &["cursor", "codex", "claude", "gemini", "copilot"];
+// DRY:FN:display_name_for
 
 /// Get the display name for a platform from specs.
 /// DRY:FN:display_name_for — avoids hardcoding platform display names in views.
 pub fn display_name_for(platform: Platform) -> &'static str {
     get_spec(platform).display_name
 }
+// DRY:FN:experimental_cli_flag
 
 /// DRY:FN:experimental_cli_flag — Get the CLI flag for experimental features (if any)
 pub fn experimental_cli_flag(platform: Platform) -> Option<&'static str> {
     get_spec(platform).experimental.as_ref().and_then(|e| e.cli_flag)
 }
+// DRY:FN:experimental_settings_path
 
 /// DRY:FN:experimental_settings_path — Get settings path for experimental features (if any)
 pub fn experimental_settings_path(platform: Platform) -> Option<&'static str> {
     get_spec(platform).experimental.as_ref().and_then(|e| e.settings_path)
 }
+// DRY:FN:subagent_env_vars
 
 /// DRY:FN:subagent_env_vars — Get environment variables needed to enable subagents for a platform
 pub fn subagent_env_vars(platform: Platform) -> Vec<(&'static str, &'static str)> {
@@ -832,6 +836,7 @@ pub fn subagent_env_vars(platform: Platform) -> Vec<(&'static str, &'static str)
         None => vec![],
     }
 }
+// DRY:FN:subagent_extra_args
 
 /// DRY:FN:subagent_extra_args — Get extra CLI args needed to enable subagents for a platform
 pub fn subagent_extra_args(platform: Platform) -> Vec<&'static str> {

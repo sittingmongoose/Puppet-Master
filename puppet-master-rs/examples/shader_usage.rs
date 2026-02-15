@@ -172,6 +172,14 @@
 //! - Typical frame time: < 0.5ms @ 1920x1080
 
 #[cfg(test)]
+use puppet_master::shaders::{
+    PAPER_GRAIN_SHADER, PaperGrainUniforms, SCANLINE_SHADER, ScanlineUniforms,
+    THEME_FIZZLE_SHADER, ThemeFizzleUniforms,
+};
+
+fn main() {}
+
+#[cfg(test)]
 mod tests {
     use super::*;
 

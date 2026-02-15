@@ -64,6 +64,7 @@ pub struct QuotaConfig {
 }
 
 impl QuotaConfig {
+    // DRY:FN:unlimited
     /// Create unlimited quota config
     pub fn unlimited(platform: Platform) -> Self {
         Self {
@@ -77,6 +78,7 @@ impl QuotaConfig {
             soft_limit_threshold: 0.8,
         }
     }
+    // DRY:FN:default_for_platform
 
     /// Create default quota config with reasonable limits
     pub fn default_for_platform(platform: Platform) -> Self {
@@ -147,6 +149,7 @@ pub struct QuotaManager {
 }
 
 impl QuotaManager {
+    // DRY:FN:new
     /// Create a new quota manager
     pub fn new() -> Self {
         let mut configs = HashMap::new();
@@ -164,12 +167,14 @@ impl QuotaManager {
             _run_start_time: Utc::now(),
         }
     }
+    // DRY:FN:set_config
 
     /// Set quota config for a platform
     pub fn set_config(&self, config: QuotaConfig) {
         let mut configs = self.configs.lock().unwrap();
         configs.insert(config.platform, config);
     }
+    // DRY:FN:get_config
 
     /// Get quota config for a platform
     pub fn get_config(&self, platform: Platform) -> QuotaConfig {
@@ -179,6 +184,7 @@ impl QuotaManager {
             .cloned()
             .unwrap_or_else(|| QuotaConfig::default_for_platform(platform))
     }
+    // DRY:FN:check_quota
 
     /// Check quota status for a platform
     pub fn check_quota(&self, platform: Platform) -> QuotaStatus {
@@ -249,6 +255,7 @@ impl QuotaManager {
 
         QuotaStatus::Ok
     }
+    // DRY:FN:record_usage
 
     /// Record usage for a platform
     pub fn record_usage(&self, platform: Platform, tokens: u64, duration_secs: f64) {
@@ -290,6 +297,7 @@ impl QuotaManager {
             .cloned()
             .unwrap_or_else(QuotaUsageStats::new)
     }
+    // DRY:FN:get_stats
 
     /// Get usage stats for a platform (returns types::UsageStats)
     pub fn get_stats(&self, platform: Platform) -> UsageStats {
@@ -299,6 +307,7 @@ impl QuotaManager {
         summary.total_tokens = internal.tokens_this_run;
         summary
     }
+    // DRY:FN:get_all_stats
 
     /// Get all usage stats
     pub fn get_all_stats(&self) -> HashMap<Platform, UsageStats> {
@@ -308,6 +317,7 @@ impl QuotaManager {
         }
         result
     }
+    // DRY:FN:reset_stats
 
     /// Reset usage stats (for testing or manual reset)
     pub fn reset_stats(&self, platform: Platform) {
@@ -315,6 +325,7 @@ impl QuotaManager {
         stats.insert(platform, QuotaUsageStats::new());
         info!("Reset usage stats for {}", platform);
     }
+    // DRY:FN:reset_all_stats
 
     /// Reset all usage stats
     pub fn reset_all_stats(&self) {
@@ -324,6 +335,7 @@ impl QuotaManager {
         }
         info!("Reset all usage stats");
     }
+    // DRY:FN:enforce_quota
 
     /// Enforce quota before execution
     pub fn enforce_quota(&self, platform: Platform) -> Result<()> {

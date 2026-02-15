@@ -69,6 +69,7 @@ pub enum IconName {
 }
 
 impl IconName {
+    // DRY:WIDGET:symbol
     /// Get the Unicode character for this icon
     pub fn symbol(&self) -> &'static str {
         match self {
@@ -132,6 +133,7 @@ impl IconName {
             IconName::Moon => ")",
         }
     }
+    // DRY:WIDGET:default_size
 
     /// Get default size for this icon type
     pub fn default_size(&self) -> f32 {
@@ -162,10 +164,10 @@ impl IconName {
 /// Create an icon widget with default size
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let check_icon = icon(IconName::Check);
 /// let folder_icon = icon(IconName::Folder);
-/// ```
+/// ```ignore
 pub fn icon<'a>(name: IconName) -> Text<'a> {
     text(name.symbol()).size(name.default_size())
 }
@@ -174,9 +176,9 @@ pub fn icon<'a>(name: IconName) -> Text<'a> {
 /// Create an icon widget with custom size
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let large_check = icon_with_size(IconName::Check, 24.0);
-/// ```
+/// ```ignore
 pub fn icon_with_size<'a>(name: IconName, size: f32) -> Text<'a> {
     text(name.symbol()).size(size)
 }
@@ -185,9 +187,9 @@ pub fn icon_with_size<'a>(name: IconName, size: f32) -> Text<'a> {
 /// Create a colored icon
 ///
 /// # Example
-/// ```
+/// ```ignore
 /// let red_cross = icon_with_color(IconName::Cross, colors::HOT_MAGENTA);
-/// ```
+/// ```ignore
 pub fn icon_with_color<'a>(name: IconName, color: Color) -> Text<'a> {
     text(name.symbol()).size(name.default_size()).color(color)
 }

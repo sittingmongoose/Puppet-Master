@@ -19,6 +19,7 @@ pub struct FileLock {
 }
 
 impl FileLock {
+    // DRY:HELPER:acquire
     /// Acquire a file lock with timeout
     ///
     /// Creates a `.lock` file adjacent to the target file.
@@ -100,6 +101,7 @@ impl FileLock {
         lock_path.push(".lock");
         PathBuf::from(lock_path)
     }
+    // DRY:HELPER:path
 
     /// Get the lock file path
     pub fn path(&self) -> &Path {
