@@ -30,38 +30,43 @@ const OUTPUT_FORMATS: &[&str] = &["markdown", "json", "yaml"];
 fn format_platform_id_option(
     platform_id: &str,
     platform_statuses: &[crate::views::setup::PlatformStatus],
+    auth_status: &HashMap<String, crate::views::login::AuthStatus>,
 ) -> String {
     // If no detection data, just return the platform ID
     if platform_statuses.is_empty() {
         return platform_id.to_string();
     }
-    
+
     // Parse the platform ID to get the Platform enum
     let platform = match Platform::from_str_loose(platform_id) {
         Some(p) => p,
         None => return platform_id.to_string(),
     };
-    
+
     // Find the status for this platform
     let status = platform_statuses.iter().find(|s| s.platform == platform);
-    
-    match status {
-        Some(s)
-            if matches!(
-                s.status,
-                InstallationStatus::Installed(_) | InstallationStatus::Outdated { .. }
-            ) =>
-        {
-            format!("{} ✓", platform_id)
-        }
-        Some(_) => {
-            format!("{} (unavailable)", platform_id)
-        }
-        None => {
-            // Platform not in detection results, treat as unavailable
-            format!("{} (unavailable)", platform_id)
+
+    let installed = match status {
+        Some(s) => matches!(
+            s.status,
+            InstallationStatus::Installed(_) | InstallationStatus::Outdated { .. }
+        ),
+        None => false,
+    };
+
+    if !installed {
+        return format!("{} (not installed)", platform_id);
+    }
+
+    // Check auth status
+    let key = platform_id.to_lowercase();
+    if let Some(auth) = auth_status.get(&key) {
+        if !auth.authenticated {
+            return format!("{} (not logged in)", platform_id);
         }
     }
+
+    format!("{} ✓", platform_id)
 }
 
 // DRY:FN:wizard_view
@@ -95,6 +100,7 @@ pub fn view<'a>(
     requirements_preview_content: &'a text_editor::Content,
     plan_content: &'a text_editor::Content,
     platform_statuses: &'a [crate::views::setup::PlatformStatus],
+    auth_status: &'a HashMap<String, crate::views::login::AuthStatus>,
     theme: &'a AppTheme,
     _size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
@@ -180,10 +186,11 @@ pub fn view<'a>(
             models,
             generating,
             platform_statuses,
+            auth_status,
             theme,
         ),
         4 => step4_review_prd(prd_editor_content, prd_text, theme),
-        5 => step5_configure_tiers(tier_configs, models, platform_statuses, theme),
+        5 => step5_configure_tiers(tier_configs, models, platform_statuses, auth_status, theme),
         6 => step6_generate_plan(plan_text, plan_content, generating, theme),
         7 => step7_review_plan(plan_text, plan_content, theme).into(),
         8 => step8_review_start(project_name, project_path, theme).into(),
@@ -740,6 +747,7 @@ fn step3_generate_prd<'a>(
     models: &'a HashMap<String, Vec<String>>,
     generating: bool,
     platform_statuses: &'a [crate::views::setup::PlatformStatus],
+    auth_status: &'a HashMap<String, crate::views::login::AuthStatus>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let platform_models = models.get(prd_platform);
@@ -770,21 +778,21 @@ fn step3_generate_prd<'a>(
                 // Build platform options with availability indicators
                 let platform_options: Vec<String> = PLATFORMS
                     .iter()
-                    .map(|p| format_platform_id_option(p, platform_statuses))
+                    .map(|p| format_platform_id_option(p, platform_statuses, auth_status))
                     .collect();
                 
                 // Find current selection with formatting
                 let selected_platform = platform_options
                     .iter()
                     .find(|opt| {
-                        let clean = opt.trim_end_matches(" ✓").trim_end_matches(" (unavailable)");
+                        let clean = opt.trim_end_matches(" ✓").trim_end_matches(" (not installed)").trim_end_matches(" (not logged in)");
                         clean == prd_platform
                     })
                     .cloned();
                 
                 pick_list(platform_options, selected_platform, |s: String| {
                     // Extract the platform ID from the formatted string
-                    let clean = s.trim_end_matches(" ✓").trim_end_matches(" (unavailable)");
+                    let clean = s.trim_end_matches(" ✓").trim_end_matches(" (not installed)").trim_end_matches(" (not logged in)");
                     Message::WizardPrdPlatformChanged(clean.to_string())
                 })
                 .width(Length::Fixed(200.0))
@@ -944,6 +952,7 @@ fn step5_configure_tiers<'a>(
     tier_configs: &'a HashMap<String, WizardTierConfig>,
     models: &'a HashMap<String, Vec<String>>,
     platform_statuses: &'a [crate::views::setup::PlatformStatus],
+    auth_status: &'a HashMap<String, crate::views::login::AuthStatus>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let tiers = vec!["phase", "task", "subtask", "iteration"];
@@ -993,21 +1002,21 @@ fn step5_configure_tiers<'a>(
                         // Build platform options with availability indicators
                         let platform_options: Vec<String> = PLATFORMS
                             .iter()
-                            .map(|p| format_platform_id_option(p, platform_statuses))
+                            .map(|p| format_platform_id_option(p, platform_statuses, auth_status))
                             .collect();
                         
                         // Find current selection with formatting
                         let selected_platform = platform_options
                             .iter()
                             .find(|opt| {
-                                let clean = opt.trim_end_matches(" ✓").trim_end_matches(" (unavailable)");
+                                let clean = opt.trim_end_matches(" ✓").trim_end_matches(" (not installed)").trim_end_matches(" (not logged in)");
                                 clean == config.platform.as_str()
                             })
                             .cloned();
                         
                         pick_list(platform_options, selected_platform, move |p: String| {
                             // Extract the platform ID from the formatted string
-                            let clean = p.trim_end_matches(" ✓").trim_end_matches(" (unavailable)");
+                            let clean = p.trim_end_matches(" ✓").trim_end_matches(" (not installed)").trim_end_matches(" (not logged in)");
                             Message::WizardTierPlatformChanged(tier.to_string(), clean.to_string())
                         })
                         .width(Length::Fixed(200.0))

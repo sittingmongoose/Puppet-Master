@@ -19,61 +19,84 @@ use iced::{Alignment, Border, Element, Length};
 use std::collections::HashMap;
 
 // DRY:FN:format_platform_option
-/// Format platform display name with availability indicator if detection data exists
+/// Format platform display name with availability indicator based on install AND auth status
 fn format_platform_option(
     platform: Platform,
     platform_statuses: &[crate::views::setup::PlatformStatus],
+    auth_status: &HashMap<String, crate::views::login::AuthStatus>,
 ) -> String {
     let display_name = platform_specs::display_name_for(platform);
-    
-    // If no detection data, just return the display name
-    if platform_statuses.is_empty() {
-        return display_name.to_string();
+
+    // Check installation status
+    let installed = if platform_statuses.is_empty() {
+        true // No detection data yet
+    } else {
+        platform_statuses
+            .iter()
+            .find(|s| s.platform == platform)
+            .map(|s| {
+                matches!(
+                    s.status,
+                    InstallationStatus::Installed(_) | InstallationStatus::Outdated { .. }
+                )
+            })
+            .unwrap_or(false)
+    };
+
+    if !installed {
+        return format!("{} (not installed)", display_name);
     }
-    
-    // Find the status for this platform
-    let status = platform_statuses.iter().find(|s| s.platform == platform);
-    
-    match status {
-        Some(s)
-            if matches!(
-                s.status,
-                InstallationStatus::Installed(_) | InstallationStatus::Outdated { .. }
-            ) =>
-        {
-            format!("{} ✓", display_name)
-        }
-        Some(_) => {
-            format!("{} (unavailable)", display_name)
-        }
-        None => {
-            // Platform not in detection results, treat as unavailable
-            format!("{} (unavailable)", display_name)
+
+    // Check authentication status
+    if !auth_status.is_empty() {
+        let auth_key = format!("{:?}", platform);
+        let authenticated = auth_status
+            .get(&auth_key)
+            .map(|s| s.authenticated)
+            .unwrap_or(false);
+        if !authenticated {
+            return format!("{} (not logged in)", display_name);
         }
     }
+
+    format!("{} ✓", display_name)
 }
 
 // DRY:FN:is_platform_available
-/// Check if a platform is available based on detection results
-#[allow(dead_code)]
+/// Check if a platform is available based on detection AND auth results
 fn is_platform_available(
     platform: Platform,
     platform_statuses: &[crate::views::setup::PlatformStatus],
+    auth_status: &HashMap<String, crate::views::login::AuthStatus>,
 ) -> bool {
-    // If no detection data, allow all platforms
-    if platform_statuses.is_empty() {
-        return true;
+    // Check installed
+    let installed = if platform_statuses.is_empty() {
+        true
+    } else {
+        platform_statuses
+            .iter()
+            .find(|s| s.platform == platform)
+            .map(|s| {
+                matches!(
+                    s.status,
+                    InstallationStatus::Installed(_) | InstallationStatus::Outdated { .. }
+                )
+            })
+            .unwrap_or(false)
+    };
+
+    if !installed {
+        return false;
     }
-    
-    platform_statuses
-        .iter()
-        .find(|s| s.platform == platform)
-        .map(|s| {
-            matches!(
-                s.status,
-                InstallationStatus::Installed(_) | InstallationStatus::Outdated { .. }
-            )
-        })
+
+    // Check authenticated
+    if auth_status.is_empty() {
+        return true; // No auth data yet
+    }
+    let auth_key = format!("{:?}", platform);
+    auth_status
+        .get(&auth_key)
+        .map(|s| s.authenticated)
         .unwrap_or(false)
 }
 
@@ -90,6 +113,7 @@ pub fn view<'a>(
     models: &'a HashMap<String, Vec<String>>,
     git_info: &'a Option<GitInfo>,
     platform_statuses: &'a [crate::views::setup::PlatformStatus],
+    auth_status: &'a HashMap<String, crate::views::login::AuthStatus>,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
@@ -177,7 +201,7 @@ pub fn view<'a>(
 
     // Tab Content
     let tab_content = match active_tab {
-        0 => tab_tiers(gui_config, models, platform_statuses, theme),
+        0 => tab_tiers(gui_config, models, platform_statuses, auth_status, theme),
         1 => tab_branching(gui_config, git_info, theme),
         2 => tab_verification(gui_config, theme),
         3 => tab_memory(gui_config, theme),
@@ -279,6 +303,7 @@ fn tab_tiers<'a>(
     gui_config: &'a GuiConfig,
     models: &'a HashMap<String, Vec<String>>,
     platform_statuses: &'a [crate::views::setup::PlatformStatus],
+    auth_status: &'a HashMap<String, crate::views::login::AuthStatus>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let mut content = column![]
@@ -348,6 +373,7 @@ fn tab_tiers<'a>(
         phase_effort,
         tooltip_variant,
         platform_statuses,
+        auth_status,
         theme,
     );
     let task_card = tier_card(
@@ -358,6 +384,7 @@ fn tab_tiers<'a>(
         task_effort,
         tooltip_variant,
         platform_statuses,
+        auth_status,
         theme,
     );
     let subtask_card = tier_card(
@@ -368,6 +395,7 @@ fn tab_tiers<'a>(
         subtask_effort,
         tooltip_variant,
         platform_statuses,
+        auth_status,
         theme,
     );
     let iteration_card = tier_card(
@@ -378,6 +406,7 @@ fn tab_tiers<'a>(
         iteration_effort,
         tooltip_variant,
         platform_statuses,
+        auth_status,
         theme,
     );
 
@@ -405,6 +434,7 @@ fn tier_card<'a>(
     effort_visible: bool,
     tooltip_variant: crate::widgets::tooltips::TooltipVariant,
     platform_statuses: &'a [crate::views::setup::PlatformStatus],
+    auth_status: &'a HashMap<String, crate::views::login::AuthStatus>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     const OUTPUT_FORMATS: &[&str] = &["text", "json", "stream-json"];
@@ -413,12 +443,17 @@ fn tier_card<'a>(
     // Build platform options with availability indicators
     let platform_options: Vec<String> = Platform::all()
         .iter()
-        .map(|platform| format_platform_option(*platform, platform_statuses))
+        .map(|platform| format_platform_option(*platform, platform_statuses, auth_status))
         .collect();
-    
+
     let selected_platform_display = Platform::from_str_loose(&tier_config.platform)
-        .map(|platform| format_platform_option(platform, platform_statuses))
+        .map(|platform| format_platform_option(platform, platform_statuses, auth_status))
         .or_else(|| Some(tier_config.platform.clone()));
+
+    // Check if the currently selected platform is fully available (installed + authenticated)
+    let platform_available = Platform::from_str_loose(&tier_config.platform)
+        .map(|p| is_platform_available(p, platform_statuses, auth_status))
+        .unwrap_or(false);
 
     let mut card_content = column![]
         .spacing(tokens::spacing::SM)
@@ -449,9 +484,11 @@ fn tier_card<'a>(
                 selected_platform_display,
                 move |platform_display: String| {
                     // Extract the platform ID from the formatted display string
-                    // The format can be "Name ✓", "Name (unavailable)", or just "Name"
+                    // The format can be "Name ✓", "Name (not installed)", "Name (not logged in)", or just "Name"
                     let clean_display = platform_display
                         .trim_end_matches(" ✓")
+                        .trim_end_matches(" (not installed)")
+                        .trim_end_matches(" (not logged in)")
                         .trim_end_matches(" (unavailable)");
                     
                     let platform_id = Platform::all()
@@ -470,7 +507,8 @@ fn tier_card<'a>(
     );
 
     // Model pick_list (dynamic from cache / fallback) with Refresh button
-    {
+    // Only show model picker if the selected platform is fully available
+    if platform_available {
         let selected_model = model_list
             .iter()
             .find(|m| m.as_str() == tier_config.model.as_str())
@@ -514,10 +552,16 @@ fn tier_card<'a>(
             ]
             .spacing(tokens::spacing::XXS),
         );
+    } else {
+        card_content = card_content.push(
+            text("Platform unavailable — install and log in to configure model")
+                .size(tokens::font_size::SM)
+                .color(theme.ink_faded()),
+        );
     }
 
     // Reasoning Effort picker — conditional: hidden for Cursor (model-based) and Gemini (unsupported)
-    if effort_visible {
+    if effort_visible && platform_available {
         // Build effort levels from platform_specs
         let effort_options: Vec<String> = {
             let mut opts = vec!["default".to_string()];

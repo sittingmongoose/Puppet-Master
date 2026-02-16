@@ -507,7 +507,7 @@ static CODEX_SPEC: PlatformSpec = PlatformSpec {
         login_command: Some("codex"),
         login_args: &["login"],
         login_is_interactive: true,
-        login_needs_terminal: false,
+        login_needs_terminal: true, // codex login is interactive and needs a visible terminal
         logout_command: Some("codex"),
         logout_args: &["logout"],
         status_command: Some("codex"),

@@ -83,82 +83,76 @@ impl AuthTarget {
 /// Spawns login for a platform. For interactive/device-flow logins (Claude, Copilot, Gemini),
 /// the CLI is launched in a terminal so the user can see prompts and complete auth.
 pub async fn spawn_login(target: AuthTarget) -> Result<()> {
-    // Claude, Gemini, and Copilot require a visible terminal for login UX
-    // (Claude has no `auth login` subcommand — browser-based login on interactive launch)
-    // (Gemini has no `auth login` — interactive "Login with Google" on first run)
-    // (Copilot uses OAuth device flow and prints a one-time code in terminal output)
-    if matches!(
-        target,
-        AuthTarget::Platform(Platform::Claude)
-            | AuthTarget::Platform(Platform::Gemini)
-            | AuthTarget::Platform(Platform::Copilot)
-    ) {
-        let platform = match target {
-            AuthTarget::Platform(platform) => platform,
-            _ => unreachable!(),
-        };
+    // Platforms with login_needs_terminal require a visible terminal for login UX
+    // (Claude: browser-based login on interactive launch, no `auth login` subcommand)
+    // (Codex: interactive `codex login` requires terminal)
+    // (Gemini: interactive "Login with Google" on first run)
+    // (Copilot: OAuth device flow prints a one-time code in terminal output)
+    if let AuthTarget::Platform(platform) = target {
         let spec = platform_specs::get_spec(platform);
-        let program_hint = spec
-            .auth
-            .login_command
-            .or_else(|| spec.cli_binary_names.first().copied())
-            .unwrap_or_default();
-        let resolved_program = resolve_platform_program(platform, program_hint).await?;
-        let base_args = spec.auth.login_args.to_vec();
-        let full_command = terminal_command(&resolved_program, &base_args);
+        if spec.auth.login_needs_terminal {
+            let program_hint = spec
+                .auth
+                .login_command
+                .or_else(|| spec.cli_binary_names.first().copied())
+                .unwrap_or_default();
+            let resolved_program = resolve_platform_program(platform, program_hint).await?;
+            let base_args = spec.auth.login_args.to_vec();
+            let full_command = terminal_command(&resolved_program, &base_args);
 
-        // Try to open in a terminal emulator so user can interact.
-        // Do not wait — terminal runs independently.
-        if cfg!(target_os = "macos") {
-            let script = format!(
-                "tell app \"Terminal\" to do script \"{}\"",
-                full_command.replace('"', "\\\"")
-            );
-            Command::new("osascript")
-                .args(["-e", &script])
-                .spawn()
-                .map_err(|e| {
-                    anyhow!(
-                        "Failed to open terminal for {}: {}. Run '{}' manually in your terminal.",
-                        program_hint,
-                        e,
-                        full_command
-                    )
-                })?;
-        } else if cfg!(target_os = "windows") {
-            Command::new("cmd")
-                .args(["/C", "start", "cmd", "/k"])
-                .arg(&resolved_program)
-                .args(&base_args)
-                .spawn()
-                .map_err(|e| {
-                    anyhow!(
-                        "Failed to open terminal for {}: {}. Run '{}' manually in your terminal.",
-                        program_hint,
-                        e,
-                        full_command
-                    )
-                })?;
-        } else {
-            // Linux: try common terminal emulators. x-terminal-emulator is the Debian/Ubuntu default.
-            let terminal_cmd = format!(
-                "x-terminal-emulator -e {0} || xterm -e {0} || gnome-terminal -- {0}",
-                full_command
-            );
-            Command::new("sh")
-                .args(["-c", &terminal_cmd])
-                .spawn()
-                .map_err(|e| {
-                    anyhow!(
-                        "Failed to open terminal for {}: {}. Run '{}' manually in your terminal.",
-                        program_hint,
-                        e,
-                        full_command
-                    )
-                })?;
+            // Try to open in a terminal emulator so user can interact.
+            // Do not wait — terminal runs independently.
+            if cfg!(target_os = "macos") {
+                let script = format!(
+                    "tell app \"Terminal\" to do script \"{}\"",
+                    full_command.replace('"', "\\\"")
+                );
+                Command::new("osascript")
+                    .args(["-e", &script])
+                    .spawn()
+                    .map_err(|e| {
+                        anyhow!(
+                            "Failed to open terminal for {}: {}. Run '{}' manually in your terminal.",
+                            program_hint,
+                            e,
+                            full_command
+                        )
+                    })?;
+            } else if cfg!(target_os = "windows") {
+                Command::new("cmd")
+                    .args(["/C", "start", "cmd", "/k"])
+                    .arg(&resolved_program)
+                    .args(&base_args)
+                    .spawn()
+                    .map_err(|e| {
+                        anyhow!(
+                            "Failed to open terminal for {}: {}. Run '{}' manually in your terminal.",
+                            program_hint,
+                            e,
+                            full_command
+                        )
+                    })?;
+            } else {
+                // Linux: try common terminal emulators. x-terminal-emulator is the Debian/Ubuntu default.
+                let terminal_cmd = format!(
+                    "x-terminal-emulator -e {0} || xterm -e {0} || gnome-terminal -- {0}",
+                    full_command
+                );
+                Command::new("sh")
+                    .args(["-c", &terminal_cmd])
+                    .spawn()
+                    .map_err(|e| {
+                        anyhow!(
+                            "Failed to open terminal for {}: {}. Run '{}' manually in your terminal.",
+                            program_hint,
+                            e,
+                            full_command
+                        )
+                    })?;
+            }
+
+            return Ok(());
         }
-
-        return Ok(());
     }
 
     let (program, args) = match target {

@@ -540,6 +540,8 @@ pub enum Message {
     ToggleDoctorPlatformSelector,
     ToggleDoctorPlatform(crate::types::Platform),
     ToggleDoctorCheckExpand(String), // check name
+    DoctorBrowsePlatformPath(crate::types::Platform),
+    DoctorPlatformPathSelected(crate::types::Platform, Option<PathBuf>),
     InstallAllMissing,
     InstallPlaywright, // Trigger Playwright auto-install
 
@@ -906,21 +908,20 @@ fn auth_flow_uses_deferred_completion(
     target: crate::platforms::AuthTarget,
     action: AuthActionKind,
 ) -> bool {
-    matches!(
-        (action, target),
+    // Login is deferred for any platform that opens a terminal (login_needs_terminal).
+    // Logout is deferred for Copilot (needs interactive /logout in terminal).
+    match (action, target) {
+        (AuthActionKind::Login, crate::platforms::AuthTarget::Platform(platform)) => {
+            crate::platforms::platform_specs::get_spec(platform)
+                .auth
+                .login_needs_terminal
+        }
         (
-            AuthActionKind::Login,
-            crate::platforms::AuthTarget::Platform(
-                crate::types::Platform::Codex
-                    | crate::types::Platform::Claude
-                    | crate::types::Platform::Gemini
-                    | crate::types::Platform::Copilot
-            )
-        ) | (
             AuthActionKind::Logout,
-            crate::platforms::AuthTarget::Platform(crate::types::Platform::Copilot)
-        )
-    )
+            crate::platforms::AuthTarget::Platform(crate::types::Platform::Copilot),
+        ) => true,
+        _ => false,
+    }
 }
 
 fn parse_first_url(text: &str) -> Option<String> {
@@ -1298,6 +1299,10 @@ impl App {
             },
             |_| Message::None,
         ));
+
+        // Auto-detect platform installations and auth status on startup
+        startup_tasks.push(Task::done(Message::SetupRunDetection));
+        startup_tasks.push(refresh_auth_status_task());
 
         let task = Task::batch(startup_tasks);
 
@@ -3466,6 +3471,74 @@ impl App {
                 Task::none()
             }
 
+            Message::DoctorBrowsePlatformPath(platform) => {
+                Task::perform(
+                    async move {
+                        let result = rfd::AsyncFileDialog::new()
+                            .set_title(&format!(
+                                "Select {} CLI binary",
+                                crate::platforms::platform_specs::get_spec(platform).display_name
+                            ))
+                            .pick_file()
+                            .await;
+                        (platform, result.map(|f| f.path().to_path_buf()))
+                    },
+                    |(platform, path)| Message::DoctorPlatformPathSelected(platform, path),
+                )
+            }
+
+            Message::DoctorPlatformPathSelected(platform, path_opt) => {
+                let Some(path) = path_opt else {
+                    return Task::none();
+                };
+
+                let path_str = path.display().to_string();
+                self.add_toast(
+                    ToastType::Info,
+                    format!(
+                        "Testing {} at {}...",
+                        crate::platforms::platform_specs::get_spec(platform).display_name,
+                        path_str
+                    ),
+                );
+
+                // Store custom path and re-run detection for this platform
+                Task::perform(
+                    async move {
+                        use crate::platforms::platform_detector::PlatformDetector;
+                        let detected = PlatformDetector::detect_platform_with_custom_paths(
+                            platform,
+                            Some(&path_str),
+                        )
+                        .await;
+                        (platform, path_str, detected)
+                    },
+                    move |(platform, path_str, detected): (crate::types::Platform, String, Option<crate::platforms::platform_detector::DetectedPlatform>)| {
+                        if detected.is_some() {
+                            Message::DoctorRunFailed(
+                                ToastType::Success,
+                                format!(
+                                    "{} validated at {}. Re-running detection...",
+                                    crate::platforms::platform_specs::get_spec(platform)
+                                        .display_name,
+                                    path_str
+                                ),
+                            )
+                        } else {
+                            Message::DoctorRunFailed(
+                                ToastType::Error,
+                                format!(
+                                    "Binary at {} is not a valid {} CLI",
+                                    path_str,
+                                    crate::platforms::platform_specs::get_spec(platform)
+                                        .display_name
+                                ),
+                            )
+                        }
+                    },
+                )
+            }
+
             Message::InstallAllMissing => {
                 let selected_platforms = self.doctor_selected_platforms.clone();
                 let using_platform_selection = !selected_platforms.is_empty();
@@ -4240,7 +4313,15 @@ impl App {
             }
 
             Message::WizardModelsLoaded(models) => {
-                self.wizard_models = models;
+                // Only include models for platforms that are fully available
+                self.wizard_models = models
+                    .into_iter()
+                    .filter(|(key, _)| {
+                        crate::types::Platform::from_str_loose(key)
+                            .map(|p| self.is_platform_fully_available(p))
+                            .unwrap_or(false)
+                    })
+                    .collect();
                 self.add_toast(ToastType::Success, "Models loaded".to_string());
                 Task::none()
             }
@@ -4356,6 +4437,9 @@ impl App {
                 self.setup_is_checking = false;
                 self.setup_platform_statuses = statuses;
 
+                // Rebuild visible models now that install status changed
+                self.rebuild_visible_models();
+
                 let installed_count = self
                     .setup_platform_statuses
                     .iter()
@@ -4371,8 +4455,10 @@ impl App {
                     ),
                 );
 
-                // Also run the Playwright check to update the UI
-                self.update(Message::RunCheck("playwright-browsers".to_string()))
+                // Chain auth refresh to update auth status for detected platforms,
+                // then run the Playwright check to update the UI
+                let playwright_task = self.update(Message::RunCheck("playwright-browsers".to_string()));
+                Task::batch(vec![refresh_auth_status_task(), playwright_task])
             }
 
             Message::SetupComplete => {
@@ -5169,6 +5255,21 @@ impl App {
             }
 
             Message::AuthStatusReceived(map) => {
+                // Detect newly-authenticated platforms for model refresh
+                let mut newly_authed: Vec<crate::types::Platform> = Vec::new();
+                for platform in crate::types::Platform::all() {
+                    let key = format!("{:?}", platform);
+                    let was_authed = self
+                        .platform_auth_status
+                        .get(&key)
+                        .map(|s| s.authenticated)
+                        .unwrap_or(false);
+                    let now_authed = map.get(&key).map(|s| s.authenticated).unwrap_or(false);
+                    if now_authed && !was_authed {
+                        newly_authed.push(*platform);
+                    }
+                }
+
                 self.platform_auth_status = map;
 
                 // Update GitHub auth status from the map
@@ -5191,6 +5292,18 @@ impl App {
                 if self.login_cli_content.text().trim().is_empty() {
                     let cli_text = default_login_cli_text();
                     self.login_cli_content = text_editor::Content::with_text(&cli_text);
+                }
+
+                // Rebuild model visibility based on install + auth status
+                self.rebuild_visible_models();
+
+                // Refresh models for any platform that just became authenticated
+                if !newly_authed.is_empty() {
+                    let tasks: Vec<Task<Message>> = newly_authed
+                        .into_iter()
+                        .map(|p| Task::done(Message::RefreshModelsForPlatform(p)))
+                        .collect();
+                    return Task::batch(tasks);
                 }
 
                 Task::none()
@@ -5249,10 +5362,23 @@ impl App {
 
                 let toast_message = match &res {
                     Ok(()) if deferred_login => {
-                        let msg = format!(
-                            "{} login flow launched in a terminal. Complete auth there; status will refresh automatically.",
-                            target.display_name()
-                        );
+                        let msg = match target {
+                            crate::platforms::AuthTarget::Platform(crate::types::Platform::Gemini) => {
+                                "Gemini CLI opened in terminal. Select 'Login with Google' when prompted to authenticate.".to_string()
+                            }
+                            crate::platforms::AuthTarget::Platform(crate::types::Platform::Claude) => {
+                                "Claude CLI opened in terminal. Complete browser-based login when prompted.".to_string()
+                            }
+                            crate::platforms::AuthTarget::Platform(crate::types::Platform::Copilot) => {
+                                "Copilot login opened in terminal. Complete the OAuth device flow and enter the code shown.".to_string()
+                            }
+                            _ => {
+                                format!(
+                                    "{} login flow launched in a terminal. Complete auth there; status will refresh automatically.",
+                                    target.display_name()
+                                )
+                            }
+                        };
                         self.add_toast(ToastType::Info, msg.clone());
                         msg
                     }
@@ -6051,6 +6177,7 @@ impl App {
                         &self.wizard_requirements_preview_content,
                         &self.wizard_plan_content,
                         &self.setup_platform_statuses,
+                        &self.platform_auth_status,
                         &self.theme,
                         layout_size,
                     )
@@ -6066,6 +6193,7 @@ impl App {
                     &self.config_models,
                     &self.config_git_info,
                     &self.setup_platform_statuses,
+                    &self.platform_auth_status,
                     &self.theme,
                     layout_size,
                 ),
@@ -6416,7 +6544,7 @@ impl App {
             return true;
         };
 
-        self.setup_platform_statuses
+        let installed = self.setup_platform_statuses
             .iter()
             .find(|status| status.platform == platform)
             .map(|status| {
@@ -6426,7 +6554,20 @@ impl App {
                         | crate::doctor::InstallationStatus::Outdated { .. }
                 )
             })
-            .unwrap_or(false)
+            .unwrap_or(false);
+
+        if !installed {
+            return false;
+        }
+
+        // Also require authentication if auth status has been checked
+        let key = platform_id.to_lowercase();
+        if let Some(auth) = self.platform_auth_status.get(&key) {
+            return auth.authenticated;
+        }
+
+        // If auth hasn't been checked yet, allow (will be gated once auth loads)
+        true
     }
 
     fn unavailable_platform_reason(&self, platform_id: &str) -> Option<String> {
@@ -6449,7 +6590,16 @@ impl App {
                     Some(detail.to_string())
                 }
             }
-            _ => None,
+            _ => {
+                // Installed but not authenticated?
+                let key = platform_id.to_lowercase();
+                if let Some(auth) = self.platform_auth_status.get(&key) {
+                    if !auth.authenticated {
+                        return Some("Not authenticated. Go to Login to authenticate.".to_string());
+                    }
+                }
+                None
+            }
         }
     }
 
@@ -7153,6 +7303,65 @@ impl App {
         self.next_toast_id += 1;
 
         self.toasts.push(Toast::new(id, toast_type, message));
+    }
+
+    /// Check whether a platform is both installed and authenticated.
+    fn is_platform_fully_available(&self, platform: crate::types::Platform) -> bool {
+        // Check installed via setup detection
+        let installed = if self.setup_platform_statuses.is_empty() {
+            true // No detection data yet, assume available
+        } else {
+            self.setup_platform_statuses
+                .iter()
+                .find(|s| s.platform == platform)
+                .map(|s| {
+                    matches!(
+                        s.status,
+                        crate::doctor::InstallationStatus::Installed(_)
+                            | crate::doctor::InstallationStatus::Outdated { .. }
+                    )
+                })
+                .unwrap_or(false)
+        };
+
+        if !installed {
+            return false;
+        }
+
+        // Check authenticated
+        if self.platform_auth_status.is_empty() {
+            return true; // No auth data yet, assume OK
+        }
+        let auth_key = format!("{:?}", platform);
+        self.platform_auth_status
+            .get(&auth_key)
+            .map(|s| s.authenticated)
+            .unwrap_or(false)
+    }
+
+    /// Rebuild config_models to only include models for platforms that are fully available.
+    fn rebuild_visible_models(&mut self) {
+        for platform in crate::types::Platform::all() {
+            let key = platform.to_string().to_lowercase();
+            if self.is_platform_fully_available(*platform) {
+                // Use cached models if available, else fallback from specs
+                if let Some(cached) = self.model_cache.get(platform) {
+                    if !cached.models.is_empty() {
+                        self.config_models.insert(key, cached.models.clone());
+                        continue;
+                    }
+                }
+                // If no cache, use fallback from specs
+                let fallback: Vec<String> =
+                    crate::platforms::platform_specs::fallback_model_ids(*platform)
+                        .into_iter()
+                        .map(|s| s.to_string())
+                        .collect();
+                self.config_models.insert(key, fallback);
+            } else {
+                self.config_models.remove(&key);
+            }
+        }
     }
 
     /// Get the model list for a platform, preferring cache then fallback.

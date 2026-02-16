@@ -205,6 +205,18 @@ pub fn view<'a>(
         .into()
 }
 
+/// Map doctor check name (e.g. "cursor-cli") to Platform enum
+fn platform_from_check_name(name: &str) -> Option<Platform> {
+    match name {
+        "cursor-cli" => Some(Platform::Cursor),
+        "codex-cli" => Some(Platform::Codex),
+        "claude-cli" => Some(Platform::Claude),
+        "gemini-cli" => Some(Platform::Gemini),
+        "copilot-cli" => Some(Platform::Copilot),
+        _ => None,
+    }
+}
+
 // ═══════════════════════════════════════════════════════════════════════
 // Header Section
 // ═══════════════════════════════════════════════════════════════════════
@@ -652,6 +664,16 @@ fn view_check_row<'a>(
             actions = actions.push(
                 styled_button_sized(theme, "Fix", ButtonVariant::Info, ButtonSize::Small)
                     .on_press(Message::FixCheck(check.name.clone(), false)),
+            );
+        }
+    }
+
+    // Browse button for CLI checks — lets user manually select binary location
+    if !check.passed && check.name.ends_with("-cli") {
+        if let Some(platform) = platform_from_check_name(&check.name) {
+            actions = actions.push(
+                styled_button_sized(theme, "Browse", ButtonVariant::Ghost, ButtonSize::Small)
+                    .on_press(Message::DoctorBrowsePlatformPath(platform)),
             );
         }
     }

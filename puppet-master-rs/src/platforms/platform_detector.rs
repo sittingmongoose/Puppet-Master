@@ -96,7 +96,12 @@ impl PlatformDetector {
                     if platform == Platform::Copilot && Self::is_gh_binary_name(name) {
                         continue;
                     }
-                    let version = Self::get_version_for_path(&found, spec.version_command).await;
+                    let (version, valid) =
+                        Self::validate_and_get_version(platform, &found, spec.version_command)
+                            .await;
+                    if !valid {
+                        continue;
+                    }
                     let detected = DetectedPlatform {
                         platform,
                         cli_path: found,
@@ -134,20 +139,23 @@ impl PlatformDetector {
                             found.display()
                         );
                     } else {
-                        let version =
-                            Self::get_version_for_path(&found, spec.version_command).await;
-                        let detected = DetectedPlatform {
-                            platform,
-                            cli_path: found,
-                            cli_name,
-                            version,
-                            available: true,
-                            searched_paths: searched_paths.clone(),
-                        };
-                        return PlatformDetectionTrace {
-                            detected: Some(detected),
-                            searched_paths,
-                        };
+                        let (version, valid) =
+                            Self::validate_and_get_version(platform, &found, spec.version_command)
+                                .await;
+                        if valid {
+                            let detected = DetectedPlatform {
+                                platform,
+                                cli_path: found,
+                                cli_name,
+                                version,
+                                available: true,
+                                searched_paths: searched_paths.clone(),
+                            };
+                            return PlatformDetectionTrace {
+                                detected: Some(detected),
+                                searched_paths,
+                            };
+                        }
                     }
                 }
             }
@@ -163,19 +171,22 @@ impl PlatformDetector {
             }
 
             if let Some(path) = Self::find_in_path(name) {
-                let version = Self::get_version_for_path(&path, spec.version_command).await;
-                let detected = DetectedPlatform {
-                    platform,
-                    cli_path: path,
-                    cli_name: name.to_string(),
-                    version,
-                    available: true,
-                    searched_paths: searched_paths.clone(),
-                };
-                return PlatformDetectionTrace {
-                    detected: Some(detected),
-                    searched_paths,
-                };
+                let (version, valid) =
+                    Self::validate_and_get_version(platform, &path, spec.version_command).await;
+                if valid {
+                    let detected = DetectedPlatform {
+                        platform,
+                        cli_path: path,
+                        cli_name: name.to_string(),
+                        version,
+                        available: true,
+                        searched_paths: searched_paths.clone(),
+                    };
+                    return PlatformDetectionTrace {
+                        detected: Some(detected),
+                        searched_paths,
+                    };
+                }
             }
         }
 
@@ -196,7 +207,11 @@ impl PlatformDetector {
                     continue;
                 }
 
-                let version = Self::get_version_for_path(&found, spec.version_command).await;
+                let (version, valid) =
+                    Self::validate_and_get_version(platform, &found, spec.version_command).await;
+                if !valid {
+                    continue;
+                }
                 let detected = DetectedPlatform {
                     platform,
                     cli_path: found,
@@ -230,7 +245,12 @@ impl PlatformDetector {
                 }
 
                 if let Some(found) = path_utils::check_executable_exists(&path) {
-                    let version = Self::get_version_for_path(&found, spec.version_command).await;
+                    let (version, valid) =
+                        Self::validate_and_get_version(platform, &found, spec.version_command)
+                            .await;
+                    if !valid {
+                        continue;
+                    }
                     let detected = DetectedPlatform {
                         platform,
                         cli_path: found,
@@ -259,7 +279,12 @@ impl PlatformDetector {
                 }
 
                 if let Some(found) = path_utils::check_executable_exists(&candidate) {
-                    let version = Self::get_version_for_path(&found, spec.version_command).await;
+                    let (version, valid) =
+                        Self::validate_and_get_version(platform, &found, spec.version_command)
+                            .await;
+                    if !valid {
+                        continue;
+                    }
                     let detected = DetectedPlatform {
                         platform,
                         cli_path: found,
@@ -285,19 +310,22 @@ impl PlatformDetector {
             }
 
             if let Some(found) = path_utils::find_in_shell_path(name) {
-                let version = Self::get_version_for_path(&found, spec.version_command).await;
-                let detected = DetectedPlatform {
-                    platform,
-                    cli_path: found,
-                    cli_name: name.to_string(),
-                    version,
-                    available: true,
-                    searched_paths: searched_paths.clone(),
-                };
-                return PlatformDetectionTrace {
-                    detected: Some(detected),
-                    searched_paths,
-                };
+                let (version, valid) =
+                    Self::validate_and_get_version(platform, &found, spec.version_command).await;
+                if valid {
+                    let detected = DetectedPlatform {
+                        platform,
+                        cli_path: found,
+                        cli_name: name.to_string(),
+                        version,
+                        available: true,
+                        searched_paths: searched_paths.clone(),
+                    };
+                    return PlatformDetectionTrace {
+                        detected: Some(detected),
+                        searched_paths,
+                    };
+                }
             }
         }
 
@@ -357,23 +385,92 @@ impl PlatformDetector {
         which(name).ok()
     }
 
-    /// Gets version string by executing an absolute or relative CLI path.
-    async fn get_version_for_path(command_path: &Path, version_flag: &str) -> Option<String> {
-        let output = Command::new(command_path)
+    /// Validates that a detected binary actually executes and belongs to the claimed platform.
+    /// Returns (version, is_valid) — is_valid is false if the binary fails to execute
+    /// (e.g., missing runtime like node) or if its output doesn't match the expected platform.
+    async fn validate_and_get_version(
+        platform: Platform,
+        command_path: &Path,
+        version_flag: &str,
+    ) -> (Option<String>, bool) {
+        let timeout = tokio::time::Duration::from_secs(5);
+        let future = Command::new(command_path)
             .arg(version_flag)
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
-            .output()
-            .await
-            .ok()?;
+            .output();
 
+        let output = match tokio::time::timeout(timeout, future).await {
+            Ok(Ok(output)) => output,
+            Ok(Err(e)) => {
+                debug!(
+                    "Binary validation failed for {:?} at {}: {}",
+                    platform,
+                    command_path.display(),
+                    e
+                );
+                return (None, false);
+            }
+            Err(_) => {
+                debug!(
+                    "Binary validation timed out for {:?} at {}",
+                    platform,
+                    command_path.display()
+                );
+                return (None, false);
+            }
+        };
+
+        // If the binary exits with a non-zero status (e.g., "env: node: No such file or directory"),
+        // and has no useful stdout, treat it as invalid.
         let stdout = String::from_utf8_lossy(&output.stdout);
         let stderr = String::from_utf8_lossy(&output.stderr);
-
-        // Try to extract version from output
         let combined = format!("{}{}", stdout, stderr);
 
-        Self::extract_version(&combined)
+        if !output.status.success() && stdout.trim().is_empty() {
+            debug!(
+                "Binary at {} exited with {:?}, stderr: {}",
+                command_path.display(),
+                output.status.code(),
+                stderr.trim()
+            );
+            return (None, false);
+        }
+
+        let version = Self::extract_version(&combined);
+
+        // Validate that the output looks like it belongs to this platform.
+        // This prevents e.g. a LaTeX "codex" binary from being detected as OpenAI Codex.
+        let combined_lower = combined.to_lowercase();
+        let is_expected_platform = match platform {
+            Platform::Codex => {
+                combined_lower.contains("codex") || combined_lower.contains("openai")
+            }
+            Platform::Copilot => {
+                combined_lower.contains("copilot") || combined_lower.contains("github")
+            }
+            Platform::Claude => {
+                combined_lower.contains("claude") || combined_lower.contains("anthropic")
+            }
+            Platform::Gemini => {
+                combined_lower.contains("gemini") || combined_lower.contains("google")
+            }
+            Platform::Cursor => {
+                combined_lower.contains("cursor") || combined_lower.contains("agent")
+            }
+        };
+
+        if !is_expected_platform {
+            debug!(
+                "Binary at {} does not appear to be {:?} (output: {})",
+                command_path.display(),
+                platform,
+                combined.trim()
+            );
+            return (version, false);
+        }
+
+        (version, true)
     }
 
     /// Extracts version number from text
