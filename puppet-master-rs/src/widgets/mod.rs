@@ -106,8 +106,8 @@ pub use selectable_text::{
     selectable_text_field, selectable_text_input, selectable_text_input_with_on_change,
 };
 pub use styled_button::{
-    ButtonSize, ButtonVariant, danger_button, ghost_button, info_button, primary_button,
-    secondary_button, styled_button, styled_button_sized, warning_button,
+    ButtonSize, ButtonVariant, danger_button, ghost_button, header_nav_button, info_button,
+    primary_button, secondary_button, styled_button, styled_button_sized, warning_button,
 };
 pub use styled_input::{
     InputSize, InputVariant, code_input, labeled_input, labeled_input_with_error, large_input,

@@ -1,10 +1,11 @@
 //! Navigation header widget
 
 use crate::theme::AppTheme;
-use crate::theme::fonts::{FONT_DISPLAY_BOLD, FONT_UI, FONT_UI_BOLD};
-use crate::theme::tokens::{borders, layout, shadows, spacing};
-use iced::widget::{Space, button, column, container, row, rule, text};
-use iced::{Background, Border, Color, Element, Length, Padding, Shadow, Vector};
+use crate::theme::fonts::FONT_DISPLAY_BOLD;
+use crate::theme::tokens::{borders, layout, spacing};
+use crate::widgets::styled_button::{header_nav_button, styled_button_sized, ButtonSize, ButtonVariant};
+use iced::widget::{Space, column, container, row, rule, text};
+use iced::{Background, Border, Element, Length, Padding, Shadow, Vector};
 
 // DRY:WIDGET:Page
 /// Application page enum
@@ -113,11 +114,10 @@ pub fn header<'a, Message>(
 where
     Message: Clone + 'a,
 {
-    let _theme_copy = *theme;
     let paper_color = theme.paper();
     let ink_color = theme.ink();
 
-    // Title - "RWM PUPPET MASTER" with thin underline (screenshot reference)
+    // Title - "RWM PUPPET MASTER" with thin underline
     let title_text = text("RWM PUPPET MASTER")
         .size(26)
         .font(FONT_DISPLAY_BOLD)
@@ -134,7 +134,34 @@ where
         .spacing(spacing::XXS)
         .align_x(iced::Alignment::Start);
 
-    // Navigation pages to display in the header
+    // ── Top row: Logo (left) → spacer → Project selector → Theme button (right) ──
+    let mut top_row = row![]
+        .spacing(spacing::SM)
+        .align_y(iced::Alignment::Center);
+
+    top_row = top_row.push(container(logo).width(Length::Shrink));
+    top_row = top_row.push(Space::new().width(Length::Fill));
+
+    // Project selector (if callback provided)
+    if let Some(_project_callback) = on_project_select {
+        if let Some(proj_name) = project_name {
+            let project_btn: iced::widget::Button<'_, Message> =
+                styled_button_sized(theme, &proj_name, ButtonVariant::Ghost, ButtonSize::Small);
+            top_row = top_row.push(project_btn);
+        }
+    }
+
+    // Theme toggle — Ghost variant gives THICK border + shadow = visible "box"
+    let theme_label = if theme.is_dark() {
+        "Light Mode"
+    } else {
+        "Dark Mode"
+    };
+    let theme_btn = styled_button_sized(theme, theme_label, ButtonVariant::Ghost, ButtonSize::Small)
+        .on_press(on_theme_toggle);
+    top_row = top_row.push(theme_btn);
+
+    // ── Bottom row: Navigation buttons ──
     let nav_pages = vec![
         Page::Dashboard,
         Page::Projects,
@@ -150,258 +177,24 @@ where
         Page::Settings,
     ];
 
-    // Build navigation buttons row (token spacing between buttons)
-    let mut nav_buttons = row![].spacing(spacing::SM).align_y(iced::Alignment::Center);
-
+    let mut nav_row = row![].spacing(spacing::SM).align_y(iced::Alignment::Center);
     for page in nav_pages {
-        let is_active = page == current_page;
-        let page_label = page.label();
-
-        let btn = if is_active {
-            // Active page: inverted colors (ink background, paper text, bold) - thin border, no shadow
-            button(text(page_label).font(FONT_UI_BOLD).size(13))
-                .on_press(on_navigate(page))
-                .padding(Padding::from([6, 12]))
-                .style(move |_theme: &iced::Theme, status| match status {
-                    button::Status::Active | button::Status::Hovered | button::Status::Pressed => {
-                        button::Style {
-                            background: Some(Background::Color(ink_color)),
-                            text_color: paper_color,
-                            border: Border {
-                                width: borders::THIN,
-                                color: ink_color,
-                                radius: 0.0.into(),
-                            },
-                            shadow: shadows::none(),
-                            snap: button::Style::default().snap,
-                        }
-                    }
-                    button::Status::Disabled => button::Style {
-                        background: Some(Background::Color(Color::from_rgba(
-                            ink_color.r,
-                            ink_color.g,
-                            ink_color.b,
-                            0.5,
-                        ))),
-                        text_color: Color::from_rgba(
-                            paper_color.r,
-                            paper_color.g,
-                            paper_color.b,
-                            0.5,
-                        ),
-                        border: Border {
-                            width: borders::THIN,
-                            color: Color::from_rgba(ink_color.r, ink_color.g, ink_color.b, 0.5),
-                            radius: 0.0.into(),
-                        },
-                        shadow: shadows::none(),
-                        snap: button::Style::default().snap,
-                    },
-                })
-        } else {
-            // Inactive page: paper bg, ink text, thin ink border (screenshot outline style)
-            button(text(page_label).font(FONT_UI).size(13))
-                .on_press(on_navigate(page))
-                .padding(Padding::from([6, 12]))
-                .style(move |_theme: &iced::Theme, status| match status {
-                    button::Status::Active => button::Style {
-                        background: Some(Background::Color(paper_color)),
-                        text_color: ink_color,
-                        border: Border {
-                            width: borders::THIN,
-                            color: ink_color,
-                            radius: 0.0.into(),
-                        },
-                        shadow: shadows::none(),
-                        snap: button::Style::default().snap,
-                    },
-                    button::Status::Hovered => button::Style {
-                        background: Some(Background::Color(ink_color)),
-                        text_color: paper_color,
-                        border: Border {
-                            width: borders::THIN,
-                            color: ink_color,
-                            radius: 0.0.into(),
-                        },
-                        shadow: shadows::none(),
-                        snap: button::Style::default().snap,
-                    },
-                    button::Status::Pressed => button::Style {
-                        background: Some(Background::Color(ink_color)),
-                        text_color: paper_color,
-                        border: Border {
-                            width: borders::THIN,
-                            color: ink_color,
-                            radius: 0.0.into(),
-                        },
-                        shadow: shadows::none(),
-                        snap: button::Style::default().snap,
-                    },
-                    button::Status::Disabled => button::Style {
-                        background: Some(Background::Color(paper_color)),
-                        text_color: Color::from_rgba(ink_color.r, ink_color.g, ink_color.b, 0.5),
-                        border: Border {
-                            width: borders::THIN,
-                            color: Color::from_rgba(ink_color.r, ink_color.g, ink_color.b, 0.5),
-                            radius: 0.0.into(),
-                        },
-                        shadow: shadows::none(),
-                        snap: button::Style::default().snap,
-                    },
-                })
-        };
-
-        nav_buttons = nav_buttons.push(btn);
+        let btn = header_nav_button(theme, page.label(), page == current_page)
+            .on_press(on_navigate(page));
+        nav_row = nav_row.push(btn);
     }
 
-    // Build the full header row: fixed height so Fill-height children can align top/bottom
-    let mut header_row = row![]
-        .spacing(spacing::SM)
-        .align_y(iced::Alignment::Center)
-        .height(Length::Fixed(layout::HEADER_HEIGHT));
+    // ── Combine into two-row column ──
+    let header_content = column![top_row, nav_row].spacing(spacing::XS);
 
-    // Left: Logo (container with Shrink so full "RWM PUPPET MASTER" is not clipped)
-    header_row = header_row.push(container(logo).width(Length::Shrink));
-
-    // Large fixed gap so nav buttons sit clearly to the right of the logo
-    header_row = header_row.push(Space::new().width(Length::Fixed(layout::HEADER_LOGO_NAV_GAP)));
-
-    // Nav buttons at bottom of header row (lower than theme button); Shrink so Ledger is not clipped
-    header_row = header_row.push(
-        container(nav_buttons)
-            .width(Length::Shrink)
-            .height(Length::Fill)
-            .align_y(iced::Alignment::End)
-            .center_x(Length::Shrink),
-    );
-
-    // Flexible spacer to push right section to the end
-    header_row = header_row.push(Space::new().width(Length::Fill));
-
-    // Right section: Project name (top-aligned) and theme toggle (top-right)
-
-    // Project selector (if callback provided) — top-aligned with theme button
-    if let Some(_project_callback) = on_project_select {
-        if let Some(proj_name) = project_name {
-            let project_btn = button(text(proj_name).font(FONT_UI_BOLD).size(13))
-                .padding(Padding::from([6, 12]))
-                .style(move |_theme: &iced::Theme, status| match status {
-                    button::Status::Active => button::Style {
-                        background: Some(Background::Color(paper_color)),
-                        text_color: ink_color,
-                        border: Border {
-                            width: borders::THIN,
-                            color: ink_color,
-                            radius: 0.0.into(),
-                        },
-                        shadow: shadows::none(),
-                        snap: button::Style::default().snap,
-                    },
-                    button::Status::Hovered => button::Style {
-                        background: Some(Background::Color(ink_color)),
-                        text_color: paper_color,
-                        border: Border {
-                            width: borders::THIN,
-                            color: ink_color,
-                            radius: 0.0.into(),
-                        },
-                        shadow: shadows::none(),
-                        snap: button::Style::default().snap,
-                    },
-                    button::Status::Pressed | button::Status::Disabled => button::Style {
-                        background: Some(Background::Color(paper_color)),
-                        text_color: ink_color,
-                        border: Border {
-                            width: borders::THIN,
-                            color: ink_color,
-                            radius: 0.0.into(),
-                        },
-                        shadow: shadows::none(),
-                        snap: button::Style::default().snap,
-                    },
-                });
-
-            header_row = header_row.push(
-                container(project_btn)
-                    .height(Length::Fill)
-                    .align_y(iced::Alignment::Start),
-            );
-        }
-    }
-
-    // Theme toggle — top-right: outline style like other header buttons
-    let theme_label = if theme.is_dark() {
-        "LIGHT MODE"
-    } else {
-        "DARK MODE"
-    };
-    let theme_btn = button(text(theme_label).font(FONT_UI_BOLD).size(13))
-        .on_press(on_theme_toggle)
-        .padding(Padding::from([6, 12]))
-        .style(move |_theme: &iced::Theme, status| match status {
-            button::Status::Active => button::Style {
-                background: Some(Background::Color(paper_color)),
-                text_color: ink_color,
-                border: Border {
-                    width: borders::THIN,
-                    color: ink_color,
-                    radius: 0.0.into(),
-                },
-                shadow: shadows::none(),
-                snap: button::Style::default().snap,
-            },
-            button::Status::Hovered => button::Style {
-                background: Some(Background::Color(ink_color)),
-                text_color: paper_color,
-                border: Border {
-                    width: borders::THIN,
-                    color: ink_color,
-                    radius: 0.0.into(),
-                },
-                shadow: shadows::none(),
-                snap: button::Style::default().snap,
-            },
-            button::Status::Pressed => button::Style {
-                background: Some(Background::Color(ink_color)),
-                text_color: paper_color,
-                border: Border {
-                    width: borders::THIN,
-                    color: ink_color,
-                    radius: 0.0.into(),
-                },
-                shadow: shadows::none(),
-                snap: button::Style::default().snap,
-            },
-            button::Status::Disabled => button::Style {
-                background: Some(Background::Color(paper_color)),
-                text_color: Color::from_rgba(ink_color.r, ink_color.g, ink_color.b, 0.5),
-                border: Border {
-                    width: borders::THIN,
-                    color: Color::from_rgba(ink_color.r, ink_color.g, ink_color.b, 0.5),
-                    radius: 0.0.into(),
-                },
-                shadow: shadows::none(),
-                snap: button::Style::default().snap,
-            },
-        });
-
-    header_row = header_row.push(
-        container(theme_btn)
-            .width(Length::Shrink)
-            .height(Length::Fill)
-            .align_y(iced::Alignment::Start)
-            .padding(Padding::ZERO.top(2.0)),
-    );
-
-    // Inner header box: sticky top, paper cream bg, 3px bottom border, cross-hatch shadow
-    // Asymmetric padding: logo further left (smaller left), theme further right (larger right)
-    let inner_header = container(header_row)
+    // Inner header box: paper bg, 3px border, hard shadow
+    let inner_header = container(header_content)
         .padding(
             Padding::ZERO
-                .top(12.0)
-                .bottom(12.0)
+                .top(spacing::SM)
+                .bottom(spacing::SM)
                 .left(spacing::LG)
-                .right(spacing::XXL),
+                .right(spacing::LG),
         )
         .width(Length::Fill)
         .style(move |_theme: &iced::Theme| container::Style {

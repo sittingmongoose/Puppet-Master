@@ -7,14 +7,20 @@ use crate::automation::{
     RunnerOutcome,
 };
 use crate::widgets::Page;
+use ab_glyph::{FontRef, PxScale};
 use anyhow::Result;
 use chrono::Utc;
 use image::{Rgb, RgbImage};
+use imageproc::drawing::{draw_filled_rect_mut, draw_hollow_rect_mut, draw_text_mut};
+use imageproc::rect::Rect;
 use serde::Serialize;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use std::sync::atomic::AtomicBool;
 use std::time::Duration;
+
+// Embedded font for headless wireframe text rendering
+const FONT_BYTES: &[u8] = include_bytes!("../../assets/fonts/Rajdhani-Bold.ttf");
 
 impl HeadlessRunner {
     // DRY:FN:run
@@ -364,10 +370,8 @@ fn write_snapshot_artifacts(app: &App, root: &Path, label: &str) -> Result<(Path
     let png_path = root.join(format!("{}.png", safe));
     let json_path = root.join(format!("{}.json", safe));
 
-    let mut image = RgbImage::new(1280, 720);
-    for pixel in image.pixels_mut() {
-        *pixel = Rgb([20, 24, 30]);
-    }
+    let is_dark = app.theme.is_dark();
+    let image = render_wireframe(app, is_dark);
     image.save(&png_path)?;
 
     let snapshot = AppSnapshot {
@@ -382,6 +386,322 @@ fn write_snapshot_artifacts(app: &App, root: &Path, label: &str) -> Result<(Path
     std::fs::write(&json_path, serde_json::to_string_pretty(&snapshot)?)?;
 
     Ok((png_path, json_path))
+}
+
+// ── Wireframe renderer for headless snapshots ──────────────────────────
+
+/// Color palette for wireframe rendering
+struct WireframeColors {
+    bg: Rgb<u8>,
+    header_bg: Rgb<u8>,
+    ink: Rgb<u8>,
+    ink_faded: Rgb<u8>,
+    active_bg: Rgb<u8>,
+    active_text: Rgb<u8>,
+    theme_btn_bg: Rgb<u8>,
+    _accent: Rgb<u8>,
+    panel_bg: Rgb<u8>,
+}
+
+impl WireframeColors {
+    fn light() -> Self {
+        Self {
+            bg: Rgb([250, 246, 241]),        // PAPER_CREAM
+            header_bg: Rgb([250, 246, 241]), // PAPER_CREAM
+            ink: Rgb([26, 26, 26]),          // INK_BLACK
+            ink_faded: Rgb([102, 102, 102]), // INK_FADED
+            active_bg: Rgb([26, 26, 26]),    // INK_BLACK (inverted)
+            active_text: Rgb([250, 246, 241]),
+            theme_btn_bg: Rgb([250, 246, 241]),
+            _accent: Rgb([0, 71, 171]),       // ELECTRIC_BLUE
+            panel_bg: Rgb([250, 246, 241]),
+        }
+    }
+
+    fn dark() -> Self {
+        Self {
+            bg: Rgb([26, 26, 26]),           // PAPER_DARK
+            header_bg: Rgb([26, 26, 26]),
+            ink: Rgb([224, 224, 224]),        // INK_LIGHT
+            ink_faded: Rgb([136, 136, 136]), // INK_FADED_DARK
+            active_bg: Rgb([224, 224, 224]),
+            active_text: Rgb([26, 26, 26]),
+            theme_btn_bg: Rgb([26, 26, 26]),
+            _accent: Rgb([0, 71, 171]),
+            panel_bg: Rgb([38, 38, 38]),
+        }
+    }
+}
+
+/// Render a wireframe image showing the current app state layout.
+fn render_wireframe(app: &App, is_dark: bool) -> RgbImage {
+    let w: u32 = 1280;
+    let h: u32 = 720;
+    let colors = if is_dark {
+        WireframeColors::dark()
+    } else {
+        WireframeColors::light()
+    };
+
+    let font = FontRef::try_from_slice(FONT_BYTES).expect("embedded font");
+    let scale_sm = PxScale::from(14.0);
+    let scale_md = PxScale::from(18.0);
+    let scale_lg = PxScale::from(24.0);
+
+    let mut img = RgbImage::from_pixel(w, h, colors.bg);
+
+    // ── Header container ──
+    let header_y: i32 = 8;
+    let header_h: u32 = 80;
+    let header_rect = Rect::at(8, header_y).of_size(w - 16, header_h);
+    draw_filled_rect_mut(&mut img, header_rect, colors.header_bg);
+    // 3px border (draw 3 nested rects)
+    for i in 0..3u32 {
+        let r = Rect::at(8 + i as i32, header_y + i as i32)
+            .of_size(w - 16 - i * 2, header_h - i * 2);
+        draw_hollow_rect_mut(&mut img, r, colors.ink);
+    }
+
+    // ── Top row: Logo + Theme button ──
+    let logo_x = 24;
+    let logo_y = header_y + 12;
+    draw_text_mut(
+        &mut img,
+        colors.ink,
+        logo_x,
+        logo_y,
+        scale_lg,
+        &font,
+        "RWM PUPPET MASTER",
+    );
+    // Underline
+    let underline_y = (logo_y + 26) as u32;
+    for x in (logo_x as u32)..(logo_x as u32 + 260) {
+        if underline_y < h {
+            img.put_pixel(x, underline_y, colors.ink);
+        }
+    }
+
+    // Theme button (top-right)
+    let theme_label = if is_dark { "LIGHT MODE" } else { "DARK MODE" };
+    let theme_btn_x: i32 = (w as i32) - 160;
+    let theme_btn_y = header_y + 10;
+    let theme_btn_rect = Rect::at(theme_btn_x, theme_btn_y).of_size(130, 28);
+    draw_filled_rect_mut(&mut img, theme_btn_rect, colors.theme_btn_bg);
+    // 3px border for theme button (styled_button THICK)
+    for i in 0..3u32 {
+        let r = Rect::at(theme_btn_x + i as i32, theme_btn_y + i as i32)
+            .of_size(130 - i * 2, 28 - i * 2);
+        draw_hollow_rect_mut(&mut img, r, colors.ink);
+    }
+    draw_text_mut(
+        &mut img,
+        colors.ink,
+        theme_btn_x + 10,
+        theme_btn_y + 5,
+        scale_sm,
+        &font,
+        theme_label,
+    );
+
+    // ── Bottom row: Nav buttons ──
+    let nav_pages = [
+        Page::Dashboard,
+        Page::Projects,
+        Page::Wizard,
+        Page::Config,
+        Page::Doctor,
+        Page::Tiers,
+        Page::Evidence,
+        Page::Metrics,
+        Page::History,
+        Page::Ledger,
+        Page::Login,
+        Page::Settings,
+    ];
+
+    let nav_y = header_y + 48;
+    let mut nav_x: i32 = 24;
+    let btn_h: u32 = 22;
+    let btn_spacing: i32 = 6;
+
+    for page in &nav_pages {
+        let label = page.label();
+        let is_active = *page == app.current_page;
+        let btn_w = (label.len() as u32) * 9 + 16;
+
+        let (bg, text_color) = if is_active {
+            (colors.active_bg, colors.active_text)
+        } else {
+            (colors.header_bg, colors.ink)
+        };
+
+        let btn_rect = Rect::at(nav_x, nav_y).of_size(btn_w, btn_h);
+        draw_filled_rect_mut(&mut img, btn_rect, bg);
+        draw_hollow_rect_mut(&mut img, btn_rect, colors.ink);
+
+        draw_text_mut(
+            &mut img,
+            text_color,
+            nav_x + 8,
+            nav_y + 3,
+            scale_sm,
+            &font,
+            label,
+        );
+
+        nav_x += btn_w as i32 + btn_spacing;
+    }
+
+    // ── Page content area ──
+    let content_y: i32 = header_y + header_h as i32 + 16;
+    let content_h = h as i32 - content_y - 16;
+
+    if content_h > 0 {
+        // Page title
+        let page_title = format!("{} Page", app.current_page.label());
+        draw_text_mut(
+            &mut img,
+            colors.ink,
+            24,
+            content_y + 8,
+            scale_md,
+            &font,
+            &page_title,
+        );
+
+        // Status info
+        let status_text = format!(
+            "Orchestrator: {}  |  Theme: {}",
+            app.orchestrator_status,
+            if is_dark { "Dark" } else { "Light" }
+        );
+        draw_text_mut(
+            &mut img,
+            colors.ink_faded,
+            24,
+            content_y + 34,
+            scale_sm,
+            &font,
+            &status_text,
+        );
+
+        // Content panel (themed_panel wireframe)
+        let panel_rect =
+            Rect::at(24, content_y + 60).of_size(w - 48, content_h as u32 - 80);
+        draw_filled_rect_mut(&mut img, panel_rect, colors.panel_bg);
+        for i in 0..3u32 {
+            let r = Rect::at(24 + i as i32, content_y + 60 + i as i32)
+                .of_size(w - 48 - i * 2, content_h as u32 - 80 - i * 2);
+            draw_hollow_rect_mut(&mut img, r, colors.ink);
+        }
+
+        // Panel shadow (4px offset, hard)
+        let shadow_color = if is_dark {
+            Rgb([60, 60, 60])
+        } else {
+            Rgb([26, 26, 26])
+        };
+        // Right shadow edge
+        for y_off in 0..(content_h as u32 - 80) {
+            for s in 0..4u32 {
+                let px = w - 48 + 24 + s;
+                let py = content_y as u32 + 60 + y_off + 4;
+                if px < w && py < h {
+                    img.put_pixel(px, py, shadow_color);
+                }
+            }
+        }
+        // Bottom shadow edge
+        for x_off in 4..(w - 48 + 4) {
+            for s in 0..4u32 {
+                let px = 24 + x_off;
+                let py = content_y as u32 + 60 + (content_h as u32 - 80) + s;
+                if px < w && py < h {
+                    img.put_pixel(px, py, shadow_color);
+                }
+            }
+        }
+
+        // Page-specific content hints
+        render_page_content_hint(&mut img, app, &colors, &font, content_y + 76, w);
+    }
+
+    img
+}
+
+/// Draw page-specific content hints inside the content panel.
+fn render_page_content_hint(
+    img: &mut RgbImage,
+    app: &App,
+    colors: &WireframeColors,
+    font: &FontRef<'_>,
+    y_start: i32,
+    w: u32,
+) {
+    let scale_sm = PxScale::from(14.0);
+    let x = 40;
+
+    match app.current_page {
+        Page::Dashboard => {
+            draw_text_mut(img, colors.ink, x, y_start + 8, scale_sm, font, "Status Panel  |  Terminal Output  |  Budget Donuts");
+            draw_text_mut(
+                img,
+                colors.ink_faded,
+                x,
+                y_start + 28,
+                scale_sm,
+                font,
+                &format!("Output lines: {}  |  Error: {}", app.output_lines.len(), app.last_error.as_deref().unwrap_or("none")),
+            );
+        }
+        Page::Ledger => {
+            // Draw 4 stat boxes
+            let box_w = (w - 80) / 4 - 8;
+            for i in 0..4u32 {
+                let bx = x + (i * (box_w + 8)) as i32;
+                let stat_rect = Rect::at(bx, y_start + 8).of_size(box_w, 50);
+                draw_hollow_rect_mut(img, stat_rect, colors.ink);
+                let labels = ["Total Events", "Event Types", "Unique Tiers", "Date Range"];
+                if let Some(label) = labels.get(i as usize) {
+                    draw_text_mut(img, colors.ink_faded, bx + 8, y_start + 34, scale_sm, font, label);
+                }
+            }
+            // Filter bar
+            let filter_y = y_start + 70;
+            let filter_rect = Rect::at(x, filter_y).of_size(w - 80, 30);
+            draw_hollow_rect_mut(img, filter_rect, colors.ink_faded);
+            draw_text_mut(img, colors.ink_faded, x + 8, filter_y + 6, scale_sm, font, "Filter: [Event Type] [Tier ID] [Session] [Limit] [Clear] [Refresh]");
+
+            // Events list area
+            let events_y = filter_y + 40;
+            let events_rect = Rect::at(x, events_y).of_size(w - 80, 200);
+            draw_hollow_rect_mut(img, events_rect, colors.ink);
+            draw_text_mut(
+                img,
+                colors.ink_faded,
+                x + 8,
+                events_y + 8,
+                scale_sm,
+                font,
+                &format!("{} ledger entries", app.ledger_entries.len()),
+            );
+        }
+        Page::Settings => {
+            draw_text_mut(img, colors.ink, x, y_start + 8, scale_sm, font, "Theme  |  Log Level  |  Auto Scroll  |  Timestamps  |  Minimize to Tray");
+        }
+        _ => {
+            draw_text_mut(
+                img,
+                colors.ink_faded,
+                x,
+                y_start + 8,
+                scale_sm,
+                font,
+                &format!("{} page content area", app.current_page.label()),
+            );
+        }
+    }
 }
 
 // DRY:FN:sanitize_label

@@ -271,6 +271,88 @@ pub fn ghost_button<'a, Message: Clone + 'a>(theme: &AppTheme, label: &str) -> B
     styled_button(theme, label, ButtonVariant::Ghost)
 }
 
+// DRY:WIDGET:header_nav_button
+/// Create a header navigation button with active/inactive styling
+///
+/// Uses THIN borders and no shadow for the header's compact aesthetic.
+/// Active buttons show inverted colors (ink bg, paper text, bold font).
+/// Inactive buttons show paper bg with ink text, inverting on hover.
+///
+/// # Example
+/// ```ignore
+/// let btn = header_nav_button(&theme, "DASHBOARD", true)
+///     .on_press(Message::NavigateTo(Page::Dashboard));
+/// ```
+pub fn header_nav_button<'a, Message: Clone + 'a>(
+    theme: &AppTheme,
+    label: &str,
+    is_active: bool,
+) -> Button<'a, Message> {
+    let theme_copy = *theme;
+    let label_string = label.to_uppercase();
+    let size = ButtonSize::Small;
+    let font = if is_active {
+        fonts::FONT_UI_BOLD
+    } else {
+        fonts::FONT_UI
+    };
+
+    button(text(label_string).size(size.font_size()).font(font))
+        .padding([size.padding_y(), size.padding_x()])
+        .style(move |_iced_theme: &iced::Theme, status: button::Status| {
+            let paper = theme_copy.paper();
+            let ink = theme_copy.ink();
+
+            if is_active {
+                // Active: always inverted (ink bg, paper text)
+                let (bg, txt, border_alpha) = match status {
+                    button::Status::Disabled => (
+                        Color { a: 0.5, ..ink },
+                        Color { a: 0.5, ..paper },
+                        0.5_f32,
+                    ),
+                    _ => (ink, paper, 1.0_f32),
+                };
+                button::Style {
+                    background: Some(Background::Color(bg)),
+                    text_color: txt,
+                    border: Border {
+                        width: tokens::borders::THIN,
+                        color: Color {
+                            a: border_alpha,
+                            ..ink
+                        },
+                        radius: tokens::radii::NONE.into(),
+                    },
+                    shadow: tokens::shadows::none(),
+                    snap: true,
+                }
+            } else {
+                // Inactive: paper bg normally, inverts on hover/press
+                let (bg, txt) = match status {
+                    button::Status::Hovered | button::Status::Pressed => (ink, paper),
+                    button::Status::Disabled => (paper, Color { a: 0.5, ..ink }),
+                    _ => (paper, ink),
+                };
+                let border_color = match status {
+                    button::Status::Disabled => Color { a: 0.5, ..ink },
+                    _ => ink,
+                };
+                button::Style {
+                    background: Some(Background::Color(bg)),
+                    text_color: txt,
+                    border: Border {
+                        width: tokens::borders::THIN,
+                        color: border_color,
+                        radius: tokens::radii::NONE.into(),
+                    },
+                    shadow: tokens::shadows::none(),
+                    snap: true,
+                }
+            }
+        })
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

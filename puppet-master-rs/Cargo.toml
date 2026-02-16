@@ -50,8 +50,10 @@ directories = "6"
 which = "7"
 open = "5"
 
-# Image processing (icons)
+# Image processing (icons + headless wireframe rendering)
 image = "0.25"
+imageproc = "0.25"
+ab_glyph = "0.2"
 
 # File watching
 notify = "7"

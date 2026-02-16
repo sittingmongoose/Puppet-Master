@@ -559,7 +559,7 @@ pub fn view<'a>(
         }
 
         content = content.push(themed_panel(
-            container(scrollable(events_col).height(Length::Fill)).padding(tokens::spacing::MD),
+            container(events_col).padding(tokens::spacing::MD),
             theme,
         ));
     }
