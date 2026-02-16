@@ -183,6 +183,12 @@ if [ ! -f "$DEB_FILE" ]; then
     exit 1
 fi
 
+# CI/workflow compatibility: also emit a stable filename without build metadata.
+COMPAT_DEB="../installer/linux/puppet-master_${BASE_VERSION}_${ARCH}.deb"
+if [ "$DEB_FILE" != "$COMPAT_DEB" ]; then
+    cp "$DEB_FILE" "$COMPAT_DEB"
+fi
+
 echo "=== Package Info ==="
 dpkg-deb --info "$DEB_FILE"
 echo ""

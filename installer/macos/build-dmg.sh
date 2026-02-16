@@ -104,6 +104,12 @@ hdiutil create -volname "${APP_NAME}" -srcfolder "${DMG_STAGING}" -ov -format UD
 echo "Signing DMG..."
 codesign --force --sign - "${DMG_NAME}"
 
+# CI/workflow compatibility: also emit a stable filename without build metadata.
+COMPAT_DMG="RWM-Puppet-Master-${BASE_VERSION}.dmg"
+if [ "${DMG_NAME}" != "${COMPAT_DMG}" ]; then
+    cp "${DMG_NAME}" "${COMPAT_DMG}"
+fi
+
 echo "✅ Created ${DMG_NAME}"
 echo "Note: Ad-hoc signed. Users will see 'unidentified developer' dialog."
 echo "For full Gatekeeper approval, need Apple Developer account + notarization."
