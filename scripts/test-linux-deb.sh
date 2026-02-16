@@ -94,13 +94,13 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
         echo "❌ Desktop entry not found"
     fi
 
-    echo ""
-    echo "=== Installation Log ==="
-    echo "Check dpkg logs:"
-    echo "  sudo grep puppet-master /var/log/dpkg.log | tail -20"
-    echo ""
-    echo "Check apt logs:"
-    echo "  sudo grep puppet-master /var/log/apt/term.log | tail -20"
+echo ""
+echo "=== Installation Log ==="
+echo "Check dpkg logs:"
+echo "  sudo grep -E 'rwm-puppet-master|puppet-master' /var/log/dpkg.log | tail -20"
+echo ""
+echo "Check apt logs:"
+echo "  sudo grep -E 'rwm-puppet-master|puppet-master' /var/log/apt/term.log | tail -20"
 else
     echo "Skipping installation"
 fi

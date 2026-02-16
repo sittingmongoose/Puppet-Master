@@ -4,7 +4,8 @@ set -euo pipefail
 
 BASE_VERSION="${1:-}"
 ARCH="amd64"
-PKG_NAME="puppet-master"
+# Avoid Debian/RPM namespace collisions with Puppet's "puppet-master" packages (common on dev machines).
+PKG_NAME="rwm-puppet-master"
 
 if [ -z "${BASE_VERSION}" ]; then
     BASE_VERSION="$(grep '^version = ' "$(dirname "$0")/../puppet-master-rs/Cargo.toml" | head -n1 | cut -d'\"' -f2)"
@@ -80,7 +81,7 @@ fi
 
 # DEBIAN/control
 cat > "$DEB_DIR/DEBIAN/control" << EOF
-Package: puppet-master
+Package: ${PKG_NAME}
 Version: ${VERSION}
 Section: devel
 Priority: optional
@@ -197,7 +198,7 @@ echo "=== Package Contents ==="
 dpkg-deb --contents "$DEB_FILE"
 echo ""
 
-echo "[OK] Created puppet-master_${VERSION}_${ARCH}.deb"
+     echo "[OK] Created puppet-master_${VERSION}_${ARCH}.deb (package: ${PKG_NAME})"
 echo "Package size: $(du -h "$DEB_FILE" | cut -f1)"
 echo ""
 echo "To install:"
@@ -218,7 +219,7 @@ ABS_BINARY="$BINARY"
 ABS_DESKTOP="$DEB_DIR/usr/share/applications/puppet-master.desktop"
 
 cat > "$RPM_DIR/SPECS/puppet-master.spec" << EOF
-Name: puppet-master
+Name: ${PKG_NAME}
 Version: ${BASE_VERSION}
 Release: 1.${BUILD_ID}
 Summary: RWM Puppet Master - AI-assisted development orchestrator
