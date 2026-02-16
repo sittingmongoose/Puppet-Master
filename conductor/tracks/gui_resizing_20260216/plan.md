@@ -6,11 +6,11 @@
 - [x] Task: Verify the operation of automated visual testing tools (`mcp-gui-automation-server.js`, `generate-widget-catalog.sh`) to establish a baseline.
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Research and Infrastructure' (Protocol in workflow.md)
 
-## Phase 2: Refactor for DRY Layouts
+## Phase 2: Refactor for DRY Layouts [checkpoint: 34f42de]
 - [x] Task: Consolidate layout constants and styling logic into a central module or structure.
 - [x] Task: Write Tests: Create unit tests for layout helper functions and dynamic scaling logic.
 - [x] Task: Implement: Refactor existing widgets to use consolidated DRY layout helpers.
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Refactor for DRY Layouts' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Refactor for DRY Layouts' (Protocol in workflow.md)
 
 ## Phase 3: Implement Responsive Scaling
 - [ ] Task: Update main application containers to use dynamic Iced lengths (`Length::Fill`, `Length::FillPortion`).
