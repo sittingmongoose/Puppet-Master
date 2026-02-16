@@ -131,7 +131,7 @@ where
         snap: true,
     });
     let logo = column![title_text, underline]
-        .spacing(spacing::XXS)
+        .spacing(0.0)
         .align_x(iced::Alignment::Start);
 
     // ── Top row: Logo (left) → spacer → Project selector → Theme button (right) ──
@@ -185,7 +185,7 @@ where
     }
 
     // ── Combine into two-row column ──
-    let header_content = column![top_row, nav_row].spacing(spacing::XS);
+    let header_content = column![top_row, nav_row].spacing(spacing::XXXS);
 
     // Inner header box: paper bg, 3px border, hard shadow
     let inner_header = container(header_content)

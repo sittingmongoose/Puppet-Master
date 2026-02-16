@@ -475,7 +475,7 @@ fn render_wireframe(app: &App, is_dark: bool) -> RgbImage {
         "RWM PUPPET MASTER",
     );
     // Underline
-    let underline_y = (logo_y + 26) as u32;
+    let underline_y = (logo_y + 22) as u32;
     for x in (logo_x as u32)..(logo_x as u32 + 260) {
         if underline_y < h {
             img.put_pixel(x, underline_y, colors.ink);
@@ -520,7 +520,7 @@ fn render_wireframe(app: &App, is_dark: bool) -> RgbImage {
         Page::Settings,
     ];
 
-    let nav_y = header_y + 48;
+    let nav_y = header_y + 46;
     let mut nav_x: i32 = 24;
     let btn_h: u32 = 22;
     let btn_spacing: i32 = 6;
