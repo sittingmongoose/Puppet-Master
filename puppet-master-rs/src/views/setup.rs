@@ -55,6 +55,7 @@ pub fn view<'a>(
         "Welcome to RWM Puppet Master",
         theme,
         header_actions,
+        size,
     ));
     content = content.push(
         text("First-time setup wizard")

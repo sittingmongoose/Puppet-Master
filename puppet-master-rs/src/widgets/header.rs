@@ -3,10 +3,11 @@
 use crate::theme::AppTheme;
 use crate::theme::fonts::FONT_DISPLAY_BOLD;
 use crate::theme::tokens::{borders, layout, spacing};
+use crate::widgets::responsive::LayoutSize;
 use crate::widgets::styled_button::{
     ButtonSize, ButtonVariant, header_nav_button, styled_button_sized,
 };
-use iced::widget::{Space, column, container, row, rule, text};
+use iced::widget::{Space, column, container, row, rule, scrollable, text};
 use iced::{Background, Border, Element, Length, Padding, Shadow, Vector};
 
 // DRY:WIDGET:Page
@@ -112,6 +113,7 @@ pub fn header<'a, Message>(
     on_navigate: impl Fn(Page) -> Message + 'a,
     on_theme_toggle: Message,
     on_project_select: Option<impl Fn(String) -> Message + 'a>,
+    size: LayoutSize,
 ) -> Element<'a, Message>
 where
     Message: Clone + 'a,
@@ -120,8 +122,8 @@ where
     let ink_color = theme.ink();
 
     // Title - "RWM PUPPET MASTER" with thin underline (tight spacing so line sits close to text)
-    let title_text = text("RWM PUPPET MASTER")
-        .size(26)
+    let title_text = text(if size.is_mobile() { "RWM" } else { "RWM PUPPET MASTER" })
+        .size(if size.is_mobile() { 20 } else { 26 })
         .font(FONT_DISPLAY_BOLD)
         .style(move |_theme: &iced::Theme| text::Style {
             color: Some(ink_color),
@@ -146,17 +148,19 @@ where
     // Project selector (if callback provided)
     if let Some(_project_callback) = on_project_select {
         if let Some(proj_name) = project_name {
-            let project_btn: iced::widget::Button<'_, Message> =
-                styled_button_sized(theme, &proj_name, ButtonVariant::Ghost, ButtonSize::Small);
-            top_row = top_row.push(project_btn);
+            if !size.is_mobile() {
+                let project_btn: iced::widget::Button<'_, Message> =
+                    styled_button_sized(theme, &proj_name, ButtonVariant::Ghost, ButtonSize::Small);
+                top_row = top_row.push(project_btn);
+            }
         }
     }
 
     // Theme toggle — Ghost variant gives THICK border + shadow = visible "box"
     let theme_label = if theme.is_dark() {
-        "Light Mode"
+        "Light"
     } else {
-        "Dark Mode"
+        "Dark"
     };
     let theme_btn =
         styled_button_sized(theme, theme_label, ButtonVariant::Ghost, ButtonSize::Small)
@@ -179,15 +183,26 @@ where
         Page::Settings,
     ];
 
-    let mut nav_row = row![].spacing(spacing::SM).align_y(iced::Alignment::Center);
+    let mut nav_row = row![].spacing(spacing::XS).align_y(iced::Alignment::Center);
     for page in nav_pages {
         let btn = header_nav_button(theme, page.label(), page == current_page)
             .on_press(on_navigate(page));
         nav_row = nav_row.push(btn);
     }
 
+    let nav_container: Element<'_, Message> = if size.width < 800.0 {
+        scrollable(nav_row)
+            .direction(iced::widget::scrollable::Direction::Horizontal(
+                iced::widget::scrollable::Scrollbar::default(),
+            ))
+            .width(Length::Fill)
+            .into()
+    } else {
+        nav_row.into()
+    };
+
     // ── Combine into two-row column: gap so nav buttons sit below the white line ──
-    let header_content = column![top_row, nav_row].spacing(spacing::MD);
+    let header_content = column![top_row, nav_container].spacing(spacing::MD);
 
     // Inner header box: paper bg, 3px border, hard shadow
     let inner_header = container(header_content)
@@ -195,8 +210,8 @@ where
             Padding::ZERO
                 .top(spacing::SM)
                 .bottom(spacing::SM)
-                .left(spacing::LG)
-                .right(spacing::LG),
+                .left(if size.is_mobile() { spacing::SM } else { spacing::LG })
+                .right(if size.is_mobile() { spacing::SM } else { spacing::LG }),
         )
         .width(Length::Fill)
         .style(move |_theme: &iced::Theme| container::Style {
@@ -229,6 +244,7 @@ pub fn simple_header<'a, Message>(
     theme: &AppTheme,
     on_navigate: impl Fn(Page) -> Message + 'a,
     on_theme_toggle: Message,
+    size: LayoutSize,
 ) -> Element<'a, Message>
 where
     Message: Clone + 'a,
@@ -240,5 +256,6 @@ where
         on_navigate,
         on_theme_toggle,
         None::<fn(String) -> Message>,
+        size,
     )
 }

@@ -394,7 +394,7 @@ pub fn view<'a>(
     .spacing(tokens::spacing::MD)
     .align_y(iced::Alignment::Center);
 
-    let full_content = column![page_header("Evidence", theme, header_actions), main_content,]
+    let full_content = column![page_header("Evidence", theme, header_actions, size), main_content,]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
 

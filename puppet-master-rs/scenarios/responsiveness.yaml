@@ -1,0 +1,29 @@
+scenarioName: "responsiveness-check"
+mode: "headless"
+steps:
+  - id: "dashboard-desktop"
+    action:
+      type: "navigate"
+      page: "dashboard"
+    assertions:
+      - type: "pageIs"
+        page: "dashboard"
+  - id: "resize-tablet"
+    action:
+      type: "resize"
+      width: 1024
+      height: 768
+  - id: "dashboard-tablet"
+    action:
+      type: "snapshot"
+      label: "dashboard-tablet"
+  - id: "resize-mobile"
+    action:
+      type: "resize"
+      width: 480
+      height: 800
+  - id: "dashboard-mobile"
+    action:
+      type: "snapshot"
+      label: "dashboard-mobile"
+

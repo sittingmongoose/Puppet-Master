@@ -81,7 +81,7 @@ pub fn view<'a>(
     )]
     .spacing(tokens::spacing::MD)
     .align_y(iced::Alignment::Center);
-    content = content.push(page_header("History", theme, header_actions));
+    content = content.push(page_header("History", theme, header_actions, size));
 
     // Search input
     content = content.push(themed_panel(

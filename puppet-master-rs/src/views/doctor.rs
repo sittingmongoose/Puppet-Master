@@ -133,7 +133,7 @@ pub fn view<'a>(
     // ═══════════════════════════════════════════════════════════════════
     // Header Section
     // ═══════════════════════════════════════════════════════════════════
-    let header = view_header(results, running, fixing, selected_platforms, theme);
+    let header = view_header(results, running, fixing, selected_platforms, theme, size);
     content = content.push(header);
 
     // ═══════════════════════════════════════════════════════════════════
@@ -245,6 +245,7 @@ fn view_header<'a>(
     _fixing: &'a HashSet<String>,
     selected_platforms: &'a [Platform],
     theme: &'a AppTheme,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
     let failed_fixable_count = results
         .iter()
@@ -288,17 +289,7 @@ fn view_header<'a>(
         );
     }
 
-    row![
-        text("Doctor")
-            .size(tokens::font_size::DISPLAY)
-            .font(crate::theme::fonts::FONT_DISPLAY)
-            .color(theme.ink()),
-        Space::new().width(Length::Fill),
-        actions,
-    ]
-    .spacing(tokens::spacing::MD)
-    .align_y(Alignment::Center)
-    .into()
+    page_header("Doctor", theme, actions, size)
 }
 
 // ═══════════════════════════════════════════════════════════════════════

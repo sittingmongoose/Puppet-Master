@@ -234,6 +234,13 @@ fn execute_action(
             std::thread::sleep(Duration::from_millis(*ms));
             Ok(())
         }
+        GuiAction::Resize { width, height } => {
+            // Update app state and notify via message
+            app.window_width = *width;
+            app.window_height = *height;
+            let task = app.update(Message::WindowResized(*width, *height));
+            drain_task_messages(app, task, step_timeout)
+        }
         GuiAction::Snapshot { label } => {
             let (png, json) = write_snapshot_artifacts(app, artifacts_root, label, renderer)
                 .map_err(|e| format!("Failed snapshot: {e}"))?;
@@ -780,8 +787,8 @@ fn write_snapshot_artifacts(
 /// Render the app's current view() tree using Iced's headless tiny-skia renderer.
 /// Returns RGBA pixel data as a Vec<u8>, along with (width, height).
 fn render_pixel_perfect(app: &App, renderer: &mut iced::Renderer) -> (Vec<u8>, u32, u32) {
-    let w: u32 = 1280;
-    let h: u32 = 800;
+    let w: u32 = app.window_width.max(1.0) as u32;
+    let h: u32 = app.window_height.max(1.0) as u32;
     let size = Size::new(w as f32, h as f32);
 
     // Build the real widget tree from the app's view function

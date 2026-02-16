@@ -63,7 +63,7 @@ pub fn view<'a>(
     ]
     .spacing(tokens::spacing::MD)
     .align_y(iced::Alignment::Center);
-    let header = page_header("Projects", theme, header_actions);
+    let header = page_header("Projects", theme, header_actions, size);
 
     content = content.push(header);
 

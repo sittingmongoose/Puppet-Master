@@ -16,7 +16,9 @@ use crate::widgets::{
     themed_panel,
 };
 use chrono::{DateTime, Utc};
-use iced::widget::{Space, column, container, mouse_area, row, text, text_editor};
+use iced::widget::{
+    Space, column, container, mouse_area, row, scrollable, text, text_editor,
+};
 use iced::{Background, Border, Element, Length};
 use std::collections::HashMap;
 
@@ -155,7 +157,7 @@ pub fn view<'a>(
 
     // ══ STATUS BAR ════════════════════════════════════════════════════
     // Matches React: status badge, workflow position, budget indicators, connection status
-    content = content.push(build_status_bar(status, progress, budgets, theme));
+    content = content.push(build_status_bar(status, progress, budgets, theme, size));
 
     // ══ MAIN DASHBOARD GRID ═══════════════════════════════════════════
     // Responsive layout:
@@ -219,112 +221,185 @@ fn build_status_bar<'a>(
     progress: &'a ProgressState,
     budgets: &'a HashMap<String, BudgetDisplayInfo>,
     theme: &'a AppTheme,
+    size: LayoutSize,
 ) -> Element<'a, Message> {
     let status_enum = status_from_str(status);
 
-    let mut status_content = row![]
-        .spacing(tokens::spacing::MD)
-        .align_y(iced::Alignment::Center);
+    if size.is_mobile() {
+        // Stacked layout for mobile
+        let mut status_rows = column![].spacing(tokens::spacing::SM);
 
-    // Status indicator
-    status_content = status_content.push(
-        row![
-            status_dot_typed(theme, status_enum),
-            text(status.to_uppercase())
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
-        ]
-        .spacing(tokens::spacing::SM)
-        .align_y(iced::Alignment::Center),
-    );
-
-    // Workflow position (Phase X/Y | Task X/Y | Subtask X/Y | Iter X/Y)
-    status_content = status_content.push(
-        text("│")
-            .size(tokens::font_size::BASE)
-            .font(fonts::FONT_MONO)
-            .color(theme.ink_faded()),
-    );
-
-    status_content = status_content.push(
-        row![
-            text(format!(
-                "Phase {}/{}",
-                progress.phase_current, progress.phase_total
-            ))
-            .size(tokens::font_size::SM)
-            .font(fonts::FONT_MONO)
-            .color(theme.ink()),
-            text("│")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
-            text(format!(
-                "Task {}/{}",
-                progress.task_current, progress.task_total
-            ))
-            .size(tokens::font_size::SM)
-            .font(fonts::FONT_MONO)
-            .color(theme.ink()),
-            text("│")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
-            text(format!(
-                "Subtask {}/{}",
-                progress.subtask_current, progress.subtask_total
-            ))
-            .size(tokens::font_size::SM)
-            .font(fonts::FONT_MONO)
-            .color(theme.ink()),
-        ]
-        .spacing(tokens::spacing::SM)
-        .align_y(iced::Alignment::Center),
-    );
-
-    status_content = status_content.push(Space::new().width(Length::Fill));
-
-    // Budget indicators with warning colors
-    if !budgets.is_empty() {
-        status_content = status_content.push(
-            text("Budget:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink()),
+        // Row 1: Status badge
+        status_rows = status_rows.push(
+            row![
+                status_dot_typed(theme, status_enum),
+                text(status.to_uppercase())
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+            ]
+            .spacing(tokens::spacing::SM)
+            .align_y(iced::Alignment::Center),
         );
 
-        for (platform, budget_info) in budgets.iter() {
-            let usage_percent = if budget_info.total > 0 && budget_info.total != usize::MAX {
-                (budget_info.used as f32 / budget_info.total as f32 * 100.0) as u32
-            } else {
-                0
-            };
-
-            let budget_color = if usage_percent >= 100 {
-                colors::HOT_MAGENTA
-            } else if usage_percent >= 80 {
-                colors::SAFETY_ORANGE
-            } else {
-                theme.ink()
-            };
-
-            let budget_text = if budget_info.total == usize::MAX {
-                format!("{} {}/∞", platform, budget_info.used)
-            } else {
-                format!(
-                    "{} {}/{} ({}%)",
-                    platform, budget_info.used, budget_info.total, usage_percent
-                )
-            };
-
-            status_content = status_content.push(
-                text(budget_text)
-                    .size(tokens::font_size::SM)
+        // Row 2: Workflow progress
+        status_rows = status_rows.push(
+            row![
+                text(format!("PH {}/{}", progress.phase_current, progress.phase_total))
+                    .size(tokens::font_size::XS)
                     .font(fonts::FONT_MONO)
-                    .color(budget_color),
+                    .color(theme.ink()),
+                text("│").size(tokens::font_size::XS).color(theme.ink_faded()),
+                text(format!("TK {}/{}", progress.task_current, progress.task_total))
+                    .size(tokens::font_size::XS)
+                    .font(fonts::FONT_MONO)
+                    .color(theme.ink()),
+                text("│").size(tokens::font_size::XS).color(theme.ink_faded()),
+                text(format!("ST {}/{}", progress.subtask_current, progress.subtask_total))
+                    .size(tokens::font_size::XS)
+                    .font(fonts::FONT_MONO)
+                    .color(theme.ink()),
+            ]
+            .spacing(tokens::spacing::XS)
+            .align_y(iced::Alignment::Center),
+        );
+
+        // Row 3: Budgets (if any)
+        if !budgets.is_empty() {
+            let mut budget_row = row![].spacing(tokens::spacing::SM);
+            for (platform, budget_info) in budgets.iter() {
+                let usage_percent = if budget_info.total > 0 && budget_info.total != usize::MAX {
+                    (budget_info.used as f32 / budget_info.total as f32 * 100.0) as u32
+                } else {
+                    0
+                };
+                let budget_color = if usage_percent >= 100 {
+                    colors::HOT_MAGENTA
+                } else if usage_percent >= 80 {
+                    colors::SAFETY_ORANGE
+                } else {
+                    theme.ink()
+                };
+                budget_row = budget_row.push(
+                    text(format!("{}:{}%", platform, usage_percent))
+                        .size(tokens::font_size::XS)
+                        .color(budget_color),
+                );
+            }
+            status_rows = status_rows.push(
+                scrollable(budget_row)
+                    .direction(iced::widget::scrollable::Direction::Horizontal(
+                        iced::widget::scrollable::Scrollbar::default(),
+                    ))
+                    .width(Length::Fill),
             );
         }
-    }
 
-    themed_panel(status_content, theme).into()
+        themed_panel(status_rows, theme).into()
+    } else {
+        // Original row layout for desktop
+        let mut status_content = row![].spacing(tokens::spacing::MD).align_y(iced::Alignment::Center);
+
+        // Status indicator
+        status_content = status_content.push(
+            row![
+                status_dot_typed(theme, status_enum),
+                text(status.to_uppercase())
+                    .size(tokens::font_size::BASE)
+                    .font(fonts::FONT_UI_BOLD)
+                    .color(theme.ink()),
+            ]
+            .spacing(tokens::spacing::SM)
+            .align_y(iced::Alignment::Center),
+        );
+
+        // Workflow position (Phase X/Y | Task X/Y | Subtask X/Y | Iter X/Y)
+        status_content = status_content.push(
+            text("│")
+                .size(tokens::font_size::BASE)
+                .font(fonts::FONT_MONO)
+                .color(theme.ink_faded()),
+        );
+
+        status_content = status_content.push(
+            row![
+                text(format!(
+                    "Phase {}/{}",
+                    progress.phase_current, progress.phase_total
+                ))
+                .size(tokens::font_size::SM)
+                .font(fonts::FONT_MONO)
+                .color(theme.ink()),
+                text("│")
+                    .size(tokens::font_size::SM)
+                    .color(theme.ink_faded()),
+                text(format!(
+                    "Task {}/{}",
+                    progress.task_current, progress.task_total
+                ))
+                .size(tokens::font_size::SM)
+                .font(fonts::FONT_MONO)
+                .color(theme.ink()),
+                text("│")
+                    .size(tokens::font_size::SM)
+                    .color(theme.ink_faded()),
+                text(format!(
+                    "Subtask {}/{}",
+                    progress.subtask_current, progress.subtask_total
+                ))
+                .size(tokens::font_size::SM)
+                .font(fonts::FONT_MONO)
+                .color(theme.ink()),
+            ]
+            .spacing(tokens::spacing::SM)
+            .align_y(iced::Alignment::Center),
+        );
+
+        status_content = status_content.push(Space::new().width(Length::Fill));
+
+        // Budget indicators with warning colors
+        if !budgets.is_empty() {
+            status_content = status_content.push(
+                text("Budget:")
+                    .size(tokens::font_size::SM)
+                    .color(theme.ink()),
+            );
+
+            for (platform, budget_info) in budgets.iter() {
+                let usage_percent = if budget_info.total > 0 && budget_info.total != usize::MAX {
+                    (budget_info.used as f32 / budget_info.total as f32 * 100.0) as u32
+                } else {
+                    0
+                };
+
+                let budget_color = if usage_percent >= 100 {
+                    colors::HOT_MAGENTA
+                } else if usage_percent >= 80 {
+                    colors::SAFETY_ORANGE
+                } else {
+                    theme.ink()
+                };
+
+                let budget_text = if budget_info.total == usize::MAX {
+                    format!("{} {}/∞", platform, budget_info.used)
+                } else {
+                    format!(
+                        "{} {}/{} ({}%)",
+                        platform, budget_info.used, budget_info.total, usage_percent
+                    )
+                };
+
+                status_content = status_content.push(
+                    text(budget_text)
+                        .size(tokens::font_size::SM)
+                        .font(fonts::FONT_MONO)
+                        .color(budget_color),
+                );
+            }
+        }
+
+        themed_panel(status_content, theme).into()
+    }
 }
 
 /// Build the Project panel

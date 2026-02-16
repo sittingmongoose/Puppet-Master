@@ -181,7 +181,7 @@ pub fn view<'a>(
     ]
     .spacing(tokens::spacing::MD)
     .align_y(Alignment::Center);
-    let header = page_header("Platform Authentication", theme, header_actions);
+    let header = page_header("Platform Authentication", theme, header_actions, size);
 
     content = content.push(header);
 

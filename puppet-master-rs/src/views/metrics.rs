@@ -27,7 +27,7 @@ pub fn view<'a>(
     )]
     .spacing(tokens::spacing::MD)
     .align_y(iced::Alignment::Center);
-    content = content.push(page_header("Metrics", theme, header_actions));
+    content = content.push(page_header("Metrics", theme, header_actions, size));
 
     if snapshot.platforms.is_empty() && snapshot.subtasks.is_empty() {
         content = content.push(themed_panel(

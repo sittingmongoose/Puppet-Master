@@ -75,21 +75,14 @@ pub fn view<'a>(
         .padding(tokens::spacing::LG);
 
     // Header
-    content = content.push(
-        row![
-            text("Tiers")
-                .size(tokens::font_size::DISPLAY)
-                .font(crate::theme::fonts::FONT_DISPLAY)
-                .color(theme.ink()),
-            Space::new().width(Length::Fill),
-            styled_button(theme, "Expand All", ButtonVariant::Ghost)
-                .on_press(Message::ExpandAllTiers),
-            styled_button(theme, "Collapse All", ButtonVariant::Ghost)
-                .on_press(Message::CollapseAllTiers),
-        ]
-        .spacing(tokens::spacing::SM)
-        .align_y(iced::Alignment::Center),
-    );
+    let header_actions = row![
+        styled_button(theme, "Expand All", ButtonVariant::Ghost).on_press(Message::ExpandAllTiers),
+        styled_button(theme, "Collapse All", ButtonVariant::Ghost).on_press(Message::CollapseAllTiers),
+    ]
+    .spacing(tokens::spacing::SM)
+    .align_y(iced::Alignment::Center);
+
+    content = content.push(page_header("Tiers", theme, header_actions, size));
 
     // Tree view
     let mut tree_col = column![].spacing(tokens::spacing::XS);

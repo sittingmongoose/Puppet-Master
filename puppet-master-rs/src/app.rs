@@ -1,7 +1,7 @@
 use crate::theme::AppTheme;
 use crate::tray::TrayAction;
 use crate::types::PuppetMasterEvent;
-use crate::widgets::Page;
+use crate::widgets::{LayoutSize, Page};
 use anyhow::Result;
 use chrono::{DateTime, Utc};
 use iced::{Element, Subscription, Task, Theme, widget::text_editor, window};
@@ -6333,7 +6333,7 @@ impl App {
             // Use effective max width: full width on small screens, max 1200px on large screens.
             let measured_width = layout_size.width.max(1.0);
             let effective_max_width = measured_width.min(tokens::layout::MAX_CONTENT_WIDTH);
-            let main_layout = column![self.render_header(), content].spacing(0);
+            let main_layout = column![self.render_header(layout_size), content].spacing(0);
             let constrained = container(main_layout)
                 .width(Length::Fill)
                 .height(Length::Fill)
@@ -7419,12 +7419,13 @@ impl App {
     }
 
     /// Render the header bar
-    fn render_header(&self) -> Element<'_, Message> {
+    fn render_header(&self, size: LayoutSize) -> Element<'_, Message> {
         crate::widgets::header::simple_header(
             self.current_page,
             &self.theme,
             Message::NavigateTo,
             Message::ToggleTheme,
+            size,
         )
     }
 

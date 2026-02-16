@@ -36,7 +36,7 @@ pub fn view<'a>(
     requirements: &'a [RequirementCoverage],
     phase_filter: &'a str,
     theme: &'a AppTheme,
-    _size: crate::widgets::responsive::LayoutSize,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
     // Coverage view uses vertical card layout; size available for future grid improvements
     let mut content = column![]
@@ -73,7 +73,7 @@ pub fn view<'a>(
     ]
     .spacing(tokens::spacing::MD)
     .align_y(iced::Alignment::Center);
-    content = content.push(page_header("Coverage", theme, header_actions));
+    content = content.push(page_header("Coverage", theme, header_actions, size));
 
     // Overall stats cards - 4 columns
     let covered_count = requirements.iter().filter(|r| r.covered).count();

@@ -59,7 +59,7 @@ pub fn view<'a>(
     _agents_content: &'a str,
     current_section: &'a MemorySection,
     theme: &'a AppTheme,
-    _size: crate::widgets::responsive::LayoutSize,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
     // Memory viewer uses vertical layout; size available for future responsive enhancements
     let mut content = column![]
@@ -73,7 +73,7 @@ pub fn view<'a>(
     )]
     .spacing(tokens::spacing::MD)
     .align_y(iced::Alignment::Center);
-    content = content.push(page_header("Memory (AGENTS.md)", theme, header_actions));
+    content = content.push(page_header("Memory (AGENTS.md)", theme, header_actions, size));
 
     // Section navigation dropdown and filter controls
     let nav_content = column![

@@ -115,7 +115,7 @@ pub fn view<'a>(
     filter_tier: &'a str,
     filter_session: &'a str,
     theme: &'a AppTheme,
-    _size: crate::widgets::responsive::LayoutSize,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
     // Ledger uses table layout; size reserved for Phase 3 responsive table enhancements
     let mut content = column![]
@@ -129,7 +129,7 @@ pub fn view<'a>(
     )]
     .spacing(tokens::spacing::MD)
     .align_y(iced::Alignment::Center);
-    content = content.push(page_header("Event Ledger", theme, header_actions));
+    content = content.push(page_header("Event Ledger", theme, header_actions, size));
 
     // Summary stats panel - count events by type
     let mut type_counts = std::collections::HashMap::new();

@@ -89,6 +89,7 @@ pub enum GuiAction {
     Click { selector: GuiSelector },
     Type { selector: GuiSelector, text: String },
     Wait { ms: u64 },
+    Resize { width: f32, height: f32 },
     Snapshot { label: String },
 }
 

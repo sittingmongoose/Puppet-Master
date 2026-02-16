@@ -102,14 +102,13 @@ pub fn view<'a>(
     platform_statuses: &'a [crate::views::setup::PlatformStatus],
     auth_status: &'a HashMap<String, crate::views::login::AuthStatus>,
     theme: &'a AppTheme,
-    _size: crate::widgets::responsive::LayoutSize,
+    size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
     // Multi-step wizard with vertical flow; size used for form field responsiveness
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
 
-    // Step indicator with circles and connecting lines (9 steps: 0, 0.5, 1-7)
     let step_indicator = row![
         step_circle(0, step, theme),
         connecting_line(0, step, theme),
@@ -132,8 +131,19 @@ pub fn view<'a>(
     .spacing(tokens::spacing::XXXS)
     .align_y(iced::Alignment::Center);
 
+    let step_container: Element<'_, Message> = if size.width < 800.0 {
+        scrollable(step_indicator)
+            .direction(iced::widget::scrollable::Direction::Horizontal(
+                iced::widget::scrollable::Scrollbar::default(),
+            ))
+            .width(Length::Fill)
+            .into()
+    } else {
+        step_indicator.into()
+    };
+
     content = content.push(
-        container(step_indicator)
+        container(step_container)
             .padding(tokens::spacing::MD)
             .width(Length::Fill)
             .align_x(iced::alignment::Horizontal::Center)
