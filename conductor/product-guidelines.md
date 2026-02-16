@@ -7,6 +7,7 @@
 ## Visual Identity
 - **Preserve Established GUI:** Adhere strictly to the existing Rust/Iced GUI design. Any "tweaks" or additions must maintain the current aesthetic, layout, and user experience.
 - **Consistency is Key:** Use existing widget styles, spacing, and color palettes to ensure new elements feel like an integral part of the original application.
+- **Mobile-First Responsiveness:** All new UI components must be implemented using shared layout helpers to ensure they scale and stack correctly on smaller screens.
 
 ## User Experience & Interaction
 - **Pre-configured Logic:** Respect the existing orchestration and feedback systems. Automated actions should follow the established patterns for user notification and intervention.

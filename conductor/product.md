@@ -13,6 +13,7 @@ RWM Puppet Master
 
 ## Key Features
 - Cross-platform (Windows, macOS, Linux) with native installers.
+- Fully responsive GUI that adapts dynamically to desktop, tablet, and mobile dimensions.
 - Four-tier workflow: Phase → Task → Subtask → Iteration.
 - File-based memory (`progress.txt`, `AGENTS.md`) and state management.
 - Integration with 5 specific AI CLI platforms (Cursor, Codex, Claude Code, Gemini, Copilot).
@@ -21,4 +22,5 @@ RWM Puppet Master
 
 ## User Experience
 - A native desktop GUI built with Rust and Iced.
+- Adaptive layout providing a seamless experience across all window sizes and device types.
 - Automated orchestration with minimal user intervention.

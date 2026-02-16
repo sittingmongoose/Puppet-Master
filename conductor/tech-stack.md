@@ -11,6 +11,7 @@
 ## Tooling & Automation
 - **Shell Scripting:** Bash (for installers and verification scripts)
 - **Node.js:** Used for MCP automation and CLI tool caching
+- **GUI Automation:** Custom Rust-based automation tool with support for visual regression and dynamic resizing tests.
 - **Package Management:** Cargo (Rust), NPM (Node.js)
 
 ## Platform Support
