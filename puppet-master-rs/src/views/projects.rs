@@ -3,8 +3,8 @@
 //! Lists available projects, allows creating new projects, and switching between them.
 
 use crate::app::{ContextMenuTarget, Message, SelectableField};
-use crate::theme::{AppTheme, colors, fonts, tokens};
-use crate::widgets::*;
+use crate::theme::{AppTheme, colors, tokens};
+use crate::widgets::{selectable_text::{selectable_label, selectable_label_mono}, *};
 use iced::widget::{Space, column, container, row, scrollable, text};
 use iced::{Border, Element, Length};
 use std::path::PathBuf;
@@ -70,12 +70,10 @@ pub fn view<'a>(
     // New Project Form (conditionally shown)
     if show_new_form {
         let form_content = column![
-            text("Create New Project")
-                .size(tokens::font_size::LG)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            selectable_label(theme, "Create New Project"),
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
             responsive_form_row(
+                theme,
                 "Project Name:",
                 styled_text_input(theme, "My Project", new_project_name)
                     .on_input(Message::NewProjectNameChanged),
@@ -83,6 +81,7 @@ pub fn view<'a>(
             ),
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
             responsive_form_row(
+                theme,
                 "Working Directory:",
                 row![
                     styled_text_input(theme, "/path/to/project", new_project_path)
@@ -95,9 +94,7 @@ pub fn view<'a>(
                 size,
             ),
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
-            text("PRD file: prd.json (auto)")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "PRD file: prd.json (auto)"),
             Space::new().height(Length::Fixed(tokens::spacing::MD)),
             row![
                 styled_button(theme, "Cancel", ButtonVariant::Secondary)
@@ -128,18 +125,12 @@ pub fn view<'a>(
         };
 
         let current_panel = column![
-            text("Current Project")
-                .size(tokens::font_size::LG)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            selectable_label(theme, "Current Project"),
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
             row![
                 column![
                     row![
-                        text(&current_project.name)
-                            .size(tokens::font_size::MD)
-                            .font(fonts::FONT_UI_BOLD)
-                            .color(theme.ink()),
+                        selectable_label(theme, &current_project.name),
                         Space::new().width(Length::Fixed(tokens::spacing::SM)),
                         container(
                             text(status_text)
@@ -173,13 +164,9 @@ pub fn view<'a>(
                         },
                     ),
                     if let Some(summary) = &current_project.status_summary {
-                        text(summary)
-                            .size(tokens::font_size::XS)
-                            .color(theme.ink_faded())
+                        selectable_label(theme, summary)
                     } else {
-                        text("")
-                            .size(tokens::font_size::XS)
-                            .color(theme.ink_faded())
+                        selectable_label(theme, "")
                     },
                 ]
                 .spacing(tokens::spacing::XXS),
@@ -225,10 +212,7 @@ pub fn view<'a>(
         ));
     } else {
         let mut projects_content = column![
-            text("Recent Projects")
-                .size(tokens::font_size::LG)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            selectable_label(theme, "Recent Projects"),
         ]
         .spacing(tokens::spacing::MD);
 
@@ -278,16 +262,11 @@ pub fn view<'a>(
                 // Project info
                 column![
                     row![
-                        text(&project.name)
-                            .size(tokens::font_size::BASE)
-                            .font(fonts::FONT_UI_BOLD)
-                            .color(theme.ink()),
+                        selectable_label(theme, &project.name),
                         if project.pinned {
-                            text(" 📌")
-                                .size(tokens::font_size::SM)
-                                .color(colors::ACID_LIME)
+                            selectable_label(theme, " 📌")
                         } else {
-                            text("").size(tokens::font_size::SM)
+                            selectable_label(theme, "")
                         }
                     ]
                     .spacing(tokens::spacing::XXS)
@@ -305,17 +284,10 @@ pub fn view<'a>(
                         },
                     ),
                     if let Some(summary) = &project.status_summary {
-                        text(summary)
-                            .size(tokens::font_size::XS)
-                            .color(theme.ink_faded())
+                        selectable_label(theme, summary)
                     } else {
-                        text(get_last_active_time(&project.path))
-                            .size(tokens::font_size::XS)
-                            .color(theme.ink_faded())
+                        selectable_label_mono(theme, &get_last_active_time(&project.path))
                     },
-                    text(get_last_active_time(&project.path))
-                        .size(tokens::font_size::XS)
-                        .color(theme.ink_faded()),
                 ]
                 .spacing(tokens::spacing::XXS),
                 Space::new().width(Length::Fill),

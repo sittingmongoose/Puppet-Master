@@ -1,10 +1,11 @@
 //! Shared page header row and refresh action helper.
 
 use crate::app::Message;
-use crate::theme::{AppTheme, fonts, tokens};
+use crate::theme::{AppTheme, tokens};
 use crate::widgets::responsive::LayoutSize;
+use crate::widgets::selectable_text::selectable_label;
 use crate::widgets::styled_button::{ButtonVariant, styled_button};
-use iced::widget::{Row, Space, column, row, text};
+use iced::widget::{Row, Space, column, row};
 use iced::{Alignment, Element, Length};
 
 // DRY:WIDGET:RefreshStyle
@@ -38,20 +39,14 @@ pub fn page_header<'a>(
 ) -> Element<'a, Message> {
     if size.is_mobile() {
         column![
-            text(title)
-                .size(tokens::font_size::XXL)
-                .font(fonts::FONT_DISPLAY)
-                .color(theme.ink()),
+            selectable_label(theme, title),
             actions,
         ]
         .spacing(tokens::spacing::SM)
         .into()
     } else {
         row![
-            text(title)
-                .size(tokens::font_size::DISPLAY)
-                .font(fonts::FONT_DISPLAY)
-                .color(theme.ink()),
+            selectable_label(theme, title),
             Space::new().width(Length::Fill),
             actions,
         ]

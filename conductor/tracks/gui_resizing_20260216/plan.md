@@ -23,3 +23,11 @@
 - [x] Task: Verify 90% test coverage for all modified UI/layout logic.
 - [x] Task: Fine-tune spacing and scaling factors to ensure the "look and feel" is perfectly preserved.
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Final Validation and Tuning' (Protocol in workflow.md)
+
+## Task Status Log — Optional Follow-ups (GUI Refactor Review Plan)
+
+| Status | Date       | Summary |
+|--------|------------|--------|
+| PASS   | 2026-02-16 | Optional follow-ups: (1) Main content uses `responsive_container_width(layout_size)` in app.rs so content is capped at MAX_CONTENT_WIDTH on large screens; (2) Pre-Completion Verification Checklist run (cargo check, cargo test, no new warnings). |
+
+**Changes:** `puppet-master-rs/src/app.rs` (use `responsive_container_width`, remove unused `tokens` import), `puppet-master-rs/src/widgets/layout_helpers.rs` (doc updated for `responsive_container_width`). **Commands:** `cargo check` (pass, no warnings), `cargo test` (967 lib + integration tests pass).

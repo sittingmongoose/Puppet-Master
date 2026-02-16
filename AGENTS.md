@@ -13,6 +13,7 @@ Always use the Context7 MCP. You need to take your time and be careful as this i
 2. [Context7 MCP](#context7-mcp)
 3. [Architecture Notes](#architecture-notes)
 4. [Codebase Patterns](#codebase-patterns)
+    - [GUI Selection & Context Menus](#gui-selection--context-menus)
 5. [DRY Method](#dry-method--reuse-first)
 6. [Tooling Rules](#tooling-rules)
 7. [Pre-Completion Checklist](#pre-completion-verification-checklist)
@@ -166,6 +167,29 @@ let header = page_header("Settings", vec![refresh_button(Message::Refresh)]);
 let btn = button(text("Save")).style(|_| { ... });
 ```
 
+### GUI Selection & Context Menus
+
+To provide a "normal application" experience, all significant text in the GUI should be selectable and support a right-click floating context menu.
+
+**Selectable Labels:**
+Use `selectable_label` (UI font) or `selectable_label_mono` (Monospace font) instead of the standard Iced `text()` widget for any value that a user might want to copy. These widgets are styled to look identical to static text but support left-click-and-drag selection and standard Ctrl+C.
+
+```rust
+use crate::widgets::{selectable_label, selectable_label_mono};
+
+// CORRECT — Selectable and supports right-click menu
+content = content.push(selectable_label(theme, &item.phase_name));
+
+// WRONG — Static text that cannot be selected/copied
+content = content.push(text(&item.phase_name));
+```
+
+**Floating Context Menu:**
+The context menu is a global overlay managed in `App::view` via a `stack!` and `absolute` positioning.
+- **Trigger**: Widgets use `.on_right_press(Message::OpenContextMenu(...))` via a `mouse_area`.
+- **Target**: `ContextMenuTarget` determines what is copied to the clipboard.
+- **Dismissal**: Handled by a full-screen transparent `mouse_area` beneath the menu.
+
 **DRY tagging — tag all new reusable items:**
 ```rust
 // DRY:FN:my_helper — What it does
@@ -207,8 +231,9 @@ grep -r "DRY:FN" puppet-master-rs/src/      # Functions
 - `platform_specs::reasoning_is_model_based(platform)` — True only for Cursor (reasoning in model names)
 
 **Key reusable widgets:**
-- `selectable_text_field` — Read-only selectable text
-- `context_menu_actions` — Copy/paste/select-all context menu
+- `selectable_label` / `selectable_label_mono` — Read-only text that looks like static labels but supports selection and floating context menus
+- `selectable_text_field` — Read-only selectable text field with standard styling
+- `context_menu_actions` — Floating context menu actions (Copy)
 - `auth_status_chip` — Auth state badge
 - `page_header` + `refresh_button` — Page title with actions
 - `status_badge` / `status_dot` — Status indicators

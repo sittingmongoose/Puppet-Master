@@ -234,6 +234,7 @@ impl Verifier for ScriptVerifier {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[cfg(unix)]
     use std::io::Write;
     #[cfg(unix)]
     use std::os::unix::fs::PermissionsExt;

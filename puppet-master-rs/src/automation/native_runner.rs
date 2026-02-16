@@ -115,6 +115,7 @@ fn resolve_cargo_dir(workspace_root: &Path) -> PathBuf {
 }
 
 enum ScreenshotCaptureResult {
+    #[cfg_attr(not(target_os = "linux"), allow(dead_code))]
     Captured,
     Skipped(String),
 }

@@ -7,8 +7,8 @@ use crate::app::{AuthActionKind, ContextMenuTarget, LoginTextSurface, Message, S
 use crate::platforms::AuthTarget;
 use crate::theme::{AppTheme, colors, tokens};
 use crate::types::Platform;
-use crate::widgets::{responsive::responsive_grid, *};
-use iced::widget::{column, container, mouse_area, row, scrollable, text, text_editor};
+use crate::widgets::{responsive::responsive_grid, selectable_text::selectable_label, *};
+use iced::widget::{column, container, mouse_area, row, scrollable, text_editor};
 use iced::{Alignment, Element, Length};
 use std::collections::HashMap;
 
@@ -119,39 +119,6 @@ fn get_platform_defs() -> Vec<PlatformDef> {
     ]
 }
 
-fn login_surface_menu_open(
-    active_context_menu: &Option<ContextMenuTarget>,
-    surface: LoginTextSurface,
-) -> bool {
-    matches!(
-        active_context_menu,
-        Some(ContextMenuTarget::LoginSurface(current)) if *current == surface
-    )
-}
-
-fn with_login_surface_context<'a>(
-    theme: &'a AppTheme,
-    surface: LoginTextSurface,
-    active_context_menu: &'a Option<ContextMenuTarget>,
-    content: Element<'a, Message>,
-    show_select_all: bool,
-) -> Element<'a, Message> {
-    let menu_open = login_surface_menu_open(active_context_menu, surface);
-    let mut wrapped = column![mouse_area(content).on_right_press(Message::OpenContextMenu(
-        ContextMenuTarget::LoginSurface(surface),
-    ))]
-    .spacing(tokens::spacing::XS);
-
-    if menu_open {
-        wrapped = wrapped.push(context_menu_actions(
-            theme,
-            ContextMenuOptions { show_select_all },
-        ));
-    }
-
-    wrapped.into()
-}
-
 // DRY:FN:login_view
 /// Platform authentication status view
 pub fn view<'a>(
@@ -224,7 +191,7 @@ pub fn view<'a>(
 /// Build the summary stats panel (responsive grid)
 fn build_summary_panel<'a>(
     auth_status: &'a HashMap<String, AuthStatus>,
-    active_context_menu: &'a Option<ContextMenuTarget>,
+    _active_context_menu: &'a Option<ContextMenuTarget>,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
@@ -233,20 +200,12 @@ fn build_summary_panel<'a>(
     let not_authenticated_count = total_count - authenticated_count;
     let skipped_count = 0; // We don't have skipped status in current implementation
 
-    let stat_card = |label: String, count: usize, color: iced::Color| {
+    let stat_card = |label: String, count: usize, _color: iced::Color| {
         themed_panel(
             container(
                 column![
-                    text(label)
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink_faded())
-                        .width(Length::Fill)
-                        .align_x(iced::alignment::Horizontal::Center),
-                    text(count.to_string())
-                        .size(tokens::font_size::XXL)
-                        .color(color)
-                        .width(Length::Fill)
-                        .align_x(iced::alignment::Horizontal::Center),
+                    selectable_label(theme, &label),
+                    selectable_label(theme, &count.to_string()),
                 ]
                 .spacing(tokens::spacing::XS)
                 .width(Length::Fill),
@@ -275,14 +234,7 @@ fn build_summary_panel<'a>(
     ];
 
     // Use responsive_grid to adapt column count based on screen size
-    let summary_grid = responsive_grid(size.width, stat_cards, tokens::spacing::MD);
-    with_login_surface_context(
-        theme,
-        LoginTextSurface::Summary,
-        active_context_menu,
-        summary_grid,
-        true,
-    )
+    responsive_grid(size.width, stat_cards, tokens::spacing::MD)
 }
 
 /// Build the platform cards grid (responsive)
@@ -347,9 +299,7 @@ fn build_platform_card<'a>(
     let icon = svg_icon_sized(def.icon_name, IconSize::XLarge);
 
     // Platform name
-    let name = text(def.display_name)
-        .size(tokens::font_size::LG)
-        .color(theme.ink());
+    let name = selectable_label(theme, def.display_name);
 
     let status_badge = auth_status_chip(
         theme,
@@ -361,23 +311,14 @@ fn build_platform_card<'a>(
     );
 
     // Auth method line
-    let auth_method_line = text(format!("Auth: {}", auth_method))
-        .size(tokens::font_size::SM)
-        .color(theme.ink_faded());
+    let auth_method_line = selectable_label(theme, &format!("Auth: {}", auth_method));
 
     // Status details
-    let details = text(status_details)
-        .size(tokens::font_size::SM)
-        .color(theme.ink_faded());
+    let details = selectable_label(theme, status_details);
 
     // Login message (if present)
     let login_message_elem = if let Some(msg) = login_messages.get(def.name) {
-        let color = if msg.contains("success") || msg.contains("completed") {
-            colors::ACID_LIME
-        } else {
-            colors::HOT_MAGENTA
-        };
-        Some(text(msg).size(tokens::font_size::SM).color(color))
+        Some(selectable_label(theme, msg))
     } else {
         None
     };
@@ -387,9 +328,7 @@ fn build_platform_card<'a>(
         let field = SelectableField::LoginAuthUrl(def.name.to_string());
         Some(
             row![
-                text("Auth URL:")
-                    .size(tokens::font_size::XS)
-                    .color(colors::ELECTRIC_BLUE),
+                selectable_label(theme, "Auth URL:"),
                 selectable_text_field(
                     theme,
                     url,
@@ -436,13 +375,12 @@ fn build_platform_card<'a>(
     card_content = card_content.push(action_buttons);
 
     let card: Element<'a, Message> = themed_panel(card_content, theme).into();
-    with_login_surface_context(
-        theme,
-        LoginTextSurface::PlatformCard(def.auth_target),
-        active_context_menu,
-        card,
-        true,
-    )
+    
+    mouse_area(card)
+        .on_right_press(Message::OpenContextMenu(ContextMenuTarget::LoginSurface(
+            LoginTextSurface::PlatformCard(def.auth_target),
+        )))
+        .into()
 }
 
 /// Build action buttons for a platform card
@@ -471,9 +409,7 @@ fn build_action_buttons<'a>(
         } else {
             // For Claude & Gemini, show info text
             buttons = buttons.push(
-                text("Manage at platform console")
-                    .size(tokens::font_size::SM)
-                    .color(theme.ink_faded()),
+                selectable_label(theme, "Manage at platform console"),
             );
         }
     } else {
@@ -494,23 +430,19 @@ fn build_action_buttons<'a>(
     buttons.into()
 }
 
-/// Build CLI alternative panel
 fn build_cli_panel<'a>(
     cli_content: &'a text_editor::Content,
-    active_context_menu: &'a Option<ContextMenuTarget>,
+    _active_context_menu: &'a Option<ContextMenuTarget>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let cli_commands = column![
-        text("CLI Alternative Commands")
-            .size(tokens::font_size::LG)
-            .color(theme.ink()),
-        text("You can also authenticate using these CLI commands:")
-            .size(tokens::font_size::SM)
-            .color(theme.ink_faded()),
+        selectable_label(theme, "CLI Alternative Commands"),
+        selectable_label(theme, "You can also authenticate using these CLI commands:"),
         container(
             text_editor(cli_content)
                 .on_action(Message::LoginCliAction)
                 .font(crate::theme::fonts::FONT_MONO)
+                .style(crate::theme::styles::text_editor_styled(theme))
                 .size(tokens::font_size::SM)
                 .height(Length::Fixed(140.0))
         )
@@ -522,31 +454,26 @@ fn build_cli_panel<'a>(
     let panel: Element<'a, Message> =
         themed_panel(container(cli_commands).padding(tokens::spacing::MD), theme).into();
 
-    with_login_surface_context(
-        theme,
-        LoginTextSurface::CliPanel,
-        active_context_menu,
-        panel,
-        true,
-    )
+    mouse_area(panel)
+        .on_right_press(Message::OpenContextMenu(ContextMenuTarget::LoginSurface(
+            LoginTextSurface::CliPanel,
+        )))
+        .into()
 }
 
-/// Build Git Configuration section
 fn build_git_config_section<'a>(
     git_info: &'a Option<crate::app::GitInfoDisplay>,
-    active_context_menu: &'a Option<ContextMenuTarget>,
+    _active_context_menu: &'a Option<ContextMenuTarget>,
     github_auth_status: &'a Option<String>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let mut content = column![
-        text("Git Configuration")
-            .size(tokens::font_size::LG)
-            .color(theme.ink()),
+        selectable_label(theme, "Git Configuration"),
     ]
     .spacing(tokens::spacing::MD);
 
     // GitHub authentication card
-    let github_card = build_github_card(github_auth_status, active_context_menu, theme);
+    let github_card = build_github_card(github_auth_status, _active_context_menu, theme);
     content = content.push(github_card);
 
     // Git info display (if available)
@@ -556,7 +483,7 @@ fn build_git_config_section<'a>(
                 theme,
                 &info.user_name,
                 SelectableField::GitUserName,
-                active_context_menu,
+                _active_context_menu,
                 |value| Message::SelectableFieldChanged(SelectableField::GitUserName, value),
             ),
             styled_button_sized(theme, "COPY", ButtonVariant::Ghost, ButtonSize::Small)
@@ -565,9 +492,7 @@ fn build_git_config_section<'a>(
         .spacing(tokens::spacing::SM)
         .align_y(Alignment::Center);
         let git_user_column = column![
-            text("Git User")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "Git User"),
             git_user_row,
         ]
         .spacing(tokens::spacing::XS);
@@ -577,7 +502,7 @@ fn build_git_config_section<'a>(
                 theme,
                 &info.user_email,
                 SelectableField::GitUserEmail,
-                active_context_menu,
+                _active_context_menu,
                 |value| Message::SelectableFieldChanged(SelectableField::GitUserEmail, value),
             ),
             styled_button_sized(theme, "COPY", ButtonVariant::Ghost, ButtonSize::Small)
@@ -586,9 +511,7 @@ fn build_git_config_section<'a>(
         .spacing(tokens::spacing::SM)
         .align_y(Alignment::Center);
         let git_email_column = column![
-            text("Git Email")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "Git Email"),
             git_email_row,
         ]
         .spacing(tokens::spacing::XS);
@@ -614,7 +537,7 @@ fn build_git_config_section<'a>(
                 theme,
                 &info.remote_url,
                 SelectableField::GitRemoteUrl,
-                active_context_menu,
+                _active_context_menu,
                 |value| Message::SelectableFieldChanged(SelectableField::GitRemoteUrl, value),
             ),
             styled_button_sized(theme, "COPY", ButtonVariant::Ghost, ButtonSize::Small)
@@ -623,9 +546,7 @@ fn build_git_config_section<'a>(
         .spacing(tokens::spacing::SM)
         .align_y(Alignment::Center);
         let git_remote_column = column![
-            text("Remote URL")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "Remote URL"),
             git_remote_row,
         ]
         .spacing(tokens::spacing::XS);
@@ -635,7 +556,7 @@ fn build_git_config_section<'a>(
                 theme,
                 &info.current_branch,
                 SelectableField::GitCurrentBranch,
-                active_context_menu,
+                _active_context_menu,
                 |value| Message::SelectableFieldChanged(SelectableField::GitCurrentBranch, value),
             ),
             styled_button_sized(theme, "COPY", ButtonVariant::Ghost, ButtonSize::Small)
@@ -644,9 +565,7 @@ fn build_git_config_section<'a>(
         .spacing(tokens::spacing::SM)
         .align_y(Alignment::Center);
         let git_branch_column = column![
-            text("Current Branch")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "Current Branch"),
             git_branch_row,
         ]
         .spacing(tokens::spacing::XS);
@@ -672,9 +591,7 @@ fn build_git_config_section<'a>(
     } else {
         content = content.push(themed_panel(
             container(
-                text("No git repository detected or git not configured")
-                    .size(tokens::font_size::SM)
-                    .color(theme.ink_faded()),
+                selectable_label(theme, "No git repository detected or git not configured"),
             )
             .padding(tokens::spacing::MD),
             theme,
@@ -684,28 +601,24 @@ fn build_git_config_section<'a>(
     // Note about Copilot
     content = content.push(
         container(
-            text("Note: GitHub Copilot uses your GitHub account authentication")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "Note: GitHub Copilot uses your GitHub account authentication"),
         )
         .padding(tokens::spacing::SM),
     );
 
     let panel: Element<'a, Message> =
         themed_panel(container(content).padding(tokens::spacing::MD), theme).into();
-    with_login_surface_context(
-        theme,
-        LoginTextSurface::GitSection,
-        active_context_menu,
-        panel,
-        true,
-    )
+    
+    mouse_area(panel)
+        .on_right_press(Message::OpenContextMenu(ContextMenuTarget::LoginSurface(
+            LoginTextSurface::GitSection,
+        )))
+        .into()
 }
 
-/// Build GitHub authentication card
 fn build_github_card<'a>(
     github_auth_status: &'a Option<String>,
-    active_context_menu: &'a Option<ContextMenuTarget>,
+    _active_context_menu: &'a Option<ContextMenuTarget>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let authenticated = github_auth_status
@@ -741,9 +654,7 @@ fn build_github_card<'a>(
             column![
                 row![
                     svg_icon_sized(IconName::Projects, IconSize::Large),
-                    text("GitHub")
-                        .size(tokens::font_size::LG)
-                        .color(theme.ink()),
+                    selectable_label(theme, "GitHub"),
                 ]
                 .spacing(tokens::spacing::SM)
                 .align_y(Alignment::Center),
@@ -757,11 +668,9 @@ fn build_github_card<'a>(
     )
     .into();
 
-    with_login_surface_context(
-        theme,
-        LoginTextSurface::PlatformCard(AuthTarget::GitHub),
-        active_context_menu,
-        card,
-        true,
-    )
+    mouse_area(card)
+        .on_right_press(Message::OpenContextMenu(ContextMenuTarget::LoginSurface(
+            LoginTextSurface::PlatformCard(AuthTarget::GitHub),
+        )))
+        .into()
 }

@@ -42,7 +42,7 @@ tmp_generated="$(mktemp)"
   for file in "${widget_files[@]}"; do
     rel="${file#"$ROOT_DIR/puppet-master-rs/"}"
     mapfile -t symbols < <(
-      rg -n "^pub (fn|struct|enum|type|trait) " "$file" \
+      (rg -n "^pub (fn|struct|enum|type|trait) " "$file" 2>/dev/null || grep -nE '^pub (fn|struct|enum|type|trait) ' "$file") \
         | sed -E 's/^.*pub (fn|struct|enum|type|trait) ([A-Za-z0-9_]+).*/\2/'
     )
 

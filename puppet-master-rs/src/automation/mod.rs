@@ -87,6 +87,9 @@ pub enum GuiAction {
     Navigate { page: String },
     Execute { action_id: String },
     Click { selector: GuiSelector },
+    RightClick { selector: GuiSelector },
+    MoveMouse { x: f32, y: f32 },
+    ClickMouse { button: String },
     Type { selector: GuiSelector, text: String },
     Wait { ms: u64 },
     Resize { width: f32, height: f32 },
@@ -139,6 +142,9 @@ pub enum GuiAssertion {
     },
     SetupPlatformCountAtLeast {
         count: usize,
+    },
+    ContextMenuOpen {
+        target: Option<String>,
     },
 }
 

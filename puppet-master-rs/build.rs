@@ -54,6 +54,21 @@ fn main() {
         "cargo:rustc-env=RWM_BUILD_UTC={}",
         sanitize_identifier(&build_utc)
     );
+
+    // Windows: embed application icon into .exe (optional; skip if icon.ico not generated yet)
+    #[cfg(windows)]
+    {
+        let icon_path = manifest_dir.join("icons").join("icon.ico");
+        if icon_path.exists() {
+            println!("cargo:rerun-if-changed={}", icon_path.display());
+            if let Err(e) = winres::WindowsResource::new()
+                .set_icon(icon_path.to_str().expect("icon path is valid UTF-8"))
+                .compile()
+            {
+                eprintln!("cargo:warning=Failed to embed Windows icon: {}. Run scripts/generate-app-icons.sh to create icons/icon.ico", e);
+            }
+        }
+    }
 }
 
 fn compose_semver_with_metadata(base_version: &str, metadata_parts: &[String]) -> String {

@@ -6,10 +6,11 @@
 use crate::app::{ContextMenuTarget, Message};
 use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::widgets::{
-    ContextMenuOptions, InterviewPanelData, context_menu_actions,
+    InterviewPanelData,
     interview_panel::interview_panel_compact,
     progress_bar::{ProgressSize, ProgressVariant, styled_progress_bar},
     responsive::LayoutSize,
+    selectable_text::{selectable_label, selectable_label_mono},
     status_badge::{Status, status_dot_typed},
     styled_button::{ButtonVariant, styled_button},
     terminal::LineType,
@@ -245,20 +246,11 @@ fn build_status_bar<'a>(
         // Row 2: Workflow progress
         status_rows = status_rows.push(
             row![
-                text(format!("PH {}/{}", progress.phase_current, progress.phase_total))
-                    .size(tokens::font_size::XS)
-                    .font(fonts::FONT_MONO)
-                    .color(theme.ink()),
+                selectable_label_mono(theme, &format!("PH {}/{}", progress.phase_current, progress.phase_total)),
                 text("│").size(tokens::font_size::XS).color(theme.ink_faded()),
-                text(format!("TK {}/{}", progress.task_current, progress.task_total))
-                    .size(tokens::font_size::XS)
-                    .font(fonts::FONT_MONO)
-                    .color(theme.ink()),
+                selectable_label_mono(theme, &format!("TK {}/{}", progress.task_current, progress.task_total)),
                 text("│").size(tokens::font_size::XS).color(theme.ink_faded()),
-                text(format!("ST {}/{}", progress.subtask_current, progress.subtask_total))
-                    .size(tokens::font_size::XS)
-                    .font(fonts::FONT_MONO)
-                    .color(theme.ink()),
+                selectable_label_mono(theme, &format!("ST {}/{}", progress.subtask_current, progress.subtask_total)),
             ]
             .spacing(tokens::spacing::XS)
             .align_y(iced::Alignment::Center),
@@ -323,33 +315,15 @@ fn build_status_bar<'a>(
 
         status_content = status_content.push(
             row![
-                text(format!(
-                    "Phase {}/{}",
-                    progress.phase_current, progress.phase_total
-                ))
-                .size(tokens::font_size::SM)
-                .font(fonts::FONT_MONO)
-                .color(theme.ink()),
+                selectable_label_mono(theme, &format!("Phase {}/{}", progress.phase_current, progress.phase_total)),
                 text("│")
                     .size(tokens::font_size::SM)
                     .color(theme.ink_faded()),
-                text(format!(
-                    "Task {}/{}",
-                    progress.task_current, progress.task_total
-                ))
-                .size(tokens::font_size::SM)
-                .font(fonts::FONT_MONO)
-                .color(theme.ink()),
+                selectable_label_mono(theme, &format!("Task {}/{}", progress.task_current, progress.task_total)),
                 text("│")
                     .size(tokens::font_size::SM)
                     .color(theme.ink_faded()),
-                text(format!(
-                    "Subtask {}/{}",
-                    progress.subtask_current, progress.subtask_total
-                ))
-                .size(tokens::font_size::SM)
-                .font(fonts::FONT_MONO)
-                .color(theme.ink()),
+                selectable_label_mono(theme, &format!("Subtask {}/{}", progress.subtask_current, progress.subtask_total)),
             ]
             .spacing(tokens::spacing::SM)
             .align_y(iced::Alignment::Center),
@@ -484,6 +458,7 @@ fn build_current_item_panel<'a>(
 
     if let Some(item) = current_item {
         // Phase
+        let phase_text = format!("{} - {}", item.phase_id, item.phase_name);
         content = content.push(
             row![
                 text("Phase:")
@@ -491,17 +466,14 @@ fn build_current_item_panel<'a>(
                     .font(fonts::FONT_UI_MEDIUM)
                     .color(theme.ink())
                     .width(Length::Fixed(80.0)),
-                text(format!("{} - {}", item.phase_id, item.phase_name))
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI)
-                    .color(theme.ink()),
+                selectable_label(theme, &phase_text),
             ]
             .spacing(tokens::spacing::SM),
         );
 
         // Task
         if let Some(task_id) = &item.task_id {
-            let task_label = if let Some(task_name) = &item.task_name {
+            let task_label_str = if let Some(task_name) = &item.task_name {
                 format!("{} - {}", task_id, task_name)
             } else {
                 task_id.clone()
@@ -513,10 +485,7 @@ fn build_current_item_panel<'a>(
                         .font(fonts::FONT_UI_MEDIUM)
                         .color(theme.ink())
                         .width(Length::Fixed(80.0)),
-                    text(task_label)
-                        .size(tokens::font_size::BASE)
-                        .font(fonts::FONT_UI)
-                        .color(theme.ink()),
+                    selectable_label(theme, &task_label_str),
                 ]
                 .spacing(tokens::spacing::SM),
             );
@@ -524,7 +493,7 @@ fn build_current_item_panel<'a>(
 
         // Subtask
         if let Some(subtask_id) = &item.subtask_id {
-            let subtask_label = if let Some(subtask_name) = &item.subtask_name {
+            let subtask_label_str = if let Some(subtask_name) = &item.subtask_name {
                 format!("{} - {}", subtask_id, subtask_name)
             } else {
                 subtask_id.clone()
@@ -536,10 +505,7 @@ fn build_current_item_panel<'a>(
                         .font(fonts::FONT_UI_MEDIUM)
                         .color(theme.ink())
                         .width(Length::Fixed(80.0)),
-                    text(subtask_label)
-                        .size(tokens::font_size::BASE)
-                        .font(fonts::FONT_UI)
-                        .color(theme.ink()),
+                    selectable_label(theme, &subtask_label_str),
                 ]
                 .spacing(tokens::spacing::SM),
             );
@@ -554,10 +520,7 @@ fn build_current_item_panel<'a>(
                         .font(fonts::FONT_UI_MEDIUM)
                         .color(theme.ink())
                         .width(Length::Fixed(80.0)),
-                    text(platform)
-                        .size(tokens::font_size::BASE)
-                        .font(fonts::FONT_UI)
-                        .color(theme.ink()),
+                    selectable_label(theme, platform),
                 ]
                 .spacing(tokens::spacing::SM),
             );
@@ -572,10 +535,7 @@ fn build_current_item_panel<'a>(
                         .font(fonts::FONT_UI_MEDIUM)
                         .color(theme.ink())
                         .width(Length::Fixed(80.0)),
-                    text(model)
-                        .size(tokens::font_size::BASE)
-                        .font(fonts::FONT_UI)
-                        .color(theme.ink()),
+                    selectable_label(theme, model),
                 ]
                 .spacing(tokens::spacing::SM),
             );
@@ -760,7 +720,7 @@ fn build_tier_progress_row<'a>(
 /// Build the Output Log panel (matches React's OutputPanel)
 fn build_output_log_panel<'a>(
     terminal_editor_content: &'a text_editor::Content,
-    terminal_context_menu_open: bool,
+    _terminal_context_menu_open: bool,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     // Terminal-like output panel with dark background and monospace font
@@ -803,7 +763,7 @@ fn build_output_log_panel<'a>(
         ..container::Style::default()
     });
 
-    let mut panel_content = column![
+    let panel_content = column![
         text("LIVE OUTPUT")
             .size(tokens::font_size::LG)
             .font(fonts::FONT_UI_BOLD)
@@ -811,15 +771,6 @@ fn build_output_log_panel<'a>(
         log_container,
     ]
     .spacing(tokens::spacing::MD);
-
-    if terminal_context_menu_open {
-        panel_content = panel_content.push(context_menu_actions(
-            theme,
-            ContextMenuOptions {
-                show_select_all: true,
-            },
-        ));
-    }
 
     themed_panel(panel_content, theme).into()
 }

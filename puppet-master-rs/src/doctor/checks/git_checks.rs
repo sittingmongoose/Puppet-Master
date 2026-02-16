@@ -389,6 +389,33 @@ impl GitRepoCheck {
     pub fn new() -> Self {
         Self
     }
+
+    /// Resolve the directory where git init should run.
+    /// Tries: 1) CWD (if writable), 2) home directory.
+    fn resolve_git_init_dir() -> PathBuf {
+        // Try CWD if it's writable
+        if let Ok(cwd) = std::env::current_dir() {
+            if Self::is_writable(&cwd) {
+                return cwd;
+            }
+        }
+
+        // Last resort: home directory
+        let home = std::env::var("HOME")
+            .or_else(|_| std::env::var("USERPROFILE"))
+            .unwrap_or_else(|_| ".".to_string());
+        PathBuf::from(home)
+    }
+
+    fn is_writable(path: &std::path::Path) -> bool {
+        let test_file = path.join(".puppet-master-write-test");
+        if std::fs::write(&test_file, "").is_ok() {
+            let _ = std::fs::remove_file(&test_file);
+            true
+        } else {
+            false
+        }
+    }
 }
 
 #[async_trait]
@@ -406,8 +433,10 @@ impl DoctorCheck for GitRepoCheck {
     }
 
     async fn run(&self) -> CheckResult {
+        let target_dir = Self::resolve_git_init_dir();
         let output = tokio::process::Command::new("git")
             .args(&["rev-parse", "--git-dir"])
+            .current_dir(&target_dir)
             .output()
             .await;
 
@@ -433,11 +462,32 @@ impl DoctorCheck for GitRepoCheck {
     }
 
     async fn fix(&self, dry_run: bool) -> Option<FixResult> {
+        // Determine the target directory for git init.
+        // Prefer the project working directory from gui config, fall back to CWD.
+        let target_dir = Self::resolve_git_init_dir();
+
         if dry_run {
             return Some(FixResult {
                 success: true,
-                message: "Would initialize git repository".to_string(),
-                steps: vec!["git init".to_string()],
+                message: format!(
+                    "Would initialize git repository in {}",
+                    target_dir.display()
+                ),
+                steps: vec![format!("git init (in {})", target_dir.display())],
+                fixable: true,
+                timestamp: Utc::now(),
+            });
+        }
+
+        // Verify directory is writable before attempting git init
+        if !target_dir.exists() {
+            return Some(FixResult {
+                success: false,
+                message: format!(
+                    "Directory does not exist: {}. Open or create a project first.",
+                    target_dir.display()
+                ),
+                steps: vec![],
                 fixable: true,
                 timestamp: Utc::now(),
             });
@@ -445,20 +495,42 @@ impl DoctorCheck for GitRepoCheck {
 
         let output = tokio::process::Command::new("git")
             .arg("init")
+            .current_dir(&target_dir)
             .output()
             .await;
 
         match output {
             Ok(output) if output.status.success() => Some(FixResult {
                 success: true,
-                message: "Initialized git repository".to_string(),
-                steps: vec!["git init".to_string()],
+                message: format!(
+                    "Initialized git repository in {}",
+                    target_dir.display()
+                ),
+                steps: vec![format!("git init (in {})", target_dir.display())],
                 fixable: true,
                 timestamp: Utc::now(),
             }),
-            _ => Some(FixResult {
+            Ok(output) => {
+                let stderr = String::from_utf8_lossy(&output.stderr);
+                Some(FixResult {
+                    success: false,
+                    message: format!(
+                        "Failed to initialize git repository in {}: {}",
+                        target_dir.display(),
+                        stderr.trim()
+                    ),
+                    steps: vec![],
+                    fixable: true,
+                    timestamp: Utc::now(),
+                })
+            }
+            Err(e) => Some(FixResult {
                 success: false,
-                message: "Failed to initialize git repository".to_string(),
+                message: format!(
+                    "Failed to run git init in {}: {}",
+                    target_dir.display(),
+                    e
+                ),
                 steps: vec![],
                 fixable: true,
                 timestamp: Utc::now(),

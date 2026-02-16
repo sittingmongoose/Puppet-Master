@@ -4,6 +4,7 @@ use crate::automation::{ArtifactManifest, ArtifactManifestEntry};
 use anyhow::{Context, Result, bail};
 use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
+#[cfg(unix)]
 use std::process::Command;
 
 // DRY:DATA:ClonedWorkspace

@@ -7,8 +7,8 @@ use crate::doctor::InstallationStatus;
 use crate::platforms::AuthTarget;
 use crate::theme::{AppTheme, tokens};
 use crate::types::Platform;
-use crate::widgets::*;
-use iced::widget::{Space, column, container, row, scrollable, text};
+use crate::widgets::{selectable_text::selectable_label, *};
+use iced::widget::{Space, column, container, row, scrollable};
 use iced::{Element, Length};
 use std::collections::HashMap;
 
@@ -58,9 +58,7 @@ pub fn view<'a>(
         size,
     ));
     content = content.push(
-        text("First-time setup wizard")
-            .size(tokens::font_size::MD)
-            .color(theme.ink_faded()),
+        selectable_label(theme, "First-time setup wizard"),
     );
 
     // Description
@@ -68,16 +66,9 @@ pub fn view<'a>(
         themed_panel(
             container(
                 column![
-                    text("Platform Detection")
-                        .size(tokens::font_size::LG)
-                        .font(crate::theme::fonts::FONT_UI_BOLD)
-                        .color(theme.ink()),
-                    text("This wizard will help you verify that platform CLI tools are installed and configured.")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink()),
-                    text("Click 'Run Detection' to scan your system for installed platforms.")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink()),
+                    selectable_label(theme, "Platform Detection"),
+                    selectable_label(theme, "This wizard will help you verify that platform CLI tools are installed and configured."),
+                    selectable_label(theme, "Click 'Run Detection' to scan your system for installed platforms."),
                 ]
                 .spacing(tokens::spacing::SM)
             )
@@ -145,9 +136,9 @@ pub fn view<'a>(
             };
 
             let mut platform_row = row![
-                container(text(status_icon).size(tokens::font_size::BASE))
+                container(selectable_label(theme, status_icon))
                     .padding(tokens::spacing::SM)
-                    .width(Length::Fixed(120.0))
+                    .width(Length::Fixed(tokens::layout::DETAIL_LABEL_WIDTH))
                     .style(move |_theme: &iced::Theme| {
                         iced::widget::container::Style {
                             background: Some(iced::Background::Color(status_color)),
@@ -159,9 +150,9 @@ pub fn view<'a>(
                             ..Default::default()
                         }
                     }),
-                text(format!("{}", platform_status.platform)).size(tokens::font_size::LG),
+                selectable_label(theme, &format!("{}", platform_status.platform)),
                 Space::new().width(Length::Fill),
-                text(format!("{}", platform_status.status)).size(tokens::font_size::BASE),
+                selectable_label(theme, &format!("{}", platform_status.status)),
                 install_btn,
             ]
             .spacing(tokens::spacing::MD)
@@ -180,16 +171,12 @@ pub fn view<'a>(
             match &platform_status.status {
                 InstallationStatus::Installed(version) => {
                     platform_col = platform_col.push(
-                        text(format!("Version: {}", version))
-                            .size(tokens::font_size::SM)
-                            .color(theme.ink_faded()),
+                        selectable_label(theme, &format!("Version: {}", version)),
                     );
                 }
                 InstallationStatus::Outdated { current, latest } => {
                     platform_col = platform_col.push(
-                        text(format!("Current: {} (latest: {})", current, latest))
-                            .size(tokens::font_size::SM)
-                            .color(theme.ink_faded()),
+                        selectable_label(theme, &format!("Current: {} (latest: {})", current, latest)),
                     );
                 }
                 InstallationStatus::NotInstalled => {}
@@ -197,20 +184,16 @@ pub fn view<'a>(
 
             if let Some(found_path) = &platform_status.detected_path {
                 platform_col = platform_col.push(
-                    text(format!("Found: {}", found_path))
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink_faded()),
+                    selectable_label(theme, &format!("Found: {}", found_path)),
                 );
             }
 
             if !platform_status.searched_paths.is_empty() {
                 platform_col = platform_col.push(
-                    text(format!(
+                    selectable_label(theme, &format!(
                         "Searched: {}",
                         platform_status.searched_paths.join(", ")
-                    ))
-                    .size(tokens::font_size::SM)
-                    .color(theme.ink_faded()),
+                    )),
                 );
             }
 
@@ -219,9 +202,7 @@ pub fn view<'a>(
                     platform_col.push(
                         container(
                             scrollable(
-                                text(&platform_status.instructions)
-                                    .size(tokens::font_size::BASE)
-                                    .line_height(iced::widget::text::LineHeight::Relative(1.6)),
+                                selectable_label(theme, &platform_status.instructions),
                             )
                             .height(Length::Shrink),
                         )
@@ -269,8 +250,7 @@ pub fn view<'a>(
     } else if !is_checking {
         content = content.push(
             container(
-                text("No detection results yet. Click 'Run Detection' to begin.")
-                    .size(tokens::font_size::SM),
+                selectable_label(theme, "No detection results yet. Click 'Run Detection' to begin."),
             )
             .padding(tokens::spacing::LG),
         );
@@ -291,9 +271,7 @@ pub fn view<'a>(
                     .on_press(Message::InstallPlaywright)
             };
 
-            let status_icon = text("⚠")
-                .size(tokens::font_size::XL)
-                .color(iced::Color::from_rgb(0.8, 0.5, 0.0));
+            let status_icon = selectable_label(theme, "⚠");
 
             content = content.push(themed_panel(
                 container(
@@ -301,13 +279,8 @@ pub fn view<'a>(
                         row![
                             status_icon,
                             column![
-                                text("Playwright Browser Dependencies")
-                                    .size(tokens::font_size::LG)
-                                    .font(crate::theme::fonts::FONT_UI_BOLD)
-                                    .color(theme.ink()),
-                                text(&check.message)
-                                    .size(tokens::font_size::BASE)
-                                    .color(theme.ink_faded()),
+                                selectable_label(theme, "Playwright Browser Dependencies"),
+                                selectable_label(theme, &check.message),
                             ]
                             .spacing(tokens::spacing::XS),
                             Space::new().width(Length::Fill),
@@ -328,7 +301,7 @@ pub fn view<'a>(
     content = content.push(themed_panel(
         container(
             row![
-                text("Ready to start?").size(tokens::font_size::MD),
+                selectable_label(theme, "Ready to start?"),
                 Space::new().width(Length::Fill),
                 styled_button(theme, "Complete Setup", ButtonVariant::Primary)
                     .on_press(Message::SetupComplete),

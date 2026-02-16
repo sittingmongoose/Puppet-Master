@@ -15,220 +15,227 @@ Root cause: detection doesn't validate binaries, login flows have terminal-spawn
 
 ---
 
-## Phase 1: Fix Platform Detection (prevent false positives)
+## Phase 1: Fix Platform Detection (prevent false positives) — DONE
 
-### 1a. Add binary validation to `platform_detector.rs`
+### 1a. Add binary validation to `platform_detector.rs` — DONE
 **File**: `puppet-master-rs/src/platforms/platform_detector.rs`
 
-After finding a candidate binary in any detection stage, validate it actually belongs to the claimed platform by running `--version` and checking the output contains expected keywords.
+Added `validate_and_get_version()` method that runs the binary with `--version` and uses a **collision-only** check: it only rejects a binary if the output positively identifies as a *different* platform. This approach was needed because some CLIs (Gemini, Cursor) output bare version numbers with no brand keywords.
 
-Add method:
-```rust
-async fn validate_detected_binary(platform: Platform, path: &Path, version_flag: &str) -> bool {
-    // Run binary with version flag, 3-second timeout
-    // Check output contains platform-specific identifiers:
-    //   Codex -> "codex" or "openai"
-    //   Copilot -> "copilot" or "github"
-    //   Claude -> "claude" or "anthropic"
-    //   Gemini -> "gemini" or "google"
-    //   Cursor -> "cursor" or "agent"
-    // Return false if binary doesn't match, causing detector to continue searching
-}
-```
+Distinctive brand markers used for collision detection:
+- `"openai"` / `"codex-cli"` → Codex
+- `"github copilot"` → Copilot
+- `"claude code"` / `"anthropic"` → Claude
 
-Call `validate_detected_binary()` after each `get_version_for_path()` in all 6 stages. If validation fails, `continue` to next candidate.
+Called in all 6 detection stages. If validation fails, the detector continues to the next candidate.
 
-### 1b. Unify Doctor checks with PlatformDetector
+### 1b. Unify Doctor checks with PlatformDetector — DONE
 **File**: `puppet-master-rs/src/doctor/checks/cli_checks.rs`
 
-Replace manual CLI detection in doctor checks with `PlatformDetector::detect_platform_with_custom_paths_trace()`. This ensures Doctor and Setup use identical detection logic. The `run()` method is already async, so calling the async detector is straightforward.
+Replaced manual CLI detection with `PlatformDetector::detect_platform()`. Doctor and Setup now use identical detection logic. Added "Browse" button next to failing CLI checks for manual path selection (handled by `DoctorBrowsePlatformPath` / `DoctorPlatformPathSelected` messages in app.rs).
 
 ---
 
-## Phase 2: Fix Login Flows
+## Phase 2: Fix Login Flows — DONE
 
-### 2a. Fix Codex login — needs terminal
-**File**: `puppet-master-rs/src/platforms/platform_specs.rs` (line ~510)
+### 2a. Fix Codex login — needs terminal — DONE
+**File**: `puppet-master-rs/src/platforms/platform_specs.rs`
 
-Change Codex `login_needs_terminal: false` → `login_needs_terminal: true`
+Changed Codex `login_needs_terminal: false` → `login_needs_terminal: true`
 
-### 2b. Make terminal-spawn data-driven
-**File**: `puppet-master-rs/src/platforms/auth_actions.rs` (lines 90-95)
+### 2b. Make terminal-spawn data-driven — DONE
+**File**: `puppet-master-rs/src/platforms/auth_actions.rs`
 
-Replace the hardcoded platform match with a spec-driven check:
-```rust
-// BEFORE: hardcoded list of Claude | Gemini | Copilot
-// AFTER:
-if let AuthTarget::Platform(platform) = target {
-    let spec = platform_specs::get_spec(platform);
-    if spec.auth.login_needs_terminal {
-        // ... existing terminal spawn code ...
-    }
-}
-```
+Replaced the hardcoded platform match with a spec-driven check using `spec.auth.login_needs_terminal`.
 
-This automatically picks up Codex (now `login_needs_terminal: true`) and any future platforms.
+### 2c. Improve Gemini login toast message — DONE
+**File**: `puppet-master-rs/src/app.rs` (in `PlatformLoginComplete` handler)
 
-### 2c. Improve Gemini login toast message
-**File**: `puppet-master-rs/src/app.rs` (in `PlatformLoginComplete` handler, ~line 5251)
+Per-platform toast messages for deferred login: Gemini gets "Select 'Login with Google'", Copilot gets "Complete the OAuth device flow", etc.
 
-For Gemini deferred login, customize toast: "Gemini CLI opened in terminal. Select 'Login with Google' when prompted to authenticate."
-
-### 2d. Auto-refresh models after auth status changes
-**File**: `puppet-master-rs/src/app.rs` (in `AuthStatusReceived` handler, ~line 5171)
-
-After updating `platform_auth_status`, compare old vs new auth states. For any platform that became newly authenticated, trigger `RefreshModelsForPlatform`. Add helper:
-```rust
-fn rebuild_visible_models(&mut self) {
-    // For each platform: if installed+authed, populate config_models from cache/specs
-    // If not available, remove from config_models so UI shows empty/disabled
-}
-```
-
----
-
-## Phase 3: Auth-Gating Across All Views
-
-### 3a. Update config view platform availability
-**File**: `puppet-master-rs/src/views/config.rs`
-
-Update `format_platform_option()` signature to accept `&HashMap<String, AuthStatus>`:
-- Not installed → "Name (not installed)"
-- Installed but not authenticated → "Name (not logged in)"
-- Installed and authenticated → "Name ✓"
-
-Update `is_platform_available()` to require both installed AND authenticated.
-
-Update `tier_card()` to hide model/effort dropdowns when platform unavailable. Show "Select an available platform" placeholder instead.
-
-### 3b. Pass auth_status to config view
-**File**: `puppet-master-rs/src/app.rs` (~line 6058)
-
-Add `&self.platform_auth_status` to the `views::config::view()` call. Update config view function signature to accept it.
-
-### 3c. Update `setup_reports_platform_available()`
-**File**: `puppet-master-rs/src/app.rs` (~line 6410)
-
-Add auth check: return false if platform not authenticated.
-
-### 3d. Update `unavailable_platform_reason()`
-**File**: `puppet-master-rs/src/app.rs` (~line 6432)
-
-Add case: if installed but not authenticated, return "Not authenticated. Go to Login to authenticate."
-
-### 3e. Pass auth_status to wizard view
-**File**: `puppet-master-rs/src/views/wizard.rs`
-
-Same pattern as config: platform dropdowns should show availability based on install + auth. Model/effort pickers should only show for available platforms.
-
----
-
-## Phase 4: Startup & Lifecycle
-
-### 4a. Auto-run detection + auth on app startup
-**File**: `puppet-master-rs/src/app.rs` (startup/loaded handler)
-
-Add to startup task batch:
-```rust
-Task::batch(vec![
-    Task::done(Message::SetupRunDetection),
-    refresh_auth_status_task(),
-])
-```
-
-This ensures both install status and auth status are populated before user visits any page.
-
-### 4b. Chain auth refresh after detection completes
-**File**: `puppet-master-rs/src/app.rs` (in `SetupDetectionComplete` handler, ~line 4355)
-
-After setting `setup_platform_statuses`, also return `refresh_auth_status_task()` to ensure auth is checked for all detected platforms.
-
----
-
-## Phase 5: Model Visibility Based on Availability
-
-### 5a. Only populate config_models for available platforms
+### 2d. Auto-refresh models after auth changes — DONE
 **File**: `puppet-master-rs/src/app.rs`
 
-In `AuthStatusReceived` and `SetupDetectionComplete`, call `rebuild_visible_models()` which:
-- For each platform that is installed + authenticated: insert cached/fallback models into `config_models`
-- For unavailable platforms: remove from `config_models`
+Added `rebuild_visible_models()` helper. After auth status updates, it rebuilds `config_models` using **only cached/dynamic models** (no static fallbacks). Unavailable platforms get their models removed.
 
-### 5b. Wizard models same treatment
-**File**: `puppet-master-rs/src/app.rs` (in `WizardRefreshModels`)
+### 2e. Fix Copilot auth detection — DONE (added this session)
+**File**: `puppet-master-rs/src/platforms/auth_status.rs`
 
-Use same gating: only include models for available platforms in `wizard_models`.
+**Root cause**: `copilot login` stores auth in `~/.copilot/config.json` under `logged_in_users`, completely separate from `gh auth`. The old code only checked `gh auth status`.
+
+**Fix**: Added `copilot_config_has_logged_in_user()` which reads `~/.copilot/config.json` and checks for a non-empty `logged_in_users` array. This is the primary check; `gh auth status` is kept as a fallback.
+
+Verified on Mac via SSH: `~/.copilot/config.json` contains `"logged_in_users": [{"host": "https://github.com", "login": "sittingmongoose"}]`.
 
 ---
 
-## Files Modified (Summary)
+## Phase 3: Auth-Gating Across All Views — DONE
+
+### 3a. Update config view platform availability — DONE
+**File**: `puppet-master-rs/src/views/config.rs`
+
+`format_platform_option()` now shows: "(not installed)" / "(not logged in)" / "✓". `is_platform_available()` requires both installed AND authenticated. Effort picker gated by `platform_available`.
+
+### 3b. Pass auth_status to config view — DONE
+**File**: `puppet-master-rs/src/app.rs`
+
+Added `&self.platform_auth_status` to the `views::config::view()` call.
+
+### 3c-d. Update availability helpers — DONE
+**File**: `puppet-master-rs/src/app.rs`
+
+`setup_reports_platform_available()` checks both install AND auth. `unavailable_platform_reason()` returns "Not authenticated. Go to Login to authenticate." when installed but not authed.
+
+### 3e. Pass auth_status to wizard view — DONE
+**File**: `puppet-master-rs/src/views/wizard.rs`
+
+Same auth-gating pattern as config. Platform dropdowns show availability based on install + auth.
+
+---
+
+## Phase 4: Startup & Lifecycle — DONE
+
+### 4a. Auto-run detection + auth on app startup — DONE
+Startup task batch includes `SetupRunDetection` + `refresh_auth_status_task()`.
+
+### 4b. Chain auth refresh after detection completes — DONE
+`SetupDetectionComplete` handler also calls `refresh_auth_status_task()` and `rebuild_visible_models()`.
+
+---
+
+## Phase 5: Model Visibility Based on Availability — DONE
+
+### 5a-b. Only populate models for available platforms — DONE
+**File**: `puppet-master-rs/src/app.rs`
+
+`rebuild_visible_models()` uses **only cached/dynamic models from `model_cache`** — never static fallbacks. `config_models` starts empty (was `build_model_map_from_specs()`). Wizard models (`WizardRefreshModels`, `WizardModelsLoaded`) use the same gating.
+
+**User directive**: "There should never be fallback models or effort/reasoning. We need to know it exactly and if we don't we don't display it. The only fallback, would be showing a previous good, validated list."
+
+---
+
+## Phase 6: Additional Fixes (added this session)
+
+### 6a. Fix git-repo initialization — DONE
+**File**: `puppet-master-rs/src/doctor/checks/git_checks.rs`
+
+**Root cause**: `git init` ran in the process CWD, which on macOS launched from DMG/Finder could be `/` or `/Applications` (read-only).
+
+**Fix**: Added `resolve_git_init_dir()` which finds a writable directory (CWD → home). Both `run()` and `fix()` now use `.current_dir(&target_dir)`. Better error messages include the target directory path.
+
+### 6b. Fix selectable_label lifetime bug — DONE
+**File**: `puppet-master-rs/src/widgets/selectable_text.rs`
+
+**Root cause**: The other agent (selectable text/copy-paste implementation) created `selectable_label(theme, value)` with `value: &'a str`, tying the value lifetime to the element. But iced's `text_input` copies the value internally, so `value` doesn't need to live as long as `'a`. This caused ~90+ compile errors across all views where `&format!(...)` temporaries were used.
+
+**Fix**: Changed `value: &'a str` → `value: &str` in both `selectable_label` and `selectable_label_mono`. One-line fix per function that resolved all ~90 errors.
+
+### 6c. Fix layout_helpers generic type mismatch — DONE
+**File**: `puppet-master-rs/src/widgets/layout_helpers.rs`
+
+**Root cause**: `responsive_form_row` and `responsive_label_value` were generic over `Message: 'a`, but `selectable_label` returns `Element<'a, crate::app::Message>` (concrete type).
+
+**Fix**: Changed from generic `Message` parameter to concrete `crate::app::Message`.
+
+### 6d. Fix context menu overlay (iced API changes) — DONE
+**File**: `puppet-master-rs/src/app.rs`
+
+Replaced removed `iced::widget::absolute` with `iced::widget::float` for context menu positioning. Fixed `Space::new()` API (no longer takes width/height args in iced 0.14). Fixed `render_context_menu_overlay` lifetime (`&self` → `&'a self`).
+
+### 6e. Fix dashboard lifetime issues — DONE
+**File**: `puppet-master-rs/src/views/dashboard.rs`
+
+Restored `selectable_label`/`selectable_label_mono` usage (was temporarily changed to `text()`) now that the lifetime fix in 6b resolves the root cause. Restored proper imports.
+
+---
+
+## Phase 7: Effort/Reasoning Gating — DONE
+
+### 7a. Remove fallback models from config view — DONE
+**File**: `puppet-master-rs/src/views/config.rs`
+
+**Root cause**: `model_list_for()` closure fell back to `fallback_model_ids()` from static specs when no dynamic models were available. This contradicted the "no fallbacks" directive.
+
+**Fix**: Simplified to `models.get(&tier_config.platform).cloned().unwrap_or_default()` — returns empty vec when no dynamic models exist.
+
+### 7b. Gate effort visibility on dynamic models — DONE
+**Files**: `puppet-master-rs/src/views/config.rs`, `puppet-master-rs/src/views/wizard.rs`
+
+**Root cause**: `effort_visible_for()` (config) and `show_reasoning` (wizard) used `supports_effort()` from static specs. Effort dropdowns appeared even when the platform had no dynamically detected models.
+
+**Fix**: Added `&& models.get(&tier_config.platform).map_or(false, |m| !m.is_empty())` gate to config's `effort_visible_for()`. In wizard, added `has_dynamic_models` check before `show_reasoning`. Removed `REASONING_EFFORTS` static fallback constant from wizard.
+
+**Result**: Effort/reasoning dropdowns only appear when we have dynamically confirmed model data for the platform. The effort level options still come from `platform_specs.rs` (since there's no CLI to query effort levels), but the **visibility** is gated on dynamic model detection.
+
+---
+
+## Files Modified (Complete Summary)
 
 | File | Changes |
 |------|---------|
-| `platform_detector.rs` | Add `validate_and_get_version()`, call in all 6 stages, remove old `get_version_for_path()` |
+| `platform_detector.rs` | `validate_and_get_version()` with collision-only check, called in all 6 stages |
 | `platform_specs.rs` | Codex `login_needs_terminal: true` |
 | `auth_actions.rs` | Data-driven terminal spawn using `spec.auth.login_needs_terminal` |
-| `cli_checks.rs` | Use `PlatformDetector` instead of manual detection |
-| `app.rs` | Startup tasks, auth-gating helpers, model visibility rebuild, pass auth to views, Doctor browse handler |
-| `views/config.rs` | Auth-aware `format_platform_option()`, hide model/effort for unavailable platforms |
-| `views/wizard.rs` | Same auth-gating for wizard platform/model pickers |
-| `views/doctor.rs` | "Browse" button next to failing CLI checks for manual path selection |
+| `auth_status.rs` | **Copilot auth**: reads `~/.copilot/config.json` `logged_in_users`; `gh auth` as fallback |
+| `cli_checks.rs` | Uses `PlatformDetector` instead of manual detection |
+| `git_checks.rs` | `resolve_git_init_dir()` + `.current_dir()` for writable target dir |
+| `app.rs` | Startup tasks, auth-gating helpers, model visibility rebuild, pass auth to views, context menu overlay (absolute→float), Doctor browse handler |
+| `views/config.rs` | Auth-aware `format_platform_option()`, hide model/effort for unavailable platforms, removed fallback models, effort gated on dynamic models |
+| `views/wizard.rs` | Same auth-gating for wizard platform/model pickers, effort gated on dynamic models, removed `REASONING_EFFORTS` fallback |
+| `views/doctor.rs` | "Browse" button next to failing CLI checks |
+| `views/dashboard.rs` | Restored `selectable_label`/`selectable_label_mono` with lifetime fix |
+| `widgets/selectable_text.rs` | **Lifetime fix**: `value: &'a str` → `value: &str` |
+| `widgets/layout_helpers.rs` | Generic `Message` → concrete `crate::app::Message` |
 
 ---
 
-## Verification
+## Build Status
 
-### Automated
-1. `cargo test --package puppet-master-rs` — all existing tests pass
-2. Add unit tests for `validate_detected_binary()` with mock outputs
-3. Add tests for `format_platform_option()` with auth/install combos
-4. Add tests for `setup_reports_platform_available()` with auth data
+- `cargo check` — **compiles clean** (29 warnings, 0 errors)
+- `cargo test --lib platforms` — **172 passed**
+- `cargo test --lib doctor::checks` — **29 passed**
+- `cargo test --lib platforms::auth_status` — **9 passed**
+- Full `cargo test` — OOM killed on this machine (test binary too large for available RAM); individual test suites pass
 
-### Manual (SSH to Mac)
+---
+
+## What's Left (for next agent)
+
+### Remaining from original plan
+- [ ] **Manual verification on Mac** — Build on Mac via SSH, test all views
+- [ ] **Manual verification on Linux** — Same
+- [ ] **Manual verification on Windows** — Same
+
+### Remaining issues reported by user
+- [x] **Effort/reasoning display** — DONE. See Phase 7 below.
+- [ ] **29 compiler warnings** — Mostly unused imports/variables from the selectable text agent's work. Can be cleaned up with `cargo fix --lib -p puppet-master`.
+
+### Key architecture decisions to preserve
+1. **No fallback models or effort** — Only dynamically detected (from CLI) or cached (from previous successful detection). Never static specs.
+2. **Collision-only binary validation** — Don't require brand keywords (Gemini/Cursor output bare versions); only reject if output identifies as a *different* platform.
+3. **Copilot auth** — Primary: `~/.copilot/config.json` `logged_in_users`. Fallback: `gh auth status`. The two are separate auth systems.
+4. **Selectable text lifetime** — `value: &str` (not `&'a str`) because iced `text_input` copies the value internally.
+
+---
+
+## SSH Credentials (for manual testing)
+
 ```bash
+# Mac
 sshpass -p '0303' ssh -o StrictHostKeyChecking=no jaredsmacbookair@192.168.50.115
 
-# 1. Check what's actually installed
-which claude codex gemini copilot agent cursor-agent gh
-codex --version 2>&1; copilot --version 2>&1
-
-# 2. Build and run
-cd /path/to/puppet-master-rs && cargo build --release && cargo run --release
-
-# 3. Test sequence:
-# - Doctor: only truly installed platforms show green
-# - Setup: consistent with Doctor
-# - Login: Codex opens terminal, Gemini opens terminal with guidance, Copilot refreshes after login
-# - Config: unavailable platforms show "(not installed)"/"(not logged in)", no model/effort dropdowns
-# - After logging in: platform shows ✓, models appear, effort shows (where supported)
-```
-
-### Cross-Platform (SSH to Linux/Windows)
-```bash
 # Linux
 sshpass -p 'Tigger12' ssh -o StrictHostKeyChecking=no sittingmongoose@192.168.50.72
-# Windows (via expect)
-# Verify same behavior on all three OS targets
+
+# Windows (interactive — sshpass doesn't work)
+ssh -o PubkeyAuthentication=no sitti@192.168.50.253
+# password: Empire00+!
 ```
 
----
-
-## Progress Tracking
-
-- [x] Phase 1a: Binary validation in platform_detector.rs
-- [x] Phase 1b: Unify doctor checks with PlatformDetector + Browse button
-- [x] Phase 2a: Codex login_needs_terminal fix
-- [x] Phase 2b: Data-driven terminal spawn in auth_actions.rs
-- [x] Phase 2c: Improved Gemini login toast
-- [x] Phase 2d: Auto-refresh models after auth changes
-- [x] Phase 3a: Auth-gating in config view
-- [x] Phase 3b: Pass auth_status to config view
-- [x] Phase 3c-d: Update availability helpers in app.rs
-- [x] Phase 3e: Auth-gating in wizard view
-- [x] Phase 4a: Startup detection + auth
-- [x] Phase 4b: Chain auth refresh after detection
-- [x] Phase 5a-b: Model visibility gating
-- [x] Tests pass (cargo test — all pass, no warnings)
-- [ ] Manual verification on Mac
-- [ ] Manual verification on Linux
-- [ ] Manual verification on Windows
+### Mac CLI locations (confirmed via SSH)
+- Claude: `/usr/local/bin/claude` → "2.1.34 (Claude Code)"
+- Codex: `/usr/local/bin/codex` → "codex-cli 0.98.0"
+- Gemini: `/opt/homebrew/bin/gemini` → "0.27.3" (bare version, no brand)
+- Copilot: `/usr/local/bin/copilot` → "GitHub Copilot CLI 0.0.408"
+- Cursor: not confirmed on Mac
+- gh: `/opt/homebrew/bin/gh` → "gh version 2.86.0"

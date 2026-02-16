@@ -4,9 +4,9 @@
 
 use crate::app::Message;
 use crate::theme::{AppTheme, colors, fonts, tokens};
-use crate::widgets::*;
+use crate::widgets::{selectable_text::{selectable_label, selectable_label_mono}, *};
 use chrono::{DateTime, Utc};
-use iced::widget::{Space, column, container, pick_list, row, scrollable, text, text_editor};
+use iced::widget::{Space, column, container, pick_list, row, scrollable, text_editor};
 use iced::{Border, Element, Length};
 use std::collections::{HashMap, HashSet};
 
@@ -143,13 +143,8 @@ pub fn view<'a>(
     stats_grid = stats_grid.push(
         container(
             column![
-                text(entries.len().to_string())
-                    .size(tokens::font_size::XL)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                text("Total Events")
-                    .size(tokens::font_size::XS)
-                    .color(theme.ink_faded()),
+                selectable_label(theme, &entries.len().to_string()),
+                selectable_label(theme, "Total Events"),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center),
@@ -169,13 +164,8 @@ pub fn view<'a>(
     stats_grid = stats_grid.push(
         container(
             column![
-                text(type_counts.len().to_string())
-                    .size(tokens::font_size::XL)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                text("Event Types")
-                    .size(tokens::font_size::XS)
-                    .color(theme.ink_faded()),
+                selectable_label(theme, &type_counts.len().to_string()),
+                selectable_label(theme, "Event Types"),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center),
@@ -199,13 +189,8 @@ pub fn view<'a>(
     stats_grid = stats_grid.push(
         container(
             column![
-                text(unique_tiers.len().to_string())
-                    .size(tokens::font_size::XL)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                text("Unique Tiers")
-                    .size(tokens::font_size::XS)
-                    .color(theme.ink_faded()),
+                selectable_label(theme, &unique_tiers.len().to_string()),
+                selectable_label(theme, "Unique Tiers"),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center),
@@ -240,13 +225,8 @@ pub fn view<'a>(
     stats_grid = stats_grid.push(
         container(
             column![
-                text(date_range_text)
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                text("Date Range")
-                    .size(tokens::font_size::XS)
-                    .color(theme.ink_faded()),
+                selectable_label(theme, &date_range_text),
+                selectable_label(theme, "Date Range"),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center),
@@ -270,9 +250,7 @@ pub fn view<'a>(
 
     // Filter bar with event type, tier, session, and limit controls
     let mut filter_row = row![
-        text("Filter:")
-            .size(tokens::font_size::SM)
-            .color(theme.ink()),
+        selectable_label(theme, "Filter:"),
     ]
     .spacing(tokens::spacing::SM)
     .align_y(iced::Alignment::Center);
@@ -302,14 +280,14 @@ pub fn view<'a>(
     filter_row = filter_row.push(
         styled_text_input(theme, "Tier ID", filter_tier)
             .on_input(Message::LedgerFilterTierChanged)
-            .width(Length::Fixed(120.0)),
+            .width(Length::Fixed(tokens::layout::DETAIL_LABEL_WIDTH)),
     );
 
     // Session filter input
     filter_row = filter_row.push(
         styled_text_input(theme, "Session ID", filter_session)
             .on_input(Message::LedgerFilterSessionChanged)
-            .width(Length::Fixed(120.0)),
+            .width(Length::Fixed(tokens::layout::DETAIL_LABEL_WIDTH)),
     );
 
     // Limit pick_list
@@ -327,9 +305,7 @@ pub fn view<'a>(
 
     filter_row = filter_row.push(
         row![
-            text("Limit:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink()),
+            selectable_label(theme, "Limit:"),
             pick_list(
                 limit_options,
                 Some(current_limit),
@@ -378,13 +354,9 @@ pub fn view<'a>(
         content = content.push(themed_panel(
             container(
                 column![
-                    text("No events found")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink()),
+                    selectable_label(theme, "No events found"),
                     Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                    text("Try adjusting your filters")
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink_faded()),
+                    selectable_label(theme, "Try adjusting your filters"),
                 ]
                 .spacing(tokens::spacing::SM),
             )
@@ -412,16 +384,12 @@ pub fn view<'a>(
             let event_row = row![
                 // Timestamp
                 container(
-                    text(timestamp_str)
-                        .size(tokens::font_size::XS)
-                        .color(theme.ink())
+                    selectable_label_mono(theme, &timestamp_str)
                 )
                 .width(Length::Fixed(80.0)),
                 // Event type badge with color
                 container(
-                    text(event_type_str)
-                        .size(tokens::font_size::XS)
-                        .color(colors::INK_BLACK)
+                    selectable_label(theme, &event_type_str)
                 )
                 .padding(tokens::spacing::XS)
                 .style(move |_theme: &iced::Theme| {
@@ -439,20 +407,14 @@ pub fn view<'a>(
                 .width(Length::Fixed(190.0)),
                 // Tier ID
                 container(
-                    text(tier_id_display)
-                        .size(tokens::font_size::XS)
-                        .color(theme.ink())
+                    selectable_label_mono(theme, &tier_id_display)
                 )
-                .width(Length::Fixed(120.0)),
+                .width(Length::Fixed(tokens::layout::DETAIL_LABEL_WIDTH)),
                 // Data preview (truncated) or expand icon
                 container(if is_expanded {
-                    text("▼ Click to collapse")
-                        .size(tokens::font_size::XS)
-                        .color(colors::ELECTRIC_BLUE)
+                    selectable_label(theme, "▼ Click to collapse")
                 } else {
-                    text(data_preview)
-                        .size(tokens::font_size::XS)
-                        .color(theme.ink())
+                    selectable_label(theme, &data_preview)
                 })
                 .width(Length::Fill),
             ]
@@ -509,7 +471,8 @@ pub fn view<'a>(
                                 })
                                 .font(fonts::FONT_MONO)
                                 .size(tokens::font_size::XS)
-                                .height(Length::Fixed(150.0)),
+                                .style(crate::theme::styles::text_editor_styled(theme))
+                                .height(Length::Fixed(tokens::layout::FORM_LABEL_WIDTH)),
                         )
                         .padding(tokens::spacing::MD)
                         .width(Length::Fill)
@@ -529,12 +492,9 @@ pub fn view<'a>(
                         // Fallback to text if content not in HashMap
                         container(
                             scrollable(
-                                text(data_full)
-                                    .size(tokens::font_size::XS)
-                                    .font(fonts::FONT_MONO)
-                                    .color(colors::ACID_LIME),
+                                selectable_label_mono(theme, &data_full),
                             )
-                            .height(Length::Fixed(150.0)),
+                            .height(Length::Fixed(tokens::layout::FORM_LABEL_WIDTH)),
                         )
                         .padding(tokens::spacing::MD)
                         .width(Length::Fill)

@@ -3,11 +3,11 @@
 //! Displays past orchestration sessions with filtering and details.
 
 use crate::app::Message;
-use crate::theme::{AppTheme, fonts, tokens};
+use crate::theme::{AppTheme, tokens};
 use crate::widgets::status_badge::status_badge_with_text;
-use crate::widgets::*;
+use crate::widgets::{selectable_text::{selectable_label, selectable_label_mono}, *};
 use chrono::{DateTime, Utc};
-use iced::widget::{Space, column, container, row, scrollable, text};
+use iced::widget::{Space, column, container, row, scrollable};
 use iced::{Element, Length};
 
 // DRY:DATA:SessionInfo
@@ -87,10 +87,7 @@ pub fn view<'a>(
     content = content.push(themed_panel(
         container(
             row![
-                text("Search:")
-                    .size(tokens::font_size::BASE)
-                    .color(theme.ink())
-                    .width(Length::Fixed(80.0)),
+                selectable_label(theme, "Search:"),
                 styled_text_input(theme, "Search by ID or project...", search_query)
                     .on_input(Message::HistorySearchChanged)
                     .width(Length::Fill),
@@ -136,9 +133,7 @@ pub fn view<'a>(
     let filter_layout: Element<Message> = if size.is_mobile() {
         // Mobile: vertical stack
         let mut filter_col = column![
-            text("Filter:")
-                .size(tokens::font_size::BASE)
-                .color(theme.ink()),
+            selectable_label(theme, "Filter:"),
         ]
         .spacing(tokens::spacing::SM);
         for btn in filter_buttons {
@@ -148,9 +143,7 @@ pub fn view<'a>(
     } else {
         // Desktop: horizontal row
         let mut filter_row = row![
-            text("Filter:")
-                .size(tokens::font_size::BASE)
-                .color(theme.ink()),
+            selectable_label(theme, "Filter:"),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center);
@@ -172,9 +165,7 @@ pub fn view<'a>(
                 styled_button(theme, "PREVIOUS", ButtonVariant::Secondary)
                     .on_press(Message::HistoryPrevPage),
                 Space::new().width(Length::Fill),
-                text(format!("Page {} of {}", page + 1, total_pages.max(1)))
-                    .size(tokens::font_size::BASE)
-                    .color(theme.ink()),
+                selectable_label(theme, &format!("Page {} of {}", page + 1, total_pages.max(1))),
                 Space::new().width(Length::Fill),
                 styled_button(theme, "NEXT", ButtonVariant::Secondary)
                     .on_press(Message::HistoryNextPage),
@@ -190,13 +181,9 @@ pub fn view<'a>(
         content = content.push(themed_panel(
             container(
                 column![
-                    text("No execution history")
-                        .size(tokens::font_size::MD)
-                        .color(theme.ink()),
+                    selectable_label(theme, "No execution history"),
                     Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                    text("History will appear after orchestration runs")
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink_faded()),
+                    selectable_label(theme, "History will appear after orchestration runs"),
                 ]
                 .spacing(tokens::spacing::SM),
             )
@@ -230,37 +217,26 @@ pub fn view<'a>(
                     .width(Length::Fixed(110.0))
                     .center_x(Length::Shrink),
                     column![
-                        text(&session.id)
-                            .size(tokens::font_size::MD)
-                            .font(fonts::FONT_UI_BOLD)
-                            .color(theme.ink()),
-                        text(format!(
+                        selectable_label_mono(theme, &session.id),
+                        selectable_label(theme, &format!(
                             "Started: {}",
                             session.start_time.format("%Y-%m-%d %H:%M:%S")
-                        ))
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink_faded()),
-                        text(format!(
+                        )),
+                        selectable_label(theme, &format!(
                             "Platform: {} | Model: {} | Effort: {}",
                             session.platform.as_deref().unwrap_or("—"),
                             session.model.as_deref().unwrap_or("—"),
                             session.reasoning_effort.as_deref().unwrap_or("—"),
-                        ))
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink_faded()),
+                        )),
                     ]
                     .spacing(tokens::spacing::XS),
                     Space::new().width(Length::Fill),
                     column![
-                        text(format!(
+                        selectable_label(theme, &format!(
                             "{}/{} items",
                             session.items_completed, session.items_total
-                        ))
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink()),
-                        text(duration.clone())
-                            .size(tokens::font_size::SM)
-                            .color(theme.ink_faded()),
+                        )),
+                        selectable_label(theme, &duration),
                     ]
                     .spacing(tokens::spacing::XS)
                     .align_x(iced::Alignment::End),
@@ -281,26 +257,19 @@ pub fn view<'a>(
             // Show details if expanded
             if session.expanded {
                 let mut details = column![
-                    text("Phases:")
-                        .size(tokens::font_size::BASE)
-                        .font(fonts::FONT_UI_BOLD)
-                        .color(theme.ink()),
+                    selectable_label(theme, "Phases:"),
                 ]
                 .spacing(tokens::spacing::XS);
 
                 for phase in &session.phases {
                     details = details.push(
-                        text(format!("• {}", phase))
-                            .size(tokens::font_size::SM)
-                            .color(theme.ink_faded()),
+                        selectable_label(theme, &format!("• {}", phase)),
                     );
                 }
 
                 if let Some(end) = session.end_time {
                     details = details.push(
-                        text(format!("Ended: {}", end.format("%Y-%m-%d %H:%M:%S")))
-                            .size(tokens::font_size::SM)
-                            .color(theme.ink_faded()),
+                        selectable_label(theme, &format!("Ended: {}", end.format("%Y-%m-%d %H:%M:%S"))),
                     );
                 }
 

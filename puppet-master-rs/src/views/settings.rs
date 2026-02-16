@@ -3,9 +3,9 @@
 //! General settings including theme, log level, and other preferences.
 
 use crate::app::Message;
-use crate::theme::{AppTheme, fonts, tokens};
-use crate::widgets::*;
-use iced::widget::{Space, column, container, pick_list, row, scrollable, text};
+use crate::theme::{AppTheme, tokens};
+use crate::widgets::{selectable_text::{selectable_label, selectable_label_mono}, *};
+use iced::widget::{Space, column, container, pick_list, row, scrollable};
 use iced::{Element, Length};
 
 // DRY:DATA:LogLevel
@@ -96,10 +96,7 @@ pub fn view<'a>(
     let header_row: Element<Message> = if size.is_mobile() {
         Element::from(
             column![
-                text("Settings")
-                    .size(tokens::font_size::DISPLAY)
-                    .font(crate::theme::fonts::FONT_DISPLAY)
-                    .color(theme.ink()),
+                selectable_label(theme, "Settings"),
                 row![
                     styled_button(theme, "RESET TO DEFAULTS", ButtonVariant::Warning)
                         .on_press(Message::SettingsResetDefaults),
@@ -113,10 +110,7 @@ pub fn view<'a>(
     } else {
         Element::from(
             row![
-                text("Settings")
-                    .size(tokens::font_size::DISPLAY)
-                    .font(crate::theme::fonts::FONT_DISPLAY)
-                    .color(theme.ink()),
+                selectable_label(theme, "Settings"),
                 Space::new().width(Length::Fill),
                 styled_button(theme, "RESET TO DEFAULTS", ButtonVariant::Warning)
                     .on_press(Message::SettingsResetDefaults),
@@ -132,16 +126,10 @@ pub fn view<'a>(
 
     // --- Appearance Section ---
     let theme_content = column![
-        text("Appearance")
-            .size(tokens::font_size::LG)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        selectable_label(theme, "Appearance"),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         row![
-            text("Theme:")
-                .size(tokens::font_size::BASE)
-                .width(Length::Fixed(150.0))
-                .color(theme.ink()),
+            selectable_label(theme, "Theme:"),
             styled_button(
                 theme,
                 if matches!(theme, AppTheme::Light) {
@@ -183,30 +171,21 @@ pub fn view<'a>(
 
     // --- Logging Section ---
     let logging_content = column![
-        text("Logging")
-            .size(tokens::font_size::LG)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        selectable_label(theme, "Logging"),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         row![
-            text("Log Level:")
-                .size(tokens::font_size::BASE)
-                .width(Length::Fixed(150.0))
-                .color(theme.ink()),
+            selectable_label(theme, "Log Level:"),
             pick_list(LogLevel::all(), Some(log_level), |level| {
                 Message::SettingsLogLevelChanged(level.as_str().to_lowercase())
             })
-            .width(Length::Fixed(150.0))
+            .width(Length::Fixed(tokens::layout::FORM_LABEL_WIDTH))
             .padding(tokens::spacing::SM)
             .text_size(tokens::font_size::BASE),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
         row![
-            text("Intensive Logging:")
-                .size(tokens::font_size::BASE)
-                .width(Length::Fixed(150.0))
-                .color(theme.ink()),
+            selectable_label(theme, "Intensive Logging:"),
             styled_button(
                 theme,
                 "OFF",
@@ -240,30 +219,19 @@ pub fn view<'a>(
 
     // --- Editor Section ---
     let editor_content = column![
-        text("Editor")
-            .size(tokens::font_size::LG)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        selectable_label(theme, "Editor"),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         row![
-            text("Auto-scroll:")
-                .size(tokens::font_size::BASE)
-                .width(Length::Fixed(150.0))
-                .color(theme.ink()),
+            selectable_label(theme, "Auto-scroll:"),
             styled_button(theme, auto_scroll.as_str(), ButtonVariant::Primary).on_press(
                 Message::SettingsAutoScrollToggled(matches!(auto_scroll, AutoScroll::Disabled))
             ),
-            text("Terminal output will automatically scroll to show new content")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "Terminal output will automatically scroll to show new content"),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
         row![
-            text("Show Timestamps:")
-                .size(tokens::font_size::BASE)
-                .width(Length::Fixed(150.0))
-                .color(theme.ink()),
+            selectable_label(theme, "Show Timestamps:"),
             styled_button(
                 theme,
                 if show_timestamps { "ON" } else { "OFF" },
@@ -274,9 +242,7 @@ pub fn view<'a>(
                 }
             )
             .on_press(Message::SettingsShowTimestampsToggled(!show_timestamps)),
-            text("Display timestamps in log output")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "Display timestamps in log output"),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
@@ -290,16 +256,10 @@ pub fn view<'a>(
 
     // --- Data Section ---
     let data_content = column![
-        text("Data")
-            .size(tokens::font_size::LG)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        selectable_label(theme, "Data"),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         row![
-            text("Retention Days:")
-                .size(tokens::font_size::BASE)
-                .width(Length::Fixed(150.0))
-                .color(theme.ink()),
+            selectable_label(theme, "Retention Days:"),
             styled_text_input(
                 theme,
                 &retention_days.to_string(),
@@ -307,9 +267,7 @@ pub fn view<'a>(
             )
             .on_input(Message::SettingsRetentionDaysChanged)
             .width(Length::Fixed(100.0)),
-            text("Days to keep evidence and logs")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "Days to keep evidence and logs"),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
@@ -323,10 +281,7 @@ pub fn view<'a>(
 
     // --- System Tray Section ---
     let tray_content = column![
-        text("System Tray")
-            .size(tokens::font_size::LG)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        selectable_label(theme, "System Tray"),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         row![
             styled_button(
@@ -343,9 +298,7 @@ pub fn view<'a>(
                 }
             )
             .on_press(Message::ToggleMinimizeToTray),
-            text("When enabled, closing minimizes to system tray instead of exiting")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "When enabled, closing minimizes to system tray instead of exiting"),
         ]
         .spacing(tokens::spacing::MD)
         .align_y(iced::Alignment::Center),
@@ -359,35 +312,26 @@ pub fn view<'a>(
 
     // --- Advanced Section ---
     let advanced_content = column![
-        text("Advanced")
-            .size(tokens::font_size::LG)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        selectable_label(theme, "Advanced"),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         row![
             styled_button(theme, "Clear All Data", ButtonVariant::Danger)
                 .on_press(Message::SettingsClearData),
-            text("Remove all evidence, logs, and state")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "Remove all evidence, logs, and state"),
         ]
         .spacing(tokens::spacing::MD)
         .align_y(iced::Alignment::Center),
         row![
             styled_button(theme, "Reset to Defaults", ButtonVariant::Warning)
                 .on_press(Message::SettingsResetDefaults),
-            text("Reset all settings to default values")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "Reset all settings to default values"),
         ]
         .spacing(tokens::spacing::MD)
         .align_y(iced::Alignment::Center),
         row![
             styled_button(theme, "Open Data Directory", ButtonVariant::Info)
                 .on_press(Message::SettingsOpenDataDir),
-            text("Open the application data folder")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "Open the application data folder"),
         ]
         .spacing(tokens::spacing::MD)
         .align_y(iced::Alignment::Center),
@@ -401,18 +345,10 @@ pub fn view<'a>(
 
     // --- About Section ---
     let about_content = column![
-        text("About")
-            .size(tokens::font_size::LG)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        selectable_label(theme, "About"),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
-        text(crate::build_info::full_build_identity())
-            .size(tokens::font_size::SM)
-            .font(fonts::FONT_MONO)
-            .color(theme.ink()),
-        text("Autonomous LLM orchestration system")
-            .size(tokens::font_size::SM)
-            .color(theme.ink_faded()),
+        selectable_label_mono(theme, &crate::build_info::full_build_identity()),
+        selectable_label(theme, "Autonomous LLM orchestration system"),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         row![
             styled_button(theme, "Documentation", ButtonVariant::Info),

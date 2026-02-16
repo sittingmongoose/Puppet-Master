@@ -6,9 +6,11 @@
 use crate::app::{ContextMenuTarget, Message, SelectableField};
 use crate::doctor::check_targeting;
 use crate::platforms::platform_specs;
-use crate::theme::{AppTheme, colors, tokens};
+use crate::theme::{AppTheme, colors, styles, tokens};
 use crate::types::Platform;
-use crate::widgets::{responsive::responsive_grid, *};
+use crate::widgets::{
+    responsive::responsive_grid, selectable_text::selectable_label, *,
+};
 use iced::widget::{
     Checkbox, Space, column, container, mouse_area, row, scrollable, text, text_editor,
 };
@@ -308,18 +310,13 @@ fn view_platform_selector<'a>(
 
     // Title
     grid = grid.push(
-        text("Select Platforms to Check")
-            .size(tokens::font_size::LG)
-            .font(crate::theme::fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        selectable_label(theme, "Select Platforms to Check"),
     );
 
     grid = grid.push(
-        text(
+        selectable_label(theme,
             "Only platform-specific checks/install actions follow selection. Global environment checks still run.",
-        )
-        .size(tokens::font_size::SM)
-        .color(theme.ink_faded()),
+        ),
     );
 
     // Platform cards in responsive grid
@@ -343,7 +340,7 @@ fn view_platform_selector<'a>(
         );
 
         grid = grid.push(
-            container(text(summary_text).size(tokens::font_size::SM))
+            container(selectable_label(theme, &summary_text))
                 .padding(tokens::spacing::SM)
                 .style(move |_theme: &iced::Theme| container::Style {
                     background: Some(Background::Color(Color {
@@ -462,13 +459,11 @@ fn view_summary<'a>(
     let mut content = column![].spacing(tokens::spacing::MD);
 
     // Main status row
+    let checks_passed_text = format!("{}/{} checks passed", passed, total);
     let main_row = row![
         view_status_badge_large(overall_status, theme),
         Space::new().width(Length::Fixed(tokens::spacing::MD)),
-        text(format!("{}/{} checks passed", passed, total))
-            .size(tokens::font_size::LG)
-            .font(crate::theme::fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        selectable_label(theme, &checks_passed_text),
     ]
     .align_y(Alignment::Center);
 
@@ -490,12 +485,12 @@ fn view_summary<'a>(
 
     // Help text if failures exist
     if failed > 0 {
-        let help_text = if selected_platforms.is_empty() {
+        let help_text_str = if selected_platforms.is_empty() {
             "Use INSTALL ALL MISSING above to install dependencies. Start a new project (or run setup/start-chain) to generate project state files."
         } else {
             "Use INSTALL SELECTED MISSING above to install dependencies only for selected platforms."
         };
-        content = content.push(text(help_text).size(tokens::font_size::SM));
+        content = content.push(selectable_label(theme, help_text_str));
     }
 
     themed_panel(container(content).padding(tokens::spacing::MD), theme).into()
@@ -507,12 +502,11 @@ fn view_mini_stat<'a>(
     label: &'a str,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
+    let stat_text = format!("{} {}", count, label);
     row![
         view_status_badge(status, "", theme),
         Space::new().width(Length::Fixed(tokens::spacing::SM)),
-        text(format!("{} {}", count, label))
-            .size(tokens::font_size::SM)
-            .color(theme.ink()),
+        selectable_label(theme, &stat_text),
     ]
     .align_y(Alignment::Center)
     .into()
@@ -537,17 +531,15 @@ fn view_category<'a>(
     let mut category_content = column![].spacing(tokens::spacing::SM);
 
     // Category header
+    let header_text = format!(
+        "{} {} ({}/{})",
+        category.icon(),
+        category.as_str(),
+        passed,
+        total
+    );
     let header = row![
-        text(format!(
-            "{} {} ({}/{})",
-            category.icon(),
-            category.as_str(),
-            passed,
-            total
-        ))
-        .size(tokens::font_size::LG)
-        .font(crate::theme::fonts::FONT_UI_BOLD)
-        .color(theme.ink()),
+        selectable_label(theme, &header_text),
     ]
     .spacing(tokens::spacing::SM)
     .align_y(Alignment::Center);
@@ -605,28 +597,24 @@ fn view_check_row<'a>(
 
     // Check name and message
     let mut name_column = column![
-        text(&check.name)
-            .size(tokens::font_size::BASE)
-            .font(crate::theme::fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        selectable_label(theme, &check.name),
     ]
     .spacing(tokens::spacing::XXS);
 
     if !check.message.is_empty() {
+        let message_text = format!("— {}", check.message);
         name_column = name_column.push(
-            text(format!("— {}", check.message))
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            selectable_label(theme, &message_text),
         );
     }
 
-    main_row = main_row.push(name_column);
-    main_row = main_row.push(Space::new().width(Length::Fill));
+    main_row = main_row.push(container(name_column).width(Length::Fill));
 
-    // Action buttons
+    // Action buttons — use Shrink so they always render at natural size
     let mut actions = row![]
         .spacing(tokens::spacing::SM)
-        .align_y(Alignment::Center);
+        .align_y(Alignment::Center)
+        .width(Length::Shrink);
 
     // Expand button (if check has details)
     if check.has_details() {
@@ -680,7 +668,7 @@ fn view_check_row<'a>(
             let context_target = ContextMenuTarget::SelectableField(
                 SelectableField::DoctorCheckDetails(check_name_for_menu.clone()),
             );
-            let menu_open = matches!(
+            let _menu_open = matches!(
                 active_context_menu,
                 Some(ContextMenuTarget::SelectableField(
                     SelectableField::DoctorCheckDetails(current),
@@ -692,6 +680,7 @@ fn view_check_row<'a>(
                         Message::DoctorDetailAction(check_name_clone.clone(), action)
                     })
                     .font(iced::Font::MONOSPACE)
+                    .style(styles::text_editor_styled(theme))
                     .height(Length::Shrink),
             )
             .padding(tokens::spacing::SM)
@@ -709,14 +698,6 @@ fn view_check_row<'a>(
             let details_with_context =
                 mouse_area(details_panel).on_right_press(Message::OpenContextMenu(context_target));
             check_content = check_content.push(details_with_context);
-            if menu_open {
-                check_content = check_content.push(context_menu_actions(
-                    theme,
-                    ContextMenuOptions {
-                        show_select_all: true,
-                    },
-                ));
-            }
         }
     }
 

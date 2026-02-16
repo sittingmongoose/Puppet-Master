@@ -4,8 +4,8 @@
 
 use crate::app::Message;
 use crate::theme::{AppTheme, fonts, tokens};
-use crate::widgets::*;
-use iced::widget::{column, container, pick_list, row, scrollable, text, text_editor};
+use crate::widgets::{selectable_text::selectable_label, *};
+use iced::widget::{column, container, pick_list, row, scrollable, text_editor};
 use iced::{Element, Length};
 
 // DRY:DATA:MemorySection
@@ -77,9 +77,7 @@ pub fn view<'a>(
 
     // Section navigation dropdown and filter controls
     let nav_content = column![
-        text("Section Filter")
-            .size(tokens::font_size::SM)
-            .color(theme.ink_faded()),
+        selectable_label(theme, "Section Filter"),
         row![
             pick_list(
                 MemorySection::all(),
@@ -109,6 +107,7 @@ pub fn view<'a>(
                 .on_action(Message::MemoryContentAction)
                 .font(fonts::FONT_MONO)
                 .size(tokens::font_size::SM)
+                .style(crate::theme::styles::text_editor_styled(theme))
                 .height(Length::Fill),
         )
         .padding(tokens::spacing::MD)

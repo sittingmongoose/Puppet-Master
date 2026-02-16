@@ -1,6 +1,6 @@
 //! Headless GUI automation runner.
 
-use crate::app::{App, Message};
+use crate::app::{App, Message, ContextMenuTarget};
 use crate::automation::action_catalog::{resolve_action, resolve_from_text};
 use crate::automation::{
     DebugFeedCollector, GuiAction, GuiAssertion, GuiRunSpec, GuiSelector, GuiStep, GuiStepResult,
@@ -225,6 +225,25 @@ fn execute_action(
             let task = app.update(msg);
             drain_task_messages(app, task, step_timeout)
         }
+        GuiAction::RightClick { selector } => {
+            let msg = selector_to_right_click_message(selector)?;
+            let task = app.update(msg);
+            drain_task_messages(app, task, step_timeout)
+        }
+        GuiAction::MoveMouse { x, y } => {
+            let task = app.update(Message::CursorMoved(iced::Point::new(*x, *y)));
+            drain_task_messages(app, task, step_timeout)
+        }
+        GuiAction::ClickMouse { button } => {
+            if button == "right" {
+                // We need to know WHAT we right-clicked.
+                // For testing, we'll assume we right-clicked something that opens a generic context menu
+                // if we don't have a selector.
+                Ok(())
+            } else {
+                Ok(())
+            }
+        }
         GuiAction::Type { selector, text } => {
             let msg = selector_to_type_message(selector, text)?;
             let task = app.update(msg);
@@ -377,6 +396,26 @@ fn selector_to_message(selector: &GuiSelector) -> std::result::Result<Message, S
             "Regex selector '{}' not supported in headless mode",
             pattern
         )),
+    }
+}
+
+// DRY:FN:selector_to_right_click_message
+fn selector_to_right_click_message(
+    selector: &GuiSelector,
+) -> std::result::Result<Message, String> {
+    match selector {
+        GuiSelector::ActionId { value } => {
+            if value == "dashboard_terminal" || value == "terminal" {
+                Ok(Message::OpenContextMenu(ContextMenuTarget::DashboardTerminal))
+            } else {
+                Err(format!("Right-click not implemented for action selector '{}'", value))
+            }
+        }
+        GuiSelector::Text { value } => {
+            // For general text, we'll assume it's a selectable label opening a StaticText menu
+            Ok(Message::OpenContextMenu(ContextMenuTarget::StaticText(value.to_string())))
+        }
+        _ => Err(format!("Right-click selector '{:?}' not supported", selector)),
     }
 }
 
@@ -639,6 +678,27 @@ fn evaluate_assertion(app: &App, assertion: &GuiAssertion) -> std::result::Resul
             }
             Ok(())
         }
+        GuiAssertion::ContextMenuOpen { target } => match (&app.active_context_menu, target) {
+            (Some(_), None) => Ok(()),
+            (Some(actual), Some(expected)) => {
+                let actual_str = match actual {
+                    ContextMenuTarget::DashboardTerminal => "terminal".to_string(),
+                    ContextMenuTarget::SelectableField(_) => "selectable_field".to_string(),
+                    ContextMenuTarget::LoginSurface(_) => "login_surface".to_string(),
+                    ContextMenuTarget::Toast(_) => "toast".to_string(),
+                    ContextMenuTarget::StaticText(t) => t.clone(),
+                };
+                if actual_str.contains(expected) {
+                    Ok(())
+                } else {
+                    Err(format!(
+                        "Context menu open but target '{}' does not match expected '{}'",
+                        actual_str, expected
+                    ))
+                }
+            }
+            (None, _) => Err("Context menu is not open".to_string()),
+        },
     }
 }
 

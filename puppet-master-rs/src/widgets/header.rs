@@ -190,7 +190,7 @@ where
         nav_row = nav_row.push(btn);
     }
 
-    let nav_container: Element<'_, Message> = if size.width < 800.0 {
+    let nav_container: Element<'_, Message> = if size.width < layout::NAV_COLLAPSE_BELOW_WIDTH {
         scrollable(nav_row)
             .direction(iced::widget::scrollable::Direction::Horizontal(
                 iced::widget::scrollable::Scrollbar::default(),

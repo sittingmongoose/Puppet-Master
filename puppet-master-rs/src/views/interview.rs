@@ -5,15 +5,15 @@
 
 use crate::app::{ContextMenuTarget, Message, SelectableField};
 use crate::interview::{InterviewPhaseDefinition, ReferenceMaterial, ReferenceType};
-use crate::theme::{AppTheme, fonts, tokens};
+use crate::theme::{AppTheme, tokens};
 use crate::widgets::{
-    InputVariant, selectable_text_field,
+    InputVariant, selectable_text::{selectable_label, selectable_label_mono, selectable_text_field},
     status_badge::{Status, status_dot_typed},
     styled_button::{ButtonSize, ButtonVariant, styled_button, styled_button_sized},
     styled_input::{InputSize, styled_text_input_with_variant},
     themed_panel,
 };
-use iced::widget::{Space, column, container, row, scrollable, text};
+use iced::widget::{Space, column, container, row, scrollable};
 use iced::{Background, Border, Element, Length};
 
 // DRY:FN:interview_view
@@ -59,14 +59,10 @@ pub fn view<'a>(
     };
 
     let header = row![
-        text("INTERVIEW SESSION")
-            .font(fonts::FONT_DISPLAY)
-            .size(tokens::font_size::DISPLAY),
+        selectable_label(theme, "INTERVIEW SESSION"),
         Space::new().width(Length::Fill),
         status_dot_typed(theme, status),
-        text(status_text)
-            .font(fonts::FONT_DISPLAY)
-            .size(tokens::font_size::SM),
+        selectable_label(theme, status_text),
     ]
     .spacing(tokens::spacing::SM)
     .align_y(iced::Alignment::Center);
@@ -92,15 +88,9 @@ pub fn view<'a>(
     if !active {
         let prompt_panel = themed_panel(
             column![
-                text("No interview session active.")
-                    .font(fonts::FONT_BODY)
-                    .size(tokens::font_size::LG)
-                    .color(theme.ink()),
+                selectable_label(theme, "No interview session active."),
                 Space::new().height(Length::Fixed(tokens::spacing::MD as f32)),
-                text("Start a new interview from the Wizard to begin gathering requirements.")
-                    .font(fonts::FONT_BODY)
-                    .size(tokens::font_size::BASE)
-                    .color(theme.ink_faded()),
+                selectable_label(theme, "Start a new interview from the Wizard to begin gathering requirements."),
                 Space::new().height(Length::Fixed(tokens::spacing::LG as f32)),
                 styled_button(theme, "GO TO WIZARD", ButtonVariant::Primary)
                     .on_press(Message::NavigateTo(crate::widgets::Page::Wizard)),
@@ -149,7 +139,7 @@ pub fn view<'a>(
             Status::Pending
         };
 
-        let phase_color = if is_active {
+        let _phase_color = if is_active {
             theme.accent()
         } else if is_complete {
             theme.success()
@@ -159,10 +149,7 @@ pub fn view<'a>(
 
         let phase_display = column![
             status_dot_typed(theme, phase_status),
-            text(phase_name)
-                .font(fonts::FONT_MONO)
-                .size(tokens::font_size::XS)
-                .color(phase_color),
+            selectable_label_mono(theme, phase_name),
         ]
         .spacing(tokens::spacing::XXXS)
         .align_x(iced::Alignment::Center);
@@ -208,10 +195,7 @@ pub fn view<'a>(
     // Current question panel with research indicator
     if !current_question.is_empty() {
         let mut question_col = column![
-            text("CURRENT QUESTION")
-                .font(fonts::FONT_DISPLAY)
-                .size(tokens::font_size::MD)
-                .color(theme.accent()),
+            selectable_label(theme, "CURRENT QUESTION"),
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
         ];
 
@@ -219,10 +203,7 @@ pub fn view<'a>(
         if researching {
             let research_indicator = row![
                 status_dot_typed(theme, Status::Running),
-                text("AI RESEARCHING...")
-                    .font(fonts::FONT_MONO)
-                    .size(tokens::font_size::XS)
-                    .color(theme.accent()),
+                selectable_label_mono(theme, "AI RESEARCHING..."),
             ]
             .spacing(tokens::spacing::XS)
             .align_y(iced::Alignment::Center);
@@ -267,11 +248,7 @@ pub fn view<'a>(
 
     // Answer input area
     let answer_input_widget: Element<'_, Message> = if paused {
-        text("Interview paused. Resume to continue.")
-            .font(fonts::FONT_BODY)
-            .size(tokens::font_size::BASE)
-            .color(theme.ink_faded())
-            .into()
+        selectable_label(theme, "Interview paused. Resume to continue.")
     } else {
         styled_text_input_with_variant(
             theme,
@@ -305,10 +282,7 @@ pub fn view<'a>(
 
     let input_panel = themed_panel(
         column![
-            text("YOUR ANSWER")
-                .font(fonts::FONT_DISPLAY)
-                .size(tokens::font_size::MD)
-                .color(theme.ink()),
+            selectable_label(theme, "YOUR ANSWER"),
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
             answer_input_widget,
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
@@ -376,10 +350,7 @@ pub fn view<'a>(
                 row![
                     match &material.ref_type {
                         ReferenceType::Link(url) => row![
-                            text("LINK:")
-                                .font(fonts::FONT_MONO)
-                                .size(tokens::font_size::SM)
-                                .color(theme.ink_faded()),
+                            selectable_label_mono(theme, "LINK:"),
                             selectable_text_field(
                                 theme,
                                 url,
@@ -393,10 +364,7 @@ pub fn view<'a>(
                         ]
                         .spacing(tokens::spacing::SM),
                         ReferenceType::File(path) => row![
-                            text("FILE:")
-                                .font(fonts::FONT_MONO)
-                                .size(tokens::font_size::SM)
-                                .color(theme.ink_faded()),
+                            selectable_label_mono(theme, "FILE:"),
                             selectable_text_field(
                                 theme,
                                 path.to_str().unwrap_or("<non-utf8 path>"),
@@ -410,10 +378,7 @@ pub fn view<'a>(
                         ]
                         .spacing(tokens::spacing::SM),
                         ReferenceType::Image(path) => row![
-                            text("IMAGE:")
-                                .font(fonts::FONT_MONO)
-                                .size(tokens::font_size::SM)
-                                .color(theme.ink_faded()),
+                            selectable_label_mono(theme, "IMAGE:"),
                             selectable_text_field(
                                 theme,
                                 path.to_str().unwrap_or("<non-utf8 path>"),
@@ -427,10 +392,7 @@ pub fn view<'a>(
                         ]
                         .spacing(tokens::spacing::SM),
                         ReferenceType::Directory(path) => row![
-                            text("DIR:")
-                                .font(fonts::FONT_MONO)
-                                .size(tokens::font_size::SM)
-                                .color(theme.ink_faded()),
+                            selectable_label_mono(theme, "DIR:"),
                             selectable_text_field(
                                 theme,
                                 path.to_str().unwrap_or("<non-utf8 path>"),
@@ -455,10 +417,7 @@ pub fn view<'a>(
 
     let reference_panel = themed_panel(
         column![
-            text("REFERENCE MATERIALS")
-                .font(fonts::FONT_DISPLAY)
-                .size(tokens::font_size::MD)
-                .color(theme.ink()),
+            selectable_label(theme, "REFERENCE MATERIALS"),
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
             button_layout,
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
@@ -484,27 +443,18 @@ pub fn view<'a>(
 
     let progress_panel = themed_panel(
         column![
-            text("SESSION PROGRESS")
-                .font(fonts::FONT_DISPLAY)
-                .size(tokens::font_size::MD)
-                .color(theme.ink()),
+            selectable_label(theme, "SESSION PROGRESS"),
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
-            text(progress_text)
-                .font(fonts::FONT_MONO)
-                .size(tokens::font_size::BASE)
-                .color(theme.ink_faded()),
+            selectable_label_mono(theme, &progress_text),
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
-            text(format!(
+            selectable_label_mono(theme, &format!(
                 "Completed phases: {}",
                 if phases_complete.is_empty() {
                     "None yet".to_string()
                 } else {
                     phases_complete.join(", ")
                 }
-            ))
-            .font(fonts::FONT_MONO)
-            .size(tokens::font_size::SM)
-            .color(theme.ink_faded()),
+            )),
         ]
         .spacing(tokens::spacing::SM)
         .padding(tokens::spacing::MD),
@@ -520,10 +470,7 @@ pub fn view<'a>(
             .padding(tokens::spacing::MD);
 
         history_list = history_list.push(
-            text("INTERVIEW HISTORY")
-                .font(fonts::FONT_DISPLAY)
-                .size(tokens::font_size::MD)
-                .color(theme.ink()),
+            selectable_label(theme, "INTERVIEW HISTORY"),
         );
 
         for (idx, answer) in answers.iter().enumerate() {
@@ -536,10 +483,7 @@ pub fn view<'a>(
 
             // Question label
             qa_column = qa_column.push(
-                text(format!("Q{}", idx + 1))
-                    .font(fonts::FONT_MONO)
-                    .size(tokens::font_size::XS)
-                    .color(theme.accent()),
+                selectable_label_mono(theme, &format!("Q{}", idx + 1)),
             );
 
             // Selectable question text
@@ -555,10 +499,7 @@ pub fn view<'a>(
 
             // Answer label
             qa_column = qa_column.push(
-                text(format!("A{}", idx + 1))
-                    .font(fonts::FONT_MONO)
-                    .size(tokens::font_size::XS)
-                    .color(theme.success()),
+                selectable_label_mono(theme, &format!("A{}", idx + 1)),
             );
 
             // Selectable answer text

@@ -4,8 +4,8 @@
 
 use crate::app::Message;
 use crate::theme::{AppTheme, colors, fonts, tokens};
-use crate::widgets::*;
-use iced::widget::{Space, column, container, row, scrollable, text, text_editor};
+use crate::widgets::{selectable_text::{selectable_label, selectable_label_mono}, *};
+use iced::widget::{Space, column, container, row, scrollable, text_editor};
 use iced::{Border, Element, Length};
 
 // DRY:DATA:TierDisplayNode
@@ -118,9 +118,7 @@ pub fn view<'a>(
                 },
                 // Type icon badge
                 container(
-                    text(node.tier_type.icon())
-                        .size(tokens::font_size::SM)
-                        .color(colors::INK_BLACK)
+                    selectable_label(theme, node.tier_type.icon())
                 )
                 .padding(tokens::spacing::SM)
                 .style(move |_theme: &iced::Theme| {
@@ -136,9 +134,7 @@ pub fn view<'a>(
                 }),
                 // Status badge
                 container(
-                    text(&node.status)
-                        .size(tokens::font_size::SM)
-                        .color(colors::INK_BLACK)
+                    selectable_label(theme, &node.status)
                 )
                 .padding(tokens::spacing::SM)
                 .width(Length::Fixed(100.0))
@@ -156,23 +152,17 @@ pub fn view<'a>(
                 // ID, title, and iteration count
                 column![
                     row![
-                        text(&node.id)
-                            .size(tokens::font_size::SM)
-                            .color(theme.ink_faded()),
+                        selectable_label_mono(theme, &node.id),
                         if node.iteration_count > 0 {
                             Element::from(
-                                text(format!(" (iter: {})", node.iteration_count))
-                                    .size(tokens::font_size::XS)
-                                    .color(colors::SAFETY_ORANGE),
+                                selectable_label_mono(theme, &format!(" (iter: {})", node.iteration_count)),
                             )
                         } else {
                             Element::from(Space::new().width(Length::Shrink))
                         },
                     ]
                     .spacing(tokens::spacing::XXS),
-                    text(&node.title)
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink()),
+                    selectable_label(theme, &node.title),
                 ]
                 .spacing(tokens::spacing::XXS),
             ]
@@ -184,18 +174,13 @@ pub fn view<'a>(
         if node.expanded && !node.acceptance_criteria.is_empty() {
             let mut criteria_col = column![
                 Space::new().height(Length::Fixed(tokens::spacing::XS)),
-                text("Acceptance Criteria:")
-                    .size(tokens::font_size::SM)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
+                selectable_label(theme, "Acceptance Criteria:"),
             ]
             .spacing(tokens::spacing::XXS);
 
             for criterion in &node.acceptance_criteria {
                 criteria_col = criteria_col.push(
-                    text(format!("• {}", criterion))
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink_faded()),
+                    selectable_label(theme, &format!("• {}", criterion)),
                 );
             }
 
@@ -298,56 +283,36 @@ fn render_details<'a>(
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let content = column![
-        text("Details")
-            .size(tokens::font_size::LG)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        selectable_label(theme, "Details"),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         column![
-            text("ID:")
-                .size(tokens::font_size::SM)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
-            text(&details.id)
-                .size(tokens::font_size::BASE)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "ID:"),
+            selectable_label_mono(theme, &details.id),
         ]
         .spacing(tokens::spacing::XXS),
         column![
-            text("Title:")
-                .size(tokens::font_size::SM)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
-            text(&details.title)
-                .size(tokens::font_size::BASE)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "Title:"),
+            selectable_label(theme, &details.title),
         ]
         .spacing(tokens::spacing::XXS),
         column![
-            text("Description:")
-                .size(tokens::font_size::SM)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            selectable_label(theme, "Description:"),
             // Use text_editor for selectable description text
             container(
                 text_editor(tier_details_content)
                     .on_action(Message::TierDetailsAction)
                     .font(fonts::FONT_UI)
                     .size(tokens::font_size::SM)
-                    .height(Length::Fixed(150.0))
+                    .style(crate::theme::styles::text_editor_styled(theme))
+                    .height(Length::Fixed(tokens::layout::FORM_LABEL_WIDTH))
             )
             .width(Length::Fill)
         ]
         .spacing(tokens::spacing::XXS),
         column![
-            text("Status:")
-                .size(tokens::font_size::SM)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            selectable_label(theme, "Status:"),
             container(
-                text(&details.status)
-                    .size(tokens::font_size::SM)
-                    .color(colors::INK_BLACK)
+                selectable_label(theme, &details.status)
             )
             .padding(tokens::spacing::SM)
             .style(move |_theme: &iced::Theme| {
@@ -364,13 +329,8 @@ fn render_details<'a>(
         ]
         .spacing(tokens::spacing::XXS),
         column![
-            text("Platform:")
-                .size(tokens::font_size::SM)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
-            text(&details.platform)
-                .size(tokens::font_size::BASE)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "Platform:"),
+            selectable_label(theme, &details.platform),
         ]
         .spacing(tokens::spacing::XXS),
     ]

@@ -2,9 +2,11 @@
 //!
 //! Provides consistent, responsive layout patterns for forms, lists, and details.
 
-use crate::theme::tokens;
+use crate::app::Message;
+use crate::theme::{AppTheme, tokens};
 use crate::widgets::responsive::LayoutSize;
-use iced::widget::{column, row, text};
+use crate::widgets::selectable_text::selectable_label;
+use iced::widget::{column, container, row};
 use iced::{Element, Length};
 
 // DRY:WIDGET:responsive_form_row
@@ -12,7 +14,8 @@ use iced::{Element, Length};
 ///
 /// - Mobile: Vertical stack (Label / Input)
 /// - Desktop: Horizontal row (Label | Input)
-pub fn responsive_form_row<'a, Message: 'a>(
+pub fn responsive_form_row<'a>(
+    theme: &'a AppTheme,
     label: impl Into<String>,
     input: impl Into<Element<'a, Message>>,
     size: LayoutSize,
@@ -20,7 +23,7 @@ pub fn responsive_form_row<'a, Message: 'a>(
     let label_str = label.into();
     if size.is_mobile() {
         column![
-            text(label_str).size(tokens::font_size::BASE),
+            selectable_label(theme, &label_str),
             input.into()
         ]
         .spacing(tokens::spacing::SM)
@@ -28,7 +31,8 @@ pub fn responsive_form_row<'a, Message: 'a>(
         .into()
     } else {
         row![
-            text(label_str).width(Length::Fixed(150.0)),
+            container(selectable_label(theme, &label_str))
+                .width(Length::Fixed(tokens::layout::FORM_LABEL_WIDTH)),
             input.into()
         ]
         .spacing(tokens::spacing::MD)
@@ -39,11 +43,13 @@ pub fn responsive_form_row<'a, Message: 'a>(
 }
 
 // DRY:WIDGET:responsive_label_value
-/// Create a responsive label-value pair for details views
+/// Create a responsive label-value pair for details views.
+/// Reserved for read-only details (ledger, history, evidence, settings).
 ///
 /// - Mobile: Vertical stack (Label / Value)
 /// - Desktop: Horizontal row (Label | Value)
-pub fn responsive_label_value<'a, Message: 'a>(
+pub fn responsive_label_value<'a>(
+    theme: &'a AppTheme,
     label: impl Into<String>,
     value: impl Into<Element<'a, Message>>,
     size: LayoutSize,
@@ -51,9 +57,7 @@ pub fn responsive_label_value<'a, Message: 'a>(
     let label_str = label.into();
     if size.is_mobile() {
         column![
-            text(label_str)
-                .size(tokens::font_size::BASE)
-                .font(crate::theme::fonts::FONT_UI_MEDIUM),
+            selectable_label(theme, &label_str),
             value.into()
         ]
         .spacing(tokens::spacing::XXS)
@@ -61,10 +65,8 @@ pub fn responsive_label_value<'a, Message: 'a>(
         .into()
     } else {
         row![
-            text(label_str)
-                .size(tokens::font_size::BASE)
-                .font(crate::theme::fonts::FONT_UI_MEDIUM)
-                .width(Length::Fixed(120.0)),
+            container(selectable_label(theme, &label_str))
+                .width(Length::Fixed(tokens::layout::DETAIL_LABEL_WIDTH)),
             value.into()
         ]
         .spacing(tokens::spacing::SM)
@@ -75,7 +77,8 @@ pub fn responsive_label_value<'a, Message: 'a>(
 }
 
 // DRY:WIDGET:responsive_container_width
-/// Get the appropriate width for a main content container
+/// Get the appropriate width for a main content container.
+/// Used by the main app content area and any full-width page that should cap at MAX_CONTENT_WIDTH.
 ///
 /// - Desktop Large: Max content width
 /// - Others: Fill

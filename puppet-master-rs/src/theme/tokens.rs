@@ -137,8 +137,17 @@ pub mod layout {
     /// Maximum content width for centered layouts
     pub const MAX_CONTENT_WIDTH: f32 = 1200.0;
 
+    /// Fixed width for form row labels (e.g. config forms)
+    pub const FORM_LABEL_WIDTH: f32 = 150.0;
+
+    /// Fixed width for label-value pair labels (e.g. details/read-only rows)
+    pub const DETAIL_LABEL_WIDTH: f32 = 120.0;
+
     /// Width of toast notifications
     pub const TOAST_WIDTH: f32 = 380.0;
+
+    /// Width below which header nav and wizard steps use horizontal scroll / narrow layout
+    pub const NAV_COLLAPSE_BELOW_WIDTH: f32 = 800.0;
 
     /// Modal dialog sizes
     pub const MODAL_SM: f32 = 400.0;

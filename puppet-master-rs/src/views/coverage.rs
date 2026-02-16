@@ -3,9 +3,9 @@
 //! Shows overall coverage percentage and per-requirement breakdown with category stats.
 
 use crate::app::Message;
-use crate::theme::{AppTheme, colors, fonts, tokens};
-use crate::widgets::*;
-use iced::widget::{Space, column, container, pick_list, row, scrollable, text};
+use crate::theme::{AppTheme, colors, tokens};
+use crate::widgets::{selectable_text::{selectable_label, selectable_label_mono}, *};
+use iced::widget::{Space, column, container, pick_list, row, scrollable};
 use iced::{Border, Element, Length};
 
 // DRY:DATA:CategoryCoverage
@@ -54,15 +54,13 @@ pub fn view<'a>(
 
     let header_actions = row![
         column![
-            text("Phase Filter")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "Phase Filter"),
             pick_list(
                 phase_options,
                 Some(phase_filter.to_string()),
                 Message::CoverageFilterChanged
             )
-            .width(Length::Fixed(150.0))
+            .width(Length::Fixed(tokens::layout::FORM_LABEL_WIDTH))
         ]
         .spacing(tokens::spacing::XXS),
         refresh_button(
@@ -85,19 +83,8 @@ pub fn view<'a>(
     stat_cards = stat_cards.push(
         container(
             column![
-                text(format!("{:.0}%", overall_percent * 100.0))
-                    .size(tokens::font_size::XL)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(if overall_percent >= 0.8 {
-                        colors::ACID_LIME
-                    } else if overall_percent >= 0.5 {
-                        colors::SAFETY_ORANGE
-                    } else {
-                        colors::HOT_MAGENTA
-                    }),
-                text("Overall Coverage")
-                    .size(tokens::font_size::XS)
-                    .color(theme.ink_faded()),
+                selectable_label(theme, &format!("{:.0}%", overall_percent * 100.0)),
+                selectable_label(theme, "Overall Coverage"),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center),
@@ -117,23 +104,16 @@ pub fn view<'a>(
     stat_cards = stat_cards.push(
         container(
             column![
-                text(format!("{}/{}", covered_count, total_count))
-                    .size(tokens::font_size::XL)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                text("Features Tested")
-                    .size(tokens::font_size::XS)
-                    .color(theme.ink_faded()),
-                text(format!(
+                selectable_label(theme, &format!("{}/{}", covered_count, total_count)),
+                selectable_label(theme, "Features Tested"),
+                selectable_label(theme, &format!(
                     "{:.0}%",
                     if total_count > 0 {
                         (covered_count as f32 / total_count as f32) * 100.0
                     } else {
                         0.0
                     }
-                ))
-                .size(tokens::font_size::XS)
-                .color(colors::ACID_LIME),
+                )),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center),
@@ -153,27 +133,16 @@ pub fn view<'a>(
     stat_cards = stat_cards.push(
         container(
             column![
-                text(format!("{}/{}", covered_count, total_count))
-                    .size(tokens::font_size::XL)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                text("Features Verified")
-                    .size(tokens::font_size::XS)
-                    .color(theme.ink_faded()),
-                text(format!(
+                selectable_label(theme, &format!("{}/{}", covered_count, total_count)),
+                selectable_label(theme, "Features Verified"),
+                selectable_label(theme, &format!(
                     "{:.0}%",
                     if total_count > 0 {
                         (covered_count as f32 / total_count as f32) * 100.0
                     } else {
                         0.0
                     }
-                ))
-                .size(tokens::font_size::XS)
-                .color(if covered_count == total_count {
-                    colors::ACID_LIME
-                } else {
-                    colors::SAFETY_ORANGE
-                }),
+                )),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center),
@@ -193,13 +162,8 @@ pub fn view<'a>(
     stat_cards = stat_cards.push(
         container(
             column![
-                text(total_evidence.to_string())
-                    .size(tokens::font_size::XL)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(colors::ELECTRIC_BLUE),
-                text("Total Evidence")
-                    .size(tokens::font_size::XS)
-                    .color(theme.ink_faded()),
+                selectable_label(theme, &total_evidence.to_string()),
+                selectable_label(theme, "Total Evidence"),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center),
@@ -221,20 +185,14 @@ pub fn view<'a>(
     // Category breakdown
     if !categories.is_empty() {
         let mut category_content = column![
-            text("Coverage by Category")
-                .size(tokens::font_size::LG)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            selectable_label(theme, "Coverage by Category"),
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
         ]
         .spacing(tokens::spacing::MD);
 
         for cat in categories {
             let cat_row = row![
-                text(&cat.name)
-                    .size(tokens::font_size::BASE)
-                    .width(Length::Fixed(150.0))
-                    .color(theme.ink()),
+                selectable_label(theme, &cat.name),
                 styled_progress_bar(
                     theme,
                     cat.coverage,
@@ -247,13 +205,8 @@ pub fn view<'a>(
                     },
                     ProgressSize::Medium
                 ),
-                text(format!("{:.0}%", cat.coverage * 100.0))
-                    .size(tokens::font_size::BASE)
-                    .width(Length::Fixed(60.0))
-                    .color(theme.ink()),
-                text(format!("{} tests", cat.test_count))
-                    .size(tokens::font_size::SM)
-                    .color(theme.ink_faded()),
+                selectable_label(theme, &format!("{:.0}%", cat.coverage * 100.0)),
+                selectable_label(theme, &format!("{} tests", cat.test_count)),
             ]
             .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center);
@@ -272,13 +225,9 @@ pub fn view<'a>(
         content = content.push(themed_panel(
             container(
                 column![
-                    text("No requirements defined")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink()),
+                    selectable_label(theme, "No requirements defined"),
                     Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                    text("Define requirements in the wizard to see coverage")
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink_faded()),
+                    selectable_label(theme, "Define requirements in the wizard to see coverage"),
                 ]
                 .spacing(tokens::spacing::SM),
             )
@@ -290,12 +239,10 @@ pub fn view<'a>(
         let total_count = requirements.len();
 
         let summary = row![
-            text(format!(
+            selectable_label(theme, &format!(
                 "{} of {} requirements covered",
                 covered_count, total_count
-            ))
-            .size(tokens::font_size::BASE)
-            .color(theme.ink()),
+            )),
             Space::new().width(Length::Fill),
             status_badge(
                 if covered_count == total_count {
@@ -322,38 +269,23 @@ pub fn view<'a>(
             container(
                 row![
                     container(
-                        text("Status")
-                            .size(tokens::font_size::SM)
-                            .font(fonts::FONT_UI_BOLD)
-                            .color(theme.ink())
+                        selectable_label(theme, "Status")
                     )
                     .width(Length::Fixed(80.0)),
                     container(
-                        text("ID")
-                            .size(tokens::font_size::SM)
-                            .font(fonts::FONT_UI_BOLD)
-                            .color(theme.ink())
+                        selectable_label(theme, "ID")
                     )
                     .width(Length::FillPortion(1)),
                     container(
-                        text("Description")
-                            .size(tokens::font_size::SM)
-                            .font(fonts::FONT_UI_BOLD)
-                            .color(theme.ink())
+                        selectable_label(theme, "Description")
                     )
                     .width(Length::FillPortion(3)),
                     container(
-                        text("Evidence")
-                            .size(tokens::font_size::SM)
-                            .font(fonts::FONT_UI_BOLD)
-                            .color(theme.ink())
+                        selectable_label(theme, "Evidence")
                     )
                     .width(Length::Fixed(100.0)),
                     container(
-                        text("Tiers")
-                            .size(tokens::font_size::SM)
-                            .font(fonts::FONT_UI_BOLD)
-                            .color(theme.ink())
+                        selectable_label(theme, "Tiers")
                     )
                     .width(Length::Fixed(80.0)),
                 ]
@@ -383,24 +315,18 @@ pub fn view<'a>(
                     status_dot(Status::Error)
                 })
                 .width(Length::Fixed(80.0)),
-                container(text(&req.id).size(tokens::font_size::XS).color(theme.ink()))
+                container(selectable_label_mono(theme, &req.id))
                     .width(Length::FillPortion(1)),
                 container(
-                    text(&req.description)
-                        .size(tokens::font_size::XS)
-                        .color(theme.ink())
+                    selectable_label(theme, &req.description)
                 )
                 .width(Length::FillPortion(3)),
                 container(
-                    text(format!("{}", req.evidence_count))
-                        .size(tokens::font_size::XS)
-                        .color(theme.ink())
+                    selectable_label(theme, &format!("{}", req.evidence_count))
                 )
                 .width(Length::Fixed(100.0)),
                 container(
-                    text(format!("{}", req.tier_ids.len()))
-                        .size(tokens::font_size::XS)
-                        .color(theme.ink())
+                    selectable_label(theme, &format!("{}", req.tier_ids.len()))
                 )
                 .width(Length::Fixed(80.0)),
             ]

@@ -5,8 +5,8 @@
 use crate::app::Message;
 use crate::theme::{AppTheme, tokens};
 use crate::views::evidence::{EvidenceItem, EvidenceItemType};
-use crate::widgets::*;
-use iced::widget::{Space, column, container, row, scrollable, text};
+use crate::widgets::{selectable_text::{selectable_label, selectable_label_mono}, *};
+use iced::widget::{Space, column, container, row, scrollable};
 use iced::{Element, Length};
 
 // DRY:FN:evidence_detail_view
@@ -28,7 +28,7 @@ pub fn view<'a>(
             styled_button(theme, "< Back", ButtonVariant::Ghost)
                 .on_press(Message::NavigateTo(Page::Evidence)),
             Space::new().width(Length::Fill),
-            text("Evidence Detail").size(tokens::font_size::XL),
+            selectable_label(theme, "Evidence Detail"),
         ]
         .spacing(tokens::spacing::MD)
         .align_y(iced::Alignment::Center),
@@ -37,7 +37,7 @@ pub fn view<'a>(
     // Metadata panel
     let metadata = column![
         row![
-            container(text(item.evidence_type.icon()).size(tokens::font_size::XXL))
+            container(selectable_label(theme, item.evidence_type.icon()))
                 .padding(tokens::spacing::MD)
                 .style(|_theme: &iced::Theme| {
                     iced::widget::container::Style {
@@ -52,34 +52,33 @@ pub fn view<'a>(
                         ..Default::default()
                     }
                 }),
-            text(item.evidence_type.as_str()).size(tokens::font_size::LG),
+            selectable_label(theme, item.evidence_type.as_str()),
         ]
         .spacing(tokens::spacing::MD)
         .align_y(iced::Alignment::Center),
         column![
-            text("ID:").size(tokens::font_size::SM),
-            text(&item.id).size(tokens::font_size::BASE),
+            selectable_label(theme, "ID:"),
+            selectable_label_mono(theme, &item.id),
         ]
         .spacing(tokens::spacing::XS),
         column![
-            text("Tier ID:").size(tokens::font_size::SM),
-            text(&item.tier_id).size(tokens::font_size::BASE),
+            selectable_label(theme, "Tier ID:"),
+            selectable_label_mono(theme, &item.tier_id),
         ]
         .spacing(tokens::spacing::XS),
         column![
-            text("Timestamp:").size(tokens::font_size::SM),
-            text(item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string())
-                .size(tokens::font_size::BASE),
+            selectable_label(theme, "Timestamp:"),
+            selectable_label(theme, &item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string()),
         ]
         .spacing(tokens::spacing::XS),
         column![
-            text("Path:").size(tokens::font_size::SM),
-            text(item.path.display().to_string()).size(tokens::font_size::SM),
+            selectable_label(theme, "Path:"),
+            selectable_label_mono(theme, &item.path.display().to_string()),
         ]
         .spacing(tokens::spacing::XS),
         column![
-            text("Summary:").size(tokens::font_size::SM),
-            text(&item.summary).size(tokens::font_size::BASE),
+            selectable_label(theme, "Summary:"),
+            selectable_label(theme, &item.summary),
         ]
         .spacing(tokens::spacing::XS),
     ]
@@ -95,9 +94,9 @@ pub fn view<'a>(
         themed_panel(
             container(
                 column![
-                    text("Content Preview").size(tokens::font_size::LG),
+                    selectable_label(theme, "Content Preview"),
                     scrollable(
-                        container(text(preview).size(tokens::font_size::SM))
+                        container(selectable_label(theme, preview))
                             .padding(tokens::spacing::SM)
                     )
                     .height(Length::Fixed(400.0)),
@@ -111,8 +110,8 @@ pub fn view<'a>(
         themed_panel(
             container(
                 column![
-                    text("Content Preview").size(tokens::font_size::LG),
-                    text("Loading preview...").size(tokens::font_size::BASE),
+                    selectable_label(theme, "Content Preview"),
+                    selectable_label(theme, "Loading preview..."),
                 ]
                 .spacing(tokens::spacing::SM),
             )

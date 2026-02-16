@@ -439,35 +439,33 @@ impl PlatformDetector {
 
         let version = Self::extract_version(&combined);
 
-        // Validate that the output looks like it belongs to this platform.
-        // This prevents e.g. a LaTeX "codex" binary from being detected as OpenAI Codex.
+        // Cross-platform collision check: reject if the output positively identifies
+        // as a *different* platform. Some CLIs (Gemini, Cursor) output only a bare
+        // version number with no brand keywords, so we cannot require brand presence.
         let combined_lower = combined.to_lowercase();
-        let is_expected_platform = match platform {
-            Platform::Codex => {
-                combined_lower.contains("codex") || combined_lower.contains("openai")
-            }
-            Platform::Copilot => {
-                combined_lower.contains("copilot") || combined_lower.contains("github")
-            }
-            Platform::Claude => {
-                combined_lower.contains("claude") || combined_lower.contains("anthropic")
-            }
-            Platform::Gemini => {
-                combined_lower.contains("gemini") || combined_lower.contains("google")
-            }
-            Platform::Cursor => {
-                combined_lower.contains("cursor") || combined_lower.contains("agent")
-            }
-        };
 
-        if !is_expected_platform {
-            debug!(
-                "Binary at {} does not appear to be {:?} (output: {})",
-                command_path.display(),
-                platform,
-                combined.trim()
-            );
-            return (version, false);
+        // Distinctive brand markers — only strong identifiers that are unlikely
+        // to appear in another platform's version output. Avoid generic words
+        // like "agent", "google", etc. that could cause false rejections.
+        let other_platform_markers: &[(&str, Platform)] = &[
+            ("openai", Platform::Codex),
+            ("codex-cli", Platform::Codex),
+            ("github copilot", Platform::Copilot),
+            ("claude code", Platform::Claude),
+            ("anthropic", Platform::Claude),
+        ];
+
+        for (marker, marker_platform) in other_platform_markers {
+            if combined_lower.contains(marker) && *marker_platform != platform {
+                debug!(
+                    "Binary at {} appears to be {:?}, not {:?} (output: {})",
+                    command_path.display(),
+                    marker_platform,
+                    platform,
+                    combined.trim()
+                );
+                return (version, false);
+            }
         }
 
         (version, true)

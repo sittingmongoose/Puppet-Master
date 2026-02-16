@@ -2,7 +2,7 @@
 //!
 //! Redesigned modal system with dark backdrop, panel styling, and proper layering.
 
-use crate::theme::{AppTheme, colors};
+use crate::theme::{AppTheme, colors, tokens};
 use iced::widget::{button, column, container, row, scrollable, stack, text};
 use iced::{Alignment, Border, Color, Element, Length, Padding, Shadow, Vector};
 
@@ -20,9 +20,9 @@ impl ModalSize {
     /// Get the width for this modal size
     pub fn width(&self) -> f32 {
         match self {
-            ModalSize::Small => 400.0,
-            ModalSize::Medium => 600.0,
-            ModalSize::Large => 800.0,
+            ModalSize::Small => tokens::layout::MODAL_SM,
+            ModalSize::Medium => tokens::layout::MODAL_MD,
+            ModalSize::Large => tokens::layout::MODAL_LG,
         }
     }
     // DRY:WIDGET:max_height

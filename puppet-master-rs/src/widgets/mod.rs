@@ -7,6 +7,7 @@
 //! - DRY:WIDGET:auth_status_chip — Authenticated/not-authenticated badge chip
 //! - DRY:WIDGET:styled_button — Primary/secondary/danger/warning/info/ghost buttons
 //! - DRY:WIDGET:styled_text_input — Themed text inputs with variants and sizes
+//! - DRY:WIDGET:selectable_label — Selectable read-only text that looks like static text
 //! - DRY:WIDGET:selectable_text_field — Read-only selectable text (canonical for display values)
 //! - DRY:WIDGET:context_menu_actions — Copy/paste/select-all/close context menu row
 //! - DRY:WIDGET:page_header — Page title + right-side actions (incl. refresh_button)
@@ -105,7 +106,8 @@ pub use icon::{
 // Re-export new styled widgets
 pub use page_transition::{TransitionState, fade_color, fade_in};
 pub use selectable_text::{
-    selectable_text_field, selectable_text_input, selectable_text_input_with_on_change,
+    selectable_label, selectable_label_mono, selectable_text_field, selectable_text_input,
+    selectable_text_input_with_on_change,
 };
 pub use styled_button::{
     ButtonSize, ButtonVariant, danger_button, ghost_button, header_nav_button, info_button,

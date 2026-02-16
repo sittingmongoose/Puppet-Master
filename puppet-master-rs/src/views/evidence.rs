@@ -3,10 +3,10 @@
 //! Browse and filter evidence items with type and tier filtering, file type icons.
 
 use crate::app::Message;
-use crate::theme::{AppTheme, colors, fonts, tokens};
-use crate::widgets::{responsive::LayoutSize, *};
+use crate::theme::{AppTheme, colors, tokens};
+use crate::widgets::{responsive::LayoutSize, selectable_text::selectable_label, *};
 use chrono::{DateTime, Utc};
-use iced::widget::{Space, column, container, row, scrollable, text, text_editor};
+use iced::widget::{Space, column, container, row, scrollable, text_editor};
 use iced::{Border, Element, Length};
 use std::path::PathBuf;
 
@@ -114,10 +114,7 @@ pub fn view<'a>(
 
     // LEFT COLUMN: Category filters
     let mut category_buttons = column![
-        text("Categories")
-            .size(tokens::font_size::BASE)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        selectable_label(theme, "Categories"),
     ]
     .spacing(tokens::spacing::SM);
 
@@ -186,13 +183,9 @@ pub fn view<'a>(
 
     let center_content = if filtered_items.is_empty() {
         column![
-            text("No evidence found")
-                .size(tokens::font_size::MD)
-                .color(theme.ink()),
+            selectable_label(theme, "No evidence found"),
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
-            text("Try adjusting your filters")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "Try adjusting your filters"),
         ]
         .spacing(tokens::spacing::SM)
     } else {
@@ -214,10 +207,7 @@ pub fn view<'a>(
             let item_row = row![
                 // Type icon badge with color (square, centered)
                 container(
-                    text(item.evidence_type.icon())
-                        .size(tokens::font_size::BASE)
-                        .font(fonts::FONT_UI_BOLD)
-                        .color(colors::INK_BLACK)
+                    selectable_label(theme, item.evidence_type.icon())
                 )
                 .padding(tokens::spacing::SM)
                 .width(Length::Fixed(48.0))
@@ -237,20 +227,11 @@ pub fn view<'a>(
                 }),
                 // Details
                 column![
-                    text(item.evidence_type.as_str())
-                        .size(tokens::font_size::BASE)
-                        .font(fonts::FONT_UI_BOLD)
-                        .color(theme.ink()),
-                    text(&item.summary)
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink()),
+                    selectable_label(theme, item.evidence_type.as_str()),
+                    selectable_label(theme, &item.summary),
                     row![
-                        text(item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string())
-                            .size(tokens::font_size::XS)
-                            .color(theme.ink_faded()),
-                        text(format!(" | {}", file_size_str))
-                            .size(tokens::font_size::XS)
-                            .color(theme.ink_faded()),
+                        selectable_label(theme, &item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string()),
+                        selectable_label(theme, &format!(" | {}", file_size_str)),
                     ],
                 ]
                 .spacing(tokens::spacing::XS),
@@ -308,16 +289,14 @@ pub fn view<'a>(
 
     // RIGHT COLUMN: Preview panel
     let preview_panel_content = column![
-        text("Preview")
-            .size(tokens::font_size::BASE)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        selectable_label(theme, "Preview"),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         if selected_item.is_some() {
             container(
                 text_editor(preview_content)
                     .on_action(Message::EvidencePreviewAction)
                     .font(iced::Font::MONOSPACE)
+                    .style(crate::theme::styles::text_editor_styled(theme))
                     .height(Length::Fill),
             )
             .padding(tokens::spacing::SM)
@@ -336,9 +315,7 @@ pub fn view<'a>(
             })
         } else {
             container(
-                text("Select an item to preview")
-                    .size(tokens::font_size::SM)
-                    .color(theme.ink_faded()),
+                selectable_label(theme, "Select an item to preview"),
             )
             .padding(tokens::spacing::XL)
             .width(Length::Fill)

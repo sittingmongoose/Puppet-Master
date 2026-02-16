@@ -1,6 +1,6 @@
 // DRY:DATA:styles
 use crate::theme::{AppTheme, colors, tokens};
-use iced::widget::{button, container, progress_bar, scrollable, text_input};
+use iced::widget::{button, container, progress_bar, scrollable, text_editor, text_input};
 use iced::{Border, Color, Shadow, Vector};
 
 /// Button variant for styling
@@ -784,4 +784,69 @@ pub enum ToastVariant {
     Success,
     Warning,
     Error,
+}
+
+/// Text editor style for read-only selection support
+// DRY:HELPER:text_editor_styled
+pub fn text_editor_styled(
+    theme: &AppTheme,
+) -> impl Fn(&iced::Theme, text_editor::Status) -> text_editor::Style {
+    let theme = *theme;
+    move |_, _| {
+        let palette = theme.palette();
+        text_editor::Style {
+            background: iced::Background::Color(palette.background),
+            border: Border {
+                color: palette.border,
+                width: 0.0,
+                radius: tokens::radii::NONE.into(),
+            },
+            placeholder: palette.text_muted,
+            value: palette.text_primary,
+            selection: palette.info,
+        }
+    }
+}
+
+/// Selectable label style (mimics static text but allows selection)
+// DRY:HELPER:selectable_label_styled
+pub fn selectable_label_styled(
+    theme: &AppTheme,
+) -> impl Fn(&iced::Theme, text_input::Status) -> text_input::Style {
+    let theme = *theme;
+    move |_, _| {
+        let palette = theme.palette();
+        text_input::Style {
+            background: iced::Background::Color(colors::TRANSPARENT),
+            border: Border {
+                color: colors::TRANSPARENT,
+                width: 0.0,
+                radius: tokens::radii::NONE.into(),
+            },
+            icon: palette.text_primary,
+            placeholder: palette.text_muted,
+            value: palette.text_primary,
+            selection: palette.info,
+        }
+    }
+}
+
+/// Floating context menu container style
+// DRY:HELPER:context_menu_container_styled
+pub fn context_menu_container_styled(theme: &AppTheme) -> impl Fn(&iced::Theme) -> container::Style {
+    let theme = *theme;
+    move |_| {
+        let palette = theme.palette();
+        container::Style {
+            background: Some(iced::Background::Color(palette.surface_elevated)),
+            border: Border {
+                color: palette.border,
+                width: tokens::borders::MEDIUM,
+                radius: tokens::radii::NONE.into(),
+            },
+            shadow: tokens::shadows::panel_shadow(palette.shadow),
+            text_color: Some(palette.text_primary),
+            snap: container::Style::default().snap,
+        }
+    }
 }

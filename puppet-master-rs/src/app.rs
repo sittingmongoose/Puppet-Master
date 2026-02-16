@@ -1,10 +1,11 @@
-use crate::theme::AppTheme;
+use crate::theme::{AppTheme, styles, tokens};
 use crate::tray::TrayAction;
 use crate::types::PuppetMasterEvent;
-use crate::widgets::{LayoutSize, Page};
+use crate::widgets::{LayoutSize, Page, responsive_container_width};
 use anyhow::Result;
 use chrono::{DateTime, Utc};
 use iced::{Element, Subscription, Task, Theme, widget::text_editor, window};
+use iced::widget::float;
 use std::collections::{HashMap, HashSet};
 use std::hash::{Hash, Hasher};
 use std::path::{Path, PathBuf};
@@ -138,6 +139,7 @@ pub enum ContextMenuTarget {
     SelectableField(SelectableField),
     LoginSurface(LoginTextSurface),
     Toast(usize),
+    StaticText(String),
 }
 
 // DRY:DATA:ModalContent
@@ -434,6 +436,7 @@ pub struct App {
     // View helper data (constant placeholders stored as fields to avoid borrow issues)
     _empty_string_vec: Vec<String>,
     _no_tier_details: Option<crate::views::tiers::TierDetails>,
+    pub cursor_position: iced::Point,
 }
 
 // ============================================================================
@@ -583,6 +586,7 @@ pub enum Message {
     OpenContextMenu(ContextMenuTarget),
     OpenLatestToastContextMenu,
     CloseContextMenu,
+    CursorMoved(iced::Point),
     ContextMenuCopy,
     ContextMenuPaste,
     ContextMenuPasteLoaded(Option<String>),
@@ -900,6 +904,15 @@ async fn load_auth_status_map() -> HashMap<String, AuthStatus> {
     map
 }
 
+/// Extract raw model ID from a label like "id — Display Name" or just "id"
+fn extract_model_id(label: &str) -> String {
+    if let Some(idx) = label.find(" — ") {
+        label[..idx].to_string()
+    } else {
+        label.to_string()
+    }
+}
+
 fn refresh_auth_status_task() -> Task<Message> {
     Task::perform(load_auth_status_map(), Message::AuthStatusReceived)
 }
@@ -1068,7 +1081,7 @@ impl App {
             config_active_tab: 0,
             config_is_dirty: false,
             gui_config: crate::config::gui_config::GuiConfig::default(),
-            config_models: crate::platforms::model_catalog::build_model_map_from_specs(),
+            config_models: HashMap::new(), // Populated by dynamic detection after startup
             config_git_info: None,
 
             // Tiers
@@ -1244,6 +1257,7 @@ impl App {
             // View helper data
             _empty_string_vec: Vec::new(),
             _no_tier_details: None,
+            cursor_position: iced::Point::ORIGIN,
         };
 
         // Ensure `.puppet-master` exists on startup (avoid read-only CWDs like DMG mounts).
@@ -2273,6 +2287,11 @@ impl App {
                 Task::none()
             }
 
+            Message::CursorMoved(position) => {
+                self.cursor_position = position;
+                Task::none()
+            }
+
             Message::OpenContextMenu(target) => {
                 if matches!(target, ContextMenuTarget::DashboardTerminal) {
                     self.terminal_interaction_until =
@@ -2312,6 +2331,7 @@ impl App {
                         .find(|toast| toast.id == toast_id)
                         .map(|toast| toast.message.clone())
                         .unwrap_or_default(),
+                    Some(ContextMenuTarget::StaticText(text)) => text,
                     None => String::new(),
                 };
 
@@ -2364,7 +2384,7 @@ impl App {
                         );
                         Task::none()
                     }
-                    None => Task::none(),
+                    Some(ContextMenuTarget::StaticText(_)) | None => Task::none(),
                 }
             }
 
@@ -2478,8 +2498,20 @@ impl App {
                                 .await;
                                 (platform, result)
                             },
-                            move |(p, res)| match res {
-                                Ok(cached) => Message::RefreshModelsComplete(p, Ok(cached.models)),
+                             move |(p, res)| match res {
+                                Ok(cached) => {
+                                    if cached.source
+                                        == crate::platforms::model_catalog::ModelSource::Fallback
+                                    {
+                                        Message::RefreshModelsComplete(
+                                            p,
+                                            Err("Model discovery unavailable; keeping existing cached models"
+                                                .to_string()),
+                                        )
+                                    } else {
+                                        Message::RefreshModelsComplete(p, Ok(cached.models))
+                                    }
+                                }
                                 Err(e) => Message::RefreshModelsComplete(
                                     p,
                                     Err(format!("Refresh failed: {}", e)),
@@ -2502,7 +2534,19 @@ impl App {
                         .await
                     },
                     move |res| match res {
-                        Ok(cached) => Message::RefreshModelsComplete(platform, Ok(cached.models)),
+                        Ok(cached) => {
+                            if cached.source
+                                == crate::platforms::model_catalog::ModelSource::Fallback
+                            {
+                                Message::RefreshModelsComplete(
+                                    platform,
+                                    Err("Model discovery unavailable; keeping existing cached models"
+                                        .to_string()),
+                                )
+                            } else {
+                                Message::RefreshModelsComplete(platform, Ok(cached.models))
+                            }
+                        }
                         Err(e) => Message::RefreshModelsComplete(
                             platform,
                             Err(format!("Refresh failed: {}", e)),
@@ -2768,6 +2812,8 @@ impl App {
                     "iteration" => &mut self.gui_config.tiers.iteration,
                     _ => return Task::none(),
                 };
+                // Extract raw model ID from "id — Display Name" label format
+                let model = extract_model_id(&model);
                 tier.model = model;
                 self.config_is_dirty = true;
                 Task::none()
@@ -3935,7 +3981,7 @@ impl App {
             }
 
             Message::WizardPrdModelChanged(model) => {
-                self.wizard_prd_model = model;
+                self.wizard_prd_model = extract_model_id(&model);
                 Task::none()
             }
 
@@ -3977,7 +4023,7 @@ impl App {
 
             Message::WizardTierModelChanged(tier, model) => {
                 if let Some(config) = self.wizard_tier_configs.get_mut(&tier) {
-                    config.model = model;
+                    config.model = extract_model_id(&model);
                 }
                 Task::none()
             }
@@ -4307,8 +4353,16 @@ impl App {
             }
 
             Message::WizardRefreshModels => {
-                // Use platform_specs fallback models (dynamic cache populated via RefreshModels)
-                let models = crate::platforms::model_catalog::build_model_map_from_specs();
+                // Use cached models from dynamic detection only — no static fallbacks
+                let mut models = HashMap::new();
+                for platform in crate::types::Platform::all() {
+                    let key = platform.to_string().to_lowercase();
+                    if let Some(cached) = self.model_cache.get(platform) {
+                        if !cached.models.is_empty() {
+                            models.insert(key, cached.models.clone());
+                        }
+                    }
+                }
                 Task::done(Message::WizardModelsLoaded(models))
             }
 
@@ -6089,7 +6143,6 @@ impl App {
     // DRY:FN:view
     /// Render the application UI
     pub fn view(&self) -> Element<'_, Message> {
-        use crate::theme::tokens;
         use crate::views;
         use crate::widgets::LayoutSize;
         use iced::Length;
@@ -6330,14 +6383,11 @@ impl App {
             };
 
             // Build the full layout (header + content constrained to same width as content boxes)
-            // Use effective max width: full width on small screens, max 1200px on large screens.
-            let measured_width = layout_size.width.max(1.0);
-            let effective_max_width = measured_width.min(tokens::layout::MAX_CONTENT_WIDTH);
+            // Use responsive_container_width: Fill on small screens, MAX_CONTENT_WIDTH on large.
             let main_layout = column![self.render_header(layout_size), content].spacing(0);
             let constrained = container(main_layout)
-                .width(Length::Fill)
-                .height(Length::Fill)
-                .max_width(effective_max_width);
+                .width(responsive_container_width(layout_size))
+                .height(Length::Fill);
 
             // Wrap in full-size container for overlays (center constrained content horizontally)
             let base_bg = self.theme.paper();
@@ -6360,11 +6410,14 @@ impl App {
             // Add toasts overlay
             let with_toasts = self.render_toasts_overlay(with_overlay.into());
 
+            // Add context menu overlay
+            let with_context_menu = self.render_context_menu_overlay(with_toasts);
+
             // Add modal overlay if present
             if let Some(ref modal) = self.show_modal {
-                self.render_modal_overlay(with_toasts, modal)
+                self.render_modal_overlay(with_context_menu, modal)
             } else {
-                with_toasts
+                with_context_menu
             }
         })
         .width(Length::Fill)
@@ -6429,6 +6482,9 @@ impl App {
             }
             iced::Event::Window(window::Event::Resized(size)) => {
                 Some(Message::WindowResized(size.width, size.height))
+            }
+            iced::Event::Mouse(iced::mouse::Event::CursorMoved { position }) => {
+                Some(Message::CursorMoved(position))
             }
             _ => None,
         }));
@@ -7340,31 +7396,29 @@ impl App {
     }
 
     /// Rebuild config_models to only include models for platforms that are fully available.
+    /// Only uses dynamically detected or previously cached models — never static fallbacks.
     fn rebuild_visible_models(&mut self) {
         for platform in crate::types::Platform::all() {
             let key = platform.to_string().to_lowercase();
             if self.is_platform_fully_available(*platform) {
-                // Use cached models if available, else fallback from specs
+                // Only use cached models from dynamic detection or persistent cache
                 if let Some(cached) = self.model_cache.get(platform) {
                     if !cached.models.is_empty() {
                         self.config_models.insert(key, cached.models.clone());
                         continue;
                     }
                 }
-                // If no cache, use fallback from specs
-                let fallback: Vec<String> =
-                    crate::platforms::platform_specs::fallback_model_ids(*platform)
-                        .into_iter()
-                        .map(|s| s.to_string())
-                        .collect();
-                self.config_models.insert(key, fallback);
+                // No cache — remove any stale entry and leave empty; trigger a dynamic refresh
+                // (the view will show a text input for manual entry)
+                self.config_models.remove(&key);
             } else {
+                // Platform not fully available — remove any existing entry
                 self.config_models.remove(&key);
             }
         }
     }
 
-    /// Get the model list for a platform, preferring cache then fallback.
+    /// Get the model list for a platform, preferring cached/dynamic values.
     fn get_model_list_for_platform(&self, platform_str: &str) -> Vec<String> {
         // Try model cache first
         if let Some(p) = crate::types::Platform::from_str_loose(platform_str) {
@@ -7379,16 +7433,11 @@ impl App {
                 }
             }
         }
-        // Fallback to config_models (backed by platform_specs)
+        // Fallback to config_models (cached/dynamic only; never static specs)
         if let Some(models) = self.config_models.get(platform_str) {
-            return models.clone();
-        }
-        // Ultimate fallback
-        if let Some(p) = crate::types::Platform::from_str_loose(platform_str) {
-            return crate::platforms::platform_specs::fallback_model_ids(p)
-                .into_iter()
-                .map(|s| s.to_string())
-                .collect();
+            if !models.is_empty() {
+                return models.clone();
+            }
         }
         Vec::new()
     }
@@ -7477,6 +7526,48 @@ impl App {
     }
 
     /// Render modal overlay
+    fn render_context_menu_overlay<'a>(
+        &'a self,
+        base: Element<'a, Message>,
+    ) -> Element<'a, Message> {
+        if let Some(ref target) = self.active_context_menu {
+            use crate::widgets::context_menu::{ContextMenuOptions, context_menu_actions};
+            use iced::widget::{container, mouse_area, stack};
+            use iced::Length;
+
+            let options = match target {
+                ContextMenuTarget::DashboardTerminal => ContextMenuOptions {
+                    show_select_all: true,
+                },
+                _ => ContextMenuOptions {
+                    show_select_all: false,
+                },
+            };
+
+            let menu = container(context_menu_actions(&self.theme, options))
+                .padding(tokens::spacing::XS)
+                .style(styles::context_menu_container_styled(&self.theme));
+
+            let cursor_pos = self.cursor_position;
+            let positioned_menu = float(menu).translate(move |bounds, viewport| {
+                iced::Vector::new(
+                    cursor_pos.x.min(viewport.width - bounds.width),
+                    cursor_pos.y.min(viewport.height - bounds.height),
+                )
+            });
+
+            // Click outside to close: a transparent mouse_area covering the whole screen
+            let click_outside_guard = mouse_area(container(
+                iced::widget::Space::new().width(Length::Fill).height(Length::Fill),
+            ))
+            .on_press(Message::CloseContextMenu);
+
+            stack![base, click_outside_guard, positioned_menu].into()
+        } else {
+            base
+        }
+    }
+
     fn render_modal_overlay<'a>(
         &self,
         base: Element<'a, Message>,
@@ -8541,6 +8632,113 @@ mod tests {
         assert!(
             data.is_none(),
             "Should return None when interview is not active"
+        );
+    }
+
+    #[test]
+    fn test_rebuild_visible_models_removes_stale_entries() {
+        // Test that rebuild_visible_models() correctly removes stale entries
+        // when a platform is fully available but has no cached models
+        let shutdown = Arc::new(AtomicBool::new(false));
+        let (mut app, _task) = App::new(shutdown);
+
+        // Simulate a stale entry in config_models for "codex"
+        let stale_models = vec!["gpt-4".to_string(), "gpt-3.5-turbo".to_string()];
+        app.config_models
+            .insert("codex".to_string(), stale_models.clone());
+
+        // Verify the stale entry exists
+        assert!(
+            app.config_models.contains_key("codex"),
+            "Stale entry should exist before rebuild"
+        );
+        assert_eq!(
+            app.config_models.get("codex"),
+            Some(&stale_models),
+            "Stale entry should have expected models"
+        );
+
+        // Mock Codex as fully available (empty setup means "assume available")
+        // and empty platform_auth_status means "assume authenticated"
+        app.setup_platform_statuses.clear();
+        app.platform_auth_status.clear();
+
+        // Ensure model_cache is empty for Codex (no cached models)
+        app.model_cache.remove(&Platform::Codex);
+
+        // Run rebuild_visible_models
+        app.rebuild_visible_models();
+
+        // Verify the stale entry was removed
+        assert!(
+            !app.config_models.contains_key("codex"),
+            "Stale entry should be removed when platform has no cached models"
+        );
+    }
+
+    #[test]
+    fn test_rebuild_visible_models_preserves_valid_cache() {
+        // Test that rebuild_visible_models() preserves entries when cache exists
+        let shutdown = Arc::new(AtomicBool::new(false));
+        let (mut app, _task) = App::new(shutdown);
+
+        // Add a valid cache entry for Codex
+        let cached_models = vec!["gpt-4o".to_string(), "gpt-4-turbo".to_string()];
+        app.model_cache.insert(
+            Platform::Codex,
+            crate::platforms::model_catalog::CachedModelList {
+                models: cached_models.clone(),
+                display_names: cached_models.clone(),
+                last_refreshed: Some(chrono::Utc::now()),
+                source: crate::platforms::model_catalog::ModelSource::Dynamic,
+            },
+        );
+
+        // Mock Codex as fully available
+        app.setup_platform_statuses.clear();
+        app.platform_auth_status.clear();
+
+        // Run rebuild_visible_models
+        app.rebuild_visible_models();
+
+        // Verify the entry was preserved and populated from cache
+        assert!(
+            app.config_models.contains_key("codex"),
+            "Valid cache entry should be preserved"
+        );
+        assert_eq!(
+            app.config_models.get("codex"),
+            Some(&cached_models),
+            "Models should match the cache"
+        );
+    }
+
+    #[test]
+    fn test_rebuild_visible_models_removes_unavailable_platform() {
+        // Test that rebuild_visible_models() removes entries for unavailable platforms
+        let shutdown = Arc::new(AtomicBool::new(false));
+        let (mut app, _task) = App::new(shutdown);
+
+        // Add an entry for Codex
+        let models = vec!["gpt-4".to_string()];
+        app.config_models.insert("codex".to_string(), models);
+
+        // Mock Codex as NOT fully available (not installed)
+        app.setup_platform_statuses.push(crate::views::setup::PlatformStatus {
+            platform: Platform::Codex,
+            status: crate::doctor::InstallationStatus::NotInstalled,
+            instructions: String::new(),
+            detected_path: None,
+            searched_paths: vec![],
+        });
+
+        // Run rebuild_visible_models
+        app.rebuild_visible_models();
+
+        // Verify the entry was removed
+        assert!(
+            !app.config_models.contains_key("codex"),
+            "Entry should be removed when platform is not fully available"
         );
     }
 }

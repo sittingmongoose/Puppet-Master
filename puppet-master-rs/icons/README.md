@@ -1,33 +1,45 @@
 # RWM Puppet Master Icons
 
-This directory contains icon assets for the system tray.
+This directory contains the application logo used for the system tray and for installed app icons on Linux, Windows, and macOS.
 
-## Required Icons
+## Source asset
 
-- `icon.png` - Main tray icon (32x32 or 64x64 PNG)
-  - Recommended: 32x32 for standard DPI, provide 64x64 for high-DPI displays
-  - Should be a simple, recognizable icon that works well at small sizes
-  - Transparent background recommended
-  - Format: PNG with alpha channel
+- **`icon.png`** – Application logo (single source for tray + all platforms)
+  - **Recommended:** 256×256 or 512×512 PNG with transparency
+  - Used by: tray icon (scaled down by the OS), Linux .desktop, Windows .exe, macOS .app
+  - Same design everywhere; keep it simple and recognizable at small and large sizes
 
-## Platform Requirements
+## Generated assets (do not edit by hand)
 
-- **macOS**: PNG format required, typically 22x22 pt (44x44 px @2x)
-- **Windows**: PNG or ICO format, 16x16 or 32x32 pixels
-- **Linux**: PNG format, 22x22 or 24x24 pixels (depends on DE)
+Generate these from `icon.png` by running from the repo root:
+
+```bash
+./scripts/generate-app-icons.sh
+```
+
+- **`icon.ico`** – Windows: multi-size (16, 32, 48, 256) for .exe and taskbar  
+  - Requires ImageMagick (`magick` or `convert`)
+- **`icon.icns`** – macOS: app bundle icon for Finder and Dock  
+  - On macOS: uses built-in `iconutil` + `sips`  
+  - On Linux/Windows: optional `make-icns` (npm: `npm i -g make-icns`, then `mkicns icon.png icon.icns`) or run the script on macOS/CI
+
+## Platform usage
+
+| Platform | Asset        | Where it appears                          |
+|----------|--------------|-------------------------------------------|
+| All      | `icon.png`   | Tray (embedded in binary via `include_bytes!`) |
+| Linux    | `icon.png`   | `.deb` / launcher (copied to hicolor/256x256/apps) |
+| Windows  | `icon.ico`   | Embedded in .exe at build time (`build.rs` + winres) |
+| macOS    | `icon.icns`  | `.app` bundle (Contents/Resources; see `installer/macos/build-dmg.sh`) |
 
 ## Fallback
 
-If `icon.png` is missing, the tray module will generate a simple fallback icon.
+If `icon.png` is missing, the tray module builds a simple generated fallback icon at runtime. Installers and Windows build expect the assets to exist (run `scripts/generate-app-icons.sh` before building installers or on Windows).
 
-## Creating Icons
+## Release checklist
 
-For best results across all platforms:
-1. Design at 64x64 pixels
-2. Export as PNG with transparency
-3. Keep design simple and high-contrast
-4. Test on all target platforms
+Before building platform installers or a Windows .exe:
 
-## Example
-
-A simple robot/puppet icon would work well for this application.
+1. Ensure `icon.png` is 256×256 or 512×512 (same design as desired tray icon).
+2. Run `./scripts/generate-app-icons.sh` so `icon.ico` and `icon.icns` are present.
+3. Then run the usual installer scripts (e.g. `scripts/build-linux-installer.sh`, `installer/macos/build-dmg.sh`).

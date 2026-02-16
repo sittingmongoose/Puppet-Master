@@ -634,7 +634,8 @@ pub fn set_process_group(cmd: &mut Command) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::process::{Command, Stdio};
+    #[cfg(unix)]
+    use std::process::Stdio;
 
     #[test]
     fn test_process_registry() {

@@ -9,6 +9,7 @@ use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::types::Platform;
 use crate::widgets::{
     help_tooltip, interaction_mode_to_variant,
+    selectable_text::selectable_label,
     styled_button::{ButtonVariant, styled_button},
     styled_input::{InputSize, InputVariant, styled_text_input_with_variant},
     themed_panel,
@@ -21,7 +22,6 @@ use std::collections::HashMap;
 
 // Static options for pick_lists — platform list sourced from platform_specs (DRY)
 const PLATFORMS: &[&str] = platform_specs::PLATFORM_ID_STRS;
-const REASONING_EFFORTS: &[&str] = &["low", "medium", "high"];
 const INTERVIEW_REASONING_LEVELS: &[&str] = &["low", "medium", "high", "max"];
 const OUTPUT_FORMATS: &[&str] = &["markdown", "json", "yaml"];
 
@@ -131,7 +131,7 @@ pub fn view<'a>(
     .spacing(tokens::spacing::XXXS)
     .align_y(iced::Alignment::Center);
 
-    let step_container: Element<'_, Message> = if size.width < 800.0 {
+    let step_container: Element<'_, Message> = if size.width < tokens::layout::NAV_COLLAPSE_BELOW_WIDTH {
         scrollable(step_indicator)
             .direction(iced::widget::scrollable::Direction::Horizontal(
                 iced::widget::scrollable::Scrollbar::default(),
@@ -256,20 +256,12 @@ fn step0_project_setup<'a>(
     let can_proceed = !project_name.trim().is_empty() && !project_path.trim().is_empty();
 
     let step_content = column![
-        text("Step 0: Project Setup")
-            .size(tokens::font_size::XL)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
-        text("Configure your project structure and repository")
-            .size(tokens::font_size::BASE)
-            .color(theme.ink_faded()),
+        selectable_label(theme, "Step 0: Project Setup"),
+        selectable_label(theme, "Configure your project structure and repository"),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Project Type Selection
         row![
-            text("Project Type:")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            selectable_label(theme, "Project Type:"),
             Space::new().width(Length::Fixed(tokens::spacing::XS)),
             help_tooltip("wizard.project_type", tooltip_variant, theme),
         ]
@@ -278,22 +270,17 @@ fn step0_project_setup<'a>(
             toggler(is_new_project)
                 .on_toggle(Message::WizardIsNewProjectToggled)
                 .spacing(tokens::spacing::SM),
-            text(if is_new_project {
+            selectable_label(theme, if is_new_project {
                 "New Project"
             } else {
                 "Existing Project"
-            })
-            .size(tokens::font_size::BASE)
-            .color(theme.ink()),
+            }),
         ]
         .spacing(tokens::spacing::SM),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         // Project Name
         row![
-            text("Project Name:")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            selectable_label(theme, "Project Name:"),
             Space::new().width(Length::Fixed(tokens::spacing::XS)),
             help_tooltip("wizard.project_name", tooltip_variant, theme),
         ]
@@ -309,10 +296,7 @@ fn step0_project_setup<'a>(
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         // Project Path
         row![
-            text("Project Path:")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            selectable_label(theme, "Project Path:"),
             Space::new().width(Length::Fixed(tokens::spacing::XS)),
             help_tooltip("wizard.project_path", tooltip_variant, theme),
         ]
@@ -334,10 +318,7 @@ fn step0_project_setup<'a>(
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // GitHub Repository Section
         row![
-            text("GitHub Repository:")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            selectable_label(theme, "GitHub Repository:"),
             Space::new().width(Length::Fixed(tokens::spacing::XS)),
             help_tooltip("wizard.github_repo", tooltip_variant, theme),
         ]
@@ -346,9 +327,7 @@ fn step0_project_setup<'a>(
             toggler(has_github_repo)
                 .on_toggle(Message::WizardHasGithubRepoToggled)
                 .spacing(tokens::spacing::SM),
-            text("I already have a GitHub repository")
-                .size(tokens::font_size::BASE)
-                .color(theme.ink()),
+            selectable_label(theme, "I already have a GitHub repository"),
         ]
         .spacing(tokens::spacing::SM),
     ]
@@ -360,9 +339,7 @@ fn step0_project_setup<'a>(
             column![
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
                 row![
-                    text("Repository URL:")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink()),
+                    selectable_label(theme, "Repository URL:"),
                     Space::new().width(Length::Fixed(tokens::spacing::XS)),
                     help_tooltip("wizard.github_url", tooltip_variant, theme),
                 ]
@@ -387,9 +364,7 @@ fn step0_project_setup<'a>(
                     toggler(create_github_repo)
                         .on_toggle(Message::WizardCreateGithubRepoToggled)
                         .spacing(tokens::spacing::SM),
-                    text("Create GitHub repository automatically")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink()),
+                    selectable_label(theme, "Create GitHub repository automatically"),
                 ]
                 .spacing(tokens::spacing::SM),
             ]
@@ -403,9 +378,7 @@ fn step0_project_setup<'a>(
             column![
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
                 row![
-                    text("Repository Visibility:")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink()),
+                    selectable_label(theme, "Repository Visibility:"),
                     Space::new().width(Length::Fixed(tokens::spacing::XS)),
                     help_tooltip("wizard.github_visibility", tooltip_variant, theme),
                 ]
@@ -419,9 +392,7 @@ fn step0_project_setup<'a>(
                 )
                 .width(Length::Fixed(200.0)),
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                text("Repository Description:")
-                    .size(tokens::font_size::BASE)
-                    .color(theme.ink()),
+                selectable_label(theme, "Repository Description:"),
                 styled_text_input_with_variant(
                     theme,
                     "Project description",
@@ -471,20 +442,12 @@ fn step1_interview_config<'a>(
     let tooltip_variant = interaction_mode_to_variant(interaction_mode);
 
     let step_content = column![
-        text("Step 0.5: Interview Configuration")
-            .size(tokens::font_size::XL)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
-        text("Configure the interactive requirements interview")
-            .size(tokens::font_size::BASE)
-            .color(theme.ink_faded()),
+        selectable_label(theme, "Step 0.5: Interview Configuration"),
+        selectable_label(theme, "Configure the interactive requirements interview"),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Use Interview Toggle
         row![
-            text("Requirements Interview:")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            selectable_label(theme, "Requirements Interview:"),
             Space::new().width(Length::Fixed(tokens::spacing::XS)),
             help_tooltip("wizard.use_interview", tooltip_variant, theme),
         ]
@@ -493,14 +456,10 @@ fn step1_interview_config<'a>(
             toggler(use_interview)
                 .on_toggle(Message::WizardUseInterviewToggled)
                 .spacing(tokens::spacing::SM),
-            text("Use interactive interview mode")
-                .size(tokens::font_size::BASE)
-                .color(theme.ink()),
+            selectable_label(theme, "Use interactive interview mode"),
         ]
         .spacing(tokens::spacing::SM),
-        text("Enable this for AI-guided requirements gathering with zero ambiguity")
-            .size(tokens::font_size::SM)
-            .color(theme.ink_faded()),
+        selectable_label(theme, "Enable this for AI-guided requirements gathering with zero ambiguity"),
     ]
     .spacing(tokens::spacing::SM);
 
@@ -511,10 +470,7 @@ fn step1_interview_config<'a>(
                 Space::new().height(Length::Fixed(tokens::spacing::MD)),
                 // Interaction Mode
                 row![
-                    text("Interaction Mode:")
-                        .size(tokens::font_size::BASE)
-                        .font(fonts::FONT_UI_BOLD)
-                        .color(theme.ink()),
+                    selectable_label(theme, "Interaction Mode:"),
                     Space::new().width(Length::Fixed(tokens::spacing::XS)),
                     help_tooltip("interview.interaction_mode", tooltip_variant, theme),
                 ]
@@ -525,20 +481,15 @@ fn step1_interview_config<'a>(
                     |mode: &str| Message::WizardInteractionModeChanged(mode.to_string()),
                 )
                 .width(Length::Fixed(200.0)),
-                text(if interaction_mode == "expert" {
+                selectable_label(theme, if interaction_mode == "expert" {
                     "Concise technical questions for experienced developers"
                 } else {
                     "Detailed explanations for every question (Explain Like I'm 5)"
-                })
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+                }),
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
                 // Reasoning Level
                 row![
-                    text("AI Reasoning Level:")
-                        .size(tokens::font_size::BASE)
-                        .font(fonts::FONT_UI_BOLD)
-                        .color(theme.ink()),
+                    selectable_label(theme, "AI Reasoning Level:"),
                     Space::new().width(Length::Fixed(tokens::spacing::XS)),
                     help_tooltip("interview.reasoning_level", tooltip_variant, theme),
                 ]
@@ -549,26 +500,20 @@ fn step1_interview_config<'a>(
                     |level: &str| Message::WizardReasoningLevelChanged(level.to_string()),
                 )
                 .width(Length::Fixed(200.0)),
-                text("Higher levels provide deeper analysis but take longer")
-                    .size(tokens::font_size::SM)
-                    .color(theme.ink_faded()),
+                selectable_label(theme, "Higher levels provide deeper analysis but take longer"),
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
                 // Generate AGENTS.md
                 row![
                     toggler(generate_agents_md)
                         .on_toggle(Message::WizardGenerateAgentsMdToggled)
                         .spacing(tokens::spacing::SM),
-                    text("Generate initial AGENTS.md")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink()),
+                    selectable_label(theme, "Generate initial AGENTS.md"),
                     Space::new().width(Length::Fixed(tokens::spacing::XS)),
                     help_tooltip("interview.generate_agents_md", tooltip_variant, theme),
                 ]
                 .spacing(tokens::spacing::SM)
                 .align_y(Alignment::Center),
-                text("Create a starter agent configuration file to guide AI agents")
-                    .size(tokens::font_size::SM)
-                    .color(theme.ink_faded()),
+                selectable_label(theme, "Create a starter agent configuration file to guide AI agents"),
             ]
             .spacing(tokens::spacing::SM),
         )
@@ -608,20 +553,12 @@ fn step2_upload_requirements<'a>(
         && !requirements_text.trim().is_empty();
 
     let step_content = column![
-        text("Step 1: Upload Requirements")
-            .size(tokens::font_size::XL)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
-        text("Enter project details and requirements")
-            .size(tokens::font_size::BASE)
-            .color(theme.ink_faded()),
+        selectable_label(theme, "Step 1: Upload Requirements"),
+        selectable_label(theme, "Enter project details and requirements"),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
 
         // Project Name
-        text("Project Name:")
-            .size(tokens::font_size::BASE)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        selectable_label(theme, "Project Name:"),
         styled_text_input_with_variant(
             theme,
             "My Awesome Project",
@@ -634,10 +571,7 @@ fn step2_upload_requirements<'a>(
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
 
         // Project Path
-        text("Project Path:")
-            .size(tokens::font_size::BASE)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        selectable_label(theme, "Project Path:"),
         row![
             styled_text_input_with_variant(
                 theme,
@@ -656,14 +590,9 @@ fn step2_upload_requirements<'a>(
 
         // Requirements Input
         row![
-            text("Requirements:")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
+            selectable_label(theme, "Requirements:"),
             Space::new().width(Length::Fill),
-            text(format!("{} characters", char_count))
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+            selectable_label(theme, &format!("{} characters", char_count)),
         ],
 
         // Requirements preview (read-only, selectable)
@@ -672,6 +601,7 @@ fn step2_upload_requirements<'a>(
                 .on_action(Message::WizardRequirementsPreviewAction)
                 .font(fonts::FONT_UI)
                 .size(tokens::font_size::BASE)
+                .style(crate::theme::styles::text_editor_styled(theme))
                 .height(Length::Fixed(200.0))
         )
         .padding(tokens::spacing::MD)
@@ -711,14 +641,9 @@ fn step2_upload_requirements<'a>(
                         ..Default::default()
                     }),
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                text("OR")
-                    .size(tokens::font_size::SM)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink_faded()),
+                selectable_label(theme, "OR"),
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                text("Use the interactive interview to generate detailed requirements through guided Q&A")
-                    .size(tokens::font_size::BASE)
-                    .color(theme.ink_faded()),
+                selectable_label(theme, "Use the interactive interview to generate detailed requirements through guided Q&A"),
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
                 styled_button(theme, "START INTERACTIVE INTERVIEW", ButtonVariant::Info)
                     .on_press(Message::StartInterview),
@@ -769,21 +694,12 @@ fn step3_generate_prd<'a>(
     };
 
     let step_content = column![
-        text("Step 2: Generate PRD")
-            .size(tokens::font_size::XL)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
-        text("Select platform and model, then generate the Product Requirements Document")
-            .size(tokens::font_size::BASE)
-            .color(theme.ink_faded()),
+        selectable_label(theme, "Step 2: Generate PRD"),
+        selectable_label(theme, "Select platform and model, then generate the Product Requirements Document"),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Platform selection
         row![
-            text("Platform:")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink())
-                .width(Length::Fixed(120.0)),
+            selectable_label(theme, "Platform:"),
             {
                 // Build platform options with availability indicators
                 let platform_options: Vec<String> = PLATFORMS
@@ -813,11 +729,7 @@ fn step3_generate_prd<'a>(
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         // Model selection
         row![
-            text("Model:")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink())
-                .width(Length::Fixed(120.0)),
+            selectable_label(theme, "Model:"),
             {
                 let model_picker: Element<'_, Message> = if let Some(models_list) = platform_models
                 {
@@ -833,10 +745,7 @@ fn step3_generate_prd<'a>(
                     .width(Length::Fixed(300.0))
                     .into()
                 } else {
-                    text("Loading models...")
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink_faded())
-                        .into()
+                    selectable_label(theme, "Loading models...")
                 };
                 model_picker
             },
@@ -845,16 +754,10 @@ fn step3_generate_prd<'a>(
         .align_y(iced::Alignment::Center),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Requirements preview
-        text("Requirements Preview (first 1000 chars):")
-            .size(tokens::font_size::BASE)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
+        selectable_label(theme, "Requirements Preview (first 1000 chars):"),
         scrollable(
             container(
-                text(preview_text)
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI)
-                    .color(theme.ink())
+                selectable_label(theme, &preview_text)
             )
             .padding(tokens::spacing::MD)
             .width(Length::Fill)
@@ -873,9 +776,7 @@ fn step3_generate_prd<'a>(
         // Status indicator
         if generating {
             row![
-                text("Generating PRD...")
-                    .size(tokens::font_size::BASE)
-                    .color(colors::ELECTRIC_BLUE),
+                selectable_label(theme, "Generating PRD..."),
             ]
         } else {
             row![]
@@ -910,19 +811,15 @@ fn step4_review_prd<'a>(
     let has_prd = !prd_text.is_empty();
 
     let step_content = column![
-        text("Step 3: Review PRD")
-            .size(tokens::font_size::XL)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
-        text("Review and edit the generated Product Requirements Document")
-            .size(tokens::font_size::BASE)
-            .color(theme.ink_faded()),
+        selectable_label(theme, "Step 3: Review PRD"),
+        selectable_label(theme, "Review and edit the generated Product Requirements Document"),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // PRD editor
         container(
             text_editor(prd_editor_content)
                 .on_action(Message::WizardPrdEditorAction)
                 .font(iced::Font::MONOSPACE)
+                .style(crate::theme::styles::text_editor_styled(theme))
                 .height(Length::Fixed(400.0))
         )
         .padding(tokens::spacing::MD)
@@ -973,41 +870,38 @@ fn step5_configure_tiers<'a>(
         if let Some(config) = tier_configs.get(tier) {
             let platform_models = models.get(&config.platform);
 
-            // Check if effort/reasoning is relevant for this platform
-            let show_reasoning = crate::types::Platform::from_str_loose(&config.platform)
-                .map(|p| {
-                    crate::platforms::platform_specs::supports_effort(p)
-                        && !crate::platforms::platform_specs::reasoning_is_model_based(p)
-                })
-                .unwrap_or(false);
+            // Effort/reasoning only shown when platform supports it AND we have
+            // dynamically detected models (no static fallbacks).
+            let has_dynamic_models = platform_models.map_or(false, |m| !m.is_empty());
+            let show_reasoning = has_dynamic_models
+                && crate::types::Platform::from_str_loose(&config.platform)
+                    .map(|p| {
+                        crate::platforms::platform_specs::supports_effort(p)
+                            && !crate::platforms::platform_specs::reasoning_is_model_based(p)
+                    })
+                    .unwrap_or(false);
 
-            // Build effort options from platform_specs
+            // Build effort options from platform_specs — only when dynamically confirmed
             let effort_options: Vec<String> = if show_reasoning {
                 if let Some(p) = crate::types::Platform::from_str_loose(&config.platform) {
                     if let Some(levels) = crate::platforms::platform_specs::effort_levels_for(p) {
                         levels.iter().map(|l| l.id.to_string()).collect()
                     } else {
-                        REASONING_EFFORTS.iter().map(|s| (*s).to_string()).collect()
+                        Vec::new()
                     }
                 } else {
-                    REASONING_EFFORTS.iter().map(|s| (*s).to_string()).collect()
+                    Vec::new()
                 }
             } else {
                 Vec::new()
             };
 
             let mut tier_col = column![
-                text(format!("{} Configuration", tier.to_uppercase()))
-                    .size(tokens::font_size::MD)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
+                selectable_label(theme, &format!("{} Configuration", tier.to_uppercase())),
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
                 // Platform
                 row![
-                    text("Platform:")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink())
-                        .width(Length::Fixed(150.0)),
+                    selectable_label(theme, "Platform:"),
                     {
                         // Build platform options with availability indicators
                         let platform_options: Vec<String> = PLATFORMS
@@ -1037,10 +931,7 @@ fn step5_configure_tiers<'a>(
                 Space::new().height(Length::Fixed(tokens::spacing::XS)),
                 // Model
                 row![
-                    text("Model:")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink())
-                        .width(Length::Fixed(150.0)),
+                    selectable_label(theme, "Model:"),
                     {
                         let tier_model_picker: Element<'_, Message> =
                             if let Some(models_list) = platform_models {
@@ -1054,10 +945,7 @@ fn step5_configure_tiers<'a>(
                                 .width(Length::Fixed(300.0))
                                 .into()
                             } else {
-                                text("auto")
-                                    .size(tokens::font_size::SM)
-                                    .color(theme.ink_faded())
-                                    .into()
+                                selectable_label(theme, "auto")
                             };
                         tier_model_picker
                     },
@@ -1076,10 +964,7 @@ fn step5_configure_tiers<'a>(
                 tier_col = tier_col.push(Space::new().height(Length::Fixed(tokens::spacing::XS)));
                 tier_col = tier_col.push(
                     row![
-                        text("Reasoning:")
-                            .size(tokens::font_size::BASE)
-                            .color(theme.ink())
-                            .width(Length::Fixed(150.0)),
+                        selectable_label(theme, "Reasoning:"),
                         pick_list(effort_options, selected_effort, move |e: String| {
                             Message::WizardTierReasoningChanged(tier.to_string(), e)
                         })
@@ -1094,10 +979,7 @@ fn step5_configure_tiers<'a>(
             tier_col = tier_col.push(Space::new().height(Length::Fixed(tokens::spacing::XS)));
             tier_col = tier_col.push(
                 row![
-                    text("Plan Mode:")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink())
-                        .width(Length::Fixed(150.0)),
+                    selectable_label(theme, "Plan Mode:"),
                     toggler(config.plan_mode).on_toggle(move |v| {
                         Message::WizardTierPlanModeToggled(tier.to_string(), v)
                     }),
@@ -1110,10 +992,7 @@ fn step5_configure_tiers<'a>(
             tier_col = tier_col.push(Space::new().height(Length::Fixed(tokens::spacing::XS)));
             tier_col = tier_col.push(
                 row![
-                    text("Ask Mode:")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink())
-                        .width(Length::Fixed(150.0)),
+                    selectable_label(theme, "Ask Mode:"),
                     toggler(config.ask_mode).on_toggle(move |v| {
                         Message::WizardTierAskModeToggled(tier.to_string(), v)
                     }),
@@ -1126,10 +1005,7 @@ fn step5_configure_tiers<'a>(
             tier_col = tier_col.push(Space::new().height(Length::Fixed(tokens::spacing::XS)));
             tier_col = tier_col.push(
                 row![
-                    text("Output Format:")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink())
-                        .width(Length::Fixed(150.0)),
+                    selectable_label(theme, "Output Format:"),
                     pick_list(
                         OUTPUT_FORMATS,
                         Some(config.output_format.as_str()),
@@ -1151,13 +1027,8 @@ fn step5_configure_tiers<'a>(
     }
 
     let step_content = column![
-        text("Step 4: Configure Tiers")
-            .size(tokens::font_size::XL)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
-        text("Configure platform, model, and options for each tier")
-            .size(tokens::font_size::BASE)
-            .color(theme.ink_faded()),
+        selectable_label(theme, "Step 4: Configure Tiers"),
+        selectable_label(theme, "Configure platform, model, and options for each tier"),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Refresh Models button
         row![
@@ -1194,13 +1065,8 @@ fn step6_generate_plan<'a>(
     let has_plan = !plan_text.is_empty();
 
     let step_content = column![
-        text("Step 5: Generate Plan")
-            .size(tokens::font_size::XL)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
-        text("Generate execution plan based on PRD and tier configurations")
-            .size(tokens::font_size::BASE)
-            .color(theme.ink_faded()),
+        selectable_label(theme, "Step 5: Generate Plan"),
+        selectable_label(theme, "Generate execution plan based on PRD and tier configurations"),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Plan preview (read-only, selectable)
         {
@@ -1210,6 +1076,7 @@ fn step6_generate_plan<'a>(
                         .on_action(Message::WizardPlanContentAction)
                         .font(fonts::FONT_MONO)
                         .size(tokens::font_size::SM)
+                        .style(crate::theme::styles::text_editor_styled(theme))
                         .height(Length::Fixed(350.0)),
                 )
                 .padding(tokens::spacing::MD)
@@ -1226,9 +1093,7 @@ fn step6_generate_plan<'a>(
                 .into()
             } else {
                 container(
-                    text("Click GENERATE PLAN to create execution plan")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink_faded()),
+                    selectable_label(theme, "Click GENERATE PLAN to create execution plan"),
                 )
                 .padding(tokens::spacing::XL)
                 .width(Length::Fill)
@@ -1250,9 +1115,7 @@ fn step6_generate_plan<'a>(
         // Status indicator
         if generating {
             row![
-                text("Generating plan...")
-                    .size(tokens::font_size::BASE)
-                    .color(colors::ELECTRIC_BLUE),
+                selectable_label(theme, "Generating plan..."),
             ]
         } else {
             row![]
@@ -1296,13 +1159,8 @@ fn step7_review_plan<'a>(
     let has_plan = !plan_text.trim().is_empty();
 
     let step_content = column![
-        text("Step 6: Review Plan")
-            .size(tokens::font_size::XL)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
-        text("Review the generated execution plan")
-            .size(tokens::font_size::BASE)
-            .color(theme.ink_faded()),
+        selectable_label(theme, "Step 6: Review Plan"),
+        selectable_label(theme, "Review the generated execution plan"),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
     ];
 
@@ -1313,6 +1171,7 @@ fn step7_review_plan<'a>(
                     .on_action(Message::WizardPlanContentAction)
                     .font(fonts::FONT_UI)
                     .size(tokens::font_size::BASE)
+                    .style(crate::theme::styles::text_editor_styled(theme))
                     .height(Length::Fixed(400.0)),
             )
             .padding(tokens::spacing::MD)
@@ -1329,9 +1188,7 @@ fn step7_review_plan<'a>(
         )
     } else {
         step_content.push(
-            text("No plan generated yet. You can skip this step or go back to generate one.")
-                .size(tokens::font_size::BASE)
-                .color(theme.ink_faded()),
+            selectable_label(theme, "No plan generated yet. You can skip this step or go back to generate one."),
         )
     };
 
@@ -1360,44 +1217,24 @@ fn step8_review_start<'a>(
     theme: &'a AppTheme,
 ) -> container::Container<'a, Message> {
     let step_content = column![
-        text("Step 7: Review & Start")
-            .size(tokens::font_size::XL)
-            .font(fonts::FONT_UI_BOLD)
-            .color(theme.ink()),
-        text("Everything is ready! Review and start the orchestration.")
-            .size(tokens::font_size::BASE)
-            .color(colors::ACID_LIME),
+        selectable_label(theme, "Step 7: Review & Start"),
+        selectable_label(theme, "Everything is ready! Review and start the orchestration."),
         Space::new().height(Length::Fixed(tokens::spacing::LG)),
         // Project summary
         themed_panel(
             container(
                 column![
-                    text("Project Summary")
-                        .size(tokens::font_size::LG)
-                        .font(fonts::FONT_UI_BOLD)
-                        .color(theme.ink()),
+                    selectable_label(theme, "Project Summary"),
                     Space::new().height(Length::Fixed(tokens::spacing::MD)),
                     row![
-                        text("Name:")
-                            .size(tokens::font_size::BASE)
-                            .font(fonts::FONT_UI_BOLD)
-                            .color(theme.ink())
-                            .width(Length::Fixed(120.0)),
-                        text(project_name)
-                            .size(tokens::font_size::BASE)
-                            .color(theme.ink()),
+                        selectable_label(theme, "Name:"),
+                        selectable_label(theme, project_name),
                     ]
                     .spacing(tokens::spacing::SM),
                     Space::new().height(Length::Fixed(tokens::spacing::SM)),
                     row![
-                        text("Path:")
-                            .size(tokens::font_size::BASE)
-                            .font(fonts::FONT_UI_BOLD)
-                            .color(theme.ink())
-                            .width(Length::Fixed(120.0)),
-                        text(project_path)
-                            .size(tokens::font_size::BASE)
-                            .color(theme.ink()),
+                        selectable_label(theme, "Path:"),
+                        selectable_label(theme, project_path),
                     ]
                     .spacing(tokens::spacing::SM),
                 ]
@@ -1411,26 +1248,13 @@ fn step8_review_start<'a>(
         themed_panel(
             container(
                 column![
-                    text("Ready to Start")
-                        .size(tokens::font_size::MD)
-                        .font(fonts::FONT_UI_BOLD)
-                        .color(colors::ACID_LIME),
+                    selectable_label(theme, "Ready to Start"),
                     Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                    text("The wizard will:")
-                        .size(tokens::font_size::BASE)
-                        .color(theme.ink()),
-                    text("- Create project directory")
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink_faded()),
-                    text("- Save PRD document")
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink_faded()),
-                    text("- Save execution plan")
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink_faded()),
-                    text("- Navigate to dashboard")
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink_faded()),
+                    selectable_label(theme, "The wizard will:"),
+                    selectable_label(theme, "- Create project directory"),
+                    selectable_label(theme, "- Save PRD document"),
+                    selectable_label(theme, "- Save execution plan"),
+                    selectable_label(theme, "- Navigate to dashboard"),
                 ]
                 .spacing(tokens::spacing::XS)
             )
@@ -1438,9 +1262,7 @@ fn step8_review_start<'a>(
             theme
         ),
         Space::new().height(Length::Fixed(tokens::spacing::LG)),
-        text("Note: You can monitor progress from the Dashboard.")
-            .size(tokens::font_size::BASE)
-            .color(theme.ink_faded()),
+        selectable_label(theme, "Note: You can monitor progress from the Dashboard."),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Navigation buttons
         row![

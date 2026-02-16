@@ -109,9 +109,16 @@ Categories=Development;IDE;
 Keywords=ai;development;orchestrator;
 EOF
 
-# Copy icon if exists
+# Copy icon if exists (resize to 256x256 when ImageMagick available and source is larger)
 if [ -f "icons/icon.png" ]; then
-    cp icons/icon.png "$DEB_DIR/usr/share/icons/hicolor/256x256/apps/puppet-master.png"
+    DEST_ICON="$DEB_DIR/usr/share/icons/hicolor/256x256/apps/puppet-master.png"
+    if command -v magick >/dev/null 2>&1; then
+        magick icons/icon.png -resize 256x256 "$DEST_ICON"
+    elif command -v convert >/dev/null 2>&1; then
+        convert icons/icon.png -resize 256x256 "$DEST_ICON"
+    else
+        cp icons/icon.png "$DEST_ICON"
+    fi
 else
     echo "Warning: icon.png not found at icons/icon.png"
 fi

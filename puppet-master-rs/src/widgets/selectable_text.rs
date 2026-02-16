@@ -4,11 +4,50 @@
 //! while keeping the underlying value immutable.
 
 use crate::app::{ContextMenuTarget, Message, SelectableField};
-use crate::theme::{AppTheme, colors, fonts, tokens};
-use crate::widgets::context_menu::{ContextMenuOptions, context_menu_actions};
+use crate::theme::{AppTheme, colors, fonts, styles, tokens};
 use iced::Border;
 use iced::Length;
-use iced::widget::{TextInput, column, mouse_area, text_input};
+use iced::widget::{TextInput, mouse_area, text_input};
+
+// DRY:WIDGET:selectable_label
+/// Build a selectable text label that looks like static text.
+pub fn selectable_label<'a>(
+    theme: &'a AppTheme,
+    value: &str,
+) -> iced::Element<'a, Message> {
+    mouse_area(
+        text_input("", value)
+            .on_input(|_| Message::None)
+            .font(fonts::FONT_UI)
+            .size(tokens::font_size::BASE)
+            .padding(0)
+            .style(styles::selectable_label_styled(theme)),
+    )
+    .on_right_press(Message::OpenContextMenu(
+        ContextMenuTarget::StaticText(value.to_string()),
+    ))
+    .into()
+}
+
+// DRY:WIDGET:selectable_label_mono
+/// Build a selectable monospace label that looks like static text.
+pub fn selectable_label_mono<'a>(
+    theme: &'a AppTheme,
+    value: &str,
+) -> iced::Element<'a, Message> {
+    mouse_area(
+        text_input("", value)
+            .on_input(|_| Message::None)
+            .font(fonts::FONT_MONO)
+            .size(tokens::font_size::SM)
+            .padding(0)
+            .style(styles::selectable_label_styled(theme)),
+    )
+    .on_right_press(Message::OpenContextMenu(
+        ContextMenuTarget::StaticText(value.to_string()),
+    ))
+    .into()
+}
 
 // DRY:WIDGET:selectable_text_input
 /// Build a single-line selectable/read-only text field.
@@ -75,33 +114,17 @@ pub fn selectable_text_field<'a, F>(
     theme: &'a AppTheme,
     value: &'a str,
     field: SelectableField,
-    active_context_menu: &'a Option<ContextMenuTarget>,
+    _active_context_menu: &'a Option<ContextMenuTarget>,
     on_change: F,
 ) -> iced::Element<'a, Message>
 where
     F: Fn(String) -> Message + Clone + 'a,
 {
-    let menu_open = matches!(
-        active_context_menu,
-        Some(ContextMenuTarget::SelectableField(current)) if current == &field
-    );
-
-    let input = mouse_area(
+    mouse_area(
         selectable_text_input_with_on_change(theme, value, on_change).width(Length::Fill),
     )
     .on_right_press(Message::OpenContextMenu(
         ContextMenuTarget::SelectableField(field),
-    ));
-
-    let mut content = column![input].spacing(tokens::spacing::XS);
-    if menu_open {
-        content = content.push(context_menu_actions(
-            theme,
-            ContextMenuOptions {
-                show_select_all: false,
-            },
-        ));
-    }
-
-    content.into()
+    ))
+    .into()
 }
