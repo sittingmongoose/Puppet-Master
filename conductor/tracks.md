@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [~] **Track: GUI Responsive Dynamic Resizing**
+- [x] **Track: GUI Responsive Dynamic Resizing**
   *Link: [./tracks/gui_resizing_20260216/](./tracks/gui_resizing_20260216/)*
