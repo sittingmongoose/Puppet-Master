@@ -7,7 +7,7 @@ use async_trait::async_trait;
 use chrono::Utc;
 use log::{debug, warn};
 use std::fs;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 // DRY:DATA:RuntimeCheck
 /// Checks runtime environment (disk space, memory, permissions, etc.)
@@ -61,6 +61,14 @@ impl RuntimeCheck {
         Self { working_dir }
     }
 
+    fn resolve_project_root(&self) -> PathBuf {
+        resolve_project_root_for_doctor(&self.working_dir)
+    }
+
+    fn in_project_context(&self) -> bool {
+        has_project_markers(&self.resolve_project_root())
+    }
+
     // DRY:FN:check
     /// Run all runtime checks
     pub fn check(&self) -> RuntimeCheckResult {
@@ -69,7 +77,7 @@ impl RuntimeCheck {
         // Check working directory exists and is writable
         checks.push(self.check_working_dir());
 
-        // Check .puppet-master directory can be created/accessed
+        // Check .puppet-master directory presence/access
         checks.push(self.check_puppet_master_dir());
 
         // Check disk space
@@ -104,24 +112,19 @@ impl RuntimeCheck {
             };
         }
 
-        // Try to create a temporary file to test write permissions
-        let test_file = self.working_dir.join(".puppet-master-write-test");
-        match fs::write(&test_file, b"test") {
-            Ok(_) => {
-                let _ = fs::remove_file(&test_file);
-                RuntimeItem {
-                    name: "Working Directory".to_string(),
-                    status: true,
-                    message: format!("Directory is writable: {:?}", self.working_dir),
-                    fix_suggestion: None,
-                }
-            }
+        match directory_appears_writable(&self.working_dir) {
+            Ok(_) => RuntimeItem {
+                name: "Working Directory".to_string(),
+                status: true,
+                message: format!("Directory appears writable: {:?}", self.working_dir),
+                fix_suggestion: None,
+            },
             Err(e) => {
-                warn!("Working directory is not writable: {}", e);
+                warn!("Working directory appears read-only: {}", e);
                 RuntimeItem {
                     name: "Working Directory".to_string(),
                     status: false,
-                    message: format!("Directory is not writable: {}", e),
+                    message: format!("Directory appears read-only: {}", e),
                     fix_suggestion: Some(
                         "Check file permissions on the working directory".to_string(),
                     ),
@@ -130,52 +133,48 @@ impl RuntimeCheck {
         }
     }
 
-    /// Check if .puppet-master directory can be created
+    /// Check if .puppet-master directory exists and appears writable
     fn check_puppet_master_dir(&self) -> RuntimeItem {
-        let pm_dir = self.working_dir.join(".puppet-master");
+        let project_root = self.resolve_project_root();
+        let pm_dir = crate::utils::puppet_master_dir(&project_root);
         debug!("Checking .puppet-master directory: {:?}", pm_dir);
 
         if pm_dir.exists() {
-            // Directory exists, check if it's writable
-            let test_file = pm_dir.join(".write-test");
-            match fs::write(&test_file, b"test") {
-                Ok(_) => {
-                    let _ = fs::remove_file(&test_file);
-                    RuntimeItem {
-                        name: ".puppet-master Directory".to_string(),
-                        status: true,
-                        message: "Directory exists and is writable".to_string(),
-                        fix_suggestion: None,
-                    }
-                }
+            match directory_appears_writable(&pm_dir) {
+                Ok(_) => RuntimeItem {
+                    name: ".puppet-master Directory".to_string(),
+                    status: true,
+                    message: format!("Directory exists and appears writable: {:?}", pm_dir),
+                    fix_suggestion: None,
+                },
                 Err(e) => RuntimeItem {
                     name: ".puppet-master Directory".to_string(),
                     status: false,
-                    message: format!("Directory is not writable: {}", e),
+                    message: format!("Directory appears read-only: {}", e),
                     fix_suggestion: Some(
                         "Check file permissions on .puppet-master directory".to_string(),
                     ),
                 },
             }
         } else {
-            // Try to create it
-            match fs::create_dir_all(&pm_dir) {
-                Ok(_) => RuntimeItem {
+            if self.in_project_context() {
+                warn!(".puppet-master directory is missing in project context");
+                RuntimeItem {
+                    name: ".puppet-master Directory".to_string(),
+                    status: false,
+                    message: format!("Directory is missing: {:?}", pm_dir),
+                    fix_suggestion: Some(
+                        "Create .puppet-master in the project root (or run project setup)"
+                            .to_string(),
+                    ),
+                }
+            } else {
+                RuntimeItem {
                     name: ".puppet-master Directory".to_string(),
                     status: true,
-                    message: "Directory created successfully".to_string(),
+                    message: ".puppet-master not found (informational outside project context)"
+                        .to_string(),
                     fix_suggestion: None,
-                },
-                Err(e) => {
-                    warn!("Cannot create .puppet-master directory: {}", e);
-                    RuntimeItem {
-                        name: ".puppet-master Directory".to_string(),
-                        status: false,
-                        message: format!("Cannot create directory: {}", e),
-                        fix_suggestion: Some(
-                            "Check write permissions in the working directory".to_string(),
-                        ),
-                    }
                 }
             }
         }
@@ -242,20 +241,14 @@ impl RuntimeCheck {
     fn check_sqlite(&self) -> RuntimeItem {
         debug!("Checking SQLite");
 
-        let db_path = self.working_dir.join(".puppet-master").join("test.db");
-
-        // Try to create/open a database
-        match rusqlite::Connection::open(&db_path) {
-            Ok(_conn) => {
-                // Clean up test database
-                let _ = fs::remove_file(&db_path);
-                RuntimeItem {
-                    name: "SQLite".to_string(),
-                    status: true,
-                    message: "SQLite can be opened in project directory".to_string(),
-                    fix_suggestion: None,
-                }
-            }
+        // Use in-memory DB to avoid side effects during a read-only doctor run.
+        match rusqlite::Connection::open_in_memory() {
+            Ok(_conn) => RuntimeItem {
+                name: "SQLite".to_string(),
+                status: true,
+                message: "SQLite is available (in-memory connection succeeded)".to_string(),
+                fix_suggestion: None,
+            },
             Err(e) => {
                 warn!("Cannot open SQLite database: {}", e);
                 RuntimeItem {
@@ -274,8 +267,21 @@ impl RuntimeCheck {
     /// Check if git is initialized in the working directory
     fn check_git_init(&self) -> RuntimeItem {
         debug!("Checking git initialization");
+        let project_root = self.resolve_project_root();
 
-        let git_dir = self.working_dir.join(".git");
+        if !has_project_markers(&project_root) {
+            return RuntimeItem {
+                name: "Git Repository".to_string(),
+                status: true,
+                message: format!(
+                    "Not a project root; git check is informational (checked: {:?})",
+                    project_root
+                ),
+                fix_suggestion: None,
+            };
+        }
+
+        let git_dir = project_root.join(".git");
 
         if git_dir.exists() {
             RuntimeItem {
@@ -293,6 +299,42 @@ impl RuntimeCheck {
             }
         }
     }
+}
+
+fn resolve_project_root_for_doctor(cwd: &Path) -> PathBuf {
+    let derived = crate::utils::derive_project_root(cwd).unwrap_or_else(|_| cwd.to_path_buf());
+    if derived
+        .file_name()
+        .is_some_and(|name| name == "puppet-master-rs")
+    {
+        if let Some(parent) = derived.parent() {
+            if crate::utils::puppet_master_dir(parent).exists() {
+                return parent.to_path_buf();
+            }
+        }
+    }
+    derived
+}
+
+fn has_project_markers(path: &Path) -> bool {
+    if [".git", "Cargo.toml", "package.json", "pom.xml", "go.mod"]
+        .iter()
+        .any(|marker| path.join(marker).exists())
+    {
+        return true;
+    }
+
+    // Treat .puppet-master as a project marker only when it has canonical project files.
+    let puppet_master_dir = path.join(".puppet-master");
+    puppet_master_dir.join("prd.json").exists()
+}
+
+fn directory_appears_writable(path: &Path) -> Result<(), String> {
+    let metadata = fs::metadata(path).map_err(|e| e.to_string())?;
+    if metadata.permissions().readonly() {
+        return Err("permissions are read-only".to_string());
+    }
+    Ok(())
 }
 
 impl Default for RuntimeCheck {
@@ -405,15 +447,26 @@ mod tests {
     #[test]
     fn test_check_puppet_master_dir() {
         let temp_dir = TempDir::new().unwrap();
+        fs::write(temp_dir.path().join("Cargo.toml"), "[package]").unwrap();
+        let check = RuntimeCheck::with_working_dir(temp_dir.path().to_path_buf());
+        let result = check.check_puppet_master_dir();
+        assert!(!result.status);
+        assert!(!temp_dir.path().join(".puppet-master").exists());
+    }
+
+    #[test]
+    fn test_check_puppet_master_dir_is_informational_outside_project_context() {
+        let temp_dir = TempDir::new().unwrap();
         let check = RuntimeCheck::with_working_dir(temp_dir.path().to_path_buf());
         let result = check.check_puppet_master_dir();
         assert!(result.status);
-        assert!(temp_dir.path().join(".puppet-master").exists());
+        assert!(!temp_dir.path().join(".puppet-master").exists());
     }
 
     #[test]
     fn test_check_git_init() {
         let temp_dir = TempDir::new().unwrap();
+        fs::write(temp_dir.path().join("Cargo.toml"), "[package]").unwrap();
         let check = RuntimeCheck::with_working_dir(temp_dir.path().to_path_buf());
         let result = check.check_git_init();
         assert!(!result.status); // Git not initialized
@@ -422,6 +475,26 @@ mod tests {
         fs::create_dir(temp_dir.path().join(".git")).unwrap();
         let result = check.check_git_init();
         assert!(result.status);
+    }
+
+    #[test]
+    fn test_check_git_init_is_informational_outside_project_context() {
+        let temp_dir = TempDir::new().unwrap();
+        let check = RuntimeCheck::with_working_dir(temp_dir.path().to_path_buf());
+        let result = check.check_git_init();
+        assert!(result.status);
+        assert!(result.message.contains("informational"));
+    }
+
+    #[test]
+    fn test_bare_puppet_master_dir_is_not_treated_as_project_marker() {
+        let temp_dir = TempDir::new().unwrap();
+        fs::create_dir(temp_dir.path().join(".puppet-master")).unwrap();
+
+        assert!(
+            !has_project_markers(temp_dir.path()),
+            "bare .puppet-master without prd.json should not force project context"
+        );
     }
 
     #[tokio::test]

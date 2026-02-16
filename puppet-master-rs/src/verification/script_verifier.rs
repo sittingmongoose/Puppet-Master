@@ -237,10 +237,10 @@ mod tests {
     use std::io::Write;
     #[cfg(unix)]
     use std::os::unix::fs::PermissionsExt;
-    #[cfg(windows)]
-    use tempfile::tempdir;
     #[cfg(unix)]
     use tempfile::NamedTempFile;
+    #[cfg(windows)]
+    use tempfile::tempdir;
 
     #[tokio::test]
     async fn test_script_verifier_success() {

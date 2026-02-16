@@ -8,22 +8,11 @@ use async_trait::async_trait;
 use chrono::Utc;
 use std::path::PathBuf;
 use tokio::process::Command;
-use which::which;
+use tokio::time::{Duration, timeout};
 
 // DRY:FN:find_executable_with_fallbacks -- Resolve executable via PATH + known fallback dirs.
 fn find_executable_with_fallbacks(name: &str) -> Option<PathBuf> {
-    if let Ok(path) = which(name) {
-        return Some(path);
-    }
-
-    for dir in crate::platforms::path_utils::get_fallback_directories() {
-        let candidate = dir.join(name);
-        if let Some(found) = crate::platforms::path_utils::check_executable_exists(&candidate) {
-            return Some(found);
-        }
-    }
-
-    crate::platforms::path_utils::find_in_shell_path(name)
+    crate::platforms::path_utils::resolve_executable(name)
 }
 
 // DRY:FN:run_shell_command -- Execute a shell command string on the current OS.
@@ -71,10 +60,7 @@ nvm alias default 'lts/*'"#
 
     #[cfg(not(any(target_os = "windows", target_os = "macos", target_os = "linux")))]
     {
-        (
-            "Unsupported operating system".to_string(),
-            String::new(),
-        )
+        ("Unsupported operating system".to_string(), String::new())
     }
 }
 
@@ -174,19 +160,37 @@ impl DoctorCheck for NodeRuntimeCheck {
         }
 
         match run_shell_command(&command).await {
-            Ok(output) if output.status.success() => Some(
-                FixResult::success("Node.js installation completed.")
+            Ok(output) if output.status.success() => {
+                let recheck = self.run().await;
+                if recheck.passed {
+                    Some(
+                        FixResult::success("Node.js installation completed.")
+                            .with_step(summary)
+                            .with_step(command)
+                            .with_step(format!("Revalidated: {}", recheck.message)),
+                    )
+                } else {
+                    let mut result = FixResult::failure(
+                        "Node.js installation command succeeded but Node runtime check still failed.",
+                    )
                     .with_step(summary)
-                    .with_step(command),
-            ),
+                    .with_step(command)
+                    .with_step(format!("Revalidation failed: {}", recheck.message));
+                    if let Some(details) = recheck.details {
+                        result = result.with_step(details);
+                    }
+                    Some(result)
+                }
+            }
             Ok(output) => {
                 let stderr = String::from_utf8_lossy(&output.stderr).trim().to_string();
-                let message = if stderr.is_empty() {
-                    "Node.js installation failed.".to_string()
-                } else {
-                    format!("Node.js installation failed: {stderr}")
-                };
-                Some(FixResult::failure(message).with_step(summary).with_step(command))
+                let mut result = FixResult::failure("Node.js installation failed.")
+                    .with_step(summary)
+                    .with_step(command);
+                if !stderr.is_empty() {
+                    result = result.with_step(format!("Installer output: {stderr}"));
+                }
+                Some(result)
             }
             Err(e) => Some(
                 FixResult::failure(format!("Failed to start Node.js installation: {e}"))
@@ -274,15 +278,36 @@ impl DoctorCheck for PlatformSdkCheck {
         let Some(node_path) = find_executable_with_fallbacks("node") else {
             return CheckResult {
                 passed: false,
-                message: format!("{} requires Node.js, but node is not installed", self.sdk_display_name()),
+                message: format!(
+                    "{} requires Node.js, but node is not installed",
+                    self.sdk_display_name()
+                ),
                 details: Some("Install Node.js first, then install SDK package.".to_string()),
+                can_fix: true,
+                timestamp: Utc::now(),
+            };
+        };
+        let Some(npm_path) = find_executable_with_fallbacks("npm") else {
+            return CheckResult {
+                passed: false,
+                message: format!(
+                    "{} requires npm, but npm is not installed",
+                    self.sdk_display_name()
+                ),
+                details: Some(format!(
+                    "Node found at {}, but npm is missing.",
+                    node_path.display()
+                )),
                 can_fix: true,
                 timestamp: Utc::now(),
             };
         };
 
         let script = Self::sdk_check_script(package);
-        let resolved = Command::new(&node_path).args(["-e", &script]).output().await;
+        let resolved = Command::new(&node_path)
+            .args(["-e", &script])
+            .output()
+            .await;
         if matches!(resolved, Ok(out) if out.status.success()) {
             return CheckResult {
                 passed: true,
@@ -294,7 +319,7 @@ impl DoctorCheck for PlatformSdkCheck {
         }
 
         // Fallback check: npm list -g package
-        let npm_global = Command::new("npm")
+        let npm_global = Command::new(&npm_path)
             .args(["list", "-g", package, "--depth=0"])
             .output()
             .await;
@@ -324,7 +349,13 @@ impl DoctorCheck for PlatformSdkCheck {
             return Some(FixResult::not_fixable());
         };
 
-        let command = format!("npm install -g {package}");
+        let Some(npm_path) = find_executable_with_fallbacks("npm") else {
+            return Some(FixResult::failure(
+                "npm is not installed; install Node.js/npm first.",
+            ));
+        };
+
+        let command = format!("{} install -g {package}", npm_path.display());
         if dry_run {
             return Some(
                 FixResult::success(format!("Would install {}", self.sdk_display_name()))
@@ -332,25 +363,57 @@ impl DoctorCheck for PlatformSdkCheck {
             );
         }
 
-        match run_shell_command(&command).await {
-            Ok(output) if output.status.success() => Some(
-                FixResult::success(format!("Installed {}", self.sdk_display_name()))
-                    .with_step(command),
-            ),
-            Ok(output) => {
-                let stderr = String::from_utf8_lossy(&output.stderr).trim().to_string();
-                let message = if stderr.is_empty() {
-                    format!("Failed to install {}", self.sdk_display_name())
+        match timeout(
+            Duration::from_secs(180),
+            Command::new(&npm_path)
+                .args(["install", "-g", package])
+                .output(),
+        )
+        .await
+        {
+            Ok(Ok(output)) if output.status.success() => {
+                let recheck = self.run().await;
+                if recheck.passed {
+                    Some(
+                        FixResult::success(format!("Installed {}", self.sdk_display_name()))
+                            .with_step(command)
+                            .with_step(format!("Revalidated: {}", recheck.message)),
+                    )
                 } else {
-                    format!("Failed to install {}: {}", self.sdk_display_name(), stderr)
-                };
-                Some(FixResult::failure(message).with_step(command))
+                    let mut result = FixResult::failure(format!(
+                        "{} install command succeeded but check still failed",
+                        self.sdk_display_name()
+                    ))
+                    .with_step(command)
+                    .with_step(format!("Revalidation failed: {}", recheck.message));
+                    if let Some(details) = recheck.details {
+                        result = result.with_step(details);
+                    }
+                    Some(result)
+                }
             }
-            Err(e) => Some(
+            Ok(Ok(output)) => {
+                let stderr = String::from_utf8_lossy(&output.stderr).trim().to_string();
+                let mut result =
+                    FixResult::failure(format!("Failed to install {}", self.sdk_display_name()))
+                        .with_step(command);
+                if !stderr.is_empty() {
+                    result = result.with_step(format!("npm stderr: {stderr}"));
+                }
+                Some(result)
+            }
+            Ok(Err(e)) => Some(
                 FixResult::failure(format!(
                     "Failed to start {} installation: {}",
                     self.sdk_display_name(),
                     e
+                ))
+                .with_step(command),
+            ),
+            Err(_) => Some(
+                FixResult::failure(format!(
+                    "{} installation timed out",
+                    self.sdk_display_name()
                 ))
                 .with_step(command),
             ),
@@ -381,5 +444,9 @@ mod tests {
         assert_eq!(codex.sdk_package_name(), Some("@openai/codex-sdk"));
         assert_eq!(copilot.sdk_package_name(), Some("@github/copilot-sdk"));
     }
-}
 
+    #[test]
+    fn executable_lookup_returns_none_for_missing_binary() {
+        assert!(find_executable_with_fallbacks("__rwm_nonexistent_binary_42__").is_none());
+    }
+}

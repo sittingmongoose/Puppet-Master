@@ -9,16 +9,20 @@ use crate::automation::{
 use crate::widgets::Page;
 use anyhow::Result;
 use chrono::Utc;
+use futures::StreamExt;
 use iced::advanced::renderer::Headless;
 use iced::mouse;
 use iced::{Color, Font, Pixels, Size};
-use image::RgbaImage;
 use iced_runtime::user_interface::{Cache, UserInterface};
+use iced_runtime::{Action, task};
+use image::RgbaImage;
 use serde::Serialize;
+use std::collections::{BTreeMap, VecDeque};
+use std::future::Future;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use std::sync::atomic::AtomicBool;
-use std::time::Duration;
+use std::time::{Duration, Instant};
 
 impl HeadlessRunner {
     // DRY:FN:run
@@ -45,7 +49,7 @@ pub fn run(
     artifacts_root: &Path,
     debug_feed: &mut DebugFeedCollector,
 ) -> Result<RunnerOutcome> {
-    let (mut app, _task) = App::new(Arc::new(AtomicBool::new(false)));
+    let (mut app, init_task) = App::new(Arc::new(AtomicBool::new(false)));
 
     // Initialize headless Iced renderer (tiny-skia software backend — no GPU/display needed).
     // Use existing tokio runtime if available (e.g. when called from #[tokio::test]),
@@ -54,15 +58,16 @@ pub fn run(
         <iced::Renderer as Headless>::new(Font::DEFAULT, Pixels(16.0), Some("tiny-skia")).await
     };
     let mut renderer = if let Ok(handle) = tokio::runtime::Handle::try_current() {
-        std::thread::scope(|s| {
-            s.spawn(|| handle.block_on(init_renderer)).join().unwrap()
-        })
+        std::thread::scope(|s| s.spawn(|| handle.block_on(init_renderer)).join().unwrap())
     } else {
         let rt = tokio::runtime::Runtime::new()
             .map_err(|e| anyhow::anyhow!("Failed to create tokio runtime: {e}"))?;
         rt.block_on(init_renderer)
     }
     .ok_or_else(|| anyhow::anyhow!("Failed to initialize headless tiny-skia renderer"))?;
+
+    let initial_timeout = Duration::from_secs(2);
+    drain_task_messages(&mut app, init_task, initial_timeout).map_err(anyhow::Error::msg)?;
 
     let mut passed = true;
     let mut results = Vec::new();
@@ -94,8 +99,15 @@ pub fn run(
         let mut message = String::from("ok");
         let mut artifacts = Vec::new();
 
-        let action_result =
-            execute_action(&mut app, &step, artifacts_root, &mut artifacts, &mut renderer);
+        let step_timeout = Duration::from_millis(step.timeout_ms.unwrap_or(spec.timeout_ms).max(1));
+        let action_result = execute_action(
+            &mut app,
+            &step,
+            artifacts_root,
+            &mut artifacts,
+            &mut renderer,
+            step_timeout,
+        );
         if let Err(err) = action_result {
             step_passed = false;
             message = err;
@@ -183,28 +195,29 @@ fn execute_action(
     artifacts_root: &Path,
     artifacts: &mut Vec<PathBuf>,
     renderer: &mut iced::Renderer,
+    step_timeout: Duration,
 ) -> std::result::Result<(), String> {
     match &step.action {
         GuiAction::Navigate { page } => {
             let page = parse_page(page).ok_or_else(|| format!("Unknown page '{}'", page))?;
-            let _ = app.update(Message::NavigateTo(page));
-            Ok(())
+            let task = app.update(Message::NavigateTo(page));
+            drain_task_messages(app, task, step_timeout)
         }
         GuiAction::Execute { action_id } => {
             let msg = resolve_action(action_id)
                 .ok_or_else(|| format!("Unknown action id '{}'", action_id))?;
-            let _ = app.update(msg);
-            Ok(())
+            let task = app.update(msg);
+            drain_task_messages(app, task, step_timeout)
         }
         GuiAction::Click { selector } => {
             let msg = selector_to_message(selector)?;
-            let _ = app.update(msg);
-            Ok(())
+            let task = app.update(msg);
+            drain_task_messages(app, task, step_timeout)
         }
         GuiAction::Type { selector, text } => {
             let msg = selector_to_type_message(selector, text)?;
-            let _ = app.update(msg);
-            Ok(())
+            let task = app.update(msg);
+            drain_task_messages(app, task, step_timeout)
         }
         GuiAction::Wait { ms } => {
             std::thread::sleep(Duration::from_millis(*ms));
@@ -218,6 +231,111 @@ fn execute_action(
             Ok(())
         }
     }
+}
+
+// DRY:FN:block_on_future
+fn block_on_future<T>(
+    future: impl Future<Output = T> + Send + 'static,
+) -> std::result::Result<T, String>
+where
+    T: Send + 'static,
+{
+    if let Ok(handle) = tokio::runtime::Handle::try_current() {
+        std::thread::scope(|scope| {
+            scope
+                .spawn(move || handle.block_on(future))
+                .join()
+                .map_err(|_| "Task drain runtime thread panicked".to_string())
+        })
+    } else {
+        let rt = tokio::runtime::Runtime::new()
+            .map_err(|e| format!("Failed to create task-drain runtime: {e}"))?;
+        Ok(rt.block_on(future))
+    }
+}
+
+// DRY:FN:collect_task_actions
+fn collect_task_actions(
+    task_to_drain: iced::Task<Message>,
+    timeout: Duration,
+) -> std::result::Result<Vec<Action<Message>>, String> {
+    let Some(mut stream) = task::into_stream(task_to_drain) else {
+        return Ok(Vec::new());
+    };
+
+    let wait_timeout = if timeout.is_zero() {
+        Duration::from_millis(1)
+    } else {
+        timeout
+    };
+
+    block_on_future(async move {
+        let deadline = tokio::time::Instant::now() + wait_timeout;
+        let mut actions = Vec::new();
+
+        loop {
+            let now = tokio::time::Instant::now();
+            if now >= deadline {
+                return Err("Task drain timed out waiting for action stream".to_string());
+            }
+
+            let remaining = deadline.saturating_duration_since(now);
+            match tokio::time::timeout(remaining, stream.next()).await {
+                Ok(Some(action)) => actions.push(action),
+                Ok(None) => break,
+                Err(_) => break,
+            }
+        }
+
+        Ok(actions)
+    })?
+}
+
+// DRY:FN:drain_task_messages
+fn drain_task_messages(
+    app: &mut App,
+    initial_task: iced::Task<Message>,
+    timeout: Duration,
+) -> std::result::Result<(), String> {
+    const MAX_TASK_OUTPUTS: usize = 20_000;
+
+    let wait_timeout = if timeout.is_zero() {
+        Duration::from_millis(1)
+    } else {
+        timeout
+    };
+
+    let deadline = Instant::now() + wait_timeout;
+    let mut queue = VecDeque::from([initial_task]);
+    let mut outputs_seen = 0usize;
+
+    while let Some(task) = queue.pop_front() {
+        if Instant::now() >= deadline {
+            break;
+        }
+
+        let remaining = deadline.saturating_duration_since(Instant::now());
+        let actions = collect_task_actions(task, remaining)?;
+
+        for action in actions {
+            match action {
+                Action::Output(message) => {
+                    outputs_seen += 1;
+                    if outputs_seen > MAX_TASK_OUTPUTS {
+                        break;
+                    }
+
+                    let next_task = app.update(message);
+                    queue.push_back(next_task);
+                }
+                _ => {
+                    // Non-output runtime effects (window/clipboard/system) are not executed in headless tests.
+                }
+            }
+        }
+    }
+
+    Ok(())
 }
 
 // DRY:FN:selector_to_message
@@ -378,6 +496,126 @@ fn evaluate_assertion(app: &App, assertion: &GuiAssertion) -> std::result::Resul
             }
             Ok(())
         }
+        GuiAssertion::DoctorRunning { value } => {
+            if app.doctor_running != *value {
+                return Err(format!(
+                    "Expected doctor_running={} but found {}",
+                    value, app.doctor_running
+                ));
+            }
+            Ok(())
+        }
+        GuiAssertion::DoctorResultCountAtLeast { count } => {
+            if app.doctor_results.len() < *count {
+                return Err(format!(
+                    "Expected at least {} doctor results but found {}",
+                    count,
+                    app.doctor_results.len()
+                ));
+            }
+            Ok(())
+        }
+        GuiAssertion::DoctorCheckStatus { check_name, status } => {
+            let Some(check) = app.doctor_results.iter().find(|c| c.name == *check_name) else {
+                return Err(format!("Doctor check '{}' not found", check_name));
+            };
+
+            let actual = if check.passed {
+                "pass"
+            } else if check.fix_available {
+                "fail"
+            } else {
+                "warn"
+            };
+            if actual != status.to_lowercase() {
+                return Err(format!(
+                    "Expected doctor check '{}' status '{}' but found '{}'",
+                    check_name, status, actual
+                ));
+            }
+            Ok(())
+        }
+        GuiAssertion::ToastContains { text } => {
+            if !app.toasts.iter().any(|toast| toast.message.contains(text)) {
+                return Err(format!("Expected at least one toast containing '{}'", text));
+            }
+            Ok(())
+        }
+        GuiAssertion::ToastTypeContains { toast_type, text } => {
+            let expected_type = toast_type.to_lowercase();
+            let has_match = app.toasts.iter().any(|toast| {
+                let type_match = format!("{:?}", toast.toast_type).to_lowercase() == expected_type;
+                let text_match = text
+                    .as_ref()
+                    .map(|needle| toast.message.contains(needle))
+                    .unwrap_or(true);
+                type_match && text_match
+            });
+
+            if !has_match {
+                return Err(format!(
+                    "Expected toast type '{}' with text filter {:?}",
+                    toast_type, text
+                ));
+            }
+            Ok(())
+        }
+        GuiAssertion::AuthStatus {
+            platform,
+            authenticated,
+        } => {
+            let Some(status) = app.platform_auth_status.get(platform) else {
+                return Err(format!("Auth status entry '{}' not found", platform));
+            };
+            if status.authenticated != *authenticated {
+                return Err(format!(
+                    "Expected auth status '{}' authenticated={} but found {}",
+                    platform, authenticated, status.authenticated
+                ));
+            }
+            Ok(())
+        }
+        GuiAssertion::SetupChecking { value } => {
+            if app.setup_is_checking != *value {
+                return Err(format!(
+                    "Expected setup_is_checking={} but found {}",
+                    value, app.setup_is_checking
+                ));
+            }
+            Ok(())
+        }
+        GuiAssertion::SetupPlatformStatus { platform, status } => {
+            let normalized_platform = platform.to_lowercase();
+            let Some(entry) = app.setup_platform_statuses.iter().find(|candidate| {
+                candidate.platform.to_string().to_lowercase() == normalized_platform
+            }) else {
+                return Err(format!("Setup platform '{}' not found", platform));
+            };
+
+            let actual_status = match &entry.status {
+                crate::doctor::InstallationStatus::Installed(_) => "installed",
+                crate::doctor::InstallationStatus::NotInstalled => "not_installed",
+                crate::doctor::InstallationStatus::Outdated { .. } => "outdated",
+            };
+
+            if actual_status != status.to_lowercase() {
+                return Err(format!(
+                    "Expected setup platform '{}' status '{}' but found '{}'",
+                    platform, status, actual_status
+                ));
+            }
+            Ok(())
+        }
+        GuiAssertion::SetupPlatformCountAtLeast { count } => {
+            if app.setup_platform_statuses.len() < *count {
+                return Err(format!(
+                    "Expected at least {} setup platforms but found {}",
+                    count,
+                    app.setup_platform_statuses.len()
+                ));
+            }
+            Ok(())
+        }
     }
 }
 
@@ -400,6 +638,82 @@ fn write_snapshot_artifacts(
         .ok_or_else(|| anyhow::anyhow!("Failed to create image from RGBA buffer"))?;
     img.save(&png_path)?;
 
+    let doctor_checks = app
+        .doctor_results
+        .iter()
+        .map(|check| DoctorCheckSnapshot {
+            name: check.name.clone(),
+            passed: check.passed,
+            status: if check.passed {
+                "pass".to_string()
+            } else if check.fix_available {
+                "fail".to_string()
+            } else {
+                "warn".to_string()
+            },
+            message: check.message.clone(),
+            fix_available: check.fix_available,
+        })
+        .collect::<Vec<_>>();
+
+    let toasts = app
+        .toasts
+        .iter()
+        .map(|toast| ToastSnapshot {
+            toast_type: format!("{:?}", toast.toast_type),
+            message: toast.message.clone(),
+        })
+        .collect::<Vec<_>>();
+
+    let mut auth_statuses = BTreeMap::new();
+    for (platform, status) in &app.platform_auth_status {
+        auth_statuses.insert(
+            platform.clone(),
+            AuthSnapshot {
+                authenticated: status.authenticated,
+                method: format!("{:?}", status.method),
+                hint: status.hint.clone(),
+            },
+        );
+    }
+
+    let setup_platform_statuses = app
+        .setup_platform_statuses
+        .iter()
+        .map(|entry| SetupPlatformSnapshot {
+            platform: entry.platform.to_string(),
+            status: match &entry.status {
+                crate::doctor::InstallationStatus::Installed(_) => "installed".to_string(),
+                crate::doctor::InstallationStatus::NotInstalled => "not_installed".to_string(),
+                crate::doctor::InstallationStatus::Outdated { .. } => "outdated".to_string(),
+            },
+            detected_path: entry.detected_path.clone(),
+        })
+        .collect::<Vec<_>>();
+
+    let platform_availability = app
+        .setup_platform_statuses
+        .iter()
+        .map(|entry| {
+            let enabled = matches!(
+                entry.status,
+                crate::doctor::InstallationStatus::Installed(_)
+                    | crate::doctor::InstallationStatus::Outdated { .. }
+            );
+            PlatformAvailabilitySnapshot {
+                platform: entry.platform.to_string(),
+                enabled,
+                reason: if enabled {
+                    None
+                } else if entry.instructions.trim().is_empty() {
+                    Some("not installed".to_string())
+                } else {
+                    Some(entry.instructions.lines().next().unwrap_or("").to_string())
+                },
+            }
+        })
+        .collect::<Vec<_>>();
+
     let snapshot = AppSnapshot {
         current_page: format!("{:?}", app.current_page),
         orchestrator_status: app.orchestrator_status.clone(),
@@ -407,6 +721,37 @@ fn write_snapshot_artifacts(
         output_line_count: app.output_lines.len(),
         wizard_step: app.wizard_step,
         doctor_running: app.doctor_running,
+        active_context_menu: app
+            .active_context_menu
+            .as_ref()
+            .map(|menu| format!("{menu:?}")),
+        toast_count: app.toasts.len(),
+        latest_toast_message: app.toasts.last().map(|toast| toast.message.clone()),
+        doctor_checks,
+        toasts,
+        auth_statuses,
+        setup_is_checking: app.setup_is_checking,
+        setup_installing: app.setup_installing.map(|platform| platform.to_string()),
+        setup_platform_statuses,
+        platform_availability,
+        config_tier_platforms: BTreeMap::from([
+            (
+                "phase".to_string(),
+                app.gui_config.tiers.phase.platform.clone(),
+            ),
+            (
+                "task".to_string(),
+                app.gui_config.tiers.task.platform.clone(),
+            ),
+            (
+                "subtask".to_string(),
+                app.gui_config.tiers.subtask.platform.clone(),
+            ),
+            (
+                "iteration".to_string(),
+                app.gui_config.tiers.iteration.platform.clone(),
+            ),
+        ]),
     };
 
     std::fs::write(&json_path, serde_json::to_string_pretty(&snapshot)?)?;
@@ -518,6 +863,52 @@ fn default_steps() -> Vec<GuiStep> {
 
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
+// DRY:DATA:DoctorCheckSnapshot
+struct DoctorCheckSnapshot {
+    name: String,
+    passed: bool,
+    status: String,
+    message: String,
+    fix_available: bool,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+// DRY:DATA:ToastSnapshot
+struct ToastSnapshot {
+    toast_type: String,
+    message: String,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+// DRY:DATA:AuthSnapshot
+struct AuthSnapshot {
+    authenticated: bool,
+    method: String,
+    hint: String,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+// DRY:DATA:SetupPlatformSnapshot
+struct SetupPlatformSnapshot {
+    platform: String,
+    status: String,
+    detected_path: Option<String>,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+// DRY:DATA:PlatformAvailabilitySnapshot
+struct PlatformAvailabilitySnapshot {
+    platform: String,
+    enabled: bool,
+    reason: Option<String>,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
 // DRY:DATA:AppSnapshot
 struct AppSnapshot {
     current_page: String,
@@ -526,6 +917,17 @@ struct AppSnapshot {
     output_line_count: usize,
     wizard_step: usize,
     doctor_running: bool,
+    active_context_menu: Option<String>,
+    toast_count: usize,
+    latest_toast_message: Option<String>,
+    doctor_checks: Vec<DoctorCheckSnapshot>,
+    toasts: Vec<ToastSnapshot>,
+    auth_statuses: BTreeMap<String, AuthSnapshot>,
+    setup_is_checking: bool,
+    setup_installing: Option<String>,
+    setup_platform_statuses: Vec<SetupPlatformSnapshot>,
+    platform_availability: Vec<PlatformAvailabilitySnapshot>,
+    config_tier_platforms: BTreeMap<String, String>,
 }
 
 #[cfg(test)]
@@ -567,8 +969,15 @@ mod tests {
         };
 
         let mut artifacts = Vec::new();
-        execute_action(&mut app, &step, temp.path(), &mut artifacts, &mut renderer)
-            .expect("type action");
+        execute_action(
+            &mut app,
+            &step,
+            temp.path(),
+            &mut artifacts,
+            &mut renderer,
+            Duration::from_secs(5),
+        )
+        .expect("type action");
 
         assert_eq!(app.wizard_project_name, "BetaProject");
     }

@@ -3,12 +3,12 @@
 //! Displays authentication status for all platforms with Login/Logout buttons in a
 //! responsive 3-column grid layout matching the Tauri React version.
 
-use crate::app::{AuthActionKind, ContextMenuTarget, Message, SelectableField};
+use crate::app::{AuthActionKind, ContextMenuTarget, LoginTextSurface, Message, SelectableField};
 use crate::platforms::AuthTarget;
 use crate::theme::{AppTheme, colors, tokens};
 use crate::types::Platform;
 use crate::widgets::{responsive::responsive_grid, *};
-use iced::widget::{column, container, row, scrollable, text, text_editor};
+use iced::widget::{column, container, mouse_area, row, scrollable, text, text_editor};
 use iced::{Alignment, Element, Length};
 use std::collections::HashMap;
 
@@ -93,7 +93,7 @@ fn get_platform_defs() -> Vec<PlatformDef> {
             platform_specs::get_spec(Platform::Claude).display_name,
             AuthTarget::Platform(Platform::Claude),
             IconName::Brain,
-            false, // Claude: manage at platform console
+            true,
         ),
         PlatformDef::new(
             "Gemini",
@@ -117,6 +117,39 @@ fn get_platform_defs() -> Vec<PlatformDef> {
             true,
         ),
     ]
+}
+
+fn login_surface_menu_open(
+    active_context_menu: &Option<ContextMenuTarget>,
+    surface: LoginTextSurface,
+) -> bool {
+    matches!(
+        active_context_menu,
+        Some(ContextMenuTarget::LoginSurface(current)) if *current == surface
+    )
+}
+
+fn with_login_surface_context<'a>(
+    theme: &'a AppTheme,
+    surface: LoginTextSurface,
+    active_context_menu: &'a Option<ContextMenuTarget>,
+    content: Element<'a, Message>,
+    show_select_all: bool,
+) -> Element<'a, Message> {
+    let menu_open = login_surface_menu_open(active_context_menu, surface);
+    let mut wrapped = column![mouse_area(content).on_right_press(Message::OpenContextMenu(
+        ContextMenuTarget::LoginSurface(surface),
+    ))]
+    .spacing(tokens::spacing::XS);
+
+    if menu_open {
+        wrapped = wrapped.push(context_menu_actions(
+            theme,
+            ContextMenuOptions { show_select_all },
+        ));
+    }
+
+    wrapped.into()
 }
 
 // DRY:FN:login_view
@@ -153,7 +186,12 @@ pub fn view<'a>(
     content = content.push(header);
 
     // Summary stats panel (responsive)
-    content = content.push(build_summary_panel(auth_status, theme, size));
+    content = content.push(build_summary_panel(
+        auth_status,
+        active_context_menu,
+        theme,
+        size,
+    ));
 
     // Platform cards grid (responsive)
     content = content.push(build_platform_grid(
@@ -167,7 +205,7 @@ pub fn view<'a>(
     ));
 
     // CLI alternative panel
-    content = content.push(build_cli_panel(cli_content, theme));
+    content = content.push(build_cli_panel(cli_content, active_context_menu, theme));
 
     // Git Configuration section
     content = content.push(build_git_config_section(
@@ -186,6 +224,7 @@ pub fn view<'a>(
 /// Build the summary stats panel (responsive grid)
 fn build_summary_panel<'a>(
     auth_status: &'a HashMap<String, AuthStatus>,
+    active_context_menu: &'a Option<ContextMenuTarget>,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
@@ -200,13 +239,17 @@ fn build_summary_panel<'a>(
                 column![
                     text(label)
                         .size(tokens::font_size::SM)
-                        .color(theme.ink_faded()),
+                        .color(theme.ink_faded())
+                        .width(Length::Fill)
+                        .align_x(iced::alignment::Horizontal::Center),
                     text(count.to_string())
                         .size(tokens::font_size::XXL)
-                        .color(color),
+                        .color(color)
+                        .width(Length::Fill)
+                        .align_x(iced::alignment::Horizontal::Center),
                 ]
                 .spacing(tokens::spacing::XS)
-                .align_x(Alignment::Center),
+                .width(Length::Fill),
             )
             .padding(tokens::spacing::MD)
             .width(Length::Fill),
@@ -232,7 +275,14 @@ fn build_summary_panel<'a>(
     ];
 
     // Use responsive_grid to adapt column count based on screen size
-    responsive_grid(size.width, stat_cards, tokens::spacing::MD)
+    let summary_grid = responsive_grid(size.width, stat_cards, tokens::spacing::MD);
+    with_login_surface_context(
+        theme,
+        LoginTextSurface::Summary,
+        active_context_menu,
+        summary_grid,
+        true,
+    )
 }
 
 /// Build the platform cards grid (responsive)
@@ -385,7 +435,14 @@ fn build_platform_card<'a>(
     // Add action buttons
     card_content = card_content.push(action_buttons);
 
-    themed_panel(card_content, theme).into()
+    let card: Element<'a, Message> = themed_panel(card_content, theme).into();
+    with_login_surface_context(
+        theme,
+        LoginTextSurface::PlatformCard(def.auth_target),
+        active_context_menu,
+        card,
+        true,
+    )
 }
 
 /// Build action buttons for a platform card
@@ -440,6 +497,7 @@ fn build_action_buttons<'a>(
 /// Build CLI alternative panel
 fn build_cli_panel<'a>(
     cli_content: &'a text_editor::Content,
+    active_context_menu: &'a Option<ContextMenuTarget>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let cli_commands = column![
@@ -461,7 +519,16 @@ fn build_cli_panel<'a>(
     ]
     .spacing(tokens::spacing::SM);
 
-    themed_panel(container(cli_commands).padding(tokens::spacing::MD), theme).into()
+    let panel: Element<'a, Message> =
+        themed_panel(container(cli_commands).padding(tokens::spacing::MD), theme).into();
+
+    with_login_surface_context(
+        theme,
+        LoginTextSurface::CliPanel,
+        active_context_menu,
+        panel,
+        true,
+    )
 }
 
 /// Build Git Configuration section
@@ -479,7 +546,7 @@ fn build_git_config_section<'a>(
     .spacing(tokens::spacing::MD);
 
     // GitHub authentication card
-    let github_card = build_github_card(github_auth_status, theme);
+    let github_card = build_github_card(github_auth_status, active_context_menu, theme);
     content = content.push(github_card);
 
     // Git info display (if available)
@@ -624,12 +691,21 @@ fn build_git_config_section<'a>(
         .padding(tokens::spacing::SM),
     );
 
-    themed_panel(container(content).padding(tokens::spacing::MD), theme).into()
+    let panel: Element<'a, Message> =
+        themed_panel(container(content).padding(tokens::spacing::MD), theme).into();
+    with_login_surface_context(
+        theme,
+        LoginTextSurface::GitSection,
+        active_context_menu,
+        panel,
+        true,
+    )
 }
 
 /// Build GitHub authentication card
 fn build_github_card<'a>(
     github_auth_status: &'a Option<String>,
+    active_context_menu: &'a Option<ContextMenuTarget>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let authenticated = github_auth_status
@@ -660,7 +736,7 @@ fn build_github_card<'a>(
         .spacing(tokens::spacing::SM)
     };
 
-    themed_panel(
+    let card: Element<'a, Message> = themed_panel(
         container(
             column![
                 row![
@@ -679,5 +755,13 @@ fn build_github_card<'a>(
         .padding(tokens::spacing::MD),
         theme,
     )
-    .into()
+    .into();
+
+    with_login_surface_context(
+        theme,
+        LoginTextSurface::PlatformCard(AuthTarget::GitHub),
+        active_context_menu,
+        card,
+        true,
+    )
 }

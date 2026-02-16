@@ -1,5 +1,5 @@
 use chrono::Utc;
-use puppet_master::app::{App, Message};
+use puppet_master::app::{App, ContextMenuTarget, LoginTextSurface, Message, SelectableField};
 use puppet_master::platforms::AuthTarget;
 use puppet_master::theme::AppTheme;
 use puppet_master::types::Platform;
@@ -7,6 +7,7 @@ use puppet_master::views::doctor::{CheckCategory, DoctorCheckResult};
 use puppet_master::views::evidence::{EvidenceFilter, EvidenceItem, EvidenceItemType};
 use puppet_master::views::history::{SessionInfo, SessionStatus};
 use puppet_master::views::ledger::{EventType, LedgerEntry};
+use puppet_master::views::login::{AuthMethod, AuthStatus};
 use puppet_master::views::memory::MemorySection;
 use puppet_master::views::tiers::{TierDisplayNode, TierNodeType};
 use serde_json::Value;
@@ -46,7 +47,9 @@ fn dashboard_projects_wizard_and_config_controls_work() {
     let _ = app.update(Message::ResumeOrchestrator);
     let _ = app.update(Message::StopOrchestrator);
     assert!(
-        app.toasts.iter().any(|t| t.message.contains("Starting orchestrator")),
+        app.toasts
+            .iter()
+            .any(|t| t.message.contains("Starting orchestrator")),
         "dashboard start action should emit toast"
     );
 
@@ -91,7 +94,9 @@ fn dashboard_projects_wizard_and_config_controls_work() {
     let _ = app.update(Message::ConfigAdvancedCheckboxToggled(
         "intensive_logging".to_string(),
     ));
-    let _ = app.update(Message::ConfigInterviewToggled("first_principles".to_string()));
+    let _ = app.update(Message::ConfigInterviewToggled(
+        "first_principles".to_string(),
+    ));
 
     assert_eq!(app.config_active_tab, 3);
     assert_eq!(app.gui_config.tiers.phase.plan_mode, !initial_plan_mode);
@@ -100,7 +105,10 @@ fn dashboard_projects_wizard_and_config_controls_work() {
         app.gui_config.verification.screenshot_on_failure,
         !initial_screenshot
     );
-    assert_eq!(app.gui_config.memory.multi_level_agents, !initial_memory_multi);
+    assert_eq!(
+        app.gui_config.memory.multi_level_agents,
+        !initial_memory_multi
+    );
     assert_eq!(
         app.gui_config.advanced.intensive_logging,
         !initial_intensive_logging
@@ -245,7 +253,9 @@ fn evidence_history_memory_ledger_and_coverage_controls_work() {
     assert_eq!(app.history_page, 0);
     let _ = app.update(Message::HistorySearchChanged("S2".to_string()));
     assert_eq!(app.history_search, "S2");
-    let _ = app.update(Message::HistoryFilterChanged(Some(SessionStatus::Completed)));
+    let _ = app.update(Message::HistoryFilterChanged(Some(
+        SessionStatus::Completed,
+    )));
     assert_eq!(app.history_filter, Some(SessionStatus::Completed));
 
     // Memory controls
@@ -288,8 +298,9 @@ fn login_settings_metrics_and_interview_controls_work() {
     assert!(
         app.toasts
             .iter()
-            .any(|t| t.message.contains("login completed")),
-        "login completion should emit toast"
+            .any(|t| t.message.contains("login completed")
+                || t.message.contains("login flow launched")),
+        "login completion should emit success or deferred-login toast"
     );
 
     // Settings controls
@@ -331,6 +342,135 @@ fn login_settings_metrics_and_interview_controls_work() {
 }
 
 #[test]
+fn login_context_menu_copy_select_and_paste_behaviors_work() {
+    let mut app = new_test_app();
+    app.platform_auth_status.insert(
+        "Codex".to_string(),
+        AuthStatus {
+            platform: "Codex".to_string(),
+            authenticated: true,
+            method: AuthMethod::CliLogin,
+            hint: "CLI authenticated".to_string(),
+        },
+    );
+    app.login_messages.insert(
+        "Codex".to_string(),
+        "Login completed successfully".to_string(),
+    );
+    app.login_auth_urls.insert(
+        "Codex".to_string(),
+        "https://example.com/codex-auth".to_string(),
+    );
+    app.github_auth_status = Some("authenticated".to_string());
+    app.git_info = Some(puppet_master::app::GitInfoDisplay {
+        user_name: "old-user".to_string(),
+        user_email: "old@example.com".to_string(),
+        remote_url: "https://example.com/repo.git".to_string(),
+        current_branch: "main".to_string(),
+    });
+
+    // Read-only login summary surface supports copy/select-all and safe paste no-op.
+    let _ = app.update(Message::OpenContextMenu(ContextMenuTarget::LoginSurface(
+        LoginTextSurface::Summary,
+    )));
+    let _ = app.update(Message::ContextMenuCopy);
+    let _ = app.update(Message::ContextMenuSelectAll);
+    let _ = app.update(Message::ContextMenuPasteLoaded(Some(
+        "ignored-read-only-paste".to_string(),
+    )));
+
+    assert!(
+        app.toasts
+            .iter()
+            .any(|t| t.message.contains("Copied to clipboard")),
+        "summary context copy should emit a copied toast"
+    );
+    assert!(
+        app.toasts
+            .iter()
+            .any(|t| t.message.contains("Selected all login text")),
+        "summary context select-all should emit a select-all toast"
+    );
+    assert!(
+        app.toasts.iter().any(|t| t
+            .message
+            .contains("Paste is disabled for read-only login text")),
+        "summary paste should be safely blocked for read-only text"
+    );
+
+    // Platform card read-only surface supports copy/select-all and safe paste no-op.
+    let _ = app.update(Message::OpenContextMenu(ContextMenuTarget::LoginSurface(
+        LoginTextSurface::PlatformCard(AuthTarget::Platform(Platform::Codex)),
+    )));
+    let _ = app.update(Message::ContextMenuCopy);
+    let _ = app.update(Message::ContextMenuSelectAll);
+    let _ = app.update(Message::ContextMenuPasteLoaded(Some(
+        "ignored-card-paste".to_string(),
+    )));
+    assert!(
+        app.toasts
+            .iter()
+            .any(|t| t.message.contains("Selected all login text")),
+        "platform card select-all should emit select-all toast"
+    );
+
+    // Git section read-only surface supports copy/select-all and safe paste no-op.
+    let _ = app.update(Message::OpenContextMenu(ContextMenuTarget::LoginSurface(
+        LoginTextSurface::GitSection,
+    )));
+    let _ = app.update(Message::ContextMenuCopy);
+    let _ = app.update(Message::ContextMenuSelectAll);
+    let _ = app.update(Message::ContextMenuPasteLoaded(Some(
+        "ignored-git-paste".to_string(),
+    )));
+    assert!(
+        app.toasts
+            .iter()
+            .any(|t| t.message.contains("Copied to clipboard")),
+        "git section copy should emit copied toast"
+    );
+
+    // Editable selectable field still supports paste.
+    let _ = app.update(Message::OpenContextMenu(
+        ContextMenuTarget::SelectableField(SelectableField::GitUserName),
+    ));
+    let _ = app.update(Message::ContextMenuPasteLoaded(Some(
+        "updated-user".to_string(),
+    )));
+    assert_eq!(
+        app.git_info
+            .as_ref()
+            .map(|info| info.user_name.as_str())
+            .unwrap_or(""),
+        "updated-user"
+    );
+
+    // Login CLI panel has right-click context menu support and select-all/copy.
+    app.login_cli_content = iced::widget::text_editor::Content::with_text("line-a\nline-b");
+    let _ = app.update(Message::OpenContextMenu(ContextMenuTarget::LoginSurface(
+        LoginTextSurface::CliPanel,
+    )));
+    let _ = app.update(Message::ContextMenuSelectAll);
+    let _ = app.update(Message::ContextMenuCopy);
+    let _ = app.update(Message::ContextMenuPasteLoaded(Some(
+        "ignored-cli-paste".to_string(),
+    )));
+
+    assert!(
+        app.toasts
+            .iter()
+            .any(|t| t.message.contains("Copied to clipboard")),
+        "CLI context copy should emit a copied toast"
+    );
+    assert!(
+        app.toasts.iter().any(|t| t
+            .message
+            .contains("Paste is disabled for read-only login text")),
+        "CLI paste should be safely blocked for read-only text"
+    );
+}
+
+#[test]
 fn settings_changes_save_and_reload() {
     let cwd = std::env::current_dir().expect("cwd");
     let data_dir = cwd.join(".puppet-master");
@@ -357,12 +497,18 @@ fn settings_changes_save_and_reload() {
     let json: Value = serde_json::from_str(&raw).expect("parse settings json");
     assert_eq!(json.get("theme").and_then(|v| v.as_str()), Some("light"));
     assert_eq!(json.get("log_level").and_then(|v| v.as_str()), Some("warn"));
-    assert_eq!(json.get("auto_scroll").and_then(|v| v.as_bool()), Some(false));
+    assert_eq!(
+        json.get("auto_scroll").and_then(|v| v.as_bool()),
+        Some(false)
+    );
     assert_eq!(
         json.get("show_timestamps").and_then(|v| v.as_bool()),
         Some(false)
     );
-    assert_eq!(json.get("retention_days").and_then(|v| v.as_u64()), Some(21));
+    assert_eq!(
+        json.get("retention_days").and_then(|v| v.as_u64()),
+        Some(21)
+    );
     assert_eq!(
         json.get("minimize_to_tray").and_then(|v| v.as_bool()),
         Some(false)

@@ -1,52 +1,165 @@
-$ErrorActionPreference = "Stop"
+[CmdletBinding(SupportsShouldProcess = $true)]
+param(
+  [Alias("n")]
+  [switch]$DryRun
+)
 
-# Uninstall Puppet Master from Windows and remove common leftovers.
+$ErrorActionPreference = "Stop"
+Set-StrictMode -Version Latest
+
+# Uninstall RWM Puppet Master from Windows and remove common leftovers.
 # Intended for installer smoke tests (fresh install each run).
 #
 # Usage (Admin PowerShell recommended):
 #   powershell -ExecutionPolicy Bypass -File scripts\\os-clean\\windows-uninstall-puppet-master.ps1
+#   powershell -ExecutionPolicy Bypass -File scripts\\os-clean\\windows-uninstall-puppet-master.ps1 -DryRun
 
-Write-Host "[windows-uninstall] starting"
-
-$installDir = Join-Path ${env:ProgramFiles} "Puppet Master"
-$uninstaller = Join-Path $installDir "Uninstall.exe"
-
-if (Test-Path $uninstaller) {
-  Write-Host "[windows-uninstall] running uninstaller: $uninstaller"
-  # NSIS silent uninstall
-  Start-Process -FilePath $uninstaller -ArgumentList "/S" -Wait
-} else {
-  Write-Host "[windows-uninstall] uninstaller not found at $uninstaller"
+# Dry-run switch maps to WhatIf semantics for safe previews.
+if ($DryRun -and -not $WhatIfPreference) {
+  $WhatIfPreference = $true
 }
 
-# Remove leftovers if any remain
-if (Test-Path $installDir) {
-  Write-Host "[windows-uninstall] removing install dir: $installDir"
-  Remove-Item -Recurse -Force $installDir
+$protectedCliNames = @(
+  "agent", "agent.exe",
+  "codex", "codex.exe",
+  "claude", "claude.exe",
+  "gemini", "gemini.exe",
+  "copilot", "copilot.exe",
+  "gh", "gh.exe",
+  "node", "node.exe"
+)
+
+function Test-ProtectedCliTarget {
+  param(
+    [Parameter(Mandatory = $true)]
+    [string]$Path
+  )
+
+  $leaf = [System.IO.Path]::GetFileName($Path)
+  if ([string]::IsNullOrWhiteSpace($leaf)) {
+    return $false
+  }
+
+  return $protectedCliNames -contains $leaf.ToLowerInvariant()
 }
 
-# Remove Start Menu folder and Desktop shortcut (all users)
-$startMenuDir = Join-Path ${env:ProgramData} "Microsoft\\Windows\\Start Menu\\Programs\\Puppet Master"
-if (Test-Path $startMenuDir) {
-  Write-Host "[windows-uninstall] removing Start Menu dir: $startMenuDir"
-  Remove-Item -Recurse -Force $startMenuDir
+function Test-UnsafeRootPath {
+  param(
+    [Parameter(Mandatory = $true)]
+    [string]$Path
+  )
+
+  if ([string]::IsNullOrWhiteSpace($Path)) {
+    return $true
+  }
+
+  $full = [System.IO.Path]::GetFullPath($Path)
+  $root = [System.IO.Path]::GetPathRoot($full)
+  return $full -eq $root
 }
 
-$desktopLink = Join-Path ${env:Public} "Desktop\\Puppet Master.lnk"
-if (Test-Path $desktopLink) {
-  Write-Host "[windows-uninstall] removing Desktop link: $desktopLink"
-  Remove-Item -Force $desktopLink
-}
+function Remove-PathSafe {
+  param(
+    [Parameter(Mandatory = $true)]
+    [string]$Path,
+    [switch]$Directory
+  )
 
-# Remove per-user runtime state
-$home = ${env:USERPROFILE}
-if ($home) {
-  $runtime = Join-Path $home ".puppet-master"
-  if (Test-Path $runtime) {
-    Write-Host "[windows-uninstall] removing runtime dir: $runtime"
-    Remove-Item -Recurse -Force $runtime
+  if (Test-ProtectedCliTarget -Path $Path) {
+    Write-Host "[windows-uninstall] skipping protected CLI target: $Path"
+    return
+  }
+
+  if (Test-UnsafeRootPath -Path $Path) {
+    Write-Host "[windows-uninstall] skipping unsafe root target: $Path"
+    return
+  }
+
+  if (-not (Test-Path -LiteralPath $Path)) {
+    return
+  }
+
+  $action = if ($Directory) { "Remove directory" } else { "Remove file" }
+  if ($PSCmdlet.ShouldProcess($Path, $action)) {
+    if ($Directory) {
+      Remove-Item -LiteralPath $Path -Recurse -Force -ErrorAction SilentlyContinue
+    } else {
+      Remove-Item -LiteralPath $Path -Force -ErrorAction SilentlyContinue
+    }
   }
 }
 
-Write-Host "[windows-uninstall] done"
+function Invoke-Uninstaller {
+  param(
+    [Parameter(Mandatory = $true)]
+    [string]$Path
+  )
 
+  if (-not (Test-Path -LiteralPath $Path)) {
+    return
+  }
+
+  if ($PSCmdlet.ShouldProcess($Path, "Run uninstaller /S")) {
+    Start-Process -FilePath $Path -ArgumentList "/S" -Wait -ErrorAction SilentlyContinue
+  }
+}
+
+$isDryRun = $DryRun.IsPresent -or $WhatIfPreference
+Write-Host "[windows-uninstall] starting (dry-run: $isDryRun)"
+
+$programFilesRoot = if ($env:ProgramW6432) {
+  $env:ProgramW6432
+} elseif ($env:ProgramFiles) {
+  $env:ProgramFiles
+} else {
+  $null
+}
+
+if ($programFilesRoot) {
+  $installDirs = @(
+    (Join-Path $programFilesRoot "RWM Puppet Master"),
+    (Join-Path $programFilesRoot "Puppet Master") # legacy path
+  )
+
+  foreach ($installDir in $installDirs) {
+    foreach ($uninstallerName in @("uninstall.exe", "Uninstall.exe")) {
+      $uninstaller = Join-Path $installDir $uninstallerName
+      Invoke-Uninstaller -Path $uninstaller
+    }
+
+    Remove-PathSafe -Path $installDir -Directory
+  }
+} else {
+  Write-Host "[windows-uninstall] ProgramFiles environment variable is unavailable; skipping install-dir cleanup"
+}
+
+# Remove Start Menu folders and Desktop shortcuts for current + legacy names.
+if (${env:ProgramData}) {
+  $startMenuRoot = Join-Path ${env:ProgramData} "Microsoft\\Windows\\Start Menu\\Programs"
+  foreach ($menuName in @("RWM Puppet Master", "Puppet Master")) {
+    Remove-PathSafe -Path (Join-Path $startMenuRoot $menuName) -Directory
+  }
+}
+
+foreach ($desktopRoot in @(${env:Public}, ${env:USERPROFILE})) {
+  if (-not $desktopRoot) {
+    continue
+  }
+
+  foreach ($shortcut in @("RWM Puppet Master.lnk", "Puppet Master.lnk")) {
+    Remove-PathSafe -Path (Join-Path (Join-Path $desktopRoot "Desktop") $shortcut)
+  }
+}
+
+# Runtime paths changed across releases; remove both current and legacy.
+if (${env:USERPROFILE}) {
+  Remove-PathSafe -Path (Join-Path ${env:USERPROFILE} ".puppet-master") -Directory
+  Remove-PathSafe -Path (Join-Path ${env:USERPROFILE} ".rwm-puppet-master") -Directory
+}
+
+if (${env:LOCALAPPDATA}) {
+  Remove-PathSafe -Path (Join-Path ${env:LOCALAPPDATA} "RWM Puppet Master") -Directory
+  Remove-PathSafe -Path (Join-Path ${env:LOCALAPPDATA} "rwm-puppet-master") -Directory
+}
+
+Write-Host "[windows-uninstall] done"

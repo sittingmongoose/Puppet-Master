@@ -5,6 +5,7 @@
 
 use crate::app::Message;
 use crate::config::gui_config::{GitInfo, GuiConfig, InstallScope};
+use crate::doctor::InstallationStatus;
 use crate::platforms::platform_specs;
 use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::types::Platform;
@@ -16,6 +17,65 @@ use iced::widget::{
 };
 use iced::{Alignment, Border, Element, Length};
 use std::collections::HashMap;
+
+// DRY:FN:format_platform_option
+/// Format platform display name with availability indicator if detection data exists
+fn format_platform_option(
+    platform: Platform,
+    platform_statuses: &[crate::views::setup::PlatformStatus],
+) -> String {
+    let display_name = platform_specs::display_name_for(platform);
+    
+    // If no detection data, just return the display name
+    if platform_statuses.is_empty() {
+        return display_name.to_string();
+    }
+    
+    // Find the status for this platform
+    let status = platform_statuses.iter().find(|s| s.platform == platform);
+    
+    match status {
+        Some(s)
+            if matches!(
+                s.status,
+                InstallationStatus::Installed(_) | InstallationStatus::Outdated { .. }
+            ) =>
+        {
+            format!("{} ✓", display_name)
+        }
+        Some(_) => {
+            format!("{} (unavailable)", display_name)
+        }
+        None => {
+            // Platform not in detection results, treat as unavailable
+            format!("{} (unavailable)", display_name)
+        }
+    }
+}
+
+// DRY:FN:is_platform_available
+/// Check if a platform is available based on detection results
+#[allow(dead_code)]
+fn is_platform_available(
+    platform: Platform,
+    platform_statuses: &[crate::views::setup::PlatformStatus],
+) -> bool {
+    // If no detection data, allow all platforms
+    if platform_statuses.is_empty() {
+        return true;
+    }
+    
+    platform_statuses
+        .iter()
+        .find(|s| s.platform == platform)
+        .map(|s| {
+            matches!(
+                s.status,
+                InstallationStatus::Installed(_) | InstallationStatus::Outdated { .. }
+            )
+        })
+        .unwrap_or(false)
+}
 
 // DRY:FN:config_view
 /// Configuration editor view with 8 functional tabs
@@ -29,6 +89,7 @@ pub fn view<'a>(
     is_dirty: bool,
     models: &'a HashMap<String, Vec<String>>,
     git_info: &'a Option<GitInfo>,
+    platform_statuses: &'a [crate::views::setup::PlatformStatus],
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
@@ -116,7 +177,7 @@ pub fn view<'a>(
 
     // Tab Content
     let tab_content = match active_tab {
-        0 => tab_tiers(gui_config, models, theme),
+        0 => tab_tiers(gui_config, models, platform_statuses, theme),
         1 => tab_branching(gui_config, git_info, theme),
         2 => tab_verification(gui_config, theme),
         3 => tab_memory(gui_config, theme),
@@ -217,6 +278,7 @@ fn tab_button<'a>(
 fn tab_tiers<'a>(
     gui_config: &'a GuiConfig,
     models: &'a HashMap<String, Vec<String>>,
+    platform_statuses: &'a [crate::views::setup::PlatformStatus],
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let mut content = column![]
@@ -285,6 +347,7 @@ fn tab_tiers<'a>(
         phase_models,
         phase_effort,
         tooltip_variant,
+        platform_statuses,
         theme,
     );
     let task_card = tier_card(
@@ -294,6 +357,7 @@ fn tab_tiers<'a>(
         task_models,
         task_effort,
         tooltip_variant,
+        platform_statuses,
         theme,
     );
     let subtask_card = tier_card(
@@ -303,6 +367,7 @@ fn tab_tiers<'a>(
         subtask_models,
         subtask_effort,
         tooltip_variant,
+        platform_statuses,
         theme,
     );
     let iteration_card = tier_card(
@@ -312,6 +377,7 @@ fn tab_tiers<'a>(
         iteration_models,
         iteration_effort,
         tooltip_variant,
+        platform_statuses,
         theme,
     );
 
@@ -338,11 +404,21 @@ fn tier_card<'a>(
     model_list: Vec<String>,
     effort_visible: bool,
     tooltip_variant: crate::widgets::tooltips::TooltipVariant,
+    platform_statuses: &'a [crate::views::setup::PlatformStatus],
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     const OUTPUT_FORMATS: &[&str] = &["text", "json", "stream-json"];
     const FAILURE_STYLES: &[&str] = &["spawn_new_agent", "continue_same_agent", "skip_retries"];
-    let platforms = platform_specs::PLATFORM_ID_STRS;
+    
+    // Build platform options with availability indicators
+    let platform_options: Vec<String> = Platform::all()
+        .iter()
+        .map(|platform| format_platform_option(*platform, platform_statuses))
+        .collect();
+    
+    let selected_platform_display = Platform::from_str_loose(&tier_config.platform)
+        .map(|platform| format_platform_option(platform, platform_statuses))
+        .or_else(|| Some(tier_config.platform.clone()));
 
     let mut card_content = column![]
         .spacing(tokens::spacing::SM)
@@ -369,12 +445,24 @@ fn tier_card<'a>(
             ]
             .align_y(Alignment::Center),
             pick_list(
-                platforms,
-                Some(tier_config.platform.as_str()),
-                move |platform: &str| Message::ConfigTierPlatformChanged(
-                    tier_name.to_string(),
-                    platform.to_string()
-                )
+                platform_options,
+                selected_platform_display,
+                move |platform_display: String| {
+                    // Extract the platform ID from the formatted display string
+                    // The format can be "Name ✓", "Name (unavailable)", or just "Name"
+                    let clean_display = platform_display
+                        .trim_end_matches(" ✓")
+                        .trim_end_matches(" (unavailable)");
+                    
+                    let platform_id = Platform::all()
+                        .iter()
+                        .find(|platform| {
+                            platform_specs::display_name_for(**platform) == clean_display
+                        })
+                        .map(|platform| platform.to_string())
+                        .unwrap_or_else(|| clean_display.to_lowercase());
+                    Message::ConfigTierPlatformChanged(tier_name.to_string(), platform_id)
+                }
             )
             .width(Length::Fill)
         ]

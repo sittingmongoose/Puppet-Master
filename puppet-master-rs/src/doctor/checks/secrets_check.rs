@@ -185,7 +185,7 @@ impl DoctorCheck for SecretsCheck {
                 } else if !var.set {
                     has_optional_missing = true;
                     platform_messages.push(format!(
-                        "  [WARN]  {} (optional): {}",
+                        "  [INFO] {} (optional): {}",
                         var.name, var.description
                     ));
                 } else {
@@ -211,7 +211,7 @@ impl DoctorCheck for SecretsCheck {
             CheckResult {
                 passed: true,
                 message:
-                    "Optional legacy env overrides missing (non-critical; browser auth preferred)"
+                    "Optional legacy env overrides missing (informational; browser auth preferred)"
                         .to_string(),
                 details: Some(messages.join("\n")),
                 can_fix: false,

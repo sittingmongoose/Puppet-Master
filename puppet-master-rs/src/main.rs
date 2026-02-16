@@ -13,7 +13,7 @@ static SHUTDOWN: AtomicBool = AtomicBool::new(false);
 
 fn main() -> Result<()> {
     if std::env::args().any(|arg| arg == "--version" || arg == "-V") {
-        println!("{}", env!("CARGO_PKG_VERSION"));
+        println!("{}", puppet_master::build_info::cli_version_output());
         return Ok(());
     }
 
@@ -24,8 +24,8 @@ fn main() -> Result<()> {
     let _ = dotenv::dotenv();
 
     info!(
-        "RWM Puppet Master v{} starting...",
-        env!("CARGO_PKG_VERSION")
+        "{} starting...",
+        puppet_master::build_info::full_build_identity()
     );
 
     // Set up signal handlers for graceful shutdown

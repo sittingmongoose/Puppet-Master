@@ -3,13 +3,15 @@
 //! Displays health check results organized by category with expandable details,
 //! platform filtering, summary statistics, and fix suggestions.
 
-use crate::app::Message;
+use crate::app::{ContextMenuTarget, Message, SelectableField};
 use crate::doctor::check_targeting;
 use crate::platforms::platform_specs;
 use crate::theme::{AppTheme, colors, tokens};
 use crate::types::Platform;
 use crate::widgets::{responsive::responsive_grid, *};
-use iced::widget::{Checkbox, Space, column, container, row, scrollable, text, text_editor};
+use iced::widget::{
+    Checkbox, Space, column, container, mouse_area, row, scrollable, text, text_editor,
+};
 use iced::{Alignment, Background, Border, Color, Element, Length};
 use std::collections::{HashMap, HashSet};
 
@@ -119,6 +121,7 @@ pub fn view<'a>(
     selected_platforms: &'a [Platform],
     expanded_checks: &'a HashSet<String>,
     detail_contents: &'a HashMap<String, text_editor::Content>,
+    active_context_menu: &'a Option<ContextMenuTarget>,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
@@ -171,6 +174,7 @@ pub fn view<'a>(
                 fixing,
                 expanded_checks,
                 detail_contents,
+                active_context_menu,
                 theme,
             );
             content = content.push(category_section);
@@ -484,9 +488,9 @@ fn view_summary<'a>(
     // Help text if failures exist
     if failed > 0 {
         let help_text = if selected_platforms.is_empty() {
-            "Use Install all missing above to install dependencies. Run puppet-master init in a project for project checks."
+            "Use INSTALL ALL MISSING above to install dependencies. Start a new project (or run setup/start-chain) to generate project state files."
         } else {
-            "Use Install selected missing above to install dependencies only for selected platforms."
+            "Use INSTALL SELECTED MISSING above to install dependencies only for selected platforms."
         };
         content = content.push(text(help_text).size(tokens::font_size::SM));
     }
@@ -521,6 +525,7 @@ fn view_category<'a>(
     fixing: &'a HashSet<String>,
     expanded_checks: &'a HashSet<String>,
     detail_contents: &'a HashMap<String, text_editor::Content>,
+    active_context_menu: &'a Option<ContextMenuTarget>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let passed = checks.iter().filter(|c| c.passed).count();
@@ -548,7 +553,14 @@ fn view_category<'a>(
 
     // Check rows
     for check in checks {
-        let check_row = view_check_row(check, fixing, expanded_checks, detail_contents, theme);
+        let check_row = view_check_row(
+            check,
+            fixing,
+            expanded_checks,
+            detail_contents,
+            active_context_menu,
+            theme,
+        );
         category_content = category_content.push(check_row);
     }
 
@@ -568,6 +580,7 @@ fn view_check_row<'a>(
     fixing: &'a HashSet<String>,
     expanded_checks: &'a HashSet<String>,
     detail_contents: &'a HashMap<String, text_editor::Content>,
+    active_context_menu: &'a Option<ContextMenuTarget>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let status = check.status();
@@ -650,6 +663,16 @@ fn view_check_row<'a>(
     if is_expanded && check.has_details() {
         if let Some(content) = detail_contents.get(&check.name) {
             let check_name_clone = check.name.clone();
+            let check_name_for_menu = check.name.clone();
+            let context_target = ContextMenuTarget::SelectableField(
+                SelectableField::DoctorCheckDetails(check_name_for_menu.clone()),
+            );
+            let menu_open = matches!(
+                active_context_menu,
+                Some(ContextMenuTarget::SelectableField(
+                    SelectableField::DoctorCheckDetails(current),
+                )) if current == &check_name_for_menu
+            );
             let details_panel = container(
                 text_editor(content)
                     .on_action(move |action| {
@@ -670,7 +693,17 @@ fn view_check_row<'a>(
                 ..Default::default()
             });
 
-            check_content = check_content.push(details_panel);
+            let details_with_context =
+                mouse_area(details_panel).on_right_press(Message::OpenContextMenu(context_target));
+            check_content = check_content.push(details_with_context);
+            if menu_open {
+                check_content = check_content.push(context_menu_actions(
+                    theme,
+                    ContextMenuOptions {
+                        show_select_all: true,
+                    },
+                ));
+            }
         }
     }
 

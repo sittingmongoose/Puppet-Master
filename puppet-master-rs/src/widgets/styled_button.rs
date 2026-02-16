@@ -306,11 +306,9 @@ pub fn header_nav_button<'a, Message: Clone + 'a>(
             if is_active {
                 // Active: always inverted (ink bg, paper text)
                 let (bg, txt, border_alpha) = match status {
-                    button::Status::Disabled => (
-                        Color { a: 0.5, ..ink },
-                        Color { a: 0.5, ..paper },
-                        0.5_f32,
-                    ),
+                    button::Status::Disabled => {
+                        (Color { a: 0.5, ..ink }, Color { a: 0.5, ..paper }, 0.5_f32)
+                    }
                     _ => (ink, paper, 1.0_f32),
                 };
                 button::Style {

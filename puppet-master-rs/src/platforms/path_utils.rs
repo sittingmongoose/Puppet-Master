@@ -7,6 +7,7 @@
 #[cfg(not(target_os = "windows"))]
 use log::debug;
 use std::path::{Path, PathBuf};
+use which::which;
 
 // DRY:FN:expand_home — Cross-platform tilde expansion (~) using $HOME or $USERPROFILE
 /// Expand leading `~` in a path string to the user's home directory.
@@ -150,11 +151,7 @@ pub fn find_in_shell_path(cli_name: &str) -> Option<PathBuf> {
                                     path_entry.replace("$HOME", &home).replace('~', &home);
                                 let exe_path = PathBuf::from(&expanded).join(cli_name);
                                 if let Some(found) = check_executable_exists(&exe_path) {
-                                    debug!(
-                                        "Found {} in shell PATH: {}",
-                                        cli_name,
-                                        found.display()
-                                    );
+                                    debug!("Found {} in shell PATH: {}", cli_name, found.display());
                                     return Some(found);
                                 }
                             }
@@ -171,6 +168,36 @@ pub fn find_in_shell_path(cli_name: &str) -> Option<PathBuf> {
     }
 
     None
+}
+
+// DRY:FN:resolve_executable -- Resolve executable using PATH, fallback directories, and shell profile PATH parsing
+/// Resolve a CLI executable using the same layered approach used by Doctor checks:
+///
+/// 1. System `PATH` lookup via `which`
+/// 2. Known fallback directories from [`get_fallback_directories`]
+/// 3. Shell profile PATH parsing via [`find_in_shell_path`]
+pub fn resolve_executable(cli_name: &str) -> Option<PathBuf> {
+    if let Ok(path) = which(cli_name) {
+        return Some(path);
+    }
+
+    for dir in get_fallback_directories() {
+        let candidate = dir.join(cli_name);
+        if let Some(found) = check_executable_exists(&candidate) {
+            return Some(found);
+        }
+    }
+
+    find_in_shell_path(cli_name)
+}
+
+// DRY:FN:resolve_executable_candidates -- Resolve first available executable from a candidate list
+/// Resolve the first available executable from `candidates`, returning the selected command name
+/// and resolved executable path.
+pub fn resolve_executable_candidates(candidates: &[&str]) -> Option<(String, PathBuf)> {
+    candidates
+        .iter()
+        .find_map(|name| resolve_executable(name).map(|path| ((*name).to_string(), path)))
 }
 
 #[cfg(test)]
@@ -223,5 +250,32 @@ mod tests {
     fn test_find_in_shell_path_nonexistent() {
         // Should return None for a command that cannot exist
         assert!(find_in_shell_path("__rwm_nonexistent_binary_42__").is_none());
+    }
+
+    #[test]
+    fn test_resolve_executable_nonexistent() {
+        assert!(resolve_executable("__rwm_nonexistent_binary_42__").is_none());
+    }
+
+    #[test]
+    fn test_resolve_executable_known_command() {
+        #[cfg(target_os = "windows")]
+        let cmd = "cmd";
+        #[cfg(not(target_os = "windows"))]
+        let cmd = "sh";
+
+        assert!(resolve_executable(cmd).is_some());
+    }
+
+    #[test]
+    fn test_resolve_executable_candidates_picks_first_available() {
+        #[cfg(target_os = "windows")]
+        let known = "cmd";
+        #[cfg(not(target_os = "windows"))]
+        let known = "sh";
+
+        let resolved = resolve_executable_candidates(&["__rwm_missing_binary__", known])
+            .expect("expected path");
+        assert_eq!(resolved.0, known);
     }
 }

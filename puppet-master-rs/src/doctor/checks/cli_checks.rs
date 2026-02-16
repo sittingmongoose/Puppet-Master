@@ -52,8 +52,7 @@ impl CliCheck {
         }
 
         // Step 3: Search platform_specs default install paths with expand_home
-        let install_paths =
-            crate::platforms::platform_specs::default_install_paths(self.platform);
+        let install_paths = crate::platforms::platform_specs::default_install_paths(self.platform);
         for install_path in install_paths {
             let expanded = crate::platforms::path_utils::expand_home(install_path);
             let path = std::path::PathBuf::from(&expanded);

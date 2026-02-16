@@ -16,6 +16,7 @@ use anyhow::{Context, Result, bail};
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
+use std::sync::atomic::{AtomicU64, Ordering};
 
 use crate::types::config::DEFAULT_GUI_AUTOMATION_ARTIFACTS_DIR;
 
@@ -96,10 +97,48 @@ pub enum GuiAction {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "camelCase")]
 pub enum GuiAssertion {
-    PageIs { page: String },
+    PageIs {
+        page: String,
+    },
     NoLastError,
-    OrchestratorStatus { status: String },
-    OutputContains { text: String },
+    OrchestratorStatus {
+        status: String,
+    },
+    OutputContains {
+        text: String,
+    },
+    DoctorRunning {
+        value: bool,
+    },
+    DoctorResultCountAtLeast {
+        count: usize,
+    },
+    DoctorCheckStatus {
+        check_name: String,
+        status: String,
+    },
+    ToastContains {
+        text: String,
+    },
+    ToastTypeContains {
+        toast_type: String,
+        #[serde(default)]
+        text: Option<String>,
+    },
+    AuthStatus {
+        platform: String,
+        authenticated: bool,
+    },
+    SetupChecking {
+        value: bool,
+    },
+    SetupPlatformStatus {
+        platform: String,
+        status: String,
+    },
+    SetupPlatformCountAtLeast {
+        count: usize,
+    },
 }
 
 // DRY:DATA:GuiStep — Single step declaration for automation scenarios
@@ -269,12 +308,22 @@ fn default_true() -> bool {
 }
 
 // DRY:FN:normalize_run_id
+static RUN_ID_COUNTER: AtomicU64 = AtomicU64::new(0);
+
+// DRY:FN:normalize_run_id
 fn normalize_run_id(spec: &mut GuiRunSpec) {
     if !spec.run_id.trim().is_empty() {
         return;
     }
 
-    spec.run_id = format!("GA-{}", Utc::now().format("%Y-%m-%d-%H-%M-%S-%3f"));
+    let nonce = RUN_ID_COUNTER.fetch_add(1, Ordering::Relaxed);
+    let pid = std::process::id();
+    spec.run_id = format!(
+        "GA-{}-p{}-n{}",
+        Utc::now().format("%Y-%m-%d-%H-%M-%S-%6f"),
+        pid,
+        nonce
+    );
 }
 
 // DRY:FN:run_artifact_root

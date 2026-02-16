@@ -51,15 +51,26 @@ pub fn create_ephemeral_clone(original_root: &Path, run_id: &str) -> Result<Clon
 
     #[cfg(unix)]
     {
-        let source = format!("{}/.", original_root.display());
-        let status = Command::new("cp")
-            .args(["-a", &source])
+        // Use rsync with exclusions for build artifacts that can cause cp -a to fail
+        // Excluded: target/ (Rust builds), node_modules/, .git/, and other common artifacts
+        let status = Command::new("rsync")
+            .args([
+                "-a",
+                "--exclude=target/",
+                "--exclude=node_modules/",
+                "--exclude=.git/",
+                "--exclude=dist/",
+                "--exclude=coverage/",
+                "--exclude=.cache/",
+                "--exclude=installer-work/",
+            ])
+            .arg(format!("{}/", original_root.display()))
             .arg(&clone_root)
             .status()
-            .context("Failed to spawn cp for workspace clone")?;
+            .context("Failed to spawn rsync for workspace clone")?;
 
         if !status.success() {
-            bail!("cp -a failed while cloning workspace");
+            bail!("rsync failed while cloning workspace");
         }
     }
 
@@ -186,6 +197,17 @@ fn copy_recursive(source: &Path, dest: &Path) -> Result<()> {
     {
         let entry = entry?;
         let src_path = entry.path();
+        let file_name = entry.file_name();
+        let file_name_str = file_name.to_string_lossy();
+        
+        // Skip build artifacts and problematic directories
+        if src_path.is_dir() && matches!(
+            file_name_str.as_ref(),
+            "target" | "node_modules" | ".git" | "dist" | "coverage" | ".cache" | "installer-work"
+        ) {
+            continue;
+        }
+        
         let dst_path = dest.join(entry.file_name());
 
         if src_path.is_dir() {

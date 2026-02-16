@@ -55,6 +55,49 @@ pub fn derive_project_root(config_path: &Path) -> Result<PathBuf> {
     }
 }
 
+// DRY:HELPER:is_directory_writable
+/// Best-effort writability check for a directory without creating probe files.
+pub fn is_directory_writable(path: &Path) -> bool {
+    std::fs::metadata(path)
+        .map(|metadata| !metadata.permissions().readonly())
+        .unwrap_or(false)
+}
+
+// DRY:HELPER:resolve_writable_state_root
+/// Resolve a writable base directory for `.puppet-master` state.
+///
+/// Priority:
+/// 1. Derived project root (or workspace parent when running in `puppet-master-rs/`) if writable.
+/// 2. Platform app data directory (`directories::ProjectDirs`) if writable/creatable.
+/// 3. Original start path (best effort fallback).
+pub fn resolve_writable_state_root(start: &Path) -> PathBuf {
+    let mut derived = derive_project_root(start).unwrap_or_else(|_| start.to_path_buf());
+
+    // When checks run from the crate directory, prefer the parent workspace root.
+    if derived
+        .file_name()
+        .is_some_and(|name| name == "puppet-master-rs")
+    {
+        if let Some(parent) = derived.parent() {
+            derived = parent.to_path_buf();
+        }
+    }
+
+    if is_directory_writable(&derived) {
+        return derived;
+    }
+
+    if let Some(project_dirs) = directories::ProjectDirs::from("com", "RWM", "Puppet Master") {
+        let app_data_root = project_dirs.data_local_dir().to_path_buf();
+        if std::fs::create_dir_all(&app_data_root).is_ok() && is_directory_writable(&app_data_root)
+        {
+            return app_data_root;
+        }
+    }
+
+    start.to_path_buf()
+}
+
 // DRY:HELPER:resolve_under_project_root
 /// Resolve a relative path under the project root
 ///
@@ -248,6 +291,23 @@ mod tests {
         let config_path = temp_dir.path().join("config.yaml");
         let root = derive_project_root(&config_path).unwrap();
         assert_eq!(root, temp_dir.path());
+    }
+
+    #[test]
+    fn test_is_directory_writable_tempdir() {
+        let temp_dir = TempDir::new().unwrap();
+        assert!(is_directory_writable(temp_dir.path()));
+    }
+
+    #[test]
+    fn test_resolve_writable_state_root_prefers_workspace_parent() {
+        let temp_dir = TempDir::new().unwrap();
+        let crate_dir = temp_dir.path().join("puppet-master-rs");
+        fs::create_dir_all(&crate_dir).unwrap();
+        fs::write(crate_dir.join("Cargo.toml"), "[package]").unwrap();
+
+        let resolved = resolve_writable_state_root(&crate_dir);
+        assert_eq!(resolved, temp_dir.path());
     }
 
     #[test]

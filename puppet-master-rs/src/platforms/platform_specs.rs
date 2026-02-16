@@ -1216,7 +1216,10 @@ mod tests {
 
     #[test]
     fn test_cli_binary_names() {
-        assert_eq!(cli_binary_names(Platform::Cursor), &["agent", "cursor-agent"]);
+        assert_eq!(
+            cli_binary_names(Platform::Cursor),
+            &["agent", "cursor-agent"]
+        );
         assert_eq!(cli_binary_names(Platform::Codex), &["codex"]);
         assert_eq!(cli_binary_names(Platform::Claude), &["claude"]);
         assert_eq!(cli_binary_names(Platform::Gemini), &["gemini"]);

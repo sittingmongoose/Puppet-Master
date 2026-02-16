@@ -4,7 +4,7 @@
 //! and cross-hatch shadows matching the GUI styling.
 
 use crate::theme::colors;
-use iced::widget::{button, column, container, row, stack, text};
+use iced::widget::{button, column, container, mouse_area, row, stack, text};
 use iced::{Alignment, Border, Color, Element, Length, Padding, Shadow, Vector};
 use std::time::{Duration, Instant};
 
@@ -182,6 +182,9 @@ impl ToastManager {
 fn render_toast<'a, Message>(
     toast: &Toast,
     on_dismiss: impl Fn(usize) -> Message + 'a,
+    on_copy: impl Fn(String) -> Message + 'a,
+    on_right_click: impl Fn(usize) -> Message + 'a,
+    context_actions: Option<Element<'a, Message>>,
 ) -> Element<'a, Message>
 where
     Message: Clone + 'a,
@@ -205,6 +208,32 @@ where
         text(message).size(14).color(text_color),
         // Spacer
         iced::widget::Space::new().width(Length::Fill),
+        // Copy button
+        button(text("Copy").size(14).color(text_color))
+            .on_press(on_copy(toast.message.clone()))
+            .padding(Padding::from([2u16, 8u16]))
+            .style(move |_theme: &iced::Theme, status| {
+                let (button_bg, button_border) = match status {
+                    iced::widget::button::Status::Hovered => {
+                        (Color { a: 0.2, ..bg_color }, text_color)
+                    }
+                    iced::widget::button::Status::Pressed => {
+                        (Color { a: 0.3, ..bg_color }, text_color)
+                    }
+                    _ => (colors::TRANSPARENT, text_color),
+                };
+
+                button::Style {
+                    background: Some(iced::Background::Color(button_bg)),
+                    text_color,
+                    border: Border {
+                        color: button_border,
+                        width: 1.0,
+                        radius: 0.0.into(),
+                    },
+                    ..button::Style::default()
+                }
+            }),
         // Close button
         button(text("X").size(14).color(text_color))
             .on_press(on_dismiss(toast_id))
@@ -237,23 +266,34 @@ where
     .padding(12)
     .align_y(Alignment::Center);
 
-    container(content)
+    let toast_card = mouse_area(
+        container(content)
+            .width(Length::Fixed(380.0))
+            .style(move |_theme: &iced::Theme| container::Style {
+                background: Some(iced::Background::Color(bg_color)),
+                border: Border {
+                    color: bg_color, // Same color as background
+                    width: 2.0,
+                    radius: 0.0.into(),
+                },
+                shadow: Shadow {
+                    color: colors::INK_BLACK,
+                    offset: Vector::new(3.0, 3.0),
+                    blur_radius: 0.0,
+                },
+                text_color: Some(text_color),
+                snap: container::Style::default().snap,
+            }),
+    )
+    .on_right_press(on_right_click(toast_id));
+
+    let mut wrapped = column![toast_card].spacing(6);
+    if let Some(actions) = context_actions {
+        wrapped = wrapped.push(actions);
+    }
+
+    wrapped
         .width(Length::Fixed(380.0))
-        .style(move |_theme: &iced::Theme| container::Style {
-            background: Some(iced::Background::Color(bg_color)),
-            border: Border {
-                color: bg_color, // Same color as background
-                width: 2.0,
-                radius: 0.0.into(),
-            },
-            shadow: Shadow {
-                color: colors::INK_BLACK,
-                offset: Vector::new(3.0, 3.0),
-                blur_radius: 0.0,
-            },
-            text_color: Some(text_color),
-            snap: container::Style::default().snap,
-        })
         .into()
 }
 
@@ -280,6 +320,10 @@ pub fn toast_overlay<'a, Message>(
     content: Element<'a, Message>,
     toasts: &[Toast],
     on_dismiss: impl Fn(usize) -> Message + 'a + Clone,
+    on_copy: impl Fn(String) -> Message + 'a + Clone,
+    on_right_click: impl Fn(usize) -> Message + 'a + Clone,
+    active_context_toast: Option<usize>,
+    render_context_actions: impl Fn() -> Element<'a, Message> + 'a + Clone,
 ) -> Element<'a, Message>
 where
     Message: Clone + 'a,
@@ -292,7 +336,18 @@ where
     let mut toast_column = column![].spacing(8);
 
     for toast in toasts {
-        toast_column = toast_column.push(render_toast(toast, on_dismiss.clone()));
+        let context_actions = if active_context_toast == Some(toast.id) {
+            Some(render_context_actions())
+        } else {
+            None
+        };
+        toast_column = toast_column.push(render_toast(
+            toast,
+            on_dismiss.clone(),
+            on_copy.clone(),
+            on_right_click.clone(),
+            context_actions,
+        ));
     }
 
     // Position toasts in bottom-right corner

@@ -7,6 +7,9 @@
 !ifndef TARGET_DIR
 !define TARGET_DIR "..\..\puppet-master-rs\target"
 !endif
+!ifndef DISPLAY_VERSION
+!define DISPLAY_VERSION "${VERSION}"
+!endif
 
 Name "RWM Puppet Master"
 OutFile "RWM-Puppet-Master-${VERSION}-setup.exe"
@@ -17,7 +20,7 @@ RequestExecutionLevel admin
 VIProductVersion "${VERSION}.0"
 VIAddVersionKey "ProductName" "RWM Puppet Master"
 VIAddVersionKey "FileDescription" "RWM Puppet Master Installer"
-VIAddVersionKey "ProductVersion" "${VERSION}"
+VIAddVersionKey "ProductVersion" "${DISPLAY_VERSION}"
 VIAddVersionKey "CompanyName" "RWM"
 
 ; MUI Settings (icon from shared installer assets)
@@ -73,7 +76,7 @@ Section "Install"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RWMPuppetMaster" "DisplayName" "RWM Puppet Master"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RWMPuppetMaster" "UninstallString" '"$INSTDIR\uninstall.exe"'
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RWMPuppetMaster" "DisplayIcon" "$INSTDIR\puppet-master.exe"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RWMPuppetMaster" "DisplayVersion" "${VERSION}"
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RWMPuppetMaster" "DisplayVersion" "${DISPLAY_VERSION}"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RWMPuppetMaster" "Publisher" "RWM"
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RWMPuppetMaster" "NoModify" 1
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\RWMPuppetMaster" "NoRepair" 1

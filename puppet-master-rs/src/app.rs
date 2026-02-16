@@ -105,6 +105,7 @@ pub struct GitInfoDisplay {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum SelectableField {
     LoginAuthUrl(String),
+    DoctorCheckDetails(String),
     GitUserName,
     GitUserEmail,
     GitRemoteUrl,
@@ -121,11 +122,22 @@ pub enum SelectableField {
     InterviewQuestion(usize),
 }
 
+// DRY:DATA:LoginTextSurface
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum LoginTextSurface {
+    Summary,
+    PlatformCard(crate::platforms::AuthTarget),
+    GitSection,
+    CliPanel,
+}
+
 // DRY:DATA:ContextMenuTarget
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ContextMenuTarget {
     DashboardTerminal,
     SelectableField(SelectableField),
+    LoginSurface(LoginTextSurface),
+    Toast(usize),
 }
 
 // DRY:DATA:ModalContent
@@ -567,6 +579,7 @@ pub enum Message {
     MetricsSummaryAction(text_editor::Action),
     LoginCliAction(text_editor::Action),
     OpenContextMenu(ContextMenuTarget),
+    OpenLatestToastContextMenu,
     CloseContextMenu,
     ContextMenuCopy,
     ContextMenuPaste,
@@ -815,6 +828,112 @@ fn default_login_cli_text() -> String {
         "• GitHub: gh auth login".to_string(),
     ]
     .join("\n")
+}
+
+fn auth_target_status_key(target: crate::platforms::AuthTarget) -> String {
+    match target {
+        crate::platforms::AuthTarget::Platform(platform) => format!("{:?}", platform),
+        crate::platforms::AuthTarget::GitHub => "GitHub".to_string(),
+    }
+}
+
+fn auth_method_from_result(
+    platform: crate::types::Platform,
+    result: &crate::platforms::AuthCheckResult,
+) -> crate::views::login::AuthMethod {
+    let message = result.message.to_lowercase();
+    let details = result.details.as_deref().unwrap_or_default().to_lowercase();
+    if message.contains("environment variable") || details.contains("environment variable") {
+        return crate::views::login::AuthMethod::EnvVar;
+    }
+
+    if result.authenticated
+        && matches!(
+            platform,
+            crate::types::Platform::Claude | crate::types::Platform::Gemini
+        )
+    {
+        return crate::views::login::AuthMethod::ConfigFile;
+    }
+
+    crate::views::login::AuthMethod::CliLogin
+}
+
+fn auth_hint_from_result(result: &crate::platforms::AuthCheckResult) -> String {
+    match result.details.as_deref() {
+        Some(details) if !details.trim().is_empty() => {
+            format!("{} {}", result.message.trim(), details.trim())
+        }
+        _ => result.message.trim().to_string(),
+    }
+}
+
+async fn load_auth_status_map() -> HashMap<String, AuthStatus> {
+    let checker = crate::platforms::AuthStatusChecker::new();
+    let mut map: HashMap<String, AuthStatus> = HashMap::new();
+    for platform in crate::types::Platform::all() {
+        let result = checker.check_platform(*platform).await;
+        let name = format!("{:?}", platform);
+        map.insert(
+            name.clone(),
+            AuthStatus {
+                platform: name,
+                authenticated: result.authenticated,
+                method: auth_method_from_result(*platform, &result),
+                hint: auth_hint_from_result(&result),
+            },
+        );
+    }
+
+    let gh = checker.check_github().await;
+    map.insert(
+        "GitHub".to_string(),
+        AuthStatus {
+            platform: "GitHub".to_string(),
+            authenticated: gh.authenticated,
+            method: crate::views::login::AuthMethod::CliLogin,
+            hint: auth_hint_from_result(&gh),
+        },
+    );
+    map
+}
+
+fn refresh_auth_status_task() -> Task<Message> {
+    Task::perform(load_auth_status_map(), Message::AuthStatusReceived)
+}
+
+fn auth_flow_uses_deferred_completion(
+    target: crate::platforms::AuthTarget,
+    action: AuthActionKind,
+) -> bool {
+    matches!(
+        (action, target),
+        (
+            AuthActionKind::Login,
+            crate::platforms::AuthTarget::Platform(
+                crate::types::Platform::Codex
+                    | crate::types::Platform::Claude
+                    | crate::types::Platform::Gemini
+                    | crate::types::Platform::Copilot
+            )
+        ) | (
+            AuthActionKind::Logout,
+            crate::platforms::AuthTarget::Platform(crate::types::Platform::Copilot)
+        )
+    )
+}
+
+fn parse_first_url(text: &str) -> Option<String> {
+    text.split_whitespace().find_map(|part| {
+        let trimmed = part
+            .trim_matches(|c: char| "()[]{}<>,;\"'".contains(c))
+            .trim_end_matches('.');
+        if trimmed.starts_with("https://") || trimmed.starts_with("http://") {
+            Some(trimmed.to_string())
+        } else {
+            None
+        }
+    })
 }
 
 /// Load git information (user, email, remote, branch)
@@ -2156,6 +2275,13 @@ impl App {
                 Task::none()
             }
 
+            Message::OpenLatestToastContextMenu => {
+                if let Some(latest_toast) = self.toasts.last() {
+                    self.active_context_menu = Some(ContextMenuTarget::Toast(latest_toast.id));
+                }
+                Task::none()
+            }
+
             Message::CloseContextMenu => {
                 self.active_context_menu = None;
                 Task::none()
@@ -2170,6 +2296,15 @@ impl App {
                     Some(ContextMenuTarget::SelectableField(field)) => {
                         self.selectable_field_value(&field).unwrap_or_default()
                     }
+                    Some(ContextMenuTarget::LoginSurface(surface)) => {
+                        self.login_surface_text(surface)
+                    }
+                    Some(ContextMenuTarget::Toast(toast_id)) => self
+                        .toasts
+                        .iter()
+                        .find(|toast| toast.id == toast_id)
+                        .map(|toast| toast.message.clone())
+                        .unwrap_or_default(),
                     None => String::new(),
                 };
 
@@ -2208,22 +2343,98 @@ impl App {
                         self.set_selectable_field_value(field, contents);
                         Task::none()
                     }
+                    Some(ContextMenuTarget::LoginSurface(_)) => {
+                        self.add_toast(
+                            ToastType::Info,
+                            "Paste is disabled for read-only login text.".to_string(),
+                        );
+                        Task::none()
+                    }
+                    Some(ContextMenuTarget::Toast(_)) => {
+                        self.add_toast(
+                            ToastType::Info,
+                            "Paste is disabled for read-only toast text.".to_string(),
+                        );
+                        Task::none()
+                    }
                     None => Task::none(),
                 }
             }
 
-            Message::ContextMenuSelectAll => {
-                if matches!(
-                    self.active_context_menu,
-                    Some(ContextMenuTarget::DashboardTerminal)
-                ) {
+            Message::ContextMenuSelectAll => match self.active_context_menu.clone() {
+                Some(ContextMenuTarget::DashboardTerminal) => {
                     self.terminal_interaction_until =
                         Some(std::time::Instant::now() + std::time::Duration::from_secs(3));
                     self.terminal_editor_content
                         .perform(text_editor::Action::SelectAll);
+                    Task::none()
                 }
-                Task::none()
-            }
+                Some(ContextMenuTarget::SelectableField(SelectableField::DoctorCheckDetails(
+                    check_name,
+                ))) => {
+                    if let Some(content) = self.doctor_detail_contents.get_mut(&check_name) {
+                        content.perform(text_editor::Action::SelectAll);
+                    }
+                    let text = self
+                        .doctor_detail_contents
+                        .get(&check_name)
+                        .map(|content| content.text())
+                        .unwrap_or_default();
+                    if text.trim().is_empty() {
+                        return Task::none();
+                    }
+                    self.add_toast(
+                        ToastType::Success,
+                        "Selected all doctor details and copied to clipboard".to_string(),
+                    );
+                    iced::clipboard::write::<Message>(text)
+                }
+                Some(ContextMenuTarget::SelectableField(field)) => {
+                    let text = self.selectable_field_value(&field).unwrap_or_default();
+                    if text.trim().is_empty() {
+                        return Task::none();
+                    }
+                    self.add_toast(
+                        ToastType::Success,
+                        "Selected all field text and copied to clipboard".to_string(),
+                    );
+                    iced::clipboard::write::<Message>(text)
+                }
+                Some(ContextMenuTarget::LoginSurface(LoginTextSurface::CliPanel)) => {
+                    self.login_cli_content
+                        .perform(text_editor::Action::SelectAll);
+                    Task::none()
+                }
+                Some(ContextMenuTarget::LoginSurface(surface)) => {
+                    let text = self.login_surface_text(surface);
+                    if text.trim().is_empty() {
+                        return Task::none();
+                    }
+
+                    self.add_toast(
+                        ToastType::Success,
+                        "Selected all login text and copied to clipboard".to_string(),
+                    );
+                    iced::clipboard::write::<Message>(text)
+                }
+                Some(ContextMenuTarget::Toast(toast_id)) => {
+                    let text = self
+                        .toasts
+                        .iter()
+                        .find(|toast| toast.id == toast_id)
+                        .map(|toast| toast.message.clone())
+                        .unwrap_or_default();
+                    if text.trim().is_empty() {
+                        return Task::none();
+                    }
+                    self.add_toast(
+                        ToastType::Success,
+                        "Selected toast text and copied to clipboard".to_string(),
+                    );
+                    iced::clipboard::write::<Message>(text)
+                }
+                _ => Task::none(),
+            },
 
             Message::ConfigTabChanged(tab) => {
                 self.config_active_tab = tab;
@@ -2488,6 +2699,23 @@ impl App {
 
             // New GUI config messages
             Message::ConfigTierPlatformChanged(tier_name, platform) => {
+                if !self.setup_reports_platform_available(&platform) {
+                    let display_name = crate::types::Platform::from_str_loose(&platform)
+                        .map(crate::platforms::platform_specs::display_name_for)
+                        .unwrap_or(platform.as_str());
+                    let reason = self
+                        .unavailable_platform_reason(&platform)
+                        .unwrap_or_else(|| "Platform is unavailable".to_string());
+                    self.add_toast(
+                        ToastType::Warning,
+                        format!(
+                            "{} is unavailable. {} Run Setup detection/install first.",
+                            display_name, reason
+                        ),
+                    );
+                    return Task::none();
+                }
+
                 // Compute model list and effort visibility before mutable borrow
                 let model_list = self.get_model_list_for_platform(&platform);
                 let parsed_platform = crate::types::Platform::from_str_loose(&platform);
@@ -3261,7 +3489,10 @@ impl App {
                             fixable_checks.len()
                         )
                     } else {
-                        format!("Installing {} missing dependencies...", fixable_checks.len())
+                        format!(
+                            "Installing {} missing dependencies...",
+                            fixable_checks.len()
+                        )
                     },
                 );
 
@@ -3586,6 +3817,23 @@ impl App {
             }
 
             Message::WizardPrdPlatformChanged(platform) => {
+                if !self.setup_reports_platform_available(&platform) {
+                    let display_name = crate::types::Platform::from_str_loose(&platform)
+                        .map(crate::platforms::platform_specs::display_name_for)
+                        .unwrap_or(platform.as_str());
+                    let reason = self
+                        .unavailable_platform_reason(&platform)
+                        .unwrap_or_else(|| "Platform is unavailable".to_string());
+                    self.add_toast(
+                        ToastType::Warning,
+                        format!(
+                            "{} is unavailable. {} Run Setup detection/install first.",
+                            display_name, reason
+                        ),
+                    );
+                    return Task::none();
+                }
+
                 self.wizard_prd_platform = platform.clone();
                 // Auto-select first model for this platform
                 if let Some(models) = self.wizard_models.get(&platform) {
@@ -3608,6 +3856,23 @@ impl App {
             }
 
             Message::WizardTierPlatformChanged(tier, platform) => {
+                if !self.setup_reports_platform_available(&platform) {
+                    let display_name = crate::types::Platform::from_str_loose(&platform)
+                        .map(crate::platforms::platform_specs::display_name_for)
+                        .unwrap_or(platform.as_str());
+                    let reason = self
+                        .unavailable_platform_reason(&platform)
+                        .unwrap_or_else(|| "Platform is unavailable".to_string());
+                    self.add_toast(
+                        ToastType::Warning,
+                        format!(
+                            "{} is unavailable. {} Run Setup detection/install first.",
+                            display_name, reason
+                        ),
+                    );
+                    return Task::none();
+                }
+
                 if let Some(config) = self.wizard_tier_configs.get_mut(&tier) {
                     config.platform = platform.clone();
                     // Auto-select first model for this platform
@@ -3993,18 +4258,17 @@ impl App {
                     "Detecting platform installations...".to_string(),
                 );
                 let cli_paths = self.gui_config.advanced.cli_paths.clone();
-                let project_dir = if self.gui_config.advanced.install_scope
-                    == InstallScope::ProjectLocal
-                {
-                    let wd = &self.gui_config.project.working_directory;
-                    if wd.is_empty() {
-                        None
+                let project_dir =
+                    if self.gui_config.advanced.install_scope == InstallScope::ProjectLocal {
+                        let wd = &self.gui_config.project.working_directory;
+                        if wd.is_empty() {
+                            None
+                        } else {
+                            Some(std::path::PathBuf::from(wd))
+                        }
                     } else {
-                        Some(std::path::PathBuf::from(wd))
-                    }
-                } else {
-                    None
-                };
+                        None
+                    };
 
                 Task::perform(
                     async move {
@@ -4878,49 +5142,12 @@ impl App {
             Message::LoadLogin => {
                 self.current_page = Page::Login;
 
-                // Load both auth status and git info
-                let load_auth = Task::perform(
-                    async {
-                        let checker = crate::platforms::AuthStatusChecker::new();
-                        let mut map: HashMap<String, AuthStatus> = HashMap::new();
-                        for platform in crate::types::Platform::all() {
-                            let result = checker.check_platform(*platform).await;
-                            let name = format!("{:?}", platform);
-                            map.insert(
-                                name.clone(),
-                                AuthStatus {
-                                    platform: name,
-                                    authenticated: result.authenticated,
-                                    method: if result.message.contains("environment variable") {
-                                        crate::views::login::AuthMethod::EnvVar
-                                    } else {
-                                        crate::views::login::AuthMethod::CliLogin
-                                    },
-                                    hint: result.message.clone(),
-                                },
-                            );
-                        }
-                        let gh = checker.check_github().await;
-                        map.insert(
-                            "GitHub".to_string(),
-                            AuthStatus {
-                                platform: "GitHub".to_string(),
-                                authenticated: gh.authenticated,
-                                method: crate::views::login::AuthMethod::CliLogin,
-                                hint: gh.message.clone(),
-                            },
-                        );
-                        map
-                    },
-                    Message::AuthStatusReceived,
-                );
-
                 let load_git = Task::perform(
                     async { load_git_info().await },
                     Message::GitInfoForLoginLoaded,
                 );
 
-                Task::batch(vec![load_auth, load_git])
+                Task::batch(vec![refresh_auth_status_task(), load_git])
             }
 
             Message::AuthStatusReceived(map) => {
@@ -4935,9 +5162,18 @@ impl App {
                     };
                 }
 
-                // Populate CLI content for login view
-                let cli_text = default_login_cli_text();
-                self.login_cli_content = text_editor::Content::with_text(&cli_text);
+                for (key, status) in &self.platform_auth_status {
+                    self.login_messages.insert(key.clone(), status.hint.clone());
+                    if let Some(url) = parse_first_url(&status.hint) {
+                        self.login_auth_urls.insert(key.clone(), url);
+                    }
+                }
+
+                // Populate CLI content for login view only when empty
+                if self.login_cli_content.text().trim().is_empty() {
+                    let cli_text = default_login_cli_text();
+                    self.login_cli_content = text_editor::Content::with_text(&cli_text);
+                }
 
                 Task::none()
             }
@@ -4957,6 +5193,24 @@ impl App {
             }
 
             Message::PlatformLogin(target) => {
+                let status_key = auth_target_status_key(target);
+                if self
+                    .platform_auth_status
+                    .get(&status_key)
+                    .map(|status| status.authenticated)
+                    .unwrap_or(false)
+                {
+                    self.add_toast(
+                        ToastType::Info,
+                        format!("{} is already authenticated", target.display_name()),
+                    );
+                    return Task::none();
+                }
+
+                self.login_messages.insert(
+                    status_key,
+                    format!("Starting {} login...", target.display_name()),
+                );
                 self.login_in_progress.insert(target, AuthActionKind::Login);
                 let target_copy = target;
                 Task::perform(
@@ -4971,72 +5225,48 @@ impl App {
 
             Message::PlatformLoginComplete(target, res) => {
                 self.login_in_progress.remove(&target);
-                let terminal_login = matches!(
-                    target,
-                    crate::platforms::AuthTarget::Platform(crate::types::Platform::Claude)
-                        | crate::platforms::AuthTarget::Platform(crate::types::Platform::Gemini)
-                        | crate::platforms::AuthTarget::Platform(crate::types::Platform::Copilot)
-                );
-                match &res {
-                    Ok(()) if terminal_login => self.add_toast(
-                        ToastType::Info,
-                        format!(
+                let status_key = auth_target_status_key(target);
+                let deferred_login =
+                    auth_flow_uses_deferred_completion(target, AuthActionKind::Login);
+
+                let toast_message = match &res {
+                    Ok(()) if deferred_login => {
+                        let msg = format!(
                             "{} login flow launched in a terminal. Complete auth there; status will refresh automatically.",
                             target.display_name()
-                        ),
-                    ),
-                    Ok(()) => self.add_toast(
-                        ToastType::Success,
-                        format!("{} login completed", target.display_name()),
-                    ),
-                    Err(e) => self.add_toast(
-                        ToastType::Error,
-                        format!("{} login failed: {}", target.display_name(), e),
-                    ),
-                }
-                let refresh_now = Task::perform(
-                    async {
-                        let checker = crate::platforms::AuthStatusChecker::new();
-                        let mut map: HashMap<String, AuthStatus> = HashMap::new();
-                        for platform in crate::types::Platform::all() {
-                            let result = checker.check_platform(*platform).await;
-                            let name = format!("{:?}", platform);
-                            map.insert(
-                                name.clone(),
-                                AuthStatus {
-                                    platform: name,
-                                    authenticated: result.authenticated,
-                                    method: if result.message.contains("environment variable") {
-                                        crate::views::login::AuthMethod::EnvVar
-                                    } else {
-                                        crate::views::login::AuthMethod::CliLogin
-                                    },
-                                    hint: result.message.clone(),
-                                },
-                            );
-                        }
-                        let gh = checker.check_github().await;
-                        map.insert(
-                            "GitHub".to_string(),
-                            AuthStatus {
-                                platform: "GitHub".to_string(),
-                                authenticated: gh.authenticated,
-                                method: crate::views::login::AuthMethod::CliLogin,
-                                hint: gh.message.clone(),
-                            },
                         );
-                        map
-                    },
-                    Message::AuthStatusReceived,
-                );
+                        self.add_toast(ToastType::Info, msg.clone());
+                        msg
+                    }
+                    Ok(()) => {
+                        let msg = format!("{} login completed", target.display_name());
+                        self.add_toast(ToastType::Success, msg.clone());
+                        msg
+                    }
+                    Err(e) => {
+                        let msg = format!("{} login failed: {}", target.display_name(), e);
+                        self.add_toast(ToastType::Error, msg.clone());
+                        msg
+                    }
+                };
 
-                let mut tasks = vec![refresh_now];
-                if terminal_login && res.is_ok() {
+                self.login_messages
+                    .insert(status_key.clone(), toast_message);
+
+                if let Err(e) = &res {
+                    if let Some(url) = parse_first_url(e) {
+                        self.login_auth_urls.insert(status_key, url);
+                    }
+                }
+
+                let mut tasks = vec![refresh_auth_status_task()];
+                if deferred_login && res.is_ok() {
                     // Terminal-launched flows complete outside the app process; poll briefly.
                     for delay_secs in [5_u64, 15, 30] {
                         tasks.push(Task::perform(
                             async move {
-                                tokio::time::sleep(std::time::Duration::from_secs(delay_secs)).await;
+                                tokio::time::sleep(std::time::Duration::from_secs(delay_secs))
+                                    .await;
                             },
                             |_| Message::RefreshAuthStatus,
                         ));
@@ -5047,6 +5277,11 @@ impl App {
             }
 
             Message::PlatformLogout(target) => {
+                let status_key = auth_target_status_key(target);
+                self.login_messages.insert(
+                    status_key,
+                    format!("Starting {} logout...", target.display_name()),
+                );
                 self.login_in_progress
                     .insert(target, AuthActionKind::Logout);
                 let target_copy = target;
@@ -5062,67 +5297,41 @@ impl App {
 
             Message::PlatformLogoutComplete(target, res) => {
                 self.login_in_progress.remove(&target);
-                let terminal_logout = matches!(
-                    target,
-                    crate::platforms::AuthTarget::Platform(crate::types::Platform::Copilot)
-                );
-                match &res {
-                    Ok(()) if terminal_logout => self.add_toast(
-                        ToastType::Info,
-                        "Copilot logout terminal opened. Run '/logout' there; status will refresh automatically."
-                            .to_string(),
-                    ),
-                    Ok(()) => self.add_toast(
-                        ToastType::Success,
-                        format!("{} logout completed", target.display_name()),
-                    ),
-                    Err(e) => self.add_toast(
-                        ToastType::Error,
-                        format!("{} logout failed: {}", target.display_name(), e),
-                    ),
-                }
-                let refresh_now = Task::perform(
-                    async {
-                        let checker = crate::platforms::AuthStatusChecker::new();
-                        let mut map: HashMap<String, AuthStatus> = HashMap::new();
-                        for platform in crate::types::Platform::all() {
-                            let result = checker.check_platform(*platform).await;
-                            let name = format!("{:?}", platform);
-                            map.insert(
-                                name.clone(),
-                                AuthStatus {
-                                    platform: name,
-                                    authenticated: result.authenticated,
-                                    method: if result.message.contains("environment variable") {
-                                        crate::views::login::AuthMethod::EnvVar
-                                    } else {
-                                        crate::views::login::AuthMethod::CliLogin
-                                    },
-                                    hint: result.message.clone(),
-                                },
-                            );
-                        }
-                        let gh = checker.check_github().await;
-                        map.insert(
-                            "GitHub".to_string(),
-                            AuthStatus {
-                                platform: "GitHub".to_string(),
-                                authenticated: gh.authenticated,
-                                method: crate::views::login::AuthMethod::CliLogin,
-                                hint: gh.message.clone(),
-                            },
-                        );
-                        map
-                    },
-                    Message::AuthStatusReceived,
-                );
+                let status_key = auth_target_status_key(target);
+                let deferred_logout =
+                    auth_flow_uses_deferred_completion(target, AuthActionKind::Logout);
+                let toast_message = match &res {
+                    Ok(()) if deferred_logout => {
+                        let msg = "Copilot logout terminal opened. Run '/logout' there; status will refresh automatically."
+                            .to_string();
+                        self.add_toast(ToastType::Info, msg.clone());
+                        msg
+                    }
+                    Ok(()) => {
+                        let msg = format!("{} logout completed", target.display_name());
+                        self.add_toast(ToastType::Success, msg.clone());
+                        msg
+                    }
+                    Err(e) => {
+                        let msg = format!("{} logout failed: {}", target.display_name(), e);
+                        self.add_toast(ToastType::Error, msg.clone());
+                        msg
+                    }
+                };
 
-                let mut tasks = vec![refresh_now];
-                if terminal_logout && res.is_ok() {
+                self.login_messages
+                    .insert(status_key.clone(), toast_message);
+                if res.is_ok() {
+                    self.login_auth_urls.remove(&status_key);
+                }
+
+                let mut tasks = vec![refresh_auth_status_task()];
+                if deferred_logout && res.is_ok() {
                     for delay_secs in [5_u64, 15, 30] {
                         tasks.push(Task::perform(
                             async move {
-                                tokio::time::sleep(std::time::Duration::from_secs(delay_secs)).await;
+                                tokio::time::sleep(std::time::Duration::from_secs(delay_secs))
+                                    .await;
                             },
                             |_| Message::RefreshAuthStatus,
                         ));
@@ -5132,41 +5341,7 @@ impl App {
                 Task::batch(tasks)
             }
 
-            Message::RefreshAuthStatus => Task::perform(
-                async {
-                    let checker = crate::platforms::AuthStatusChecker::new();
-                    let mut map: HashMap<String, AuthStatus> = HashMap::new();
-                    for platform in crate::types::Platform::all() {
-                        let result = checker.check_platform(*platform).await;
-                        let name = format!("{:?}", platform);
-                        map.insert(
-                            name.clone(),
-                            AuthStatus {
-                                platform: name,
-                                authenticated: result.authenticated,
-                                method: if result.message.contains("environment variable") {
-                                    crate::views::login::AuthMethod::EnvVar
-                                } else {
-                                    crate::views::login::AuthMethod::CliLogin
-                                },
-                                hint: result.message.clone(),
-                            },
-                        );
-                    }
-                    let gh = checker.check_github().await;
-                    map.insert(
-                        "GitHub".to_string(),
-                        AuthStatus {
-                            platform: "GitHub".to_string(),
-                            authenticated: gh.authenticated,
-                            method: crate::views::login::AuthMethod::CliLogin,
-                            hint: gh.message.clone(),
-                        },
-                    );
-                    map
-                },
-                Message::AuthStatusReceived,
-            ),
+            Message::RefreshAuthStatus => refresh_auth_status_task(),
 
             Message::LoadGitInfoForLogin => Task::perform(
                 async { load_git_info().await },
@@ -5857,6 +6032,7 @@ impl App {
                         &self.wizard_models,
                         &self.wizard_requirements_preview_content,
                         &self.wizard_plan_content,
+                        &self.setup_platform_statuses,
                         &self.theme,
                         layout_size,
                     )
@@ -5871,6 +6047,7 @@ impl App {
                     self.config_is_dirty,
                     &self.config_models,
                     &self.config_git_info,
+                    &self.setup_platform_statuses,
                     &self.theme,
                     layout_size,
                 ),
@@ -5882,6 +6059,7 @@ impl App {
                     &self.doctor_selected_platforms,
                     &self.doctor_expanded_checks,
                     &self.doctor_detail_contents,
+                    &self.active_context_menu,
                     &self.theme,
                     layout_size,
                 ),
@@ -6129,6 +6307,10 @@ impl App {
     fn selectable_field_value(&self, field: &SelectableField) -> Option<String> {
         match field {
             SelectableField::LoginAuthUrl(platform) => self.login_auth_urls.get(platform).cloned(),
+            SelectableField::DoctorCheckDetails(check_name) => self
+                .doctor_detail_contents
+                .get(check_name)
+                .map(|content| content.selection().unwrap_or_else(|| content.text())),
             SelectableField::GitUserName => {
                 self.git_info.as_ref().map(|info| info.user_name.clone())
             }
@@ -6207,10 +6389,142 @@ impl App {
         }
     }
 
+    fn setup_reports_platform_available(&self, platform_id: &str) -> bool {
+        if self.setup_platform_statuses.is_empty() {
+            return true;
+        }
+
+        let Some(platform) = crate::types::Platform::from_str_loose(platform_id) else {
+            return true;
+        };
+
+        self.setup_platform_statuses
+            .iter()
+            .find(|status| status.platform == platform)
+            .map(|status| {
+                matches!(
+                    status.status,
+                    crate::doctor::InstallationStatus::Installed(_)
+                        | crate::doctor::InstallationStatus::Outdated { .. }
+                )
+            })
+            .unwrap_or(false)
+    }
+
+    fn unavailable_platform_reason(&self, platform_id: &str) -> Option<String> {
+        if self.setup_platform_statuses.is_empty() {
+            return None;
+        }
+
+        let platform = crate::types::Platform::from_str_loose(platform_id)?;
+        let status = self
+            .setup_platform_statuses
+            .iter()
+            .find(|entry| entry.platform == platform)?;
+
+        match &status.status {
+            crate::doctor::InstallationStatus::NotInstalled => {
+                let detail = status.instructions.lines().next().unwrap_or("").trim();
+                if detail.is_empty() {
+                    Some("Platform CLI is not installed.".to_string())
+                } else {
+                    Some(detail.to_string())
+                }
+            }
+            _ => None,
+        }
+    }
+
+    fn login_surface_text(&self, surface: LoginTextSurface) -> String {
+        match surface {
+            LoginTextSurface::Summary => {
+                let total_count = self.platform_auth_status.len();
+                let authenticated_count = self
+                    .platform_auth_status
+                    .values()
+                    .filter(|status| status.authenticated)
+                    .count();
+                let not_authenticated_count = total_count.saturating_sub(authenticated_count);
+
+                format!(
+                    "Total Platforms: {}\nAuthenticated: {}\nNot Authenticated: {}\nSkipped: 0",
+                    total_count, authenticated_count, not_authenticated_count
+                )
+            }
+            LoginTextSurface::PlatformCard(target) => {
+                let status_key = auth_target_status_key(target);
+                let display_name = target.display_name();
+
+                let mut lines = vec![format!("Platform: {}", display_name)];
+                if let Some(status) = self.platform_auth_status.get(&status_key) {
+                    lines.push(format!(
+                        "Authenticated: {}",
+                        if status.authenticated { "yes" } else { "no" }
+                    ));
+                    lines.push(format!("Auth Method: {:?}", status.method));
+                    if !status.hint.trim().is_empty() {
+                        lines.push(format!("Status: {}", status.hint.trim()));
+                    }
+                } else {
+                    lines.push("Authenticated: unknown".to_string());
+                }
+
+                if let Some(message) = self.login_messages.get(&status_key) {
+                    if !message.trim().is_empty() {
+                        lines.push(format!("Message: {}", message.trim()));
+                    }
+                }
+
+                if let Some(url) = self.login_auth_urls.get(&status_key) {
+                    if !url.trim().is_empty() {
+                        lines.push(format!("Auth URL: {}", url.trim()));
+                    }
+                }
+
+                lines.join("\n")
+            }
+            LoginTextSurface::GitSection => {
+                let github_status = self
+                    .github_auth_status
+                    .clone()
+                    .unwrap_or_else(|| "unknown".to_string());
+
+                let mut lines = vec![format!("GitHub Auth: {}", github_status)];
+
+                if let Some(info) = &self.git_info {
+                    lines.push(format!("Git User: {}", info.user_name));
+                    lines.push(format!("Git Email: {}", info.user_email));
+                    lines.push(format!("Remote URL: {}", info.remote_url));
+                    lines.push(format!("Current Branch: {}", info.current_branch));
+                } else {
+                    lines.push("No git repository detected or git not configured".to_string());
+                }
+
+                lines.push(
+                    "Note: GitHub Copilot uses your GitHub account authentication".to_string(),
+                );
+                lines.join("\n")
+            }
+            LoginTextSurface::CliPanel => self
+                .login_cli_content
+                .selection()
+                .unwrap_or_else(|| self.login_cli_content.text()),
+        }
+    }
+
     fn set_selectable_field_value(&mut self, field: SelectableField, value: String) {
         match field {
             SelectableField::LoginAuthUrl(platform) => {
                 self.login_auth_urls.insert(platform, value);
+            }
+            SelectableField::DoctorCheckDetails(check_name) => {
+                self.add_toast(
+                    ToastType::Info,
+                    format!(
+                        "Paste is disabled for read-only doctor details ({})",
+                        check_name
+                    ),
+                );
             }
             SelectableField::GitUserName => {
                 let info = self.git_info.get_or_insert_with(|| GitInfoDisplay {
@@ -6777,9 +7091,13 @@ impl App {
     // DRY:FN:has_config_file_in_dir
     /// Check whether a directory already contains a recognized config file.
     fn has_config_file_in_dir(dir: &Path) -> bool {
-        ["pm-config.yaml", "puppet-master.yaml", ".puppet-master.yaml"]
-            .iter()
-            .any(|name| dir.join(name).exists())
+        [
+            "pm-config.yaml",
+            "puppet-master.yaml",
+            ".puppet-master.yaml",
+        ]
+        .iter()
+        .any(|name| dir.join(name).exists())
     }
 
     // DRY:FN:is_directory_writable
@@ -6886,7 +7204,25 @@ impl App {
     /// Render toast notifications overlay
     fn render_toasts_overlay<'a>(&'a self, base: Element<'a, Message>) -> Element<'a, Message> {
         // Use the new toast_overlay function from the widgets module
-        crate::widgets::toast_overlay(base, &self.toasts, |id| Message::DismissToast(id))
+        crate::widgets::toast_overlay(
+            base,
+            &self.toasts,
+            |id| Message::DismissToast(id),
+            Message::CopyToClipboard,
+            |id| Message::OpenContextMenu(ContextMenuTarget::Toast(id)),
+            match self.active_context_menu.as_ref() {
+                Some(ContextMenuTarget::Toast(id)) => Some(*id),
+                _ => None,
+            },
+            || {
+                crate::widgets::context_menu_actions(
+                    &self.theme,
+                    crate::widgets::ContextMenuOptions {
+                        show_select_all: true,
+                    },
+                )
+            },
+        )
     }
 
     /// Render a single toast (no longer needed - handled by widget module)

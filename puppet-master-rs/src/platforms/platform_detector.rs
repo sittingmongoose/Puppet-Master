@@ -320,12 +320,9 @@ impl PlatformDetector {
 
         for platform in Platform::all() {
             let custom_path = cli_paths.get(*platform);
-            let trace = Self::detect_platform_with_custom_paths_trace(
-                *platform,
-                custom_path,
-                project_dir,
-            )
-            .await;
+            let trace =
+                Self::detect_platform_with_custom_paths_trace(*platform, custom_path, project_dir)
+                    .await;
             if let Some(info) = trace.detected {
                 detected.push(info);
             }

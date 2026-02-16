@@ -47,7 +47,10 @@ mod tests {
             check_platform_from_name("cursor-cli"),
             Some(Platform::Cursor)
         );
-        assert_eq!(check_platform_from_name("copilot-sdk"), Some(Platform::Copilot));
+        assert_eq!(
+            check_platform_from_name("copilot-sdk"),
+            Some(Platform::Copilot)
+        );
         assert_eq!(check_platform_from_name("github-cli"), None);
     }
 

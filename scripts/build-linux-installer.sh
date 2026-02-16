@@ -2,11 +2,25 @@
 # Build Linux installers for RWM Puppet Master
 set -euo pipefail
 
-VERSION="${1:-0.1.1}"
+BASE_VERSION="${1:-}"
 ARCH="amd64"
 PKG_NAME="puppet-master"
 
+if [ -z "${BASE_VERSION}" ]; then
+    BASE_VERSION="$(grep '^version = ' "$(dirname "$0")/../puppet-master-rs/Cargo.toml" | head -n1 | cut -d'\"' -f2)"
+fi
+if [ -z "${BASE_VERSION}" ]; then
+    BASE_VERSION="0.1.1"
+fi
+
+BUILD_ID="${PM_BUILD_ID:-$(date -u +%Y%m%d%H%M%S)}"
+BUILD_UTC="${PM_BUILD_UTC:-${BUILD_ID}}"
+VERSION="${BASE_VERSION}+b${BUILD_ID}"
+export PM_BUILD_ID="${BUILD_ID}"
+export PM_BUILD_UTC="${BUILD_UTC}"
+
 echo "=== Building RWM Puppet Master v${VERSION} for Linux ==="
+echo "Build metadata: PM_BUILD_ID=${PM_BUILD_ID} PM_BUILD_UTC=${PM_BUILD_UTC}"
 
 cd "$(dirname "$0")/../puppet-master-rs" || {
     echo "Error: Cannot find puppet-master-rs directory"
@@ -199,8 +213,8 @@ ABS_DESKTOP="$DEB_DIR/usr/share/applications/puppet-master.desktop"
 
 cat > "$RPM_DIR/SPECS/puppet-master.spec" << EOF
 Name: puppet-master
-Version: ${VERSION}
-Release: 1
+Version: ${BASE_VERSION}
+Release: 1.${BUILD_ID}
 Summary: RWM Puppet Master - AI-assisted development orchestrator
 License: MIT
 Group: Development/Tools

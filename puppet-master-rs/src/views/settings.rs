@@ -406,8 +406,9 @@ pub fn view<'a>(
             .font(fonts::FONT_UI_BOLD)
             .color(theme.ink()),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
-        text(format!("RWM Puppet Master v{}", env!("CARGO_PKG_VERSION")))
-            .size(tokens::font_size::BASE)
+        text(crate::build_info::full_build_identity())
+            .size(tokens::font_size::SM)
+            .font(fonts::FONT_MONO)
             .color(theme.ink()),
         text("Autonomous LLM orchestration system")
             .size(tokens::font_size::SM)

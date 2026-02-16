@@ -3,16 +3,18 @@
 //! Verifies installed platform CLIs appear compatible with the flags/features
 //! Puppet Master expects (by inspecting help output and version strings).
 
-use crate::types::{CheckCategory, CheckResult, DoctorCheck, FixResult};
+use crate::platforms::platform_detector::PlatformDetector;
+use crate::platforms::platform_specs;
+use crate::types::{CheckCategory, CheckResult, DoctorCheck, FixResult, Platform};
 use async_trait::async_trait;
 use chrono::Utc;
+use std::path::Path;
 use std::process::Stdio;
 use tokio::process::Command;
 use tokio::time::{Duration, timeout};
-use which::which;
 
 async fn run_command(
-    program: &str,
+    program: &Path,
     args: &[&str],
     timeout_duration: Duration,
 ) -> Result<std::process::Output, String> {
@@ -24,8 +26,12 @@ async fn run_command(
 
     match timeout(timeout_duration, cmd.output()).await {
         Ok(Ok(output)) => Ok(output),
-        Ok(Err(e)) => Err(format!("Failed to run {program}: {e}")),
-        Err(_) => Err(format!("Timed out running {program} {:?}", args)),
+        Ok(Err(e)) => Err(format!("Failed to run {}: {e}", program.display())),
+        Err(_) => Err(format!(
+            "Timed out running {} {:?}",
+            program.display(),
+            args
+        )),
     }
 }
 
@@ -35,52 +41,15 @@ fn combined_lower(output: &std::process::Output) -> String {
     format!("{}{}", stdout, stderr).to_lowercase()
 }
 
-#[derive(Clone, Copy)]
-struct ToolSpec {
-    label: &'static str,
-    candidates: &'static [&'static str],
-    version_args: &'static [&'static str],
-    help_args: &'static [&'static str],
-    required_help_substrings: &'static [&'static str],
+fn required_help_substrings(platform: Platform) -> &'static [&'static str] {
+    match platform {
+        Platform::Cursor => &["--model", "--output-format"],
+        Platform::Codex => &["exec", "--json"],
+        Platform::Claude => &["--output-format", "--no-session-persistence"],
+        Platform::Gemini => &["--output-format", "--approval-mode"],
+        Platform::Copilot => &["--allow-all-tools"],
+    }
 }
-
-const TOOL_SPECS: &[ToolSpec] = &[
-    ToolSpec {
-        label: "Cursor",
-        candidates: &["agent", "cursor-agent"],
-        version_args: &["--version"],
-        help_args: &["--help"],
-        required_help_substrings: &["--model", "--output-format"],
-    },
-    ToolSpec {
-        label: "Codex",
-        candidates: &["codex"],
-        version_args: &["--version"],
-        help_args: &["--help"],
-        required_help_substrings: &["exec", "--json"],
-    },
-    ToolSpec {
-        label: "Claude",
-        candidates: &["claude"],
-        version_args: &["--version"],
-        help_args: &["--help"],
-        required_help_substrings: &["--output-format", "--no-session-persistence"],
-    },
-    ToolSpec {
-        label: "Gemini",
-        candidates: &["gemini"],
-        version_args: &["--version"],
-        help_args: &["--help"],
-        required_help_substrings: &["--output-format", "--approval-mode"],
-    },
-    ToolSpec {
-        label: "Copilot",
-        candidates: &["copilot"],
-        version_args: &["--version"],
-        help_args: &["--help"],
-        required_help_substrings: &["--allow-all-tools"],
-    },
-];
 
 // DRY:DATA:PlatformCompatibilityCheck
 /// Checks that installed CLIs are new enough / compatible with expected flags.
@@ -118,35 +87,42 @@ impl DoctorCheck for PlatformCompatibilityCheck {
         let mut incompatible = Vec::new();
         let mut checked_any = false;
 
-        for spec in TOOL_SPECS {
-            let found = spec
-                .candidates
-                .iter()
-                .find_map(|c| which(c).ok().map(|p| (c.to_string(), p)));
+        for platform in Platform::all() {
+            let spec = platform_specs::get_spec(*platform);
+            let trace =
+                PlatformDetector::detect_platform_with_custom_paths_trace(*platform, None, None)
+                    .await;
 
-            let Some((candidate, path)) = found else {
-                details.push(format!("{}: not installed (skipped)", spec.label));
+            let Some(detected) = trace.detected else {
+                details.push(format!("{}: not installed (skipped)", spec.display_name));
                 continue;
             };
 
             checked_any = true;
             details.push(format!(
-                "{}: using '{}' at {:?}",
-                spec.label, candidate, path
+                "{}: using '{}' at {}",
+                spec.display_name,
+                detected.cli_name,
+                detected.cli_path.display()
             ));
 
-            let version =
-                match run_command(&candidate, spec.version_args, Duration::from_secs(8)).await {
-                    Ok(out) => {
-                        let text = combined_lower(&out);
-                        if out.status.success() {
-                            Some(text.lines().next().unwrap_or("").trim().to_string())
-                        } else {
-                            None
-                        }
+            let version = match run_command(
+                &detected.cli_path,
+                &[spec.version_command],
+                Duration::from_secs(8),
+            )
+            .await
+            {
+                Ok(out) => {
+                    let text = combined_lower(&out);
+                    if out.status.success() {
+                        Some(text.lines().next().unwrap_or("").trim().to_string())
+                    } else {
+                        None
                     }
-                    Err(_) => None,
-                };
+                }
+                Err(_) => None,
+            };
 
             if let Some(v) = version {
                 details.push(format!("  version: {v}"));
@@ -155,12 +131,12 @@ impl DoctorCheck for PlatformCompatibilityCheck {
             }
 
             let help_out =
-                match run_command(&candidate, spec.help_args, Duration::from_secs(8)).await {
+                match run_command(&detected.cli_path, &["--help"], Duration::from_secs(8)).await {
                     Ok(out) => out,
                     Err(e) => {
                         incompatible.push(format!(
                             "{}: failed to read --help output ({e})",
-                            spec.label
+                            spec.display_name
                         ));
                         continue;
                     }
@@ -168,7 +144,7 @@ impl DoctorCheck for PlatformCompatibilityCheck {
 
             let help_text = combined_lower(&help_out);
             let mut missing = Vec::new();
-            for req in spec.required_help_substrings {
+            for req in required_help_substrings(*platform) {
                 if !help_text.contains(req) {
                     missing.push(*req);
                 }
@@ -177,7 +153,7 @@ impl DoctorCheck for PlatformCompatibilityCheck {
             if !missing.is_empty() {
                 incompatible.push(format!(
                     "{}: missing expected flag(s) in --help: {}",
-                    spec.label,
+                    spec.display_name,
                     missing.join(", ")
                 ));
             }
@@ -185,7 +161,8 @@ impl DoctorCheck for PlatformCompatibilityCheck {
 
         if !checked_any {
             return CheckResult {
-                passed: true,
+                // WARN (not PASS): avoids green state when every platform is effectively skipped.
+                passed: false,
                 message: "No platform CLIs detected; compatibility check skipped".to_string(),
                 details: Some(details.join("\n")),
                 can_fix: false,
@@ -220,5 +197,23 @@ impl DoctorCheck for PlatformCompatibilityCheck {
 
     async fn fix(&self, _dry_run: bool) -> Option<FixResult> {
         None
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn required_help_flags_include_expected_cursor_flags() {
+        let flags = required_help_substrings(Platform::Cursor);
+        assert!(flags.contains(&"--model"));
+        assert!(flags.contains(&"--output-format"));
+    }
+
+    #[test]
+    fn required_help_flags_include_expected_copilot_flag() {
+        let flags = required_help_substrings(Platform::Copilot);
+        assert_eq!(flags, &["--allow-all-tools"]);
     }
 }

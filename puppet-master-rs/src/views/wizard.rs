@@ -3,8 +3,10 @@
 //! Wizard flow with Project Setup and Interview Config steps for Rust/Iced GUI.
 
 use crate::app::{Message, WizardTierConfig};
+use crate::doctor::InstallationStatus;
 use crate::platforms::platform_specs;
 use crate::theme::{AppTheme, colors, fonts, tokens};
+use crate::types::Platform;
 use crate::widgets::{
     help_tooltip, interaction_mode_to_variant,
     styled_button::{ButtonVariant, styled_button},
@@ -22,6 +24,45 @@ const PLATFORMS: &[&str] = platform_specs::PLATFORM_ID_STRS;
 const REASONING_EFFORTS: &[&str] = &["low", "medium", "high"];
 const INTERVIEW_REASONING_LEVELS: &[&str] = &["low", "medium", "high", "max"];
 const OUTPUT_FORMATS: &[&str] = &["markdown", "json", "yaml"];
+
+// DRY:FN:format_platform_id_option
+/// Format platform ID with availability indicator if detection data exists
+fn format_platform_id_option(
+    platform_id: &str,
+    platform_statuses: &[crate::views::setup::PlatformStatus],
+) -> String {
+    // If no detection data, just return the platform ID
+    if platform_statuses.is_empty() {
+        return platform_id.to_string();
+    }
+    
+    // Parse the platform ID to get the Platform enum
+    let platform = match Platform::from_str_loose(platform_id) {
+        Some(p) => p,
+        None => return platform_id.to_string(),
+    };
+    
+    // Find the status for this platform
+    let status = platform_statuses.iter().find(|s| s.platform == platform);
+    
+    match status {
+        Some(s)
+            if matches!(
+                s.status,
+                InstallationStatus::Installed(_) | InstallationStatus::Outdated { .. }
+            ) =>
+        {
+            format!("{} ✓", platform_id)
+        }
+        Some(_) => {
+            format!("{} (unavailable)", platform_id)
+        }
+        None => {
+            // Platform not in detection results, treat as unavailable
+            format!("{} (unavailable)", platform_id)
+        }
+    }
+}
 
 // DRY:FN:wizard_view
 /// Requirements wizard view - 8-step process (0, 1-6 renamed to 0-8) matching enhanced flow
@@ -53,6 +94,7 @@ pub fn view<'a>(
     models: &'a HashMap<String, Vec<String>>,
     requirements_preview_content: &'a text_editor::Content,
     plan_content: &'a text_editor::Content,
+    platform_statuses: &'a [crate::views::setup::PlatformStatus],
     theme: &'a AppTheme,
     _size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
@@ -137,10 +179,11 @@ pub fn view<'a>(
             prd_model,
             models,
             generating,
+            platform_statuses,
             theme,
         ),
         4 => step4_review_prd(prd_editor_content, prd_text, theme),
-        5 => step5_configure_tiers(tier_configs, models, theme),
+        5 => step5_configure_tiers(tier_configs, models, platform_statuses, theme),
         6 => step6_generate_plan(plan_text, plan_content, generating, theme),
         7 => step7_review_plan(plan_text, plan_content, theme).into(),
         8 => step8_review_start(project_name, project_path, theme).into(),
@@ -696,6 +739,7 @@ fn step3_generate_prd<'a>(
     prd_model: &'a str,
     models: &'a HashMap<String, Vec<String>>,
     generating: bool,
+    platform_statuses: &'a [crate::views::setup::PlatformStatus],
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let platform_models = models.get(prd_platform);
@@ -722,10 +766,29 @@ fn step3_generate_prd<'a>(
                 .font(fonts::FONT_UI_BOLD)
                 .color(theme.ink())
                 .width(Length::Fixed(120.0)),
-            pick_list(PLATFORMS, Some(prd_platform), |s| {
-                Message::WizardPrdPlatformChanged(s.to_string())
-            })
-            .width(Length::Fixed(200.0)),
+            {
+                // Build platform options with availability indicators
+                let platform_options: Vec<String> = PLATFORMS
+                    .iter()
+                    .map(|p| format_platform_id_option(p, platform_statuses))
+                    .collect();
+                
+                // Find current selection with formatting
+                let selected_platform = platform_options
+                    .iter()
+                    .find(|opt| {
+                        let clean = opt.trim_end_matches(" ✓").trim_end_matches(" (unavailable)");
+                        clean == prd_platform
+                    })
+                    .cloned();
+                
+                pick_list(platform_options, selected_platform, |s: String| {
+                    // Extract the platform ID from the formatted string
+                    let clean = s.trim_end_matches(" ✓").trim_end_matches(" (unavailable)");
+                    Message::WizardPrdPlatformChanged(clean.to_string())
+                })
+                .width(Length::Fixed(200.0))
+            },
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
@@ -880,6 +943,7 @@ fn step4_review_prd<'a>(
 fn step5_configure_tiers<'a>(
     tier_configs: &'a HashMap<String, WizardTierConfig>,
     models: &'a HashMap<String, Vec<String>>,
+    platform_statuses: &'a [crate::views::setup::PlatformStatus],
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let tiers = vec!["phase", "task", "subtask", "iteration"];
@@ -925,10 +989,29 @@ fn step5_configure_tiers<'a>(
                         .size(tokens::font_size::BASE)
                         .color(theme.ink())
                         .width(Length::Fixed(150.0)),
-                    pick_list(PLATFORMS, Some(config.platform.as_str()), move |p| {
-                        Message::WizardTierPlatformChanged(tier.to_string(), p.to_string())
-                    })
-                    .width(Length::Fixed(200.0)),
+                    {
+                        // Build platform options with availability indicators
+                        let platform_options: Vec<String> = PLATFORMS
+                            .iter()
+                            .map(|p| format_platform_id_option(p, platform_statuses))
+                            .collect();
+                        
+                        // Find current selection with formatting
+                        let selected_platform = platform_options
+                            .iter()
+                            .find(|opt| {
+                                let clean = opt.trim_end_matches(" ✓").trim_end_matches(" (unavailable)");
+                                clean == config.platform.as_str()
+                            })
+                            .cloned();
+                        
+                        pick_list(platform_options, selected_platform, move |p: String| {
+                            // Extract the platform ID from the formatted string
+                            let clean = p.trim_end_matches(" ✓").trim_end_matches(" (unavailable)");
+                            Message::WizardTierPlatformChanged(tier.to_string(), clean.to_string())
+                        })
+                        .width(Length::Fixed(200.0))
+                    },
                 ]
                 .spacing(tokens::spacing::SM)
                 .align_y(iced::Alignment::Center),

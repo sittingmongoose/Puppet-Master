@@ -9,7 +9,10 @@
 #
 set -euo pipefail
 
-VERSION="${1:-0.1.1}"
+BASE_VERSION="${1:-0.1.1}"
+BUILD_ID="${PM_BUILD_ID:-$(date -u +%Y%m%d%H%M%S)}"
+BUILD_UTC="${PM_BUILD_UTC:-${BUILD_ID}}"
+VERSION="${BASE_VERSION}+b${BUILD_ID}"
 APP_NAME="RWM Puppet Master"
 BUNDLE_NAME="RWM Puppet Master.app"
 DMG_NAME="RWM-Puppet-Master-${VERSION}.dmg"
@@ -17,6 +20,8 @@ UNIVERSAL="${PM_MAC_UNIVERSAL:-1}"
 
 # Build the release binary (universal or arm64-only)
 cd ../../puppet-master-rs
+export PM_BUILD_ID="${BUILD_ID}"
+export PM_BUILD_UTC="${BUILD_UTC}"
 
 TARGET_DIR="${PM_TARGET_DIR:-}"
 if [ -z "${TARGET_DIR}" ]; then
@@ -57,6 +62,12 @@ cp "${BIN_PATH}" "${BUNDLE_DIR}/Contents/MacOS/puppet-master"
 
 # Copy Info.plist
 cp Info.plist "${BUNDLE_DIR}/Contents/"
+/usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString ${BASE_VERSION}" "${BUNDLE_DIR}/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c "Set :CFBundleVersion ${BUILD_ID}" "${BUNDLE_DIR}/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c "Delete :PMBuildID" "${BUNDLE_DIR}/Contents/Info.plist" 2>/dev/null || true
+/usr/libexec/PlistBuddy -c "Delete :PMBuildUTC" "${BUNDLE_DIR}/Contents/Info.plist" 2>/dev/null || true
+/usr/libexec/PlistBuddy -c "Add :PMBuildID string ${BUILD_ID}" "${BUNDLE_DIR}/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c "Add :PMBuildUTC string ${BUILD_UTC}" "${BUNDLE_DIR}/Contents/Info.plist"
 
 # Copy icon
 if [ -f "../../puppet-master-rs/icons/icon.icns" ]; then

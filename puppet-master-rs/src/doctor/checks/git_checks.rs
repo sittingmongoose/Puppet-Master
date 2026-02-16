@@ -150,10 +150,7 @@ chmod +x "$HOME/.local/bin/gh""#;
 
         #[cfg(not(any(target_os = "windows", target_os = "macos", target_os = "linux")))]
         {
-            (
-                "Unsupported operating system".to_string(),
-                String::new(),
-            )
+            ("Unsupported operating system".to_string(), String::new())
         }
     }
 }
@@ -205,7 +202,10 @@ impl DoctorCheck for GitHubCliCheck {
                 let stderr = String::from_utf8_lossy(&output.stderr);
                 CheckResult {
                     passed: false,
-                    message: format!("GitHub CLI found at {} but failed to execute", path.display()),
+                    message: format!(
+                        "GitHub CLI found at {} but failed to execute",
+                        path.display()
+                    ),
                     details: Some(stderr.trim().to_string()),
                     can_fix: true,
                     timestamp: Utc::now(),
@@ -218,7 +218,9 @@ impl DoctorCheck for GitHubCliCheck {
                     path.display(),
                     e
                 ),
-                details: Some("Run 'gh --version' manually to inspect the installation.".to_string()),
+                details: Some(
+                    "Run 'gh --version' manually to inspect the installation.".to_string(),
+                ),
                 can_fix: true,
                 timestamp: Utc::now(),
             },
@@ -266,7 +268,11 @@ impl DoctorCheck for GitHubCliCheck {
                 } else {
                     format!("GitHub CLI installation failed: {}", details)
                 };
-                Some(FixResult::failure(message).with_step(summary).with_step(command))
+                Some(
+                    FixResult::failure(message)
+                        .with_step(summary)
+                        .with_step(command),
+                )
             }
             Err(e) => Some(
                 FixResult::failure(format!("Failed to start GitHub CLI installation: {}", e))

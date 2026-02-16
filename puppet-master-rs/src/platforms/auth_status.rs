@@ -36,6 +36,16 @@ impl AuthStatusChecker {
     pub async fn check_platform(&self, platform: Platform) -> AuthCheckResult {
         debug!("Checking authentication for platform: {}", platform);
 
+        if let Some(env_var) = Self::active_env_override(platform) {
+            return AuthCheckResult::authenticated(format!(
+                "Authenticated via environment variable {}",
+                env_var
+            ))
+            .with_details(
+                "Legacy headless/CI override detected. Browser/subscription auth is preferred for local interactive use.",
+            );
+        }
+
         match platform {
             Platform::Cursor => self.check_cursor().await,
             Platform::Codex => self.check_codex().await,
@@ -98,7 +108,22 @@ impl AuthStatusChecker {
         let spec = platform_specs::get_spec(Platform::Codex);
         for cmd in platform_specs::cli_binary_names(Platform::Codex) {
             if let Ok(output) = self.run_command(cmd, spec.auth.status_args).await {
-                if output.status.success() {
+                let stdout = String::from_utf8_lossy(&output.stdout);
+                let stderr = String::from_utf8_lossy(&output.stderr);
+                let combined = format!("{}{}", stdout, stderr).to_lowercase();
+
+                let clearly_not_authenticated = combined.contains("not logged")
+                    || combined.contains("not authenticated")
+                    || combined.contains("login required")
+                    || combined.contains("please login");
+                if clearly_not_authenticated {
+                    continue;
+                }
+
+                if output.status.success()
+                    || combined.contains("logged in")
+                    || combined.contains("authenticated")
+                {
                     return AuthCheckResult::authenticated(
                         "Codex CLI is authenticated via subscription",
                     );
@@ -116,7 +141,7 @@ impl AuthStatusChecker {
         let cred_path = std::path::Path::new(&home).join(".claude");
         let spec = platform_specs::get_spec(Platform::Claude);
 
-        if cred_path.exists() {
+        if Self::credentials_cached(&cred_path) {
             for cmd in platform_specs::cli_binary_names(Platform::Claude) {
                 if let Ok(output) = self.run_command(cmd, &[spec.version_command]).await {
                     if output.status.success() {
@@ -149,7 +174,7 @@ impl AuthStatusChecker {
         let cred_path = std::path::Path::new(&home).join(".gemini");
         let spec = platform_specs::get_spec(Platform::Gemini);
 
-        if cred_path.exists() {
+        if Self::credentials_cached(&cred_path) {
             for cmd in platform_specs::cli_binary_names(Platform::Gemini) {
                 if let Ok(output) = self.run_command(cmd, &[spec.version_command]).await {
                     if output.status.success() {
@@ -193,7 +218,7 @@ impl AuthStatusChecker {
         // as a proxy when the Copilot CLI itself is installed.
         let gh_authenticated = if let Ok(output) = self.run_command("gh", &["auth", "status"]).await
         {
-            output.status.success()
+            Self::gh_auth_output_is_authenticated(&output)
         } else {
             false
         };
@@ -232,13 +257,7 @@ impl AuthStatusChecker {
         }
 
         if let Ok(output) = self.run_command("gh", &["auth", "status"]).await {
-            let stdout = String::from_utf8_lossy(&output.stdout);
-            let stderr = String::from_utf8_lossy(&output.stderr);
-            let combined = format!("{}{}", stdout, stderr);
-
-            if combined.to_lowercase().contains("logged in")
-                || combined.to_lowercase().contains("authenticated to")
-            {
+            if Self::gh_auth_output_is_authenticated(&output) {
                 return AuthCheckResult::authenticated("GitHub CLI is authenticated");
             }
 
@@ -271,6 +290,52 @@ impl AuthStatusChecker {
                 self.timeout_secs
             )),
         }
+    }
+
+    // DRY:FN:credentials_cached — Checks whether a credentials path likely contains auth material.
+    fn credentials_cached(path: &Path) -> bool {
+        if !path.exists() {
+            return false;
+        }
+
+        if path.is_file() {
+            return true;
+        }
+
+        std::fs::read_dir(path)
+            .ok()
+            .and_then(|mut entries| entries.next())
+            .is_some()
+    }
+
+    fn active_env_override(platform: Platform) -> Option<&'static str> {
+        let vars: &[&str] = match platform {
+            Platform::Cursor => &["CURSOR_API_KEY"],
+            Platform::Codex => &["CODEX_API_KEY", "OPENAI_API_KEY"],
+            Platform::Claude => &["ANTHROPIC_API_KEY"],
+            Platform::Gemini => &["GEMINI_API_KEY", "GOOGLE_API_KEY"],
+            Platform::Copilot => &["GH_TOKEN", "GITHUB_TOKEN"],
+        };
+
+        vars.iter().copied().find(|key| {
+            std::env::var(key)
+                .map(|value| !value.trim().is_empty())
+                .unwrap_or(false)
+        })
+    }
+
+    // DRY:FN:gh_auth_output_is_authenticated — Normalize GH auth status parsing.
+    fn gh_auth_output_is_authenticated(output: &std::process::Output) -> bool {
+        let stdout = String::from_utf8_lossy(&output.stdout);
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        let combined = format!("{}{}", stdout, stderr).to_lowercase();
+
+        (output.status.success()
+            && (combined.contains("logged in")
+                || combined.contains("authenticated to")
+                || combined.contains("active account")))
+            || combined.contains("logged in")
+            || combined.contains("authenticated to")
     }
 
     // DRY:FN:resolve_program — Resolve executable path via PATH + known fallback dirs.
@@ -426,13 +491,22 @@ mod tests {
     fn test_copilot_auth_policy_not_authenticated_when_cli_without_gh_auth() {
         let result = AuthStatusChecker::copilot_auth_result(true, false);
         assert!(!result.authenticated);
-        assert!(result.message.to_lowercase().contains("no active github auth"));
+        assert!(
+            result
+                .message
+                .to_lowercase()
+                .contains("no active github auth")
+        );
     }
 
     #[test]
     fn test_resolve_program_keeps_explicit_path() {
         let checker = AuthStatusChecker::new();
-        let explicit = if cfg!(windows) { "C:\\Windows" } else { "/bin/sh" };
+        let explicit = if cfg!(windows) {
+            "C:\\Windows"
+        } else {
+            "/bin/sh"
+        };
         let resolved = checker.resolve_program(explicit);
         assert_eq!(resolved, std::path::PathBuf::from(explicit));
     }
@@ -443,5 +517,35 @@ mod tests {
         let missing = "__definitely_missing_auth_status_test_binary__";
         let resolved = checker.resolve_program(missing);
         assert_eq!(resolved, std::path::PathBuf::from(missing));
+    }
+
+    #[test]
+    fn test_credentials_cached_false_for_empty_dir() {
+        let dir = tempfile::tempdir().expect("tempdir");
+        assert!(!AuthStatusChecker::credentials_cached(dir.path()));
+    }
+
+    #[test]
+    fn test_credentials_cached_true_for_non_empty_dir() {
+        let dir = tempfile::tempdir().expect("tempdir");
+        let marker = dir.path().join("session.json");
+        std::fs::write(&marker, "{}").expect("write marker");
+        assert!(AuthStatusChecker::credentials_cached(dir.path()));
+    }
+
+    #[test]
+    fn test_active_env_override_detects_set_cursor_key() {
+        let key = "CURSOR_API_KEY";
+        let prior = std::env::var(key).ok();
+        // SAFETY: test-only process-scoped env mutation; restored before return.
+        unsafe { std::env::set_var(key, "test-value") };
+        let detected = AuthStatusChecker::active_env_override(Platform::Cursor);
+        assert_eq!(detected, Some(key));
+        match prior {
+            // SAFETY: restoring prior environment value in this test scope.
+            Some(value) => unsafe { std::env::set_var(key, value) },
+            // SAFETY: restoring absence of env var in this test scope.
+            None => unsafe { std::env::remove_var(key) },
+        }
     }
 }

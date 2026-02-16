@@ -1,6 +1,7 @@
 //! RWM Puppet Master - Library crate
 //! Exports modules for use in integration tests and as a library
 
+pub mod build_info;
 pub mod config;
 pub mod core;
 pub mod doctor;

@@ -17,13 +17,19 @@ fn combined_output(output: &std::process::Output) -> String {
     format!("{}{}", stdout, stderr).trim().to_string()
 }
 
-fn repo_root_from_cwd(cwd: &Path) -> PathBuf {
-    // Same logic as BrowserVerifier::repo_root_from_cwd
-    if cwd.file_name().is_some_and(|n| n == "puppet-master-rs") {
-        cwd.parent().unwrap_or(cwd).to_path_buf()
-    } else {
-        cwd.to_path_buf()
+fn resolve_project_root_for_doctor(cwd: &Path) -> PathBuf {
+    let derived = crate::utils::derive_project_root(cwd).unwrap_or_else(|_| cwd.to_path_buf());
+    if derived
+        .file_name()
+        .is_some_and(|name| name == "puppet-master-rs")
+    {
+        if let Some(parent) = derived.parent() {
+            if crate::utils::puppet_master_dir(parent).exists() {
+                return parent.to_path_buf();
+            }
+        }
     }
+    derived
 }
 
 fn default_ms_playwright_dir() -> Option<PathBuf> {
@@ -52,6 +58,58 @@ fn any_playwright_browser_dirs_exist(browsers_dir: &PathBuf) -> Result<Vec<Strin
     }
 
     Ok(found)
+}
+
+fn resolve_tool(name: &str) -> Option<PathBuf> {
+    crate::platforms::path_utils::resolve_executable(name)
+}
+
+async fn read_playwright_version_with_node(node_path: &Path, repo_root: &Path) -> Option<String> {
+    let node_script = r#"
+      try {
+        const pkg = require('playwright/package.json');
+        if (pkg && pkg.version) {
+          console.log(pkg.version);
+          process.exit(0);
+        }
+        process.exit(1);
+      } catch {
+        process.exit(1);
+      }
+    "#;
+
+    let mut cmd = Command::new(node_path);
+    cmd.args(["-e", node_script])
+        .current_dir(repo_root)
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .kill_on_drop(true);
+
+    match timeout(Duration::from_secs(10), cmd.output()).await {
+        Ok(Ok(output)) if output.status.success() => {
+            let version = String::from_utf8_lossy(&output.stdout).trim().to_string();
+            if version.is_empty() {
+                None
+            } else {
+                Some(version)
+            }
+        }
+        _ => None,
+    }
+}
+
+async fn read_playwright_version_with_npx(npx_path: &Path, repo_root: &Path) -> Option<String> {
+    let mut cmd = Command::new(npx_path);
+    cmd.args(["--no-install", "playwright", "--version"])
+        .current_dir(repo_root)
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .kill_on_drop(true);
+
+    match timeout(Duration::from_secs(10), cmd.output()).await {
+        Ok(Ok(out)) if out.status.success() => Some(combined_output(&out)),
+        _ => None,
+    }
 }
 
 // DRY:DATA:PlaywrightCheck
@@ -86,67 +144,73 @@ impl DoctorCheck for PlaywrightCheck {
     }
 
     async fn run(&self) -> CheckResult {
-        // Determine repo root (same logic as BrowserVerifier)
+        // Determine project root from current working directory.
         let cwd = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-        let repo_root = repo_root_from_cwd(&cwd);
+        let repo_root = resolve_project_root_for_doctor(&cwd);
 
         let browsers_path_note = match std::env::var("PLAYWRIGHT_BROWSERS_PATH") {
             Ok(v) => format!("PLAYWRIGHT_BROWSERS_PATH={v}"),
             Err(_) => "PLAYWRIGHT_BROWSERS_PATH is not set".to_string(),
         };
 
-        // 1) Verify Playwright CLI is available from repo_root
-        let version_output = {
-            let mut cmd = Command::new("npx");
-            cmd.args(&["--no-install", "playwright", "--version"])
-                .current_dir(&repo_root)
-                .stdout(Stdio::piped())
-                .stderr(Stdio::piped())
-                .kill_on_drop(true);
-
-            match timeout(Duration::from_secs(10), cmd.output()).await {
-                Ok(Ok(out)) if out.status.success() => Some(out),
-                _ => {
-                    let mut cmd2 = Command::new("npx");
-                    cmd2.args(&["playwright", "--version"])
-                        .current_dir(&repo_root)
-                        .stdout(Stdio::piped())
-                        .stderr(Stdio::piped())
-                        .kill_on_drop(true);
-
-                    timeout(Duration::from_secs(10), cmd2.output())
-                        .await
-                        .ok()
-                        .and_then(|r| r.ok())
-                }
-            }
+        let Some(node_path) = resolve_tool("node") else {
+            return CheckResult {
+                passed: false,
+                message: "Node.js not found".to_string(),
+                details: Some(
+                    "Playwright checks require Node.js. Install Node.js, then rerun doctor."
+                        .to_string(),
+                ),
+                can_fix: true,
+                timestamp: Utc::now(),
+            };
         };
+        let Some(npm_path) = resolve_tool("npm") else {
+            return CheckResult {
+                passed: false,
+                message: "npm not found".to_string(),
+                details: Some(format!(
+                    "Node found at {}, but npm is missing.",
+                    node_path.display()
+                )),
+                can_fix: true,
+                timestamp: Utc::now(),
+            };
+        };
+        let npx_path = resolve_tool("npx");
 
-        let version_text = match version_output {
-            Some(out) if out.status.success() => combined_output(&out),
-            Some(out) => {
+        // 1) Verify Playwright package/CLI can be resolved from project root.
+        let version_text = if let Some(version) =
+            read_playwright_version_with_node(&node_path, &repo_root).await
+        {
+            version
+        } else if let Some(npx) = &npx_path {
+            if let Some(version) = read_playwright_version_with_npx(npx, &repo_root).await {
+                version
+            } else {
                 return CheckResult {
                     passed: false,
-                    message: "Playwright CLI not available via npx".to_string(),
+                    message: "Playwright package not available".to_string(),
                     details: Some(format!(
-                        "{browsers_path_note}. npx output: {}\nSuggestion: ensure Playwright is installed (e.g. npm i -D playwright) and try: npx playwright --version",
-                        combined_output(&out)
+                        "{browsers_path_note}. Could not resolve Playwright with node or npx from {}.\nSuggestion: install dependencies (npm ci or npm install), then run: npx playwright install",
+                        repo_root.display()
                     )),
-                    can_fix: true, // Can be fixed by installing dependencies
+                    can_fix: true,
                     timestamp: Utc::now(),
                 };
             }
-            None => {
-                return CheckResult {
-                    passed: false,
-                    message: "Failed to run npx playwright".to_string(),
-                    details: Some(format!(
-                        "{browsers_path_note}. Error: npx command timed out or failed\nSuggestion: ensure Node.js + npm are installed, then install Playwright and run: npx playwright install"
-                    )),
-                    can_fix: true, // Can be fixed by installing
-                    timestamp: Utc::now(),
-                };
-            }
+        } else {
+            return CheckResult {
+                passed: false,
+                message: "Playwright package not available".to_string(),
+                details: Some(format!(
+                    "{browsers_path_note}. Playwright package lookup failed and npx is unavailable.\nNode: {}, npm: {}\nSuggestion: install dependencies (npm ci or npm install), then install browsers.",
+                    node_path.display(),
+                    npm_path.display()
+                )),
+                can_fix: true,
+                timestamp: Utc::now(),
+            };
         };
 
         // 2) Check browser binaries.
@@ -164,8 +228,8 @@ impl DoctorCheck for PlaywrightCheck {
 
         let mut found = Vec::new();
 
-        let mut cmd = Command::new("node");
-        cmd.args(&["-e", node_script])
+        let mut cmd = Command::new(&node_path);
+        cmd.args(["-e", node_script])
             .current_dir(&repo_root)
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
@@ -247,20 +311,44 @@ impl DoctorCheck for PlaywrightCheck {
 
     async fn fix(&self, dry_run: bool) -> Option<FixResult> {
         let cwd = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-        let repo_root = repo_root_from_cwd(&cwd);
+        let repo_root = resolve_project_root_for_doctor(&cwd);
+        let Some(npm_path) = resolve_tool("npm") else {
+            return Some(FixResult::failure(
+                "npm not found. Install Node.js/npm before fixing Playwright.",
+            ));
+        };
+        let npx_path = resolve_tool("npx");
 
         let mut steps = Vec::new();
 
         if dry_run {
             steps.push(format!("Would determine repo root: {repo_root:?}"));
             steps.push("Would check if package-lock.json exists".to_string());
-            steps.push("Would run: npm ci (or npm install if no package-lock.json)".to_string());
-            steps.push("Would run: npx playwright install".to_string());
+            steps.push(format!(
+                "Would run: {} ci (or install if no package-lock.json)",
+                npm_path.display()
+            ));
+            if let Some(npx) = &npx_path {
+                steps.push(format!("Would run: {} playwright install", npx.display()));
+            } else {
+                steps.push(format!(
+                    "Would run: {} exec -- playwright install",
+                    npm_path.display()
+                ));
+            }
 
             #[cfg(target_os = "linux")]
-            steps.push(
-                "Would run: npx playwright install --with-deps (on Linux, best-effort)".to_string(),
-            );
+            if let Some(npx) = &npx_path {
+                steps.push(format!(
+                    "Would run: {} playwright install --with-deps (on Linux, best-effort)",
+                    npx.display()
+                ));
+            } else {
+                steps.push(format!(
+                    "Would run: {} exec -- playwright install --with-deps (on Linux, best-effort)",
+                    npm_path.display()
+                ));
+            }
 
             return Some(
                 FixResult::success("Dry run: would install Playwright dependencies and browsers")
@@ -282,7 +370,7 @@ impl DoctorCheck for PlaywrightCheck {
         };
 
         // Run npm ci/install
-        let mut npm_cmd = Command::new("npm");
+        let mut npm_cmd = Command::new(&npm_path);
         npm_cmd
             .arg(npm_command)
             .current_dir(&repo_root)
@@ -317,9 +405,21 @@ impl DoctorCheck for PlaywrightCheck {
         }
 
         // Step 3: Install Playwright browsers
-        let mut playwright_cmd = Command::new("npx");
+        let mut playwright_cmd = if let Some(npx) = &npx_path {
+            let mut cmd = Command::new(npx);
+            cmd.args(["playwright", "install"]);
+            steps.push(format!("Using npx at {}", npx.display()));
+            cmd
+        } else {
+            let mut cmd = Command::new(&npm_path);
+            cmd.args(["exec", "--", "playwright", "install"]);
+            steps.push(format!(
+                "npx not found; falling back to npm exec via {}",
+                npm_path.display()
+            ));
+            cmd
+        };
         playwright_cmd
-            .args(&["playwright", "install"])
             .current_dir(&repo_root)
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
@@ -327,18 +427,18 @@ impl DoctorCheck for PlaywrightCheck {
 
         match timeout(Duration::from_secs(300), playwright_cmd.output()).await {
             Ok(Ok(output)) if output.status.success() => {
-                steps.push("Successfully ran 'npx playwright install'".to_string());
+                steps.push("Successfully installed Playwright browsers".to_string());
             }
             Ok(Ok(output)) => {
                 let stderr = String::from_utf8_lossy(&output.stderr);
-                steps.push(format!("npx playwright install failed: {stderr}"));
+                steps.push(format!("Playwright browser install failed: {stderr}"));
                 return Some(
                     FixResult::failure("Failed to install Playwright browsers")
                         .with_step(steps.join("\n")),
                 );
             }
             Ok(Err(e)) => {
-                steps.push(format!("Failed to execute npx playwright install: {e}"));
+                steps.push(format!("Failed to execute Playwright install command: {e}"));
                 return Some(
                     FixResult::failure("Failed to execute playwright install command")
                         .with_step(steps.join("\n")),
@@ -358,9 +458,16 @@ impl DoctorCheck for PlaywrightCheck {
             steps.push(
                 "Attempting to install system dependencies on Linux (best-effort)".to_string(),
             );
-            let mut deps_cmd = Command::new("npx");
+            let mut deps_cmd = if let Some(npx) = &npx_path {
+                let mut cmd = Command::new(npx);
+                cmd.args(["playwright", "install", "--with-deps"]);
+                cmd
+            } else {
+                let mut cmd = Command::new(&npm_path);
+                cmd.args(["exec", "--", "playwright", "install", "--with-deps"]);
+                cmd
+            };
             deps_cmd
-                .args(&["playwright", "install", "--with-deps"])
                 .current_dir(&repo_root)
                 .stdout(Stdio::piped())
                 .stderr(Stdio::piped())
@@ -382,9 +489,56 @@ impl DoctorCheck for PlaywrightCheck {
             }
         }
 
-        Some(
-            FixResult::success("Playwright dependencies and browsers installed successfully")
-                .with_step(steps.join("\n")),
+        let recheck = self.run().await;
+        if recheck.passed {
+            Some(
+                FixResult::success("Playwright dependencies and browsers installed successfully")
+                    .with_step(steps.join("\n"))
+                    .with_step(format!("Revalidated: {}", recheck.message)),
+            )
+        } else {
+            let mut result = FixResult::failure(
+                "Playwright install steps completed but validation still failed.",
+            )
+            .with_step(steps.join("\n"))
+            .with_step(format!("Revalidation failed: {}", recheck.message));
+            if let Some(details) = recheck.details {
+                result = result.with_step(details);
+            }
+            Some(result)
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs;
+    use tempfile::TempDir;
+
+    #[test]
+    fn finds_browser_cache_directories() {
+        let temp_dir = TempDir::new().unwrap();
+        fs::create_dir_all(temp_dir.path().join("chromium-1234")).unwrap();
+        fs::create_dir_all(temp_dir.path().join("webkit-5678")).unwrap();
+
+        let found = any_playwright_browser_dirs_exist(&temp_dir.path().to_path_buf()).unwrap();
+        assert_eq!(found.len(), 2);
+    }
+
+    #[test]
+    fn resolves_workspace_parent_from_puppet_master_rs_cwd() {
+        let root = TempDir::new().unwrap();
+        fs::create_dir_all(root.path().join(".puppet-master")).unwrap();
+        let crate_dir = root.path().join("puppet-master-rs");
+        fs::create_dir_all(&crate_dir).unwrap();
+        fs::write(
+            crate_dir.join("Cargo.toml"),
+            "[package]\nname='x'\nversion='0.1.0'",
         )
+        .unwrap();
+
+        let resolved = resolve_project_root_for_doctor(&crate_dir);
+        assert_eq!(resolved, root.path());
     }
 }

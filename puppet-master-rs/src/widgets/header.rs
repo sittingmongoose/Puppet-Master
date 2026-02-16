@@ -3,7 +3,9 @@
 use crate::theme::AppTheme;
 use crate::theme::fonts::FONT_DISPLAY_BOLD;
 use crate::theme::tokens::{borders, layout, spacing};
-use crate::widgets::styled_button::{header_nav_button, styled_button_sized, ButtonSize, ButtonVariant};
+use crate::widgets::styled_button::{
+    ButtonSize, ButtonVariant, header_nav_button, styled_button_sized,
+};
 use iced::widget::{Space, column, container, row, rule, text};
 use iced::{Background, Border, Element, Length, Padding, Shadow, Vector};
 
@@ -136,9 +138,7 @@ where
         .align_x(iced::Alignment::Start);
 
     // ── Top row: Logo (left) → spacer → Project selector → Theme button (right) ──
-    let mut top_row = row![]
-        .spacing(spacing::SM)
-        .align_y(iced::Alignment::Center);
+    let mut top_row = row![].spacing(spacing::SM).align_y(iced::Alignment::Center);
 
     top_row = top_row.push(container(logo).width(Length::Shrink));
     top_row = top_row.push(Space::new().width(Length::Fill));
@@ -158,8 +158,9 @@ where
     } else {
         "Dark Mode"
     };
-    let theme_btn = styled_button_sized(theme, theme_label, ButtonVariant::Ghost, ButtonSize::Small)
-        .on_press(on_theme_toggle);
+    let theme_btn =
+        styled_button_sized(theme, theme_label, ButtonVariant::Ghost, ButtonSize::Small)
+            .on_press(on_theme_toggle);
     top_row = top_row.push(theme_btn);
 
     // ── Bottom row: Navigation buttons ──

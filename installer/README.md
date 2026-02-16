@@ -43,32 +43,32 @@ installer/
 cd puppet-master-rs
 cargo build --release
 
-# Build installer with NSIS
+# Build installer with NSIS (base semver + display metadata)
 cd ../installer/windows
-makensis /DVERSION=0.1.1 puppet-master.nsi
+makensis /DVERSION=0.1.1 /DDISPLAY_VERSION=0.1.1+b20260216010101 puppet-master.nsi
 ```
 
-Output: `RWM-Puppet-Master-0.1.1-setup.exe`
+Output: `RWM-Puppet-Master-0.1.1-setup.exe` (Windows Add/Remove Programs shows `DisplayVersion`)
 
 ### macOS DMG
 
 ```bash
 cd installer/macos
-./build-dmg.sh 0.1.1
+PM_BUILD_ID=20260216010101 PM_BUILD_UTC=20260216010101 ./build-dmg.sh 0.1.1
 ```
 
-Output: `RWM-Puppet-Master-0.1.1.dmg` (Universal binary for Intel + Apple Silicon)
+Output: `RWM-Puppet-Master-0.1.1+b20260216010101.dmg` (Universal binary for Intel + Apple Silicon)
 
 ### Linux Packages
 
 ```bash
 cd scripts
-./build-linux-installer.sh 0.1.1
+PM_BUILD_ID=20260216010101 PM_BUILD_UTC=20260216010101 ./build-linux-installer.sh 0.1.1
 ```
 
 Output:
-- `installer/linux/puppet-master_0.1.1_amd64.deb`
-- `installer/linux/puppet-master-0.1.1-1.x86_64.rpm` (if rpmbuild available)
+- `installer/linux/puppet-master_0.1.1+b20260216010101_amd64.deb`
+- `installer/linux/puppet-master-0.1.1-1.20260216010101.x86_64.rpm` (if rpmbuild available)
 
 The Linux installer packages a release binary built from `puppet-master-rs` (glibc target).
 
@@ -147,7 +147,7 @@ dpkg-deb --contents installer/linux/puppet-master_0.1.1_amd64.deb
 ## Project Info
 
 - **Name:** RWM Puppet Master
-- **Version:** 0.1.1
+- **Versioning:** base SemVer from `Cargo.toml` + per-build metadata (`PM_BUILD_ID`, `PM_BUILD_UTC`, git SHA)
 - **Identifier:** com.rwm.puppet-master
 - **Description:** AI-assisted development orchestrator
 - **License:** MIT
