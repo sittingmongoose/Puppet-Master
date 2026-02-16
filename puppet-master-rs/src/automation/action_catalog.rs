@@ -1,6 +1,6 @@
 //! Stable automation action catalog.
 
-use crate::app::{LoginTextSurface, Message};
+use crate::app::{ContextMenuTarget, LoginTextSurface, Message, SelectableField};
 use crate::platforms::AuthTarget;
 use crate::widgets::Page;
 
@@ -116,6 +116,14 @@ pub fn list_actions() -> Vec<ActionDefinition> {
         ActionDefinition {
             id: "doctor.fix.state_directory_dry_run",
             description: "Preview doctor fix for state-directory",
+        },
+        ActionDefinition {
+            id: "doctor.expand.state_directory",
+            description: "Toggle doctor details for state-directory",
+        },
+        ActionDefinition {
+            id: "doctor.context.details.state_directory",
+            description: "Open context menu for state-directory details",
         },
         ActionDefinition {
             id: "doctor.fix.node_runtime",
@@ -261,6 +269,14 @@ pub fn resolve_action(action_id: &str) -> Option<Message> {
         "doctor.fix.state_directory_dry_run" => {
             Message::FixCheck("state-directory".to_string(), true)
         }
+        "doctor.expand.state_directory" => {
+            Message::ToggleDoctorCheckExpand("state-directory".to_string())
+        }
+        "doctor.context.details.state_directory" => Message::OpenContextMenu(
+            ContextMenuTarget::SelectableField(SelectableField::DoctorCheckDetails(
+                "state-directory".to_string(),
+            )),
+        ),
         "doctor.fix.node_runtime" => Message::FixCheck("node-runtime".to_string(), false),
         "doctor.fix.playwright_browsers" => {
             Message::FixCheck("playwright-browsers".to_string(), false)

@@ -56,11 +56,42 @@ pub fn derive_project_root(config_path: &Path) -> Result<PathBuf> {
 }
 
 // DRY:HELPER:is_directory_writable
-/// Best-effort writability check for a directory without creating probe files.
+/// Best-effort writability check for a directory.
+///
+/// Note: permission bits alone are not sufficient to detect read-only mounts (e.g. DMG images on
+/// macOS). We do a tiny create/delete probe file to confirm writability.
 pub fn is_directory_writable(path: &Path) -> bool {
-    std::fs::metadata(path)
-        .map(|metadata| !metadata.permissions().readonly())
-        .unwrap_or(false)
+    let Ok(metadata) = std::fs::metadata(path) else {
+        return false;
+    };
+    if !metadata.is_dir() {
+        return false;
+    }
+    if metadata.permissions().readonly() {
+        return false;
+    }
+
+    let nanos = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|d| d.as_nanos())
+        .unwrap_or(0);
+    let probe_path = path.join(format!(
+        ".rwm-write-probe-{}-{}",
+        std::process::id(),
+        nanos
+    ));
+
+    match std::fs::OpenOptions::new()
+        .write(true)
+        .create_new(true)
+        .open(&probe_path)
+    {
+        Ok(_) => {
+            let _ = std::fs::remove_file(&probe_path);
+            true
+        }
+        Err(_) => false,
+    }
 }
 
 // DRY:HELPER:resolve_writable_state_root

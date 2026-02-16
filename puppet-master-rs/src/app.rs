@@ -1245,14 +1245,15 @@ impl App {
             _no_tier_details: None,
         };
 
-        // Ensure .puppet-master directory exists on startup
+        // Ensure `.puppet-master` exists on startup (avoid read-only CWDs like DMG mounts).
         if let Ok(cwd) = std::env::current_dir() {
-            let puppet_dir = cwd.join(".puppet-master");
+            let resolved_root = crate::utils::resolve_writable_state_root(&cwd);
+            let puppet_dir = crate::utils::puppet_master_dir(&resolved_root);
             let _ = std::fs::create_dir_all(&puppet_dir);
-            let _ = std::fs::create_dir_all(puppet_dir.join("evidence"));
-            let _ = std::fs::create_dir_all(puppet_dir.join("logs"));
+            let _ = std::fs::create_dir_all(crate::utils::evidence_dir(&resolved_root));
+            let _ = std::fs::create_dir_all(crate::utils::logs_dir(&resolved_root));
             let _ = std::fs::create_dir_all(puppet_dir.join("sessions"));
-            let _ = std::fs::create_dir_all(puppet_dir.join("checkpoints"));
+            let _ = std::fs::create_dir_all(crate::utils::checkpoints_dir(&resolved_root));
         }
 
         // Initial tasks: load fonts, load projects, load config, etc.
@@ -1302,7 +1303,8 @@ impl App {
 
         // First-boot detection: check if setup has been completed
         let cwd = std::env::current_dir().unwrap_or_default();
-        let setup_marker = cwd.join(".puppet-master").join("setup-complete");
+        let resolved_root = crate::utils::resolve_writable_state_root(&cwd);
+        let setup_marker = crate::utils::puppet_master_dir(&resolved_root).join("setup-complete");
         if !setup_marker.exists() {
             // No setup marker found - show setup wizard on first boot
             app.current_page = Page::Setup;
@@ -3338,6 +3340,13 @@ impl App {
 
             Message::FixCheckComplete(name, fix_result) => {
                 self.doctor_fixing.remove(&name);
+                let fix_steps_for_details = fix_result.as_ref().and_then(|fix| {
+                    if fix.success || fix.steps.is_empty() {
+                        None
+                    } else {
+                        Some(fix.steps.join("\n"))
+                    }
+                });
                 match &fix_result {
                     Some(fix) => {
                         if fix.success {
@@ -3351,6 +3360,7 @@ impl App {
                     }
                 }
                 let name_for_refresh = name;
+                let fix_steps_for_details = fix_steps_for_details.clone();
                 Task::perform(
                     async move {
                         let registry = crate::doctor::CheckRegistry::default();
@@ -3377,11 +3387,18 @@ impl App {
                             },
                             name: check.name,
                             passed: check.result.passed,
-                            message: check
-                                .result
-                                .details
-                                .clone()
-                                .unwrap_or_else(|| check.result.message.clone()),
+                            message: {
+                                let base = check
+                                    .result
+                                    .details
+                                    .clone()
+                                    .unwrap_or_else(|| check.result.message.clone());
+                                if let Some(fix_steps) = &fix_steps_for_details {
+                                    format!("{base}\n\n---\nFix output:\n{fix_steps}")
+                                } else {
+                                    base
+                                }
+                            },
                             fix_available: check.result.can_fix,
                             fix_command: None,
                         }),
@@ -4359,7 +4376,7 @@ impl App {
             }
 
             Message::SetupComplete => {
-                let base = self
+                let start = self
                     .current_project
                     .as_ref()
                     .map(|p| p.path.clone())
@@ -4367,7 +4384,8 @@ impl App {
                         std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."))
                     });
 
-                let marker_dir = base.join(".puppet-master");
+                let base = crate::utils::resolve_writable_state_root(&start);
+                let marker_dir = crate::utils::puppet_master_dir(&base);
                 let marker_file = marker_dir.join("setup-complete");
 
                 // Create directory if it doesn't exist

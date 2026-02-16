@@ -57,14 +57,25 @@ pub fn run(
     let init_renderer = async {
         <iced::Renderer as Headless>::new(Font::DEFAULT, Pixels(16.0), Some("tiny-skia")).await
     };
-    let mut renderer = if let Ok(handle) = tokio::runtime::Handle::try_current() {
-        std::thread::scope(|s| s.spawn(|| handle.block_on(init_renderer)).join().unwrap())
+    let renderer_init = if tokio::runtime::Handle::try_current().is_ok() {
+        // In #[tokio::test] (often current-thread runtime), using Handle::block_on can deadlock.
+        // Always spin up an isolated runtime on a helper thread for headless renderer init.
+        std::thread::scope(|s| {
+            s.spawn(|| {
+                let rt = tokio::runtime::Runtime::new()
+                    .map_err(|e| anyhow::anyhow!("Failed to create tokio runtime: {e}"))?;
+                Ok::<_, anyhow::Error>(rt.block_on(init_renderer))
+            })
+            .join()
+            .unwrap()
+        })?
     } else {
         let rt = tokio::runtime::Runtime::new()
             .map_err(|e| anyhow::anyhow!("Failed to create tokio runtime: {e}"))?;
         rt.block_on(init_renderer)
-    }
-    .ok_or_else(|| anyhow::anyhow!("Failed to initialize headless tiny-skia renderer"))?;
+    };
+    let mut renderer =
+        renderer_init.ok_or_else(|| anyhow::anyhow!("Failed to initialize headless tiny-skia renderer"))?;
 
     let initial_timeout = Duration::from_secs(2);
     drain_task_messages(&mut app, init_task, initial_timeout).map_err(anyhow::Error::msg)?;
@@ -240,12 +251,17 @@ fn block_on_future<T>(
 where
     T: Send + 'static,
 {
-    if let Ok(handle) = tokio::runtime::Handle::try_current() {
+    if tokio::runtime::Handle::try_current().is_ok() {
+        // Avoid deadlocks when called from a current-thread runtime by using an isolated runtime.
         std::thread::scope(|scope| {
             scope
-                .spawn(move || handle.block_on(future))
+                .spawn(move || {
+                    let rt = tokio::runtime::Runtime::new()
+                        .map_err(|e| format!("Failed to create task-drain runtime: {e}"))?;
+                    Ok(rt.block_on(future))
+                })
                 .join()
-                .map_err(|_| "Task drain runtime thread panicked".to_string())
+                .map_err(|_| "Task drain runtime thread panicked".to_string())?
         })
     } else {
         let rt = tokio::runtime::Runtime::new()

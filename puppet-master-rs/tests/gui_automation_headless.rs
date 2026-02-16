@@ -519,6 +519,83 @@ fn doctor_fix_transition_updates_state_in_headless_mode() {
     );
 }
 
+#[test]
+fn doctor_details_context_menu_actions_are_automated_in_headless_mode() {
+    let temp = tempfile::tempdir().expect("tempdir");
+
+    let spec = GuiRunSpec {
+        scenario_name: "doctor-details-context-menu".to_string(),
+        mode: GuiRunMode::Headless,
+        full_action: false,
+        workspace_root: std::env::current_dir().expect("cwd"),
+        artifacts_root: temp.path().to_path_buf(),
+        workspace_isolation: WorkspaceIsolation::EphemeralClone,
+        capture_full_bundle: true,
+        steps: vec![
+            GuiStep {
+                id: "goto-doctor".to_string(),
+                action: GuiAction::Navigate {
+                    page: "doctor".to_string(),
+                },
+                assertions: vec![GuiAssertion::PageIs {
+                    page: "doctor".to_string(),
+                }],
+                timeout_ms: Some(30_000),
+            },
+            GuiStep {
+                id: "run-state-directory-check".to_string(),
+                action: GuiAction::Execute {
+                    action_id: "doctor.run.state_directory".to_string(),
+                },
+                assertions: vec![GuiAssertion::DoctorRunning { value: false }],
+                timeout_ms: Some(120_000),
+            },
+            GuiStep {
+                id: "expand-state-directory-details".to_string(),
+                action: GuiAction::Execute {
+                    action_id: "doctor.expand.state_directory".to_string(),
+                },
+                assertions: Vec::new(),
+                timeout_ms: Some(30_000),
+            },
+            GuiStep {
+                id: "open-state-directory-details-context-menu".to_string(),
+                action: GuiAction::Execute {
+                    action_id: "doctor.context.details.state_directory".to_string(),
+                },
+                assertions: Vec::new(),
+                timeout_ms: Some(30_000),
+            },
+            GuiStep {
+                id: "select-all-doctor-details".to_string(),
+                action: GuiAction::Execute {
+                    action_id: "context.select_all".to_string(),
+                },
+                assertions: vec![GuiAssertion::ToastContains {
+                    text: "Selected all doctor details and copied to clipboard".to_string(),
+                }],
+                timeout_ms: Some(30_000),
+            },
+            GuiStep {
+                id: "snapshot".to_string(),
+                action: GuiAction::Snapshot {
+                    label: "doctor-details-context-state".to_string(),
+                },
+                assertions: Vec::new(),
+                timeout_ms: Some(30_000),
+            },
+        ],
+        ..GuiRunSpec::default()
+    };
+
+    let result = run_gui_automation(spec).expect("run_gui_automation should succeed");
+    assert!(
+        result.passed,
+        "doctor details context scenario should pass: {}",
+        result.message
+    );
+}
+
 /// Captures a headless screenshot of the dashboard (header visible) to a fixed
 /// artifacts path for before/after visual comparison. Run header_screenshot_for_visual_before
 /// before layout changes, then header_screenshot_for_visual_after after, to get two PNGs

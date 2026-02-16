@@ -88,6 +88,8 @@ pub fn get_fallback_directories() -> Vec<PathBuf> {
             dirs.push(home_path.join("bin"));
             dirs.push(home_path.join(".npm-global/bin"));
             dirs.push(home_path.join(".node_modules/bin"));
+            // Common nvm convention used by platform_specs default install paths.
+            dirs.push(home_path.join(".nvm/current/bin"));
         }
     }
 

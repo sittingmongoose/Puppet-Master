@@ -4,6 +4,7 @@
 //! (CLI login, OAuth) rather than API keys.
 
 use crate::platforms::platform_specs;
+use crate::platforms::platform_detector::PlatformDetector;
 use crate::types::Platform;
 use anyhow::{Result, anyhow};
 use log::info;
@@ -14,6 +15,21 @@ use tokio::process::Command;
 fn resolve_program(program: &str) -> PathBuf {
     crate::platforms::path_utils::resolve_executable(program)
         .unwrap_or_else(|| PathBuf::from(program))
+}
+
+async fn resolve_platform_program(platform: Platform, command_hint: &str) -> Result<PathBuf> {
+    if let Some(detected) = PlatformDetector::detect_platform(platform).await {
+        return Ok(detected.cli_path);
+    }
+
+    if let Some(resolved) = crate::platforms::path_utils::resolve_executable(command_hint) {
+        return Ok(resolved);
+    }
+
+    Err(anyhow!(
+        "{} CLI not found. Install it from Setup/Doctor first.",
+        platform_specs::get_spec(platform).display_name
+    ))
 }
 
 fn shell_quote(arg: &str) -> String {
@@ -82,12 +98,12 @@ pub async fn spawn_login(target: AuthTarget) -> Result<()> {
             _ => unreachable!(),
         };
         let spec = platform_specs::get_spec(platform);
-        let program = spec
+        let program_hint = spec
             .auth
             .login_command
             .or_else(|| spec.cli_binary_names.first().copied())
             .unwrap_or_default();
-        let resolved_program = resolve_program(program);
+        let resolved_program = resolve_platform_program(platform, program_hint).await?;
         let base_args = spec.auth.login_args.to_vec();
         let full_command = terminal_command(&resolved_program, &base_args);
 
@@ -104,7 +120,7 @@ pub async fn spawn_login(target: AuthTarget) -> Result<()> {
                 .map_err(|e| {
                     anyhow!(
                         "Failed to open terminal for {}: {}. Run '{}' manually in your terminal.",
-                        program,
+                        program_hint,
                         e,
                         full_command
                     )
@@ -118,7 +134,7 @@ pub async fn spawn_login(target: AuthTarget) -> Result<()> {
                 .map_err(|e| {
                     anyhow!(
                         "Failed to open terminal for {}: {}. Run '{}' manually in your terminal.",
-                        program,
+                        program_hint,
                         e,
                         full_command
                     )
@@ -135,7 +151,7 @@ pub async fn spawn_login(target: AuthTarget) -> Result<()> {
                 .map_err(|e| {
                     anyhow!(
                         "Failed to open terminal for {}: {}. Run '{}' manually in your terminal.",
-                        program,
+                        program_hint,
                         e,
                         full_command
                     )
@@ -157,7 +173,10 @@ pub async fn spawn_login(target: AuthTarget) -> Result<()> {
         }
         AuthTarget::GitHub => ("gh", vec!["auth", "login"]),
     };
-    let resolved_program = resolve_program(program);
+    let resolved_program = match target {
+        AuthTarget::Platform(platform) => resolve_platform_program(platform, program).await?,
+        AuthTarget::GitHub => resolve_program(program),
+    };
 
     info!(
         "Spawning login for {}: {} {:?}",
@@ -236,11 +255,11 @@ pub async fn spawn_logout(target: AuthTarget) -> Result<()> {
 
     // Copilot logout requires interactive terminal (/logout slash command)
     if matches!(target, AuthTarget::Platform(Platform::Copilot)) {
-        let program = platform_specs::cli_binary_names(Platform::Copilot)
+        let program_hint = platform_specs::cli_binary_names(Platform::Copilot)
             .first()
             .copied()
             .unwrap_or("copilot");
-        let resolved_program = resolve_program(program);
+        let resolved_program = resolve_platform_program(Platform::Copilot, program_hint).await?;
         if cfg!(target_os = "macos") {
             let script = format!(
                 "tell app \"Terminal\" to do script \"{}\"",
@@ -252,7 +271,7 @@ pub async fn spawn_logout(target: AuthTarget) -> Result<()> {
                 .map_err(|e| {
                     anyhow!(
                         "Failed to open terminal for {}: {}. Run 'copilot' and type /logout manually.",
-                        program,
+                        program_hint,
                         e,
                     )
                 })?;
@@ -264,7 +283,7 @@ pub async fn spawn_logout(target: AuthTarget) -> Result<()> {
                 .map_err(|e| {
                     anyhow!(
                         "Failed to open terminal for {}: {}. Run 'copilot' and type /logout manually.",
-                        program,
+                        program_hint,
                         e,
                     )
                 })?;
@@ -279,7 +298,7 @@ pub async fn spawn_logout(target: AuthTarget) -> Result<()> {
                 .map_err(|e| {
                     anyhow!(
                         "Failed to open terminal for {}: {}. Run 'copilot' and type /logout manually.",
-                        program,
+                        program_hint,
                         e,
                     )
                 })?;
@@ -299,7 +318,10 @@ pub async fn spawn_logout(target: AuthTarget) -> Result<()> {
         }
         AuthTarget::GitHub => ("gh", vec!["auth", "logout"]),
     };
-    let resolved_program = resolve_program(program);
+    let resolved_program = match target {
+        AuthTarget::Platform(platform) => resolve_platform_program(platform, program).await?,
+        AuthTarget::GitHub => resolve_program(program),
+    };
 
     info!(
         "Spawning logout for {}: {} {:?}",
