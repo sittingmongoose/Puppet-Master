@@ -80,6 +80,24 @@ All paths below are relative to `puppet-master-rs/src/`.
 | `src/state/` | Agent state management, promotion gates |
 | `src/projects/` | Project management |
 | `src/start_chain/` | Startup chain orchestration |
+| `src/automation/` | GUI automation (headless runner, action catalog, MCP bridge) |
+
+### Headless Rendering
+
+Headless screenshots use **Iced's `tiny-skia` software renderer** for pixel-perfect output without a GPU or display server. This replaces the old `imageproc`/`ab_glyph` wireframe approximation.
+
+**How it works:**
+1. `headless_runner.rs` creates a headless `iced::Renderer` via `<iced::Renderer as Headless>::new(Font::DEFAULT, Pixels(16.0), Some("tiny-skia"))`
+2. Calls `app.view()` to build the real widget tree, then lays it out with `UserInterface::build(element, size, cache, renderer)`
+3. Draws via `ui.draw(renderer, &theme, &style, cursor)` and extracts RGBA pixels via `renderer.screenshot()`
+4. Saves as PNG — identical to what the real GUI renders
+
+**Key dependencies:**
+- `iced` with `"advanced"` feature (exposes `Headless` trait)
+- `iced_runtime` (for `UserInterface` and `Cache`)
+- `image` crate (RGBA → PNG)
+
+**Tokio runtime note:** The renderer init is async. `run()` detects whether a tokio runtime already exists (`Handle::try_current()`) to avoid "cannot start a runtime from within a runtime" panics in `#[tokio::test]` contexts. When inside an existing runtime, it spawns a scoped thread for `block_on`.
 
 ### Supported Platforms (5 total)
 All platform data is in `src/platforms/platform_specs.rs`. **Never hardcode platform info elsewhere.**

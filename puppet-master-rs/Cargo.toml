@@ -17,7 +17,8 @@ path = "src/main.rs"
 
 [dependencies]
 # GUI
-iced = { version = "0.14.0", features = ["canvas", "svg", "image", "tokio"] }
+iced = { version = "0.14.0", features = ["canvas", "svg", "image", "tokio", "advanced"] }
+iced_runtime = "0.14"
 
 # System tray
 tray-icon = "0.19"
@@ -50,10 +51,8 @@ directories = "6"
 which = "7"
 open = "5"
 
-# Image processing (icons + headless wireframe rendering)
+# Image processing (icons + headless pixel-perfect rendering)
 image = "0.25"
-imageproc = "0.25"
-ab_glyph = "0.2"
 
 # File watching
 notify = "7"
