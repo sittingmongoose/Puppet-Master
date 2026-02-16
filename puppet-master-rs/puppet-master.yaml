@@ -1,0 +1,147 @@
+project:
+  name: puppet-master-rs
+  workingDirectory: /home/sittingmongoose/Cursor/RWM Puppet Master/puppet-master-rs
+  version: 1.0.0
+tiers:
+  phase:
+    platform: cursor
+    model: gpt-5
+    planMode: false
+    askMode: false
+    outputFormat: text
+    maxIterations: 3
+    taskFailureStyle: continue_same_agent
+  task:
+    platform: cursor
+    model: gpt-5
+    planMode: false
+    askMode: false
+    outputFormat: text
+    maxIterations: 3
+    taskFailureStyle: continue_same_agent
+  subtask:
+    platform: cursor
+    model: gpt-5
+    planMode: false
+    askMode: false
+    outputFormat: text
+    maxIterations: 3
+    taskFailureStyle: continue_same_agent
+  iteration:
+    platform: cursor
+    model: gpt-5
+    planMode: false
+    askMode: false
+    outputFormat: text
+    maxIterations: 3
+    taskFailureStyle: continue_same_agent
+branching:
+  baseBranch: main
+  namingPattern: rwm/{tier}/{id}
+  granularity: per_phase
+  autoPr: false
+verification:
+  browserAdapter: playwright
+  evidenceDirectory: .puppet-master/evidence
+  screenshotOnFailure: true
+memory:
+  progressFile: progress.txt
+  agentsFile: .puppet-master/agents/agents.json
+  prdFile: prd.json
+  multiLevelAgents: false
+budgets:
+  cursor:
+    maxCallsPerRun: 100
+    maxCallsPerHour: 200
+    maxCallsPerDay: 1000
+    unlimitedAutoMode: false
+  codex:
+    maxCallsPerRun: 100
+    maxCallsPerHour: 200
+    maxCallsPerDay: 1000
+    unlimitedAutoMode: false
+  claude:
+    maxCallsPerRun: 100
+    maxCallsPerHour: 200
+    maxCallsPerDay: 1000
+    unlimitedAutoMode: false
+  gemini:
+    maxCallsPerRun: 100
+    maxCallsPerHour: 200
+    maxCallsPerDay: 1000
+    unlimitedAutoMode: false
+  copilot:
+    maxCallsPerRun: 100
+    maxCallsPerHour: 200
+    maxCallsPerDay: 1000
+    unlimitedAutoMode: false
+advanced:
+  logLevel: info
+  processTimeoutMs: 300000
+  parallelIterations: 1
+  intensiveLogging: false
+  cliPaths:
+    cursor: ''
+    codex: ''
+    claude: ''
+    gemini: ''
+    copilot: ''
+  installScope: global
+  experimentalEnabled: {}
+  subagentEnabled: {}
+  rateLimits:
+    cursor:
+      callsPerMinute: 60
+      cooldownMs: 1000
+    codex:
+      callsPerMinute: 60
+      cooldownMs: 1000
+    claude:
+      callsPerMinute: 60
+      cooldownMs: 1000
+    gemini:
+      callsPerMinute: 60
+      cooldownMs: 1000
+    copilot:
+      callsPerMinute: 60
+      cooldownMs: 1000
+  execution:
+    killOnFailure: false
+    enableParallel: false
+    maxParallelPhases: 0
+    maxParallelTasks: 0
+  checkpointing:
+    enabled: false
+    intervalSeconds: 300
+    maxCheckpoints: 10
+    onSubtaskComplete: false
+    onShutdown: true
+  loopGuard:
+    enabled: true
+    maxRepetitions: 3
+    suppressReplyRelay: false
+  network:
+    lanMode: false
+    trustProxy: false
+    allowedOrigins: '*'
+interview:
+  platform: claude
+  model: claude-sonnet-4-5-20250929
+  reasoningLevel: medium
+  backupPlatforms:
+  - platform: cursor
+    model: claude-sonnet-4-5-20250929
+  maxQuestionsPerPhase: 8
+  firstPrinciples: false
+  outputDir: .puppet-master/interview
+  requireArchitectureConfirmation: true
+  generatePlaywrightRequirements: true
+  generateInitialAgentsMd: true
+  interactionMode: expert
+  visionProvider: codex
+guiAutomation:
+  enabled: true
+  mode: hybrid
+  workspaceIsolation: ephemeralClone
+  artifactsDirectory: .puppet-master/evidence/gui-automation
+  visualDiffThreshold: 0.01

@@ -9,8 +9,7 @@ use crate::doctor::InstallationStatus;
 use crate::platforms::platform_specs;
 use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::types::Platform;
-use crate::widgets::styled_button::{ButtonVariant, styled_button};
-use crate::widgets::{help_tooltip, interaction_mode_to_variant};
+use crate::widgets::*;
 use iced::widget::{
     Space, button, column, container, pick_list, radio, row, scrollable, text, text_editor,
     text_input, toggler,
@@ -201,13 +200,13 @@ pub fn view<'a>(
 
     // Tab Content
     let tab_content = match active_tab {
-        0 => tab_tiers(gui_config, models, platform_statuses, auth_status, theme),
-        1 => tab_branching(gui_config, git_info, theme),
-        2 => tab_verification(gui_config, theme),
-        3 => tab_memory(gui_config, theme),
-        4 => tab_budgets(gui_config, theme),
-        5 => tab_advanced(gui_config, theme),
-        6 => tab_interview(gui_config, theme),
+        0 => tab_tiers(gui_config, models, platform_statuses, auth_status, theme, size),
+        1 => tab_branching(gui_config, git_info, theme, size),
+        2 => tab_verification(gui_config, theme, size),
+        3 => tab_memory(gui_config, theme, size),
+        4 => tab_budgets(gui_config, theme, size),
+        5 => tab_advanced(gui_config, theme, size),
+        6 => tab_interview(gui_config, theme, size),
         7 => tab_yaml(config_text, editor_content, valid, error, theme),
         _ => column![].into(),
     };
@@ -305,6 +304,7 @@ fn tab_tiers<'a>(
     platform_statuses: &'a [crate::views::setup::PlatformStatus],
     auth_status: &'a HashMap<String, crate::views::login::AuthStatus>,
     theme: &'a AppTheme,
+    size: LayoutSize,
 ) -> Element<'a, Message> {
     let mut content = column![]
         .spacing(tokens::spacing::LG)
@@ -364,7 +364,7 @@ fn tab_tiers<'a>(
     let subtask_effort = effort_visible_for(&gui_config.tiers.subtask);
     let iteration_effort = effort_visible_for(&gui_config.tiers.iteration);
 
-    // Create a 2x2 grid of tier cards
+    // Create a 2x2 grid of tier cards (or 1x4 on mobile)
     let phase_card = tier_card(
         "phase",
         "PHASE",
@@ -410,18 +410,8 @@ fn tab_tiers<'a>(
         theme,
     );
 
-    // First row: Phase and Task
-    let row1 = row![phase_card, task_card]
-        .spacing(tokens::spacing::MD)
-        .width(Length::Fill);
-
-    // Second row: Subtask and Iteration
-    let row2 = row![subtask_card, iteration_card]
-        .spacing(tokens::spacing::MD)
-        .width(Length::Fill);
-
-    content = content.push(row1);
-    content = content.push(row2);
+    let cards = vec![phase_card, task_card, subtask_card, iteration_card];
+    content = content.push(responsive_grid(size.width, cards, tokens::spacing::MD));
 
     content.into()
 }
@@ -727,6 +717,7 @@ fn tab_branching<'a>(
     gui_config: &'a GuiConfig,
     git_info: &'a Option<GitInfo>,
     theme: &'a AppTheme,
+    size: LayoutSize,
 ) -> Element<'a, Message> {
     let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
 
@@ -785,54 +776,33 @@ fn tab_branching<'a>(
     }
 
     // Base Branch field
-    content = content.push(
-        column![
-            row![
-                text("Base Branch")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fill),
-                help_tooltip("branching.base_branch", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            text("The branch to use as the base for new branches (e.g., 'main', 'develop')")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
-            text_input("main", &gui_config.branching.base_branch)
-                .on_input(|value| Message::ConfigBranchingFieldChanged(
-                    "base_branch".to_string(),
-                    value
-                ))
-                .width(Length::Fill)
+    content = content.push(responsive_form_row(
+        "Base Branch:",
+        row![
+            help_tooltip("branching.base_branch", tooltip_variant, theme),
+            styled_text_input(theme, "main", &gui_config.branching.base_branch).on_input(|value| {
+                Message::ConfigBranchingFieldChanged("base_branch".to_string(), value)
+            }),
         ]
-        .spacing(tokens::spacing::XXS),
-    );
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        size,
+    ));
 
     // Naming Pattern field
-    content = content.push(
-        column![
-            row![
-                text("Naming Pattern")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fill),
-                help_tooltip("branching.naming_pattern", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            text("Pattern for branch names. Use {tier} and {id} as placeholders")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
-            text_input("rwm/{tier}/{id}", &gui_config.branching.naming_pattern)
-                .on_input(|value| Message::ConfigBranchingFieldChanged(
-                    "naming_pattern".to_string(),
-                    value
-                ))
-                .width(Length::Fill)
+    content = content.push(responsive_form_row(
+        "Naming Pattern:",
+        row![
+            help_tooltip("branching.naming_pattern", tooltip_variant, theme),
+            styled_text_input(theme, "rwm/{tier}/{id}", &gui_config.branching.naming_pattern)
+                .on_input(|value| {
+                    Message::ConfigBranchingFieldChanged("naming_pattern".to_string(), value)
+                }),
         ]
-        .spacing(tokens::spacing::XXS),
-    );
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        size,
+    ));
 
     // Granularity radio buttons
     let granularity_ref = gui_config.branching.granularity.as_str();
@@ -875,7 +845,11 @@ fn tab_branching<'a>(
     content.into()
 }
 
-fn tab_verification<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a, Message> {
+fn tab_verification<'a>(
+    gui_config: &'a GuiConfig,
+    theme: &'a AppTheme,
+    size: LayoutSize,
+) -> Element<'a, Message> {
     let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
 
     let mut content = column![]
@@ -897,102 +871,70 @@ fn tab_verification<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Eleme
     );
 
     // Browser Adapter field
-    content = content.push(
-        column![
-            row![
-                text("Browser Adapter")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fill),
-                help_tooltip("verification.browser_adapter", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            text("The browser automation adapter to use (e.g., 'playwright', 'selenium')")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
-            text_input("playwright", &gui_config.verification.browser_adapter)
+    content = content.push(responsive_form_row(
+        "Browser Adapter:",
+        row![
+            help_tooltip("verification.browser_adapter", tooltip_variant, theme),
+            styled_text_input(theme, "playwright", &gui_config.verification.browser_adapter)
                 .on_input(|value| Message::ConfigVerificationFieldChanged(
                     "browser_adapter".to_string(),
                     value
-                ))
-                .width(Length::Fill)
+                )),
         ]
-        .spacing(tokens::spacing::XXS),
-    );
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        size,
+    ));
 
     // Evidence Directory field with folder picker
-    content = content.push(
-        column![
-            row![
-                text("Evidence Directory")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fill),
-                help_tooltip("verification.evidence_directory", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            text("Directory where verification evidence (screenshots, logs) will be stored")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
-            row![
-                text_input(
-                    ".puppet-master/evidence",
-                    &gui_config.verification.evidence_directory
-                )
-                .on_input(|value| Message::ConfigVerificationFieldChanged(
-                    "evidence_directory".to_string(),
-                    value
-                ))
-                .width(Length::Fill),
-                styled_button(theme, "Browse...", ButtonVariant::Secondary)
-                    .on_press(Message::BrowseEvidenceDirectory)
-            ]
-            .spacing(tokens::spacing::SM)
-            .align_y(Alignment::Center)
+    content = content.push(responsive_form_row(
+        "Evidence Directory:",
+        row![
+            help_tooltip("verification.evidence_directory", tooltip_variant, theme),
+            styled_text_input(
+                theme,
+                ".puppet-master/evidence",
+                &gui_config.verification.evidence_directory
+            )
+            .on_input(|value| Message::ConfigVerificationFieldChanged(
+                "evidence_directory".to_string(),
+                value
+            ))
+            .width(Length::Fill),
+            styled_button(theme, "Browse...", ButtonVariant::Secondary)
+                .on_press(Message::BrowseEvidenceDirectory)
         ]
-        .spacing(tokens::spacing::XXS),
-    );
+        .spacing(tokens::spacing::SM)
+        .align_y(Alignment::Center),
+        size,
+    ));
 
     // Screenshot on Failure toggler
-    content = content.push(
-        column![
-            row![
-                text("Screenshot on Failure")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fill),
-                help_tooltip("verification.screenshot_on_failure", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            text("Automatically capture screenshots when tests or verifications fail")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
-            row![
-                text(if gui_config.verification.screenshot_on_failure {
-                    "Enabled"
-                } else {
-                    "Disabled"
-                })
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI)
-                .color(theme.ink()),
-                Space::new().width(Length::Fill),
-                toggler(gui_config.verification.screenshot_on_failure)
-                    .on_toggle(|_| Message::ConfigVerificationScreenshotToggled)
-            ]
-            .align_y(Alignment::Center)
-            .spacing(tokens::spacing::SM)
+    content = content.push(responsive_form_row(
+        "Screenshot on Failure:",
+        row![
+            help_tooltip("verification.screenshot_on_failure", tooltip_variant, theme),
+            text(if gui_config.verification.screenshot_on_failure {
+                "Enabled"
+            } else {
+                "Disabled"
+            })
+            .size(tokens::font_size::BASE)
+            .font(fonts::FONT_UI)
+            .color(theme.ink()),
+            Space::new().width(Length::Fill),
+            toggler(gui_config.verification.screenshot_on_failure)
+                .on_toggle(|_| Message::ConfigVerificationScreenshotToggled)
         ]
-        .spacing(tokens::spacing::XXS),
-    );
+        .align_y(Alignment::Center)
+        .spacing(tokens::spacing::SM),
+        size,
+    ));
 
     content.into()
 }
 
-fn tab_memory<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a, Message> {
+fn tab_memory<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme, size: LayoutSize) -> Element<'a, Message> {
     use crate::widgets::styled_input::{InputSize, InputVariant, styled_text_input_with_variant};
 
     let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
@@ -1018,115 +960,84 @@ fn tab_memory<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a,
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
 
     // Progress File
-    content = content.push(
-        column![
-            row![
-                text("Progress File")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fill),
-                help_tooltip("memory.progress_file", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            row![
-                styled_text_input_with_variant(
-                    theme,
-                    "progress.txt",
-                    &gui_config.memory.progress_file,
-                    InputVariant::Default,
-                    InputSize::Medium,
-                )
-                .on_input(|s| Message::ConfigMemoryFieldChanged("progress_file".to_string(), s))
-                .width(Length::Fill),
-                Space::new().width(Length::Fixed(tokens::spacing::SM)),
-                styled_button(theme, "Browse...", ButtonVariant::Secondary)
-                    .on_press(Message::BrowseMemoryProgressFile),
-            ]
-            .spacing(tokens::spacing::SM)
-            .align_y(iced::Alignment::Center),
+    content = content.push(responsive_form_row(
+        "Progress File:",
+        row![
+            help_tooltip("memory.progress_file", tooltip_variant, theme),
+            styled_text_input_with_variant(
+                theme,
+                "progress.txt",
+                &gui_config.memory.progress_file,
+                InputVariant::Default,
+                InputSize::Medium,
+            )
+            .on_input(|s| Message::ConfigMemoryFieldChanged("progress_file".to_string(), s))
+            .width(Length::Fill),
+            Space::new().width(Length::Fixed(tokens::spacing::SM)),
+            styled_button(theme, "Browse...", ButtonVariant::Secondary)
+                .on_press(Message::BrowseMemoryProgressFile),
         ]
-        .spacing(tokens::spacing::XS),
-    );
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        size,
+    ));
 
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
 
     // Agents File
-    content = content.push(
-        column![
-            row![
-                text("Agents File")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fill),
-                help_tooltip("memory.agents_file", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            row![
-                styled_text_input_with_variant(
-                    theme,
-                    ".puppet-master/agents/agents.json",
-                    &gui_config.memory.agents_file,
-                    InputVariant::Default,
-                    InputSize::Medium,
-                )
-                .on_input(|s| Message::ConfigMemoryFieldChanged("agents_file".to_string(), s))
-                .width(Length::Fill),
-                Space::new().width(Length::Fixed(tokens::spacing::SM)),
-                styled_button(theme, "Browse...", ButtonVariant::Secondary)
-                    .on_press(Message::BrowseMemoryAgentsFile),
-            ]
-            .spacing(tokens::spacing::SM)
-            .align_y(iced::Alignment::Center),
+    content = content.push(responsive_form_row(
+        "Agents File:",
+        row![
+            help_tooltip("memory.agents_file", tooltip_variant, theme),
+            styled_text_input_with_variant(
+                theme,
+                ".puppet-master/agents/agents.json",
+                &gui_config.memory.agents_file,
+                InputVariant::Default,
+                InputSize::Medium,
+            )
+            .on_input(|s| Message::ConfigMemoryFieldChanged("agents_file".to_string(), s))
+            .width(Length::Fill),
+            Space::new().width(Length::Fixed(tokens::spacing::SM)),
+            styled_button(theme, "Browse...", ButtonVariant::Secondary)
+                .on_press(Message::BrowseMemoryAgentsFile),
         ]
-        .spacing(tokens::spacing::XS),
-    );
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        size,
+    ));
 
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
 
     // PRD File
-    content = content.push(
-        column![
-            row![
-                text("PRD File")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fill),
-                help_tooltip("memory.prd_file", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            row![
-                styled_text_input_with_variant(
-                    theme,
-                    "prd.json",
-                    &gui_config.memory.prd_file,
-                    InputVariant::Default,
-                    InputSize::Medium,
-                )
-                .on_input(|s| Message::ConfigMemoryFieldChanged("prd_file".to_string(), s))
-                .width(Length::Fill),
-                Space::new().width(Length::Fixed(tokens::spacing::SM)),
-                styled_button(theme, "Browse...", ButtonVariant::Secondary)
-                    .on_press(Message::BrowseMemoryPrdFile),
-            ]
-            .spacing(tokens::spacing::SM)
-            .align_y(iced::Alignment::Center),
+    content = content.push(responsive_form_row(
+        "PRD File:",
+        row![
+            help_tooltip("memory.prd_file", tooltip_variant, theme),
+            styled_text_input_with_variant(
+                theme,
+                "prd.json",
+                &gui_config.memory.prd_file,
+                InputVariant::Default,
+                InputSize::Medium,
+            )
+            .on_input(|s| Message::ConfigMemoryFieldChanged("prd_file".to_string(), s))
+            .width(Length::Fill),
+            Space::new().width(Length::Fixed(tokens::spacing::SM)),
+            styled_button(theme, "Browse...", ButtonVariant::Secondary)
+                .on_press(Message::BrowseMemoryPrdFile),
         ]
-        .spacing(tokens::spacing::XS),
-    );
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        size,
+    ));
 
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
 
     // Multi-Level Agents Toggle
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Multi-Level Agents:",
         row![
-            text("Multi-Level Agents")
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI_BOLD)
-                .color(theme.ink()),
-            Space::new().width(Length::Fill),
             help_tooltip("memory.multi_level_agents", tooltip_variant, theme),
             Space::new().width(Length::Fixed(tokens::spacing::SM)),
             iced::widget::toggler(gui_config.memory.multi_level_agents)
@@ -1142,12 +1053,13 @@ fn tab_memory<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a,
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     content.into()
 }
 
-fn tab_budgets<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a, Message> {
+fn tab_budgets<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme, size: LayoutSize) -> Element<'a, Message> {
     let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
 
     let mut content = column![]
@@ -1177,6 +1089,7 @@ fn tab_budgets<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a
         true,
         tooltip_variant,
         theme,
+        size,
     ));
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
     content = content.push(budget_card(
@@ -1185,6 +1098,7 @@ fn tab_budgets<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a
         false,
         tooltip_variant,
         theme,
+        size,
     ));
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
     content = content.push(budget_card(
@@ -1193,6 +1107,7 @@ fn tab_budgets<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a
         false,
         tooltip_variant,
         theme,
+        size,
     ));
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
     content = content.push(budget_card(
@@ -1201,6 +1116,7 @@ fn tab_budgets<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a
         false,
         tooltip_variant,
         theme,
+        size,
     ));
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
     content = content.push(budget_card(
@@ -1209,6 +1125,7 @@ fn tab_budgets<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a
         false,
         tooltip_variant,
         theme,
+        size,
     ));
 
     content.into()
@@ -1220,6 +1137,7 @@ fn budget_card<'a>(
     is_cursor: bool,
     tooltip_variant: crate::widgets::tooltips::TooltipVariant,
     theme: &'a AppTheme,
+    size: LayoutSize,
 ) -> Element<'a, Message> {
     use crate::widgets::styled_input::{InputSize, InputVariant, styled_text_input_with_variant};
 
@@ -1236,12 +1154,9 @@ fn budget_card<'a>(
     );
 
     // Max Calls Per Run
-    card_content = card_content.push(
+    card_content = card_content.push(responsive_form_row(
+        "Max Calls Per Run:",
         row![
-            text("Max Calls Per Run:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("budget.max_calls_per_run", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
@@ -1259,15 +1174,13 @@ fn budget_card<'a>(
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     // Max Calls Per Hour
-    card_content = card_content.push(
+    card_content = card_content.push(responsive_form_row(
+        "Max Calls Per Hour:",
         row![
-            text("Max Calls Per Hour:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("budget.max_calls_per_hour", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
@@ -1285,15 +1198,13 @@ fn budget_card<'a>(
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     // Max Calls Per Day
-    card_content = card_content.push(
+    card_content = card_content.push(responsive_form_row(
+        "Max Calls Per Day:",
         row![
-            text("Max Calls Per Day:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("budget.max_calls_per_day", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
@@ -1311,16 +1222,14 @@ fn budget_card<'a>(
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     // Cursor-specific: Unlimited Auto Mode
     if is_cursor {
-        card_content = card_content.push(
+        card_content = card_content.push(responsive_form_row(
+            "Unlimited Auto Mode:",
             row![
-                text("Unlimited Auto Mode:")
-                    .size(tokens::font_size::SM)
-                    .color(theme.ink())
-                    .width(Length::Fixed(180.0)),
                 help_tooltip("budget.unlimited_auto_mode", tooltip_variant, theme),
                 iced::widget::toggler(budget.unlimited_auto_mode).on_toggle(move |v| {
                     Message::ConfigBudgetFieldChanged(
@@ -1332,7 +1241,8 @@ fn budget_card<'a>(
             ]
             .spacing(tokens::spacing::SM)
             .align_y(iced::Alignment::Center),
-        );
+            size,
+        ));
     }
 
     container(card_content)
@@ -1349,7 +1259,7 @@ fn budget_card<'a>(
         .into()
 }
 
-fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a, Message> {
+fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme, size: LayoutSize) -> Element<'a, Message> {
     use crate::widgets::styled_input::{InputSize, InputVariant, styled_text_input_with_variant};
     use iced::widget::pick_list;
 
@@ -1385,12 +1295,9 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
 
     // Log Level
     const LOG_LEVELS: &[&str] = &["error", "warn", "info", "debug"];
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Log Level:",
         row![
-            text("Log Level:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("orchestrator.log_level", tooltip_variant, theme),
             pick_list(
                 LOG_LEVELS,
@@ -1401,15 +1308,13 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     // Process Timeout
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Process Timeout (ms):",
         row![
-            text("Process Timeout (ms):")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("orchestrator.process_timeout", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
@@ -1423,15 +1328,13 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     // Parallel Iterations
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Parallel Iterations:",
         row![
-            text("Parallel Iterations:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("orchestrator.parallel_iterations", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
@@ -1445,15 +1348,13 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     // Intensive Logging Toggle
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Intensive Logging:",
         row![
-            text("Intensive Logging:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("orchestrator.intensive_logging", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.intensive_logging).on_toggle(|_| {
                 Message::ConfigAdvancedCheckboxToggled("intensive_logging".to_string())
@@ -1469,7 +1370,8 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
 
@@ -1499,12 +1401,9 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
             _ => "",
         };
 
-        content = content.push(
+        content = content.push(responsive_form_row(
+            format!("{}:", platform.to_uppercase()),
             row![
-                text(format!("{}:", platform.to_uppercase()))
-                    .size(tokens::font_size::SM)
-                    .color(theme.ink())
-                    .width(Length::Fixed(180.0)),
                 help_tooltip(tooltip_key, tooltip_variant, theme),
                 styled_text_input_with_variant(
                     theme,
@@ -1521,7 +1420,8 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
             ]
             .spacing(tokens::spacing::SM)
             .align_y(iced::Alignment::Center),
-        );
+            size,
+        ));
     }
 
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
@@ -1536,12 +1436,9 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
 
     // Install Scope
     const INSTALL_SCOPES: &[InstallScope] = &[InstallScope::Global, InstallScope::ProjectLocal];
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Install Scope:",
         row![
-            text("Install Scope:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("install_scope", tooltip_variant, theme),
             pick_list(
                 INSTALL_SCOPES,
@@ -1561,7 +1458,8 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
 
@@ -1589,12 +1487,9 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 .copied()
                 .unwrap_or(false);
 
-            content = content.push(
+            content = content.push(responsive_form_row(
+                format!("Enable {} Experimental:", display_name),
                 row![
-                    text(format!("Enable {} Experimental:", display_name))
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink())
-                        .width(Length::Fixed(180.0)),
                     help_tooltip(&format!("experimental_{}", key), tooltip_variant, theme),
                     iced::widget::toggler(enabled).on_toggle(move |_| {
                         Message::ConfigAdvancedCheckboxToggled(format!("experimental_{}", key))
@@ -1602,7 +1497,8 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 ]
                 .spacing(tokens::spacing::SM)
                 .align_y(iced::Alignment::Center),
-            );
+                size,
+            ));
         }
     }
 
@@ -1635,12 +1531,9 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
             let spec = platform_specs::get_spec(platform);
             let note = spec.subagent.as_ref().map(|s| s.note).unwrap_or("");
 
-            content = content.push(
+            content = content.push(responsive_form_row(
+                format!("Enable {}:", display_name),
                 row![
-                    text(format!("Enable {}:", display_name))
-                        .size(tokens::font_size::SM)
-                        .color(theme.ink())
-                        .width(Length::Fixed(250.0)),
                     iced::widget::toggler(enabled).on_toggle(move |_| {
                         Message::ConfigAdvancedCheckboxToggled(format!("subagent_{}", key))
                     }),
@@ -1651,7 +1544,8 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
                 ]
                 .spacing(tokens::spacing::SM)
                 .align_y(iced::Alignment::Center),
-            );
+                size,
+            ));
         }
     }
 
@@ -1666,12 +1560,9 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
     );
 
     // Kill on Failure
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Kill Agent on Failure:",
         row![
-            text("Kill Agent on Failure:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("orchestrator.kill_agent_on_failure", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.execution.kill_on_failure).on_toggle(|_| {
                 Message::ConfigAdvancedCheckboxToggled("kill_on_failure".to_string())
@@ -1679,15 +1570,13 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     // Enable Parallel
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Enable Parallel:",
         row![
-            text("Enable Parallel:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("orchestrator.enable_parallel", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.execution.enable_parallel).on_toggle(|_| {
                 Message::ConfigAdvancedCheckboxToggled("enable_parallel".to_string())
@@ -1695,15 +1584,13 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     // Max Parallel Phases
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Max Parallel Phases:",
         row![
-            text("Max Parallel Phases:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("orchestrator.max_parallel_phases", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
@@ -1721,15 +1608,13 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     // Max Parallel Tasks
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Max Parallel Tasks:",
         row![
-            text("Max Parallel Tasks:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("orchestrator.max_parallel_tasks", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
@@ -1743,7 +1628,8 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
 
@@ -1756,12 +1642,9 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
     );
 
     // Enabled
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Enabled:",
         row![
-            text("Enabled:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("checkpointing.enabled", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.checkpointing.enabled).on_toggle(|_| {
                 Message::ConfigAdvancedCheckboxToggled("checkpoint_enabled".to_string())
@@ -1769,15 +1652,13 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     // Interval
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Interval (seconds):",
         row![
-            text("Interval (seconds):")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("checkpointing.interval_seconds", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
@@ -1795,15 +1676,13 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     // Max Checkpoints
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Max Checkpoints:",
         row![
-            text("Max Checkpoints:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("checkpointing.max_checkpoints", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
@@ -1821,15 +1700,13 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     // On Subtask Complete
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "On Subtask Complete:",
         row![
-            text("On Subtask Complete:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("checkpointing.on_subtask_complete", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.checkpointing.on_subtask_complete).on_toggle(
                 |_| Message::ConfigAdvancedCheckboxToggled("checkpoint_on_subtask".to_string())
@@ -1837,15 +1714,13 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     // On Shutdown
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "On Shutdown:",
         row![
-            text("On Shutdown:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("checkpointing.on_shutdown", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.checkpointing.on_shutdown).on_toggle(|_| {
                 Message::ConfigAdvancedCheckboxToggled("checkpoint_on_shutdown".to_string())
@@ -1853,7 +1728,8 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
 
@@ -1866,27 +1742,22 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
     );
 
     // Enabled
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Enabled:",
         row![
-            text("Enabled:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("loop_guard.enabled", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.loop_guard.enabled)
                 .on_toggle(|_| Message::ConfigAdvancedCheckboxToggled("loop_enabled".to_string())),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     // Max Repetitions
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Max Repetitions:",
         row![
-            text("Max Repetitions:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("loop_guard.max_repetitions", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
@@ -1903,15 +1774,13 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     // Suppress Reply Relay
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Suppress Reply Relay:",
         row![
-            text("Suppress Reply Relay:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("loop_guard.suppress_reply_relay", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.loop_guard.suppress_reply_relay).on_toggle(
                 |_| Message::ConfigAdvancedCheckboxToggled("loop_suppress_relay".to_string())
@@ -1919,7 +1788,8 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
 
@@ -1932,42 +1802,35 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
     );
 
     // LAN Mode
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "LAN Mode:",
         row![
-            text("LAN Mode:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("network.lan_mode", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.network.lan_mode)
                 .on_toggle(|_| Message::ConfigAdvancedCheckboxToggled("lan_mode".to_string())),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     // Trust Proxy
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Trust Proxy:",
         row![
-            text("Trust Proxy:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("network.trust_proxy", tooltip_variant, theme),
             iced::widget::toggler(gui_config.advanced.network.trust_proxy)
                 .on_toggle(|_| Message::ConfigAdvancedCheckboxToggled("trust_proxy".to_string())),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     // Allowed Origins
-    content = content.push(
+    content = content.push(responsive_form_row(
+        "Allowed Origins:",
         row![
-            text("Allowed Origins:")
-                .size(tokens::font_size::SM)
-                .color(theme.ink())
-                .width(Length::Fixed(180.0)),
             help_tooltip("network.allowed_origins", tooltip_variant, theme),
             styled_text_input_with_variant(
                 theme,
@@ -1981,12 +1844,13 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-    );
+        size,
+    ));
 
     content.into()
 }
 
-fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<'a, Message> {
+fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme, size: LayoutSize) -> Element<'a, Message> {
     const REASONING_LEVELS: &[&str] = &["low", "medium", "high", "max"];
     const INTERACTION_MODES: &[&str] = &["expert", "eli5"];
     let platforms = platform_specs::PLATFORM_ID_STRS;
@@ -2013,20 +1877,10 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
     );
 
     // Primary Platform
-    content = content.push(
-        column![
-            row![
-                text("Primary Platform")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                help_tooltip("interview.primary_platform", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            text("The AI platform used for the interview")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+    content = content.push(responsive_form_row(
+        "Primary Platform:",
+        row![
+            help_tooltip("interview.primary_platform", tooltip_variant, theme),
             pick_list(
                 platforms,
                 Some(gui_config.interview.platform.as_str()),
@@ -2035,10 +1889,12 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
                     platform.to_string(),
                 )
             )
-            .width(Length::Fixed(200.0))
+            .width(Length::Fixed(200.0)),
         ]
-        .spacing(tokens::spacing::XXS),
-    );
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        size,
+    ));
 
     // Vision Provider
     let vision_platform_options: Vec<String> = {
@@ -2050,20 +1906,10 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
         }
     };
 
-    content = content.push(
-        column![
-            row![
-                text("Vision Provider")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                help_tooltip("interview.vision_provider", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            text("Preferred platform for vision-capable image references")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+    content = content.push(responsive_form_row(
+        "Vision Provider:",
+        row![
+            help_tooltip("interview.vision_provider", tooltip_variant, theme),
             pick_list(
                 vision_platform_options,
                 Some(gui_config.interview.vision_provider.clone()),
@@ -2071,48 +1917,32 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
                     Message::ConfigInterviewFieldChanged("vision_provider".to_string(), platform)
                 }
             )
-            .width(Length::Fixed(200.0))
+            .width(Length::Fixed(200.0)),
         ]
-        .spacing(tokens::spacing::XXS),
-    );
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        size,
+    ));
 
     // Primary Model
-    content = content.push(
-        column![
-            row![
-                text("Primary Model")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                help_tooltip("interview.primary_model", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            text("Model identifier for the primary platform")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+    content = content.push(responsive_form_row(
+        "Primary Model:",
+        row![
+            help_tooltip("interview.primary_model", tooltip_variant, theme),
             text_input("claude-sonnet-4-5-20250929", &gui_config.interview.model)
                 .on_input(|value| Message::ConfigInterviewFieldChanged("model".to_string(), value,))
-                .width(Length::Fill)
+                .width(Length::Fill),
         ]
-        .spacing(tokens::spacing::XXS),
-    );
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        size,
+    ));
 
     // Reasoning Level
-    content = content.push(
-        column![
-            row![
-                text("Reasoning Level")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                help_tooltip("interview.reasoning_level", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            text("How deeply the interview model reasons (low/medium/high/max)")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+    content = content.push(responsive_form_row(
+        "Reasoning Level:",
+        row![
+            help_tooltip("interview.reasoning_level", tooltip_variant, theme),
             pick_list(
                 REASONING_LEVELS,
                 Some(gui_config.interview.reasoning_level.as_str()),
@@ -2121,28 +1951,19 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
                     level.to_string(),
                 ),
             )
-            .width(Length::Fixed(200.0))
+            .width(Length::Fixed(200.0)),
         ]
-        .spacing(tokens::spacing::XXS),
-    );
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        size,
+    ));
 
     // Backup Platforms
     content = content.push(
-        column![
-            row![
-                text("Backup Platforms")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                help_tooltip("interview.backup_platforms", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            text("Fallback platforms tried in order if primary quota is exhausted")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
-        ]
-        .spacing(tokens::spacing::XXS),
+        text("BACKUP PLATFORMS")
+            .size(tokens::font_size::BASE)
+            .font(fonts::FONT_UI_BOLD)
+            .color(colors::ELECTRIC_BLUE),
     );
 
     // Render existing backup platform entries
@@ -2150,7 +1971,8 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
         let idx_for_platform = idx;
         let idx_for_model = idx;
         let idx_for_remove = idx;
-        content = content.push(
+        content = content.push(responsive_form_row(
+            format!("Backup {}:", idx + 1),
             row![
                 pick_list(platforms, Some(pair.platform.as_str()), move |p: &str| {
                     Message::ConfigInterviewBackupChanged(
@@ -2172,7 +1994,8 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
             ]
             .spacing(tokens::spacing::SM)
             .align_y(Alignment::Center),
-        );
+            size,
+        ));
     }
 
     content = content.push(
@@ -2181,20 +2004,10 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
     );
 
     // Max Questions Per Phase
-    content = content.push(
-        column![
-            row![
-                text("Max Questions Per Phase")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                help_tooltip("interview.max_questions_per_phase", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            text("Number of questions asked per domain phase (3-15)")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+    content = content.push(responsive_form_row(
+        "Max Questions Per Phase:",
+        row![
+            help_tooltip("interview.max_questions_per_phase", tooltip_variant, theme),
             text_input(
                 "8",
                 &gui_config.interview.max_questions_per_phase.to_string()
@@ -2203,171 +2016,109 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
                 "max_questions_per_phase".to_string(),
                 value,
             ))
-            .width(Length::Fixed(120.0))
+            .width(Length::Fixed(120.0)),
         ]
-        .spacing(tokens::spacing::XXS),
-    );
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        size,
+    ));
 
     // First-Principles Mode
-    content = content.push(
-        column![
-            row![
-                text("First-Principles Mode")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                help_tooltip("interview.first_principles", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            text("Challenge assumptions before accepting them as requirements")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
-            row![
-                text(if gui_config.interview.first_principles {
-                    "Enabled"
-                } else {
-                    "Disabled"
-                })
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI)
-                .color(theme.ink()),
-                Space::new().width(Length::Fill),
-                toggler(gui_config.interview.first_principles)
-                    .on_toggle(|_| Message::ConfigInterviewToggled("first_principles".to_string()))
-            ]
-            .align_y(Alignment::Center)
-            .spacing(tokens::spacing::SM)
-        ]
-        .spacing(tokens::spacing::XXS),
-    );
-
-    // Architecture Confirmation
-    content = content.push(
-        column![
-            row![
-                text("Require Architecture Confirmation")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                help_tooltip(
-                    "interview.architecture_confirmation",
-                    tooltip_variant,
-                    theme
-                ),
-            ]
-            .align_y(Alignment::Center),
-            text("Explicitly confirm tech stack versions, frameworks, and dependencies")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
-            row![
-                text(if gui_config.interview.require_architecture_confirmation {
-                    "Enabled"
-                } else {
-                    "Disabled"
-                })
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI)
-                .color(theme.ink()),
-                Space::new().width(Length::Fill),
-                toggler(gui_config.interview.require_architecture_confirmation).on_toggle(|_| {
-                    Message::ConfigInterviewToggled("require_architecture_confirmation".to_string())
-                })
-            ]
-            .align_y(Alignment::Center)
-            .spacing(tokens::spacing::SM)
-        ]
-        .spacing(tokens::spacing::XXS),
-    );
-
-    // Playwright Requirements
-    content = content.push(
-        column![
-            row![
-                text("Generate Playwright Requirements")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                help_tooltip("interview.playwright_requirements", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            text(
-                "Automatically generate testable Playwright specifications from acceptance criteria"
-            )
+    content = content.push(responsive_form_row(
+        "First-Principles Mode:",
+        row![
+            help_tooltip("interview.first_principles", tooltip_variant, theme),
+            toggler(gui_config.interview.first_principles)
+                .on_toggle(|_| Message::ConfigInterviewToggled("first_principles".to_string())),
+            Space::new().width(Length::Fixed(tokens::spacing::SM)),
+            text(if gui_config.interview.first_principles {
+                "Enabled"
+            } else {
+                "Disabled"
+            })
             .size(tokens::font_size::SM)
             .color(theme.ink_faded()),
-            row![
-                text(if gui_config.interview.generate_playwright_requirements {
-                    "Enabled"
-                } else {
-                    "Disabled"
-                })
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI)
-                .color(theme.ink()),
-                Space::new().width(Length::Fill),
-                toggler(gui_config.interview.generate_playwright_requirements).on_toggle(|_| {
-                    Message::ConfigInterviewToggled("generate_playwright_requirements".to_string())
-                })
-            ]
-            .align_y(Alignment::Center)
-            .spacing(tokens::spacing::SM)
         ]
-        .spacing(tokens::spacing::XXS),
-    );
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        size,
+    ));
+
+    // Architecture Confirmation
+    content = content.push(responsive_form_row(
+        "Require Architecture Confirmation:",
+        row![
+            help_tooltip(
+                "interview.architecture_confirmation",
+                tooltip_variant,
+                theme
+            ),
+            toggler(gui_config.interview.require_architecture_confirmation).on_toggle(|_| {
+                Message::ConfigInterviewToggled("require_architecture_confirmation".to_string())
+            }),
+            Space::new().width(Length::Fixed(tokens::spacing::SM)),
+            text(if gui_config.interview.require_architecture_confirmation {
+                "Enabled"
+            } else {
+                "Disabled"
+            })
+            .size(tokens::font_size::SM)
+            .color(theme.ink_faded()),
+        ]
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        size,
+    ));
+
+    // Playwright Requirements
+    content = content.push(responsive_form_row(
+        "Generate Playwright Requirements:",
+        row![
+            help_tooltip("interview.playwright_requirements", tooltip_variant, theme),
+            toggler(gui_config.interview.generate_playwright_requirements).on_toggle(|_| {
+                Message::ConfigInterviewToggled("generate_playwright_requirements".to_string())
+            }),
+            Space::new().width(Length::Fixed(tokens::spacing::SM)),
+            text(if gui_config.interview.generate_playwright_requirements {
+                "Enabled"
+            } else {
+                "Disabled"
+            })
+            .size(tokens::font_size::SM)
+            .color(theme.ink_faded()),
+        ]
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        size,
+    ));
 
     // Generate Initial AGENTS.md
-    content = content.push(
-        column![
-            row![
-                text("Generate Initial AGENTS.md")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                help_tooltip("interview.generate_agents_md", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            text("Create a starter AGENTS.md from interview decisions")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
-            row![
-                text(if gui_config.interview.generate_initial_agents_md {
-                    "Enabled"
-                } else {
-                    "Disabled"
-                })
-                .size(tokens::font_size::BASE)
-                .font(fonts::FONT_UI)
-                .color(theme.ink()),
-                Space::new().width(Length::Fill),
-                toggler(gui_config.interview.generate_initial_agents_md).on_toggle(|_| {
-                    Message::ConfigInterviewToggled("generate_initial_agents_md".to_string())
-                })
-            ]
-            .align_y(Alignment::Center)
-            .spacing(tokens::spacing::SM)
+    content = content.push(responsive_form_row(
+        "Generate Initial AGENTS.md:",
+        row![
+            help_tooltip("interview.generate_agents_md", tooltip_variant, theme),
+            toggler(gui_config.interview.generate_initial_agents_md).on_toggle(|_| {
+                Message::ConfigInterviewToggled("generate_initial_agents_md".to_string())
+            }),
+            Space::new().width(Length::Fixed(tokens::spacing::SM)),
+            text(if gui_config.interview.generate_initial_agents_md {
+                "Enabled"
+            } else {
+                "Disabled"
+            })
+            .size(tokens::font_size::SM)
+            .color(theme.ink_faded()),
         ]
-        .spacing(tokens::spacing::XXS),
-    );
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        size,
+    ));
 
     // Interaction Mode
-    content = content.push(
-        column![
-            row![
-                text("Interaction Mode")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                help_tooltip("interview.interaction_mode", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            text("Expert mode is concise; ELI5 mode explains each question")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+    content = content.push(responsive_form_row(
+        "Interaction Mode:",
+        row![
+            help_tooltip("interview.interaction_mode", tooltip_variant, theme),
             pick_list(
                 INTERACTION_MODES,
                 Some(gui_config.interview.interaction_mode.as_str()),
@@ -2376,35 +2127,29 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme) -> Element<
                     mode.to_string(),
                 ),
             )
-            .width(Length::Fixed(200.0))
+            .width(Length::Fixed(200.0)),
         ]
-        .spacing(tokens::spacing::XXS),
-    );
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        size,
+    ));
 
     // Output Directory
-    content = content.push(
-        column![
-            row![
-                text("Output Directory")
-                    .size(tokens::font_size::BASE)
-                    .font(fonts::FONT_UI_BOLD)
-                    .color(theme.ink()),
-                Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                help_tooltip("interview.output_dir", tooltip_variant, theme),
-            ]
-            .align_y(Alignment::Center),
-            text("Directory where interview phase documents are written")
-                .size(tokens::font_size::SM)
-                .color(theme.ink_faded()),
+    content = content.push(responsive_form_row(
+        "Output Directory:",
+        row![
+            help_tooltip("interview.output_dir", tooltip_variant, theme),
             text_input(".puppet-master/interview", &gui_config.interview.output_dir)
                 .on_input(|value| Message::ConfigInterviewFieldChanged(
                     "output_dir".to_string(),
                     value,
                 ))
-                .width(Length::Fill)
+                .width(Length::Fill),
         ]
-        .spacing(tokens::spacing::XXS),
-    );
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        size,
+    ));
 
     content.into()
 }

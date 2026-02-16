@@ -7,9 +7,9 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Research and Infrastructure' (Protocol in workflow.md)
 
 ## Phase 2: Refactor for DRY Layouts
-- [ ] Task: Consolidate layout constants and styling logic into a central module or structure.
-- [ ] Task: Write Tests: Create unit tests for layout helper functions and dynamic scaling logic.
-- [ ] Task: Implement: Refactor existing widgets to use consolidated DRY layout helpers.
+- [x] Task: Consolidate layout constants and styling logic into a central module or structure.
+- [x] Task: Write Tests: Create unit tests for layout helper functions and dynamic scaling logic.
+- [x] Task: Implement: Refactor existing widgets to use consolidated DRY layout helpers.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Refactor for DRY Layouts' (Protocol in workflow.md)
 
 ## Phase 3: Implement Responsive Scaling
