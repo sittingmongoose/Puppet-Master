@@ -19,7 +19,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 3: Implement Responsive Scaling' (Protocol in workflow.md)
 
 ## Phase 4: Final Validation and Tuning
-- [ ] Task: Use automated GUI tools to perform visual regression testing across multiple window sizes.
-- [ ] Task: Verify 90% test coverage for all modified UI/layout logic.
-- [ ] Task: Fine-tune spacing and scaling factors to ensure the "look and feel" is perfectly preserved.
+- [x] Task: Use automated GUI tools to perform visual regression testing across multiple window sizes.
+- [x] Task: Verify 90% test coverage for all modified UI/layout logic.
+- [x] Task: Fine-tune spacing and scaling factors to ensure the "look and feel" is perfectly preserved.
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Final Validation and Tuning' (Protocol in workflow.md)

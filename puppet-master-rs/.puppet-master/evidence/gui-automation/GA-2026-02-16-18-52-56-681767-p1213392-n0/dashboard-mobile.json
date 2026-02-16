@@ -1,0 +1,29 @@
+{
+  "currentPage": "Dashboard",
+  "orchestratorStatus": "idle",
+  "lastError": null,
+  "outputLineCount": 0,
+  "wizardStep": 0,
+  "doctorRunning": false,
+  "activeContextMenu": null,
+  "toastCount": 1,
+  "latestToastMessage": "Detecting platform installations...",
+  "doctorChecks": [],
+  "toasts": [
+    {
+      "toastType": "Info",
+      "message": "Detecting platform installations..."
+    }
+  ],
+  "authStatuses": {},
+  "setupIsChecking": true,
+  "setupInstalling": null,
+  "setupPlatformStatuses": [],
+  "platformAvailability": [],
+  "configTierPlatforms": {
+    "iteration": "cursor",
+    "phase": "cursor",
+    "subtask": "cursor",
+    "task": "cursor"
+  }
+}
