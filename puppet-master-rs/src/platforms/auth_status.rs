@@ -3,6 +3,8 @@
 //! This module provides authentication verification for each platform,
 //! checking CLI authentication status and subscription auth (preferred over API keys).
 
+use crate::platforms::path_utils;
+use crate::platforms::platform_detector::PlatformDetector;
 use crate::platforms::platform_specs;
 use crate::types::Platform;
 use anyhow::{Result, anyhow};
@@ -86,6 +88,11 @@ impl AuthStatusChecker {
     // Platform-specific authentication checks
 
     async fn check_cursor(&self) -> AuthCheckResult {
+        if PlatformDetector::detect_platform(Platform::Cursor).await.is_none() {
+            return AuthCheckResult::not_authenticated(
+                "Cursor CLI is not installed. Install Cursor CLI, then run 'agent login'.",
+            );
+        }
         // Prefer subscription auth: agent status (Cursor docs)
         let spec = platform_specs::get_spec(Platform::Cursor);
         for cmd in platform_specs::cli_binary_names(Platform::Cursor) {
@@ -104,6 +111,11 @@ impl AuthStatusChecker {
     }
 
     async fn check_codex(&self) -> AuthCheckResult {
+        if PlatformDetector::detect_platform(Platform::Codex).await.is_none() {
+            return AuthCheckResult::not_authenticated(
+                "Codex CLI is not installed. Install Codex CLI, then run 'codex login'.",
+            );
+        }
         // Subscription auth via Codex CLI login
         let spec = platform_specs::get_spec(Platform::Codex);
         for cmd in platform_specs::cli_binary_names(Platform::Codex) {
@@ -135,6 +147,11 @@ impl AuthStatusChecker {
     }
 
     async fn check_claude(&self) -> AuthCheckResult {
+        if PlatformDetector::detect_platform(Platform::Claude).await.is_none() {
+            return AuthCheckResult::not_authenticated(
+                "Claude CLI is not installed. Install Claude Code CLI, then run 'claude' to complete browser-based login.",
+            );
+        }
         // Claude has no `auth status` subcommand.
         // Check: 1) ~/.claude/ credentials exist  2) `claude --version` succeeds (CLI installed)
         let home = std::env::var("HOME").unwrap_or_default();
@@ -170,6 +187,11 @@ impl AuthStatusChecker {
     }
 
     async fn check_gemini(&self) -> AuthCheckResult {
+        if PlatformDetector::detect_platform(Platform::Gemini).await.is_none() {
+            return AuthCheckResult::not_authenticated(
+                "Gemini CLI is not installed. Install Gemini CLI, then run 'gemini' and Login with Google.",
+            );
+        }
         let home = std::env::var("HOME").unwrap_or_default();
         let cred_path = std::path::Path::new(&home).join(".gemini");
         let spec = platform_specs::get_spec(Platform::Gemini);
@@ -203,18 +225,7 @@ impl AuthStatusChecker {
     }
 
     async fn check_copilot(&self) -> AuthCheckResult {
-        let spec = platform_specs::get_spec(Platform::Copilot);
-        let mut copilot_cli_installed = false;
-        for cmd in platform_specs::cli_binary_names(Platform::Copilot) {
-            if let Ok(output) = self.run_command(cmd, &[spec.version_command]).await {
-                if output.status.success() {
-                    copilot_cli_installed = true;
-                    break;
-                }
-            }
-        }
-
-        if !copilot_cli_installed {
+        if PlatformDetector::detect_platform(Platform::Copilot).await.is_none() {
             return AuthCheckResult::not_authenticated(
                 "Copilot CLI is not installed. Install Copilot CLI, then run 'copilot login'.",
             );
@@ -293,12 +304,14 @@ impl AuthStatusChecker {
         )
     }
 
-    /// Runs a command with timeout
+    /// Runs a command with timeout.
+    /// Uses enhanced PATH so node-based CLIs (codex, gemini, copilot) can find `node` when spawned from GUI apps.
     async fn run_command(&self, program: &str, args: &[&str]) -> Result<std::process::Output> {
         let timeout = tokio::time::Duration::from_secs(self.timeout_secs);
         let resolved_program = self.resolve_program(program);
 
         let future = Command::new(&resolved_program)
+            .env("PATH", path_utils::build_enhanced_path_for_subprocess())
             .args(args)
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())

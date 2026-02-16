@@ -4,6 +4,7 @@
 //! Provides status checks, platform-specific installation instructions, and
 //! execution of official install commands.
 
+use crate::platforms::path_utils;
 use crate::platforms::platform_specs;
 use crate::types::Platform;
 use anyhow::{Result, anyhow};
@@ -205,12 +206,19 @@ impl InstallationManager {
         crate::platforms::path_utils::find_in_shell_path(cli_name)
     }
 
-    /// Get version from an executable path
+    /// Get version from an executable path.
+    /// Uses enhanced PATH so node-based CLIs can find `node` when spawned from GUI apps.
     fn get_version_from_path(&self, exe_path: &Path, cli_name: &str) -> Option<String> {
+        let enhanced_path = path_utils::build_enhanced_path_for_subprocess();
+
         // Special case for Copilot: prefer `copilot version` and fall back to `--version`.
         if cli_name == "copilot" {
             for version_flag in ["version", "--version"] {
-                if let Ok(output) = Command::new(exe_path).arg(version_flag).output() {
+                if let Ok(output) = Command::new(exe_path)
+                    .env("PATH", &enhanced_path)
+                    .arg(version_flag)
+                    .output()
+                {
                     if output.status.success() {
                         let version_str = String::from_utf8_lossy(&output.stdout);
                         let version = self.extract_version(&version_str);
@@ -228,7 +236,11 @@ impl InstallationManager {
         let version_flags = ["--version", "-v", "version"];
 
         for flag in &version_flags {
-            match Command::new(exe_path).arg(flag).output() {
+            match Command::new(exe_path)
+                .env("PATH", &enhanced_path)
+                .arg(flag)
+                .output()
+            {
                 Ok(output) => {
                     if output.status.success() {
                         let version_str = String::from_utf8_lossy(&output.stdout);
@@ -527,7 +539,15 @@ Verify installation:
     }
 
     fn execute_codex_install(&self) -> Result<InstallResult> {
-        let status = Command::new("npm")
+        let npm_path = match path_utils::resolve_executable("npm") {
+            Some(p) => p,
+            None => {
+                return Ok(InstallResult::failure(
+                    "npm not found. Install Node.js first (e.g. brew install node on macOS).",
+                ))
+            }
+        };
+        let status = Command::new(&npm_path)
             .args(["install", "-g", "@openai/codex"])
             .stdin(Stdio::inherit())
             .stdout(Stdio::inherit())
@@ -590,7 +610,15 @@ Verify installation:
     }
 
     fn execute_gemini_install(&self) -> Result<InstallResult> {
-        let status = Command::new("npm")
+        let npm_path = match path_utils::resolve_executable("npm") {
+            Some(p) => p,
+            None => {
+                return Ok(InstallResult::failure(
+                    "npm not found. Install Node.js first (e.g. brew install node on macOS).",
+                ))
+            }
+        };
+        let status = Command::new(&npm_path)
             .args(["install", "-g", "@google/gemini-cli"])
             .stdin(Stdio::inherit())
             .stdout(Stdio::inherit())
@@ -609,18 +637,29 @@ Verify installation:
     }
 
     fn execute_copilot_install(&self) -> Result<InstallResult> {
-        let install_cmd = "npm install -g @github/copilot";
+        let npm_path = match path_utils::resolve_executable("npm") {
+            Some(p) => p,
+            None => {
+                return Ok(InstallResult::failure(
+                    "npm not found. Install Node.js first (e.g. brew install node on macOS).",
+                ))
+            }
+        };
         let status = if matches!(self.os, OperatingSystem::Windows) {
+            let cmd_str = format!(
+                "& \"{}\" install -g @github/copilot",
+                npm_path.display()
+            );
             Command::new("powershell")
-                .args(["-NoProfile", "-Command", install_cmd])
+                .args(["-NoProfile", "-Command", &cmd_str])
                 .stdin(Stdio::inherit())
                 .stdout(Stdio::inherit())
                 .stderr(Stdio::inherit())
                 .status()
                 .map_err(|e| anyhow!("Failed to run Copilot install: {}", e))?
         } else {
-            Command::new("sh")
-                .args(["-c", install_cmd])
+            Command::new(&npm_path)
+                .args(["install", "-g", "@github/copilot"])
                 .stdin(Stdio::inherit())
                 .stdout(Stdio::inherit())
                 .stderr(Stdio::inherit())

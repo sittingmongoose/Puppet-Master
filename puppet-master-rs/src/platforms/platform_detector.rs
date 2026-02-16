@@ -395,6 +395,7 @@ impl PlatformDetector {
     ) -> (Option<String>, bool) {
         let timeout = tokio::time::Duration::from_secs(5);
         let future = Command::new(command_path)
+            .env("PATH", path_utils::build_enhanced_path_for_subprocess())
             .arg(version_flag)
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())

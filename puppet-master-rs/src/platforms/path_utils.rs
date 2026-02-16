@@ -202,6 +202,40 @@ pub fn resolve_executable_candidates(candidates: &[&str]) -> Option<(String, Pat
         .find_map(|name| resolve_executable(name).map(|path| ((*name).to_string(), path)))
 }
 
+// DRY:FN:build_enhanced_path_for_subprocess — PATH with fallback dirs prepended for CLI execution
+/// Builds a PATH string with fallback directories prepended so node-based CLIs
+/// (codex, gemini, copilot) can find `node` when spawned from GUI apps that inherit minimal PATH.
+///
+/// GUI apps on macOS/Linux/Windows often inherit a minimal PATH. When spawning
+/// `codex --version` or similar, the CLI wrapper invokes `#!/usr/bin/env node` —
+/// if `node` is not in the child's PATH, the command fails. Prepending fallback
+/// dirs (e.g. /opt/homebrew/bin, ~/.nvm/current/bin, ~/.local/bin) fixes this.
+///
+/// Use with `Command::new(...).env("PATH", build_enhanced_path_for_subprocess())`.
+pub fn build_enhanced_path_for_subprocess() -> String {
+    let fallback_dirs = get_fallback_directories();
+    let prepend: Vec<String> = fallback_dirs
+        .iter()
+        .filter_map(|p| p.to_str())
+        .map(|s| s.to_string())
+        .collect();
+
+    #[cfg(target_os = "windows")]
+    let separator = ";";
+    #[cfg(not(target_os = "windows"))]
+    let separator = ":";
+
+    let current = std::env::var_os("PATH")
+        .and_then(|v| v.into_string().ok())
+        .unwrap_or_default();
+
+    if prepend.is_empty() {
+        current
+    } else {
+        format!("{}{}{}", prepend.join(separator), separator, current)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -279,5 +313,15 @@ mod tests {
         let resolved = resolve_executable_candidates(&["__rwm_missing_binary__", known])
             .expect("expected path");
         assert_eq!(resolved.0, known);
+    }
+
+    #[test]
+    fn test_build_enhanced_path_for_subprocess() {
+        let path = build_enhanced_path_for_subprocess();
+        assert!(!path.is_empty());
+        #[cfg(not(target_os = "windows"))]
+        assert!(path.contains(':'));
+        #[cfg(target_os = "windows")]
+        assert!(path.contains(';'));
     }
 }
