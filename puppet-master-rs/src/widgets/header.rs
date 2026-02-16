@@ -117,20 +117,21 @@ where
     let paper_color = theme.paper();
     let ink_color = theme.ink();
 
-    // Title - "RWM PUPPET MASTER" with thin underline
+    // Title - "RWM PUPPET MASTER" with thin underline (tight spacing so line sits close to text)
     let title_text = text("RWM PUPPET MASTER")
         .size(26)
         .font(FONT_DISPLAY_BOLD)
         .style(move |_theme: &iced::Theme| text::Style {
             color: Some(ink_color),
         });
+    let title_wrapped = container(title_text).padding(Padding::ZERO);
     let underline = rule::horizontal(2).style(move |_theme: &iced::Theme| rule::Style {
         color: ink_color,
         radius: 0.0.into(),
         fill_mode: rule::FillMode::Full,
         snap: true,
     });
-    let logo = column![title_text, underline]
+    let logo = column![title_wrapped, underline]
         .spacing(0.0)
         .align_x(iced::Alignment::Start);
 
@@ -184,8 +185,8 @@ where
         nav_row = nav_row.push(btn);
     }
 
-    // ── Combine into two-row column ──
-    let header_content = column![top_row, nav_row].spacing(spacing::XXXS);
+    // ── Combine into two-row column: gap so nav buttons sit below the white line ──
+    let header_content = column![top_row, nav_row].spacing(spacing::MD);
 
     // Inner header box: paper bg, 3px border, hard shadow
     let inner_header = container(header_content)
