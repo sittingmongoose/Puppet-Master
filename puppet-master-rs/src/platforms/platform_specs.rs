@@ -1094,6 +1094,75 @@ pub fn subagent_extra_args(platform: Platform) -> Vec<&'static str> {
     args
 }
 
+// ─── Install Metadata Helpers ──────────────────────────────────────────────
+
+/// DRY:FN:npm_package_info — Get npm package name and binary name for platforms installed via npm
+///
+/// Returns `Some((package_name, binary_name))` for npm-based platforms, `None` otherwise.
+/// This is the single source of truth for npm package metadata, extracted from
+/// the platform's install methods and cli_binary_names.
+pub fn npm_package_info(platform: Platform) -> Option<(&'static str, &'static str)> {
+    let spec = get_spec(platform);
+    // Find npm install method
+    for method in spec.install_methods {
+        if method.method == "npm" {
+            // Parse "npm install -g @package/name" to extract package
+            let parts: Vec<&str> = method.command.split_whitespace().collect();
+            if let Some(pkg_idx) = parts.iter().position(|&p| p.starts_with('@') || (!p.starts_with('-') && p != "npm" && p != "install")) {
+                let package = parts.get(pkg_idx)?;
+                // Binary name comes from cli_binary_names (primary binary)
+                let binary = spec.cli_binary_names.first()?;
+                return Some((package, binary));
+            }
+        }
+    }
+    None
+}
+
+/// DRY:FN:install_script_urls — Get install script URLs for platforms installed via curl/PowerShell
+///
+/// Returns `Some((unix_url, windows_url))` for script-based platforms, `None` otherwise.
+/// This is the single source of truth for install script URLs, extracted from
+/// the platform's install methods.
+pub fn install_script_urls(platform: Platform) -> Option<(&'static str, &'static str)> {
+    let spec = get_spec(platform);
+    let mut unix_url = None;
+    let mut windows_url = None;
+
+    // Find curl and powershell install methods
+    for method in spec.install_methods {
+        if method.method == "curl" {
+            // Parse "curl -fsSL https://example.com/install.sh | bash"
+            let parts: Vec<&str> = method.command.split_whitespace().collect();
+            for part in parts.iter() {
+                if part.starts_with("http://") || part.starts_with("https://") {
+                    unix_url = Some(*part);
+                    break;
+                }
+            }
+        } else if method.method == "powershell" {
+            // Parse "irm 'https://example.com/install' | iex"
+            // Handle both quoted and unquoted URLs
+            let cmd = method.command;
+            if let Some(start) = cmd.find("http") {
+                let url_part = &cmd[start..];
+                // Find end of URL (space, quote, or pipe)
+                let end = url_part
+                    .find(|c: char| c.is_whitespace() || c == '\'' || c == '"' || c == '|')
+                    .unwrap_or(url_part.len());
+                windows_url = Some(&url_part[..end]);
+            }
+        }
+    }
+
+    match (unix_url, windows_url) {
+        (Some(u), Some(w)) => Some((u, w)),
+        (Some(u), None) => Some((u, "")), // Unix-only
+        (None, Some(w)) => Some(("", w)), // Windows-only
+        (None, None) => None,
+    }
+}
+
 // ─── Tests ──────────────────────────────────────────────────────────────────
 
 #[cfg(test)]
@@ -1289,10 +1358,50 @@ mod tests {
         assert!(claude_args.is_empty()); // Uses env var, not CLI flag
 
         let codex_args = subagent_extra_args(Platform::Codex);
-        // Codex has experimental but no CLI flag
-        assert!(codex_args.is_empty() || !codex_args.is_empty()); // May or may not have args
+        assert!(codex_args.is_empty());
 
         let cursor_args = subagent_extra_args(Platform::Cursor);
         assert!(cursor_args.is_empty());
+    }
+
+    #[test]
+    fn test_npm_package_info() {
+        // Gemini
+        let (pkg, bin) = npm_package_info(Platform::Gemini).expect("Gemini should have npm package");
+        assert_eq!(pkg, "@google/gemini-cli");
+        assert_eq!(bin, "gemini");
+
+        // Codex
+        let (pkg, bin) = npm_package_info(Platform::Codex).expect("Codex should have npm package");
+        assert_eq!(pkg, "@openai/codex");
+        assert_eq!(bin, "codex");
+
+        // Copilot
+        let (pkg, bin) = npm_package_info(Platform::Copilot).expect("Copilot should have npm package");
+        assert_eq!(pkg, "@github/copilot");
+        assert_eq!(bin, "copilot");
+
+        // Claude and Cursor don't use npm
+        assert!(npm_package_info(Platform::Claude).is_none());
+        assert!(npm_package_info(Platform::Cursor).is_none());
+    }
+
+    #[test]
+    fn test_install_script_urls() {
+        // Claude
+        let (unix, _win) = install_script_urls(Platform::Claude)
+            .expect("Claude should have install scripts");
+        assert_eq!(unix, "https://claude.ai/install.sh");
+
+        // Cursor
+        let (unix, win) = install_script_urls(Platform::Cursor)
+            .expect("Cursor should have install scripts");
+        assert_eq!(unix, "https://cursor.com/install");
+        assert_eq!(win, "https://cursor.com/install?win32=true");
+
+        // NPM-based platforms don't have install scripts
+        assert!(install_script_urls(Platform::Gemini).is_none());
+        assert!(install_script_urls(Platform::Codex).is_none());
+        assert!(install_script_urls(Platform::Copilot).is_none());
     }
 }

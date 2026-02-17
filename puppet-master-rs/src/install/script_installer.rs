@@ -7,6 +7,7 @@
 
 use crate::install::app_paths::ensure_app_bin_dir;
 use crate::install::install_coordinator::InstallOutcome;
+use crate::types::Platform;
 use log::info;
 use std::path::PathBuf;
 use std::process::Stdio;
@@ -14,70 +15,90 @@ use std::process::Stdio;
 // DRY:FN:install_claude_app_local — Run Claude Code install script and copy to bin/claude
 /// Install Claude Code via the official script and copy the binary to the app-local `bin/`.
 pub async fn install_claude_app_local() -> InstallOutcome {
-    info!("Installing Claude Code via official script");
-
-    let mut log_lines = Vec::new();
-
-    // Step 1: Run official install script
-    let install_ok = run_install_script(
-        "curl -fsSL https://claude.ai/install.sh | bash",
-        "irm https://claude.ai/install.ps1 | iex",
-        &mut log_lines,
-    )
-    .await;
-
-    if !install_ok {
-        return InstallOutcome::failure_with_log(
-            "Claude Code install script failed. Check log for details.",
-            log_lines,
-        );
-    }
-
-    // Step 2: Detect where claude was installed
-    let detected_path = find_installed_binary(&["claude"], &mut log_lines).await;
-
-    // Step 3: Copy to app-local bin/
-    copy_to_app_bin(detected_path, "claude", &mut log_lines)
+    install_script_based_platform(Platform::Claude).await
 }
 
 // DRY:FN:install_cursor_app_local — Run Cursor install script and copy to bin/agent
 /// Install Cursor CLI via the official script and copy the binary to the app-local `bin/`.
 pub async fn install_cursor_app_local() -> InstallOutcome {
-    info!("Installing Cursor CLI via official script");
+    install_script_based_platform(Platform::Cursor).await
+}
+
+/// Install a platform via its official install script and copy the binary to the app-local `bin/`.
+///
+/// Uses `crate::platforms::platform_specs::install_script_urls` as the single source of truth
+/// for install script URLs.
+async fn install_script_based_platform(platform: Platform) -> InstallOutcome {
+    info!("Installing {} via official script", crate::platforms::platform_specs::display_name_for(platform));
 
     let mut log_lines = Vec::new();
 
+    // Get install script URLs from platform_specs (single source of truth)
+    #[allow(unused_variables)]
+    let (unix_url, win_url) = match crate::platforms::platform_specs::install_script_urls(platform) {
+        Some(urls) => urls,
+        None => {
+            return InstallOutcome::failure(format!(
+                "{} does not support script-based installation",
+                crate::platforms::platform_specs::display_name_for(platform)
+            ));
+        }
+    };
+
+    // Construct platform-appropriate install commands
+    #[cfg(not(target_os = "windows"))]
+    let unix_cmd = if unix_url.is_empty() {
+        return InstallOutcome::failure(format!(
+            "{} does not have a Unix install script",
+            crate::platforms::platform_specs::display_name_for(platform)
+        ));
+    } else {
+        format!("curl -fsSL {} | bash", unix_url)
+    };
+
+    #[cfg(target_os = "windows")]
+    let win_cmd = if win_url.is_empty() {
+        return InstallOutcome::failure(format!(
+            "{} does not have a Windows PowerShell install script. Use winget or another package manager instead.",
+            crate::platforms::platform_specs::display_name_for(platform)
+        ));
+    } else {
+        format!("irm '{}' | iex", win_url)
+    };
+
     // Step 1: Run official install script
-    let install_ok = run_install_script(
-        "curl https://cursor.com/install -fsS | bash",
-        "irm 'https://cursor.com/install?win32=true' | iex",
-        &mut log_lines,
-    )
-    .await;
+    #[cfg(not(target_os = "windows"))]
+    let install_ok = run_install_script(&unix_cmd, "", &mut log_lines).await;
+
+    #[cfg(target_os = "windows")]
+    let install_ok = run_install_script("", &win_cmd, &mut log_lines).await;
 
     if !install_ok {
         return InstallOutcome::failure_with_log(
-            "Cursor install script failed. Check log for details.",
+            format!("{} install script failed. Check log for details.",
+                    crate::platforms::platform_specs::display_name_for(platform)),
             log_lines,
         );
     }
 
-    // Step 2: Detect where agent/cursor-agent was installed
-    let detected_path =
-        find_installed_binary(&["agent", "cursor-agent"], &mut log_lines).await;
+    // Step 2: Detect where the binary was installed
+    let binary_names = crate::platforms::platform_specs::cli_binary_names(platform);
+    let detected_path = find_installed_binary(binary_names, &mut log_lines).await;
 
-    // Step 3: Copy to app-local bin/agent
-    copy_to_app_bin(detected_path, "agent", &mut log_lines)
+    // Step 3: Copy to app-local bin/ using the primary binary name
+    let primary_binary = binary_names.first().expect("Platform should have at least one binary name");
+    copy_to_app_bin(detected_path, primary_binary, &mut log_lines)
 }
 
 /// Run the platform-appropriate install script and return whether it succeeded.
 async fn run_install_script(
     unix_cmd: &str,
-    _win_cmd: &str,
+    win_cmd: &str,
     log_lines: &mut Vec<String>,
 ) -> bool {
     #[cfg(not(target_os = "windows"))]
     {
+        let _ = win_cmd;
         log_lines.push(format!("Running: sh -c \"{unix_cmd}\""));
         let result = tokio::process::Command::new("sh")
             .args(["-c", unix_cmd])
@@ -105,6 +126,7 @@ async fn run_install_script(
 
     #[cfg(target_os = "windows")]
     {
+        let _ = unix_cmd;
         log_lines.push(format!("Running PowerShell: {win_cmd}"));
         let result = tokio::process::Command::new("powershell")
             .args(["-NoProfile", "-Command", win_cmd])

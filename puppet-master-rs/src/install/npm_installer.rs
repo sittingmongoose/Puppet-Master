@@ -28,23 +28,15 @@ pub struct NpmPackage {
 }
 
 /// Return the npm package info for a known platform, if applicable.
+///
+/// Uses `crate::platforms::platform_specs::npm_package_info` as the single source of truth.
 pub fn npm_package_for_platform(platform: crate::types::Platform) -> Option<NpmPackage> {
-    use crate::types::Platform;
-    match platform {
-        Platform::Gemini => Some(NpmPackage {
-            package_name: "@google/gemini-cli",
-            binary_name: "gemini",
-        }),
-        Platform::Codex => Some(NpmPackage {
-            package_name: "@openai/codex",
-            binary_name: "codex",
-        }),
-        Platform::Copilot => Some(NpmPackage {
-            package_name: "@github/copilot",
-            binary_name: "copilot",
-        }),
-        _ => None,
-    }
+    crate::platforms::platform_specs::npm_package_info(platform).map(|(package_name, binary_name)| {
+        NpmPackage {
+            package_name,
+            binary_name,
+        }
+    })
 }
 
 // DRY:FN:npm_install_to_app_dir — Install an npm package into the app data directory
