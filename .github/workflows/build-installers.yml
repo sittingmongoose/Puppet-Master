@@ -94,6 +94,12 @@ jobs:
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "Using version: $VERSION"
 
+      - name: Headless GUI smoke test
+        shell: bash
+        run: |
+          cd puppet-master-rs
+          cargo test --test gui_automation_headless --quiet
+
       - name: Build installer (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
