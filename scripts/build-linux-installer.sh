@@ -109,18 +109,23 @@ Categories=Development;IDE;
 Keywords=ai;development;orchestrator;
 EOF
 
-# Copy icon if exists (resize to 256x256 when ImageMagick available and source is larger)
-if [ -f "icons/icon.png" ]; then
-    DEST_ICON="$DEB_DIR/usr/share/icons/hicolor/256x256/apps/puppet-master.png"
-    if command -v magick >/dev/null 2>&1; then
-        magick icons/icon.png -resize 256x256 "$DEST_ICON"
-    elif command -v convert >/dev/null 2>&1; then
-        convert icons/icon.png -resize 256x256 "$DEST_ICON"
-    else
-        cp icons/icon.png "$DEST_ICON"
-    fi
+# Copy icon (required; fail if missing so package is never shipped without icon)
+if [ ! -f "icons/icon.png" ]; then
+    echo "Error: icons/icon.png not found." >&2
+    echo "Add a 256x256 or 512x512 PNG and run ./scripts/generate-app-icons.sh if needed. Then re-run this script." >&2
+    exit 1
+fi
+DEST_ICON="$DEB_DIR/usr/share/icons/hicolor/256x256/apps/puppet-master.png"
+if command -v magick >/dev/null 2>&1; then
+    magick icons/icon.png -resize 256x256 "$DEST_ICON"
+elif command -v convert >/dev/null 2>&1; then
+    convert icons/icon.png -resize 256x256 "$DEST_ICON"
 else
-    echo "Warning: icon.png not found at icons/icon.png"
+    cp icons/icon.png "$DEST_ICON"
+fi
+if [ ! -s "$DEST_ICON" ]; then
+    echo "Error: Icon copy failed or produced empty file at ${DEST_ICON}" >&2
+    exit 1
 fi
 
 # Create postinstall script

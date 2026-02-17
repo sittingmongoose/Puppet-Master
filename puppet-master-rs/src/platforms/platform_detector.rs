@@ -86,6 +86,37 @@ impl PlatformDetector {
         let spec = platform_specs::get_spec(platform);
         let mut searched_paths = Vec::new();
 
+        // Stage -1: App-local bin directory (always checked first)
+        let app_bin_dir = crate::install::app_paths::get_app_bin_dir();
+        for name in cli_names {
+            let candidate = app_bin_dir.join(name);
+            searched_paths.push(format!("app-local: {}", candidate.display()));
+
+            if let Some(found) = path_utils::check_executable_exists(&candidate) {
+                if platform == Platform::Copilot && Self::is_gh_binary_name(name) {
+                    continue;
+                }
+                let (version, valid) =
+                    Self::validate_and_get_version(platform, &found, spec.version_command)
+                        .await;
+                if !valid {
+                    continue;
+                }
+                let detected = DetectedPlatform {
+                    platform,
+                    cli_path: found,
+                    cli_name: name.to_string(),
+                    version,
+                    available: true,
+                    searched_paths: searched_paths.clone(),
+                };
+                return PlatformDetectionTrace {
+                    detected: Some(detected),
+                    searched_paths,
+                };
+            }
+        }
+
         // Stage 0: Project-local node_modules/.bin/{cli_name}
         if let Some(proj) = project_dir {
             for name in cli_names {

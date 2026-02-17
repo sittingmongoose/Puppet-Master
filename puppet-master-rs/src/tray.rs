@@ -48,7 +48,7 @@ use tray_icon::{Icon, TrayIcon, TrayIconBuilder, TrayIconEvent, menu::MenuId};
 use tray_icon::{MouseButton, MouseButtonState};
 
 /// Embedded icon bytes - fallback if external file not found
-const ICON_BYTES: &[u8] = include_bytes!("../icons/icon.png");
+pub const ICON_BYTES: &[u8] = include_bytes!("../icons/icon.png");
 
 // DRY:DATA:TrayAction
 /// Actions that can be triggered from the system tray

@@ -70,7 +70,7 @@ fn format_platform_id_option(
 }
 
 // DRY:FN:wizard_view
-/// Requirements wizard view - 8-step process (0, 1-6 renamed to 0-8) matching enhanced flow
+/// Requirements wizard view - 10-step process (0-9) with new dependency install step.
 pub fn view<'a>(
     step: usize,
     // Step 0 fields
@@ -80,7 +80,14 @@ pub fn view<'a>(
     create_github_repo: bool,
     github_visibility: &'a str,
     github_description: &'a str,
-    // Step 0.5 fields
+    // Step 1 (new): Dependency Install fields
+    dep_node_ok: Option<bool>,
+    dep_gh_ok: Option<bool>,
+    dep_platforms_selected: &'a std::collections::HashSet<crate::types::Platform>,
+    dep_platform_ok: &'a HashMap<crate::types::Platform, Option<bool>>,
+    dep_install_log: &'a [String],
+    dep_installing: Option<&'a str>,
+    // Step 2 (was 0.5) fields
     use_interview: bool,
     interaction_mode: &'a str,
     reasoning_level: &'a str,
@@ -127,6 +134,8 @@ pub fn view<'a>(
         step_circle(7, step, theme),
         connecting_line(7, step, theme),
         step_circle(8, step, theme),
+        connecting_line(8, step, theme),
+        step_circle(9, step, theme),
     ]
     .spacing(tokens::spacing::XXXS)
     .align_y(iced::Alignment::Center);
@@ -174,7 +183,17 @@ pub fn view<'a>(
             theme,
         )
         .into(),
-        1 => step1_interview_config(
+        1 => step1_install_dependencies(
+            dep_node_ok,
+            dep_gh_ok,
+            dep_platforms_selected,
+            dep_platform_ok,
+            dep_install_log,
+            dep_installing,
+            theme,
+        )
+        .into(),
+        2 => step1_interview_config(
             use_interview,
             interaction_mode,
             reasoning_level,
@@ -182,14 +201,14 @@ pub fn view<'a>(
             theme,
         )
         .into(),
-        2 => step2_upload_requirements(
+        3 => step2_upload_requirements(
             project_name,
             project_path,
             requirements_text,
             requirements_preview_content,
             theme,
         ),
-        3 => step3_generate_prd(
+        4 => step3_generate_prd(
             requirements_text,
             prd_platform,
             prd_model,
@@ -199,11 +218,11 @@ pub fn view<'a>(
             auth_status,
             theme,
         ),
-        4 => step4_review_prd(prd_editor_content, prd_text, theme),
-        5 => step5_configure_tiers(tier_configs, models, platform_statuses, auth_status, theme),
-        6 => step6_generate_plan(plan_text, plan_content, generating, theme),
-        7 => step7_review_plan(plan_text, plan_content, theme).into(),
-        8 => step8_review_start(project_name, project_path, theme).into(),
+        5 => step4_review_prd(prd_editor_content, prd_text, theme),
+        6 => step5_configure_tiers(tier_configs, models, platform_statuses, auth_status, theme),
+        7 => step6_generate_plan(plan_text, plan_content, generating, theme),
+        8 => step7_review_plan(plan_text, plan_content, theme).into(),
+        9 => step8_review_start(project_name, project_path, theme).into(),
         _ => container(
             text("Invalid step")
                 .size(tokens::font_size::XL)
@@ -218,7 +237,6 @@ pub fn view<'a>(
         container(step_panel)
             .width(Length::Fill)
             .padding(tokens::spacing::LG)
-            .max_width(tokens::layout::MAX_CONTENT_WIDTH)
             .style(move |_: &iced::Theme| container::Style {
                 background: Some(iced::Background::Color(theme.paper())),
                 border: Border {
@@ -430,7 +448,182 @@ fn step0_project_setup<'a>(
     themed_panel(final_content, theme)
 }
 
-/// Step 1: Quick Interview Config
+// DRY:FN:step1_install_dependencies — Dependency install wizard step
+/// Step 1 (new): Dependency Install
+/// Shows Node.js, GitHub CLI and platform CLI install status with INSTALL buttons.
+/// NEXT is enabled once Node is confirmed present.
+fn step1_install_dependencies<'a>(
+    node_ok: Option<bool>,
+    gh_ok: Option<bool>,
+    platforms_selected: &'a std::collections::HashSet<crate::types::Platform>,
+    platform_ok: &'a HashMap<crate::types::Platform, Option<bool>>,
+    install_log: &'a [String],
+    installing: Option<&'a str>,
+    theme: &'a AppTheme,
+) -> container::Container<'a, Message> {
+    let node_installed = node_ok == Some(true);
+
+    // Node row
+    let node_status_label = match node_ok {
+        None => "Checking…",
+        Some(true) => "Installed ✓",
+        Some(false) => "Not found",
+    };
+    let node_row = row![
+        selectable_label(theme, "Node.js (>= 18):"),
+        Space::new().width(Length::Fixed(tokens::spacing::SM)),
+        selectable_label(theme, node_status_label),
+        Space::new().width(Length::Fill),
+        if node_ok != Some(true) {
+            styled_button(
+                theme,
+                if installing == Some("node") { "Installing…" } else { "INSTALL" },
+                ButtonVariant::Primary,
+            )
+            .on_press_maybe(if installing.is_none() {
+                Some(Message::WizardInstallNode)
+            } else {
+                None
+            })
+        } else {
+            styled_button(theme, "Installed ✓", ButtonVariant::Secondary)
+        },
+    ]
+    .spacing(tokens::spacing::MD)
+    .align_y(Alignment::Center);
+
+    // GitHub CLI row
+    let gh_status_label = match gh_ok {
+        None => "Checking…",
+        Some(true) => "Installed ✓",
+        Some(false) => "Not found",
+    };
+    let gh_row = row![
+        selectable_label(theme, "GitHub CLI (gh):"),
+        Space::new().width(Length::Fixed(tokens::spacing::SM)),
+        selectable_label(theme, gh_status_label),
+        Space::new().width(Length::Fill),
+        if gh_ok != Some(true) {
+            styled_button(
+                theme,
+                if installing == Some("gh") { "Installing…" } else { "INSTALL" },
+                ButtonVariant::Primary,
+            )
+            .on_press_maybe(if installing.is_none() {
+                Some(Message::WizardInstallGhCli)
+            } else {
+                None
+            })
+        } else {
+            styled_button(theme, "Installed ✓", ButtonVariant::Secondary)
+        },
+    ]
+    .spacing(tokens::spacing::MD)
+    .align_y(Alignment::Center);
+
+    // Platform CLI rows
+    let platform_rows: Vec<iced::Element<'a, Message>> = crate::types::Platform::all()
+        .iter()
+        .map(|&platform| {
+            let selected = platforms_selected.contains(&platform);
+            let status = platform_ok.get(&platform).copied().flatten();
+            let status_label = if status == Some(true) {
+                "Installed ✓"
+            } else if selected && status == Some(false) {
+                "Failed"
+            } else if selected {
+                "Selected"
+            } else {
+                ""
+            };
+            let platform_str = format!("{platform}");
+            let installing_this = installing == Some(platform_str.as_str());
+            row![
+                toggler(selected)
+                    .on_toggle(move |_| Message::WizardToggleDepPlatform(platform))
+                    .spacing(tokens::spacing::SM),
+                selectable_label(theme, format!("{platform}").as_str()),
+                Space::new().width(Length::Fixed(tokens::spacing::SM)),
+                selectable_label(theme, status_label),
+                Space::new().width(Length::Fill),
+                if selected && status != Some(true) {
+                    styled_button(
+                        theme,
+                        if installing_this { "Installing…" } else { "INSTALL" },
+                        ButtonVariant::Primary,
+                    )
+                    .on_press_maybe(if installing.is_none() {
+                        Some(Message::WizardInstallPlatformCli(platform))
+                    } else {
+                        None
+                    })
+                } else {
+                    styled_button(theme, "", ButtonVariant::Secondary)
+                },
+            ]
+            .spacing(tokens::spacing::MD)
+            .align_y(Alignment::Center)
+            .into()
+        })
+        .collect();
+
+    // Install log
+    let log_col: Vec<iced::Element<'a, Message>> = install_log
+        .iter()
+        .take(8) // show last 8 lines
+        .map(|line| selectable_label(theme, line.as_str()).into())
+        .collect();
+
+    let mut step_content = column![
+        selectable_label(theme, "Step 1: Install Dependencies"),
+        selectable_label(
+            theme,
+            "Install required CLI tools into the app data directory."
+        ),
+        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        selectable_label(theme, "Required:"),
+        node_row,
+        gh_row,
+        Space::new().height(Length::Fixed(tokens::spacing::SM)),
+        selectable_label(theme, "Platform CLIs (optional — select and install):"),
+    ]
+    .spacing(tokens::spacing::SM)
+    .width(Length::Fill);
+
+    for row_elem in platform_rows {
+        step_content = step_content.push(row_elem);
+    }
+
+    if !log_col.is_empty() {
+        step_content = step_content
+            .push(Space::new().height(Length::Fixed(tokens::spacing::SM)))
+            .push(selectable_label(theme, "Install log:"));
+        for line in log_col {
+            step_content = step_content.push(line);
+        }
+    }
+
+    let nav_buttons = row![
+        styled_button(theme, "← BACK", ButtonVariant::Secondary)
+            .on_press(Message::WizardPrevStep),
+        Space::new().width(Length::Fill),
+        if node_installed {
+            styled_button(theme, "NEXT →", ButtonVariant::Primary)
+                .on_press(Message::WizardNextStep)
+        } else {
+            styled_button(theme, "NEXT → (install Node first)", ButtonVariant::Secondary)
+        },
+    ]
+    .spacing(tokens::spacing::MD);
+
+    let final_content = column![step_content, nav_buttons]
+        .spacing(tokens::spacing::LG)
+        .width(Length::Fill);
+
+    themed_panel(final_content, theme)
+}
+
+/// Step 2 (was 1): Quick Interview Config
 fn step1_interview_config<'a>(
     use_interview: bool,
     interaction_mode: &'a str,

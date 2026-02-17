@@ -6,6 +6,7 @@ pub mod config;
 pub mod core;
 pub mod doctor;
 pub mod git;
+pub mod install;
 pub mod interview;
 pub mod logging;
 pub mod platforms;

@@ -69,10 +69,14 @@ cp Info.plist "${BUNDLE_DIR}/Contents/"
 /usr/libexec/PlistBuddy -c "Add :PMBuildID string ${BUILD_ID}" "${BUNDLE_DIR}/Contents/Info.plist"
 /usr/libexec/PlistBuddy -c "Add :PMBuildUTC string ${BUILD_UTC}" "${BUNDLE_DIR}/Contents/Info.plist"
 
-# Copy icon
-if [ -f "../../puppet-master-rs/icons/icon.icns" ]; then
-    cp ../../puppet-master-rs/icons/icon.icns "${BUNDLE_DIR}/Contents/Resources/"
+# Copy icon (required; fail if missing so app is never shipped without icon)
+ICON_ICNS="../../puppet-master-rs/icons/icon.icns"
+if [ ! -f "$ICON_ICNS" ]; then
+    echo "Error: icon.icns not found at ${ICON_ICNS}" >&2
+    echo "Run ./scripts/generate-app-icons.sh from repo root (with icon.png in puppet-master-rs/icons/), then rebuild." >&2
+    exit 1
 fi
+cp "$ICON_ICNS" "${BUNDLE_DIR}/Contents/Resources/"
 
 # Ad-hoc code signing (removes "damaged" error, changes to security dialog)
 # This doesn't bypass Gatekeeper fully but makes it user-friendly

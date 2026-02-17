@@ -55,18 +55,23 @@ fn main() {
         sanitize_identifier(&build_utc)
     );
 
-    // Windows: embed application icon into .exe (optional; skip if icon.ico not generated yet)
+    // Windows: embed application icon into .exe (required; fail if missing so .exe never ships without icon)
     #[cfg(windows)]
     {
         let icon_path = manifest_dir.join("icons").join("icon.ico");
-        if icon_path.exists() {
-            println!("cargo:rerun-if-changed={}", icon_path.display());
-            if let Err(e) = winres::WindowsResource::new()
-                .set_icon(icon_path.to_str().expect("icon path is valid UTF-8"))
-                .compile()
-            {
-                eprintln!("cargo:warning=Failed to embed Windows icon: {}. Run scripts/generate-app-icons.sh to create icons/icon.ico", e);
-            }
+        if !icon_path.exists() {
+            eprintln!(
+                "cargo:warning=icons/icon.ico not found. Run ./scripts/generate-app-icons.sh from repo root (ensure icon.png exists in puppet-master-rs/icons/)."
+            );
+            std::process::exit(1);
+        }
+        println!("cargo:rerun-if-changed={}", icon_path.display());
+        if let Err(e) = winres::WindowsResource::new()
+            .set_icon(icon_path.to_str().expect("icon path is valid UTF-8"))
+            .compile()
+        {
+            eprintln!("cargo:warning=Failed to embed Windows icon: {}. Run scripts/generate-app-icons.sh to create icons/icon.ico", e);
+            std::process::exit(1);
         }
     }
 }

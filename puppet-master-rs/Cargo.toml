@@ -102,6 +102,7 @@ reqwest = { version = "0.12", features = ["json", "blocking"] }
 
 # Signal handling
 ctrlc = "3.4"
+bytes = "1.11.1"
 
 # Unix signals (for process management)
 [target.'cfg(unix)'.dependencies]

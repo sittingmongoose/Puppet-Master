@@ -4,6 +4,7 @@
 //! and cross-hatch shadows matching the GUI styling.
 
 use crate::theme::colors;
+use crate::widgets::icon::{icon_sized, IconName, IconSize};
 use iced::widget::{button, column, container, mouse_area, row, stack, text};
 use iced::{Alignment, Border, Color, Element, Length, Padding, Shadow, Vector};
 use std::time::{Duration, Instant};
@@ -204,14 +205,14 @@ where
                 ..iced::Font::DEFAULT
             })
             .color(text_color),
-        // Message text
-        text(message).size(14).color(text_color),
-        // Spacer
-        iced::widget::Space::new().width(Length::Fill),
-        // Copy button
-        button(text("Copy").size(14).color(text_color))
+        // Message text — constrained so Copy/Close buttons stay visible
+        container(text(message).size(14).color(text_color))
+            .width(Length::Fill)
+            .clip(true),
+        // Copy button — compact icon for space
+        button(icon_sized(IconName::Copy, IconSize::Small))
             .on_press(on_copy(toast.message.clone()))
-            .padding(Padding::from([2u16, 8u16]))
+            .padding(Padding::from([4u16, 6u16]))
             .style(move |_theme: &iced::Theme, status| {
                 let (button_bg, button_border) = match status {
                     iced::widget::button::Status::Hovered => {

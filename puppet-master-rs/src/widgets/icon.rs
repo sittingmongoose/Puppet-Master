@@ -36,6 +36,7 @@ pub enum IconName {
     Collapse,
     Add,
     Search,
+    Copy, // DRY:WIDGET:copy_icon
 
     // Status icons
     Check,
@@ -114,6 +115,7 @@ fn icon_bytes(name: IconName) -> &'static [u8] {
         IconName::Collapse => include_bytes!("../../assets/icons/collapse.svg"),
         IconName::Add => include_bytes!("../../assets/icons/add.svg"),
         IconName::Search => include_bytes!("../../assets/icons/search.svg"),
+        IconName::Copy => include_bytes!("../../assets/icons/copy.svg"),
 
         // Status
         IconName::Check => include_bytes!("../../assets/icons/check.svg"),
@@ -219,6 +221,7 @@ mod tests {
             IconName::Collapse,
             IconName::Add,
             IconName::Search,
+            IconName::Copy,
             IconName::Check,
             IconName::Cross,
             IconName::Warning,

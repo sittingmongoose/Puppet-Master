@@ -7,11 +7,11 @@
 use crate::platforms::path_utils;
 use crate::platforms::platform_specs;
 use crate::types::Platform;
-use anyhow::{Result, anyhow};
+use anyhow::Result;
 use log::debug;
 use serde::{Deserialize, Serialize};
 use std::path::{Path, PathBuf};
-use std::process::{Command, Stdio};
+use std::process::Command;
 use which::which;
 
 // DRY:DATA:InstallationStatus
@@ -493,188 +493,132 @@ Verify installation:
     }
 
     fn execute_cursor_install(&self) -> Result<InstallResult> {
-        match self.os {
-            OperatingSystem::MacOS | OperatingSystem::Linux => {
-                let status = Command::new("sh")
-                    .args(["-c", "curl https://cursor.com/install -fsS | bash"])
-                    .stdin(Stdio::inherit())
-                    .stdout(Stdio::inherit())
-                    .stderr(Stdio::inherit())
-                    .status()
-                    .map_err(|e| anyhow!("Failed to run Cursor install: {}", e))?;
-                if status.success() {
-                    Ok(InstallResult::success(
-                        "Cursor installed. Restart terminal.",
-                    ))
-                } else {
-                    Ok(InstallResult::failure(
-                        "Cursor install script exited with error",
-                    ))
-                }
-            }
-            OperatingSystem::Windows => {
-                let status = Command::new("powershell")
-                    .args([
-                        "-NoProfile",
-                        "-Command",
-                        "irm 'https://cursor.com/install?win32=true' | iex",
-                    ])
-                    .stdin(Stdio::inherit())
-                    .stdout(Stdio::inherit())
-                    .stderr(Stdio::inherit())
-                    .status()
-                    .map_err(|e| anyhow!("Failed to run Cursor install: {}", e))?;
-                if status.success() {
-                    Ok(InstallResult::success(
-                        "Cursor installed. Restart terminal.",
-                    ))
-                } else {
-                    Ok(InstallResult::failure(
-                        "Cursor install script exited with error",
-                    ))
-                }
-            }
-            OperatingSystem::Unknown => Ok(InstallResult::failure("Unsupported operating system")),
+        let rt = tokio::runtime::Handle::try_current()
+            .map(|h| {
+                tokio::task::block_in_place(|| {
+                    h.block_on(async {
+                        crate::install::install_coordinator::install_platform(
+                            crate::types::Platform::Cursor,
+                        )
+                        .await
+                    })
+                })
+            })
+            .unwrap_or_else(|_| {
+                tokio::runtime::Runtime::new().unwrap().block_on(
+                    crate::install::install_coordinator::install_platform(
+                        crate::types::Platform::Cursor,
+                    ),
+                )
+            });
+        if rt.success {
+            Ok(InstallResult::success(rt.message))
+        } else {
+            Ok(InstallResult::failure(rt.message))
         }
     }
 
     fn execute_codex_install(&self) -> Result<InstallResult> {
-        let npm_path = match path_utils::resolve_executable("npm") {
-            Some(p) => p,
-            None => {
-                return Ok(InstallResult::failure(
-                    "npm not found. Install Node.js first (e.g. brew install node on macOS).",
-                ))
-            }
-        };
-        let status = Command::new(&npm_path)
-            .args(["install", "-g", "@openai/codex"])
-            .stdin(Stdio::inherit())
-            .stdout(Stdio::inherit())
-            .stderr(Stdio::inherit())
-            .status()
-            .map_err(|e| anyhow!("Failed to run Codex install: {}", e))?;
-        if status.success() {
-            Ok(InstallResult::success(
-                "Codex installed. Run 'codex login' to authenticate.",
-            ))
+        let rt = tokio::runtime::Handle::try_current()
+            .map(|h| {
+                tokio::task::block_in_place(|| {
+                    h.block_on(async {
+                        crate::install::install_coordinator::install_platform(
+                            crate::types::Platform::Codex,
+                        )
+                        .await
+                    })
+                })
+            })
+            .unwrap_or_else(|_| {
+                tokio::runtime::Runtime::new().unwrap().block_on(
+                    crate::install::install_coordinator::install_platform(
+                        crate::types::Platform::Codex,
+                    ),
+                )
+            });
+        if rt.success {
+            Ok(InstallResult::success(rt.message))
         } else {
-            Ok(InstallResult::failure("npm install @openai/codex failed"))
+            Ok(InstallResult::failure(rt.message))
         }
     }
 
     fn execute_claude_install(&self) -> Result<InstallResult> {
-        match self.os {
-            OperatingSystem::MacOS | OperatingSystem::Linux => {
-                let status = Command::new("sh")
-                    .args(["-c", "curl -fsSL https://claude.ai/install.sh | bash"])
-                    .stdin(Stdio::inherit())
-                    .stdout(Stdio::inherit())
-                    .stderr(Stdio::inherit())
-                    .status()
-                    .map_err(|e| anyhow!("Failed to run Claude install: {}", e))?;
-                if status.success() {
-                    Ok(InstallResult::success(
-                        "Claude CLI installed. Run 'claude' to complete browser-based login.",
-                    ))
-                } else {
-                    Ok(InstallResult::failure(
-                        "Claude install script exited with error",
-                    ))
-                }
-            }
-            OperatingSystem::Windows => {
-                let status = Command::new("powershell")
-                    .args([
-                        "-NoProfile",
-                        "-Command",
-                        "irm https://claude.ai/install.ps1 | iex",
-                    ])
-                    .stdin(Stdio::inherit())
-                    .stdout(Stdio::inherit())
-                    .stderr(Stdio::inherit())
-                    .status()
-                    .map_err(|e| anyhow!("Failed to run Claude install: {}", e))?;
-                if status.success() {
-                    Ok(InstallResult::success(
-                        "Claude CLI installed. Run 'claude' to complete browser-based login.",
-                    ))
-                } else {
-                    Ok(InstallResult::failure(
-                        "Claude install script exited with error",
-                    ))
-                }
-            }
-            OperatingSystem::Unknown => Ok(InstallResult::failure("Unsupported operating system")),
+        let rt = tokio::runtime::Handle::try_current()
+            .map(|h| {
+                tokio::task::block_in_place(|| {
+                    h.block_on(async {
+                        crate::install::install_coordinator::install_platform(
+                            crate::types::Platform::Claude,
+                        )
+                        .await
+                    })
+                })
+            })
+            .unwrap_or_else(|_| {
+                tokio::runtime::Runtime::new().unwrap().block_on(
+                    crate::install::install_coordinator::install_platform(
+                        crate::types::Platform::Claude,
+                    ),
+                )
+            });
+        if rt.success {
+            Ok(InstallResult::success(rt.message))
+        } else {
+            Ok(InstallResult::failure(rt.message))
         }
     }
 
     fn execute_gemini_install(&self) -> Result<InstallResult> {
-        let npm_path = match path_utils::resolve_executable("npm") {
-            Some(p) => p,
-            None => {
-                return Ok(InstallResult::failure(
-                    "npm not found. Install Node.js first (e.g. brew install node on macOS).",
-                ))
-            }
-        };
-        let status = Command::new(&npm_path)
-            .args(["install", "-g", "@google/gemini-cli"])
-            .stdin(Stdio::inherit())
-            .stdout(Stdio::inherit())
-            .stderr(Stdio::inherit())
-            .status()
-            .map_err(|e| anyhow!("Failed to run Gemini install: {}", e))?;
-        if status.success() {
-            Ok(InstallResult::success(
-                "Gemini CLI installed. Run 'gemini' and Login with Google.",
-            ))
+        let rt = tokio::runtime::Handle::try_current()
+            .map(|h| {
+                tokio::task::block_in_place(|| {
+                    h.block_on(async {
+                        crate::install::install_coordinator::install_platform(
+                            crate::types::Platform::Gemini,
+                        )
+                        .await
+                    })
+                })
+            })
+            .unwrap_or_else(|_| {
+                tokio::runtime::Runtime::new().unwrap().block_on(
+                    crate::install::install_coordinator::install_platform(
+                        crate::types::Platform::Gemini,
+                    ),
+                )
+            });
+        if rt.success {
+            Ok(InstallResult::success(rt.message))
         } else {
-            Ok(InstallResult::failure(
-                "npm install @google/gemini-cli failed",
-            ))
+            Ok(InstallResult::failure(rt.message))
         }
     }
 
     fn execute_copilot_install(&self) -> Result<InstallResult> {
-        let npm_path = match path_utils::resolve_executable("npm") {
-            Some(p) => p,
-            None => {
-                return Ok(InstallResult::failure(
-                    "npm not found. Install Node.js first (e.g. brew install node on macOS).",
-                ))
-            }
-        };
-        let status = if matches!(self.os, OperatingSystem::Windows) {
-            let cmd_str = format!(
-                "& \"{}\" install -g @github/copilot",
-                npm_path.display()
-            );
-            Command::new("powershell")
-                .args(["-NoProfile", "-Command", &cmd_str])
-                .stdin(Stdio::inherit())
-                .stdout(Stdio::inherit())
-                .stderr(Stdio::inherit())
-                .status()
-                .map_err(|e| anyhow!("Failed to run Copilot install: {}", e))?
+        let rt = tokio::runtime::Handle::try_current()
+            .map(|h| {
+                tokio::task::block_in_place(|| {
+                    h.block_on(async {
+                        crate::install::install_coordinator::install_platform(
+                            crate::types::Platform::Copilot,
+                        )
+                        .await
+                    })
+                })
+            })
+            .unwrap_or_else(|_| {
+                tokio::runtime::Runtime::new().unwrap().block_on(
+                    crate::install::install_coordinator::install_platform(
+                        crate::types::Platform::Copilot,
+                    ),
+                )
+            });
+        if rt.success {
+            Ok(InstallResult::success(rt.message))
         } else {
-            Command::new(&npm_path)
-                .args(["install", "-g", "@github/copilot"])
-                .stdin(Stdio::inherit())
-                .stdout(Stdio::inherit())
-                .stderr(Stdio::inherit())
-                .status()
-                .map_err(|e| anyhow!("Failed to run Copilot install: {}", e))?
-        };
-
-        if status.success() {
-            Ok(InstallResult::success(
-                "Copilot CLI installed. Run 'copilot login' to authenticate (or use /login interactively; GH_TOKEN/GITHUB_TOKEN also supported).",
-            ))
-        } else {
-            Ok(InstallResult::failure(
-                "Copilot CLI install failed (npm install -g @github/copilot)",
-            ))
+            Ok(InstallResult::failure(rt.message))
         }
     }
 

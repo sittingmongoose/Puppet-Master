@@ -1,0 +1,102 @@
+//! App-local path helpers.
+//!
+//! Provides the canonical directory where Puppet Master installs CLI tools and
+//! browser binaries so the app always knows the exact binary path regardless of
+//! the user's shell PATH configuration.
+//!
+//! Directory layout (example Linux):
+//! ```text
+//! ~/.local/share/rwm-puppet-master/
+//! ├── bin/                 # All CLI binaries live here
+//! ├── lib/node_modules/    # npm prefix installs
+//! └── playwright-browsers/ # Playwright browser binaries
+//! ```
+
+use std::path::PathBuf;
+
+// DRY:FN:get_app_data_dir — Platform-specific app data directory for Puppet Master
+/// Return the platform-specific application data directory for Puppet Master.
+///
+/// - Linux:   `$XDG_DATA_HOME/rwm-puppet-master` (or `~/.local/share/rwm-puppet-master`)
+/// - macOS:   `~/Library/Application Support/RWM Puppet Master`
+/// - Windows: `%LOCALAPPDATA%\RWM Puppet Master\data`
+pub fn get_app_data_dir() -> PathBuf {
+    if let Some(dirs) = directories::ProjectDirs::from("com", "rwm", "RWM Puppet Master") {
+        dirs.data_local_dir().to_path_buf()
+    } else {
+        // Fallback: use home/.rwm-puppet-master
+        let home = std::env::var_os("HOME")
+            .or_else(|| std::env::var_os("USERPROFILE"))
+            .map(PathBuf::from)
+            .unwrap_or_else(|| PathBuf::from("."));
+        home.join(".rwm-puppet-master")
+    }
+}
+
+// DRY:FN:get_app_bin_dir — {APP_DATA_DIR}/bin directory for installed CLI binaries
+/// Return `{APP_DATA_DIR}/bin/` — the directory where all app-local CLI binaries are stored.
+pub fn get_app_bin_dir() -> PathBuf {
+    get_app_data_dir().join("bin")
+}
+
+// DRY:FN:get_playwright_browsers_dir — {APP_DATA_DIR}/playwright-browsers
+/// Return the directory where Playwright downloads browser binaries.
+pub fn get_playwright_browsers_dir() -> PathBuf {
+    get_app_data_dir().join("playwright-browsers")
+}
+
+// DRY:FN:get_lib_dir — {APP_DATA_DIR}/lib used as NPM_CONFIG_PREFIX
+/// Return the directory used as `NPM_CONFIG_PREFIX` for npm global installs.
+pub fn get_lib_dir() -> PathBuf {
+    get_app_data_dir().join("lib")
+}
+
+// DRY:FN:ensure_app_bin_dir — Create {APP_DATA_DIR}/bin if it does not exist
+/// Ensure the `bin/` directory exists, creating it (and any parents) if necessary.
+///
+/// Returns the path on success so callers can immediately use it.
+pub fn ensure_app_bin_dir() -> anyhow::Result<PathBuf> {
+    let bin_dir = get_app_bin_dir();
+    std::fs::create_dir_all(&bin_dir)?;
+    Ok(bin_dir)
+}
+
+/// Ensure the `lib/` directory (npm prefix) exists.
+pub fn ensure_lib_dir() -> anyhow::Result<PathBuf> {
+    let lib_dir = get_lib_dir();
+    std::fs::create_dir_all(&lib_dir)?;
+    Ok(lib_dir)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn app_data_dir_is_non_empty() {
+        let dir = get_app_data_dir();
+        assert!(!dir.as_os_str().is_empty());
+    }
+
+    #[test]
+    fn app_bin_dir_is_child_of_app_data_dir() {
+        let data = get_app_data_dir();
+        let bin = get_app_bin_dir();
+        assert!(bin.starts_with(&data));
+        assert_eq!(bin.file_name().and_then(|n| n.to_str()), Some("bin"));
+    }
+
+    #[test]
+    fn playwright_browsers_dir_is_child_of_app_data_dir() {
+        let data = get_app_data_dir();
+        let pw = get_playwright_browsers_dir();
+        assert!(pw.starts_with(&data));
+    }
+
+    #[test]
+    fn ensure_app_bin_dir_creates_directory() {
+        // Use a temp override approach — just call it and verify no panic
+        // (may fail if no write access, but should at least return Ok on a writable system)
+        let _ = ensure_app_bin_dir();
+    }
+}

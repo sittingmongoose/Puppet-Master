@@ -72,10 +72,17 @@ impl DoctorCheck for WiringCheck {
 
         // 1) Source-level wiring checks (defensive against partial ports / TODO stubs).
         let Some(crate_root) = find_crate_root() else {
+            // Not running inside the puppet-master source tree (e.g. release binary,
+            // or project directory is not a Rust project). Skip source checks gracefully.
             return CheckResult {
-                passed: false,
-                message: "Unable to locate crate root (Cargo.toml)".to_string(),
-                details: None,
+                passed: true,
+                message: "Wiring source checks skipped (not running from a Rust project directory)"
+                    .to_string(),
+                details: Some(
+                    "Source-level checks only apply when running from the puppet-master-rs \
+                     source directory."
+                        .to_string(),
+                ),
                 can_fix: false,
                 timestamp: Utc::now(),
             };

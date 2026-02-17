@@ -355,7 +355,8 @@ impl DoctorCheck for PlatformSdkCheck {
             ));
         };
 
-        let command = format!("{} install -g {package}", npm_path.display());
+        let lib_dir_display = crate::install::app_paths::get_lib_dir();
+        let command = format!("NPM_CONFIG_PREFIX={} {} install -g {package}", lib_dir_display.display(), npm_path.display());
         if dry_run {
             return Some(
                 FixResult::success(format!("Would install {}", self.sdk_display_name()))
@@ -363,10 +364,13 @@ impl DoctorCheck for PlatformSdkCheck {
             );
         }
 
+        let lib_dir = crate::install::app_paths::ensure_lib_dir()
+            .unwrap_or_else(|_| crate::install::app_paths::get_lib_dir());
         match timeout(
             Duration::from_secs(180),
             Command::new(&npm_path)
                 .args(["install", "-g", package])
+                .env("NPM_CONFIG_PREFIX", lib_dir.as_os_str())
                 .output(),
         )
         .await

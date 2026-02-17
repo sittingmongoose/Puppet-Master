@@ -139,7 +139,13 @@ impl ConfigManager {
         }
 
         log::info!("No config file found, using defaults");
-        Ok(Self::new())
+        let manager = Self::new();
+        // Persist default config so subsequent Doctor runs find a config file
+        // and don't emit "No config file found to validate" warnings.
+        if let Err(e) = manager.save() {
+            log::warn!("Could not persist default config on first launch: {}", e);
+        }
+        Ok(manager)
     }
 
     // DRY:FN:save

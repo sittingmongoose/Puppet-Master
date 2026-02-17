@@ -60,8 +60,14 @@ pub fn check_executable_exists(path: &Path) -> Option<PathBuf> {
 /// Returns a list of common directories where CLI executables may be installed,
 /// varying by operating system. Includes user-local directories derived from
 /// `$HOME` / `$USERPROFILE`.
+///
+/// The app-local `{APP_DATA_DIR}/bin/` directory is always prepended so
+/// app-installed CLIs are found before system-wide ones.
 pub fn get_fallback_directories() -> Vec<PathBuf> {
     let mut dirs = Vec::new();
+
+    // App-local bin is always checked first (Stage -1 equivalent in path utils)
+    dirs.push(crate::install::app_paths::get_app_bin_dir());
 
     #[cfg(not(target_os = "windows"))]
     {

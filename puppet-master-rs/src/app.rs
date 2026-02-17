@@ -1,7 +1,7 @@
 use crate::theme::{AppTheme, styles, tokens};
 use crate::tray::TrayAction;
 use crate::types::PuppetMasterEvent;
-use crate::widgets::{LayoutSize, Page, responsive_container_width};
+use crate::widgets::{LayoutSize, Page};
 use anyhow::Result;
 use chrono::{DateTime, Utc};
 use iced::{Element, Subscription, Task, Theme, widget::text_editor, window};
@@ -240,6 +240,8 @@ pub struct App {
     pub terminal_editor_content: text_editor::Content,
     terminal_interaction_until: Option<std::time::Instant>,
     pub active_context_menu: Option<ContextMenuTarget>,
+    /// Position where the context menu was opened (keeps menu fixed; not updated on cursor move).
+    context_menu_open_position: Option<iced::Point>,
     pub last_error: Option<String>,
     pub start_time: Option<DateTime<Utc>>,
 
@@ -325,6 +327,13 @@ pub struct App {
 
     // Wizard
     pub wizard_step: usize,
+    // Step 1 (new): Dependency Install
+    pub wizard_dep_node_ok: Option<bool>,
+    pub wizard_dep_gh_ok: Option<bool>,
+    pub wizard_dep_platforms_selected: HashSet<crate::types::Platform>,
+    pub wizard_dep_platform_ok: HashMap<crate::types::Platform, Option<bool>>,
+    pub wizard_dep_install_log: Vec<String>,
+    pub wizard_dep_installing: Option<String>,
     // Step 0: Project Setup
     pub wizard_is_new_project: bool,
     pub wizard_has_github_repo: bool,
@@ -551,6 +560,14 @@ pub enum Message {
     // Wizard
     WizardNextStep,
     WizardPrevStep,
+    // Step 1 (new): Dependency Install
+    WizardCheckDependencies,
+    WizardInstallNode,
+    WizardInstallGhCli,
+    WizardToggleDepPlatform(crate::types::Platform),
+    WizardInstallPlatformCli(crate::types::Platform),
+    WizardDepInstallDone(String, bool),   // (item_name, success)
+    WizardDepCheckDone(String, bool),     // (item_name, is_installed)
     // Step 0: Project Setup
     WizardIsNewProjectToggled(bool),
     WizardHasGithubRepoToggled(bool),
@@ -1053,6 +1070,7 @@ impl App {
             ),
             terminal_interaction_until: None,
             active_context_menu: None,
+            context_menu_open_position: None,
             last_error: None,
             start_time: None,
 
@@ -1138,6 +1156,13 @@ impl App {
 
             // Wizard
             wizard_step: 0, // Start at Step 0
+            // Step 1 (new): Dependency Install
+            wizard_dep_node_ok: None,
+            wizard_dep_gh_ok: None,
+            wizard_dep_platforms_selected: HashSet::new(),
+            wizard_dep_platform_ok: HashMap::new(),
+            wizard_dep_install_log: Vec::new(),
+            wizard_dep_installing: None,
             // Step 0: Project Setup
             wizard_is_new_project: true,
             wizard_has_github_repo: false,
@@ -1348,6 +1373,7 @@ impl App {
                 self.page_transition = crate::widgets::TransitionState::start();
                 self.current_page = page;
                 self.active_context_menu = None;
+                self.context_menu_open_position = None;
 
                 // Auto-load data when navigating to certain pages
                 match page {
@@ -2297,6 +2323,7 @@ impl App {
                     self.terminal_interaction_until =
                         Some(std::time::Instant::now() + std::time::Duration::from_secs(3));
                 }
+                self.context_menu_open_position = Some(self.cursor_position);
                 self.active_context_menu = Some(target);
                 Task::none()
             }
@@ -2310,6 +2337,7 @@ impl App {
 
             Message::CloseContextMenu => {
                 self.active_context_menu = None;
+                self.context_menu_open_position = None;
                 Task::none()
             }
 
@@ -3668,11 +3696,15 @@ impl App {
             // Wizard
             // ================================================================
             Message::WizardNextStep => {
-                // Advance to next step (max step is 8: 0, 0.5, 1-6)
-                // Steps: 0 (Project Setup), 1 (Interview Config), 2 (Requirements), 3 (Generate PRD),
-                // 4 (Review PRD), 5 (Configure Tiers), 6 (Generate Plan), 7 (Review Plan), 8 (Review & Start)
-                if self.wizard_step < 8 {
+                // Steps: 0 (Project Setup), 1 (Dep Install), 2 (Interview Config),
+                // 3 (Requirements), 4 (Generate PRD), 5 (Review PRD),
+                // 6 (Configure Tiers), 7 (Generate Plan), 8 (Review Plan), 9 (Review & Start)
+                if self.wizard_step < 9 {
                     self.wizard_step += 1;
+                    // Auto-check deps when entering step 1
+                    if self.wizard_step == 1 {
+                        return self.update(Message::WizardCheckDependencies);
+                    }
                 }
                 Task::none()
             }
@@ -3681,6 +3713,97 @@ impl App {
                 // Go back to previous step (min step is 0)
                 if self.wizard_step > 0 {
                     self.wizard_step -= 1;
+                }
+                Task::none()
+            }
+
+            Message::WizardCheckDependencies => {
+                // Probe node, gh, and selected platform CLIs
+                Task::batch([
+                    Task::perform(
+                        async { crate::install::node_installer::node_meets_minimum() },
+                        |ok| Message::WizardDepCheckDone("node".to_string(), ok),
+                    ),
+                    Task::perform(
+                        async {
+                            crate::platforms::path_utils::resolve_executable("gh").is_some()
+                        },
+                        |ok| Message::WizardDepCheckDone("gh".to_string(), ok),
+                    ),
+                ])
+            }
+
+            Message::WizardInstallNode => {
+                self.wizard_dep_installing = Some("node".to_string());
+                self.wizard_dep_install_log.clear();
+                Task::perform(
+                    crate::install::install_coordinator::install_node(),
+                    |outcome| {
+                        Message::WizardDepInstallDone("node".to_string(), outcome.success)
+                    },
+                )
+            }
+
+            Message::WizardInstallGhCli => {
+                self.wizard_dep_installing = Some("gh".to_string());
+                self.wizard_dep_install_log.clear();
+                Task::perform(
+                    crate::install::install_coordinator::install_gh_cli(),
+                    |outcome| {
+                        Message::WizardDepInstallDone("gh".to_string(), outcome.success)
+                    },
+                )
+            }
+
+            Message::WizardToggleDepPlatform(platform) => {
+                if self.wizard_dep_platforms_selected.contains(&platform) {
+                    self.wizard_dep_platforms_selected.remove(&platform);
+                } else {
+                    self.wizard_dep_platforms_selected.insert(platform);
+                }
+                Task::none()
+            }
+
+            Message::WizardInstallPlatformCli(platform) => {
+                let name = format!("{}", platform);
+                self.wizard_dep_installing = Some(name.clone());
+                self.wizard_dep_install_log.clear();
+                Task::perform(
+                    crate::install::install_coordinator::install_platform(platform),
+                    move |outcome| {
+                        Message::WizardDepInstallDone(name.clone(), outcome.success)
+                    },
+                )
+            }
+
+            Message::WizardDepInstallDone(name, success) => {
+                self.wizard_dep_installing = None;
+                let log_msg = if success {
+                    format!("{name} installed successfully.")
+                } else {
+                    format!("{name} installation failed.")
+                };
+                self.wizard_dep_install_log.push(log_msg);
+                // Update status
+                match name.as_str() {
+                    "node" => self.wizard_dep_node_ok = Some(success),
+                    "gh" => self.wizard_dep_gh_ok = Some(success),
+                    other => {
+                        if let Some(p) =
+                            crate::types::Platform::from_str_loose(other)
+                        {
+                            self.wizard_dep_platform_ok.insert(p, Some(success));
+                        }
+                    }
+                }
+                Task::none()
+            }
+
+            Message::WizardDepCheckDone(name, is_installed) => {
+                match name.as_str() {
+                    "node" => self.wizard_dep_node_ok = Some(is_installed),
+                    "gh" => self.wizard_dep_gh_ok = Some(is_installed),
+                    _ => {}
                 }
                 Task::none()
             }
@@ -3906,7 +4029,7 @@ impl App {
                     ToastType::Success,
                     "Project initialized successfully".to_string(),
                 );
-                self.wizard_step = 1;
+                self.wizard_step = 2; // Step 0→2 because step 1 is Dep Install
                 Task::none()
             }
 
@@ -4186,7 +4309,7 @@ impl App {
                         self.wizard_prd_text = prd.clone();
                         self.wizard_prd_editor_content = text_editor::Content::with_text(&prd);
                         self.wizard_prd_preview = Some(prd);
-                        self.wizard_step = 3; // Move to review step
+                        self.wizard_step = 5; // Move to Review PRD step (was 3, now 5 after adding steps 1 and renumbering)
                         self.add_toast(
                             ToastType::Success,
                             "PRD generated successfully".to_string(),
@@ -4341,7 +4464,7 @@ impl App {
                 self.current_page = Page::Dashboard;
 
                 // Reset wizard state for next use
-                self.wizard_step = 1;
+                self.wizard_step = 0;
                 self.wizard_project_name.clear();
                 self.wizard_project_path.clear();
                 self.wizard_requirements_text.clear();
@@ -5842,6 +5965,7 @@ impl App {
                 self.page_transition = crate::widgets::TransitionState::start();
                 self.current_page = Page::Interview;
                 self.active_context_menu = None;
+                self.context_menu_open_position = None;
                 Task::none()
             }
             Message::InterviewQuestionReceived(question) => {
@@ -6199,8 +6323,8 @@ impl App {
                     layout_size,
                 ),
                 Page::Wizard => {
-                    // Clamp wizard step to valid range (0-8)
-                    let wizard_step = self.wizard_step.min(8);
+                    // Clamp wizard step to valid range (0-9)
+                    let wizard_step = self.wizard_step.min(9);
                     views::wizard::view(
                         wizard_step,
                         // Step 0 params
@@ -6210,7 +6334,14 @@ impl App {
                         self.wizard_create_github_repo,
                         &self.wizard_github_visibility,
                         &self.wizard_github_description,
-                        // Step 0.5 params
+                        // Step 1 (new): Dep Install params
+                        self.wizard_dep_node_ok,
+                        self.wizard_dep_gh_ok,
+                        &self.wizard_dep_platforms_selected,
+                        &self.wizard_dep_platform_ok,
+                        &self.wizard_dep_install_log,
+                        self.wizard_dep_installing.as_deref(),
+                        // Step 2 (was 0.5): Quick Interview Config
                         self.wizard_use_interview,
                         &self.wizard_interaction_mode,
                         &self.wizard_reasoning_level,
@@ -6382,14 +6513,15 @@ impl App {
                 ),
             };
 
-            // Build the full layout (header + content constrained to same width as content boxes)
-            // Use responsive_container_width: Fill on small screens, MAX_CONTENT_WIDTH on large.
+            // Build the full layout (header + content) with a small margin on all sides.
             let main_layout = column![self.render_header(layout_size), content].spacing(0);
+            let margin = tokens::spacing::MD;
             let constrained = container(main_layout)
-                .width(responsive_container_width(layout_size))
-                .height(Length::Fill);
+                .width(Length::Fill)
+                .height(Length::Fill)
+                .padding(margin);
 
-            // Wrap in full-size container for overlays (center constrained content horizontally)
+            // Wrap in full-size container for overlays.
             let base_bg = self.theme.paper();
             let base = container(constrained)
                 .width(iced::Length::Fill)
@@ -6397,8 +6529,7 @@ impl App {
                 .style(move |_theme: &iced::Theme| iced::widget::container::Style {
                     background: Some(iced::Background::Color(base_bg)),
                     ..iced::widget::container::Style::default()
-                })
-                .align_x(iced::Alignment::Center);
+                });
 
             // Layer with retro overlay effects (pixel grid and scanlines)
             let with_overlay = stack![
@@ -7548,11 +7679,13 @@ impl App {
                 .padding(tokens::spacing::XS)
                 .style(styles::context_menu_container_styled(&self.theme));
 
-            let cursor_pos = self.cursor_position;
+            let open_pos = self
+                .context_menu_open_position
+                .unwrap_or(self.cursor_position);
             let positioned_menu = float(menu).translate(move |bounds, viewport| {
                 iced::Vector::new(
-                    cursor_pos.x.min(viewport.width - bounds.width),
-                    cursor_pos.y.min(viewport.height - bounds.height),
+                    open_pos.x.min(viewport.width - bounds.width),
+                    open_pos.y.min(viewport.height - bounds.height),
                 )
             });
 
@@ -8179,10 +8312,35 @@ pub fn run(shutdown: Arc<AtomicBool>) -> Result<()> {
     .title("RWM Puppet Master")
     .theme(App::theme)
     .subscription(App::subscription)
-    .window_size(iced::Size::new(1280.0, 800.0))
+    .window(iced::window::Settings {
+        size: iced::Size::new(1280.0, 800.0),
+        icon: load_window_icon(),
+        ..iced::window::Settings::default()
+    })
     .run()?;
 
     Ok(())
+}
+
+fn load_window_icon() -> Option<iced::window::Icon> {
+    let icon_bytes = crate::tray::ICON_BYTES;
+    match image::load_from_memory(icon_bytes) {
+        Ok(img) => {
+            let rgba = img.to_rgba8();
+            let (width, height) = rgba.dimensions();
+            match iced::window::icon::from_rgba(rgba.into_raw(), width, height) {
+                Ok(icon) => Some(icon),
+                Err(e) => {
+                    log::warn!("Failed to create window icon from RGBA: {}", e);
+                    None
+                }
+            }
+        }
+        Err(e) => {
+            log::warn!("Failed to load window icon from bytes: {}", e);
+            None
+        }
+    }
 }
 
 fn spawn_orchestrator_backend(
