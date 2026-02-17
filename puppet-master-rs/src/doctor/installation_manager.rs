@@ -295,179 +295,66 @@ impl InstallationManager {
         }
     }
 
-    fn get_cursor_instructions(&self) -> String {
+    fn os_id(&self) -> &'static str {
         match self.os {
-            OperatingSystem::MacOS => {
-                r#"Install Cursor CLI on macOS:
-
- 1. Install via the official script:
-   curl https://cursor.com/install -fsS | bash
-
- 2. Restart your terminal
-
- Alternative (inside Cursor IDE):
-  - Command Palette (Cmd+Shift+P) → "Install 'cursor' command in PATH"
-
- Verify installation:
-   agent --version
-   # or: cursor-agent --version
- "#
-            }
-            OperatingSystem::Linux => {
-                r#"Install Cursor CLI on Linux:
-
- 1. Install via the official script:
-   curl https://cursor.com/install -fsS | bash
-
- 2. Restart your terminal
-
- Verify installation:
-   agent --version
-   # or: cursor-agent --version
- "#
-            }
-            OperatingSystem::Windows => {
-                r#"Install Cursor CLI on Windows PowerShell:
-
- 1. Install via the official script:
-   irm 'https://cursor.com/install?win32=true' | iex
-
- 2. Restart your terminal
-
- Verify installation:
-   agent --version
-   # or: cursor-agent --version
- "#
-            }
-            OperatingSystem::Unknown => "Platform-specific instructions not available.",
+            OperatingSystem::Linux => "linux",
+            OperatingSystem::MacOS => "macos",
+            OperatingSystem::Windows => "windows",
+            OperatingSystem::Unknown => "unknown",
         }
-        .to_string()
+    }
+
+    // DRY:FN:build_platform_instructions -- Shared install instructions with app-local target dir
+    fn build_platform_instructions(&self, platform: Platform) -> String {
+        let spec = platform_specs::get_spec(platform);
+        let bin_dir = crate::install::app_paths::get_app_bin_dir();
+
+        let mut out = format!(
+            "Install {} via Puppet Master:\n\n  Target directory: {}\n\nUse the Setup/Doctor INSTALL button to install into the app-local bin directory.\n",
+            spec.display_name,
+            bin_dir.display()
+        );
+
+        if let Some(cmd) = spec.auth.login_command {
+            let args = if spec.auth.login_args.is_empty() {
+                String::new()
+            } else {
+                format!(" {}", spec.auth.login_args.join(" "))
+            };
+            out.push_str(&format!("\nAuthenticate:\n  {}{}\n", cmd, args));
+        } else if spec.auth.uses_browser_auth {
+            out.push_str("\nAuthenticate:\n  Launch the CLI and complete the browser-based login.\n");
+        }
+
+        let manual_methods = platform_specs::install_methods_for(platform, self.os_id());
+        if !manual_methods.is_empty() {
+            out.push_str("\nManual install options (system-wide):\n");
+            for m in manual_methods {
+                out.push_str(&format!("  - {}: {}\n", m.method, m.command));
+            }
+        }
+
+        out
+    }
+
+    fn get_cursor_instructions(&self) -> String {
+        self.build_platform_instructions(Platform::Cursor)
     }
 
     fn get_codex_instructions(&self) -> String {
-        match self.os {
-            OperatingSystem::MacOS | OperatingSystem::Linux => {
-                r#"Install Codex CLI (OpenAI):
-
- 1. Install via npm:
-    npm install -g @openai/codex
-
- 2. Authenticate:
-    codex login
-
- Verify installation:
-   codex --version
- "#
-            }
-            OperatingSystem::Windows => {
-                r#"Install Codex CLI (OpenAI) on Windows:
-
- 1. Install via npm:
-    npm install -g @openai/codex
-
- 2. Authenticate:
-    codex login
-
- Verify installation:
-   codex --version
- "#
-            }
-            OperatingSystem::Unknown => "Platform-specific instructions not available.",
-        }
-        .to_string()
+        self.build_platform_instructions(Platform::Codex)
     }
 
     fn get_claude_instructions(&self) -> String {
-        r#"Install Claude Code CLI:
-
- macOS / Linux:
-   curl -fsSL https://claude.ai/install.sh | bash
-
- Windows (PowerShell):
-   irm https://claude.ai/install.ps1 | iex
-
- Authenticate:
-   claude
-   # Complete browser-based login in the interactive session
-
- Verify installation:
-   claude --version
- "#
-        .to_string()
+        self.build_platform_instructions(Platform::Claude)
     }
 
     fn get_gemini_instructions(&self) -> String {
-        match self.os {
-            OperatingSystem::MacOS | OperatingSystem::Linux => {
-                r#"Install Gemini CLI:
-
- 1. Install via npm:
-    npm install -g @google/gemini-cli
-
- 2. Authenticate:
-    gemini
-    # Choose "Login with Google" when prompted
-
- Verify installation:
-   gemini --version
- "#
-            }
-            OperatingSystem::Windows => {
-                r#"Install Gemini CLI on Windows:
-
- 1. Install via npm:
-    npm install -g @google/gemini-cli
-
- 2. Authenticate:
-    gemini
-    # Choose "Login with Google" when prompted
-
- Verify installation:
-   gemini --version
- "#
-            }
-            OperatingSystem::Unknown => "Platform-specific instructions not available.",
-        }
-        .to_string()
+        self.build_platform_instructions(Platform::Gemini)
     }
 
     fn get_copilot_instructions(&self) -> String {
-        match self.os {
-            OperatingSystem::MacOS | OperatingSystem::Linux => {
-                r#"Install GitHub Copilot CLI:
-
-1. Install Copilot CLI:
-   npm install -g @github/copilot
-   # or on macOS: brew install copilot-cli
-
-2. Authenticate:
-   copilot login
-   # fallback: launch `copilot` and run /login interactively
-   # or set GH_TOKEN / GITHUB_TOKEN with Copilot Requests scope
-
-Verify installation:
-  copilot version
-"#
-            }
-            OperatingSystem::Windows => {
-                r#"Install GitHub Copilot CLI on Windows:
-
-1. Install Copilot CLI:
-   winget install GitHub.Copilot
-   # or: npm install -g @github/copilot
-
-2. Authenticate:
-   copilot login
-   # fallback: launch `copilot` and run /login interactively
-   # or set GH_TOKEN / GITHUB_TOKEN with Copilot Requests scope
-
-Verify installation:
-  copilot version
-"#
-            }
-            OperatingSystem::Unknown => "Platform-specific instructions not available.",
-        }
-        .to_string()
+        self.build_platform_instructions(Platform::Copilot)
     }
 
     // DRY:FN:check_all_platforms
@@ -739,7 +626,8 @@ mod tests {
         let instructions = manager.get_cursor_instructions();
 
         assert!(instructions.contains("Cursor"));
-        assert!(instructions.contains("cursor"));
+        assert!(instructions.contains("Target directory"));
+        assert!(instructions.contains("INSTALL"));
     }
 
     #[test]
@@ -748,9 +636,8 @@ mod tests {
         let instructions = manager.get_copilot_instructions();
 
         assert!(instructions.contains("Copilot"));
+        assert!(instructions.contains("Authenticate"));
         assert!(instructions.contains("copilot login"));
-        assert!(instructions.contains("/login"));
-        assert!(instructions.contains("GH_TOKEN"));
     }
 
     #[test]
@@ -759,6 +646,6 @@ mod tests {
         let instructions = manager.get_claude_instructions();
 
         assert!(!instructions.contains("claude auth login"));
-        assert!(instructions.contains("claude"));
+        assert!(instructions.contains("Authenticate"));
     }
 }

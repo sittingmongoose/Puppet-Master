@@ -303,11 +303,36 @@ impl DoctorCheck for PlatformSdkCheck {
             };
         };
 
-        let script = Self::sdk_check_script(package);
-        let resolved = Command::new(&node_path)
-            .args(["-e", &script])
+        let lib_dir = crate::install::app_paths::get_lib_dir();
+
+        // Prefer checking app-local npm prefix installs.
+        let npm_root_app = Command::new(&npm_path)
+            .args(["root", "-g"])
+            .env("NPM_CONFIG_PREFIX", lib_dir.as_os_str())
             .output()
             .await;
+
+        let mut node_path_entries: Vec<std::path::PathBuf> = Vec::new();
+        if let Ok(out) = npm_root_app {
+            if out.status.success() {
+                let root = String::from_utf8_lossy(&out.stdout).trim().to_string();
+                if !root.is_empty() {
+                    node_path_entries.push(std::path::PathBuf::from(root));
+                }
+            }
+        }
+        if let Some(existing) = std::env::var_os("NODE_PATH") {
+            node_path_entries.extend(std::env::split_paths(&existing));
+        }
+        let node_path_env = std::env::join_paths(node_path_entries).ok();
+
+        let script = Self::sdk_check_script(package);
+        let mut resolve_cmd = Command::new(&node_path);
+        resolve_cmd.args(["-e", &script]);
+        if let Some(node_path_env) = node_path_env {
+            resolve_cmd.env("NODE_PATH", node_path_env);
+        }
+        let resolved = resolve_cmd.output().await;
         if matches!(resolved, Ok(out) if out.status.success()) {
             return CheckResult {
                 passed: true,
@@ -318,7 +343,23 @@ impl DoctorCheck for PlatformSdkCheck {
             };
         }
 
-        // Fallback check: npm list -g package
+        // Fallback check: npm list -g package (app-local prefix)
+        let npm_app = Command::new(&npm_path)
+            .args(["list", "-g", package, "--depth=0"])
+            .env("NPM_CONFIG_PREFIX", lib_dir.as_os_str())
+            .output()
+            .await;
+        if matches!(npm_app, Ok(out) if out.status.success()) {
+            return CheckResult {
+                passed: true,
+                message: format!("{} found in app-local npm packages", self.sdk_display_name()),
+                details: Some(format!("Package: {package}")),
+                can_fix: false,
+                timestamp: Utc::now(),
+            };
+        }
+
+        // Fallback check: system global npm list -g package
         let npm_global = Command::new(&npm_path)
             .args(["list", "-g", package, "--depth=0"])
             .output()
@@ -337,7 +378,8 @@ impl DoctorCheck for PlatformSdkCheck {
             passed: false,
             message: format!("{} not installed", self.sdk_display_name()),
             details: Some(format!(
-                "Optional but recommended for SDK fallback. Install with: npm install -g {package}"
+                "Optional but recommended for SDK fallback. Install with: NPM_CONFIG_PREFIX={} npm install -g {package}",
+                lib_dir.display()
             )),
             can_fix: true,
             timestamp: Utc::now(),
