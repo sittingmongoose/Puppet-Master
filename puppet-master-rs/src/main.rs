@@ -17,6 +17,11 @@ fn main() -> Result<()> {
         return Ok(());
     }
 
+    if std::env::args().any(|arg| arg == "--help" || arg == "-h") {
+        println!("{}\n\nUsage:\n  puppet-master [--version] [--help]\n\nRun without arguments to launch the GUI.", puppet_master::build_info::full_build_identity());
+        return Ok(());
+    }
+
     // Initialize logging
     env_logger::Builder::from_env(env_logger::Env::default().default_filter_or("info")).init();
 
