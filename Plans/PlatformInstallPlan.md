@@ -46,9 +46,9 @@ The current CLI detection pipeline tries to find tools across dozens of system p
 - `puppet-master-rs/src/platforms/path_utils.rs` — app_bin_dir prepended to fallback dirs
 - `puppet-master-rs/src/platforms/platform_detector.rs` — Stage -1 app-local bin check
 
-### Phase 4 — Doctor/Installation Wiring 🔄 IN PROGRESS
-- `puppet-master-rs/src/doctor/installation_manager.rs` — needs delegation to install_coordinator
-- `puppet-master-rs/src/doctor/checks/sdk_checks.rs` — use NPM_CONFIG_PREFIX for SDK checks
+### Phase 4 — Doctor/Installation Wiring ✅ COMPLETE
+- `puppet-master-rs/src/doctor/installation_manager.rs` — install instructions target app-local bin dir; installs delegate to install_coordinator
+- `puppet-master-rs/src/doctor/checks/sdk_checks.rs` — SDK checks + fixes use `NPM_CONFIG_PREFIX` for app-local installs
 
 ### Phase 5 — Config Fixes ✅ COMPLETE
 - `puppet-master-rs/src/config/config_manager.rs` — persist default config on first launch
