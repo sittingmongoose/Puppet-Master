@@ -75,6 +75,16 @@ fn test_headless_automation_run() {
                 }],
                 timeout_ms: None,
             },
+            GuiStep {
+                id: "goto-memory".to_string(),
+                action: GuiAction::Navigate {
+                    page: "memory".to_string(),
+                },
+                assertions: vec![GuiAssertion::PageIs {
+                    page: "memory".to_string(),
+                }],
+                timeout_ms: None,
+            },
         ],
         ..GuiRunSpec::default()
     };

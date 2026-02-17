@@ -5,7 +5,7 @@
 use crate::app::Message;
 use crate::theme::{AppTheme, fonts, tokens};
 use crate::widgets::{selectable_text::selectable_label, *};
-use iced::widget::{column, container, pick_list, row, scrollable, text_editor};
+use iced::widget::{column, container, pick_list, row, text_editor};
 use iced::{Element, Length};
 
 // DRY:DATA:MemorySection
@@ -127,7 +127,7 @@ pub fn view<'a>(
         ],
     ));
 
-    scrollable(content)
+    container(content)
         .width(Length::Fill)
         .height(Length::Fill)
         .into()
