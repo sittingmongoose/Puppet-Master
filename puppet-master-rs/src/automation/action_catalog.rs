@@ -222,6 +222,34 @@ pub fn list_actions() -> Vec<ActionDefinition> {
             description: "Move wizard to previous step",
         },
         ActionDefinition {
+            id: "wizard.install.node",
+            description: "Install Node.js dependency",
+        },
+        ActionDefinition {
+            id: "wizard.install.gh",
+            description: "Install GitHub CLI dependency",
+        },
+        ActionDefinition {
+            id: "wizard.install.cursor",
+            description: "Install Cursor CLI into app-local bin",
+        },
+        ActionDefinition {
+            id: "wizard.install.codex",
+            description: "Install Codex CLI into app-local bin",
+        },
+        ActionDefinition {
+            id: "wizard.install.claude",
+            description: "Install Claude CLI into app-local bin",
+        },
+        ActionDefinition {
+            id: "wizard.install.gemini",
+            description: "Install Gemini CLI into app-local bin",
+        },
+        ActionDefinition {
+            id: "wizard.install.copilot",
+            description: "Install Copilot CLI into app-local bin",
+        },
+        ActionDefinition {
             id: "memory.refresh",
             description: "Refresh memory view",
         },
@@ -335,6 +363,23 @@ pub fn resolve_action(action_id: &str) -> Option<Message> {
         "context.close" => Message::CloseContextMenu,
         "wizard.next" => Message::WizardNextStep,
         "wizard.prev" => Message::WizardPrevStep,
+        "wizard.install.node" => Message::WizardInstallNode,
+        "wizard.install.gh" => Message::WizardInstallGhCli,
+        "wizard.install.cursor" => {
+            Message::WizardInstallPlatformCli(crate::types::Platform::Cursor)
+        }
+        "wizard.install.codex" => {
+            Message::WizardInstallPlatformCli(crate::types::Platform::Codex)
+        }
+        "wizard.install.claude" => {
+            Message::WizardInstallPlatformCli(crate::types::Platform::Claude)
+        }
+        "wizard.install.gemini" => {
+            Message::WizardInstallPlatformCli(crate::types::Platform::Gemini)
+        }
+        "wizard.install.copilot" => {
+            Message::WizardInstallPlatformCli(crate::types::Platform::Copilot)
+        }
         "memory.refresh" => Message::MemoryRefresh,
         "ledger.refresh" => Message::LedgerRefresh,
         "metrics.refresh" => Message::RefreshMetrics,
