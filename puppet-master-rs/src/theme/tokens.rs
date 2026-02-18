@@ -96,16 +96,6 @@ pub mod shadows {
         }
     }
 
-    /// Small shadow (2,2) - for compact elements e.g. header logo
-    // DRY:HELPER:small_shadow
-    pub fn small_shadow(ink: Color) -> Shadow {
-        Shadow {
-            color: ink,
-            offset: Vector::new(2.0, 2.0),
-            blur_radius: 0.0,
-        }
-    }
-
     /// No shadow
     // DRY:HELPER:none
     pub fn none() -> Shadow {

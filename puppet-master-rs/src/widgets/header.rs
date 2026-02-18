@@ -2,7 +2,7 @@
 
 use crate::theme::AppTheme;
 use crate::theme::fonts::FONT_DISPLAY_BOLD;
-use crate::theme::tokens::{borders, layout, shadows, spacing};
+use crate::theme::tokens::{borders, layout, spacing};
 use crate::widgets::responsive::LayoutSize;
 use crate::widgets::styled_button::{
     ButtonSize, ButtonVariant, header_nav_button, styled_button_sized,
@@ -142,16 +142,7 @@ where
     // ── Top row: Logo (left) → spacer → Project selector → Theme button (right) ──
     let mut top_row = row![].spacing(spacing::SM).align_y(iced::Alignment::Center);
 
-    let logo_container = container(logo)
-        .width(Length::Shrink)
-        .style(move |_theme: &iced::Theme| container::Style {
-            background: None,
-            border: Border::default(),
-            shadow: shadows::small_shadow(ink_color),
-            text_color: None,
-            ..container::Style::default()
-        });
-    top_row = top_row.push(logo_container);
+    top_row = top_row.push(container(logo).width(Length::Shrink));
     top_row = top_row.push(Space::new().width(Length::Fill));
 
     // Project selector (if callback provided)

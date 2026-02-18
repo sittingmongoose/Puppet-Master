@@ -1568,13 +1568,12 @@ impl App {
 
             Message::SaveSettings => {
                 let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-                let data_dir = base.join(".puppet-master");
+                let resolved_root = crate::utils::resolve_writable_state_root(&base);
+                let data_dir = crate::utils::puppet_master_dir(&resolved_root);
                 let settings_file = data_dir.join("settings.json");
 
                 // Create directory if needed (including parent directories)
-                if let Some(parent) = settings_file.parent() {
-                    let _ = std::fs::create_dir_all(parent);
-                }
+                let _ = std::fs::create_dir_all(&data_dir);
 
                 // Serialize settings
                 let settings = serde_json::json!({
@@ -7859,7 +7858,8 @@ impl App {
     /// Load settings from disk on startup
     fn load_settings(&mut self) {
         let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-        let settings_file = base.join(".puppet-master").join("settings.json");
+        let resolved_root = crate::utils::resolve_writable_state_root(&base);
+        let settings_file = crate::utils::puppet_master_dir(&resolved_root).join("settings.json");
 
         if settings_file.exists() {
             if let Ok(content) = std::fs::read_to_string(&settings_file) {
