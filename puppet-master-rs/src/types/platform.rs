@@ -47,7 +47,18 @@ impl Platform {
 
     /// DRY:FN:resolve_cli_command — Resolve the best available CLI command using platform_specs.
     pub fn resolve_cli_command(&self) -> String {
+        let app_bin = crate::install::app_paths::get_app_bin_dir();
         let cli_names = crate::platforms::platform_specs::cli_binary_names(*self);
+
+        // Check app-local bin first (app-managed installations).
+        for name in cli_names {
+            let candidate = app_bin.join(name);
+            if candidate.exists() && candidate.is_file() {
+                return candidate.to_string_lossy().to_string();
+            }
+        }
+
+        // Fall back to system PATH (for backward compat).
         for name in cli_names {
             if which::which(name).is_ok() {
                 return (*name).to_string();

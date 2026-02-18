@@ -3438,9 +3438,10 @@ impl App {
                         self.add_toast(ToastType::Warning, "No fix available".to_string());
                     }
                 }
+                let fix_was_successful = fix_result.as_ref().map_or(false, |f| f.success);
                 let name_for_refresh = name;
                 let fix_steps_for_details = fix_steps_for_details.clone();
-                Task::perform(
+                let recheck_task = Task::perform(
                     async move {
                         let registry = crate::doctor::CheckRegistry::default();
                         registry.run_check(&name_for_refresh).await
@@ -3483,7 +3484,14 @@ impl App {
                         }),
                         _ => Message::None,
                     },
-                )
+                );
+                // After a successful fix, also refresh shared platform statuses
+                // so Setup, Config, and other pages stay in sync with Doctor.
+                if fix_was_successful {
+                    Task::batch([recheck_task, Task::done(Message::SetupRunDetection)])
+                } else {
+                    recheck_task
+                }
             }
 
             Message::DoctorResultsReceived(results) => {
@@ -3726,7 +3734,7 @@ impl App {
                     ),
                     Task::perform(
                         async {
-                            crate::platforms::path_utils::resolve_executable("gh").is_some()
+                            crate::platforms::path_utils::resolve_app_local_executable("gh").is_some()
                         },
                         |ok| Message::WizardDepCheckDone("gh".to_string(), ok),
                     ),
@@ -3796,7 +3804,8 @@ impl App {
                         }
                     }
                 }
-                Task::none()
+                // Refresh shared platform statuses so all pages stay in sync
+                self.update(Message::SetupRunDetection)
             }
 
             Message::WizardDepCheckDone(name, is_installed) => {

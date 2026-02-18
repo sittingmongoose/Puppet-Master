@@ -13,7 +13,6 @@ use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use std::process::Stdio;
 use tokio::process::Command;
-use which::which;
 // DRY:DATA:PlatformDetector
 
 /// Platform detector for finding installed CLI tools
@@ -64,14 +63,11 @@ impl PlatformDetector {
     /// Unlike `detect_platform_with_custom_paths`, this preserves `searched_paths` even when no
     /// CLI is found, which allows setup UI to display the actual detection path attempts.
     ///
-    /// Detection order:
+    /// Detection order (app-local enforcement):
+    /// -1. App-local bin directory (`{APP_DATA_DIR}/bin/`)
     /// 0. Project-local `node_modules/.bin/{cli_name}` (when `project_dir` is provided)
     /// 1. Custom path (if provided and non-empty)
-    /// 2. System PATH (`which`)
-    /// 3. Platform specs default install paths
-    /// 4. Common system locations
-    /// 5. Fallback directories from `path_utils`
-    /// 6. Shell profile PATH parsing
+    /// System PATH and other system-wide stages are intentionally skipped.
     pub async fn detect_platform_with_custom_paths_trace(
         platform: Platform,
         custom_path: Option<&str>,
@@ -192,178 +188,20 @@ impl PlatformDetector {
             }
         }
 
-        // Stage 2: Search system PATH
-        searched_paths.push("PATH".to_string());
-        for name in cli_names {
-            searched_paths.push(format!("PATH lookup: {}", name));
-
-            if platform == Platform::Copilot && Self::is_gh_binary_name(name) {
-                continue;
-            }
-
-            if let Some(path) = Self::find_in_path(name) {
-                let (version, valid) =
-                    Self::validate_and_get_version(platform, &path, spec.version_command).await;
-                if valid {
-                    let detected = DetectedPlatform {
-                        platform,
-                        cli_path: path,
-                        cli_name: name.to_string(),
-                        version,
-                        available: true,
-                        searched_paths: searched_paths.clone(),
-                    };
-                    return PlatformDetectionTrace {
-                        detected: Some(detected),
-                        searched_paths,
-                    };
-                }
-            }
-        }
-
-        // Stage 3: Search platform_specs default install paths
-        let install_paths = platform_specs::default_install_paths(platform);
-        for install_path in install_paths {
-            let expanded = path_utils::expand_home(install_path);
-            searched_paths.push(install_path.to_string());
-            let path = PathBuf::from(&expanded);
-
-            if let Some(found) = path_utils::check_executable_exists(&path) {
-                let cli_name = found
-                    .file_name()
-                    .map(|n| n.to_string_lossy().to_string())
-                    .unwrap_or_default();
-
-                if platform == Platform::Copilot && Self::is_gh_binary_name(&cli_name) {
-                    continue;
-                }
-
-                let (version, valid) =
-                    Self::validate_and_get_version(platform, &found, spec.version_command).await;
-                if !valid {
-                    continue;
-                }
-                let detected = DetectedPlatform {
-                    platform,
-                    cli_path: found,
-                    cli_name,
-                    version,
-                    available: true,
-                    searched_paths: searched_paths.clone(),
-                };
-                return PlatformDetectionTrace {
-                    detected: Some(detected),
-                    searched_paths,
-                };
-            }
-        }
-
-        // Stage 4: Check common system locations
-        let common_paths = [
-            "/usr/local/bin",
-            "/usr/bin",
-            "/opt/homebrew/bin",
-            "/home/linuxbrew/.linuxbrew/bin",
-        ];
-
-        for base_path in &common_paths {
-            for name in cli_names {
-                let path = PathBuf::from(base_path).join(name);
-                searched_paths.push(path.to_string_lossy().to_string());
-
-                if platform == Platform::Copilot && Self::is_gh_binary_name(name) {
-                    continue;
-                }
-
-                if let Some(found) = path_utils::check_executable_exists(&path) {
-                    let (version, valid) =
-                        Self::validate_and_get_version(platform, &found, spec.version_command)
-                            .await;
-                    if !valid {
-                        continue;
-                    }
-                    let detected = DetectedPlatform {
-                        platform,
-                        cli_path: found,
-                        cli_name: name.to_string(),
-                        version,
-                        available: true,
-                        searched_paths: searched_paths.clone(),
-                    };
-                    return PlatformDetectionTrace {
-                        detected: Some(detected),
-                        searched_paths,
-                    };
-                }
-            }
-        }
-
-        // Stage 5: Search path_utils fallback directories
-        let fallback_dirs = path_utils::get_fallback_directories();
-        for dir in &fallback_dirs {
-            for name in cli_names {
-                let candidate = dir.join(name);
-                searched_paths.push(format!("fallback: {}", candidate.display()));
-
-                if platform == Platform::Copilot && Self::is_gh_binary_name(name) {
-                    continue;
-                }
-
-                if let Some(found) = path_utils::check_executable_exists(&candidate) {
-                    let (version, valid) =
-                        Self::validate_and_get_version(platform, &found, spec.version_command)
-                            .await;
-                    if !valid {
-                        continue;
-                    }
-                    let detected = DetectedPlatform {
-                        platform,
-                        cli_path: found,
-                        cli_name: name.to_string(),
-                        version,
-                        available: true,
-                        searched_paths: searched_paths.clone(),
-                    };
-                    return PlatformDetectionTrace {
-                        detected: Some(detected),
-                        searched_paths,
-                    };
-                }
-            }
-        }
-
-        // Stage 6: Shell profile PATH parsing
-        for name in cli_names {
-            searched_paths.push(format!("shell-path: {}", name));
-
-            if platform == Platform::Copilot && Self::is_gh_binary_name(name) {
-                continue;
-            }
-
-            if let Some(found) = path_utils::find_in_shell_path(name) {
-                let (version, valid) =
-                    Self::validate_and_get_version(platform, &found, spec.version_command).await;
-                if valid {
-                    let detected = DetectedPlatform {
-                        platform,
-                        cli_path: found,
-                        cli_name: name.to_string(),
-                        version,
-                        available: true,
-                        searched_paths: searched_paths.clone(),
-                    };
-                    return PlatformDetectionTrace {
-                        detected: Some(detected),
-                        searched_paths,
-                    };
-                }
-            }
-        }
-
-        PlatformDetectionTrace {
+        // App-local install enforcement: Platform CLIs must be in app-local bin
+        // (Stage -1) or user-specified custom path (Stage 1). System PATH,
+        // fallback dirs, and shell profiles are skipped to prevent detecting
+        // system-installed CLIs that are not managed by Puppet Master.
+        searched_paths.push("(system-wide search skipped: use Setup > Install)".to_string());
+        return PlatformDetectionTrace {
             detected: None,
             searched_paths,
-        }
+        };
+
+        // Stages 2-6 (system PATH, default install paths, common locations,
+        // fallback directories, shell profile PATH) have been removed.
+        // Platform CLIs are now exclusively discovered via app-local bin
+        // (Stage -1) or user-specified custom paths (Stage 1).
     }
 
     /// Detects all installed platforms using custom CLI paths from config
@@ -410,11 +248,6 @@ impl PlatformDetector {
     }
 
     // Helper functions
-
-    /// Finds a command in system PATH
-    fn find_in_path(name: &str) -> Option<PathBuf> {
-        which(name).ok()
-    }
 
     /// Validates that a detected binary actually executes and belongs to the claimed platform.
     /// Returns (version, is_valid) — is_valid is false if the binary fails to execute

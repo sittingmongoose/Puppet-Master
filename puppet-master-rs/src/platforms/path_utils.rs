@@ -56,6 +56,16 @@ pub fn check_executable_exists(path: &Path) -> Option<PathBuf> {
     None
 }
 
+// DRY:FN:resolve_app_local_executable — Resolve a CLI only in the app-local bin directory
+/// Resolve a CLI executable ONLY in the app-local bin directory.
+/// Used for app-managed tools (gh, platform CLIs) where system-wide
+/// installs should not be treated as "installed by Puppet Master."
+pub fn resolve_app_local_executable(cli_name: &str) -> Option<PathBuf> {
+    let app_bin = crate::install::app_paths::get_app_bin_dir();
+    let candidate = app_bin.join(cli_name);
+    check_executable_exists(&candidate)
+}
+
 // DRY:FN:get_fallback_directories — Cross-platform fallback directories for CLI discovery
 /// Returns a list of common directories where CLI executables may be installed,
 /// varying by operating system. Includes user-local directories derived from
@@ -199,15 +209,6 @@ pub fn resolve_executable(cli_name: &str) -> Option<PathBuf> {
     find_in_shell_path(cli_name)
 }
 
-// DRY:FN:resolve_executable_candidates -- Resolve first available executable from a candidate list
-/// Resolve the first available executable from `candidates`, returning the selected command name
-/// and resolved executable path.
-pub fn resolve_executable_candidates(candidates: &[&str]) -> Option<(String, PathBuf)> {
-    candidates
-        .iter()
-        .find_map(|name| resolve_executable(name).map(|path| ((*name).to_string(), path)))
-}
-
 // DRY:FN:build_enhanced_path_for_subprocess — PATH with fallback dirs prepended for CLI execution
 /// Builds a PATH string with fallback directories prepended so node-based CLIs
 /// (codex, gemini, copilot) can find `node` when spawned from GUI apps that inherit minimal PATH.
@@ -307,18 +308,6 @@ mod tests {
         let cmd = "sh";
 
         assert!(resolve_executable(cmd).is_some());
-    }
-
-    #[test]
-    fn test_resolve_executable_candidates_picks_first_available() {
-        #[cfg(target_os = "windows")]
-        let known = "cmd";
-        #[cfg(not(target_os = "windows"))]
-        let known = "sh";
-
-        let resolved = resolve_executable_candidates(&["__rwm_missing_binary__", known])
-            .expect("expected path");
-        assert_eq!(resolved.0, known);
     }
 
     #[test]

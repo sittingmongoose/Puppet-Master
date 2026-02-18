@@ -28,7 +28,6 @@
 //! - DRY:FN:install_methods_for — Install commands filtered by OS
 //! - DRY:FN:effort_levels_for — Platform-specific effort level IDs and display names
 //! - DRY:FN:image_capable_platforms — All platforms that support images (currently all 5)
-//! - DRY:FN:subagent_capable_platforms — Platforms with multi-agent support
 
 use crate::types::Platform;
 
@@ -894,21 +893,6 @@ pub fn get_spec(platform: Platform) -> &'static PlatformSpec {
     }
 }
 
-/// All platform specs as a static array.
-static ALL_SPECS: [&PlatformSpec; 5] = [
-    &CLAUDE_SPEC,
-    &CURSOR_SPEC,
-    &CODEX_SPEC,
-    &GEMINI_SPEC,
-    &COPILOT_SPEC,
-];
-
-// DRY:FN:all_specs — Get all platform specs
-/// Get all platform specs.
-pub fn all_specs() -> &'static [&'static PlatformSpec; 5] {
-    &ALL_SPECS
-}
-
 // ─── Convenience API ────────────────────────────────────────────────────────
 
 // DRY:FN:supports_effort — Whether platform supports effort/reasoning levels
@@ -1013,16 +997,6 @@ pub fn image_capable_platforms() -> Vec<Platform> {
     Platform::all()
         .iter()
         .filter(|p| supports_images(**p))
-        .copied()
-        .collect()
-}
-
-// DRY:FN:subagent_capable_platforms — Get all platforms that support sub-agents
-/// Get all platforms that support sub-agents.
-pub fn subagent_capable_platforms() -> Vec<Platform> {
-    Platform::all()
-        .iter()
-        .filter(|p| supports_subagents(**p))
         .copied()
         .collect()
 }

@@ -3,7 +3,7 @@
 use crate::theme::colors;
 use iced::mouse;
 use iced::widget::canvas::{Cache, Geometry, Path, Stroke};
-use iced::widget::{Canvas, canvas, column, text};
+use iced::widget::{Canvas, canvas};
 use iced::{Color, Element, Point, Rectangle};
 use std::f32::consts::PI;
 
@@ -174,27 +174,4 @@ where
     let diameter = size.diameter();
 
     Canvas::new(donut).width(diameter).height(diameter).into()
-}
-
-// DRY:WIDGET:budget_donut_with_label
-/// Create a budget donut with label below
-pub fn budget_donut_with_label<'a, Message>(
-    used: f32,
-    limit: f32,
-    platform_name: impl Into<String>,
-    size: BudgetSize,
-) -> Element<'a, Message>
-where
-    Message: Clone + 'a,
-{
-    let name = platform_name.into();
-    let name_clone = name.clone();
-
-    column![
-        budget_donut(used, limit, name, size),
-        text(name_clone).size(12).color(colors::INK_FADED)
-    ]
-    .spacing(8)
-    .align_x(iced::Alignment::Center)
-    .into()
 }

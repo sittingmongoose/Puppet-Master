@@ -31,7 +31,6 @@ pub mod header;
 pub mod help_text;
 pub mod help_tooltip; // NEW: Help tooltip system with ? icons
 pub mod icon; // NEW: SVG icon system
-pub mod icons; // OLD: Unicode symbol icons (to be deprecated)
 pub mod interview_panel; // NEW: Interview progress side panel
 pub mod layout_helpers; // NEW: Consolidated responsive layout helpers
 pub mod modal;
@@ -58,7 +57,6 @@ pub use context_menu::{ContextMenuOptions, context_menu_actions};
 pub use header::{Page, header};
 pub use help_text::help_text;
 pub use help_tooltip::{help_tooltip, interaction_mode_to_variant}; // NEW: Help tooltip system
-pub use icons::{icon, icon_with_size}; // OLD Unicode icons
 pub use interview_panel::{
     InterviewPanelData, interview_panel, interview_panel_compact, interview_panel_data_from_state,
 }; // NEW: Interview progress side panel

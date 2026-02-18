@@ -11,11 +11,10 @@
 //!
 //! # Features
 //!
-//! - Persistent tray icon with embedded fallback
+//! - Persistent tray icon with embedded PNG
 //! - Dynamic status updates
 //! - Context menu with common actions
 //! - Cross-platform icon support
-//! - Graceful fallback if icon file missing
 //!
 //! # Example
 //!
@@ -39,7 +38,6 @@
 
 use anyhow::{Context, Result};
 use crossbeam_channel::{Receiver, Sender, bounded};
-use image::{ImageBuffer, Rgba};
 use log::{debug, warn};
 use muda::{Menu, MenuEvent, MenuItem, PredefinedMenuItem};
 use std::sync::{Arc, Mutex};
@@ -47,7 +45,7 @@ use tray_icon::{Icon, TrayIcon, TrayIconBuilder, TrayIconEvent, menu::MenuId};
 #[cfg(not(target_os = "macos"))]
 use tray_icon::{MouseButton, MouseButtonState};
 
-/// Embedded icon bytes - fallback if external file not found
+/// Embedded tray icon PNG bytes.
 pub const ICON_BYTES: &[u8] = include_bytes!("../icons/icon.png");
 
 // DRY:DATA:TrayAction
@@ -109,7 +107,7 @@ impl TrayManager {
     pub fn new() -> Result<(Self, Receiver<TrayAction>)> {
         debug!("Initializing system tray manager");
 
-        // Load or create fallback icon
+        // Load icon from embedded bytes
         let icon = Self::load_icon(ICON_BYTES).context("Failed to load tray icon")?;
 
         // Create menu
@@ -215,59 +213,23 @@ impl TrayManager {
         }
     }
 
-    /// Load icon from bytes, with fallback to generated icon
+    /// Load icon from bytes
     ///
-    /// Attempts to load the icon from embedded PNG bytes. If that fails,
-    /// generates a simple fallback icon.
+    /// Attempts to load the icon from embedded PNG bytes.
     fn load_icon(icon_bytes: &[u8]) -> Result<Icon> {
         // Try to load from embedded bytes
-        match image::load_from_memory(icon_bytes) {
-            Ok(img) => {
-                let rgba = img.to_rgba8();
-                let (width, height) = rgba.dimensions();
-                let icon = Icon::from_rgba(rgba.into_raw(), width, height)
-                    .context("Failed to create icon from RGBA data")?;
-                debug!(
-                    "Loaded tray icon from embedded bytes ({}x{})",
-                    width, height
-                );
-                Ok(icon)
-            }
-            Err(e) => {
-                warn!("Failed to load embedded icon: {}, generating fallback", e);
-                Self::create_fallback_icon()
-            }
-        }
-    }
-
-    /// Create a simple fallback icon if the main icon cannot be loaded
-    ///
-    /// Generates a 32x32 colored square as a last-resort icon.
-    fn create_fallback_icon() -> Result<Icon> {
-        const SIZE: u32 = 32;
-        let mut buffer: ImageBuffer<Rgba<u8>, Vec<u8>> = ImageBuffer::new(SIZE, SIZE);
-
-        // Create a simple blue square with border
-        for y in 0..SIZE {
-            for x in 0..SIZE {
-                let pixel = if x == 0 || x == SIZE - 1 || y == 0 || y == SIZE - 1 {
-                    // Border - darker blue
-                    Rgba([50u8, 100u8, 200u8, 255u8])
-                } else if x > 4 && x < SIZE - 5 && y > 4 && y < SIZE - 5 {
-                    // Inner square - light blue
-                    Rgba([100u8, 150u8, 255u8, 255u8])
-                } else {
-                    // Middle border - medium blue
-                    Rgba([75u8, 125u8, 230u8, 255u8])
-                };
-                buffer.put_pixel(x, y, pixel);
-            }
-        }
-
-        let icon = Icon::from_rgba(buffer.into_raw(), SIZE, SIZE)
-            .context("Failed to create fallback icon")?;
-
-        warn!("Using generated fallback icon");
+        let img = image::load_from_memory(icon_bytes)
+            .context("Failed to load embedded icon from memory")?;
+        
+        let rgba = img.to_rgba8();
+        let (width, height) = rgba.dimensions();
+        let icon = Icon::from_rgba(rgba.into_raw(), width, height)
+            .context("Failed to create icon from RGBA data")?;
+            
+        debug!(
+            "Loaded tray icon from embedded bytes ({}x{})",
+            width, height
+        );
         Ok(icon)
     }
 
@@ -434,13 +396,6 @@ mod tests {
     }
 
     #[test]
-    fn test_fallback_icon_creation() {
-        // Test that we can create a fallback icon
-        let result = TrayManager::create_fallback_icon();
-        assert!(result.is_ok(), "Fallback icon creation should succeed");
-    }
-
-    #[test]
     fn test_icon_loading_from_bytes() {
         // Test loading from embedded bytes
         let result = TrayManager::load_icon(ICON_BYTES);
@@ -448,12 +403,10 @@ mod tests {
     }
 
     #[test]
-    fn test_icon_loading_fallback_on_invalid_data() {
-        // Test that invalid data triggers fallback
+    fn test_icon_loading_fails_on_invalid_data() {
         let invalid_data: &[u8] = &[0xFF, 0xD8, 0xFF]; // Truncated JPEG header
         let result = TrayManager::load_icon(invalid_data);
-        // Should succeed with fallback
-        assert!(result.is_ok(), "Should fallback to generated icon");
+        assert!(result.is_err(), "load_icon should fail on invalid data");
     }
 
     // Note: Integration tests for tray creation are platform-specific and

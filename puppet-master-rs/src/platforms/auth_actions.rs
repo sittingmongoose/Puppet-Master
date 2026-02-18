@@ -12,18 +12,10 @@ use std::path::{Path, PathBuf};
 use std::process::Stdio;
 use tokio::process::Command;
 
-fn resolve_program(program: &str) -> PathBuf {
-    crate::platforms::path_utils::resolve_executable(program)
-        .unwrap_or_else(|| PathBuf::from(program))
-}
-
 async fn resolve_platform_program(platform: Platform, command_hint: &str) -> Result<PathBuf> {
+    let _ = command_hint;
     if let Some(detected) = PlatformDetector::detect_platform(platform).await {
         return Ok(detected.cli_path);
-    }
-
-    if let Some(resolved) = crate::platforms::path_utils::resolve_executable(command_hint) {
-        return Ok(resolved);
     }
 
     Err(anyhow!(
@@ -169,7 +161,10 @@ pub async fn spawn_login(target: AuthTarget) -> Result<()> {
     };
     let resolved_program = match target {
         AuthTarget::Platform(platform) => resolve_platform_program(platform, program).await?,
-        AuthTarget::GitHub => resolve_program(program),
+        AuthTarget::GitHub => {
+            crate::platforms::path_utils::resolve_app_local_executable("gh")
+                .unwrap_or_else(|| PathBuf::from("gh"))
+        }
     };
 
     info!(
@@ -314,7 +309,10 @@ pub async fn spawn_logout(target: AuthTarget) -> Result<()> {
     };
     let resolved_program = match target {
         AuthTarget::Platform(platform) => resolve_platform_program(platform, program).await?,
-        AuthTarget::GitHub => resolve_program(program),
+        AuthTarget::GitHub => {
+            crate::platforms::path_utils::resolve_app_local_executable("gh")
+                .unwrap_or_else(|| PathBuf::from("gh"))
+        }
     };
 
     info!(

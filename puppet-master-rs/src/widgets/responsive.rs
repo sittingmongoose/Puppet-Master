@@ -261,27 +261,3 @@ fn grid_layout<'a, Message: 'a>(
 
     grid_row.into()
 }
-
-// DRY:WIDGET:column_count_for_width
-/// Get recommended column count based on window width
-pub fn column_count_for_width(window_width: f32) -> usize {
-    let device = Device::from_width(window_width);
-
-    match device {
-        Device::DesktopLarge => 3,
-        Device::Desktop | Device::Tablet => 2,
-        Device::Mobile => 1,
-    }
-}
-
-// DRY:WIDGET:is_compact_layout
-/// Check if layout should be compact (single column) for given width
-pub fn is_compact_layout(window_width: f32) -> bool {
-    window_width < breakpoints::DESKTOP
-}
-
-// DRY:WIDGET:is_expanded_layout
-/// Check if layout should be expanded (multi-column) for given width
-pub fn is_expanded_layout(window_width: f32) -> bool {
-    window_width >= breakpoints::DESKTOP
-}

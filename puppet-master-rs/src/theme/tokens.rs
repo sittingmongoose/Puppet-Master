@@ -96,16 +96,6 @@ pub mod shadows {
         }
     }
 
-    /// Header shadow - subtle bottom shadow
-    // DRY:HELPER:header_shadow
-    pub fn header_shadow(ink: Color) -> Shadow {
-        Shadow {
-            color: ink,
-            offset: Vector::new(0.0, 2.0),
-            blur_radius: 0.0,
-        }
-    }
-
     /// No shadow
     // DRY:HELPER:none
     pub fn none() -> Shadow {

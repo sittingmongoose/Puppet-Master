@@ -170,7 +170,7 @@ impl DoctorCheck for GitHubCliCheck {
     }
 
     async fn run(&self) -> CheckResult {
-        let Some(path) = find_tool_executable("gh") else {
+        let Some(path) = crate::platforms::path_utils::resolve_app_local_executable("gh") else {
             return CheckResult {
                 passed: false,
                 message: "GitHub CLI (gh) not found".to_string(),
