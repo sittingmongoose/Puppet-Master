@@ -313,14 +313,25 @@ impl WorktreeManager {
 
     /// Extract tier ID from worktree path
     fn extract_tier_id(&self, path: &PathBuf) -> Option<String> {
+        // Canonicalize both paths to handle macOS symlinks (/var/folders vs /private/var/folders)
+        let canonical_path = path.canonicalize().unwrap_or_else(|_| path.clone());
+        let canonical_base = self.worktree_base.canonicalize().unwrap_or_else(|_| self.worktree_base.clone());
+
         // Only return tier_id if the path is under our worktree_base
-        if !path.starts_with(&self.worktree_base) {
+        if !canonical_path.starts_with(&canonical_base) {
             return None;
         }
 
         path.file_name()
             .and_then(|name| name.to_str())
             .map(|s| s.to_string())
+    }
+
+    /// Returns the canonical form of worktree_base for cross-platform path comparisons.
+    fn canonical_worktree_base(&self) -> PathBuf {
+        self.worktree_base
+            .canonicalize()
+            .unwrap_or_else(|_| self.worktree_base.clone())
     }
 
     // DRY:FN:get_worktree_path
@@ -345,8 +356,9 @@ impl WorktreeManager {
 
         // Get list of worktrees tracked by git
         let git_worktrees = self.list_worktrees().await?;
+        // Canonicalize paths for cross-platform comparison (handles macOS symlinks)
         let git_worktree_paths: std::collections::HashSet<PathBuf> =
-            git_worktrees.into_iter().map(|w| w.path).collect();
+            git_worktrees.into_iter().map(|w| w.path.canonicalize().unwrap_or(w.path)).collect();
 
         // Scan the worktree base directory
         let mut orphaned = Vec::new();
@@ -361,15 +373,18 @@ impl WorktreeManager {
             .context("Failed to read worktree base directory")?;
 
         while let Some(entry) = entries.next_entry().await? {
-            let path = entry.path();
+            let path = strip_unc_prefix(entry.path());
 
             // Only consider directories
             if !path.is_dir() {
                 continue;
             }
 
+            // Canonicalize for comparison against git-tracked paths (handles macOS symlinks)
+            let canonical = path.canonicalize().unwrap_or_else(|_| path.clone());
+
             // Check if this worktree is tracked by git
-            if !git_worktree_paths.contains(&path) {
+            if !git_worktree_paths.contains(&canonical) {
                 warn!("Found orphaned worktree: {:?}", path);
                 orphaned.push(path);
             }
@@ -385,8 +400,9 @@ impl WorktreeManager {
     /// - It doesn't have uncommitted changes
     /// - It's under our worktree_base directory
     async fn is_safe_to_prune(&self, worktree_path: &PathBuf) -> bool {
-        // Must be under our worktree_base
-        if !worktree_path.starts_with(&self.worktree_base) {
+        // Must be under our worktree_base (canonicalize to handle macOS symlinks)
+        let canonical = worktree_path.canonicalize().unwrap_or_else(|_| worktree_path.clone());
+        if !canonical.starts_with(&self.canonical_worktree_base()) {
             warn!("Worktree {:?} is not under worktree_base", worktree_path);
             return false;
         }
@@ -521,6 +537,18 @@ impl WorktreeManager {
         );
         Ok(recovered)
     }
+}
+
+// DRY:FN:strip_unc_prefix — Remove Windows extended-length path prefix (\\?\) for consistent path comparison
+fn strip_unc_prefix(path: PathBuf) -> PathBuf {
+    #[cfg(target_os = "windows")]
+    {
+        let s = path.to_string_lossy();
+        if let Some(stripped) = s.strip_prefix(r"\\?\") {
+            return PathBuf::from(stripped);
+        }
+    }
+    path
 }
 
 #[cfg(test)]

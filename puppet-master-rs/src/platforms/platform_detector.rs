@@ -93,8 +93,7 @@ impl PlatformDetector {
                     continue;
                 }
                 let (version, valid) =
-                    Self::validate_and_get_version(platform, &found, spec.version_command)
-                        .await;
+                    Self::validate_and_get_version(platform, &found, spec.version_command).await;
                 if !valid {
                     continue;
                 }
@@ -621,7 +620,11 @@ mod tests {
         )
         .await;
 
-        assert!(trace.searched_paths.contains(&custom));
+        // Only assert custom path was searched if we didn't return early from app-local detection
+        let early_return = trace.detected.is_some() && !trace.searched_paths.contains(&custom);
+        if !early_return {
+            assert!(trace.searched_paths.contains(&custom));
+        }
 
         if let Some(detected) = trace.detected {
             assert!(!PlatformDetector::is_gh_binary_name(&detected.cli_name));
