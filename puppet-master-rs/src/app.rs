@@ -343,7 +343,6 @@ pub struct App {
     pub wizard_github_description: String,
     // Step 0.5: Quick Interview Config
     pub wizard_use_interview: bool,
-    pub wizard_interaction_mode: String, // "expert" or "eli5"
     pub wizard_reasoning_level: String,  // "low", "medium", "high"
     pub wizard_generate_agents_md: bool,
     // Original wizard fields
@@ -416,6 +415,7 @@ pub struct App {
     pub settings_show_timestamps: bool,
     pub settings_retention_days: u32,
     pub settings_intensive_logging: bool,
+    pub settings_interaction_mode: String, // "expert" or "eli5" — global tooltip verbosity
 
     // Backend channels
     pub event_receiver: Option<crossbeam_channel::Receiver<PuppetMasterEvent>>,
@@ -578,7 +578,6 @@ pub enum Message {
     WizardInitializeProject,
     // Step 0.5: Quick Interview Config
     WizardUseInterviewToggled(bool),
-    WizardInteractionModeChanged(String),
     WizardReasoningLevelChanged(String),
     WizardGenerateAgentsMdToggled(bool),
     // Original wizard messages
@@ -703,6 +702,7 @@ pub enum Message {
     SettingsRetentionDaysChanged(String),
     SettingsMinimizeToTrayToggled(bool),
     SettingsIntensiveLoggingToggled(bool),
+    SettingsInteractionModeChanged(String),
     SettingsClearData,
     SettingsResetDefaults,
     SettingsOpenDataDir,
@@ -1176,7 +1176,6 @@ impl App {
             wizard_github_description: String::new(),
             // Step 0.5: Quick Interview Config
             wizard_use_interview: false,
-            wizard_interaction_mode: "expert".to_string(),
             wizard_reasoning_level: "medium".to_string(),
             wizard_generate_agents_md: true,
             // Original wizard fields
@@ -1258,6 +1257,7 @@ impl App {
             settings_show_timestamps: true,
             settings_retention_days: 30,
             settings_intensive_logging: false,
+            settings_interaction_mode: "eli5".to_string(),
 
             // Memory
             memory_content: text_editor::Content::new(),
@@ -1494,6 +1494,13 @@ impl App {
                 Task::none()
             }
 
+            Message::SettingsInteractionModeChanged(mode) => {
+                if mode.eq_ignore_ascii_case("expert") || mode.eq_ignore_ascii_case("eli5") {
+                    self.settings_interaction_mode = mode.to_lowercase();
+                }
+                Task::none()
+            }
+
             Message::SettingsClearData => {
                 self.add_toast(ToastType::Warning, "Clearing all data...".to_string());
                 let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
@@ -1519,6 +1526,7 @@ impl App {
                 self.settings_show_timestamps = true;
                 self.settings_retention_days = 30;
                 self.settings_intensive_logging = false;
+                self.settings_interaction_mode = "eli5".to_string();
                 self.minimize_to_tray = true;
 
                 // Delete settings file
@@ -1577,6 +1585,7 @@ impl App {
                     "retention_days": self.settings_retention_days,
                     "intensive_logging": self.settings_intensive_logging,
                     "minimize_to_tray": self.minimize_to_tray,
+                    "interaction_mode": self.settings_interaction_mode,
                 });
 
                 if let Ok(json) = serde_json::to_string_pretty(&settings) {
@@ -4052,12 +4061,6 @@ impl App {
                 Task::none()
             }
 
-            Message::WizardInteractionModeChanged(mode) => {
-                self.wizard_interaction_mode = mode;
-                self.gui_config.interview.interaction_mode = self.wizard_interaction_mode.clone();
-                Task::none()
-            }
-
             Message::WizardReasoningLevelChanged(level) => {
                 self.wizard_reasoning_level = level;
                 self.gui_config.interview.reasoning_level = self.wizard_reasoning_level.clone();
@@ -5888,6 +5891,7 @@ impl App {
 
                 // Initialize orchestrator asynchronously
                 let gui_config = self.gui_config.clone();
+                let settings_interaction_mode = self.settings_interaction_mode.clone();
                 let project_path = self
                     .current_project
                     .as_ref()
@@ -5901,6 +5905,7 @@ impl App {
                             gui_config,
                             project_path,
                             is_existing_project,
+                            settings_interaction_mode,
                         )
                         .await
                     },
@@ -6226,7 +6231,6 @@ impl App {
                     "model" => self.gui_config.interview.model = value,
                     "output_dir" => self.gui_config.interview.output_dir = value,
                     "reasoning_level" => self.gui_config.interview.reasoning_level = value,
-                    "interaction_mode" => self.gui_config.interview.interaction_mode = value,
                     "vision_provider" => self.gui_config.interview.vision_provider = value,
                     "max_questions_per_phase" => {
                         if let Ok(v) = value.parse::<u32>() {
@@ -6406,7 +6410,7 @@ impl App {
                         self.wizard_dep_installing.as_deref(),
                         // Step 2 (was 0.5): Quick Interview Config
                         self.wizard_use_interview,
-                        &self.wizard_interaction_mode,
+                        &self.settings_interaction_mode,
                         &self.wizard_reasoning_level,
                         self.wizard_generate_agents_md,
                         // Original params
@@ -6441,6 +6445,7 @@ impl App {
                     &self.config_git_info,
                     &self.setup_platform_statuses,
                     &self.platform_auth_status,
+                    &self.settings_interaction_mode,
                     &self.theme,
                     layout_size,
                 ),
@@ -6543,6 +6548,7 @@ impl App {
                         self.minimize_to_tray,
                         self.settings_retention_days,
                         self.settings_intensive_logging,
+                        &self.settings_interaction_mode,
                         layout_size,
                     )
                 }
@@ -7892,6 +7898,11 @@ impl App {
                     {
                         self.minimize_to_tray = minimize_to_tray;
                     }
+                    if let Some(im) = json.get("interaction_mode").and_then(|v| v.as_str()) {
+                        if im.eq_ignore_ascii_case("expert") || im.eq_ignore_ascii_case("eli5") {
+                            self.settings_interaction_mode = im.to_lowercase();
+                        }
+                    }
 
                     log::info!("Settings loaded from disk");
                 }
@@ -8070,6 +8081,7 @@ impl App {
         gui_config: crate::config::gui_config::GuiConfig,
         project_path: PathBuf,
         is_existing_project: bool,
+        settings_interaction_mode: String,
     ) -> Result<(Arc<Mutex<crate::interview::InterviewOrchestrator>>, String), String> {
         use crate::interview::failover::PlatformModelPair;
         use crate::interview::state::load_state_at_output_dir;
@@ -8159,7 +8171,7 @@ impl App {
             project_name: gui_config.project.name.clone(),
             generate_initial_agents_md: gui_config.interview.generate_initial_agents_md,
             generate_playwright_requirements: gui_config.interview.generate_playwright_requirements,
-            interaction_mode: gui_config.interview.interaction_mode.clone(),
+            interaction_mode: settings_interaction_mode,
             research_config: None, // Could add research engine config
         };
 

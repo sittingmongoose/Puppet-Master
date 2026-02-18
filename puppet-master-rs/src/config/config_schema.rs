@@ -150,14 +150,6 @@ fn validate_interview(config: &crate::types::InterviewConfig, errors: &mut Vec<V
         });
     }
 
-    let interaction_mode = config.interaction_mode.as_str();
-    if !["expert", "eli5"].contains(&interaction_mode) {
-        errors.push(ValidationError::InvalidValue {
-            field: "interview.interaction_mode".to_string(),
-            message: "interaction_mode must be expert or eli5".to_string(),
-        });
-    }
-
     for (index, backup) in config.backup_platforms.iter().enumerate() {
         if backup.platform.trim().is_empty() {
             errors.push(ValidationError::InvalidValue {

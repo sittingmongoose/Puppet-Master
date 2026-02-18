@@ -10,6 +10,7 @@ use crate::types::Platform;
 use crate::widgets::{
     help_tooltip, interaction_mode_to_variant,
     selectable_text::selectable_label,
+    step_circle_canvas,
     styled_button::{ButtonVariant, styled_button},
     styled_input::{InputSize, InputVariant, styled_text_input_with_variant},
     themed_panel,
@@ -117,25 +118,25 @@ pub fn view<'a>(
         .padding(tokens::spacing::LG);
 
     let step_indicator = row![
-        step_circle(0, step, theme),
+        step_circle_canvas::step_circle_canvas(0, step, theme),
         connecting_line(0, step, theme),
-        step_circle(1, step, theme),
+        step_circle_canvas::step_circle_canvas(1, step, theme),
         connecting_line(1, step, theme),
-        step_circle(2, step, theme),
+        step_circle_canvas::step_circle_canvas(2, step, theme),
         connecting_line(2, step, theme),
-        step_circle(3, step, theme),
+        step_circle_canvas::step_circle_canvas(3, step, theme),
         connecting_line(3, step, theme),
-        step_circle(4, step, theme),
+        step_circle_canvas::step_circle_canvas(4, step, theme),
         connecting_line(4, step, theme),
-        step_circle(5, step, theme),
+        step_circle_canvas::step_circle_canvas(5, step, theme),
         connecting_line(5, step, theme),
-        step_circle(6, step, theme),
+        step_circle_canvas::step_circle_canvas(6, step, theme),
         connecting_line(6, step, theme),
-        step_circle(7, step, theme),
+        step_circle_canvas::step_circle_canvas(7, step, theme),
         connecting_line(7, step, theme),
-        step_circle(8, step, theme),
+        step_circle_canvas::step_circle_canvas(8, step, theme),
         connecting_line(8, step, theme),
-        step_circle(9, step, theme),
+        step_circle_canvas::step_circle_canvas(9, step, theme),
     ]
     .spacing(tokens::spacing::XXXS)
     .align_y(iced::Alignment::Center);
@@ -180,6 +181,7 @@ pub fn view<'a>(
             github_description,
             project_name,
             project_path,
+            interaction_mode,
             theme,
         )
         .into(),
@@ -266,10 +268,10 @@ fn step0_project_setup<'a>(
     github_description: &'a str,
     project_name: &'a str,
     project_path: &'a str,
+    interaction_mode: &'a str,
     theme: &'a AppTheme,
 ) -> container::Container<'a, Message> {
-    // Default to Expert tooltips (interaction mode not selected yet)
-    let tooltip_variant = crate::widgets::TooltipVariant::Expert;
+    let tooltip_variant = interaction_mode_to_variant(interaction_mode);
 
     let can_proceed = !project_name.trim().is_empty() && !project_path.trim().is_empty();
 
@@ -661,25 +663,6 @@ fn step1_interview_config<'a>(
         step_content.push(
             column![
                 Space::new().height(Length::Fixed(tokens::spacing::MD)),
-                // Interaction Mode
-                row![
-                    selectable_label(theme, "Interaction Mode:"),
-                    Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                    help_tooltip("interview.interaction_mode", tooltip_variant, theme),
-                ]
-                .align_y(Alignment::Center),
-                pick_list(
-                    vec!["expert", "eli5"],
-                    Some(interaction_mode),
-                    |mode: &str| Message::WizardInteractionModeChanged(mode.to_string()),
-                )
-                .width(Length::Fixed(200.0)),
-                selectable_label(theme, if interaction_mode == "expert" {
-                    "Concise technical questions for experienced developers"
-                } else {
-                    "Detailed explanations for every question (Explain Like I'm 5)"
-                }),
-                Space::new().height(Length::Fixed(tokens::spacing::SM)),
                 // Reasoning Level
                 row![
                     selectable_label(theme, "AI Reasoning Level:"),
@@ -1472,58 +1455,6 @@ fn step8_review_start<'a>(
     container(scrollable(step_content).width(Length::Fill))
         .width(Length::Fill)
         .height(Length::Fill)
-}
-
-/// Create a step circle indicator
-fn step_circle<'a>(
-    step_num: usize,
-    current_step: usize,
-    theme: &'a AppTheme,
-) -> Element<'a, Message> {
-    let is_complete = step_num < current_step;
-    let is_active = step_num == current_step;
-
-    let label = if is_complete {
-        "OK".to_string()
-    } else {
-        step_num.to_string()
-    };
-
-    let (bg_color, text_color, border_color) = if is_complete {
-        (colors::ACID_LIME, colors::INK_BLACK, colors::ACID_LIME)
-    } else if is_active {
-        (
-            colors::ELECTRIC_BLUE,
-            colors::PAPER_CREAM,
-            colors::ELECTRIC_BLUE,
-        )
-    } else {
-        (theme.paper(), theme.ink_faded(), theme.ink_faded())
-    };
-
-    container(
-        text(label)
-            .size(tokens::font_size::BASE)
-            .font(fonts::FONT_UI_BOLD)
-            .style(move |_theme: &iced::Theme| iced::widget::text::Style {
-                color: Some(text_color),
-            }),
-    )
-    .padding(tokens::spacing::MD)
-    .width(Length::Fixed(44.0))
-    .height(Length::Fixed(44.0))
-    .align_x(iced::alignment::Horizontal::Center)
-    .align_y(iced::alignment::Vertical::Center)
-    .style(move |_theme: &iced::Theme| iced::widget::container::Style {
-        background: Some(iced::Background::Color(bg_color)),
-        border: Border {
-            color: border_color,
-            width: tokens::borders::THICK,
-            radius: tokens::radii::PILL.into(),
-        },
-        ..Default::default()
-    })
-    .into()
 }
 
 /// Create a connecting line between step circles

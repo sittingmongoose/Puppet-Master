@@ -99,60 +99,6 @@ impl GitHubCliCheck {
         Self
     }
 
-    // DRY:FN:install_plan -- OS-specific install command for GitHub CLI.
-    fn install_plan() -> (String, String) {
-        #[cfg(target_os = "windows")]
-        {
-            return (
-                "Install GitHub CLI via winget".to_string(),
-                "winget install --id GitHub.cli -e --accept-source-agreements --accept-package-agreements"
-                    .to_string(),
-            );
-        }
-
-        #[cfg(target_os = "macos")]
-        {
-            return (
-                "Install GitHub CLI via Homebrew".to_string(),
-                "brew install gh".to_string(),
-            );
-        }
-
-        #[cfg(target_os = "linux")]
-        {
-            let cmd = r#"set -euo pipefail
-tmp_dir="$(mktemp -d)"
-trap 'rm -rf "$tmp_dir"' EXIT
-
-arch="$(uname -m)"
-case "$arch" in
-  x86_64|amd64) gh_arch="amd64" ;;
-  aarch64|arm64) gh_arch="arm64" ;;
-  *) echo "Unsupported CPU architecture: $arch" >&2; exit 1 ;;
-esac
-
-version="$(curl -fsSL https://api.github.com/repos/cli/cli/releases/latest | sed -n 's/.*"tag_name": *"v\([^"]*\)".*/\1/p' | head -n 1)"
-[ -n "$version" ] || { echo "Failed to detect latest GitHub CLI version" >&2; exit 1; }
-
-archive="gh_${version}_linux_${gh_arch}.tar.gz"
-curl -fsSL "https://github.com/cli/cli/releases/download/v${version}/${archive}" -o "$tmp_dir/$archive"
-tar -xzf "$tmp_dir/$archive" -C "$tmp_dir"
-
-mkdir -p "$HOME/.local/bin"
-cp "$tmp_dir/gh_${version}_linux_${gh_arch}/bin/gh" "$HOME/.local/bin/gh"
-chmod +x "$HOME/.local/bin/gh""#;
-
-            return (
-                "Install GitHub CLI to ~/.local/bin from official release".to_string(),
-                cmd.to_string(),
-            );
-        }
-
-        #[cfg(not(any(target_os = "windows", target_os = "macos", target_os = "linux")))]
-        {
-            ("Unsupported operating system".to_string(), String::new())
-        }
-    }
 }
 
 #[async_trait]
@@ -228,58 +174,22 @@ impl DoctorCheck for GitHubCliCheck {
     }
 
     async fn fix(&self, dry_run: bool) -> Option<FixResult> {
-        let (summary, command) = Self::install_plan();
-        if command.is_empty() {
-            return Some(FixResult::failure(
-                "Automatic GitHub CLI installation is not supported on this OS.",
-            ));
-        }
-
         if dry_run {
-            return Some(
-                FixResult::success(format!("Would install GitHub CLI: {}", summary))
-                    .with_step(format!("Would run: {}", command)),
-            );
+            return Some(FixResult::success(
+                "Would install GitHub CLI from official GitHub releases (native binary)"
+            ).with_step("Download native gh binary to app-local bin/"));
         }
 
-        let output = if cfg!(target_os = "windows") {
-            tokio::process::Command::new("cmd")
-                .args(["/C", &command])
-                .output()
-                .await
+        let outcome = crate::install::install_coordinator::install_gh_cli().await;
+        let mut result = if outcome.success {
+            FixResult::success("GitHub CLI installed. Run 'gh auth login' to authenticate.")
         } else {
-            tokio::process::Command::new("sh")
-                .args(["-c", &command])
-                .output()
-                .await
+            FixResult::failure(outcome.message)
         };
-
-        match output {
-            Ok(output) if output.status.success() => Some(
-                FixResult::success("GitHub CLI installed. Run 'gh auth login' to authenticate.")
-                    .with_step(summary)
-                    .with_step(command),
-            ),
-            Ok(output) => {
-                let stderr = String::from_utf8_lossy(&output.stderr);
-                let details = stderr.trim();
-                let message = if details.is_empty() {
-                    "GitHub CLI installation failed.".to_string()
-                } else {
-                    format!("GitHub CLI installation failed: {}", details)
-                };
-                Some(
-                    FixResult::failure(message)
-                        .with_step(summary)
-                        .with_step(command),
-                )
-            }
-            Err(e) => Some(
-                FixResult::failure(format!("Failed to start GitHub CLI installation: {}", e))
-                    .with_step(summary)
-                    .with_step(command),
-            ),
+        for line in &outcome.log_lines {
+            result = result.with_step(line.clone());
         }
+        Some(result)
     }
 
     fn has_fix(&self) -> bool {
@@ -288,17 +198,7 @@ impl DoctorCheck for GitHubCliCheck {
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn github_install_plan_is_not_empty() {
-        let (summary, command) = GitHubCliCheck::install_plan();
-        assert!(!summary.trim().is_empty());
-        #[cfg(any(target_os = "windows", target_os = "macos", target_os = "linux"))]
-        assert!(!command.trim().is_empty());
-    }
-}
+mod tests {}
 
 // DRY:DATA:GitConfiguredCheck
 /// Check if git is configured

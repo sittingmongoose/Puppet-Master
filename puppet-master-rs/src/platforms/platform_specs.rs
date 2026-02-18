@@ -723,38 +723,25 @@ static COPILOT_SPEC: PlatformSpec = PlatformSpec {
     display_name: "GitHub Copilot CLI",
     cli_binary_names: &["copilot"],
     install_methods: &[
+        // Native ELF binary distributed via GitHub Releases (github/gh-copilot).
+        // Download URL pattern: https://github.com/github/gh-copilot/releases/latest/download/{os}-{arch}
+        // e.g. linux-amd64, darwin-arm64, windows-amd64.exe
         InstallMethod {
-            method: "npm",
-            command: "npm install -g @github/copilot",
+            method: "github-release",
+            command: "https://github.com/github/gh-copilot/releases/latest/download/",
             os: &["linux", "macos", "windows"],
-        },
-        InstallMethod {
-            method: "brew",
-            command: "brew install copilot-cli",
-            os: &["macos"],
-        },
-        InstallMethod {
-            method: "winget",
-            command: "winget install GitHub.Copilot",
-            os: &["windows"],
         },
     ],
     default_install_paths: &[
-        // npm global
-        "~/.npm-global/bin/copilot",
-        "/usr/local/bin/copilot",
+        // Standard user-local binary path (most Linux installs)
         "~/.local/bin/copilot",
+        "/usr/local/bin/copilot",
         "/usr/bin/copilot",
-        "~/.local/share/npm/bin/copilot",
-        // macOS Homebrew (Caskroom install)
+        // macOS Homebrew
         "/opt/homebrew/bin/copilot",
         // Linux Homebrew
         "/home/linuxbrew/.linuxbrew/bin/copilot",
-        // nvm-managed node
-        "~/.nvm/current/bin/copilot",
         // Windows
-        "~/AppData/Roaming/npm/copilot.cmd",
-        "~/AppData/Roaming/npm/copilot",
         "~/AppData/Local/Microsoft/WinGet/Links/copilot.exe",
     ],
     auth: AuthSpec {
@@ -1350,10 +1337,8 @@ mod tests {
         assert_eq!(pkg, "@openai/codex");
         assert_eq!(bin, "codex");
 
-        // Copilot
-        let (pkg, bin) = npm_package_info(Platform::Copilot).expect("Copilot should have npm package");
-        assert_eq!(pkg, "@github/copilot");
-        assert_eq!(bin, "copilot");
+        // Copilot is a native binary installed from GitHub Releases, not npm
+        assert!(npm_package_info(Platform::Copilot).is_none());
 
         // Claude and Cursor don't use npm
         assert!(npm_package_info(Platform::Claude).is_none());

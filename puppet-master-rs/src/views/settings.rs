@@ -4,7 +4,11 @@
 
 use crate::app::Message;
 use crate::theme::{AppTheme, tokens};
-use crate::widgets::{selectable_text::{selectable_label, selectable_label_mono}, *};
+use crate::widgets::{
+    help_tooltip, interaction_mode_to_variant,
+    selectable_text::{selectable_label, selectable_label_mono},
+    *,
+};
 use iced::widget::{Space, column, container, pick_list, row, scrollable};
 use iced::{Element, Length};
 
@@ -85,6 +89,7 @@ pub fn view<'a>(
     minimize_to_tray: bool,
     retention_days: u32,
     intensive_logging: bool,
+    interaction_mode: &'a str,
     size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
     // Settings panels use standard single-column layout; size is used for header responsiveness
@@ -166,6 +171,38 @@ pub fn view<'a>(
 
     content = content.push(themed_panel(
         container(theme_content).padding(tokens::spacing::MD),
+        theme,
+    ));
+
+    // --- Help Section ---
+    let help_content = column![
+        selectable_label(theme, "Help"),
+        Space::new().height(Length::Fixed(tokens::spacing::SM)),
+        row![
+            selectable_label(theme, "Tooltip Verbosity:"),
+            Space::new().width(Length::Fixed(tokens::spacing::SM)),
+            help_tooltip(
+                "interview.interaction_mode",
+                interaction_mode_to_variant(interaction_mode),
+                theme,
+            ),
+            pick_list(
+                ["expert", "eli5"],
+                Some(interaction_mode),
+                |mode: &str| Message::SettingsInteractionModeChanged(mode.to_string()),
+            )
+            .width(Length::Fixed(tokens::layout::FORM_LABEL_WIDTH))
+            .padding(tokens::spacing::SM)
+            .text_size(tokens::font_size::BASE),
+        ]
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center),
+        selectable_label(theme, "Expert: concise technical tooltips. ELI5: friendly explanations for every field."),
+    ]
+    .spacing(tokens::spacing::SM);
+
+    content = content.push(themed_panel(
+        container(help_content).padding(tokens::spacing::MD),
         theme,
     ));
 

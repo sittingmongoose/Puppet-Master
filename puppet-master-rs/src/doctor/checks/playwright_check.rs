@@ -9,7 +9,7 @@ use chrono::Utc;
 use std::path::{Path, PathBuf};
 use std::process::Stdio;
 use tokio::process::Command;
-use tokio::time::{Duration, timeout};
+use tokio::time::{timeout, Duration};
 
 fn combined_output(output: &std::process::Output) -> String {
     let stdout = String::from_utf8_lossy(&output.stdout);
@@ -310,203 +310,24 @@ impl DoctorCheck for PlaywrightCheck {
     }
 
     async fn fix(&self, dry_run: bool) -> Option<FixResult> {
-        let cwd = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-        let repo_root = resolve_project_root_for_doctor(&cwd);
-        let Some(npm_path) = resolve_tool("npm") else {
-            return Some(FixResult::failure(
-                "npm not found. Install Node.js/npm before fixing Playwright.",
-            ));
-        };
-        let npx_path = resolve_tool("npx");
-
-        let mut steps = Vec::new();
-
         if dry_run {
-            steps.push(format!("Would determine repo root: {repo_root:?}"));
-            steps.push("Would check if package-lock.json exists".to_string());
-            steps.push(format!(
-                "Would run: {} ci (or install if no package-lock.json)",
-                npm_path.display()
-            ));
-            if let Some(npx) = &npx_path {
-                steps.push(format!("Would run: {} playwright install", npx.display()));
-            } else {
-                steps.push(format!(
-                    "Would run: {} exec -- playwright install",
-                    npm_path.display()
-                ));
-            }
-
-            #[cfg(target_os = "linux")]
-            if let Some(npx) = &npx_path {
-                steps.push(format!(
-                    "Would run: {} playwright install --with-deps (on Linux, best-effort)",
-                    npx.display()
-                ));
-            } else {
-                steps.push(format!(
-                    "Would run: {} exec -- playwright install --with-deps (on Linux, best-effort)",
-                    npm_path.display()
-                ));
-            }
-
             return Some(
-                FixResult::success("Dry run: would install Playwright dependencies and browsers")
-                    .with_step(steps.join("\n")),
+                FixResult::success("Would install Playwright and download browser binaries")
+                    .with_step("npm install -g playwright (app-local prefix)")
+                    .with_step("npx playwright install"),
             );
         }
 
-        // Step 1: Determine repo root
-        steps.push(format!("Determined repo root: {repo_root:?}"));
-
-        // Step 2: Ensure JS dependencies are installed
-        let package_lock = repo_root.join("package-lock.json");
-        let npm_command = if package_lock.exists() {
-            steps.push("Found package-lock.json, using 'npm ci'".to_string());
-            "ci"
+        let outcome = crate::install::install_coordinator::install_playwright().await;
+        let mut result = if outcome.success {
+            FixResult::success("Playwright installed successfully.")
         } else {
-            steps.push("No package-lock.json found, using 'npm install'".to_string());
-            "install"
+            FixResult::failure(outcome.message)
         };
-
-        // Run npm ci/install
-        let mut npm_cmd = Command::new(&npm_path);
-        npm_cmd
-            .arg(npm_command)
-            .current_dir(&repo_root)
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped())
-            .kill_on_drop(true);
-
-        match timeout(Duration::from_secs(120), npm_cmd.output()).await {
-            Ok(Ok(output)) if output.status.success() => {
-                steps.push(format!("Successfully ran 'npm {npm_command}'"));
-            }
-            Ok(Ok(output)) => {
-                let stderr = String::from_utf8_lossy(&output.stderr);
-                steps.push(format!("npm {npm_command} failed: {stderr}"));
-                return Some(
-                    FixResult::failure(format!("Failed to run 'npm {npm_command}'"))
-                        .with_step(steps.join("\n")),
-                );
-            }
-            Ok(Err(e)) => {
-                steps.push(format!("Failed to execute npm: {e}"));
-                return Some(
-                    FixResult::failure("Failed to execute npm command").with_step(steps.join("\n")),
-                );
-            }
-            Err(_) => {
-                steps.push("npm command timed out after 120 seconds".to_string());
-                return Some(
-                    FixResult::failure("npm command timed out").with_step(steps.join("\n")),
-                );
-            }
+        for line in &outcome.log_lines {
+            result = result.with_step(line.clone());
         }
-
-        // Step 3: Install Playwright browsers
-        let mut playwright_cmd = if let Some(npx) = &npx_path {
-            let mut cmd = Command::new(npx);
-            cmd.args(["playwright", "install"]);
-            steps.push(format!("Using npx at {}", npx.display()));
-            cmd
-        } else {
-            let mut cmd = Command::new(&npm_path);
-            cmd.args(["exec", "--", "playwright", "install"]);
-            steps.push(format!(
-                "npx not found; falling back to npm exec via {}",
-                npm_path.display()
-            ));
-            cmd
-        };
-        playwright_cmd
-            .current_dir(&repo_root)
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped())
-            .kill_on_drop(true);
-
-        match timeout(Duration::from_secs(300), playwright_cmd.output()).await {
-            Ok(Ok(output)) if output.status.success() => {
-                steps.push("Successfully installed Playwright browsers".to_string());
-            }
-            Ok(Ok(output)) => {
-                let stderr = String::from_utf8_lossy(&output.stderr);
-                steps.push(format!("Playwright browser install failed: {stderr}"));
-                return Some(
-                    FixResult::failure("Failed to install Playwright browsers")
-                        .with_step(steps.join("\n")),
-                );
-            }
-            Ok(Err(e)) => {
-                steps.push(format!("Failed to execute Playwright install command: {e}"));
-                return Some(
-                    FixResult::failure("Failed to execute playwright install command")
-                        .with_step(steps.join("\n")),
-                );
-            }
-            Err(_) => {
-                steps.push("playwright install command timed out after 300 seconds".to_string());
-                return Some(
-                    FixResult::failure("playwright install timed out").with_step(steps.join("\n")),
-                );
-            }
-        }
-
-        // Step 4: On Linux, try to install system dependencies (best-effort)
-        #[cfg(target_os = "linux")]
-        {
-            steps.push(
-                "Attempting to install system dependencies on Linux (best-effort)".to_string(),
-            );
-            let mut deps_cmd = if let Some(npx) = &npx_path {
-                let mut cmd = Command::new(npx);
-                cmd.args(["playwright", "install", "--with-deps"]);
-                cmd
-            } else {
-                let mut cmd = Command::new(&npm_path);
-                cmd.args(["exec", "--", "playwright", "install", "--with-deps"]);
-                cmd
-            };
-            deps_cmd
-                .current_dir(&repo_root)
-                .stdout(Stdio::piped())
-                .stderr(Stdio::piped())
-                .kill_on_drop(true);
-
-            match timeout(Duration::from_secs(300), deps_cmd.output()).await {
-                Ok(Ok(output)) if output.status.success() => {
-                    steps.push("Successfully installed system dependencies".to_string());
-                }
-                Ok(Ok(_)) => {
-                    steps.push(
-                        "System dependencies installation failed (non-critical, continuing)"
-                            .to_string(),
-                    );
-                }
-                Ok(Err(_)) | Err(_) => {
-                    steps.push("Could not install system dependencies (non-critical)".to_string());
-                }
-            }
-        }
-
-        let recheck = self.run().await;
-        if recheck.passed {
-            Some(
-                FixResult::success("Playwright dependencies and browsers installed successfully")
-                    .with_step(steps.join("\n"))
-                    .with_step(format!("Revalidated: {}", recheck.message)),
-            )
-        } else {
-            let mut result = FixResult::failure(
-                "Playwright install steps completed but validation still failed.",
-            )
-            .with_step(steps.join("\n"))
-            .with_step(format!("Revalidation failed: {}", recheck.message));
-            if let Some(details) = recheck.details {
-                result = result.with_step(details);
-            }
-            Some(result)
-        }
+        Some(result)
     }
 }
 

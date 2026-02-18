@@ -651,8 +651,6 @@ pub struct InterviewGuiConfig {
     pub generate_playwright_requirements: bool,
     #[serde(default = "default_true_interview")]
     pub generate_initial_agents_md: bool,
-    #[serde(default = "default_interaction_mode")]
-    pub interaction_mode: String,
     /// Preferred platform for vision-capable image references (filtered by capabilities).
     #[serde(default = "default_vision_provider")]
     pub vision_provider: String,
@@ -674,7 +672,6 @@ impl Default for InterviewGuiConfig {
             require_architecture_confirmation: true,
             generate_playwright_requirements: true,
             generate_initial_agents_md: true,
-            interaction_mode: default_interaction_mode(),
             vision_provider: default_vision_provider(),
         }
     }
@@ -706,10 +703,6 @@ fn default_max_questions_per_phase() -> u32 {
 
 fn default_interview_output_dir() -> String {
     ".puppet-master/interview".to_string()
-}
-
-fn default_interaction_mode() -> String {
-    "expert".to_string()
 }
 
 fn default_vision_provider() -> String {

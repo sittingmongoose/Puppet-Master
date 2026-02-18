@@ -42,6 +42,36 @@ pub fn responsive_form_row<'a>(
     }
 }
 
+// DRY:WIDGET:responsive_form_row_wide_label
+/// Like responsive_form_row but uses FORM_LABEL_WIDTH_WIDE for long labels (e.g. Advanced tab).
+pub fn responsive_form_row_wide_label<'a>(
+    theme: &'a AppTheme,
+    label: impl Into<String>,
+    input: impl Into<Element<'a, Message>>,
+    size: LayoutSize,
+) -> Element<'a, Message> {
+    let label_str = label.into();
+    if size.is_mobile() {
+        column![
+            selectable_label(theme, &label_str),
+            input.into()
+        ]
+        .spacing(tokens::spacing::SM)
+        .width(Length::Fill)
+        .into()
+    } else {
+        row![
+            container(selectable_label(theme, &label_str))
+                .width(Length::Fixed(tokens::layout::FORM_LABEL_WIDTH_WIDE)),
+            input.into()
+        ]
+        .spacing(tokens::spacing::MD)
+        .align_y(iced::Alignment::Center)
+        .width(Length::Fill)
+        .into()
+    }
+}
+
 // DRY:WIDGET:responsive_label_value
 /// Create a responsive label-value pair for details views.
 /// Reserved for read-only details (ledger, history, evidence, settings).

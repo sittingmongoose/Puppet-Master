@@ -934,10 +934,6 @@ pub struct InterviewConfig {
     #[serde(default = "default_true")]
     pub generate_initial_agents_md: bool,
 
-    /// Interaction mode (expert or eli5).
-    #[serde(default = "default_interaction_mode")]
-    pub interaction_mode: String,
-
     /// Preferred platform for vision analysis (default: codex).
     /// Will be filtered to only show platforms with vision capability.
     #[serde(default = "default_vision_provider")]
@@ -960,7 +956,6 @@ impl Default for InterviewConfig {
             require_architecture_confirmation: true,
             generate_playwright_requirements: true,
             generate_initial_agents_md: true,
-            interaction_mode: default_interaction_mode(),
             vision_provider: default_vision_provider(),
         }
     }
@@ -984,10 +979,6 @@ fn default_max_questions_per_phase() -> u32 {
 
 fn default_interview_output_dir() -> String {
     ".puppet-master/interview".to_string()
-}
-
-fn default_interaction_mode() -> String {
-    "expert".to_string()
 }
 
 fn default_vision_provider() -> String {

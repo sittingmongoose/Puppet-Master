@@ -240,14 +240,13 @@ mod tests {
     }
 
     #[test]
-    fn npm_package_for_copilot_returns_correct_package() {
-        let pkg = npm_package_for_platform(crate::types::Platform::Copilot).unwrap();
-        assert_eq!(pkg.package_name, "@github/copilot");
-        assert_eq!(pkg.binary_name, "copilot");
+    fn npm_package_for_claude_returns_none() {
+        assert!(npm_package_for_platform(crate::types::Platform::Claude).is_none());
     }
 
     #[test]
-    fn npm_package_for_claude_returns_none() {
-        assert!(npm_package_for_platform(crate::types::Platform::Claude).is_none());
+    fn npm_package_for_copilot_returns_none() {
+        // Copilot is a native binary installed from GitHub Releases, not npm
+        assert!(npm_package_for_platform(crate::types::Platform::Copilot).is_none());
     }
 }

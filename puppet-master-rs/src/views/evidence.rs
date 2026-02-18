@@ -152,12 +152,6 @@ pub fn view<'a>(
         );
     }
 
-    category_buttons =
-        category_buttons.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
-    category_buttons = category_buttons.push(
-        styled_button(theme, "Refresh", ButtonVariant::Info).on_press(Message::EvidenceRefresh),
-    );
-
     let left_panel = themed_panel(
         container(category_buttons).padding(tokens::spacing::MD),
         theme,

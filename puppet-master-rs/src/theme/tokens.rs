@@ -96,6 +96,16 @@ pub mod shadows {
         }
     }
 
+    /// Small shadow (2,2) - for compact elements e.g. header logo
+    // DRY:HELPER:small_shadow
+    pub fn small_shadow(ink: Color) -> Shadow {
+        Shadow {
+            color: ink,
+            offset: Vector::new(2.0, 2.0),
+            blur_radius: 0.0,
+        }
+    }
+
     /// No shadow
     // DRY:HELPER:none
     pub fn none() -> Shadow {
@@ -129,6 +139,9 @@ pub mod layout {
 
     /// Fixed width for form row labels (e.g. config forms)
     pub const FORM_LABEL_WIDTH: f32 = 150.0;
+
+    /// Wider label width for Advanced tab rows with long labels (Experimental, Sub-Agent)
+    pub const FORM_LABEL_WIDTH_WIDE: f32 = 280.0;
 
     /// Fixed width for label-value pair labels (e.g. details/read-only rows)
     pub const DETAIL_LABEL_WIDTH: f32 = 120.0;

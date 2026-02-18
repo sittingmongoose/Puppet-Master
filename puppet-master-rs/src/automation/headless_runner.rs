@@ -438,8 +438,9 @@ fn selector_to_type_message(
         "input_wizard_github_description" | "wizard_github_description" => {
             Ok(Message::WizardGithubDescriptionChanged(value))
         }
-        "input_wizard_interaction_mode" | "wizard_interaction_mode" => {
-            Ok(Message::WizardInteractionModeChanged(value))
+        "input_wizard_interaction_mode" | "wizard_interaction_mode"
+        | "input_settings_interaction_mode" | "settings_interaction_mode" => {
+            Ok(Message::SettingsInteractionModeChanged(value))
         }
         "input_wizard_reasoning_level" | "wizard_reasoning_level" => {
             Ok(Message::WizardReasoningLevelChanged(value))

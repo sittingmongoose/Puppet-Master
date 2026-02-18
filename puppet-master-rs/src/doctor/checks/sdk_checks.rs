@@ -15,14 +15,7 @@ fn find_executable_with_fallbacks(name: &str) -> Option<PathBuf> {
     crate::platforms::path_utils::resolve_executable(name)
 }
 
-// DRY:FN:run_shell_command -- Execute a shell command string on the current OS.
-async fn run_shell_command(command: &str) -> std::io::Result<std::process::Output> {
-    if cfg!(target_os = "windows") {
-        Command::new("cmd").args(["/C", command]).output().await
-    } else {
-        Command::new("bash").args(["-lc", command]).output().await
-    }
-}
+
 
 // DRY:FN:node_install_plan -- OS-specific Node.js install plan.
 fn node_install_plan() -> (String, String) {
@@ -145,59 +138,24 @@ impl DoctorCheck for NodeRuntimeCheck {
     }
 
     async fn fix(&self, dry_run: bool) -> Option<FixResult> {
-        let (summary, command) = node_install_plan();
-        if command.is_empty() {
-            return Some(FixResult::failure(
-                "Automatic Node.js installation is not supported on this OS.",
-            ));
-        }
-
         if dry_run {
+            let (summary, command) = node_install_plan();
             return Some(
                 FixResult::success(format!("Would install Node.js runtime: {summary}"))
                     .with_step(format!("Would run: {command}")),
             );
         }
 
-        match run_shell_command(&command).await {
-            Ok(output) if output.status.success() => {
-                let recheck = self.run().await;
-                if recheck.passed {
-                    Some(
-                        FixResult::success("Node.js installation completed.")
-                            .with_step(summary)
-                            .with_step(command)
-                            .with_step(format!("Revalidated: {}", recheck.message)),
-                    )
-                } else {
-                    let mut result = FixResult::failure(
-                        "Node.js installation command succeeded but Node runtime check still failed.",
-                    )
-                    .with_step(summary)
-                    .with_step(command)
-                    .with_step(format!("Revalidation failed: {}", recheck.message));
-                    if let Some(details) = recheck.details {
-                        result = result.with_step(details);
-                    }
-                    Some(result)
-                }
-            }
-            Ok(output) => {
-                let stderr = String::from_utf8_lossy(&output.stderr).trim().to_string();
-                let mut result = FixResult::failure("Node.js installation failed.")
-                    .with_step(summary)
-                    .with_step(command);
-                if !stderr.is_empty() {
-                    result = result.with_step(format!("Installer output: {stderr}"));
-                }
-                Some(result)
-            }
-            Err(e) => Some(
-                FixResult::failure(format!("Failed to start Node.js installation: {e}"))
-                    .with_step(summary)
-                    .with_step(command),
-            ),
+        let outcome = crate::install::install_coordinator::install_node().await;
+        let mut result = if outcome.success {
+            FixResult::success("Node.js installed successfully.")
+        } else {
+            FixResult::failure(outcome.message)
+        };
+        for line in &outcome.log_lines {
+            result = result.with_step(line.clone());
         }
+        Some(result)
     }
 
     fn has_fix(&self) -> bool {
@@ -413,6 +371,7 @@ impl DoctorCheck for PlatformSdkCheck {
             Command::new(&npm_path)
                 .args(["install", "-g", package])
                 .env("NPM_CONFIG_PREFIX", lib_dir.as_os_str())
+                .env("PATH", crate::platforms::path_utils::build_enhanced_path_for_subprocess())
                 .output(),
         )
         .await

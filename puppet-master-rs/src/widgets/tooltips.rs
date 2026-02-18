@@ -560,6 +560,62 @@ static TOOLTIPS: Lazy<HashMap<&'static str, TooltipEntry>> = Lazy::new(|| {
     );
 
     // ═══════════════════════════════════════════════════════════════
+    // Advanced — Experimental Features
+    // ═══════════════════════════════════════════════════════════════
+
+    map.insert(
+        "experimental_codex",
+        TooltipEntry::new(
+            "Enable Codex experimental CLI features",
+            "Turns on experimental Codex features that may change. Use if you need bleeding-edge capabilities; leave off for stable runs."
+        )
+    );
+
+    map.insert(
+        "experimental_gemini",
+        TooltipEntry::new(
+            "Enable Gemini experimental features",
+            "Turns on experimental Gemini options. Useful for preview features; disable for predictable behavior."
+        )
+    );
+
+    map.insert(
+        "experimental_copilot",
+        TooltipEntry::new(
+            "Enable Copilot experimental CLI features",
+            "Enables experimental Copilot CLI flags (e.g. fleet/delegate). Required for some multi-agent features."
+        )
+    );
+
+    // ═══════════════════════════════════════════════════════════════
+    // Advanced — Sub-Agent / Multi-Agent
+    // ═══════════════════════════════════════════════════════════════
+
+    map.insert(
+        "subagent_claude",
+        TooltipEntry::new(
+            "Agent Teams: team lead + teammates with shared task list and messaging",
+            "Claude can run a small team of agents that share a task list and talk to each other. Great for splitting complex work."
+        )
+    );
+
+    map.insert(
+        "subagent_codex",
+        TooltipEntry::new(
+            "Sub-agents with connector capabilities; automatic for complex tasks",
+            "Codex can spin up sub-agents that connect to tools and run automatically when a task is complex enough."
+        )
+    );
+
+    map.insert(
+        "subagent_copilot",
+        TooltipEntry::new(
+            "Fleets for parallel multi-agent work (like Claude Teams); /delegate for single sub-tasks; custom agents from ~/.copilot/agents or .github/agents",
+            "Copilot can run multiple agents in parallel (fleets) or delegate a single sub-task. You can also define custom agents in config files."
+        )
+    );
+
+    // ═══════════════════════════════════════════════════════════════
     // Network Tab Tooltips
     // ═══════════════════════════════════════════════════════════════
 

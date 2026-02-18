@@ -11,7 +11,7 @@ use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::types::Platform;
 use crate::widgets::{
     help_tooltip, interaction_mode_to_variant,
-    responsive_form_row, responsive_grid,
+    responsive_form_row, responsive_form_row_wide_label, responsive_grid,
     selectable_text::selectable_label,
     LayoutSize,
     styled_button::{ButtonVariant, styled_button},
@@ -120,6 +120,7 @@ pub fn view<'a>(
     git_info: &'a Option<GitInfo>,
     platform_statuses: &'a [crate::views::setup::PlatformStatus],
     auth_status: &'a HashMap<String, crate::views::login::AuthStatus>,
+    settings_interaction_mode: &'a str,
     theme: &'a AppTheme,
     size: LayoutSize,
 ) -> Element<'a, Message> {
@@ -201,13 +202,13 @@ pub fn view<'a>(
 
     // Tab Content
     let tab_content = match active_tab {
-        0 => tab_tiers(gui_config, models, platform_statuses, auth_status, theme, size),
-        1 => tab_branching(gui_config, git_info, theme, size),
-        2 => tab_verification(gui_config, theme, size),
-        3 => tab_memory(gui_config, theme, size),
-        4 => tab_budgets(gui_config, theme, size),
-        5 => tab_advanced(gui_config, theme, size),
-        6 => tab_interview(gui_config, theme, size),
+        0 => tab_tiers(gui_config, models, platform_statuses, auth_status, settings_interaction_mode, theme, size),
+        1 => tab_branching(gui_config, git_info, settings_interaction_mode, theme, size),
+        2 => tab_verification(gui_config, settings_interaction_mode, theme, size),
+        3 => tab_memory(gui_config, settings_interaction_mode, theme, size),
+        4 => tab_budgets(gui_config, settings_interaction_mode, theme, size),
+        5 => tab_advanced(gui_config, settings_interaction_mode, theme, size),
+        6 => tab_interview(gui_config, settings_interaction_mode, theme, size),
         7 => tab_yaml(config_text, editor_content, valid, error, theme),
         _ => column![].into(),
     };
@@ -304,6 +305,7 @@ fn tab_tiers<'a>(
     models: &'a HashMap<String, Vec<String>>,
     platform_statuses: &'a [crate::views::setup::PlatformStatus],
     auth_status: &'a HashMap<String, crate::views::login::AuthStatus>,
+    settings_interaction_mode: &'a str,
     theme: &'a AppTheme,
     size: LayoutSize,
 ) -> Element<'a, Message> {
@@ -320,7 +322,7 @@ fn tab_tiers<'a>(
         selectable_label(theme, "Configure execution settings for each tier: Phase, Task, Subtask, and Iteration"),
     );
 
-    let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
+    let tooltip_variant = interaction_mode_to_variant(settings_interaction_mode);
 
     // Helper to build dynamic model list for a tier
     // Only use dynamically detected/cached models — no static fallbacks.
@@ -675,10 +677,11 @@ fn tier_card<'a>(
 fn tab_branching<'a>(
     gui_config: &'a GuiConfig,
     git_info: &'a Option<GitInfo>,
+    settings_interaction_mode: &'a str,
     theme: &'a AppTheme,
     size: LayoutSize,
 ) -> Element<'a, Message> {
-    let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
+    let tooltip_variant = interaction_mode_to_variant(settings_interaction_mode);
 
     let mut content = column![]
         .spacing(tokens::spacing::LG)
@@ -801,10 +804,11 @@ fn tab_branching<'a>(
 
 fn tab_verification<'a>(
     gui_config: &'a GuiConfig,
+    settings_interaction_mode: &'a str,
     theme: &'a AppTheme,
     size: LayoutSize,
 ) -> Element<'a, Message> {
-    let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
+    let tooltip_variant = interaction_mode_to_variant(settings_interaction_mode);
 
     let mut content = column![]
         .spacing(tokens::spacing::LG)
@@ -883,8 +887,13 @@ fn tab_verification<'a>(
     content.into()
 }
 
-fn tab_memory<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme, size: LayoutSize) -> Element<'a, Message> {
-    let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
+fn tab_memory<'a>(
+    gui_config: &'a GuiConfig,
+    settings_interaction_mode: &'a str,
+    theme: &'a AppTheme,
+    size: LayoutSize,
+) -> Element<'a, Message> {
+    let tooltip_variant = interaction_mode_to_variant(settings_interaction_mode);
 
     let mut content = column![]
         .spacing(tokens::spacing::MD)
@@ -1006,8 +1015,13 @@ fn tab_memory<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme, size: LayoutSi
     content.into()
 }
 
-fn tab_budgets<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme, size: LayoutSize) -> Element<'a, Message> {
-    let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
+fn tab_budgets<'a>(
+    gui_config: &'a GuiConfig,
+    settings_interaction_mode: &'a str,
+    theme: &'a AppTheme,
+    size: LayoutSize,
+) -> Element<'a, Message> {
+    let tooltip_variant = interaction_mode_to_variant(settings_interaction_mode);
 
     let mut content = column![]
         .spacing(tokens::spacing::MD)
@@ -1204,10 +1218,15 @@ fn budget_card<'a>(
         .into()
 }
 
-fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme, size: LayoutSize) -> Element<'a, Message> {
+fn tab_advanced<'a>(
+    gui_config: &'a GuiConfig,
+    settings_interaction_mode: &'a str,
+    theme: &'a AppTheme,
+    size: LayoutSize,
+) -> Element<'a, Message> {
     use iced::widget::pick_list;
 
-    let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
+    let tooltip_variant = interaction_mode_to_variant(settings_interaction_mode);
 
     let mut content = column![]
         .spacing(tokens::spacing::MD)
@@ -1431,7 +1450,7 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme, size: Layout
                 .copied()
                 .unwrap_or(false);
 
-            content = content.push(responsive_form_row(theme, 
+            content = content.push(responsive_form_row_wide_label(theme, 
                 format!("Enable {} Experimental:", display_name),
                 row![
                     help_tooltip(&format!("experimental_{}", key), tooltip_variant, theme),
@@ -1472,19 +1491,13 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme, size: Layout
                 .copied()
                 .unwrap_or(false);
 
-            let spec = platform_specs::get_spec(platform);
-            let note = spec.subagent.as_ref().map(|s| s.note).unwrap_or("");
-
-            content = content.push(responsive_form_row(theme, 
+            content = content.push(responsive_form_row_wide_label(theme, 
                 format!("Enable {}:", display_name),
                 row![
+                    help_tooltip(&format!("subagent_{}", key), tooltip_variant, theme),
                     iced::widget::toggler(enabled).on_toggle(move |_| {
                         Message::ConfigAdvancedCheckboxToggled(format!("subagent_{}", key))
                     }),
-                    Space::new().width(Length::Fixed(tokens::spacing::SM)),
-                    text(note)
-                        .size(tokens::font_size::XS)
-                        .color(theme.ink_faded()),
                 ]
                 .spacing(tokens::spacing::SM)
                 .align_y(iced::Alignment::Center),
@@ -1794,13 +1807,16 @@ fn tab_advanced<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme, size: Layout
     content.into()
 }
 
-fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme, size: LayoutSize) -> Element<'a, Message> {
+fn tab_interview<'a>(
+    gui_config: &'a GuiConfig,
+    settings_interaction_mode: &'a str,
+    theme: &'a AppTheme,
+    size: LayoutSize,
+) -> Element<'a, Message> {
     const REASONING_LEVELS: &[&str] = &["low", "medium", "high", "max"];
-    const INTERACTION_MODES: &[&str] = &["expert", "eli5"];
     let platforms = platform_specs::PLATFORM_ID_STRS;
 
-    // Determine tooltip variant from interaction mode
-    let tooltip_variant = interaction_mode_to_variant(&gui_config.interview.interaction_mode);
+    let tooltip_variant = interaction_mode_to_variant(settings_interaction_mode);
 
     let mut content = column![]
         .spacing(tokens::spacing::LG)
@@ -2052,26 +2068,6 @@ fn tab_interview<'a>(gui_config: &'a GuiConfig, theme: &'a AppTheme, size: Layou
             })
             .size(tokens::font_size::SM)
             .color(theme.ink_faded()),
-        ]
-        .spacing(tokens::spacing::SM)
-        .align_y(iced::Alignment::Center),
-        size,
-    ));
-
-    // Interaction Mode
-    content = content.push(responsive_form_row(theme, 
-        "Interaction Mode:",
-        row![
-            help_tooltip("interview.interaction_mode", tooltip_variant, theme),
-            pick_list(
-                INTERACTION_MODES,
-                Some(gui_config.interview.interaction_mode.as_str()),
-                |mode: &str| Message::ConfigInterviewFieldChanged(
-                    "interaction_mode".to_string(),
-                    mode.to_string(),
-                ),
-            )
-            .width(Length::Fixed(200.0)),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),

@@ -43,6 +43,7 @@ pub mod progress_bar;
 pub mod responsive; // NEW: Responsive layout helpers
 pub mod selectable_text; // NEW: Read-only selectable text helper
 pub mod status_badge;
+pub mod step_circle_canvas;
 pub mod styled_button; // NEW: Redesigned button widget
 pub mod styled_input; // NEW: Redesigned input widget
 pub mod terminal;
@@ -60,7 +61,10 @@ pub use help_tooltip::{help_tooltip, interaction_mode_to_variant}; // NEW: Help 
 pub use interview_panel::{
     InterviewPanelData, interview_panel, interview_panel_compact, interview_panel_data_from_state,
 }; // NEW: Interview progress side panel
-pub use layout_helpers::{responsive_container_width, responsive_form_row, responsive_label_value};
+pub use layout_helpers::{
+    responsive_container_width, responsive_form_row, responsive_form_row_wide_label,
+    responsive_label_value,
+};
 pub use modal::{ModalData, ModalSize, confirm_modal, error_modal, modal_overlay};
 pub use page_header::{RefreshStyle, page_header, refresh_button};
 pub use panel::{
