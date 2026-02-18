@@ -167,12 +167,21 @@ impl PrManager {
 
     /// Check if gh CLI is available
     async fn is_gh_available(&self) -> Result<bool> {
-        let output = tokio::process::Command::new("which")
+        // DRY:PLATFORM:which_command - Use 'where' on Windows, 'which' on Unix
+        let which_cmd = if cfg!(target_os = "windows") {
+            "where"
+        } else {
+            "which"
+        };
+        
+        match tokio::process::Command::new(which_cmd)
             .arg("gh")
             .output()
-            .await?;
-
-        Ok(output.status.success())
+            .await
+        {
+            Ok(output) => Ok(output.status.success()),
+            Err(_) => Ok(false), // command not found means gh not available
+        }
     }
 
     // DRY:FN:preflight_check
@@ -599,11 +608,19 @@ mod e2e_tests {
         assert!(result.is_ok(), "is_gh_available should not panic");
 
         // Result should match whether 'gh' command exists locally
-        let gh_exists = Command::new("which")
-            .arg("gh")
-            .output()
-            .map(|o| o.status.success())
-            .unwrap_or(false);
+        // DRY:PLATFORM:which_command - Use 'where' on Windows, 'which' on Unix
+        let gh_exists = {
+            let which_cmd = if cfg!(target_os = "windows") {
+                "where"
+            } else {
+                "which"
+            };
+            Command::new(which_cmd)
+                .arg("gh")
+                .output()
+                .map(|o| o.status.success())
+                .unwrap_or(false)
+        };
 
         assert_eq!(
             result.unwrap(),

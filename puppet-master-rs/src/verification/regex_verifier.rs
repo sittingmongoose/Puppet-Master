@@ -29,11 +29,23 @@ impl Verifier for RegexVerifier {
         // Use expected field as "file:pattern" format, or just pattern
         let expected = criterion.expected.as_deref().unwrap_or("");
 
-        // Try to parse "file:pattern" format
-        let (file, pattern) = if let Some(idx) = expected.find(':') {
-            (&expected[..idx], &expected[idx + 1..])
-        } else {
-            ("", expected)
+        // DRY:PLATFORM:path_parsing - Try to parse "file:pattern" format
+        // On Windows, paths may start with a drive letter like "C:\..."
+        // Skip the first colon if it's a drive letter separator (single alpha char before colon)
+        let (file, pattern) = {
+            let search_from = if expected.len() >= 2 
+                && expected.as_bytes()[1] == b':' 
+                && expected.as_bytes()[0].is_ascii_alphabetic() {
+                2 // skip past drive letter colon
+            } else {
+                0
+            };
+            if let Some(idx) = expected[search_from..].find(':') {
+                let split = search_from + idx;
+                (&expected[..split], &expected[split + 1..])
+            } else {
+                ("", expected)
+            }
         };
 
         debug!("Checking regex pattern in file: {}", file);

@@ -63,10 +63,18 @@ impl CommandVerifier {
     }
 
     async fn execute(spec: &CommandSpec) -> Result<std::process::Output, String> {
-        let mut cmd = Command::new("sh");
-        cmd.arg("-c")
-            .arg(&spec.command)
-            .stdin(Stdio::null())
+        // DRY:PLATFORM:shell_command - Use cmd /c on Windows, sh -c on Unix
+        let mut cmd = if cfg!(target_os = "windows") {
+            let mut c = Command::new("cmd");
+            c.args(["/C", &spec.command]);
+            c
+        } else {
+            let mut c = Command::new("sh");
+            c.args(["-c", &spec.command]);
+            c
+        };
+        
+        cmd.stdin(Stdio::null())
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
             .kill_on_drop(true);
@@ -213,12 +221,19 @@ mod tests {
     #[tokio::test]
     async fn test_command_verifier_success() {
         let verifier = CommandVerifier::new();
+
+        let expected = if cfg!(windows) {
+            "cmd /c echo hello"
+        } else {
+            "echo 'hello'"
+        };
+
         let criterion = Criterion {
             id: "test-1".to_string(),
             description: "Echo test".to_string(),
             met: false,
             verification_method: Some("command".to_string()),
-            expected: Some("echo 'hello'".to_string()),
+            expected: Some(expected.to_string()),
             actual: None,
         };
 
@@ -229,12 +244,19 @@ mod tests {
     #[tokio::test]
     async fn test_command_verifier_failure() {
         let verifier = CommandVerifier::new();
+
+        let expected = if cfg!(windows) {
+            "cmd /c exit 1"
+        } else {
+            "false"
+        };
+
         let criterion = Criterion {
             id: "test-2".to_string(),
             description: "Failing command".to_string(),
             met: false,
             verification_method: Some("command".to_string()),
-            expected: Some("exit 1".to_string()),
+            expected: Some(expected.to_string()),
             actual: None,
         };
 
