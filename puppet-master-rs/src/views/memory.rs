@@ -73,7 +73,12 @@ pub fn view<'a>(
     )]
     .spacing(tokens::spacing::MD)
     .align_y(iced::Alignment::Center);
-    content = content.push(page_header("Memory (AGENTS.md)", theme, header_actions, size));
+    content = content.push(page_header(
+        "Memory (AGENTS.md)",
+        theme,
+        header_actions,
+        size,
+    ));
 
     // Section navigation dropdown and filter controls
     let nav_content = column![

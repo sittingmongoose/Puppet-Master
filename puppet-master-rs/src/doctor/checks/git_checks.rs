@@ -98,7 +98,6 @@ impl GitHubCliCheck {
     pub fn new() -> Self {
         Self
     }
-
 }
 
 #[async_trait]
@@ -175,9 +174,12 @@ impl DoctorCheck for GitHubCliCheck {
 
     async fn fix(&self, dry_run: bool) -> Option<FixResult> {
         if dry_run {
-            return Some(FixResult::success(
-                "Would install GitHub CLI from official GitHub releases (native binary)"
-            ).with_step("Download native gh binary to app-local bin/"));
+            return Some(
+                FixResult::success(
+                    "Would install GitHub CLI from official GitHub releases (native binary)",
+                )
+                .with_step("Download native gh binary to app-local bin/"),
+            );
         }
 
         let outcome = crate::install::install_coordinator::install_gh_cli().await;
@@ -402,10 +404,7 @@ impl DoctorCheck for GitRepoCheck {
         match output {
             Ok(output) if output.status.success() => Some(FixResult {
                 success: true,
-                message: format!(
-                    "Initialized git repository in {}",
-                    target_dir.display()
-                ),
+                message: format!("Initialized git repository in {}", target_dir.display()),
                 steps: vec![format!("git init (in {})", target_dir.display())],
                 fixable: true,
                 timestamp: Utc::now(),
@@ -426,11 +425,7 @@ impl DoctorCheck for GitRepoCheck {
             }
             Err(e) => Some(FixResult {
                 success: false,
-                message: format!(
-                    "Failed to run git init in {}: {}",
-                    target_dir.display(),
-                    e
-                ),
+                message: format!("Failed to run git init in {}: {}", target_dir.display(), e),
                 steps: vec![],
                 fixable: true,
                 timestamp: Utc::now(),

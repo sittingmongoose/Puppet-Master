@@ -70,7 +70,10 @@ fn main() {
             .set_icon(icon_path.to_str().expect("icon path is valid UTF-8"))
             .compile()
         {
-            eprintln!("cargo:warning=Failed to embed Windows icon: {}. Run scripts/generate-app-icons.sh to create icons/icon.ico", e);
+            eprintln!(
+                "cargo:warning=Failed to embed Windows icon: {}. Run scripts/generate-app-icons.sh to create icons/icon.ico",
+                e
+            );
             std::process::exit(1);
         }
     }

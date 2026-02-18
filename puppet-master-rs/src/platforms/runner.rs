@@ -576,7 +576,11 @@ mod tests {
     #[tokio::test]
     async fn test_command_availability() {
         // Test with a command that should exist on all systems
+        #[cfg(unix)]
         assert!(BaseRunner::is_command_available("echo").await);
+
+        #[cfg(windows)]
+        assert!(BaseRunner::is_command_available("cmd").await);
 
         // Test with a command that likely doesn't exist
         assert!(!BaseRunner::is_command_available("nonexistent_command_xyz").await);

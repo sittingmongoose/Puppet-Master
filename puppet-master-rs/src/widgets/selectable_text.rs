@@ -11,10 +11,7 @@ use iced::widget::{TextInput, mouse_area, text_input};
 
 // DRY:WIDGET:selectable_label
 /// Build a selectable text label that looks like static text.
-pub fn selectable_label<'a>(
-    theme: &'a AppTheme,
-    value: &str,
-) -> iced::Element<'a, Message> {
+pub fn selectable_label<'a>(theme: &'a AppTheme, value: &str) -> iced::Element<'a, Message> {
     mouse_area(
         text_input("", value)
             .on_input(|_| Message::None)
@@ -23,18 +20,15 @@ pub fn selectable_label<'a>(
             .padding(0)
             .style(styles::selectable_label_styled(theme)),
     )
-    .on_right_press(Message::OpenContextMenu(
-        ContextMenuTarget::StaticText(value.to_string()),
-    ))
+    .on_right_press(Message::OpenContextMenu(ContextMenuTarget::StaticText(
+        value.to_string(),
+    )))
     .into()
 }
 
 // DRY:WIDGET:selectable_label_mono
 /// Build a selectable monospace label that looks like static text.
-pub fn selectable_label_mono<'a>(
-    theme: &'a AppTheme,
-    value: &str,
-) -> iced::Element<'a, Message> {
+pub fn selectable_label_mono<'a>(theme: &'a AppTheme, value: &str) -> iced::Element<'a, Message> {
     mouse_area(
         text_input("", value)
             .on_input(|_| Message::None)
@@ -43,9 +37,9 @@ pub fn selectable_label_mono<'a>(
             .padding(0)
             .style(styles::selectable_label_styled(theme)),
     )
-    .on_right_press(Message::OpenContextMenu(
-        ContextMenuTarget::StaticText(value.to_string()),
-    ))
+    .on_right_press(Message::OpenContextMenu(ContextMenuTarget::StaticText(
+        value.to_string(),
+    )))
     .into()
 }
 
@@ -120,11 +114,9 @@ pub fn selectable_text_field<'a, F>(
 where
     F: Fn(String) -> Message + Clone + 'a,
 {
-    mouse_area(
-        selectable_text_input_with_on_change(theme, value, on_change).width(Length::Fill),
-    )
-    .on_right_press(Message::OpenContextMenu(
-        ContextMenuTarget::SelectableField(field),
-    ))
-    .into()
+    mouse_area(selectable_text_input_with_on_change(theme, value, on_change).width(Length::Fill))
+        .on_right_press(Message::OpenContextMenu(
+            ContextMenuTarget::SelectableField(field),
+        ))
+        .into()
 }

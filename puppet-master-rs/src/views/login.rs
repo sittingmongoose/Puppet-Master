@@ -4,11 +4,15 @@
 //! responsive 3-column grid layout matching the Tauri React version.
 
 use crate::app::{AuthActionKind, ContextMenuTarget, LoginTextSurface, Message, SelectableField};
+use crate::doctor::InstallationStatus;
 use crate::platforms::AuthTarget;
 use crate::theme::{AppTheme, colors, tokens};
 use crate::types::Platform;
+use crate::views::doctor::build_launch_button_for_platform;
+use crate::views::setup::PlatformStatus;
 use crate::widgets::{responsive::responsive_grid, selectable_text::selectable_label, *};
-use iced::widget::{column, container, mouse_area, row, scrollable, text_editor};
+use iced::font::Weight;
+use iced::widget::{column, container, mouse_area, row, scrollable, text, text_editor};
 use iced::{Alignment, Element, Length};
 use std::collections::HashMap;
 
@@ -130,6 +134,7 @@ pub fn view<'a>(
     active_context_menu: &'a Option<ContextMenuTarget>,
     github_auth_status: &'a Option<String>,
     cli_content: &'a text_editor::Content,
+    platform_statuses: &'a [PlatformStatus],
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
@@ -167,6 +172,7 @@ pub fn view<'a>(
         login_messages,
         login_auth_urls,
         active_context_menu,
+        platform_statuses,
         theme,
         size,
     ));
@@ -200,12 +206,17 @@ fn build_summary_panel<'a>(
     let not_authenticated_count = total_count - authenticated_count;
     let skipped_count = 0; // We don't have skipped status in current implementation
 
-    let stat_card = |label: String, count: usize, _color: iced::Color| {
+    let stat_card = |label: String, count: usize, number_color: iced::Color| {
         themed_panel(
             container(
                 column![
-                    selectable_label(theme, &label),
-                    selectable_label(theme, &count.to_string()),
+                    text(label).size(tokens::font_size::MD).font(iced::Font {
+                        weight: Weight::Bold,
+                        ..Default::default()
+                    }),
+                    text(count.to_string())
+                        .size(tokens::font_size::XXL)
+                        .color(number_color),
                 ]
                 .spacing(tokens::spacing::XS)
                 .width(Length::Fill),
@@ -217,7 +228,12 @@ fn build_summary_panel<'a>(
     };
 
     let stat_cards: Vec<Element<'a, Message>> = vec![
-        stat_card("Total Platforms".to_string(), total_count, theme.ink()).into(),
+        stat_card(
+            "Total Platforms".to_string(),
+            total_count,
+            colors::ACID_LIME,
+        )
+        .into(),
         stat_card(
             "Authenticated".to_string(),
             authenticated_count,
@@ -230,7 +246,7 @@ fn build_summary_panel<'a>(
             colors::HOT_MAGENTA,
         )
         .into(),
-        stat_card("Skipped".to_string(), skipped_count, colors::INK_FADED).into(),
+        stat_card("Skipped".to_string(), skipped_count, colors::HOT_MAGENTA).into(),
     ];
 
     // Use responsive_grid to adapt column count based on screen size
@@ -244,6 +260,7 @@ fn build_platform_grid<'a>(
     login_messages: &'a HashMap<String, String>,
     login_auth_urls: &'a HashMap<String, String>,
     active_context_menu: &'a Option<ContextMenuTarget>,
+    platform_statuses: &'a [PlatformStatus],
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
 ) -> Element<'a, Message> {
@@ -260,6 +277,7 @@ fn build_platform_grid<'a>(
                 login_messages,
                 login_auth_urls,
                 active_context_menu,
+                platform_statuses,
                 theme,
             )
             .into()
@@ -270,6 +288,22 @@ fn build_platform_grid<'a>(
     responsive_grid(size.width, cards, tokens::spacing::MD)
 }
 
+// DRY:FN:is_platform_cli_installed — Check if platform CLI is installed from platform statuses
+/// Check if a platform CLI is installed based on platform statuses.
+/// Returns true if the platform status is Installed or Outdated.
+fn is_platform_cli_installed(platform: Platform, platform_statuses: &[PlatformStatus]) -> bool {
+    platform_statuses
+        .iter()
+        .find(|s| s.platform == platform)
+        .map(|s| {
+            matches!(
+                s.status,
+                InstallationStatus::Installed(_) | InstallationStatus::Outdated { .. }
+            )
+        })
+        .unwrap_or(false)
+}
+
 /// Build a single platform card
 fn build_platform_card<'a>(
     def: &PlatformDef,
@@ -278,13 +312,13 @@ fn build_platform_card<'a>(
     login_messages: &'a HashMap<String, String>,
     login_auth_urls: &'a HashMap<String, String>,
     active_context_menu: &'a Option<ContextMenuTarget>,
+    platform_statuses: &'a [PlatformStatus],
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let status = auth_status.get(def.name);
     let in_progress = login_in_progress.get(&def.auth_target).copied();
 
     let authenticated = status.map(|s| s.authenticated).unwrap_or(false);
-    let auth_method = status.map(|s| s.method.as_str()).unwrap_or("Unknown");
     let status_details = if authenticated {
         status
             .map(|s| s.hint.as_str())
@@ -309,9 +343,6 @@ fn build_platform_card<'a>(
             AuthState::NotAuthenticated
         },
     );
-
-    // Auth method line
-    let auth_method_line = selectable_label(theme, &format!("Auth: {}", auth_method));
 
     // Status details
     let details = selectable_label(theme, status_details);
@@ -348,14 +379,14 @@ fn build_platform_card<'a>(
     };
 
     // Action buttons
-    let action_buttons = build_action_buttons(def, authenticated, in_progress, theme);
+    let action_buttons =
+        build_action_buttons(def, authenticated, in_progress, platform_statuses, theme);
 
     // Assemble card content
     let mut card_content = column![
         row![icon].align_y(Alignment::Center),
         name,
         status_badge,
-        auth_method_line,
         details,
     ]
     .spacing(tokens::spacing::SM)
@@ -375,7 +406,7 @@ fn build_platform_card<'a>(
     card_content = card_content.push(action_buttons);
 
     let card: Element<'a, Message> = themed_panel(card_content, theme).into();
-    
+
     mouse_area(card)
         .on_right_press(Message::OpenContextMenu(ContextMenuTarget::LoginSurface(
             LoginTextSurface::PlatformCard(def.auth_target),
@@ -388,6 +419,7 @@ fn build_action_buttons<'a>(
     def: &PlatformDef,
     authenticated: bool,
     in_progress: Option<AuthActionKind>,
+    platform_statuses: &'a [PlatformStatus],
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
     let mut buttons = row![].spacing(tokens::spacing::SM);
@@ -408,9 +440,7 @@ fn build_action_buttons<'a>(
             );
         } else {
             // For Claude & Gemini, show info text
-            buttons = buttons.push(
-                selectable_label(theme, "Manage at platform console"),
-            );
+            buttons = buttons.push(selectable_label(theme, "Manage at platform console"));
         }
     } else {
         // Not authenticated: show login button
@@ -418,6 +448,13 @@ fn build_action_buttons<'a>(
             styled_button(theme, "Login", ButtonVariant::Info)
                 .on_press(Message::PlatformLogin(def.auth_target)),
         );
+    }
+
+    // Launch button - only show if platform CLI is installed
+    if let AuthTarget::Platform(platform) = def.auth_target {
+        if is_platform_cli_installed(platform, platform_statuses) {
+            buttons = buttons.push(build_launch_button_for_platform(theme, platform));
+        }
     }
 
     // Refresh button (always visible)
@@ -467,10 +504,8 @@ fn build_git_config_section<'a>(
     github_auth_status: &'a Option<String>,
     theme: &'a AppTheme,
 ) -> Element<'a, Message> {
-    let mut content = column![
-        selectable_label(theme, "Git Configuration"),
-    ]
-    .spacing(tokens::spacing::MD);
+    let mut content =
+        column![selectable_label(theme, "Git Configuration"),].spacing(tokens::spacing::MD);
 
     // GitHub authentication card
     let github_card = build_github_card(github_auth_status, _active_context_menu, theme);
@@ -491,11 +526,8 @@ fn build_git_config_section<'a>(
         ]
         .spacing(tokens::spacing::SM)
         .align_y(Alignment::Center);
-        let git_user_column = column![
-            selectable_label(theme, "Git User"),
-            git_user_row,
-        ]
-        .spacing(tokens::spacing::XS);
+        let git_user_column = column![selectable_label(theme, "Git User"), git_user_row,]
+            .spacing(tokens::spacing::XS);
 
         let git_email_row = row![
             selectable_text_field(
@@ -510,11 +542,8 @@ fn build_git_config_section<'a>(
         ]
         .spacing(tokens::spacing::SM)
         .align_y(Alignment::Center);
-        let git_email_column = column![
-            selectable_label(theme, "Git Email"),
-            git_email_row,
-        ]
-        .spacing(tokens::spacing::XS);
+        let git_email_column = column![selectable_label(theme, "Git Email"), git_email_row,]
+            .spacing(tokens::spacing::XS);
 
         let git_info_grid = row![
             themed_panel(
@@ -545,11 +574,8 @@ fn build_git_config_section<'a>(
         ]
         .spacing(tokens::spacing::SM)
         .align_y(Alignment::Center);
-        let git_remote_column = column![
-            selectable_label(theme, "Remote URL"),
-            git_remote_row,
-        ]
-        .spacing(tokens::spacing::XS);
+        let git_remote_column = column![selectable_label(theme, "Remote URL"), git_remote_row,]
+            .spacing(tokens::spacing::XS);
 
         let git_branch_row = row![
             selectable_text_field(
@@ -564,11 +590,8 @@ fn build_git_config_section<'a>(
         ]
         .spacing(tokens::spacing::SM)
         .align_y(Alignment::Center);
-        let git_branch_column = column![
-            selectable_label(theme, "Current Branch"),
-            git_branch_row,
-        ]
-        .spacing(tokens::spacing::XS);
+        let git_branch_column = column![selectable_label(theme, "Current Branch"), git_branch_row,]
+            .spacing(tokens::spacing::XS);
 
         let remote_branch_grid = row![
             themed_panel(
@@ -590,9 +613,10 @@ fn build_git_config_section<'a>(
         content = content.push(remote_branch_grid);
     } else {
         content = content.push(themed_panel(
-            container(
-                selectable_label(theme, "No git repository detected or git not configured"),
-            )
+            container(selectable_label(
+                theme,
+                "No git repository detected or git not configured",
+            ))
             .padding(tokens::spacing::MD),
             theme,
         ));
@@ -600,15 +624,16 @@ fn build_git_config_section<'a>(
 
     // Note about Copilot
     content = content.push(
-        container(
-            selectable_label(theme, "Note: GitHub Copilot uses your GitHub account authentication"),
-        )
+        container(selectable_label(
+            theme,
+            "Note: GitHub Copilot uses your GitHub account authentication",
+        ))
         .padding(tokens::spacing::SM),
     );
 
     let panel: Element<'a, Message> =
         themed_panel(container(content).padding(tokens::spacing::MD), theme).into();
-    
+
     mouse_area(panel)
         .on_right_press(Message::OpenContextMenu(ContextMenuTarget::LoginSurface(
             LoginTextSurface::GitSection,

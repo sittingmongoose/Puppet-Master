@@ -1,4 +1,13 @@
-//! GitHub Copilot CLI app-local binary installer.
+//! DEPRECATED: Copilot is now installed via npm (@github/copilot) instead of GitHub Releases.
+//!
+//! Use `npm_installer::npm_install_to_app_dir(Platform::Copilot)` instead.
+//!
+//! This file is retained for reference. The github/gh-copilot releases contain the
+//! suggest/explain tool (v1.2.0), NOT the Copilot coding agent. The correct package
+//! is @github/copilot from npm, which includes full coding agent capabilities with
+//! --allow-all-tools support.
+//!
+//! GitHub Copilot CLI app-local binary installer (DEPRECATED — see above).
 //!
 //! Downloads the latest `copilot` native binary from the `github/gh-copilot`
 //! GitHub Releases and installs it into `{APP_DATA_DIR}/bin/copilot`.
@@ -17,12 +26,12 @@ use crate::install::install_coordinator::InstallOutcome;
 use log::info;
 
 /// GitHub Releases API endpoint for the `github/gh-copilot` repository.
-const COPILOT_RELEASES_API: &str =
-    "https://api.github.com/repos/github/gh-copilot/releases/latest";
+const COPILOT_RELEASES_API: &str = "https://api.github.com/repos/github/gh-copilot/releases/latest";
 
 // DRY:FN:install_copilot_app_local — Download copilot native binary into app-local bin/
 /// Download the latest GitHub Copilot CLI binary for the current platform and
 /// install it into `{APP_DATA_DIR}/bin/copilot`.
+#[allow(dead_code)]
 pub async fn install_copilot_app_local() -> InstallOutcome {
     info!("Installing GitHub Copilot CLI to app-local bin/");
     let mut log_lines = Vec::new();
@@ -59,7 +68,7 @@ pub async fn install_copilot_app_local() -> InstallOutcome {
             return InstallOutcome::failure_with_log(
                 format!("Failed to create bin dir: {e}"),
                 log_lines,
-            )
+            );
         }
     };
 
@@ -89,9 +98,8 @@ pub async fn install_copilot_app_local() -> InstallOutcome {
 }
 
 /// Fetch the latest release JSON from GitHub API.
-async fn fetch_latest_release(
-    log_lines: &mut Vec<String>,
-) -> Result<serde_json::Value, String> {
+#[allow(dead_code)]
+async fn fetch_latest_release(log_lines: &mut Vec<String>) -> Result<serde_json::Value, String> {
     let client = reqwest::Client::builder()
         .user_agent("rwm-puppet-master/1.0")
         .build()
@@ -104,10 +112,7 @@ async fn fetch_latest_release(
         .map_err(|e| format!("HTTP request failed: {e}"))?;
 
     if !resp.status().is_success() {
-        return Err(format!(
-            "GitHub API returned HTTP {}",
-            resp.status()
-        ));
+        return Err(format!("GitHub API returned HTTP {}", resp.status()));
     }
 
     let json: serde_json::Value = resp
@@ -124,6 +129,7 @@ async fn fetch_latest_release(
 ///
 /// Asset names follow the pattern `{os}-{arch}` (e.g. `linux-amd64`, `darwin-arm64`,
 /// `windows-amd64.exe`).
+#[allow(dead_code)]
 fn pick_asset_url(release: &serde_json::Value, log_lines: &mut Vec<String>) -> Option<String> {
     let assets = release["assets"].as_array()?;
 
@@ -145,15 +151,13 @@ fn pick_asset_url(release: &serde_json::Value, log_lines: &mut Vec<String>) -> O
     }
 
     // Log available assets to help diagnose failures
-    let names: Vec<&str> = assets
-        .iter()
-        .filter_map(|a| a["name"].as_str())
-        .collect();
+    let names: Vec<&str> = assets.iter().filter_map(|a| a["name"].as_str()).collect();
     log_lines.push(format!("Available assets: {}", names.join(", ")));
     None
 }
 
 /// Returns the exact asset filename for the current target triple.
+#[allow(dead_code)]
 fn current_asset_name() -> &'static str {
     #[cfg(all(target_os = "linux", target_arch = "x86_64"))]
     return "linux-amd64";
@@ -176,6 +180,7 @@ fn current_asset_name() -> &'static str {
 }
 
 /// Download bytes from a URL.
+#[allow(dead_code)]
 async fn download_bytes(url: &str, log_lines: &mut Vec<String>) -> Result<Vec<u8>, String> {
     let client = reqwest::Client::builder()
         .user_agent("rwm-puppet-master/1.0")
@@ -205,6 +210,7 @@ async fn download_bytes(url: &str, log_lines: &mut Vec<String>) -> Result<Vec<u8
 }
 
 #[cfg(not(target_os = "windows"))]
+#[allow(dead_code)]
 fn set_executable_bit(path: &std::path::Path) {
     use std::os::unix::fs::PermissionsExt;
     if let Ok(meta) = std::fs::metadata(path) {
@@ -215,15 +221,15 @@ fn set_executable_bit(path: &std::path::Path) {
 }
 
 #[cfg(target_os = "windows")]
+#[allow(dead_code)]
 fn set_executable_bit(_path: &std::path::Path) {}
 
 /// Return the public download URL base for the given platform asset.
 /// Used in tests and display only.
+#[allow(dead_code)]
 pub fn copilot_asset_download_url(tag: &str) -> String {
     let asset = current_asset_name();
-    format!(
-        "https://github.com/github/gh-copilot/releases/download/{tag}/{asset}"
-    )
+    format!("https://github.com/github/gh-copilot/releases/download/{tag}/{asset}")
 }
 
 #[cfg(test)]
@@ -249,8 +255,14 @@ mod tests {
     #[test]
     fn download_url_contains_asset_name() {
         let url = copilot_asset_download_url("v1.2.0");
-        assert!(url.contains("gh-copilot"), "URL should reference gh-copilot repo");
+        assert!(
+            url.contains("gh-copilot"),
+            "URL should reference gh-copilot repo"
+        );
         assert!(url.contains("v1.2.0"), "URL should contain the tag");
-        assert!(url.contains(current_asset_name()), "URL should contain the asset name");
+        assert!(
+            url.contains(current_asset_name()),
+            "URL should contain the asset name"
+        );
     }
 }

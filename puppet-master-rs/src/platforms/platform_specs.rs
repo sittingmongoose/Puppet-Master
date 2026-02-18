@@ -723,12 +723,11 @@ static COPILOT_SPEC: PlatformSpec = PlatformSpec {
     display_name: "GitHub Copilot CLI",
     cli_binary_names: &["copilot"],
     install_methods: &[
-        // Native ELF binary distributed via GitHub Releases (github/gh-copilot).
-        // Download URL pattern: https://github.com/github/gh-copilot/releases/latest/download/{os}-{arch}
-        // e.g. linux-amd64, darwin-arm64, windows-amd64.exe
+        // npm package @github/copilot — the actual coding agent with --allow-all-tools
+        // (NOT the github/gh-copilot GitHub Releases binary which is the suggest/explain tool)
         InstallMethod {
-            method: "github-release",
-            command: "https://github.com/github/gh-copilot/releases/latest/download/",
+            method: "npm",
+            command: "npm install -g @github/copilot",
             os: &["linux", "macos", "windows"],
         },
     ],
@@ -860,7 +859,7 @@ static COPILOT_SPEC: PlatformSpec = PlatformSpec {
         status: "Technical Preview",
         note: "Can list models, define custom agents/skills/tools. Auth: GitHub OAuth, BYOK.",
     }),
-    version_command: "version", // Note: `copilot version`, not `--version`
+    version_command: "--version", // npm @github/copilot uses --version (not `copilot version`)
     update_command: Some("update"),
     reasoning_is_model_based: false,
     auto_mode: None,
@@ -1069,7 +1068,9 @@ pub fn npm_package_info(platform: Platform) -> Option<(&'static str, &'static st
         if method.method == "npm" {
             // Parse "npm install -g @package/name" to extract package
             let parts: Vec<&str> = method.command.split_whitespace().collect();
-            if let Some(pkg_idx) = parts.iter().position(|&p| p.starts_with('@') || (!p.starts_with('-') && p != "npm" && p != "install")) {
+            if let Some(pkg_idx) = parts.iter().position(|&p| {
+                p.starts_with('@') || (!p.starts_with('-') && p != "npm" && p != "install")
+            }) {
                 let package = parts.get(pkg_idx)?;
                 // Binary name comes from cli_binary_names (primary binary)
                 let binary = spec.cli_binary_names.first()?;
@@ -1328,7 +1329,8 @@ mod tests {
     #[test]
     fn test_npm_package_info() {
         // Gemini
-        let (pkg, bin) = npm_package_info(Platform::Gemini).expect("Gemini should have npm package");
+        let (pkg, bin) =
+            npm_package_info(Platform::Gemini).expect("Gemini should have npm package");
         assert_eq!(pkg, "@google/gemini-cli");
         assert_eq!(bin, "gemini");
 
@@ -1337,8 +1339,11 @@ mod tests {
         assert_eq!(pkg, "@openai/codex");
         assert_eq!(bin, "codex");
 
-        // Copilot is a native binary installed from GitHub Releases, not npm
-        assert!(npm_package_info(Platform::Copilot).is_none());
+        // Copilot — now uses npm @github/copilot package (coding agent)
+        let (pkg, bin) =
+            npm_package_info(Platform::Copilot).expect("Copilot should have npm package");
+        assert_eq!(pkg, "@github/copilot");
+        assert_eq!(bin, "copilot");
 
         // Claude and Cursor don't use npm
         assert!(npm_package_info(Platform::Claude).is_none());
@@ -1348,13 +1353,13 @@ mod tests {
     #[test]
     fn test_install_script_urls() {
         // Claude
-        let (unix, _win) = install_script_urls(Platform::Claude)
-            .expect("Claude should have install scripts");
+        let (unix, _win) =
+            install_script_urls(Platform::Claude).expect("Claude should have install scripts");
         assert_eq!(unix, "https://claude.ai/install.sh");
 
         // Cursor
-        let (unix, win) = install_script_urls(Platform::Cursor)
-            .expect("Cursor should have install scripts");
+        let (unix, win) =
+            install_script_urls(Platform::Cursor).expect("Cursor should have install scripts");
         assert_eq!(unix, "https://cursor.com/install");
         assert_eq!(win, "https://cursor.com/install?win32=true");
 

@@ -21,6 +21,13 @@ pub struct AuthStatusChecker {
     timeout_secs: u64,
 }
 
+// DRY:HELPER:get_home_dir — Cross-platform home directory (HOME on Unix, USERPROFILE on Windows)
+fn get_home_dir() -> Option<PathBuf> {
+    std::env::var_os("HOME")
+        .or_else(|| std::env::var_os("USERPROFILE"))
+        .map(PathBuf::from)
+}
+
 impl AuthStatusChecker {
     // DRY:FN:new
     /// Creates a new auth status checker with default timeout
@@ -88,7 +95,10 @@ impl AuthStatusChecker {
     // Platform-specific authentication checks
 
     async fn check_cursor(&self) -> AuthCheckResult {
-        if PlatformDetector::detect_platform(Platform::Cursor).await.is_none() {
+        if PlatformDetector::detect_platform(Platform::Cursor)
+            .await
+            .is_none()
+        {
             return AuthCheckResult::not_authenticated(
                 "Cursor CLI is not installed. Install Cursor CLI, then run 'agent login'.",
             );
@@ -111,7 +121,10 @@ impl AuthStatusChecker {
     }
 
     async fn check_codex(&self) -> AuthCheckResult {
-        if PlatformDetector::detect_platform(Platform::Codex).await.is_none() {
+        if PlatformDetector::detect_platform(Platform::Codex)
+            .await
+            .is_none()
+        {
             return AuthCheckResult::not_authenticated(
                 "Codex CLI is not installed. Install Codex CLI, then run 'codex login'.",
             );
@@ -147,15 +160,22 @@ impl AuthStatusChecker {
     }
 
     async fn check_claude(&self) -> AuthCheckResult {
-        if PlatformDetector::detect_platform(Platform::Claude).await.is_none() {
+        if PlatformDetector::detect_platform(Platform::Claude)
+            .await
+            .is_none()
+        {
             return AuthCheckResult::not_authenticated(
                 "Claude CLI is not installed. Install Claude Code CLI, then run 'claude' to complete browser-based login.",
             );
         }
         // Claude has no `auth status` subcommand.
         // Check: 1) ~/.claude/ credentials exist  2) `claude --version` succeeds (CLI installed)
-        let home = std::env::var("HOME").unwrap_or_default();
-        let cred_path = std::path::Path::new(&home).join(".claude");
+        let Some(home) = get_home_dir() else {
+            return AuthCheckResult::not_authenticated(
+                "Could not determine home directory. Set HOME or USERPROFILE environment variable.",
+            );
+        };
+        let cred_path = home.join(".claude");
         let spec = platform_specs::get_spec(Platform::Claude);
 
         if Self::credentials_cached(&cred_path) {
@@ -163,7 +183,7 @@ impl AuthStatusChecker {
                 if let Ok(output) = self.run_command(cmd, &[spec.version_command]).await {
                     if output.status.success() {
                         return AuthCheckResult::authenticated(
-                            "Claude CLI installed and credentials cached",
+                            "Authenticated (credentials from ~/.claude/)",
                         );
                     }
                 }
@@ -187,13 +207,20 @@ impl AuthStatusChecker {
     }
 
     async fn check_gemini(&self) -> AuthCheckResult {
-        if PlatformDetector::detect_platform(Platform::Gemini).await.is_none() {
+        if PlatformDetector::detect_platform(Platform::Gemini)
+            .await
+            .is_none()
+        {
             return AuthCheckResult::not_authenticated(
                 "Gemini CLI is not installed. Install Gemini CLI, then run 'gemini' and Login with Google.",
             );
         }
-        let home = std::env::var("HOME").unwrap_or_default();
-        let cred_path = std::path::Path::new(&home).join(".gemini");
+        let Some(home) = get_home_dir() else {
+            return AuthCheckResult::not_authenticated(
+                "Could not determine home directory. Set HOME or USERPROFILE environment variable.",
+            );
+        };
+        let cred_path = home.join(".gemini");
         let spec = platform_specs::get_spec(Platform::Gemini);
 
         if Self::credentials_cached(&cred_path) {
@@ -201,7 +228,7 @@ impl AuthStatusChecker {
                 if let Ok(output) = self.run_command(cmd, &[spec.version_command]).await {
                     if output.status.success() {
                         return AuthCheckResult::authenticated(
-                            "Gemini CLI installed and credentials cached",
+                            "Authenticated (credentials from ~/.gemini/)",
                         );
                     }
                 }
@@ -225,7 +252,10 @@ impl AuthStatusChecker {
     }
 
     async fn check_copilot(&self) -> AuthCheckResult {
-        if PlatformDetector::detect_platform(Platform::Copilot).await.is_none() {
+        if PlatformDetector::detect_platform(Platform::Copilot)
+            .await
+            .is_none()
+        {
             return AuthCheckResult::not_authenticated(
                 "Copilot CLI is not installed. Install Copilot CLI, then run 'copilot login'.",
             );
@@ -234,14 +264,11 @@ impl AuthStatusChecker {
         // Primary: check ~/.copilot/config.json for logged_in_users
         // (copilot login stores auth here, separate from gh auth)
         if Self::copilot_config_has_logged_in_user() {
-            return AuthCheckResult::authenticated(
-                "Copilot CLI is authenticated (logged in via copilot login).",
-            );
+            return AuthCheckResult::authenticated("Authenticated (credentials from ~/.copilot/)");
         }
 
         // Fallback: check gh auth status as a proxy
-        let gh_authenticated = if let Ok(output) =
-            self.run_command("gh", &["auth", "status"]).await
+        let gh_authenticated = if let Ok(output) = self.run_command("gh", &["auth", "status"]).await
         {
             Self::gh_auth_output_is_authenticated(&output)
         } else {
@@ -261,15 +288,10 @@ impl AuthStatusChecker {
 
     /// Check if ~/.copilot/config.json contains logged_in_users with at least one entry.
     fn copilot_config_has_logged_in_user() -> bool {
-        let home = std::env::var("HOME")
-            .or_else(|_| std::env::var("USERPROFILE"))
-            .unwrap_or_default();
-        if home.is_empty() {
+        let Some(home) = get_home_dir() else {
             return false;
-        }
-        let config_path = std::path::Path::new(&home)
-            .join(".copilot")
-            .join("config.json");
+        };
+        let config_path = home.join(".copilot").join("config.json");
         let Ok(contents) = std::fs::read_to_string(&config_path) else {
             return false;
         };

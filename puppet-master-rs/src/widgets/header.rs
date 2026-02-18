@@ -122,12 +122,16 @@ where
     let ink_color = theme.ink();
 
     // Title - "RWM PUPPET MASTER" with thin underline (tight spacing so line sits close to text)
-    let title_text = text(if size.is_mobile() { "RWM" } else { "RWM PUPPET MASTER" })
-        .size(if size.is_mobile() { 20 } else { 26 })
-        .font(FONT_DISPLAY_BOLD)
-        .style(move |_theme: &iced::Theme| text::Style {
-            color: Some(ink_color),
-        });
+    let title_text = text(if size.is_mobile() {
+        "RWM"
+    } else {
+        "RWM PUPPET MASTER"
+    })
+    .size(if size.is_mobile() { 20 } else { 26 })
+    .font(FONT_DISPLAY_BOLD)
+    .style(move |_theme: &iced::Theme| text::Style {
+        color: Some(ink_color),
+    });
     let title_wrapped = container(title_text).padding(Padding::ZERO);
     let underline = rule::horizontal(2).style(move |_theme: &iced::Theme| rule::Style {
         color: ink_color,
@@ -157,11 +161,7 @@ where
     }
 
     // Theme toggle — Ghost variant gives THICK border + shadow = visible "box"
-    let theme_label = if theme.is_dark() {
-        "Light"
-    } else {
-        "Dark"
-    };
+    let theme_label = if theme.is_dark() { "Light" } else { "Dark" };
     let theme_btn =
         styled_button_sized(theme, theme_label, ButtonVariant::Ghost, ButtonSize::Small)
             .on_press(on_theme_toggle);
@@ -210,8 +210,16 @@ where
             Padding::ZERO
                 .top(spacing::SM)
                 .bottom(spacing::SM)
-                .left(if size.is_mobile() { spacing::SM } else { spacing::LG })
-                .right(if size.is_mobile() { spacing::SM } else { spacing::LG }),
+                .left(if size.is_mobile() {
+                    spacing::SM
+                } else {
+                    spacing::LG
+                })
+                .right(if size.is_mobile() {
+                    spacing::SM
+                } else {
+                    spacing::LG
+                }),
         )
         .width(Length::Fill)
         .style(move |_theme: &iced::Theme| container::Style {

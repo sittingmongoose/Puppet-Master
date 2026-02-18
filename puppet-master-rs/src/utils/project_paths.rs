@@ -75,11 +75,7 @@ pub fn is_directory_writable(path: &Path) -> bool {
         .duration_since(std::time::UNIX_EPOCH)
         .map(|d| d.as_nanos())
         .unwrap_or(0);
-    let probe_path = path.join(format!(
-        ".rwm-write-probe-{}-{}",
-        std::process::id(),
-        nanos
-    ));
+    let probe_path = path.join(format!(".rwm-write-probe-{}-{}", std::process::id(), nanos));
 
     match std::fs::OpenOptions::new()
         .write(true)

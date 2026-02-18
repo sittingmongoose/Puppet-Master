@@ -739,7 +739,17 @@ mod tests {
         let (cmd, args) =
             verifier.build_platform_command(Platform::Claude, "hello", Path::new("/tmp"));
 
-        assert_eq!(cmd, "claude");
+        // cmd may be a full path (e.g. on macOS with app-local install) or just "claude"
+        assert!(
+            cmd == "claude"
+                || std::path::Path::new(&cmd)
+                    .file_name()
+                    .and_then(|n| n.to_str())
+                    .map(|n| n == "claude" || n.starts_with("claude"))
+                    .unwrap_or(false),
+            "Expected command to be 'claude' or a path ending in 'claude', got: {}",
+            cmd
+        );
         assert!(args.contains(&"-p".to_string()));
         assert!(args.contains(&"hello".to_string()));
         assert!(args.contains(&"--model".to_string()));

@@ -10,10 +10,9 @@ use crate::platforms::platform_specs;
 use crate::theme::{AppTheme, colors, fonts, tokens};
 use crate::types::Platform;
 use crate::widgets::{
-    help_tooltip, interaction_mode_to_variant,
-    responsive_form_row, responsive_form_row_wide_label, responsive_grid,
+    LayoutSize, help_tooltip, interaction_mode_to_variant, responsive_form_row,
+    responsive_form_row_wide_label, responsive_grid,
     selectable_text::selectable_label,
-    LayoutSize,
     styled_button::{ButtonVariant, styled_button},
     styled_input::{InputSize, InputVariant, styled_text_input, styled_text_input_with_variant},
 };
@@ -202,7 +201,15 @@ pub fn view<'a>(
 
     // Tab Content
     let tab_content = match active_tab {
-        0 => tab_tiers(gui_config, models, platform_statuses, auth_status, settings_interaction_mode, theme, size),
+        0 => tab_tiers(
+            gui_config,
+            models,
+            platform_statuses,
+            auth_status,
+            settings_interaction_mode,
+            theme,
+            size,
+        ),
         1 => tab_branching(gui_config, git_info, settings_interaction_mode, theme, size),
         2 => tab_verification(gui_config, settings_interaction_mode, theme, size),
         3 => tab_memory(gui_config, settings_interaction_mode, theme, size),
@@ -314,13 +321,12 @@ fn tab_tiers<'a>(
         .padding(tokens::spacing::MD);
 
     // Header
-    content = content.push(
-        selectable_label(theme, "TIER CONFIGURATION"),
-    );
+    content = content.push(selectable_label(theme, "TIER CONFIGURATION"));
 
-    content = content.push(
-        selectable_label(theme, "Configure execution settings for each tier: Phase, Task, Subtask, and Iteration"),
-    );
+    content = content.push(selectable_label(
+        theme,
+        "Configure execution settings for each tier: Phase, Task, Subtask, and Iteration",
+    ));
 
     let tooltip_variant = interaction_mode_to_variant(settings_interaction_mode);
 
@@ -328,7 +334,10 @@ fn tab_tiers<'a>(
     // Only use dynamically detected/cached models — no static fallbacks.
     // Per user directive: "There should never be fallback models or effort/reasoning."
     let model_list_for = |tier_config: &crate::config::gui_config::TierConfig| -> Vec<String> {
-        models.get(&tier_config.platform).cloned().unwrap_or_default()
+        models
+            .get(&tier_config.platform)
+            .cloned()
+            .unwrap_or_default()
     };
 
     // Effort is only visible when we have dynamically detected models for the platform.
@@ -337,7 +346,9 @@ fn tab_tiers<'a>(
         if let Some(p) = crate::types::Platform::from_str_loose(&tier_config.platform) {
             crate::platforms::platform_specs::supports_effort(p)
                 && !crate::platforms::platform_specs::reasoning_is_model_based(p)
-                && models.get(&tier_config.platform).map_or(false, |m| !m.is_empty())
+                && models
+                    .get(&tier_config.platform)
+                    .map_or(false, |m| !m.is_empty())
         } else {
             false
         }
@@ -419,7 +430,7 @@ fn tier_card<'a>(
 ) -> Element<'a, Message> {
     const OUTPUT_FORMATS: &[&str] = &["text", "json", "stream-json"];
     const FAILURE_STYLES: &[&str] = &["spawn_new_agent", "continue_same_agent", "skip_retries"];
-    
+
     // Build platform options with availability indicators
     let platform_options: Vec<String> = Platform::all()
         .iter()
@@ -440,9 +451,7 @@ fn tier_card<'a>(
         .padding(tokens::spacing::MD);
 
     // Header
-    card_content = card_content.push(
-        selectable_label(theme, display_name),
-    );
+    card_content = card_content.push(selectable_label(theme, display_name));
 
     // Platform picker
     card_content = card_content.push(
@@ -464,7 +473,7 @@ fn tier_card<'a>(
                         .trim_end_matches(" (not installed)")
                         .trim_end_matches(" (not logged in)")
                         .trim_end_matches(" (unavailable)");
-                    
+
                     let platform_id = Platform::all()
                         .iter()
                         .find(|platform| {
@@ -524,9 +533,10 @@ fn tier_card<'a>(
             .spacing(tokens::spacing::XXS),
         );
     } else {
-        card_content = card_content.push(
-            selectable_label(theme, "Platform unavailable — install and log in to configure model"),
-        );
+        card_content = card_content.push(selectable_label(
+            theme,
+            "Platform unavailable — install and log in to configure model",
+        ));
     }
 
     // Reasoning Effort picker — conditional: hidden for Cursor (model-based) and Gemini (unsupported)
@@ -688,13 +698,12 @@ fn tab_branching<'a>(
         .padding(tokens::spacing::MD);
 
     // Header
-    content = content.push(
-        selectable_label(theme, "BRANCHING CONFIGURATION"),
-    );
+    content = content.push(selectable_label(theme, "BRANCHING CONFIGURATION"));
 
-    content = content.push(
-        selectable_label(theme, "Configure Git branching strategy for automated branch creation"),
-    );
+    content = content.push(selectable_label(
+        theme,
+        "Configure Git branching strategy for automated branch creation",
+    ));
 
     // Git Info Display (if available)
     if let Some(info) = git_info {
@@ -733,7 +742,8 @@ fn tab_branching<'a>(
     }
 
     // Base Branch field
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Base Branch:",
         row![
             help_tooltip("branching.base_branch", tooltip_variant, theme),
@@ -747,14 +757,19 @@ fn tab_branching<'a>(
     ));
 
     // Naming Pattern field
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Naming Pattern:",
         row![
             help_tooltip("branching.naming_pattern", tooltip_variant, theme),
-            styled_text_input(theme, "rwm/{tier}/{id}", &gui_config.branching.naming_pattern)
-                .on_input(|value| {
-                    Message::ConfigBranchingFieldChanged("naming_pattern".to_string(), value)
-                }),
+            styled_text_input(
+                theme,
+                "rwm/{tier}/{id}",
+                &gui_config.branching.naming_pattern
+            )
+            .on_input(|value| {
+                Message::ConfigBranchingFieldChanged("naming_pattern".to_string(), value)
+            }),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
@@ -815,24 +830,28 @@ fn tab_verification<'a>(
         .padding(tokens::spacing::MD);
 
     // Header
-    content = content.push(
-        selectable_label(theme, "VERIFICATION CONFIGURATION"),
-    );
+    content = content.push(selectable_label(theme, "VERIFICATION CONFIGURATION"));
 
-    content = content.push(
-        selectable_label(theme, "Configure verification and testing settings for automated testing"),
-    );
+    content = content.push(selectable_label(
+        theme,
+        "Configure verification and testing settings for automated testing",
+    ));
 
     // Browser Adapter field
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Browser Adapter:",
         row![
             help_tooltip("verification.browser_adapter", tooltip_variant, theme),
-            styled_text_input(theme, "playwright", &gui_config.verification.browser_adapter)
-                .on_input(|value| Message::ConfigVerificationFieldChanged(
-                    "browser_adapter".to_string(),
-                    value
-                )),
+            styled_text_input(
+                theme,
+                "playwright",
+                &gui_config.verification.browser_adapter
+            )
+            .on_input(|value| Message::ConfigVerificationFieldChanged(
+                "browser_adapter".to_string(),
+                value
+            )),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
@@ -840,7 +859,8 @@ fn tab_verification<'a>(
     ));
 
     // Evidence Directory field with folder picker
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Evidence Directory:",
         row![
             help_tooltip("verification.evidence_directory", tooltip_variant, theme),
@@ -863,7 +883,8 @@ fn tab_verification<'a>(
     ));
 
     // Screenshot on Failure toggler
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Screenshot on Failure:",
         row![
             help_tooltip("verification.screenshot_on_failure", tooltip_variant, theme),
@@ -916,7 +937,8 @@ fn tab_memory<'a>(
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
 
     // Progress File
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Progress File:",
         row![
             help_tooltip("memory.progress_file", tooltip_variant, theme),
@@ -941,7 +963,8 @@ fn tab_memory<'a>(
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
 
     // Agents File
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Agents File:",
         row![
             help_tooltip("memory.agents_file", tooltip_variant, theme),
@@ -966,7 +989,8 @@ fn tab_memory<'a>(
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::SM)));
 
     // PRD File
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "PRD File:",
         row![
             help_tooltip("memory.prd_file", tooltip_variant, theme),
@@ -991,7 +1015,8 @@ fn tab_memory<'a>(
     content = content.push(Space::new().height(Length::Fixed(tokens::spacing::MD)));
 
     // Multi-Level Agents Toggle
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Multi-Level Agents:",
         row![
             help_tooltip("memory.multi_level_agents", tooltip_variant, theme),
@@ -1113,7 +1138,8 @@ fn budget_card<'a>(
     );
 
     // Max Calls Per Run
-    card_content = card_content.push(responsive_form_row(theme, 
+    card_content = card_content.push(responsive_form_row(
+        theme,
         "Max Calls Per Run:",
         row![
             help_tooltip("budget.max_calls_per_run", tooltip_variant, theme),
@@ -1137,7 +1163,8 @@ fn budget_card<'a>(
     ));
 
     // Max Calls Per Hour
-    card_content = card_content.push(responsive_form_row(theme, 
+    card_content = card_content.push(responsive_form_row(
+        theme,
         "Max Calls Per Hour:",
         row![
             help_tooltip("budget.max_calls_per_hour", tooltip_variant, theme),
@@ -1161,7 +1188,8 @@ fn budget_card<'a>(
     ));
 
     // Max Calls Per Day
-    card_content = card_content.push(responsive_form_row(theme, 
+    card_content = card_content.push(responsive_form_row(
+        theme,
         "Max Calls Per Day:",
         row![
             help_tooltip("budget.max_calls_per_day", tooltip_variant, theme),
@@ -1186,7 +1214,8 @@ fn budget_card<'a>(
 
     // Cursor-specific: Unlimited Auto Mode
     if is_cursor {
-        card_content = card_content.push(responsive_form_row(theme, 
+        card_content = card_content.push(responsive_form_row(
+            theme,
             "Unlimited Auto Mode:",
             row![
                 help_tooltip("budget.unlimited_auto_mode", tooltip_variant, theme),
@@ -1258,7 +1287,8 @@ fn tab_advanced<'a>(
 
     // Log Level
     const LOG_LEVELS: &[&str] = &["error", "warn", "info", "debug"];
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Log Level:",
         row![
             help_tooltip("orchestrator.log_level", tooltip_variant, theme),
@@ -1275,7 +1305,8 @@ fn tab_advanced<'a>(
     ));
 
     // Process Timeout
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Process Timeout (ms):",
         row![
             help_tooltip("orchestrator.process_timeout", tooltip_variant, theme),
@@ -1295,7 +1326,8 @@ fn tab_advanced<'a>(
     ));
 
     // Parallel Iterations
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Parallel Iterations:",
         row![
             help_tooltip("orchestrator.parallel_iterations", tooltip_variant, theme),
@@ -1315,7 +1347,8 @@ fn tab_advanced<'a>(
     ));
 
     // Intensive Logging Toggle
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Intensive Logging:",
         row![
             help_tooltip("orchestrator.intensive_logging", tooltip_variant, theme),
@@ -1364,7 +1397,8 @@ fn tab_advanced<'a>(
             _ => "",
         };
 
-        content = content.push(responsive_form_row(theme, 
+        content = content.push(responsive_form_row(
+            theme,
             format!("{}:", platform.to_uppercase()),
             row![
                 help_tooltip(tooltip_key, tooltip_variant, theme),
@@ -1399,7 +1433,8 @@ fn tab_advanced<'a>(
 
     // Install Scope
     const INSTALL_SCOPES: &[InstallScope] = &[InstallScope::Global, InstallScope::ProjectLocal];
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Install Scope:",
         row![
             help_tooltip("install_scope", tooltip_variant, theme),
@@ -1450,7 +1485,8 @@ fn tab_advanced<'a>(
                 .copied()
                 .unwrap_or(false);
 
-            content = content.push(responsive_form_row_wide_label(theme, 
+            content = content.push(responsive_form_row_wide_label(
+                theme,
                 format!("Enable {} Experimental:", display_name),
                 row![
                     help_tooltip(&format!("experimental_{}", key), tooltip_variant, theme),
@@ -1491,7 +1527,8 @@ fn tab_advanced<'a>(
                 .copied()
                 .unwrap_or(false);
 
-            content = content.push(responsive_form_row_wide_label(theme, 
+            content = content.push(responsive_form_row_wide_label(
+                theme,
                 format!("Enable {}:", display_name),
                 row![
                     help_tooltip(&format!("subagent_{}", key), tooltip_variant, theme),
@@ -1517,7 +1554,8 @@ fn tab_advanced<'a>(
     );
 
     // Kill on Failure
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Kill Agent on Failure:",
         row![
             help_tooltip("orchestrator.kill_agent_on_failure", tooltip_variant, theme),
@@ -1531,7 +1569,8 @@ fn tab_advanced<'a>(
     ));
 
     // Enable Parallel
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Enable Parallel:",
         row![
             help_tooltip("orchestrator.enable_parallel", tooltip_variant, theme),
@@ -1545,7 +1584,8 @@ fn tab_advanced<'a>(
     ));
 
     // Max Parallel Phases
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Max Parallel Phases:",
         row![
             help_tooltip("orchestrator.max_parallel_phases", tooltip_variant, theme),
@@ -1569,7 +1609,8 @@ fn tab_advanced<'a>(
     ));
 
     // Max Parallel Tasks
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Max Parallel Tasks:",
         row![
             help_tooltip("orchestrator.max_parallel_tasks", tooltip_variant, theme),
@@ -1599,7 +1640,8 @@ fn tab_advanced<'a>(
     );
 
     // Enabled
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Enabled:",
         row![
             help_tooltip("checkpointing.enabled", tooltip_variant, theme),
@@ -1613,7 +1655,8 @@ fn tab_advanced<'a>(
     ));
 
     // Interval
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Interval (seconds):",
         row![
             help_tooltip("checkpointing.interval_seconds", tooltip_variant, theme),
@@ -1637,7 +1680,8 @@ fn tab_advanced<'a>(
     ));
 
     // Max Checkpoints
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Max Checkpoints:",
         row![
             help_tooltip("checkpointing.max_checkpoints", tooltip_variant, theme),
@@ -1661,7 +1705,8 @@ fn tab_advanced<'a>(
     ));
 
     // On Subtask Complete
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "On Subtask Complete:",
         row![
             help_tooltip("checkpointing.on_subtask_complete", tooltip_variant, theme),
@@ -1675,7 +1720,8 @@ fn tab_advanced<'a>(
     ));
 
     // On Shutdown
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "On Shutdown:",
         row![
             help_tooltip("checkpointing.on_shutdown", tooltip_variant, theme),
@@ -1699,7 +1745,8 @@ fn tab_advanced<'a>(
     );
 
     // Enabled
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Enabled:",
         row![
             help_tooltip("loop_guard.enabled", tooltip_variant, theme),
@@ -1712,7 +1759,8 @@ fn tab_advanced<'a>(
     ));
 
     // Max Repetitions
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Max Repetitions:",
         row![
             help_tooltip("loop_guard.max_repetitions", tooltip_variant, theme),
@@ -1735,7 +1783,8 @@ fn tab_advanced<'a>(
     ));
 
     // Suppress Reply Relay
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Suppress Reply Relay:",
         row![
             help_tooltip("loop_guard.suppress_reply_relay", tooltip_variant, theme),
@@ -1759,7 +1808,8 @@ fn tab_advanced<'a>(
     );
 
     // LAN Mode
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "LAN Mode:",
         row![
             help_tooltip("network.lan_mode", tooltip_variant, theme),
@@ -1772,7 +1822,8 @@ fn tab_advanced<'a>(
     ));
 
     // Trust Proxy
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Trust Proxy:",
         row![
             help_tooltip("network.trust_proxy", tooltip_variant, theme),
@@ -1785,7 +1836,8 @@ fn tab_advanced<'a>(
     ));
 
     // Allowed Origins
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Allowed Origins:",
         row![
             help_tooltip("network.allowed_origins", tooltip_variant, theme),
@@ -1837,7 +1889,8 @@ fn tab_interview<'a>(
     );
 
     // Primary Platform
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Primary Platform:",
         row![
             help_tooltip("interview.primary_platform", tooltip_variant, theme),
@@ -1866,7 +1919,8 @@ fn tab_interview<'a>(
         }
     };
 
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Vision Provider:",
         row![
             help_tooltip("interview.vision_provider", tooltip_variant, theme),
@@ -1885,7 +1939,8 @@ fn tab_interview<'a>(
     ));
 
     // Primary Model
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Primary Model:",
         row![
             help_tooltip("interview.primary_model", tooltip_variant, theme),
@@ -1899,7 +1954,8 @@ fn tab_interview<'a>(
     ));
 
     // Reasoning Level
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Reasoning Level:",
         row![
             help_tooltip("interview.reasoning_level", tooltip_variant, theme),
@@ -1931,7 +1987,8 @@ fn tab_interview<'a>(
         let idx_for_platform = idx;
         let idx_for_model = idx;
         let idx_for_remove = idx;
-        content = content.push(responsive_form_row(theme, 
+        content = content.push(responsive_form_row(
+            theme,
             format!("Backup {}:", idx + 1),
             row![
                 pick_list(platforms, Some(pair.platform.as_str()), move |p: &str| {
@@ -1964,7 +2021,8 @@ fn tab_interview<'a>(
     );
 
     // Max Questions Per Phase
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Max Questions Per Phase:",
         row![
             help_tooltip("interview.max_questions_per_phase", tooltip_variant, theme),
@@ -1984,7 +2042,8 @@ fn tab_interview<'a>(
     ));
 
     // First-Principles Mode
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "First-Principles Mode:",
         row![
             help_tooltip("interview.first_principles", tooltip_variant, theme),
@@ -2005,7 +2064,8 @@ fn tab_interview<'a>(
     ));
 
     // Architecture Confirmation
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Require Architecture Confirmation:",
         row![
             help_tooltip(
@@ -2031,7 +2091,8 @@ fn tab_interview<'a>(
     ));
 
     // Playwright Requirements
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Generate Playwright Requirements:",
         row![
             help_tooltip("interview.playwright_requirements", tooltip_variant, theme),
@@ -2053,7 +2114,8 @@ fn tab_interview<'a>(
     ));
 
     // Generate Initial AGENTS.md
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Generate Initial AGENTS.md:",
         row![
             help_tooltip("interview.generate_agents_md", tooltip_variant, theme),
@@ -2075,7 +2137,8 @@ fn tab_interview<'a>(
     ));
 
     // Output Directory
-    content = content.push(responsive_form_row(theme, 
+    content = content.push(responsive_form_row(
+        theme,
         "Output Directory:",
         row![
             help_tooltip("interview.output_dir", tooltip_variant, theme),

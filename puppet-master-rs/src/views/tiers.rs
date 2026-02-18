@@ -4,7 +4,10 @@
 
 use crate::app::Message;
 use crate::theme::{AppTheme, colors, fonts, tokens};
-use crate::widgets::{selectable_text::{selectable_label, selectable_label_mono}, *};
+use crate::widgets::{
+    selectable_text::{selectable_label, selectable_label_mono},
+    *,
+};
 use iced::widget::{Space, column, container, row, scrollable, text_editor};
 use iced::{Border, Element, Length};
 
@@ -77,7 +80,8 @@ pub fn view<'a>(
     // Header
     let header_actions = row![
         styled_button(theme, "Expand All", ButtonVariant::Ghost).on_press(Message::ExpandAllTiers),
-        styled_button(theme, "Collapse All", ButtonVariant::Ghost).on_press(Message::CollapseAllTiers),
+        styled_button(theme, "Collapse All", ButtonVariant::Ghost)
+            .on_press(Message::CollapseAllTiers),
     ]
     .spacing(tokens::spacing::SM)
     .align_y(iced::Alignment::Center);
@@ -117,46 +121,43 @@ pub fn view<'a>(
                     Element::from(Space::new().width(Length::Fixed(32.0)))
                 },
                 // Type icon badge
-                container(
-                    selectable_label(theme, node.tier_type.icon())
-                )
-                .padding(tokens::spacing::SM)
-                .style(move |_theme: &iced::Theme| {
-                    iced::widget::container::Style {
-                        background: Some(iced::Background::Color(node.tier_type.color())),
-                        border: Border {
-                            color: colors::INK_BLACK,
-                            width: tokens::borders::MEDIUM,
-                            radius: tokens::radii::NONE.into(),
-                        },
-                        ..Default::default()
-                    }
-                }),
+                container(selectable_label(theme, node.tier_type.icon()))
+                    .padding(tokens::spacing::SM)
+                    .style(move |_theme: &iced::Theme| {
+                        iced::widget::container::Style {
+                            background: Some(iced::Background::Color(node.tier_type.color())),
+                            border: Border {
+                                color: colors::INK_BLACK,
+                                width: tokens::borders::MEDIUM,
+                                radius: tokens::radii::NONE.into(),
+                            },
+                            ..Default::default()
+                        }
+                    }),
                 // Status badge
-                container(
-                    selectable_label(theme, &node.status)
-                )
-                .padding(tokens::spacing::SM)
-                .width(Length::Fixed(100.0))
-                .style(move |_theme: &iced::Theme| {
-                    iced::widget::container::Style {
-                        background: Some(iced::Background::Color(status_color)),
-                        border: Border {
-                            color: colors::INK_BLACK,
-                            width: tokens::borders::MEDIUM,
-                            radius: tokens::radii::NONE.into(),
-                        },
-                        ..Default::default()
-                    }
-                }),
+                container(selectable_label(theme, &node.status))
+                    .padding(tokens::spacing::SM)
+                    .width(Length::Fixed(100.0))
+                    .style(move |_theme: &iced::Theme| {
+                        iced::widget::container::Style {
+                            background: Some(iced::Background::Color(status_color)),
+                            border: Border {
+                                color: colors::INK_BLACK,
+                                width: tokens::borders::MEDIUM,
+                                radius: tokens::radii::NONE.into(),
+                            },
+                            ..Default::default()
+                        }
+                    }),
                 // ID, title, and iteration count
                 column![
                     row![
                         selectable_label_mono(theme, &node.id),
                         if node.iteration_count > 0 {
-                            Element::from(
-                                selectable_label_mono(theme, &format!(" (iter: {})", node.iteration_count)),
-                            )
+                            Element::from(selectable_label_mono(
+                                theme,
+                                &format!(" (iter: {})", node.iteration_count),
+                            ))
                         } else {
                             Element::from(Space::new().width(Length::Shrink))
                         },
@@ -179,9 +180,8 @@ pub fn view<'a>(
             .spacing(tokens::spacing::XXS);
 
             for criterion in &node.acceptance_criteria {
-                criteria_col = criteria_col.push(
-                    selectable_label(theme, &format!("• {}", criterion)),
-                );
+                criteria_col =
+                    criteria_col.push(selectable_label(theme, &format!("• {}", criterion)));
             }
 
             node_content =
@@ -311,21 +311,19 @@ fn render_details<'a>(
         .spacing(tokens::spacing::XXS),
         column![
             selectable_label(theme, "Status:"),
-            container(
-                selectable_label(theme, &details.status)
-            )
-            .padding(tokens::spacing::SM)
-            .style(move |_theme: &iced::Theme| {
-                iced::widget::container::Style {
-                    background: Some(iced::Background::Color(status_to_color(&details.status))),
-                    border: Border {
-                        color: colors::INK_BLACK,
-                        width: tokens::borders::MEDIUM,
-                        radius: tokens::radii::NONE.into(),
-                    },
-                    ..Default::default()
-                }
-            }),
+            container(selectable_label(theme, &details.status))
+                .padding(tokens::spacing::SM)
+                .style(move |_theme: &iced::Theme| {
+                    iced::widget::container::Style {
+                        background: Some(iced::Background::Color(status_to_color(&details.status))),
+                        border: Border {
+                            color: colors::INK_BLACK,
+                            width: tokens::borders::MEDIUM,
+                            radius: tokens::radii::NONE.into(),
+                        },
+                        ..Default::default()
+                    }
+                }),
         ]
         .spacing(tokens::spacing::XXS),
         column![

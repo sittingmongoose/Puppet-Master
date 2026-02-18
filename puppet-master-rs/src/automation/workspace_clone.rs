@@ -200,15 +200,23 @@ fn copy_recursive(source: &Path, dest: &Path) -> Result<()> {
         let src_path = entry.path();
         let file_name = entry.file_name();
         let file_name_str = file_name.to_string_lossy();
-        
+
         // Skip build artifacts and problematic directories
-        if src_path.is_dir() && matches!(
-            file_name_str.as_ref(),
-            "target" | "node_modules" | ".git" | "dist" | "coverage" | ".cache" | "installer-work"
-        ) {
+        if src_path.is_dir()
+            && matches!(
+                file_name_str.as_ref(),
+                "target"
+                    | "node_modules"
+                    | ".git"
+                    | "dist"
+                    | "coverage"
+                    | ".cache"
+                    | "installer-work"
+            )
+        {
             continue;
         }
-        
+
         let dst_path = dest.join(entry.file_name());
 
         if src_path.is_dir() {

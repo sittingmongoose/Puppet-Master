@@ -141,16 +141,17 @@ pub fn view<'a>(
     .spacing(tokens::spacing::XXXS)
     .align_y(iced::Alignment::Center);
 
-    let step_container: Element<'_, Message> = if size.width < tokens::layout::NAV_COLLAPSE_BELOW_WIDTH {
-        scrollable(step_indicator)
-            .direction(iced::widget::scrollable::Direction::Horizontal(
-                iced::widget::scrollable::Scrollbar::default(),
-            ))
-            .width(Length::Fill)
-            .into()
-    } else {
-        step_indicator.into()
-    };
+    let step_container: Element<'_, Message> =
+        if size.width < tokens::layout::NAV_COLLAPSE_BELOW_WIDTH {
+            scrollable(step_indicator)
+                .direction(iced::widget::scrollable::Direction::Horizontal(
+                    iced::widget::scrollable::Scrollbar::default(),
+                ))
+                .width(Length::Fill)
+                .into()
+        } else {
+            step_indicator.into()
+        };
 
     content = content.push(
         container(step_container)
@@ -290,11 +291,14 @@ fn step0_project_setup<'a>(
             toggler(is_new_project)
                 .on_toggle(Message::WizardIsNewProjectToggled)
                 .spacing(tokens::spacing::SM),
-            selectable_label(theme, if is_new_project {
-                "New Project"
-            } else {
-                "Existing Project"
-            }),
+            selectable_label(
+                theme,
+                if is_new_project {
+                    "New Project"
+                } else {
+                    "Existing Project"
+                }
+            ),
         ]
         .spacing(tokens::spacing::SM),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
@@ -479,7 +483,11 @@ fn step1_install_dependencies<'a>(
         if node_ok != Some(true) {
             styled_button(
                 theme,
-                if installing == Some("node") { "Installing…" } else { "INSTALL" },
+                if installing == Some("node") {
+                    "Installing…"
+                } else {
+                    "INSTALL"
+                },
                 ButtonVariant::Primary,
             )
             .on_press_maybe(if installing.is_none() {
@@ -508,7 +516,11 @@ fn step1_install_dependencies<'a>(
         if gh_ok != Some(true) {
             styled_button(
                 theme,
-                if installing == Some("gh") { "Installing…" } else { "INSTALL" },
+                if installing == Some("gh") {
+                    "Installing…"
+                } else {
+                    "INSTALL"
+                },
                 ButtonVariant::Primary,
             )
             .on_press_maybe(if installing.is_none() {
@@ -551,7 +563,11 @@ fn step1_install_dependencies<'a>(
                 if selected && status != Some(true) {
                     styled_button(
                         theme,
-                        if installing_this { "Installing…" } else { "INSTALL" },
+                        if installing_this {
+                            "Installing…"
+                        } else {
+                            "INSTALL"
+                        },
                         ButtonVariant::Primary,
                     )
                     .on_press_maybe(if installing.is_none() {
@@ -606,14 +622,16 @@ fn step1_install_dependencies<'a>(
     }
 
     let nav_buttons = row![
-        styled_button(theme, "← BACK", ButtonVariant::Secondary)
-            .on_press(Message::WizardPrevStep),
+        styled_button(theme, "← BACK", ButtonVariant::Secondary).on_press(Message::WizardPrevStep),
         Space::new().width(Length::Fill),
         if node_installed {
-            styled_button(theme, "NEXT →", ButtonVariant::Primary)
-                .on_press(Message::WizardNextStep)
+            styled_button(theme, "NEXT →", ButtonVariant::Primary).on_press(Message::WizardNextStep)
         } else {
-            styled_button(theme, "NEXT → (install Node first)", ButtonVariant::Secondary)
+            styled_button(
+                theme,
+                "NEXT → (install Node first)",
+                ButtonVariant::Secondary,
+            )
         },
     ]
     .spacing(tokens::spacing::MD);
@@ -654,7 +672,10 @@ fn step1_interview_config<'a>(
             selectable_label(theme, "Use interactive interview mode"),
         ]
         .spacing(tokens::spacing::SM),
-        selectable_label(theme, "Enable this for AI-guided requirements gathering with zero ambiguity"),
+        selectable_label(
+            theme,
+            "Enable this for AI-guided requirements gathering with zero ambiguity"
+        ),
     ]
     .spacing(tokens::spacing::SM);
 
@@ -676,7 +697,10 @@ fn step1_interview_config<'a>(
                     |level: &str| Message::WizardReasoningLevelChanged(level.to_string()),
                 )
                 .width(Length::Fixed(200.0)),
-                selectable_label(theme, "Higher levels provide deeper analysis but take longer"),
+                selectable_label(
+                    theme,
+                    "Higher levels provide deeper analysis but take longer"
+                ),
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
                 // Generate AGENTS.md
                 row![
@@ -689,7 +713,10 @@ fn step1_interview_config<'a>(
                 ]
                 .spacing(tokens::spacing::SM)
                 .align_y(Alignment::Center),
-                selectable_label(theme, "Create a starter agent configuration file to guide AI agents"),
+                selectable_label(
+                    theme,
+                    "Create a starter agent configuration file to guide AI agents"
+                ),
             ]
             .spacing(tokens::spacing::SM),
         )
@@ -871,89 +898,87 @@ fn step3_generate_prd<'a>(
 
     let step_content = column![
         selectable_label(theme, "Step 2: Generate PRD"),
-        selectable_label(theme, "Select platform and model, then generate the Product Requirements Document"),
+        selectable_label(
+            theme,
+            "Select platform and model, then generate the Product Requirements Document"
+        ),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Platform selection
-        row![
-            selectable_label(theme, "Platform:"),
-            {
-                // Build platform options with availability indicators
-                let platform_options: Vec<String> = PLATFORMS
-                    .iter()
-                    .map(|p| format_platform_id_option(p, platform_statuses, auth_status))
-                    .collect();
-                
-                // Find current selection with formatting
-                let selected_platform = platform_options
-                    .iter()
-                    .find(|opt| {
-                        let clean = opt.trim_end_matches(" ✓").trim_end_matches(" (not installed)").trim_end_matches(" (not logged in)");
-                        clean == prd_platform
-                    })
-                    .cloned();
-                
-                pick_list(platform_options, selected_platform, |s: String| {
-                    // Extract the platform ID from the formatted string
-                    let clean = s.trim_end_matches(" ✓").trim_end_matches(" (not installed)").trim_end_matches(" (not logged in)");
-                    Message::WizardPrdPlatformChanged(clean.to_string())
+        row![selectable_label(theme, "Platform:"), {
+            // Build platform options with availability indicators
+            let platform_options: Vec<String> = PLATFORMS
+                .iter()
+                .map(|p| format_platform_id_option(p, platform_statuses, auth_status))
+                .collect();
+
+            // Find current selection with formatting
+            let selected_platform = platform_options
+                .iter()
+                .find(|opt| {
+                    let clean = opt
+                        .trim_end_matches(" ✓")
+                        .trim_end_matches(" (not installed)")
+                        .trim_end_matches(" (not logged in)");
+                    clean == prd_platform
                 })
-                .width(Length::Fixed(200.0))
-            },
-        ]
+                .cloned();
+
+            pick_list(platform_options, selected_platform, |s: String| {
+                // Extract the platform ID from the formatted string
+                let clean = s
+                    .trim_end_matches(" ✓")
+                    .trim_end_matches(" (not installed)")
+                    .trim_end_matches(" (not logged in)");
+                Message::WizardPrdPlatformChanged(clean.to_string())
+            })
+            .width(Length::Fixed(200.0))
+        },]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         // Model selection
-        row![
-            selectable_label(theme, "Model:"),
-            {
-                let model_picker: Element<'_, Message> = if let Some(models_list) = platform_models
-                {
-                    let selected = models_list
-                        .iter()
-                        .find(|m| m.as_str() == prd_model)
-                        .cloned();
-                    pick_list(
-                        models_list.as_slice(),
-                        selected,
-                        Message::WizardPrdModelChanged,
-                    )
-                    .width(Length::Fixed(300.0))
-                    .into()
-                } else {
-                    selectable_label(theme, "Loading models...")
-                };
-                model_picker
-            },
-        ]
+        row![selectable_label(theme, "Model:"), {
+            let model_picker: Element<'_, Message> = if let Some(models_list) = platform_models {
+                let selected = models_list
+                    .iter()
+                    .find(|m| m.as_str() == prd_model)
+                    .cloned();
+                pick_list(
+                    models_list.as_slice(),
+                    selected,
+                    Message::WizardPrdModelChanged,
+                )
+                .width(Length::Fixed(300.0))
+                .into()
+            } else {
+                selectable_label(theme, "Loading models...")
+            };
+            model_picker
+        },]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Requirements preview
         selectable_label(theme, "Requirements Preview (first 1000 chars):"),
         scrollable(
-            container(
-                selectable_label(theme, &preview_text)
-            )
-            .padding(tokens::spacing::MD)
-            .width(Length::Fill)
-            .style(move |_: &iced::Theme| container::Style {
-                background: Some(iced::Background::Color(theme.paper())),
-                border: Border {
-                    color: theme.ink(),
-                    width: tokens::borders::MEDIUM,
-                    radius: tokens::radii::SM.into(),
-                },
-                ..Default::default()
-            })
+            container(selectable_label(theme, &preview_text))
+                .padding(tokens::spacing::MD)
+                .width(Length::Fill)
+                .style(move |_: &iced::Theme| container::Style {
+                    background: Some(iced::Background::Color(theme.paper())),
+                    border: Border {
+                        color: theme.ink(),
+                        width: tokens::borders::MEDIUM,
+                        radius: tokens::radii::SM.into(),
+                    },
+                    ..Default::default()
+                })
         )
         .height(Length::Fixed(250.0)),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Status indicator
         if generating {
-            row![
-                selectable_label(theme, "Generating PRD..."),
-            ]
+            row![selectable_label(theme, "Generating PRD..."),]
         } else {
             row![]
         },
@@ -988,7 +1013,10 @@ fn step4_review_prd<'a>(
 
     let step_content = column![
         selectable_label(theme, "Step 3: Review PRD"),
-        selectable_label(theme, "Review and edit the generated Product Requirements Document"),
+        selectable_label(
+            theme,
+            "Review and edit the generated Product Requirements Document"
+        ),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // PRD editor
         container(
@@ -1076,56 +1104,56 @@ fn step5_configure_tiers<'a>(
                 selectable_label(theme, &format!("{} Configuration", tier.to_uppercase())),
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
                 // Platform
-                row![
-                    selectable_label(theme, "Platform:"),
-                    {
-                        // Build platform options with availability indicators
-                        let platform_options: Vec<String> = PLATFORMS
-                            .iter()
-                            .map(|p| format_platform_id_option(p, platform_statuses, auth_status))
-                            .collect();
-                        
-                        // Find current selection with formatting
-                        let selected_platform = platform_options
-                            .iter()
-                            .find(|opt| {
-                                let clean = opt.trim_end_matches(" ✓").trim_end_matches(" (not installed)").trim_end_matches(" (not logged in)");
-                                clean == config.platform.as_str()
-                            })
-                            .cloned();
-                        
-                        pick_list(platform_options, selected_platform, move |p: String| {
-                            // Extract the platform ID from the formatted string
-                            let clean = p.trim_end_matches(" ✓").trim_end_matches(" (not installed)").trim_end_matches(" (not logged in)");
-                            Message::WizardTierPlatformChanged(tier.to_string(), clean.to_string())
+                row![selectable_label(theme, "Platform:"), {
+                    // Build platform options with availability indicators
+                    let platform_options: Vec<String> = PLATFORMS
+                        .iter()
+                        .map(|p| format_platform_id_option(p, platform_statuses, auth_status))
+                        .collect();
+
+                    // Find current selection with formatting
+                    let selected_platform = platform_options
+                        .iter()
+                        .find(|opt| {
+                            let clean = opt
+                                .trim_end_matches(" ✓")
+                                .trim_end_matches(" (not installed)")
+                                .trim_end_matches(" (not logged in)");
+                            clean == config.platform.as_str()
                         })
-                        .width(Length::Fixed(200.0))
-                    },
-                ]
+                        .cloned();
+
+                    pick_list(platform_options, selected_platform, move |p: String| {
+                        // Extract the platform ID from the formatted string
+                        let clean = p
+                            .trim_end_matches(" ✓")
+                            .trim_end_matches(" (not installed)")
+                            .trim_end_matches(" (not logged in)");
+                        Message::WizardTierPlatformChanged(tier.to_string(), clean.to_string())
+                    })
+                    .width(Length::Fixed(200.0))
+                },]
                 .spacing(tokens::spacing::SM)
                 .align_y(iced::Alignment::Center),
                 Space::new().height(Length::Fixed(tokens::spacing::XS)),
                 // Model
-                row![
-                    selectable_label(theme, "Model:"),
-                    {
-                        let tier_model_picker: Element<'_, Message> =
-                            if let Some(models_list) = platform_models {
-                                let selected = models_list
-                                    .iter()
-                                    .find(|m| m.as_str() == config.model.as_str())
-                                    .cloned();
-                                pick_list(models_list.as_slice(), selected, move |m: String| {
-                                    Message::WizardTierModelChanged(tier.to_string(), m)
-                                })
-                                .width(Length::Fixed(300.0))
-                                .into()
-                            } else {
-                                selectable_label(theme, "auto")
-                            };
-                        tier_model_picker
-                    },
-                ]
+                row![selectable_label(theme, "Model:"), {
+                    let tier_model_picker: Element<'_, Message> =
+                        if let Some(models_list) = platform_models {
+                            let selected = models_list
+                                .iter()
+                                .find(|m| m.as_str() == config.model.as_str())
+                                .cloned();
+                            pick_list(models_list.as_slice(), selected, move |m: String| {
+                                Message::WizardTierModelChanged(tier.to_string(), m)
+                            })
+                            .width(Length::Fixed(300.0))
+                            .into()
+                        } else {
+                            selectable_label(theme, "auto")
+                        };
+                    tier_model_picker
+                },]
                 .spacing(tokens::spacing::SM)
                 .align_y(iced::Alignment::Center),
             ]
@@ -1204,7 +1232,10 @@ fn step5_configure_tiers<'a>(
 
     let step_content = column![
         selectable_label(theme, "Step 4: Configure Tiers"),
-        selectable_label(theme, "Configure platform, model, and options for each tier"),
+        selectable_label(
+            theme,
+            "Configure platform, model, and options for each tier"
+        ),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Refresh Models button
         row![
@@ -1242,7 +1273,10 @@ fn step6_generate_plan<'a>(
 
     let step_content = column![
         selectable_label(theme, "Step 5: Generate Plan"),
-        selectable_label(theme, "Generate execution plan based on PRD and tier configurations"),
+        selectable_label(
+            theme,
+            "Generate execution plan based on PRD and tier configurations"
+        ),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Plan preview (read-only, selectable)
         {
@@ -1268,9 +1302,10 @@ fn step6_generate_plan<'a>(
                 })
                 .into()
             } else {
-                container(
-                    selectable_label(theme, "Click GENERATE PLAN to create execution plan"),
-                )
+                container(selectable_label(
+                    theme,
+                    "Click GENERATE PLAN to create execution plan",
+                ))
                 .padding(tokens::spacing::XL)
                 .width(Length::Fill)
                 .style(move |_: &iced::Theme| container::Style {
@@ -1290,9 +1325,7 @@ fn step6_generate_plan<'a>(
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Status indicator
         if generating {
-            row![
-                selectable_label(theme, "Generating plan..."),
-            ]
+            row![selectable_label(theme, "Generating plan..."),]
         } else {
             row![]
         },
@@ -1363,9 +1396,10 @@ fn step7_review_plan<'a>(
             }),
         )
     } else {
-        step_content.push(
-            selectable_label(theme, "No plan generated yet. You can skip this step or go back to generate one."),
-        )
+        step_content.push(selectable_label(
+            theme,
+            "No plan generated yet. You can skip this step or go back to generate one.",
+        ))
     };
 
     let step_content = step_content.push(Space::new().height(Length::Fixed(tokens::spacing::LG)));
@@ -1394,7 +1428,10 @@ fn step8_review_start<'a>(
 ) -> container::Container<'a, Message> {
     let step_content = column![
         selectable_label(theme, "Step 7: Review & Start"),
-        selectable_label(theme, "Everything is ready! Review and start the orchestration."),
+        selectable_label(
+            theme,
+            "Everything is ready! Review and start the orchestration."
+        ),
         Space::new().height(Length::Fixed(tokens::spacing::LG)),
         // Project summary
         themed_panel(

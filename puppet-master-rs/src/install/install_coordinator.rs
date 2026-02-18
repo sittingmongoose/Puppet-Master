@@ -78,18 +78,13 @@ pub async fn install_playwright() -> InstallOutcome {
 /// - [`Platform::Cursor`]  → script installer (curl | bash) → copy to `bin/agent`
 /// - [`Platform::Gemini`]  → npm prefix install
 /// - [`Platform::Codex`]   → npm prefix install
-/// - [`Platform::Copilot`] → GitHub Releases binary download (native ELF, not npm)
+/// - [`Platform::Copilot`] → npm prefix install (@github/copilot — coding agent)
 pub async fn install_platform(platform: Platform) -> InstallOutcome {
     match platform {
         Platform::Claude => crate::install::script_installer::install_claude_app_local().await,
         Platform::Cursor => crate::install::script_installer::install_cursor_app_local().await,
-        Platform::Copilot => {
-            crate::install::copilot_installer::install_copilot_app_local().await
-        }
-        Platform::Gemini | Platform::Codex => {
-            if let Some(pkg) =
-                crate::install::npm_installer::npm_package_for_platform(platform)
-            {
+        Platform::Copilot | Platform::Gemini | Platform::Codex => {
+            if let Some(pkg) = crate::install::npm_installer::npm_package_for_platform(platform) {
                 crate::install::npm_installer::npm_install_to_app_dir(&pkg).await
             } else {
                 InstallOutcome::failure(format!(

@@ -300,11 +300,11 @@ pub fn resolve_action(action_id: &str) -> Option<Message> {
         "doctor.expand.state_directory" => {
             Message::ToggleDoctorCheckExpand("state-directory".to_string())
         }
-        "doctor.context.details.state_directory" => Message::OpenContextMenu(
-            ContextMenuTarget::SelectableField(SelectableField::DoctorCheckDetails(
-                "state-directory".to_string(),
-            )),
-        ),
+        "doctor.context.details.state_directory" => {
+            Message::OpenContextMenu(ContextMenuTarget::SelectableField(
+                SelectableField::DoctorCheckDetails("state-directory".to_string()),
+            ))
+        }
         "doctor.fix.node_runtime" => Message::FixCheck("node-runtime".to_string(), false),
         "doctor.fix.playwright_browsers" => {
             Message::FixCheck("playwright-browsers".to_string(), false)
@@ -368,9 +368,7 @@ pub fn resolve_action(action_id: &str) -> Option<Message> {
         "wizard.install.cursor" => {
             Message::WizardInstallPlatformCli(crate::types::Platform::Cursor)
         }
-        "wizard.install.codex" => {
-            Message::WizardInstallPlatformCli(crate::types::Platform::Codex)
-        }
+        "wizard.install.codex" => Message::WizardInstallPlatformCli(crate::types::Platform::Codex),
         "wizard.install.claude" => {
             Message::WizardInstallPlatformCli(crate::types::Platform::Claude)
         }

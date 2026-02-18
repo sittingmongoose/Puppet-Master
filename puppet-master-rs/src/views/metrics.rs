@@ -110,13 +110,16 @@ pub fn view<'a>(
             Space::new().width(Length::Fill),
         ],
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
-        selectable_label(theme, &format!(
-            "Escalations: {} ({:.1}%) | P95 Latency: {}ms | Est Cost: ${:.4}",
-            overall.escalations,
-            overall.escalation_rate() * 100.0,
-            overall.p95_latency_ms,
-            overall.estimated_cost_usd
-        )),
+        selectable_label(
+            theme,
+            &format!(
+                "Escalations: {} ({:.1}%) | P95 Latency: {}ms | Est Cost: ${:.4}",
+                overall.escalations,
+                overall.escalation_rate() * 100.0,
+                overall.p95_latency_ms,
+                overall.estimated_cost_usd
+            )
+        ),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         row![
             column![
@@ -181,7 +184,10 @@ pub fn view<'a>(
                 row![
                     column![
                         selectable_label(theme, "Success Rate"),
-                        selectable_label(theme, &format!("{:.1}%", platform_metrics.success_rate() * 100.0)),
+                        selectable_label(
+                            theme,
+                            &format!("{:.1}%", platform_metrics.success_rate() * 100.0)
+                        ),
                         styled_progress_bar(
                             theme,
                             platform_metrics.success_rate() as f32,
@@ -197,13 +203,19 @@ pub fn view<'a>(
                     Space::new().width(Length::Fixed(tokens::spacing::MD)),
                     column![
                         selectable_label(theme, "Avg Latency"),
-                        selectable_label(theme, &format!("{:.0} ms", platform_metrics.avg_latency_ms())),
+                        selectable_label(
+                            theme,
+                            &format!("{:.0} ms", platform_metrics.avg_latency_ms())
+                        ),
                     ]
                     .spacing(tokens::spacing::XXS),
                     Space::new().width(Length::Fixed(tokens::spacing::MD)),
                     column![
                         selectable_label(theme, "Estimated Cost"),
-                        selectable_label(theme, &format!("${:.4}", platform_metrics.estimated_cost_usd)),
+                        selectable_label(
+                            theme,
+                            &format!("${:.4}", platform_metrics.estimated_cost_usd)
+                        ),
                     ]
                     .spacing(tokens::spacing::XXS),
                 ],
@@ -288,7 +300,8 @@ pub fn view<'a>(
                     selectable_label(theme, &r.subtask_id)
                 }),
                 table_column(selectable_label(theme, "Platform"), |r: SubtaskMetrics| {
-                    selectable_label(theme,
+                    selectable_label(
+                        theme,
                         &r.last_platform
                             .map(|p| format!("{:?}", p))
                             .unwrap_or_default(),
@@ -322,7 +335,10 @@ pub fn view<'a>(
                     selectable_label(theme, &r.timeouts.to_string())
                 }),
                 table_column(selectable_label(theme, "Gate"), |r: SubtaskMetrics| {
-                    selectable_label(theme, &format!("{}PASS/{}FAIL", r.gate_passes, r.gate_failures))
+                    selectable_label(
+                        theme,
+                        &format!("{}PASS/{}FAIL", r.gate_passes, r.gate_failures),
+                    )
                 }),
                 table_column(selectable_label(theme, "Tokens"), |r: SubtaskMetrics| {
                     selectable_label(theme, &r.estimated_tokens.to_string())

@@ -323,7 +323,9 @@ impl InstallationManager {
             };
             out.push_str(&format!("\nAuthenticate:\n  {}{}\n", cmd, args));
         } else if spec.auth.uses_browser_auth {
-            out.push_str("\nAuthenticate:\n  Launch the CLI and complete the browser-based login.\n");
+            out.push_str(
+                "\nAuthenticate:\n  Launch the CLI and complete the browser-based login.\n",
+            );
         }
 
         let manual_methods = platform_specs::install_methods_for(platform, self.os_id());

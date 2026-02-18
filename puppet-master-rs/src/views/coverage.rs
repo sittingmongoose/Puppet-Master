@@ -4,7 +4,10 @@
 
 use crate::app::Message;
 use crate::theme::{AppTheme, colors, tokens};
-use crate::widgets::{selectable_text::{selectable_label, selectable_label_mono}, *};
+use crate::widgets::{
+    selectable_text::{selectable_label, selectable_label_mono},
+    *,
+};
 use iced::widget::{Space, column, container, pick_list, row, scrollable};
 use iced::{Border, Element, Length};
 
@@ -106,14 +109,17 @@ pub fn view<'a>(
             column![
                 selectable_label(theme, &format!("{}/{}", covered_count, total_count)),
                 selectable_label(theme, "Features Tested"),
-                selectable_label(theme, &format!(
-                    "{:.0}%",
-                    if total_count > 0 {
-                        (covered_count as f32 / total_count as f32) * 100.0
-                    } else {
-                        0.0
-                    }
-                )),
+                selectable_label(
+                    theme,
+                    &format!(
+                        "{:.0}%",
+                        if total_count > 0 {
+                            (covered_count as f32 / total_count as f32) * 100.0
+                        } else {
+                            0.0
+                        }
+                    )
+                ),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center),
@@ -135,14 +141,17 @@ pub fn view<'a>(
             column![
                 selectable_label(theme, &format!("{}/{}", covered_count, total_count)),
                 selectable_label(theme, "Features Verified"),
-                selectable_label(theme, &format!(
-                    "{:.0}%",
-                    if total_count > 0 {
-                        (covered_count as f32 / total_count as f32) * 100.0
-                    } else {
-                        0.0
-                    }
-                )),
+                selectable_label(
+                    theme,
+                    &format!(
+                        "{:.0}%",
+                        if total_count > 0 {
+                            (covered_count as f32 / total_count as f32) * 100.0
+                        } else {
+                            0.0
+                        }
+                    )
+                ),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center),
@@ -239,10 +248,10 @@ pub fn view<'a>(
         let total_count = requirements.len();
 
         let summary = row![
-            selectable_label(theme, &format!(
-                "{} of {} requirements covered",
-                covered_count, total_count
-            )),
+            selectable_label(
+                theme,
+                &format!("{} of {} requirements covered", covered_count, total_count)
+            ),
             Space::new().width(Length::Fill),
             status_badge(
                 if covered_count == total_count {
@@ -268,26 +277,11 @@ pub fn view<'a>(
             // Table header with background
             container(
                 row![
-                    container(
-                        selectable_label(theme, "Status")
-                    )
-                    .width(Length::Fixed(80.0)),
-                    container(
-                        selectable_label(theme, "ID")
-                    )
-                    .width(Length::FillPortion(1)),
-                    container(
-                        selectable_label(theme, "Description")
-                    )
-                    .width(Length::FillPortion(3)),
-                    container(
-                        selectable_label(theme, "Evidence")
-                    )
-                    .width(Length::Fixed(100.0)),
-                    container(
-                        selectable_label(theme, "Tiers")
-                    )
-                    .width(Length::Fixed(80.0)),
+                    container(selectable_label(theme, "Status")).width(Length::Fixed(80.0)),
+                    container(selectable_label(theme, "ID")).width(Length::FillPortion(1)),
+                    container(selectable_label(theme, "Description")).width(Length::FillPortion(3)),
+                    container(selectable_label(theme, "Evidence")).width(Length::Fixed(100.0)),
+                    container(selectable_label(theme, "Tiers")).width(Length::Fixed(80.0)),
                 ]
                 .spacing(tokens::spacing::SM)
                 .padding(tokens::spacing::SM)
@@ -315,20 +309,12 @@ pub fn view<'a>(
                     status_dot(Status::Error)
                 })
                 .width(Length::Fixed(80.0)),
-                container(selectable_label_mono(theme, &req.id))
-                    .width(Length::FillPortion(1)),
-                container(
-                    selectable_label(theme, &req.description)
-                )
-                .width(Length::FillPortion(3)),
-                container(
-                    selectable_label(theme, &format!("{}", req.evidence_count))
-                )
-                .width(Length::Fixed(100.0)),
-                container(
-                    selectable_label(theme, &format!("{}", req.tier_ids.len()))
-                )
-                .width(Length::Fixed(80.0)),
+                container(selectable_label_mono(theme, &req.id)).width(Length::FillPortion(1)),
+                container(selectable_label(theme, &req.description)).width(Length::FillPortion(3)),
+                container(selectable_label(theme, &format!("{}", req.evidence_count)))
+                    .width(Length::Fixed(100.0)),
+                container(selectable_label(theme, &format!("{}", req.tier_ids.len())))
+                    .width(Length::Fixed(80.0)),
             ]
             .spacing(tokens::spacing::SM)
             .padding(tokens::spacing::SM);

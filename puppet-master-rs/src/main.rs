@@ -18,7 +18,10 @@ fn main() -> Result<()> {
     }
 
     if std::env::args().any(|arg| arg == "--help" || arg == "-h") {
-        println!("{}\n\nUsage:\n  puppet-master [--version] [--help]\n\nRun without arguments to launch the GUI.", puppet_master::build_info::full_build_identity());
+        println!(
+            "{}\n\nUsage:\n  puppet-master [--version] [--help]\n\nRun without arguments to launch the GUI.",
+            puppet_master::build_info::full_build_identity()
+        );
         return Ok(());
     }
 

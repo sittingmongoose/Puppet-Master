@@ -305,7 +305,10 @@ fn toast_context_menu_actions_are_automated_in_headless_mode() {
         .get("toastCount")
         .and_then(|v| v.as_u64())
         .unwrap_or(0);
-    assert!(toast_count >= 4, "expected context-menu toasts to be present");
+    assert!(
+        toast_count >= 4,
+        "expected context-menu toasts to be present"
+    );
 
     let latest_toast = snapshot
         .get("latestToastMessage")
@@ -691,11 +694,9 @@ fn wizard_displays_all_platforms_with_availability_indicators() {
                 action: GuiAction::Execute {
                     action_id: "setup.run_detection".to_string(),
                 },
-                assertions: vec![
-                    GuiAssertion::ToastContains {
-                        text: "Detection complete".to_string(),
-                    },
-                ],
+                assertions: vec![GuiAssertion::ToastContains {
+                    text: "Detection complete".to_string(),
+                }],
                 timeout_ms: Some(120_000),
             },
             // Now go to wizard and check that platforms are shown
@@ -774,11 +775,9 @@ fn config_displays_all_platforms_with_availability_indicators() {
                 action: GuiAction::Execute {
                     action_id: "setup.run_detection".to_string(),
                 },
-                assertions: vec![
-                    GuiAssertion::ToastContains {
-                        text: "Detection complete".to_string(),
-                    },
-                ],
+                assertions: vec![GuiAssertion::ToastContains {
+                    text: "Detection complete".to_string(),
+                }],
                 timeout_ms: Some(120_000),
             },
             // Now go to config and check that platforms are shown
@@ -922,7 +921,10 @@ fn all_pages_headless_smoke_test_group_a_dashboard_through_doctor() {
     ];
     for step_id in expected_steps {
         assert!(
-            result.step_results.iter().any(|r| r.id == step_id && r.passed),
+            result
+                .step_results
+                .iter()
+                .any(|r| r.id == step_id && r.passed),
             "step {} should have passed",
             step_id
         );
@@ -1023,7 +1025,10 @@ fn all_pages_headless_smoke_test_group_b_tiers_through_coverage() {
     ];
     for step_id in expected_steps {
         assert!(
-            result.step_results.iter().any(|r| r.id == step_id && r.passed),
+            result
+                .step_results
+                .iter()
+                .any(|r| r.id == step_id && r.passed),
             "step {} should have passed",
             step_id
         );
@@ -1113,7 +1118,10 @@ fn all_pages_headless_smoke_test_group_c_login_through_interview() {
     ];
     for step_id in expected_steps {
         assert!(
-            result.step_results.iter().any(|r| r.id == step_id && r.passed),
+            result
+                .step_results
+                .iter()
+                .any(|r| r.id == step_id && r.passed),
             "step {} should have passed",
             step_id
         );

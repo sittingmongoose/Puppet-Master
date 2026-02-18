@@ -186,18 +186,19 @@ pub fn view<'a>(
                 interaction_mode_to_variant(interaction_mode),
                 theme,
             ),
-            pick_list(
-                ["expert", "eli5"],
-                Some(interaction_mode),
-                |mode: &str| Message::SettingsInteractionModeChanged(mode.to_string()),
-            )
+            pick_list(["expert", "eli5"], Some(interaction_mode), |mode: &str| {
+                Message::SettingsInteractionModeChanged(mode.to_string())
+            },)
             .width(Length::Fixed(tokens::layout::FORM_LABEL_WIDTH))
             .padding(tokens::spacing::SM)
             .text_size(tokens::font_size::BASE),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
-        selectable_label(theme, "Expert: concise technical tooltips. ELI5: friendly explanations for every field."),
+        selectable_label(
+            theme,
+            "Expert: concise technical tooltips. ELI5: friendly explanations for every field."
+        ),
     ]
     .spacing(tokens::spacing::SM);
 
@@ -263,7 +264,10 @@ pub fn view<'a>(
             styled_button(theme, auto_scroll.as_str(), ButtonVariant::Primary).on_press(
                 Message::SettingsAutoScrollToggled(matches!(auto_scroll, AutoScroll::Disabled))
             ),
-            selectable_label(theme, "Terminal output will automatically scroll to show new content"),
+            selectable_label(
+                theme,
+                "Terminal output will automatically scroll to show new content"
+            ),
         ]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center),
@@ -335,7 +339,10 @@ pub fn view<'a>(
                 }
             )
             .on_press(Message::ToggleMinimizeToTray),
-            selectable_label(theme, "When enabled, closing minimizes to system tray instead of exiting"),
+            selectable_label(
+                theme,
+                "When enabled, closing minimizes to system tray instead of exiting"
+            ),
         ]
         .spacing(tokens::spacing::MD)
         .align_y(iced::Alignment::Center),

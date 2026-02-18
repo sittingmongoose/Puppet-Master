@@ -4,7 +4,10 @@
 
 use crate::app::Message;
 use crate::theme::{AppTheme, colors, fonts, tokens};
-use crate::widgets::{selectable_text::{selectable_label, selectable_label_mono}, *};
+use crate::widgets::{
+    selectable_text::{selectable_label, selectable_label_mono},
+    *,
+};
 use chrono::{DateTime, Utc};
 use iced::widget::{Space, column, container, pick_list, row, scrollable, text_editor};
 use iced::{Border, Element, Length};
@@ -249,11 +252,9 @@ pub fn view<'a>(
     ));
 
     // Filter bar with event type, tier, session, and limit controls
-    let mut filter_row = row![
-        selectable_label(theme, "Filter:"),
-    ]
-    .spacing(tokens::spacing::SM)
-    .align_y(iced::Alignment::Center);
+    let mut filter_row = row![selectable_label(theme, "Filter:"),]
+        .spacing(tokens::spacing::SM)
+        .align_y(iced::Alignment::Center);
 
     // Event type pick_list
     let event_type_options: Vec<String> = std::iter::once("All".to_string())
@@ -383,33 +384,26 @@ pub fn view<'a>(
 
             let event_row = row![
                 // Timestamp
-                container(
-                    selectable_label_mono(theme, &timestamp_str)
-                )
-                .width(Length::Fixed(80.0)),
+                container(selectable_label_mono(theme, &timestamp_str)).width(Length::Fixed(80.0)),
                 // Event type badge with color
-                container(
-                    selectable_label(theme, &event_type_str)
-                )
-                .padding(tokens::spacing::XS)
-                .style(move |_theme: &iced::Theme| {
-                    iced::widget::container::Style {
-                        background: Some(iced::Background::Color(event_type_color)),
-                        border: Border {
-                            color: colors::INK_BLACK,
-                            width: tokens::borders::THIN,
-                            radius: tokens::radii::SM.into(),
-                        },
-                        text_color: Some(colors::INK_BLACK),
-                        ..Default::default()
-                    }
-                })
-                .width(Length::Fixed(190.0)),
+                container(selectable_label(theme, &event_type_str))
+                    .padding(tokens::spacing::XS)
+                    .style(move |_theme: &iced::Theme| {
+                        iced::widget::container::Style {
+                            background: Some(iced::Background::Color(event_type_color)),
+                            border: Border {
+                                color: colors::INK_BLACK,
+                                width: tokens::borders::THIN,
+                                radius: tokens::radii::SM.into(),
+                            },
+                            text_color: Some(colors::INK_BLACK),
+                            ..Default::default()
+                        }
+                    })
+                    .width(Length::Fixed(190.0)),
                 // Tier ID
-                container(
-                    selectable_label_mono(theme, &tier_id_display)
-                )
-                .width(Length::Fixed(tokens::layout::DETAIL_LABEL_WIDTH)),
+                container(selectable_label_mono(theme, &tier_id_display))
+                    .width(Length::Fixed(tokens::layout::DETAIL_LABEL_WIDTH)),
                 // Data preview (truncated) or expand icon
                 container(if is_expanded {
                     selectable_label(theme, "▼ Click to collapse")
@@ -491,10 +485,8 @@ pub fn view<'a>(
                     } else {
                         // Fallback to text if content not in HashMap
                         container(
-                            scrollable(
-                                selectable_label_mono(theme, &data_full),
-                            )
-                            .height(Length::Fixed(tokens::layout::FORM_LABEL_WIDTH)),
+                            scrollable(selectable_label_mono(theme, &data_full))
+                                .height(Length::Fixed(tokens::layout::FORM_LABEL_WIDTH)),
                         )
                         .padding(tokens::spacing::MD)
                         .width(Length::Fill)

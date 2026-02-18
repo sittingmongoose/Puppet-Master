@@ -9,7 +9,7 @@ use chrono::Utc;
 use std::path::{Path, PathBuf};
 use std::process::Stdio;
 use tokio::process::Command;
-use tokio::time::{timeout, Duration};
+use tokio::time::{Duration, timeout};
 
 fn combined_output(output: &std::process::Output) -> String {
     let stdout = String::from_utf8_lossy(&output.stdout);
@@ -85,6 +85,14 @@ async fn read_playwright_version_with_node(node_path: &Path, repo_root: &Path) -
         .stderr(Stdio::piped())
         .kill_on_drop(true);
 
+    // Set PLAYWRIGHT_BROWSERS_PATH to app-local directory
+    let browsers_dir = crate::install::app_paths::get_playwright_browsers_dir();
+    cmd.env("PLAYWRIGHT_BROWSERS_PATH", &browsers_dir);
+    cmd.env(
+        "PATH",
+        crate::platforms::path_utils::build_enhanced_path_for_subprocess(),
+    );
+
     match timeout(Duration::from_secs(10), cmd.output()).await {
         Ok(Ok(output)) if output.status.success() => {
             let version = String::from_utf8_lossy(&output.stdout).trim().to_string();
@@ -105,6 +113,14 @@ async fn read_playwright_version_with_npx(npx_path: &Path, repo_root: &Path) -> 
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
         .kill_on_drop(true);
+
+    // Set PLAYWRIGHT_BROWSERS_PATH to app-local directory
+    let browsers_dir = crate::install::app_paths::get_playwright_browsers_dir();
+    cmd.env("PLAYWRIGHT_BROWSERS_PATH", &browsers_dir);
+    cmd.env(
+        "PATH",
+        crate::platforms::path_utils::build_enhanced_path_for_subprocess(),
+    );
 
     match timeout(Duration::from_secs(10), cmd.output()).await {
         Ok(Ok(out)) if out.status.success() => Some(combined_output(&out)),
@@ -235,6 +251,14 @@ impl DoctorCheck for PlaywrightCheck {
             .stderr(Stdio::piped())
             .kill_on_drop(true);
 
+        // Set PLAYWRIGHT_BROWSERS_PATH to app-local directory
+        let browsers_dir = crate::install::app_paths::get_playwright_browsers_dir();
+        cmd.env("PLAYWRIGHT_BROWSERS_PATH", &browsers_dir);
+        cmd.env(
+            "PATH",
+            crate::platforms::path_utils::build_enhanced_path_for_subprocess(),
+        );
+
         if let Ok(out) = timeout(Duration::from_secs(10), cmd.output()).await {
             if let Ok(out) = out {
                 if out.status.success() {
@@ -257,25 +281,58 @@ impl DoctorCheck for PlaywrightCheck {
 
         if found.is_empty() {
             // Fallback: look for cached browser directories.
-            let browsers_dir = match std::env::var("PLAYWRIGHT_BROWSERS_PATH") {
-                Ok(v) if !v.is_empty() && v != "0" => Some(PathBuf::from(v)),
-                _ => default_ms_playwright_dir(),
-            };
+            // Check app-local playwright-browsers/ first, then system paths.
+            let mut checked_paths = Vec::new();
 
-            if let Some(dir) = browsers_dir {
-                match any_playwright_browser_dirs_exist(&dir) {
+            // 1. App-local playwright-browsers/ (preferred)
+            let app_browsers_dir = crate::install::app_paths::get_playwright_browsers_dir();
+            if app_browsers_dir.exists() {
+                checked_paths.push(app_browsers_dir.clone());
+                match any_playwright_browser_dirs_exist(&app_browsers_dir) {
                     Ok(dirs) if !dirs.is_empty() => {
-                        found.extend(dirs.into_iter().map(|d| format!("cache: {dir:?}/{d}")));
+                        found.extend(
+                            dirs.into_iter()
+                                .map(|d| format!("app-local: {app_browsers_dir:?}/{d}")),
+                        );
                     }
                     Ok(_) => {}
                     Err(e) => {
                         return CheckResult {
                             passed: false,
                             message: "Playwright browsers check failed".to_string(),
-                            details: Some(format!("{browsers_path_note}. Error: {e}")),
+                            details: Some(format!(
+                                "{browsers_path_note}. Error checking app-local dir: {e}"
+                            )),
                             can_fix: false,
                             timestamp: Utc::now(),
                         };
+                    }
+                }
+            }
+
+            // 2. If not found in app-local, check PLAYWRIGHT_BROWSERS_PATH or system default
+            if found.is_empty() {
+                let browsers_dir = match std::env::var("PLAYWRIGHT_BROWSERS_PATH") {
+                    Ok(v) if !v.is_empty() && v != "0" => Some(PathBuf::from(v)),
+                    _ => default_ms_playwright_dir(),
+                };
+
+                if let Some(dir) = browsers_dir {
+                    checked_paths.push(dir.clone());
+                    match any_playwright_browser_dirs_exist(&dir) {
+                        Ok(dirs) if !dirs.is_empty() => {
+                            found.extend(dirs.into_iter().map(|d| format!("cache: {dir:?}/{d}")));
+                        }
+                        Ok(_) => {}
+                        Err(e) => {
+                            return CheckResult {
+                                passed: false,
+                                message: "Playwright browsers check failed".to_string(),
+                                details: Some(format!("{browsers_path_note}. Error: {e}")),
+                                can_fix: false,
+                                timestamp: Utc::now(),
+                            };
+                        }
                     }
                 }
             }

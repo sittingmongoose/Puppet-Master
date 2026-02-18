@@ -22,13 +22,10 @@ pub fn responsive_form_row<'a>(
 ) -> Element<'a, Message> {
     let label_str = label.into();
     if size.is_mobile() {
-        column![
-            selectable_label(theme, &label_str),
-            input.into()
-        ]
-        .spacing(tokens::spacing::SM)
-        .width(Length::Fill)
-        .into()
+        column![selectable_label(theme, &label_str), input.into()]
+            .spacing(tokens::spacing::SM)
+            .width(Length::Fill)
+            .into()
     } else {
         row![
             container(selectable_label(theme, &label_str))
@@ -52,13 +49,10 @@ pub fn responsive_form_row_wide_label<'a>(
 ) -> Element<'a, Message> {
     let label_str = label.into();
     if size.is_mobile() {
-        column![
-            selectable_label(theme, &label_str),
-            input.into()
-        ]
-        .spacing(tokens::spacing::SM)
-        .width(Length::Fill)
-        .into()
+        column![selectable_label(theme, &label_str), input.into()]
+            .spacing(tokens::spacing::SM)
+            .width(Length::Fill)
+            .into()
     } else {
         row![
             container(selectable_label(theme, &label_str))
@@ -86,13 +80,10 @@ pub fn responsive_label_value<'a>(
 ) -> Element<'a, Message> {
     let label_str = label.into();
     if size.is_mobile() {
-        column![
-            selectable_label(theme, &label_str),
-            value.into()
-        ]
-        .spacing(tokens::spacing::XXS)
-        .width(Length::Fill)
-        .into()
+        column![selectable_label(theme, &label_str), value.into()]
+            .spacing(tokens::spacing::XXS)
+            .width(Length::Fill)
+            .into()
     } else {
         row![
             container(selectable_label(theme, &label_str))

@@ -5,7 +5,7 @@
 
 use crate::theme::{AppTheme, colors, fonts, tokens};
 use iced::mouse;
-use iced::widget::{canvas, Canvas};
+use iced::widget::{Canvas, canvas};
 use iced::{Color, Element, Point, Rectangle};
 
 // DRY:WIDGET:step_circle_canvas
@@ -97,8 +97,5 @@ pub fn step_circle_canvas<'a, Message: 'a>(
         border_color,
     };
 
-    Canvas::new(state)
-        .width(44.0)
-        .height(44.0)
-        .into()
+    Canvas::new(state).width(44.0).height(44.0).into()
 }

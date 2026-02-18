@@ -38,12 +38,9 @@ pub fn page_header<'a>(
     size: LayoutSize,
 ) -> Element<'a, Message> {
     if size.is_mobile() {
-        column![
-            selectable_label(theme, title),
-            actions,
-        ]
-        .spacing(tokens::spacing::SM)
-        .into()
+        column![selectable_label(theme, title), actions,]
+            .spacing(tokens::spacing::SM)
+            .into()
     } else {
         row![
             selectable_label(theme, title),

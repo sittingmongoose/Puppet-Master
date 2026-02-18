@@ -15,8 +15,6 @@ fn find_executable_with_fallbacks(name: &str) -> Option<PathBuf> {
     crate::platforms::path_utils::resolve_executable(name)
 }
 
-
-
 // DRY:FN:node_install_plan -- OS-specific Node.js install plan.
 fn node_install_plan() -> (String, String) {
     #[cfg(target_os = "windows")]
@@ -310,7 +308,10 @@ impl DoctorCheck for PlatformSdkCheck {
         if matches!(npm_app, Ok(out) if out.status.success()) {
             return CheckResult {
                 passed: true,
-                message: format!("{} found in app-local npm packages", self.sdk_display_name()),
+                message: format!(
+                    "{} found in app-local npm packages",
+                    self.sdk_display_name()
+                ),
                 details: Some(format!("Package: {package}")),
                 can_fix: false,
                 timestamp: Utc::now(),
@@ -356,7 +357,11 @@ impl DoctorCheck for PlatformSdkCheck {
         };
 
         let lib_dir_display = crate::install::app_paths::get_lib_dir();
-        let command = format!("NPM_CONFIG_PREFIX={} {} install -g {package}", lib_dir_display.display(), npm_path.display());
+        let command = format!(
+            "NPM_CONFIG_PREFIX={} {} install -g {package}",
+            lib_dir_display.display(),
+            npm_path.display()
+        );
         if dry_run {
             return Some(
                 FixResult::success(format!("Would install {}", self.sdk_display_name()))
@@ -371,7 +376,10 @@ impl DoctorCheck for PlatformSdkCheck {
             Command::new(&npm_path)
                 .args(["install", "-g", package])
                 .env("NPM_CONFIG_PREFIX", lib_dir.as_os_str())
-                .env("PATH", crate::platforms::path_utils::build_enhanced_path_for_subprocess())
+                .env(
+                    "PATH",
+                    crate::platforms::path_utils::build_enhanced_path_for_subprocess(),
+                )
                 .output(),
         )
         .await

@@ -17,10 +17,7 @@ const MIN_NODE_MAJOR: u64 = 18;
 /// is found even when the GUI app inherits a minimal PATH.
 pub fn check_node_version() -> Option<String> {
     // First try direct which lookup
-    if let Ok(out) = std::process::Command::new("node")
-        .arg("--version")
-        .output()
-    {
+    if let Ok(out) = std::process::Command::new("node").arg("--version").output() {
         if out.status.success() {
             let v = String::from_utf8_lossy(&out.stdout).trim().to_string();
             if !v.is_empty() {
@@ -84,6 +81,96 @@ pub fn node_meets_minimum() -> bool {
     }
 }
 
+// DRY:HELPER:check_node_via_login_shell — Check if node is available via login shell (finds nvm installs)
+/// Check if Node.js is already available via a login shell.
+///
+/// Uses `bash -lc "node --version"` which sources `.bashrc`/`.bash_profile` and finds nvm installs.
+/// This is useful on macOS systems where GUI apps inherit a minimal PATH but node is installed via nvm.
+///
+/// Returns the version string if found, `None` otherwise.
+#[cfg(not(target_os = "windows"))]
+async fn check_node_via_login_shell() -> Option<String> {
+    let output = tokio::process::Command::new("bash")
+        .args(["-lc", "node --version"])
+        .output()
+        .await;
+
+    if let Ok(out) = output {
+        if out.status.success() {
+            let version = String::from_utf8_lossy(&out.stdout).trim().to_string();
+            if !version.is_empty() {
+                return Some(version);
+            }
+        }
+    }
+
+    None
+}
+
+// DRY:FN:install_via_nvm — Install Node.js via nvm (shared between Linux and macOS fallback)
+/// Install Node.js via nvm (Node Version Manager).
+///
+/// This is a fallback installer used when the platform package manager fails or is unavailable.
+/// Works on both Linux and macOS.
+///
+/// The nvm script will:
+/// 1. Install nvm if not already present
+/// 2. Install the LTS version of Node.js
+/// 3. Set it as the default
+#[cfg(not(target_os = "windows"))]
+async fn install_via_nvm(log_lines: &mut Vec<String>) -> InstallOutcome {
+    use std::process::Stdio;
+
+    log_lines.push("Installing Node.js via nvm…".to_string());
+
+    let nvm_script = r#"
+export NVM_DIR="$HOME/.nvm"
+if [ ! -s "$NVM_DIR/nvm.sh" ]; then
+  curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+fi
+. "$NVM_DIR/nvm.sh"
+nvm install --lts
+nvm alias default 'lts/*'
+"#;
+
+    let result = tokio::process::Command::new("bash")
+        .args(["-lc", nvm_script])
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .output()
+        .await;
+
+    match result {
+        Ok(out) => {
+            log_lines.push(String::from_utf8_lossy(&out.stdout).to_string());
+            if !out.status.success() {
+                log_lines.push(String::from_utf8_lossy(&out.stderr).to_string());
+                return InstallOutcome::failure_with_log(
+                    "nvm install failed. Please install Node.js 18+ manually.",
+                    log_lines.clone(),
+                );
+            }
+            if node_meets_minimum() {
+                InstallOutcome {
+                    success: true,
+                    message: "Node.js installed via nvm.".to_string(),
+                    log_lines: log_lines.clone(),
+                    installed_path: None,
+                }
+            } else {
+                InstallOutcome::failure_with_log(
+                    "nvm install succeeded but node >= 18 not detected. Open a new terminal.",
+                    log_lines.clone(),
+                )
+            }
+        }
+        Err(e) => InstallOutcome::failure_with_log(
+            format!("nvm install failed to start: {e}"),
+            log_lines.clone(),
+        ),
+    }
+}
+
 // DRY:FN:install_node_system_wide — Install Node.js system-wide via package manager
 /// Install Node.js system-wide using the platform's package manager.
 ///
@@ -113,6 +200,23 @@ async fn install_node_linux() -> InstallOutcome {
 
     let mut log_lines = Vec::new();
 
+    // Step 0: Check if node already available via login shell (nvm, etc.)
+    if let Some(version) = check_node_via_login_shell().await {
+        log_lines.push(format!(
+            "Node.js {} already available via login shell",
+            version
+        ));
+        return InstallOutcome {
+            success: true,
+            message: format!(
+                "Node.js {} already installed (via nvm or other version manager)",
+                version
+            ),
+            log_lines,
+            installed_path: None,
+        };
+    }
+
     // Try apt-get first (Debian/Ubuntu)
     if which::which("apt-get").is_ok() {
         log_lines.push("Trying: apt-get install -y nodejs npm".to_string());
@@ -137,7 +241,10 @@ async fn install_node_linux() -> InstallOutcome {
                         installed_path: which::which("node").ok(),
                     };
                 }
-                log_lines.push("apt-get succeeded but node version check failed; trying nvm fallback.".to_string());
+                log_lines.push(
+                    "apt-get succeeded but node version check failed; trying nvm fallback."
+                        .to_string(),
+                );
             }
             Ok(out) => {
                 log_lines.push(String::from_utf8_lossy(&out.stderr).to_string());
@@ -149,63 +256,42 @@ async fn install_node_linux() -> InstallOutcome {
         }
     }
 
-    // nvm fallback
-    log_lines.push("Installing Node.js via nvm…".to_string());
-    let nvm_script = r#"
-export NVM_DIR="$HOME/.nvm"
-if [ ! -s "$NVM_DIR/nvm.sh" ]; then
-  curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-fi
-. "$NVM_DIR/nvm.sh"
-nvm install --lts
-nvm alias default 'lts/*'
-"#;
-    let result = tokio::process::Command::new("bash")
-        .args(["-lc", nvm_script])
-        .stdout(Stdio::piped())
-        .stderr(Stdio::piped())
-        .output()
-        .await;
-
-    match result {
-        Ok(out) => {
-            log_lines.push(String::from_utf8_lossy(&out.stdout).to_string());
-            if !out.status.success() {
-                log_lines.push(String::from_utf8_lossy(&out.stderr).to_string());
-                return InstallOutcome::failure_with_log(
-                    "nvm install failed. Please install Node.js 18+ manually.",
-                    log_lines,
-                );
-            }
-            if node_meets_minimum() {
-                InstallOutcome {
-                    success: true,
-                    message: "Node.js installed via nvm.".to_string(),
-                    log_lines,
-                    installed_path: None,
-                }
-            } else {
-                InstallOutcome::failure_with_log(
-                    "nvm install succeeded but node >= 18 not detected. Open a new terminal.",
-                    log_lines,
-                )
-            }
-        }
-        Err(e) => InstallOutcome::failure_with_log(
-            format!("nvm install failed to start: {e}"),
-            log_lines,
-        ),
-    }
+    // nvm fallback (DRY: reuse shared nvm installer)
+    install_via_nvm(&mut log_lines).await
 }
 
 #[cfg(target_os = "macos")]
 async fn install_node_macos() -> InstallOutcome {
     use std::process::Stdio;
 
-    let mut log_lines = vec!["Running: brew install node".to_string()];
+    let mut log_lines = Vec::new();
+
+    // Step 0: Check if node already available via login shell (nvm, etc.)
+    if let Some(version) = check_node_via_login_shell().await {
+        log_lines.push(format!(
+            "Node.js {} already available via login shell",
+            version
+        ));
+        return InstallOutcome {
+            success: true,
+            message: format!(
+                "Node.js {} already installed (via nvm or other version manager)",
+                version
+            ),
+            log_lines,
+            installed_path: None,
+        };
+    }
+
+    // Step 1: Try brew (with enhanced PATH so brew is found from GUI context)
+    log_lines.push("Running: brew install node".to_string());
 
     let result = tokio::process::Command::new("brew")
         .args(["install", "node"])
+        .env(
+            "PATH",
+            crate::platforms::path_utils::build_enhanced_path_for_subprocess(),
+        )
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
         .output()
@@ -215,33 +301,36 @@ async fn install_node_macos() -> InstallOutcome {
         Ok(out) => {
             log_lines.push(String::from_utf8_lossy(&out.stdout).to_string());
             if out.status.success() && node_meets_minimum() {
-                InstallOutcome {
+                return InstallOutcome {
                     success: true,
                     message: "Node.js installed via Homebrew.".to_string(),
                     log_lines,
                     installed_path: which::which("node").ok(),
-                }
+                };
             } else {
                 log_lines.push(String::from_utf8_lossy(&out.stderr).to_string());
-                InstallOutcome::failure_with_log(
-                    "brew install node failed. Please install Node.js 18+ manually.",
-                    log_lines,
-                )
+                log_lines.push(
+                    "brew install node failed or brew not available; trying nvm fallback."
+                        .to_string(),
+                );
             }
         }
-        Err(e) => InstallOutcome::failure_with_log(
-            format!("Homebrew not available or failed: {e}"),
-            log_lines,
-        ),
+        Err(e) => {
+            log_lines.push(format!(
+                "Homebrew not available or failed: {e}; trying nvm fallback."
+            ));
+        }
     }
+
+    // Step 2: Fallback to nvm install (DRY: reuse shared nvm installer)
+    install_via_nvm(&mut log_lines).await
 }
 
 #[cfg(target_os = "windows")]
 async fn install_node_windows() -> InstallOutcome {
     use std::process::Stdio;
 
-    let mut log_lines =
-        vec!["Running: winget install --id OpenJS.NodeJS.LTS".to_string()];
+    let mut log_lines = vec!["Running: winget install --id OpenJS.NodeJS.LTS".to_string()];
 
     let result = tokio::process::Command::new("winget")
         .args([

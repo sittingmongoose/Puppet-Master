@@ -10,7 +10,7 @@ pub mod default_config;
 pub mod gui_config;
 pub mod secrets_manager;
 
-pub use config_discovery::{discover_config_path, has_config_in_dir, CONFIG_FILE_NAMES};
+pub use config_discovery::{CONFIG_FILE_NAMES, discover_config_path, has_config_in_dir};
 pub use config_manager::ConfigManager;
 pub use config_override::{
     BudgetOverride, ConfigOverride, LoggingOverride, PlatformOverride, StartChainOverride,

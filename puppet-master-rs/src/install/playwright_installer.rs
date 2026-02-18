@@ -60,18 +60,14 @@ async fn download_playwright_browsers(log_lines: &mut Vec<String>) -> InstallOut
 
     // Ensure browsers directory exists
     if let Err(e) = std::fs::create_dir_all(&browsers_dir) {
-        return InstallOutcome::failure(format!(
-            "Failed to create playwright-browsers dir: {e}"
-        ));
+        return InstallOutcome::failure(format!("Failed to create playwright-browsers dir: {e}"));
     }
 
     // Find npx
     let npx_path = match resolve_executable("npx") {
         Some(p) => p,
         None => {
-            return InstallOutcome::failure(
-                "npx not found; cannot download Playwright browsers.",
-            );
+            return InstallOutcome::failure("npx not found; cannot download Playwright browsers.");
         }
     };
 
@@ -87,7 +83,10 @@ async fn download_playwright_browsers(log_lines: &mut Vec<String>) -> InstallOut
         .args(["playwright", "install"])
         .env("NPM_CONFIG_PREFIX", &prefix_val)
         .env("PLAYWRIGHT_BROWSERS_PATH", &browsers_val)
-        .env("PATH", crate::platforms::path_utils::build_enhanced_path_for_subprocess())
+        .env(
+            "PATH",
+            crate::platforms::path_utils::build_enhanced_path_for_subprocess(),
+        )
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
         .output()

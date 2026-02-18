@@ -439,7 +439,13 @@ mod tests {
 
     #[test]
     fn test_check_working_dir_not_exists() {
-        let check = RuntimeCheck::with_working_dir(PathBuf::from("/nonexistent/path/12345"));
+        // Use a platform-appropriate non-existent path
+        #[cfg(windows)]
+        let nonexistent_path = PathBuf::from("C:\\nonexistent\\path\\12345");
+        #[cfg(not(windows))]
+        let nonexistent_path = PathBuf::from("/nonexistent/path/12345");
+
+        let check = RuntimeCheck::with_working_dir(nonexistent_path);
         let result = check.check_working_dir();
         assert!(!result.status);
     }

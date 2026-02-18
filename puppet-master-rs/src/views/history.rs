@@ -5,7 +5,10 @@
 use crate::app::Message;
 use crate::theme::{AppTheme, tokens};
 use crate::widgets::status_badge::status_badge_with_text;
-use crate::widgets::{selectable_text::{selectable_label, selectable_label_mono}, *};
+use crate::widgets::{
+    selectable_text::{selectable_label, selectable_label_mono},
+    *,
+};
 use chrono::{DateTime, Utc};
 use iced::widget::{Space, column, container, row, scrollable};
 use iced::{Element, Length};
@@ -132,21 +135,17 @@ pub fn view<'a>(
 
     let filter_layout: Element<Message> = if size.is_mobile() {
         // Mobile: vertical stack
-        let mut filter_col = column![
-            selectable_label(theme, "Filter:"),
-        ]
-        .spacing(tokens::spacing::SM);
+        let mut filter_col =
+            column![selectable_label(theme, "Filter:"),].spacing(tokens::spacing::SM);
         for btn in filter_buttons {
             filter_col = filter_col.push(btn);
         }
         Element::from(filter_col)
     } else {
         // Desktop: horizontal row
-        let mut filter_row = row![
-            selectable_label(theme, "Filter:"),
-        ]
-        .spacing(tokens::spacing::SM)
-        .align_y(iced::Alignment::Center);
+        let mut filter_row = row![selectable_label(theme, "Filter:"),]
+            .spacing(tokens::spacing::SM)
+            .align_y(iced::Alignment::Center);
         for btn in filter_buttons {
             filter_row = filter_row.push(btn);
         }
@@ -165,7 +164,10 @@ pub fn view<'a>(
                 styled_button(theme, "PREVIOUS", ButtonVariant::Secondary)
                     .on_press(Message::HistoryPrevPage),
                 Space::new().width(Length::Fill),
-                selectable_label(theme, &format!("Page {} of {}", page + 1, total_pages.max(1))),
+                selectable_label(
+                    theme,
+                    &format!("Page {} of {}", page + 1, total_pages.max(1))
+                ),
                 Space::new().width(Length::Fill),
                 styled_button(theme, "NEXT", ButtonVariant::Secondary)
                     .on_press(Message::HistoryNextPage),
@@ -218,24 +220,30 @@ pub fn view<'a>(
                     .center_x(Length::Shrink),
                     column![
                         selectable_label_mono(theme, &session.id),
-                        selectable_label(theme, &format!(
-                            "Started: {}",
-                            session.start_time.format("%Y-%m-%d %H:%M:%S")
-                        )),
-                        selectable_label(theme, &format!(
-                            "Platform: {} | Model: {} | Effort: {}",
-                            session.platform.as_deref().unwrap_or("—"),
-                            session.model.as_deref().unwrap_or("—"),
-                            session.reasoning_effort.as_deref().unwrap_or("—"),
-                        )),
+                        selectable_label(
+                            theme,
+                            &format!(
+                                "Started: {}",
+                                session.start_time.format("%Y-%m-%d %H:%M:%S")
+                            )
+                        ),
+                        selectable_label(
+                            theme,
+                            &format!(
+                                "Platform: {} | Model: {} | Effort: {}",
+                                session.platform.as_deref().unwrap_or("—"),
+                                session.model.as_deref().unwrap_or("—"),
+                                session.reasoning_effort.as_deref().unwrap_or("—"),
+                            )
+                        ),
                     ]
                     .spacing(tokens::spacing::XS),
                     Space::new().width(Length::Fill),
                     column![
-                        selectable_label(theme, &format!(
-                            "{}/{} items",
-                            session.items_completed, session.items_total
-                        )),
+                        selectable_label(
+                            theme,
+                            &format!("{}/{} items", session.items_completed, session.items_total)
+                        ),
                         selectable_label(theme, &duration),
                     ]
                     .spacing(tokens::spacing::XS)
@@ -256,21 +264,18 @@ pub fn view<'a>(
 
             // Show details if expanded
             if session.expanded {
-                let mut details = column![
-                    selectable_label(theme, "Phases:"),
-                ]
-                .spacing(tokens::spacing::XS);
+                let mut details =
+                    column![selectable_label(theme, "Phases:"),].spacing(tokens::spacing::XS);
 
                 for phase in &session.phases {
-                    details = details.push(
-                        selectable_label(theme, &format!("• {}", phase)),
-                    );
+                    details = details.push(selectable_label(theme, &format!("• {}", phase)));
                 }
 
                 if let Some(end) = session.end_time {
-                    details = details.push(
-                        selectable_label(theme, &format!("Ended: {}", end.format("%Y-%m-%d %H:%M:%S"))),
-                    );
+                    details = details.push(selectable_label(
+                        theme,
+                        &format!("Ended: {}", end.format("%Y-%m-%d %H:%M:%S")),
+                    ));
                 }
 
                 session_content =

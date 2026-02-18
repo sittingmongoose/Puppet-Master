@@ -89,6 +89,25 @@ pub fn get_fallback_directories() -> Vec<PathBuf> {
         {
             dirs.push(PathBuf::from("/opt/homebrew/bin"));
             dirs.push(PathBuf::from("/opt/local/bin"));
+
+            // Homebrew Cellar versioned node installs (ARM Macs)
+            if let Ok(entries) = std::fs::read_dir("/opt/homebrew/Cellar/node") {
+                for entry in entries.flatten() {
+                    let node_bin = entry.path().join("bin");
+                    if node_bin.join("node").exists() {
+                        dirs.push(node_bin);
+                    }
+                }
+            }
+            // Intel Mac Homebrew location
+            if let Ok(entries) = std::fs::read_dir("/usr/local/Cellar/node") {
+                for entry in entries.flatten() {
+                    let node_bin = entry.path().join("bin");
+                    if node_bin.join("node").exists() {
+                        dirs.push(node_bin);
+                    }
+                }
+            }
         }
 
         #[cfg(target_os = "linux")]
@@ -112,7 +131,15 @@ pub fn get_fallback_directories() -> Vec<PathBuf> {
     #[cfg(target_os = "windows")]
     {
         if let Some(program_files) = std::env::var_os("ProgramFiles") {
-            dirs.push(PathBuf::from(program_files));
+            let program_files_path = PathBuf::from(program_files);
+
+            // Standard nodejs installation location
+            let nodejs_dir = program_files_path.join("nodejs");
+            if nodejs_dir.exists() {
+                dirs.push(nodejs_dir);
+            }
+
+            dirs.push(program_files_path);
         }
         if let Some(program_files_x86) = std::env::var_os("ProgramFiles(x86)") {
             dirs.push(PathBuf::from(program_files_x86));

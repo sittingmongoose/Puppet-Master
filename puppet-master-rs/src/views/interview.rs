@@ -7,7 +7,8 @@ use crate::app::{ContextMenuTarget, Message, SelectableField};
 use crate::interview::{InterviewPhaseDefinition, ReferenceMaterial, ReferenceType};
 use crate::theme::{AppTheme, tokens};
 use crate::widgets::{
-    InputVariant, selectable_text::{selectable_label, selectable_label_mono, selectable_text_field},
+    InputVariant,
+    selectable_text::{selectable_label, selectable_label_mono, selectable_text_field},
     status_badge::{Status, status_dot_typed},
     styled_button::{ButtonSize, ButtonVariant, styled_button, styled_button_sized},
     styled_input::{InputSize, styled_text_input_with_variant},
@@ -90,7 +91,10 @@ pub fn view<'a>(
             column![
                 selectable_label(theme, "No interview session active."),
                 Space::new().height(Length::Fixed(tokens::spacing::MD as f32)),
-                selectable_label(theme, "Start a new interview from the Wizard to begin gathering requirements."),
+                selectable_label(
+                    theme,
+                    "Start a new interview from the Wizard to begin gathering requirements."
+                ),
                 Space::new().height(Length::Fixed(tokens::spacing::LG as f32)),
                 styled_button(theme, "GO TO WIZARD", ButtonVariant::Primary)
                     .on_press(Message::NavigateTo(crate::widgets::Page::Wizard)),
@@ -447,14 +451,17 @@ pub fn view<'a>(
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
             selectable_label_mono(theme, &progress_text),
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
-            selectable_label_mono(theme, &format!(
-                "Completed phases: {}",
-                if phases_complete.is_empty() {
-                    "None yet".to_string()
-                } else {
-                    phases_complete.join(", ")
-                }
-            )),
+            selectable_label_mono(
+                theme,
+                &format!(
+                    "Completed phases: {}",
+                    if phases_complete.is_empty() {
+                        "None yet".to_string()
+                    } else {
+                        phases_complete.join(", ")
+                    }
+                )
+            ),
         ]
         .spacing(tokens::spacing::SM)
         .padding(tokens::spacing::MD),
@@ -469,9 +476,7 @@ pub fn view<'a>(
             .spacing(tokens::spacing::SM)
             .padding(tokens::spacing::MD);
 
-        history_list = history_list.push(
-            selectable_label(theme, "INTERVIEW HISTORY"),
-        );
+        history_list = history_list.push(selectable_label(theme, "INTERVIEW HISTORY"));
 
         for (idx, answer) in answers.iter().enumerate() {
             let question = questions
@@ -482,9 +487,7 @@ pub fn view<'a>(
             let mut qa_column = column![].spacing(tokens::spacing::XS);
 
             // Question label
-            qa_column = qa_column.push(
-                selectable_label_mono(theme, &format!("Q{}", idx + 1)),
-            );
+            qa_column = qa_column.push(selectable_label_mono(theme, &format!("Q{}", idx + 1)));
 
             // Selectable question text
             qa_column = qa_column.push(selectable_text_field(
@@ -498,9 +501,7 @@ pub fn view<'a>(
             ));
 
             // Answer label
-            qa_column = qa_column.push(
-                selectable_label_mono(theme, &format!("A{}", idx + 1)),
-            );
+            qa_column = qa_column.push(selectable_label_mono(theme, &format!("A{}", idx + 1)));
 
             // Selectable answer text
             qa_column = qa_column.push(selectable_text_field(

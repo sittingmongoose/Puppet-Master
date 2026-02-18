@@ -220,12 +220,12 @@ impl TrayManager {
         // Try to load from embedded bytes
         let img = image::load_from_memory(icon_bytes)
             .context("Failed to load embedded icon from memory")?;
-        
+
         let rgba = img.to_rgba8();
         let (width, height) = rgba.dimensions();
         let icon = Icon::from_rgba(rgba.into_raw(), width, height)
             .context("Failed to create icon from RGBA data")?;
-            
+
         debug!(
             "Loaded tray icon from embedded bytes ({}x{})",
             width, height

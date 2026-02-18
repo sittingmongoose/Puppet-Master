@@ -5,7 +5,10 @@
 use crate::app::Message;
 use crate::theme::{AppTheme, tokens};
 use crate::views::evidence::{EvidenceItem, EvidenceItemType};
-use crate::widgets::{selectable_text::{selectable_label, selectable_label_mono}, *};
+use crate::widgets::{
+    selectable_text::{selectable_label, selectable_label_mono},
+    *,
+};
 use iced::widget::{Space, column, container, row, scrollable};
 use iced::{Element, Length};
 
@@ -68,7 +71,10 @@ pub fn view<'a>(
         .spacing(tokens::spacing::XS),
         column![
             selectable_label(theme, "Timestamp:"),
-            selectable_label(theme, &item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string()),
+            selectable_label(
+                theme,
+                &item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string()
+            ),
         ]
         .spacing(tokens::spacing::XS),
         column![
@@ -96,8 +102,7 @@ pub fn view<'a>(
                 column![
                     selectable_label(theme, "Content Preview"),
                     scrollable(
-                        container(selectable_label(theme, preview))
-                            .padding(tokens::spacing::SM)
+                        container(selectable_label(theme, preview)).padding(tokens::spacing::SM)
                     )
                     .height(Length::Fixed(400.0)),
                 ]

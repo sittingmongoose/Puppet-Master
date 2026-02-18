@@ -700,8 +700,8 @@ Puppet Master integrates platform-reported usage data for quota visibility:
 | Cursor | ✅ Native | `--mode=plan` |
 | Claude Code | ✅ Native | `--permission-mode plan` |
 | Gemini | ✅ Native | `--approval-mode plan` (requires `experimental.plan: true`) |
-| Codex | ❌ | Prompt preamble fallback |
-| Copilot | ❌ | Prompt preamble fallback |
+| Codex | ❌ | `--sandbox read-only` for plan-like behavior; no native plan flag |
+| Copilot | ❌ | Restrictive flags when plan_mode (omit `--allow-all-paths`); native plan is interactive (Shift+Tab) only |
 
 ### Error Message Parsing
 - **Codex**: `"You've reached your 5-hour message limit. Try again in 3h 42m."` → Extracts reset time

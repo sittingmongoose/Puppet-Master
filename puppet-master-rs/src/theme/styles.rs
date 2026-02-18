@@ -833,7 +833,9 @@ pub fn selectable_label_styled(
 
 /// Floating context menu container style
 // DRY:HELPER:context_menu_container_styled
-pub fn context_menu_container_styled(theme: &AppTheme) -> impl Fn(&iced::Theme) -> container::Style {
+pub fn context_menu_container_styled(
+    theme: &AppTheme,
+) -> impl Fn(&iced::Theme) -> container::Style {
     let theme = *theme;
     move |_| {
         let palette = theme.palette();

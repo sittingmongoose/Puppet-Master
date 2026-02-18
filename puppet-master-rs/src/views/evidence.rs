@@ -113,10 +113,8 @@ pub fn view<'a>(
     // Narrow (< 1024px): Single column stack: Filters → List → Preview
 
     // LEFT COLUMN: Category filters
-    let mut category_buttons = column![
-        selectable_label(theme, "Categories"),
-    ]
-    .spacing(tokens::spacing::SM);
+    let mut category_buttons =
+        column![selectable_label(theme, "Categories"),].spacing(tokens::spacing::SM);
 
     category_buttons = category_buttons.push(
         styled_button(
@@ -200,31 +198,32 @@ pub fn view<'a>(
 
             let item_row = row![
                 // Type icon badge with color (square, centered)
-                container(
-                    selectable_label(theme, item.evidence_type.icon())
-                )
-                .padding(tokens::spacing::SM)
-                .width(Length::Fixed(48.0))
-                .height(Length::Fixed(48.0))
-                .align_x(iced::Alignment::Center)
-                .align_y(iced::Alignment::Center)
-                .style(move |_theme: &iced::Theme| {
-                    iced::widget::container::Style {
-                        background: Some(iced::Background::Color(item.evidence_type.color())),
-                        border: Border {
-                            color: colors::INK_BLACK,
-                            width: tokens::borders::MEDIUM,
-                            radius: tokens::radii::NONE.into(),
-                        },
-                        ..Default::default()
-                    }
-                }),
+                container(selectable_label(theme, item.evidence_type.icon()))
+                    .padding(tokens::spacing::SM)
+                    .width(Length::Fixed(48.0))
+                    .height(Length::Fixed(48.0))
+                    .align_x(iced::Alignment::Center)
+                    .align_y(iced::Alignment::Center)
+                    .style(move |_theme: &iced::Theme| {
+                        iced::widget::container::Style {
+                            background: Some(iced::Background::Color(item.evidence_type.color())),
+                            border: Border {
+                                color: colors::INK_BLACK,
+                                width: tokens::borders::MEDIUM,
+                                radius: tokens::radii::NONE.into(),
+                            },
+                            ..Default::default()
+                        }
+                    }),
                 // Details
                 column![
                     selectable_label(theme, item.evidence_type.as_str()),
                     selectable_label(theme, &item.summary),
                     row![
-                        selectable_label(theme, &item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string()),
+                        selectable_label(
+                            theme,
+                            &item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string()
+                        ),
                         selectable_label(theme, &format!(" | {}", file_size_str)),
                     ],
                 ]
@@ -308,13 +307,11 @@ pub fn view<'a>(
                 ..Default::default()
             })
         } else {
-            container(
-                selectable_label(theme, "Select an item to preview"),
-            )
-            .padding(tokens::spacing::XL)
-            .width(Length::Fill)
-            .height(Length::Fill)
-            .style(move |_: &iced::Theme| container::Style::default())
+            container(selectable_label(theme, "Select an item to preview"))
+                .padding(tokens::spacing::XL)
+                .width(Length::Fill)
+                .height(Length::Fill)
+                .style(move |_: &iced::Theme| container::Style::default())
         }
     ]
     .spacing(tokens::spacing::SM);
@@ -365,9 +362,12 @@ pub fn view<'a>(
     .spacing(tokens::spacing::MD)
     .align_y(iced::Alignment::Center);
 
-    let full_content = column![page_header("Evidence", theme, header_actions, size), main_content,]
-        .spacing(tokens::spacing::LG)
-        .padding(tokens::spacing::LG);
+    let full_content = column![
+        page_header("Evidence", theme, header_actions, size),
+        main_content,
+    ]
+    .spacing(tokens::spacing::LG)
+    .padding(tokens::spacing::LG);
 
     container(full_content)
         .width(Length::Fill)

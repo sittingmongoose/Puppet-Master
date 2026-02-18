@@ -16,8 +16,7 @@ use log::{debug, info};
 use std::path::PathBuf;
 
 /// GitHub Releases API endpoint for the `cli/cli` repository.
-const GH_RELEASES_API: &str =
-    "https://api.github.com/repos/cli/cli/releases/latest";
+const GH_RELEASES_API: &str = "https://api.github.com/repos/cli/cli/releases/latest";
 
 // DRY:FN:install_gh_to_app_bin — Download + extract gh binary into app-local bin/
 /// Download the latest GitHub CLI binary for the current platform and install it
@@ -58,7 +57,7 @@ pub async fn install_gh_to_app_bin() -> InstallOutcome {
             return InstallOutcome::failure_with_log(
                 format!("Failed to create bin dir: {e}"),
                 log_lines,
-            )
+            );
         }
     };
 
@@ -67,10 +66,7 @@ pub async fn install_gh_to_app_bin() -> InstallOutcome {
             log_lines.push(format!("gh installed at {}", dst.display()));
             InstallOutcome {
                 success: true,
-                message: format!(
-                    "GitHub CLI installed to {}",
-                    dst.display()
-                ),
+                message: format!("GitHub CLI installed to {}", dst.display()),
                 log_lines,
                 installed_path: Some(dst),
             }
@@ -80,9 +76,7 @@ pub async fn install_gh_to_app_bin() -> InstallOutcome {
 }
 
 /// Fetch the latest release JSON from GitHub API.
-async fn fetch_latest_release(
-    log_lines: &mut Vec<String>,
-) -> Result<serde_json::Value, String> {
+async fn fetch_latest_release(log_lines: &mut Vec<String>) -> Result<serde_json::Value, String> {
     let client = reqwest::Client::builder()
         .user_agent("rwm-puppet-master/1.0")
         .build()
@@ -95,10 +89,7 @@ async fn fetch_latest_release(
         .map_err(|e| format!("HTTP request failed: {e}"))?;
 
     if !resp.status().is_success() {
-        return Err(format!(
-            "GitHub API returned HTTP {}",
-            resp.status()
-        ));
+        return Err(format!("GitHub API returned HTTP {}", resp.status()));
     }
 
     let json: serde_json::Value = resp
@@ -123,9 +114,7 @@ fn pick_asset_url(release: &serde_json::Value, log_lines: &mut Vec<String>) -> O
     for asset in assets {
         let name = asset["name"].as_str().unwrap_or("");
         let name_lower = name.to_lowercase();
-        if name_lower.contains(os_key)
-            && name_lower.contains(arch_key)
-            && name_lower.ends_with(ext)
+        if name_lower.contains(os_key) && name_lower.contains(arch_key) && name_lower.ends_with(ext)
         {
             let url = asset["browser_download_url"]
                 .as_str()
@@ -139,10 +128,7 @@ fn pick_asset_url(release: &serde_json::Value, log_lines: &mut Vec<String>) -> O
     }
 
     // Log available assets to help diagnose failures
-    let names: Vec<&str> = assets
-        .iter()
-        .filter_map(|a| a["name"].as_str())
-        .collect();
+    let names: Vec<&str> = assets.iter().filter_map(|a| a["name"].as_str()).collect();
     log_lines.push(format!("Available assets: {}", names.join(", ")));
     None
 }
@@ -167,8 +153,12 @@ fn current_platform_keys() -> (&'static str, &'static str, &'static str) {
 
     #[cfg(target_os = "windows")]
     let ext = ".zip";
-    #[cfg(not(target_os = "windows"))]
+    #[cfg(target_os = "macos")]
+    let ext = ".zip"; // macOS gh releases are .zip
+    #[cfg(target_os = "linux")]
     let ext = ".tar.gz";
+    #[cfg(not(any(target_os = "windows", target_os = "macos", target_os = "linux")))]
+    let ext = ".tar.gz"; // Default fallback
 
     (os, arch, ext)
 }
@@ -193,10 +183,7 @@ async fn download_bytes(url: &str, log_lines: &mut Vec<String>) -> Result<Vec<u8
 
     let content_length = resp.content_length().unwrap_or(0);
     if content_length > 0 {
-        log_lines.push(format!(
-            "Downloading {} bytes…",
-            content_length
-        ));
+        log_lines.push(format!("Downloading {} bytes…", content_length));
     }
 
     resp.bytes()
@@ -213,8 +200,7 @@ fn extract_and_install_gh(
     log_lines: &mut Vec<String>,
 ) -> Result<PathBuf, String> {
     let tmp_dir = std::env::temp_dir().join(format!("rwm-gh-{}", std::process::id()));
-    std::fs::create_dir_all(&tmp_dir)
-        .map_err(|e| format!("Failed to create temp dir: {e}"))?;
+    std::fs::create_dir_all(&tmp_dir).map_err(|e| format!("Failed to create temp dir: {e}"))?;
 
     let tmp_archive = if asset_url.ends_with(".zip") {
         tmp_dir.join("gh.zip")
@@ -223,10 +209,13 @@ fn extract_and_install_gh(
     };
 
     debug!("Writing archive to {}", tmp_archive.display());
-    std::fs::write(&tmp_archive, bytes)
-        .map_err(|e| format!("Failed to write archive: {e}"))?;
+    std::fs::write(&tmp_archive, bytes).map_err(|e| format!("Failed to write archive: {e}"))?;
 
-    let gh_binary_name = if cfg!(target_os = "windows") { "gh.exe" } else { "gh" };
+    let gh_binary_name = if cfg!(target_os = "windows") {
+        "gh.exe"
+    } else {
+        "gh"
+    };
 
     if asset_url.ends_with(".zip") {
         extract_zip_and_find_gh(&tmp_archive, &tmp_dir, gh_binary_name, log_lines)?;
@@ -239,8 +228,7 @@ fn extract_and_install_gh(
         .ok_or_else(|| format!("Could not find {gh_binary_name} in extracted archive"))?;
 
     let dst = bin_dir.join(gh_binary_name);
-    std::fs::copy(&gh_src, &dst)
-        .map_err(|e| format!("Failed to copy gh binary: {e}"))?;
+    std::fs::copy(&gh_src, &dst).map_err(|e| format!("Failed to copy gh binary: {e}"))?;
 
     set_executable_bit(&dst);
     log_lines.push(format!("Installed gh → {}", dst.display()));
@@ -258,10 +246,8 @@ fn extract_zip_and_find_gh(
     _gh_name: &str,
     log_lines: &mut Vec<String>,
 ) -> Result<(), String> {
-    let file = std::fs::File::open(archive)
-        .map_err(|e| format!("Cannot open zip: {e}"))?;
-    let mut zip = zip::ZipArchive::new(file)
-        .map_err(|e| format!("Invalid zip archive: {e}"))?;
+    let file = std::fs::File::open(archive).map_err(|e| format!("Cannot open zip: {e}"))?;
+    let mut zip = zip::ZipArchive::new(file).map_err(|e| format!("Invalid zip archive: {e}"))?;
 
     for i in 0..zip.len() {
         let mut entry = zip
@@ -269,17 +255,14 @@ fn extract_zip_and_find_gh(
             .map_err(|e| format!("Zip entry error: {e}"))?;
         let out_path = extract_dir.join(entry.mangled_name());
         if entry.is_dir() {
-            std::fs::create_dir_all(&out_path)
-                .map_err(|e| format!("mkdir error: {e}"))?;
+            std::fs::create_dir_all(&out_path).map_err(|e| format!("mkdir error: {e}"))?;
         } else {
             if let Some(parent) = out_path.parent() {
-                std::fs::create_dir_all(parent)
-                    .map_err(|e| format!("mkdir error: {e}"))?;
+                std::fs::create_dir_all(parent).map_err(|e| format!("mkdir error: {e}"))?;
             }
-            let mut out_file = std::fs::File::create(&out_path)
-                .map_err(|e| format!("File create error: {e}"))?;
-            std::io::copy(&mut entry, &mut out_file)
-                .map_err(|e| format!("Copy error: {e}"))?;
+            let mut out_file =
+                std::fs::File::create(&out_path).map_err(|e| format!("File create error: {e}"))?;
+            std::io::copy(&mut entry, &mut out_file).map_err(|e| format!("Copy error: {e}"))?;
         }
     }
 

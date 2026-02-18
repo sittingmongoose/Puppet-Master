@@ -4,7 +4,10 @@
 
 use crate::app::{ContextMenuTarget, Message, SelectableField};
 use crate::theme::{AppTheme, colors, tokens};
-use crate::widgets::{selectable_text::{selectable_label, selectable_label_mono}, *};
+use crate::widgets::{
+    selectable_text::{selectable_label, selectable_label_mono},
+    *,
+};
 use iced::widget::{Space, column, container, row, scrollable, text};
 use iced::{Border, Element, Length};
 use std::path::PathBuf;
@@ -211,10 +214,8 @@ pub fn view<'a>(
             theme,
         ));
     } else {
-        let mut projects_content = column![
-            selectable_label(theme, "Recent Projects"),
-        ]
-        .spacing(tokens::spacing::MD);
+        let mut projects_content =
+            column![selectable_label(theme, "Recent Projects"),].spacing(tokens::spacing::MD);
 
         for project in projects {
             let is_current = current

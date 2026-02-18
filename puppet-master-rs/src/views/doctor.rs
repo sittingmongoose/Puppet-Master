@@ -8,9 +8,7 @@ use crate::doctor::check_targeting;
 use crate::platforms::platform_specs;
 use crate::theme::{AppTheme, colors, styles, tokens};
 use crate::types::Platform;
-use crate::widgets::{
-    responsive::responsive_grid, selectable_text::selectable_label, *,
-};
+use crate::widgets::{responsive::responsive_grid, selectable_text::selectable_label, *};
 use iced::widget::{
     Checkbox, Space, column, container, mouse_area, row, scrollable, text, text_editor,
 };
@@ -219,6 +217,33 @@ fn platform_from_check_name(name: &str) -> Option<Platform> {
     }
 }
 
+// DRY:FN:is_platform_cli_installed_from_results — Check if platform CLI is installed from doctor check results
+/// Check if a platform CLI is installed based on doctor check results.
+/// Returns true if the platform's CLI check exists and passed.
+pub fn is_platform_cli_installed_from_results(
+    platform: Platform,
+    results: &[DoctorCheckResult],
+) -> bool {
+    let cli_check_name = format!("{}-cli", platform);
+    results
+        .iter()
+        .find(|check| check.name == cli_check_name)
+        .map(|check| check.passed)
+        .unwrap_or(false)
+}
+
+// DRY:FN:build_launch_button_for_platform — Build Launch button for platform CLI
+/// Build a Launch button element for launching a platform CLI in a terminal.
+/// Returns a small Info-styled button that triggers LaunchPlatformCli message.
+pub fn build_launch_button_for_platform<'a>(
+    theme: &'a AppTheme,
+    platform: Platform,
+) -> Element<'a, Message> {
+    styled_button_sized(theme, "Launch", ButtonVariant::Info, ButtonSize::Small)
+        .on_press(Message::LaunchPlatformCli(platform))
+        .into()
+}
+
 // ═══════════════════════════════════════════════════════════════════════
 // Header Section
 // ═══════════════════════════════════════════════════════════════════════
@@ -309,9 +334,7 @@ fn view_platform_selector<'a>(
     let mut grid = column![].spacing(tokens::spacing::MD);
 
     // Title
-    grid = grid.push(
-        selectable_label(theme, "Select Platforms to Check"),
-    );
+    grid = grid.push(selectable_label(theme, "Select Platforms to Check"));
 
     grid = grid.push(
         selectable_label(theme,
@@ -369,12 +392,7 @@ fn view_platform_card<'a>(
     let is_selected = selected_platforms.contains(&platform);
     // DRY: use platform_specs for display name instead of hardcoding
     let platform_name = platform_specs::display_name_for(platform);
-    let cli_check_name = format!("{}-cli", platform);
-    let is_installed = results
-        .iter()
-        .find(|check| check.name == cli_check_name)
-        .map(|check| check.passed)
-        .unwrap_or(false);
+    let is_installed = is_platform_cli_installed_from_results(platform, results);
 
     let theme_copy = *theme;
 
@@ -392,12 +410,11 @@ fn view_platform_card<'a>(
         theme,
     );
 
-    let mut status_row = row![status_badge].spacing(tokens::spacing::SM).align_y(Alignment::Center);
+    let mut status_row = row![status_badge]
+        .spacing(tokens::spacing::SM)
+        .align_y(Alignment::Center);
     if is_installed {
-        status_row = status_row.push(
-            styled_button_sized(theme, "Launch", ButtonVariant::Info, ButtonSize::Small)
-                .on_press(Message::LaunchPlatformCli(platform)),
-        );
+        status_row = status_row.push(build_launch_button_for_platform(theme, platform));
     }
 
     container(
@@ -548,11 +565,9 @@ fn view_category<'a>(
         passed,
         total
     );
-    let header = row![
-        selectable_label(theme, &header_text),
-    ]
-    .spacing(tokens::spacing::SM)
-    .align_y(Alignment::Center);
+    let header = row![selectable_label(theme, &header_text),]
+        .spacing(tokens::spacing::SM)
+        .align_y(Alignment::Center);
 
     category_content = category_content.push(header);
 
@@ -606,16 +621,12 @@ fn view_check_row<'a>(
     .align_y(Alignment::Center);
 
     // Check name and message
-    let mut name_column = column![
-        selectable_label(theme, &check.name),
-    ]
-    .spacing(tokens::spacing::XXS);
+    let mut name_column =
+        column![selectable_label(theme, &check.name),].spacing(tokens::spacing::XXS);
 
     if !check.message.is_empty() {
         let message_text = format!("— {}", check.message);
-        name_column = name_column.push(
-            selectable_label(theme, &message_text),
-        );
+        name_column = name_column.push(selectable_label(theme, &message_text));
     }
 
     main_row = main_row.push(container(name_column).width(Length::Fill));
@@ -664,6 +675,13 @@ fn view_check_row<'a>(
                 styled_button_sized(theme, "Browse", ButtonVariant::Ghost, ButtonSize::Small)
                     .on_press(Message::DoctorBrowsePlatformPath(platform)),
             );
+        }
+    }
+
+    // Launch button for installed CLI checks
+    if check.passed && check.name.ends_with("-cli") {
+        if let Some(platform) = platform_from_check_name(&check.name) {
+            actions = actions.push(build_launch_button_for_platform(theme, platform));
         }
     }
 

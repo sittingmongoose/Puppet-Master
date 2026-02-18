@@ -45,10 +45,7 @@ impl DoctorCheck for ConfigFileCheck {
                 CheckResult {
                     passed: false,
                     message: "Config file not found".to_string(),
-                    details: Some(format!(
-                        "Expected one of: {}. {}",
-                        expected, locations
-                    )),
+                    details: Some(format!("Expected one of: {}. {}", expected, locations)),
                     can_fix: false,
                     timestamp: Utc::now(),
                 }

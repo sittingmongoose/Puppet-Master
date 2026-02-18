@@ -38,8 +38,27 @@ impl SdkBridge {
     // DRY:FN:new
     /// Creates a new SDK bridge, detecting Node.js automatically.
     pub fn new() -> Option<Self> {
-        let node_path = which("node").ok()?;
-        Some(Self { node_path })
+        // Try system PATH first
+        if let Ok(node_path) = which("node") {
+            return Some(Self { node_path });
+        }
+        // Try enhanced PATH resolution (finds nvm, brew Cellar, etc.)
+        if let Some(node_path) = crate::platforms::path_utils::resolve_executable("node") {
+            return Some(Self { node_path });
+        }
+        // Try app-local bin (GUI apps may not inherit full PATH)
+        let app_node =
+            crate::install::app_paths::get_app_bin_dir().join(if cfg!(target_os = "windows") {
+                "node.exe"
+            } else {
+                "node"
+            });
+        if app_node.exists() {
+            return Some(Self {
+                node_path: app_node,
+            });
+        }
+        None
     }
     // DRY:FN:with_node_path
 
@@ -360,20 +379,42 @@ main().catch(e => {{
     // DRY:FN:node_command_with_global_path — Spawn node with NODE_PATH including npm global root.
     fn node_command_with_global_path(&self) -> tokio::process::Command {
         let mut command = tokio::process::Command::new(&self.node_path);
-        if let Some(global_root) = self.npm_global_root() {
-            let sep = if cfg!(target_os = "windows") {
-                ";"
-            } else {
-                ":"
-            };
-            let merged = match std::env::var("NODE_PATH") {
-                Ok(existing) if !existing.trim().is_empty() => {
-                    format!("{}{}{}", existing, sep, global_root)
-                }
-                _ => global_root,
-            };
-            command.env("NODE_PATH", merged);
+
+        let sep = if cfg!(target_os = "windows") {
+            ";"
+        } else {
+            ":"
+        };
+
+        // Build NODE_PATH including:
+        // 1. App-local lib/node_modules (for GUI environments)
+        // 2. npm global root (from npm config)
+        // 3. Existing NODE_PATH
+        let mut paths = Vec::new();
+
+        // App-local lib/node_modules first
+        let lib_dir = crate::install::app_paths::get_lib_dir();
+        let app_modules = lib_dir.join("lib").join("node_modules");
+        if app_modules.exists() {
+            paths.push(app_modules.to_string_lossy().to_string());
         }
+
+        // npm global root
+        if let Some(global_root) = self.npm_global_root() {
+            paths.push(global_root);
+        }
+
+        // Existing NODE_PATH
+        if let Ok(existing) = std::env::var("NODE_PATH") {
+            if !existing.trim().is_empty() {
+                paths.push(existing);
+            }
+        }
+
+        if !paths.is_empty() {
+            command.env("NODE_PATH", paths.join(sep));
+        }
+
         command
     }
 

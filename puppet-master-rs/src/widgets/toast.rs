@@ -4,7 +4,7 @@
 //! and cross-hatch shadows matching the GUI styling.
 
 use crate::theme::colors;
-use crate::widgets::icon::{icon_sized, IconName, IconSize};
+use crate::widgets::icon::{IconName, IconSize, icon_sized};
 use iced::widget::{button, column, container, mouse_area, row, stack, text};
 use iced::{Alignment, Border, Color, Element, Length, Padding, Shadow, Vector};
 use std::time::{Duration, Instant};
@@ -267,25 +267,23 @@ where
     .padding(12)
     .align_y(Alignment::Center);
 
-    let toast_card = mouse_area(
-        container(content)
-            .width(Length::Fixed(380.0))
-            .style(move |_theme: &iced::Theme| container::Style {
-                background: Some(iced::Background::Color(bg_color)),
-                border: Border {
-                    color: bg_color, // Same color as background
-                    width: 2.0,
-                    radius: 0.0.into(),
-                },
-                shadow: Shadow {
-                    color: colors::INK_BLACK,
-                    offset: Vector::new(3.0, 3.0),
-                    blur_radius: 0.0,
-                },
-                text_color: Some(text_color),
-                snap: container::Style::default().snap,
-            }),
-    )
+    let toast_card = mouse_area(container(content).width(Length::Fixed(380.0)).style(
+        move |_theme: &iced::Theme| container::Style {
+            background: Some(iced::Background::Color(bg_color)),
+            border: Border {
+                color: bg_color, // Same color as background
+                width: 2.0,
+                radius: 0.0.into(),
+            },
+            shadow: Shadow {
+                color: colors::INK_BLACK,
+                offset: Vector::new(3.0, 3.0),
+                blur_radius: 0.0,
+            },
+            text_color: Some(text_color),
+            snap: container::Style::default().snap,
+        },
+    ))
     .on_right_press(on_right_click(toast_id));
 
     let mut wrapped = column![toast_card].spacing(6);
@@ -293,9 +291,7 @@ where
         wrapped = wrapped.push(actions);
     }
 
-    wrapped
-        .width(Length::Fixed(380.0))
-        .into()
+    wrapped.width(Length::Fixed(380.0)).into()
 }
 
 // DRY:WIDGET:toast_overlay

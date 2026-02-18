@@ -247,6 +247,7 @@ mod tests {
     use super::*;
 
     #[tokio::test]
+    #[cfg(unix)]
     async fn test_spawn_successful_command() {
         let spawner = FreshSpawn::with_defaults();
 
@@ -260,6 +261,23 @@ mod tests {
     }
 
     #[tokio::test]
+    #[cfg(windows)]
+    async fn test_spawn_successful_command() {
+        let spawner = FreshSpawn::with_defaults();
+
+        let (result, audit) = spawner
+            .spawn("cmd", &["/c".to_string(), "echo hello".to_string()])
+            .await
+            .unwrap();
+
+        assert_eq!(result.exit_code, Some(0));
+        assert!(result.stdout.contains("hello"));
+        assert!(!result.timed_out);
+        assert_eq!(audit.command, "cmd");
+    }
+
+    #[tokio::test]
+    #[cfg(unix)]
     async fn test_spawn_failed_command() {
         let spawner = FreshSpawn::with_defaults();
 
@@ -271,6 +289,22 @@ mod tests {
     }
 
     #[tokio::test]
+    #[cfg(windows)]
+    async fn test_spawn_failed_command() {
+        let spawner = FreshSpawn::with_defaults();
+
+        // Use 'cmd /c exit 1' which exits with code 1
+        let (result, _) = spawner
+            .spawn("cmd", &["/c".to_string(), "exit 1".to_string()])
+            .await
+            .unwrap();
+
+        assert_ne!(result.exit_code, Some(0));
+        assert!(!result.timed_out);
+    }
+
+    #[tokio::test]
+    #[cfg(unix)]
     async fn test_spawn_with_timeout() {
         let config = SpawnConfig {
             timeout_secs: 1,
@@ -285,6 +319,28 @@ mod tests {
     }
 
     #[tokio::test]
+    #[cfg(windows)]
+    async fn test_spawn_with_timeout() {
+        let config = SpawnConfig {
+            timeout_secs: 1,
+            ..Default::default()
+        };
+        let spawner = FreshSpawn::new(config);
+
+        // Use ping command as a sleep replacement on Windows (waits ~10 seconds)
+        let (result, _) = spawner
+            .spawn(
+                "cmd",
+                &["/c".to_string(), "ping 127.0.0.1 -n 10 > nul".to_string()],
+            )
+            .await
+            .unwrap();
+
+        assert!(result.timed_out);
+    }
+
+    #[tokio::test]
+    #[cfg(unix)]
     async fn test_spawn_with_env_vars() {
         let config = SpawnConfig {
             env_vars: vec![("TEST_VAR".to_string(), "test_value".to_string())],
@@ -304,6 +360,27 @@ mod tests {
     }
 
     #[tokio::test]
+    #[cfg(windows)]
+    async fn test_spawn_with_env_vars() {
+        let config = SpawnConfig {
+            env_vars: vec![("TEST_VAR".to_string(), "test_value".to_string())],
+            ..Default::default()
+        };
+        let spawner = FreshSpawn::new(config);
+
+        // Echo environment variable on Windows
+        let (result, audit) = spawner
+            .spawn("cmd", &["/c".to_string(), "echo %TEST_VAR%".to_string()])
+            .await
+            .unwrap();
+
+        assert_eq!(result.exit_code, Some(0));
+        assert!(result.stdout.contains("test_value"));
+        assert_eq!(audit.env_vars.len(), 1);
+    }
+
+    #[tokio::test]
+    #[cfg(unix)]
     async fn test_spawn_captures_stderr() {
         let spawner = FreshSpawn::with_defaults();
 
@@ -317,6 +394,21 @@ mod tests {
     }
 
     #[tokio::test]
+    #[cfg(windows)]
+    async fn test_spawn_captures_stderr() {
+        let spawner = FreshSpawn::with_defaults();
+
+        // Command that writes to stderr on Windows
+        let (result, _) = spawner
+            .spawn("cmd", &["/c".to_string(), "echo error 1>&2".to_string()])
+            .await
+            .unwrap();
+
+        assert!(result.stderr.contains("error"));
+    }
+
+    #[tokio::test]
+    #[cfg(unix)]
     async fn test_audit_trail() {
         let spawner = FreshSpawn::with_defaults();
 
@@ -324,6 +416,22 @@ mod tests {
 
         assert_eq!(audit.command, "echo");
         assert_eq!(audit.args, vec!["test"]);
+        assert!(audit.pid.is_some());
+        assert!(audit.ended_at.is_some());
+        assert!(audit.duration_ms.is_some());
+    }
+
+    #[tokio::test]
+    #[cfg(windows)]
+    async fn test_audit_trail() {
+        let spawner = FreshSpawn::with_defaults();
+
+        let (_, audit) = spawner
+            .spawn("cmd", &["/c".to_string(), "echo test".to_string()])
+            .await
+            .unwrap();
+
+        assert_eq!(audit.command, "cmd");
         assert!(audit.pid.is_some());
         assert!(audit.ended_at.is_some());
         assert!(audit.duration_ms.is_some());

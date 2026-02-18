@@ -4,8 +4,8 @@
 //! (CLI login, OAuth) rather than API keys.
 
 use crate::platforms::path_utils;
-use crate::platforms::platform_specs;
 use crate::platforms::platform_detector::PlatformDetector;
+use crate::platforms::platform_specs;
 use crate::types::Platform;
 use anyhow::{Result, anyhow};
 use log::info;
@@ -46,11 +46,7 @@ fn terminal_command(program: &Path, args: &[&str]) -> String {
 // DRY:FN:spawn_terminal_with_command — Cross-platform terminal spawn with enhanced PATH
 /// Spawns a new terminal with the given program and args pre-invoked.
 /// Uses enhanced PATH for node-based CLIs. On Linux, keeps shell open after CLI exits.
-fn spawn_terminal_with_command(
-    program: &Path,
-    args: &[&str],
-    cwd: Option<&Path>,
-) -> Result<()> {
+fn spawn_terminal_with_command(program: &Path, args: &[&str], cwd: Option<&Path>) -> Result<()> {
     let full_command = terminal_command(program, args);
     let cli_name = program
         .file_name()
@@ -70,13 +66,8 @@ fn spawn_terminal_with_command(
         if let Some(cwd) = cwd {
             cmd.current_dir(cwd);
         }
-        cmd.spawn().map_err(|e| {
-            anyhow!(
-                "Failed to open terminal: {}. {}",
-                e,
-                fallback_msg
-            )
-        })?;
+        cmd.spawn()
+            .map_err(|e| anyhow!("Failed to open terminal: {}. {}", e, fallback_msg))?;
         Ok(())
     };
 
@@ -99,7 +90,9 @@ fn spawn_terminal_with_command(
         let wrapped = format!("{}; exec bash", full_command.replace('\'', "'\\''"));
         let terminal_cmd = format!(
             "x-terminal-emulator -e '{}' || xterm -e '{}' || gnome-terminal -- bash -c '{}' || true",
-            wrapped, wrapped, wrapped.replace('\'', "'\"'\"'")
+            wrapped,
+            wrapped,
+            wrapped.replace('\'', "'\"'\"'")
         );
         let mut cmd = Command::new("sh");
         cmd.args(["-c", &terminal_cmd]);
@@ -176,10 +169,8 @@ pub async fn spawn_login(target: AuthTarget) -> Result<()> {
     };
     let resolved_program = match target {
         AuthTarget::Platform(platform) => resolve_platform_program(platform, program).await?,
-        AuthTarget::GitHub => {
-            crate::platforms::path_utils::resolve_app_local_executable("gh")
-                .unwrap_or_else(|| PathBuf::from("gh"))
-        }
+        AuthTarget::GitHub => crate::platforms::path_utils::resolve_app_local_executable("gh")
+            .unwrap_or_else(|| PathBuf::from("gh")),
     };
 
     info!(
@@ -230,18 +221,11 @@ pub async fn spawn_login(target: AuthTarget) -> Result<()> {
 // DRY:FN:spawn_launch_cli — Spawns platform CLI in a new terminal (interactive mode)
 /// Launches the platform CLI interactively in a new terminal. Uses app-local or detected path.
 /// When project_dir is Some, the terminal opens in that directory.
-pub async fn spawn_launch_cli(
-    platform: Platform,
-    project_dir: Option<PathBuf>,
-) -> Result<()> {
+pub async fn spawn_launch_cli(platform: Platform, project_dir: Option<PathBuf>) -> Result<()> {
     let cli_names = platform_specs::cli_binary_names(platform);
     let hint = cli_names.first().copied().unwrap_or("cli");
     let resolved = resolve_platform_program(platform, hint).await?;
-    spawn_terminal_with_command(
-        &resolved,
-        &[],
-        project_dir.as_deref(),
-    )?;
+    spawn_terminal_with_command(&resolved, &[], project_dir.as_deref())?;
     Ok(())
 }
 
@@ -300,10 +284,8 @@ pub async fn spawn_logout(target: AuthTarget) -> Result<()> {
     };
     let resolved_program = match target {
         AuthTarget::Platform(platform) => resolve_platform_program(platform, program).await?,
-        AuthTarget::GitHub => {
-            crate::platforms::path_utils::resolve_app_local_executable("gh")
-                .unwrap_or_else(|| PathBuf::from("gh"))
-        }
+        AuthTarget::GitHub => crate::platforms::path_utils::resolve_app_local_executable("gh")
+            .unwrap_or_else(|| PathBuf::from("gh")),
     };
 
     info!(

@@ -1,6 +1,6 @@
 //! Headless GUI automation runner.
 
-use crate::app::{App, Message, ContextMenuTarget};
+use crate::app::{App, ContextMenuTarget, Message};
 use crate::automation::action_catalog::{resolve_action, resolve_from_text};
 use crate::automation::{
     DebugFeedCollector, GuiAction, GuiAssertion, GuiRunSpec, GuiSelector, GuiStep, GuiStepResult,
@@ -74,8 +74,8 @@ pub fn run(
             .map_err(|e| anyhow::anyhow!("Failed to create tokio runtime: {e}"))?;
         rt.block_on(init_renderer)
     };
-    let mut renderer =
-        renderer_init.ok_or_else(|| anyhow::anyhow!("Failed to initialize headless tiny-skia renderer"))?;
+    let mut renderer = renderer_init
+        .ok_or_else(|| anyhow::anyhow!("Failed to initialize headless tiny-skia renderer"))?;
 
     let initial_timeout = Duration::from_secs(2);
     drain_task_messages(&mut app, init_task, initial_timeout).map_err(anyhow::Error::msg)?;
@@ -400,22 +400,30 @@ fn selector_to_message(selector: &GuiSelector) -> std::result::Result<Message, S
 }
 
 // DRY:FN:selector_to_right_click_message
-fn selector_to_right_click_message(
-    selector: &GuiSelector,
-) -> std::result::Result<Message, String> {
+fn selector_to_right_click_message(selector: &GuiSelector) -> std::result::Result<Message, String> {
     match selector {
         GuiSelector::ActionId { value } => {
             if value == "dashboard_terminal" || value == "terminal" {
-                Ok(Message::OpenContextMenu(ContextMenuTarget::DashboardTerminal))
+                Ok(Message::OpenContextMenu(
+                    ContextMenuTarget::DashboardTerminal,
+                ))
             } else {
-                Err(format!("Right-click not implemented for action selector '{}'", value))
+                Err(format!(
+                    "Right-click not implemented for action selector '{}'",
+                    value
+                ))
             }
         }
         GuiSelector::Text { value } => {
             // For general text, we'll assume it's a selectable label opening a StaticText menu
-            Ok(Message::OpenContextMenu(ContextMenuTarget::StaticText(value.to_string())))
+            Ok(Message::OpenContextMenu(ContextMenuTarget::StaticText(
+                value.to_string(),
+            )))
         }
-        _ => Err(format!("Right-click selector '{:?}' not supported", selector)),
+        _ => Err(format!(
+            "Right-click selector '{:?}' not supported",
+            selector
+        )),
     }
 }
 
@@ -438,10 +446,10 @@ fn selector_to_type_message(
         "input_wizard_github_description" | "wizard_github_description" => {
             Ok(Message::WizardGithubDescriptionChanged(value))
         }
-        "input_wizard_interaction_mode" | "wizard_interaction_mode"
-        | "input_settings_interaction_mode" | "settings_interaction_mode" => {
-            Ok(Message::SettingsInteractionModeChanged(value))
-        }
+        "input_wizard_interaction_mode"
+        | "wizard_interaction_mode"
+        | "input_settings_interaction_mode"
+        | "settings_interaction_mode" => Ok(Message::SettingsInteractionModeChanged(value)),
         "input_wizard_reasoning_level" | "wizard_reasoning_level" => {
             Ok(Message::WizardReasoningLevelChanged(value))
         }

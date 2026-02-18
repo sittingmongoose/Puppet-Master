@@ -17,9 +17,7 @@ use crate::widgets::{
     themed_panel,
 };
 use chrono::{DateTime, Utc};
-use iced::widget::{
-    Space, column, container, mouse_area, row, scrollable, text, text_editor,
-};
+use iced::widget::{Space, column, container, mouse_area, row, scrollable, text, text_editor};
 use iced::{Background, Border, Element, Length};
 use std::collections::HashMap;
 
@@ -246,11 +244,24 @@ fn build_status_bar<'a>(
         // Row 2: Workflow progress
         status_rows = status_rows.push(
             row![
-                selectable_label_mono(theme, &format!("PH {}/{}", progress.phase_current, progress.phase_total)),
-                text("│").size(tokens::font_size::XS).color(theme.ink_faded()),
-                selectable_label_mono(theme, &format!("TK {}/{}", progress.task_current, progress.task_total)),
-                text("│").size(tokens::font_size::XS).color(theme.ink_faded()),
-                selectable_label_mono(theme, &format!("ST {}/{}", progress.subtask_current, progress.subtask_total)),
+                selectable_label_mono(
+                    theme,
+                    &format!("PH {}/{}", progress.phase_current, progress.phase_total)
+                ),
+                text("│")
+                    .size(tokens::font_size::XS)
+                    .color(theme.ink_faded()),
+                selectable_label_mono(
+                    theme,
+                    &format!("TK {}/{}", progress.task_current, progress.task_total)
+                ),
+                text("│")
+                    .size(tokens::font_size::XS)
+                    .color(theme.ink_faded()),
+                selectable_label_mono(
+                    theme,
+                    &format!("ST {}/{}", progress.subtask_current, progress.subtask_total)
+                ),
             ]
             .spacing(tokens::spacing::XS)
             .align_y(iced::Alignment::Center),
@@ -290,7 +301,9 @@ fn build_status_bar<'a>(
         themed_panel(status_rows, theme).into()
     } else {
         // Original row layout for desktop
-        let mut status_content = row![].spacing(tokens::spacing::MD).align_y(iced::Alignment::Center);
+        let mut status_content = row![]
+            .spacing(tokens::spacing::MD)
+            .align_y(iced::Alignment::Center);
 
         // Status indicator
         status_content = status_content.push(
@@ -315,15 +328,27 @@ fn build_status_bar<'a>(
 
         status_content = status_content.push(
             row![
-                selectable_label_mono(theme, &format!("Phase {}/{}", progress.phase_current, progress.phase_total)),
+                selectable_label_mono(
+                    theme,
+                    &format!("Phase {}/{}", progress.phase_current, progress.phase_total)
+                ),
                 text("│")
                     .size(tokens::font_size::SM)
                     .color(theme.ink_faded()),
-                selectable_label_mono(theme, &format!("Task {}/{}", progress.task_current, progress.task_total)),
+                selectable_label_mono(
+                    theme,
+                    &format!("Task {}/{}", progress.task_current, progress.task_total)
+                ),
                 text("│")
                     .size(tokens::font_size::SM)
                     .color(theme.ink_faded()),
-                selectable_label_mono(theme, &format!("Subtask {}/{}", progress.subtask_current, progress.subtask_total)),
+                selectable_label_mono(
+                    theme,
+                    &format!(
+                        "Subtask {}/{}",
+                        progress.subtask_current, progress.subtask_total
+                    )
+                ),
             ]
             .spacing(tokens::spacing::SM)
             .align_y(iced::Alignment::Center),

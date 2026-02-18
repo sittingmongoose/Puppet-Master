@@ -4,8 +4,8 @@ use crate::types::PuppetMasterEvent;
 use crate::widgets::{LayoutSize, Page};
 use anyhow::Result;
 use chrono::{DateTime, Utc};
-use iced::{Element, Subscription, Task, Theme, widget::text_editor, window};
 use iced::widget::float;
+use iced::{Element, Subscription, Task, Theme, widget::text_editor, window};
 use std::collections::{HashMap, HashSet};
 use std::hash::{Hash, Hasher};
 use std::path::{Path, PathBuf};
@@ -343,7 +343,7 @@ pub struct App {
     pub wizard_github_description: String,
     // Step 0.5: Quick Interview Config
     pub wizard_use_interview: bool,
-    pub wizard_reasoning_level: String,  // "low", "medium", "high"
+    pub wizard_reasoning_level: String, // "low", "medium", "high"
     pub wizard_generate_agents_md: bool,
     // Original wizard fields
     pub wizard_project_name: String,
@@ -566,8 +566,8 @@ pub enum Message {
     WizardInstallGhCli,
     WizardToggleDepPlatform(crate::types::Platform),
     WizardInstallPlatformCli(crate::types::Platform),
-    WizardDepInstallDone(String, bool),   // (item_name, success)
-    WizardDepCheckDone(String, bool),     // (item_name, is_installed)
+    WizardDepInstallDone(String, bool), // (item_name, success)
+    WizardDepCheckDone(String, bool),   // (item_name, is_installed)
     // Step 0: Project Setup
     WizardIsNewProjectToggled(bool),
     WizardHasGithubRepoToggled(bool),
@@ -2540,17 +2540,13 @@ impl App {
                             },
                              move |(p, res)| match res {
                                 Ok(cached) => {
+                                    // Fallback models are valid data — always return Ok, log info if fallback
                                     if cached.source
                                         == crate::platforms::model_catalog::ModelSource::Fallback
                                     {
-                                        Message::RefreshModelsComplete(
-                                            p,
-                                            Err("Model discovery unavailable; keeping existing cached models"
-                                                .to_string()),
-                                        )
-                                    } else {
-                                        Message::RefreshModelsComplete(p, Ok(cached.models))
+                                        log::info!("Using fallback models for {:?} (no CLI/SDK discovery available)", p);
                                     }
+                                    Message::RefreshModelsComplete(p, Ok(cached.models))
                                 }
                                 Err(e) => Message::RefreshModelsComplete(
                                     p,
@@ -2575,17 +2571,16 @@ impl App {
                     },
                     move |res| match res {
                         Ok(cached) => {
+                            // Fallback models are valid data — always return Ok, log info if fallback
                             if cached.source
                                 == crate::platforms::model_catalog::ModelSource::Fallback
                             {
-                                Message::RefreshModelsComplete(
-                                    platform,
-                                    Err("Model discovery unavailable; keeping existing cached models"
-                                        .to_string()),
-                                )
-                            } else {
-                                Message::RefreshModelsComplete(platform, Ok(cached.models))
+                                log::info!(
+                                    "Using fallback models for {:?} (no CLI/SDK discovery available)",
+                                    platform
+                                );
                             }
+                            Message::RefreshModelsComplete(platform, Ok(cached.models))
                         }
                         Err(e) => Message::RefreshModelsComplete(
                             platform,
@@ -3497,10 +3492,15 @@ impl App {
                         _ => Message::None,
                     },
                 );
-                // After a successful fix, also refresh shared platform statuses
-                // so Setup, Config, and other pages stay in sync with Doctor.
+                // After a successful fix, also refresh shared platform statuses,
+                // auth status, and models so Setup, Config, and other pages stay in sync with Doctor.
                 if fix_was_successful {
-                    Task::batch([recheck_task, Task::done(Message::SetupRunDetection)])
+                    Task::batch(vec![
+                        recheck_task,
+                        Task::done(Message::SetupRunDetection),
+                        Task::done(Message::RefreshAuthStatus),
+                        Task::done(Message::RefreshModels),
+                    ])
                 } else {
                     recheck_task
                 }
@@ -3565,21 +3565,19 @@ impl App {
                 Task::none()
             }
 
-            Message::DoctorBrowsePlatformPath(platform) => {
-                Task::perform(
-                    async move {
-                        let result = rfd::AsyncFileDialog::new()
-                            .set_title(&format!(
-                                "Select {} CLI binary",
-                                crate::platforms::platform_specs::get_spec(platform).display_name
-                            ))
-                            .pick_file()
-                            .await;
-                        (platform, result.map(|f| f.path().to_path_buf()))
-                    },
-                    |(platform, path)| Message::DoctorPlatformPathSelected(platform, path),
-                )
-            }
+            Message::DoctorBrowsePlatformPath(platform) => Task::perform(
+                async move {
+                    let result = rfd::AsyncFileDialog::new()
+                        .set_title(&format!(
+                            "Select {} CLI binary",
+                            crate::platforms::platform_specs::get_spec(platform).display_name
+                        ))
+                        .pick_file()
+                        .await;
+                    (platform, result.map(|f| f.path().to_path_buf()))
+                },
+                |(platform, path)| Message::DoctorPlatformPathSelected(platform, path),
+            ),
 
             Message::DoctorPlatformPathSelected(platform, path_opt) => {
                 let Some(path) = path_opt else {
@@ -3607,7 +3605,11 @@ impl App {
                         .await;
                         (platform, path_str, detected)
                     },
-                    move |(platform, path_str, detected): (crate::types::Platform, String, Option<crate::platforms::platform_detector::DetectedPlatform>)| {
+                    move |(platform, path_str, detected): (
+                        crate::types::Platform,
+                        String,
+                        Option<crate::platforms::platform_detector::DetectedPlatform>,
+                    )| {
                         if detected.is_some() {
                             Message::DoctorRunFailed(
                                 ToastType::Success,
@@ -3746,7 +3748,8 @@ impl App {
                     ),
                     Task::perform(
                         async {
-                            crate::platforms::path_utils::resolve_app_local_executable("gh").is_some()
+                            crate::platforms::path_utils::resolve_app_local_executable("gh")
+                                .is_some()
                         },
                         |ok| Message::WizardDepCheckDone("gh".to_string(), ok),
                     ),
@@ -3758,9 +3761,7 @@ impl App {
                 self.wizard_dep_install_log.clear();
                 Task::perform(
                     crate::install::install_coordinator::install_node(),
-                    |outcome| {
-                        Message::WizardDepInstallDone("node".to_string(), outcome.success)
-                    },
+                    |outcome| Message::WizardDepInstallDone("node".to_string(), outcome.success),
                 )
             }
 
@@ -3769,9 +3770,7 @@ impl App {
                 self.wizard_dep_install_log.clear();
                 Task::perform(
                     crate::install::install_coordinator::install_gh_cli(),
-                    |outcome| {
-                        Message::WizardDepInstallDone("gh".to_string(), outcome.success)
-                    },
+                    |outcome| Message::WizardDepInstallDone("gh".to_string(), outcome.success),
                 )
             }
 
@@ -3790,9 +3789,7 @@ impl App {
                 self.wizard_dep_install_log.clear();
                 Task::perform(
                     crate::install::install_coordinator::install_platform(platform),
-                    move |outcome| {
-                        Message::WizardDepInstallDone(name.clone(), outcome.success)
-                    },
+                    move |outcome| Message::WizardDepInstallDone(name.clone(), outcome.success),
                 )
             }
 
@@ -3805,17 +3802,42 @@ impl App {
                 };
                 self.wizard_dep_install_log.push(log_msg);
                 // Update status
-                match name.as_str() {
-                    "node" => self.wizard_dep_node_ok = Some(success),
-                    "gh" => self.wizard_dep_gh_ok = Some(success),
+                let platform_installed = match name.as_str() {
+                    "node" => {
+                        self.wizard_dep_node_ok = Some(success);
+                        None
+                    }
+                    "gh" => {
+                        self.wizard_dep_gh_ok = Some(success);
+                        None
+                    }
                     other => {
-                        if let Some(p) =
-                            crate::types::Platform::from_str_loose(other)
-                        {
+                        if let Some(p) = crate::types::Platform::from_str_loose(other) {
                             self.wizard_dep_platform_ok.insert(p, Some(success));
+                            Some(p)
+                        } else {
+                            None
                         }
                     }
+                };
+
+                // After successful platform install, refresh detection, auth status, and models
+                if success {
+                    if let Some(platform) = platform_installed {
+                        return Task::batch(vec![
+                            self.update(Message::SetupRunDetection),
+                            self.update(Message::RefreshAuthStatus),
+                            Task::done(Message::RefreshModelsForPlatform(platform)),
+                        ]);
+                    } else {
+                        // For node/gh, just refresh detection and auth
+                        return Task::batch(vec![
+                            self.update(Message::SetupRunDetection),
+                            self.update(Message::RefreshAuthStatus),
+                        ]);
+                    }
                 }
+
                 // Refresh shared platform statuses so all pages stay in sync
                 self.update(Message::SetupRunDetection)
             }
@@ -4280,18 +4302,14 @@ impl App {
                 self.wizard_generating = true;
                 let requirements = self.wizard_requirements_text.clone();
                 let project_name = self.wizard_project_name.clone();
-                let config_hint = self
-                    .current_project
-                    .as_ref()
-                    .map(|p| p.path.clone());
+                let config_hint = self.current_project.as_ref().map(|p| p.path.clone());
 
                 // Use StartChainPipeline to generate real PRD
                 Task::perform(
                     async move {
                         // Load config (prefer current project's config if set)
-                        let config = match ConfigManager::discover_with_hint(
-                            config_hint.as_deref(),
-                        ) {
+                        let config = match ConfigManager::discover_with_hint(config_hint.as_deref())
+                        {
                             Ok(cfg) => Arc::new(cfg.get_config()),
                             Err(e) => {
                                 return Err(format!("Failed to load config: {}", e));
@@ -4355,18 +4373,14 @@ impl App {
                 self.wizard_generating = true;
                 let requirements = self.wizard_requirements_text.clone();
                 let project_name = self.wizard_project_name.clone();
-                let config_hint = self
-                    .current_project
-                    .as_ref()
-                    .map(|p| p.path.clone());
+                let config_hint = self.current_project.as_ref().map(|p| p.path.clone());
 
                 // Use StartChainPipeline to generate real tier plan
                 Task::perform(
                     async move {
                         // Load config (prefer current project's config if set)
-                        let config = match ConfigManager::discover_with_hint(
-                            config_hint.as_deref(),
-                        ) {
+                        let config = match ConfigManager::discover_with_hint(config_hint.as_deref())
+                        {
                             Ok(cfg) => Arc::new(cfg.get_config()),
                             Err(e) => {
                                 return Err(format!("Failed to load config: {}", e));
@@ -4661,7 +4675,8 @@ impl App {
 
                 // Chain auth refresh to update auth status for detected platforms,
                 // then run the Playwright check to update the UI
-                let playwright_task = self.update(Message::RunCheck("playwright-browsers".to_string()));
+                let playwright_task =
+                    self.update(Message::RunCheck("playwright-browsers".to_string()));
                 Task::batch(vec![refresh_auth_status_task(), playwright_task])
             }
 
@@ -5608,6 +5623,14 @@ impl App {
                 }
 
                 let mut tasks = vec![refresh_auth_status_task()];
+
+                // After successful login, refresh models for that platform
+                if res.is_ok() {
+                    if let crate::platforms::AuthTarget::Platform(platform) = target {
+                        tasks.push(Task::done(Message::RefreshModelsForPlatform(platform)));
+                    }
+                }
+
                 if deferred_login && res.is_ok() {
                     // Terminal-launched flows complete outside the app process; poll briefly.
                     for delay_secs in [5_u64, 15, 30] {
@@ -5690,19 +5713,13 @@ impl App {
             }
 
             Message::LaunchPlatformCli(platform) => {
-                let project_dir = self
-                    .current_project
-                    .as_ref()
-                    .map(|p| p.path.clone());
+                let project_dir = self.current_project.as_ref().map(|p| p.path.clone());
                 let platform_copy = platform;
                 Task::perform(
                     async move {
-                        crate::platforms::auth_actions::spawn_launch_cli(
-                            platform_copy,
-                            project_dir,
-                        )
-                        .await
-                        .map_err(|e| e.to_string())
+                        crate::platforms::auth_actions::spawn_launch_cli(platform_copy, project_dir)
+                            .await
+                            .map_err(|e| e.to_string())
                     },
                     move |res| Message::LaunchPlatformCliComplete(platform_copy, res),
                 )
@@ -5764,7 +5781,15 @@ impl App {
             Message::SetupInstallComplete(platform, res) => {
                 self.setup_installing = None;
                 match &res {
-                    Ok(()) => self.add_toast(ToastType::Success, format!("{} installed", platform)),
+                    Ok(()) => {
+                        self.add_toast(ToastType::Success, format!("{} installed", platform));
+                        // After successful install, refresh detection, auth status, and models
+                        return Task::batch(vec![
+                            self.update(Message::SetupRunDetection),
+                            self.update(Message::RefreshAuthStatus),
+                            Task::done(Message::RefreshModelsForPlatform(platform)),
+                        ]);
+                    }
                     Err(e) => self.add_toast(
                         ToastType::Error,
                         format!("{} install failed: {}", platform, e),
@@ -6522,6 +6547,7 @@ impl App {
                     &self.active_context_menu,
                     &self.github_auth_status,
                     &self.login_cli_content,
+                    &self.setup_platform_statuses,
                     &self.theme,
                     layout_size,
                 ),
@@ -6556,6 +6582,7 @@ impl App {
                     self.setup_is_checking,
                     self.setup_installing,
                     &self.login_in_progress,
+                    &self.platform_auth_status,
                     &self.doctor_results,
                     &self.doctor_fixing,
                     &self.theme,
@@ -6799,7 +6826,8 @@ impl App {
             return true;
         };
 
-        let installed = self.setup_platform_statuses
+        let installed = self
+            .setup_platform_statuses
             .iter()
             .find(|status| status.platform == platform)
             .map(|status| {
@@ -7731,8 +7759,8 @@ impl App {
     ) -> Element<'a, Message> {
         if let Some(ref target) = self.active_context_menu {
             use crate::widgets::context_menu::{ContextMenuOptions, context_menu_actions};
-            use iced::widget::{container, mouse_area, stack};
             use iced::Length;
+            use iced::widget::{container, mouse_area, stack};
 
             let options = match target {
                 ContextMenuTarget::DashboardTerminal => ContextMenuOptions {
@@ -7759,7 +7787,9 @@ impl App {
 
             // Click outside to close: a transparent mouse_area covering the whole screen
             let click_outside_guard = mouse_area(container(
-                iced::widget::Space::new().width(Length::Fill).height(Length::Fill),
+                iced::widget::Space::new()
+                    .width(Length::Fill)
+                    .height(Length::Fill),
             ))
             .on_press(Message::CloseContextMenu);
 
@@ -8957,13 +8987,14 @@ mod tests {
         app.config_models.insert("codex".to_string(), models);
 
         // Mock Codex as NOT fully available (not installed)
-        app.setup_platform_statuses.push(crate::views::setup::PlatformStatus {
-            platform: Platform::Codex,
-            status: crate::doctor::InstallationStatus::NotInstalled,
-            instructions: String::new(),
-            detected_path: None,
-            searched_paths: vec![],
-        });
+        app.setup_platform_statuses
+            .push(crate::views::setup::PlatformStatus {
+                platform: Platform::Codex,
+                status: crate::doctor::InstallationStatus::NotInstalled,
+                instructions: String::new(),
+                detected_path: None,
+                searched_paths: vec![],
+            });
 
         // Run rebuild_visible_models
         app.rebuild_visible_models();
