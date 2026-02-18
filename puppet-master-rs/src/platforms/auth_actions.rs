@@ -3,6 +3,7 @@
 //! Spawns platform CLIs for interactive login/logout. Uses subscription auth
 //! (CLI login, OAuth) rather than API keys.
 
+use crate::platforms::path_utils;
 use crate::platforms::platform_specs;
 use crate::platforms::platform_detector::PlatformDetector;
 use crate::types::Platform;
@@ -40,6 +41,72 @@ fn terminal_command(program: &Path, args: &[&str]) -> String {
     parts.push(shell_quote(&program.display().to_string()));
     parts.extend(args.iter().map(|arg| shell_quote(arg)));
     parts.join(" ")
+}
+
+// DRY:FN:spawn_terminal_with_command — Cross-platform terminal spawn with enhanced PATH
+/// Spawns a new terminal with the given program and args pre-invoked.
+/// Uses enhanced PATH for node-based CLIs. On Linux, keeps shell open after CLI exits.
+fn spawn_terminal_with_command(
+    program: &Path,
+    args: &[&str],
+    cwd: Option<&Path>,
+) -> Result<()> {
+    let full_command = terminal_command(program, args);
+    let cli_name = program
+        .file_name()
+        .and_then(|n| n.to_str())
+        .unwrap_or("cli");
+    let bin_dir = crate::install::app_paths::get_app_bin_dir();
+    let enhanced_path = path_utils::build_enhanced_path_for_subprocess();
+
+    let fallback_msg = format!(
+        "Add {} to PATH and run '{}' manually.",
+        bin_dir.display(),
+        cli_name
+    );
+
+    let spawn_cmd = |mut cmd: Command| -> Result<()> {
+        cmd.env("PATH", &enhanced_path);
+        if let Some(cwd) = cwd {
+            cmd.current_dir(cwd);
+        }
+        cmd.spawn().map_err(|e| {
+            anyhow!(
+                "Failed to open terminal: {}. {}",
+                e,
+                fallback_msg
+            )
+        })?;
+        Ok(())
+    };
+
+    if cfg!(target_os = "macos") {
+        let script = format!(
+            "tell app \"Terminal\" to do script \"{}\"",
+            full_command.replace('"', "\\\"")
+        );
+        let mut cmd = Command::new("osascript");
+        cmd.args(["-e", &script]);
+        spawn_cmd(cmd)?;
+    } else if cfg!(target_os = "windows") {
+        let mut cmd = Command::new("cmd");
+        cmd.args(["/C", "start", "cmd", "/k"]);
+        cmd.arg(program);
+        cmd.args(args);
+        spawn_cmd(cmd)?;
+    } else {
+        // Linux: shell persistence — keep bash open after CLI exits
+        let wrapped = format!("{}; exec bash", full_command.replace('\'', "'\\''"));
+        let terminal_cmd = format!(
+            "x-terminal-emulator -e '{}' || xterm -e '{}' || gnome-terminal -- bash -c '{}' || true",
+            wrapped, wrapped, wrapped.replace('\'', "'\"'\"'")
+        );
+        let mut cmd = Command::new("sh");
+        cmd.args(["-c", &terminal_cmd]);
+        spawn_cmd(cmd)?;
+    }
+
+    Ok(())
 }
 
 fn credentials_dir(folder: &str) -> Option<PathBuf> {
@@ -89,60 +156,8 @@ pub async fn spawn_login(target: AuthTarget) -> Result<()> {
                 .or_else(|| spec.cli_binary_names.first().copied())
                 .unwrap_or_default();
             let resolved_program = resolve_platform_program(platform, program_hint).await?;
-            let base_args = spec.auth.login_args.to_vec();
-            let full_command = terminal_command(&resolved_program, &base_args);
-
-            // Try to open in a terminal emulator so user can interact.
-            // Do not wait — terminal runs independently.
-            if cfg!(target_os = "macos") {
-                let script = format!(
-                    "tell app \"Terminal\" to do script \"{}\"",
-                    full_command.replace('"', "\\\"")
-                );
-                Command::new("osascript")
-                    .args(["-e", &script])
-                    .spawn()
-                    .map_err(|e| {
-                        anyhow!(
-                            "Failed to open terminal for {}: {}. Run '{}' manually in your terminal.",
-                            program_hint,
-                            e,
-                            full_command
-                        )
-                    })?;
-            } else if cfg!(target_os = "windows") {
-                Command::new("cmd")
-                    .args(["/C", "start", "cmd", "/k"])
-                    .arg(&resolved_program)
-                    .args(&base_args)
-                    .spawn()
-                    .map_err(|e| {
-                        anyhow!(
-                            "Failed to open terminal for {}: {}. Run '{}' manually in your terminal.",
-                            program_hint,
-                            e,
-                            full_command
-                        )
-                    })?;
-            } else {
-                // Linux: try common terminal emulators. x-terminal-emulator is the Debian/Ubuntu default.
-                let terminal_cmd = format!(
-                    "x-terminal-emulator -e {0} || xterm -e {0} || gnome-terminal -- {0}",
-                    full_command
-                );
-                Command::new("sh")
-                    .args(["-c", &terminal_cmd])
-                    .spawn()
-                    .map_err(|e| {
-                        anyhow!(
-                            "Failed to open terminal for {}: {}. Run '{}' manually in your terminal.",
-                            program_hint,
-                            e,
-                            full_command
-                        )
-                    })?;
-            }
-
+            let base_args: Vec<&str> = spec.auth.login_args.iter().copied().collect();
+            spawn_terminal_with_command(&resolved_program, &base_args, None)?;
             return Ok(());
         }
     }
@@ -212,6 +227,24 @@ pub async fn spawn_login(target: AuthTarget) -> Result<()> {
     ))
 }
 
+// DRY:FN:spawn_launch_cli — Spawns platform CLI in a new terminal (interactive mode)
+/// Launches the platform CLI interactively in a new terminal. Uses app-local or detected path.
+/// When project_dir is Some, the terminal opens in that directory.
+pub async fn spawn_launch_cli(
+    platform: Platform,
+    project_dir: Option<PathBuf>,
+) -> Result<()> {
+    let cli_names = platform_specs::cli_binary_names(platform);
+    let hint = cli_names.first().copied().unwrap_or("cli");
+    let resolved = resolve_platform_program(platform, hint).await?;
+    spawn_terminal_with_command(
+        &resolved,
+        &[],
+        project_dir.as_deref(),
+    )?;
+    Ok(())
+}
+
 // DRY:FN:spawn_logout — Spawns logout for a platform where supported
 /// Spawns logout for a platform where supported.
 pub async fn spawn_logout(target: AuthTarget) -> Result<()> {
@@ -249,49 +282,7 @@ pub async fn spawn_logout(target: AuthTarget) -> Result<()> {
             .copied()
             .unwrap_or("copilot");
         let resolved_program = resolve_platform_program(Platform::Copilot, program_hint).await?;
-        if cfg!(target_os = "macos") {
-            let script = format!(
-                "tell app \"Terminal\" to do script \"{}\"",
-                terminal_command(&resolved_program, &[]).replace('"', "\\\"")
-            );
-            Command::new("osascript")
-                .args(["-e", &script])
-                .spawn()
-                .map_err(|e| {
-                    anyhow!(
-                        "Failed to open terminal for {}: {}. Run 'copilot' and type /logout manually.",
-                        program_hint,
-                        e,
-                    )
-                })?;
-        } else if cfg!(target_os = "windows") {
-            Command::new("cmd")
-                .args(["/C", "start", "cmd", "/k"])
-                .arg(&resolved_program)
-                .spawn()
-                .map_err(|e| {
-                    anyhow!(
-                        "Failed to open terminal for {}: {}. Run 'copilot' and type /logout manually.",
-                        program_hint,
-                        e,
-                    )
-                })?;
-        } else {
-            let terminal_cmd = format!(
-                "x-terminal-emulator -e {0} || xterm -e {0} || gnome-terminal -- {0}",
-                terminal_command(&resolved_program, &[])
-            );
-            Command::new("sh")
-                .args(["-c", &terminal_cmd])
-                .spawn()
-                .map_err(|e| {
-                    anyhow!(
-                        "Failed to open terminal for {}: {}. Run 'copilot' and type /logout manually.",
-                        program_hint,
-                        e,
-                    )
-                })?;
-        }
+        spawn_terminal_with_command(&resolved_program, &[], None)?;
         return Ok(());
     }
 

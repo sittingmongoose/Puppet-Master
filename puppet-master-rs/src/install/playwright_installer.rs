@@ -87,6 +87,7 @@ async fn download_playwright_browsers(log_lines: &mut Vec<String>) -> InstallOut
         .args(["playwright", "install"])
         .env("NPM_CONFIG_PREFIX", &prefix_val)
         .env("PLAYWRIGHT_BROWSERS_PATH", &browsers_val)
+        .env("PATH", crate::platforms::path_utils::build_enhanced_path_for_subprocess())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
         .output()

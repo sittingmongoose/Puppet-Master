@@ -492,18 +492,25 @@ fn refresh_models_cli_blocking(platform: Platform) -> CachedModelList {
         return CachedModelList::from_fallback(platform);
     };
 
-    // Check if the CLI binary is available.
-    if which::which(cli_cmd).is_err() {
+    // Resolve the CLI command using the DRY method (checks app-local bin first, then PATH).
+    let resolved = platform.resolve_cli_command();
+    
+    // Check if the resolved CLI binary is actually available.
+    let cli_exists = std::path::Path::new(&resolved).exists() 
+        || which::which(&resolved).is_ok();
+    
+    if !cli_exists {
         log::warn!(
-            "CLI binary '{}' not found for {:?} model discovery, using fallback",
+            "CLI binary '{}' (resolved to '{}') not found for {:?} model discovery, using fallback",
             cli_cmd,
+            resolved,
             platform
         );
         return CachedModelList::from_fallback(platform);
     }
 
-    // Run the discovery command.
-    let output = std::process::Command::new(cli_cmd)
+    // Run the discovery command using the resolved path.
+    let output = std::process::Command::new(&resolved)
         .args(discovery.cli_args)
         .stdout(std::process::Stdio::piped())
         .stderr(std::process::Stdio::piped())

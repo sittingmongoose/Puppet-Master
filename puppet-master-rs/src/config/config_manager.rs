@@ -5,6 +5,7 @@
 //! - Merge with default values
 //! - Save configuration back to file
 
+use crate::config::config_discovery;
 use crate::config::config_override::{ConfigOverride, apply_overrides};
 use crate::config::config_schema::validate_config;
 use crate::config::default_config::{default_config, default_workspace_dir};
@@ -74,68 +75,12 @@ impl ConfigManager {
         })
     }
 
-    // DRY:FN:discover
-    /// Discover and load configuration file
-    ///
-    /// Searches in order:
-    /// 1. Default workspace directory (platform-specific user data dir)
-    /// 2. Current directory (if accessible)
-    /// 3. Parent directories (up to 3 levels)
-    /// 4. Home directory
-    pub fn discover() -> Result<Self> {
-        let config_names = [
-            "pm-config.yaml",
-            "puppet-master.yaml",
-            ".puppet-master.yaml",
-        ];
-
-        // Try default workspace directory first (handles Windows/Linux system installs)
-        let workspace_dir = default_workspace_dir();
-        for name in &config_names {
-            let path = workspace_dir.join(name);
-            if path.exists() {
-                log::info!("Found config file in workspace: {}", path.display());
-                return Self::load(path);
-            }
-        }
-
-        // Try current directory (may fail on Windows if running from Program Files)
-        if let Ok(current_dir) = std::env::current_dir() {
-            for name in &config_names {
-                let path = current_dir.join(name);
-                if path.exists() {
-                    log::info!("Found config file: {}", path.display());
-                    return Self::load(path);
-                }
-            }
-
-            // Try parent directories
-            let mut parent_dir = current_dir;
-            for _ in 0..3 {
-                if !parent_dir.pop() {
-                    break;
-                }
-
-                for name in &config_names {
-                    let path = parent_dir.join(name);
-                    if path.exists() {
-                        log::info!("Found config file: {}", path.display());
-                        return Self::load(path);
-                    }
-                }
-            }
-        }
-
-        // Try home directory
-        if let Some(home_dir) = directories::UserDirs::new() {
-            let home = home_dir.home_dir();
-            for name in &config_names {
-                let path = home.join(name);
-                if path.exists() {
-                    log::info!("Found config file: {}", path.display());
-                    return Self::load(path);
-                }
-            }
+    // DRY:FN:discover_with_hint
+    /// Discover and load configuration file, optionally preferring a hint directory.
+    pub fn discover_with_hint(hint: Option<&Path>) -> Result<Self> {
+        if let Some(path) = config_discovery::discover_config_path(hint) {
+            log::info!("Found config file: {}", path.display());
+            return Self::load(path);
         }
 
         log::info!("No config file found, using defaults");
@@ -146,6 +91,12 @@ impl ConfigManager {
             log::warn!("Could not persist default config on first launch: {}", e);
         }
         Ok(manager)
+    }
+
+    // DRY:FN:discover
+    /// Discover and load configuration file (no hint).
+    pub fn discover() -> Result<Self> {
+        Self::discover_with_hint(None)
     }
 
     // DRY:FN:save

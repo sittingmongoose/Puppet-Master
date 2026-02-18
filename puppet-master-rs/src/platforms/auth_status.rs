@@ -373,13 +373,19 @@ impl AuthStatusChecker {
             || combined.contains("authenticated to")
     }
 
-    // DRY:FN:resolve_program — Resolve executable path via PATH + known fallback dirs.
+    // DRY:FN:resolve_program — Resolve executable path via app-local + PATH + known fallback dirs.
     fn resolve_program(&self, program: &str) -> PathBuf {
         let path = Path::new(program);
         if path.is_absolute() || program.contains(std::path::MAIN_SEPARATOR) {
             return path.to_path_buf();
         }
 
+        // Check app-local bin first (app-managed installations take priority)
+        if let Some(found) = crate::platforms::path_utils::resolve_app_local_executable(program) {
+            return found;
+        }
+
+        // Fall back to system PATH for system tools (gh, git, etc.)
         if let Ok(found) = which::which(program) {
             return found;
         }

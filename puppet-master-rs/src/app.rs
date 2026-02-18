@@ -754,6 +754,10 @@ pub enum Message {
     // Doctor (refresh)
     RefreshDoctor,
 
+    // Launch platform CLI in terminal
+    LaunchPlatformCli(crate::types::Platform),
+    LaunchPlatformCliComplete(crate::types::Platform, Result<(), String>),
+
     // Setup (refresh platform status)
     RefreshSetup,
 
@@ -4274,12 +4278,18 @@ impl App {
                 self.wizard_generating = true;
                 let requirements = self.wizard_requirements_text.clone();
                 let project_name = self.wizard_project_name.clone();
+                let config_hint = self
+                    .current_project
+                    .as_ref()
+                    .map(|p| p.path.clone());
 
                 // Use StartChainPipeline to generate real PRD
                 Task::perform(
                     async move {
-                        // Load config
-                        let config = match ConfigManager::discover() {
+                        // Load config (prefer current project's config if set)
+                        let config = match ConfigManager::discover_with_hint(
+                            config_hint.as_deref(),
+                        ) {
                             Ok(cfg) => Arc::new(cfg.get_config()),
                             Err(e) => {
                                 return Err(format!("Failed to load config: {}", e));
@@ -4343,12 +4353,18 @@ impl App {
                 self.wizard_generating = true;
                 let requirements = self.wizard_requirements_text.clone();
                 let project_name = self.wizard_project_name.clone();
+                let config_hint = self
+                    .current_project
+                    .as_ref()
+                    .map(|p| p.path.clone());
 
                 // Use StartChainPipeline to generate real tier plan
                 Task::perform(
                     async move {
-                        // Load config
-                        let config = match ConfigManager::discover() {
+                        // Load config (prefer current project's config if set)
+                        let config = match ConfigManager::discover_with_hint(
+                            config_hint.as_deref(),
+                        ) {
                             Ok(cfg) => Arc::new(cfg.get_config()),
                             Err(e) => {
                                 return Err(format!("Failed to load config: {}", e));
@@ -5669,6 +5685,44 @@ impl App {
                 }
 
                 Task::batch(tasks)
+            }
+
+            Message::LaunchPlatformCli(platform) => {
+                let project_dir = self
+                    .current_project
+                    .as_ref()
+                    .map(|p| p.path.clone());
+                let platform_copy = platform;
+                Task::perform(
+                    async move {
+                        crate::platforms::auth_actions::spawn_launch_cli(
+                            platform_copy,
+                            project_dir,
+                        )
+                        .await
+                        .map_err(|e| e.to_string())
+                    },
+                    move |res| Message::LaunchPlatformCliComplete(platform_copy, res),
+                )
+            }
+
+            Message::LaunchPlatformCliComplete(platform, res) => {
+                let name = crate::platforms::platform_specs::display_name_for(platform);
+                match &res {
+                    Ok(()) => {
+                        self.add_toast(
+                            ToastType::Success,
+                            format!("Launched {} in terminal", name),
+                        );
+                    }
+                    Err(e) => {
+                        self.add_toast(
+                            ToastType::Error,
+                            format!("Failed to launch {}: {}", name, e),
+                        );
+                    }
+                }
+                Task::none()
             }
 
             Message::RefreshAuthStatus => refresh_auth_status_task(),
@@ -7382,6 +7436,12 @@ impl App {
             return project.path.clone();
         }
 
+        if let Some(config_path) = crate::config::config_discovery::discover_config_path(None) {
+            if let Some(parent) = config_path.parent() {
+                return parent.to_path_buf();
+            }
+        }
+
         let cwd = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
         if Self::has_config_file_in_dir(&cwd) || Self::is_directory_writable(&cwd) {
             return cwd;
@@ -7452,16 +7512,10 @@ impl App {
         Ok(true)
     }
 
-    // DRY:FN:has_config_file_in_dir
+    // DRY:FN:has_config_file_in_dir — delegates to config_discovery::has_config_in_dir
     /// Check whether a directory already contains a recognized config file.
     fn has_config_file_in_dir(dir: &Path) -> bool {
-        [
-            "pm-config.yaml",
-            "puppet-master.yaml",
-            ".puppet-master.yaml",
-        ]
-        .iter()
-        .any(|name| dir.join(name).exists())
+        crate::config::config_discovery::has_config_in_dir(dir)
     }
 
     // DRY:FN:is_directory_writable

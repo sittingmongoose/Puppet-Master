@@ -85,7 +85,7 @@ pub async fn npm_install_to_app_dir(pkg: &NpmPackage) -> InstallOutcome {
     let mut child = match Command::new(&npm_path)
         .args(["install", "-g", pkg.package_name])
         .env("NPM_CONFIG_PREFIX", &prefix_val)
-        // Clear any inherited NPM_CONFIG_PREFIX that might conflict
+        .env("PATH", crate::platforms::path_utils::build_enhanced_path_for_subprocess())
         .stdout(std::process::Stdio::piped())
         .stderr(std::process::Stdio::piped())
         .spawn()

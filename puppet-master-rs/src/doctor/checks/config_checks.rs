@@ -1,9 +1,9 @@
 //! Configuration file checks
 
+use crate::config::config_discovery::{self, CONFIG_FILE_NAMES};
 use crate::types::{CheckCategory, CheckResult, DoctorCheck, FixResult};
 use async_trait::async_trait;
 use chrono::Utc;
-use std::path::PathBuf;
 
 // DRY:DATA:ConfigFileCheck
 /// Check if config file exists
@@ -31,30 +31,28 @@ impl DoctorCheck for ConfigFileCheck {
     }
 
     async fn run(&self) -> CheckResult {
-        let config_paths = vec![
-            PathBuf::from("puppet-master.yaml"),
-            PathBuf::from("puppet-master.yml"),
-            PathBuf::from(".puppet-master/config.yaml"),
-        ];
-
-        for path in &config_paths {
-            if path.exists() {
-                return CheckResult {
-                    passed: true,
-                    message: "Config file found".to_string(),
-                    details: Some(format!("Path: {:?}", path)),
+        match config_discovery::discover_config_path(None) {
+            Some(path) => CheckResult {
+                passed: true,
+                message: "Config file found".to_string(),
+                details: Some(format!("Path: {}", path.display())),
+                can_fix: false,
+                timestamp: Utc::now(),
+            },
+            None => {
+                let expected = CONFIG_FILE_NAMES.join(", ");
+                let locations = config_discovery::search_locations_summary();
+                CheckResult {
+                    passed: false,
+                    message: "Config file not found".to_string(),
+                    details: Some(format!(
+                        "Expected one of: {}. {}",
+                        expected, locations
+                    )),
                     can_fix: false,
                     timestamp: Utc::now(),
-                };
+                }
             }
-        }
-
-        CheckResult {
-            passed: false,
-            message: "Config file not found".to_string(),
-            details: Some("Expected: puppet-master.yaml or puppet-master.yml".to_string()),
-            can_fix: false,
-            timestamp: Utc::now(),
         }
     }
 
@@ -89,54 +87,42 @@ impl DoctorCheck for ConfigValidCheck {
     }
 
     async fn run(&self) -> CheckResult {
-        let config_paths = vec![
-            PathBuf::from("puppet-master.yaml"),
-            PathBuf::from("puppet-master.yml"),
-            PathBuf::from(".puppet-master/config.yaml"),
-        ];
-
-        for path in &config_paths {
-            if path.exists() {
-                match tokio::fs::read_to_string(path).await {
-                    Ok(content) => match serde_yaml::from_str::<serde_yaml::Value>(&content) {
-                        Ok(_) => {
-                            return CheckResult {
-                                passed: true,
-                                message: "Config file is valid YAML".to_string(),
-                                details: Some(format!("Path: {:?}", path)),
-                                can_fix: false,
-                                timestamp: Utc::now(),
-                            };
-                        }
-                        Err(e) => {
-                            return CheckResult {
-                                passed: false,
-                                message: "Config file is invalid YAML".to_string(),
-                                details: Some(format!("Error: {}", e)),
-                                can_fix: false,
-                                timestamp: Utc::now(),
-                            };
-                        }
+        match config_discovery::discover_config_path(None) {
+            Some(path) => match tokio::fs::read_to_string(&path).await {
+                Ok(content) => match serde_yaml::from_str::<serde_yaml::Value>(&content) {
+                    Ok(_) => CheckResult {
+                        passed: true,
+                        message: "Config file is valid YAML".to_string(),
+                        details: Some(format!("Path: {}", path.display())),
+                        can_fix: false,
+                        timestamp: Utc::now(),
                     },
-                    Err(e) => {
-                        return CheckResult {
-                            passed: false,
-                            message: "Cannot read config file".to_string(),
-                            details: Some(format!("Error: {}", e)),
-                            can_fix: false,
-                            timestamp: Utc::now(),
-                        };
-                    }
+                    Err(e) => CheckResult {
+                        passed: false,
+                        message: "Config file is invalid YAML".to_string(),
+                        details: Some(format!("Error: {}", e)),
+                        can_fix: false,
+                        timestamp: Utc::now(),
+                    },
+                },
+                Err(e) => CheckResult {
+                    passed: false,
+                    message: "Cannot read config file".to_string(),
+                    details: Some(format!("Error: {}", e)),
+                    can_fix: false,
+                    timestamp: Utc::now(),
+                },
+            },
+            None => {
+                let locations = config_discovery::search_locations_summary();
+                CheckResult {
+                    passed: false,
+                    message: "No config file found to validate".to_string(),
+                    details: Some(locations),
+                    can_fix: false,
+                    timestamp: Utc::now(),
                 }
             }
-        }
-
-        CheckResult {
-            passed: false,
-            message: "No config file found to validate".to_string(),
-            details: None,
-            can_fix: false,
-            timestamp: Utc::now(),
         }
     }
 

@@ -378,25 +378,35 @@ fn view_platform_card<'a>(
 
     let theme_copy = *theme;
 
+    let status_badge = view_status_badge(
+        if is_installed {
+            CheckStatus::Pass
+        } else {
+            CheckStatus::Fail
+        },
+        if is_installed {
+            "Installed"
+        } else {
+            "Not Installed"
+        },
+        theme,
+    );
+
+    let mut status_row = row![status_badge].spacing(tokens::spacing::SM).align_y(Alignment::Center);
+    if is_installed {
+        status_row = status_row.push(
+            styled_button_sized(theme, "Launch", ButtonVariant::Info, ButtonSize::Small)
+                .on_press(Message::LaunchPlatformCli(platform)),
+        );
+    }
+
     container(
         column![
             Checkbox::new(is_selected)
                 .label(platform_name)
                 .on_toggle(move |_| Message::ToggleDoctorPlatform(platform)),
             Space::new().height(Length::Fixed(tokens::spacing::XS)),
-            view_status_badge(
-                if is_installed {
-                    CheckStatus::Pass
-                } else {
-                    CheckStatus::Fail
-                },
-                if is_installed {
-                    "Installed"
-                } else {
-                    "Not Installed"
-                },
-                theme
-            ),
+            status_row,
         ]
         .spacing(tokens::spacing::XS),
     )
