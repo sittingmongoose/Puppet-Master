@@ -52,6 +52,15 @@ pub fn get_lib_dir() -> PathBuf {
     get_app_data_dir().join("lib")
 }
 
+// DRY:FN:get_npm_cache_dir — {APP_DATA_DIR}/.npm-cache used as npm_config_cache
+/// Return the app-local npm cache directory.
+///
+/// Routing npm's cache here prevents EACCES errors on macOS when `~/.npm/_cacache`
+/// has root-owned files left over from a previous `sudo npm` invocation.
+pub fn get_npm_cache_dir() -> PathBuf {
+    get_app_data_dir().join(".npm-cache")
+}
+
 // DRY:FN:ensure_app_bin_dir — Create {APP_DATA_DIR}/bin if it does not exist
 /// Ensure the `bin/` directory exists, creating it (and any parents) if necessary.
 ///

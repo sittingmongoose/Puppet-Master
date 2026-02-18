@@ -92,6 +92,9 @@ async fn read_playwright_version_with_node(node_path: &Path, repo_root: &Path) -
         "PATH",
         crate::platforms::path_utils::build_enhanced_path_for_subprocess(),
     );
+    // Set NODE_PATH so node can find app-local playwright package
+    let lib_dir = crate::install::app_paths::get_lib_dir();
+    cmd.env("NODE_PATH", lib_dir.join("lib").join("node_modules"));
 
     match timeout(Duration::from_secs(10), cmd.output()).await {
         Ok(Ok(output)) if output.status.success() => {
@@ -121,6 +124,9 @@ async fn read_playwright_version_with_npx(npx_path: &Path, repo_root: &Path) -> 
         "PATH",
         crate::platforms::path_utils::build_enhanced_path_for_subprocess(),
     );
+    // Set NODE_PATH so npx can find app-local playwright package
+    let lib_dir = crate::install::app_paths::get_lib_dir();
+    cmd.env("NODE_PATH", lib_dir.join("lib").join("node_modules"));
 
     match timeout(Duration::from_secs(10), cmd.output()).await {
         Ok(Ok(out)) if out.status.success() => Some(combined_output(&out)),
@@ -258,6 +264,9 @@ impl DoctorCheck for PlaywrightCheck {
             "PATH",
             crate::platforms::path_utils::build_enhanced_path_for_subprocess(),
         );
+        // Set NODE_PATH so node can find app-local playwright package
+        let lib_dir = crate::install::app_paths::get_lib_dir();
+        cmd.env("NODE_PATH", lib_dir.join("lib").join("node_modules"));
 
         if let Ok(out) = timeout(Duration::from_secs(10), cmd.output()).await {
             if let Ok(out) = out {

@@ -192,8 +192,15 @@ impl PlatformSdkCheck {
 
     // DRY:FN:sdk_check_script
     fn sdk_check_script(package: &str) -> String {
+        // Use fs.existsSync on package.json to handle both CJS and ESM packages.
+        // require.resolve() fails for ESM-only packages such as @openai/codex-sdk
+        // and @github/copilot-sdk.
         format!(
-            "try {{ require.resolve('{package}'); process.exit(0); }} catch {{ process.exit(1); }}"
+            "const p=require('path'),f=require('fs');\
+             const np=(process.env.NODE_PATH||'').split(p.delimiter).filter(Boolean);\
+             const found=np.some(function(d){{return f.existsSync(p.join(d,'{}','package.json'))}});\
+             process.exit(found?0:1);",
+            package
         )
     }
 }
@@ -265,6 +272,7 @@ impl DoctorCheck for PlatformSdkCheck {
         let npm_root_app = Command::new(&npm_path)
             .args(["root", "-g"])
             .env("NPM_CONFIG_PREFIX", lib_dir.as_os_str())
+            .env("npm_config_cache", crate::install::app_paths::get_npm_cache_dir())
             .output()
             .await;
 
@@ -376,6 +384,7 @@ impl DoctorCheck for PlatformSdkCheck {
             Command::new(&npm_path)
                 .args(["install", "-g", package])
                 .env("NPM_CONFIG_PREFIX", lib_dir.as_os_str())
+                .env("npm_config_cache", crate::install::app_paths::get_npm_cache_dir())
                 .env(
                     "PATH",
                     crate::platforms::path_utils::build_enhanced_path_for_subprocess(),

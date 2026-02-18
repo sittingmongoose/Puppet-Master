@@ -484,24 +484,7 @@ static CODEX_SPEC: PlatformSpec = PlatformSpec {
             os: &["macos"],
         },
     ],
-    default_install_paths: &[
-        // npm global — varies by npm prefix config
-        "~/.npm-global/bin/codex",
-        "/usr/local/bin/codex",
-        "~/.local/share/npm/bin/codex",
-        "~/.local/bin/codex",
-        "/usr/bin/codex",
-        // macOS Homebrew
-        "/opt/homebrew/bin/codex",
-        // Linux Homebrew
-        "/home/linuxbrew/.linuxbrew/bin/codex",
-        // nvm-managed node
-        "~/.nvm/current/bin/codex",
-        // Windows npm global
-        "~/AppData/Roaming/npm/codex.cmd",
-        "~/AppData/Roaming/npm/codex",
-        "~/AppData/Local/Microsoft/WinGet/Links/codex.exe",
-    ],
+    default_install_paths: &[],  // App-local only — use Setup > Install button
     auth: AuthSpec {
         login_command: Some("codex"),
         login_args: &["login"],
@@ -570,7 +553,7 @@ static CODEX_SPEC: PlatformSpec = PlatformSpec {
     headless: HeadlessSpec {
         prompt_flag: "", // Uses positional arg after `exec`
         subcommand: Some("exec"),
-        output_format_flag: "--json",
+        output_format_flag: "",  // @openai/codex Rust CLI: no JSON output flag; agent outputs to stdout
         output_formats: &["json", "text"],
         force_flag: Some("--full-auto"),
         silent_flag: Some("--output-last-message"),
@@ -624,23 +607,7 @@ static GEMINI_SPEC: PlatformSpec = PlatformSpec {
             os: &["macos"],
         },
     ],
-    default_install_paths: &[
-        // npm global — varies by npm prefix
-        "~/.npm-global/bin/gemini",
-        "/usr/local/bin/gemini",
-        "~/.local/bin/gemini",
-        "/usr/bin/gemini",
-        "~/.local/share/npm/bin/gemini",
-        // macOS Homebrew
-        "/opt/homebrew/bin/gemini",
-        // Linux Homebrew
-        "/home/linuxbrew/.linuxbrew/bin/gemini",
-        // nvm-managed node
-        "~/.nvm/current/bin/gemini",
-        // Windows npm global
-        "~/AppData/Roaming/npm/gemini.cmd",
-        "~/AppData/Roaming/npm/gemini",
-    ],
+    default_install_paths: &[],  // App-local only — use Setup > Install button
     auth: AuthSpec {
         login_command: None, // Interactive on first run — "Login with Google"
         login_args: &[],
@@ -718,6 +685,7 @@ static GEMINI_SPEC: PlatformSpec = PlatformSpec {
     auto_mode: None,
 };
 
+// Launch and orchestrator run via npx -y @github/copilot to ensure the agentic CLI.
 static COPILOT_SPEC: PlatformSpec = PlatformSpec {
     platform: Platform::Copilot,
     display_name: "GitHub Copilot CLI",
@@ -731,18 +699,7 @@ static COPILOT_SPEC: PlatformSpec = PlatformSpec {
             os: &["linux", "macos", "windows"],
         },
     ],
-    default_install_paths: &[
-        // Standard user-local binary path (most Linux installs)
-        "~/.local/bin/copilot",
-        "/usr/local/bin/copilot",
-        "/usr/bin/copilot",
-        // macOS Homebrew
-        "/opt/homebrew/bin/copilot",
-        // Linux Homebrew
-        "/home/linuxbrew/.linuxbrew/bin/copilot",
-        // Windows
-        "~/AppData/Local/Microsoft/WinGet/Links/copilot.exe",
-    ],
+    default_install_paths: &[],  // App-local only — use Setup > Install button
     auth: AuthSpec {
         login_command: Some("copilot"),
         login_args: &["login"],

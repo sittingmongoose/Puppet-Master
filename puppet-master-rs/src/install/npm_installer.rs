@@ -71,10 +71,11 @@ pub async fn npm_install_to_app_dir(pkg: &NpmPackage) -> InstallOutcome {
 
     let mut log_lines = Vec::new();
     log_lines.push(format!(
-        "Running: {} install -g {} --include=optional (NPM_CONFIG_PREFIX={})",
+        "Running: {} install -g {} --include=optional (NPM_CONFIG_PREFIX={}, cache={})",
         npm_path.display(),
         pkg.package_name,
-        lib_dir.display()
+        lib_dir.display(),
+        crate::install::app_paths::get_npm_cache_dir().display()
     ));
 
     // Build npm_config_prefix as OsString to handle paths with spaces on Windows
@@ -83,6 +84,7 @@ pub async fn npm_install_to_app_dir(pkg: &NpmPackage) -> InstallOutcome {
     let mut child = match Command::new(&npm_path)
         .args(["install", "-g", pkg.package_name, "--include=optional"])
         .env("NPM_CONFIG_PREFIX", &prefix_val)
+        .env("npm_config_cache", crate::install::app_paths::get_npm_cache_dir())
         .env(
             "PATH",
             crate::platforms::path_utils::build_enhanced_path_for_subprocess(),

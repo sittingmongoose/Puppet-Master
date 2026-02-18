@@ -44,7 +44,7 @@ fn combined_lower(output: &std::process::Output) -> String {
 fn required_help_substrings(platform: Platform) -> &'static [&'static str] {
     match platform {
         Platform::Cursor => &["--model", "--output-format"],
-        Platform::Codex => &["exec", "--json"],
+        Platform::Codex => &["exec", "--config"],  // @openai/codex Rust binary: exec ✓, --config ✓, --json ✗
         Platform::Claude => &["--output-format", "--no-session-persistence"],
         Platform::Gemini => &["--output-format", "--approval-mode"],
         Platform::Copilot => &["--allow-all-tools"],
