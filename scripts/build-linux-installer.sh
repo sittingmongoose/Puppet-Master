@@ -8,7 +8,7 @@ ARCH="amd64"
 PKG_NAME="rwm-puppet-master"
 
 if [ -z "${BASE_VERSION}" ]; then
-    BASE_VERSION="$(grep '^version = ' "$(dirname "$0")/../puppet-master-rs/Cargo.toml" | head -n1 | cut -d'\"' -f2)"
+    BASE_VERSION="$(grep '^version = ' "$(dirname "$0")/../puppet-master-rs/Cargo.toml" | head -n1 | cut -d'"' -f2)"
 fi
 if [ -z "${BASE_VERSION}" ]; then
     BASE_VERSION="0.1.1"
