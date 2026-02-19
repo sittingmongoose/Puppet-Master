@@ -10,7 +10,8 @@
 //! - Stall detection
 
 use crate::platforms::{
-    HealthMonitor, PermissionAction, PermissionAudit, PermissionEvent, QuotaManager, RateLimiter,
+    path_utils, HealthMonitor, PermissionAction, PermissionAudit, PermissionEvent, QuotaManager,
+    RateLimiter,
 };
 use crate::types::{
     CompletionSignal, ExecutionRequest, ExecutionResult, OutputLine, OutputLineType, Platform,
@@ -279,6 +280,11 @@ impl BaseRunner {
         // Handle stdin if needed
         if stdin_input.is_some() {
             cmd.stdin(Stdio::piped());
+        }
+
+        // Copilot runs via npx; ensure subprocess can find node via enhanced PATH.
+        if self.platform == Platform::Copilot {
+            cmd.env("PATH", path_utils::build_enhanced_path_for_subprocess());
         }
 
         let mut child = cmd

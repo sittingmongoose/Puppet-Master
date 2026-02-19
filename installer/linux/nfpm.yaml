@@ -74,13 +74,6 @@ contents:
       mode: 0644
       owner: root
       group: root
-  # Autostart entry for desktop environments
-  - src: installer/linux/autostart/puppet-master-gui.desktop
-    dst: /etc/xdg/autostart/puppet-master-gui.desktop
-    file_info:
-      mode: 0644
-      owner: root
-      group: root
 
 # P0-G23: Post-install guidance
 scripts:

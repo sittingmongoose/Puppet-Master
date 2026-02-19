@@ -660,6 +660,8 @@ gemini -p "prompt" --output-format json --approval-mode yolo [--model <model>] [
 copilot -p "prompt" --allow-all-tools [--allow-all-paths] [--allow-all-urls] [--silent] [--stream off]
 ```
 
+Launch and orchestrator execution for Copilot use `npx -y @github/copilot` so the agentic CLI is used everywhere (the resolved `copilot` binary may be the old suggest/explain tool).
+
 **Key capabilities:**
 - `copilot -p "prompt"` — Programmatic mode with prompt
 - `--allow-all-tools` — Auto-approve all tools without manual approval

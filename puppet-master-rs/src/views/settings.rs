@@ -87,6 +87,7 @@ pub fn view<'a>(
     auto_scroll: AutoScroll,
     show_timestamps: bool,
     minimize_to_tray: bool,
+    start_on_boot: bool,
     retention_days: u32,
     intensive_logging: bool,
     interaction_mode: &'a str,
@@ -342,6 +343,28 @@ pub fn view<'a>(
             selectable_label(
                 theme,
                 "When enabled, closing minimizes to system tray instead of exiting"
+            ),
+        ]
+        .spacing(tokens::spacing::MD)
+        .align_y(iced::Alignment::Center),
+        row![
+            styled_button(
+                theme,
+                if start_on_boot {
+                    "Start on boot: ON"
+                } else {
+                    "Start on boot: OFF"
+                },
+                if start_on_boot {
+                    ButtonVariant::Primary
+                } else {
+                    ButtonVariant::Secondary
+                }
+            )
+            .on_press(Message::ToggleStartOnBoot),
+            selectable_label(
+                theme,
+                "When enabled, Puppet Master starts when you log in."
             ),
         ]
         .spacing(tokens::spacing::MD)

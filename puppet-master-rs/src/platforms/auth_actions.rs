@@ -43,6 +43,51 @@ fn terminal_command(program: &Path, args: &[&str]) -> String {
     parts.join(" ")
 }
 
+// DRY:FN:spawn_terminal_with_raw_command — Spawn terminal with a pre-built shell command string
+/// Spawns a new terminal that runs the given full shell command (e.g. `export PATH="..."; npx -y @github/copilot`).
+/// Used for Copilot Launch so the agentic CLI is always invoked regardless of which `copilot` binary is resolved.
+/// Uses enhanced PATH in the spawn environment; the command string can also embed PATH for the shell inside the terminal.
+fn spawn_terminal_with_raw_command(full_shell_command: &str, cwd: Option<&Path>) -> Result<()> {
+    let enhanced_path = path_utils::build_enhanced_path_for_subprocess();
+    let spawn_cmd = |mut cmd: Command| -> Result<()> {
+        cmd.env("PATH", &enhanced_path);
+        if let Some(cwd) = cwd {
+            cmd.current_dir(cwd);
+        }
+        cmd.spawn()
+            .map_err(|e| anyhow!("Failed to open terminal: {}", e))?;
+        Ok(())
+    };
+
+    if cfg!(target_os = "macos") {
+        let script = format!(
+            "tell app \"Terminal\" to do script \"{}\"",
+            full_shell_command.replace('"', "\\\"")
+        );
+        let mut cmd = Command::new("osascript");
+        cmd.args(["-e", &script]);
+        spawn_cmd(cmd)?;
+    } else if cfg!(target_os = "windows") {
+        let mut cmd = Command::new("cmd");
+        cmd.args(["/C", "start", "cmd", "/k", full_shell_command]);
+        spawn_cmd(cmd)?;
+    } else {
+        // Linux: keep bash open after command exits
+        let wrapped = format!("{}; exec bash", full_shell_command.replace('\'', "'\\''"));
+        let terminal_cmd = format!(
+            "x-terminal-emulator -e '{}' || xterm -e '{}' || gnome-terminal -- bash -c '{}' || true",
+            wrapped,
+            wrapped,
+            wrapped.replace('\'', "'\"'\"'")
+        );
+        let mut cmd = Command::new("sh");
+        cmd.args(["-c", &terminal_cmd]);
+        spawn_cmd(cmd)?;
+    }
+
+    Ok(())
+}
+
 // DRY:FN:spawn_terminal_with_command — Cross-platform terminal spawn with enhanced PATH
 /// Spawns a new terminal with the given program and args pre-invoked.
 /// Uses enhanced PATH for node-based CLIs. On Linux, keeps shell open after CLI exits.
@@ -218,10 +263,34 @@ pub async fn spawn_login(target: AuthTarget) -> Result<()> {
     ))
 }
 
+/// Builds the shell command string to launch the agentic Copilot CLI via npx.
+/// Embeds enhanced PATH so the terminal finds node/npx. Path is escaped for use inside double quotes.
+#[cfg(test)]
+pub fn build_copilot_launch_command_for_tests(enhanced_path: &str) -> String {
+    build_copilot_launch_command_impl(enhanced_path)
+}
+
+fn build_copilot_launch_command_impl(enhanced_path: &str) -> String {
+    let escaped = enhanced_path.replace('"', "\\\"");
+    if cfg!(target_os = "windows") {
+        format!("set \"PATH={}\" && npx -y @github/copilot", escaped)
+    } else {
+        format!("export PATH=\"{}\"; npx -y @github/copilot", escaped)
+    }
+}
+
 // DRY:FN:spawn_launch_cli — Spawns platform CLI in a new terminal (interactive mode)
 /// Launches the platform CLI interactively in a new terminal. Uses app-local or detected path.
 /// When project_dir is Some, the terminal opens in that directory.
+/// For Copilot we run `npx -y @github/copilot` with enhanced PATH so the agentic CLI starts regardless of which `copilot` binary is resolved elsewhere.
 pub async fn spawn_launch_cli(platform: Platform, project_dir: Option<PathBuf>) -> Result<()> {
+    if platform == Platform::Copilot {
+        let enhanced_path = path_utils::build_enhanced_path_for_subprocess();
+        let command = build_copilot_launch_command_impl(&enhanced_path);
+        spawn_terminal_with_raw_command(&command, project_dir.as_deref())?;
+        return Ok(());
+    }
+
     let cli_names = platform_specs::cli_binary_names(platform);
     let hint = cli_names.first().copied().unwrap_or("cli");
     let resolved = resolve_platform_program(platform, hint).await?;
@@ -334,5 +403,32 @@ pub async fn spawn_logout(target: AuthTarget) -> Result<()> {
             resolved_program.display(),
             stderr.trim()
         ))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_build_copilot_launch_command_contains_export_path_npx_copilot() {
+        let path = "/usr/bin:/opt/homebrew/bin";
+        let cmd = build_copilot_launch_command_for_tests(path);
+        assert!(cmd.contains("npx"), "command should contain npx");
+        assert!(cmd.contains("@github/copilot"), "command should contain @github/copilot");
+        if cfg!(target_os = "windows") {
+            assert!(cmd.contains("set "), "Windows command should set PATH");
+        } else {
+            assert!(cmd.contains("export PATH="), "Unix command should export PATH");
+        }
+        assert!(cmd.contains(path), "command should contain the path");
+    }
+
+    #[test]
+    fn test_build_copilot_launch_command_escapes_double_quotes_in_path() {
+        let path = r#"C:\Program "Files"\node"#;
+        let cmd = build_copilot_launch_command_for_tests(path);
+        assert!(!cmd.contains(r#""Files""#), "double quotes in path should be escaped");
+        assert!(cmd.contains("\\\""), "path should contain escaped double quote");
     }
 }

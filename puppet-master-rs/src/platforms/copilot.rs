@@ -62,7 +62,8 @@ pub struct CopilotRunner {
 
 impl CopilotRunner {
     // DRY:FN:new — Create a new Copilot runner
-    /// Create a new Copilot runner
+    /// Create a new Copilot runner.
+    /// Command is `npx` (from resolve_cli_command); we prepend `-y` and `@github/copilot` in build_args.
     pub fn new() -> Self {
         let command = Platform::Copilot.resolve_cli_command();
         Self {
@@ -152,6 +153,10 @@ impl PlatformRunner for CopilotRunner {
     fn build_args(&self, request: &ExecutionRequest) -> Vec<String> {
         let mut args = Vec::new();
 
+        // Invoke via npx -y @github/copilot so the agentic CLI is used
+        args.push("-y".to_string());
+        args.push("@github/copilot".to_string());
+
         // Add prompt (Copilot attaches files via @path tokens)
         let prompt = append_prompt_attachments(&request.prompt, &request.context_files, "@");
         args.push("-p".to_string());
@@ -214,6 +219,8 @@ mod tests {
 
         let args = runner.build_args(&request);
 
+        assert_eq!(args[0], "-y");
+        assert_eq!(args[1], "@github/copilot");
         assert!(args.contains(&"-p".to_string()));
         assert!(args.contains(&"Test prompt".to_string()));
         assert!(args.contains(&"-s".to_string())); // Silent mode for headless
@@ -238,6 +245,8 @@ mod tests {
 
         let args = runner.build_args(&request);
 
+        assert_eq!(args[0], "-y");
+        assert_eq!(args[1], "@github/copilot");
         // Plan mode should NOT include --allow-all-paths
         assert!(!args.contains(&"--allow-all-paths".to_string()));
     }
@@ -255,6 +264,8 @@ mod tests {
 
         let args = runner.build_args(&request);
 
+        assert_eq!(args[0], "-y");
+        assert_eq!(args[1], "@github/copilot");
         assert!(args.iter().any(|a| a.contains("@/tmp/ref.png")));
     }
 

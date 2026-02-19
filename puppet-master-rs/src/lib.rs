@@ -22,6 +22,7 @@ pub mod app;
 pub mod automation;
 pub mod shaders;
 pub mod theme;
+pub mod autostart;
 pub mod tray;
 pub mod views;
 pub mod widgets;

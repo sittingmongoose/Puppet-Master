@@ -7,6 +7,7 @@ use puppet_master::views::doctor::{CheckCategory, DoctorCheckResult};
 use puppet_master::views::evidence::{EvidenceFilter, EvidenceItem, EvidenceItemType};
 use puppet_master::views::history::{SessionInfo, SessionStatus};
 use puppet_master::views::ledger::{EventType, LedgerEntry};
+use puppet_master::utils::{puppet_master_dir, resolve_writable_state_root};
 use puppet_master::views::login::{AuthMethod, AuthStatus};
 use puppet_master::views::memory::MemorySection;
 use puppet_master::views::tiers::{TierDisplayNode, TierNodeType};
@@ -472,8 +473,10 @@ fn login_context_menu_copy_select_and_paste_behaviors_work() {
 
 #[test]
 fn settings_changes_save_and_reload() {
+    // Use same writable root as app (SaveSettings / load_settings) so the test reads where the app writes.
     let cwd = std::env::current_dir().expect("cwd");
-    let data_dir = cwd.join(".puppet-master");
+    let resolved_root = resolve_writable_state_root(&cwd);
+    let data_dir = puppet_master_dir(&resolved_root);
     let settings_path = data_dir.join("settings.json");
     fs::create_dir_all(&data_dir).expect("create .puppet-master");
 
