@@ -229,6 +229,13 @@ pub struct App {
     // Navigation
     pub current_page: Page,
 
+    // Resolved writable state root — computed once in App::new() so all handlers use the same
+    // path consistently. Re-computing via current_dir() each time is fragile: on network-mounted
+    // workspaces (SMB/NFS) the writability probe in resolve_writable_state_root() may produce
+    // different results across calls, causing settings to be written to one path but read back
+    // from another.
+    pub state_root: std::path::PathBuf,
+
     // Theme
     pub theme: AppTheme,
 
@@ -1051,9 +1058,15 @@ impl App {
     // DRY:FN:new
     /// Create a new App instance with initial state
     pub fn new(shutdown: Arc<AtomicBool>) -> (Self, Task<Message>) {
+        let state_root = std::env::current_dir()
+            .map(|cwd| crate::utils::resolve_writable_state_root(&cwd))
+            .unwrap_or_else(|_| std::path::PathBuf::from("."));
+
         let mut app = Self {
             // Navigation
             current_page: Page::Dashboard,
+
+            state_root,
 
             // Theme
             theme: AppTheme::Dark,
@@ -1295,9 +1308,9 @@ impl App {
         };
 
         // Ensure `.puppet-master` exists on startup (avoid read-only CWDs like DMG mounts).
-        if let Ok(cwd) = std::env::current_dir() {
-            let resolved_root = crate::utils::resolve_writable_state_root(&cwd);
-            let puppet_dir = crate::utils::puppet_master_dir(&resolved_root);
+        {
+            let resolved_root = &app.state_root;
+            let puppet_dir = crate::utils::puppet_master_dir(resolved_root);
             let _ = std::fs::create_dir_all(&puppet_dir);
             let _ = std::fs::create_dir_all(crate::utils::evidence_dir(&resolved_root));
             let _ = std::fs::create_dir_all(crate::utils::logs_dir(&resolved_root));
@@ -1355,9 +1368,8 @@ impl App {
         let task = Task::batch(startup_tasks);
 
         // First-boot detection: check if setup has been completed
-        let cwd = std::env::current_dir().unwrap_or_default();
-        let resolved_root = crate::utils::resolve_writable_state_root(&cwd);
-        let setup_marker = crate::utils::puppet_master_dir(&resolved_root).join("setup-complete");
+        let resolved_root = &app.state_root;
+        let setup_marker = crate::utils::puppet_master_dir(resolved_root).join("setup-complete");
         if !setup_marker.exists() {
             // No setup marker found - show setup wizard on first boot
             app.current_page = Page::Setup;
@@ -1516,9 +1528,7 @@ impl App {
 
             Message::SettingsClearData => {
                 self.add_toast(ToastType::Warning, "Clearing all data...".to_string());
-                let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-                let resolved_root = crate::utils::resolve_writable_state_root(&base);
-                let data_dir = crate::utils::puppet_master_dir(&resolved_root);
+                let data_dir = crate::utils::puppet_master_dir(&self.state_root);
 
                 if data_dir.exists() {
                     // Clear evidence, logs, but keep settings
@@ -1546,9 +1556,7 @@ impl App {
                 let _ = crate::autostart::apply_start_on_boot(false);
 
                 // Delete settings file (same path as SaveSettings / load_settings)
-                let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-                let resolved_root = crate::utils::resolve_writable_state_root(&base);
-                let settings_file = crate::utils::puppet_master_dir(&resolved_root).join("settings.json");
+                let settings_file = crate::utils::settings_file(&self.state_root);
                 if settings_file.exists() {
                     let _ = std::fs::remove_file(&settings_file);
                 }
@@ -1558,9 +1566,7 @@ impl App {
             }
 
             Message::SettingsOpenDataDir => {
-                let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-                let resolved_root = crate::utils::resolve_writable_state_root(&base);
-                let data_dir = crate::utils::puppet_master_dir(&resolved_root);
+                let data_dir = crate::utils::puppet_master_dir(&self.state_root);
 
                 // Try to open directory with platform-specific command
                 #[cfg(target_os = "linux")]
@@ -1585,10 +1591,8 @@ impl App {
             }
 
             Message::SaveSettings => {
-                let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-                let resolved_root = crate::utils::resolve_writable_state_root(&base);
-                let data_dir = crate::utils::puppet_master_dir(&resolved_root);
-                let settings_file = data_dir.join("settings.json");
+                let data_dir = crate::utils::puppet_master_dir(&self.state_root);
+                let settings_file = crate::utils::settings_file(&self.state_root);
 
                 // Create directory if needed (including parent directories)
                 let _ = std::fs::create_dir_all(&data_dir);
@@ -5657,8 +5661,9 @@ impl App {
                 }
 
                 if deferred_login && res.is_ok() {
-                    // Terminal-launched flows complete outside the app process; poll briefly.
-                    for delay_secs in [5_u64, 15, 30] {
+                    // Terminal-launched flows complete outside the app process; poll for up to ~3.5 minutes.
+                    // Codex OAuth can take longer than 50s so we extend to 120s.
+                    for delay_secs in [5_u64, 15, 30, 60, 120] {
                         tasks.push(Task::perform(
                             async move {
                                 tokio::time::sleep(std::time::Duration::from_secs(delay_secs))
@@ -5723,7 +5728,7 @@ impl App {
 
                 let mut tasks = vec![refresh_auth_status_task()];
                 if deferred_logout && res.is_ok() {
-                    for delay_secs in [5_u64, 15, 30] {
+                    for delay_secs in [5_u64, 15, 30, 60, 120] {
                         tasks.push(Task::perform(
                             async move {
                                 tokio::time::sleep(std::time::Duration::from_secs(delay_secs))
@@ -7912,10 +7917,8 @@ impl App {
     }
 
     /// Load settings from disk on startup
-    fn load_settings(&mut self) {
-        let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-        let resolved_root = crate::utils::resolve_writable_state_root(&base);
-        let settings_file = crate::utils::puppet_master_dir(&resolved_root).join("settings.json");
+    pub fn load_settings(&mut self) {
+        let settings_file = crate::utils::settings_file(&self.state_root);
 
         if settings_file.exists() {
             if let Ok(content) = std::fs::read_to_string(&settings_file) {
@@ -7971,9 +7974,7 @@ impl App {
 
     /// Load history from disk (sessions and logs)
     fn load_history_from_disk(&mut self) {
-        let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-        let resolved_root = crate::utils::resolve_writable_state_root(&base);
-        let data_dir = crate::utils::puppet_master_dir(&resolved_root);
+        let data_dir = crate::utils::puppet_master_dir(&self.state_root);
 
         // Clear existing history
         self.history_sessions.clear();

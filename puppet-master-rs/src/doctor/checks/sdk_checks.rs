@@ -107,7 +107,16 @@ impl DoctorCheck for NodeRuntimeCheck {
         };
 
         let node_version = Command::new(&node_path).arg("--version").output().await;
-        let npm_version = Command::new(&npm_path).arg("--version").output().await;
+        // npm is a Node.js script (#!/usr/bin/env node) — it needs `node` in PATH to run.
+        // Use build_enhanced_path_for_subprocess() so npm can find node from any GUI context.
+        let npm_version = Command::new(&npm_path)
+            .env(
+                "PATH",
+                crate::platforms::path_utils::build_enhanced_path_for_subprocess(),
+            )
+            .arg("--version")
+            .output()
+            .await;
 
         match (node_version, npm_version) {
             (Ok(node), Ok(npm)) if node.status.success() && npm.status.success() => {
@@ -268,22 +277,13 @@ impl DoctorCheck for PlatformSdkCheck {
 
         let lib_dir = crate::install::app_paths::get_lib_dir();
 
-        // Prefer checking app-local npm prefix installs.
-        let npm_root_app = Command::new(&npm_path)
-            .args(["root", "-g"])
-            .env("NPM_CONFIG_PREFIX", lib_dir.as_os_str())
-            .env("npm_config_cache", crate::install::app_paths::get_npm_cache_dir())
-            .output()
-            .await;
-
+        // Direct path computation: npm with NPM_CONFIG_PREFIX=lib_dir installs to
+        // lib_dir/lib/node_modules. No need to run `npm root -g` (which can fail with
+        // EACCES when ~/.npm is root-owned, or permission issues in GUI contexts).
         let mut node_path_entries: Vec<std::path::PathBuf> = Vec::new();
-        if let Ok(out) = npm_root_app {
-            if out.status.success() {
-                let root = String::from_utf8_lossy(&out.stdout).trim().to_string();
-                if !root.is_empty() {
-                    node_path_entries.push(std::path::PathBuf::from(root));
-                }
-            }
+        let app_node_modules = lib_dir.join("lib").join("node_modules");
+        if app_node_modules.exists() {
+            node_path_entries.push(app_node_modules);
         }
         if let Some(existing) = std::env::var_os("NODE_PATH") {
             node_path_entries.extend(std::env::split_paths(&existing));
@@ -311,6 +311,10 @@ impl DoctorCheck for PlatformSdkCheck {
         let npm_app = Command::new(&npm_path)
             .args(["list", "-g", package, "--depth=0"])
             .env("NPM_CONFIG_PREFIX", lib_dir.as_os_str())
+            .env(
+                "PATH",
+                crate::platforms::path_utils::build_enhanced_path_for_subprocess(),
+            )
             .output()
             .await;
         if matches!(npm_app, Ok(out) if out.status.success()) {
@@ -329,6 +333,10 @@ impl DoctorCheck for PlatformSdkCheck {
         // Fallback check: system global npm list -g package
         let npm_global = Command::new(&npm_path)
             .args(["list", "-g", package, "--depth=0"])
+            .env(
+                "PATH",
+                crate::platforms::path_utils::build_enhanced_path_for_subprocess(),
+            )
             .output()
             .await;
         if matches!(npm_global, Ok(out) if out.status.success()) {
@@ -385,6 +393,7 @@ impl DoctorCheck for PlatformSdkCheck {
                 .args(["install", "-g", package])
                 .env("NPM_CONFIG_PREFIX", lib_dir.as_os_str())
                 .env("npm_config_cache", crate::install::app_paths::get_npm_cache_dir())
+                .env("NPM_CONFIG_CACHE", crate::install::app_paths::get_npm_cache_dir())
                 .env(
                     "PATH",
                     crate::platforms::path_utils::build_enhanced_path_for_subprocess(),

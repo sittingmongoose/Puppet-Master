@@ -384,6 +384,18 @@ impl DoctorCheck for PlaywrightCheck {
             );
         }
 
+        // First: try just regenerating the shim (fast repair, no browser re-download)
+        if let Ok(()) = crate::install::playwright_installer::regenerate_playwright_shim() {
+            let recheck = self.run().await;
+            if recheck.passed {
+                return Some(
+                    FixResult::success("Playwright shim repaired with PLAYWRIGHT_BROWSERS_PATH.")
+                        .with_step("Regenerated playwright shim with PLAYWRIGHT_BROWSERS_PATH"),
+                );
+            }
+        }
+
+        // Shim fix didn't fully resolve → full reinstall
         let outcome = crate::install::install_coordinator::install_playwright().await;
         let mut result = if outcome.success {
             FixResult::success("Playwright installed successfully.")

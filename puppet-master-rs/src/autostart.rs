@@ -1,6 +1,7 @@
 //! Autostart (start on boot) support per OS: Linux XDG autostart, macOS LaunchAgents, Windows Run key.
 
 use std::env;
+#[cfg(any(target_os = "linux", target_os = "macos"))]
 use std::fs;
 
 /// Applies or removes start-on-boot registration for the current executable.
@@ -92,6 +93,9 @@ fn xml_escape(s: &str) -> String {
 #[cfg(target_os = "windows")]
 fn apply_windows(enabled: bool, exe: &std::path::Path) -> Result<(), anyhow::Error> {
     use std::os::windows::ffi::OsStrExt;
+    use winapi::shared::minwindef::HKEY;
+    use winapi::shared::winerror::ERROR_SUCCESS;
+    use winapi::um::winnt::{KEY_QUERY_VALUE, KEY_SET_VALUE, REG_SZ};
 
     let exe_path = exe
         .as_os_str()
@@ -104,15 +108,15 @@ fn apply_windows(enabled: bool, exe: &std::path::Path) -> Result<(), anyhow::Err
         let key_path: Vec<u16> = "Software\\Microsoft\\Windows\\CurrentVersion\\Run\0"
             .encode_utf16()
             .collect();
-        let mut hkey: winapi::um::winreg::HKEY = std::ptr::null_mut();
+        let mut hkey: HKEY = std::ptr::null_mut();
         let ret = winapi::um::winreg::RegOpenKeyExW(
             winapi::um::winreg::HKEY_CURRENT_USER,
             key_path.as_ptr(),
             0,
-            winapi::um::winreg::KEY_SET_VALUE | winapi::um::winreg::KEY_QUERY_VALUE,
+            KEY_SET_VALUE | KEY_QUERY_VALUE,
             &mut hkey,
         );
-        if ret != winapi::um::winreg::ERROR_SUCCESS {
+        if ret != ERROR_SUCCESS as i32 {
             anyhow::bail!(
                 "RegOpenKeyExW failed: {}",
                 ret
@@ -123,12 +127,12 @@ fn apply_windows(enabled: bool, exe: &std::path::Path) -> Result<(), anyhow::Err
                 hkey,
                 value_name.as_ptr(),
                 0,
-                winapi::um::winreg::REG_SZ,
+                REG_SZ,
                 exe_path.as_ptr() as *const _,
                 (exe_path.len() * 2) as u32,
             );
             winapi::um::winreg::RegCloseKey(hkey);
-            if ret != winapi::um::winreg::ERROR_SUCCESS {
+            if ret != ERROR_SUCCESS as i32 {
                 anyhow::bail!("RegSetValueExW failed: {}", ret);
             }
         } else {
