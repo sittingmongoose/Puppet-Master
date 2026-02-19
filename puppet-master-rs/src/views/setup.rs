@@ -7,7 +7,7 @@ use crate::doctor::InstallationStatus;
 use crate::platforms::AuthTarget;
 use crate::theme::{AppTheme, tokens};
 use crate::types::Platform;
-use crate::views::login::AuthStatus; // For auth status checking
+use crate::views::login::{self, AuthStatus};
 use crate::widgets::{selectable_text::selectable_label, *};
 use iced::widget::{Space, column, container, row, scrollable};
 use iced::{Element, Length};
@@ -250,44 +250,32 @@ pub fn view<'a>(
             let auth_target = AuthTarget::Platform(platform_status.platform);
             let auth_action = login_in_progress.get(&auth_target).copied();
 
-            // Fix 9a: Unified login/logout button - show ONLY ONE auth button based on state
-            let auth_btn = if is_installed {
-                if let Some(kind) = auth_action {
-                    // Auth action in progress
-                    match kind {
-                        AuthActionKind::Login => {
-                            styled_button(theme, "Logging in...", ButtonVariant::Info)
-                        }
-                        AuthActionKind::Logout => {
-                            styled_button(theme, "Logging out...", ButtonVariant::Danger)
-                        }
-                    }
-                } else {
-                    // Check authentication state to decide which button to show
-                    let platform_name = format!("{}", platform_status.platform);
-                    let is_authenticated = platform_auth_status
-                        .get(&platform_name)
-                        .map(|status| status.authenticated)
-                        .unwrap_or(false);
+            // Auth key must match load_auth_status_map (Debug format = PascalCase)
+            let auth_key = format!("{:?}", platform_status.platform);
+            let is_authenticated = platform_auth_status
+                .get(&auth_key)
+                .map(|status| status.authenticated)
+                .unwrap_or(false);
 
-                    if is_authenticated {
-                        // Authenticated — Logout only
-                        styled_button(theme, "Logout", ButtonVariant::Danger)
-                            .on_press(Message::PlatformLogout(auth_target))
-                    } else {
-                        // Not authenticated — Login only
-                        styled_button(theme, "Login", ButtonVariant::Info)
-                            .on_press(Message::PlatformLogin(auth_target))
-                    }
-                }
+            // When installed: use same auth row as Login page (DRY). Refresh uses RefreshAuthStatus so we stay on Setup and buttons update.
+            let action_widget: Element<Message> = if is_installed {
+                login::platform_auth_action_row(
+                    auth_target,
+                    is_authenticated,
+                    auth_action,
+                    theme,
+                    Message::RefreshAuthStatus,
+                )
             } else if is_installing {
-                styled_button(theme, "Installing...", ButtonVariant::Primary)
+                styled_button(theme, "Installing...", ButtonVariant::Primary).into()
             } else {
                 styled_button(theme, "Install", ButtonVariant::Primary)
                     .on_press(Message::SetupInstall(platform_status.platform))
+                    .into()
             };
 
-            let platform_row = row![
+            // Row 1: badge + platform name (avoids squeezing status text)
+            let row_1 = row![
                 container(selectable_label(theme, status_icon))
                     .padding(tokens::spacing::SM)
                     .width(Length::Fixed(tokens::layout::DETAIL_LABEL_WIDTH))
@@ -303,14 +291,25 @@ pub fn view<'a>(
                         }
                     }),
                 selectable_label(theme, &format!("{}", platform_status.platform)),
-                Space::new().width(Length::Fill),
-                selectable_label(theme, &format!("{}", platform_status.status)),
-                auth_btn,
             ]
             .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center);
 
-            let mut platform_col = column![platform_row].spacing(tokens::spacing::SM);
+            // Row 2: status text on its own row (full width) so "Installed (v...)" is never cut off
+            let status_text = format!("{}", platform_status.status);
+            let row_2 = container(selectable_label(theme, &status_text))
+                .width(Length::Fill)
+                .align_x(iced::Alignment::Start);
+
+            // Row 3: action widget (auth buttons or Install) so it never squeezes the status text
+            let row_3 = row![
+                Space::new().width(Length::Fill),
+                action_widget,
+            ]
+            .spacing(tokens::spacing::MD)
+            .align_y(iced::Alignment::Center);
+
+            let mut platform_col = column![row_1, row_2, row_3].spacing(tokens::spacing::SM);
 
             // Show detection trace info from actual setup detection data
             match &platform_status.status {

@@ -5,6 +5,7 @@
 
 use crate::app::{AuthActionKind, ContextMenuTarget, LoginTextSurface, Message, SelectableField};
 use crate::doctor::InstallationStatus;
+use crate::platforms::platform_specs;
 use crate::platforms::AuthTarget;
 use crate::theme::{AppTheme, colors, tokens};
 use crate::types::Platform;
@@ -12,7 +13,7 @@ use crate::views::doctor::build_launch_button_for_platform;
 use crate::views::setup::PlatformStatus;
 use crate::widgets::{responsive::responsive_grid, selectable_text::selectable_label, *};
 use iced::font::Weight;
-use iced::widget::{column, container, mouse_area, row, scrollable, text, text_editor};
+use iced::widget::{column, container, mouse_area, row, scrollable, text, text_editor, Space};
 use iced::{Alignment, Element, Length};
 use std::collections::HashMap;
 
@@ -46,13 +47,12 @@ impl AuthMethod {
     }
 }
 
-/// Platform definition with display metadata
+/// Platform definition with display metadata (supports_logout derived from platform_specs in platform_auth_action_row)
 struct PlatformDef {
     name: &'static str,
     display_name: &'static str,
     auth_target: AuthTarget,
     icon_name: IconName,
-    supports_logout: bool,
 }
 
 impl PlatformDef {
@@ -61,14 +61,12 @@ impl PlatformDef {
         display_name: &'static str,
         auth_target: AuthTarget,
         icon_name: IconName,
-        supports_logout: bool,
     ) -> Self {
         Self {
             name,
             display_name,
             auth_target,
             icon_name,
-            supports_logout,
         }
     }
 }
@@ -83,42 +81,36 @@ fn get_platform_defs() -> Vec<PlatformDef> {
             platform_specs::get_spec(Platform::Cursor).display_name,
             AuthTarget::Platform(Platform::Cursor),
             IconName::Dashboard,
-            true,
         ),
         PlatformDef::new(
             "Codex",
             platform_specs::get_spec(Platform::Codex).display_name,
             AuthTarget::Platform(Platform::Codex),
             IconName::Terminal,
-            true,
         ),
         PlatformDef::new(
             "Claude",
             platform_specs::get_spec(Platform::Claude).display_name,
             AuthTarget::Platform(Platform::Claude),
             IconName::Brain,
-            true,
         ),
         PlatformDef::new(
             "Gemini",
             platform_specs::get_spec(Platform::Gemini).display_name,
             AuthTarget::Platform(Platform::Gemini),
             IconName::Config,
-            false, // Gemini: manage at platform console
         ),
         PlatformDef::new(
             "Copilot",
             platform_specs::get_spec(Platform::Copilot).display_name,
             AuthTarget::Platform(Platform::Copilot),
             IconName::Doctor,
-            true,
         ),
         PlatformDef::new(
             "GitHub",
             "GitHub",
             AuthTarget::GitHub,
             IconName::Projects,
-            true,
         ),
     ]
 }
@@ -347,9 +339,18 @@ fn build_platform_card<'a>(
     // Status details
     let details = selectable_label(theme, status_details);
 
-    // Login message (if present)
+    // Login message only when different from status details (avoids duplicate hint text).
+    // Skip if message equals hint or is contained in it (or vice versa) so we never show the same text twice.
     let login_message_elem = if let Some(msg) = login_messages.get(def.name) {
-        Some(selectable_label(theme, msg))
+        let m = msg.trim();
+        let same = m == status_details;
+        let msg_in_details = !m.is_empty() && status_details.contains(m);
+        let details_in_msg = !status_details.is_empty() && m.contains(status_details);
+        if same || msg_in_details || details_in_msg {
+            None
+        } else {
+            Some(selectable_label(theme, msg.as_str()))
+        }
     } else {
         None
     };
@@ -380,17 +381,37 @@ fn build_platform_card<'a>(
 
     // Action buttons
     let action_buttons =
-        build_action_buttons(def, authenticated, in_progress, platform_statuses, theme);
+        build_action_buttons(def, authenticated, in_progress, theme);
 
-    // Assemble card content
+    // Header row: left = icon + name, right = Launch when platform CLI installed
+    let header_right: Element<Message> = if let AuthTarget::Platform(platform) = def.auth_target {
+        if is_platform_cli_installed(platform, platform_statuses) {
+            build_launch_button_for_platform(theme, platform)
+        } else {
+            Space::new().into()
+        }
+    } else {
+        Space::new().into()
+    };
+    let header_row = row![
+        row![icon, name]
+            .spacing(tokens::spacing::SM)
+            .align_y(Alignment::Center),
+        Space::new().width(Length::Fill),
+        header_right,
+    ]
+    .width(Length::Fill)
+    .align_y(Alignment::Center);
+
+    // Assemble card content: header first, then status_badge, details, etc.
     let mut card_content = column![
-        row![icon].align_y(Alignment::Center),
-        name,
+        header_row,
         status_badge,
         details,
     ]
     .spacing(tokens::spacing::SM)
-    .padding(tokens::spacing::MD);
+    .padding(tokens::spacing::MD)
+    .width(Length::Fill);
 
     // Add login message if present
     if let Some(msg_elem) = login_message_elem {
@@ -414,17 +435,24 @@ fn build_platform_card<'a>(
         .into()
 }
 
-/// Build action buttons for a platform card
-fn build_action_buttons<'a>(
-    def: &PlatformDef,
+// DRY:FN:platform_auth_action_row — Shared auth button row for Login and Setup (Login/Logout/Refresh)
+/// Build the same auth action row used on Login and Setup: Login | Logout | Logging in... | Logging out... | "Manage at platform console" + Refresh.
+/// `supports_logout` is derived from platform_specs (AuthTarget::Platform) or true for GitHub.
+/// `refresh_message`: use `Message::LoadLogin` on Login page (navigate + refresh), `Message::RefreshAuthStatus` on Setup (refresh in place so buttons update).
+pub fn platform_auth_action_row<'a>(
+    auth_target: AuthTarget,
     authenticated: bool,
     in_progress: Option<AuthActionKind>,
-    platform_statuses: &'a [PlatformStatus],
     theme: &'a AppTheme,
+    refresh_message: Message,
 ) -> Element<'a, Message> {
+    let supports_logout = match auth_target {
+        AuthTarget::Platform(p) => platform_specs::get_spec(p).auth.logout_command.is_some(),
+        AuthTarget::GitHub => true,
+    };
+
     let mut buttons = row![].spacing(tokens::spacing::SM);
 
-    // Login/Logout button or info text
     if let Some(kind) = in_progress {
         let label = match kind {
             AuthActionKind::Login => "Logging in...",
@@ -432,39 +460,44 @@ fn build_action_buttons<'a>(
         };
         buttons = buttons.push(styled_button(theme, label, ButtonVariant::Info));
     } else if authenticated {
-        // Show logout button only for platforms that support it
-        if def.supports_logout {
+        if supports_logout {
             buttons = buttons.push(
                 styled_button(theme, "Logout", ButtonVariant::Danger)
-                    .on_press(Message::PlatformLogout(def.auth_target)),
+                    .on_press(Message::PlatformLogout(auth_target)),
             );
         } else {
-            // For Claude & Gemini, show info text
             buttons = buttons.push(selectable_label(theme, "Manage at platform console"));
         }
     } else {
-        // Not authenticated: show login button
         buttons = buttons.push(
             styled_button(theme, "Login", ButtonVariant::Info)
-                .on_press(Message::PlatformLogin(def.auth_target)),
+                .on_press(Message::PlatformLogin(auth_target)),
         );
     }
 
-    // Launch button - only show if platform CLI is installed
-    if let AuthTarget::Platform(platform) = def.auth_target {
-        if is_platform_cli_installed(platform, platform_statuses) {
-            buttons = buttons.push(build_launch_button_for_platform(theme, platform));
-        }
-    }
-
-    // Refresh button (always visible)
     buttons = buttons.push(refresh_button(
         theme,
-        Message::LoadLogin,
+        refresh_message,
         RefreshStyle::TitleCase(ButtonVariant::Ghost),
     ));
 
     buttons.into()
+}
+
+/// Build action buttons for a platform card (Login/Logout, Refresh only; Launch is in card header)
+fn build_action_buttons<'a>(
+    def: &PlatformDef,
+    authenticated: bool,
+    in_progress: Option<AuthActionKind>,
+    theme: &'a AppTheme,
+) -> Element<'a, Message> {
+    platform_auth_action_row(
+        def.auth_target,
+        authenticated,
+        in_progress,
+        theme,
+        Message::LoadLogin,
+    )
 }
 
 fn build_cli_panel<'a>(

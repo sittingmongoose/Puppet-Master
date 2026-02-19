@@ -47,6 +47,13 @@ impl Platform {
 
     /// DRY:FN:resolve_cli_command — Resolve the best available CLI command using platform_specs.
     pub fn resolve_cli_command(&self) -> String {
+        // Copilot uses npx -y @github/copilot so the agentic CLI is always used; resolve npx only.
+        if matches!(self, Platform::Copilot) {
+            return crate::platforms::path_utils::resolve_executable("npx")
+                .map(|p| p.to_string_lossy().to_string())
+                .unwrap_or_else(|| "npx".to_string());
+        }
+
         let app_bin = crate::install::app_paths::get_app_bin_dir();
         let cli_names = crate::platforms::platform_specs::cli_binary_names(*self);
 
@@ -363,6 +370,16 @@ mod tests {
     fn test_platform_display() {
         assert_eq!(Platform::Cursor.to_string(), "cursor");
         assert_eq!(Platform::Gemini.to_string(), "gemini");
+    }
+
+    /// Auth map keys use Debug format (PascalCase). Setup and load_auth_status_map must use the same key.
+    #[test]
+    fn test_platform_debug_format_matches_auth_map_key() {
+        assert_eq!(format!("{:?}", Platform::Cursor), "Cursor");
+        assert_eq!(format!("{:?}", Platform::Codex), "Codex");
+        assert_eq!(format!("{:?}", Platform::Claude), "Claude");
+        assert_eq!(format!("{:?}", Platform::Gemini), "Gemini");
+        assert_eq!(format!("{:?}", Platform::Copilot), "Copilot");
     }
 
     #[test]

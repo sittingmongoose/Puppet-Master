@@ -410,6 +410,7 @@ pub struct App {
 
     // Settings
     pub minimize_to_tray: bool,
+    pub start_on_boot: bool,
     pub settings_log_level: String,
     pub settings_auto_scroll: bool,
     pub settings_show_timestamps: bool,
@@ -701,6 +702,7 @@ pub enum Message {
     SettingsShowTimestampsToggled(bool),
     SettingsRetentionDaysChanged(String),
     SettingsMinimizeToTrayToggled(bool),
+    ToggleStartOnBoot,
     SettingsIntensiveLoggingToggled(bool),
     SettingsInteractionModeChanged(String),
     SettingsClearData,
@@ -887,11 +889,13 @@ fn auth_method_from_result(
 }
 
 fn auth_hint_from_result(result: &crate::platforms::AuthCheckResult) -> String {
+    let msg = result.message.trim();
     match result.details.as_deref() {
         Some(details) if !details.trim().is_empty() => {
-            format!("{} {}", result.message.trim(), details.trim())
+            let d = details.trim();
+            if d == msg { msg.to_string() } else { format!("{} {}", msg, d) }
         }
-        _ => result.message.trim().to_string(),
+        _ => msg.to_string(),
     }
 }
 
@@ -1252,6 +1256,7 @@ impl App {
 
             // Settings
             minimize_to_tray: true,
+            start_on_boot: false,
             settings_log_level: "info".to_string(),
             settings_auto_scroll: true,
             settings_show_timestamps: true,
@@ -1392,19 +1397,23 @@ impl App {
                         }
                     }
                     Page::Setup => {
-                        // Auto-run detection if no results yet
+                        // Refresh auth status so Setup page shows current Login/Logout state
+                        let mut tasks = vec![refresh_auth_status_task()];
                         if self.setup_platform_statuses.is_empty() && !self.setup_is_checking {
-                            return self.update(Message::SetupRunDetection);
+                            tasks.push(self.update(Message::SetupRunDetection));
+                            return Task::batch(tasks);
                         }
-                        // Also run Playwright check if we don't have results yet
                         if !self
                             .doctor_results
                             .iter()
                             .any(|r| r.name == "playwright-browsers")
                         {
-                            return self
-                                .update(Message::RunCheck("playwright-browsers".to_string()));
+                            tasks.push(self.update(Message::RunCheck(
+                                "playwright-browsers".to_string(),
+                            )));
+                            return Task::batch(tasks);
                         }
+                        return Task::batch(tasks);
                     }
                     Page::Config => {
                         // Auto-reload config
@@ -1458,6 +1467,10 @@ impl App {
                 self.minimize_to_tray = !self.minimize_to_tray;
                 Task::none()
             }
+            Message::ToggleStartOnBoot => {
+                self.start_on_boot = !self.start_on_boot;
+                Task::none()
+            }
 
             // ================================================================
             // Settings
@@ -1504,7 +1517,8 @@ impl App {
             Message::SettingsClearData => {
                 self.add_toast(ToastType::Warning, "Clearing all data...".to_string());
                 let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-                let data_dir = base.join(".puppet-master");
+                let resolved_root = crate::utils::resolve_writable_state_root(&base);
+                let data_dir = crate::utils::puppet_master_dir(&resolved_root);
 
                 if data_dir.exists() {
                     // Clear evidence, logs, but keep settings
@@ -1528,10 +1542,13 @@ impl App {
                 self.settings_intensive_logging = false;
                 self.settings_interaction_mode = "eli5".to_string();
                 self.minimize_to_tray = true;
+                self.start_on_boot = false;
+                let _ = crate::autostart::apply_start_on_boot(false);
 
-                // Delete settings file
+                // Delete settings file (same path as SaveSettings / load_settings)
                 let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-                let settings_file = base.join(".puppet-master").join("settings.json");
+                let resolved_root = crate::utils::resolve_writable_state_root(&base);
+                let settings_file = crate::utils::puppet_master_dir(&resolved_root).join("settings.json");
                 if settings_file.exists() {
                     let _ = std::fs::remove_file(&settings_file);
                 }
@@ -1542,7 +1559,8 @@ impl App {
 
             Message::SettingsOpenDataDir => {
                 let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-                let data_dir = base.join(".puppet-master");
+                let resolved_root = crate::utils::resolve_writable_state_root(&base);
+                let data_dir = crate::utils::puppet_master_dir(&resolved_root);
 
                 // Try to open directory with platform-specific command
                 #[cfg(target_os = "linux")]
@@ -1584,12 +1602,18 @@ impl App {
                     "retention_days": self.settings_retention_days,
                     "intensive_logging": self.settings_intensive_logging,
                     "minimize_to_tray": self.minimize_to_tray,
+                    "start_on_boot": self.start_on_boot,
                     "interaction_mode": self.settings_interaction_mode,
                 });
 
                 if let Ok(json) = serde_json::to_string_pretty(&settings) {
                     if let Ok(_) = std::fs::write(&settings_file, json) {
-                        self.add_toast(ToastType::Success, "Settings saved".to_string());
+                        if let Err(e) = crate::autostart::apply_start_on_boot(self.start_on_boot) {
+                            log::warn!("Failed to update start on boot: {}", e);
+                            self.add_toast(ToastType::Warning, "Failed to update start on boot".to_string());
+                        } else {
+                            self.add_toast(ToastType::Success, "Settings saved".to_string());
+                        }
                     } else {
                         self.add_toast(ToastType::Error, "Failed to save settings".to_string());
                     }
@@ -5500,8 +5524,9 @@ impl App {
                     };
                 }
 
+                // Do not insert status.hint into login_messages here — cards already show hint
+                // as details. login_messages is only for transient messages (e.g. "Starting login...").
                 for (key, status) in &self.platform_auth_status {
-                    self.login_messages.insert(key.clone(), status.hint.clone());
                     if let Some(url) = parse_first_url(&status.hint) {
                         self.login_auth_urls.insert(key.clone(), url);
                     }
@@ -6571,6 +6596,7 @@ impl App {
                         auto_scroll,
                         self.settings_show_timestamps,
                         self.minimize_to_tray,
+                        self.start_on_boot,
                         self.settings_retention_days,
                         self.settings_intensive_logging,
                         &self.settings_interaction_mode,
@@ -7928,6 +7954,9 @@ impl App {
                     {
                         self.minimize_to_tray = minimize_to_tray;
                     }
+                    if let Some(b) = json.get("start_on_boot").and_then(|v| v.as_bool()) {
+                        self.start_on_boot = b;
+                    }
                     if let Some(im) = json.get("interaction_mode").and_then(|v| v.as_str()) {
                         if im.eq_ignore_ascii_case("expert") || im.eq_ignore_ascii_case("eli5") {
                             self.settings_interaction_mode = im.to_lowercase();
@@ -7943,7 +7972,8 @@ impl App {
     /// Load history from disk (sessions and logs)
     fn load_history_from_disk(&mut self) {
         let base = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("."));
-        let data_dir = base.join(".puppet-master");
+        let resolved_root = crate::utils::resolve_writable_state_root(&base);
+        let data_dir = crate::utils::puppet_master_dir(&resolved_root);
 
         // Clear existing history
         self.history_sessions.clear();
@@ -8420,6 +8450,7 @@ pub fn run(shutdown: Arc<AtomicBool>) -> Result<()> {
     .window(iced::window::Settings {
         size: iced::Size::new(1280.0, 800.0),
         icon: load_window_icon(),
+        exit_on_close_request: false,
         ..iced::window::Settings::default()
     })
     .run()?;
