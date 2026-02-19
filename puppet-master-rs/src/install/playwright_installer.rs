@@ -84,6 +84,20 @@ fn generate_playwright_shim(
     Ok(())
 }
 
+// DRY:FN:regenerate_playwright_shim — Public entry point to regenerate playwright shim with PLAYWRIGHT_BROWSERS_PATH
+/// Regenerate the playwright shim in the app bin directory.
+///
+/// This is callable from outside the module (e.g. the doctor fix action) to repair the shim
+/// without requiring a full reinstall. The shim sets both `NODE_PATH` and
+/// `PLAYWRIGHT_BROWSERS_PATH` so Playwright can locate its app-local browsers.
+pub fn regenerate_playwright_shim() -> Result<(), String> {
+    let lib_dir = get_lib_dir();
+    let bin_dir = get_app_bin_dir();
+    let node_path = crate::platforms::path_utils::resolve_executable("node")
+        .map(std::path::PathBuf::from);
+    generate_playwright_shim(&lib_dir, &bin_dir, node_path.as_deref())
+}
+
 // DRY:FN:install_playwright_app_local — npm install playwright + browser download
 /// Install Playwright into the app data directory and download browser binaries.
 ///
@@ -115,11 +129,14 @@ pub async fn install_playwright_app_local() -> InstallOutcome {
             );
         }
         Err(e) => {
-            // Non-fatal: browsers are still installed, shim just lacks the env var.
             warn!("Failed to regenerate playwright shim: {e}");
             log_lines.push(format!(
-                "Warning: could not regenerate playwright shim: {e}"
+                "Playwright installed but shim generation failed: {e}. Re-run install."
             ));
+            return InstallOutcome::failure_with_log(
+                format!("Playwright installed but shim generation failed: {e}. Re-run install."),
+                log_lines,
+            );
         }
     }
 

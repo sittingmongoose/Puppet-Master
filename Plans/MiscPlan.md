@@ -55,7 +55,7 @@ Implement sections in dependency order; optional items can be deferred. The **DR
 
 ### Target-project DRY (interview-seeded)
 
-Puppet Master uses the DRY method in its own codebase (AGENTS.md). **Target projects** (projects created or managed by Puppet Master) can use the same reuse-first approach: the **interview** can seed the target project’s **AGENTS.md** when it generates that file at interview completion. Seeded content includes a **DRY Method** section and a **Technology & version constraints** (or "Stack conventions") section — e.g. "always use React 18", "always use Pydantic v2" — born from the interview (especially Architecture & Technology phase) and optionally from convention templates for well-known stacks. That gives all agents working on the target project (during orchestrator runs or later) clear guidelines: check for existing code and docs before adding new, tag reusable items, and keep a single source of truth for config and specs. Implementation belongs in the Interview plan and in `agents_md_generator` (or equivalent); see **Plans/interview-subagent-integration.md** §5.1 (AGENTS.md content: DRY Method). That subsection also lists **gaps and improvements**: config default for `generate_initial_agents_md`, stack parameterization, preserving the DRY section when agents update AGENTS.md, projects created without the full interview, and overwrite vs. merge if AGENTS.md already exists.
+Puppet Master uses the DRY method in its own codebase (AGENTS.md). **Target projects** (projects created or managed by Puppet Master) can use the same reuse-first approach: the **interview** can seed the target project’s **AGENTS.md** when it generates that file at interview completion. Seeded content includes a **DRY Method** section and a **Technology & version constraints** (or "Stack conventions") section — e.g. "always use React 18", "always use Pydantic v2" — born from the interview (especially Architecture & Technology phase) and optionally from convention templates for well-known stacks. That gives all agents working on the target project (during orchestrator runs or later) clear guidelines: check for existing code and docs before adding new, tag reusable items, and keep a single source of truth for config and specs. **Keep generated AGENTS.md minimal:** it is loaded into agent context; long files consume context and get skimmed, so critical rules get missed. The Interview plan §5.1 specifies: critical-first block at top, size budget (~150–200 lines), linked docs for long reference, and two-tier structure. Implementation belongs in the Interview plan and in `agents_md_generator` (or equivalent); see **Plans/interview-subagent-integration.md** §5.1 (AGENTS.md content: DRY Method and minimality). That subsection also lists **gaps and improvements**: config default for `generate_initial_agents_md`, stack parameterization, preserving the DRY section when agents update AGENTS.md, projects created without the full interview, and overwrite vs. merge if AGENTS.md already exists.
 
 ---
 
@@ -259,12 +259,14 @@ The following gives implementers exact signatures, data, and step-by-step logic 
 **DRY:FN:run_git_clean_with_excludes**
 
 - **Signature:** `pub async fn run_git_clean_with_excludes(work_dir: &Path, clean_untracked: bool, clean_ignored: bool) -> Result<()>`.
+- **DRY REQUIREMENT:** Tag with `// DRY:FN:run_git_clean_with_excludes`. MUST use `cleanup_exclude_patterns()` from the same module — DO NOT accept allowlist as parameter or hardcode exclude patterns. MUST use shared git binary resolution (e.g. `path_utils::resolve_executable("git")` or `resolve_git_executable()` from Worktree plan) — DO NOT hardcode `Command::new("git")`.
 - **Behavior:** If `clean_untracked` is false, return `Ok(())` without running git. Otherwise run `git clean -fd` (or `-fdx` if `clean_ignored`). Resolve the git binary via the same helper used by GitManager/Doctor (e.g. `crate::platforms::path_utils::resolve_executable("git")` until Worktree plan adds `resolve_git_executable()`; then switch to that). Build the command with one `-e <pattern>` per entry from `cleanup_exclude_patterns()`. Set `Command::current_dir(work_dir)`. Do not assume `Command::new("git")` is sufficient.
 - **Callers:** Only `prepare_working_directory` (and the manual "Clean workspace" action) call this; `cleanup_after_execution` does not.
 
 **DRY:FN:prepare_working_directory**
 
 - **Signature:** `pub async fn prepare_working_directory(work_dir: &Path, config: &CleanupConfig) -> Result<()>` (or take config from a shared app config if preferred).
+- **DRY REQUIREMENT:** Tag with `// DRY:FN:prepare_working_directory`. MUST call `run_git_clean_with_excludes()` for git clean operations — DO NOT duplicate git clean logic. MUST use `cleanup_exclude_patterns()` for allowlist — DO NOT hardcode exclude patterns.
 - **Step-by-step:**
   1. **Git check:** Run `git rev-parse --show-toplevel` with `current_dir(work_dir)`. If the command fails (non-repo or git not found), **do not fail the iteration**: log a warning (e.g. "Prepare: not a git repo or git unavailable, skipping git clean") and return `Ok(())`. Optionally run only non-git cleanup (e.g. clear agent-output dir per config) if implemented. This resolves §9.1.3 and §9.1.10 (best-effort; continue without prepare).
   2. **Optional tracked reset:** Do **not** run `git checkout -- .` or `git restore .` unless a future config flag is added and documented; see §9.1.4. For now, prepare only cleans **untracked** (and optionally ignored) files.
@@ -275,6 +277,7 @@ The following gives implementers exact signatures, data, and step-by-step logic 
 **DRY:FN:cleanup_after_execution**
 
 - **Signature:** `pub async fn cleanup_after_execution(pid: u32, work_dir: &Path, config: &CleanupConfig) -> Result<()>`.
+- **DRY REQUIREMENT:** Tag with `// DRY:FN:cleanup_after_execution`. MUST use `cleanup_exclude_patterns()` for any path checks — DO NOT hardcode exclude patterns. MUST use shared git binary resolution if git operations are needed — DO NOT hardcode `Command::new("git")`.
 - **Step-by-step:**
   1. **Terminate process:** If `pid > 0`, attempt to terminate the process (e.g. `kill(pid, SIGTERM)` or platform equivalent); do not block indefinitely; log if termination fails.
   2. **Runner temp files:** Remove any temp files or dirs that the **runner** created for this execution (e.g. context copy temp dir). This requires the runner (or a shared base) to record the temp path(s) so cleanup can remove them; if no such path is stored, this step is a no-op for now. Do **not** run `run_git_clean_with_excludes` here.
@@ -285,6 +288,7 @@ The following gives implementers exact signatures, data, and step-by-step logic 
 
 - **Placement:** Prefer `src/core/run_with_cleanup.rs` (or a helper in `src/core/execution_engine.rs`) so the execution engine can call it; alternatively `src/cleanup/run_with_cleanup.rs` if the wrapper is considered part of cleanup. Document the choice in AGENTS.md.
 - **Signature:** `pub async fn run_with_cleanup<R: PlatformRunner>(runner: &R, request: &ExecutionRequest, config: &CleanupConfig) -> Result<ExecutionResult>`. Alternatively, accept an `Option<&CleanupConfig>` and skip prepare/cleanup when `None` or when config says skip (e.g. for conversation from arbitrary CWD).
+- **DRY REQUIREMENT:** Tag with `// DRY:FN:run_with_cleanup`. MUST call `prepare_working_directory()` and `cleanup_after_execution()` from the cleanup module — DO NOT duplicate prepare/cleanup logic. This wrapper ensures all call sites get consistent behavior.
 - **Logic:** (1) If config says skip prepare for this context, skip to step 2. (2) Call `crate::cleanup::prepare_working_directory(&request.working_directory, config).await`; on error, log and continue (per §9.1.10: best-effort). (3) Call `runner.execute(request).await` and capture result. (4) Call `crate::cleanup::cleanup_after_execution(0, &request.working_directory, config).await` (pid may be 0 if not tracked). (5) Return execution result.
 - **Call sites (concrete):**
   - **ExecutionEngine:** In `execute_with_sdk_fallback`, replace `runner.execute(request).await` with `run_with_cleanup(&*runner, request, &cleanup_config).await`. The cleanup_config must be obtained from the same run config as the orchestrator (e.g. from `IterationContext` or from a shared config handle). ExecutionEngine currently has no access to config; add a way to pass cleanup config into ExecutionEngine (e.g. at construction or per execute_iteration).
@@ -478,7 +482,7 @@ Platform CLIs (Cursor, Codex, Claude Code, Gemini, Copilot) support **hooks**, *
 - [ ] **8.2.1** Implement `run_with_cleanup(runner, request, config)` per §4.8 (prepare → execute → cleanup; on prepare error log and continue). Place in `src/core/run_with_cleanup.rs` or inside `execution_engine.rs`; tag DRY:FN.
 - [ ] **8.2.2** Add `CleanupConfig` (or cleanup section) to the run config shape built from GuiConfig (Option B, Worktree §5). Ensure the orchestrator and other call sites can obtain a `CleanupConfig` when starting a run.
 - [ ] **8.2.3** Extend `IterationContext` (or equivalent) with `cleanup_config: Option<CleanupConfig>` per §9.1.16. When the orchestrator builds the context, set it from run config.
-- [ ] **8.2.4** In `ExecutionEngine::execute_with_sdk_fallback`, replace `runner.execute(request).await` with `run_with_cleanup(&*runner, request, &context.cleanup_config.unwrap_or_default()).await` (or pass config from context). Ensure context is available in the execution path.
+- [ ] **8.2.4** In **ExecutionEngine::execute_iteration**: call `prepare_working_directory(&context.working_directory, &cleanup_config)` before the platform loop; then call `execute_with_sdk_fallback(...)` as today (do not replace `runner.execute` inside it with run_with_cleanup—see §9.1.17); then call `cleanup_after_execution(0, &context.working_directory, &cleanup_config)` after it returns. Obtain cleanup_config from context (e.g. `context.cleanup_config.unwrap_or_default()`). This way prepare/cleanup wrap the entire execution (SDK or CLI).
 - [ ] **8.2.5** In `interview/research_engine.rs` `execute_research_ai_call`, wrap `runner.execute(&request)` in `run_with_cleanup(runner, &request, &config).await`; obtain config from research engine config or caller.
 - [ ] **8.2.6** In start_chain: `prd_generator.rs`, `requirements_interviewer.rs`, `architecture_generator.rs`, `multi_pass_generator.rs` — replace each `runner.execute(&request).await` with `run_with_cleanup(..., &request, &config).await`; pass config from caller or discovery.
 - [ ] **8.2.7** In `app.rs` `execute_ai_turn`: optionally use run_with_cleanup when working_dir is a known project; otherwise keep direct execute and skip prepare/cleanup.
@@ -611,6 +615,41 @@ The following gaps or issues should be resolved during implementation or explici
 
 - **Gap:** ExecutionEngine currently has no access to run config or CleanupConfig. To use `run_with_cleanup`, the orchestrator (or whoever calls `execute_iteration`) must pass CleanupConfig into the execution path.
 - **Concrete options:** (1) Add `cleanup_config: CleanupConfig` to `IterationContext` and have the orchestrator set it when building the context; (2) Add `cleanup_config: CleanupConfig` to ExecutionEngine at construction and pass it when creating the engine; (3) Use a thread-local or global "current run config" that ExecutionEngine reads (not recommended — prefer explicit passing). Recommendation: (1) extend `IterationContext` with an optional `cleanup_config: Option<CleanupConfig>`; when building the context, the orchestrator fills it from the run config. ExecutionEngine then passes it to `run_with_cleanup`. If None, skip prepare/cleanup (backward compatible).
+- **CleanupConfig default:** When `cleanup_config` is `None` or `unwrap_or_default()` is used, document the default: e.g. `CleanupConfig { untracked: true, clean_ignored: false, clear_agent_output: false, remove_build_artifacts: false }` so prepare runs untracked clean by default and we don't accidentally disable cleanup when config is missing.
+
+### 9.1.17 ExecutionEngine execute step is SDK fallback, not runner.execute only
+
+- **Gap:** `ExecutionEngine::execute_with_sdk_fallback` first tries `try_execute_with_sdk(request)`; only on failure does it call `runner.execute(request)`. So the "execute" step is **not** a single `runner.execute()` call—it can be SDK or runner. If we replace only `runner.execute(request).await` with `run_with_cleanup(&*runner, request, config).await`, then when the **SDK path** succeeds we would **never run prepare or cleanup** (because run_with_cleanup wouldn't be called).
+- **Resolved:** Do **not** use `run_with_cleanup` inside `execute_with_sdk_fallback`. Instead, in **execute_iteration** (or the caller of `execute_with_sdk_fallback`): (1) call `prepare_working_directory(&context.working_directory, &cleanup_config)` before the platform loop; (2) call `execute_with_sdk_fallback(...)` as today; (3) after it returns, call `cleanup_after_execution(0, &context.working_directory, &cleanup_config)`. So prepare and cleanup wrap the **entire** execution (SDK or CLI). `run_with_cleanup` remains for call sites that only do `runner.execute()` (research_engine, start_chain, app). Checklist 8.2.4 updated accordingly.
+
+### 9.1.18 Unwired features, GUI gaps, and implementation status (sweep)
+
+The following reflects a sweep of the codebase and plans. Use it to avoid missing wiring or GUI updates when implementing.
+
+**Not yet implemented (MiscPlan / cleanup)**
+
+- **Cleanup module:** No `src/cleanup/`; no `prepare_working_directory`, `cleanup_after_execution`, `run_git_clean_with_excludes`, or `run_with_cleanup`. All call sites still call `runner.execute()` (or SDK fallback) with no prepare/cleanup. Implement per §4 and §8.
+- **CleanupConfig / run config:** No `CleanupConfig` type; no cleanup or evidence section in the config the run uses. When implementing, add to the **run config** (Option B: build from gui_config at run start) so the orchestrator and other call sites receive cleanup settings.
+- **GUI — Config → Advanced:** No "Workspace / Cleanup" subsection; no toggles for clean untracked, clean ignored, clear agent-output, evidence retention. Add per §7.5 and checklist 8.6.
+- **GUI — Doctor:** No "Clean workspace now" button; no Workspace category. Doctor does not receive a project-path hint when run from the app (Worktree plan §7.2). Add button and project context per §7.5 and 8.6.2.
+
+**Unwired (run does not use GUI state)**
+
+- **Orchestrator run config:** The backend uses `ConfigManager::discover()` (no hint) and `get_config()` which loads **PuppetMasterConfig** from the **file**. The Config page saves **GuiConfig** to the same path. The two shapes differ (Worktree plan §5); the run does **not** receive `gui_config.advanced.execution.enable_parallel` or other GUI-only fields unless Option B (build run config from gui_config at run start) is implemented. So **enable_parallel**, branching, and (once added) cleanup toggles are **unwired** until Option B is in place.
+- **Interview:** When building `InterviewOrchestratorConfig` in app.rs, only **generate_initial_agents_md** and **generate_playwright_requirements** are passed from `gui_config.interview`. The following are **in the GUI** but **not** passed to the orchestrator: **require_architecture_confirmation**, **vision_provider**, **max_questions_per_phase**. **min_questions_per_phase** does not exist in GUI or in `InterviewOrchestratorConfig`. Phase definitions use hardcoded `min_questions: 3`, `max_questions: 8`. Wire these per Interview plan "GUI gaps: Interview tab" and orchestrator plan "Interviewer Enhancements and Config Wiring."
+
+**GUI changes required (summary)**
+
+| Plan / feature | GUI change |
+|----------------|------------|
+| **MiscPlan** | Config → Advanced: add "Workspace / Cleanup" subsection (toggles + optional evidence). Doctor: add "Clean workspace now" (and optional "Clean all worktrees"); resolve project path; disable when no project. |
+| **Worktree** | Branching tab: Enable Git, Auto PR, Branch strategy; fix/hide naming_pattern. Option B: run receives config built from gui_config so enable_parallel and branching take effect. |
+| **Interview** | Interview tab: add min_questions_per_phase; add "Unlimited" for max; wire require_architecture_confirmation, vision_provider, min/max into InterviewOrchestratorConfig when starting interview. |
+| **Orchestrator** | Tiers tab: plan mode global toggle, "Enable plan mode for all tiers" button; Subagents section. Single Save persists all (gui_config); Option B run-config build includes plan mode and subagents. |
+
+**Widgets and DRY**
+
+- All new GUI for cleanup, interview min/max, and branching must use existing widgets from `docs/gui-widget-catalog.md` (e.g. toggler, styled_button, styled_text_input, help_tooltip, confirm_modal). Run `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` after changes. Tag new reusable widgets with `// DRY:WIDGET:`.
 
 ---
 
@@ -667,6 +706,330 @@ This section ties the Misc Plan to **Plans/WorktreeGitImprovement.md**, **Plans/
 | **interview-subagent-integration** | When adding research or subagent runs that call the platform runner, use run_with_cleanup so interview runs get the same prepare/cleanup behavior. |
 
 ---
+
+## 10.5 Crews and Subagent Communication Enhancements for Cleanup Operations
+
+The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines **Crews** (multi-agent communication system) and enhanced subagent communication. These features can enhance **cleanup operations** to enable better coordination between cleanup operations and subagents.
+
+### 1. Cleanup Coordination via Crews
+
+**Concept:** When orchestrator performs cleanup operations, crews can coordinate to ensure cleanup is safe and effective.
+
+**Benefits:**
+- **Safe cleanup:** Crew members can warn about files that should not be cleaned
+- **Coordinated cleanup:** Multiple cleanup operations can coordinate to avoid conflicts
+- **Evidence preservation:** Crew members can coordinate to preserve evidence files
+
+**BeforeCleanup crew coordination responsibilities:**
+
+- **Identify cleanup scope:** Determine which files/directories will be cleaned and which subagents are involved
+- **Create cleanup crew:** Create crew with subagents involved in cleanup operations, crew_id = `cleanup-{cleanup_id}`
+- **Post cleanup warnings:** Crew members post warnings about files that should not be cleaned (e.g., evidence files, state files)
+- **Coordinate cleanup order:** Crew members coordinate cleanup order to avoid conflicts
+
+**DuringCleanup crew coordination responsibilities:**
+
+- **Monitor cleanup progress:** Crew members post updates about cleanup progress
+- **Handle cleanup conflicts:** If cleanup conflicts arise, crew members coordinate resolution
+- **Preserve evidence files:** Crew members ensure evidence files are not cleaned
+
+**AfterCleanup crew completion responsibilities:**
+
+- **Validate cleanup results:** Crew members confirm that cleanup completed successfully and evidence files were preserved
+- **Archive cleanup coordination messages:** Archive cleanup coordination messages to `.puppet-master/memory/cleanup-{cleanup_id}-messages.json`
+- **Disband cleanup crew:** Mark crew as complete and remove from active crews
+
+**Implementation:** Extend `src/cleanup/workspace.rs` to create cleanup crews, coordinate cleanup operations, and disband crews after cleanup completes.
+
+**Integration with cleanup module:**
+
+In `src/cleanup/workspace.rs`, extend cleanup operations:
+
+```rust
+impl CleanupModule {
+    pub async fn prepare_working_directory_with_crew_coordination(
+        &self,
+        work_dir: &Path,
+        config: &CleanupConfig,
+        crew_id: Option<&str>,
+    ) -> Result<()> {
+        if let Some(crew_id) = crew_id {
+            // Post cleanup plan to crew for review
+            let cleanup_plan_message = AgentMessage {
+                message_id: generate_message_id(),
+                from_agent_id: "cleanup-manager".to_string(),
+                from_platform: /* ... */,
+                to_agent_id: None,
+                message_type: MessageType::Request,
+                subject: "Cleanup plan review".to_string(),
+                content: format!(
+                    "Proposed cleanup plan:\nWork directory: {}\nClean untracked: {}\nClean ignored: {}\nAllowlist: {:?}\n\nPlease review and warn about files that should not be cleaned.",
+                    work_dir.display(),
+                    config.untracked,
+                    config.clean_ignored,
+                    cleanup_exclude_patterns()
+                ),
+                context: MessageContext {
+                    crew_id: Some(crew_id.to_string()),
+                },
+                thread_id: None,
+                in_reply_to: None,
+                created_at: Utc::now(),
+                read_by: Vec::new(),
+                resolved: false,
+            };
+            
+            self.crew_manager.post_to_crew(crew_id, cleanup_plan_message).await?;
+            
+            // Wait for crew warnings (or timeout after 5 seconds)
+            let warnings = self.crew_manager.wait_for_responses(
+                crew_id,
+                MessageType::Warning,
+                chrono::Duration::seconds(5),
+            ).await?;
+            
+            // Apply warnings to cleanup config (add additional exclude patterns)
+            let updated_config = self.apply_cleanup_warnings(config, &warnings)?;
+            
+            // Perform cleanup with updated config
+            self.prepare_working_directory(work_dir, &updated_config).await?;
+            
+            // Post cleanup completion to crew
+            let completion_message = AgentMessage {
+                message_id: generate_message_id(),
+                from_agent_id: "cleanup-manager".to_string(),
+                from_platform: /* ... */,
+                to_agent_id: None,
+                message_type: MessageType::Announcement,
+                subject: "Cleanup completed".to_string(),
+                content: format!("Cleanup completed for work directory: {}", work_dir.display()),
+                context: MessageContext {
+                    crew_id: Some(crew_id.to_string()),
+                },
+                thread_id: None,
+                in_reply_to: None,
+                created_at: Utc::now(),
+                read_by: Vec::new(),
+                resolved: false,
+            };
+            
+            self.crew_manager.post_to_crew(crew_id, completion_message).await?;
+        } else {
+            // No crew coordination, perform cleanup directly
+            self.prepare_working_directory(work_dir, config).await?;
+        }
+        
+        Ok(())
+    }
+    
+    fn apply_cleanup_warnings(
+        &self,
+        config: &CleanupConfig,
+        warnings: &[AgentMessage],
+    ) -> Result<CleanupConfig> {
+        let mut updated_config = config.clone();
+        
+        // Extract additional exclude patterns from warnings
+        let mut additional_excludes = Vec::new();
+        for warning in warnings {
+            // Parse warning content to extract file paths/patterns that should not be cleaned
+            // E.g., "Do not clean .puppet-master/evidence/test-results.json"
+            let exclude_patterns = self.extract_exclude_patterns_from_warning(warning)?;
+            additional_excludes.extend(exclude_patterns);
+        }
+        
+        // Add additional excludes to config (implementation depends on CleanupConfig structure)
+        // updated_config.additional_excludes.extend(additional_excludes);
+        
+        Ok(updated_config)
+    }
+    
+    fn extract_exclude_patterns_from_warning(
+        &self,
+        warning: &AgentMessage,
+    ) -> Result<Vec<String>> {
+        // Parse warning content to extract exclude patterns
+        // Simple implementation: look for file paths mentioned in warning
+        let mut patterns = Vec::new();
+        
+        // Extract paths from warning content (simple regex or string matching)
+        // E.g., "Do not clean .puppet-master/evidence/test-results.json" → ".puppet-master/evidence/test-results.json"
+        // Implementation depends on warning message format
+        
+        Ok(patterns)
+    }
+}
+```
+
+**Error handling:**
+
+- **Cleanup crew creation failure:** If crew creation fails, log warning and proceed without crew coordination
+- **Cleanup warning parsing failure:** If cleanup warnings cannot be parsed, log warning and proceed with original config
+- **Cleanup coordination failure:** If cleanup coordination fails, log warning and proceed with direct cleanup (may clean files that should be preserved)
+
+## 10.6 Lifecycle and Quality Enhancements for Cleanup Operations
+
+The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines lifecycle hooks, structured handoff validation, remediation loops, and cross-session memory. These features can enhance **cleanup operations** to improve reliability, quality, and continuity.
+
+### 1. Hook-Based Lifecycle for Cleanup Operations
+
+**Concept:** Apply hook-based lifecycle middleware to cleanup operations. Run **BeforeCleanup** and **AfterCleanup** hooks before and after workspace cleanup (prepare_working_directory, cleanup_after_execution, manual "Clean workspace").
+
+**BeforeCleanup hook responsibilities:**
+
+- **Track active cleanup:** Record which cleanup operation is being performed (e.g., `prepare_working_directory`, `cleanup_after_execution`, `manual_clean`).
+- **Inject cleanup context:** Add workspace path, allowlist state, config snapshot, and known cleanup issues to cleanup context.
+- **Load cross-session memory:** Load prior cleanup patterns (e.g., which dirs were cleaned, which were preserved) from `.puppet-master/memory/` and inject into cleanup context.
+- **Validate workspace state:** Check workspace is valid (git repo, permissions) before cleanup.
+
+**AfterCleanup hook responsibilities:**
+
+- **Validate cleanup result:** Check that cleanup succeeded (e.g., files removed, allowlisted paths preserved).
+- **Track completion:** Update cleanup operation tracking, mark cleanup completion state.
+- **Save memory:** Persist cleanup patterns (e.g., which patterns were effective, which dirs were problematic) to `.puppet-master/memory/patterns.json`.
+- **Safe error handling:** Guarantee structured output even on cleanup failure.
+
+**Implementation:** Extend `src/cleanup/workspace.rs` to call hooks before and after cleanup operations. Use the same hook registry pattern as orchestrator hooks, but with cleanup-specific contexts (`BeforeCleanupContext`, `AfterCleanupContext`).
+
+**Integration with cleanup module:**
+
+In `src/cleanup/workspace.rs`, wrap cleanup operations:
+
+```rust
+// Before cleanup
+let before_ctx = BeforeCleanupContext {
+    operation: CleanupOperation::PrepareWorkingDirectory,
+    work_dir: work_dir.to_path_buf(),
+    config: config.clone(),
+    allowlist: cleanup_exclude_patterns(),
+    known_issues: get_known_cleanup_issues()?,
+};
+
+let before_result = self.hook_registry.execute_before_cleanup(&before_ctx)?;
+
+if before_result.block {
+    return Err(anyhow!("Cleanup blocked by hook: {}", before_result.block_reason.unwrap_or_default()));
+}
+
+// Perform cleanup
+let result = run_git_clean_with_excludes(work_dir, config.untracked, config.clean_ignored).await?;
+
+// After cleanup
+let after_ctx = AfterCleanupContext {
+    operation: CleanupOperation::PrepareWorkingDirectory,
+    work_dir: work_dir.to_path_buf(),
+    cleanup_result: result.clone(),
+    completion_status: if result.success { CompletionStatus::Success } else { CompletionStatus::Failure(result.error) },
+    files_removed: result.files_removed,
+    allowlisted_preserved: result.allowlisted_preserved,
+};
+
+let after_result = self.hook_registry.execute_after_cleanup(&after_ctx)?;
+
+// Save memory if cleanup succeeded
+if result.success {
+    self.memory_manager.save_pattern(EstablishedPattern {
+        name: "cleanup_patterns".to_string(),
+        description: format!("Cleaned {} files, preserved allowlisted paths", result.files_removed),
+        examples: vec![format!("git clean -fd -e .puppet-master ...")],
+        timestamp: Utc::now(),
+    }).await?;
+}
+```
+
+### 2. Structured Handoff Validation for Cleanup Results
+
+**Concept:** Enforce structured output format for cleanup operation results. Use structured format for cleanup operation outputs.
+
+**Cleanup operation result format:**
+
+```rust
+pub struct CleanupResult {
+    pub operation: CleanupOperation,
+    pub success: bool,
+    pub files_removed: u32,
+    pub dirs_removed: u32,
+    pub allowlisted_preserved: Vec<PathBuf>,
+    pub errors: Vec<String>,
+    pub warnings: Vec<String>,
+    pub duration_ms: u64,
+}
+```
+
+**Validation:** After cleanup operations, validate result format matches `CleanupResult`. On validation failure (e.g., unexpected git clean output format), log warning and proceed with partial result.
+
+**Integration:** Extend `run_git_clean_with_excludes()` and `prepare_working_directory()` to return structured `CleanupResult` instead of raw success/failure. Parse git clean output into structured format (e.g., count files/dirs removed from `git clean -fd -n` preview).
+
+### 3. Cross-Session Memory for Cleanup Patterns
+
+**Concept:** Persist cleanup patterns (effective exclude patterns, problematic directories, cleanup frequency) to `.puppet-master/memory/` so future runs can load prior cleanup knowledge.
+
+**What to persist:**
+
+- **Cleanup patterns:** Examples of effective cleanup operations (e.g., "git clean -fd -e .puppet-master removed 15 files").
+- **Problematic directories:** Directories that caused cleanup issues (e.g., permission errors, locked files).
+- **Cleanup frequency:** How often cleanup runs, which operations are most effective.
+
+**When to persist:**
+
+- **At cleanup completion:** Save cleanup pattern example if cleanup was effective.
+- **At cleanup failure:** Save problematic directory pattern if cleanup failed.
+
+**When to load:**
+
+- **At run start:** Load prior cleanup patterns and inject into cleanup context.
+- **At cleanup operation:** Load prior cleanup patterns to optimize cleanup strategy.
+
+**Integration:** Use the same `MemoryManager` from orchestrator plan. In cleanup module, call `memory_manager.save_pattern()` at cleanup operations (prepare, cleanup_after_execution, manual clean).
+
+### 4. Active Agent Tracking for Cleanup Operations
+
+**Concept:** Track which cleanup operation is currently active. Store in cleanup module state and expose for logging and debugging.
+
+**Tracking:**
+
+- **Per operation:** `active_cleanup_operation: Option<CleanupOperation>` in cleanup module state.
+- **Persistence:** Write to `.puppet-master/state/active-cleanup-operations.json` (updated on each cleanup operation).
+
+**Use cases:**
+
+- **Logging:** "Cleanup operation: prepare_working_directory, work_dir = /path/to/project, files_removed = 15"
+- **Debugging:** "Why did this cleanup fail? Check active cleanup operation logs."
+- **Audit trails:** "Which cleanup operations ran in this run? See active-cleanup-operations.json."
+
+### 5. Remediation Loop for Cleanup Failures
+
+**Concept:** When cleanup operations fail with recoverable errors (e.g., permission errors, locked files), enter a remediation loop. Retry with fixes until cleanup succeeds or escalate.
+
+**Severity levels:**
+
+- **Critical:** Workspace corruption, critical permission errors — **escalate to user**.
+- **Major:** Permission errors for specific files, locked files — **remediate automatically** (skip problematic files, retry with different strategy).
+- **Minor:** Non-fatal warnings (e.g., "some files could not be removed") — **log and proceed**.
+- **Info:** Informational messages — **log and proceed**.
+
+**Remediation loop:**
+
+1. Cleanup operation fails (e.g., `git clean -fd` fails with "Permission denied" for specific file).
+2. Parse error from cleanup output.
+3. Categorize error (Critical/Major/Minor/Info).
+4. If Major (recoverable):
+   - Apply remediation (e.g., skip problematic file, retry with `-f` force flag, or use alternative cleanup method).
+   - Retry cleanup operation.
+   - Repeat until succeeds or max retries (e.g., 2).
+   - If max retries reached, escalate to user or skip problematic files.
+5. If Critical: escalate to user immediately.
+6. If Minor/Info: log and proceed.
+
+**Integration:** Extend cleanup module to use remediation loop pattern from orchestrator plan. Wrap cleanup operations in remediation-aware handlers that detect recoverable errors and apply fixes.
+
+### Implementation Notes
+
+- **Where:** Extend `src/cleanup/workspace.rs` with hook integration; reuse `src/core/memory.rs` for persistence; reuse `src/core/remediation.rs` for remediation loops.
+- **What:** Add BeforeCleanup/AfterCleanup hooks; validate cleanup results with structured format; persist cleanup patterns to memory; track active cleanup operations; implement remediation loops for recoverable cleanup errors.
+- **When:** Hooks run automatically at cleanup boundaries; memory persists at cleanup operations; remediation loop runs when cleanup operations fail with recoverable errors.
+
+**Cross-reference:** See orchestrator plan "Lifecycle and Quality Features" for full implementation details. See orchestrator plan "Puppet Master Crews" for how cleanup crews can coordinate workspace cleanup operations.
 
 ## 11. References
 

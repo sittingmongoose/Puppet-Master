@@ -195,6 +195,7 @@ pub struct SubagentSelector {
 
 impl SubagentSelector {
     /// Detect project language from codebase
+    // DRY:FN:detect_language — Detect programming languages in workspace
     pub fn detect_language(&self, workspace: &Path) -> Result<Vec<DetectedLanguage>> {
         let mut languages = Vec::new();
         
@@ -238,6 +239,7 @@ impl SubagentSelector {
     }
     
     /// Select subagent for tier level
+    // DRY:FN:select_for_tier — Select subagents for a tier based on context
     pub fn select_for_tier(
         &self,
         tier_type: TierType,
@@ -386,29 +388,20 @@ impl SubagentSelector {
         subagents
     }
     
+    // DRY:DATA:language_to_subagent_mapping — Single source of truth for language → subagent mapping
+    // DRY REQUIREMENT: MUST use subagent_registry::get_subagent_for_language() — NEVER hardcode language → subagent mappings
     fn language_to_subagent(&self, lang: &str) -> Option<String> {
-        match lang {
-            "rust" => Some("rust-engineer".to_string()),
-            "python" => Some("python-pro".to_string()),
-            "javascript" => Some("javascript-pro".to_string()),
-            "typescript" => Some("typescript-pro".to_string()),
-            "swift" => Some("swift-expert".to_string()),
-            "java" => Some("java-architect".to_string()),
-            "csharp" => Some("csharp-developer".to_string()),
-            "php" => Some("php-pro".to_string()),
-            "go" => Some("golang-pro".to_string()),
-            _ => None,
-        }
+        // Use canonical subagent registry (DRY:DATA:subagent_registry)
+        // DO NOT use match statements like: match lang { "rust" => Some("rust-engineer".to_string()), ... }
+        subagent_registry::get_subagent_for_language(lang)
     }
     
+    // DRY:DATA:framework_to_subagent_mapping — Single source of truth for framework → subagent mapping
+    // DRY REQUIREMENT: MUST use subagent_registry::get_subagent_for_framework() — NEVER hardcode framework → subagent mappings
     fn framework_to_subagent(&self, framework: &str) -> Option<String> {
-        match framework.to_lowercase().as_str() {
-            "react" => Some("react-specialist".to_string()),
-            "vue" => Some("vue-expert".to_string()),
-            "nextjs" | "next.js" => Some("nextjs-developer".to_string()),
-            "laravel" => Some("laravel-specialist".to_string()),
-            _ => None,
-        }
+        // Use canonical subagent registry (DRY:DATA:subagent_registry)
+        // DO NOT use match statements like: match framework { "react" => Some("react-specialist".to_string()), ... }
+        subagent_registry::get_subagent_for_framework(framework)
     }
 }
 ```
@@ -497,35 +490,218 @@ impl Orchestrator {
         let tier_context = self.build_tier_context(tier_node, context)?;
         
         // Select subagents
-        let subagent_names = self.subagent_selector.select_for_tier(
+        // DRY REQUIREMENT: SubagentSelector MUST use subagent_registry:: functions — NEVER hardcode subagent names
+        let mut subagent_names = self.subagent_selector.select_for_tier(
             tier_node.tier_type,
             &tier_context,
         );
         
-        // Invoke subagents via platform runner
-        let platform = self.get_platform_for_tier(tier_node.tier_type);
-        let model = self.get_model_for_tier(tier_node.tier_type);
+        // Apply tier overrides (replace if non-empty, else use selected list)
+        // DRY REQUIREMENT: Validate override names using subagent_registry::is_valid_subagent_name()
+        if let Some(overrides) = self.get_tier_overrides(tier_node.tier_type) {
+            if !overrides.is_empty() {
+                // Validate all override names against canonical list
+                for name in &overrides {
+                    if !subagent_registry::is_valid_subagent_name(name) {
+                        return Err(anyhow!("Invalid subagent name in override: {}", name));
+                    }
+                }
+                subagent_names = overrides;
+            }
+        }
         
+        // Filter disabled subagents
+        // DRY REQUIREMENT: Validate disabled names using subagent_registry::is_valid_subagent_name()
+        subagent_names.retain(|name| {
+            if !subagent_registry::is_valid_subagent_name(name) {
+                log::warn!("Invalid subagent name in disabled list: {}", name);
+                false
+            } else {
+                !self.is_subagent_disabled(name)
+            }
+        });
+        
+        // Add required subagents
+        // DRY REQUIREMENT: Validate required names using subagent_registry::is_valid_subagent_name()
+        if let Some(required) = self.get_required_subagents(tier_node.tier_type) {
+            for req in required {
+                if !subagent_registry::is_valid_subagent_name(&req) {
+                    return Err(anyhow!("Invalid subagent name in required list: {}", req));
+                }
+                if !subagent_names.contains(&req) {
+                    subagent_names.push(req);
+                }
+            }
+        }
+        
+        // Get platform and model for this tier
+        let platform = self.get_platform_for_tier(tier_node.tier_type)?;
+        let model = self.get_model_for_tier(tier_node.tier_type)?;
+        
+        // Get coordination context
+        let coordination_context = self.coordinator.get_coordination_context(&tier_context.workspace).await?;
+        
+        // Register agents in coordination state before execution
         for subagent_name in &subagent_names {
-            let invocation = self.build_subagent_invocation(
-                subagent_name,
-                &tier_node.description,
-                &tier_context,
-            )?;
-            
-            // Execute via platform runner with subagent
-            self.execute_with_subagent(
+            let agent_id = format!("{}-{}", subagent_name, tier_node.id);
+            self.coordinator.register_agent(ActiveAgent {
+                agent_id: agent_id.clone(),
                 platform,
-                model,
-                subagent_name,
-                invocation,
-                &tier_context,
-            ).await?;
+                tier_id: tier_node.id.clone(),
+                worktree_path: context.worktree_path.clone(),
+                files_being_edited: Vec::new(), // Updated during execution
+                current_operation: format!("Executing {} tier", tier_node.tier_type),
+                started_at: Utc::now(),
+                last_update: Utc::now(),
+            }).await?;
+        }
+        
+        // Execute subagents (sequential or parallel based on config)
+        if self.config.enable_parallel_subagents {
+            // Execute subagents in parallel
+            let mut tasks = Vec::new();
+            for subagent_name in &subagent_names {
+                let task = self.execute_subagent_async(
+                    platform,
+                    &model,
+                    subagent_name,
+                    tier_node,
+                    &tier_context,
+                    &coordination_context,
+                );
+                tasks.push(task);
+            }
+            
+            // Wait for all subagents to complete
+            let results = futures::future::join_all(tasks).await;
+            
+            // Check for failures
+            for result in results {
+                result??; // Propagate errors
+            }
+        } else {
+            // Execute subagents sequentially
+            for subagent_name in &subagent_names {
+                self.execute_subagent(
+                    platform,
+                    &model,
+                    subagent_name,
+                    tier_node,
+                    &tier_context,
+                    &coordination_context,
+                ).await?;
+            }
+        }
+        
+        // Unregister agents from coordination state after execution
+        for subagent_name in &subagent_names {
+            let agent_id = format!("{}-{}", subagent_name, tier_node.id);
+            self.coordinator.unregister_agent(&agent_id).await?;
         }
         
         Ok(())
     }
     
+    // DRY:FN:execute_subagent — Execute a single subagent for a tier
+    async fn execute_subagent(
+        &self,
+        platform: Platform,
+        model: &str,
+        subagent_name: &str,
+        tier_node: &TierNode,
+        tier_context: &TierContext,
+        coordination_context: &str,
+    ) -> Result<SubagentOutput> {
+        let agent_id = format!("{}-{}", subagent_name, tier_node.id);
+        
+        // Build subagent invocation prompt with coordination context
+        let invocation = self.build_subagent_invocation(
+            subagent_name,
+            &tier_node.description,
+            tier_context,
+            coordination_context,
+        )?;
+        
+        // Update coordination state: mark agent as active
+        self.coordinator.update_agent_operation(
+            &agent_id,
+            format!("Executing {}: {}", subagent_name, tier_node.title),
+        ).await?;
+        
+        // Execute via platform runner with subagent
+        let output = self.execute_with_subagent(
+            platform,
+            model,
+            subagent_name,
+            &invocation,
+            tier_context,
+        ).await?;
+        
+        // Update coordination state: extract file operations from output
+        let file_operations = self.extract_file_operations_from_output(&output)?;
+        self.coordinator.update_agent_files(&agent_id, &file_operations).await?;
+        
+        Ok(output)
+    }
+    
+    // DRY:FN:build_subagent_invocation — Build platform-specific subagent invocation prompt
+    // DRY REQUIREMENT: MUST use platform_specs::get_subagent_invocation_format() — NEVER hardcode platform-specific formats
+    fn build_subagent_invocation(
+        &self,
+        subagent_name: &str,
+        task_description: &str,
+        tier_context: &TierContext,
+        coordination_context: &str,
+    ) -> Result<String> {
+        // Build platform-specific subagent invocation using platform_specs
+        let platform = self.get_platform_for_tier(tier_context.tier_type)?;
+        
+        // DRY: Use platform_specs to get subagent invocation format (DRY:DATA:platform_specs)
+        // DO NOT hardcode match statements for Platform::Cursor, Platform::Codex, etc.
+        // DO NOT duplicate platform-specific format strings here
+        let invocation_format = platform_specs::get_subagent_invocation_format(platform)?;
+        
+        // Format invocation using platform-specific format from platform_specs
+        let invocation = invocation_format
+            .replace("{subagent}", subagent_name)
+            .replace("{task}", task_description)
+            .replace("{context}", &format_tier_context(tier_context))
+            .replace("{coordination}", coordination_context);
+        
+        Ok(invocation)
+    }
+    
+    // DRY:FN:extract_file_operations_from_output — Extract file paths from subagent output
+    fn extract_file_operations_from_output(
+        &self,
+        output: &SubagentOutput,
+    ) -> Result<Vec<PathBuf>> {
+        // Extract file paths from subagent output
+        // Can parse from task_report, downstream_context, or findings
+        let mut files = Vec::new();
+        
+        // Extract from findings (file field)
+        for finding in &output.findings {
+            if let Some(file) = &finding.file {
+                files.push(file.clone());
+            }
+        }
+        
+        // Extract from task_report (parse file mentions)
+        // Implementation: regex or text parsing to find file paths
+        
+        Ok(files)
+    }
+```
+
+**Error handling:**
+
+- **Subagent selection failure:** If subagent selection fails, log warning and fall back to default subagent or skip subagents
+- **Coordination registration failure:** If coordination registration fails, log warning and continue (coordination is best-effort)
+- **Subagent execution failure:** If subagent execution fails, log error and continue with next subagent (or fail tier if critical)
+- **Coordination update failure:** If coordination update fails, log warning and continue (coordination updates are best-effort)
+    
+    // DRY:FN:build_tier_context — Build tier context for subagent selection
     fn build_tier_context(
         &self,
         tier_node: &TierNode,
@@ -739,6 +915,8 @@ Other platforms follow the same pattern: check env gate, find binary (from `plat
 // puppet-master-rs/tests/subagent_invocation_integration.rs
 
 /// Builds the exact Command the orchestrator would use for Cursor + subagent.
+// DRY REQUIREMENT: MUST use platform_specs::cli_binary_names() — NEVER hardcode "agent" or "cursor-agent"
+// DRY REQUIREMENT: MUST use platform_specs::get_subagent_invocation_format() — NEVER hardcode "/{subagent} {prompt}" format
 fn build_cursor_subagent_command(
     subagent_name: &str,
     prompt: &str,
@@ -746,11 +924,17 @@ fn build_cursor_subagent_command(
     workspace: &std::path::Path,
 ) -> std::process::Command {
     use std::process::Command;
+    // DRY: Use platform_specs for binary name — DO NOT hardcode "agent"
     let binary = crate::platforms::platform_specs::cli_binary_names(crate::types::Platform::Cursor)
         .first()
         .copied()
         .unwrap_or("agent");
-    let full_prompt = format!("/{} {}", subagent_name, prompt);
+    // DRY: Use platform_specs for invocation format — DO NOT hardcode "/{subagent} {prompt}"
+    let invocation_format = platform_specs::get_subagent_invocation_format(Platform::Cursor)
+        .unwrap_or_else(|_| "/{} {}".to_string());
+    let full_prompt = invocation_format
+        .replace("{subagent}", subagent_name)
+        .replace("{task}", prompt);
     let mut cmd = Command::new(binary);
     cmd.arg("-p").arg(&full_prompt)
         .arg("--output-format").arg("json");
@@ -963,6 +1147,7 @@ The following summarizes recent CLI releases (Dec 2025 – Feb 2026) that affect
 **7. GUI gaps summary (cross-plan)**
 
 - **Config:** Plan mode and subagent UI live in Config (Tiers tab, optional global toggle, Subagents section). **MiscPlan** adds cleanup/evidence under Config → Advanced (§7.5); **Worktree** adds Branching tab controls. Ensure a single Save persists the whole GuiConfig (including plan mode, subagents, cleanup, branching) and that Option B run-config build includes all of these so the run sees current UI state.
+- **Unwired / implementation status:** For a consolidated list of unwired features, missing GUI controls, and implementation status (interview config, run config Option B, cleanup, Doctor), see **MiscPlan §9.1.18**.
 - **Platform CLI capabilities (hooks, skills, plugins, extensions):** This plan documents them in **"Platform-Specific Capabilities & Extensions"** below. We pass subagent names and plan mode via **prompt/CLI args**; we do not require Cursor plugins or Claude hooks for core orchestration. **MiscPlan §7.6** summarizes how cleanup/prepare are implemented in Puppet Master and how we might optionally leverage or document platform hooks/skills. When changing subagent invocation, keep platform_specs and AGENTS.md aligned with CLI release notes.
 
 ### Implementation checklist
@@ -993,13 +1178,20 @@ The following summarizes recent CLI releases (Dec 2025 – Feb 2026) that affect
 - [ ] When Copilot (or Codex) gains a native plan flag, add it to `platform_specs` and the runner and update AGENTS.md.
 - [ ] **Fully test plan mode in the CLIs:** Add plan mode CLI verification tests (run each platform CLI with plan mode enabled; assert exit success and correct flags); env-gated like `platform_cli_smoke` (e.g. `RUN_PLAN_MODE_CLI_TESTS=1`). See "3. Plan Mode CLI Verification" in this plan.
 - [ ] Unit tests for global plan-mode toggle and one-click; subagent config load/apply tests.
-- [ ] **Resolve gaps:** Before or during implementation, resolve each item in **"Gaps and Clarifications"** (persistence location for plan-mode global, subagent in GuiConfig, Doctor config source, canonical subagent list, tier-overrides shape, orchestrator/subagent code path, Message/handlers, TierId type, **interview config wiring — Gap §9**).
+- [ ] **Resolve gaps:** Before or during implementation, resolve each item in **"Gaps and Clarifications"** (persistence location for plan-mode global, subagent in GuiConfig, Doctor config source, canonical subagent list, tier-overrides shape, orchestrator/subagent code path, Message/handlers, TierId type, **interview config wiring — Gap §9**, **platform-specific parsers — Gap §10**).
 - [ ] **Mitigate potential issues:** Review **"Potential Issues"** and address defaults, validation, platform adapters, caching, and persistence so the feature is robust in production.
 - [ ] **DRY method and widget catalog:** Check `docs/gui-widget-catalog.md` before adding UI; use existing widgets; tag new reusable items with `DRY:WIDGET:`, `DRY:FN:`, or `DRY:DATA:`; run `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` after widget changes.
 - [ ] **Interview config wiring:** Wire interview settings per **"Interviewer Enhancements and Config Wiring"**: add `min_questions_per_phase` and `max_questions_per_phase` (Option for unlimited) to `InterviewOrchestratorConfig`, set from `gui_config.interview` in `app.rs`, use in PhaseManager and phase-complete logic and prompts; add GUI controls (Min / Max with Unlimited). Wire `require_architecture_confirmation` and `vision_provider` into `InterviewOrchestratorConfig` and use in interview flow (architecture gate; vision platform when image flows exist).
 - [ ] **Config-wiring validation at each tier:** Implement `validate_config_wiring_for_tier` (or equivalent) and call it at **Phase start, Task start, Subtask start, Iteration start** in the main orchestrator (and at phase/sub-tier start in the interview orchestrator). Fail fast when required config is missing; warn when a GUI/file field is not present in execution config. See **"Avoiding Built but Not Wired"** and **Implementation Notes — Config-wiring validation**.
 - [ ] **AGENTS.md wiring checklist:** Add to AGENTS.md (e.g. under Pre-Completion Verification Checklist or DO): for any new execution-affecting config, follow the three-step wiring checklist (add to execution config, set at construction from GUI/file, use in runtime); link to this plan or REQUIREMENTS.md.
 - [ ] **Start and end verification:** Implement start-of-phase/task/subtask verification (config-wiring + wiring/readiness: GUI? backend? steps make sense? gaps?) and end-of-phase/task/subtask verification (wiring re-check + acceptance gate + quality verification / code review). See **"Start and End Verification at Phase, Task, and Subtask"**; resolve gaps there (quality definition per tier, readiness checklist source of truth, interview-phase mirror).
+- [ ] **Lifecycle hooks:** Implement BeforeTier/AfterTier hooks (track active subagent, inject context, prune stale state, validate handoff format). Leverage platform-native hooks where available (Cursor, Claude, Gemini); use orchestrator-level middleware for all platforms. Leverage Codex SDK and Copilot SDK for coordination when using SDK-based execution. See **"Lifecycle and Quality Features"**.
+- [ ] **Structured handoff validation:** Implement `validate_subagent_output()` with platform-specific parsers (JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot). Enforce `SubagentOutput` format (task_report, downstream_context, findings). Retry on malformed output; fail-safe after retry.
+- [ ] **Remediation loop:** Implement remediation loop for Critical/Major findings. Parse findings from reviewer subagent; block completion on Critical/Major; re-run executor + reviewer until resolved or max retries; escalate to parent-tier on max retries. Minor/Info findings log and proceed.
+- [ ] **Cross-session memory:** Implement `save_memory()` and `load_memory()` for architectural decisions, patterns, tech choices, pitfalls. Persist at Phase completion; load at run start; inject into Phase 1 context. Use for subagent selection (e.g., "project uses Rust" → prefer rust-engineer).
+- [ ] **Active agent tracking:** Track `active_subagent: Option<String>` in `TierContext`; update in BeforeTier/AfterTier hooks; persist to `.puppet-master/state/active-subagents.json`; expose for logging, debugging, GUI display.
+- [ ] **Safe error handling:** Wrap hooks and verification functions in `safe_hook_main()` that guarantees structured output (JSON or Result) even on failure. Hooks must never crash the session.
+- [ ] **Lazy lifecycle:** Create verification state directories on first write (no setup command); prune stale state (>2 hours) in BeforeTier hook (no teardown command).
 
 This keeps plan mode as the preferred behavior for every request while preserving the ability to turn it off per tier or globally when needed.
 
@@ -1077,6 +1269,12 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 
 **Known subagent names (canonical list for UI and validation):**
 
+**DRY:DATA:subagent_registry** — Single source of truth for all subagent names. This list must be implemented as a constant or module (`src/core/subagent_registry.rs`) and used for:
+- UI multi-select/autocomplete
+- Validation of override/disabled/required lists
+- Language/framework → subagent mapping
+- Platform availability checks
+
 | Category | Names |
 |----------|--------|
 | Phase | `project-manager`, `architect-reviewer`, `product-manager` |
@@ -1085,6 +1283,135 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 | Task (framework) | `react-specialist`, `vue-expert`, `nextjs-developer`, `laravel-specialist` |
 | Subtask | `code-reviewer`, `test-automator`, `technical-writer`, `api-designer`, `ui-designer`, `security-engineer`, `accessibility-tester`, `compliance-auditor` |
 | Iteration | `debugger`, `qa-expert` |
+
+**Implementation:** Create `src/core/subagent_registry.rs` with:
+
+**DRY REQUIREMENT:** This module is the SINGLE SOURCE OF TRUTH for all subagent names. DO NOT hardcode subagent names anywhere else in the codebase. All code that needs subagent names MUST use functions from this module.
+
+```rust
+// DRY:DATA:subagent_registry — Canonical list of all subagent names
+// DRY REQUIREMENT: This is the ONLY place subagent names should be defined. All other code MUST use functions from this module.
+pub mod subagent_registry {
+    use std::collections::HashMap;
+    
+    // DRY:DATA:subagent_names_by_category — Subagents grouped by tier/category
+    pub const PHASE_SUBAGENTS: &[&str] = &[
+        "project-manager",
+        "architect-reviewer",
+        "product-manager",
+    ];
+    
+    pub const TASK_LANGUAGE_SUBAGENTS: &[&str] = &[
+        "rust-engineer",
+        "python-pro",
+        "javascript-pro",
+        "typescript-pro",
+        "swift-expert",
+        "java-architect",
+        "csharp-developer",
+        "php-pro",
+        "golang-pro",
+    ];
+    
+    pub const TASK_DOMAIN_SUBAGENTS: &[&str] = &[
+        "backend-developer",
+        "frontend-developer",
+        "fullstack-developer",
+        "mobile-developer",
+        "devops-engineer",
+        "database-administrator",
+        "security-auditor",
+        "performance-engineer",
+    ];
+    
+    pub const TASK_FRAMEWORK_SUBAGENTS: &[&str] = &[
+        "react-specialist",
+        "vue-expert",
+        "nextjs-developer",
+        "laravel-specialist",
+    ];
+    
+    pub const SUBTASK_SUBAGENTS: &[&str] = &[
+        "code-reviewer",
+        "test-automator",
+        "technical-writer",
+        "api-designer",
+        "ui-designer",
+        "security-engineer",
+        "accessibility-tester",
+        "compliance-auditor",
+    ];
+    
+    pub const ITERATION_SUBAGENTS: &[&str] = &[
+        "debugger",
+        "qa-expert",
+    ];
+    
+    // DRY:DATA:all_subagent_names — Union of all subagent names
+    pub fn all_subagent_names() -> Vec<String> {
+        let mut all = Vec::new();
+        all.extend(PHASE_SUBAGENTS.iter().map(|s| s.to_string()));
+        all.extend(TASK_LANGUAGE_SUBAGENTS.iter().map(|s| s.to_string()));
+        all.extend(TASK_DOMAIN_SUBAGENTS.iter().map(|s| s.to_string()));
+        all.extend(TASK_FRAMEWORK_SUBAGENTS.iter().map(|s| s.to_string()));
+        all.extend(SUBTASK_SUBAGENTS.iter().map(|s| s.to_string()));
+        all.extend(ITERATION_SUBAGENTS.iter().map(|s| s.to_string()));
+        all
+    }
+    
+    // DRY:DATA:language_to_subagent_mapping — Language → subagent mapping
+    pub fn get_subagent_for_language(lang: &str) -> Option<String> {
+        let mapping: HashMap<&str, &str> = HashMap::from([
+            ("rust", "rust-engineer"),
+            ("python", "python-pro"),
+            ("javascript", "javascript-pro"),
+            ("typescript", "typescript-pro"),
+            ("swift", "swift-expert"),
+            ("java", "java-architect"),
+            ("csharp", "csharp-developer"),
+            ("php", "php-pro"),
+            ("go", "golang-pro"),
+        ]);
+        
+        mapping.get(lang).map(|s| s.to_string())
+    }
+    
+    // DRY:DATA:framework_to_subagent_mapping — Framework → subagent mapping
+    pub fn get_subagent_for_framework(framework: &str) -> Option<String> {
+        let framework_lower = framework.to_lowercase();
+        let mapping: HashMap<&str, &str> = HashMap::from([
+            ("react", "react-specialist"),
+            ("vue", "vue-expert"),
+            ("nextjs", "nextjs-developer"),
+            ("next.js", "nextjs-developer"),
+            ("laravel", "laravel-specialist"),
+        ]);
+        
+        mapping.get(framework_lower.as_str()).map(|s| s.to_string())
+    }
+    
+    // DRY:FN:is_valid_subagent_name — Validate subagent name against canonical list
+    pub fn is_valid_subagent_name(name: &str) -> bool {
+        all_subagent_names().contains(&name.to_string())
+    }
+    
+    // DRY:FN:get_subagents_for_tier — Get subagents available for a tier type
+    pub fn get_subagents_for_tier(tier_type: TierType) -> Vec<String> {
+        match tier_type {
+            TierType::Phase => PHASE_SUBAGENTS.iter().map(|s| s.to_string()).collect(),
+            TierType::Task => {
+                let mut all = Vec::new();
+                all.extend(TASK_LANGUAGE_SUBAGENTS.iter().map(|s| s.to_string()));
+                all.extend(TASK_DOMAIN_SUBAGENTS.iter().map(|s| s.to_string()));
+                all.extend(TASK_FRAMEWORK_SUBAGENTS.iter().map(|s| s.to_string()));
+                all
+            }
+            TierType::Subtask => SUBTASK_SUBAGENTS.iter().map(|s| s.to_string()).collect(),
+            TierType::Iteration => ITERATION_SUBAGENTS.iter().map(|s| s.to_string()).collect(),
+        }
+    }
+}
+```
 
 Use the union of all names for override/disabled/required lists; optionally restrict multi-select by tier in the UI.
 
@@ -1114,9 +1441,50 @@ Use the union of all names for override/disabled/required lists; optionally rest
 - **Gap:** Several interview settings exist in `InterviewGuiConfig` and `InterviewConfig` but are not in `InterviewOrchestratorConfig` and are never used in `interview/` (orchestrator, phase_manager, prompt_templates). See **"Interviewer Enhancements and Config Wiring"** and **"Avoiding Built but Not Wired"** in this plan.
 - **Clarify:** (1) **Min/max questions:** Add `min_questions_per_phase` and `max_questions_per_phase` (Option for unlimited) to `InterviewOrchestratorConfig`; set from `gui_config.interview` in `app.rs`; pass into PhaseManager and use in phase-complete logic and prompts. (2) **require_architecture_confirmation** and **vision_provider:** Add to `InterviewOrchestratorConfig`, set at construction, and use in interview flow (architecture gate and vision platform selection). (3) For any future execution-affecting interview setting, follow the three-step wiring checklist: add to execution config, set at construction, use in runtime.
 
+### 10. Platform-specific subagent output parsers
+
+- **Gap:** Structured handoff validation (`validate_subagent_output`) needs platform-specific parsers: JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot. The plan does not yet specify parser implementation details or fallback behavior when parsing fails.
+- **Clarify:** (1) **JSON parsers:** For Cursor/Claude/Gemini, use `serde_json` to parse `--output-format json` output into `SubagentOutput`. Handle missing fields gracefully (e.g., `downstream_context: None` if field absent). (2) **JSONL parser:** For Codex, parse `--json` or `--experimental-json` JSONL stream; aggregate events into single `SubagentOutput` (last event wins for fields, accumulate findings). (3) **Text parser:** For Copilot, use regex or pattern matching to extract "Task Report:", "Downstream Context:", "Findings:" sections from text output. If sections missing, treat as malformed and retry. (4) **Fallback:** If parsing fails after retry, create partial `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` and mark tier as "complete with warnings" rather than failing the run.
+
 ---
 
-## DRY Method and GUI Widget Catalog
+## DRY Method Compliance
+
+**CRITICAL:** All code in this plan MUST follow DRY principles. This section documents DRY requirements and violations to avoid.
+
+### DRY Requirements
+
+1. **Platform Data — ALWAYS use platform_specs:**
+   - ❌ **NEVER** hardcode platform CLI commands, binary names, models, auth, or capabilities
+   - ✅ **ALWAYS** use `platform_specs::` functions (e.g., `platform_specs::cli_binary_names()`, `platform_specs::get_subagent_invocation_format()`, `platform_specs::supports_effort()`)
+   - ✅ **ALWAYS** use `platform_specs::discover_platform_capabilities()` instead of platform match statements
+
+2. **Subagent Names — ALWAYS use subagent_registry:**
+   - ❌ **NEVER** hardcode subagent names in match statements or mappings
+   - ✅ **ALWAYS** use `subagent_registry::` functions (e.g., `subagent_registry::get_subagent_for_language()`, `subagent_registry::is_valid_subagent_name()`)
+   - ✅ **ALWAYS** reference `DRY:DATA:subagent_registry` as the single source of truth
+
+3. **Tag All Reusable Items:**
+   - ✅ Tag reusable functions: `// DRY:FN:<name> — Description`
+   - ✅ Tag reusable data structures: `// DRY:DATA:<name> — Description`
+   - ✅ Tag reusable widgets: `// DRY:WIDGET:<name> — Description`
+   - ✅ Tag reusable helpers: `// DRY:HELPER:<name> — Description`
+
+4. **Widget Reuse:**
+   - ✅ **ALWAYS** check `docs/gui-widget-catalog.md` before creating new UI
+   - ✅ **ALWAYS** use existing widgets from `src/widgets/`
+   - ✅ If bespoke UI is required, add `// UI-DRY-EXCEPTION: <reason>`
+
+### DRY Violations Fixed in This Plan
+
+- ✅ `build_subagent_invocation`: Now uses `platform_specs::get_subagent_invocation_format()` instead of hardcoded platform match
+- ✅ `language_to_subagent` / `framework_to_subagent`: Now use `subagent_registry::` functions instead of hardcoded mappings
+- ✅ `platform_agents_dir`: Now uses `platform_specs::get_agents_directory_name()` instead of hardcoded platform match
+- ✅ `invoke_subagent`: Now uses `platform_specs::get_subagent_invocation_format()` instead of hardcoded platform match
+- ✅ `discover_capabilities`: Now uses `platform_specs::discover_platform_capabilities()` instead of hardcoded platform match
+- ✅ Subagent registry: Created `DRY:DATA:subagent_registry` module as single source of truth for all subagent names and mappings
+
+### DRY Method and GUI Widget Catalog
 
 The codebase follows the **DRY method** (reuse-first) and uses a **widget catalog** for UI. When implementing the plan-mode and subagent GUI (Config, Wizard, Doctor), follow these rules so new UI stays consistent and discoverable.
 
@@ -1208,6 +1576,14 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 - **Mitigation:** Follow existing Config save behavior: save on explicit Save action and/or mark dirty and prompt on leave. Ensure `use_plan_mode_all_tiers`, `last_per_tier_plan_mode` (if used), and the full `subagent` block (SubagentGuiConfig) are part of the same `GuiConfig` struct and are written in the same `gui_config::save_config()` call from the Config view so we never persist only tier config without plan-mode global or subagent settings. When the user clicks Save on any Config tab, the entire `gui_config` (including these fields) is serialized to the same YAML file.
 
 ### 12. Start/end verification overhead and quality definition
+
+- **Issue:** Start and end verification at every Phase/Task/Subtask (wiring, readiness, acceptance, quality) adds latency and requires a clear definition of "quality" and who addresses unrelated failures.
+- **Mitigation:** (1) Quality over performance: run full checks; do not skip or weaken for speed. Scope quality checks to changed files or this tier's artifacts to stay practical. (2) Define a small canonical quality checklist per tier (e.g. in this plan or verification config): reviewer subagent (required) plus gate criteria (clippy, tests, etc.). (3) Reviewer subagent runs in all three cases: always at end-of-tier, on retry, and when quality gate fails. (4) Unrelated failures (e.g. pre-existing tech debt) are addressed by the parent-tier orchestrator (retry, different subagent, escalate). Reuse existing gates where possible; end verification should call into current gate logic rather than duplicate it.
+
+### 13. Platform-specific hook integration and parser reliability
+
+- **Issue:** Lifecycle hooks and structured handoff validation require platform-specific implementations (native hooks vs orchestrator middleware, JSON vs JSONL vs text parsing). Parsers may fail on edge cases (malformed JSON, missing sections in text, JSONL aggregation errors).
+- **Mitigation:** (1) **Hooks:** For platforms with native hooks (Cursor, Claude, Gemini), register Puppet Master hooks that delegate to platform hooks where possible; for others (Codex, Copilot), use orchestrator-level middleware. Document which platforms use which approach. (2) **Parsers:** Implement robust parsers with fallback behavior: JSON parsers handle missing fields gracefully; JSONL parser aggregates events safely (last event wins, accumulate findings); text parser uses multiple patterns and validates extracted sections. (3) **Fail-safe:** If parsing fails after retry, create partial `SubagentOutput` and mark tier as "complete with warnings" rather than crashing. (4) **Testing:** Add integration tests for each platform's parser with malformed input, missing fields, and edge cases to ensure reliability.
 
 - **Issue:** Start and end verification at every Phase/Task/Subtask (wiring, readiness, acceptance, quality) adds latency and requires a clear definition of "quality" and who addresses unrelated failures.
 - **Mitigation:** (1) Quality over performance: run full checks; do not skip or weaken for speed. Scope quality checks to changed files or this tier’s artifacts. (2) Define a small canonical quality checklist per tier (e.g. in this plan or verification config): reviewer subagent (required) plus gate criteria (clippy, tests, etc.). (3) Reviewer subagent runs in all three cases: always at end-of-tier, on retry, and when quality gate fails. (4) Unrelated failures (e.g. pre-existing tech debt) are addressed by the parent-tier orchestrator (retry, different subagent, escalate). Reuse existing gates where possible; end verification should call into current gate logic rather than duplicate it.
@@ -1359,7 +1735,272 @@ When the orchestrator **enters** a Phase, Task, or Subtask, run the following **
    - **Do these steps make sense?** For this tier, is the sequence of operations (load config → select subagents → build request → run) consistent with the plan and with the config schema? For example: if subagents are enabled for this tier, is the subagent list actually derived from config and not hardcoded?
    - **Gaps or potential issues:** Are there known gaps (e.g. missing persistence, missing validation, platform-specific limitations) that could affect this tier? Optionally run a lightweight "gap check" (e.g. list of known gaps per tier type) and log or warn so operators see them.
 
-**Implementation:** These can be part of the same validation module (e.g. `config_wiring.rs`) or a separate "readiness" step. Entry point could be `verify_tier_start(tier_type, config, context) -> Result<(), StartVerificationError>` that (1) calls the existing config-wiring validator and (2) runs the wiring/readiness checklist above. If any item fails (e.g. GUI missing for a backend setting), fail fast or warn according to project policy.
+**BeforeTierStart verification responsibilities:**
+
+- **Load tier config:** Load tier configuration from `PuppetMasterConfig` (or equivalent) for this tier type
+- **Validate config wiring:** Call `validate_config_wiring_for_tier(tier_type, config)` to check tier config present, plan_mode/subagent/interview fields wired
+- **Check GUI-backend mapping:** Load GUI-backend mapping (from `config_wiring.rs` or static list) and verify all execution-affecting settings have GUI controls
+- **Check backend-GUI mapping:** Verify all GUI controls are read and applied in execution path for this tier
+- **Validate operation sequence:** Check that operation sequence (load config → select subagents → build request → run) is consistent with config schema
+- **Run gap check:** Load known gaps per tier type and log/warn if any affect this tier
+- **Build verification result:** Create `StartVerificationResult` with pass/fail status and detailed findings
+
+**DuringTierStart verification responsibilities:**
+
+- **Log verification results:** Log verification results to `.puppet-master/logs/verification.log`
+- **Handle failures:** If verification fails, either fail fast (per policy) or warn and continue (per policy)
+- **Update state:** Update orchestrator state with verification results
+
+**AfterTierStart verification responsibilities:**
+
+- **Persist verification results:** Save verification results to `.puppet-master/state/verification-{tier_id}.json`
+- **Track verification history:** Add verification entry to verification history for this tier
+
+**Implementation:** Create `src/verification/tier_start.rs` with `verify_tier_start()` function. Integrate with orchestrator tier entry point.
+
+**Integration with orchestrator:**
+
+In `src/core/orchestrator.rs`, extend tier entry logic:
+
+```rust
+use crate::verification::tier_start::{verify_tier_start, StartVerificationError, StartVerificationResult};
+
+impl Orchestrator {
+    pub async fn execute_tier(
+        &self,
+        tier_node: &TierNode,
+        context: &OrchestratorContext,
+    ) -> Result<()> {
+        // Run start verification BEFORE building execution context
+        let verification_result = verify_tier_start(
+            tier_node.tier_type,
+            &self.config,
+            context,
+        ).await?;
+        
+        // Handle verification failures
+        match verification_result.status {
+            VerificationStatus::Pass => {
+                // Continue with tier execution
+            }
+            VerificationStatus::Fail => {
+                match self.config.verification_policy {
+                    VerificationPolicy::FailFast => {
+                        return Err(anyhow!("Tier start verification failed: {:?}", verification_result.findings));
+                    }
+                    VerificationPolicy::WarnAndContinue => {
+                        tracing::warn!("Tier start verification failed: {:?}", verification_result.findings);
+                        // Continue with tier execution
+                    }
+                }
+            }
+            VerificationStatus::Warning => {
+                tracing::warn!("Tier start verification warnings: {:?}", verification_result.findings);
+                // Continue with tier execution
+            }
+        }
+        
+        // Log verification results
+        self.log_verification_result(&tier_node.id, &verification_result).await?;
+        
+        // Persist verification results
+        self.persist_verification_result(&tier_node.id, &verification_result).await?;
+        
+        // Build execution context (only if verification passed or warn-and-continue)
+        let execution_context = self.build_execution_context(tier_node, context)?;
+        
+        // Continue with tier execution...
+        Ok(())
+    }
+}
+```
+
+**Verification function implementation:**
+
+```rust
+// src/verification/tier_start.rs
+
+use crate::types::{TierType, Platform};
+use crate::config::PuppetMasterConfig;
+use crate::core::OrchestratorContext;
+use anyhow::{Result, Context};
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct StartVerificationResult {
+    pub tier_type: TierType,
+    pub tier_id: String,
+    pub status: VerificationStatus,
+    pub findings: Vec<VerificationFinding>,
+    pub timestamp: chrono::DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum VerificationStatus {
+    Pass,
+    Fail,
+    Warning,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct VerificationFinding {
+    pub category: FindingCategory,
+    pub severity: FindingSeverity,
+    pub message: String,
+    pub suggestion: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum FindingCategory {
+    ConfigWiring,
+    GuiBackendMapping,
+    BackendGuiMapping,
+    OperationSequence,
+    KnownGaps,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum FindingSeverity {
+    Critical,
+    Major,
+    Minor,
+    Info,
+}
+
+// DRY:FN:verify_tier_start — Verify tier readiness before execution
+pub async fn verify_tier_start(
+    tier_type: TierType,
+    config: &PuppetMasterConfig,
+    context: &OrchestratorContext,
+) -> Result<StartVerificationResult> {
+    let mut findings = Vec::new();
+    
+    // 1. Config-wiring check
+    let config_wiring_result = validate_config_wiring_for_tier(tier_type, config)?;
+    if !config_wiring_result.passed {
+        findings.extend(config_wiring_result.findings.into_iter().map(|f| VerificationFinding {
+            category: FindingCategory::ConfigWiring,
+            severity: FindingSeverity::Critical,
+            message: f,
+            suggestion: Some("Ensure tier config is present and all required fields are wired".to_string()),
+        }));
+    }
+    
+    // 2. GUI-backend mapping check
+    let gui_backend_result = check_gui_backend_mapping(tier_type, config)?;
+    if !gui_backend_result.passed {
+        findings.extend(gui_backend_result.findings.into_iter().map(|f| VerificationFinding {
+            category: FindingCategory::GuiBackendMapping,
+            severity: FindingSeverity::Major,
+            message: f,
+            suggestion: Some("Add GUI control for this backend setting or document why it is internal-only".to_string()),
+        }));
+    }
+    
+    // 3. Backend-GUI mapping check
+    let backend_gui_result = check_backend_gui_mapping(tier_type, config)?;
+    if !backend_gui_result.passed {
+        findings.extend(backend_gui_result.findings.into_iter().map(|f| VerificationFinding {
+            category: FindingCategory::BackendGuiMapping,
+            severity: FindingSeverity::Major,
+            message: f,
+            suggestion: Some("Read and apply this GUI setting in the execution path for this tier".to_string()),
+        }));
+    }
+    
+    // 4. Operation sequence validation
+    let sequence_result = validate_operation_sequence(tier_type, config)?;
+    if !sequence_result.passed {
+        findings.extend(sequence_result.findings.into_iter().map(|f| VerificationFinding {
+            category: FindingCategory::OperationSequence,
+            severity: FindingSeverity::Major,
+            message: f,
+            suggestion: Some("Ensure operation sequence matches config schema and plan".to_string()),
+        }));
+    }
+    
+    // 5. Gap check
+    let gap_result = check_known_gaps(tier_type)?;
+    if !gap_result.gaps.is_empty() {
+        for gap in gap_result.gaps {
+            findings.push(VerificationFinding {
+                category: FindingCategory::KnownGaps,
+                severity: FindingSeverity::Info,
+                message: gap.description,
+                suggestion: gap.mitigation,
+            });
+        }
+    }
+    
+    // Determine overall status
+    let status = if findings.iter().any(|f| matches!(f.severity, FindingSeverity::Critical)) {
+        VerificationStatus::Fail
+    } else if findings.iter().any(|f| matches!(f.severity, FindingSeverity::Major)) {
+        VerificationStatus::Warning
+    } else {
+        VerificationStatus::Pass
+    };
+    
+    Ok(StartVerificationResult {
+        tier_type,
+        tier_id: context.tier_id.clone(),
+        status,
+        findings,
+        timestamp: Utc::now(),
+    })
+}
+
+fn validate_config_wiring_for_tier(
+    tier_type: TierType,
+    config: &PuppetMasterConfig,
+) -> Result<ConfigWiringResult> {
+    // Implementation: check tier config present, plan_mode/subagent/interview fields wired
+    // ...
+}
+
+fn check_gui_backend_mapping(
+    tier_type: TierType,
+    config: &PuppetMasterConfig,
+) -> Result<MappingCheckResult> {
+    // Load GUI-backend mapping (from config_wiring.rs or static list)
+    let mapping = load_gui_backend_mapping(tier_type)?;
+    
+    // Check all execution-affecting settings have GUI controls
+    // ...
+}
+
+fn check_backend_gui_mapping(
+    tier_type: TierType,
+    config: &PuppetMasterConfig,
+) -> Result<MappingCheckResult> {
+    // Load backend-GUI mapping
+    let mapping = load_backend_gui_mapping(tier_type)?;
+    
+    // Check all GUI controls are read and applied in execution path
+    // ...
+}
+
+fn validate_operation_sequence(
+    tier_type: TierType,
+    config: &PuppetMasterConfig,
+) -> Result<SequenceValidationResult> {
+    // Check operation sequence consistency
+    // ...
+}
+
+fn check_known_gaps(tier_type: TierType) -> Result<GapCheckResult> {
+    // Load known gaps per tier type
+    let gaps = load_known_gaps(tier_type)?;
+    
+    Ok(GapCheckResult { gaps })
+}
+```
+
+**Error handling:**
+
+- **Config loading failure:** If tier config cannot be loaded, return `VerificationStatus::Fail` with Critical finding
+- **Mapping load failure:** If GUI-backend or backend-GUI mapping cannot be loaded, return `VerificationStatus::Warning` with Info finding (mapping may not exist yet)
+- **Gap check failure:** If gap check fails, log warning and continue (gaps are informational)
 
 ### End-of-phase / end-of-task / end-of-subtask verification
 
@@ -1371,7 +2012,352 @@ When the orchestrator **completes** a Phase, Task, or Subtask (e.g. all iteratio
    - **Structured code review by reviewer subagent (required, not optional):** Run a dedicated reviewer subagent (e.g. `code-reviewer`) at end-of-phase/task/subtask. It inspects the diff or artifacts and outputs pass/fail + feedback. There is no path that skips this. Do **not** use human review.
    - **Quality criteria in the gate (required as well):** Extend the verification gate for this tier to include automated quality items (e.g. "no new clippy warnings," "new code has tests," "no TODOs without tickets"). Linters, formatters, test coverage delta, and security scanners run on changed files for this tier and fail or warn if below threshold.
 
-**Implementation:** End verification can live in the same place as the existing gate (e.g. after `check_phase_completion` or task/subtask completion). Add a function e.g. `verify_tier_end(tier_type, outcome, diff_or_artifacts, config) -> Result<(), EndVerificationError>` that (1) re-runs wiring/readiness for the completed tier, (2) runs acceptance criteria (or delegates to existing gate), (3) runs quality verification. If quality fails, the plan should define whether the tier is marked "incomplete" (rework) or "complete with warnings" (log and proceed).
+**BeforeTierEnd verification responsibilities:**
+
+- **Collect tier artifacts:** Collect all artifacts produced during this tier (code changes, documents, test results, etc.)
+- **Compute diff:** Compute git diff for changed files in this tier (if applicable)
+- **Load tier context:** Load tier context and execution history for this tier
+- **Prepare verification context:** Build verification context with artifacts, diff, tier context, and config
+
+**DuringTierEnd verification responsibilities:**
+
+- **Re-run wiring check:** Re-run wiring/readiness check for completed tier (check if new config/settings were introduced and are properly wired)
+- **Run acceptance criteria:** Run existing verification gate (PRD criteria, command/file/regex checks)
+- **Run quality verification:**
+  - **Code review by reviewer subagent:** Invoke reviewer subagent (e.g., `code-reviewer`) to review diff/artifacts
+  - **Quality gate criteria:** Run automated quality checks (linters, formatters, test coverage, security scanners)
+- **Collect verification results:** Collect all verification results (wiring, acceptance, quality)
+- **Determine tier status:** Determine if tier should be marked "complete", "incomplete" (rework), or "complete with warnings"
+
+**AfterTierEnd verification responsibilities:**
+
+- **Persist verification results:** Save verification results to `.puppet-master/state/verification-{tier_id}-end.json`
+- **Update tier status:** Update tier status in PRD/state based on verification results
+- **Generate feedback:** If verification failed, generate feedback for agent/user (what failed, which file/criterion, suggested fix)
+- **Handle failures:** If quality fails, either mark tier as "incomplete" (rework) or "complete with warnings" (log and proceed) per policy
+
+**Implementation:** Create `src/verification/tier_end.rs` with `verify_tier_end()` function. Integrate with orchestrator tier completion point.
+
+**Integration with orchestrator:**
+
+In `src/core/orchestrator.rs`, extend tier completion logic:
+
+```rust
+use crate::verification::tier_end::{verify_tier_end, EndVerificationError, EndVerificationResult, TierStatus};
+
+impl Orchestrator {
+    pub async fn complete_tier(
+        &self,
+        tier_node: &TierNode,
+        outcome: &TierOutcome,
+        context: &OrchestratorContext,
+    ) -> Result<TierStatus> {
+        // Collect tier artifacts
+        let artifacts = self.collect_tier_artifacts(tier_node, context).await?;
+        
+        // Compute diff
+        let diff = self.compute_tier_diff(tier_node, context).await?;
+        
+        // Run end verification
+        let verification_result = verify_tier_end(
+            tier_node.tier_type,
+            outcome,
+            &artifacts,
+            &diff,
+            &self.config,
+            context,
+        ).await?;
+        
+        // Handle verification results
+        let tier_status = match verification_result.status {
+            VerificationStatus::Pass => {
+                // Mark tier as complete
+                TierStatus::Complete
+            }
+            VerificationStatus::Fail => {
+                // Mark tier as incomplete (rework required)
+                TierStatus::Incomplete {
+                    reason: format!("Verification failed: {:?}", verification_result.findings),
+                    feedback: verification_result.feedback.clone(),
+                }
+            }
+            VerificationStatus::Warning => {
+                // Mark tier as complete with warnings
+                TierStatus::CompleteWithWarnings {
+                    warnings: verification_result.findings,
+                }
+            }
+        };
+        
+        // Persist verification results
+        self.persist_verification_result(&tier_node.id, &verification_result).await?;
+        
+        // Update tier status in PRD/state
+        self.update_tier_status(tier_node, &tier_status).await?;
+        
+        // Generate feedback if verification failed
+        if matches!(tier_status, TierStatus::Incomplete { .. }) {
+            self.generate_verification_feedback(tier_node, &verification_result).await?;
+        }
+        
+        Ok(tier_status)
+    }
+}
+```
+
+**Verification function implementation:**
+
+```rust
+// src/verification/tier_end.rs
+
+use crate::types::{TierType, Platform};
+use crate::config::PuppetMasterConfig;
+use crate::core::{OrchestratorContext, TierOutcome};
+use crate::platforms::PlatformRunner;
+use anyhow::{Result, Context};
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct EndVerificationResult {
+    pub tier_type: TierType,
+    pub tier_id: String,
+    pub status: VerificationStatus,
+    pub wiring_check: WiringCheckResult,
+    pub acceptance_check: AcceptanceCheckResult,
+    pub quality_check: QualityCheckResult,
+    pub findings: Vec<VerificationFinding>,
+    pub feedback: Option<String>,
+    pub timestamp: chrono::DateTime<Utc>,
+}
+
+// DRY:FN:verify_tier_end — Verify tier completion and quality
+pub async fn verify_tier_end(
+    tier_type: TierType,
+    outcome: &TierOutcome,
+    artifacts: &TierArtifacts,
+    diff: &Option<String>,
+    config: &PuppetMasterConfig,
+    context: &OrchestratorContext,
+) -> Result<EndVerificationResult> {
+    let mut findings = Vec::new();
+    
+    // 1. Re-run wiring check
+    let wiring_result = re_run_wiring_check(tier_type, config, context).await?;
+    if !wiring_result.passed {
+        findings.extend(wiring_result.findings.into_iter().map(|f| VerificationFinding {
+            category: FindingCategory::ConfigWiring,
+            severity: FindingSeverity::Major,
+            message: f,
+            suggestion: Some("Ensure new config/settings introduced during tier are properly wired".to_string()),
+        }));
+    }
+    
+    // 2. Run acceptance criteria
+    let acceptance_result = run_acceptance_criteria(tier_type, outcome, artifacts, config).await?;
+    if !acceptance_result.passed {
+        findings.extend(acceptance_result.findings.into_iter().map(|f| VerificationFinding {
+            category: FindingCategory::AcceptanceCriteria,
+            severity: FindingSeverity::Critical,
+            message: f,
+            suggestion: Some("Ensure acceptance criteria from PRD are met".to_string()),
+        }));
+    }
+    
+    // 3. Run quality verification
+    let quality_result = run_quality_verification(tier_type, artifacts, diff, config, context).await?;
+    if !quality_result.passed {
+        findings.extend(quality_result.findings.into_iter().map(|f| VerificationFinding {
+            category: FindingCategory::Quality,
+            severity: f.severity,
+            message: f.message,
+            suggestion: f.suggestion,
+        }));
+    }
+    
+    // Determine overall status
+    let status = if findings.iter().any(|f| matches!(f.severity, FindingSeverity::Critical)) {
+        VerificationStatus::Fail
+    } else if findings.iter().any(|f| matches!(f.severity, FindingSeverity::Major)) {
+        VerificationStatus::Warning
+    } else {
+        VerificationStatus::Pass
+    };
+    
+    // Generate feedback if verification failed
+    let feedback = if matches!(status, VerificationStatus::Fail) {
+        Some(generate_verification_feedback(&findings, artifacts, diff)?)
+    } else {
+        None
+    };
+    
+    Ok(EndVerificationResult {
+        tier_type,
+        tier_id: context.tier_id.clone(),
+        status,
+        wiring_check: wiring_result,
+        acceptance_check: acceptance_result,
+        quality_check: quality_result,
+        findings,
+        feedback,
+        timestamp: Utc::now(),
+    })
+}
+
+async fn run_quality_verification(
+    tier_type: TierType,
+    artifacts: &TierArtifacts,
+    diff: &Option<String>,
+    config: &PuppetMasterConfig,
+    context: &OrchestratorContext,
+) -> Result<QualityCheckResult> {
+    let mut findings = Vec::new();
+    
+    // 3a. Code review by reviewer subagent (REQUIRED, not optional)
+    let reviewer_result = run_reviewer_subagent(tier_type, artifacts, diff, config, context).await?;
+    if !reviewer_result.passed {
+        findings.extend(reviewer_result.findings);
+    }
+    
+    // 3b. Quality gate criteria (REQUIRED as well)
+    let quality_gate_result = run_quality_gate_criteria(tier_type, artifacts, diff, config).await?;
+    if !quality_gate_result.passed {
+        findings.extend(quality_gate_result.findings);
+    }
+    
+    Ok(QualityCheckResult {
+        passed: findings.is_empty(),
+        reviewer_result,
+        quality_gate_result,
+        findings,
+    })
+}
+
+async fn run_reviewer_subagent(
+    tier_type: TierType,
+    artifacts: &TierArtifacts,
+    diff: &Option<String>,
+    config: &PuppetMasterConfig,
+    context: &OrchestratorContext,
+) -> Result<ReviewerResult> {
+    // DRY REQUIREMENT: MUST use subagent_registry::get_subagents_for_tier() to get reviewer subagent — NEVER hardcode "code-reviewer"
+    // Get reviewer subagent for this tier type
+    let reviewer_subagent = get_reviewer_subagent_for_tier(tier_type)?;
+    // Implementation note: get_reviewer_subagent_for_tier() MUST use subagent_registry::get_subagents_for_tier(TierType::Subtask)
+    // and filter for "code-reviewer" or use subagent_registry::get_reviewer_subagent_for_tier() if such a function exists
+    
+    // Build review prompt
+    let review_prompt = build_review_prompt(artifacts, diff, tier_type)?;
+    
+    // DRY REQUIREMENT: MUST use platform_specs functions — NEVER hardcode platform-specific behavior
+    // Invoke reviewer subagent via platform runner
+    let platform = get_platform_for_tier(tier_type, config)?;
+    let model = get_model_for_tier(tier_type, config)?;
+    
+    // DRY: Use platform_specs to get runner — DO NOT use match statements for platform selection
+    let runner = get_platform_runner(platform)?;
+    // DRY REQUIREMENT: execute_with_subagent MUST use platform_specs::get_subagent_invocation_format() internally
+    let review_output = runner.execute_with_subagent(
+        &reviewer_subagent,
+        &review_prompt,
+        &context.workspace,
+    ).await?;
+    
+    // Parse reviewer output as structured SubagentOutput
+    let parsed_output = parse_reviewer_output(&review_output.stdout)?;
+    
+    // Extract findings from reviewer output
+    let findings = parsed_output.findings.into_iter()
+        .map(|f| QualityFinding {
+            severity: f.severity,
+            message: f.description,
+            file: f.file,
+            line: f.line,
+            suggestion: f.suggestion,
+        })
+        .collect();
+    
+    Ok(ReviewerResult {
+        passed: findings.iter().all(|f| matches!(f.severity, Severity::Info | Severity::Minor)),
+        findings,
+        reviewer_feedback: parsed_output.task_report,
+    })
+}
+
+async fn run_quality_gate_criteria(
+    tier_type: TierType,
+    artifacts: &TierArtifacts,
+    diff: &Option<String>,
+    config: &PuppetMasterConfig,
+) -> Result<QualityGateResult> {
+    let mut findings = Vec::new();
+    
+    // Get quality criteria for this tier type
+    let quality_criteria = get_quality_criteria_for_tier(tier_type)?;
+    
+    // Run each quality check
+    for criterion in quality_criteria {
+        let check_result = run_quality_check(&criterion, artifacts, diff, config).await?;
+        if !check_result.passed {
+            findings.push(QualityFinding {
+                severity: criterion.severity,
+                message: check_result.message,
+                file: check_result.file,
+                line: check_result.line,
+                suggestion: check_result.suggestion,
+            });
+        }
+    }
+    
+    Ok(QualityGateResult {
+        passed: findings.is_empty(),
+        findings,
+    })
+}
+
+fn get_quality_criteria_for_tier(tier_type: TierType) -> Result<Vec<QualityCriterion>> {
+    match tier_type {
+        TierType::Phase => Ok(vec![
+            QualityCriterion {
+                name: "document_quality".to_string(),
+                check_type: QualityCheckType::DocumentReview,
+                severity: FindingSeverity::Major,
+            },
+        ]),
+        TierType::Task => Ok(vec![
+            QualityCriterion {
+                name: "design_doc_quality".to_string(),
+                check_type: QualityCheckType::DocumentReview,
+                severity: FindingSeverity::Major,
+            },
+        ]),
+        TierType::Subtask => Ok(vec![
+            QualityCriterion {
+                name: "no_new_clippy_warnings".to_string(),
+                check_type: QualityCheckType::Linter,
+                severity: FindingSeverity::Major,
+            },
+            QualityCriterion {
+                name: "new_code_has_tests".to_string(),
+                check_type: QualityCheckType::TestCoverage,
+                severity: FindingSeverity::Critical,
+            },
+            QualityCriterion {
+                name: "no_todos_without_tickets".to_string(),
+                check_type: QualityCheckType::CodeReview,
+                severity: FindingSeverity::Minor,
+            },
+        ]),
+        TierType::Iteration => Ok(vec![]), // Iteration quality checked at subtask level
+    }
+}
+```
+
+**Error handling:**
+
+- **Artifact collection failure:** If artifacts cannot be collected, return `VerificationStatus::Warning` with Info finding
+- **Diff computation failure:** If diff cannot be computed, log warning and continue (diff may not be applicable)
+- **Reviewer subagent failure:** If reviewer subagent fails, return `VerificationStatus::Fail` with Critical finding (reviewer is required)
+- **Quality gate failure:** If quality gate fails, return appropriate status based on severity (Critical → Fail, Major/Minor → Warning)
 
 ### Summary table — start vs end, what runs when
 
@@ -1400,6 +2386,1607 @@ When the orchestrator **completes** a Phase, Task, or Subtask (e.g. all iteratio
 - **Unrelated failures and who addresses them:** Automated quality checks (linters, coverage) can fail for reasons unrelated to this tier's work (e.g. pre-existing tech debt). **The parent-tier orchestrator** is responsible for addressing these: when a Subtask fails due to an unrelated issue, the Task-level orchestrator decides (retry, assign a different subagent such as a tech-debt fixer, escalate to Phase level). When a Task fails, the Phase-level orchestrator decides. When a Phase fails, the top-level orchestrator escalates to the user. Unrelated failures must be addressed by someone; they cannot be silently bypassed. Tier-scoped checks (e.g. "no new warnings in this subtask's files") reduce unrelated failures but do not eliminate them; the parent-tier escalation flow handles what remains.
 - **Feedback loop:** When end verification fails (acceptance or quality), the agent or user needs clear feedback (what failed, which file/criterion, suggested fix). Integrate with the existing "incomplete task + feedback" flow (e.g. prepend feedback to task file, re-run iteration) so rework is guided.
 - **Consistency with existing gates:** The codebase may already have verification gates between tiers. Start/end verification should **complement** them: start = before work; end = after work (gate + quality). Ensure we do not duplicate gate logic; the "acceptance criteria" at end can call the existing gate.
+
+---
+
+## Lifecycle and Quality Features
+
+This section defines lifecycle hooks, structured handoff contracts, remediation loops, and cross-session persistence that enhance reliability and quality across **all five platforms** (Cursor, Codex, Claude Code, Gemini, Copilot). These features complement the start/end verification above and can be implemented using platform-native hooks where available, or via orchestrator-level middleware for platforms without native hooks.
+
+### 1. Hook-Based Lifecycle Middleware (BeforeTier/AfterTier)
+
+**Concept:** Puppet Master should support **BeforeTier** and **AfterTier** hooks that run automatically at tier boundaries (Phase, Task, Subtask, Iteration). Hooks handle lifecycle concerns (tracking, state management, validation) separately from execution logic.
+
+**Platform-specific hook registration:**
+
+- **Cursor:** Register hooks in `.cursor/hooks.json` or `~/.cursor/hooks.json` for native hooks (`SubagentStart`, `SubagentStop`, `beforeSubmitPrompt`, `afterAgentResponse`). Also implement orchestrator-level hooks in Rust that wrap platform calls. **Note:** CLI subagents have reported issues (Feb 2026); use orchestrator-level hooks as primary, native hooks as enhancement when CLI subagents are fixed.
+- **Codex:** Use SDK lifecycle callbacks (`onSessionStart`, `onTurnComplete`, thread coordination) or MCP server hooks if available. **Leverage Codex SDK** (`@openai/codex-sdk`) for thread-based coordination and shared state. Implement orchestrator-level hooks as primary middleware (Codex SDK may not expose all lifecycle events).
+- **Claude Code:** Register hooks in `.claude/settings.json` for native hooks (`SubagentStart`, `SubagentStop`, `PreToolUse`, `PostToolUse`, `SessionStart`, `SessionEnd`). Also implement orchestrator-level hooks. Native hooks can block operations (exit code 2) or inject context.
+- **Gemini:** Register hooks in `~/.gemini/settings.json` or extension config for native hooks (`BeforeAgent`, `AfterAgent`, `BeforeModel`, `AfterModel`, `BeforeTool`, `AfterTool`). Implement orchestrator-level hooks as fallback. Gemini hooks communicate via JSON stdin/stdout.
+- **Copilot:** Use SDK callbacks (`onAgentStart`, `onAgentComplete`, session coordination) if available. **Leverage Copilot SDK** (`@github/copilot-sdk`) for session-based coordination and shared state. Implement orchestrator-level hooks as primary (Copilot has limited native hooks; rely on orchestrator middleware).
+
+**Hook trait definition:**
+
+```rust
+// src/core/hooks.rs or src/verification/hooks.rs
+
+use crate::types::{Platform, TierType};
+use crate::core::state_persistence::TierContext;
+use anyhow::Result;
+
+/// Hook context passed to BeforeTier hook
+pub struct BeforeTierContext {
+    pub tier_id: String,
+    pub tier_type: TierType,
+    pub platform: Platform,
+    pub model: String,
+    pub selected_subagents: Vec<String>,
+    pub config_snapshot: serde_json::Value, // Serialized tier config + orchestrator config
+    pub known_gaps: Vec<String>, // Known gaps/issues that could affect this tier
+}
+
+/// Hook context passed to AfterTier hook
+pub struct AfterTierContext {
+    pub tier_id: String,
+    pub tier_type: TierType,
+    pub platform: Platform,
+    pub subagent_output: String, // Raw stdout from subagent
+    pub completion_status: CompletionStatus, // Success, Failure, Warning
+    pub iteration_count: u32,
+}
+
+pub enum CompletionStatus {
+    Success,
+    Failure(String),
+    Warning(String),
+}
+
+/// BeforeTier hook trait
+pub trait BeforeTierHook: Send + Sync {
+    /// Execute hook before tier starts
+    fn execute(&self, ctx: &BeforeTierContext) -> Result<BeforeTierResult>;
+    
+    /// Hook name for logging/debugging
+    fn name(&self) -> &str;
+}
+
+/// AfterTier hook trait
+pub trait AfterTierHook: Send + Sync {
+    /// Execute hook after tier completes
+    fn execute(&self, ctx: &AfterTierContext) -> Result<AfterTierResult>;
+    
+    /// Hook name for logging/debugging
+    fn name(&self) -> &str;
+}
+
+pub struct BeforeTierResult {
+    /// Active subagent to track (from selection or override)
+    pub active_subagent: Option<String>,
+    /// Additional context to inject into subagent prompt
+    pub injected_context: Option<String>,
+    /// Whether to block tier start (hook can prevent execution)
+    pub block: bool,
+    /// Block reason if blocking
+    pub block_reason: Option<String>,
+}
+
+pub struct AfterTierResult {
+    /// Whether handoff validation passed
+    pub validation_passed: bool,
+    /// Validation error if failed
+    pub validation_error: Option<String>,
+    /// Whether to request retry (one chance)
+    pub request_retry: bool,
+    /// Retry reason
+    pub retry_reason: Option<String>,
+}
+
+/// Hook registry that manages all hooks
+pub struct HookRegistry {
+    before_tier_hooks: Vec<Box<dyn BeforeTierHook>>,
+    after_tier_hooks: Vec<Box<dyn AfterTierHook>>,
+}
+
+impl HookRegistry {
+    pub fn new() -> Self {
+        Self {
+            before_tier_hooks: Vec::new(),
+            after_tier_hooks: Vec::new(),
+        }
+    }
+    
+    pub fn register_before_tier(&mut self, hook: Box<dyn BeforeTierHook>) {
+        self.before_tier_hooks.push(hook);
+    }
+    
+    pub fn register_after_tier(&mut self, hook: Box<dyn AfterTierHook>) {
+        self.after_tier_hooks.push(hook);
+    }
+    
+    /// Execute all BeforeTier hooks (safe wrapper)
+    pub fn execute_before_tier(&self, ctx: &BeforeTierContext) -> Result<BeforeTierResult> {
+        let mut active_subagent = None;
+        let mut injected_contexts = Vec::new();
+        let mut block = false;
+        let mut block_reason = None;
+        
+        for hook in &self.before_tier_hooks {
+            match safe_hook_main(|| hook.execute(ctx)) {
+                Ok(result) => {
+                    if result.block {
+                        block = true;
+                        block_reason = Some(result.block_reason.unwrap_or_else(|| format!("Hook {} blocked", hook.name())));
+                        break; // Stop on first block
+                    }
+                    if let Some(subagent) = result.active_subagent {
+                        active_subagent = Some(subagent);
+                    }
+                    if let Some(ctx) = result.injected_context {
+                        injected_contexts.push(ctx);
+                    }
+                }
+                Err(e) => {
+                    log::warn!("BeforeTier hook {} failed: {}", hook.name(), e);
+                    // Continue with other hooks (fail-safe)
+                }
+            }
+        }
+        
+        Ok(BeforeTierResult {
+            active_subagent,
+            injected_context: if injected_contexts.is_empty() {
+                None
+            } else {
+                Some(injected_contexts.join("\n\n"))
+            },
+            block,
+            block_reason,
+        })
+    }
+    
+    /// Execute all AfterTier hooks (safe wrapper)
+    pub fn execute_after_tier(&self, ctx: &AfterTierContext) -> Result<AfterTierResult> {
+        let mut validation_passed = true;
+        let mut validation_error = None;
+        let mut request_retry = false;
+        let mut retry_reason = None;
+        
+        for hook in &self.after_tier_hooks {
+            match safe_hook_main(|| hook.execute(ctx)) {
+                Ok(result) => {
+                    if !result.validation_passed {
+                        validation_passed = false;
+                        validation_error = result.validation_error;
+                        request_retry = result.request_retry;
+                        retry_reason = result.retry_reason;
+                        break; // Stop on first validation failure
+                    }
+                }
+                Err(e) => {
+                    log::warn!("AfterTier hook {} failed: {}", hook.name(), e);
+                    // Continue with other hooks (fail-safe)
+                }
+            }
+        }
+        
+        Ok(AfterTierResult {
+            validation_passed,
+            validation_error,
+            request_retry,
+            retry_reason,
+        })
+    }
+}
+
+/// Safe hook wrapper that guarantees structured output
+fn safe_hook_main<F, T>(hook_fn: F) -> Result<T>
+where
+    F: FnOnce() -> Result<T>,
+{
+    hook_fn()
+}
+```
+
+**Built-in hooks (implement in `src/core/hooks/builtin.rs`):**
+
+1. **ActiveSubagentTrackerHook** (BeforeTier): Sets `active_subagent` in `TierContext`; persists to `.puppet-master/state/active-subagents.json`.
+2. **TierContextInjectorHook** (BeforeTier): Injects current phase/task/subtask status, config snapshot, known gaps into subagent prompt.
+3. **StaleStatePrunerHook** (BeforeTier): Prunes verification state older than 2 hours; creates state directories on first write.
+4. **HandoffValidatorHook** (AfterTier): Validates subagent output format (calls `validate_subagent_output`); requests retry on malformed output.
+
+**Integration with orchestrator:**
+
+In `src/core/orchestrator.rs`, modify `execute_tier`:
+
+```rust
+async fn execute_tier(&self, tier_id: &str) -> Result<()> {
+    // ... existing state transition logic ...
+    
+    // BEFORE TIER: Execute BeforeTier hooks
+    let before_ctx = BeforeTierContext {
+        tier_id: tier_id.to_string(),
+        tier_type,
+        platform: tier_config.platform,
+        model: tier_config.model.clone(),
+        selected_subagents: self.get_selected_subagents(tier_id)?,
+        config_snapshot: serde_json::to_value(&tier_config)?,
+        known_gaps: self.get_known_gaps_for_tier(tier_type)?,
+    };
+    
+    let before_result = self.hook_registry.execute_before_tier(&before_ctx)?;
+    
+    if before_result.block {
+        return Err(anyhow!("Tier {} blocked by hook: {}", tier_id, before_result.block_reason.unwrap_or_default()));
+    }
+    
+    // Update TierContext with active subagent
+    if let Some(subagent) = before_result.active_subagent {
+        self.update_tier_context(tier_id, |ctx| {
+            ctx.active_subagent = Some(subagent);
+        })?;
+    }
+    
+    // Inject context into prompt if provided
+    let prompt = if let Some(injected) = before_result.injected_context {
+        format!("{}\n\n{}", prompt, injected)
+    } else {
+        prompt
+    };
+    
+    // ... existing iteration execution ...
+    
+    // AFTER TIER: Execute AfterTier hooks
+    let after_ctx = AfterTierContext {
+        tier_id: tier_id.to_string(),
+        tier_type,
+        platform: tier_config.platform,
+        subagent_output: iteration_result.output.clone(),
+        completion_status: if gate_report.passed {
+            CompletionStatus::Success
+        } else {
+            CompletionStatus::Failure(gate_report.report.unwrap_or_default())
+        },
+        iteration_count: attempt,
+    };
+    
+    let after_result = self.hook_registry.execute_after_tier(&after_ctx)?;
+    
+    if !after_result.validation_passed {
+        if after_result.request_retry && attempt < max_iterations {
+            // Retry with format instruction
+            let retry_prompt = format!("{}\n\nIMPORTANT: Format your output as structured JSON with task_report, downstream_context, and findings fields.", prompt);
+            previous_feedback = Some(after_result.retry_reason.unwrap_or_else(|| "Output format validation failed".to_string()));
+            continue; // Retry iteration
+        } else {
+            // Fail-safe: proceed with warnings
+            log::warn!("Tier {} output validation failed but proceeding: {}", tier_id, after_result.validation_error.unwrap_or_default());
+            // Mark tier as complete with warnings
+        }
+    }
+    
+    // ... rest of tier completion logic ...
+}
+```
+
+**BeforeTier hook responsibilities (detailed):**
+
+- **Track active subagent:** Record which subagent is active at this tier (e.g., `active_subagent: Option<String>` in `TierContext`). Persist to `.puppet-master/state/active-subagents.json` with format: `{ "tier_id": "1.1.1", "active_subagent": "rust-engineer", "timestamp": "2026-02-18T10:30:00Z" }`.
+- **Inject tier context:** Add current phase/task/subtask status, config snapshot, and known gaps to subagent prompt or context. Format: "Current tier: {tier_id}, Type: {tier_type}, Platform: {platform}, Model: {model}. Known gaps: {gaps}. Config: {config_summary}."
+- **Prune stale state:** Clean up verification state older than threshold (e.g., 2 hours). Check modification time of files in `.puppet-master/verification/<session-id>/`; delete if `mtime < now - 2 hours`.
+- **Lazy state creation:** Create verification state directories on first write (no explicit setup commands). Create `.puppet-master/verification/<session-id>/` if it doesn't exist when first hook writes state.
+
+**AfterTier hook responsibilities (detailed):**
+
+- **Validate subagent output format:** Check that output matches structured handoff contract (see #2 below). Call `validate_subagent_output(output, platform)`; return `validation_passed: false` if malformed.
+- **Track completion:** Update active subagent tracking (clear `active_subagent` in `TierContext`), mark tier completion state in `.puppet-master/state/active-subagents.json`.
+- **Safe error handling:** Guarantee structured output even on hook failure. Wrap hook execution in `safe_hook_main`; on panic or error, return `{ "status": "error", "message": "...", "details": {...} }` instead of crashing.
+
+**Platform-native hook integration:**
+
+For platforms with native hooks, create adapter hooks that delegate:
+
+```rust
+// src/core/hooks/platform_adapters.rs
+
+/// Cursor native hook adapter
+pub struct CursorNativeHookAdapter {
+    hook_script_path: PathBuf, // Path to .cursor/hooks.json registered script
+}
+
+impl BeforeTierHook for CursorNativeHookAdapter {
+    fn execute(&self, ctx: &BeforeTierContext) -> Result<BeforeTierResult> {
+        // Call Cursor hook script via subprocess
+        // Pass context as JSON stdin
+        // Parse JSON stdout
+        // Return BeforeTierResult
+    }
+}
+
+// Similar adapters for Claude Code, Gemini
+```
+
+**Implementation:** Create `src/core/hooks.rs` or `src/verification/hooks.rs` with `BeforeTierHook` and `AfterTierHook` traits. Register hooks per tier type in `HookRegistry`. Call hooks automatically at tier boundaries (before `verify_tier_start`, after `verify_tier_end`) in `orchestrator.rs::execute_tier`. For platforms with native hooks, register Puppet Master hooks that delegate to platform hooks where possible. **Default hooks:** Always register built-in hooks (ActiveSubagentTrackerHook, TierContextInjectorHook, StaleStatePrunerHook, HandoffValidatorHook) even if platform-native hooks are also registered.
+
+### 2. Structured Handoff Report Validation
+
+**Concept:** Enforce a standardized output format for subagent invocations. Every subagent must produce a structured handoff report with required fields. If output is malformed, block and request one retry (fail-safe after retry).
+
+**BeforeHandoffValidation responsibilities:**
+
+- **Detect output format:** Detect if subagent output is structured (JSON) or unstructured (text)
+- **Load validation schema:** Load validation schema for `SubagentOutput` format
+- **Prepare validation context:** Build validation context with expected fields and format requirements
+
+**DuringHandoffValidation responsibilities:**
+
+- **Parse structured output:** Attempt to parse output as structured `SubagentOutput` JSON
+- **Validate required fields:** Validate that all required fields are present (`task_report` is required)
+- **Validate field types:** Validate that field types match schema (string, array, enum, etc.)
+- **Validate findings format:** Validate that findings array contains valid `Finding` objects with required fields
+- **Extract from text (fallback):** If JSON parsing fails, attempt to extract structured data from text output
+- **Request retry if malformed:** If output is malformed and retry not yet attempted, request one retry with format instruction
+
+**AfterHandoffValidation responsibilities:**
+
+- **Persist validation results:** Save validation results to `.puppet-master/state/handoff-validation-{tier_id}.json`
+- **Update tier context:** Update tier context with validated `SubagentOutput` (task_report, downstream_context, findings)
+- **Handle validation failures:** If validation fails after retry, proceed with partial output but mark tier as "complete with warnings"
+
+**Required output format:**
+
+```rust
+// src/types/subagent_output.rs (new file)
+
+use serde::{Deserialize, Serialize};
+use std::path::PathBuf;
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+// DRY:DATA:SubagentOutput — Structured subagent output format
+pub struct SubagentOutput {
+    /// Task report: what the subagent did
+    pub task_report: String,
+    /// Downstream context: information for next tier/subagent
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub downstream_context: Option<String>,
+    /// Findings: quality issues, blockers, recommendations
+    #[serde(default)]
+    pub findings: Vec<Finding>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Finding {
+    pub severity: Severity,
+    pub category: String,   // e.g., "security", "performance", "maintainability"
+    pub description: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub file: Option<PathBuf>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub line: Option<u32>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub suggestion: Option<String>,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum Severity {
+    Critical,
+    Major,
+    Minor,
+    Info,
+}
+
+#[derive(Debug, thiserror::Error)]
+pub enum ValidationError {
+    #[error("JSON parse error: {0}")]
+    JsonParse(#[from] serde_json::Error),
+    #[error("Missing required field: {0}")]
+    MissingField(String),
+    #[error("Invalid severity: {0}")]
+    InvalidSeverity(String),
+    #[error("Text extraction failed: {0}")]
+    TextExtraction(String),
+    #[error("Validation failed after retry: {0}")]
+    ValidationFailedAfterRetry(String),
+}
+```
+
+**Platform-specific parser implementation:**
+
+Extend `src/platforms/output_parser.rs` with new parser methods:
+
+```rust
+// Add to ParsedOutput struct:
+pub struct ParsedOutput {
+    // ... existing fields ...
+    /// Parsed subagent output if structured format detected
+    pub subagent_output: Option<SubagentOutput>,
+}
+
+// Add to OutputParser trait:
+pub trait OutputParser: Send + Sync {
+    // ... existing methods ...
+    
+    /// Parse structured subagent output (platform-specific)
+    fn parse_subagent_output(&self, stdout: &str, stderr: &str) -> Result<SubagentOutput, ValidationError>;
+    
+    /// Extract structured output from text (fallback)
+    fn extract_subagent_output_from_text(&self, stdout: &str, stderr: &str) -> Result<SubagentOutput, ValidationError>;
+}
+
+// Implementation for each platform parser:
+
+impl OutputParser for CursorOutputParser {
+    // DRY REQUIREMENT: Tag with // DRY:FN:parse_subagent_output_cursor
+    fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
+        // DRY REQUIREMENT: Output format detection MUST use platform_specs — DO NOT hardcode "--output-format json"
+        // Cursor outputs JSON with --output-format json (from platform_specs)
+        // Implementation note: Use platform_specs to determine expected output format for this platform
+        let json: serde_json::Value = serde_json::from_str(stdout)
+            .map_err(|e| ValidationError::JsonParse(e))?;
+        
+        // Extract structured fields
+        let task_report = json.get("task_report")
+            .and_then(|v| v.as_str())
+            .ok_or_else(|| ValidationError::MissingField("task_report".to_string()))?
+            .to_string();
+        
+        let downstream_context = json.get("downstream_context")
+            .and_then(|v| v.as_str())
+            .map(String::from);
+        
+        let findings = json.get("findings")
+            .and_then(|v| v.as_array())
+            .map(|arr| {
+                arr.iter()
+                    .filter_map(|item| {
+                        serde_json::from_value::<Finding>(item.clone()).ok()
+                    })
+                    .collect()
+            })
+            .unwrap_or_default();
+        
+        Ok(SubagentOutput {
+            task_report,
+            downstream_context,
+            findings,
+        })
+    }
+    
+    fn extract_subagent_output_from_text(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
+        // Fallback: extract from text output
+        // Look for structured markers (e.g., "Task Report:", "Findings:", etc.)
+        // Or use LLM to extract structured data from text
+        // Implementation depends on platform output format
+        
+        // Simple text extraction (can be enhanced with LLM)
+        let task_report = if let Some(start) = stdout.find("Task Report:") {
+            let end = stdout[start..].find("\n\n").unwrap_or(stdout.len() - start);
+            stdout[start + 12..start + end].trim().to_string()
+        } else {
+            stdout.to_string() // Fallback: use entire output as task report
+        };
+        
+        Ok(SubagentOutput {
+            task_report,
+            downstream_context: None,
+            findings: Vec::new(), // Cannot extract findings from text reliably
+        })
+    }
+}
+
+// Similar implementations for other platform parsers...
+```
+
+**Validation workflow:**
+
+```rust
+// src/core/handoff_validation.rs
+
+use crate::types::subagent_output::{SubagentOutput, ValidationError};
+use crate::platforms::{PlatformRunner, OutputParser};
+
+// DRY:DATA:HandoffValidator — Structured handoff validation system
+pub struct HandoffValidator {
+    parser: Box<dyn OutputParser>,
+    max_retries: u32,
+}
+
+impl HandoffValidator {
+    // DRY:FN:validate_subagent_output — Validate subagent output format
+    // DRY REQUIREMENT: MUST use platform_specs to determine parser type — NEVER hardcode parser selection by platform
+    pub async fn validate_subagent_output(
+        &self,
+        stdout: &str,
+        stderr: &str,
+        platform: Platform,
+        retry_count: u32,
+    ) -> Result<SubagentOutput, ValidationError> {
+        // DRY: Parser selection MUST use platform_specs to determine output format — DO NOT use match platform statements
+        // Try structured parsing first
+        match self.parser.parse_subagent_output(stdout, stderr) {
+            Ok(output) => {
+                // Validate required fields
+                self.validate_required_fields(&output)?;
+                Ok(output)
+            }
+            Err(ValidationError::JsonParse(_)) => {
+                // JSON parse failed, try text extraction
+                if retry_count < self.max_retries {
+                    // Request retry with format instruction
+                    return Err(ValidationError::ValidationFailedAfterRetry(
+                        "Output is not valid JSON. Please output structured JSON format.".to_string()
+                    ));
+                }
+                
+                // Max retries reached, try text extraction as fallback
+                self.parser.extract_subagent_output_from_text(stdout, stderr)
+                    .map_err(|e| ValidationError::TextExtraction(format!("Failed to extract from text: {}", e)))
+            }
+            Err(e) => {
+                // Other validation error
+                if retry_count < self.max_retries {
+                    return Err(ValidationError::ValidationFailedAfterRetry(
+                        format!("Validation failed: {}", e)
+                    ));
+                }
+                Err(e)
+            }
+        }
+    }
+    
+    fn validate_required_fields(&self, output: &SubagentOutput) -> Result<(), ValidationError> {
+        // Validate task_report is not empty
+        if output.task_report.trim().is_empty() {
+            return Err(ValidationError::MissingField("task_report".to_string()));
+        }
+        
+        // Validate findings have required fields
+        for finding in &output.findings {
+            if finding.description.trim().is_empty() {
+                return Err(ValidationError::MissingField("finding.description".to_string()));
+            }
+            
+            // Validate severity is valid
+            match finding.severity {
+                Severity::Critical | Severity::Major | Severity::Minor | Severity::Info => {}
+            }
+        }
+        
+        Ok(())
+    }
+}
+```
+
+**Integration with orchestrator:**
+
+In `src/core/orchestrator.rs`, extend subagent execution:
+
+```rust
+use crate::core::handoff_validation::HandoffValidator;
+
+impl Orchestrator {
+    async fn execute_with_subagent(
+        &self,
+        platform: Platform,
+        model: &str,
+        subagent_name: &str,
+        prompt: &str,
+        context: &TierContext,
+    ) -> Result<SubagentOutput> {
+        let runner = self.get_platform_runner(platform)?;
+        let mut retry_count = 0;
+        
+        loop {
+            // Execute subagent
+            let output = runner.execute_with_subagent(
+                subagent_name,
+                prompt,
+                &context.workspace,
+            ).await?;
+            
+            // Validate handoff output
+            let validator = HandoffValidator::new(platform)?;
+            match validator.validate_subagent_output(
+                &output.stdout,
+                &output.stderr,
+                platform,
+                retry_count,
+            ).await {
+                Ok(validated_output) => {
+                    // Validation passed
+                    return Ok(validated_output);
+                }
+                Err(ValidationError::ValidationFailedAfterRetry(msg)) => {
+                    // Request retry with format instruction
+                    retry_count += 1;
+                    if retry_count >= validator.max_retries() {
+                        // Max retries reached, proceed with partial output
+                        tracing::warn!("Handoff validation failed after {} retries: {}", retry_count, msg);
+                        return Ok(validator.extract_partial_output(&output.stdout, &output.stderr)?);
+                    }
+                    
+                    // Update prompt with format instruction
+                    let updated_prompt = format!(
+                        "{}\n\n**IMPORTANT:** Output must be valid JSON matching this format:\n{}\n\nCurrent output was not valid JSON. Please retry with structured JSON output.",
+                        prompt,
+                        serde_json::to_string_pretty(&SubagentOutput::example())?
+                    );
+                    
+                    // Continue loop with updated prompt
+                    continue;
+                }
+                Err(e) => {
+                    return Err(anyhow!("Handoff validation error: {}", e));
+                }
+            }
+        }
+    }
+}
+```
+
+**Error handling:**
+
+- **JSON parse failure:** If JSON parsing fails, attempt text extraction; if that fails and retry not attempted, request retry with format instruction
+- **Missing field failure:** If required field is missing, request retry with field requirement instruction
+- **Invalid severity failure:** If severity is invalid, request retry with valid severity values
+- **Max retries reached:** If max retries reached, proceed with partial output but mark tier as "complete with warnings"
+                    .filter_map(|v| serde_json::from_value(v.clone()).ok())
+                    .collect()
+            })
+            .unwrap_or_default();
+        
+        Ok(SubagentOutput {
+            task_report,
+            downstream_context,
+            findings,
+        })
+    }
+}
+
+impl OutputParser for CodexOutputParser {
+    // DRY:FN:parse_subagent_output_codex — Parse Codex subagent output
+    // DRY REQUIREMENT: Output format detection MUST use platform_specs — DO NOT hardcode "JSONL" or output format
+    fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
+        // DRY: Use platform_specs to determine expected output format — DO NOT hardcode "Codex outputs JSONL"
+        // Codex outputs JSONL (one JSON object per line) — format from platform_specs
+        let mut task_report = String::new();
+        let mut downstream_context = None;
+        let mut findings = Vec::new();
+        
+        for line in stdout.lines() {
+            if let Ok(json) = serde_json::from_str::<serde_json::Value>(line) {
+                // Look for Turn event with structured output
+                if let Some(event_type) = json.get("type").and_then(|v| v.as_str()) {
+                    if event_type == "Turn" || event_type == "turn" {
+                        if let Some(content) = json.get("content") {
+                            // Try to parse content as SubagentOutput
+                            if let Ok(output) = serde_json::from_value::<SubagentOutput>(content.clone()) {
+                                return Ok(output);
+                            }
+                            // Fallback: extract text content
+                            if let Some(text) = content.as_str() {
+                                task_report.push_str(text);
+                            }
+                        }
+                    }
+                }
+                
+                // Aggregate findings from multiple events
+                if let Some(f) = json.get("findings").and_then(|v| v.as_array()) {
+                    for finding_val in f {
+                        if let Ok(finding) = serde_json::from_value::<Finding>(finding_val.clone()) {
+                            findings.push(finding);
+                        }
+                    }
+                }
+            }
+        }
+        
+        // If no structured output found, try to extract from text
+        if task_report.is_empty() {
+            return Err(ValidationError::TextExtraction("No structured output found in JSONL".to_string()));
+        }
+        
+        Ok(SubagentOutput {
+            task_report,
+            downstream_context,
+            findings,
+        })
+    }
+}
+
+impl OutputParser for ClaudeOutputParser {
+    // DRY:FN:parse_subagent_output_claude — Parse Claude Code subagent output
+    // DRY REQUIREMENT: Output format detection MUST use platform_specs — DO NOT hardcode "--output-format json"
+    fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
+        // DRY: Use platform_specs to determine expected output format — DO NOT hardcode "Claude outputs JSON"
+        // Claude outputs JSON with --output-format json — format from platform_specs
+        let json: serde_json::Value = serde_json::from_str(stdout)?;
+        
+        // Claude wraps output in "result" -> "content" or direct fields
+        let content = json.get("result")
+            .and_then(|r| r.get("content"))
+            .or_else(|| Some(&json))
+            .ok_or_else(|| ValidationError::MissingField("result.content".to_string()))?;
+        
+        // Try direct parse
+        if let Ok(output) = serde_json::from_value::<SubagentOutput>(content.clone()) {
+            return Ok(output);
+        }
+        
+        // Fallback: extract fields manually
+        let task_report = content.get("task_report")
+            .and_then(|v| v.as_str())
+            .or_else(|| content.as_str())
+            .ok_or_else(|| ValidationError::MissingField("task_report".to_string()))?
+            .to_string();
+        
+        let downstream_context = content.get("downstream_context")
+            .and_then(|v| v.as_str())
+            .map(String::from);
+        
+        let findings = content.get("findings")
+            .and_then(|v| v.as_array())
+            .map(|arr| {
+                arr.iter()
+                    .filter_map(|v| serde_json::from_value(v.clone()).ok())
+                    .collect()
+            })
+            .unwrap_or_default();
+        
+        Ok(SubagentOutput {
+            task_report,
+            downstream_context,
+            findings,
+        })
+    }
+}
+
+impl OutputParser for GeminiOutputParser {
+    // DRY:FN:parse_subagent_output_gemini — Parse Gemini subagent output
+    // DRY REQUIREMENT: Output format detection MUST use platform_specs — DO NOT hardcode "--output-format json"
+    fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
+        // DRY: Use platform_specs to determine expected output format — DO NOT hardcode "Gemini outputs JSON"
+        // Gemini outputs JSON with --output-format json — format from platform_specs
+        let json: serde_json::Value = serde_json::from_str(stdout)?;
+        
+        // Gemini wraps in "candidates" -> [0] -> "content" -> "parts" -> [0] -> "text"
+        let text = json.get("candidates")
+            .and_then(|c| c.as_array())
+            .and_then(|arr| arr.get(0))
+            .and_then(|c| c.get("content"))
+            .and_then(|c| c.get("parts"))
+            .and_then(|p| p.as_array())
+            .and_then(|arr| arr.get(0))
+            .and_then(|p| p.get("text"))
+            .and_then(|t| t.as_str())
+            .ok_or_else(|| ValidationError::MissingField("candidates[0].content.parts[0].text".to_string()))?;
+        
+        // Try to parse text as JSON (Gemini may output JSON as text)
+        if let Ok(output) = serde_json::from_str::<SubagentOutput>(text) {
+            return Ok(output);
+        }
+        
+        // Fallback: extract from text patterns
+        Err(ValidationError::TextExtraction("Gemini text output requires pattern extraction".to_string()))
+    }
+}
+
+impl OutputParser for CopilotOutputParser {
+    // DRY:FN:parse_subagent_output_copilot — Parse Copilot subagent output
+    // DRY REQUIREMENT: Output format detection MUST use platform_specs — DO NOT hardcode "Copilot outputs text"
+    fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
+        // DRY: Use platform_specs to determine expected output format — DO NOT hardcode "Copilot outputs text"
+        // Copilot outputs text (no JSON) — format from platform_specs
+        // Extract structured sections via regex/pattern matching
+        
+        let combined = format!("{stdout}\n{stderr}");
+        
+        // Pattern: ## Task Report\n\n...content...
+        let task_report_re = Regex::new(r"(?s)##\s*Task\s*Report\s*\n\n(.*?)(?=\n##|\z)").unwrap();
+        let task_report = task_report_re.captures(&combined)
+            .and_then(|cap| cap.get(1))
+            .map(|m| m.as_str().trim().to_string())
+            .ok_or_else(|| ValidationError::MissingField("Task Report section".to_string()))?;
+        
+        // Pattern: ## Downstream Context\n\n...content... (optional)
+        let downstream_re = Regex::new(r"(?s)##\s*Downstream\s*Context\s*\n\n(.*?)(?=\n##|\z)").unwrap();
+        let downstream_context = downstream_re.captures(&combined)
+            .and_then(|cap| cap.get(1))
+            .map(|m| m.as_str().trim().to_string());
+        
+        // Pattern: ## Findings\n\n- [Severity] Category: Description (file:line) Suggestion
+        let findings_re = Regex::new(r"(?m)^-\s*\[(Critical|Major|Minor|Info)\]\s*(\w+):\s*(.*?)(?:\s*\(([^:]+):(\d+)\))?(?:\s*Suggestion:\s*(.*))?$").unwrap();
+        let mut findings = Vec::new();
+        
+        if let Some(findings_section) = Regex::new(r"(?s)##\s*Findings\s*\n\n(.*?)(?=\n##|\z)").unwrap().captures(&combined) {
+            for cap in findings_re.captures_iter(findings_section.get(1).unwrap().as_str()) {
+                let severity = match cap.get(1).unwrap().as_str() {
+                    "Critical" => Severity::Critical,
+                    "Major" => Severity::Major,
+                    "Minor" => Severity::Minor,
+                    "Info" => Severity::Info,
+                    _ => continue,
+                };
+                
+                findings.push(Finding {
+                    severity,
+                    category: cap.get(2).unwrap().as_str().to_string(),
+                    description: cap.get(3).unwrap().as_str().to_string(),
+                    file: cap.get(4).map(|m| PathBuf::from(m.as_str())),
+                    line: cap.get(5).and_then(|m| m.as_str().parse().ok()),
+                    suggestion: cap.get(6).map(|m| m.as_str().to_string()),
+                });
+            }
+        }
+        
+        Ok(SubagentOutput {
+            task_report,
+            downstream_context,
+            findings,
+        })
+    }
+}
+```
+
+**Validation function:**
+
+```rust
+// src/core/hooks/handoff_validator.rs
+
+use crate::platforms::output_parser::{OutputParser, create_parser};
+use crate::types::{Platform, SubagentOutput};
+use crate::core::hooks::ValidationError;
+
+pub fn validate_subagent_output(
+    output: &str,
+    stderr: &str,
+    platform: Platform,
+) -> Result<SubagentOutput, ValidationError> {
+    let parser = create_parser(platform);
+    parser.parse_subagent_output(output, stderr)
+}
+```
+
+**Validation logic in AfterTier hook:** AfterTier hook calls `validate_subagent_output(output: &str, stderr: &str, platform: Platform) -> Result<SubagentOutput, ValidationError>`. If validation fails:
+1. Log error with details (platform, error type, partial output snippet).
+2. Request one retry (re-run subagent with "format your output as structured JSON" instruction appended to prompt).
+3. If retry also fails, proceed with partial output (fail-safe) but mark tier as "complete with warnings" in `TierContext`.
+
+**Integration with existing ParsedOutput:**
+
+Modify `src/platforms/output_parser.rs` to populate `subagent_output` field:
+
+```rust
+impl OutputParser for CursorOutputParser {
+    fn parse(&self, stdout: &str, stderr: &str) -> ParsedOutput {
+        let mut output = ParsedOutput::new(stdout.to_string());
+        // ... existing parsing ...
+        
+        // Try to parse structured subagent output
+        output.subagent_output = self.parse_subagent_output(stdout, stderr).ok();
+        
+        output
+    }
+}
+```
+
+**Benefits:** Ensures Phase/Task/Subtask reliably know what their subagents produced; enables automated remediation loops; supports cross-tier context passing; provides structured error reporting for debugging.
+
+### 3. Remediation Loop for Critical/Major Findings
+
+**Concept:** When quality verification finds Critical or Major issues, block tier completion and enter a remediation loop. Re-run reviewer subagent until Critical/Major findings are resolved or escalated. Minor/Info findings log and proceed.
+
+**Severity levels:**
+
+- **Critical:** Security vulnerabilities, data loss risks, breaking changes — **block completion**.
+- **Major:** Performance issues, maintainability problems, test failures — **block completion**.
+- **Minor:** Code style, minor optimizations, suggestions — **log and proceed**.
+- **Info:** Documentation, comments, non-blocking recommendations — **log and proceed**.
+
+**Remediation loop implementation:**
+
+```rust
+// src/core/remediation.rs (new file)
+
+use crate::types::SubagentOutput;
+use crate::core::hooks::Severity;
+use crate::core::orchestrator::Orchestrator;
+
+// DRY:DATA:RemediationLoop — Remediation loop for Critical/Major findings
+pub struct RemediationLoop {
+    max_retries: u32,
+    orchestrator: Arc<Orchestrator>,
+}
+
+impl RemediationLoop {
+    // DRY:FN:new — Create remediation loop
+    pub fn new(max_retries: u32, orchestrator: Arc<Orchestrator>) -> Self {
+        Self { max_retries, orchestrator }
+    }
+    
+    // DRY:FN:run — Run remediation loop for a tier
+    // DRY REQUIREMENT: Reviewer subagent name MUST come from subagent_registry — NEVER hardcode "code-reviewer"
+    /// Run remediation loop for a tier
+    pub async fn run(
+        &self,
+        tier_id: &str,
+        reviewer_output: SubagentOutput,
+    ) -> Result<RemediationResult> {
+        // DRY: Severity filtering logic is reusable — consider extracting to DRY:FN:filter_critical_major_findings
+        let critical_major: Vec<_> = reviewer_output.findings
+            .iter()
+            .filter(|f| matches!(f.severity, Severity::Critical | Severity::Major))
+            .collect();
+        
+        if critical_major.is_empty() {
+            // Only Minor/Info findings: log and proceed
+            self.log_findings(&reviewer_output.findings);
+            return Ok(RemediationResult::Complete);
+        }
+        
+        // Critical/Major findings: enter remediation loop
+        let mut retry_count = 0;
+        let mut current_findings = critical_major.clone();
+        
+        while retry_count < self.max_retries {
+            // Mark tier as incomplete
+            self.orchestrator.mark_tier_incomplete(tier_id, &current_findings).await?;
+            
+            // Build remediation prompt
+            let remediation_prompt = self.build_remediation_prompt(&current_findings);
+            
+            // DRY REQUIREMENT: Executor and reviewer subagent names MUST come from subagent_registry — NEVER hardcode names
+            // Re-run executor subagent with remediation prompt
+            // Implementation note: re_run_executor_with_prompt MUST use subagent_registry to get executor subagent name
+            let executor_result = self.orchestrator
+                .re_run_executor_with_prompt(tier_id, &remediation_prompt)
+                .await?;
+            
+            // DRY REQUIREMENT: Reviewer subagent name MUST come from subagent_registry::get_reviewer_subagent_for_tier()
+            // Re-run reviewer subagent
+            // Implementation note: re_run_reviewer MUST use subagent_registry to get reviewer subagent name
+            let reviewer_result = self.orchestrator
+                .re_run_reviewer(tier_id)
+                .await?;
+            
+            // Parse new findings
+            let new_critical_major: Vec<_> = reviewer_result.findings
+                .iter()
+                .filter(|f| matches!(f.severity, Severity::Critical | Severity::Major))
+                .collect();
+            
+            if new_critical_major.is_empty() {
+                // All Critical/Major resolved
+                return Ok(RemediationResult::Resolved);
+            }
+            
+            // Check if findings changed (progress made)
+            if self.findings_unchanged(&current_findings, &new_critical_major) {
+                retry_count += 1;
+                if retry_count >= self.max_retries {
+                    // Escalate to parent-tier orchestrator
+                    return Ok(RemediationResult::Escalate(new_critical_major));
+                }
+            } else {
+                // Progress made, reset retry count
+                retry_count = 0;
+            }
+            
+            current_findings = new_critical_major;
+        }
+        
+        Ok(RemediationResult::Escalate(current_findings))
+    }
+    
+    fn build_remediation_prompt(&self, findings: &[&Finding]) -> String {
+        let mut prompt = "CRITICAL/Major findings must be fixed before tier completion:\n\n".to_string();
+        for finding in findings {
+            prompt.push_str(&format!(
+                "- [{}] {}: {}\n",
+                format!("{:?}", finding.severity),
+                finding.category,
+                finding.description
+            ));
+            if let Some(file) = &finding.file {
+                prompt.push_str(&format!("  File: {}\n", file.display()));
+            }
+            if let Some(line) = finding.line {
+                prompt.push_str(&format!("  Line: {}\n", line));
+            }
+            if let Some(suggestion) = &finding.suggestion {
+                prompt.push_str(&format!("  Suggestion: {}\n", suggestion));
+            }
+            prompt.push('\n');
+        }
+        prompt.push_str("\nPlease fix these issues and re-run verification.");
+        prompt
+    }
+    
+    fn findings_unchanged(&self, old: &[&Finding], new: &[&Finding]) -> bool {
+        // Compare finding descriptions and locations
+        old.len() == new.len() && old.iter().all(|o| {
+            new.iter().any(|n| {
+                o.description == n.description
+                    && o.file == n.file
+                    && o.line == n.line
+            })
+        })
+    }
+    
+    fn log_findings(&self, findings: &[Finding]) {
+        for finding in findings {
+            log::info!(
+                "[{}] {}: {}",
+                format!("{:?}", finding.severity),
+                finding.category,
+                finding.description
+            );
+        }
+    }
+}
+
+pub enum RemediationResult {
+    Complete, // No Critical/Major findings
+    Resolved, // Critical/Major findings resolved
+    Escalate(Vec<Finding>), // Escalate to parent-tier orchestrator
+}
+```
+
+**Integration with orchestrator:**
+
+In `src/core/orchestrator.rs`, after gate passes and reviewer subagent runs:
+
+```rust
+// After reviewer subagent completes
+let reviewer_output = parse_reviewer_output(&iteration_result.output)?;
+
+// Run remediation loop
+let remediation_result = self.remediation_loop
+    .run(tier_id, reviewer_output)
+    .await?;
+
+match remediation_result {
+    RemediationResult::Complete => {
+        // Proceed with tier completion
+    }
+    RemediationResult::Resolved => {
+        // Re-run gate to verify fixes
+        // Then proceed with tier completion
+    }
+    RemediationResult::Escalate(findings) => {
+        // Escalate to parent-tier orchestrator
+        self.escalate_to_parent(tier_id, findings).await?;
+        return Err(anyhow!("Tier {} escalated due to unresolved Critical/Major findings", tier_id));
+    }
+}
+```
+
+**Platform-specific implementation:** Works identically across all platforms — remediation loop is orchestrator-level logic, not platform-specific. All platforms receive remediation prompts and re-run subagents the same way. The executor and reviewer subagents are re-run using the same platform/model as the original tier execution.
+
+**Integration with existing quality verification:** This extends the existing "required reviewer subagent" requirement. The reviewer must output structured findings with severity; the orchestrator enforces the remediation loop. The remediation loop runs **after** the gate passes but **before** tier completion, ensuring Critical/Major issues are addressed before advancing.
+
+### 4. Cross-Session Knowledge Persistence (`save_memory`)
+
+**Concept:** Persist architectural decisions, established patterns, tech choices, and lessons learned across runs. When a new run starts, load prior context to maintain continuity.
+
+**What to persist:**
+
+- **Architectural decisions:** Tech stack choices, design patterns, framework selections.
+- **Established patterns:** Code organization, naming conventions, testing strategies.
+- **Tech choices:** Dependency versions, tool configurations, environment setup.
+- **Pitfalls encountered:** Known issues, workarounds, anti-patterns to avoid.
+
+**Storage structure:**
+
+```rust
+// src/core/memory.rs (new file)
+
+use serde::{Deserialize, Serialize};
+use std::path::PathBuf;
+use chrono::{DateTime, Utc};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ArchitectureMemory {
+    pub decisions: Vec<ArchitecturalDecision>,
+    pub last_updated: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ArchitecturalDecision {
+    pub category: String, // e.g., "tech_stack", "design_pattern", "framework"
+    pub decision: String, // e.g., "Rust + Actix Web"
+    pub rationale: Option<String>,
+    pub alternatives_considered: Vec<String>,
+    pub timestamp: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct PatternsMemory {
+    pub patterns: Vec<EstablishedPattern>,
+    pub last_updated: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct EstablishedPattern {
+    pub name: String, // e.g., "TDD", "Code organization", "Naming conventions"
+    pub description: String,
+    pub examples: Vec<String>,
+    pub timestamp: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct TechChoicesMemory {
+    pub choices: Vec<TechChoice>,
+    pub last_updated: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct TechChoice {
+    pub category: String, // e.g., "dependency", "tool", "environment"
+    pub name: String, // e.g., "clippy", "rustfmt"
+    pub version: Option<String>,
+    pub config: Option<serde_json::Value>,
+    pub timestamp: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct PitfallsMemory {
+    pub pitfalls: Vec<Pitfall>,
+    pub last_updated: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Pitfall {
+    pub issue: String, // Description of the issue
+    pub workaround: Option<String>,
+    pub anti_pattern: Option<String>, // What to avoid
+    pub context: Option<String>, // When this applies
+    pub timestamp: DateTime<Utc>,
+}
+
+pub struct MemoryManager {
+    memory_dir: PathBuf,
+}
+
+// DRY:DATA:MemoryManager — Cross-session memory management
+impl MemoryManager {
+    // DRY:FN:new — Create memory manager
+    pub fn new(memory_dir: Option<PathBuf>) -> Self {
+        let memory_dir = memory_dir.unwrap_or_else(|| {
+            PathBuf::from(".puppet-master").join("memory")
+        });
+        Self { memory_dir }
+    }
+    
+    // DRY:FN:save_architecture — Save architectural decision
+    /// Save architectural decision
+    pub async fn save_architecture(&self, decision: ArchitecturalDecision) -> Result<()> {
+        let mut arch = self.load_architecture().await?;
+        arch.decisions.push(decision);
+        arch.last_updated = Utc::now();
+        self.save_file("architecture.json", &arch).await
+    }
+    
+    /// Load architectural decisions
+    pub async fn load_architecture(&self) -> Result<ArchitectureMemory> {
+        self.load_file("architecture.json").await
+            .unwrap_or_else(|_| ArchitectureMemory {
+                decisions: Vec::new(),
+                last_updated: Utc::now(),
+            })
+    }
+    
+    /// Save pattern
+    pub async fn save_pattern(&self, pattern: EstablishedPattern) -> Result<()> {
+        let mut patterns = self.load_patterns().await?;
+        patterns.patterns.push(pattern);
+        patterns.last_updated = Utc::now();
+        self.save_file("patterns.json", &patterns).await
+    }
+    
+    /// Load patterns
+    pub async fn load_patterns(&self) -> Result<PatternsMemory> {
+        self.load_file("patterns.json").await
+            .unwrap_or_else(|_| PatternsMemory {
+                patterns: Vec::new(),
+                last_updated: Utc::now(),
+            })
+    }
+    
+    /// Save tech choice
+    pub async fn save_tech_choice(&self, choice: TechChoice) -> Result<()> {
+        let mut tech = self.load_tech_choices().await?;
+        tech.choices.push(choice);
+        tech.last_updated = Utc::now();
+        self.save_file("tech-choices.json", &tech).await
+    }
+    
+    /// Load tech choices
+    pub async fn load_tech_choices(&self) -> Result<TechChoicesMemory> {
+        self.load_file("tech-choices.json").await
+            .unwrap_or_else(|_| TechChoicesMemory {
+                choices: Vec::new(),
+                last_updated: Utc::now(),
+            })
+    }
+    
+    /// Save pitfall
+    pub async fn save_pitfall(&self, pitfall: Pitfall) -> Result<()> {
+        let mut pitfalls = self.load_pitfalls().await?;
+        pitfalls.pitfalls.push(pitfall);
+        pitfalls.last_updated = Utc::now();
+        self.save_file("pitfalls.json", &pitfalls).await
+    }
+    
+    /// Load pitfalls
+    pub async fn load_pitfalls(&self) -> Result<PitfallsMemory> {
+        self.load_file("pitfalls.json").await
+            .unwrap_or_else(|_| PitfallsMemory {
+                pitfalls: Vec::new(),
+                last_updated: Utc::now(),
+            })
+    }
+    
+    /// Load all memory and format for prompt injection
+    pub async fn load_all_for_prompt(&self) -> Result<String> {
+        let arch = self.load_architecture().await?;
+        let patterns = self.load_patterns().await?;
+        let tech = self.load_tech_choices().await?;
+        let pitfalls = self.load_pitfalls().await?;
+        
+        let mut prompt = String::new();
+        
+        if !arch.decisions.is_empty() {
+            prompt.push_str("## Previous Architectural Decisions\n\n");
+            for decision in &arch.decisions {
+                prompt.push_str(&format!("- **{}**: {}\n", decision.category, decision.decision));
+                if let Some(rationale) = &decision.rationale {
+                    prompt.push_str(&format!("  Rationale: {}\n", rationale));
+                }
+            }
+            prompt.push('\n');
+        }
+        
+        if !patterns.patterns.is_empty() {
+            prompt.push_str("## Established Patterns\n\n");
+            for pattern in &patterns.patterns {
+                prompt.push_str(&format!("- **{}**: {}\n", pattern.name, pattern.description));
+            }
+            prompt.push('\n');
+        }
+        
+        if !tech.choices.is_empty() {
+            prompt.push_str("## Tech Choices\n\n");
+            for choice in &tech.choices {
+                prompt.push_str(&format!("- **{}**: {}", choice.category, choice.name));
+                if let Some(version) = &choice.version {
+                    prompt.push_str(&format!(" ({})", version));
+                }
+                prompt.push('\n');
+            }
+            prompt.push('\n');
+        }
+        
+        if !pitfalls.pitfalls.is_empty() {
+            prompt.push_str("## Known Pitfalls to Avoid\n\n");
+            for pitfall in &pitfalls.pitfalls {
+                prompt.push_str(&format!("- {}\n", pitfall.issue));
+                if let Some(workaround) = &pitfall.workaround {
+                    prompt.push_str(&format!("  Workaround: {}\n", workaround));
+                }
+            }
+        }
+        
+        Ok(prompt)
+    }
+    
+    async fn save_file<T: Serialize>(&self, filename: &str, data: &T) -> Result<()> {
+        std::fs::create_dir_all(&self.memory_dir)?;
+        let path = self.memory_dir.join(filename);
+        let json = serde_json::to_string_pretty(data)?;
+        std::fs::write(path, json)?;
+        Ok(())
+    }
+    
+    async fn load_file<T: for<'de> Deserialize<'de>>(&self, filename: &str) -> Result<T> {
+        let path = self.memory_dir.join(filename);
+        let json = std::fs::read_to_string(path)?;
+        let data: T = serde_json::from_str(&json)?;
+        Ok(data)
+    }
+}
+```
+
+**When to persist:** At Phase completion (especially Phase 1: Planning/Architecture). Use `memory_manager.save_architecture()`, `save_pattern()`, `save_tech_choice()`, `save_pitfall()` functions. Extract decisions/patterns from Phase 1 output (e.g., parse "We chose Rust + Actix" → save as architectural decision).
+
+**When to load:** At run start, before Phase 1 begins. Call `memory_manager.load_all_for_prompt()` and inject into Phase 1 context. Also use for subagent selection (e.g., "project uses Rust" → prefer `rust-engineer`; "established TDD pattern" → include `test-automator`).
+
+**Platform-specific implementation:** Platform-agnostic — memory persistence is orchestrator-level. All platforms benefit from loaded context injected into prompts. Memory files are stored in `.puppet-master/memory/` as JSON files, readable by all platforms.
+
+### 5. Active Agent Tracking
+
+**Concept:** Track which subagent is currently active at each tier. Store in tier context and expose for logging, debugging, and audit trails.
+
+**Tracking:**
+
+- **Per tier:** `active_subagent: Option<String>` in `TierContext`.
+- **Per run:** `active_subagents: HashMap<TierId, String>` in orchestrator state.
+- **Persistence:** Write to `.puppet-master/state/active-subagents.json` (updated on each tier start).
+
+**BeforeTier hook:** Sets `active_subagent` when tier starts (from subagent selection or override).
+
+**AfterTier hook:** Clears `active_subagent` when tier completes.
+
+**Use cases:**
+
+- **Logging:** "Phase X: active subagent = architect-reviewer"
+- **Debugging:** "Why did this tier fail? Check active subagent logs."
+- **Audit trails:** "Which subagents ran in this run? See active-subagents.json."
+- **GUI display:** Show active subagent in tier status UI.
+
+**Platform-specific implementation:** Platform-agnostic — tracking is orchestrator-level. All platforms benefit from the same tracking mechanism.
+
+### 6. Safe Error Handling (Guaranteed Structured Output)
+
+**Concept:** Hooks and verification functions must never crash the session. Use wrappers that guarantee structured output (JSON or Result) even on failure.
+
+**Wrapper pattern:**
+
+```rust
+pub fn safe_hook_main<F>(hook_fn: F) -> String
+where
+    F: FnOnce() -> Result<HookOutput, HookError>,
+{
+    match hook_fn() {
+        Ok(output) => serde_json::to_string(&output).unwrap_or_else(|_| r#"{"status":"ok"}"#.to_string()),
+        Err(e) => serde_json::to_string(&HookErrorOutput {
+            status: "error",
+            message: e.to_string(),
+            details: None,
+        }).unwrap_or_else(|_| r#"{"status":"error","message":"unknown"}"#.to_string()),
+    }
+}
+```
+
+**Application:**
+
+- **BeforeTier/AfterTier hooks:** Wrap hook execution in `safe_hook_main` so hooks never crash.
+- **Verification functions:** Return `Result<(), VerificationError>` with structured error types.
+- **Subagent output parsing:** On parse failure, return `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` (partial output) rather than crashing.
+
+**Platform-specific implementation:** Platform-agnostic — safe error handling is Rust-level. All platforms benefit from the same wrappers.
+
+### 7. Lazy Lifecycle (State Created on First Write)
+
+**Concept:** Verification state directories are created lazily (on first write) and pruned after inactivity. No explicit setup/teardown commands required.
+
+**Lazy creation:**
+
+- **BeforeTier hook:** On first tier start, create `.puppet-master/verification/<session-id>/` if it doesn't exist.
+- **State files:** Create on first write (e.g., `active-subagents.json`, `handoff-reports.json`).
+- **No setup command:** Users don't need to run "puppet-master setup" — state is created automatically.
+
+**Stale pruning:**
+
+- **BeforeTier hook:** Prune verification state older than threshold (e.g., 2 hours of inactivity).
+- **Pruning logic:** Check modification time of state files; delete if older than threshold.
+- **No teardown command:** Cleanup happens automatically during normal operation.
+
+**Platform-specific implementation:** Platform-agnostic — lazy lifecycle is orchestrator-level file system management. All platforms benefit from the same behavior.
+
+### 8. Structured Handoff Contract Enforcement at Runtime
+
+**Concept:** Enforce the structured handoff format (Task Report + Downstream Context + Findings) at runtime via AfterTier hook validation, not just in prompts. This ensures reliability even if prompts are modified.
+
+**Enforcement:**
+
+- **AfterTier hook:** Calls `validate_subagent_output()` (see #2 above).
+- **On validation failure:** Block response, request one retry with format instruction.
+- **After retry:** If still malformed, proceed with partial output (fail-safe) but mark tier as "complete with warnings."
+
+**Documentation:** Document the contract in AGENTS.md and in subagent prompt templates. State that subagents **must** produce structured output; runtime validation enforces it.
+
+**Platform-specific implementation:**
+
+- **Cursor/Codex/Claude/Gemini:** Parse JSON output; validate required fields (`task_report`, `downstream_context`, `findings`).
+- **Copilot:** Parse text output; extract structured sections via regex or pattern matching; validate presence.
+
+**Integration with existing plan:** This complements the existing "required reviewer subagent" requirement. The reviewer must produce structured output; runtime validation ensures it.
+
+### Platform-Specific Implementation Summary
+
+| Feature | Cursor | Codex | Claude | Gemini | Copilot | Implementation Level |
+|---------|--------|-------|--------|--------|---------|---------------------|
+| **BeforeTier/AfterTier hooks** | Native hooks + orchestrator | SDK callbacks + orchestrator | Native hooks + orchestrator | Native hooks + orchestrator | Orchestrator only | Orchestrator + platform hooks |
+| **Handoff validation** | JSON parse | JSONL parse | JSON parse | JSON parse | Text parse | Platform-specific parser |
+| **Remediation loop** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
+| **Cross-session memory** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
+| **Active agent tracking** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
+| **Safe error handling** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
+| **Lazy lifecycle** | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator | Orchestrator (platform-agnostic) |
+| **Contract enforcement** | JSON validation | JSONL validation | JSON validation | JSON validation | Text validation | Platform-specific validator |
+
+**Key insight:** Most features are **orchestrator-level** (platform-agnostic). Only handoff validation and contract enforcement need platform-specific parsers (JSON vs JSONL vs text). Hooks can leverage platform-native hooks where available (Cursor, Claude, Gemini) but also work via orchestrator-level middleware for all platforms.
+
+### Integration with Start/End Verification
+
+These lifecycle and quality features **complement** the existing start/end verification:
+
+- **BeforeTier hook** runs **before** `verify_tier_start` (tracks active subagent, injects context, prunes state).
+- **AfterTier hook** runs **after** `verify_tier_end` (validates handoff format, tracks completion, safe error handling).
+- **Remediation loop** extends the existing "required reviewer subagent" — reviewer outputs structured findings; orchestrator enforces remediation.
+- **Cross-session memory** enhances Phase 1 context (loads prior decisions before planning).
+- **Active agent tracking** enhances logging and debugging (shows which subagent ran at each tier).
+
+### Additional Gaps and Potential Issues for Lifecycle and Quality Features
+
+**Gap #14: Platform-native hook registration and discovery**
+
+**Issue:** How do we discover and register platform-native hooks (Cursor `.cursor/hooks.json`, Claude `.claude/settings.json`, Gemini `~/.gemini/settings.json`)? Should Puppet Master auto-discover hooks or require explicit configuration?
+
+**Mitigation:**
+- **Auto-discovery:** Scan for hook config files in project root and home directory on startup. Register discovered hooks as adapters.
+- **Explicit config:** Add `platform_hooks` section to `PuppetMasterConfig`:
+  ```yaml
+  platform_hooks:
+    cursor:
+      enabled: true
+      config_path: ".cursor/hooks.json"
+    claude:
+      enabled: true
+      config_path: ".claude/settings.json"
+    gemini:
+      enabled: true
+      config_path: "~/.gemini/settings.json"
+  ```
+- **Fallback:** If platform-native hooks fail or are unavailable, fall back to orchestrator-level hooks (always available).
+
+**Gap #15: Hook execution order and dependencies**
+
+**Issue:** When multiple hooks are registered (built-in + platform-native), what is the execution order? Can hooks depend on each other? What if one hook blocks execution?
+
+**Mitigation:**
+- **Execution order:** Built-in hooks run first (ActiveSubagentTrackerHook, TierContextInjectorHook, StaleStatePrunerHook), then platform-native hooks, then custom hooks.
+- **Dependencies:** Hooks should be independent. If a hook needs data from another hook, use shared context (`BeforeTierContext`/`AfterTierContext`).
+- **Blocking:** First hook that blocks stops execution. Log which hook blocked and why.
+
+**Gap #16: Structured output parsing reliability**
+
+**Issue:** Platform output formats may vary (JSON vs JSONL vs text). Parsers may fail on edge cases (malformed JSON, partial output, streaming output). How do we handle parsing failures gracefully?
+
+**Mitigation:**
+- **Multi-pass parsing:** Try JSON parse first, then JSONL, then text extraction. Use best-effort parsing with fallbacks.
+- **Partial output handling:** If parsing fails, extract what we can (e.g., `task_report` from text even if `findings` missing). Mark tier as "complete with warnings."
+- **Parser testing:** Comprehensive test suite for each platform parser with edge cases (malformed JSON, unicode, large outputs, streaming).
+- **Parser versioning:** Track parser version and platform CLI version. Update parsers when platform CLI changes.
+
+**Gap #17: Remediation loop infinite retry risk**
+
+**Issue:** Remediation loop could retry indefinitely if findings never resolve (e.g., false positives, unrelated failures). How do we detect and break infinite loops?
+
+**Mitigation:**
+- **Max retries:** Hard limit (default: 3) on remediation retries per tier.
+- **Progress detection:** Compare findings between retries. If findings unchanged after 2 retries, escalate (don't retry again).
+- **Escalation threshold:** After max retries, escalate to parent-tier orchestrator. Parent-tier can decide to skip, fix manually, or re-plan.
+- **Timeout:** Remediation loop has overall timeout (e.g., 30 minutes). If timeout exceeded, escalate.
+
+**Gap #18: Memory persistence conflicts and staleness**
+
+**Issue:** Memory files may become stale (outdated decisions), conflict between runs (different decisions), or grow unbounded. How do we manage memory lifecycle?
+
+**Mitigation:**
+- **Versioning:** Each memory entry has timestamp. Load only recent entries (e.g., last 30 days) unless explicitly requested.
+- **Conflict resolution:** When loading memory, detect conflicts (e.g., "Rust + Actix" vs "Python + FastAPI"). Prompt user or use most recent decision.
+- **Pruning:** Prune old memory entries (older than threshold, e.g., 90 days) unless marked as "persistent."
+- **Size limits:** Limit memory file sizes (e.g., max 10MB per file). Rotate or archive old entries.
+
+**Gap #19: Active subagent tracking accuracy**
+
+**Issue:** Active subagent tracking may be inaccurate if subagent selection changes mid-tier, or if platform-native hooks override selection. How do we ensure tracking reflects reality?
+
+**Mitigation:**
+- **Single source of truth:** `TierContext.active_subagent` is set by BeforeTier hook (built-in ActiveSubagentTrackerHook). Platform-native hooks can override but must update `TierContext`.
+- **Validation:** AfterTier hook validates that tracked subagent matches actual execution (check platform logs or output for subagent name).
+- **Fallback:** If tracking fails, infer subagent from output patterns (e.g., "rust-engineer" if output mentions Rust-specific patterns).
+
+**Gap #20: Safe error handling performance overhead**
+
+**Issue:** Wrapping every hook/verification function in `safe_hook_main` adds overhead. Could impact performance for high-frequency operations.
+
+**Mitigation:**
+- **Selective wrapping:** Only wrap hooks and verification functions that could panic or fail unpredictably. Trusted functions (e.g., simple getters) don't need wrapping.
+- **Lazy evaluation:** Use `Result` types instead of panics where possible. Only wrap functions that could panic.
+- **Performance testing:** Benchmark wrapped vs unwrapped functions. If overhead > 5%, optimize or remove wrapping for hot paths.
+
+**Gap #21: Lazy lifecycle state directory permissions**
+
+**Issue:** Lazy creation of state directories may fail due to permissions (e.g., `.puppet-master/verification/` not writable). How do we handle permission errors gracefully?
+
+**Mitigation:**
+- **Permission check:** Before creating directories, check write permissions. If not writable, log error and continue (state won't be persisted but execution continues).
+- **Fallback location:** If default location not writable, try fallback (e.g., `/tmp/puppet-master-<user>/`).
+- **User notification:** Log clear error message with instructions (e.g., "Cannot create state directory. Run: chmod 755 .puppet-master").
+
+**Gap #22: Structured handoff contract enforcement prompt injection**
+
+**Issue:** Subagents may ignore structured output format instructions in prompts. Runtime validation catches this, but retry may also fail if subagent doesn't understand format requirement.
+
+**Mitigation:**
+- **Explicit format examples:** Include JSON schema example in prompt:
+  ```
+  Required output format:
+  {
+    "task_report": "What I did...",
+    "downstream_context": "Info for next tier...",
+    "findings": [{"severity": "critical", "category": "security", ...}]
+  }
+  ```
+- **Platform-specific instructions:** For Copilot (text-only), provide markdown format example instead of JSON.
+- **Validation feedback:** If retry fails, include validation error in retry prompt: "Your output was missing 'task_report' field. Please include it."
+- **Fail-safe:** After retry fails, extract partial output (best-effort) and proceed with warnings.
+
+**Gap #23: Cross-platform hook adapter complexity**
+
+**Issue:** Platform-native hook adapters (CursorNativeHookAdapter, ClaudeNativeHookAdapter, GeminiNativeHookAdapter) must handle different hook formats, communication protocols (JSON stdin/stdout, exit codes), and error handling. This adds complexity.
+
+**Mitigation:**
+- **Unified adapter trait:** Define `PlatformHookAdapter` trait with common interface:
+  ```rust
+  trait PlatformHookAdapter: Send + Sync {
+      fn execute_before_tier(&self, ctx: &BeforeTierContext) -> Result<BeforeTierResult>;
+      fn execute_after_tier(&self, ctx: &AfterTierContext) -> Result<AfterTierResult>;
+      fn platform(&self) -> Platform;
+  }
+  ```
+- **Platform-specific implementations:** Each platform adapter handles its own format/protocol internally.
+- **Testing:** Test each adapter with mock hook scripts. Verify JSON parsing, exit code handling, error cases.
+- **Documentation:** Document hook format for each platform in `docs/platform-hooks.md`.
+
+**Gap #24: Memory extraction from Phase 1 output**
+
+**Issue:** How do we extract architectural decisions, patterns, tech choices, and pitfalls from Phase 1 (Planning/Architecture) output? Phase 1 output is unstructured text, not structured JSON.
+
+**Mitigation:**
+- **Pattern matching:** Use regex/pattern matching to extract decisions (e.g., "We chose Rust + Actix" → save as architectural decision).
+- **LLM extraction:** Run a lightweight extraction subagent (e.g., `project-manager`) on Phase 1 output to extract structured memory entries.
+- **Manual tagging:** Allow Phase 1 subagent to explicitly tag decisions (e.g., `<memory:architecture>Rust + Actix</memory:architecture>`).
+- **Best-effort:** Extract what we can. Missing extractions don't block execution; memory is enhancement, not requirement.
+
+**Gap #25: Remediation loop subagent re-execution context**
+
+**Issue:** When remediation loop re-runs executor/reviewer subagents, do they get the same context (prompt, files, state) as original execution, or modified context (remediation prompt, updated files)?
+
+**Mitigation:**
+- **Modified context:** Re-run with remediation prompt appended, but include original context (files, state) so subagent has full picture.
+- **Incremental fixes:** Each retry builds on previous fixes. Include previous iteration's output in context.
+- **State preservation:** Don't reset tier state between remediation retries. Preserve progress (e.g., files modified, tests run).
+
+**Gap #26: Hook performance impact on tier execution time**
+
+**Issue:** Hooks add overhead to tier execution (BeforeTier hooks run before every tier start, AfterTier hooks run after every tier completion). Could slow down fast tiers significantly.
+
+**Mitigation:**
+- **Async hooks:** Run hooks asynchronously where possible (e.g., StaleStatePrunerHook can run in background).
+- **Selective execution:** Skip hooks for Iteration tier (too frequent) or only run critical hooks (ActiveSubagentTrackerHook, HandoffValidatorHook).
+- **Caching:** Cache hook results when inputs unchanged (e.g., TierContextInjectorHook can cache injected context for same tier type).
+- **Performance monitoring:** Track hook execution time. If hooks > 10% of tier time, optimize or skip non-critical hooks.
+
+**Gap #27: Structured output validation false positives**
+
+**Issue:** Validation may incorrectly reject valid output (false positive) if parser is too strict, or accept invalid output (false negative) if parser is too lenient.
+
+**Mitigation:**
+- **Lenient validation:** Accept partial output (e.g., missing `downstream_context` is OK, missing `task_report` is not). Only reject if critical fields missing.
+- **Parser testing:** Test with real platform outputs to tune validation strictness. Aim for < 1% false positive rate.
+- **User feedback:** If validation fails, log raw output for debugging. Allow users to report false positives.
+- **Parser updates:** Update parsers based on user feedback and platform CLI changes.
+
+### Implementation Notes
+
+- **Where:** New module `src/core/hooks.rs` or `src/verification/hooks.rs` for hook system; `src/core/memory.rs` for cross-session persistence; extend `SubagentOutput` in `src/types/` for structured handoff.
+- **What:** Implement `BeforeTierHook` and `AfterTierHook` traits; `save_memory()` and `load_memory()` functions; `validate_subagent_output()` with platform-specific parsers; remediation loop in orchestrator completion logic.
+- **When:** Hooks run automatically at tier boundaries; memory persists at Phase completion and loads at run start; remediation loop runs when Critical/Major findings detected.
 
 ---
 
@@ -1439,7 +4026,7 @@ Short notes so implementers know where to put code and what the orchestrator alr
 ### Phase 3: Orchestrator Integration
 
 - **Where:** `src/core/orchestrator.rs`. The orchestrator already has `tier_config_for(tier_type) -> &TierConfig` (platform, model, plan_mode, etc.); use it for subagent runs.
-- **What to add:** (1) Read `enable_tier_subagents` and subagent config from the same config source as tier config (e.g. from run config or GuiConfig). (2) When executing a tier, if subagents enabled: call `SubagentSelector::select_for_tier`, apply `tier_overrides` (replace if non-empty, else use selected list), filter `disabled_subagents`, add `required_subagents`. (3) For each subagent name, build an `ExecutionRequest` (prompt, model, **plan_mode from tier_config**, etc.) and run via the existing platform runner (same path as non-subagent iterations). (4) `build_subagent_invocation` and `execute_with_subagent` can be methods that take `tier_config` (for plan_mode and platform/model) and call the runner. Platform/model: use `tier_config_for(tier_node.tier_type).platform` and `.model` (no separate get_platform_for_tier needed if you use tier_config_for).
+- **What to add:** (1) Read `enable_tier_subagents` and subagent config from the same config source as tier config (e.g. from run config or GuiConfig). (2) When executing a tier, if subagents enabled: call `SubagentSelector::select_for_tier`, apply `tier_overrides` (replace if non-empty, else use selected list), filter `disabled_subagents`, add `required_subagents`. (3) **Register agent in coordination state** before execution (see "Agent Coordination and Communication"). (4) **Get coordination context** and inject into prompt (warns agent about active files/operations). (5) For each subagent name, build an `ExecutionRequest` (prompt with coordination context, model, **plan_mode from tier_config**, etc.) and run via the existing platform runner (same path as non-subagent iterations). **For Codex/Copilot SDK:** Use shared thread/session for coordination when using SDK-based execution. (6) **Update coordination state** during execution (files being edited, current operation). (7) **Unregister agent** after execution completes. (8) `build_subagent_invocation` and `execute_with_subagent` can be methods that take `tier_config` (for plan_mode and platform/model) and call the runner. Platform/model: use `tier_config_for(tier_node.tier_type).platform` and `.model` (no separate get_platform_for_tier needed if you use tier_config_for).
 
 ### Phase 4: Error Pattern Detection
 
@@ -1461,6 +4048,19 @@ Short notes so implementers know where to put code and what the orchestrator alr
 - **Where:** Same verification module as config-wiring (e.g. `src/verification/` or `src/core/`) or a dedicated `tier_verification.rs`. The main orchestrator calls `verify_tier_start` when entering a Phase/Task/Subtask (after or as part of config-wiring) and `verify_tier_end` when completing a Phase/Task/Subtask (after acceptance gate; quality step can be part of gate or separate).
 - **What:** Start: config-wiring (existing) + wiring/readiness checklist (GUI updated? backend updated? steps make sense? known gaps?). End: wiring re-check + existing acceptance gate + quality verification. Quality verification is **both** (1) required reviewer subagent (code-reviewer) at end-of-tier, on retry, and when gate fails; (2) gate criteria (clippy, tests, etc.). Parent-tier orchestrator addresses unrelated failures. See **"Start and End Verification at Phase, Task, and Subtask"** for the table and gaps. Define per-tier quality checklist (e.g. Phase: docs; Task: design; Subtask: code + tests + clippy) in code or config.
 - **When called:** Start at Phase/Task/Subtask entry; end at Phase/Task/Subtask completion (before marking tier complete). Iteration can use tier-level checks only (no separate iteration start/end verification unless needed).
+- **Integration with hooks:** BeforeTier hook runs **before** `verify_tier_start` (tracks active subagent, injects context, prunes stale state). AfterTier hook runs **after** `verify_tier_end` (validates handoff format, tracks completion). See **"Lifecycle and Quality Features"** for hook implementation.
+
+### Agent coordination
+
+- **Where:** New module `src/core/agent_coordination.rs` for file-based coordination (cross-platform); extend `src/platforms/codex.rs` and `src/platforms/copilot.rs` (or SDK bridge) for SDK-based coordination (same-platform only).
+- **What:** (1) **File-based coordination (cross-platform):** Implement `AgentCoordinator` that manages `active-agents.json` state file. Register agents before execution (including platform field), update status during execution (files being edited, current operation), unregister after execution. Get coordination context for prompt injection. **This enables cross-platform coordination** — Codex agents can see Claude agents' status, and vice versa. All platforms read/write to the same JSON file. (2) **SDK-based coordination (Codex/Copilot, same-platform only):** Extend Codex runner to create shared threads for parallel subtasks **when all agents are Codex**; extend Copilot runner to create shared sessions for parallel subtasks **when all agents are Copilot**. All agents in the same dependency level use the same thread/session. Thread/session state provides coordination context. **Note:** SDK coordination only works within the same platform (Codex↔Codex, Copilot↔Copilot), not across platforms. (3) **Prompt injection:** Inject coordination context into each agent's prompt (active agents with platform info, files being modified, warnings about conflicts). Include platform identifier so agents know which platform other agents are using. (4) **Status updates:** Extract file operations from agent output (parse file paths, use platform hooks, use SDK callbacks) and update coordination state periodically. (5) **Conflict prevention:** Check coordination state before execution to detect file conflicts; warn agents or delay execution if conflicts detected. Works across platforms via file-based coordination.
+- **When called:** Register agent before tier execution (include platform from tier_config); update status during execution (periodically or on file operations); unregister after execution. For SDK coordination, create shared thread/session at dependency level start **only if all agents in that level use the same platform**; otherwise use file-based coordination. See **"Agent Coordination and Communication"** for full details and cross-platform examples.
+
+### Lifecycle hooks and quality features
+
+- **Where:** New module `src/core/hooks.rs` or `src/verification/hooks.rs` for hook system; `src/core/memory.rs` for cross-session persistence (`save_memory`, `load_memory`); extend `SubagentOutput` in `src/types/` for structured handoff format; remediation loop in orchestrator completion logic (`src/core/orchestrator.rs`).
+- **What:** (1) **BeforeTier/AfterTier hooks:** Implement hook traits, register hooks per tier type, call automatically at tier boundaries. For platforms with native hooks (Cursor, Claude, Gemini), register Puppet Master hooks that delegate where possible; for Codex/Copilot, use orchestrator-level middleware and **leverage SDK coordination** when using SDK-based execution. (2) **Structured handoff validation:** `validate_subagent_output()` with platform-specific parsers (JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot). (3) **Remediation loop:** Parse findings from reviewer subagent output; filter Critical/Major; block completion and re-run until resolved or max retries; escalate to parent-tier on max retries. (4) **Cross-session memory:** Save architectural decisions/patterns/tech choices at Phase completion; load at run start; inject into Phase 1 context. (5) **Active agent tracking:** `active_subagent: Option<String>` in `TierContext`; update in BeforeTier/AfterTier hooks; persist to `.puppet-master/state/active-subagents.json`. (6) **Safe error handling:** Wrap hooks and verification in `safe_hook_main()` that guarantees structured output even on failure. (7) **Lazy lifecycle:** Create verification state on first write; prune stale state (>2 hours) in BeforeTier hook. (8) **Contract enforcement:** AfterTier hook validates handoff format; retry on malformed output; fail-safe after retry.
+- **When called:** Hooks run automatically at tier boundaries (before `verify_tier_start`, after `verify_tier_end`). Memory persists at Phase completion; loads at run start. Remediation loop runs when Critical/Major findings detected. See **"Lifecycle and Quality Features"** for full details and platform-specific implementation notes.
 
 ### Considerations #6 (Subagent availability / files)
 
@@ -1521,12 +4121,20 @@ async fn execute_subtasks_parallel(&self, subtask_ids: &[String]) -> Result<Vec<
             // Build context for this specific subtask
             let tier_context = self.build_tier_context(&tier_node, &context)?;
             
+            // DRY REQUIREMENT: Subagent selection MUST use subagent_selector which uses subagent_registry — NEVER hardcode subagent names
             // Select subagents for THIS subtask (independent of others)
             let subagent_names = self.subagent_selector.select_for_tier(
                 TierType::Subtask,
                 &tier_context,
             );
+            // DRY: Validate selected subagent names using subagent_registry::is_valid_subagent_name()
+            for name in &subagent_names {
+                if !subagent_registry::is_valid_subagent_name(name) {
+                    log::warn!("Invalid subagent name selected: {}", name);
+                }
+            }
             
+            // DRY REQUIREMENT: execute_tier_with_subagents MUST use platform_specs for platform-specific invocation
             // Execute with selected subagents
             self.execute_tier_with_subagents(&tier_node, &tier_context, &subagent_names).await
         })).await;
@@ -1551,6 +4159,8 @@ Subtask A (rust-engineer) → Subtask B (rust-engineer + test-automator)
 // src/core/subagent_selector.rs (additions)
 
 impl SubagentSelector {
+    // DRY:FN:select_with_dependency_context — Select subagents with dependency context
+    // DRY REQUIREMENT: MUST use subagent_registry::get_subagent_for_language() — NEVER hardcode language → subagent mappings
     /// Select subagents with dependency context
     pub fn select_with_dependency_context(
         &self,
@@ -1560,13 +4170,15 @@ impl SubagentSelector {
     ) -> Vec<String> {
         let mut subagents = self.select_for_tier(tier_node.tier_type, tier_context);
         
+        // DRY REQUIREMENT: language_to_subagent MUST use subagent_registry::get_subagent_for_language()
         // Inherit language/domain from completed dependencies
         for dep in completed_dependencies {
             if let Some(dep_context) = self.get_tier_context(dep) {
                 // Inherit language if not already set
                 if tier_context.primary_language.is_none() {
                     if let Some(lang) = &dep_context.primary_language {
-                        if let Some(subagent) = self.language_to_subagent(lang) {
+                        // DRY: Use subagent_registry — DO NOT call self.language_to_subagent which may hardcode mappings
+                        if let Some(subagent) = subagent_registry::get_subagent_for_language(lang) {
                             if !subagents.contains(&subagent) {
                                 subagents.insert(0, subagent); // Prioritize inherited language
                             }
@@ -1586,6 +4198,2657 @@ impl SubagentSelector {
 }
 ```
 
+### Agent Coordination and Communication
+
+When multiple agents/subagents run concurrently (parallel subtasks, different tiers, or same tier with multiple subagents), they need **coordination** to avoid conflicts, understand what others are working on, and not "freak out" when code changes around them.
+
+**Benefits of coordination:**
+
+- **Conflict prevention:** Agents know what files/modules others are modifying, avoiding simultaneous edits
+- **Context awareness:** Agents understand what other agents are working on, reducing confusion when seeing changes
+- **Efficient collaboration:** Agents can build on each other's work, reference shared decisions, and avoid duplicate effort
+- **Reduced errors:** Agents don't overwrite each other's changes or create conflicting implementations
+- **Cross-platform coordination:** Agents from different platforms (Codex, Claude, Cursor, Gemini, Copilot) can coordinate with each other through shared state files
+
+**Coordination mechanisms:**
+
+1. **Shared state files (existing):** All agents read `progress.txt`, `AGENTS.md`, `prd.json` — these provide **asynchronous** coordination (agents see what others have done, not what they're doing now).
+
+2. **Real-time coordination state (new, cross-platform):** Add `.puppet-master/state/active-agents.json` that tracks:
+   - Which agents/subagents are currently active (including platform: "codex", "claude", "cursor", "gemini", "copilot")
+   - What files/modules each agent is working on
+   - What operations each agent is performing (e.g., "editing src/api.rs", "running tests")
+   - Platform identifier (so agents know which platform other agents are using)
+   - Timestamp of last update
+   
+   **This file-based coordination works across ALL platforms** — a Codex agent can see what a Claude agent is doing, and vice versa. All platforms read/write to the same JSON file.
+
+3. **Platform-specific coordination (SDK-based, same-platform only):**
+   - **Codex SDK:** Use thread-based coordination (`codexClient.startThread()`, thread sharing, thread state). Codex SDK supports thread coordination where multiple **Codex agents** can share thread context and see each other's progress. **Note:** This only works between Codex agents, not across platforms.
+   - **Copilot SDK:** Use session-based coordination (`createSession()`, session state sharing). Copilot SDK supports session coordination where multiple **Copilot agents** can share session context and coordinate operations. **Note:** This only works between Copilot agents, not across platforms.
+
+4. **Cross-worktree awareness:** Even when agents run in separate worktrees, they can:
+   - Read shared state files from main repo (progress.txt, prd.json)
+   - Read active-agents.json to see what others are doing (regardless of platform)
+   - Write their own status to active-agents.json before starting work
+   - Update status as they work (file being edited, operation in progress)
+
+5. **Prompt injection:** Inject coordination context into each agent's prompt:
+   ```
+   **Active Agents:**
+   - rust-engineer (Codex) is editing src/api.rs (started 2 minutes ago)
+   - test-automator (Claude Code) is running tests in tests/api_test.rs (started 1 minute ago)
+   
+   **Files Being Modified:**
+   - src/api.rs (by rust-engineer on Codex)
+   - tests/api_test.rs (by test-automator on Claude Code)
+   
+   **Your Task:** Implement authentication middleware. Avoid editing src/api.rs until rust-engineer finishes.
+   ```
+
+**Cross-platform coordination example:**
+
+When a Codex agent and a Claude Code agent work simultaneously:
+
+```
+1. Codex agent (rust-engineer) starts Subtask A:
+   - Registers in active-agents.json:
+     {
+       "agent_id": "rust-engineer-1.1.1",
+       "platform": "codex",
+       "tier_id": "1.1.1",
+       "current_operation": "Starting API implementation",
+       "files_being_edited": []
+     }
+
+2. Claude Code agent (test-automator) starts Subtask B (parallel):
+   - Reads active-agents.json before starting
+   - Sees: "rust-engineer (Codex) is working on Subtask A"
+   - Registers itself:
+     {
+       "agent_id": "test-automator-1.1.2",
+       "platform": "claude",
+       "tier_id": "1.1.2",
+       "current_operation": "Starting test implementation",
+       "files_being_edited": []
+     }
+
+3. Codex agent begins editing src/api.rs:
+   - Updates active-agents.json:
+     {
+       "agent_id": "rust-engineer-1.1.1",
+       "platform": "codex",
+       "files_being_edited": ["src/api.rs"],
+       "current_operation": "Editing src/api.rs to add POST /users endpoint"
+     }
+
+4. Claude Code agent reads coordination state (periodic check):
+   - Sees: "rust-engineer (Codex) is editing src/api.rs"
+   - Prompt includes: "**Active Agents:** rust-engineer (Codex) is editing src/api.rs. **Your Task:** Add tests for POST /users endpoint. Wait for rust-engineer to finish src/api.rs before adding tests."
+   - Agent understands context and avoids editing src/api.rs
+
+5. Codex agent completes:
+   - Unregisters from active-agents.json
+   - Claude Code agent can now safely edit src/api.rs for tests
+```
+
+**Platform field in coordination state:**
+
+The `active-agents.json` includes a `platform` field so agents know which platform other agents are using:
+
+```json
+{
+  "active_agents": {
+    "rust-engineer-1.1.1": {
+      "agent_id": "rust-engineer-1.1.1",
+      "platform": "codex",
+      "tier_id": "1.1.1",
+      "worktree_path": ".puppet-master/worktrees/1.1.1",
+      "files_being_edited": ["src/api.rs"],
+      "current_operation": "Editing src/api.rs",
+      "started_at": "2026-02-18T10:00:00Z",
+      "last_update": "2026-02-18T10:02:00Z"
+    },
+    "test-automator-1.1.2": {
+      "agent_id": "test-automator-1.1.2",
+      "platform": "claude",
+      "tier_id": "1.1.2",
+      "worktree_path": ".puppet-master/worktrees/1.1.2",
+      "files_being_edited": ["tests/api_test.rs"],
+      "current_operation": "Writing tests for API endpoint",
+      "started_at": "2026-02-18T10:01:00Z",
+      "last_update": "2026-02-18T10:03:00Z"
+    }
+  },
+  "last_updated": "2026-02-18T10:03:00Z"
+}
+```
+
+This allows agents to see not just what others are doing, but also which platform they're using, which can be useful context (e.g., "Codex agent is working on this, Claude agent is working on that").
+
+**Implementation:**
+
+```rust
+// src/core/agent_coordination.rs (new module)
+
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
+use std::path::PathBuf;
+use chrono::{DateTime, Utc};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+// DRY:DATA:ActiveAgent — Active agent coordination state
+pub struct ActiveAgent {
+    pub agent_id: String, // e.g., "rust-engineer", "test-automator"
+    pub platform: Platform, // "codex", "claude", "cursor", "gemini", "copilot" - enables cross-platform coordination
+    pub tier_id: String,
+    pub worktree_path: Option<PathBuf>, // None if main repo
+    pub files_being_edited: Vec<PathBuf>,
+    pub current_operation: String, // e.g., "editing src/api.rs", "running tests"
+    pub started_at: DateTime<Utc>,
+    pub last_update: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct AgentCoordinationState {
+    pub active_agents: HashMap<String, ActiveAgent>, // keyed by agent_id
+    pub last_updated: DateTime<Utc>,
+}
+
+// DRY:DATA:AgentCoordinator — Agent coordination state manager
+pub struct AgentCoordinator {
+    state_file: PathBuf,
+}
+
+impl AgentCoordinator {
+    // DRY:FN:new — Create agent coordinator
+    pub fn new(project_root: &Path) -> Self {
+        Self {
+            state_file: project_root.join(".puppet-master").join("state").join("active-agents.json"),
+        }
+    }
+    
+    // DRY:FN:register_agent — Register an agent as active
+    // DRY REQUIREMENT: Agent platform field MUST be from tier_config.platform — NEVER hardcode platform
+    /// Register an agent as active
+    pub async fn register_agent(&self, agent: ActiveAgent) -> Result<()> {
+        // DRY: Validate agent_id format if needed — use subagent_registry::is_valid_subagent_name() for subagent names
+        let mut state = self.load_state().await?;
+        state.active_agents.insert(agent.agent_id.clone(), agent);
+        state.last_updated = Utc::now();
+        self.save_state(&state).await
+    }
+    
+    /// Update agent status (files being edited, current operation)
+    pub async fn update_agent_status(
+        &self,
+        agent_id: &str,
+        files_being_edited: Vec<PathBuf>,
+        current_operation: String,
+    ) -> Result<()> {
+        let mut state = self.load_state().await?;
+        if let Some(agent) = state.active_agents.get_mut(agent_id) {
+            agent.files_being_edited = files_being_edited;
+            agent.current_operation = current_operation;
+            agent.last_update = Utc::now();
+            state.last_updated = Utc::now();
+            self.save_state(&state).await
+        } else {
+            Err(anyhow!("Agent {} not found", agent_id))
+        }
+    }
+    
+    /// Unregister an agent (when it completes)
+    pub async fn unregister_agent(&self, agent_id: &str) -> Result<()> {
+        let mut state = self.load_state().await?;
+        state.active_agents.remove(agent_id);
+        state.last_updated = Utc::now();
+        self.save_state(&state).await
+    }
+    
+    // DRY:FN:get_coordination_context — Get coordination context for prompt injection
+    /// Get coordination context for prompt injection
+    pub async fn get_coordination_context(&self) -> Result<String> {
+        let state = self.load_state().await?;
+        let mut context = String::new();
+        
+        if !state.active_agents.is_empty() {
+            context.push_str("**Active Agents:**\n");
+            for agent in state.active_agents.values() {
+                let age = Utc::now().signed_duration_since(agent.started_at);
+                // DRY REQUIREMENT: Platform display name MUST use platform_specs::display_name_for() — NEVER hardcode platform names
+                let platform_display = platform_specs::display_name_for(agent.platform);
+                context.push_str(&format!(
+                    "- {} ({}) is {} (started {} ago, tier: {})\n",
+                    agent.agent_id,
+                    platform_display, // Use platform_specs for display name
+                    agent.current_operation,
+                    format_duration(age),
+                    agent.tier_id
+                ));
+            }
+            
+            context.push_str("\n**Files Being Modified:**\n");
+            let mut all_files: Vec<_> = state.active_agents.values()
+                .flat_map(|a| &a.files_being_edited)
+                .collect();
+            all_files.sort();
+            all_files.dedup();
+            for file in all_files {
+                let agents: Vec<_> = state.active_agents.values()
+                    .filter(|a| a.files_being_edited.contains(file))
+                    .map(|a| &a.agent_id)
+                    .collect();
+                context.push_str(&format!(
+                    "- {} (by {})\n",
+                    file.display(),
+                    agents.join(", ")
+                ));
+            }
+        }
+        
+        Ok(context)
+    }
+    
+    async fn load_state(&self) -> Result<AgentCoordinationState> {
+        if self.state_file.exists() {
+            let json = std::fs::read_to_string(&self.state_file)?;
+            let state: AgentCoordinationState = serde_json::from_str(&json)?;
+            // Prune stale agents (no update in last hour)
+            let mut pruned = state.clone();
+            let cutoff = Utc::now() - chrono::Duration::hours(1);
+            pruned.active_agents.retain(|_, agent| agent.last_update > cutoff);
+            if pruned.active_agents.len() != state.active_agents.len() {
+                self.save_state(&pruned).await?;
+            }
+            Ok(pruned)
+        } else {
+            Ok(AgentCoordinationState {
+                active_agents: HashMap::new(),
+                last_updated: Utc::now(),
+            })
+        }
+    }
+    
+    async fn save_state(&self, state: &AgentCoordinationState) -> Result<()> {
+        std::fs::create_dir_all(self.state_file.parent().unwrap())?;
+        let json = serde_json::to_string_pretty(state)?;
+        std::fs::write(&self.state_file, json)?;
+        Ok(())
+    }
+}
+
+fn format_duration(d: chrono::Duration) -> String {
+    if d.num_minutes() < 1 {
+        format!("{}s", d.num_seconds())
+    } else if d.num_hours() < 1 {
+        format!("{}m", d.num_minutes())
+    } else {
+        format!("{}h {}m", d.num_hours(), d.num_minutes() % 60)
+    }
+}
+```
+
+**Integration with orchestrator:**
+
+In `src/core/orchestrator.rs`, before executing a tier:
+
+```rust
+// Before tier execution
+let coordinator = AgentCoordinator::new(&self.config.project.working_directory);
+
+// Register this agent/subagent as active (includes platform for cross-platform coordination)
+coordinator.register_agent(ActiveAgent {
+    agent_id: format!("{}-{}", subagent_name, tier_id),
+    platform: tier_config.platform, // Include platform so other agents know which platform this agent uses
+    tier_id: tier_id.to_string(),
+    worktree_path: self.get_tier_worktree(tier_id),
+    files_being_edited: Vec::new(), // Will update as agent works
+    current_operation: format!("Starting tier {}", tier_id),
+    started_at: Utc::now(),
+    last_update: Utc::now(),
+}).await?;
+
+// Get coordination context and inject into prompt
+let coordination_context = coordinator.get_coordination_context().await?;
+let enhanced_prompt = if !coordination_context.is_empty() {
+    format!("{}\n\n{}", prompt, coordination_context)
+} else {
+    prompt
+};
+
+// During execution, update status periodically (e.g., when agent edits files)
+// This requires parsing agent output or using platform-specific hooks
+// For now, update on tier completion
+
+// After tier execution
+coordinator.unregister_agent(&format!("{}-{}", subagent_name, tier_id)).await?;
+```
+
+**Platform-specific coordination (Codex SDK and Copilot SDK):**
+
+**Codex SDK (`@openai/codex-sdk`):**
+
+- **Thread-based coordination:** Codex SDK uses threads (`codexClient.startThread()`) that can be shared across multiple agents. When using Codex SDK:
+  - Create a shared thread for related subtasks
+  - Multiple agents can read/write to the same thread
+  - Thread state provides coordination context
+  - Use `thread.run()` and `thread.runStreamed()` with shared thread ID
+
+```typescript
+// Example: Codex SDK thread coordination
+const codexClient = new CodexClient({ apiKey: process.env.CODEX_API_KEY });
+
+// Create shared thread for parallel subtasks
+const sharedThread = await codexClient.startThread({
+  metadata: { tier_id: "1.1", subtasks: ["A", "B"] }
+});
+
+// Agent A uses shared thread
+await sharedThread.run({
+  prompt: "Implement API endpoint",
+  // Thread context includes Agent B's progress
+});
+
+// Agent B uses same shared thread
+await sharedThread.run({
+  prompt: "Add tests for API endpoint",
+  // Thread context includes Agent A's progress
+});
+```
+
+**Copilot SDK (`@github/copilot-sdk`):**
+
+- **Session-based coordination:** Copilot SDK uses sessions (`createSession()`) that can share state. When using Copilot SDK:
+  - Create a shared session for related subtasks
+  - Multiple agents can use the same session
+  - Session state provides coordination context
+  - Use `session.run()` with shared session ID
+
+```typescript
+// Example: Copilot SDK session coordination
+const copilotClient = new CopilotClient({ token: process.env.GITHUB_TOKEN });
+
+// Create shared session for parallel subtasks
+const sharedSession = await copilotClient.createSession({
+  mcpServers: { context7: { ... } },
+  metadata: { tier_id: "1.1", subtasks: ["A", "B"] }
+});
+
+// Agent A uses shared session
+await sharedSession.run({
+  prompt: "Implement API endpoint",
+  // Session context includes Agent B's progress
+});
+
+// Agent B uses same shared session
+await sharedSession.run({
+  prompt: "Add tests for API endpoint",
+  // Session context includes Agent A's progress
+});
+```
+
+**When to use SDK coordination vs. file-based coordination:**
+
+- **SDK coordination (Codex/Copilot, same-platform only):** Use when running agents via SDK (programmatic control) **and all agents are on the same platform**. Provides **real-time coordination** through shared thread/session state. Codex agents can coordinate with other Codex agents via shared threads; Copilot agents can coordinate with other Copilot agents via shared sessions. **Note:** SDK coordination does NOT work across platforms (Codex agents cannot coordinate with Claude agents via SDK threads/sessions).
+- **File-based coordination (all platforms, cross-platform):** Use for CLI-based runs, when SDK coordination is not available, or **when coordinating agents across different platforms**. Provides **asynchronous coordination** through shared state files. All platforms (Codex, Claude, Cursor, Gemini, Copilot) read/write to the same `active-agents.json` file, enabling **cross-platform coordination**. A Codex agent can see what a Claude agent is doing, and vice versa. Agents read coordination state before starting work and update their status periodically.
+
+**Benefits:**
+
+- **Reduced conflicts:** Agents know what files others are editing, avoiding simultaneous modifications. Coordination context warns agents: "rust-engineer is editing src/api.rs — avoid this file."
+- **Better context:** Agents understand what others are working on, reducing confusion when seeing changes. Agent sees: "test-automator is running tests — these test failures are expected."
+- **Efficient collaboration:** Agents can reference shared decisions and avoid duplicate work. Agent sees: "architect-reviewer established pattern X — use this pattern."
+- **No "freaking out":** Agents see coordination context explaining why code is changing, who is changing it, and what they're doing. Reduces false alarms and confusion.
+- **Platform-native:** Codex and Copilot SDKs provide built-in coordination mechanisms (shared threads/sessions) that Puppet Master can leverage.
+
+**Coordination state updates:**
+
+- **Before execution:** Agent registers in coordination state with initial operation description.
+- **During execution:** Agent updates coordination state periodically (e.g., every 30 seconds or when file operations occur):
+  - Files being edited (extracted from agent output or platform hooks)
+  - Current operation (e.g., "editing src/api.rs", "running cargo test")
+  - Progress updates
+- **After execution:** Agent unregisters from coordination state.
+
+**Extracting file operations from agent output:**
+
+- **Parse agent output:** Use output parser to detect file paths mentioned in agent responses (e.g., "I'm editing src/api.rs" or file paths in diffs).
+- **Platform hooks:** For platforms with native hooks (Cursor, Claude, Gemini), use `PreToolUse`/`PostToolUse` hooks to detect file operations in real-time.
+- **SDK callbacks:** For Codex/Copilot SDK, use SDK callbacks to detect file operations (e.g., `onToolUse` callbacks).
+
+**Example coordination flow (cross-platform):**
+
+```
+1. Agent A (rust-engineer, Codex) starts Subtask A: registers in active-agents.json
+   - agent_id: "rust-engineer-1.1.1"
+   - platform: "codex"
+   - current_operation: "Starting implementation of API endpoint"
+   - files_being_edited: []
+
+2. Agent A begins editing: updates coordination state
+   - files_being_edited: ["src/api.rs"]
+   - current_operation: "Editing src/api.rs to add POST /users endpoint"
+
+3. Agent B (test-automator, Claude Code) starts Subtask B (parallel): reads coordination state
+   - Sees: "rust-engineer (Codex) is editing src/api.rs"
+   - Prompt includes: "**Active Agents:** rust-engineer (Codex) is editing src/api.rs (started 1 minute ago). **Your Task:** Add tests for POST /users endpoint. Wait for rust-engineer to finish src/api.rs before adding tests."
+
+4. Agent B (Claude Code) waits or works on other files, then proceeds when Agent A (Codex) finishes
+   - Cross-platform coordination: Claude agent sees Codex agent's status via shared file
+
+5. Agent A (Codex) completes: unregisters from coordination state
+   - Agent B (Claude Code) can now safely edit src/api.rs for tests
+```
+
+**Key point:** File-based coordination enables **cross-platform communication**. A Codex agent and a Claude Code agent can coordinate with each other through the shared `active-agents.json` file, even though they're using different platforms and different SDKs/CLIs.
+
+**SDK-specific coordination (Codex and Copilot):**
+
+**Codex SDK thread coordination:**
+
+```typescript
+// src/platforms/codex_sdk_coordinator.ts (if using TypeScript bridge)
+
+import { CodexClient } from '@openai/codex-sdk';
+
+export class CodexThreadCoordinator {
+    private client: CodexClient;
+    private sharedThreads: Map<string, string>; // tier_id -> thread_id
+    
+    async createSharedThread(tierId: string, subtaskIds: string[]): Promise<string> {
+        const thread = await this.client.startThread({
+            metadata: {
+                tier_id: tierId,
+                subtasks: subtaskIds,
+                coordination: true,
+            }
+        });
+        this.sharedThreads.set(tierId, thread.id);
+        return thread.id;
+    }
+    
+    async getThreadContext(threadId: string): Promise<string> {
+        // Get thread state (includes other agents' progress)
+        const thread = await this.client.getThread(threadId);
+        return this.formatCoordinationContext(thread);
+    }
+    
+    async runWithCoordination(
+        threadId: string,
+        agentId: string,
+        prompt: string
+    ): Promise<string> {
+        // Get coordination context from thread state
+        const context = await this.getThreadContext(threadId);
+        const enhancedPrompt = `${context}\n\n${prompt}`;
+        
+        // Run with shared thread (other agents see this run's progress)
+        const result = await this.client.resumeThread(threadId).run({
+            prompt: enhancedPrompt,
+        });
+        
+        return result.content;
+    }
+}
+```
+
+**Copilot SDK session coordination:**
+
+```typescript
+// src/platforms/copilot_sdk_coordinator.ts (if using TypeScript bridge)
+
+import { CopilotClient } from '@github/copilot-sdk';
+
+export class CopilotSessionCoordinator {
+    private client: CopilotClient;
+    private sharedSessions: Map<string, string>; // tier_id -> session_id
+    
+    async createSharedSession(tierId: string, subtaskIds: string[]): Promise<string> {
+        const session = await this.client.createSession({
+            mcpServers: {
+                context7: { /* ... */ }
+            },
+            metadata: {
+                tier_id: tierId,
+                subtasks: subtaskIds,
+                coordination: true,
+            }
+        });
+        this.sharedSessions.set(tierId, session.id);
+        return session.id;
+    }
+    
+    async getSessionContext(sessionId: string): Promise<string> {
+        // Get session state (includes other agents' progress)
+        const session = await this.client.getSession(sessionId);
+        return this.formatCoordinationContext(session);
+    }
+    
+    async runWithCoordination(
+        sessionId: string,
+        agentId: string,
+        prompt: string
+    ): Promise<string> {
+        // Get coordination context from session state
+        const context = await this.getSessionContext(sessionId);
+        const enhancedPrompt = `${context}\n\n${prompt}`;
+        
+        // Run with shared session (other agents see this run's progress)
+        const result = await this.client.getSession(sessionId).run({
+            prompt: enhancedPrompt,
+        });
+        
+        return result.content;
+    }
+}
+```
+
+**Integration with platform runners:**
+
+- **Codex runner:** When using Codex SDK, create shared thread for parallel subtasks. All agents in the same dependency level use the same thread. Thread state provides coordination context.
+- **Copilot runner:** When using Copilot SDK, create shared session for parallel subtasks. All agents in the same dependency level use the same session. Session state provides coordination context.
+- **CLI-based runners (Cursor, Claude, Gemini):** Use file-based coordination (`active-agents.json`) since CLI doesn't provide shared thread/session state.
+
+**Implementation notes:**
+
+- **Where:** New module `src/core/agent_coordination.rs` for file-based coordination; extend `src/platforms/codex.rs` and `src/platforms/copilot.rs` (or SDK bridge) for SDK-based coordination.
+- **What:** Implement `AgentCoordinator` for file-based coordination; extend Codex/Copilot runners to use shared threads/sessions when SDK is available; inject coordination context into prompts.
+- **When:** Register agent before execution; update status during execution (periodically or on file operations); unregister after execution. For SDK coordination, create shared thread/session at dependency level start; all agents in that level use the same thread/session.
+
+### Puppet Master Crews (Teams/Fleets Alternative)
+
+**Concept:** Build a Puppet Master-native multi-agent communication system called **"Crews"** that enables subagents to talk to each other directly. Crews can be invoked by users (platform-specific) or by the orchestrator (cross-platform coordination). This provides agent-to-agent communication and gives the orchestrator ("boss agent") full visibility into subagent interactions.
+
+**Feature Name:** "Crews" (can be invoked as "crew" or "crews" in commands/prompts)
+
+**Two modes of operation:**
+
+1. **User-initiated Crews (platform-specific) — Future: Assistant feature:**
+   - **Status:** Not yet implemented. Will be enabled when the "Assistant" feature is added.
+   - User will invoke crew via command/prompt: "use a crew", "create a crew", "crew", "crews"
+   - Crew will use the **currently selected platform** (from tier config or GUI selection)
+   - Example: If user has Copilot selected → Crew spawns Copilot subagents
+   - Example: If user has Claude Code selected → Crew spawns Claude Code subagents
+   - **Rationale:** User needs control over which platform to use (subscription limits, preferences, capabilities)
+   - **Note:** Platform selection logic will be defined when Assistant feature is designed (see Gap #37)
+
+2. **Orchestrator-initiated Crews (platform-specific per tier, cross-platform coordination via message board) — Current implementation:**
+   - Orchestrator automatically creates crews for each tier that needs subagents
+   - **Respects tier-level platform configuration:**
+     - Task level with platform = Codex → Crew uses Codex subagents
+     - Subtask level with platform = Copilot → Crew uses Copilot subagents
+   - Each crew uses the platform specified in that tier's config
+   - **Cross-platform coordination:** Different crews (different platforms) coordinate via shared message board (`agent-messages.json`) and coordination state (`active-agents.json`)
+   - **Rationale:** Orchestrator respects tier-level platform selections while enabling cross-platform coordination through shared state
+
+**User-initiated Crew invocation (Future: Assistant feature):**
+
+**Status:** Not yet implemented. This will be enabled when the "Assistant" feature is added.
+
+```rust
+// Future implementation (when Assistant feature is added):
+// User command examples:
+// "use a crew to implement authentication"
+// "create a crew for testing"
+// "crew: implement API endpoint"
+// "crews: add tests and documentation"
+
+// In orchestrator (via Assistant), detect crew invocation
+if prompt.contains("crew") || prompt.contains("crews") || prompt.contains("use a crew") || prompt.contains("create a crew") {
+    // Get current platform from tier config or GUI selection
+    // Platform selection logic TBD when Assistant feature is designed
+    let platform = self.get_current_platform(); // e.g., Platform::Copilot
+    
+    // Parse crew request (extract task, subagents needed)
+    let crew_request = parse_crew_request(&prompt)?;
+    
+    // Create crew with platform-specific subagents
+    let crew = Crew::new(platform, crew_request.subagents, crew_request.task);
+    
+    // Spawn crew (all subagents use same platform)
+    crew.execute().await?;
+}
+```
+
+**Platform selection for user-initiated crews (Future consideration):**
+
+- **Source:** Current tier config platform, or GUI platform selection if in GUI mode
+- **Fallback:** If no platform selected, prompt user to choose platform
+- **Validation:** Ensure platform supports subagents (all 5 platforms support subagents via coordination)
+- **Note:** Exact implementation will be defined when Assistant feature is designed (see Gap #37)
+
+**Example user-initiated crew flow (Future):**
+
+```
+User: "use a crew to implement authentication system"
+Current platform: Copilot (from tier config or GUI)
+
+Orchestrator (via Assistant):
+1. Detects "crew" invocation
+2. Gets current platform: Copilot
+3. Parses request: task = "implement authentication system"
+4. Selects subagents: ["backend-developer", "security-auditor", "test-automator"]
+5. Creates crew with Copilot platform
+6. Spawns 3 Copilot subagents (all using Copilot CLI)
+7. Agents coordinate via Crew communication system (file-based)
+8. All agents can talk to each other, orchestrator monitors
+```
+
+**Orchestrator-initiated crew flow:**
+
+```
+Orchestrator needs to coordinate:
+- Codex agent (rust-engineer) working on Subtask A
+- Claude Code agent (test-automator) working on Subtask B (parallel)
+
+Orchestrator:
+1. Creates cross-platform crew automatically
+2. Registers both agents in crew
+3. Agents coordinate via file-based coordination
+4. Agents can communicate via message board
+5. Orchestrator monitors all communication
+```
+
+**Crew structure:**
+
+```rust
+// src/core/crews.rs (new module)
+
+use crate::types::Platform;
+
+#[derive(Debug, Clone)]
+// DRY:DATA:Crew — Crew (multi-agent team) structure
+pub struct Crew {
+    pub crew_id: String, // UUID
+    pub name: Option<String>, // User-provided name (optional)
+    pub platform: Platform, // Platform for user-initiated crews; None for orchestrator cross-platform crews
+    pub subagents: Vec<CrewSubagent>,
+    pub task: String, // Crew's overall task
+    pub created_by: CrewCreator, // User or Orchestrator
+    pub created_at: DateTime<Utc>,
+    pub status: CrewStatus,
+}
+
+#[derive(Debug, Clone)]
+pub enum CrewCreator {
+    User { user_id: Option<String> },
+    Orchestrator { tier_id: String },
+}
+
+#[derive(Debug, Clone)]
+pub struct CrewSubagent {
+    pub agent_id: String, // e.g., "rust-engineer", "test-automator"
+    pub agent_type: String, // Subagent type/name
+    pub platform: Platform, // For orchestrator crews, can differ from crew.platform
+    pub tier_id: Option<String>, // Which tier this subagent is working on
+    pub status: SubagentStatus,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum CrewStatus {
+    Forming, // Crew being created
+    Active, // Crew members working
+    Waiting, // Crew waiting for something
+    Complete, // Crew finished task
+    Disbanded, // Crew disbanded
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum SubagentStatus {
+    Pending, // Not started yet
+    Active, // Currently working
+    Waiting, // Waiting for another subagent
+    Complete, // Finished
+    Blocked, // Blocked on something
+}
+```
+
+**Crew communication:**
+
+Crew members communicate via the message board (`agent-messages.json`), but messages are scoped to the crew:
+
+```rust
+impl Crew {
+    // DRY:FN:post_to_crew — Post message to crew
+    // DRY REQUIREMENT: Validate crew subagent names using subagent_registry::is_valid_subagent_name()
+    /// Post message to crew (all crew members see it)
+    pub async fn post_to_crew(&self, message: AgentMessage) -> Result<()> {
+        // DRY: Validate crew subagent names — DO NOT allow invalid subagent names in crew
+        for subagent in &self.subagents {
+            if !subagent_registry::is_valid_subagent_name(&subagent.agent_type) {
+                return Err(anyhow!("Invalid subagent name in crew: {}", subagent.agent_type));
+            }
+        }
+        // Set message routing to crew members
+        message.to_tier_id = None; // Override tier_id
+        message.crew_id = Some(self.crew_id.clone()); // Scope to crew
+        
+        communicator.post_message(message).await
+    }
+    
+    /// Get messages for crew
+    pub async fn get_crew_messages(&self) -> Result<Vec<AgentMessage>> {
+        communicator.get_messages_for_crew(&self.crew_id).await
+    }
+}
+```
+
+**User-initiated crew example:**
+
+```rust
+// User: "create a crew with rust-engineer, test-automator, and code-reviewer to implement authentication"
+
+// Parse crew request
+let crew_request = CrewRequest {
+    subagents: vec!["rust-engineer".to_string(), "test-automator".to_string(), "code-reviewer".to_string()],
+    task: "implement authentication".to_string(),
+    platform: None, // Will use current platform
+};
+
+// Get current platform
+let current_platform = tier_config.platform; // e.g., Platform::Copilot
+
+// Create crew
+let crew = Crew {
+    crew_id: uuid::Uuid::new_v4().to_string(),
+    name: Some("Authentication Crew".to_string()),
+    platform: current_platform, // Copilot
+    subagents: vec![
+        CrewSubagent {
+            agent_id: format!("rust-engineer-{}", crew.crew_id),
+            agent_type: "rust-engineer".to_string(),
+            platform: current_platform, // All use Copilot
+            tier_id: None,
+            status: SubagentStatus::Pending,
+        },
+        CrewSubagent {
+            agent_id: format!("test-automator-{}", crew.crew_id),
+            agent_type: "test-automator".to_string(),
+            platform: current_platform, // All use Copilot
+            tier_id: None,
+            status: SubagentStatus::Pending,
+        },
+        CrewSubagent {
+            agent_id: format!("code-reviewer-{}", crew.crew_id),
+            agent_type: "code-reviewer".to_string(),
+            platform: current_platform, // All use Copilot
+            tier_id: None,
+            status: SubagentStatus::Pending,
+        },
+    ],
+    task: "implement authentication".to_string(),
+    created_by: CrewCreator::User { user_id: None },
+    created_at: Utc::now(),
+    status: CrewStatus::Forming,
+};
+
+// Execute crew (spawn all subagents using Copilot)
+crew.execute().await?;
+```
+
+**Orchestrator-initiated crew example:**
+
+```rust
+// Orchestrator creates crews per tier, respecting tier platform config
+
+// Task level (1.1) has platform = Codex
+let task_tier_config = tier_config_for(TierType::Task, "1.1");
+// task_tier_config.platform = Platform::Codex
+
+let task_crew = Crew {
+    crew_id: uuid::Uuid::new_v4().to_string(),
+    name: None,
+    platform: task_tier_config.platform, // Codex (from tier config)
+    subagents: vec![
+        CrewSubagent {
+            agent_id: "rust-engineer-1.1".to_string(),
+            agent_type: "rust-engineer".to_string(),
+            platform: task_tier_config.platform, // Codex (all use same platform)
+            tier_id: Some("1.1".to_string()),
+            status: SubagentStatus::Active,
+        },
+        CrewSubagent {
+            agent_id: "backend-developer-1.1".to_string(),
+            agent_type: "backend-developer".to_string(),
+            platform: task_tier_config.platform, // Codex (all use same platform)
+            tier_id: Some("1.1".to_string()),
+            status: SubagentStatus::Active,
+        },
+    ],
+    task: "Implement API endpoints".to_string(),
+    created_by: CrewCreator::Orchestrator { tier_id: "1.1".to_string() },
+    created_at: Utc::now(),
+    status: CrewStatus::Active,
+};
+
+// Subtask level (1.1.1) has platform = Copilot
+let subtask_tier_config = tier_config_for(TierType::Subtask, "1.1.1");
+// subtask_tier_config.platform = Platform::Copilot
+
+let subtask_crew = Crew {
+    crew_id: uuid::Uuid::new_v4().to_string(),
+    name: None,
+    platform: subtask_tier_config.platform, // Copilot (from tier config)
+    subagents: vec![
+        CrewSubagent {
+            agent_id: "test-automator-1.1.1".to_string(),
+            agent_type: "test-automator".to_string(),
+            platform: subtask_tier_config.platform, // Copilot (all use same platform)
+            tier_id: Some("1.1.1".to_string()),
+            status: SubagentStatus::Active,
+        },
+    ],
+    task: "Add tests for API endpoint".to_string(),
+    created_by: CrewCreator::Orchestrator { tier_id: "1.1.1".to_string() },
+    created_at: Utc::now(),
+    status: CrewStatus::Active,
+};
+
+// Both crews coordinate via shared message board (cross-platform coordination)
+// Task crew (Codex) and Subtask crew (Copilot) can communicate through agent-messages.json
+// Orchestrator monitors all crews regardless of platform
+```
+
+**Cross-platform coordination example:**
+
+```
+Task level (1.1):
+  Platform: Codex
+  Crew: Codex subagents (rust-engineer, backend-developer)
+  
+Subtask level (1.1.1):
+  Platform: Copilot
+  Crew: Copilot subagents (test-automator)
+
+Coordination:
+  - Codex crew members coordinate via Codex SDK threads (same platform)
+  - Copilot crew members coordinate via Copilot SDK sessions (same platform)
+  - Cross-platform coordination: Codex crew and Copilot crew communicate via shared message board (agent-messages.json)
+  - Orchestrator monitors all crews and can see cross-platform communication
+```
+
+**Crew state file:**
+
+```json
+// .puppet-master/state/crews.json
+
+{
+  "crews": [
+    {
+      "crew_id": "abc-123",
+      "name": "Authentication Crew",
+      "platform": "copilot",
+      "created_by": { "type": "user" },
+      "subagents": [
+        {
+          "agent_id": "rust-engineer-abc-123",
+          "agent_type": "rust-engineer",
+          "platform": "copilot",
+          "tier_id": null,
+          "status": "active"
+        }
+      ],
+      "task": "implement authentication",
+      "status": "active",
+      "created_at": "2026-02-18T10:00:00Z"
+    },
+    {
+      "crew_id": "xyz-789",
+      "name": null,
+      "platform": "codex",
+      "created_by": { "type": "orchestrator", "tier_id": "1.1" },
+      "subagents": [
+        {
+          "agent_id": "rust-engineer-1.1",
+          "agent_type": "rust-engineer",
+          "platform": "codex",
+          "tier_id": "1.1",
+          "status": "active"
+        },
+        {
+          "agent_id": "backend-developer-1.1",
+          "agent_type": "backend-developer",
+          "platform": "codex",
+          "tier_id": "1.1",
+          "status": "active"
+        }
+      ],
+      "task": "Implement API endpoints",
+      "status": "active",
+      "created_at": "2026-02-18T10:01:00Z"
+    },
+    {
+      "crew_id": "def-456",
+      "name": null,
+      "platform": "copilot",
+      "created_by": { "type": "orchestrator", "tier_id": "1.1.1" },
+      "subagents": [
+        {
+          "agent_id": "test-automator-1.1.1",
+          "agent_type": "test-automator",
+          "platform": "copilot",
+          "tier_id": "1.1.1",
+          "status": "active"
+        }
+      ],
+      "task": "Add tests for API endpoint",
+      "status": "active",
+      "created_at": "2026-02-18T10:02:00Z"
+    }
+  ],
+  "last_updated": "2026-02-18T10:02:00Z"
+}
+```
+
+**Note:** Each orchestrator-initiated crew uses the platform from its tier config. Crew xyz-789 (Task 1.1) uses Codex because Task tier config specifies Codex. Crew def-456 (Subtask 1.1.1) uses Copilot because Subtask tier config specifies Copilot. They coordinate cross-platform via shared message board.
+
+**GUI integration (Current and Future):**
+
+**Current implementation (orchestrator-initiated crews only):**
+- **Crew monitoring:** Show active orchestrator-initiated crews, crew members, crew communication
+- **Crew status:** Display crew progress, subagent status, messages
+- **Crew actions:** View crew details, cancel crew, view messages
+- **Crew filtering:** Filter by platform, status, tier
+
+**Future implementation (when Assistant feature is added):**
+- **Crew creation:** User can create crews from GUI (select platform, subagents, task, optional name)
+- **Crew settings:** GUI settings panel for crew configuration (max crew size, timeout, etc.)
+- **Assistant integration:** GUI integration with Assistant feature for user-initiated crew creation
+
+**GUI components to add:**
+
+1. **Crews tab/page** (new view in GUI)
+2. **Crew list widget** (shows all crews with status)
+3. **Crew detail view** (expandable crew details)
+4. **Crew message viewer** (messages within crew)
+5. **Crew status badges** (visual status indicators)
+6. **Crew filter controls** (filter by platform, status, tier)
+7. **Crew cancellation dialog** (confirm cancellation)
+8. **Future: Crew creation dialog** (when Assistant feature is added)
+
+**Command parsing:**
+
+```rust
+// Detect crew invocation in prompts
+fn detect_crew_invocation(prompt: &str) -> Option<CrewRequest> {
+    let lower = prompt.to_lowercase();
+    
+    if lower.contains("crew") || lower.contains("crews") {
+        // Parse crew request
+        // Extract: subagents, task, optional name
+        // ...
+    }
+    
+    None
+}
+```
+
+**Benefits of "Crews" name:**
+
+- **Intuitive:** "Crew" suggests a team working together
+- **Flexible:** Can be singular ("crew") or plural ("crews")
+- **Distinct:** Different from "Teams" (Claude) and "Fleets" (Copilot)
+- **Memorable:** Easy to remember and type
+
+**Implementation notes:**
+
+- **Where:** New module `src/core/crews.rs` for crew management; extend `src/core/agent_communication.rs` for crew-scoped messaging; extend GUI views for crew monitoring
+- **What:** Implement `Crew` struct, crew creation (orchestrator-initiated only for now), crew execution, crew communication, GUI components for crew visibility
+- **When:** 
+  - **Current:** Orchestrator creates crew for tier → use platform from tier config (`tier_config_for(tier_type, tier_id).platform`)
+  - **Future (Assistant feature):** User invokes crew → create platform-specific crew using current platform selection (platform selection logic TBD)
+  - Cross-platform coordination happens automatically via shared message board (`agent-messages.json`)
+
+**GUI implementation requirements:**
+
+- **Where:** New GUI view `src/views/crews.rs` for crew monitoring; extend `src/app.rs` with crew-related messages and handlers
+- **What:** Implement crew list view, crew detail view, crew message viewer, crew status indicators, crew filter controls, crew cancellation dialog
+- **Messages:** Add crew-related messages (e.g., `Message::CrewsTabSelected`, `Message::CrewDetailExpanded(String)`, `Message::CrewCancelled(String)`, `Message::CrewFilterChanged(...)`)
+- **Data loading:** Load crews from `.puppet-master/state/crews.json`, messages from `agent-messages.json`, coordination state from `active-agents.json`
+- **Update frequency:** Event-driven updates for crew status changes, polling every 5 seconds for messages
+- **Future (Assistant feature):** When Assistant feature is added, extend GUI with crew creation dialog, crew settings panel, Assistant integration
+
+**Key implementation detail:**
+
+When orchestrator creates a crew for a tier, it must:
+1. Get tier config: `let tier_config = tier_config_for(tier_type, tier_id)?;`
+2. Use tier platform: `crew.platform = tier_config.platform;`
+3. All crew subagents use same platform: `subagent.platform = tier_config.platform;`
+4. Crew coordinates with other crews (different platforms) via shared message board
+
+### Gaps and Potential Issues for Crews Feature
+
+**Gap #37: Platform selection ambiguity for user-initiated crews (Future: Assistant feature)**
+
+**Status:** Not applicable to current Crews implementation. This gap will be relevant when the "Assistant" feature is implemented, which will enable user-initiated crew invocations.
+
+**Current state:** With the current system, users cannot directly invoke crews. Only orchestrator-initiated crews are supported (crews created automatically for tiers that need subagents).
+
+**Future consideration (Assistant feature):** When the Assistant feature is implemented, users will be able to invoke crews directly. At that time, platform selection logic will need to be defined:
+
+**Potential issues when Assistant feature is added:**
+- "Current platform selection" is ambiguous. What if user is in GUI mode but hasn't selected a platform? What if user is in CLI mode with no tier context? What if multiple tiers are active with different platforms?
+
+**Potential mitigation (to be refined when Assistant feature is designed):**
+- **Priority order:** (1) Current tier config platform (if executing a tier), (2) GUI platform selection (if in GUI mode), (3) Default platform from config, (4) Prompt user to choose
+- **Explicit platform override:** Allow user to specify platform in crew command: "use a crew with Copilot to implement authentication"
+- **Context awareness:** If user is in a specific tier context, use that tier's platform; otherwise use global default
+- **Validation:** Ensure platform is valid and supports subagents before creating crew
+
+**Note:** This gap should be revisited when the Assistant feature is designed and fleshed out. The exact platform selection logic will depend on how Assistant integrates with the existing system.
+
+**Gap #38: Crew lifecycle management and cleanup (GUI updates required)**
+
+**Issue:** What happens when a crew member crashes? What if crew never completes? What if user cancels crew mid-execution? How do we clean up crew state?
+
+**Mitigation:**
+- **Crew timeout:** Set maximum crew execution time (e.g., 2 hours). If exceeded, mark crew as "timeout" and disband.
+- **Member failure handling:** If crew member fails, either (1) retry with same subagent, (2) replace with alternative subagent, or (3) mark crew as "partial failure" and continue with remaining members
+- **Graceful shutdown:** On user cancel (via GUI), send cancellation message to all crew members, wait for cleanup, then disband crew
+- **Automatic cleanup:** Prune crews older than 24 hours (completed or failed). Archive crew state before deletion.
+- **Crew status tracking:** Track crew status transitions (Forming → Active → Complete/Disbanded). Log all transitions for debugging.
+
+**GUI requirements:**
+- **Crew cancellation button:** Allow users to cancel orchestrator-initiated crews via GUI (with confirmation dialog)
+- **Crew timeout warning:** Show warning in GUI when crew approaches timeout (e.g., "Crew will timeout in 10 minutes")
+- **Member failure indicators:** Show visual indicators in GUI when crew members fail (red status badge, error icon)
+- **Crew status updates:** Update GUI in real-time when crew status changes (Forming → Active → Complete/Disbanded)
+- **Cleanup notifications:** Show notification in GUI when crews are automatically cleaned up ("3 crews archived")
+
+```rust
+impl Crew {
+    pub async fn handle_member_failure(&mut self, failed_agent_id: &str) -> Result<()> {
+        // Mark member as failed
+        if let Some(member) = self.subagents.iter_mut().find(|a| a.agent_id == failed_agent_id) {
+            member.status = SubagentStatus::Blocked;
+        }
+        
+        // Check if crew can continue
+        let active_members: Vec<_> = self.subagents.iter()
+            .filter(|a| matches!(a.status, SubagentStatus::Active | SubagentStatus::Pending))
+            .collect();
+        
+        if active_members.is_empty() {
+            // All members failed — disband crew
+            self.status = CrewStatus::Disbanded;
+            self.post_to_crew(AgentMessage {
+                message_type: MessageType::Announcement,
+                subject: "Crew disbanded due to member failures".to_string(),
+                content: "All crew members have failed. Crew is being disbanded.".to_string(),
+                // ...
+            }).await?;
+        } else {
+            // Continue with remaining members
+            self.post_to_crew(AgentMessage {
+                message_type: MessageType::Update,
+                subject: format!("Crew member {} failed", failed_agent_id),
+                content: format!("Crew will continue with {} remaining members", active_members.len()),
+                // ...
+            }).await?;
+        }
+        
+        Ok(())
+    }
+    
+    pub async fn cancel(&mut self) -> Result<()> {
+        // Send cancellation to all members
+        self.post_to_crew(AgentMessage {
+            message_type: MessageType::Announcement,
+            subject: "Crew cancelled".to_string(),
+            content: "User has cancelled this crew. Please stop work and clean up.".to_string(),
+            // ...
+        }).await?;
+        
+        // Wait for members to acknowledge (with timeout)
+        tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
+        
+        // Disband crew
+        self.status = CrewStatus::Disbanded;
+        self.save_state().await?;
+        
+        Ok(())
+    }
+}
+```
+
+**Gap #39: Message routing and crew scoping**
+
+**Issue:** How do we ensure messages are scoped correctly to crews? What prevents messages from leaking between crews? What if agent is in multiple crews?
+
+**Mitigation:**
+- **Crew ID in messages:** All crew messages must include `crew_id` field. Filter messages by crew_id when retrieving.
+- **Message scoping:** When agent posts message to crew, set `crew_id` and filter recipients to crew members only
+- **Multi-crew agents:** If agent is in multiple crews, show messages from all crews but clearly label which crew each message belongs to
+- **Message isolation:** Crew messages are isolated by default. Cross-crew communication requires explicit broadcast or orchestrator mediation.
+
+```rust
+impl AgentCommunicator {
+    pub async fn get_messages_for_crew(&self, crew_id: &str) -> Result<Vec<AgentMessage>> {
+        let board = self.load_message_board().await?;
+        Ok(board.messages.iter()
+            .filter(|msg| msg.crew_id.as_ref().map(|id| id == crew_id).unwrap_or(false))
+            .cloned()
+            .collect())
+    }
+    
+    pub async fn get_messages_for_agent_in_crews(
+        &self,
+        agent_id: &str,
+        crew_ids: &[String],
+    ) -> Result<Vec<AgentMessage>> {
+        let board = self.load_message_board().await?;
+        Ok(board.messages.iter()
+            .filter(|msg| {
+                // Message is to this agent
+                msg.to_agent_id.as_ref().map(|id| id == agent_id).unwrap_or(false) ||
+                // Message is to a crew this agent is in
+                msg.crew_id.as_ref().map(|id| crew_ids.contains(id)).unwrap_or(false) ||
+                // Broadcast message
+                (msg.to_agent_id.is_none() && msg.crew_id.is_none())
+            })
+            .cloned()
+            .collect())
+    }
+}
+```
+
+**Gap #40: Crew size limits and resource management (GUI updates required)**
+
+**Issue:** What's the maximum crew size? What if crew exceeds platform quota? What if too many crews run simultaneously?
+
+**Mitigation:**
+- **Crew size limits:** Maximum 10 subagents per crew (configurable). If user requests more, split into multiple crews or reject with suggestion.
+- **Platform quota checking:** Before creating crew, check platform quota. If insufficient, either (1) wait for quota, (2) use fallback platform, or (3) reject with error.
+- **Concurrent crew limits:** Maximum 5 active crews per platform (configurable). Queue additional crews or reject.
+- **Resource monitoring:** Track platform usage per crew. Alert if crew approaches quota limits.
+
+**GUI requirements:**
+- **Crew size indicator:** Show crew size (e.g., "3/10 members") in crew list/detail view
+- **Platform quota display:** Show platform quota usage in GUI (e.g., "Codex: 2/5 crews active, 45/100 quota remaining")
+- **Limit warnings:** Show warnings in GUI when approaching limits ("Warning: 4/5 crews active for Codex")
+- **Resource usage dashboard:** Add resource usage section showing platform quotas, active crews per platform, crew sizes
+- **Future (Assistant feature):** When user-initiated crews are added, GUI should validate crew size and platform quota before allowing crew creation
+
+```rust
+impl CrewManager {
+    pub async fn can_create_crew(&self, platform: Platform, crew_size: usize) -> Result<bool> {
+        // Check crew size limit
+        if crew_size > self.config.max_crew_size {
+            return Err(anyhow!("Crew size {} exceeds maximum {}", crew_size, self.config.max_crew_size));
+        }
+        
+        // Check concurrent crew limit
+        let active_crews = self.get_active_crews_for_platform(platform).await?;
+        if active_crews.len() >= self.config.max_concurrent_crews_per_platform {
+            return Err(anyhow!("Maximum concurrent crews ({}) reached for platform {:?}", 
+                self.config.max_concurrent_crews_per_platform, platform));
+        }
+        
+        // Check platform quota (if available)
+        if let Some(quota) = self.check_platform_quota(platform).await? {
+            if quota.remaining < crew_size as u64 {
+                return Err(anyhow!("Insufficient platform quota. Need {}, have {}", 
+                    crew_size, quota.remaining));
+            }
+        }
+        
+        Ok(true)
+    }
+}
+```
+
+**Gap #41: Crew parsing and subagent selection**
+
+**Issue:** How do we parse crew requests from user prompts? What if user requests invalid subagent names? What if requested subagents aren't available for the platform?
+
+**Mitigation:**
+- **Crew request parsing:** Use regex/NLP to extract: (1) subagent names (explicit list or inferred from task), (2) task description, (3) optional crew name, (4) optional platform override
+- **Subagent validation:** Validate requested subagents against canonical subagent list. If invalid, suggest alternatives or reject.
+- **Platform compatibility:** Check if requested subagents are available for selected platform. Some platforms may not support all subagent types.
+- **Auto-selection fallback:** If user doesn't specify subagents, auto-select based on task (use `SubagentSelector`).
+
+```rust
+fn parse_crew_request(prompt: &str) -> Result<CrewRequest> {
+    // Try to extract explicit subagent list
+    // Pattern: "crew with rust-engineer, test-automator, code-reviewer"
+    let subagent_pattern = regex::Regex::new(r"crew\s+with\s+([^,]+(?:,\s*[^,]+)*)")?;
+    let subagents = if let Some(caps) = subagent_pattern.captures(prompt) {
+        caps.get(1).unwrap().as_str()
+            .split(',')
+            .map(|s| s.trim().to_string())
+            .collect()
+    } else {
+        // Auto-select based on task
+        vec![] // Will be filled by SubagentSelector
+    };
+    
+    // Extract task
+    // Pattern: "crew to <task>" or "crew: <task>"
+    let task_pattern = regex::Regex::new(r"crew\s+(?:to|:)\s+(.+)")?;
+    let task = task_pattern.captures(prompt)
+        .and_then(|c| c.get(1))
+        .map(|m| m.as_str().to_string())
+        .ok_or_else(|| anyhow!("Could not parse task from crew request"))?;
+    
+    // Extract platform override
+    // Pattern: "crew with <platform>"
+    let platform_pattern = regex::Regex::new(r"crew\s+with\s+(codex|copilot|claude|cursor|gemini)")?;
+    let platform_override = platform_pattern.captures(prompt)
+        .and_then(|c| c.get(1))
+        .map(|m| parse_platform(m.as_str()));
+    
+    Ok(CrewRequest {
+        subagents,
+        task,
+        platform_override,
+    })
+}
+```
+
+**Gap #42: Crew state persistence and recovery**
+
+**Issue:** What if Puppet Master crashes mid-crew? How do we recover crew state? What if crew state file gets corrupted?
+
+**Mitigation:**
+- **Crew state persistence:** Save crew state to `.puppet-master/state/crews.json` after each significant change (member status, message posted, crew status change)
+- **Recovery on startup:** On Puppet Master startup, load crew state and resume active crews. Check if crew members are still active (via coordination state).
+- **State validation:** Validate crew state on load (check required fields, valid status transitions, member consistency)
+- **Backup and restore:** Backup crew state before major changes. Restore from backup if corruption detected.
+
+```rust
+impl CrewManager {
+    pub async fn recover_crews_on_startup(&self) -> Result<()> {
+        let crews = self.load_crews().await?;
+        let coordination_state = self.coordinator.load_state().await?;
+        
+        for mut crew in crews {
+            if matches!(crew.status, CrewStatus::Active | CrewStatus::Forming) {
+                // Check if crew members are still active
+                let active_members: Vec<_> = crew.subagents.iter()
+                    .filter(|member| {
+                        coordination_state.active_agents.contains_key(&member.agent_id)
+                    })
+                    .collect();
+                
+                if active_members.is_empty() {
+                    // All members inactive — mark crew as disbanded
+                    crew.status = CrewStatus::Disbanded;
+                    tracing::warn!("Crew {} disbanded on recovery: all members inactive", crew.crew_id);
+                } else if active_members.len() < crew.subagents.len() {
+                    // Some members inactive — update status
+                    for member in &mut crew.subagents {
+                        if !coordination_state.active_agents.contains_key(&member.agent_id) {
+                            member.status = SubagentStatus::Blocked;
+                        }
+                    }
+                    tracing::info!("Crew {} recovered with {} active members", crew.crew_id, active_members.len());
+                }
+                
+                self.save_crew(&crew).await?;
+            }
+        }
+        
+        Ok(())
+    }
+}
+```
+
+**Gap #43: Crew conflicts and deadlocks (GUI updates required)**
+
+**Issue:** What if crew members have conflicting requirements? What if crew deadlocks (all members waiting for each other)? What if crew members disagree on approach?
+
+**Mitigation:**
+- **Conflict detection:** Monitor crew messages for conflicts (e.g., "I need X" vs "I need Y" where X and Y conflict). Detect deadlocks (all members in "Waiting" status for >5 minutes).
+- **Orchestrator intervention:** If conflict or deadlock detected, orchestrator can (1) mediate via message, (2) assign decision-maker (e.g., architect-reviewer), or (3) disband and re-plan
+- **Decision escalation:** If crew members disagree, escalate to orchestrator or user. Orchestrator can inject decision message to resolve conflict.
+
+**GUI requirements:**
+- **Conflict indicators:** Show visual indicators in GUI when conflicts or deadlocks are detected (warning badge, alert icon)
+- **Deadlock notification:** Show notification/toast when deadlock detected ("Crew 'Authentication Crew' is deadlocked. Orchestrator is resolving...")
+- **Conflict resolution UI:** Show conflict details in GUI (which members disagree, what the conflict is about) with option to manually intervene
+- **Status indicators:** Highlight crews with conflicts/deadlocks in crew list (different color, warning icon)
+
+```rust
+impl Crew {
+    pub async fn detect_deadlock(&self) -> Result<bool> {
+        // Check if all members are waiting
+        let all_waiting = self.subagents.iter()
+            .all(|member| matches!(member.status, SubagentStatus::Waiting));
+        
+        if all_waiting {
+            // Check how long they've been waiting
+            let oldest_wait = self.subagents.iter()
+                .filter_map(|m| {
+                    if matches!(m.status, SubagentStatus::Waiting) {
+                        // Get last status change time (would need to track this)
+                        Some(Utc::now() - chrono::Duration::minutes(5)) // Placeholder
+                    } else {
+                        None
+                    }
+                })
+                .min();
+            
+            if let Some(wait_time) = oldest_wait {
+                if wait_time.num_minutes() > 5 {
+                    return Ok(true); // Deadlock detected
+                }
+            }
+        }
+        
+        Ok(false)
+    }
+    
+    pub async fn resolve_deadlock(&mut self, orchestrator: &Orchestrator) -> Result<()> {
+        // Orchestrator injects resolution message
+        orchestrator.post_to_crew(self.crew_id.clone(), AgentMessage {
+            message_type: MessageType::Decision,
+            subject: "Deadlock resolution".to_string(),
+            content: "Orchestrator detected deadlock. Proceeding with approach X. All members should proceed.".to_string(),
+            // ...
+        }).await?;
+        
+        // Unblock all members
+        for member in &mut self.subagents {
+            if matches!(member.status, SubagentStatus::Waiting) {
+                member.status = SubagentStatus::Active;
+            }
+        }
+        
+        Ok(())
+    }
+}
+```
+
+**Gap #44: Crew visibility and user experience (GUI updates required)**
+
+**Issue:** How do users see orchestrator-initiated crews? How do users monitor crew progress? How do users interact with crews (cancel, modify, etc.)?
+
+**Mitigation:**
+- **GUI crew dashboard:** Add "Crews" tab/section to GUI showing all active crews (orchestrator-initiated for now; user-initiated when Assistant feature is added), crew members, status, messages
+- **Crew status indicators:** Show crew status (Active, Waiting, Complete, Disbanded) with visual indicators. Show member status within crew (Pending, Active, Waiting, Complete, Blocked).
+- **Crew actions:** Allow users to (1) view crew messages, (2) cancel crew (orchestrator-initiated crews), (3) view crew details (platform, tier, task, members), (4) filter/search crews
+- **Crew filtering:** Filter crews by platform, status, creator (orchestrator for now), tier
+- **Crew message viewer:** Show messages within each crew, with threading, timestamps, and read status
+- **Crew creation UI (Future: Assistant feature):** When Assistant feature is added, GUI will need controls for creating user-initiated crews (select platform, subagents, task)
+
+**GUI implementation requirements:**
+
+**New GUI components needed:**
+1. **Crews tab/page:** New view showing all crews
+2. **Crew list widget:** List of crews with status badges, platform icons, member counts
+3. **Crew detail view:** Expandable/collapsible crew details showing members, messages, status
+4. **Crew message viewer:** Message list/thread viewer within crew detail
+5. **Crew status badge:** Visual indicator for crew status (color-coded)
+6. **Crew member status indicator:** Visual indicator for member status within crew
+7. **Crew actions menu:** Context menu or action buttons (view, cancel, etc.)
+8. **Crew filter controls:** Filter by platform, status, tier (dropdowns, checkboxes)
+
+**GUI data sources:**
+- Load crews from `.puppet-master/state/crews.json`
+- Load messages from `.puppet-master/state/agent-messages.json` (filtered by crew_id)
+- Load coordination state from `.puppet-master/state/active-agents.json` (for member status)
+
+**GUI update frequency:**
+- Crew list: Update on crew status change (event-driven)
+- Crew messages: Poll every 5 seconds or use event-driven updates
+- Member status: Update on coordination state change (event-driven)
+
+**Future GUI requirements (Assistant feature):**
+- When Assistant feature is added, GUI will need:
+  - Crew creation dialog/form (select platform, subagents, task, optional name)
+  - Platform selection widget (for user-initiated crews)
+  - Subagent selection widget (multi-select from canonical list)
+  - Crew name input field
+  - Task description input field
+
+**Gap #45: Crew performance and scalability**
+
+**Issue:** What if there are 50+ active crews? What if crew has 20+ members? Will message board become a bottleneck?
+
+**Mitigation:**
+- **Crew limits:** Enforce maximum concurrent crews (e.g., 20 total). Queue additional crews or reject.
+- **Message board optimization:** Index messages by crew_id, agent_id, tier_id for fast filtering. Archive old messages (>24 hours).
+- **Lazy loading:** Only load messages for active crews. Load full message history on demand.
+- **Message batching:** Batch multiple messages into single file write to reduce I/O.
+
+**Gap #46: Crew integration with existing subagent system**
+
+**Issue:** How do crews integrate with existing tier-level subagent selection? What if tier already has subagents when crew is created? Can crew members be tier subagents?
+
+**Mitigation:**
+- **Crew vs tier subagents:** Crews are separate from tier-level subagents. Tier subagents work independently; crews add communication layer.
+- **Overlap handling:** If crew member is also a tier subagent, agent participates in both (tier work + crew communication)
+- **Coordination:** Crew members coordinate via message board; tier subagents coordinate via coordination state. Both can coexist.
+
+**Gap #47: Crew message spam and rate limiting**
+
+**Issue:** What prevents crew members from spamming messages? What if agent posts 100 messages per minute?
+
+**Mitigation:**
+- **Rate limiting:** Limit messages per agent per minute (e.g., max 10 messages/minute). Reject excess messages with error.
+- **Message importance:** Prioritize important messages (Questions, Warnings) over updates. Filter low-priority messages if message board is full.
+- **Message deduplication:** Detect duplicate messages (same content from same agent within 1 minute). Reject duplicates.
+
+```rust
+impl AgentCommunicator {
+    pub async fn post_message_with_rate_limit(&self, message: AgentMessage) -> Result<()> {
+        // Check rate limit
+        let recent_messages = self.get_recent_messages_for_agent(&message.from_agent_id, 
+            chrono::Duration::minutes(1)).await?;
+        
+        if recent_messages.len() >= 10 {
+            return Err(anyhow!("Rate limit exceeded: max 10 messages per minute"));
+        }
+        
+        // Check for duplicates
+        if self.is_duplicate(&message, &recent_messages)? {
+            return Err(anyhow!("Duplicate message detected"));
+        }
+        
+        // Post message
+        self.post_message(message).await
+    }
+}
+```
+
+**Gap #48: Crew task completion and handoff**
+
+**Issue:** How do crews know when their task is complete? How do crews hand off work to the next tier or other crews? What if crew members disagree on completion criteria?
+
+**Mitigation:**
+- **Task completion criteria:** Define clear completion criteria for crew tasks (e.g., "all tests pass", "code review approved", "documentation complete"). Crew members can vote on completion or defer to orchestrator.
+- **Crew handoff:** When crew completes, post completion message to orchestrator and other crews. Include handoff context (files changed, decisions made, blockers resolved).
+- **Completion validation:** Orchestrator validates crew completion against acceptance criteria. If criteria not met, crew continues or escalates.
+- **Handoff messages:** Crews can post handoff messages to other crews (e.g., "Task 1.1 complete, API endpoints ready for testing"). Other crews receive these as coordination context.
+
+**Gap #49: Crew member selection and availability**
+
+**Issue:** What if requested subagent type isn't available for the platform? What if subagent is already busy in another crew? How do we handle subagent unavailability?
+
+**Mitigation:**
+- **Subagent availability check:** Before creating crew, check if requested subagents are available (not already in max crews, platform supports subagent type).
+- **Fallback subagents:** If requested subagent unavailable, suggest alternatives (e.g., "rust-engineer unavailable, use backend-developer instead?").
+- **Subagent capacity:** Track how many crews each subagent type is in. Limit concurrent crews per subagent type (e.g., max 3 crews per subagent type).
+- **Platform compatibility:** Validate subagent type is supported by platform. Some platforms may not support all subagent types.
+
+**Gap #50: Crew coordination with tier execution**
+
+**Issue:** How do crews coordinate with tier-level execution? What if tier completes while crew is still working? What if crew needs to wait for tier completion?
+
+**Mitigation:**
+- **Tier completion awareness:** Crews monitor tier completion status. When tier completes, crew can either (1) continue if task not complete, (2) disband if task complete, or (3) wait for next tier.
+- **Crew-tier synchronization:** Crews can wait for tier completion before starting (e.g., "wait for Task 1.1 to complete before starting Subtask 1.1.1 crew").
+- **Tier context injection:** Crews receive tier context (files, decisions, blockers) as part of coordination context. Crews can reference tier work in their messages.
+
+**Gap #51: Crew debugging and observability**
+
+**Issue:** How do we debug crew communication issues? How do we see what crews are doing? How do we trace crew decision-making?
+
+**Mitigation:**
+- **Crew logs:** Log all crew operations (creation, member status changes, messages posted, completion) to `.puppet-master/logs/crews.log`.
+- **Crew traces:** Generate traces for crew execution (similar to iteration traces). Show crew timeline, member activities, message flow.
+- **Crew metrics:** Track crew metrics (duration, message count, member failures, conflicts detected). Display in GUI.
+- **Debug mode:** Enable verbose logging for crew communication (log all messages, coordination state changes, platform calls).
+
+### Additional Enhancements for Crews
+
+**Enhancement #1: Crew templates and presets**
+
+Allow users (when Assistant feature is added) to save crew configurations as templates:
+
+```rust
+pub struct CrewTemplate {
+    pub name: String,
+    pub subagents: Vec<String>,
+    pub default_task: Option<String>,
+    pub description: String,
+}
+
+// Users can create templates like:
+// "Full Stack Crew": [rust-engineer, frontend-developer, test-automator, code-reviewer]
+// "Security Review Crew": [security-auditor, compliance-auditor, code-reviewer]
+```
+
+**Enhancement #2: Crew performance metrics**
+
+Track and display crew performance:
+- Average time to complete tasks
+- Success rate (tasks completed vs failed)
+- Member utilization (how often each subagent type is used)
+- Platform usage distribution
+
+**Enhancement #3: Crew learning and adaptation**
+
+Crews can learn from past executions:
+- Track which subagent combinations work best for different task types
+- Suggest optimal crew compositions based on historical data
+- Adapt crew behavior based on success patterns
+
+**Enhancement #4: Crew scheduling and prioritization**
+
+When multiple crews are queued:
+- Prioritize crews by tier dependency (crews for earlier tiers run first)
+- Schedule crews based on platform quota availability
+- Allow users to reorder crew execution (when Assistant feature is added)
+
+**Gap #52: Crew integration with PRD/plan generation**
+
+**Issue:** When the interview generates PRD/plans, should it account for crews? Should plans specify which tasks/subtasks benefit from crews? Should plans include crew recommendations?
+
+**Mitigation:**
+- **Crew-aware plan generation:** When interview generates PRD/plans, include crew recommendations for tasks that would benefit from multiple subagents working together
+- **Plan annotations:** Add crew hints to PRD tasks/subtasks (e.g., "This subtask benefits from a crew: rust-engineer + test-automator + code-reviewer")
+- **Crew templates in plans:** Plans can reference crew templates (e.g., "Use 'Full Stack Crew' template for this phase")
+- **Orchestrator awareness:** Orchestrator reads crew hints from PRD and automatically creates crews when appropriate
+
+**Integration with interview plan generation:**
+
+When interview generates PRD (`prd.json`), add crew metadata to tasks/subtasks:
+
+```json
+{
+  "phases": [
+    {
+      "tasks": [
+        {
+          "subtasks": [
+            {
+              "id": "ST-001-001-001",
+              "title": "Implement authentication API",
+              "crew_recommendation": {
+                "suggested": true,
+                "subagents": ["rust-engineer", "security-auditor", "test-automator"],
+                "rationale": "Requires security expertise, implementation, and testing"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Gap #53: Crew coordination with interview phases**
+
+**Issue:** Can crews be used during the interview itself? Should interview phases use crews for research/validation/documentation?
+
+**Mitigation:**
+- **Interview phase crews:** Interview phases can use crews internally (e.g., Architecture phase crew: architect-reviewer + knowledge-synthesizer + technical-writer)
+- **Research crews:** Research operations can use crews (e.g., multiple researchers working in parallel)
+- **Document generation crews:** Document generation can use crews (e.g., technical-writer + knowledge-synthesizer + qa-expert)
+- **Cross-phase coordination:** Crews can coordinate across interview phases (e.g., Architecture crew shares decisions with Testing crew)
+
+**Note:** This is separate from orchestrator-initiated crews for execution tiers. Interview crews are for interview flow only.
+
+**Why this is valuable:**
+
+1. **Cross-platform communication:** Works for all 5 platforms (Cursor, Codex, Claude, Gemini, Copilot), even those without native teams/fleets support
+2. **Orchestrator visibility:** Boss agent (orchestrator) can monitor all subagent communication, providing insights into what subagents are doing and how they're coordinating
+3. **Platform-agnostic:** Can be used alongside native teams/fleets (Claude Code Teams, Copilot Fleets) but provides fallback and cross-platform capabilities
+4. **Enhanced coordination:** Enables more sophisticated coordination patterns (agents asking for help, sharing decisions, requesting reviews)
+5. **Unified interface:** Single communication system works the same way across all platforms
+
+**Comparison with native solutions:**
+
+| Feature | Claude Code Teams | Copilot Fleets | Puppet Master Communication |
+|---------|------------------|----------------|---------------------------|
+| Cross-platform | ❌ Claude only | ❌ Copilot only | ✅ All 5 platforms |
+| Orchestrator visibility | Limited | Limited | ✅ Full visibility |
+| Agent-to-agent messaging | ✅ Native | ❌ Not supported | ✅ Supported |
+| File-based (no API) | ❌ Uses API | ❌ Uses API | ✅ File-based |
+| Works with CLI-only | ❌ Requires Teams API | ❌ Requires Fleets API | ✅ Pure file-based |
+
+**Architecture:**
+
+The communication system extends the existing coordination state with a message board/queue:
+
+```
+.puppet-master/state/
+├── active-agents.json          # Existing: agent status tracking
+└── agent-messages.json         # New: agent-to-agent messages
+```
+
+**Message structure:**
+
+```rust
+// src/core/agent_communication.rs (new module)
+
+use serde::{Deserialize, Serialize};
+use chrono::{DateTime, Utc};
+use std::path::PathBuf;
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+// DRY:DATA:AgentMessage — Agent-to-agent message structure
+pub struct AgentMessage {
+    pub message_id: String, // UUID
+    pub from_agent_id: String, // e.g., "rust-engineer-1.1.1"
+    pub from_platform: Platform,
+    pub to_agent_id: Option<String>, // None = broadcast
+    pub to_agent_type: Option<String>, // e.g., "test-automator", "code-reviewer"
+    pub to_tier_id: Option<String>, // e.g., "1.1" (all agents in this tier)
+    pub message_type: MessageType,
+    pub subject: String, // Brief summary
+    pub content: String, // Full message content
+    pub context: MessageContext, // Files, operations, etc.
+    pub thread_id: Option<String>, // For threaded conversations
+    pub in_reply_to: Option<String>, // message_id of message being replied to
+    pub created_at: DateTime<Utc>,
+    pub read_by: Vec<String>, // agent_ids that have read this message
+    pub resolved: bool, // Whether this message/request has been resolved
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum MessageType {
+    Question, // Agent asking a question
+    Answer, // Agent answering a question
+    Update, // Agent sharing progress/status update
+    Request, // Agent requesting help/review/approval
+    Decision, // Agent sharing a decision (architecture, pattern, etc.)
+    Warning, // Agent warning about conflicts/issues
+    Announcement, // Agent announcing completion/blocker
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct MessageContext {
+    pub files_mentioned: Vec<PathBuf>,
+    pub operations_mentioned: Vec<String>, // e.g., "editing src/api.rs", "running tests"
+    pub tier_id: String,
+    pub related_messages: Vec<String>, // message_ids
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct AgentMessageBoard {
+    pub messages: Vec<AgentMessage>,
+    pub last_updated: DateTime<Utc>,
+    pub schema_version: u32,
+}
+```
+
+**Message routing:**
+
+Messages can be routed to:
+- **Direct:** Specific agent ID (`to_agent_id`)
+- **By type:** All agents of a specific type (`to_agent_type`, e.g., "all test-automators")
+- **By tier:** All agents in a specific tier (`to_tier_id`)
+- **Broadcast:** All active agents (`to_agent_id = None`, `to_agent_type = None`, `to_tier_id = None`)
+
+**Usage examples:**
+
+**Example 1: Agent asking for help**
+
+```rust
+// Rust engineer needs help with testing
+coordinator.post_message(AgentMessage {
+    message_id: uuid::Uuid::new_v4().to_string(),
+    from_agent_id: "rust-engineer-1.1.1".to_string(),
+    from_platform: Platform::Codex,
+    to_agent_type: Some("test-automator".to_string()), // Ask all test-automators
+    message_type: MessageType::Question,
+    subject: "Need help writing tests for POST /users endpoint".to_string(),
+    content: "I've implemented the POST /users endpoint in src/api.rs. Can someone help me write comprehensive tests? The endpoint handles validation, authentication, and database insertion.".to_string(),
+    context: MessageContext {
+        files_mentioned: vec![PathBuf::from("src/api.rs")],
+        operations_mentioned: vec!["implemented POST /users endpoint".to_string()],
+        tier_id: "1.1.1".to_string(),
+        related_messages: vec![],
+    },
+    thread_id: None,
+    in_reply_to: None,
+    created_at: Utc::now(),
+    read_by: vec![],
+    resolved: false,
+}).await?;
+```
+
+**Example 2: Agent sharing a decision**
+
+```rust
+// Architect reviewer shares architectural decision
+coordinator.post_message(AgentMessage {
+    message_id: uuid::Uuid::new_v4().to_string(),
+    from_agent_id: "architect-reviewer-1.0".to_string(),
+    from_platform: Platform::Claude,
+    to_tier_id: Some("1.1".to_string()), // Share with all agents in tier 1.1
+    message_type: MessageType::Decision,
+    subject: "Architecture decision: Use Actix-web for API server".to_string(),
+    content: "After reviewing requirements, I've decided we should use Actix-web for the API server. This provides async/await support, good performance, and strong Rust ecosystem integration. All agents working on API-related tasks should use this framework.".to_string(),
+    context: MessageContext {
+        files_mentioned: vec![],
+        operations_mentioned: vec!["architecture review".to_string()],
+        tier_id: "1.0".to_string(),
+        related_messages: vec![],
+    },
+    thread_id: None,
+    in_reply_to: None,
+    created_at: Utc::now(),
+    read_by: vec![],
+    resolved: false,
+}).await?;
+```
+
+**Example 3: Agent warning about conflicts**
+
+```rust
+// Agent warns about file conflict
+coordinator.post_message(AgentMessage {
+    message_id: uuid::Uuid::new_v4().to_string(),
+    from_agent_id: "test-automator-1.1.2".to_string(),
+    from_platform: Platform::Claude,
+    to_agent_id: Some("rust-engineer-1.1.1".to_string()), // Direct message
+    message_type: MessageType::Warning,
+    subject: "File conflict: src/api.rs".to_string(),
+    content: "I'm about to add tests for src/api.rs. Are you still editing it? I'll wait if you need more time.".to_string(),
+    context: MessageContext {
+        files_mentioned: vec![PathBuf::from("src/api.rs")],
+        operations_mentioned: vec!["adding tests".to_string()],
+        tier_id: "1.1.2".to_string(),
+        related_messages: vec![],
+    },
+    thread_id: None,
+    in_reply_to: None,
+    created_at: Utc::now(),
+    read_by: vec![],
+    resolved: false,
+}).await?;
+```
+
+**Integration with orchestrator:**
+
+The orchestrator monitors all messages and can:
+- **Track agent communication:** See which agents are talking to each other
+- **Detect blockers:** Identify when agents are stuck or need help
+- **Monitor decisions:** Track architectural decisions and ensure consistency
+- **Detect conflicts:** See warnings about file conflicts before they happen
+- **Provide insights:** Show communication patterns in GUI
+
+**Integration with agent prompts:**
+
+Messages are injected into agent prompts as part of coordination context:
+
+```rust
+// In orchestrator, before executing agent
+let coordination_context = coordinator.get_coordination_context().await?;
+let messages = coordinator.get_messages_for_agent(&agent_id, &tier_id).await?;
+let message_context = coordinator.format_messages_for_prompt(&messages)?;
+
+let enhanced_prompt = format!(
+    "{}\n\n{}\n\n**Messages from other agents:**\n{}",
+    prompt,
+    coordination_context,
+    message_context
+);
+```
+
+**Message filtering:**
+
+Agents only see messages relevant to them:
+- Messages addressed to their agent_id
+- Messages addressed to their agent type
+- Messages addressed to their tier_id
+- Broadcast messages
+- Messages mentioning files they're working on
+
+**Message threading:**
+
+Messages can be threaded (conversations):
+- `thread_id`: Groups related messages together
+- `in_reply_to`: Links reply to original message
+- Agents can follow threads to see conversation history
+
+**Message lifecycle:**
+
+- **Created:** Agent posts message
+- **Read:** Agent reads message (tracked in `read_by`)
+- **Replied:** Agent replies (creates new message with `in_reply_to`)
+- **Resolved:** Message marked as resolved (e.g., question answered, request fulfilled)
+- **Expired:** Old messages (>24 hours) are archived or deleted
+
+**Implementation:**
+
+```rust
+// src/core/agent_communication.rs
+
+// DRY:DATA:AgentCommunicator — Agent-to-agent message communication
+pub struct AgentCommunicator {
+    message_board_file: PathBuf,
+    coordinator: AgentCoordinator, // Reuse coordination state
+}
+
+impl AgentCommunicator {
+    // DRY:FN:new — Create agent communicator
+    pub fn new(project_root: &Path) -> Self {
+        Self {
+            message_board_file: project_root.join(".puppet-master").join("state").join("agent-messages.json"),
+            coordinator: AgentCoordinator::new(project_root),
+        }
+    }
+    
+    // DRY:FN:post_message — Post a message to the message board
+    // DRY REQUIREMENT: Validate agent_id using subagent_registry::is_valid_subagent_name() if it's a subagent name
+    /// Post a message to the message board
+    pub async fn post_message(&self, message: AgentMessage) -> Result<()> {
+        // DRY: Validate message.from_agent_id if it's a subagent name (not a tier-specific ID)
+        // Implementation note: Extract subagent name from agent_id if format is "subagent-tier_id"
+        // and validate using subagent_registry::is_valid_subagent_name()
+        let mut board = self.load_message_board().await?;
+        board.messages.push(message);
+        board.last_updated = Utc::now();
+        self.save_message_board(&board).await
+    }
+    
+    /// Get messages relevant to an agent
+    pub async fn get_messages_for_agent(
+        &self,
+        agent_id: &str,
+        tier_id: &str,
+        agent_type: Option<&str>,
+    ) -> Result<Vec<AgentMessage>> {
+        let board = self.load_message_board().await?;
+        let active_agents = self.coordinator.load_state().await?;
+        
+        // Filter messages relevant to this agent
+        let relevant: Vec<_> = board.messages.iter()
+            .filter(|msg| {
+                // Direct message
+                if let Some(ref to_id) = msg.to_agent_id {
+                    if to_id == agent_id {
+                        return true;
+                    }
+                }
+                
+                // Message to agent type
+                if let Some(ref to_type) = msg.to_agent_type {
+                    if agent_type.map(|t| t == to_type).unwrap_or(false) {
+                        return true;
+                    }
+                }
+                
+                // Message to tier
+                if let Some(ref to_tier) = msg.to_tier_id {
+                    if to_tier == tier_id {
+                        return true;
+                    }
+                }
+                
+                // Broadcast (no specific recipient)
+                if msg.to_agent_id.is_none() && msg.to_agent_type.is_none() && msg.to_tier_id.is_none() {
+                    return true;
+                }
+                
+                // Message mentions files agent is working on
+                if let Some(agent) = active_agents.active_agents.get(agent_id) {
+                    for file in &agent.files_being_edited {
+                        if msg.context.files_mentioned.contains(file) {
+                            return true;
+                        }
+                    }
+                }
+                
+                false
+            })
+            .cloned()
+            .collect();
+        
+        Ok(relevant)
+    }
+    
+    /// Format messages for prompt injection
+    pub fn format_messages_for_prompt(&self, messages: &[AgentMessage]) -> Result<String> {
+        if messages.is_empty() {
+            return Ok(String::new());
+        }
+        
+        let mut formatted = String::new();
+        formatted.push_str("**Recent Messages from Other Agents:**\n\n");
+        
+        for msg in messages.iter().take(10) { // Limit to 10 most recent
+            // DRY REQUIREMENT: Platform display name MUST use platform_specs::display_name_for() — NEVER hardcode platform names
+            let platform_display = platform_specs::display_name_for(msg.from_platform);
+            let from_info = format!("{} ({})", msg.from_agent_id, platform_display);
+            let message_type_str = match msg.message_type {
+                MessageType::Question => "❓ Question",
+                MessageType::Answer => "✅ Answer",
+                MessageType::Update => "📢 Update",
+                MessageType::Request => "🙏 Request",
+                MessageType::Decision => "🎯 Decision",
+                MessageType::Warning => "⚠️ Warning",
+                MessageType::Announcement => "📣 Announcement",
+            };
+            
+            formatted.push_str(&format!(
+                "- **{}** from {}: {}\n  {}\n",
+                message_type_str,
+                from_info,
+                msg.subject,
+                msg.content
+            ));
+            
+            if !msg.context.files_mentioned.is_empty() {
+                formatted.push_str(&format!(
+                    "  Files: {}\n",
+                    msg.context.files_mentioned.iter()
+                        .map(|f| f.display().to_string())
+                        .collect::<Vec<_>>()
+                        .join(", ")
+                ));
+            }
+        }
+        
+        Ok(formatted)
+    }
+    
+    /// Mark message as read
+    pub async fn mark_message_read(&self, message_id: &str, agent_id: &str) -> Result<()> {
+        let mut board = self.load_message_board().await?;
+        if let Some(msg) = board.messages.iter_mut().find(|m| m.message_id == message_id) {
+            if !msg.read_by.contains(&agent_id.to_string()) {
+                msg.read_by.push(agent_id.to_string());
+                self.save_message_board(&board).await?;
+            }
+        }
+        Ok(())
+    }
+    
+    /// Archive old messages (>24 hours)
+    pub async fn archive_old_messages(&self) -> Result<()> {
+        let mut board = self.load_message_board().await?;
+        let cutoff = Utc::now() - chrono::Duration::hours(24);
+        
+        let (active, archived): (Vec<_>, Vec<_>) = board.messages
+            .into_iter()
+            .partition(|msg| msg.created_at > cutoff || !msg.resolved);
+        
+        board.messages = active;
+        self.save_message_board(&board).await?;
+        
+        // Save archived messages to separate file
+        if !archived.is_empty() {
+            let archive_file = self.message_board_file.with_extension("archive.json");
+            // Append to archive file
+            // ...
+        }
+        
+        Ok(())
+    }
+    
+    async fn load_message_board(&self) -> Result<AgentMessageBoard> {
+        // Similar to AgentCoordinator::load_state
+        // ...
+    }
+    
+    async fn save_message_board(&self, board: &AgentMessageBoard) -> Result<()> {
+        // Similar to AgentCoordinator::save_state (with locking)
+        // ...
+    }
+}
+```
+
+**Integration with agent execution:**
+
+Agents can post messages during execution:
+
+```rust
+// In orchestrator, during agent execution
+// Parse agent output for message commands
+if agent_output.contains("@message") || agent_output.contains("@ask") {
+    // Extract message from agent output
+    let message = parse_message_from_output(&agent_output)?;
+    communicator.post_message(message).await?;
+}
+
+// Before agent execution, inject messages into prompt
+let messages = communicator.get_messages_for_agent(&agent_id, &tier_id, Some(&agent_type)).await?;
+let message_context = communicator.format_messages_for_prompt(&messages)?;
+```
+
+**Orchestrator monitoring:**
+
+The orchestrator can monitor all messages for insights:
+
+```rust
+// In orchestrator
+pub struct OrchestratorInsights {
+    pub active_conversations: Vec<ConversationThread>,
+    pub pending_questions: Vec<AgentMessage>,
+    pub recent_decisions: Vec<AgentMessage>,
+    pub conflict_warnings: Vec<AgentMessage>,
+}
+
+impl OrchestratorInsights {
+    pub async fn analyze_communication(&self, communicator: &AgentCommunicator) -> Result<Self> {
+        let board = communicator.load_message_board().await?;
+        
+        // Analyze messages for insights
+        // ...
+    }
+}
+```
+
+**Benefits:**
+
+1. **Cross-platform:** Works for all 5 platforms, even without native teams/fleets
+2. **Orchestrator visibility:** Boss agent can see all subagent communication
+3. **Enhanced coordination:** Agents can ask for help, share decisions, warn about conflicts
+4. **File-based:** No API calls, pure file-based (fits Puppet Master architecture)
+5. **Flexible routing:** Messages can be direct, by type, by tier, or broadcast
+6. **Threaded conversations:** Supports multi-turn conversations
+7. **Integration:** Works seamlessly with existing coordination state
+
+**Potential issues and mitigations:**
+
+- **Message spam:** Limit message rate per agent (max 10 messages/minute)
+- **Large message board:** Archive old messages, limit message history
+- **File locking:** Use same locking mechanism as coordination state
+- **Message parsing:** Agents may not always format messages correctly — provide clear instructions in prompts
+- **Orphaned messages:** Messages from crashed agents — mark as resolved after agent unregisters
+
+**Next steps:**
+
+1. Add message board to coordination state
+2. Implement `AgentCommunicator` with message posting/reading
+3. Integrate message injection into agent prompts
+4. Add orchestrator monitoring/insights
+5. Add GUI visualization of agent communication
+6. Test with multiple agents across different platforms
+
+### Gaps and Potential Issues for Agent Coordination
+
+**Gap #28: File locking and concurrent writes**
+
+**Issue:** Multiple agents may write to `active-agents.json` simultaneously, causing race conditions, file corruption, or lost updates. The current implementation reads the entire file, modifies it, and writes it back — this is not atomic.
+
+**Mitigation:**
+- **File locking:** Use advisory file locks (e.g., `flock` on Unix, `File::lock` in Rust) to ensure exclusive access during writes. Implement retry logic with exponential backoff if lock acquisition fails.
+- **Atomic writes:** Write to a temporary file (`active-agents.json.tmp`), then atomically rename to `active-agents.json` (rename is atomic on most filesystems).
+- **Read-modify-write with retry:** If file changes between read and write, reload and retry (up to 3 attempts).
+- **Lock timeout:** If lock cannot be acquired within 5 seconds, log warning and proceed (coordination may be stale but execution continues).
+
+```rust
+// src/core/agent_coordination.rs (enhanced)
+
+use std::fs::File;
+use std::io::{Read, Write};
+use std::os::unix::fs::FileExt; // For file locking on Unix
+
+impl AgentCoordinator {
+    async fn save_state_with_lock(&self, state: &AgentCoordinationState) -> Result<()> {
+        let lock_file = self.state_file.with_extension("lock");
+        let mut attempts = 0;
+        const MAX_ATTEMPTS: u32 = 3;
+        
+        loop {
+            // Try to acquire lock
+            match self.acquire_lock(&lock_file).await {
+                Ok(_) => break,
+                Err(e) if attempts < MAX_ATTEMPTS => {
+                    attempts += 1;
+                    tokio::time::sleep(tokio::time::Duration::from_millis(100 * attempts)).await;
+                    continue;
+                }
+                Err(e) => {
+                    // Lock timeout — log warning but proceed
+                    tracing::warn!("Could not acquire coordination lock after {} attempts: {}. Proceeding without lock.", MAX_ATTEMPTS, e);
+                    break;
+                }
+            }
+        }
+        
+        // Write to temp file first
+        let temp_file = self.state_file.with_extension("tmp");
+        let json = serde_json::to_string_pretty(state)?;
+        std::fs::write(&temp_file, json)?;
+        
+        // Atomic rename
+        std::fs::rename(&temp_file, &self.state_file)?;
+        
+        // Release lock
+        let _ = std::fs::remove_file(&lock_file);
+        
+        Ok(())
+    }
+    
+    async fn acquire_lock(&self, lock_file: &Path) -> Result<()> {
+        // Create lock file with PID
+        let pid = std::process::id();
+        let lock_content = format!("{}\n", pid);
+        
+        // Try to create lock file exclusively
+        match std::fs::OpenOptions::new()
+            .write(true)
+            .create_new(true)
+            .open(lock_file)
+        {
+            Ok(mut file) => {
+                file.write_all(lock_content.as_bytes())?;
+                Ok(())
+            }
+            Err(e) if e.kind() == std::io::ErrorKind::AlreadyExists => {
+                // Check if lock is stale (process no longer exists)
+                if let Ok(content) = std::fs::read_to_string(lock_file) {
+                    if let Ok(lock_pid) = content.trim().parse::<u32>() {
+                        // Check if process exists (Unix-specific)
+                        if !self.process_exists(lock_pid) {
+                            // Stale lock — remove it
+                            let _ = std::fs::remove_file(lock_file);
+                            return self.acquire_lock(lock_file).await;
+                        }
+                    }
+                }
+                Err(anyhow!("Lock file exists"))
+            }
+            Err(e) => Err(anyhow!("Failed to create lock: {}", e)),
+        }
+    }
+    
+    fn process_exists(&self, pid: u32) -> bool {
+        // Unix-specific: check if process exists
+        #[cfg(unix)]
+        {
+            use std::process::Command;
+            Command::new("kill")
+                .args(&["-0", &pid.to_string()])
+                .output()
+                .map(|o| o.status.success())
+                .unwrap_or(false)
+        }
+        #[cfg(not(unix))]
+        {
+            // Windows: use different approach
+            true // Assume exists for now
+        }
+    }
+}
+```
+
+**Gap #29: Error handling and file corruption recovery**
+
+**Issue:** If `active-agents.json` becomes corrupted (invalid JSON, partial write, disk full), coordination breaks. Agents may not be able to register or read coordination state.
+
+**Mitigation:**
+- **JSON validation:** Validate JSON structure after reading. If invalid, try to parse what we can (best-effort recovery).
+- **Backup before write:** Create backup (`active-agents.json.bak`) before each write. If write fails, restore from backup.
+- **Fallback to empty state:** If file is corrupted and cannot be recovered, start with empty state (all agents unregistered). Log warning.
+- **Corruption detection:** Check file size, JSON validity, and schema compliance. If corrupted, attempt recovery or reset.
+
+```rust
+async fn load_state(&self) -> Result<AgentCoordinationState> {
+    if self.state_file.exists() {
+        let json = match std::fs::read_to_string(&self.state_file) {
+            Ok(json) => json,
+            Err(e) => {
+                tracing::error!("Failed to read coordination state: {}. Using empty state.", e);
+                return Ok(AgentCoordinationState::default());
+            }
+        };
+        
+        // Try to parse JSON
+        match serde_json::from_str::<AgentCoordinationState>(&json) {
+            Ok(state) => {
+                // Validate schema (check required fields)
+                self.validate_state(&state)?;
+                Ok(state)
+            }
+            Err(e) => {
+                // Try backup
+                let backup_file = self.state_file.with_extension("bak");
+                if backup_file.exists() {
+                    tracing::warn!("Coordination state corrupted. Attempting backup recovery.");
+                    if let Ok(backup_json) = std::fs::read_to_string(&backup_file) {
+                        if let Ok(backup_state) = serde_json::from_str(&backup_json) {
+                            tracing::info!("Recovered coordination state from backup.");
+                            return Ok(backup_state);
+                        }
+                    }
+                }
+                
+                // Last resort: empty state
+                tracing::error!("Coordination state corrupted and backup recovery failed: {}. Using empty state.", e);
+                Ok(AgentCoordinationState::default())
+            }
+        }
+    } else {
+        Ok(AgentCoordinationState::default())
+    }
+}
+
+fn validate_state(&self, state: &AgentCoordinationState) -> Result<()> {
+    // Validate schema: check that all agents have required fields
+    for (agent_id, agent) in &state.active_agents {
+        if agent.agent_id.is_empty() {
+            return Err(anyhow!("Invalid agent: empty agent_id"));
+        }
+        if agent.tier_id.is_empty() {
+            return Err(anyhow!("Invalid agent {}: empty tier_id", agent_id));
+        }
+        // Check for reasonable timestamps (not in future, not too old)
+        let now = Utc::now();
+        if agent.started_at > now {
+            return Err(anyhow!("Invalid agent {}: started_at in future", agent_id));
+        }
+        if agent.started_at < now - chrono::Duration::days(7) {
+            // Agent running for 7+ days is likely stale
+            tracing::warn!("Agent {} has been running for 7+ days — likely stale", agent_id);
+        }
+    }
+    Ok(())
+}
+```
+
+**Gap #30: Stale agent cleanup and crash recovery**
+
+**Issue:** If an agent crashes or is killed without unregistering, it remains in `active-agents.json` indefinitely, causing false conflicts and stale coordination state.
+
+**Mitigation:**
+- **Heartbeat mechanism:** Agents update `last_update` timestamp periodically (every 30 seconds). Prune agents with `last_update` older than threshold (e.g., 5 minutes).
+- **Process existence check:** When loading state, check if agent's process still exists (via PID if stored, or by checking worktree activity). Remove stale entries.
+- **Automatic cleanup:** Before each coordination read/write, prune stale agents (no update in last 5 minutes).
+- **Crash detection:** Detect agent crashes (process exit, worktree deletion) and automatically unregister.
+
+```rust
+async fn load_state(&self) -> Result<AgentCoordinationState> {
+    // ... existing load logic ...
+    
+    // Prune stale agents
+    let mut pruned = state.clone();
+    let cutoff = Utc::now() - chrono::Duration::minutes(5); // 5 minute timeout
+    let initial_count = pruned.active_agents.len();
+    
+    pruned.active_agents.retain(|agent_id, agent| {
+        // Check if agent is stale
+        if agent.last_update < cutoff {
+            tracing::info!("Pruning stale agent: {} (last update: {} ago)", 
+                agent_id, 
+                Utc::now().signed_duration_since(agent.last_update));
+            return false;
+        }
+        
+        // Check if worktree still exists (if applicable)
+        if let Some(ref worktree) = agent.worktree_path {
+            if !worktree.exists() {
+                tracing::info!("Pruning agent {}: worktree {} no longer exists", agent_id, worktree.display());
+                return false;
+            }
+        }
+        
+        true
+    });
+    
+    if pruned.active_agents.len() != initial_count {
+        // Save pruned state
+        self.save_state(&pruned).await?;
+    }
+    
+    Ok(pruned)
+}
+```
+
+**Gap #31: File operation extraction reliability**
+
+**Issue:** Extracting file operations from agent output is unreliable. Agents may mention files they don't edit, or edit files they don't mention. Platform hooks may not fire for all file operations.
+
+**Mitigation:**
+- **Multi-source extraction:** Combine multiple sources: (1) agent output parsing (regex for file paths), (2) platform hooks (`PreToolUse`/`PostToolUse`), (3) SDK callbacks (`onToolUse`), (4) git diff detection (compare worktree before/after).
+- **Confidence scoring:** Assign confidence scores to file operations (high: platform hook detected, medium: agent mentioned, low: inferred from context). Only include high/medium confidence files in coordination state.
+- **Validation:** After agent completes, validate claimed files against actual git diff. If mismatch, log warning and update coordination state.
+- **Best-effort updates:** If file extraction fails, still register agent with empty `files_being_edited` list. Coordination context will still show agent is active, just without file details.
+
+```rust
+pub struct FileOperationExtractor;
+
+impl FileOperationExtractor {
+    /// Extract file operations from multiple sources
+    pub async fn extract_files(
+        &self,
+        agent_output: &str,
+        platform_hooks: Option<Vec<String>>, // Files detected by platform hooks
+        git_diff: Option<Vec<PathBuf>>, // Files changed in git diff
+    ) -> Vec<PathBuf> {
+        let mut files = std::collections::HashSet::new();
+        
+        // Source 1: Platform hooks (highest confidence)
+        if let Some(hook_files) = platform_hooks {
+            for file in hook_files {
+                files.insert(PathBuf::from(file));
+            }
+        }
+        
+        // Source 2: Git diff (high confidence)
+        if let Some(diff_files) = git_diff {
+            for file in diff_files {
+                files.insert(file);
+            }
+        }
+        
+        // Source 3: Agent output parsing (medium confidence)
+        let output_files = self.parse_files_from_output(agent_output);
+        for file in output_files {
+            files.insert(file);
+        }
+        
+        files.into_iter().collect()
+    }
+    
+    fn parse_files_from_output(&self, output: &str) -> Vec<PathBuf> {
+        // Regex patterns for common file mentions
+        let patterns = vec![
+            r#"editing\s+([^\s]+\.(rs|ts|js|py|go|java))"#i,
+            r#"modifying\s+([^\s]+\.(rs|ts|js|py|go|java))"#i,
+            r#""([^"]+\.(rs|ts|js|py|go|java))""#,
+            r#"'([^']+\.(rs|ts|js|py|go|java))'"#,
+        ];
+        
+        let mut files = Vec::new();
+        for pattern in patterns {
+            let re = regex::Regex::new(pattern).unwrap();
+            for cap in re.captures_iter(output) {
+                if let Some(file_match) = cap.get(1) {
+                    files.push(PathBuf::from(file_match.as_str()));
+                }
+            }
+        }
+        
+        files
+    }
+}
+```
+
+**Gap #32: Coordination state size limits and performance**
+
+**Issue:** If many agents run simultaneously (50+), `active-agents.json` becomes large, causing slow reads/writes and prompt token bloat. Coordination context injected into prompts may exceed token limits.
+
+**Mitigation:**
+- **Size limits:** Limit coordination state to max 100 active agents. If exceeded, prune oldest agents (by `started_at`).
+- **Prompt context limits:** Limit coordination context to max 2000 tokens. If exceeded, summarize (e.g., "15 agents active, 8 editing files") or filter (only show agents editing files in current directory).
+- **Lazy loading:** Only load coordination state when needed (before agent execution), not on every orchestrator tick.
+- **Caching:** Cache coordination context for 5 seconds to avoid repeated file reads.
+- **Filtering:** Allow filtering coordination context by tier, platform, or file path to reduce size.
+
+```rust
+pub async fn get_coordination_context(
+    &self,
+    filter: Option<CoordinationFilter>, // Filter by tier, platform, file path
+) -> Result<String> {
+    let state = self.load_state().await?;
+    let mut context = String::new();
+    
+    // Apply filters
+    let filtered_agents: Vec<_> = state.active_agents.values()
+        .filter(|agent| {
+            if let Some(ref filter) = filter {
+                if let Some(ref tier_filter) = filter.tier_id {
+                    if agent.tier_id != *tier_filter {
+                        return false;
+                    }
+                }
+                if let Some(ref platform_filter) = filter.platform {
+                    if agent.platform != *platform_filter {
+                        return false;
+                    }
+                }
+                if let Some(ref file_filter) = filter.file_path {
+                    if !agent.files_being_edited.iter().any(|f| f == file_filter) {
+                        return false;
+                    }
+                }
+            }
+            true
+        })
+        .collect();
+    
+    // Limit to max agents
+    let max_agents = 20; // Limit to prevent token bloat
+    let agents_to_show: Vec<_> = filtered_agents.iter().take(max_agents).collect();
+    
+    if agents_to_show.is_empty() {
+        return Ok(String::new());
+    }
+    
+    // Build context (same as before but with limit)
+    // ... existing context building logic ...
+    
+    // If context exceeds token limit, summarize
+    let estimated_tokens = context.len() / 4; // Rough estimate
+    if estimated_tokens > 2000 {
+        context = self.summarize_coordination_context(&agents_to_show)?;
+    }
+    
+    Ok(context)
+}
+
+pub struct CoordinationFilter {
+    pub tier_id: Option<String>,
+    pub platform: Option<Platform>,
+    pub file_path: Option<PathBuf>,
+}
+```
+
+**Gap #33: Conflict resolution and file locking**
+
+**Issue:** If two agents want to edit the same file, coordination context warns them, but there's no automatic conflict resolution. Agents may ignore warnings or both proceed, causing merge conflicts.
+
+**Mitigation:**
+- **Conflict detection:** Before agent starts, check coordination state for file conflicts. If conflict detected, either (1) delay agent start, (2) select alternative files, or (3) escalate to orchestrator.
+- **File-level locking:** Extend coordination state to include file locks (which agent has "locked" a file for editing). Agents must acquire lock before editing.
+- **Lock timeout:** File locks expire after 30 minutes (agent should finish editing by then). Stale locks are automatically released.
+- **Orchestrator intervention:** If conflict persists, orchestrator can serialize execution (run agents sequentially instead of parallel) or reassign files.
+
+```rust
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct FileLock {
+    pub file_path: PathBuf,
+    pub locked_by: String, // agent_id
+    pub locked_at: DateTime<Utc>,
+    pub expires_at: DateTime<Utc>,
+}
+
+impl AgentCoordinator {
+    /// Check for file conflicts before agent starts
+    pub async fn check_file_conflicts(
+        &self,
+        agent_id: &str,
+        files_to_edit: &[PathBuf],
+    ) -> Result<Vec<FileConflict>> {
+        let state = self.load_state().await?;
+        let mut conflicts = Vec::new();
+        
+        for file in files_to_edit {
+            // Check if any other agent is editing this file
+            for (other_agent_id, other_agent) in &state.active_agents {
+                if *other_agent_id != agent_id && other_agent.files_being_edited.contains(file) {
+                    conflicts.push(FileConflict {
+                        file: file.clone(),
+                        conflicting_agent: other_agent_id.clone(),
+                        conflicting_platform: other_agent.platform.clone(),
+                    });
+                }
+            }
+        }
+        
+        Ok(conflicts)
+    }
+    
+    /// Acquire file lock (if available)
+    pub async fn acquire_file_lock(
+        &self,
+        agent_id: &str,
+        file: &Path,
+        duration_minutes: u64,
+    ) -> Result<bool> {
+        let mut state = self.load_state().await?;
+        
+        // Check if file is already locked
+        // (This would require extending AgentCoordinationState with file_locks field)
+        // For now, check files_being_edited
+        
+        // If not locked, add to agent's files_being_edited
+        if let Some(agent) = state.active_agents.get_mut(agent_id) {
+            if !agent.files_being_edited.contains(file) {
+                agent.files_being_edited.push(file.to_path_buf());
+                agent.last_update = Utc::now();
+                self.save_state(&state).await?;
+                return Ok(true);
+            }
+        }
+        
+        Ok(false) // File already locked
+    }
+}
+
+pub struct FileConflict {
+    pub file: PathBuf,
+    pub conflicting_agent: String,
+    pub conflicting_platform: Platform,
+}
+```
+
+**Gap #34: Path normalization and worktree handling**
+
+**Issue:** Agents may report file paths in different formats (relative vs absolute, worktree paths vs main repo paths). Coordination state may not correctly match files across worktrees.
+
+**Mitigation:**
+- **Path normalization:** Normalize all paths to relative paths from project root before storing in coordination state.
+- **Worktree path resolution:** Convert worktree paths to main repo paths (e.g., `.puppet-master/worktrees/A/src/api.rs` → `src/api.rs`).
+- **Path comparison:** Use canonical paths for comparison (resolve symlinks, normalize separators).
+
+```rust
+impl AgentCoordinator {
+    fn normalize_path(&self, path: &Path, project_root: &Path) -> PathBuf {
+        // If path is absolute, make it relative to project root
+        if path.is_absolute() {
+            if let Ok(relative) = path.strip_prefix(project_root) {
+                return relative.to_path_buf();
+            }
+        }
+        
+        // If path is in worktree, convert to main repo path
+        if let Ok(stripped) = path.strip_prefix(".puppet-master/worktrees/") {
+            // Extract worktree name and file path
+            if let Some(components) = stripped.components().next() {
+                // Remove worktree prefix, keep file path
+                return stripped.strip_prefix(components).unwrap_or(stripped).to_path_buf();
+            }
+        }
+        
+        path.to_path_buf()
+    }
+}
+```
+
+**Gap #35: SDK coordination fallback**
+
+**Issue:** If SDK coordination fails (Codex SDK thread creation fails, Copilot SDK session creation fails), agents fall back to file-based coordination, but there's no automatic fallback mechanism.
+
+**Mitigation:**
+- **Fallback detection:** Detect SDK coordination failures (thread/session creation errors, timeout). Automatically fall back to file-based coordination.
+- **Hybrid coordination:** Use SDK coordination when available, but also update file-based coordination state as backup.
+- **Error handling:** Log SDK coordination failures but don't block execution. Continue with file-based coordination.
+
+**Gap #36: Coordination metrics and monitoring**
+
+**Issue:** No visibility into coordination effectiveness. Can't tell if coordination is preventing conflicts, how often agents wait, or if coordination state is accurate.
+
+**Mitigation:**
+- **Metrics:** Track coordination events (agent registered, conflicts detected, stale agents pruned, file locks acquired).
+- **Logging:** Log coordination state changes (agent registered/unregistered, file conflicts detected, coordination context injected).
+- **Monitoring:** Add coordination state to GUI (show active agents, file locks, conflicts).
+- **Analytics:** Track coordination effectiveness (conflicts prevented, false positives, coordination accuracy).
+
+### Improvements to Agent Coordination
+
+**Improvement #1: Coordination state querying and filtering**
+
+Add methods to query coordination state by platform, tier, file path, or agent ID:
+
+```rust
+impl AgentCoordinator {
+    pub async fn get_agents_by_platform(&self, platform: Platform) -> Result<Vec<ActiveAgent>> {
+        let state = self.load_state().await?;
+        Ok(state.active_agents.values()
+            .filter(|a| a.platform == platform)
+            .cloned()
+            .collect())
+    }
+    
+    pub async fn get_agents_by_tier(&self, tier_id: &str) -> Result<Vec<ActiveAgent>> {
+        let state = self.load_state().await?;
+        Ok(state.active_agents.values()
+            .filter(|a| a.tier_id == tier_id)
+            .cloned()
+            .collect())
+    }
+    
+    pub async fn get_agents_editing_file(&self, file: &Path) -> Result<Vec<ActiveAgent>> {
+        let state = self.load_state().await?;
+        Ok(state.active_agents.values()
+            .filter(|a| a.files_being_edited.contains(file))
+            .cloned()
+            .collect())
+    }
+}
+```
+
+**Improvement #2: Coordination state backup and recovery**
+
+Automatically backup coordination state before each write, with retention policy:
+
+```rust
+impl AgentCoordinator {
+    async fn save_state(&self, state: &AgentCoordinationState) -> Result<()> {
+        // Backup current state
+        if self.state_file.exists() {
+            let backup_file = self.state_file.with_extension(format!("bak.{}", Utc::now().timestamp()));
+            let _ = std::fs::copy(&self.state_file, &backup_file);
+            
+            // Cleanup old backups (keep last 10)
+            self.cleanup_old_backups().await?;
+        }
+        
+        // Save new state (with locking as above)
+        self.save_state_with_lock(state).await
+    }
+    
+    async fn cleanup_old_backups(&self) -> Result<()> {
+        // Implementation: list backup files, sort by timestamp, keep last 10
+        // ...
+    }
+}
+```
+
+**Improvement #3: Coordination state validation and schema versioning**
+
+Add schema versioning to coordination state to handle format changes:
+
+```rust
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct AgentCoordinationState {
+    pub schema_version: u32, // Current version: 1
+    pub active_agents: HashMap<String, ActiveAgent>,
+    pub last_updated: DateTime<Utc>,
+}
+
+impl AgentCoordinator {
+    fn validate_schema_version(&self, state: &AgentCoordinationState) -> Result<()> {
+        const CURRENT_SCHEMA_VERSION: u32 = 1;
+        
+        if state.schema_version != CURRENT_SCHEMA_VERSION {
+            return Err(anyhow!(
+                "Coordination state schema version mismatch: expected {}, got {}",
+                CURRENT_SCHEMA_VERSION,
+                state.schema_version
+            ));
+        }
+        
+        Ok(())
+    }
+    
+    async fn migrate_schema(&self, old_state: AgentCoordinationState) -> Result<AgentCoordinationState> {
+        // Migrate old schema versions to current
+        // ...
+    }
+}
+```
+
 ### Handling Concurrent Subagent Execution
 
 When multiple subagents run in parallel:
@@ -1594,6 +6857,7 @@ When multiple subagents run in parallel:
 2. **Independent Selection**: Each subtask selects subagents independently based on its own context
 3. **Resource Management**: Platform runners handle concurrent invocations
 4. **Context Sharing**: Completed subtasks share results via dependency chain, not direct subagent communication
+5. **Coordination**: Agents coordinate through shared state files and real-time coordination state (see "Agent Coordination and Communication" above)
 
 **Example:**
 ```rust
@@ -1616,30 +6880,56 @@ Level 0:
 
 **Mitigation Strategies:**
 
+**Coordination-based prevention (primary):** Use agent coordination (see "Agent Coordination and Communication" above) to prevent conflicts:
+- Agents register files they're editing in `active-agents.json`
+- Before starting work, agents check coordination state for file conflicts
+- If conflict detected, agent waits or selects alternative files
+- Coordination context injected into prompts warns agents about active files
+
+**Conflict detection (secondary):** Detect conflicts before execution:
+
 ```rust
 // src/core/subagent_selector.rs (additions)
 
 pub struct SubagentConflictDetector;
 
 impl SubagentConflictDetector {
-    /// Check for potential conflicts between parallel subagents
-    pub fn detect_conflicts(
+    /// Check for potential conflicts between parallel subagents using coordination state
+    pub async fn detect_conflicts(
         &self,
         subagent_groups: &[Vec<String>],
         tier_contexts: &[TierContext],
+        coordinator: &AgentCoordinator,
     ) -> Vec<Conflict> {
         let mut conflicts = Vec::new();
+        let coordination_state = coordinator.load_state().await.ok();
         
-        // Check for overlapping file modifications
+        // Check for overlapping file modifications using coordination state
         for (i, context_a) in tier_contexts.iter().enumerate() {
             for (j, context_b) in tier_contexts.iter().enumerate().skip(i + 1) {
-                if self.files_overlap(context_a, context_b) {
-                    conflicts.push(Conflict {
-                        type_: ConflictType::FileOverlap,
-                        subtask_a: i,
-                        subtask_b: j,
-                        files: self.get_overlapping_files(context_a, context_b),
-                    });
+                if let Some(state) = &coordination_state {
+                    // Check if any active agents are editing overlapping files
+                    let files_a: Vec<_> = state.active_agents.values()
+                        .filter(|a| a.tier_id == context_a.item_id)
+                        .flat_map(|a| &a.files_being_edited)
+                        .collect();
+                    let files_b: Vec<_> = state.active_agents.values()
+                        .filter(|a| a.tier_id == context_b.item_id)
+                        .flat_map(|a| &a.files_being_edited)
+                        .collect();
+                    
+                    let overlapping: Vec<_> = files_a.iter()
+                        .filter(|f| files_b.contains(f))
+                        .collect();
+                    
+                    if !overlapping.is_empty() {
+                        conflicts.push(Conflict {
+                            type_: ConflictType::FileOverlap,
+                            subtask_a: i,
+                            subtask_b: j,
+                            files: overlapping.iter().map(|f| (*f).clone()).collect(),
+                        });
+                    }
                 }
             }
         }
@@ -1659,12 +6949,6 @@ impl SubagentConflictDetector {
         }
         
         conflicts
-    }
-    
-    fn files_overlap(&self, context_a: &TierContext, context_b: &TierContext) -> bool {
-        // Check if subtasks modify overlapping files
-        // This would require tracking file modifications per subtask
-        false // Placeholder
     }
     
     fn has_architectural_conflict(
@@ -2267,31 +7551,29 @@ pub struct PlatformCapabilityManager {
 }
 
 impl PlatformCapabilityManager {
+    // DRY:FN:discover_capabilities — Discover platform-specific capabilities using platform_specs
     /// Discover platform-specific capabilities
     pub fn discover_capabilities(&self, platform: Platform) -> Result<Capabilities> {
-        match platform {
-            Platform::Cursor => self.discover_cursor_capabilities(),
-            Platform::Claude => self.discover_claude_capabilities(),
-            Platform::Gemini => self.discover_gemini_capabilities(),
-            Platform::Codex => self.discover_codex_capabilities(),
-            Platform::Copilot => self.discover_copilot_capabilities(),
-        }
+        // Use platform_specs to get capability discovery function (DRY:DATA:platform_specs)
+        platform_specs::discover_platform_capabilities(platform)
     }
     
+    // DRY:FN:install_subagent_package — Install platform-specific subagent package
+    // DRY REQUIREMENT: MUST use platform_specs to determine install method — NEVER hardcode platform-specific install logic
     /// Install platform-specific subagent package
     pub fn install_subagent_package(
         &self,
         platform: Platform,
         package: &SubagentPackage,
     ) -> Result<()> {
-        match platform {
-            Platform::Cursor => self.install_cursor_plugin(package),
-            Platform::Claude => self.install_claude_plugin(package),
-            Platform::Gemini => self.install_gemini_extension(package),
-            _ => Ok(()), // Codex/Copilot use SDK or built-in
-        }
+        // DRY: Use platform_specs to get install method — DO NOT use match platform statements
+        // Implementation note: If platform_specs doesn't have install_subagent_package() yet, it MUST be created
+        // and delegate to platform-specific install functions that use platform_specs for paths/commands
+        platform_specs::install_subagent_package(platform, package)
     }
     
+    // DRY:FN:configure_subagent_hooks — Configure hooks for subagent lifecycle
+    // DRY REQUIREMENT: MUST use platform_specs to determine hook configuration method — NEVER hardcode platform-specific hook logic
     /// Configure hooks for subagent lifecycle
     pub fn configure_subagent_hooks(
         &self,
@@ -2299,12 +7581,13 @@ impl PlatformCapabilityManager {
         subagent_name: &str,
         hooks: &SubagentHooks,
     ) -> Result<()> {
-        match platform {
-            Platform::Cursor => self.configure_cursor_hooks(subagent_name, hooks),
-            Platform::Claude => self.configure_claude_hooks(subagent_name, hooks),
-            Platform::Gemini => self.configure_gemini_hooks(subagent_name, hooks),
-            _ => Ok(()),
+        // DRY REQUIREMENT: Validate subagent_name using subagent_registry::is_valid_subagent_name()
+        if !subagent_registry::is_valid_subagent_name(subagent_name) {
+            return Err(anyhow!("Invalid subagent name: {}", subagent_name));
         }
+        // DRY: Use platform_specs to get hook configuration method — DO NOT use match platform statements
+        // Implementation note: If platform_specs doesn't have configure_subagent_hooks() yet, it MUST be created
+        platform_specs::configure_subagent_hooks(platform, subagent_name, hooks)
     }
 }
 ```
@@ -2315,6 +7598,8 @@ impl PlatformCapabilityManager {
 // src/core/subagent_invoker.rs (enhanced)
 
 impl SubagentInvoker {
+    // DRY:FN:invoke_with_capabilities — Invoke subagent using platform-specific capabilities
+    // DRY REQUIREMENT: MUST use platform_specs to determine invocation method — NEVER hardcode platform-specific invocation logic
     /// Invoke subagent using platform-specific capabilities
     pub async fn invoke_with_capabilities(
         &self,
@@ -2323,28 +7608,28 @@ impl SubagentInvoker {
         task: &str,
         capabilities: &PlatformCapabilities,
     ) -> Result<String> {
-        match platform {
-            Platform::Codex if capabilities.has_sdk => {
-                // Use Codex SDK for programmatic control
-                self.invoke_via_codex_sdk(subagent_name, task).await
-            }
-            Platform::Codex if capabilities.has_mcp_server => {
-                // Use Codex MCP server
-                self.invoke_via_mcp(subagent_name, task).await
-            }
-            Platform::Copilot if capabilities.has_sdk => {
-                // Use Copilot SDK
-                self.invoke_via_copilot_sdk(subagent_name, task).await
-            }
-            Platform::Claude if capabilities.has_agent_sdk => {
-                // Use Claude Agent SDK
-                self.invoke_via_claude_sdk(subagent_name, task).await
-            }
-            _ => {
-                // Fallback to CLI invocation
-                self.invoke_via_cli(platform, subagent_name, task).await
-            }
+        // DRY REQUIREMENT: Validate subagent_name using subagent_registry::is_valid_subagent_name()
+        if !subagent_registry::is_valid_subagent_name(subagent_name) {
+            return Err(anyhow!("Invalid subagent name: {}", subagent_name));
         }
+        // DRY: Use platform_specs to determine invocation method based on capabilities — DO NOT use match platform statements
+        // Implementation note: platform_specs should provide a function like:
+        // platform_specs::get_subagent_invocation_method(platform, capabilities) -> InvocationMethod
+        // which returns SDK, MCP, or CLI based on platform capabilities
+        let invocation_method = platform_specs::get_subagent_invocation_method(platform, capabilities)?;
+        match invocation_method {
+            InvocationMethod::Sdk => self.invoke_via_sdk(platform, subagent_name, task).await,
+            InvocationMethod::Mcp => self.invoke_via_mcp(platform, subagent_name, task).await,
+            InvocationMethod::Cli => self.invoke_via_cli(platform, subagent_name, task).await,
+        }
+    }
+    
+    // DRY:FN:invoke_via_cli — Invoke subagent via CLI
+    // DRY REQUIREMENT: MUST use platform_specs::get_subagent_invocation_format() — NEVER hardcode CLI invocation formats
+    async fn invoke_via_cli(&self, platform: Platform, subagent_name: &str, task: &str) -> Result<String> {
+        // Use platform_specs for CLI invocation format
+        let invocation_format = platform_specs::get_subagent_invocation_format(platform)?;
+        // ... rest of implementation
     }
 }
 ```
@@ -2663,11 +7948,14 @@ async fn run_enhanced_loop(&self) -> Result<()> {
         };
         
         // Step 3: Execute with subagent
+        // DRY REQUIREMENT: Subagent selection MUST use subagent_selector which uses subagent_registry
         let subagents = self.subagent_selector.select_for_tier(
             next_task.tier_type,
             &tier_context,
         );
+        // DRY: Validate selected subagent names using subagent_registry::is_valid_subagent_name()
         
+        // DRY REQUIREMENT: execute_with_subagents MUST use platform_specs for platform-specific invocation
         let result = self.execute_with_subagents(
             &next_task.tier_node,
             &subagents,

@@ -27,6 +27,19 @@ pub fn check_node_version() -> Option<String> {
         }
     }
 
+    // Try via enhanced PATH (finds Homebrew, nvm even from GUI app context)
+    if let Some(node_path) = crate::platforms::path_utils::resolve_executable("node") {
+        if let Ok(out) = std::process::Command::new(&node_path).arg("--version").output() {
+            if out.status.success() {
+                let v = String::from_utf8_lossy(&out.stdout).trim().to_string();
+                if !v.is_empty() {
+                    debug!("node version via enhanced PATH ({}): {}", node_path.display(), v);
+                    return Some(v);
+                }
+            }
+        }
+    }
+
     // Fallback: bash login shell (picks up nvm, asdf, etc.)
     #[cfg(not(target_os = "windows"))]
     {

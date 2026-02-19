@@ -33,6 +33,7 @@ pub mod session_tracker;
 pub mod state_machine;
 pub mod state_persistence;
 pub mod state_transitions;
+pub mod subagent_registry;
 pub mod tier_node;
 pub mod worker_reviewer;
 
@@ -70,6 +71,10 @@ pub use state_persistence::{
 pub use state_transitions::{
     OrchestratorTransition, StateTransitions, TierTransition, can_transition_orchestrator,
     can_transition_tier, get_valid_next_orchestrator_states, get_valid_next_tier_states,
+};
+pub use subagent_registry::{
+    all_subagent_names, get_subagent_for_framework, get_subagent_for_language,
+    get_reviewer_subagent_for_tier, get_subagents_for_tier, is_valid_subagent_name,
 };
 pub use tier_node::{TierNode, TierTree};
 pub use worker_reviewer::WorkerReviewer;

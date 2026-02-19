@@ -1082,6 +1082,172 @@ pub fn install_script_urls(platform: Platform) -> Option<(&'static str, &'static
     }
 }
 
+// ─── Subagent Support Functions ─────────────────────────────────────────────
+
+// DRY:FN:get_subagent_invocation_format — Get platform-specific subagent invocation format string
+/// Get the format string for invoking a subagent on this platform.
+/// 
+/// Returns a format string with placeholders:
+/// - `{subagent}` — subagent name
+/// - `{task}` — task description
+/// - `{context}` — tier context (optional)
+/// - `{coordination}` — coordination context (optional)
+/// 
+/// Example formats:
+/// - Cursor: "/{subagent} {task}"
+/// - Claude: "As {subagent}, {task}"
+/// - Codex: "Use {subagent} to: {task}"
+/// - Gemini: "Act as {subagent}. {task}"
+/// - Copilot: "/agent {subagent} {task}"
+pub fn get_subagent_invocation_format(platform: Platform) -> Result<&'static str, anyhow::Error> {
+    match platform {
+        Platform::Cursor => Ok("/{subagent} {task}"),
+        Platform::Claude => Ok("As {subagent}, {task}"),
+        Platform::Codex => Ok("Use {subagent} to: {task}"),
+        Platform::Gemini => Ok("Act as {subagent}. {task}"),
+        Platform::Copilot => Ok("/agent {subagent} {task}"),
+    }
+}
+
+// DRY:FN:get_agents_directory_name — Get platform-specific agents directory name
+/// Get the directory name where platform-specific agent definitions are stored.
+/// 
+/// Returns the directory name (e.g., ".cursor/agents", ".claude/agents").
+/// This is the single source of truth for agent directory paths.
+pub fn get_agents_directory_name(platform: Platform) -> &'static str {
+    match platform {
+        Platform::Cursor => ".cursor/agents",
+        Platform::Claude => ".claude/agents",
+        Platform::Codex => ".codex/agents",
+        Platform::Gemini => ".gemini/agents",
+        Platform::Copilot => ".copilot/agents",
+    }
+}
+
+// DRY:FN:discover_platform_capabilities — Discover platform capabilities dynamically
+/// Discover platform capabilities dynamically (hooks, SDKs, plugins, etc.).
+/// 
+/// This function delegates to platform-specific capability discovery.
+/// Returns a `Capabilities` struct with discovered features.
+/// 
+/// NOTE: This is a placeholder that should delegate to platform-specific discovery.
+/// For now, returns capabilities based on static spec data.
+pub fn discover_platform_capabilities(platform: Platform) -> Result<Capabilities, anyhow::Error> {
+    let spec = get_spec(platform);
+    Ok(Capabilities {
+        has_sdk: spec.sdk.is_some(),
+        has_mcp_server: false, // TODO: Detect MCP server availability
+        has_agent_sdk: matches!(platform, Platform::Claude), // Claude has Agent SDK
+        has_hooks: matches!(platform, Platform::Cursor | Platform::Claude | Platform::Gemini),
+        has_plugins: matches!(platform, Platform::Cursor | Platform::Claude | Platform::Gemini),
+        has_extensions: matches!(platform, Platform::Gemini),
+        supports_subagents: spec.subagent.is_some(),
+    })
+}
+
+/// Platform capabilities discovered dynamically.
+#[derive(Debug, Clone)]
+pub struct Capabilities {
+    pub has_sdk: bool,
+    pub has_mcp_server: bool,
+    pub has_agent_sdk: bool,
+    pub has_hooks: bool,
+    pub has_plugins: bool,
+    pub has_extensions: bool,
+    pub supports_subagents: bool,
+}
+
+// DRY:FN:install_subagent_package — Install platform-specific subagent package
+/// Install a platform-specific subagent package (plugin, extension, etc.).
+/// 
+/// This is a placeholder that should delegate to platform-specific installers.
+/// For now, returns Ok(()) as a stub.
+pub fn install_subagent_package(
+    platform: Platform,
+    _package: &SubagentPackage,
+) -> Result<(), anyhow::Error> {
+    // TODO: Implement platform-specific package installation
+    // - Cursor: Install plugin to .cursor/plugins/
+    // - Claude: Install plugin to .claude-plugin/
+    // - Gemini: Install extension via `gemini extensions install`
+    // - Codex/Copilot: Use SDK or built-in subagents
+    match platform {
+        Platform::Cursor | Platform::Claude | Platform::Gemini => {
+            // Plugin/extension installation would go here
+            Ok(())
+        }
+        Platform::Codex | Platform::Copilot => {
+            // SDK-based or built-in subagents
+            Ok(())
+        }
+    }
+}
+
+/// Subagent package definition (placeholder for future implementation).
+pub struct SubagentPackage {
+    pub name: String,
+    pub source: String, // URL or path
+}
+
+// DRY:FN:configure_subagent_hooks — Configure platform-specific hooks for subagent lifecycle
+/// Configure platform-specific hooks for subagent lifecycle management.
+/// 
+/// This is a placeholder that should write hook configuration files.
+/// For now, returns Ok(()) as a stub.
+pub fn configure_subagent_hooks(
+    platform: Platform,
+    _subagent_name: &str,
+    _hooks: &SubagentHooks,
+) -> Result<(), anyhow::Error> {
+    // TODO: Implement platform-specific hook configuration
+    // - Cursor: Write to .cursor/hooks.json
+    // - Claude: Write to .claude/settings.json hooks section
+    // - Gemini: Write to ~/.gemini/settings.json hooks section
+    // - Codex/Copilot: Use SDK callbacks or orchestrator-level hooks
+    match platform {
+        Platform::Cursor | Platform::Claude | Platform::Gemini => {
+            // Hook configuration would go here
+            Ok(())
+        }
+        Platform::Codex | Platform::Copilot => {
+            // SDK callbacks or orchestrator-level hooks
+            Ok(())
+        }
+    }
+}
+
+/// Subagent hooks configuration (placeholder for future implementation).
+pub struct SubagentHooks {
+    pub before_start: Option<String>,
+    pub after_complete: Option<String>,
+}
+
+// DRY:FN:get_subagent_invocation_method — Determine invocation method based on capabilities
+/// Determine the best invocation method for a subagent based on platform capabilities.
+/// 
+/// Returns the recommended invocation method (SDK, MCP, or CLI).
+pub fn get_subagent_invocation_method(
+    platform: Platform,
+    capabilities: &Capabilities,
+) -> Result<InvocationMethod, anyhow::Error> {
+    // Priority: SDK > MCP > CLI
+    if capabilities.has_sdk && matches!(platform, Platform::Codex | Platform::Copilot) {
+        Ok(InvocationMethod::Sdk)
+    } else if capabilities.has_mcp_server {
+        Ok(InvocationMethod::Mcp)
+    } else {
+        Ok(InvocationMethod::Cli)
+    }
+}
+
+/// Invocation method for subagents.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum InvocationMethod {
+    Sdk,
+    Mcp,
+    Cli,
+}
+
 // ─── Tests ──────────────────────────────────────────────────────────────────
 
 #[cfg(test)]

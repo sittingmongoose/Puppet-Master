@@ -111,6 +111,14 @@ impl AuthStatusChecker {
                 let stderr = String::from_utf8_lossy(&output.stderr);
                 let combined = format!("{}{}", stdout, stderr).to_lowercase();
 
+                // Guard against "Not logged in" matching the "logged in" substring
+                let clearly_not = combined.contains("not logged in")
+                    || combined.contains("not authenticated")
+                    || combined.contains("sign in to");
+                if clearly_not {
+                    continue;
+                }
+
                 if combined.contains("logged in") || combined.contains("authenticated") {
                     return AuthCheckResult::authenticated("Cursor CLI is authenticated");
                 }
@@ -168,36 +176,26 @@ impl AuthStatusChecker {
                 "Claude CLI is not installed. Install Claude Code CLI, then run 'claude' to complete browser-based login.",
             );
         }
-        // Claude has no `auth status` subcommand.
-        // Check: 1) ~/.claude/ credentials exist  2) `claude --version` succeeds (CLI installed)
-        let Some(home) = get_home_dir() else {
-            return AuthCheckResult::not_authenticated(
-                "Could not determine home directory. Set HOME or USERPROFILE environment variable.",
-            );
-        };
-        let cred_path = home.join(".claude");
-        let spec = platform_specs::get_spec(Platform::Claude);
 
-        if Self::credentials_cached(&cred_path) {
-            for cmd in platform_specs::cli_binary_names(Platform::Claude) {
-                if let Ok(output) = self.run_command(cmd, &[spec.version_command]).await {
-                    if output.status.success() {
-                        return AuthCheckResult::authenticated(
-                            "Authenticated (credentials from ~/.claude/)",
-                        );
-                    }
-                }
-            }
-        }
-
-        // CLI exists but no cached creds
+        // Use `claude auth status` which returns JSON {"loggedIn":true/false,...}
+        // This is authoritative (checks macOS Keychain etc.) unlike the filesystem check
+        // which gives false positives because ~/.claude/ dirs are recreated on every run.
         for cmd in platform_specs::cli_binary_names(Platform::Claude) {
-            if let Ok(output) = self.run_command(cmd, &[spec.version_command]).await {
-                if output.status.success() {
-                    return AuthCheckResult::not_authenticated(
-                        "Claude CLI installed but not authenticated. Run 'claude' to complete browser-based login.",
-                    );
+            if let Ok(output) = self.run_command(cmd, &["auth", "status"]).await {
+                let stdout = String::from_utf8_lossy(&output.stdout);
+                let stderr = String::from_utf8_lossy(&output.stderr);
+                let combined = format!("{}{}", stdout, stderr).to_lowercase();
+
+                // Claude outputs JSON: {"loggedIn":true,...} or {"loggedIn":false,...}
+                // Remove whitespace around colon for robustness
+                let compact = combined.replace(" ", "");
+                if compact.contains("\"loggedin\":true") {
+                    return AuthCheckResult::authenticated("Claude CLI is authenticated");
                 }
+                // CLI ran but reported not logged in
+                return AuthCheckResult::not_authenticated(
+                    "Claude CLI installed but not authenticated. Run 'claude auth login'.",
+                );
             }
         }
 

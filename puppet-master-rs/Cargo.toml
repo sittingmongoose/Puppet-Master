@@ -110,7 +110,7 @@ nix = { version = "0.29", features = ["signal"] }
 
 # Windows API (for process management and file locking)
 [target.'cfg(windows)'.dependencies]
-winapi = { version = "0.3", features = ["fileapi", "handleapi", "processthreadsapi", "winnt", "winreg"] }
+winapi = { version = "0.3", features = ["fileapi", "handleapi", "processthreadsapi", "winnt", "winreg", "winerror"] }
 
 # Windows: embed application icon into .exe (used only when building for Windows)
 [target.'cfg(windows)'.build-dependencies]
@@ -129,6 +129,12 @@ codegen-units = 1
 [profile.dev]
 opt-level = 0
 debug = true
+codegen-units = 16
+
+[profile.test]
+opt-level = 0
+debug = true
+codegen-units = 16
 
 [package.metadata.bundle]
 name = "RWM Puppet Master"

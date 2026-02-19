@@ -9,22 +9,29 @@ Always use the Context7 MCP. You need to take your time and be careful as this i
 
 ## Table of Contents
 
-1. [Project Overview](#project-overview)
-2. [Context7 MCP](#context7-mcp)
-3. [Architecture Notes](#architecture-notes)
-4. [Codebase Patterns](#codebase-patterns)
+1. [Keeping AGENTS.md minimal](#keeping-agentsmd-minimal)
+2. [Project Overview](#project-overview)
+3. [Context7 MCP](#context7-mcp)
+4. [Architecture Notes](#architecture-notes)
+5. [Codebase Patterns](#codebase-patterns)
     - [GUI Selection & Context Menus](#gui-selection--context-menus)
-5. [DRY Method](#dry-method--reuse-first)
-6. [Tooling Rules](#tooling-rules)
-7. [Pre-Completion Checklist](#pre-completion-verification-checklist)
-8. [Common Failure Modes](#common-failure-modes)
-9. [DO / DON'T](#do)
-10. [Testing](#testing)
-11. [Directory Structure](#directory-structure)
-12. [Configuration](#configuration)
-13. [Platform CLI Commands](#platform-cli-commands)
-14. [Usage Tracking](#usage-tracking--plan-detection)
-15. [Completion Signals](#completion-signals)
+6. [DRY Method](#dry-method--reuse-first)
+7. [Tooling Rules](#tooling-rules)
+8. [Pre-Completion Checklist](#pre-completion-verification-checklist)
+9. [Common Failure Modes](#common-failure-modes)
+10. [DO / DON'T](#do)
+11. [Testing](#testing)
+12. [Directory Structure](#directory-structure)
+13. [Configuration](#configuration)
+14. [Platform CLI Commands](#platform-cli-commands)
+15. [Usage Tracking](#usage-tracking--plan-detection)
+16. [Completion Signals](#completion-signals)
+
+---
+
+## Keeping AGENTS.md minimal
+
+This file is loaded into agent context; long files consume context and get skimmed, so critical rules can be missed. When **adding or editing** this file: put **critical rules at the top**; move **long reference** (e.g. full platform CLI details, long tables) to `docs/` and link from here; **trim redundancy**. For **generated** (target-project) AGENTS.md, the Interview plan §5.1 specifies a size budget, critical-first block, and linked docs—see Plans/interview-subagent-integration.md.
 
 ---
 
@@ -322,6 +329,9 @@ yarn-error.log*
    - [ ] Task scope strictly followed
    - [ ] Gitignore uses specific `.log` patterns (not blanket `*.log`)
    - [ ] Git commit format followed
+
+7. **Documentation / AGENTS.md**
+   - [ ] When adding to AGENTS.md: keep it minimal—critical rules at top, long reference in docs/, trim redundancy (see "Keeping AGENTS.md minimal" above).
 
 **After completing this checklist, proceed to update the Task Status Log.**
 

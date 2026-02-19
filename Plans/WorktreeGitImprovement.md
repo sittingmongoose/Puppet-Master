@@ -36,7 +36,7 @@ Resolve each section during implementation so worktrees and Git work correctly e
 
 ### Critical Blocker
 
-The orchestrator reads **PuppetMasterConfig** from `ConfigManager::discover()` (YAML). The Config page edits **GuiConfig** and saves it to the same path (e.g. `puppet-master.yaml`). The two shapes differ; **enable_parallel** and other advanced/orchestrator fields in the GUI are never seen by the run. **Until config wiring is fixed**, worktrees and Git behavior cannot be fully controlled from the UI.
+The orchestrator reads **PuppetMasterConfig** from `ConfigManager::discover()` (YAML). The Config page edits **GuiConfig** and saves it to the same path (e.g. `puppet-master.yaml`). The two shapes differ; **enable_parallel** and other advanced/orchestrator fields in the GUI are never seen by the run. **Until config wiring is fixed**, worktrees and Git behavior cannot be fully controlled from the UI. For a consolidated list of unwired features and GUI gaps across plans, see **MiscPlan §9.1.18**.
 
 ### Readiness for implementation
 
@@ -211,11 +211,13 @@ The plan is **ready to implement** with the following in mind:
 
 #### 4.2.2 Branching tab: add missing controls
 
-- **Enable Git:** Toggle bound to `orchestrator.enable_git` (or equivalent in the canonical config). Tooltip: e.g. "Enable git branch creation, commits, and PR creation during runs."
-- **Auto PR:** Toggle bound to `branching.auto_pr`. Tooltip: "Create a pull request automatically when a tier completes; if off, worktree is merged to base branch without PR."
-- **Branch strategy:** Dropdown or radio: Main only / Feature (or Tier) / Release. Bound to config `branching.strategy` (or equivalent). Use existing tooltip `branching.strategy`.
-- **Use worktrees (parallel):** Can stay in Advanced as "Enable parallel execution" but must be wired (see 5). Optionally add a short note in the Branching tab: "Parallel subtasks use separate git worktrees."
-- **Auto merge on success / Delete on merge:** Add toggles if the product wants them; wire to config and implement behavior in orchestrator/worktree cleanup. Use existing tooltips.
+**DRY REQUIREMENT — Widget Reuse:** Before writing ANY UI code, check `docs/gui-widget-catalog.md` and use existing widgets (`toggler`, `styled_button`, `selectable_label`, `themed_panel`, `help_tooltip`). DO NOT create new widgets unless absolutely necessary. Tag any new reusable widgets with `// DRY:WIDGET:<name>` and run `scripts/generate-widget-catalog.sh` after changes.
+
+- **Enable Git:** Toggle bound to `orchestrator.enable_git` (or equivalent in the canonical config). **Use existing `toggler` widget** — DO NOT create a new toggle. Tooltip: e.g. "Enable git branch creation, commits, and PR creation during runs." **Use existing `help_tooltip` widget**.
+- **Auto PR:** Toggle bound to `branching.auto_pr`. **Use existing `toggler` widget**. Tooltip: "Create a pull request automatically when a tier completes; if off, worktree is merged to base branch without PR." **Use existing `help_tooltip` widget**.
+- **Branch strategy:** Dropdown or radio: Main only / Feature (or Tier) / Release. Bound to config `branching.strategy` (or equivalent). **Use existing dropdown/radio widgets** — DO NOT create new selection widgets. Use existing tooltip `branching.strategy`.
+- **Use worktrees (parallel):** Can stay in Advanced as "Enable parallel execution" but must be wired (see 5). Optionally add a short note in the Branching tab: "Parallel subtasks use separate git worktrees." **Use existing `selectable_label` widget** for the note.
+- **Auto merge on success / Delete on merge:** Add toggles if the product wants them; wire to config and implement behavior in orchestrator/worktree cleanup. **Use existing `toggler` widgets**. Use existing tooltips.
 
 #### 4.2.3 Branching tab: fix or remove unused fields
 
@@ -370,6 +372,36 @@ This section captures underspecified items, risks, and concrete details so the p
 - **Config migration:** If we move to a single canonical format (Option A), existing users may have only GuiConfig-shaped YAML. Loading it as PuppetMasterConfig can fail (missing `paths`, etc.). Plan: on load, try PuppetMasterConfig first; if it fails, try GuiConfig and convert to PuppetMasterConfig (with defaults for missing fields), then save in canonical format on next save.
 - **Save timing:** Option B is chosen: on Run, build the config used for the run from in-memory `gui_config`, so Save is not required for the next run. Document this in the UI (e.g. tooltip or short note: “Run uses current settings; Save stores them for next time.”).
 
+## DRY Method Compliance
+
+**CRITICAL:** All code in this plan MUST follow DRY principles.
+
+### DRY Requirements
+
+1. **Platform Data — ALWAYS use platform_specs:**
+   - ❌ **NEVER** hardcode platform CLI commands, binary names, models, auth, or capabilities
+   - ✅ **ALWAYS** use `platform_specs::` functions
+
+2. **Subagent Names — ALWAYS use subagent_registry:**
+   - ❌ **NEVER** hardcode subagent names
+   - ✅ **ALWAYS** use `subagent_registry::` functions
+   - ✅ **ALWAYS** reference `DRY:DATA:subagent_registry` from orchestrator plan as the single source of truth
+
+3. **Git Binary Resolution — Single Source of Truth:**
+   - ✅ **ALWAYS** use shared git binary resolution functions (DRY:FN:resolve_git_binary)
+   - ❌ **NEVER** duplicate git binary detection logic
+
+4. **Tag All Reusable Items:**
+   - ✅ Tag reusable functions: `// DRY:FN:<name> — Description`
+   - ✅ Tag reusable data structures: `// DRY:DATA:<name> — Description`
+   - ✅ Tag reusable widgets: `// DRY:WIDGET:<name> — Description`
+   - ✅ Tag reusable helpers: `// DRY:HELPER:<name> — Description`
+
+5. **Widget Reuse:**
+   - ✅ **ALWAYS** check `docs/gui-widget-catalog.md` before creating new UI
+   - ✅ **ALWAYS** use existing widgets from `src/widgets/`
+   - ✅ If bespoke UI is required, add `// UI-DRY-EXCEPTION: <reason>`
+
 ### 7.11 DRY and AGENTS.md conventions
 
 This plan must be implemented in line with **AGENTS.md** (reuse-first DRY method):
@@ -380,6 +412,492 @@ This plan must be implemented in line with **AGENTS.md** (reuse-first DRY method
 - **Pre-completion:** Before marking any task done, run the AGENTS.md "Pre-Completion Verification Checklist" (cargo check/test, DRY checks, no hardcoded platform data, scope, gitignore rules).
 
 ---
+
+## 7.12 Crews and Subagent Communication Enhancements for Git/Worktree Operations
+
+The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines **Crews** (multi-agent communication system) and enhanced subagent communication. These features can enhance **git and worktree operations** to enable better coordination between git operations and subagents.
+
+### 1. Git Operation Crews
+
+**Concept:** When orchestrator performs git operations (branch creation, commits, PR creation), crews can coordinate multiple subagents working on related git operations.
+
+**Benefits:**
+- **Coordinated commits:** Multiple subagents can coordinate commit messages and branch naming
+- **PR coordination:** Subagents can discuss PR content and review requirements
+- **Conflict prevention:** Crews can coordinate to avoid git conflicts
+
+**BeforeGitOp crew creation responsibilities:**
+
+- **Identify parallel git operations:** When orchestrator creates parallel subtasks that will perform git operations, identify if they need coordination
+- **Create git operation crew:** Create crew with subagents from parallel subtasks, crew_id = `git-op-{tier_id}`
+- **Initialize git coordination:** Set up message board for git operation crew with tier_id context
+- **Register worktree paths:** Crew members register their worktree paths in coordination state
+
+**DuringGitOp crew coordination responsibilities:**
+
+- **Coordinate branch names:** Crew members coordinate branch names to avoid conflicts (e.g., `subtask/ST-001-001-001`, `subtask/ST-001-001-002`)
+- **Coordinate commit messages:** Crew members coordinate commit message formats to ensure consistency (e.g., `ralph: [ITERATION] ...`)
+- **Coordinate PR content:** Crew members coordinate PR titles, descriptions, and review requirements
+- **Avoid git conflicts:** Crew members check coordination state before editing files to avoid conflicts
+
+**AfterGitOp crew completion responsibilities:**
+
+- **Validate git operations:** Crew members confirm that git operations completed successfully
+- **Archive git coordination messages:** Archive git coordination messages to `.puppet-master/memory/git-op-{tier_id}-messages.json`
+- **Disband git crew:** Mark crew as complete and remove from active crews
+
+**Implementation:** Extend `src/git/git_manager.rs`, `src/git/worktree_manager.rs`, and `src/git/pr_manager.rs` to create git operation crews, coordinate git operations, and disband crews after operations complete.
+
+**Integration with git managers:**
+
+In `src/git/git_manager.rs`, extend branch creation:
+
+```rust
+impl GitManager {
+    pub async fn create_tier_branch_with_crew_coordination(
+        &self,
+        tier_id: &str,
+        branch_name: &str,
+        crew_id: Option<&str>,
+    ) -> Result<String> {
+        if let Some(crew_id) = crew_id {
+            // Coordinate branch name with crew
+            let coordination_message = AgentMessage {
+                message_id: generate_message_id(),
+                from_agent_id: format!("git-manager-{}", tier_id),
+                from_platform: /* ... */,
+                to_agent_id: None,
+                message_type: MessageType::Request,
+                subject: "Branch name coordination".to_string(),
+                content: format!("Proposed branch name: {}. Please confirm or suggest alternative.", branch_name),
+                context: MessageContext {
+                    crew_id: Some(crew_id.to_string()),
+                    tier_id: Some(tier_id.to_string()),
+                },
+                thread_id: None,
+                in_reply_to: None,
+                created_at: Utc::now(),
+                read_by: Vec::new(),
+                resolved: false,
+            };
+            
+            self.crew_manager.post_to_crew(crew_id, coordination_message).await?;
+            
+            // Wait for crew responses (or timeout after 5 seconds)
+            let responses = self.crew_manager.wait_for_responses(
+                crew_id,
+                MessageType::Answer,
+                chrono::Duration::seconds(5),
+            ).await?;
+            
+            // Use coordinated branch name (or original if no response)
+            let final_branch_name = if let Some(response) = responses.first() {
+                // Parse response to extract alternative branch name if suggested
+                self.parse_branch_name_from_response(response)?
+                    .unwrap_or_else(|| branch_name.to_string())
+            } else {
+                branch_name.to_string()
+            };
+            
+            // Create branch with coordinated name
+            self.create_branch(&final_branch_name).await?;
+            
+            Ok(final_branch_name)
+        } else {
+            // No crew coordination, create branch directly
+            self.create_branch(branch_name).await?;
+            Ok(branch_name.to_string())
+        }
+    }
+}
+```
+
+In `src/git/pr_manager.rs`, extend PR creation:
+
+```rust
+impl PrManager {
+    pub async fn create_pr_with_crew_coordination(
+        &self,
+        branch_name: &str,
+        title: &str,
+        description: &str,
+        crew_id: Option<&str>,
+    ) -> Result<String> {
+        if let Some(crew_id) = crew_id {
+            // Coordinate PR content with crew
+            let pr_proposal_message = AgentMessage {
+                message_id: generate_message_id(),
+                from_agent_id: "pr-manager".to_string(),
+                from_platform: /* ... */,
+                to_agent_id: None,
+                message_type: MessageType::Request,
+                subject: "PR content coordination".to_string(),
+                content: format!("Proposed PR:\nTitle: {}\nDescription: {}\n\nPlease review and suggest improvements.", title, description),
+                context: MessageContext {
+                    crew_id: Some(crew_id.to_string()),
+                },
+                thread_id: None,
+                in_reply_to: None,
+                created_at: Utc::now(),
+                read_by: Vec::new(),
+                resolved: false,
+            };
+            
+            self.crew_manager.post_to_crew(crew_id, pr_proposal_message).await?;
+            
+            // Wait for crew responses (or timeout after 10 seconds)
+            let responses = self.crew_manager.wait_for_responses(
+                crew_id,
+                MessageType::Answer,
+                chrono::Duration::seconds(10),
+            ).await?;
+            
+            // Apply crew feedback to PR content
+            let (final_title, final_description) = self.apply_pr_feedback(title, description, &responses)?;
+            
+            // Create PR with coordinated content
+            let pr_url = self.create_pr(branch_name, &final_title, &final_description).await?;
+            
+            Ok(pr_url)
+        } else {
+            // No crew coordination, create PR directly
+            self.create_pr(branch_name, title, description).await?;
+            Ok(/* pr_url */)
+        }
+    }
+}
+```
+
+**Error handling:**
+
+- **Git crew creation failure:** If crew creation fails, log warning and proceed without crew coordination
+- **Branch name coordination failure:** If branch name coordination fails, log warning and use original branch name
+- **PR coordination failure:** If PR coordination fails, log warning and proceed with original PR content
+
+### 2. Worktree Coordination via Crews
+
+**Concept:** When orchestrator creates worktrees for parallel subtasks, crews can coordinate to ensure worktrees are used correctly and conflicts are avoided.
+
+**Benefits:**
+- **Worktree awareness:** Crew members know which worktrees are in use
+- **Conflict prevention:** Crew members can coordinate to avoid editing files in the same worktree
+- **Merge coordination:** Crew members can coordinate merge order and conflict resolution
+
+**BeforeWorktreeCreation crew coordination responsibilities:**
+
+- **Identify parallel worktrees:** When orchestrator creates parallel subtasks that will use worktrees, identify if they need coordination
+- **Create worktree coordination crew:** Create crew with subagents from parallel subtasks, crew_id = `worktree-coord-{tier_id}`
+- **Register worktree paths:** Crew members register their worktree paths in coordination state before creation
+
+**DuringWorktreeUsage crew coordination responsibilities:**
+
+- **Check worktree availability:** Crew members check coordination state before editing files to ensure worktree is available
+- **Coordinate file edits:** Crew members coordinate which files they will edit to avoid conflicts
+- **Coordinate merge order:** Crew members coordinate merge order to avoid merge conflicts
+
+**AfterWorktreeMerge crew coordination responsibilities:**
+
+- **Validate merge results:** Crew members confirm that merges completed successfully
+- **Archive worktree coordination messages:** Archive worktree coordination messages to `.puppet-master/memory/worktree-coord-{tier_id}-messages.json`
+- **Disband worktree crew:** Mark crew as complete and remove from active crews
+
+**Implementation:** Extend `src/git/worktree_manager.rs` to create worktree coordination crews, coordinate worktree usage, and disband crews after merges complete.
+
+**Integration with worktree manager:**
+
+In `src/git/worktree_manager.rs`, extend worktree creation:
+
+```rust
+impl WorktreeManager {
+    pub async fn create_subtask_worktree_with_crew_coordination(
+        &self,
+        tier_id: &str,
+        crew_id: Option<&str>,
+    ) -> Result<PathBuf> {
+        if let Some(crew_id) = crew_id {
+            // Register worktree path in coordination state
+            let worktree_path = self.get_worktree_path(tier_id);
+            
+            let registration_message = AgentMessage {
+                message_id: generate_message_id(),
+                from_agent_id: format!("worktree-manager-{}", tier_id),
+                from_platform: /* ... */,
+                to_agent_id: None,
+                message_type: MessageType::Announcement,
+                subject: "Worktree registration".to_string(),
+                content: format!("Registering worktree path: {}", worktree_path.display()),
+                context: MessageContext {
+                    crew_id: Some(crew_id.to_string()),
+                    tier_id: Some(tier_id.to_string()),
+                },
+                thread_id: None,
+                in_reply_to: None,
+                created_at: Utc::now(),
+                read_by: Vec::new(),
+                resolved: false,
+            };
+            
+            self.crew_manager.post_to_crew(crew_id, registration_message).await?;
+            
+            // Create worktree
+            self.create_worktree(tier_id).await?;
+            
+            Ok(worktree_path)
+        } else {
+            // No crew coordination, create worktree directly
+            self.create_worktree(tier_id).await?;
+            Ok(self.get_worktree_path(tier_id))
+        }
+    }
+    
+    pub async fn merge_worktree_with_crew_coordination(
+        &self,
+        tier_id: &str,
+        target_branch: &str,
+        crew_id: Option<&str>,
+    ) -> Result<()> {
+        if let Some(crew_id) = crew_id {
+            // Coordinate merge order with crew
+            let merge_coordination_message = AgentMessage {
+                message_id: generate_message_id(),
+                from_agent_id: format!("worktree-manager-{}", tier_id),
+                from_platform: /* ... */,
+                to_agent_id: None,
+                message_type: MessageType::Request,
+                subject: "Merge order coordination".to_string(),
+                content: format!("Requesting merge order for worktree {} to branch {}", tier_id, target_branch),
+                context: MessageContext {
+                    crew_id: Some(crew_id.to_string()),
+                    tier_id: Some(tier_id.to_string()),
+                },
+                thread_id: None,
+                in_reply_to: None,
+                created_at: Utc::now(),
+                read_by: Vec::new(),
+                resolved: false,
+            };
+            
+            self.crew_manager.post_to_crew(crew_id, merge_coordination_message).await?;
+            
+            // Wait for merge order (or timeout after 5 seconds)
+            let responses = self.crew_manager.wait_for_responses(
+                crew_id,
+                MessageType::Decision,
+                chrono::Duration::seconds(5),
+            ).await?;
+            
+            // Determine merge order from crew responses
+            let merge_order = self.determine_merge_order_from_responses(&responses)?;
+            
+            // Wait for turn if not first in merge order
+            if merge_order > 0 {
+                self.wait_for_merge_turn(crew_id, merge_order).await?;
+            }
+            
+            // Perform merge
+            self.merge_worktree(tier_id, target_branch).await?;
+            
+            // Notify crew that merge completed
+            let completion_message = AgentMessage {
+                message_id: generate_message_id(),
+                from_agent_id: format!("worktree-manager-{}", tier_id),
+                from_platform: /* ... */,
+                to_agent_id: None,
+                message_type: MessageType::Announcement,
+                subject: "Merge completed".to_string(),
+                content: format!("Worktree {} merged to branch {}", tier_id, target_branch),
+                context: MessageContext {
+                    crew_id: Some(crew_id.to_string()),
+                    tier_id: Some(tier_id.to_string()),
+                },
+                thread_id: None,
+                in_reply_to: None,
+                created_at: Utc::now(),
+                read_by: Vec::new(),
+                resolved: false,
+            };
+            
+            self.crew_manager.post_to_crew(crew_id, completion_message).await?;
+        } else {
+            // No crew coordination, merge directly
+            self.merge_worktree(tier_id, target_branch).await?;
+        }
+        
+        Ok(())
+    }
+}
+```
+
+**Error handling:**
+
+- **Worktree crew creation failure:** If crew creation fails, log warning and proceed without crew coordination
+- **Worktree registration failure:** If worktree registration fails, log warning and proceed (coordination may be incomplete)
+- **Merge coordination failure:** If merge coordination fails, log warning and proceed with direct merge (may cause conflicts)
+
+## 7.13 Lifecycle and Quality Enhancements for Git/Worktree Operations
+
+The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines lifecycle hooks, structured handoff validation, remediation loops, and cross-session memory. These features can enhance **git and worktree operations** to improve reliability, quality, and continuity.
+
+### 1. Hook-Based Lifecycle for Git/Worktree Operations
+
+**Concept:** Apply hook-based lifecycle middleware to git and worktree operations. Run **BeforeGitOp** and **AfterGitOp** hooks before and after git operations (commit, branch creation, worktree creation/merge, PR creation).
+
+**BeforeGitOp hook responsibilities:**
+
+- **Track active operation:** Record which git operation is being performed (e.g., `create_branch`, `create_worktree`, `commit`, `create_pr`).
+- **Inject operation context:** Add tier context, branch strategy, worktree state, and known git issues to operation context.
+- **Load cross-session memory:** Load prior git/branching patterns from `.puppet-master/memory/` and inject into operation context.
+- **Validate git state:** Check git repo state, branch existence, worktree validity before operation.
+
+**AfterGitOp hook responsibilities:**
+
+- **Validate operation result:** Check that git operation succeeded (e.g., branch created, commit succeeded, worktree merged).
+- **Track completion:** Update git operation tracking, mark operation completion state.
+- **Save memory:** Persist git/branching patterns (e.g., branch naming patterns, worktree usage patterns) to `.puppet-master/memory/patterns.json`.
+- **Safe error handling:** Guarantee structured output even on git operation failure.
+
+**Implementation:** Create `src/git/hooks.rs` with `BeforeGitOpHook` and `AfterGitOpHook` traits. Register hooks per git operation type. Call hooks automatically at git operation boundaries (before `run_git_cmd`, after operation completes). Use the same hook registry pattern as orchestrator hooks.
+
+**Integration with git managers:**
+
+In `src/git/git_manager.rs`, `src/git/worktree_manager.rs`, `src/git/pr_manager.rs`, wrap git operations:
+
+```rust
+// Before git operation
+let before_ctx = BeforeGitOpContext {
+    operation: GitOperation::CreateBranch,
+    tier_id: tier_id.clone(),
+    branch_name: branch_name.clone(),
+    branch_strategy: config.branching.strategy,
+    worktree_state: get_worktree_state(tier_id)?,
+    known_issues: get_known_git_issues()?,
+};
+
+let before_result = self.hook_registry.execute_before_git_op(&before_ctx)?;
+
+if before_result.block {
+    return Err(anyhow!("Git operation blocked by hook: {}", before_result.block_reason.unwrap_or_default()));
+}
+
+// Perform git operation
+let result = self.run_git_cmd(&["checkout", "-b", &branch_name]).await?;
+
+// After git operation
+let after_ctx = AfterGitOpContext {
+    operation: GitOperation::CreateBranch,
+    tier_id: tier_id.clone(),
+    operation_result: result.clone(),
+    completion_status: if result.success { CompletionStatus::Success } else { CompletionStatus::Failure(result.stderr) },
+};
+
+let after_result = self.hook_registry.execute_after_git_op(&after_ctx)?;
+
+// Save memory if operation succeeded
+if result.success {
+    self.memory_manager.save_pattern(EstablishedPattern {
+        name: "branch_naming".to_string(),
+        description: format!("Branch created: {}", branch_name),
+        examples: vec![branch_name.clone()],
+        timestamp: Utc::now(),
+    }).await?;
+}
+```
+
+### 2. Structured Handoff Validation for Git Operation Results
+
+**Concept:** Enforce structured output format for git operation results. Use structured format for git command outputs and worktree operations.
+
+**Git operation result format:**
+
+```rust
+pub struct GitOperationResult {
+    pub operation: GitOperation,
+    pub success: bool,
+    pub stdout: String,
+    pub stderr: String,
+    pub branch_created: Option<String>,
+    pub commit_hash: Option<String>,
+    pub worktree_path: Option<PathBuf>,
+    pub pr_url: Option<String>,
+    pub warnings: Vec<String>,
+}
+```
+
+**Validation:** After git operations, validate result format matches `GitOperationResult`. On validation failure (e.g., unexpected git output format), log warning and proceed with partial result.
+
+**Integration:** Extend `GitManager::run_git_cmd()` to return structured `GitOperationResult` instead of raw stdout/stderr. Parse git output into structured format (e.g., extract branch name from `git checkout -b` output, extract commit hash from `git commit` output).
+
+### 3. Cross-Session Memory for Git/Branching Patterns
+
+**Concept:** Persist git and branching patterns (branch naming conventions, worktree usage patterns, commit message formats) to `.puppet-master/memory/` so future runs can load prior patterns.
+
+**What to persist:**
+
+- **Branch naming patterns:** Examples of branch names created (e.g., `subtask/ST-001-001-001`, `feature/auth-system`).
+- **Worktree usage patterns:** Which tiers use worktrees, worktree cleanup patterns.
+- **Commit message patterns:** Examples of commit messages (e.g., `ralph: [ITERATION] ...`).
+
+**When to persist:**
+
+- **At branch creation:** Save branch naming pattern example.
+- **At worktree creation:** Save worktree usage pattern.
+- **At commit:** Save commit message pattern example.
+
+**When to load:**
+
+- **At run start:** Load prior git/branching patterns and inject into git operation context.
+- **At branch creation:** Load prior branch naming patterns to ensure consistency.
+
+**Integration:** Use the same `MemoryManager` from orchestrator plan. In git managers, call `memory_manager.save_pattern()` at git operations (branch creation, commit, worktree creation).
+
+### 4. Active Agent Tracking for Git Operations
+
+**Concept:** Track which git operation is currently active. Store in git manager state and expose for logging and debugging.
+
+**Tracking:**
+
+- **Per operation:** `active_git_operation: Option<GitOperation>` in `GitManager` state.
+- **Persistence:** Write to `.puppet-master/state/active-git-operations.json` (updated on each git operation).
+
+**Use cases:**
+
+- **Logging:** "Git operation: create_branch, tier = 1.1.1, branch = subtask/ST-001-001-001"
+- **Debugging:** "Why did this git operation fail? Check active git operation logs."
+- **Audit trails:** "Which git operations ran in this run? See active-git-operations.json."
+
+### 5. Remediation Loop for Git Operation Failures
+
+**Concept:** When git operations fail with recoverable errors (e.g., branch already exists, merge conflicts), enter a remediation loop. Retry with fixes until operation succeeds or escalate.
+
+**Severity levels:**
+
+- **Critical:** Git repo corruption, permission errors — **escalate to user**.
+- **Major:** Branch already exists, merge conflicts — **remediate automatically** (delete branch if safe, resolve conflicts).
+- **Minor:** Non-fatal warnings (e.g., "nothing to commit") — **log and proceed**.
+- **Info:** Informational messages — **log and proceed**.
+
+**Remediation loop:**
+
+1. Git operation fails (e.g., `git worktree add -b <branch> <path>` fails with "branch already exists").
+2. Parse error from git output.
+3. Categorize error (Critical/Major/Minor/Info).
+4. If Major (recoverable):
+   - Apply remediation (e.g., delete existing branch if safe, use existing branch for worktree).
+   - Retry git operation.
+   - Repeat until succeeds or max retries (e.g., 2).
+   - If max retries reached, escalate to user or skip operation.
+5. If Critical: escalate to user immediately.
+6. If Minor/Info: log and proceed.
+
+**Integration:** Extend git managers to use remediation loop pattern from orchestrator plan. Wrap git operations in remediation-aware handlers that detect recoverable errors and apply fixes.
+
+### Implementation Notes
+
+- **Where:** New module `src/git/hooks.rs` for git-specific hooks; reuse `src/core/memory.rs` for persistence; reuse `src/core/remediation.rs` for remediation loops.
+- **What:** Implement `BeforeGitOpHook` and `AfterGitOpHook` traits; validate git operation results with structured format; persist git/branching patterns to memory; track active git operations; implement remediation loops for recoverable git errors.
+- **When:** Hooks run automatically at git operation boundaries; memory persists at git operations; remediation loop runs when git operations fail with recoverable errors.
+
+**Cross-reference:** See orchestrator plan "Lifecycle and Quality Features" for full implementation details. See orchestrator plan "Puppet Master Crews" for how git operation crews can coordinate branch creation, commits, and PRs.
 
 ## 8. References
 

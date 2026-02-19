@@ -5,7 +5,6 @@
 
 use crate::app::{AuthActionKind, ContextMenuTarget, LoginTextSurface, Message, SelectableField};
 use crate::doctor::InstallationStatus;
-use crate::platforms::platform_specs;
 use crate::platforms::AuthTarget;
 use crate::theme::{AppTheme, colors, tokens};
 use crate::types::Platform;
@@ -36,16 +35,6 @@ pub enum AuthMethod {
     Unknown,
 }
 
-impl AuthMethod {
-    fn as_str(&self) -> &str {
-        match self {
-            AuthMethod::EnvVar => "Environment Variable",
-            AuthMethod::CliLogin => "CLI Login",
-            AuthMethod::ConfigFile => "Config File",
-            AuthMethod::Unknown => "Unknown",
-        }
-    }
-}
 
 /// Platform definition with display metadata (supports_logout derived from platform_specs in platform_auth_action_row)
 struct PlatformDef {
@@ -446,10 +435,9 @@ pub fn platform_auth_action_row<'a>(
     theme: &'a AppTheme,
     refresh_message: Message,
 ) -> Element<'a, Message> {
-    let supports_logout = match auth_target {
-        AuthTarget::Platform(p) => platform_specs::get_spec(p).auth.logout_command.is_some(),
-        AuthTarget::GitHub => true,
-    };
+    // All platforms support some form of logout (CLI command, credential deletion, or config clearing).
+    // Each platform's spawn_logout() handles the appropriate mechanism.
+    let supports_logout = true;
 
     let mut buttons = row![].spacing(tokens::spacing::SM);
 

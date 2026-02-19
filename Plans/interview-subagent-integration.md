@@ -181,9 +181,34 @@ pub fn generate_system_prompt(
 
 ### 3. Research Engine Integration
 
-Enhance `research_engine.rs` to use subagents:
+Enhance `research_engine.rs` to use subagents with detailed error handling, retry logic, and structured output parsing.
+
+**BeforeResearch responsibilities:**
+
+- **Determine research subagent:** Determine which research subagent to use (from phase config or fallback)
+- **Build research context:** Build research context with topic, interview context, prior phase decisions, and detected frameworks
+- **Check subagent availability:** Verify research subagent is available for the configured platform
+
+**DuringResearch responsibilities:**
+
+- **Build research prompt:** Build research prompt with subagent invocation, topic, context, and research criteria
+- **Execute research:** Invoke research subagent via platform runner
+- **Parse structured output:** Parse research output as structured `SubagentOutput` with research findings
+- **Extract research findings:** Extract research findings from parsed output (best practices, technologies, pitfalls, considerations, compatibility)
+
+**AfterResearch responsibilities:**
+
+- **Persist research results:** Save research results to interview state
+- **Update phase context:** Update phase context with research findings for use in questions
+- **Generate research summary:** Generate research summary for injection into question prompts
+
+**Implementation:** Extend `src/interview/research_engine.rs` with detailed research workflow.
 
 ```rust
+use crate::types::subagent_output::{SubagentOutput, Finding};
+use crate::platforms::PlatformRunner;
+use crate::core::handoff_validation::HandoffValidator;
+
 impl ResearchEngine {
     /// Performs pre-question research using a specialized subagent
     pub async fn research_pre_question_with_subagent(
@@ -191,40 +216,258 @@ impl ResearchEngine {
         topic: &str,
         context: &str,
         working_dir: &Path,
+        phase_id: &str,
         subagent_name: Option<&str>,
     ) -> Result<ResearchResult> {
-        let research_prompt = if let Some(subagent) = subagent_name {
-            // Invoke subagent for specialized research
-            format!(
-                r#"/{} Research the following topic for interview preparation:
+        // Determine research subagent
+        let research_subagent = subagent_name.or_else(|| {
+            self.get_research_subagent_for_phase(phase_id).ok()
+        });
+        
+        // Build research context
+        let research_context = self.build_research_context(topic, context, phase_id).await?;
+        
+        // Build research prompt
+        let research_prompt = if let Some(subagent) = research_subagent {
+            self.build_subagent_research_prompt(
+                subagent,
+                topic,
+                context,
+                &research_context,
+            )?
+        } else {
+            self.build_pre_question_prompt(topic, context)
+        };
+        
+        // Execute research
+        let research_output = if let Some(subagent) = research_subagent {
+            // Execute with subagent
+            self.execute_research_with_subagent(
+                subagent,
+                &research_prompt,
+                working_dir,
+            ).await?
+        } else {
+            // Execute without subagent (fallback)
+            self.execute_research_ai_call(&research_prompt, working_dir).await?
+        };
+        
+        // Parse structured output
+        let parsed_output = self.parse_research_output(&research_output)?;
+        
+        // Extract research findings
+        let research_findings = self.extract_research_findings(&parsed_output)?;
+        
+        // Persist research results
+        self.persist_research_result(phase_id, topic, &research_findings).await?;
+        
+        // Generate research summary
+        let research_summary = self.generate_research_summary(&research_findings)?;
+        
+        Ok(ResearchResult {
+            topic: topic.to_string(),
+            findings: research_findings,
+            summary: research_summary,
+            raw_output: research_output,
+        })
+    }
+    
+    fn build_subagent_research_prompt(
+        &self,
+        subagent: &str,
+        topic: &str,
+        context: &str,
+        research_context: &ResearchContext,
+    ) -> Result<String> {
+        Ok(format!(
+            r#"/{} Research the following topic for interview preparation:
 
 **Topic:** {}
 **Context:** {}
+**Prior Phase Decisions:** {}
+**Detected Frameworks:** {}
 
-Provide:
+Provide structured research output with:
 1. Current best practices
 2. Common technologies and versions
 3. Common pitfalls
 4. Key considerations
 5. Technology compatibility
 
-Format as markdown with clear sections."#,
-                subagent, topic, context
-            )
-        } else {
-            self.build_pre_question_prompt(topic, context)
-        };
-        
-        self.execute_research_ai_call(&research_prompt, working_dir).await
+Format as structured JSON matching SubagentOutput format with findings categorized by type."#,
+            subagent,
+            topic,
+            context,
+            format_decisions(&research_context.prior_decisions),
+            research_context.detected_frameworks.join(", ")
+        ))
     }
+    
+    async fn execute_research_with_subagent(
+        &self,
+        subagent: &str,
+        prompt: &str,
+        working_dir: &Path,
+    ) -> Result<String> {
+        let platform = self.config.primary_platform.platform;
+        let model = self.config.primary_platform.model.clone();
+        let runner = self.get_platform_runner(platform)?;
+        
+        // Execute research via platform runner
+        let output = runner.execute_with_subagent(
+            subagent,
+            prompt,
+            working_dir,
+        ).await?;
+        
+        // Validate handoff output
+        let validator = HandoffValidator::new(platform)?;
+        let validated_output = validator.validate_subagent_output(
+            &output.stdout,
+            &output.stderr,
+            platform,
+            0, // No retry for research (research is informational)
+        ).await?;
+        
+        // Return task_report as research output
+        Ok(validated_output.task_report)
+    }
+    
+    fn parse_research_output(&self, output: &str) -> Result<SubagentOutput> {
+        // Try to parse as structured JSON first
+        if let Ok(json) = serde_json::from_str::<SubagentOutput>(output) {
+            return Ok(json);
+        }
+        
+        // Fallback: extract from text output
+        self.extract_research_from_text(output)
+    }
+    
+    fn extract_research_findings(&self, parsed_output: &SubagentOutput) -> Result<ResearchFindings> {
+        // Extract research findings from SubagentOutput
+        // Map findings to research categories (best practices, technologies, pitfalls, etc.)
+        let mut findings = ResearchFindings::default();
+        
+        for finding in &parsed_output.findings {
+            match finding.category.as_str() {
+                "best_practices" => findings.best_practices.push(finding.description.clone()),
+                "technologies" => findings.technologies.push(finding.description.clone()),
+                "pitfalls" => findings.pitfalls.push(finding.description.clone()),
+                "considerations" => findings.considerations.push(finding.description.clone()),
+                "compatibility" => findings.compatibility.push(finding.description.clone()),
+                _ => {} // Unknown category
+            }
+        }
+        
+        // Also extract from task_report if structured
+        // Implementation: parse task_report for research sections
+        
+        Ok(findings)
+    }
+    
+    fn generate_research_summary(&self, findings: &ResearchFindings) -> Result<String> {
+        // Generate markdown summary from research findings
+        let mut summary = String::new();
+        
+        if !findings.best_practices.is_empty() {
+            summary.push_str("## Best Practices\n\n");
+            for practice in &findings.best_practices {
+                summary.push_str(&format!("- {}\n", practice));
+            }
+            summary.push_str("\n");
+        }
+        
+        if !findings.technologies.is_empty() {
+            summary.push_str("## Technologies\n\n");
+            for tech in &findings.technologies {
+                summary.push_str(&format!("- {}\n", tech));
+            }
+            summary.push_str("\n");
+        }
+        
+        if !findings.pitfalls.is_empty() {
+            summary.push_str("## Common Pitfalls\n\n");
+            for pitfall in &findings.pitfalls {
+                summary.push_str(&format!("- {}\n", pitfall));
+            }
+            summary.push_str("\n");
+        }
+        
+        if !findings.considerations.is_empty() {
+            summary.push_str("## Key Considerations\n\n");
+            for consideration in &findings.considerations {
+                summary.push_str(&format!("- {}\n", consideration));
+            }
+            summary.push_str("\n");
+        }
+        
+        if !findings.compatibility.is_empty() {
+            summary.push_str("## Technology Compatibility\n\n");
+            for compat in &findings.compatibility {
+                summary.push_str(&format!("- {}\n", compat));
+            }
+        }
+        
+        Ok(summary)
+    }
+}
+
+#[derive(Debug, Default)]
+pub struct ResearchFindings {
+    pub best_practices: Vec<String>,
+    pub technologies: Vec<String>,
+    pub pitfalls: Vec<String>,
+    pub considerations: Vec<String>,
+    pub compatibility: Vec<String>,
+}
+
+#[derive(Debug, Clone)]
+pub struct ResearchResult {
+    pub topic: String,
+    pub findings: ResearchFindings,
+    pub summary: String,
+    pub raw_output: String,
 }
 ```
 
+**Error handling:**
+
+- **Research subagent determination failure:** If research subagent cannot be determined, fall back to non-subagent research
+- **Research execution failure:** If research execution fails, log error and return empty research result (research is informational)
+- **Output parsing failure:** If output parsing fails, attempt text extraction; if that fails, return empty research result
+- **Finding extraction failure:** If finding extraction fails, log warning and return partial findings
+
 ### 4. Answer Validation Integration
 
-Add validation methods to orchestrator:
+Add validation methods to orchestrator with detailed error handling, retry logic, and structured output parsing.
+
+**BeforeValidation responsibilities:**
+
+- **Load validation subagent:** Determine validation subagent for this phase (from `SubagentConfig.phase_subagents` or fallback)
+- **Build validation context:** Build validation context with question, answer, phase info, and prior phase decisions
+- **Check subagent availability:** Verify validation subagent is available for the configured platform
+
+**DuringValidation responsibilities:**
+
+- **Build validation prompt:** Build validation prompt with subagent invocation, question, answer, and validation criteria
+- **Execute validation:** Invoke validation subagent via platform runner
+- **Parse structured output:** Parse validation output as structured `SubagentOutput` with findings
+- **Extract findings:** Extract findings from parsed output and categorize by severity (Critical/Major/Minor/Info)
+- **Apply remediation loop:** If Critical/Major findings exist, enter remediation loop (re-prompt user, re-run validation)
+
+**AfterValidation responsibilities:**
+
+- **Persist validation results:** Save validation results to interview state
+- **Update phase status:** Update phase status based on validation results (complete, incomplete, complete with warnings)
+- **Generate feedback:** Generate feedback for user if validation failed (what failed, why, how to fix)
+
+**Implementation:** Extend `src/interview/orchestrator.rs` with detailed validation workflow.
 
 ```rust
+use crate::core::remediation::RemediationLoop;
+use crate::types::subagent_output::{SubagentOutput, Finding, Severity};
+use crate::platforms::PlatformRunner;
+
 impl InterviewOrchestrator {
     /// Validates a user answer using a specialized subagent
     pub async fn validate_answer_with_subagent(
@@ -233,41 +476,204 @@ impl InterviewOrchestrator {
         answer: &str,
         phase_id: &str,
     ) -> Result<ValidationResult> {
-        let subagent_name = self.config.subagent_config
-            .as_ref()
-            .and_then(|cfg| cfg.phase_subagents.get(phase_id));
+        // Load validation subagent
+        let subagent_name = self.get_validation_subagent_for_phase(phase_id)?;
         
-        if let Some(subagent) = subagent_name {
-            let validation_prompt = format!(
-                r#"/{} Validate this interview answer:
-
-**Question:** {}
-**Answer:** {}
-**Phase:** {}
-
-Check:
-1. Technical feasibility
-2. Version/compatibility
-3. Potential issues
-4. Best practice alignment
-5. Follow-up recommendations
-
-Provide validation report."#,
-                subagent, question, answer, phase_id
-            );
-            
-            // Execute validation via platform runner
-            // ... implementation ...
+        if subagent_name.is_none() {
+            // No validation subagent configured, skip validation
+            return Ok(ValidationResult {
+                passed: true,
+                findings: Vec::new(),
+                feedback: None,
+            });
         }
         
-        Ok(ValidationResult::default())
+        let subagent = subagent_name.unwrap();
+        
+        // Build validation context
+        let validation_context = self.build_validation_context(question, answer, phase_id).await?;
+        
+        // Build validation prompt
+        let validation_prompt = self.build_validation_prompt(
+            &subagent,
+            question,
+            answer,
+            phase_id,
+            &validation_context,
+        )?;
+        
+        // Execute validation with remediation loop
+        let validation_result = self.execute_validation_with_remediation(
+            &subagent,
+            &validation_prompt,
+            &validation_context,
+        ).await?;
+        
+        // Persist validation results
+        self.persist_validation_result(phase_id, &validation_result).await?;
+        
+        // Update phase status
+        self.update_phase_status_from_validation(phase_id, &validation_result).await?;
+        
+        Ok(validation_result)
     }
+    
+    async fn execute_validation_with_remediation(
+        &self,
+        subagent: &str,
+        prompt: &str,
+        context: &ValidationContext,
+    ) -> Result<ValidationResult> {
+        let mut remediation_loop = RemediationLoop::new(
+            max_retries: 3,
+            retry_on_severities: vec![Severity::Critical, Severity::Major],
+        );
+        
+        loop {
+            // Execute validation
+            let platform = self.config.primary_platform.platform;
+            let model = self.config.primary_platform.model.clone();
+            let runner = self.get_platform_runner(platform)?;
+            
+            let validation_output = runner.execute_with_subagent(
+                subagent,
+                prompt,
+                &self.config.working_directory,
+            ).await?;
+            
+            // Parse structured output
+            let parsed_output = self.parse_validation_output(&validation_output.stdout)?;
+            
+            // Extract findings
+            let findings = parsed_output.findings;
+            
+            // Filter Critical/Major findings
+            let critical_major_findings: Vec<_> = findings.iter()
+                .filter(|f| matches!(f.severity, Severity::Critical | Severity::Major))
+                .collect();
+            
+            // Check if remediation needed
+            if critical_major_findings.is_empty() {
+                // No Critical/Major findings, validation passed
+                return Ok(ValidationResult {
+                    passed: true,
+                    findings: findings.clone(),
+                    feedback: None,
+                });
+            }
+            
+            // Check remediation loop
+            match remediation_loop.should_retry(&critical_major_findings) {
+                Ok(true) => {
+                    // Retry validation with updated prompt (include findings)
+                    let updated_prompt = self.build_remediation_prompt(
+                        prompt,
+                        &critical_major_findings,
+                    )?;
+                    // Continue loop with updated prompt
+                    continue;
+                }
+                Ok(false) => {
+                    // Max retries reached, return failure
+                    return Ok(ValidationResult {
+                        passed: false,
+                        findings: findings.clone(),
+                        feedback: Some(self.generate_validation_feedback(&findings)?),
+                    });
+                }
+                Err(e) => {
+                    return Err(anyhow!("Remediation loop error: {}", e));
+                }
+            }
+        }
+    }
+    
+    fn parse_validation_output(&self, stdout: &str) -> Result<SubagentOutput> {
+        // Try to parse as structured JSON first
+        if let Ok(json) = serde_json::from_str::<SubagentOutput>(stdout) {
+            return Ok(json);
+        }
+        
+        // Fallback: extract from text output
+        // Look for structured markers or parse text format
+        // Implementation depends on platform output format
+        self.extract_validation_from_text(stdout)
+    }
+    
+    fn build_remediation_prompt(
+        &self,
+        original_prompt: &str,
+        findings: &[&Finding],
+    ) -> Result<String> {
+        let findings_text = findings.iter()
+            .map(|f| format!("- [{}] {}: {}", f.severity, f.category, f.description))
+            .collect::<Vec<_>>()
+            .join("\n");
+        
+        Ok(format!(
+            "{}\n\n**Previous Validation Found Critical/Major Issues:**\n{}\n\nPlease revise your answer to address these issues.",
+            original_prompt,
+            findings_text
+        ))
+    }
+    
+    fn generate_validation_feedback(&self, findings: &[Finding]) -> Result<String> {
+        let critical_major: Vec<_> = findings.iter()
+            .filter(|f| matches!(f.severity, Severity::Critical | Severity::Major))
+            .collect();
+        
+        if critical_major.is_empty() {
+            return Ok("Validation passed with minor suggestions.".to_string());
+        }
+        
+        let feedback = critical_major.iter()
+            .map(|f| {
+                format!(
+                    "**{} Issue ({})**: {}\n{}\n",
+                    f.severity,
+                    f.category,
+                    f.description,
+                    f.suggestion.as_ref().map(|s| format!("Suggestion: {}", s)).unwrap_or_default()
+                )
+            })
+            .collect::<Vec<_>>()
+            .join("\n");
+        
+        Ok(format!(
+            "Validation found {} critical/major issues:\n\n{}",
+            critical_major.len(),
+            feedback
+        ))
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct ValidationResult {
+    pub passed: bool,
+    pub findings: Vec<Finding>,
+    pub feedback: Option<String>,
+}
+
+#[derive(Debug, Clone)]
+pub struct ValidationContext {
+    pub question: String,
+    pub answer: String,
+    pub phase_id: String,
+    pub prior_phase_decisions: Vec<Decision>,
+    pub detected_frameworks: Vec<String>,
 }
 ```
 
+**Error handling:**
+
+- **Subagent availability failure:** If validation subagent is not available, log warning and skip validation (return passed result)
+- **Validation execution failure:** If validation execution fails, return `ValidationResult` with `passed: false` and error finding
+- **Output parsing failure:** If output parsing fails, attempt text extraction; if that fails, return error finding
+- **Remediation loop failure:** If remediation loop fails, return failure result with findings collected so far
+
 ### 5. Document Generation Integration
 
-Enhance document writers to use subagents:
+Enhance document writers to use subagents and crews:
 
 ```rust
 impl DocumentWriter {
@@ -308,6 +714,67 @@ Provide enhancement suggestions."#,
         }
         
         Ok(path)
+    }
+    
+    /// Writes PRD with crew recommendations
+    pub fn write_prd_with_crew_recommendations(
+        phases: &[Phase],
+        output_path: &Path,
+        crew_manager: &CrewManager,
+    ) -> Result<PathBuf> {
+        // Generate base PRD
+        let prd = Self::generate_prd(phases)?;
+        
+        // Add crew recommendations to tasks/subtasks
+        for phase in phases {
+            for task in &phase.tasks {
+                for subtask in &task.subtasks {
+                    // Analyze subtask complexity and suggest crews
+                    let crew_recommendation = crew_manager.suggest_crew_for_subtask(subtask)?;
+                    
+                    if let Some(recommendation) = crew_recommendation {
+                        subtask.crew_recommendation = Some(recommendation);
+                    }
+                }
+            }
+        }
+        
+        // Write PRD with crew recommendations
+        Self::write_prd_json(&prd, output_path)?;
+        
+        Ok(output_path.to_path_buf())
+    }
+}
+```
+
+**Crew recommendation logic:**
+
+```rust
+impl CrewManager {
+    pub fn suggest_crew_for_subtask(&self, subtask: &Subtask) -> Result<Option<CrewRecommendation>> {
+        // Analyze subtask complexity
+        let complexity = self.analyze_subtask_complexity(subtask)?;
+        
+        // Suggest crew if complexity is high or subtask requires multiple expertise areas
+        if complexity.requires_multiple_expertise || complexity.estimated_hours > 4.0 {
+            let suggested_subagents = self.select_subagents_for_subtask(subtask)?;
+            
+            return Ok(Some(CrewRecommendation {
+                suggested: true,
+                subagents: suggested_subagents,
+                rationale: format!("Subtask requires {} expertise areas and estimated {} hours", 
+                    complexity.expertise_areas.len(), complexity.estimated_hours),
+                crew_template: self.find_matching_template(&suggested_subagents)?,
+            }));
+        }
+        
+        Ok(None)
+    }
+    
+    fn analyze_subtask_complexity(&self, subtask: &Subtask) -> Result<SubtaskComplexity> {
+        // Analyze subtask title, description, acceptance criteria
+        // Determine: expertise areas needed, estimated complexity, coordination requirements
+        // ...
     }
 }
 ```
@@ -357,7 +824,18 @@ When the interview generates **AGENTS.md** for the **target project** (at comple
 - **Wiring TechnologyExtractor into generate_agents_md:** The plan says "optionally use technology_matrix::TechnologyExtractor". Currently `generate_agents_md(project_name, completed_phases, feature_description)` does not take extracted tech entries. Either: (1) have `write_agents_md` (or the caller) call `TechnologyExtractor::extract(completed_phases)` and pass the result into `generate_agents_md` as an optional parameter, or (2) call the extractor inside `generate_agents_md` from `completed_phases`. Document the chosen wiring so "Technology & version constraints" can render structured (name, version) lines from the matrix when available.
 - **Section placement:** "Technology & version constraints" is specified as "near the top (e.g. after Overview, before or as part of Architecture Notes)". For implementers: prefer **its own section** (e.g. "## Technology & version constraints") immediately after Overview and before "## Architecture Notes", so agents see version rules before detailed architecture text; avoid burying it as a subsection if the goal is visibility.
 
-**Cross-reference:** MiscPlan (Plans/MiscPlan.md) describes target-project DRY as interview-seeded and points here for implementation.
+**Keep generated AGENTS.md minimal (context and attention)**
+
+AGENTS.md is loaded into agent context; long files consume context budget and encourage skimming, so important rules get missed. Apply the following so generated AGENTS.md stays short and high-signal.
+
+- **Critical-first:** Put the most important rules in a **short "Critical" or "TL;DR" block at the very top** (e.g. 5–10 bullets): Technology & version constraints in 3–5 bullets, DRY in 3–5 bullets, top DO/DON'T. Even if the rest is skimmed, the first screen is seen.
+- **Size budget:** Prefer a **cap** on generated AGENTS.md (e.g. **~150–200 lines** or a token budget). Prioritize: Critical block → Technology & version constraints (short bullets) → DRY (short) → minimal DO/DON'T (top 5–7 each) → one short "Where to look". Trim or move the rest.
+- **Linked docs over long prose:** Move **long reference** out of AGENTS.md into separate generated files and link from AGENTS.md. For example: put full "Architecture Notes" and "Codebase Patterns" in `docs/architecture.md` and `docs/codebase-patterns.md` (generated by the interview if needed), and in AGENTS.md keep only a one-line "Architecture: see docs/architecture.md" and "Patterns: see docs/codebase-patterns.md". Agents load a minimal AGENTS.md by default and can open other docs when the task needs them.
+- **Two-tier structure (optional):** Section 1 = **Critical (must-read):** Technology & version constraints + DRY + top DO/DON'T in a fixed short block (≤1 screen). Section 2 = **Reference:** Pointers to `docs/architecture.md`, `docs/guidelines.md`, etc. Implement in the generator by emitting a short AGENTS.md and optionally writing linked docs in `docs/` from the same interview output.
+- **Preserve minimality when updating:** Add a line in the generated AGENTS.md: "When updating this file with learnings, keep the Critical and Technology & version constraints sections; do not add long prose—prefer adding links to docs/."
+- **Linked docs implementation:** If the generator emits a two-tier structure with pointers to `docs/architecture.md`, `docs/codebase-patterns.md`, etc., it must **write those files** from the same interview output (e.g. from completed_phases) so the links resolve. Document in the generator or plan: when generating minimal AGENTS.md, optionally write `docs/architecture.md` and `docs/codebase-patterns.md` (or a single `docs/project-context.md`) and link from AGENTS.md; ensure `docs/` exists in the target project (create if needed).
+
+**Cross-reference:** MiscPlan (Plans/MiscPlan.md) describes target-project DRY as interview-seeded and points here for implementation; MiscPlan also states that generated AGENTS.md should be kept minimal.
 
 ### 5.2 DRY method when implementing interview code (Puppet Master codebase)
 
@@ -365,6 +843,38 @@ When implementing or changing **interview-related code** in Puppet Master (inter
 
 - **Widget catalog:** Before adding new UI, check **`docs/gui-widget-catalog.md`** and use existing widgets (e.g. `styled_button`, `page_header`, `toggler`, `selectable_label`, `modal_overlay`). Interview views live in `src/views/` and should reuse widgets from `src/widgets/`.
 - **Platform data:** Use **`platform_specs`** (e.g. `platform_specs::cli_binary_names`, `platform_specs::fallback_model_ids`) for any platform-specific behavior in the interview flow; do not hardcode CLI names, models, or capabilities.
+
+## DRY Method Compliance
+
+**CRITICAL:** All code in this plan MUST follow DRY principles.
+
+### DRY Requirements
+
+1. **Platform Data — ALWAYS use platform_specs:**
+   - ❌ **NEVER** hardcode platform CLI commands, binary names, models, auth, or capabilities
+   - ✅ **ALWAYS** use `platform_specs::` functions (e.g., `platform_specs::cli_binary_names()`, `platform_specs::get_subagent_invocation_format()`, `platform_specs::get_agents_directory_name()`)
+   - ✅ **ALWAYS** use `platform_specs::discover_platform_capabilities()` instead of platform match statements
+
+2. **Subagent Names — ALWAYS use subagent_registry:**
+   - ❌ **NEVER** hardcode subagent names in match statements or mappings
+   - ✅ **ALWAYS** use `subagent_registry::` functions (e.g., `subagent_registry::get_subagent_for_language()`, `subagent_registry::is_valid_subagent_name()`)
+   - ✅ **ALWAYS** reference `DRY:DATA:subagent_registry` from orchestrator plan as the single source of truth
+
+3. **Tag All Reusable Items:**
+   - ✅ Tag reusable functions: `// DRY:FN:<name> — Description`
+   - ✅ Tag reusable data structures: `// DRY:DATA:<name> — Description`
+   - ✅ Tag reusable widgets: `// DRY:WIDGET:<name> — Description`
+   - ✅ Tag reusable helpers: `// DRY:HELPER:<name> — Description`
+
+4. **Widget Reuse:**
+   - ✅ **ALWAYS** check `docs/gui-widget-catalog.md` before creating new UI
+   - ✅ **ALWAYS** use existing widgets from `src/widgets/`
+   - ✅ If bespoke UI is required, add `// UI-DRY-EXCEPTION: <reason>`
+
+### DRY Violations Fixed in This Plan
+
+- ✅ `platform_agents_dir`: Now uses `platform_specs::get_agents_directory_name()` instead of hardcoded platform match
+- ✅ `invoke_subagent`: Now uses `platform_specs::get_subagent_invocation_format()` instead of hardcoded platform match
 - **Tagging:** Tag new reusable items with `// DRY:WIDGET:`, `// DRY:FN:`, `// DRY:DATA:`, or `// DRY:HELPER:` so they appear in grep and the catalog. If a widget does not fit, add `// UI-DRY-EXCEPTION: <reason>`.
 - **After widget/catalog changes:** Run `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` (warn-only).
 
@@ -374,15 +884,26 @@ When implementing or changing **interview-related code** in Puppet Master (inter
 
 ### Phase 1: Configuration & Infrastructure
 1. Add `SubagentConfig` struct
+   - **DRY REQUIREMENT:** Tag with `// DRY:DATA:SubagentConfig` if reusable
 2. Extend `InterviewOrchestratorConfig`
+   - **DRY REQUIREMENT:** Use `subagent_registry::` functions for any subagent name validation — DO NOT hardcode subagent names
 3. Add subagent configuration to GUI
+   - **DRY REQUIREMENT:** Check `docs/gui-widget-catalog.md` FIRST — use existing widgets (`toggler`, `styled_button`, `selectable_label`, `themed_panel`)
+   - **DRY REQUIREMENT:** Subagent name lists MUST come from `subagent_registry::all_subagent_names()` or `subagent_registry::get_subagents_for_tier()` — DO NOT hardcode names
+   - **DRY REQUIREMENT:** Tag any new reusable widgets with `// DRY:WIDGET:<name>`
+   - **DRY REQUIREMENT:** Run `scripts/generate-widget-catalog.sh` after widget changes
 4. Create subagent mapping utilities
+   - **DRY REQUIREMENT:** MUST use `subagent_registry::get_subagent_for_language()` and `subagent_registry::get_subagent_for_framework()` — DO NOT create duplicate mapping logic
+   - **DRY REQUIREMENT:** Tag reusable functions with `// DRY:FN:<name>`
 5. **DRY (Puppet Master code):** When adding interview UI or helpers, follow DRY per §5.2 (widget catalog, platform_specs, tagging; run catalog scripts after widget changes)
 
 ### Phase 2: Prompt Integration
 1. Modify `prompt_templates.rs` to include subagent instructions
+   - **DRY REQUIREMENT:** Use `platform_specs::get_subagent_invocation_format()` when building platform-specific invocation syntax — DO NOT hardcode formats
 2. Add subagent invocation syntax to prompts
+   - **DRY REQUIREMENT:** Use `SubagentInvoker::invoke_subagent()` which uses `platform_specs` — DO NOT duplicate platform-specific logic
 3. Update prompt generation to pass subagent config
+   - **DRY REQUIREMENT:** Validate subagent names using `subagent_registry::is_valid_subagent_name()` before including in prompts
 
 ### Phase 3: Research Integration
 1. Enhance `ResearchEngine` to use subagents
@@ -399,7 +920,10 @@ When implementing or changing **interview-related code** in Puppet Master (inter
 2. Use knowledge-synthesizer for technology matrix
 3. Use qa-expert and test-automator for test strategy
 4. **AGENTS.md — Technology & version constraints:** Add a "Technology & version constraints" (or "Stack conventions") section to generated AGENTS.md per §5.1, derived from Architecture phase and optionally technology_matrix; include convention templates for well-known stacks (e.g. Pydantic v2, React 18) when detected.
-5. **AGENTS.md DRY section:** Add a DRY Method (reuse-first) section to generated AGENTS.md per §5.1 so target-project agents follow reuse-first and tag reusable items
+5. **AGENTS.md DRY section:** Add a DRY Method (reuse-first) section to generated AGENTS.md per §5.1 so target-project agents follow reuse-first and tag reusable items.
+6. **AGENTS.md minimality:** Implement critical-first block, size budget (~150–200 lines), and optional linked docs (e.g. docs/architecture.md) per §5.1 "Keep generated AGENTS.md minimal"; add "When updating, keep Critical and Technology & version constraints; prefer links to docs/" in generated file.
+7. **PRD crew recommendations:** Extend PRD generator to analyze task complexity and suggest crews for tasks/subtasks that would benefit from multiple subagents. Add `crew_recommendation` field to PRD JSON schema. Include crew recommendations in generated PRD and plan markdown.
+8. **Document generation crews:** Use crews for document generation (e.g., technical-writer + knowledge-synthesizer + qa-expert crew) to coordinate document creation and ensure consistency.
 
 ### Phase 6: Testing & Refinement
 1. Test subagent invocations for each phase
@@ -449,6 +973,1266 @@ let subagent_config = SubagentConfig {
 4. **Latency:** Subagent invocations add latency to interview flow
 5. **Error Handling:** Graceful fallback when subagents unavailable
 
+## Crews and Subagent Communication Enhancements for Interview Flow
+
+The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines **Crews** (multi-agent communication system) and enhanced subagent communication. These features can enhance the **interview flow** to enable better coordination between interview subagents and improve plan generation quality.
+
+### 1. Interview Phase Crews
+
+**Concept:** Use crews within interview phases to enable subagents to communicate and coordinate. For example, Architecture phase can use a crew with `architect-reviewer`, `knowledge-synthesizer`, and `technical-writer` working together.
+
+**Benefits:**
+- **Parallel research:** Multiple research subagents can work simultaneously and share findings
+- **Collaborative validation:** Validation subagents can discuss answers and reach consensus
+- **Coordinated documentation:** Document generation subagents can coordinate to ensure consistency
+
+**BeforePhase crew creation responsibilities:**
+
+- **Check phase subagent configuration:** Determine if phase has multiple subagents (primary + secondary) that would benefit from crew coordination
+- **Create phase crew:** If phase has multiple subagents, create crew with all phase subagents as members
+- **Register crew:** Register crew with `CrewManager` and persist to `.puppet-master/state/crews.json`
+- **Initialize crew communication:** Set up message board routing for crew (crew_id = `interview-phase-{phase_id}`)
+- **Inject crew context:** Add crew information to phase subagent prompts (crew members, message board access, coordination instructions)
+
+**DuringPhase crew coordination responsibilities:**
+
+- **Monitor crew messages:** Track messages posted by crew members via message board
+- **Coordinate research:** When research subagents run, they post findings to crew message board before returning results
+- **Coordinate validation:** When validation subagents run, they can query crew message board for prior validations and post their own findings
+- **Coordinate documentation:** When document generation subagents run, they can query crew message board for prior document sections and coordinate consistency
+
+**AfterPhase crew completion responsibilities:**
+
+- **Validate crew output:** Check that crew members completed their work and posted final messages
+- **Archive crew messages:** Archive crew messages to `.puppet-master/memory/interview-phase-{phase_id}-messages.json`
+- **Disband crew:** Mark crew as `CrewStatus::Complete` and remove from active crews
+- **Save crew decisions:** Persist crew decisions and findings to memory for use by later phases
+
+**Implementation:** Extend `src/interview/orchestrator.rs` to create crews at phase start, coordinate during phase execution, and disband at phase completion. Use `CrewManager` from orchestrator plan (`src/core/crews.rs`).
+
+**Integration with interview orchestrator:**
+
+In `src/interview/orchestrator.rs`, modify phase transition logic:
+
+```rust
+// Before starting a new phase
+let before_ctx = BeforePhaseContext {
+    phase_id: current_phase.id.clone(),
+    phase_type: current_phase.phase_type,
+    platform: config.primary_platform.platform,
+    model: config.primary_platform.model.clone(),
+    selected_subagents: get_phase_subagents(&config, &current_phase.id)?,
+    previous_decisions: load_previous_phase_decisions(&state)?,
+    detected_gui_frameworks: state.detected_gui_frameworks.clone(),
+    known_gaps: get_known_gaps_for_phase(&current_phase.id)?,
+};
+
+let before_result = self.hook_registry.execute_before_phase(&before_ctx)?;
+
+// Create phase crew if multiple subagents
+let phase_crew = if before_result.selected_subagents.len() > 1 {
+    let crew_id = format!("interview-phase-{}", current_phase.id);
+    let crew_subagents: Vec<CrewSubagent> = before_result.selected_subagents.iter()
+        .map(|(agent_type, agent_id)| CrewSubagent {
+            agent_id: format!("{}-phase-{}", agent_id, current_phase.id),
+            agent_type: agent_type.clone(),
+            platform: config.primary_platform.platform,
+            tier_id: None, // Interview phase, not tier
+            status: SubagentStatus::Active,
+        })
+        .collect();
+    
+    let crew = Crew {
+        crew_id: crew_id.clone(),
+        name: Some(format!("{} Phase Crew", current_phase.name)),
+        platform: config.primary_platform.platform,
+        subagents: crew_subagents,
+        task: format!("Research and validate {} phase decisions", current_phase.name),
+        created_by: CrewCreator::Orchestrator { tier_id: format!("interview-phase-{}", current_phase.id) },
+        created_at: Utc::now(),
+        status: CrewStatus::Forming,
+    };
+    
+    self.crew_manager.create_crew(crew).await?;
+    Some(crew_id)
+} else {
+    None
+};
+
+// Inject crew context into prompt if crew exists
+let prompt = if let Some(crew_id) = &phase_crew {
+    let crew_context = self.crew_manager.get_crew_coordination_context(&crew_id).await?;
+    format!("{}\n\n**Crew Coordination:** You are part of a crew ({}) with {} members. Coordinate via the message board (agent-messages.json). Post findings and questions to the crew before completing your work.\n\n{}", 
+        prompt, crew_id, before_result.selected_subagents.len(), crew_context)
+} else {
+    prompt
+};
+
+// After phase completes
+let after_ctx = AfterPhaseContext {
+    phase_id: current_phase.id.clone(),
+    phase_type: current_phase.phase_type,
+    platform: config.primary_platform.platform,
+    subagent_output: phase_output.clone(),
+    completion_status: if phase_complete { CompletionStatus::Success } else { CompletionStatus::Warning("Incomplete".to_string()) },
+    question_count: state.current_phase_qa.len(),
+};
+
+let after_result = self.hook_registry.execute_after_phase(&after_ctx)?;
+
+// Disband phase crew if it exists
+if let Some(crew_id) = phase_crew {
+    self.crew_manager.disband_crew(&crew_id, "Phase completed").await?;
+    
+    // Archive crew messages
+    let messages = self.crew_manager.get_crew_messages(&crew_id).await?;
+    let archive_path = format!(".puppet-master/memory/interview-phase-{}-messages.json", current_phase.id);
+    std::fs::write(&archive_path, serde_json::to_string_pretty(&messages)?)?;
+    
+    // Save crew decisions to memory
+    self.memory_manager.save_phase_decisions(&current_phase.id, &extract_crew_decisions(&messages)).await?;
+}
+```
+
+**Error handling:**
+
+- **Crew creation failure:** If crew creation fails, log warning and proceed without crew (fallback to single-subagent mode)
+- **Message board failure:** If message board access fails, log warning and proceed without coordination (subagents work independently)
+- **Crew disband failure:** If crew disband fails, log error but continue (crew will be cleaned up on next startup)
+
+### 2. Crew-Aware Plan Generation
+
+**Concept:** When the interview generates PRD/plans, include crew recommendations for tasks/subtasks that would benefit from multiple subagents working together.
+
+**What to include in generated plans:**
+- **Crew recommendations:** Suggest crews for complex tasks/subtasks
+- **Crew templates:** Reference crew templates (e.g., "Use 'Full Stack Crew' for this phase")
+- **Crew metadata:** Add crew hints to PRD tasks/subtasks
+
+**PRD schema extension:**
+
+```json
+{
+  "phases": [
+    {
+      "tasks": [
+        {
+          "subtasks": [
+            {
+              "id": "ST-001-001-001",
+              "title": "Implement authentication API",
+              "crew_recommendation": {
+                "suggested": true,
+                "subagents": ["rust-engineer", "security-auditor", "test-automator"],
+                "rationale": "Requires security expertise, implementation, and testing",
+                "crew_template": "Security Implementation Crew",
+                "complexity_score": 7.5,
+                "expertise_areas": ["security", "backend", "testing"]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Complexity analysis responsibilities:**
+
+- **Analyze subtask title and description:** Extract keywords, technical terms, and complexity indicators (e.g., "implement", "design", "integrate", "refactor")
+- **Analyze acceptance criteria:** Count verification tokens (TEST:, CLI_VERIFY:, etc.), assess test complexity, identify multiple verification types
+- **Analyze dependencies:** Check if subtask depends on other subtasks or external systems
+- **Estimate effort:** Calculate estimated hours based on title length, description length, acceptance criteria count, dependency count
+- **Identify expertise areas:** Map keywords and technical terms to expertise areas (e.g., "authentication" → security, "API" → backend, "test" → testing)
+
+**Subagent selection logic:**
+
+- **Map expertise areas to subagents:** Use expertise area → subagent type mapping (e.g., security → security-auditor, backend → rust-engineer, testing → test-automator)
+- **Check subagent availability:** Verify subagent types are available for the platform configured for this tier
+- **Apply crew templates:** Match expertise areas to crew templates (e.g., security + backend + testing → "Security Implementation Crew")
+- **Generate rationale:** Create human-readable rationale explaining why crew is recommended
+
+**Implementation:** Extend `src/start-chain/prd_generator.rs` (or equivalent) to include complexity analysis and crew recommendation logic. Add `CrewRecommendationGenerator` module.
+
+**Integration with PRD generator:**
+
+In `src/start-chain/prd_generator.rs` (or equivalent), extend subtask generation:
+
+```rust
+use crate::core::crews::{CrewManager, CrewRecommendationGenerator};
+
+impl PrdGenerator {
+    pub fn generate_prd_with_crew_recommendations(
+        &self,
+        phases: &[Phase],
+        output_path: &Path,
+        crew_manager: &CrewManager,
+    ) -> Result<PathBuf> {
+        let mut prd = self.generate_base_prd(phases)?;
+        
+        // Analyze each subtask and add crew recommendations
+        let crew_recommender = CrewRecommendationGenerator::new(crew_manager);
+        
+        for phase in &mut prd.phases {
+            for task in &mut phase.tasks {
+                for subtask in &mut task.subtasks {
+                    // Analyze subtask complexity
+                    let complexity = self.analyze_subtask_complexity(subtask)?;
+                    
+                    // Generate crew recommendation if complexity warrants it
+                    if complexity.should_suggest_crew() {
+                        let recommendation = crew_recommender.suggest_crew_for_subtask(
+                            subtask,
+                            &complexity,
+                            &task.platform_config, // Platform for this tier
+                        ).await?;
+                        
+                        if let Some(recommendation) = recommendation {
+                            subtask.crew_recommendation = Some(recommendation);
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Write PRD with crew recommendations
+        self.write_prd_json(&prd, output_path)?;
+        
+        Ok(output_path.to_path_buf())
+    }
+    
+    fn analyze_subtask_complexity(&self, subtask: &Subtask) -> Result<SubtaskComplexity> {
+        // Extract keywords from title and description
+        let title_keywords = self.extract_keywords(&subtask.title);
+        let desc_keywords = self.extract_keywords(&subtask.description);
+        
+        // Count acceptance criteria and verification tokens
+        let acceptance_criteria_count = subtask.acceptance_criteria.len();
+        let verification_token_count = subtask.acceptance_criteria.iter()
+            .filter(|ac| ac.contains("TEST:") || ac.contains("CLI_VERIFY:") || 
+                    ac.contains("BROWSER_VERIFY:") || ac.contains("FILE_VERIFY:"))
+            .count();
+        
+        // Identify expertise areas
+        let expertise_areas = self.identify_expertise_areas(&title_keywords, &desc_keywords);
+        
+        // Estimate effort (hours)
+        let estimated_hours = self.estimate_effort(
+            &subtask.title,
+            &subtask.description,
+            acceptance_criteria_count,
+            verification_token_count,
+            subtask.dependencies.len(),
+        );
+        
+        // Calculate complexity score (0-10)
+        let complexity_score = self.calculate_complexity_score(
+            estimated_hours,
+            expertise_areas.len(),
+            acceptance_criteria_count,
+            verification_token_count,
+        );
+        
+        Ok(SubtaskComplexity {
+            estimated_hours,
+            complexity_score,
+            expertise_areas,
+            requires_multiple_expertise: expertise_areas.len() > 1,
+            acceptance_criteria_count,
+            verification_token_count,
+        })
+    }
+    
+    fn identify_expertise_areas(&self, title_keywords: &[String], desc_keywords: &[String]) -> Vec<String> {
+        let mut areas = Vec::new();
+        let all_keywords: Vec<_> = title_keywords.iter().chain(desc_keywords.iter()).collect();
+        
+        // Map keywords to expertise areas
+        for keyword in all_keywords {
+            let keyword_lower = keyword.to_lowercase();
+            if keyword_lower.contains("auth") || keyword_lower.contains("security") || 
+               keyword_lower.contains("encrypt") || keyword_lower.contains("permission") {
+                if !areas.contains(&"security".to_string()) {
+                    areas.push("security".to_string());
+                }
+            }
+            if keyword_lower.contains("api") || keyword_lower.contains("endpoint") || 
+               keyword_lower.contains("server") || keyword_lower.contains("backend") {
+                if !areas.contains(&"backend".to_string()) {
+                    areas.push("backend".to_string());
+                }
+            }
+            if keyword_lower.contains("test") || keyword_lower.contains("verify") || 
+               keyword_lower.contains("assert") || keyword_lower.contains("spec") {
+                if !areas.contains(&"testing".to_string()) {
+                    areas.push("testing".to_string());
+                }
+            }
+            if keyword_lower.contains("ui") || keyword_lower.contains("frontend") || 
+               keyword_lower.contains("component") || keyword_lower.contains("render") {
+                if !areas.contains(&"frontend".to_string()) {
+                    areas.push("frontend".to_string());
+                }
+            }
+            if keyword_lower.contains("database") || keyword_lower.contains("db") || 
+               keyword_lower.contains("schema") || keyword_lower.contains("migration") {
+                if !areas.contains(&"database".to_string()) {
+                    areas.push("database".to_string());
+                }
+            }
+        }
+        
+        areas
+    }
+    
+    fn estimate_effort(
+        &self,
+        title: &str,
+        description: &str,
+        acceptance_criteria_count: usize,
+        verification_token_count: usize,
+        dependency_count: usize,
+    ) -> f64 {
+        // Base effort from title/description length
+        let base_hours = (title.len() + description.len()) as f64 / 500.0;
+        
+        // Add effort for acceptance criteria (0.5 hours each)
+        let criteria_hours = acceptance_criteria_count as f64 * 0.5;
+        
+        // Add effort for verification tokens (0.3 hours each)
+        let verification_hours = verification_token_count as f64 * 0.3;
+        
+        // Add effort for dependencies (0.2 hours each)
+        let dependency_hours = dependency_count as f64 * 0.2;
+        
+        // Minimum 1 hour, maximum 8 hours
+        (base_hours + criteria_hours + verification_hours + dependency_hours)
+            .max(1.0)
+            .min(8.0)
+    }
+    
+    fn calculate_complexity_score(
+        &self,
+        estimated_hours: f64,
+        expertise_area_count: usize,
+        acceptance_criteria_count: usize,
+        verification_token_count: usize,
+    ) -> f64 {
+        // Normalize to 0-10 scale
+        let hours_score = (estimated_hours / 8.0) * 4.0; // Max 4 points
+        let expertise_score = (expertise_area_count as f64 / 5.0) * 3.0; // Max 3 points
+        let criteria_score = (acceptance_criteria_count as f64 / 10.0) * 2.0; // Max 2 points
+        let verification_score = (verification_token_count as f64 / 5.0) * 1.0; // Max 1 point
+        
+        (hours_score + expertise_score + criteria_score + verification_score)
+            .min(10.0)
+    }
+}
+
+impl CrewRecommendationGenerator {
+    pub async fn suggest_crew_for_subtask(
+        &self,
+        subtask: &Subtask,
+        complexity: &SubtaskComplexity,
+        platform_config: &PlatformConfig,
+    ) -> Result<Option<CrewRecommendation>> {
+        // Only suggest crew if complexity warrants it
+        if !complexity.should_suggest_crew() {
+            return Ok(None);
+        }
+        
+        // Map expertise areas to subagent types
+        let subagent_types = self.map_expertise_to_subagents(&complexity.expertise_areas)?;
+        
+        // Filter subagents by platform availability
+        let available_subagents = self.filter_by_platform(subagent_types, platform_config.platform)?;
+        
+        if available_subagents.is_empty() {
+            return Ok(None); // No available subagents for this platform
+        }
+        
+        // Find matching crew template
+        let crew_template = self.find_matching_template(&available_subagents)?;
+        
+        // Generate rationale
+        let rationale = format!(
+            "Subtask requires {} expertise areas ({}), estimated {} hours, and {} acceptance criteria. Recommended crew: {}",
+            complexity.expertise_areas.len(),
+            complexity.expertise_areas.join(", "),
+            complexity.estimated_hours,
+            complexity.acceptance_criteria_count,
+            available_subagents.join(" + ")
+        );
+        
+        Ok(Some(CrewRecommendation {
+            suggested: true,
+            subagents: available_subagents,
+            rationale,
+            crew_template,
+            complexity_score: complexity.complexity_score,
+            expertise_areas: complexity.expertise_areas.clone(),
+        }))
+    }
+    
+    fn map_expertise_to_subagents(&self, expertise_areas: &[String]) -> Result<Vec<String>> {
+        let mut subagents = Vec::new();
+        
+        for area in expertise_areas {
+            match area.as_str() {
+                "security" => subagents.push("security-auditor".to_string()),
+                "backend" => subagents.push("rust-engineer".to_string()), // Or backend-developer
+                "testing" => subagents.push("test-automator".to_string()),
+                "frontend" => subagents.push("frontend-developer".to_string()),
+                "database" => subagents.push("database-administrator".to_string()),
+                _ => {} // Unknown expertise area
+            }
+        }
+        
+        Ok(subagents)
+    }
+    
+    fn filter_by_platform(&self, subagents: Vec<String>, platform: Platform) -> Result<Vec<String>> {
+        // Check which subagents are available for this platform
+        // This would check platform_specs or subagent registry
+        let available: Vec<String> = subagents.into_iter()
+            .filter(|subagent| self.is_subagent_available(subagent, platform))
+            .collect();
+        
+        Ok(available)
+    }
+    
+    fn find_matching_template(&self, subagents: &[String]) -> Result<Option<String>> {
+        // Match subagent combination to crew templates
+        // E.g., ["rust-engineer", "security-auditor", "test-automator"] → "Security Implementation Crew"
+        let template_map: HashMap<Vec<String>, String> = HashMap::from([
+            (vec!["rust-engineer".to_string(), "security-auditor".to_string(), "test-automator".to_string()], 
+             "Security Implementation Crew".to_string()),
+            (vec!["rust-engineer".to_string(), "frontend-developer".to_string(), "test-automator".to_string()], 
+             "Full Stack Crew".to_string()),
+            // ... more templates
+        ]);
+        
+        // Sort subagents for consistent matching
+        let mut sorted_subagents = subagents.to_vec();
+        sorted_subagents.sort();
+        
+        Ok(template_map.get(&sorted_subagents).cloned())
+    }
+}
+
+impl SubtaskComplexity {
+    fn should_suggest_crew(&self) -> bool {
+        // Suggest crew if:
+        // - Requires multiple expertise areas, OR
+        // - Estimated hours > 4.0, OR
+        // - Complexity score > 6.0
+        self.requires_multiple_expertise || 
+        self.estimated_hours > 4.0 || 
+        self.complexity_score > 6.0
+    }
+}
+```
+
+**Integration with orchestrator:**
+
+- Orchestrator reads `crew_recommendation` from PRD tasks/subtasks when loading PRD
+- When orchestrator creates crews for tiers, it checks for `crew_recommendation` and uses it as a hint for subagent selection
+- Crew recommendations guide subagent selection for orchestrator-initiated crews, but orchestrator can override based on tier configuration
+
+**Error handling:**
+
+- **Complexity analysis failure:** If complexity analysis fails, log warning and proceed without crew recommendation
+- **Subagent mapping failure:** If expertise area → subagent mapping fails, log warning and use fallback subagents
+- **Platform availability check failure:** If platform availability check fails, log warning and proceed without filtering (may suggest unavailable subagents)
+
+### 3. Cross-Phase Crew Coordination
+
+**Concept:** Crews can coordinate across interview phases. For example, Architecture phase crew shares decisions with Testing phase crew.
+
+**Benefits:**
+- **Consistency:** Later phases can reference decisions from earlier phases
+- **Context sharing:** Crews can ask questions of previous phase crews
+- **Decision validation:** Later phase crews can validate earlier phase decisions
+
+**BeforePhase cross-phase coordination responsibilities:**
+
+- **Load prior phase crew messages:** Load messages from previous phase crews from `.puppet-master/memory/interview-phase-{phase_id}-messages.json`
+- **Load prior phase decisions:** Load decisions from previous phases from `.puppet-master/memory/interview-decisions.json`
+- **Inject cross-phase context:** Add prior phase decisions and crew messages to current phase crew context
+- **Set up cross-phase message routing:** Configure message board to route messages to previous phase crews (for questions/validation)
+
+**DuringPhase cross-phase coordination responsibilities:**
+
+- **Post decisions to message board:** When phase crew makes decisions, post them to message board with `to_tier_id` = `interview-phase-{next_phase_id}` for future phases
+- **Query prior phase crews:** Current phase crew can post questions to previous phase crews via message board (routing by phase_id)
+- **Validate prior decisions:** Current phase crew can validate decisions from previous phases and post validation results
+
+**AfterPhase cross-phase coordination responsibilities:**
+
+- **Archive phase decisions:** Save phase decisions to `.puppet-master/memory/interview-decisions.json` with phase_id key
+- **Archive crew messages:** Archive crew messages with cross-phase routing information
+- **Prepare for next phase:** Set up message routing for next phase to access current phase decisions
+
+**Implementation:** Extend `src/interview/orchestrator.rs` to load prior phase messages/decisions at phase start, enable cross-phase message routing during phase execution, and archive decisions/messages at phase completion.
+
+**Integration with interview orchestrator:**
+
+In `src/interview/orchestrator.rs`, extend phase transition logic:
+
+```rust
+// Before starting a new phase
+let before_ctx = BeforePhaseContext {
+    phase_id: current_phase.id.clone(),
+    phase_type: current_phase.phase_type,
+    platform: config.primary_platform.platform,
+    model: config.primary_platform.model.clone(),
+    selected_subagents: get_phase_subagents(&config, &current_phase.id)?,
+    previous_decisions: load_previous_phase_decisions(&state)?,
+    detected_gui_frameworks: state.detected_gui_frameworks.clone(),
+    known_gaps: get_known_gaps_for_phase(&current_phase.id)?,
+};
+
+let before_result = self.hook_registry.execute_before_phase(&before_ctx)?;
+
+// Load prior phase crew messages and decisions
+let prior_phase_messages = if current_phase.number > 1 {
+    let prior_phase_id = format!("phase-{}", current_phase.number - 1);
+    self.load_phase_crew_messages(&prior_phase_id).await?
+} else {
+    Vec::new()
+};
+
+let prior_phase_decisions = self.memory_manager.load_phase_decisions(&current_phase.id).await?;
+
+// Create phase crew with cross-phase context
+let phase_crew = if before_result.selected_subagents.len() > 1 {
+    let crew_id = format!("interview-phase-{}", current_phase.id);
+    
+    // Inject cross-phase context into crew task
+    let crew_task = format!(
+        "Research and validate {} phase decisions.\n\n**Prior Phase Context:**\n{}\n\n**Prior Phase Decisions:**\n{}",
+        current_phase.name,
+        format_crew_messages_summary(&prior_phase_messages),
+        format_decisions_summary(&prior_phase_decisions)
+    );
+    
+    let crew = Crew {
+        crew_id: crew_id.clone(),
+        name: Some(format!("{} Phase Crew", current_phase.name)),
+        platform: config.primary_platform.platform,
+        subagents: /* ... */,
+        task: crew_task,
+        created_by: CrewCreator::Orchestrator { tier_id: format!("interview-phase-{}", current_phase.id) },
+        created_at: Utc::now(),
+        status: CrewStatus::Forming,
+    };
+    
+    self.crew_manager.create_crew(crew).await?;
+    
+    // Set up cross-phase message routing
+    if current_phase.number > 1 {
+        let prior_phase_id = format!("interview-phase-phase-{}", current_phase.number - 1);
+        self.crew_manager.enable_cross_phase_routing(&crew_id, &prior_phase_id).await?;
+    }
+    
+    Some(crew_id)
+} else {
+    None
+};
+
+// After phase completes
+// ... existing after phase logic ...
+
+// Archive phase decisions and messages
+if let Some(crew_id) = phase_crew {
+    let messages = self.crew_manager.get_crew_messages(&crew_id).await?;
+    
+    // Extract decisions from messages
+    let decisions: Vec<Decision> = messages.iter()
+        .filter(|msg| matches!(msg.message_type, MessageType::Decision))
+        .map(|msg| extract_decision_from_message(msg))
+        .collect();
+    
+    // Save decisions to memory
+    self.memory_manager.save_phase_decisions(&current_phase.id, &decisions).await?;
+    
+    // Archive messages
+    let archive_path = format!(".puppet-master/memory/interview-phase-{}-messages.json", current_phase.id);
+    std::fs::write(&archive_path, serde_json::to_string_pretty(&messages)?)?;
+    
+    // Disband crew
+    self.crew_manager.disband_crew(&crew_id, "Phase completed").await?;
+}
+```
+
+**Cross-phase message routing:**
+
+```rust
+impl CrewManager {
+    pub async fn enable_cross_phase_routing(
+        &self,
+        current_crew_id: &str,
+        prior_crew_id: &str,
+    ) -> Result<()> {
+        // Configure message board to allow current crew to post messages to prior crew
+        // Prior crew is archived, but messages can still be posted for reference
+        self.message_board.enable_cross_phase_routing(
+            current_crew_id,
+            prior_crew_id,
+        ).await?;
+        
+        Ok(())
+    }
+    
+    pub async fn post_cross_phase_question(
+        &self,
+        from_crew_id: &str,
+        to_phase_id: &str,
+        question: &str,
+    ) -> Result<String> {
+        // Post question to prior phase crew (archived, but accessible)
+        let message = AgentMessage {
+            message_id: generate_message_id(),
+            from_agent_id: format!("crew-{}", from_crew_id),
+            from_platform: /* ... */,
+            to_agent_id: None,
+            to_tier_id: Some(format!("interview-phase-{}", to_phase_id)),
+            message_type: MessageType::Question,
+            subject: "Cross-phase question".to_string(),
+            content: question.to_string(),
+            context: MessageContext {
+                phase_id: Some(to_phase_id.to_string()),
+                crew_id: Some(from_crew_id.to_string()),
+            },
+            thread_id: None,
+            in_reply_to: None,
+            created_at: Utc::now(),
+            read_by: Vec::new(),
+            resolved: false,
+        };
+        
+        self.message_board.post_message(message).await?;
+        
+        Ok(message.message_id)
+    }
+}
+```
+
+**Error handling:**
+
+- **Prior phase message load failure:** If loading prior phase messages fails, log warning and proceed without cross-phase context
+- **Cross-phase routing failure:** If cross-phase routing setup fails, log warning and proceed without cross-phase coordination
+- **Decision archive failure:** If archiving decisions fails, log error but continue (decisions may be lost, but phase can complete)
+
+### 4. Research Crews for Tool Discovery
+
+**Concept:** When interview performs tool research (newtools plan), use crews to coordinate multiple researchers working in parallel.
+
+**Benefits:**
+- **Parallel research:** Multiple researchers can research different tools simultaneously
+- **Coordinated catalog updates:** Researchers can coordinate catalog entries
+- **Conflict resolution:** Researchers can discuss conflicting tool recommendations
+
+**BeforeResearch crew creation responsibilities:**
+
+- **Determine research scope:** Identify GUI framework(s) to research and required research subagents
+- **Create research crew:** Create crew with research subagents (e.g., `ux-researcher`, `qa-expert`, `test-automator` for GUI testing tools)
+- **Assign research tasks:** Divide research scope among crew members (e.g., `ux-researcher` researches UX tools, `qa-expert` researches testing tools)
+- **Initialize research coordination:** Set up message board for research crew to share findings
+
+**DuringResearch crew coordination responsibilities:**
+
+- **Coordinate research assignments:** Crew members post their research assignments to message board to avoid duplicates
+- **Share research findings:** Crew members post findings to message board as they discover tools
+- **Resolve conflicts:** If crew members find conflicting information, they discuss via message board to reach consensus
+- **Coordinate catalog entries:** Before adding catalog entries, crew members review each other's proposed entries
+
+**AfterResearch crew completion responsibilities:**
+
+- **Validate research results:** Crew members validate each other's research results before catalog update
+- **Merge research findings:** Combine findings from all crew members into unified catalog entries
+- **Archive research messages:** Archive research crew messages to `.puppet-master/memory/tool-research-{research_id}-messages.json`
+- **Disband research crew:** Mark crew as complete and remove from active crews
+
+**Implementation:** Extend `src/interview/research_engine.rs` to create research crews, coordinate research operations, and disband crews after research completes.
+
+**Integration with research engine:**
+
+In `src/interview/research_engine.rs`, extend research operations:
+
+```rust
+impl ResearchEngine {
+    pub async fn execute_research_with_crew(
+        &self,
+        topic: &str,
+        context: &str,
+        framework: Option<&str>,
+        config: &InterviewOrchestratorConfig,
+    ) -> Result<ResearchResult> {
+        // Determine research subagents based on topic and framework
+        let research_subagents = self.select_research_subagents(topic, framework)?;
+        
+        // Create research crew if multiple subagents
+        let research_crew = if research_subagents.len() > 1 {
+            let research_id = generate_research_id();
+            let crew_id = format!("tool-research-{}", research_id);
+            
+            let crew_subagents: Vec<CrewSubagent> = research_subagents.iter()
+                .map(|(agent_type, agent_id)| CrewSubagent {
+                    agent_id: format!("{}-research-{}", agent_id, research_id),
+                    agent_type: agent_type.clone(),
+                    platform: config.primary_platform.platform,
+                    tier_id: None,
+                    status: SubagentStatus::Active,
+                })
+                .collect();
+            
+            // Divide research scope among crew members
+            let research_tasks = self.divide_research_scope(topic, framework, &research_subagents)?;
+            
+            let crew = Crew {
+                crew_id: crew_id.clone(),
+                name: Some(format!("Tool Research Crew: {}", topic)),
+                platform: config.primary_platform.platform,
+                subagents: crew_subagents,
+                task: format!("Research {} tools for {}", topic, framework.unwrap_or("detected framework")),
+                created_by: CrewCreator::Orchestrator { tier_id: "interview-phase-8".to_string() },
+                created_at: Utc::now(),
+                status: CrewStatus::Active,
+            };
+            
+            self.crew_manager.create_crew(crew).await?;
+            
+            // Assign research tasks to crew members
+            for (i, (agent_id, task)) in research_tasks.iter().enumerate() {
+                let message = AgentMessage {
+                    message_id: generate_message_id(),
+                    from_agent_id: "research-orchestrator".to_string(),
+                    from_platform: config.primary_platform.platform,
+                    to_agent_id: Some(agent_id.clone()),
+                    message_type: MessageType::Request,
+                    subject: "Research assignment".to_string(),
+                    content: task.clone(),
+                    context: MessageContext {
+                        crew_id: Some(crew_id.clone()),
+                        research_id: Some(research_id.clone()),
+                    },
+                    thread_id: None,
+                    in_reply_to: None,
+                    created_at: Utc::now(),
+                    read_by: Vec::new(),
+                    resolved: false,
+                };
+                
+                self.crew_manager.post_to_crew(&crew_id, message).await?;
+            }
+            
+            Some((crew_id, research_id))
+        } else {
+            None
+        };
+        
+        // Execute research (with or without crew)
+        let research_result = if let Some((crew_id, _)) = &research_crew {
+            // Research with crew coordination
+            self.execute_parallel_research_with_crew(topic, context, framework, &crew_id).await?
+        } else {
+            // Single-subagent research (no crew)
+            self.execute_single_research(topic, context, framework).await?
+        };
+        
+        // Disband research crew if it exists
+        if let Some((crew_id, research_id)) = research_crew {
+            // Archive research messages
+            let messages = self.crew_manager.get_crew_messages(&crew_id).await?;
+            let archive_path = format!(".puppet-master/memory/tool-research-{}-messages.json", research_id);
+            std::fs::write(&archive_path, serde_json::to_string_pretty(&messages)?)?;
+            
+            // Disband crew
+            self.crew_manager.disband_crew(&crew_id, "Research completed").await?;
+        }
+        
+        Ok(research_result)
+    }
+    
+    async fn execute_parallel_research_with_crew(
+        &self,
+        topic: &str,
+        context: &str,
+        framework: Option<&str>,
+        crew_id: &str,
+    ) -> Result<ResearchResult> {
+        // Get crew members
+        let crew = self.crew_manager.get_crew(crew_id).await?;
+        
+        // Execute research for each crew member in parallel
+        let mut research_tasks = Vec::new();
+        for member in &crew.subagents {
+            let task = tokio::spawn({
+                let crew_id = crew_id.to_string();
+                let member_id = member.agent_id.clone();
+                let topic = topic.to_string();
+                let context = context.to_string();
+                let framework = framework.map(|s| s.to_string());
+                
+                async move {
+                    // Execute research for this crew member
+                    let result = self.execute_research_for_member(
+                        &member_id,
+                        &topic,
+                        &context,
+                        framework.as_deref(),
+                    ).await?;
+                    
+                    // Post findings to crew message board
+                    let findings_message = AgentMessage {
+                        message_id: generate_message_id(),
+                        from_agent_id: member_id.clone(),
+                        from_platform: member.platform,
+                        to_agent_id: None,
+                        message_type: MessageType::Update,
+                        subject: format!("Research findings: {}", topic),
+                        content: format!("Found {} tools:\n{}", result.tools.len(), 
+                            result.tools.iter().map(|t| format!("- {}", t.name)).collect::<Vec<_>>().join("\n")),
+                        context: MessageContext {
+                            crew_id: Some(crew_id),
+                        },
+                        thread_id: None,
+                        in_reply_to: None,
+                        created_at: Utc::now(),
+                        read_by: Vec::new(),
+                        resolved: false,
+                    };
+                    
+                    self.crew_manager.post_to_crew(&crew_id, findings_message).await?;
+                    
+                    Ok::<ResearchResult, Error>(result)
+                }
+            });
+            
+            research_tasks.push(task);
+        }
+        
+        // Wait for all research tasks to complete
+        let mut all_results = Vec::new();
+        for task in research_tasks {
+            let result = task.await??;
+            all_results.push(result);
+        }
+        
+        // Merge research results from all crew members
+        let merged_result = self.merge_research_results(all_results)?;
+        
+        // Validate merged results (crew members review each other's findings)
+        let validated_result = self.validate_research_results_with_crew(&merged_result, crew_id).await?;
+        
+        Ok(validated_result)
+    }
+    
+    fn divide_research_scope(
+        &self,
+        topic: &str,
+        framework: Option<&str>,
+        subagents: &[(String, String)],
+    ) -> Result<Vec<(String, String)>> {
+        // Divide research scope based on subagent expertise
+        let mut tasks = Vec::new();
+        
+        for (agent_type, agent_id) in subagents {
+            let task = match agent_type.as_str() {
+                "ux-researcher" => format!("Research UX tools for {} framework", framework.unwrap_or("detected")),
+                "qa-expert" => format!("Research testing tools for {} framework", framework.unwrap_or("detected")),
+                "test-automator" => format!("Research automation tools for {} framework", framework.unwrap_or("detected")),
+                _ => format!("Research {} tools for {} framework", topic, framework.unwrap_or("detected")),
+            };
+            
+            tasks.push((agent_id.clone(), task));
+        }
+        
+        Ok(tasks)
+    }
+    
+    async fn validate_research_results_with_crew(
+        &self,
+        results: &ResearchResult,
+        crew_id: &str,
+    ) -> Result<ResearchResult> {
+        // Post research results to crew for validation
+        let validation_message = AgentMessage {
+            message_id: generate_message_id(),
+            from_agent_id: "research-orchestrator".to_string(),
+            from_platform: /* ... */,
+            to_agent_id: None,
+            message_type: MessageType::Request,
+            subject: "Validate research results".to_string(),
+            content: format!("Please review and validate these research results:\n{}", 
+                serde_json::to_string_pretty(results)?),
+            context: MessageContext {
+                crew_id: Some(crew_id.to_string()),
+            },
+            thread_id: None,
+            in_reply_to: None,
+            created_at: Utc::now(),
+            read_by: Vec::new(),
+            resolved: false,
+        };
+        
+        self.crew_manager.post_to_crew(crew_id, validation_message).await?;
+        
+        // Wait for validation responses (or timeout after 30 seconds)
+        let validation_responses = self.crew_manager.wait_for_responses(
+            crew_id,
+            MessageType::Answer,
+            chrono::Duration::seconds(30),
+        ).await?;
+        
+        // Merge validation feedback
+        let validated_results = self.apply_validation_feedback(results, &validation_responses)?;
+        
+        Ok(validated_results)
+    }
+}
+```
+
+**Error handling:**
+
+- **Research crew creation failure:** If crew creation fails, log warning and fall back to single-subagent research
+- **Research task assignment failure:** If task assignment fails, log error and proceed with available crew members
+- **Research coordination failure:** If message board access fails during research, log warning and continue (crew members work independently)
+- **Validation failure:** If validation fails, log warning and proceed with unvalidated results (catalog update may be incomplete)
+
+## Lifecycle and Quality Enhancements for Interview Flow
+
+The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines lifecycle hooks, structured handoff validation, remediation loops, and cross-session memory. These features can enhance the **interview flow** to improve reliability, quality, and continuity across interview phases.
+
+### 1. Interview Phase Hooks (BeforePhase/AfterPhase)
+
+**Concept:** Apply hook-based lifecycle middleware to interview phases, similar to orchestrator tier hooks. Run **BeforePhase** and **AfterPhase** hooks at each interview phase boundary (Scope, Architecture, UX, Data, Security, Deployment, Performance, Testing).
+
+**BeforePhase hook responsibilities:**
+
+- **Track active subagent:** Record which subagent is active for this phase (e.g., `product-manager` for Phase 1, `architect-reviewer` for Phase 2) in interview state.
+- **Inject phase context:** Add current phase status, previous phase decisions, detected GUI frameworks, and known gaps to subagent prompt or context.
+- **Load cross-session memory:** Load prior interview decisions (architecture, patterns, tech choices) from `.puppet-master/memory/` and inject into phase context.
+- **Prune stale state:** Clean up old interview state files older than threshold (e.g., 2 hours).
+
+**AfterPhase hook responsibilities:**
+
+- **Validate subagent output format:** Check that phase subagent output matches structured handoff contract (see orchestrator plan §2).
+- **Track completion:** Update active subagent tracking, mark phase completion state.
+- **Save memory:** Persist architectural decisions, patterns, tech choices from this phase to `.puppet-master/memory/` (especially Architecture & Technology phase).
+- **Safe error handling:** Guarantee structured output even on hook failure.
+
+**Implementation:** Create `src/interview/hooks.rs` with `BeforePhaseHook` and `AfterPhaseHook` traits. Register hooks per phase type. Call hooks automatically at phase boundaries (before `process_ai_turn` for a new phase, after phase completion). Use the same hook registry pattern as orchestrator hooks (`HookRegistry`), but with interview-specific contexts.
+
+**Integration with interview orchestrator:**
+
+In `src/interview/orchestrator.rs`, modify phase transition logic:
+
+```rust
+// Before starting a new phase
+let before_ctx = BeforePhaseContext {
+    phase_id: current_phase.id.clone(),
+    phase_type: current_phase.phase_type,
+    platform: config.primary_platform.platform,
+    model: config.primary_platform.model.clone(),
+    selected_subagents: get_phase_subagents(&config, &current_phase.id)?,
+    previous_decisions: load_previous_phase_decisions(&state)?,
+    detected_gui_frameworks: state.detected_gui_frameworks.clone(),
+    known_gaps: get_known_gaps_for_phase(&current_phase.id)?,
+};
+
+let before_result = self.hook_registry.execute_before_phase(&before_ctx)?;
+
+// Inject context into prompt if provided
+let prompt = if let Some(injected) = before_result.injected_context {
+    format!("{}\n\n{}", prompt, injected)
+} else {
+    prompt
+};
+
+// After phase completes
+let after_ctx = AfterPhaseContext {
+    phase_id: current_phase.id.clone(),
+    phase_type: current_phase.phase_type,
+    platform: config.primary_platform.platform,
+    subagent_output: phase_output.clone(),
+    completion_status: if phase_complete { CompletionStatus::Success } else { CompletionStatus::Warning("Incomplete".to_string()) },
+    question_count: state.current_phase_qa.len(),
+};
+
+let after_result = self.hook_registry.execute_after_phase(&after_ctx)?;
+
+// Save memory if Architecture phase
+if current_phase.phase_type == PhaseType::ArchitectureTechnology {
+    self.memory_manager.save_architecture_decisions(&extract_decisions(&phase_output)).await?;
+}
+```
+
+### 2. Structured Handoff Validation for Interview Subagents
+
+**Concept:** Enforce structured output format for interview subagent invocations (research, validation, document generation). Use the same `SubagentOutput` format as orchestrator (task_report, downstream_context, findings).
+
+**Platform-specific parsing:**
+
+- **Research subagents:** Parse research output (e.g., from `research_pre_question_with_subagent`) as structured `SubagentOutput` with `task_report` = research summary, `downstream_context` = key findings for next question, `findings` = validation issues or gaps.
+- **Validation subagents:** Parse validation output (e.g., from `validate_answer_with_subagent`) as structured `SubagentOutput` with `task_report` = validation summary, `findings` = severity-coded issues (Critical/Major/Minor/Info).
+- **Document generation subagents:** Parse document enhancement output as structured `SubagentOutput` with `task_report` = enhancement summary, `downstream_context` = document path.
+
+**Integration:** Extend `src/interview/research_engine.rs` and validation methods to use `validate_subagent_output()` from orchestrator hooks. On validation failure, request one retry with format instruction; after retry, proceed with partial output but mark phase as "complete with warnings."
+
+### 3. Cross-Session Memory for Interview Decisions
+
+**Concept:** Persist interview decisions (architecture, patterns, tech choices) to `.puppet-master/memory/` so future interview runs or orchestrator runs can load prior context.
+
+**What to persist from interview:**
+
+- **Architectural decisions:** Tech stack choices, design patterns, framework selections (from Architecture & Technology phase).
+- **Established patterns:** Code organization, naming conventions, testing strategies (from Testing & Verification phase).
+- **Tech choices:** Dependency versions, tool configurations (from Architecture phase and technology matrix).
+- **GUI framework decisions:** Selected framework tools, custom headless tool plans (from Testing phase and newtools plan).
+
+**When to persist:**
+
+- **At phase completion:** Especially Architecture & Technology phase (save architectural decisions), Testing & Verification phase (save patterns and tool choices).
+- **At interview completion:** Save all accumulated decisions and patterns.
+
+**When to load:**
+
+- **At interview start:** Load all memory files and inject into Phase 1 (Scope & Goals) context.
+- **At each phase start:** Load relevant memory (e.g., Architecture phase loads prior architectural decisions).
+
+**Integration:** Use the same `MemoryManager` from orchestrator plan (`src/core/memory.rs`). In interview orchestrator, call `memory_manager.save_architecture_decisions()`, `save_pattern()`, `save_tech_choice()` at phase completion. Call `memory_manager.load_all_for_prompt()` at interview start and inject into Phase 1 prompt.
+
+### 4. Active Agent Tracking for Interview Phases
+
+**Concept:** Track which subagent is currently active at each interview phase. Store in interview state and expose for logging, debugging, and audit trails.
+
+**BeforePhase tracking responsibilities:**
+
+- **Determine active subagent:** Determine which subagent is active for this phase (from `SubagentConfig.phase_subagents` or override)
+- **Set active subagent:** Set `active_subagent` in `InterviewPhaseState` for current phase
+- **Update interview tracking:** Update `active_subagents` HashMap in interview orchestrator state
+- **Persist tracking state:** Write active subagent tracking to `.puppet-master/interview/active-subagents.json`
+- **Log tracking event:** Log active subagent change to `.puppet-master/logs/interview.log`
+
+**DuringPhase tracking responsibilities:**
+
+- **Monitor subagent status:** Monitor subagent execution status (active, waiting, blocked, complete)
+- **Update tracking on status change:** Update tracking state when subagent status changes
+- **Persist status changes:** Persist status changes to active-subagents.json
+
+**AfterPhase tracking responsibilities:**
+
+- **Clear active subagent:** Clear `active_subagent` in `InterviewPhaseState` when phase completes
+- **Update interview tracking:** Remove phase entry from `active_subagents` HashMap (or mark as complete)
+- **Persist final state:** Persist final tracking state to active-subagents.json
+- **Archive tracking:** Archive tracking data to `.puppet-master/memory/interview-{interview_id}-subagents.json`
+
+**Implementation:** Extend `src/interview/orchestrator.rs` and `src/interview/state.rs` to track active subagents.
+
+**Integration with interview orchestrator:**
+
+In `src/interview/orchestrator.rs`, extend phase transition logic:
+
+```rust
+use crate::interview::state::{InterviewPhaseState, ActiveSubagentTracker};
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ActiveSubagentState {
+    pub phase_id: String,
+    pub subagent_name: String,
+    pub started_at: chrono::DateTime<Utc>,
+    pub status: SubagentStatus,
+    pub last_update: chrono::DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum SubagentStatus {
+    Active,
+    Waiting,
+    Blocked,
+    Complete,
+}
+
+impl InterviewOrchestrator {
+    pub async fn start_phase(
+        &self,
+        phase_id: &str,
+    ) -> Result<()> {
+        // Determine active subagent for this phase
+        let active_subagent = self.get_active_subagent_for_phase(phase_id)?;
+        
+        if let Some(subagent_name) = active_subagent {
+            // Set active subagent in phase state
+            self.state.set_active_subagent(phase_id, &subagent_name).await?;
+            
+            // Update interview tracking
+            let tracking_state = ActiveSubagentState {
+                phase_id: phase_id.to_string(),
+                subagent_name: subagent_name.clone(),
+                started_at: Utc::now(),
+                status: SubagentStatus::Active,
+                last_update: Utc::now(),
+            };
+            
+            self.active_subagent_tracker.add_tracking(tracking_state).await?;
+            
+            // Persist tracking state
+            self.persist_active_subagent_tracking().await?;
+            
+            // Log tracking event
+            tracing::info!("Phase {}: active subagent = {}", phase_id, subagent_name);
+        }
+        
+        // Continue with phase start...
+        Ok(())
+    }
+    
+    pub async fn complete_phase(
+        &self,
+        phase_id: &str,
+    ) -> Result<()> {
+        // Clear active subagent
+        self.state.clear_active_subagent(phase_id).await?;
+        
+        // Update tracking status to Complete
+        if let Some(tracking) = self.active_subagent_tracker.get_tracking(phase_id).await? {
+            let mut updated = tracking.clone();
+            updated.status = SubagentStatus::Complete;
+            updated.last_update = Utc::now();
+            self.active_subagent_tracker.update_tracking(updated).await?;
+        }
+        
+        // Persist final state
+        self.persist_active_subagent_tracking().await?;
+        
+        // Archive tracking
+        self.archive_active_subagent_tracking(phase_id).await?;
+        
+        Ok(())
+    }
+    
+    async fn persist_active_subagent_tracking(&self) -> Result<()> {
+        let tracking_data = self.active_subagent_tracker.get_all_tracking().await?;
+        let path = self.config.working_directory.join(".puppet-master/interview/active-subagents.json");
+        
+        std::fs::create_dir_all(path.parent().unwrap())?;
+        std::fs::write(&path, serde_json::to_string_pretty(&tracking_data)?)?;
+        
+        Ok(())
+    }
+    
+    async fn archive_active_subagent_tracking(&self, phase_id: &str) -> Result<()> {
+        let tracking = self.active_subagent_tracker.get_tracking(phase_id).await?;
+        
+        if let Some(tracking) = tracking {
+            let archive_path = format!(
+                ".puppet-master/memory/interview-{}-subagents.json",
+                self.state.interview_id
+            );
+            
+            // Load existing archive or create new
+            let mut archive: Vec<ActiveSubagentState> = if std::path::Path::new(&archive_path).exists() {
+                serde_json::from_str(&std::fs::read_to_string(&archive_path)?)?
+            } else {
+                Vec::new()
+            };
+            
+            archive.push(tracking);
+            
+            std::fs::write(&archive_path, serde_json::to_string_pretty(&archive)?)?;
+        }
+        
+        Ok(())
+    }
+}
+
+impl ActiveSubagentTracker {
+    pub async fn add_tracking(&self, tracking: ActiveSubagentState) -> Result<()> {
+        // Add to in-memory tracking
+        self.tracking.insert(tracking.phase_id.clone(), tracking);
+        Ok(())
+    }
+    
+    pub async fn update_tracking(&self, tracking: ActiveSubagentState) -> Result<()> {
+        // Update in-memory tracking
+        self.tracking.insert(tracking.phase_id.clone(), tracking);
+        Ok(())
+    }
+    
+    pub async fn get_tracking(&self, phase_id: &str) -> Result<Option<ActiveSubagentState>> {
+        Ok(self.tracking.get(phase_id).cloned())
+    }
+    
+    pub async fn get_all_tracking(&self) -> Result<Vec<ActiveSubagentState>> {
+        Ok(self.tracking.values().cloned().collect())
+    }
+}
+```
+
+**Error handling:**
+
+- **Subagent determination failure:** If active subagent cannot be determined, log warning and proceed without tracking
+- **Tracking persistence failure:** If tracking persistence fails, log error but continue (tracking is informational)
+- **Archive failure:** If archive fails, log warning but continue (archive is for historical reference)
+
+**Use cases:**
+
+- **Logging:** "Phase 2 (Architecture): active subagent = architect-reviewer"
+- **Debugging:** "Why did this phase fail? Check active subagent logs."
+- **Audit trails:** "Which subagents ran in this interview? See active-subagents.json."
+- **GUI display:** Show active subagent in interview phase status UI.
+
+### 5. Remediation Loop for Interview Answer Validation
+
+**Concept:** When validation subagent finds Critical or Major issues with an interview answer, block phase completion and enter a remediation loop. Re-run validation until Critical/Major findings are resolved or escalated.
+
+**Severity levels:**
+
+- **Critical:** Security vulnerabilities, breaking architecture decisions, incompatible tech choices — **block phase completion**.
+- **Major:** Performance issues, maintainability problems, missing requirements — **block phase completion**.
+- **Minor:** Code style, minor optimizations, suggestions — **log and proceed**.
+- **Info:** Documentation, comments, non-blocking recommendations — **log and proceed**.
+
+**Remediation loop:**
+
+1. Validation subagent runs after user answer (per existing plan).
+2. Parse findings from `SubagentOutput.findings`.
+3. Filter Critical/Major findings.
+4. If Critical/Major exist:
+   - Mark phase as "incomplete" (not "complete with warnings").
+   - Prepend findings to phase context.
+   - Re-prompt user with remediation request (e.g., "Critical/Major findings: ... Please revise your answer.").
+   - Re-run validation subagent.
+   - Repeat until Critical/Major resolved or max retries (e.g., 3).
+   - If max retries reached, escalate to next phase with warnings or pause for user intervention.
+5. If only Minor/Info findings: log, mark phase complete, proceed.
+
+**Integration:** Extend `validate_answer_with_subagent()` in interview orchestrator to parse structured findings and enforce remediation loop. Use the same `RemediationLoop` implementation from orchestrator plan (`src/core/remediation.rs`), adapted for interview context (re-prompt user instead of re-running executor subagent).
+
+### 6. Safe Error Handling for Interview Hooks
+
+**Concept:** Interview hooks and validation functions must never crash the interview session. Use wrappers that guarantee structured output even on failure.
+
+**Application:**
+
+- **BeforePhase/AfterPhase hooks:** Wrap hook execution in `safe_hook_main` so hooks never crash.
+- **Validation functions:** Return `Result<ValidationResult, ValidationError>` with structured error types.
+- **Subagent output parsing:** On parse failure, return partial `SubagentOutput` rather than crashing.
+
+**Integration:** Use the same `safe_hook_main` wrapper from orchestrator hooks. Wrap all interview hook executions and validation calls.
+
+### Implementation Notes
+
+- **Where:** New module `src/interview/hooks.rs` for interview-specific hooks; reuse `src/core/memory.rs` and `src/core/remediation.rs` from orchestrator plan.
+- **What:** Implement `BeforePhaseHook` and `AfterPhaseHook` traits; integrate with `MemoryManager` for persistence; use `validate_subagent_output()` for structured handoff; use `RemediationLoop` for validation remediation.
+- **When:** Hooks run automatically at phase boundaries; memory persists at phase completion and loads at interview start; remediation loop runs when Critical/Major findings detected.
+
+**Cross-reference:** See orchestrator plan "Lifecycle and Quality Features" for full implementation details of hooks, structured handoff, remediation loops, and memory persistence. See orchestrator plan "Puppet Master Crews" for crew implementation details and how crews can enhance interview phases.
+
 ## Next Steps
 
 1. Review and approve this plan
@@ -456,6 +2240,7 @@ let subagent_config = SubagentConfig {
 3. Test subagent discovery and invocation
 4. Iterate on implementation phases
 5. Measure quality improvements
+6. **Enhancement:** Integrate lifecycle hooks, structured handoff, memory persistence, and remediation loops (see section above)
 
 ## GUI gaps: Interview tab
 
@@ -482,6 +2267,16 @@ The Config view has an **Interview** tab (tab index 6) bound to `InterviewGuiCon
 
 - MiscPlan §7.5: Cleanup/evidence UI lives in Config → Advanced; Interview tab is separate. No overlap.
 - Orchestrator plan Gaps: "Interviewer Enhancements and Config Wiring" — same wiring requirement for interview config.
+
+**Unwired interview config (implementation status)**
+
+As of the final sweep, the following are **not** wired in code:
+
+- **InterviewOrchestratorConfig** does not have: `min_questions_per_phase`, `max_questions_per_phase` (or unlimited), `require_architecture_confirmation`, `vision_provider`. Phase definitions in `phase_manager.rs` use hardcoded `min_questions: 3`, `max_questions: 8`.
+- **app.rs** (where interview config is built for the orchestrator) passes only: `generate_initial_agents_md`, `generate_playwright_requirements`, plus project/platform/output/feature fields. It does **not** pass the four items above.
+- **InterviewGuiConfig** does not have `min_questions_per_phase`; the Interview tab has no "Unlimited" for max.
+
+When implementing, add the fields to `InterviewOrchestratorConfig` and `InterviewGuiConfig`, set them from `gui_config.interview` in app.rs when starting the interview, and use them in phase_manager and research flows. See also **MiscPlan §9.1.18** for the consolidated unwired/GUI sweep.
 
 ## Subagent File Management
 
@@ -567,14 +2362,13 @@ impl SubagentManager {
         Ok(())
     }
     
+    // DRY:FN:platform_agents_dir — Get platform-specific agents directory path
+    // DRY REQUIREMENT: MUST use platform_specs::get_agents_directory_name() — NEVER hardcode platform-specific directory paths
     fn platform_agents_dir(project_dir: &Path, platform: Platform) -> PathBuf {
-        match platform {
-            Platform::Cursor => project_dir.join(".cursor/agents"),
-            Platform::Claude => project_dir.join(".claude/agents"),
-            Platform::Codex => project_dir.join(".codex/agents"),
-            Platform::Gemini => project_dir.join(".gemini/agents"),
-            Platform::Copilot => project_dir.join(".github/agents"),
-        }
+        // DRY: Use platform_specs to get agents directory (DRY:DATA:platform_specs)
+        // DO NOT use match statements like: match platform { Platform::Cursor => ".cursor/agents", ... }
+        let agents_dir_name = platform_specs::get_agents_directory_name(platform);
+        project_dir.join(agents_dir_name)
     }
     
     fn parse_subagent_file(path: &Path) -> Result<Option<SubagentInfo>> {
@@ -820,56 +2614,28 @@ pub struct SubagentInvoker;
 
 impl SubagentInvoker {
     /// Invokes a subagent using platform-specific syntax
+    // DRY:FN:invoke_subagent — Build platform-specific subagent invocation prompt
+    // DRY REQUIREMENT: MUST use platform_specs::get_subagent_invocation_format() — NEVER hardcode platform-specific invocation formats
     pub fn invoke_subagent(
         platform: Platform,
         subagent_name: &str,
         task: &str,
         context: &SubagentContext,
     ) -> String {
-        match platform {
-            Platform::Cursor => {
-                // Cursor: /subagent-name syntax
-                // Note: Currently broken in CLI, works in editor
-                format!("/{} {}", subagent_name, task)
-            }
-            Platform::Codex => {
-                // Codex: Natural language via MCP tools
-                format!(
-                    "Use the {} agent to: {}",
-                    subagent_name, task
-                )
-            }
-            Platform::Claude => {
-                // Claude: Either --agents flag or automatic invocation
-                if context.use_dynamic_agents {
-                    // Would need to build --agents JSON flag
-                    format!("Use the {} subagent to: {}", subagent_name, task)
-                } else {
-                    // Rely on automatic invocation from .claude/agents/
-                    format!(
-                        "Use the {} subagent (available in .claude/agents/) to: {}",
-                        subagent_name, task
-                    )
-                }
-            }
-            Platform::Gemini => {
-                // Gemini: Subagents exposed as tools
-                format!(
-                    "Call the {} tool to: {}",
-                    subagent_name, task
-                )
-            }
-            Platform::Copilot => {
-                // Copilot: /agent, /fleet, or /delegate
-                match context.copilot_invocation_type {
-                    Some(CopilotInvocationType::Fleet) => {
-                        format!("/fleet {}", task)
-                    }
-                    Some(CopilotInvocationType::Delegate) => {
-                        format!("/delegate {}", task)
-                    }
-                    _ => {
-                        format!("/agent {} {}", subagent_name, task)
+        // DRY: Use platform_specs to get subagent invocation format (DRY:DATA:platform_specs)
+        // DO NOT use match statements like: match platform { Platform::Cursor => format!("/{} {}", ...), ... }
+        let invocation_format = platform_specs::get_subagent_invocation_format(platform)
+            .unwrap_or_else(|| {
+                // Fallback: use generic format if platform_specs doesn't have specific format
+                format!("As {}, {}", subagent_name, task)
+            });
+        
+        // Format invocation using platform-specific format from platform_specs
+        invocation_format
+            .replace("{subagent}", subagent_name)
+            .replace("{task}", task)
+            // Handle platform-specific context (e.g., Copilot fleet/delegate)
+            .replace("{context}", &format_context_for_platform(platform, context))
                     }
                 }
             }

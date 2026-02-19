@@ -296,15 +296,15 @@ pub struct PlatformConfig {
 impl PlatformConfig {
     // DRY:FN:new
     /// Creates a new platform configuration.
+    // DRY REQUIREMENT: MUST use platform_specs::cli_binary_names() — NEVER hardcode executable names
     pub fn new(platform: Platform, model: impl Into<String>) -> Self {
         let platform_name = format!("{:?}", platform);
-        let executable = match platform {
-            Platform::Cursor => "agent".to_string(),
-            Platform::Codex => "codex".to_string(),
-            Platform::Claude => "claude".to_string(),
-            Platform::Gemini => "gemini".to_string(),
-            Platform::Copilot => "copilot".to_string(),
-        };
+        // DRY: Use platform_specs to get executable name — DO NOT hardcode match platform statements
+        let executable = crate::platforms::platform_specs::cli_binary_names(platform)
+            .first()
+            .copied()
+            .unwrap_or("unknown")
+            .to_string();
 
         Self {
             platform,

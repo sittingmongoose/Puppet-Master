@@ -165,6 +165,14 @@ pub fn puppet_master_dir(root: &Path) -> PathBuf {
     root.join(".puppet-master")
 }
 
+// DRY:HELPER:settings_file
+/// Get the settings.json file path
+///
+/// Returns the path to the app settings file inside .puppet-master.
+pub fn settings_file(root: &Path) -> PathBuf {
+    puppet_master_dir(root).join("settings.json")
+}
+
 // DRY:HELPER:evidence_dir
 /// Get the evidence directory path
 ///

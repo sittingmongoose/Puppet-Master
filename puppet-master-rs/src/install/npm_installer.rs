@@ -85,6 +85,7 @@ pub async fn npm_install_to_app_dir(pkg: &NpmPackage) -> InstallOutcome {
         .args(["install", "-g", pkg.package_name, "--include=optional"])
         .env("NPM_CONFIG_PREFIX", &prefix_val)
         .env("npm_config_cache", crate::install::app_paths::get_npm_cache_dir())
+        .env("NPM_CONFIG_CACHE", crate::install::app_paths::get_npm_cache_dir())
         .env(
             "PATH",
             crate::platforms::path_utils::build_enhanced_path_for_subprocess(),

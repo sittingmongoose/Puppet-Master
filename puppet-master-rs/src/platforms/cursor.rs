@@ -198,8 +198,10 @@ impl PlatformRunner for CursorRunner {
             }
         }
 
-        // Backward compatibility for older Cursor installs.
-        BaseRunner::is_command_available("cursor-agent").await
+        // DRY REQUIREMENT: Backward compatibility check MUST use platform_specs — DO NOT hardcode "cursor-agent"
+        // Backward compatibility for older Cursor installs (cursor-agent is already in platform_specs::cli_binary_names)
+        // This check is redundant since platform_specs already includes "cursor-agent" as a fallback binary name
+        false
     }
 
     async fn discover_models(&self) -> Result<Vec<String>> {

@@ -7,7 +7,7 @@ use puppet_master::views::doctor::{CheckCategory, DoctorCheckResult};
 use puppet_master::views::evidence::{EvidenceFilter, EvidenceItem, EvidenceItemType};
 use puppet_master::views::history::{SessionInfo, SessionStatus};
 use puppet_master::views::ledger::{EventType, LedgerEntry};
-use puppet_master::utils::{puppet_master_dir, resolve_writable_state_root};
+use puppet_master::utils::{puppet_master_dir, settings_file};
 use puppet_master::views::login::{AuthMethod, AuthStatus};
 use puppet_master::views::memory::MemorySection;
 use puppet_master::views::tiers::{TierDisplayNode, TierNodeType};
@@ -473,11 +473,12 @@ fn login_context_menu_copy_select_and_paste_behaviors_work() {
 
 #[test]
 fn settings_changes_save_and_reload() {
-    // Use same writable root as app (SaveSettings / load_settings) so the test reads where the app writes.
-    let cwd = std::env::current_dir().expect("cwd");
-    let resolved_root = resolve_writable_state_root(&cwd);
-    let data_dir = puppet_master_dir(&resolved_root);
-    let settings_path = data_dir.join("settings.json");
+    // Create app first so we can derive the exact settings path from app.state_root.
+    // This ensures the test reads from the same location that SaveSettings writes to,
+    // regardless of platform-specific path resolution (e.g. SMB mounts on Windows).
+    let mut app = new_test_app();
+    let data_dir = puppet_master_dir(&app.state_root);
+    let settings_path = settings_file(&app.state_root);
     fs::create_dir_all(&data_dir).expect("create .puppet-master");
 
     let backup = fs::read(&settings_path).ok();
@@ -485,8 +486,6 @@ fn settings_changes_save_and_reload() {
         path: settings_path.clone(),
         backup,
     };
-
-    let mut app = new_test_app();
     let _ = app.update(Message::SettingsLogLevelChanged("warn".to_string()));
     let _ = app.update(Message::SettingsAutoScrollToggled(false));
     let _ = app.update(Message::SettingsShowTimestampsToggled(false));
@@ -521,7 +520,12 @@ fn settings_changes_save_and_reload() {
         Some(true)
     );
 
-    let reloaded = new_test_app();
+    // For the reload check, re-use app.state_root so that load_settings reads from the same
+    // location where SaveSettings just wrote. A fresh new_test_app() may resolve a different
+    // state_root if is_directory_writable probes are inconsistent across calls (e.g. Mac SSH).
+    let mut reloaded = new_test_app();
+    reloaded.state_root = app.state_root.clone();
+    reloaded.load_settings();
     assert_eq!(reloaded.theme, AppTheme::Light);
     assert_eq!(reloaded.settings_log_level, "warn");
     assert!(!reloaded.settings_auto_scroll);

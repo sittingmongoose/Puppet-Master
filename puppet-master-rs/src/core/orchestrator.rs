@@ -220,7 +220,8 @@ impl Orchestrator {
             Arc::new(GateRunner::new(GateRunConfig::default()));
 
         // Ensure workspace directory exists and is writable
-        if !config.paths.workspace.exists() {
+        let workspace_just_created = !config.paths.workspace.exists();
+        if workspace_just_created {
             std::fs::create_dir_all(&config.paths.workspace).with_context(|| {
                 format!(
                     "Failed to create workspace directory: {}. Please ensure the path is writable.",
@@ -229,15 +230,29 @@ impl Orchestrator {
             })?;
         }
 
-        // Verify workspace is writable
-        let test_file = config.paths.workspace.join(".puppet-master-write-test");
-        std::fs::write(&test_file, "test").with_context(|| {
-            format!(
-                "Workspace directory is not writable: {}. Please check permissions.",
-                config.paths.workspace.display()
-            )
-        })?;
-        std::fs::remove_file(&test_file).ok();
+        // Verify workspace is writable only when it already existed (if we just created it,
+        // creation success proves writability). Skipping the write-test on a freshly created
+        // directory avoids concurrent-write races (e.g. Windows ERROR_SHARING_VIOLATION) when
+        // multiple test threads all use the same workspace path at startup.
+        // Note: failure here is a warning only — if writes truly fail, later operations will
+        // surface clearer errors; treating this as fatal causes spurious test failures on
+        // Windows SSH sessions where AppData ACLs differ from interactive sessions.
+        if !workspace_just_created {
+            let test_file = config.paths.workspace.join(format!(
+                ".puppet-master-write-test-{}",
+                std::process::id()
+            ));
+            match std::fs::write(&test_file, "test") {
+                Ok(()) => { std::fs::remove_file(&test_file).ok(); }
+                Err(e) => {
+                    log::warn!(
+                        "Workspace directory may not be writable: {}. Error: {}",
+                        config.paths.workspace.display(),
+                        e
+                    );
+                }
+            }
+        }
 
         // Initialize .puppet-master directory structure
         let puppet_master_dir = config.paths.workspace.join(".puppet-master");

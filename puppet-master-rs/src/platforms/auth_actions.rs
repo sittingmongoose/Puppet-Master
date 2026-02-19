@@ -13,8 +13,11 @@ use std::path::{Path, PathBuf};
 use std::process::Stdio;
 use tokio::process::Command;
 
-async fn resolve_platform_program(platform: Platform, command_hint: &str) -> Result<PathBuf> {
-    let _ = command_hint;
+// DRY:FN:resolve_platform_program — Resolve platform CLI program path
+// DRY REQUIREMENT: MUST use platform_specs — command_hint parameter is deprecated, use platform_specs instead
+async fn resolve_platform_program(platform: Platform, _command_hint: &str) -> Result<PathBuf> {
+    // DRY: Use platform_specs to get CLI binary names — DO NOT use command_hint parameter
+    // Implementation note: command_hint is kept for backward compatibility but is ignored
     if let Some(detected) = PlatformDetector::detect_platform(platform).await {
         return Ok(detected.cli_path);
     }
@@ -301,41 +304,75 @@ pub async fn spawn_launch_cli(platform: Platform, project_dir: Option<PathBuf>) 
 // DRY:FN:spawn_logout — Spawns logout for a platform where supported
 /// Spawns logout for a platform where supported.
 pub async fn spawn_logout(target: AuthTarget) -> Result<()> {
-    // Claude logout: remove local credential cache.
+    // Claude logout: use `claude auth logout` which correctly clears macOS Keychain entries.
+    // Deleting ~/.claude/ was insufficient because Claude Code stores the OAuth token in Keychain.
+    // DRY REQUIREMENT: MUST use platform_specs::cli_binary_names() — DO NOT hardcode "claude"
     if matches!(target, AuthTarget::Platform(Platform::Claude)) {
-        let Some(path) = credentials_dir(".claude") else {
+        // DRY: Use platform_specs to get CLI binary name — DO NOT hardcode "claude"
+        let cli_name = platform_specs::cli_binary_names(Platform::Claude)
+            .first()
+            .copied()
+            .unwrap_or("claude");
+        let resolved_program = resolve_platform_program(Platform::Claude, cli_name).await?;
+        let output = Command::new(&resolved_program)
+            .args(["auth", "logout"])
+            .env(
+                "PATH",
+                crate::platforms::path_utils::build_enhanced_path_for_subprocess(),
+            )
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped())
+            .output()
+            .await
+            .map_err(|e| anyhow!("Failed to run claude auth logout: {}", e))?;
+        return if output.status.success() {
+            Ok(())
+        } else {
+            let stderr = String::from_utf8_lossy(&output.stderr);
+            Err(anyhow!("claude auth logout failed: {}", stderr.trim()))
+        };
+    }
+
+    // Gemini logout: delete ~/.gemini/ credentials directory.
+    // Gemini CLI has no logout subcommand; credential deletion is the correct approach.
+    if matches!(target, AuthTarget::Platform(Platform::Gemini)) {
+        let Some(path) = credentials_dir(".gemini") else {
             return Err(anyhow!(
-                "Could not resolve home directory for Claude logout"
+                "Could not resolve home directory for Gemini logout"
             ));
         };
         if !path.exists() {
             return Ok(());
         }
         tokio::fs::remove_dir_all(&path).await.map_err(|e| {
-            anyhow!(
-                "Failed to remove Claude credentials at {}: {}",
-                path.display(),
-                e
-            )
+            anyhow!("Failed to remove Gemini credentials: {}", e)
         })?;
         return Ok(());
     }
 
-    // Gemini has no logout subcommand — inform user to delete ~/.gemini/ credentials
-    if matches!(target, AuthTarget::Platform(Platform::Gemini)) {
-        return Err(anyhow!(
-            "Gemini CLI does not support programmatic logout. To change accounts, run 'gemini' interactively or delete ~/.gemini/ credentials."
-        ));
-    }
-
-    // Copilot logout requires interactive terminal (/logout slash command)
+    // Copilot logout: clear logged_in_users in ~/.copilot/config.json.
+    // The old approach of opening an interactive terminal for /logout was unreliable.
     if matches!(target, AuthTarget::Platform(Platform::Copilot)) {
-        let program_hint = platform_specs::cli_binary_names(Platform::Copilot)
-            .first()
-            .copied()
-            .unwrap_or("copilot");
-        let resolved_program = resolve_platform_program(Platform::Copilot, program_hint).await?;
-        spawn_terminal_with_command(&resolved_program, &[], None)?;
+        let Some(dir) = credentials_dir(".copilot") else {
+            return Err(anyhow!(
+                "Could not resolve home directory for Copilot logout"
+            ));
+        };
+        let config_path = dir.join("config.json");
+        if config_path.exists() {
+            if let Ok(contents) = std::fs::read_to_string(&config_path) {
+                if let Ok(mut json) =
+                    serde_json::from_str::<serde_json::Value>(&contents)
+                {
+                    json["logged_in_users"] = serde_json::json!([]);
+                    json["last_logged_in_user"] = serde_json::Value::Null;
+                    let updated = serde_json::to_string_pretty(&json)
+                        .map_err(|e| anyhow!("JSON error: {}", e))?;
+                    std::fs::write(&config_path, updated)
+                        .map_err(|e| anyhow!("Failed to write Copilot config: {}", e))?;
+                }
+            }
+        }
         return Ok(());
     }
 
@@ -364,26 +401,56 @@ pub async fn spawn_logout(target: AuthTarget) -> Result<()> {
         args
     );
 
-    // gh logout can require interactive confirmation.
+    // GitHub logout: pre-check auth status first.
+    // `gh auth logout` exits 1 with "not logged in" when gh is not authenticated.
+    // Treat "already not logged in" as success to avoid spurious error messages.
     if matches!(target, AuthTarget::GitHub) {
+        let auth_check = Command::new(&resolved_program)
+            .args(["auth", "status"])
+            .env(
+                "PATH",
+                crate::platforms::path_utils::build_enhanced_path_for_subprocess(),
+            )
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped())
+            .output()
+            .await;
+
+        let already_logged_out = match &auth_check {
+            Ok(out) => {
+                let combined = format!(
+                    "{}{}",
+                    String::from_utf8_lossy(&out.stdout),
+                    String::from_utf8_lossy(&out.stderr)
+                )
+                .to_lowercase();
+                combined.contains("not logged in") || !out.status.success()
+            }
+            Err(_) => false,
+        };
+
+        if already_logged_out {
+            return Ok(());
+        }
+
         let status = Command::new(&resolved_program)
-            .args(&args)
+            .args(["auth", "logout", "--hostname", "github.com"])
             .stdin(Stdio::inherit())
             .stdout(Stdio::inherit())
             .stderr(Stdio::inherit())
             .status()
             .await
-            .map_err(|e| anyhow!("Failed to run {} logout: {}", resolved_program.display(), e))?;
+            .map_err(|e| anyhow!("Failed to run gh logout: {}", e))?;
 
-        if status.success() {
-            return Ok(());
-        }
-
-        return Err(anyhow!(
-            "{} logout failed with exit code {:?}",
-            resolved_program.display(),
-            status.code()
-        ));
+        return if status.success() {
+            Ok(())
+        } else {
+            Err(anyhow!(
+                "{} logout failed with exit code {:?}",
+                resolved_program.display(),
+                status.code()
+            ))
+        };
     }
 
     let output = Command::new(&resolved_program)
