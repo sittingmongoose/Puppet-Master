@@ -173,12 +173,8 @@ impl PlatformRunner for CodexRunner {
             }
         }
 
-        // Fallback to known Codex models
-        warn!("Config-based model discovery failed, using known Codex models");
-        Ok(platform_specs::fallback_model_ids(Platform::Codex)
-            .into_iter()
-            .map(str::to_string)
-            .collect())
+        warn!("Model discovery returned no models for Codex");
+        Ok(Vec::new())
     }
 
     fn build_args(&self, request: &ExecutionRequest) -> Vec<String> {

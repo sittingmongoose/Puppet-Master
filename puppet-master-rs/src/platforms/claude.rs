@@ -195,12 +195,8 @@ impl PlatformRunner for ClaudeRunner {
             }
         }
 
-        // Fallback to known Claude models
-        warn!("CLI model discovery failed, using known Claude models");
-        Ok(platform_specs::fallback_model_ids(Platform::Claude)
-            .into_iter()
-            .map(str::to_string)
-            .collect())
+        warn!("CLI model discovery returned no models for Claude");
+        Ok(Vec::new())
     }
 
     fn build_args(&self, request: &ExecutionRequest) -> Vec<String> {
@@ -338,8 +334,7 @@ mod tests {
         match result {
             Ok(models) => {
                 assert!(models.is_ok());
-                let model_list = models.unwrap();
-                assert!(!model_list.is_empty());
+                // Dynamic discovery may return empty list if CLI not installed; that is correct.
             }
             Err(_) => {} // Timeout is acceptable in test environment
         }

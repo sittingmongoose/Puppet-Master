@@ -2578,12 +2578,6 @@ impl App {
                             },
                              move |(p, res)| match res {
                                 Ok(cached) => {
-                                    // Fallback models are valid data — always return Ok, log info if fallback
-                                    if cached.source
-                                        == crate::platforms::model_catalog::ModelSource::Fallback
-                                    {
-                                        log::info!("Using fallback models for {:?} (no CLI/SDK discovery available)", p);
-                                    }
                                     Message::RefreshModelsComplete(p, Ok(cached.models))
                                 }
                                 Err(e) => Message::RefreshModelsComplete(
@@ -2609,15 +2603,6 @@ impl App {
                     },
                     move |res| match res {
                         Ok(cached) => {
-                            // Fallback models are valid data — always return Ok, log info if fallback
-                            if cached.source
-                                == crate::platforms::model_catalog::ModelSource::Fallback
-                            {
-                                log::info!(
-                                    "Using fallback models for {:?} (no CLI/SDK discovery available)",
-                                    platform
-                                );
-                            }
                             Message::RefreshModelsComplete(platform, Ok(cached.models))
                         }
                         Err(e) => Message::RefreshModelsComplete(

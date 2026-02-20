@@ -170,12 +170,8 @@ impl PlatformRunner for GeminiRunner {
             }
         }
 
-        // Fallback to known Gemini models
-        warn!("CLI model discovery failed, using known Gemini models");
-        Ok(platform_specs::fallback_model_ids(Platform::Gemini)
-            .into_iter()
-            .map(str::to_string)
-            .collect())
+        warn!("CLI model discovery returned no models for Gemini");
+        Ok(Vec::new())
     }
 
     fn build_args(&self, request: &ExecutionRequest) -> Vec<String> {

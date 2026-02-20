@@ -42,8 +42,6 @@ pub struct PlatformSpec {
     pub install_methods: &'static [InstallMethod],
     pub default_install_paths: &'static [&'static str],
     pub auth: AuthSpec,
-    /// Fallback models — used when dynamic discovery fails or cache is empty.
-    pub fallback_models: &'static [ModelSpec],
     /// How to fetch models dynamically from this platform.
     pub model_discovery: ModelDiscoverySpec,
     pub plan_mode: Option<PlanModeSpec>,
@@ -123,16 +121,6 @@ pub struct SdkSpec {
     pub communication: &'static str,
     pub status: &'static str,
     pub note: &'static str,
-}
-
-/// A fallback model definition (used when dynamic discovery is unavailable).
-// DRY:DATA:ModelSpec — Model specification entry
-pub struct ModelSpec {
-    pub id: &'static str,
-    pub display_name: &'static str,
-    pub supports_effort: bool,
-    pub supports_vision: bool,
-    pub is_default: bool,
 }
 
 /// Plan mode specification.
@@ -259,31 +247,8 @@ static CLAUDE_SPEC: PlatformSpec = PlatformSpec {
         uses_browser_auth: true,
         credentials_path: Some("~/.claude"),
     },
-    fallback_models: &[
-        ModelSpec {
-            id: "sonnet",
-            display_name: "Claude Sonnet 4.5",
-            supports_effort: true,
-            supports_vision: true,
-            is_default: true,
-        },
-        ModelSpec {
-            id: "opus",
-            display_name: "Claude Opus 4.6",
-            supports_effort: true,
-            supports_vision: true,
-            is_default: false,
-        },
-        ModelSpec {
-            id: "haiku",
-            display_name: "Claude Haiku 4.5",
-            supports_effort: true,
-            supports_vision: true,
-            is_default: false,
-        },
-    ],
     model_discovery: ModelDiscoverySpec {
-        cli_command: None, // Claude model list is relatively stable — use fallback
+        cli_command: None,
         cli_args: &[],
         sdk_available: false,
         cache_ttl_minutes: 1440, // 24 hours — models are stable
@@ -397,36 +362,6 @@ static CURSOR_SPEC: PlatformSpec = PlatformSpec {
         uses_browser_auth: true,
         credentials_path: None,
     },
-    fallback_models: &[
-        ModelSpec {
-            id: "auto",
-            display_name: "Auto (recommended)",
-            supports_effort: false,
-            supports_vision: true,
-            is_default: true,
-        },
-        ModelSpec {
-            id: "sonnet-4.5-thinking",
-            display_name: "Sonnet 4.5 Thinking",
-            supports_effort: false,
-            supports_vision: true,
-            is_default: false,
-        },
-        ModelSpec {
-            id: "sonnet-4.5",
-            display_name: "Sonnet 4.5",
-            supports_effort: false,
-            supports_vision: true,
-            is_default: false,
-        },
-        ModelSpec {
-            id: "gpt-4.1",
-            display_name: "GPT-4.1",
-            supports_effort: false,
-            supports_vision: true,
-            is_default: false,
-        },
-    ],
     model_discovery: ModelDiscoverySpec {
         cli_command: Some("agent"),
         cli_args: &["models"],
@@ -498,13 +433,6 @@ static CODEX_SPEC: PlatformSpec = PlatformSpec {
         uses_browser_auth: true,
         credentials_path: None,
     },
-    fallback_models: &[ModelSpec {
-        id: "gpt-5.3-codex",
-        display_name: "GPT-5.3 Codex",
-        supports_effort: true,
-        supports_vision: true,
-        is_default: true,
-    }],
     model_discovery: ModelDiscoverySpec {
         cli_command: None, // Use SDK for discovery
         cli_args: &[],
@@ -621,28 +549,12 @@ static GEMINI_SPEC: PlatformSpec = PlatformSpec {
         uses_browser_auth: true,
         credentials_path: Some("~/.gemini"),
     },
-    fallback_models: &[
-        ModelSpec {
-            id: "gemini-2.5-pro",
-            display_name: "Gemini 2.5 Pro",
-            supports_effort: false,
-            supports_vision: true,
-            is_default: true,
-        },
-        ModelSpec {
-            id: "gemini-2.5-flash",
-            display_name: "Gemini 2.5 Flash",
-            supports_effort: false,
-            supports_vision: true,
-            is_default: false,
-        },
-    ],
     model_discovery: ModelDiscoverySpec {
         cli_command: None,
         cli_args: &[],
         sdk_available: false,
         cache_ttl_minutes: 1440,
-        note: "Gemini models are relatively stable; aliases auto/pro/flash available",
+        note: "Gemini does not expose a model list command",
     },
     plan_mode: Some(PlanModeSpec {
         cli_flag: "--approval-mode",
@@ -713,29 +625,6 @@ static COPILOT_SPEC: PlatformSpec = PlatformSpec {
         uses_browser_auth: true,
         credentials_path: None,
     },
-    fallback_models: &[
-        ModelSpec {
-            id: "claude-sonnet-4.5",
-            display_name: "Claude Sonnet 4.5",
-            supports_effort: false,
-            supports_vision: true,
-            is_default: true,
-        },
-        ModelSpec {
-            id: "claude-sonnet-4",
-            display_name: "Claude Sonnet 4",
-            supports_effort: false,
-            supports_vision: true,
-            is_default: false,
-        },
-        ModelSpec {
-            id: "gpt-5",
-            display_name: "GPT-5",
-            supports_effort: true,
-            supports_vision: true,
-            is_default: false,
-        },
-    ],
     model_discovery: ModelDiscoverySpec {
         cli_command: None, // Use SDK for discovery
         cli_args: &[],
@@ -912,26 +801,6 @@ pub fn cli_binary_names(platform: Platform) -> &'static [&'static str] {
 /// Get default install paths for a platform.
 pub fn default_install_paths(platform: Platform) -> &'static [&'static str] {
     get_spec(platform).default_install_paths
-}
-
-// DRY:FN:fallback_model_ids — Get fallback model IDs when dynamic discovery fails
-/// Get fallback model IDs (used when dynamic discovery fails).
-pub fn fallback_model_ids(platform: Platform) -> Vec<&'static str> {
-    get_spec(platform)
-        .fallback_models
-        .iter()
-        .map(|m| m.id)
-        .collect()
-}
-
-// DRY:FN:default_model_for — Get the default model for a platform
-/// Get the default model for a platform.
-pub fn default_model_for(platform: Platform) -> Option<&'static str> {
-    get_spec(platform)
-        .fallback_models
-        .iter()
-        .find(|m| m.is_default)
-        .map(|m| m.id)
 }
 
 // DRY:FN:image_capable_platforms — Get all platforms that support images
@@ -1261,29 +1130,6 @@ mod tests {
             assert_eq!(spec.platform, *platform);
             assert!(!spec.display_name.is_empty());
             assert!(!spec.cli_binary_names.is_empty());
-        }
-    }
-
-    #[test]
-    fn test_fallback_models_not_empty() {
-        for platform in Platform::all() {
-            let models = fallback_model_ids(*platform);
-            assert!(
-                !models.is_empty(),
-                "{:?} should have fallback models",
-                platform
-            );
-        }
-    }
-
-    #[test]
-    fn test_each_platform_has_default_model() {
-        for platform in Platform::all() {
-            assert!(
-                default_model_for(*platform).is_some(),
-                "{:?} should have a default model",
-                platform
-            );
         }
     }
 

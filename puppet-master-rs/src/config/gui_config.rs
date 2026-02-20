@@ -827,18 +827,14 @@ pub fn get_git_info() -> GitInfo {
 }
 
 // DRY:FN:build_model_map — Builds HashMap<platform_name, Vec<model_id>> from platform_specs fallback data
-/// Build the initial model map for all platforms using platform_specs fallback data.
+/// Build the initial (empty) model map for all platforms.
+/// Models are populated dynamically via model discovery at runtime.
 pub fn build_model_map() -> HashMap<String, Vec<String>> {
-    use crate::platforms::platform_specs;
     use crate::types::Platform;
 
     let mut map = HashMap::new();
     for platform in Platform::all() {
-        let models: Vec<String> = platform_specs::fallback_model_ids(*platform)
-            .into_iter()
-            .map(|s| s.to_string())
-            .collect();
-        map.insert(platform.to_string(), models);
+        map.insert(platform.to_string(), Vec::new());
     }
     map
 }

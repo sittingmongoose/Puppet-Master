@@ -193,9 +193,7 @@ fn default_platforms() -> HashMap<String, PlatformConfig> {
         |platform: Platform, enabled: bool, priority: u32, max_tokens: u32, temperature: f32| {
             PlatformConfig {
                 platform,
-                model: platform_specs::default_model_for(platform)
-                    .unwrap_or_else(|| platform.default_cli_name())
-                    .to_string(),
+                model: String::new(),
                 name: platform_specs::display_name_for(platform).to_string(),
                 executable: platform_specs::cli_binary_names(platform)
                     .first()
@@ -241,16 +239,10 @@ fn default_platforms() -> HashMap<String, PlatformConfig> {
 }
 
 fn default_tiers() -> TierConfigs {
-    let default_model = |platform: Platform| {
-        platform_specs::default_model_for(platform)
-            .unwrap_or_else(|| platform.default_cli_name())
-            .to_string()
-    };
-
     TierConfigs {
         phase: TierConfig {
             platform: Platform::Claude,
-            model: default_model(Platform::Claude),
+            model: String::new(),
             model_level: ModelLevel::Level2,
             reasoning_effort: None,
             plan_mode: false,
@@ -264,7 +256,7 @@ fn default_tiers() -> TierConfigs {
         },
         task: TierConfig {
             platform: Platform::Cursor,
-            model: default_model(Platform::Cursor),
+            model: String::new(),
             model_level: ModelLevel::Level2,
             reasoning_effort: None,
             plan_mode: false,
@@ -278,7 +270,7 @@ fn default_tiers() -> TierConfigs {
         },
         subtask: TierConfig {
             platform: Platform::Cursor,
-            model: default_model(Platform::Cursor),
+            model: String::new(),
             model_level: ModelLevel::Level2,
             reasoning_effort: None,
             plan_mode: false,
@@ -292,7 +284,7 @@ fn default_tiers() -> TierConfigs {
         },
         iteration: TierConfig {
             platform: Platform::Cursor,
-            model: default_model(Platform::Cursor),
+            model: String::new(),
             model_level: ModelLevel::Level1,
             reasoning_effort: None,
             plan_mode: false,

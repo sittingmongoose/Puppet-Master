@@ -51,7 +51,6 @@ use crate::platforms::{BaseRunner, PlatformRunner, platform_specs};
 use crate::types::{ExecutionRequest, ExecutionResult, Platform};
 use anyhow::Result;
 use async_trait::async_trait;
-use log::warn;
 use std::sync::Arc;
 
 // DRY:DATA:CopilotRunner — GitHub Copilot CLI runner
@@ -141,13 +140,8 @@ impl PlatformRunner for CopilotRunner {
 
     async fn discover_models(&self) -> Result<Vec<String>> {
         // Copilot does not expose model selection in programmatic mode.
-        // Default model is Claude Sonnet 4.5 (GitHub reserves right to change).
         // Model switching only available via /model slash command in interactive mode.
-        warn!("GitHub Copilot does not support model discovery in programmatic mode");
-        Ok(platform_specs::fallback_model_ids(Platform::Copilot)
-            .into_iter()
-            .map(str::to_string)
-            .collect())
+        Ok(Vec::new())
     }
 
     fn build_args(&self, request: &ExecutionRequest) -> Vec<String> {
@@ -279,8 +273,7 @@ mod tests {
         match result {
             Ok(models) => {
                 assert!(models.is_ok());
-                let model_list = models.unwrap();
-                assert!(!model_list.is_empty());
+                // Dynamic discovery returns empty for Copilot (no programmatic model list).
             }
             Err(_) => {} // Timeout is acceptable in test environment
         }

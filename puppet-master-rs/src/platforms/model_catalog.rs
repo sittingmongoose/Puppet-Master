@@ -175,32 +175,10 @@ impl ModelCatalogManager {
         manager
     }
 
-    // DRY:FN:init_catalog_from_specs — Build static catalog entries directly from platform_specs fallback models.
+    // DRY:FN:init_catalog_from_specs — Initialize an empty catalog for a platform.
+    // Models are discovered dynamically at runtime; no static entries.
     fn init_catalog_from_specs(&mut self, platform: Platform) {
-        let spec = platform_specs::get_spec(platform);
-        let mut catalog = ModelCatalog::new(platform);
-
-        for fallback_model in spec.fallback_models {
-            catalog.add_model(ModelInfo {
-                id: fallback_model.id.to_string(),
-                name: fallback_model.display_name.to_string(),
-                provider: infer_provider(platform, fallback_model.id),
-                context_window: fallback_context_window(platform),
-                max_output: fallback_max_output(platform),
-                supports_vision: fallback_model.supports_vision,
-                supports_tools: true,
-                supports_streaming: true,
-                tier_required: None,
-                notes: Some(format!("Fallback model from {}", spec.display_name)),
-            });
-        }
-
-        if let Some(default_model) = platform_specs::default_model_for(platform) {
-            catalog.set_default(default_model);
-        } else if let Some(first_model) = catalog.models.first() {
-            catalog.set_default(first_model.id.clone());
-        }
-
+        let catalog = ModelCatalog::new(platform);
         self.catalogs.insert(platform, catalog);
     }
 
@@ -358,8 +336,6 @@ pub fn get_default_model(platform: Platform) -> Option<&'static ModelInfo> {
 pub enum ModelSource {
     /// Freshly fetched from the platform CLI/SDK.
     Dynamic,
-    /// Loaded from platform_specs fallback (CLI unavailable).
-    Fallback,
     /// Loaded from persistent disk cache.
     Cached,
     /// Fetched via SDK bridge (Node.js SDK).
@@ -377,25 +353,13 @@ pub struct CachedModelList {
 }
 
 impl CachedModelList {
-    // DRY:FN:from_fallback
-    /// Create a fallback list from platform_specs.
-    pub fn from_fallback(platform: Platform) -> Self {
-        let spec = platform_specs::get_spec(platform);
-        let models: Vec<String> = spec
-            .fallback_models
-            .iter()
-            .map(|m| m.id.to_string())
-            .collect();
-        let display_names: Vec<String> = spec
-            .fallback_models
-            .iter()
-            .map(|m| m.display_name.to_string())
-            .collect();
+    /// Create an empty model list (no models discovered).
+    pub fn empty() -> Self {
         Self {
-            models,
-            display_names,
-            last_refreshed: None,
-            source: ModelSource::Fallback,
+            models: Vec::new(),
+            display_names: Vec::new(),
+            last_refreshed: Some(Utc::now()),
+            source: ModelSource::Dynamic,
         }
     }
     // DRY:FN:is_stale
@@ -577,9 +541,9 @@ fn refresh_models_cli_blocking(platform: Platform) -> CachedModelList {
     let spec = platform_specs::get_spec(platform);
     let discovery = &spec.model_discovery;
 
-    // If no CLI discovery command, return fallback.
+    // If no CLI discovery command, return empty.
     let Some(cli_cmd) = discovery.cli_command else {
-        return CachedModelList::from_fallback(platform);
+        return CachedModelList::empty();
     };
 
     // Resolve the CLI command using the DRY method (checks app-local bin first, then PATH).
@@ -590,12 +554,12 @@ fn refresh_models_cli_blocking(platform: Platform) -> CachedModelList {
 
     if !cli_exists {
         log::warn!(
-            "CLI binary '{}' (resolved to '{}') not found for {:?} model discovery, using fallback",
+            "CLI binary '{}' (resolved to '{}') not found for {:?} model discovery",
             cli_cmd,
             resolved,
             platform
         );
-        return CachedModelList::from_fallback(platform);
+        return CachedModelList::empty();
     }
 
     // Run the discovery command using the resolved path.
@@ -616,8 +580,8 @@ fn refresh_models_cli_blocking(platform: Platform) -> CachedModelList {
                 stdout.lines().filter_map(parse_model_line).collect();
 
             if parsed.is_empty() {
-                log::warn!("Empty model list from {:?} CLI, using fallback", platform);
-                return CachedModelList::from_fallback(platform);
+                log::warn!("Empty model list from {:?} CLI", platform);
+                return CachedModelList::empty();
             }
 
             let models: Vec<String> = parsed.iter().map(|(id, _)| id.clone()).collect();
@@ -638,18 +602,18 @@ fn refresh_models_cli_blocking(platform: Platform) -> CachedModelList {
                 platform,
                 stderr.trim()
             );
-            CachedModelList::from_fallback(platform)
+            CachedModelList::empty()
         }
         Err(e) => {
             log::warn!("Failed to run model discovery for {:?}: {}", platform, e);
-            CachedModelList::from_fallback(platform)
+            CachedModelList::empty()
         }
     }
 }
 // DRY:FN:refresh_models_with_sdk_fallback
 
 /// DRY:FN:refresh_models_via_sdk — Attempt model discovery via Node.js SDK bridge.
-/// Falls back to CLI discovery or platform_specs fallback if SDK is unavailable.
+/// Falls back to CLI discovery if SDK is unavailable; returns empty list if neither works.
 pub fn refresh_models_with_sdk_fallback(platform: Platform) -> CachedModelList {
     // Only try SDK for platforms that have one
     if !platform_specs::has_sdk(platform) {
@@ -659,7 +623,7 @@ pub fn refresh_models_with_sdk_fallback(platform: Platform) -> CachedModelList {
     // Try SDK bridge (requires Node.js)
     let Some(bridge) = super::sdk_bridge::SdkBridge::new() else {
         log::info!(
-            "Node.js not available for {:?} SDK, falling back to CLI",
+            "Node.js not available for {:?} SDK, trying CLI",
             platform
         );
         return refresh_models_cli_blocking(platform);
@@ -690,24 +654,19 @@ pub fn refresh_models_with_sdk_fallback(platform: Platform) -> CachedModelList {
             }
         }
         _ => {
-            log::info!("SDK returned empty for {:?}, falling back to CLI", platform);
+            log::info!("SDK returned empty for {:?}, trying CLI", platform);
             refresh_models_cli_blocking(platform)
         }
     }
 }
 // DRY:FN:build_model_map_from_specs
 
-/// Build the initial model map for all platforms using platform_specs fallback data.
-/// Replaces the old hardcoded `gui_config::build_model_map()`.
+/// Build an empty initial model map for all platforms.
+/// Models are populated dynamically via refresh_models_blocking.
 pub fn build_model_map_from_specs() -> HashMap<String, Vec<String>> {
     let mut map = HashMap::new();
     for platform in Platform::all() {
-        let key = platform_to_str(*platform).to_string();
-        let models: Vec<String> = platform_specs::fallback_model_ids(*platform)
-            .into_iter()
-            .map(|s| s.to_string())
-            .collect();
-        map.insert(key, models);
+        map.insert(platform_to_str(*platform).to_string(), Vec::new());
     }
     map
 }
@@ -745,187 +704,110 @@ mod tests {
 
     #[test]
     fn test_cursor_models() {
+        // Catalogs start empty — models are discovered dynamically at runtime.
         let manager = ModelCatalogManager::new();
         let models = manager.get_models(Platform::Cursor);
-
-        assert!(!models.is_empty());
-        assert!(models.iter().any(|m| m.id == "auto"));
-        assert!(models.iter().any(|m| m.id == "sonnet-4.5-thinking"));
-        assert!(models.iter().any(|m| m.id == "gpt-4.1"));
+        assert!(models.is_empty());
     }
 
     #[test]
     fn test_codex_models() {
         let manager = ModelCatalogManager::new();
         let models = manager.get_models(Platform::Codex);
-
-        assert!(!models.is_empty());
-        assert!(models.iter().any(|m| m.id == "gpt-5.3-codex"));
+        assert!(models.is_empty());
     }
 
     #[test]
     fn test_claude_models() {
         let manager = ModelCatalogManager::new();
         let models = manager.get_models(Platform::Claude);
-
-        assert!(!models.is_empty());
-        assert!(models.iter().any(|m| m.id == "sonnet"));
-        assert!(models.iter().any(|m| m.id == "opus"));
-        assert!(models.iter().any(|m| m.id == "haiku"));
+        assert!(models.is_empty());
     }
 
     #[test]
     fn test_gemini_models() {
         let manager = ModelCatalogManager::new();
         let models = manager.get_models(Platform::Gemini);
-
-        assert!(!models.is_empty());
-        assert!(models.iter().any(|m| m.id == "gemini-2.5-pro"));
-        assert!(models.iter().any(|m| m.id == "gemini-2.5-flash"));
-
-        // Check 1M context window
-        let gemini_pro = models.iter().find(|m| m.id == "gemini-2.5-pro").unwrap();
-        assert_eq!(gemini_pro.context_window, 1_000_000);
+        assert!(models.is_empty());
     }
 
     #[test]
     fn test_copilot_models() {
         let manager = ModelCatalogManager::new();
         let models = manager.get_models(Platform::Copilot);
-
-        assert!(!models.is_empty());
-        assert!(models.iter().any(|m| m.id == "claude-sonnet-4.5"));
-        assert!(models.iter().any(|m| m.id == "gpt-5"));
+        assert!(models.is_empty());
     }
 
     #[test]
     fn test_get_model() {
+        // No static models — get_model returns None for any ID.
         let manager = ModelCatalogManager::new();
-
-        let model = manager
-            .get_model(Platform::Cursor, "sonnet-4.5-thinking")
-            .unwrap();
-        assert_eq!(model.name, "Sonnet 4.5 Thinking");
-        assert_eq!(model.provider, ModelProvider::Anthropic);
-        assert!(model.supports_vision);
-        assert!(model.supports_tools);
+        let model = manager.get_model(Platform::Cursor, "auto");
+        assert!(model.is_none());
     }
 
     #[test]
     fn test_default_models() {
+        // No static defaults — get_default_model returns None until runtime discovery.
         let manager = ModelCatalogManager::new();
-
-        // Cursor default
-        let cursor_default = manager.get_default_model(Platform::Cursor).unwrap();
-        assert_eq!(
-            cursor_default.id,
-            platform_specs::default_model_for(Platform::Cursor).unwrap()
-        );
-
-        // Codex default
-        let codex_default = manager.get_default_model(Platform::Codex).unwrap();
-        assert_eq!(
-            codex_default.id,
-            platform_specs::default_model_for(Platform::Codex).unwrap()
-        );
-
-        // Claude default
-        let claude_default = manager.get_default_model(Platform::Claude).unwrap();
-        assert_eq!(
-            claude_default.id,
-            platform_specs::default_model_for(Platform::Claude).unwrap()
-        );
-
-        // Gemini default
-        let gemini_default = manager.get_default_model(Platform::Gemini).unwrap();
-        assert_eq!(
-            gemini_default.id,
-            platform_specs::default_model_for(Platform::Gemini).unwrap()
-        );
-
-        // Copilot default
-        let copilot_default = manager.get_default_model(Platform::Copilot).unwrap();
-        assert_eq!(
-            copilot_default.id,
-            platform_specs::default_model_for(Platform::Copilot).unwrap()
-        );
+        for platform in Platform::all() {
+            assert!(manager.get_default_model(*platform).is_none());
+        }
     }
 
     #[test]
     fn test_vision_models() {
+        // Empty catalog has no vision models.
         let manager = ModelCatalogManager::new();
         let catalog = manager.get_catalog(Platform::Cursor).unwrap();
-        let vision_models = catalog.get_vision_models();
-
-        assert!(!vision_models.is_empty());
-        for model in vision_models {
-            assert!(model.supports_vision);
-        }
+        assert!(catalog.get_vision_models().is_empty());
     }
 
     #[test]
     fn test_tool_models() {
+        // Empty catalog has no tool models.
         let manager = ModelCatalogManager::new();
         let catalog = manager.get_catalog(Platform::Codex).unwrap();
-        let tool_models = catalog.get_tool_models();
-
-        assert!(!tool_models.is_empty());
-        for model in tool_models {
-            assert!(model.supports_tools);
-        }
+        assert!(catalog.get_tool_models().is_empty());
     }
 
     #[test]
     fn test_get_by_provider() {
+        // Empty catalog returns empty provider lists.
         let manager = ModelCatalogManager::new();
         let catalog = manager.get_catalog(Platform::Cursor).unwrap();
-
-        let anthropic_models = catalog.get_by_provider(ModelProvider::Anthropic);
-        assert!(!anthropic_models.is_empty());
-        for model in anthropic_models {
-            assert_eq!(model.provider, ModelProvider::Anthropic);
-        }
-
-        let openai_models = catalog.get_by_provider(ModelProvider::OpenAI);
-        assert!(!openai_models.is_empty());
-        for model in openai_models {
-            assert_eq!(model.provider, ModelProvider::OpenAI);
-        }
+        assert!(catalog.get_by_provider(ModelProvider::Anthropic).is_empty());
+        assert!(catalog.get_by_provider(ModelProvider::OpenAI).is_empty());
     }
 
     #[test]
     fn test_global_catalog() {
+        // Global catalog starts empty — populated at runtime.
         let models = get_models(Platform::Cursor);
-        assert!(!models.is_empty());
+        assert!(models.is_empty());
 
         let model = get_model(Platform::Cursor, "auto");
-        assert!(model.is_some());
+        assert!(model.is_none());
 
         let default = get_default_model(Platform::Claude);
-        assert!(default.is_some());
+        assert!(default.is_none());
     }
 
     #[test]
     fn test_refresh_with_sdk_fallback_non_sdk_platform() {
-        // Claude doesn't have SDK, should fall back to CLI/specs
+        // Claude has no SDK and no CLI model discovery — returns empty list.
         let result = refresh_models_with_sdk_fallback(Platform::Claude);
-        assert!(!result.models.is_empty());
-        // Should be Fallback or Dynamic, NOT Sdk
-        assert!(matches!(
-            result.source,
-            ModelSource::Fallback | ModelSource::Dynamic
-        ));
+        assert!(result.models.is_empty());
+        assert!(matches!(result.source, ModelSource::Dynamic));
     }
 
     #[test]
     fn test_refresh_models_blocking_sdk_platform_returns_models() {
-        // SDK-capable platforms should still return models even when SDK is unavailable,
-        // because refresh_models_blocking now routes through SDK fallback.
+        // SDK-capable platforms with no SDK/CLI available return empty list.
         let result = refresh_models_blocking(Platform::Codex);
-        assert!(!result.models.is_empty());
         assert!(matches!(
             result.source,
-            ModelSource::Sdk | ModelSource::Dynamic | ModelSource::Fallback
+            ModelSource::Sdk | ModelSource::Dynamic | ModelSource::Cached
         ));
     }
 

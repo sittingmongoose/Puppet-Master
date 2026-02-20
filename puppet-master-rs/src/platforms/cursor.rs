@@ -212,12 +212,8 @@ impl PlatformRunner for CursorRunner {
             }
         }
 
-        // Fallback to known models
-        warn!("CLI model discovery failed, using known Cursor models");
-        Ok(platform_specs::fallback_model_ids(Platform::Cursor)
-            .into_iter()
-            .map(str::to_string)
-            .collect())
+        warn!("CLI model discovery returned no models for Cursor");
+        Ok(Vec::new())
     }
 
     fn build_args(&self, request: &ExecutionRequest) -> Vec<String> {
