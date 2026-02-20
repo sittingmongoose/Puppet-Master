@@ -482,6 +482,96 @@ pub fn refresh_models_blocking(platform: Platform) -> CachedModelList {
     refresh_models_cli_blocking(platform)
 }
 
+/// Strip ANSI escape codes from a string.
+///
+/// Handles sequences of the form `ESC [ <params> <letter>` as well as plain `ESC` chars.
+fn strip_ansi_codes(s: &str) -> String {
+    let mut result = String::with_capacity(s.len());
+    let mut chars = s.chars().peekable();
+    while let Some(c) = chars.next() {
+        if c == '\x1b' {
+            if chars.peek() == Some(&'[') {
+                chars.next(); // consume '['
+                // Skip parameter bytes until a final letter (A-Za-z)
+                while let Some(&next) = chars.peek() {
+                    chars.next();
+                    if next.is_ascii_alphabetic() {
+                        break;
+                    }
+                }
+            }
+            // bare ESC without '[' — just skip it
+        } else {
+            result.push(c);
+        }
+    }
+    result
+}
+
+/// Parse a single line from a CLI model listing into `(model_id, display_name)`.
+///
+/// Handles the Cursor `agent models` format:
+/// ```text
+/// auto - Auto
+/// sonnet-4.5-thinking - Claude Sonnet 4.5 Thinking  (current, default)
+/// ```
+///
+/// Returns `None` for noise lines (ANSI headers, tips, error messages, blank lines).
+fn parse_model_line(line: &str) -> Option<(String, String)> {
+    let clean = strip_ansi_codes(line.trim());
+    if clean.is_empty() {
+        return None;
+    }
+
+    // Skip known noise patterns
+    let lower = clean.to_lowercase();
+    if lower.starts_with("tip:")
+        || lower.starts_with("available models")
+        || lower.starts_with("loading models")
+        || lower.starts_with("no models")
+        || lower.starts_with("error:")
+    {
+        return None;
+    }
+
+    // Try "id - DisplayName" format (Cursor agent models)
+    if let Some(sep) = clean.find(" - ") {
+        let id = clean[..sep].trim();
+        let display_raw = clean[sep + 3..].trim();
+        // Strip "(current, default)" suffix from display name
+        let display = display_raw
+            .trim_end_matches("  (current, default)")
+            .trim_end_matches(" (current, default)")
+            .trim()
+            .to_string();
+        // Validate ID looks like a model identifier (alphanumeric + - _ .)
+        if !id.is_empty()
+            && id
+                .chars()
+                .all(|c| c.is_alphanumeric() || c == '-' || c == '_' || c == '.')
+        {
+            let display = if display.is_empty() {
+                id.to_string()
+            } else {
+                display
+            };
+            return Some((id.to_string(), display));
+        }
+    }
+
+    // Fallback: treat as a raw model ID if it looks like one (no spaces, reasonable length)
+    if !clean.contains(' ')
+        && clean.len() < 120
+        && clean
+            .chars()
+            .all(|c| c.is_alphanumeric() || c == '-' || c == '_' || c == '.' || c == '/')
+    {
+        return Some((clean.clone(), clean));
+    }
+
+    None
+}
+
 /// Attempt to discover models from a platform CLI only (blocking — call from async).
 fn refresh_models_cli_blocking(platform: Platform) -> CachedModelList {
     let spec = platform_specs::get_spec(platform);
@@ -522,19 +612,17 @@ fn refresh_models_cli_blocking(platform: Platform) -> CachedModelList {
     match output {
         Ok(out) if out.status.success() => {
             let stdout = String::from_utf8_lossy(&out.stdout);
-            let models: Vec<String> = stdout
-                .lines()
-                .map(|l| l.trim().to_string())
-                .filter(|l| !l.is_empty())
-                .collect();
+            let parsed: Vec<(String, String)> =
+                stdout.lines().filter_map(parse_model_line).collect();
 
-            if models.is_empty() {
+            if parsed.is_empty() {
                 log::warn!("Empty model list from {:?} CLI, using fallback", platform);
                 return CachedModelList::from_fallback(platform);
             }
 
-            // Display names default to model IDs.
-            let display_names = models.clone();
+            let models: Vec<String> = parsed.iter().map(|(id, _)| id.clone()).collect();
+            let display_names: Vec<String> =
+                parsed.iter().map(|(_, name)| name.clone()).collect();
 
             CachedModelList {
                 models,
@@ -846,5 +934,70 @@ mod tests {
         // Verify the Sdk variant exists and can be matched
         let source = ModelSource::Sdk;
         assert!(matches!(source, ModelSource::Sdk));
+    }
+
+    #[test]
+    fn test_strip_ansi_codes() {
+        // ANSI codes from `agent models` progress output
+        let input = "\x1b[2K\x1b[GLoading models\u{2026}";
+        let stripped = strip_ansi_codes(input);
+        assert_eq!(stripped, "Loading models\u{2026}");
+
+        // No ANSI codes — unchanged
+        let plain = "auto - Auto";
+        assert_eq!(strip_ansi_codes(plain), plain);
+
+        // Multiple ANSI sequences in one line
+        let multi = "\x1b[2K\x1b[1A\x1b[2K\x1b[GAvailable models";
+        let stripped = strip_ansi_codes(multi);
+        assert_eq!(stripped, "Available models");
+    }
+
+    #[test]
+    fn test_parse_model_line_cursor_format() {
+        // Standard "id - DisplayName" format
+        assert_eq!(
+            parse_model_line("auto - Auto"),
+            Some(("auto".to_string(), "Auto".to_string()))
+        );
+        assert_eq!(
+            parse_model_line("sonnet-4.5-thinking - Claude Sonnet 4.5 Thinking"),
+            Some((
+                "sonnet-4.5-thinking".to_string(),
+                "Claude Sonnet 4.5 Thinking".to_string()
+            ))
+        );
+    }
+
+    #[test]
+    fn test_parse_model_line_strips_current_default_suffix() {
+        let (id, display) =
+            parse_model_line("opus-4.6-thinking - Claude 4.6 Opus (Thinking)  (current, default)")
+                .unwrap();
+        assert_eq!(id, "opus-4.6-thinking");
+        assert_eq!(display, "Claude 4.6 Opus (Thinking)");
+    }
+
+    #[test]
+    fn test_parse_model_line_noise_lines_return_none() {
+        assert!(parse_model_line("").is_none());
+        assert!(parse_model_line("Tip: use --model <id>").is_none());
+        assert!(parse_model_line("Available models").is_none());
+        assert!(parse_model_line("Loading models…").is_none());
+        assert!(parse_model_line("No models available for this account.").is_none());
+        // ANSI-coded noise
+        assert!(parse_model_line("\x1b[2K\x1b[GLoading models\u{2026}").is_none());
+        assert!(parse_model_line("\x1b[2K\x1b[1A\x1b[2K\x1b[GNo models available for this account.").is_none());
+    }
+
+    #[test]
+    fn test_parse_model_line_raw_id() {
+        // Plain model IDs without display name separator
+        assert_eq!(
+            parse_model_line("gemini-2.5-pro"),
+            Some(("gemini-2.5-pro".to_string(), "gemini-2.5-pro".to_string()))
+        );
+        // IDs with spaces should be rejected
+        assert!(parse_model_line("not a model id").is_none());
     }
 }

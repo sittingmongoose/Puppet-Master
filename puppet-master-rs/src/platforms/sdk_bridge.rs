@@ -122,25 +122,50 @@ impl SdkBridge {
             anyhow::bail!("Copilot does not have SDK support in platform_specs");
         }
 
-        // The Copilot SDK uses JSON-RPC to communicate with the CLI.
-        // We try to list models via the SDK's model listing capability.
-        let script = r#"
-const sdk = require('@github/copilot-sdk');
-async function main() {
-    try {
-        const client = new sdk.CopilotClient();
-        const models = await client.listModels();
-        const ids = models.map(m => m.id || m.name || m);
-        console.log(JSON.stringify(ids));
-    } catch (e) {
-        // Fallback: try parsing copilot model list
-        console.log(JSON.stringify([]));
-    }
-}
-main();
-"#;
+        // @github/copilot-sdk is an ESM-only package — use dynamic import().
+        // CopilotClient.listModels() requires a connected CLI server.
+        // We pass the app-local copilot binary path so the SDK can start the server.
+        let copilot_bin = crate::install::app_paths::get_app_bin_dir()
+            .join(if cfg!(target_os = "windows") {
+                "copilot.cmd"
+            } else {
+                "copilot"
+            })
+            .to_string_lossy()
+            .replace('\\', "\\\\")
+            .replace('"', "\\\"");
 
-        self.run_node_script(script, "Copilot SDK model listing")
+        let app_modules = crate::install::app_paths::get_lib_dir()
+            .join("lib")
+            .join("node_modules")
+            .to_string_lossy()
+            .replace('\\', "\\\\")
+            .replace('"', "\\\"");
+
+        let script = format!(
+            r#"
+(async () => {{
+    try {{
+        const sdkPath = "{app_modules}/@github/copilot-sdk/dist/index.js";
+        const {{ CopilotClient }} = await import(sdkPath);
+        const client = new CopilotClient();
+        const cliPath = "{copilot_bin}";
+        await client.startCLIServer({{ cliPath }});
+        // Wait briefly for the CLI server to be ready
+        await new Promise(r => setTimeout(r, 2000));
+        const models = await client.listModels();
+        const ids = (models || []).map(m => m.id || m.name || String(m)).filter(Boolean);
+        await client.stop().catch(() => {{}});
+        console.log(JSON.stringify(ids));
+    }} catch (e) {{
+        // SDK unavailable, CLI not connected, or not logged in — return empty
+        console.log(JSON.stringify([]));
+    }}
+}})();
+"#
+        );
+
+        self.run_node_script(&script, "Copilot SDK model listing")
             .await
     }
 
@@ -151,26 +176,11 @@ main();
             anyhow::bail!("Codex does not have SDK support in platform_specs");
         }
 
-        // The Codex SDK wraps the CLI binary and communicates via JSONL.
-        // Model listing is done by querying available models.
-        let script = r#"
-const { Codex } = require('@openai/codex-sdk');
-async function main() {
-    try {
-        const client = new Codex();
-        const models = await client.listModels();
-        const ids = models.map(m => m.id || m.name || m);
-        console.log(JSON.stringify(ids));
-    } catch (e) {
-        // Fallback: empty list (will use platform_specs fallback)
-        console.log(JSON.stringify([]));
-    }
-}
-main();
-"#;
-
-        self.run_node_script(script, "Codex SDK model listing")
-            .await
+        // @openai/codex-sdk is an ESM-only package that wraps the CLI binary.
+        // The SDK (Codex class) exposes startThread()/resumeThread() only — no listModels().
+        // Model listing is not supported by this SDK version; return empty so the caller
+        // falls back to platform_specs static models.
+        Ok(Vec::new())
     }
 
     /// List models for any SDK-capable platform.
