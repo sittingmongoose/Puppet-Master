@@ -204,6 +204,28 @@ impl AuthStatusChecker {
         )
     }
 
+    /// Returns true when ~/.gemini/google_accounts.json has a non-null "active" account.
+    ///
+    /// We MUST NOT use `credentials_cached("~/.gemini/")` here: the Gemini CLI creates
+    /// non-auth files (projects.json, history/, tmp/, …) on every invocation, so the
+    /// directory is always non-empty even when the user is logged out.
+    fn gemini_has_active_account() -> bool {
+        let Some(home) = get_home_dir() else {
+            return false;
+        };
+        let config_path = home.join(".gemini").join("google_accounts.json");
+        let Ok(contents) = std::fs::read_to_string(&config_path) else {
+            return false;
+        };
+        if let Ok(json) = serde_json::from_str::<serde_json::Value>(&contents) {
+            return json
+                .get("active")
+                .map(|v| !v.is_null())
+                .unwrap_or(false);
+        }
+        false
+    }
+
     async fn check_gemini(&self) -> AuthCheckResult {
         if PlatformDetector::detect_platform(Platform::Gemini)
             .await
@@ -213,30 +235,13 @@ impl AuthStatusChecker {
                 "Gemini CLI is not installed. Install Gemini CLI, then run 'gemini' and Login with Google.",
             );
         }
-        let Some(home) = get_home_dir() else {
-            return AuthCheckResult::not_authenticated(
-                "Could not determine home directory. Set HOME or USERPROFILE environment variable.",
-            );
-        };
-        let cred_path = home.join(".gemini");
-        let spec = platform_specs::get_spec(Platform::Gemini);
 
-        if Self::credentials_cached(&cred_path) {
-            for cmd in platform_specs::cli_binary_names(Platform::Gemini) {
-                if let Ok(output) = self.run_command(cmd, &[spec.version_command]).await {
-                    if output.status.success() {
-                        return AuthCheckResult::authenticated(
-                            "Authenticated (credentials from ~/.gemini/)",
-                        );
-                    }
-                }
-            }
+        if Self::gemini_has_active_account() {
+            return AuthCheckResult::authenticated(
+                "Authenticated (Google account from ~/.gemini/google_accounts.json)",
+            );
         }
 
-        // No cached credentials — CLI is installed (confirmed above) but not logged in.
-        // Do NOT run the gemini binary here: some versions recreate ~/.gemini/ on any
-        // invocation, which would cause the next auth refresh to incorrectly re-detect
-        // the user as authenticated immediately after logout.
         AuthCheckResult::not_authenticated(
             "Gemini CLI installed but not authenticated. Run 'gemini' and select 'Login with Google'.",
         )
@@ -341,6 +346,8 @@ impl AuthStatusChecker {
     }
 
     // DRY:FN:credentials_cached — Checks whether a credentials path likely contains auth material.
+    // Used by tests; no longer called in production code (Gemini now uses gemini_has_active_account).
+    #[allow(dead_code)]
     fn credentials_cached(path: &Path) -> bool {
         if !path.exists() {
             return false;

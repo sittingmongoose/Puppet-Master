@@ -341,20 +341,38 @@ pub async fn spawn_logout(target: AuthTarget) -> Result<()> {
         };
     }
 
-    // Gemini logout: delete ~/.gemini/ credentials directory.
-    // Gemini CLI has no logout subcommand; credential deletion is the correct approach.
+    // Gemini logout: clear only the OAuth credential files inside ~/.gemini/.
+    // We do NOT delete the entire directory: the Gemini CLI recreates non-auth files
+    // (projects.json, history/, tmp/, settings.json, …) on every invocation, so a
+    // full deletion both breaks CLI usability after logout and fools our auth check
+    // into thinking the user is still authenticated.
+    // Strategy:
+    //   • google_accounts.json — set active:null,old:[] (same pattern as Copilot)
+    //   • oauth_creds.json    — remove entirely if present
     if matches!(target, AuthTarget::Platform(Platform::Gemini)) {
-        let Some(path) = credentials_dir(".gemini") else {
+        let Some(dir) = credentials_dir(".gemini") else {
             return Err(anyhow!(
                 "Could not resolve home directory for Gemini logout"
             ));
         };
-        if !path.exists() {
-            return Ok(());
+
+        // Clear google_accounts.json
+        let accounts_path = dir.join("google_accounts.json");
+        if accounts_path.exists() {
+            let cleared = serde_json::json!({"active": null, "old": []});
+            let json_str = serde_json::to_string_pretty(&cleared)
+                .map_err(|e| anyhow!("JSON error clearing Gemini accounts: {}", e))?;
+            std::fs::write(&accounts_path, json_str)
+                .map_err(|e| anyhow!("Failed to clear Gemini google_accounts.json: {}", e))?;
         }
-        tokio::fs::remove_dir_all(&path).await.map_err(|e| {
-            anyhow!("Failed to remove Gemini credentials: {}", e)
-        })?;
+
+        // Remove oauth_creds.json entirely if present
+        let oauth_path = dir.join("oauth_creds.json");
+        if oauth_path.exists() {
+            std::fs::remove_file(&oauth_path)
+                .map_err(|e| anyhow!("Failed to remove Gemini oauth_creds.json: {}", e))?;
+        }
+
         return Ok(());
     }
 
