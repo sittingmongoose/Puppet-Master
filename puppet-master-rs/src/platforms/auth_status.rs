@@ -345,24 +345,6 @@ impl AuthStatusChecker {
         }
     }
 
-    // DRY:FN:credentials_cached — Checks whether a credentials path likely contains auth material.
-    // Used by tests; no longer called in production code (Gemini now uses gemini_has_active_account).
-    #[allow(dead_code)]
-    fn credentials_cached(path: &Path) -> bool {
-        if !path.exists() {
-            return false;
-        }
-
-        if path.is_file() {
-            return true;
-        }
-
-        std::fs::read_dir(path)
-            .ok()
-            .and_then(|mut entries| entries.next())
-            .is_some()
-    }
-
     fn active_env_override(platform: Platform) -> Option<&'static str> {
         let vars: &[&str] = match platform {
             Platform::Cursor => &["CURSOR_API_KEY"],
@@ -552,20 +534,6 @@ mod tests {
         let missing = "__definitely_missing_auth_status_test_binary__";
         let resolved = checker.resolve_program(missing);
         assert_eq!(resolved, std::path::PathBuf::from(missing));
-    }
-
-    #[test]
-    fn test_credentials_cached_false_for_empty_dir() {
-        let dir = tempfile::tempdir().expect("tempdir");
-        assert!(!AuthStatusChecker::credentials_cached(dir.path()));
-    }
-
-    #[test]
-    fn test_credentials_cached_true_for_non_empty_dir() {
-        let dir = tempfile::tempdir().expect("tempdir");
-        let marker = dir.path().join("session.json");
-        std::fs::write(&marker, "{}").expect("write marker");
-        assert!(AuthStatusChecker::credentials_cached(dir.path()));
     }
 
     #[test]
