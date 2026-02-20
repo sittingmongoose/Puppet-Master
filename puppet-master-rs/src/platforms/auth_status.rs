@@ -257,24 +257,12 @@ impl AuthStatusChecker {
             );
         }
 
-        // Primary: check ~/.copilot/config.json for logged_in_users
-        // (copilot login stores auth here, separate from gh auth)
+        // Check ~/.copilot/config.json for either logged_in_users entries or a
+        // non-null last_logged_in_user. We do NOT fall back to `gh auth status`:
+        // gh being authenticated does not mean Copilot is authenticated, and
+        // using it as a proxy causes the logout button to never update.
         if Self::copilot_config_has_logged_in_user() {
             return AuthCheckResult::authenticated("Authenticated (credentials from ~/.copilot/)");
-        }
-
-        // Fallback: check gh auth status as a proxy
-        let gh_authenticated = if let Ok(output) = self.run_command("gh", &["auth", "status"]).await
-        {
-            Self::gh_auth_output_is_authenticated(&output)
-        } else {
-            false
-        };
-
-        if gh_authenticated {
-            return AuthCheckResult::authenticated(
-                "Copilot CLI detected; authentication inferred from active GitHub auth.",
-            );
         }
 
         AuthCheckResult::not_authenticated(
@@ -282,7 +270,12 @@ impl AuthStatusChecker {
         )
     }
 
-    /// Check if ~/.copilot/config.json contains logged_in_users with at least one entry.
+    /// Returns true when ~/.copilot/config.json indicates an active login.
+    ///
+    /// Checks both `logged_in_users` (non-empty array) and `last_logged_in_user`
+    /// (non-null object). Some versions of the Copilot CLI keep credentials only in
+    /// `last_logged_in_user` while leaving `logged_in_users` empty; checking both
+    /// prevents false "not authenticated" results in that mixed state.
     fn copilot_config_has_logged_in_user() -> bool {
         let Some(home) = get_home_dir() else {
             return false;
@@ -293,7 +286,17 @@ impl AuthStatusChecker {
         };
         if let Ok(json) = serde_json::from_str::<serde_json::Value>(&contents) {
             if let Some(users) = json.get("logged_in_users").and_then(|v| v.as_array()) {
-                return !users.is_empty();
+                if !users.is_empty() {
+                    return true;
+                }
+            }
+            // Also check last_logged_in_user: non-null/non-absent means still logged in.
+            if json
+                .get("last_logged_in_user")
+                .map(|v| !v.is_null())
+                .unwrap_or(false)
+            {
+                return true;
             }
         }
         false

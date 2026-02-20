@@ -47,7 +47,11 @@ fn required_help_substrings(platform: Platform) -> &'static [&'static str] {
         Platform::Codex => &["exec", "--config"],  // @openai/codex Rust binary: exec ✓, --config ✓, --json ✗
         Platform::Claude => &["--output-format", "--no-session-persistence"],
         Platform::Gemini => &["--output-format", "--approval-mode"],
-        Platform::Copilot => &["--allow-all-tools"],
+        // Copilot is launched via `npx -y @github/copilot` (always downloads latest agent).
+        // The binary detected by PlatformDetector may be the legacy gh-copilot suggest/explain
+        // tool (from the deprecated binary installer), which does not expose --allow-all-tools.
+        // Flag checking is not useful here: agent compatibility is guaranteed by npx -y.
+        Platform::Copilot => &[],
     }
 }
 
@@ -212,8 +216,9 @@ mod tests {
     }
 
     #[test]
-    fn required_help_flags_include_expected_copilot_flag() {
+    fn required_help_flags_for_copilot_is_empty() {
+        // Copilot is launched via npx -y @github/copilot; no static binary flag check needed.
         let flags = required_help_substrings(Platform::Copilot);
-        assert_eq!(flags, &["--allow-all-tools"]);
+        assert!(flags.is_empty());
     }
 }

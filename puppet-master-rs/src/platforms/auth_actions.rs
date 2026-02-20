@@ -466,9 +466,13 @@ pub async fn spawn_logout(target: AuthTarget) -> Result<()> {
 
         let status = Command::new(&resolved_program)
             .args(["auth", "logout", "--hostname", "github.com"])
-            .stdin(Stdio::inherit())
-            .stdout(Stdio::inherit())
-            .stderr(Stdio::inherit())
+            .env(
+                "PATH",
+                crate::platforms::path_utils::build_enhanced_path_for_subprocess(),
+            )
+            .stdin(Stdio::null())
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped())
             .status()
             .await
             .map_err(|e| anyhow!("Failed to run gh logout: {}", e))?;

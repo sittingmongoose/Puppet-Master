@@ -23,6 +23,7 @@
 
 pub mod app_paths;
 pub mod copilot_installer;
+pub mod gemini_installer;
 pub mod github_cli_installer;
 pub mod install_coordinator;
 pub mod node_installer;

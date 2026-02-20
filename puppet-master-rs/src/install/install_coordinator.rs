@@ -83,7 +83,14 @@ pub async fn install_platform(platform: Platform) -> InstallOutcome {
     match platform {
         Platform::Claude => crate::install::script_installer::install_claude_app_local().await,
         Platform::Cursor => crate::install::script_installer::install_cursor_app_local().await,
-        Platform::Copilot | Platform::Gemini | Platform::Codex => {
+        Platform::Gemini => {
+            // Use the Gemini-specific installer: after npm install, overwrites the
+            // generic shim with one that also exports NPM_CONFIG_PREFIX so that
+            // Gemini's built-in auto-updater can find npm and install to the correct
+            // app-local directory.
+            crate::install::gemini_installer::install_gemini_app_local().await
+        }
+        Platform::Copilot | Platform::Codex => {
             if let Some(pkg) = crate::install::npm_installer::npm_package_for_platform(platform) {
                 crate::install::npm_installer::npm_install_to_app_dir(&pkg).await
             } else {
