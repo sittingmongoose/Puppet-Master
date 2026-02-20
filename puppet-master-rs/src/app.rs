@@ -956,17 +956,14 @@ fn auth_flow_uses_deferred_completion(
     action: AuthActionKind,
 ) -> bool {
     // Login is deferred for any platform that opens a terminal (login_needs_terminal).
-    // Logout is deferred for Copilot (needs interactive /logout in terminal).
+    // Copilot logout is NOT deferred: it now modifies ~/.copilot/config.json directly
+    // (the old interactive-terminal /logout approach was removed). Button refreshes immediately.
     match (action, target) {
         (AuthActionKind::Login, crate::platforms::AuthTarget::Platform(platform)) => {
             crate::platforms::platform_specs::get_spec(platform)
                 .auth
                 .login_needs_terminal
         }
-        (
-            AuthActionKind::Logout,
-            crate::platforms::AuthTarget::Platform(crate::types::Platform::Copilot),
-        ) => true,
         _ => false,
     }
 }

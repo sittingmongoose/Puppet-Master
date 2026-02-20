@@ -233,19 +233,12 @@ impl AuthStatusChecker {
             }
         }
 
-        // CLI exists but no cached creds
-        for cmd in platform_specs::cli_binary_names(Platform::Gemini) {
-            if let Ok(output) = self.run_command(cmd, &[spec.version_command]).await {
-                if output.status.success() {
-                    return AuthCheckResult::not_authenticated(
-                        "Gemini CLI installed but not authenticated. Run 'gemini' and select 'Login with Google'.",
-                    );
-                }
-            }
-        }
-
+        // No cached credentials — CLI is installed (confirmed above) but not logged in.
+        // Do NOT run the gemini binary here: some versions recreate ~/.gemini/ on any
+        // invocation, which would cause the next auth refresh to incorrectly re-detect
+        // the user as authenticated immediately after logout.
         AuthCheckResult::not_authenticated(
-            "Not authenticated. Run 'gemini' and select 'Login with Google'.",
+            "Gemini CLI installed but not authenticated. Run 'gemini' and select 'Login with Google'.",
         )
     }
 

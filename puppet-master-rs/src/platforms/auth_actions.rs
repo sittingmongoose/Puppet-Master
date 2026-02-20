@@ -373,7 +373,12 @@ pub async fn spawn_logout(target: AuthTarget) -> Result<()> {
                     serde_json::from_str::<serde_json::Value>(&contents)
                 {
                     json["logged_in_users"] = serde_json::json!([]);
-                    json["last_logged_in_user"] = serde_json::Value::Null;
+                    // Remove rather than null: Copilot CLI's schema expects this field
+                    // to be an object or absent. Writing null causes a schema validation
+                    // error ("Expected object, received null") on next launch.
+                    if let Some(obj) = json.as_object_mut() {
+                        obj.remove("last_logged_in_user");
+                    }
                     let updated = serde_json::to_string_pretty(&json)
                         .map_err(|e| anyhow!("JSON error: {}", e))?;
                     std::fs::write(&config_path, updated)
