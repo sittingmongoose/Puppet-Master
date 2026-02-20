@@ -40,6 +40,11 @@ installer-work/
 .puppet-master/evidence/screenshots/*.jpg
 .puppet-master/evidence/screenshots/*.jpeg
 .puppet-master/evidence/screenshots/*.webp
+# GUI-automation evidence includes inline PNGs — exclude the entire directory
+**/evidence/gui-automation/
+.puppet-master/evidence/screenshots/*.jpg
+.puppet-master/evidence/screenshots/*.jpeg
+.puppet-master/evidence/screenshots/*.webp
 
 # Project-local runtime state that should not be committed (volatile / machine-specific).
 .puppet-master/gui-token.txt

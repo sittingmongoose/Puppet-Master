@@ -411,5 +411,4 @@ mod tests {
 
     // Note: Integration tests for tray creation are platform-specific and
     // require a windowing environment, so they're omitted from unit tests.
-    // Run with `cargo test --test tray_integration` for full testing.
 }

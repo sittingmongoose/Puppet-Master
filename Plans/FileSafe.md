@@ -1,4 +1,4 @@
-# Database Safety Guard & Safety Features — Implementation Plan
+# FileSafe, Context Compilation & Token Efficiency — Implementation Plan
 
 **Date:** 2026-02-19  
 **Priority:** CRITICAL  
@@ -18,17 +18,43 @@
 
 ## Executive Summary
 
-Implement a **comprehensive safety system** that protects against destructive operations at multiple levels:
+This plan covers **two pillars**: (1) **FileSafe** — guards that block destructive operations before execution — and (2) **context compilation and token efficiency** that reduce coordination overhead by compiling role-specific context and related optimizations.
 
-1. **Database Safety Guard** — Blocks destructive database commands (`migrate:fresh`, `db:drop`, `TRUNCATE TABLE`, etc.)
-2. **File Guard** — Prevents writes to files not declared in the active plan
-3. **Security Filter** — Blocks access to sensitive files (`.env`, credentials, keys)
-4. **Prompt Content Checking** — Scans prompts for destructive commands before execution
-5. **Verification Gate Integration** — Coordinates with existing verification gates
+### Part A — FileSafe
 
-**Why Critical:** Agents with Bash access can accidentally run destructive commands, access sensitive files, or write to files outside their scope during execution. These guards prevent such accidents at the platform level, providing deterministic protection regardless of agent behavior.
+1. **Database guard** — Blocks destructive database commands (`migrate:fresh`, `db:drop`, `TRUNCATE TABLE`, etc.) before they run.
+2. **File Guard** — Prevents writes to files not declared in the active plan.
+3. **Security Filter** — Blocks access to sensitive files (`.env`, credentials, keys).
+4. **Prompt Content Checking** — Scans prompts for destructive commands before sending to the platform CLI.
+5. **Verification Gate Integration** — Allows legitimate destructive operations when tagged as verification-gate or interview operations.
 
-**DRY Compliance:** All reusable code is tagged with `DRY:FN:`, `DRY:DATA:`, `DRY:HELPER:` comments. Platform data uses `platform_specs::` functions. Widgets reuse existing components from `src/widgets/`.
+**Why critical:** Agents with shell access can accidentally run destructive commands, touch sensitive files, or write outside scope. FileSafe provides deterministic, platform-level protection regardless of agent behavior.
+
+### Part B — Context Compilation & Token Efficiency
+
+6. **Role-Specific Context Compiler** — Builds `.context-{role}.md` per agent role (Phase/Task/Subtask/Iteration) so each agent gets only the context it needs (e.g. phase goal, filtered requirements, conventions). Cuts coordination overhead by ~40–60% at scale.
+7. **Delta Context** — Adds a “Changed Files (Delta)” section with code slices from recently modified files so agents see what just changed.
+8. **Context Cache** — Caches the compiled context index so compilation is skipped when project files are unchanged.
+9. **Structured Handoff Schemas** — Typed JSON schemas for inter-agent messages (e.g. progress, blockers, QA results) for reliable parsing.
+10. **Compaction-Aware Re-Reads** — A deterministic marker indicates when plan/context re-read is needed, avoiding redundant full re-reads every task.
+11. **Skill Bundling** — Bundles skills referenced in the plan into the compiled context once per phase instead of per task.
+
+**Why critical:** Context compilation and these features reduce token use and improve reliability where coordination and context size matter most (large projects, many phases).
+
+**DRY compliance:** All reusable code is tagged with `DRY:FN:`, `DRY:DATA:`, `DRY:HELPER:`. Platform data uses `platform_specs::`. Widgets reuse components from `src/widgets/`.
+
+---
+
+## Table of Contents
+
+**Part A — FileSafe**  
+1. Architecture Overview · 2. Implementation Details (guards) · 3. Integration with Platform Runner · 4. Pattern File · 5. Configuration · 6. Event Logging · 7. Error Messages · 8. Testing · 9. Implementation Checklist · 10. Relationship to Other Plans · 11. Additional FileSafe Features (File Guard, Security Filter, Prompt Checking, Verification Gates) · 12. Gaps and Potential Issues · 13. Enhancements
+
+**Part B — Context & Token Efficiency**  
+14. Context Compilation & Token Efficiency (14.1 Role-Specific Context Compiler · 14.2 Delta Context · 14.3 Context Cache · 14.4 Structured Handoff Schemas · 14.5 Compaction-Aware Re-Reads · 14.6 Skill Bundling · 14.7 Token Savings and Config)
+
+**Integration & References**  
+15. System Integration Analysis · 16. References
 
 ---
 
@@ -66,12 +92,12 @@ if let Err(e) = self.bash_guard.check_command(&full_command_string) {
 
 1. **At application startup:**
    - Load `GuiConfig` from `puppet-master.yaml` (or defaults)
-   - Extract `SafetyConfig` from `GuiConfig`
+   - Extract `FileSafeConfig` from `GuiConfig`
    - Store in app state
 
 2. **When orchestrator starts:**
    - Build `PuppetMasterConfig` from `GuiConfig` (Option B pattern)
-   - Extract safety config
+   - Extract FileSafe config
    - Pass to `BaseRunner::new()` via orchestrator context
 
 3. **When BaseRunner is created:**
@@ -82,7 +108,7 @@ if let Err(e) = self.bash_guard.check_command(&full_command_string) {
 
 4. **Per ExecutionRequest:**
    - Update `FileGuard` allowed files from request metadata
-   - Check guards before spawning process
+   - Run FileSafe checks before spawning process
    - Log violations to event log
 
 **Error Handling:**
@@ -92,10 +118,10 @@ if let Err(e) = self.bash_guard.check_command(&full_command_string) {
 
 ### 2.1 Module Structure
 
-Create new module: `puppet-master-rs/src/safety/`
+Create new module: `puppet-master-rs/src/filesafe/`
 
 ```
-src/safety/
+src/filesafe/
 ├── mod.rs                    # Module declaration + re-exports
 ├── bash_guard.rs            # Main guard implementation
 ├── destructive_patterns.rs  # Pattern loading and matching
@@ -111,9 +137,9 @@ src/safety/
 - **Project-specific:** `.puppet-master/destructive-commands.local.txt` (optional override)
 - **Resolution order:** Custom path → Project-specific → Bundled → Disabled (with warning)
 
-**Module Declaration (`src/safety/mod.rs`):**
+**Module Declaration (`src/filesafe/mod.rs`):**
 ```rust
-//! Safety guards for preventing destructive operations
+//! FileSafe — guards for preventing destructive operations
 //!
 //! This module provides guards that block destructive commands, file writes,
 //! and sensitive file access before execution.
@@ -131,14 +157,14 @@ pub use security_filter::SecurityFilter;
 ### 2.2 Core Types
 
 ```rust
-// src/safety/bash_guard.rs
+// src/filesafe/bash_guard.rs
 
 use regex::Regex;
 use std::path::PathBuf;
 use anyhow::{Result, Context};
 
-// DRY:DATA:BashGuard — Database safety guard that blocks destructive commands
-/// Database safety guard that blocks destructive commands
+// DRY:DATA:BashGuard — FileSafe database guard that blocks destructive commands
+/// FileSafe database guard that blocks destructive commands
 pub struct BashGuard {
     patterns: Vec<Regex>,
     allow_destructive: bool,
@@ -290,7 +316,7 @@ impl BashGuard {
 ### 2.3 Pattern Loading
 
 ```rust
-// src/safety/destructive_patterns.rs
+// src/filesafe/destructive_patterns.rs
 
 use regex::Regex;
 use std::fs;
@@ -409,13 +435,13 @@ pub fn load_patterns_with_merge(
 // Add to GuiConfig struct:
 pub struct GuiConfig {
     // ... existing fields ...
-    pub safety: SafetyConfig,
+    pub filesafe: FileSafeConfig,
 }
 
-// New SafetyConfig:
+// New FileSafeConfig:
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 #[serde(rename_all = "camelCase")]
-pub struct SafetyConfig {
+pub struct FileSafeConfig {
     pub bash_guard: BashGuardConfig,
     pub file_guard: FileGuardConfig,
     pub security_filter: SecurityFilterConfig,
@@ -484,13 +510,13 @@ impl Default for SecurityFilterConfig {
 
 The orchestrator reads from `PuppetMasterConfig` (YAML), not `GuiConfig`. Follow Option B pattern from WorktreeGitImprovement plan:
 
-1. Add `SafetyConfig` to `PuppetMasterConfig` type (in `src/types/config.rs`)
-2. When orchestrator starts, build run config from `GuiConfig::safety` → `PuppetMasterConfig::safety`
-3. Pass safety config to `BaseRunner::new()` via orchestrator context
+1. Add `FileSafeConfig` to `PuppetMasterConfig` type (in `src/types/config.rs`)
+2. When orchestrator starts, build run config from `GuiConfig::filesafe` → `PuppetMasterConfig::filesafe`
+3. Pass FileSafe config to `BaseRunner::new()` via orchestrator context
 
 **Config File Format (`puppet-master.yaml`):**
 ```yaml
-safety:
+filesafe:
   bashGuard:
     enabled: true
     allowDestructive: false
@@ -512,7 +538,7 @@ safety:
 Update `puppet-master-rs/src/platforms/runner.rs`:
 
 ```rust
-use crate::safety::BashGuard;
+use crate::filesafe::BashGuard;
 
 pub struct BaseRunner {
     // ... existing fields ...
@@ -523,7 +549,7 @@ impl BaseRunner {
     pub fn new(command: String, platform: Platform) -> Self {
         // ... existing initialization ...
         
-        // Initialize safety guards
+        // Initialize FileSafe guards
         // Pattern file resolution: try project-specific, then bundled
         let pattern_file = std::env::current_dir()
             .ok()
@@ -844,7 +870,7 @@ let allow_destructive = std::env::var("PUPPET_MASTER_ALLOW_DESTRUCTIVE")
 Add to `puppet-master.yaml`:
 
 ```yaml
-safety:
+filesafe:
   bash_guard:
     enabled: true  # Default: true
     allow_destructive: false  # Default: false
@@ -872,10 +898,10 @@ if let Some(local_path) = &config.custom_patterns_path {
 
 ## 6. Event Logging
 
-Log blocked commands to `.puppet-master/logs/safety-events.jsonl`:
+Log blocked commands to `.puppet-master/logs/filesafe-events.jsonl`:
 
 ```rust
-pub struct SafetyEvent {
+pub struct FileSafeEvent {
     pub event_type: String,  // "bash_guard_block"
     pub command_preview: String,  // First 40 chars
     pub pattern_matched: String,
@@ -1027,13 +1053,13 @@ async fn test_runner_blocks_destructive() {
 
 ## 9. Implementation Checklist
 
-- [ ] **Create safety module structure**
-  - [ ] `src/safety/mod.rs`
-  - [ ] `src/safety/bash_guard.rs`
-  - [ ] `src/safety/destructive_patterns.rs`
-  - [ ] `src/safety/file_guard.rs` (Section 11.1)
-  - [ ] `src/safety/security_filter.rs` (Section 11.2)
-  - [ ] Add `pub mod safety;` to `src/lib.rs`
+- [ ] **Create FileSafe module structure**
+  - [ ] `src/filesafe/mod.rs`
+  - [ ] `src/filesafe/bash_guard.rs`
+  - [ ] `src/filesafe/destructive_patterns.rs`
+  - [ ] `src/filesafe/file_guard.rs` (Section 11.1)
+  - [ ] `src/filesafe/security_filter.rs` (Section 11.2)
+  - [ ] Add `pub mod filesafe;` to `src/lib.rs`
   - [ ] Tag all reusable items with DRY comments
 
 - [ ] **Port pattern file**
@@ -1049,7 +1075,7 @@ async fn test_runner_blocks_destructive() {
   - [ ] Command checking logic (`check_command()`)
   - [ ] Prompt content checking (`check_prompt()` + `extract_commands_from_prompt()`)
   - [ ] Environment variable override (`PUPPET_MASTER_ALLOW_DESTRUCTIVE`)
-  - [ ] Config file integration (read from `SafetyConfig`)
+  - [ ] Config file integration (read from `FileSafeConfig`)
   - [ ] Project-specific pattern loading (`.puppet-master/destructive-commands.local.txt`)
   - [ ] Error handling (graceful degradation on init failure)
 
@@ -1074,12 +1100,12 @@ async fn test_runner_blocks_destructive() {
   - [ ] Handle guard errors gracefully (return clear error messages, log to event log)
 
 - [ ] **Add configuration**
-  - [ ] Add `SafetyConfig` to config system
+  - [ ] Add `FileSafeConfig` to config system
   - [ ] Wire to GUI config (optional, can be CLI-only initially)
   - [ ] Document config options
 
 - [ ] **Event logging**
-  - [ ] Create `SafetyEvent` struct
+  - [ ] Create `FileSafeEvent` struct
   - [ ] Integrate with existing event logging system (Section 11.5)
   - [ ] Log blocked commands, file access violations, security filter blocks
   - [ ] Include command preview, pattern matched, timestamp, agent context
@@ -1096,8 +1122,8 @@ async fn test_runner_blocks_destructive() {
   - [ ] Test false positive scenarios (documentation, comments)
 
 - [ ] **Documentation**
-  - [ ] Add to AGENTS.md safety section:
-    - [ ] Database safety guard
+  - [ ] Add to AGENTS.md FileSafe section:
+    - [ ] FileSafe database guard
     - [ ] File guard
     - [ ] Security filter
     - [ ] Override mechanisms
@@ -1112,6 +1138,18 @@ async fn test_runner_blocks_destructive() {
   - [ ] `cargo test` passes
   - [ ] No hardcoded platform data
   - [ ] DRY compliance (tag reusable items)
+
+- [ ] **Context compilation (Part B)**
+  - [ ] Create `src/context/` module: `mod.rs`, `compiler.rs`, `role.rs`, `filters.rs`, `skills.rs`
+  - [ ] Implement `compile_context(phase_id, role, plan_path, working_directory)` and role-specific compilers (Phase, Task, Subtask, Iteration)
+  - [ ] Requirement filtering (phase-mapped only); convention extraction from AGENTS.md; decision extraction from state/progress
+  - [ ] Skill bundling: parse plan frontmatter `skills_used`, resolve paths, append to Task/Iteration context; handle missing skills
+  - [ ] Delta context: git diff since last phase, code slices, "Changed Files (Delta)" section; config `context.delta_context`
+  - [ ] Context cache: `context-index.json` with key (paths + mtimes/hashes); skip compile when valid; invalidate on change; config `context.context_cache`
+  - [ ] Structured handoff schemas: define message types and JSON schemas; `HandoffMessage` enum + validation in orchestrator; reference doc in docs/
+  - [ ] Compaction-aware re-reads: `.compaction-marker` lifecycle (clear on session start, set on compaction); consult before including plan in context
+  - [ ] Add `ContextConfig` to GuiConfig and `puppet-master.yaml`; wire to orchestrator (Option B); call compiler in platform runner before building prompt; graceful degradation on failure
+  - [ ] Unit and integration tests for compiler, cache, handoff parsing; document token savings and config in AGENTS.md
 
 ---
 
@@ -1135,7 +1173,7 @@ The guard complements cleanup policies by preventing destructive operations befo
 
 ---
 
-## 11. Additional Safety Features
+## 11. Additional FileSafe Features
 
 ### 11.1 File Guard (CRITICAL)
 
@@ -1323,9 +1361,9 @@ pub fn append_prompt_attachments(
 | **Codex** | TBD | May use `--add-dir` flags instead | N/A |
 | **Claude** | TBD | May use `--append-system-prompt-file` | N/A |
 
-**Safety Guard Integration Point:**
+**FileSafe integration point:**
 
-The safety guards must check the **compiled prompt** (after context compilation), not just the original prompt. This ensures:
+FileSafe must check the **compiled prompt** (after context compilation), not just the original prompt. This ensures:
 - Destructive commands in context files are caught
 - File paths in context attachments are validated
 - The final prompt sent to the platform is safe
@@ -1428,7 +1466,7 @@ impl BashGuard {
 
 **Integration with Context Compilation:**
 
-The safety guard must check the **compiled prompt** (after context files are merged), not the original prompt. This requires checking at the right point in the execution flow:
+FileSafe must check the **compiled prompt** (after context files are merged), not the original prompt. This requires checking at the right point in the execution flow:
 
 ```rust
 // In platform runner (e.g., CursorRunner::execute()):
@@ -1478,7 +1516,7 @@ async fn execute(&self, request: &ExecutionRequest) -> Result<ExecutionResult> {
 
 ### 11.4 Integration with Verification Gates
 
-**Problem:** Safety guards operate independently of verification gates, potentially blocking valid operations.
+**Problem:** FileSafe operates independently of verification gates, potentially blocking valid operations.
 
 **Solution:** Coordinate guards with verification gates to allow legitimate operations.
 
@@ -1516,7 +1554,7 @@ impl BashGuard {
         error: &GuardError,
         event_logger: &EventLogger,
     ) {
-        let event = SafetyEvent {
+        let event = FileSafeEvent {
             event_type: "bash_guard_block".to_string(),
             command_preview: command.chars().take(40).collect(),
             pattern_matched: match error {
@@ -1527,7 +1565,7 @@ impl BashGuard {
             timestamp: Utc::now(),
         };
         
-        event_logger.log_safety_event(event).await;
+        event_logger.log_filesafe_event(event).await;
     }
 }
 ```
@@ -1630,9 +1668,9 @@ pub struct GuardRateLimiter {
 
 ### 13.4 GUI Integration
 
-Add safety settings to Config view:
+Add FileSafe settings to Config view:
 
-- Toggle: "Enable database safety guard"
+- Toggle: "Enable FileSafe database guard"
 - Toggle: "Enable file guard"
 - Toggle: "Enable security filter"
 - Override: "Allow destructive commands" (with warning)
@@ -1643,9 +1681,228 @@ Add safety settings to Config view:
 
 ---
 
-## 14. System Integration Analysis
+## 14. Context Compilation & Token Efficiency
 
-### 14.1 Integration with BaseRunner
+### 14.1 Role-Specific Context Compiler
+
+**Problem:** Every agent currently receives the same context files regardless of tier or role. Phase planning loads full REQUIREMENTS; task execution loads STATE and full plans; verification loads full protocol docs. That wastes tokens and dilutes focus.
+
+**Solution:** A **context compiler** produces one compiled context file per role (Phase, Task, Subtask, Iteration). Each file contains only what that role needs. Filtering is deterministic (pattern-based on known file formats), not LLM-based — zero token cost and reliable.
+
+**Module:** `src/context/` (or `src/prompt/context_compiler.rs`).
+
+**Output files:** `.puppet-master/phases/{phase_id}/.context-{role}.md`.
+
+**Compiler contract:**
+
+```rust
+// DRY:FN:compile_context — Compile role-specific context for agent
+pub fn compile_context(
+    phase_id: &str,
+    role: AgentRole,
+    plan_path: Option<&Path>,
+    working_directory: &Path,
+) -> Result<PathBuf>;
+```
+
+**Role → content mapping:**
+
+| Role     | Contents |
+|----------|----------|
+| **Phase**  | Phase goal (from roadmap), success criteria, **filtered requirements** (only phase-mapped), active decisions (from state/progress). |
+| **Task**   | Phase goal, project conventions (from AGENTS.md), **bundled skills** if plan references them. |
+| **Subtask**| Phase goal, conventions, current subtask scope. |
+| **Iteration** | Phase goal, conventions, iteration scope; same as Task when no subtask split. |
+
+**Requirement filtering:** Parse REQUIREMENTS (or prd.json) and include only items whose IDs are listed in the current phase's scope. Use grep/sed or structured parse on a known format; no LLM.
+
+**When to run:** Before spawning the agent for that role (e.g. in platform runner or orchestrator): call `compile_context(phase_id, role, plan_path, cwd)`, then add the returned path to `ExecutionRequest.context_files` (or equivalent) so the agent receives the compiled file instead of (or in addition to) raw project files, per config.
+
+**Config:** `context.compiler_enabled` (default true). If false or compilation fails, fall back to existing behavior (direct file reads).
+
+**Example Phase context output (snippet):**
+
+```markdown
+## Phase PH-002 Context (Compiled)
+
+### Goal
+Implement role-specific context compiler and wire into platform runners.
+
+### Success Criteria
+- compile_context() produces .context-{role}.md under .puppet-master/phases/{id}/
+- Only phase-mapped requirements appear in Phase context
+
+### Requirements (REQ-06, REQ-07, REQ-08, REQ-09)
+- [ ] **REQ-06**: compile_context script extracts phase-relevant requirements...
+- [ ] **REQ-07**: Compiler produces .context-phase.md with phase goal...
+
+### Active Decisions
+- Deterministic context compilation (pattern-based, no LLM)
+- Marker-file approach for compaction detection
+```
+
+**Token impact:** Replaces multiple full-file reads with one short file per spawn. Typical savings: ~1.4k–2.8k tokens per Phase spawn; ~0.5k–1.6k per Task/Iteration (e.g. skipping STATE, filtering requirements). Scale-dependent: larger projects see larger absolute savings.
+
+---
+
+### 14.2 Delta Context
+
+**Purpose:** When iterating on existing code, agents benefit more from *what just changed* than from the full codebase. Delta context adds a "Changed Files (Delta)" section to the compiled context.
+
+**Behavior:**
+
+- **Input:** Git diff since last phase (or since last commit / tag — configurable). Optionally restrict to certain dirs (e.g. `src/`).
+- **Content:** For each changed file: path, optional short code slices (e.g. first/last N lines or hunks), and a brief summary (e.g. "modified", "added"). Total size capped (e.g. ~225–375 tokens per compiled context).
+- **Output:** Appended to the compiled `.context-{role}.md` when `context.delta_context` is true (e.g. only for Task/Iteration roles if desired).
+
+**Implementation sketch:**
+
+- Run `git diff` (or `git log -p` with limits) from a configured ref (e.g. `HEAD~1`, or last phase tag).
+- Parse diff; for each file, optionally read file and take slices (e.g. 20 lines before/after changed regions).
+- Write a "## Changed Files (Delta)" section with path, summary, and slices; enforce token/line limit.
+
+**Config:** `context.delta_context` (default false). Enable for iterative development.
+
+---
+
+### 14.3 Context Cache
+
+**Purpose:** Avoid recomputing compiled context when project files have not changed (e.g. multiple spawns in the same phase, or re-runs).
+
+**Behavior:**
+
+- **Cache key:** Directory or file set that affects context (e.g. `.puppet-master/`, `REQUIREMENTS.md`, `prd.json`, `AGENTS.md`, phase dirs). Represent as a list of paths + mtimes or content hashes.
+- **Cache store:** Single index file, e.g. `.puppet-master/context-index.json`, containing: phase_id, role, list of (path, mtime_or_hash), and path to last compiled output (or hash of its content).
+- **Lookup:** Before calling the compiler, compute current key; if it matches cache and cached output path exists and is readable, skip compilation and return cached path.
+- **Invalidation:** On any change to the key (e.g. file under `.puppet-master/` or requirements/prd/AGENTS), delete or invalidate the cache entry for that phase/role and recompute on next request.
+
+**Config:** `context.context_cache` (default true for large-repo use cases). When false, always run the compiler.
+
+---
+
+### 14.4 Structured Handoff Schemas
+
+**Purpose:** Make inter-agent communication parseable and type-safe so orchestrator and downstream agents do not rely on free-form markdown.
+
+**Behavior:**
+
+- **Schema registry:** Define a small set of message types, e.g. `phase_progress`, `task_blocker`, `subtask_result`, `qa_result`, `iteration_complete`. Each has a fixed JSON schema (required fields, types).
+- **Wire format:** Agents (or the runner wrapping them) send handoff payloads as JSON (e.g. in a well-known field of the execution result or in a side-channel file). Example:
+
+```json
+{
+  "type": "task_progress",
+  "phase_id": "PH-002",
+  "task_id": "TK-002-01",
+  "status": "complete",
+  "files_changed": ["src/context/compiler.rs"],
+  "commit": "abc123"
+}
+```
+
+- **Validation:** Orchestrator (or a small Rust module) parses and validates against the schema; on failure, log and optionally retry or escalate. Unknown `type` can be rejected or treated as legacy plain text per policy.
+- **Docs:** Single reference doc (e.g. in `docs/` or `references/`) lists all types and their schemas; agents are instructed to emit one of these shapes.
+
+**Implementation:** Add `HandoffMessage` enum in Rust with serde; implement `TryFrom` from JSON string; use in orchestrator when processing agent output.
+
+---
+
+### 14.5 Compaction-Aware Re-Reads
+
+**Purpose:** Avoid re-reading the full plan (or other large context) before every task when the plan has not been compacted or changed.
+
+**Behavior:**
+
+- **Marker file:** A deterministic marker file (e.g. `.puppet-master/.compaction-marker`) with a timestamp. Written only when a "compaction" or context-reset event occurs (e.g. session compaction, or explicit "context was trimmed" signal from the platform).
+- **Protocol:** Before spawning a task, check for the marker. If absent, assume plan/context is still valid from a previous load — skip re-read. If present, re-read plan (and any other context that might have been trimmed), then clear or update the marker so the next task does not re-read unnecessarily.
+- **Conservative rule:** On any doubt (e.g. marker present, or read failure), do the re-read. Prefer redundant reads over missing updates.
+
+**Saving:** Typically 1–2 full plan re-reads per phase (~500–1,600 tokens per plan depending on plan size).
+
+**Integration:** Orchestrator or platform runner consults the marker when building `ExecutionRequest.context_files` (or when deciding whether to include plan path again). Lifecycle: clear marker on session start; set marker when compaction is detected or signaled.
+
+---
+
+### 14.6 Skill Bundling
+
+**Purpose:** When a plan references skills (e.g. in frontmatter like `skills_used: [bash-pro, rust-clippy]`), load those skill files once and embed them in the compiled context for Task/Iteration roles instead of loading the same files per task.
+
+**Behavior:**
+
+- **Discovery:** When compiling context for Task or Iteration, if a plan path is provided, parse plan frontmatter for a list of skill names (e.g. `skills_used`).
+- **Resolution:** Resolve each name to a file path (e.g. `~/.cursor/skills/{name}/SKILL.md` or project-local `.cursor/skills/{name}/SKILL.md`). If missing, skip that skill and log.
+- **Bundling:** Read each skill file (subject to size limit if desired), then append a "## Skills Reference" section to the compiled context with the contents. One concatenation per phase, not per task.
+- **Saving:** `(num_tasks - 1) * skill_content_size` per plan (e.g. one skill × 3 tasks → ~2× content size saved).
+
+**Config:** `context.skill_bundling` (default true).
+
+---
+
+### 14.7 Token Savings and Context Configuration
+
+**Projected savings (illustrative):**
+
+| Scale   | Phases | Requirements | Coordination overhead (no compiler) | With compiler | Reduction |
+|---------|--------|--------------|-------------------------------------|----------------|-----------|
+| Small   | 3      | 10           | ~65k tokens                          | ~32k           | ~51%      |
+| Medium  | 5      | 20           | ~150k tokens                         | ~60k           | ~60%      |
+| Large   | 8      | 30           | ~300k tokens                         | ~125k          | ~58%      |
+
+**Unified context config (add to `GuiConfig` / `puppet-master.yaml`):**
+
+```yaml
+context:
+  compiler_enabled: true
+  delta_context: false
+  context_cache: true
+  skill_bundling: true
+```
+
+```rust
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+#[serde(rename_all = "camelCase")]
+pub struct ContextConfig {
+    #[serde(default = "default_true")]
+    pub compiler_enabled: bool,
+    #[serde(default)]
+    pub delta_context: bool,
+    #[serde(default = "default_true")]
+    pub context_cache: bool,
+    #[serde(default = "default_true")]
+    pub skill_bundling: bool,
+}
+```
+
+**AgentRole enum (for compiler):**
+
+```rust
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum AgentRole {
+    Phase,
+    Task,
+    Subtask,
+    Iteration,
+}
+
+impl AgentRole {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Self::Phase => "phase",
+            Self::Task => "task",
+            Self::Subtask => "subtask",
+            Self::Iteration => "iteration",
+        }
+    }
+}
+```
+
+**Integration with platform runner:** Before building the prompt, if `context.compiler_enabled`, call `context_compiler::compile_context(phase_id, role, plan_path, working_directory)`. On success, add the returned path to the request's context files (or replace a subset). On failure, log and proceed with existing behavior (no compiled context).
+
+---
+
+## 15. System Integration Analysis
+
+### 15.1 Integration with BaseRunner
 
 **Current Architecture:**
 - `BaseRunner::execute_command()` spawns platform CLI processes
@@ -1665,7 +1922,7 @@ pub async fn execute_command(...) -> Result<ExecutionResult> {
     // 3. RATE LIMIT (existing)
     self.rate_limiter.acquire(...).await?;
     
-    // 4. NEW: Safety guards (add here)
+    // 4. NEW: FileSafe (add here)
     // Check prompt content first (may contain destructive commands)
     if let Err(e) = self.bash_guard.check_prompt(&request.prompt) {
         return Err(anyhow!("Destructive command in prompt: {}", e));
@@ -1717,9 +1974,9 @@ pub async fn execute_command(...) -> Result<ExecutionResult> {
 - Guards are initialized in `BaseRunner::new()` alongside other components
 - All guards use `Arc<>` for thread-safe sharing
 - Guard errors are logged via existing logging infrastructure
-- Guard violations are logged to event log (if available) or safety-events.jsonl
+- Guard violations are logged to event log (if available) or filesafe-events.jsonl
 
-### 14.2 Integration with Orchestrator
+### 15.2 Integration with Orchestrator
 
 **Current Architecture:**
 - Orchestrator calls `BaseRunner::execute_command()` for each iteration
@@ -1846,12 +2103,12 @@ if let Some(allowed_files) = get_allowed_files_for_current_subtask(&tier_state) 
 }
 ```
 
-### 14.3 Integration with Interview Flow
+### 15.3 Integration with Interview Flow
 
 **Current Architecture:**
 - Interview orchestrator spawns agents for research, validation, document generation
 - Uses same `BaseRunner` infrastructure
-- No special safety considerations currently
+- No special FileSafe considerations currently
 
 **Integration Points:**
 
@@ -1871,20 +2128,20 @@ impl BaseRunner {
 ```
 
 2. **Interview Config:**
-   - Add safety settings to `InterviewGuiConfig`:
+   - Add FileSafe settings to `InterviewGuiConfig`:
    ```rust
    pub struct InterviewGuiConfig {
        // ... existing fields ...
-       pub safety: InterviewSafetyConfig,
+       pub filesafe: InterviewFileSafeConfig,
    }
    
-   pub struct InterviewSafetyConfig {
+   pub struct InterviewFileSafeConfig {
        pub allow_sensitive_file_read: bool,  // Default: true for research
        pub strict_file_guard: bool,          // Default: false (no plan yet)
    }
    ```
 
-### 14.4 Integration with Worktrees
+### 15.4 Integration with Worktrees
 
 **Current Architecture:**
 - Worktrees are created per subtask for parallel execution
@@ -1923,7 +2180,7 @@ impl FileGuard {
    - MiscPlan cleanup should respect file guard (don't delete allowed files)
    - Coordinate with `cleanup_after_execution` in runner contract
 
-### 14.5 GUI Integration
+### 15.5 GUI Integration
 
 **Current Architecture:**
 - Config view has 8 tabs: Tiers, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML
@@ -1932,20 +2189,20 @@ impl FileGuard {
 
 **Required GUI Updates:**
 
-1. **New Safety Tab (Tab 9) or Add to Advanced Tab:**
+1. **New FileSafe tab (Tab 9) or add to Advanced tab:**
 
-**Option A: New Safety Tab (Recommended)**
+**Option A: New FileSafe tab (recommended)**
 ```rust
 // Add to GuiConfig:
 pub struct GuiConfig {
     // ... existing fields ...
-    pub safety: SafetyConfig,
+    pub filesafe: FileSafeConfig,
 }
 
-// New SafetyConfig:
+// New FileSafeConfig:
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 #[serde(rename_all = "camelCase")]
-pub struct SafetyConfig {
+pub struct FileSafeConfig {
     pub bash_guard: BashGuardConfig,
     pub file_guard: FileGuardConfig,
     pub security_filter: SecurityFilterConfig,
@@ -1979,49 +2236,49 @@ pub struct SecurityFilterConfig {
 ```
 
 **Option B: Add to Advanced Tab**
-- Add safety section to existing `AdvancedConfig`
+- Add FileSafe section to existing `AdvancedConfig`
 - Less discoverable but avoids adding another tab
 - Use collapsible sections within Advanced tab
 
 2. **GUI Widgets Needed:**
 
 ```rust
-// In src/views/config.rs, add safety tab view:
-fn render_safety_tab(config: &GuiConfig, ...) -> Element<Message> {
+// In src/views/config.rs, add FileSafe tab view:
+fn render_filesafe_tab(config: &GuiConfig, ...) -> Element<Message> {
     column![
         // Bash Guard Section
-        text("Database Safety Guard").size(18),
-        toggler("Enable database safety guard".to_string(), 
-            config.safety.bash_guard.enabled, 
-            Message::SafetyBashGuardToggled),
+        text("FileSafe — Database Guard").size(18),
+        toggler("Enable FileSafe database guard".to_string(), 
+            config.filesafe.bash_guard.enabled, 
+            Message::FileSafeBashGuardToggled),
         toggler("Allow destructive commands (override)".to_string(),
-            config.safety.bash_guard.allow_destructive,
-            Message::SafetyAllowDestructiveToggled),
+            config.filesafe.bash_guard.allow_destructive,
+            Message::FileSafeAllowDestructiveToggled),
         help_tooltip("Blocks destructive database commands like migrate:fresh, db:drop, etc."),
         
         // File Guard Section
         text("File Guard").size(18),
         toggler("Enable file guard".to_string(),
-            config.safety.file_guard.enabled,
-            Message::SafetyFileGuardToggled),
+            config.filesafe.file_guard.enabled,
+            Message::FileSafeFileGuardToggled),
         toggler("Strict mode (block vs warn)".to_string(),
-            config.safety.file_guard.strict_mode,
-            Message::SafetyFileGuardStrictToggled),
+            config.filesafe.file_guard.strict_mode,
+            Message::FileSafeFileGuardStrictToggled),
         help_tooltip("Prevents writes to files not declared in the active plan"),
         
         // Security Filter Section
         text("Security Filter").size(18),
         toggler("Enable security filter".to_string(),
-            config.safety.security_filter.enabled,
-            Message::SafetySecurityFilterToggled),
+            config.filesafe.security_filter.enabled,
+            Message::FileSafeSecurityFilterToggled),
         toggler("Allow sensitive files during interview".to_string(),
-            config.safety.security_filter.allow_during_interview,
-            Message::SafetyAllowSensitiveDuringInterviewToggled),
+            config.filesafe.security_filter.allow_during_interview,
+            Message::FileSafeAllowSensitiveDuringInterviewToggled),
         help_tooltip("Blocks access to sensitive files (.env, credentials, keys)"),
         
         // Event Log Viewer (optional)
-        text("Recent Safety Events").size(18),
-        // List of recent blocked commands from safety-events.jsonl
+        text("Recent FileSafe Events").size(18),
+        // List of recent blocked commands from filesafe-events.jsonl
     ]
     .spacing(10)
     .into()
@@ -2031,26 +2288,26 @@ fn render_safety_tab(config: &GuiConfig, ...) -> Element<Message> {
 3. **Message Enum Updates:**
 
 ```rust
-// In src/app.rs, add safety-related messages:
+// In src/app.rs, add FileSafe-related messages:
 pub enum Message {
     // ... existing messages ...
-    SafetyBashGuardToggled(bool),
-    SafetyAllowDestructiveToggled(bool),
-    SafetyFileGuardToggled(bool),
-    SafetyFileGuardStrictToggled(bool),
-    SafetySecurityFilterToggled(bool),
-    SafetyAllowSensitiveDuringInterviewToggled(bool),
-    SafetyViewEventLog,
+    FileSafeBashGuardToggled(bool),
+    FileSafeAllowDestructiveToggled(bool),
+    FileSafeFileGuardToggled(bool),
+    FileSafeFileGuardStrictToggled(bool),
+    FileSafeSecurityFilterToggled(bool),
+    FileSafeAllowSensitiveDuringInterviewToggled(bool),
+    FileSafeViewEventLog,
 }
 ```
 
 4. **Config Wiring (Critical):**
-   - Safety config must be wired to `PuppetMasterConfig` (orchestrator config)
+   - FileSafe config must be wired to `PuppetMasterConfig` (orchestrator config)
    - Follow Option B pattern from WorktreeGitImprovement plan
    - Build run config from GUI config at orchestrator start
-   - Ensure safety settings are available to `BaseRunner` initialization
+   - Ensure FileSafe settings are available to `BaseRunner` initialization
 
-### 14.6 Integration with Verification Gates
+### 15.6 Integration with Verification Gates
 
 **Current Architecture:**
 - Verification gates run AFTER iteration completion
@@ -2070,7 +2327,7 @@ pub enum Message {
    - Add gate-specific override list:
 
 ```rust
-pub struct SafetyConfig {
+pub struct FileSafeConfig {
     // ... existing fields ...
     pub gate_overrides: GateOverrideConfig,
 }
@@ -2084,9 +2341,9 @@ pub struct GateOverrideConfig {
 3. **Gate Evidence Integration:**
    - Blocked commands should be logged as gate evidence
    - Add to `GateReport` if guard blocks occur during gate execution
-   - Helps track safety violations during verification
+   - Helps track FileSafe violations during verification
 
-### 14.7 Integration with State Management
+### 15.7 Integration with State Management
 
 **Current Architecture:**
 - State is managed via `prd.json`, `progress.txt`, `AGENTS.md`
@@ -2095,10 +2352,10 @@ pub struct GateOverrideConfig {
 
 **Integration Points:**
 
-1. **Safety Event State:**
-   - Safety events are logged to `.puppet-master/logs/safety-events.jsonl`
+1. **FileSafe event state:**
+   - FileSafe events are logged to `.puppet-master/logs/filesafe-events.jsonl`
    - Should be included in state snapshots for debugging
-   - Consider adding to `prd.json` metadata or separate safety state file
+   - Consider adding to `prd.json` metadata or separate FileSafe state file
 
 2. **Guard Configuration State:**
    - Guard config is part of `GuiConfig` → `puppet-master.yaml`
@@ -2110,7 +2367,7 @@ pub struct GateOverrideConfig {
    - Plan metadata should be accessible to `BaseRunner`
    - Consider adding to `ExecutionRequest` or passing via context
 
-### 14.8 Integration with Cleanup (MiscPlan)
+### 15.8 Integration with Cleanup (MiscPlan)
 
 **Current Architecture:**
 - Cleanup runs `prepare_working_directory` and `cleanup_after_execution`
@@ -2132,7 +2389,7 @@ pub struct GateOverrideConfig {
    - Security filter patterns should be added to cleanup allowlist
    - Prevents accidental deletion of credentials
 
-### 14.9 Gaps Identified
+### 15.9 Gaps Identified
 
 #### Gap 1: ExecutionRequest Metadata
 **Issue:** No way to tag operations as verification gates, interview phases, etc.
@@ -2145,8 +2402,8 @@ pub struct GateOverrideConfig {
 **Fix:** Pass plan metadata via `ExecutionRequest` or context files
 
 #### Gap 3: Config Wiring
-**Issue:** Safety config in GUI may not be wired to orchestrator config (same issue as WorktreeGitImprovement)
-**Impact:** Safety settings from GUI won't be applied at runtime
+**Issue:** FileSafe config in GUI may not be wired to orchestrator config (same issue as WorktreeGitImprovement)
+**Impact:** FileSafe settings from GUI won't be applied at runtime
 **Fix:** Implement Option B config wiring (build run config from GUI at orchestrator start)
 
 #### Gap 4: Worktree Path Resolution
@@ -2160,11 +2417,11 @@ pub struct GateOverrideConfig {
 **Fix:** Tag interview operations in `ExecutionRequest`, check tag in guards
 
 #### Gap 6: Event Log Integration
-**Issue:** Safety events logged separately from other events
-**Impact:** Difficult to correlate safety violations with execution context
-**Fix:** Integrate with existing event logging system or add safety events to gate reports
+**Issue:** FileSafe events logged separately from other events
+**Impact:** Difficult to correlate FileSafe violations with execution context
+**Fix:** Integrate with existing event logging system or add FileSafe events to gate reports
 
-### 14.10 Potential Issues
+### 15.10 Potential Issues
 
 #### Issue 1: False Positives in Documentation
 **Problem:** Agents may include destructive commands in documentation or comments
@@ -2209,13 +2466,13 @@ pub struct GateOverrideConfig {
 - Provide `BashGuard::disabled()` fallback
 - Doctor check validates guard initialization
 
-### 14.11 Enhancements for Existing Systems
+### 15.11 Enhancements for Existing Systems
 
-#### Enhancement 1: Doctor Check for Safety Guards
+#### Enhancement 1: Doctor check for FileSafe
 **Add to `src/doctor/checks/`:**
 ```rust
-// DRY:FN:check_safety_guards — Verify safety guards are initialized correctly
-pub fn check_safety_guards() -> DoctorCheck {
+// DRY:FN:check_filesafe — Verify FileSafe guards are initialized correctly
+pub fn check_filesafe() -> DoctorCheck {
     // Check pattern file exists and is readable
     // Check patterns compile as valid regex
     // Check guards initialize without errors
@@ -2223,15 +2480,15 @@ pub fn check_safety_guards() -> DoctorCheck {
 }
 ```
 
-#### Enhancement 2: Safety Events in Gate Reports
-**Enhance `GateReport` to include safety violations:**
+#### Enhancement 2: FileSafe events in gate reports
+**Enhance `GateReport` to include FileSafe violations:**
 ```rust
 pub struct GateReport {
     // ... existing fields ...
-    pub safety_violations: Vec<SafetyViolation>,  // New field
+    pub filesafe_violations: Vec<FileSafeViolation>,  // New field
 }
 
-pub struct SafetyViolation {
+pub struct FileSafeViolation {
     pub guard_type: String,  // "bash_guard", "file_guard", "security_filter"
     pub violation_type: String,  // "destructive_command", "file_not_in_plan", etc.
     pub details: String,
@@ -2240,12 +2497,12 @@ pub struct SafetyViolation {
 }
 ```
 
-#### Enhancement 3: Safety Metrics Dashboard
+#### Enhancement 3: FileSafe metrics dashboard
 **Add to GUI status/overview:**
 - Count of blocked commands (total, by guard type)
 - Most common violations
 - Override usage statistics
-- Safety event timeline
+- FileSafe event timeline
 
 #### Enhancement 4: Plan File List Validation
 **Enhance plan generation to include file lists:**
@@ -2256,17 +2513,17 @@ pub struct SafetyViolation {
 #### Enhancement 5: Guard Configuration Profiles
 **Allow different guard strictness per tier:**
 ```rust
-pub struct TierSafetyConfig {
-    pub phase: SafetyConfig,
-    pub task: SafetyConfig,
-    pub subtask: SafetyConfig,
-    pub iteration: SafetyConfig,
+pub struct TierFileSafeConfig {
+    pub phase: FileSafeConfig,
+    pub task: FileSafeConfig,
+    pub subtask: FileSafeConfig,
+    pub iteration: FileSafeConfig,
 }
 ```
 - Phase/Task tiers: stricter guards (planning phase)
 - Subtask/Iteration tiers: more permissive (execution phase)
 
-### 14.12 Integration Checklist
+### 15.12 Integration Checklist
 
 - [ ] **ExecutionRequest Updates**
   - [ ] Add `tags: Vec<String>` field OR use `env_vars` for operation metadata
@@ -2284,12 +2541,12 @@ pub struct TierSafetyConfig {
 - [ ] **Orchestrator Integration**
   - [ ] Tag verification gate operations in `ExecutionRequest`
   - [ ] Pass plan metadata (allowed files) to `ExecutionRequest`
-  - [ ] Integrate safety violations into gate reports
+  - [ ] Integrate FileSafe violations into gate reports
   - [ ] Update gate execution to handle guard overrides
 
 - [ ] **Interview Integration**
   - [ ] Tag interview operations in `ExecutionRequest`
-  - [ ] Add safety config to `InterviewGuiConfig`
+  - [ ] Add FileSafe config to `InterviewGuiConfig`
   - [ ] Relax security filter during interview phases (if configured)
 
 - [ ] **Worktree Integration**
@@ -2298,15 +2555,15 @@ pub struct TierSafetyConfig {
   - [ ] Handle worktree symlinks in path resolution
 
 - [ ] **GUI Integration**
-  - [ ] Add `SafetyConfig` to `GuiConfig`
-  - [ ] Add Safety tab to Config view (or add to Advanced tab)
-  - [ ] Add safety-related messages to `Message` enum
-  - [ ] Wire safety config to orchestrator config (Option B)
-  - [ ] Add safety event log viewer (optional)
+  - [ ] Add `FileSafeConfig` to `GuiConfig`
+  - [ ] Add FileSafe tab to Config view (or add to Advanced tab)
+  - [ ] Add FileSafe-related messages to `Message` enum
+  - [ ] Wire FileSafe config to orchestrator config (Option B)
+  - [ ] Add FileSafe event log viewer (optional)
 
 - [ ] **Config Wiring**
-  - [ ] Wire `GuiConfig::safety` to `PuppetMasterConfig` (orchestrator config)
-  - [ ] Ensure safety settings available to `BaseRunner` initialization
+  - [ ] Wire `GuiConfig::filesafe` to `PuppetMasterConfig` (orchestrator config)
+  - [ ] Ensure FileSafe settings available to `BaseRunner` initialization
   - [ ] Test config persistence across sessions
 
 - [ ] **Cleanup Integration**
@@ -2315,9 +2572,9 @@ pub struct TierSafetyConfig {
   - [ ] Ensure cleanup never deletes sensitive files
 
 - [ ] **State Management**
-  - [ ] Include safety events in state snapshots
+  - [ ] Include FileSafe events in state snapshots
   - [ ] Persist guard configuration in config file
-  - [ ] Add safety state to `prd.json` metadata (optional)
+  - [ ] Add FileSafe state to `prd.json` metadata (optional)
 
 - [ ] **Testing Integration**
   - [ ] Test guards with verification gate operations
@@ -2328,7 +2585,7 @@ pub struct TierSafetyConfig {
 
 ---
 
-## 15. References
+## 16. References
 
 - **AGENTS.md:** DRY Method, platform_specs, Pre-Completion Verification Checklist
 - **Plans/orchestrator-subagent-integration.md:** BaseRunner execution flow, verification gates, tier execution
@@ -2336,6 +2593,7 @@ pub struct TierSafetyConfig {
 - **Plans/WorktreeGitImprovement.md:** Worktree execution context, path resolution
 - **Plans/MiscPlan.md:** Cleanup policies, runner contract, file management
 - **puppet-master-rs/src/platforms/runner.rs:** BaseRunner implementation
+- **puppet-master-rs/src/platforms/context_files.rs:** Context file handling, append_prompt_attachments
 - **puppet-master-rs/src/config/gui_config.rs:** GUI config structure
 - **puppet-master-rs/src/types/execution.rs:** ExecutionRequest structure
 - **puppet-master-rs/src/core/orchestrator.rs:** Orchestrator execution flow
