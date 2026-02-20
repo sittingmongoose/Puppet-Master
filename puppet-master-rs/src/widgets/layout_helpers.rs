@@ -19,20 +19,21 @@ pub fn responsive_form_row<'a>(
     label: impl Into<String>,
     input: impl Into<Element<'a, Message>>,
     size: LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let label_str = label.into();
     if size.is_mobile() {
-        column![selectable_label(theme, &label_str), input.into()]
-            .spacing(tokens::spacing::SM)
+        column![selectable_label(theme, &label_str, scaled), input.into()]
+            .spacing(scaled.spacing(tokens::spacing::SM))
             .width(Length::Fill)
             .into()
     } else {
         row![
-            container(selectable_label(theme, &label_str))
-                .width(Length::Fixed(tokens::layout::FORM_LABEL_WIDTH)),
+            container(selectable_label(theme, &label_str, scaled))
+                .width(Length::Fixed(scaled.layout(tokens::layout::FORM_LABEL_WIDTH))),
             input.into()
         ]
-        .spacing(tokens::spacing::MD)
+        .spacing(scaled.spacing(tokens::spacing::MD))
         .align_y(iced::Alignment::Center)
         .width(Length::Fill)
         .into()
@@ -46,20 +47,21 @@ pub fn responsive_form_row_wide_label<'a>(
     label: impl Into<String>,
     input: impl Into<Element<'a, Message>>,
     size: LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let label_str = label.into();
     if size.is_mobile() {
-        column![selectable_label(theme, &label_str), input.into()]
-            .spacing(tokens::spacing::SM)
+        column![selectable_label(theme, &label_str, scaled), input.into()]
+            .spacing(scaled.spacing(tokens::spacing::SM))
             .width(Length::Fill)
             .into()
     } else {
         row![
-            container(selectable_label(theme, &label_str))
-                .width(Length::Fixed(tokens::layout::FORM_LABEL_WIDTH_WIDE)),
+            container(selectable_label(theme, &label_str, scaled))
+                .width(Length::Fixed(scaled.layout(tokens::layout::FORM_LABEL_WIDTH_WIDE))),
             input.into()
         ]
-        .spacing(tokens::spacing::MD)
+        .spacing(scaled.spacing(tokens::spacing::MD))
         .align_y(iced::Alignment::Center)
         .width(Length::Fill)
         .into()
@@ -77,20 +79,21 @@ pub fn responsive_label_value<'a>(
     label: impl Into<String>,
     value: impl Into<Element<'a, Message>>,
     size: LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let label_str = label.into();
     if size.is_mobile() {
-        column![selectable_label(theme, &label_str), value.into()]
-            .spacing(tokens::spacing::XXS)
+        column![selectable_label(theme, &label_str, scaled), value.into()]
+            .spacing(scaled.spacing(tokens::spacing::XXS))
             .width(Length::Fill)
             .into()
     } else {
         row![
-            container(selectable_label(theme, &label_str))
-                .width(Length::Fixed(tokens::layout::DETAIL_LABEL_WIDTH)),
+            container(selectable_label(theme, &label_str, scaled))
+                .width(Length::Fixed(scaled.layout(tokens::layout::DETAIL_LABEL_WIDTH))),
             value.into()
         ]
-        .spacing(tokens::spacing::SM)
+        .spacing(scaled.spacing(tokens::spacing::SM))
         .align_y(iced::Alignment::Center)
         .width(Length::Fill)
         .into()
@@ -103,9 +106,10 @@ pub fn responsive_label_value<'a>(
 ///
 /// - Desktop Large: Max content width
 /// - Others: Fill
-pub fn responsive_container_width(size: LayoutSize) -> Length {
-    if size.width >= tokens::layout::MAX_CONTENT_WIDTH {
-        Length::Fixed(tokens::layout::MAX_CONTENT_WIDTH)
+pub fn responsive_container_width(size: LayoutSize, scaled: crate::theme::ScaledTokens) -> Length {
+    let max_w = scaled.layout(tokens::layout::MAX_CONTENT_WIDTH);
+    if size.width >= max_w {
+        Length::Fixed(max_w)
     } else {
         Length::Fill
     }
@@ -114,23 +118,25 @@ pub fn responsive_container_width(size: LayoutSize) -> Length {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::theme::ScaledTokens;
     use crate::widgets::responsive::breakpoints;
 
     #[test]
     fn test_responsive_container_width() {
+        let scaled = ScaledTokens::default();
         let mobile_size = LayoutSize {
             width: breakpoints::MOBILE - 10.0,
             height: 600.0,
         };
-        assert_eq!(responsive_container_width(mobile_size), Length::Fill);
+        assert_eq!(responsive_container_width(mobile_size, scaled), Length::Fill);
 
         let large_desktop_size = LayoutSize {
-            width: tokens::layout::MAX_CONTENT_WIDTH + 100.0,
+            width: scaled.layout(tokens::layout::MAX_CONTENT_WIDTH) + 100.0,
             height: 900.0,
         };
         assert_eq!(
-            responsive_container_width(large_desktop_size),
-            Length::Fixed(tokens::layout::MAX_CONTENT_WIDTH)
+            responsive_container_width(large_desktop_size, scaled),
+            Length::Fixed(scaled.layout(tokens::layout::MAX_CONTENT_WIDTH))
         );
     }
 }

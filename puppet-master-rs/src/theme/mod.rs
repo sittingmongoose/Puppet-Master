@@ -2,8 +2,11 @@
 pub mod colors;
 pub mod fonts;
 pub mod palette;
+pub mod scaled;
 pub mod styles;
 pub mod tokens;
+
+pub use scaled::ScaledTokens;
 
 use iced::Color;
 use palette::Palette;

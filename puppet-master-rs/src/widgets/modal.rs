@@ -77,6 +77,7 @@ pub fn modal_overlay<'a, Message>(
     theme: &AppTheme,
     on_close: Message,
     on_confirm: Option<Message>,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message>
 where
     Message: Clone + 'a,
@@ -165,10 +166,10 @@ where
     let body_content = scrollable(
         container(
             text(modal_data.body.clone())
-                .size(14)
+                .size(scaled.font_size(tokens::font_size::SM))
                 .color(theme_copy.ink()),
         )
-        .padding(16)
+        .padding(scaled.spacing(tokens::spacing::MD))
         .width(Length::Fill),
     )
     .height(Length::Fill);
@@ -186,13 +187,20 @@ where
                 ..container::Style::default()
             });
 
-        let mut footer_buttons = row![].spacing(12).padding(16);
+        let mut footer_buttons = row![]
+            .spacing(scaled.spacing(tokens::spacing::SM))
+            .padding(scaled.spacing(tokens::spacing::MD));
 
         // Cancel button
         if let Some(cancel_label) = modal_data.cancel_label.clone() {
-            let cancel_btn = button(text(cancel_label).size(14))
-                .on_press(on_close.clone())
-                .padding(Padding::from([8, 16]))
+            let cancel_btn = button(
+                text(cancel_label).size(scaled.font_size(tokens::font_size::SM)),
+            )
+            .on_press(on_close.clone())
+            .padding(Padding::from([
+                scaled.spacing(tokens::spacing::SM),
+                scaled.spacing(tokens::spacing::MD),
+            ]))
                 .style(move |_theme: &iced::Theme, status| {
                     let (bg, shadow_offset) = match status {
                         iced::widget::button::Status::Hovered => {
@@ -234,9 +242,14 @@ where
         // Confirm button
         if let Some(confirm_label) = modal_data.confirm_label.clone() {
             if let Some(confirm_msg) = on_confirm {
-                let confirm_btn = button(text(confirm_label).size(14))
-                    .on_press(confirm_msg)
-                    .padding(Padding::from([8, 16]))
+                let confirm_btn = button(
+                    text(confirm_label).size(scaled.font_size(tokens::font_size::SM)),
+                )
+                .on_press(confirm_msg)
+                .padding(Padding::from([
+                    scaled.spacing(tokens::spacing::SM),
+                    scaled.spacing(tokens::spacing::MD),
+                ]))
                     .style(move |_theme: &iced::Theme, status| {
                         let (bg, shadow_offset) = match status {
                             iced::widget::button::Status::Hovered => {
@@ -282,7 +295,7 @@ where
 
     // Wrap in styled panel with shadow
     let modal_panel = container(modal_content)
-        .width(Length::Fixed(modal_size.width()))
+        .width(Length::Fixed(scaled.layout(modal_size.width())))
         .max_height(modal_size.max_height())
         .style(move |_theme: &iced::Theme| container::Style {
             background: Some(iced::Background::Color(theme_copy.paper())),
@@ -353,6 +366,7 @@ pub fn confirm_modal<'a, Message>(
     theme: &AppTheme,
     on_confirm: Message,
     on_cancel: Message,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message>
 where
     Message: Clone + 'a,
@@ -371,6 +385,7 @@ where
         theme,
         on_cancel,
         Some(on_confirm),
+        scaled,
     )
 }
 
@@ -402,6 +417,7 @@ pub fn error_modal<'a, Message>(
     details: impl Into<String>,
     theme: &AppTheme,
     on_close: Message,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message>
 where
     Message: Clone + 'a,
@@ -414,5 +430,5 @@ where
         cancel_label: Some("Close".to_string()),
     };
 
-    modal_overlay(content, Some(modal_data), theme, on_close, None)
+    modal_overlay(content, Some(modal_data), theme, on_close, None, scaled)
 }

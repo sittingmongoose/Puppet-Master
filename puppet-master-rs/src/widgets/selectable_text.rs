@@ -11,12 +11,16 @@ use iced::widget::{TextInput, mouse_area, text_input};
 
 // DRY:WIDGET:selectable_label
 /// Build a selectable text label that looks like static text.
-pub fn selectable_label<'a>(theme: &'a AppTheme, value: &str) -> iced::Element<'a, Message> {
+pub fn selectable_label<'a>(
+    theme: &'a AppTheme,
+    value: &str,
+    scaled: crate::theme::ScaledTokens,
+) -> iced::Element<'a, Message> {
     mouse_area(
         text_input("", value)
             .on_input(|_| Message::None)
             .font(fonts::FONT_UI)
-            .size(tokens::font_size::BASE)
+            .size(scaled.font_size(tokens::font_size::BASE))
             .padding(0)
             .style(styles::selectable_label_styled(theme)),
     )
@@ -28,12 +32,16 @@ pub fn selectable_label<'a>(theme: &'a AppTheme, value: &str) -> iced::Element<'
 
 // DRY:WIDGET:selectable_label_mono
 /// Build a selectable monospace label that looks like static text.
-pub fn selectable_label_mono<'a>(theme: &'a AppTheme, value: &str) -> iced::Element<'a, Message> {
+pub fn selectable_label_mono<'a>(
+    theme: &'a AppTheme,
+    value: &str,
+    scaled: crate::theme::ScaledTokens,
+) -> iced::Element<'a, Message> {
     mouse_area(
         text_input("", value)
             .on_input(|_| Message::None)
             .font(fonts::FONT_MONO)
-            .size(tokens::font_size::SM)
+            .size(scaled.font_size(tokens::font_size::SM))
             .padding(0)
             .style(styles::selectable_label_styled(theme)),
     )
@@ -51,8 +59,9 @@ pub fn selectable_text_input<'a, Message: Clone + 'a>(
     theme: &AppTheme,
     value: &'a str,
     on_interaction: Message,
+    scaled: crate::theme::ScaledTokens,
 ) -> TextInput<'a, Message> {
-    selectable_text_input_with_on_change(theme, value, move |_| on_interaction.clone())
+    selectable_text_input_with_on_change(theme, value, move |_| on_interaction.clone(), scaled)
 }
 
 // DRY:WIDGET:selectable_text_input_with_on_change
@@ -61,6 +70,7 @@ pub fn selectable_text_input_with_on_change<'a, Message, F>(
     theme: &AppTheme,
     value: &'a str,
     on_change: F,
+    scaled: crate::theme::ScaledTokens,
 ) -> TextInput<'a, Message>
 where
     Message: Clone + 'a,
@@ -73,7 +83,7 @@ where
         .on_input(on_change)
         .on_paste(on_paste)
         .font(fonts::FONT_MONO)
-        .size(tokens::font_size::SM)
+        .size(scaled.font_size(tokens::font_size::SM))
         .padding([2, 6])
         .style(
             move |_iced_theme: &iced::Theme, status: text_input::Status| {
@@ -110,11 +120,14 @@ pub fn selectable_text_field<'a, F>(
     field: SelectableField,
     _active_context_menu: &'a Option<ContextMenuTarget>,
     on_change: F,
+    scaled: crate::theme::ScaledTokens,
 ) -> iced::Element<'a, Message>
 where
     F: Fn(String) -> Message + Clone + 'a,
 {
-    mouse_area(selectable_text_input_with_on_change(theme, value, on_change).width(Length::Fill))
+    mouse_area(
+        selectable_text_input_with_on_change(theme, value, on_change, scaled).width(Length::Fill),
+    )
         .on_right_press(Message::OpenContextMenu(
             ContextMenuTarget::SelectableField(field),
         ))

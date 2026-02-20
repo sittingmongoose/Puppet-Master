@@ -60,6 +60,7 @@ pub fn terminal_output<'a, Message: 'a>(
     lines: &'a [TerminalLine],
     _theme: &'a AppTheme,
     height: f32,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let mut content = column![].spacing(1.0);
 
@@ -72,17 +73,17 @@ pub fn terminal_output<'a, Message: 'a>(
 
     for line in visible_lines {
         let timestamp_text = text(&line.timestamp)
-            .size(tokens::font_size::XS)
+            .size(scaled.font_size(tokens::font_size::XS))
             .color(Color::from_rgb(0.4, 0.4, 0.4))
             .font(fonts::FONT_MONO);
 
         let prefix_text = text(format!("[{}]", line.line_type.prefix()))
-            .size(tokens::font_size::XS)
+            .size(scaled.font_size(tokens::font_size::XS))
             .color(line.line_type.color())
             .font(fonts::FONT_MONO);
 
         let content_text = text(&line.content)
-            .size(tokens::font_size::SM)
+            .size(scaled.font_size(tokens::font_size::SM))
             .color(line.line_type.color())
             .font(fonts::FONT_MONO);
 
@@ -102,7 +103,7 @@ pub fn terminal_output<'a, Message: 'a>(
     if lines.is_empty() {
         content = content.push(
             text("Waiting for output...")
-                .size(tokens::font_size::SM)
+                .size(scaled.font_size(tokens::font_size::SM))
                 .color(Color::from_rgb(0.4, 0.4, 0.4))
                 .font(fonts::FONT_MONO),
         );
@@ -115,7 +116,7 @@ pub fn terminal_output<'a, Message: 'a>(
     container(
         scrollable(
             container(content)
-                .padding(Padding::new(tokens::spacing::MD))
+                .padding(Padding::new(scaled.spacing(tokens::spacing::MD)))
                 .width(Length::Fill),
         )
         .height(Length::Fixed(height)),
@@ -138,8 +139,9 @@ pub fn terminal_output<'a, Message: 'a>(
 pub fn terminal_compact<'a, Message: 'a>(
     lines: &'a [TerminalLine],
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
-    terminal_output(lines, theme, 200.0)
+    terminal_output(lines, theme, 200.0, scaled)
 }
 
 // DRY:WIDGET:terminal_large
@@ -147,6 +149,7 @@ pub fn terminal_compact<'a, Message: 'a>(
 pub fn terminal_large<'a, Message: 'a>(
     lines: &'a [TerminalLine],
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
-    terminal_output(lines, theme, 500.0)
+    terminal_output(lines, theme, 500.0, scaled)
 }

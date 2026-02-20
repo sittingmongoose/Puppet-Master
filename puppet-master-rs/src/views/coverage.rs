@@ -40,7 +40,9 @@ pub fn view<'a>(
     phase_filter: &'a str,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
+
     // Coverage view uses vertical card layout; size available for future grid improvements
     let mut content = column![]
         .spacing(tokens::spacing::LG)
@@ -57,7 +59,7 @@ pub fn view<'a>(
 
     let header_actions = row![
         column![
-            selectable_label(theme, "Phase Filter"),
+            selectable_label(theme, "Phase Filter", scaled),
             pick_list(
                 phase_options,
                 Some(phase_filter.to_string()),
@@ -69,12 +71,13 @@ pub fn view<'a>(
         refresh_button(
             theme,
             Message::None,
-            RefreshStyle::Uppercase(ButtonVariant::Info)
+            RefreshStyle::Uppercase(ButtonVariant::Info),
+            scaled,
         ),
     ]
     .spacing(tokens::spacing::MD)
     .align_y(iced::Alignment::Center);
-    content = content.push(page_header("Coverage", theme, header_actions, size));
+    content = content.push(page_header("Coverage", theme, header_actions, size, scaled));
 
     // Overall stats cards - 4 columns
     let covered_count = requirements.iter().filter(|r| r.covered).count();
@@ -86,8 +89,8 @@ pub fn view<'a>(
     stat_cards = stat_cards.push(
         container(
             column![
-                selectable_label(theme, &format!("{:.0}%", overall_percent * 100.0)),
-                selectable_label(theme, "Overall Coverage"),
+                selectable_label(theme, &format!("{:.0}%", overall_percent * 100.0), scaled),
+                selectable_label(theme, "Overall Coverage", scaled),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center),
@@ -107,8 +110,8 @@ pub fn view<'a>(
     stat_cards = stat_cards.push(
         container(
             column![
-                selectable_label(theme, &format!("{}/{}", covered_count, total_count)),
-                selectable_label(theme, "Features Tested"),
+                selectable_label(theme, &format!("{}/{}", covered_count, total_count), scaled),
+                selectable_label(theme, "Features Tested", scaled),
                 selectable_label(
                     theme,
                     &format!(
@@ -118,7 +121,8 @@ pub fn view<'a>(
                         } else {
                             0.0
                         }
-                    )
+                    ),
+                    scaled,
                 ),
             ]
             .spacing(tokens::spacing::XXS)
@@ -139,8 +143,8 @@ pub fn view<'a>(
     stat_cards = stat_cards.push(
         container(
             column![
-                selectable_label(theme, &format!("{}/{}", covered_count, total_count)),
-                selectable_label(theme, "Features Verified"),
+                selectable_label(theme, &format!("{}/{}", covered_count, total_count), scaled),
+                selectable_label(theme, "Features Verified", scaled),
                 selectable_label(
                     theme,
                     &format!(
@@ -150,7 +154,8 @@ pub fn view<'a>(
                         } else {
                             0.0
                         }
-                    )
+                    ),
+                    scaled,
                 ),
             ]
             .spacing(tokens::spacing::XXS)
@@ -171,8 +176,8 @@ pub fn view<'a>(
     stat_cards = stat_cards.push(
         container(
             column![
-                selectable_label(theme, &total_evidence.to_string()),
-                selectable_label(theme, "Total Evidence"),
+                selectable_label(theme, &total_evidence.to_string(), scaled),
+                selectable_label(theme, "Total Evidence", scaled),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center),
@@ -194,14 +199,14 @@ pub fn view<'a>(
     // Category breakdown
     if !categories.is_empty() {
         let mut category_content = column![
-            selectable_label(theme, "Coverage by Category"),
+            selectable_label(theme, "Coverage by Category", scaled),
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
         ]
         .spacing(tokens::spacing::MD);
 
         for cat in categories {
             let cat_row = row![
-                selectable_label(theme, &cat.name),
+                selectable_label(theme, &cat.name, scaled),
                 styled_progress_bar(
                     theme,
                     cat.coverage,
@@ -212,10 +217,11 @@ pub fn view<'a>(
                     } else {
                         ProgressVariant::Error
                     },
-                    ProgressSize::Medium
+                    ProgressSize::Medium,
+                    scaled,
                 ),
-                selectable_label(theme, &format!("{:.0}%", cat.coverage * 100.0)),
-                selectable_label(theme, &format!("{} tests", cat.test_count)),
+                selectable_label(theme, &format!("{:.0}%", cat.coverage * 100.0), scaled),
+                selectable_label(theme, &format!("{} tests", cat.test_count), scaled),
             ]
             .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center);
@@ -226,6 +232,7 @@ pub fn view<'a>(
         content = content.push(themed_panel(
             container(category_content).padding(tokens::spacing::MD),
             theme,
+            scaled,
         ));
     }
 
@@ -234,14 +241,15 @@ pub fn view<'a>(
         content = content.push(themed_panel(
             container(
                 column![
-                    selectable_label(theme, "No requirements defined"),
+                    selectable_label(theme, "No requirements defined", scaled),
                     Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                    selectable_label(theme, "Define requirements in the wizard to see coverage"),
+                    selectable_label(theme, "Define requirements in the wizard to see coverage", scaled),
                 ]
                 .spacing(tokens::spacing::SM),
             )
             .padding(tokens::spacing::XL),
             theme,
+            scaled,
         ));
     } else {
         let covered_count = requirements.iter().filter(|r| r.covered).count();
@@ -250,7 +258,8 @@ pub fn view<'a>(
         let summary = row![
             selectable_label(
                 theme,
-                &format!("{} of {} requirements covered", covered_count, total_count)
+                &format!("{} of {} requirements covered", covered_count, total_count),
+                scaled,
             ),
             Space::new().width(Length::Fill),
             status_badge(
@@ -270,6 +279,7 @@ pub fn view<'a>(
         content = content.push(themed_panel(
             container(summary).padding(tokens::spacing::MD),
             theme,
+            scaled,
         ));
 
         // Requirement table
@@ -277,11 +287,11 @@ pub fn view<'a>(
             // Table header with background
             container(
                 row![
-                    container(selectable_label(theme, "Status")).width(Length::Fixed(80.0)),
-                    container(selectable_label(theme, "ID")).width(Length::FillPortion(1)),
-                    container(selectable_label(theme, "Description")).width(Length::FillPortion(3)),
-                    container(selectable_label(theme, "Evidence")).width(Length::Fixed(100.0)),
-                    container(selectable_label(theme, "Tiers")).width(Length::Fixed(80.0)),
+                    container(selectable_label(theme, "Status", scaled)).width(Length::Fixed(80.0)),
+                    container(selectable_label(theme, "ID", scaled)).width(Length::FillPortion(1)),
+                    container(selectable_label(theme, "Description", scaled)).width(Length::FillPortion(3)),
+                    container(selectable_label(theme, "Evidence", scaled)).width(Length::Fixed(100.0)),
+                    container(selectable_label(theme, "Tiers", scaled)).width(Length::Fixed(80.0)),
                 ]
                 .spacing(tokens::spacing::SM)
                 .padding(tokens::spacing::SM)
@@ -309,11 +319,11 @@ pub fn view<'a>(
                     status_dot(Status::Error)
                 })
                 .width(Length::Fixed(80.0)),
-                container(selectable_label_mono(theme, &req.id)).width(Length::FillPortion(1)),
-                container(selectable_label(theme, &req.description)).width(Length::FillPortion(3)),
-                container(selectable_label(theme, &format!("{}", req.evidence_count)))
+                container(selectable_label_mono(theme, &req.id, scaled)).width(Length::FillPortion(1)),
+                container(selectable_label(theme, &req.description, scaled)).width(Length::FillPortion(3)),
+                container(selectable_label(theme, &format!("{}", req.evidence_count), scaled))
                     .width(Length::Fixed(100.0)),
-                container(selectable_label(theme, &format!("{}", req.tier_ids.len())))
+                container(selectable_label(theme, &format!("{}", req.tier_ids.len()), scaled))
                     .width(Length::Fixed(80.0)),
             ]
             .spacing(tokens::spacing::SM)
@@ -342,6 +352,7 @@ pub fn view<'a>(
         content = content.push(themed_panel(
             container(scrollable(table).height(Length::Fill)).padding(tokens::spacing::MD),
             theme,
+            scaled,
         ));
     }
 

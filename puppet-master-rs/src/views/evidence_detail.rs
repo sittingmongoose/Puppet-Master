@@ -19,7 +19,9 @@ pub fn view<'a>(
     content_preview: &'a Option<String>,
     theme: &'a AppTheme,
     _size: crate::widgets::responsive::LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
+
     // Detail view uses vertical layout; size reserved for future enhancements
     let mut content = column![]
         .spacing(tokens::spacing::LG)
@@ -28,10 +30,10 @@ pub fn view<'a>(
     // Header with back button
     content = content.push(
         row![
-            styled_button(theme, "< Back", ButtonVariant::Ghost)
+            styled_button(theme, "< Back", ButtonVariant::Ghost, scaled)
                 .on_press(Message::NavigateTo(Page::Evidence)),
             Space::new().width(Length::Fill),
-            selectable_label(theme, "Evidence Detail"),
+            selectable_label(theme, "Evidence Detail", scaled),
         ]
         .spacing(tokens::spacing::MD)
         .align_y(iced::Alignment::Center),
@@ -40,7 +42,7 @@ pub fn view<'a>(
     // Metadata panel
     let metadata = column![
         row![
-            container(selectable_label(theme, item.evidence_type.icon()))
+            container(selectable_label(theme, item.evidence_type.icon(), scaled))
                 .padding(tokens::spacing::MD)
                 .style(|_theme: &iced::Theme| {
                     iced::widget::container::Style {
@@ -55,36 +57,37 @@ pub fn view<'a>(
                         ..Default::default()
                     }
                 }),
-            selectable_label(theme, item.evidence_type.as_str()),
+            selectable_label(theme, item.evidence_type.as_str(), scaled),
         ]
         .spacing(tokens::spacing::MD)
         .align_y(iced::Alignment::Center),
         column![
-            selectable_label(theme, "ID:"),
-            selectable_label_mono(theme, &item.id),
+            selectable_label(theme, "ID:", scaled),
+            selectable_label_mono(theme, &item.id, scaled),
         ]
         .spacing(tokens::spacing::XS),
         column![
-            selectable_label(theme, "Tier ID:"),
-            selectable_label_mono(theme, &item.tier_id),
+            selectable_label(theme, "Tier ID:", scaled),
+            selectable_label_mono(theme, &item.tier_id, scaled),
         ]
         .spacing(tokens::spacing::XS),
         column![
-            selectable_label(theme, "Timestamp:"),
+            selectable_label(theme, "Timestamp:", scaled),
             selectable_label(
                 theme,
-                &item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string()
+                &item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string(),
+                scaled,
             ),
         ]
         .spacing(tokens::spacing::XS),
         column![
-            selectable_label(theme, "Path:"),
-            selectable_label_mono(theme, &item.path.display().to_string()),
+            selectable_label(theme, "Path:", scaled),
+            selectable_label_mono(theme, &item.path.display().to_string(), scaled),
         ]
         .spacing(tokens::spacing::XS),
         column![
-            selectable_label(theme, "Summary:"),
-            selectable_label(theme, &item.summary),
+            selectable_label(theme, "Summary:", scaled),
+            selectable_label(theme, &item.summary, scaled),
         ]
         .spacing(tokens::spacing::XS),
     ]
@@ -93,6 +96,7 @@ pub fn view<'a>(
     content = content.push(themed_panel(
         container(metadata).padding(tokens::spacing::MD),
         theme,
+        scaled,
     ));
 
     // Content preview
@@ -100,9 +104,9 @@ pub fn view<'a>(
         themed_panel(
             container(
                 column![
-                    selectable_label(theme, "Content Preview"),
+                    selectable_label(theme, "Content Preview", scaled),
                     scrollable(
-                        container(selectable_label(theme, preview)).padding(tokens::spacing::SM)
+                        container(selectable_label(theme, preview, scaled)).padding(tokens::spacing::SM)
                     )
                     .height(Length::Fixed(400.0)),
                 ]
@@ -110,18 +114,20 @@ pub fn view<'a>(
             )
             .padding(tokens::spacing::MD),
             theme,
+            scaled,
         )
     } else {
         themed_panel(
             container(
                 column![
-                    selectable_label(theme, "Content Preview"),
-                    selectable_label(theme, "Loading preview..."),
+                    selectable_label(theme, "Content Preview", scaled),
+                    selectable_label(theme, "Loading preview...", scaled),
                 ]
                 .spacing(tokens::spacing::SM),
             )
             .padding(tokens::spacing::MD),
             theme,
+            scaled,
         )
     };
 
@@ -129,9 +135,9 @@ pub fn view<'a>(
 
     // Action buttons
     let actions = row![
-        styled_button(theme, "Open in External Viewer", ButtonVariant::Info)
+        styled_button(theme, "Open in External Viewer", ButtonVariant::Info, scaled)
             .on_press(Message::SelectEvidence(item.id.clone())),
-        styled_button(theme, "Export", ButtonVariant::Secondary)
+        styled_button(theme, "Export", ButtonVariant::Secondary, scaled)
             .on_press(Message::SelectEvidence(item.id.clone())),
     ]
     .spacing(tokens::spacing::SM);
@@ -139,6 +145,7 @@ pub fn view<'a>(
     content = content.push(themed_panel(
         container(actions).padding(tokens::spacing::MD),
         theme,
+        scaled,
     ));
 
     // Type-specific information

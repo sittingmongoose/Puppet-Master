@@ -159,8 +159,9 @@ pub fn styled_button<'a, Message: Clone + 'a>(
     theme: &AppTheme,
     label: &str,
     variant: ButtonVariant,
+    scaled: crate::theme::ScaledTokens,
 ) -> Button<'a, Message> {
-    styled_button_sized(theme, label, variant, ButtonSize::Medium)
+    styled_button_sized(theme, label, variant, ButtonSize::Medium, scaled)
 }
 
 // DRY:WIDGET:styled_button_sized
@@ -182,12 +183,13 @@ pub fn styled_button_sized<'a, Message: Clone + 'a>(
     label: &str,
     variant: ButtonVariant,
     size: ButtonSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Button<'a, Message> {
     let theme_copy = *theme;
     let label_string = label.to_uppercase(); // Uppercase for retro aesthetic
-    let font_size = size.font_size();
-    let padding_x = size.padding_x();
-    let padding_y = size.padding_y();
+    let font_size = scaled.font_size(size.font_size());
+    let padding_x = scaled.spacing(size.padding_x() as f32);
+    let padding_y = scaled.spacing(size.padding_y() as f32);
 
     button(text(label_string).size(font_size).font(fonts::FONT_UI_BOLD))
         .padding([padding_y, padding_x])
@@ -228,8 +230,9 @@ fn lighten_color(color: Color, amount: f32) -> Color {
 pub fn primary_button<'a, Message: Clone + 'a>(
     theme: &AppTheme,
     label: &str,
+    scaled: crate::theme::ScaledTokens,
 ) -> Button<'a, Message> {
-    styled_button(theme, label, ButtonVariant::Primary)
+    styled_button(theme, label, ButtonVariant::Primary, scaled)
 }
 
 // DRY:WIDGET:secondary_button
@@ -237,8 +240,9 @@ pub fn primary_button<'a, Message: Clone + 'a>(
 pub fn secondary_button<'a, Message: Clone + 'a>(
     theme: &AppTheme,
     label: &str,
+    scaled: crate::theme::ScaledTokens,
 ) -> Button<'a, Message> {
-    styled_button(theme, label, ButtonVariant::Secondary)
+    styled_button(theme, label, ButtonVariant::Secondary, scaled)
 }
 
 // DRY:WIDGET:danger_button
@@ -246,8 +250,9 @@ pub fn secondary_button<'a, Message: Clone + 'a>(
 pub fn danger_button<'a, Message: Clone + 'a>(
     theme: &AppTheme,
     label: &str,
+    scaled: crate::theme::ScaledTokens,
 ) -> Button<'a, Message> {
-    styled_button(theme, label, ButtonVariant::Danger)
+    styled_button(theme, label, ButtonVariant::Danger, scaled)
 }
 
 // DRY:WIDGET:warning_button
@@ -255,20 +260,29 @@ pub fn danger_button<'a, Message: Clone + 'a>(
 pub fn warning_button<'a, Message: Clone + 'a>(
     theme: &AppTheme,
     label: &str,
+    scaled: crate::theme::ScaledTokens,
 ) -> Button<'a, Message> {
-    styled_button(theme, label, ButtonVariant::Warning)
+    styled_button(theme, label, ButtonVariant::Warning, scaled)
 }
 
 // DRY:WIDGET:info_button
 /// Create an info button (Electric Blue)
-pub fn info_button<'a, Message: Clone + 'a>(theme: &AppTheme, label: &str) -> Button<'a, Message> {
-    styled_button(theme, label, ButtonVariant::Info)
+pub fn info_button<'a, Message: Clone + 'a>(
+    theme: &AppTheme,
+    label: &str,
+    scaled: crate::theme::ScaledTokens,
+) -> Button<'a, Message> {
+    styled_button(theme, label, ButtonVariant::Info, scaled)
 }
 
 // DRY:WIDGET:ghost_button
 /// Create a ghost button (Transparent)
-pub fn ghost_button<'a, Message: Clone + 'a>(theme: &AppTheme, label: &str) -> Button<'a, Message> {
-    styled_button(theme, label, ButtonVariant::Ghost)
+pub fn ghost_button<'a, Message: Clone + 'a>(
+    theme: &AppTheme,
+    label: &str,
+    scaled: crate::theme::ScaledTokens,
+) -> Button<'a, Message> {
+    styled_button(theme, label, ButtonVariant::Ghost, scaled)
 }
 
 // DRY:WIDGET:header_nav_button
@@ -287,6 +301,7 @@ pub fn header_nav_button<'a, Message: Clone + 'a>(
     theme: &AppTheme,
     label: &str,
     is_active: bool,
+    scaled: crate::theme::ScaledTokens,
 ) -> Button<'a, Message> {
     let theme_copy = *theme;
     let label_string = label.to_uppercase();
@@ -297,8 +312,8 @@ pub fn header_nav_button<'a, Message: Clone + 'a>(
         fonts::FONT_UI
     };
 
-    button(text(label_string).size(size.font_size()).font(font))
-        .padding([size.padding_y(), size.padding_x()])
+    button(text(label_string).size(scaled.font_size(size.font_size())).font(font))
+        .padding([scaled.spacing(size.padding_y() as f32), scaled.spacing(size.padding_x() as f32)])
         .style(move |_iced_theme: &iced::Theme, status: button::Status| {
             let paper = theme_copy.paper();
             let ink = theme_copy.ink();

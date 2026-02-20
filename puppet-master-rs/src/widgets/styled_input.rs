@@ -93,6 +93,7 @@ pub fn styled_text_input<'a, Message: Clone + 'a>(
     theme: &AppTheme,
     placeholder: &str,
     value: &str,
+    scaled: crate::theme::ScaledTokens,
 ) -> TextInput<'a, Message> {
     styled_text_input_with_variant(
         theme,
@@ -100,6 +101,7 @@ pub fn styled_text_input<'a, Message: Clone + 'a>(
         value,
         InputVariant::Default,
         InputSize::Medium,
+        scaled,
     )
 }
 
@@ -130,10 +132,11 @@ pub fn styled_text_input_with_variant<'a, Message: Clone + 'a>(
     value: &str,
     variant: InputVariant,
     size: InputSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> TextInput<'a, Message> {
     let theme_copy = *theme;
     let font = variant.font();
-    let font_size = size.font_size();
+    let font_size = scaled.font_size(size.font_size());
     let padding = size.padding();
 
     text_input(placeholder, value)
@@ -192,15 +195,16 @@ pub fn labeled_input<'a, Message: Clone + 'a>(
     placeholder: &str,
     value: &str,
     on_change: impl Fn(String) -> Message + 'a,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     column![
         text(label.to_uppercase())
-            .size(tokens::font_size::SM)
+            .size(scaled.font_size(tokens::font_size::SM))
             .font(fonts::FONT_UI_BOLD)
             .color(theme.ink()),
-        styled_text_input(theme, placeholder, value).on_input(on_change),
+        styled_text_input(theme, placeholder, value, scaled).on_input(on_change),
     ]
-    .spacing(tokens::spacing::XS)
+    .spacing(scaled.spacing(tokens::spacing::XS))
     .into()
 }
 
@@ -233,6 +237,7 @@ pub fn labeled_input_with_error<'a, Message: Clone + 'a>(
     value: &str,
     error: Option<&'a str>,
     on_change: impl Fn(String) -> Message + 'a,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let variant = if error.is_some() {
         InputVariant::Error
@@ -242,19 +247,26 @@ pub fn labeled_input_with_error<'a, Message: Clone + 'a>(
 
     let mut col = column![
         text(label.to_uppercase())
-            .size(tokens::font_size::SM)
+            .size(scaled.font_size(tokens::font_size::SM))
             .font(fonts::FONT_UI_BOLD)
             .color(theme.ink()),
-        styled_text_input_with_variant(theme, placeholder, value, variant, InputSize::Medium)
-            .on_input(on_change),
+        styled_text_input_with_variant(
+            theme,
+            placeholder,
+            value,
+            variant,
+            InputSize::Medium,
+            scaled,
+        )
+        .on_input(on_change),
     ]
-    .spacing(tokens::spacing::XS);
+    .spacing(scaled.spacing(tokens::spacing::XS));
 
     // Add error message if present
     if let Some(error_msg) = error {
         col = col.push(
             text(error_msg)
-                .size(tokens::font_size::SM)
+                .size(scaled.font_size(tokens::font_size::SM))
                 .color(colors::HOT_MAGENTA),
         );
     }
@@ -279,6 +291,7 @@ pub fn code_input<'a, Message: Clone + 'a>(
     theme: &AppTheme,
     placeholder: &str,
     value: &str,
+    scaled: crate::theme::ScaledTokens,
 ) -> TextInput<'a, Message> {
     styled_text_input_with_variant(
         theme,
@@ -286,6 +299,7 @@ pub fn code_input<'a, Message: Clone + 'a>(
         value,
         InputVariant::Code,
         InputSize::Medium,
+        scaled,
     )
 }
 
@@ -295,6 +309,7 @@ pub fn small_input<'a, Message: Clone + 'a>(
     theme: &AppTheme,
     placeholder: &str,
     value: &str,
+    scaled: crate::theme::ScaledTokens,
 ) -> TextInput<'a, Message> {
     styled_text_input_with_variant(
         theme,
@@ -302,6 +317,7 @@ pub fn small_input<'a, Message: Clone + 'a>(
         value,
         InputVariant::Default,
         InputSize::Small,
+        scaled,
     )
 }
 
@@ -311,6 +327,7 @@ pub fn large_input<'a, Message: Clone + 'a>(
     theme: &AppTheme,
     placeholder: &str,
     value: &str,
+    scaled: crate::theme::ScaledTokens,
 ) -> TextInput<'a, Message> {
     styled_text_input_with_variant(
         theme,
@@ -318,6 +335,7 @@ pub fn large_input<'a, Message: Clone + 'a>(
         value,
         InputVariant::Default,
         InputSize::Large,
+        scaled,
     )
 }
 

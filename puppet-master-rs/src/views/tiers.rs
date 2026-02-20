@@ -72,21 +72,23 @@ pub fn view<'a>(
     tier_details_content: &'a text_editor::Content,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
+
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
 
     // Header
     let header_actions = row![
-        styled_button(theme, "Expand All", ButtonVariant::Ghost).on_press(Message::ExpandAllTiers),
-        styled_button(theme, "Collapse All", ButtonVariant::Ghost)
+        styled_button(theme, "Expand All", ButtonVariant::Ghost, scaled).on_press(Message::ExpandAllTiers),
+        styled_button(theme, "Collapse All", ButtonVariant::Ghost, scaled)
             .on_press(Message::CollapseAllTiers),
     ]
     .spacing(tokens::spacing::SM)
     .align_y(iced::Alignment::Center);
 
-    content = content.push(page_header("Tiers", theme, header_actions, size));
+    content = content.push(page_header("Tiers", theme, header_actions, size, scaled));
 
     // Tree view
     let mut tree_col = column![].spacing(tokens::spacing::XS);
@@ -114,6 +116,7 @@ pub fn view<'a>(
                             expand_icon,
                             ButtonVariant::Ghost,
                             ButtonSize::Small,
+                            scaled,
                         )
                         .on_press(Message::ToggleTierExpand(node.id.clone())),
                     )
@@ -121,7 +124,7 @@ pub fn view<'a>(
                     Element::from(Space::new().width(Length::Fixed(32.0)))
                 },
                 // Type icon badge
-                container(selectable_label(theme, node.tier_type.icon()))
+                container(selectable_label(theme, node.tier_type.icon(), scaled))
                     .padding(tokens::spacing::SM)
                     .style(move |_theme: &iced::Theme| {
                         iced::widget::container::Style {
@@ -135,7 +138,7 @@ pub fn view<'a>(
                         }
                     }),
                 // Status badge
-                container(selectable_label(theme, &node.status))
+                container(selectable_label(theme, &node.status, scaled))
                     .padding(tokens::spacing::SM)
                     .width(Length::Fixed(100.0))
                     .style(move |_theme: &iced::Theme| {
@@ -152,18 +155,19 @@ pub fn view<'a>(
                 // ID, title, and iteration count
                 column![
                     row![
-                        selectable_label_mono(theme, &node.id),
+                        selectable_label_mono(theme, &node.id, scaled),
                         if node.iteration_count > 0 {
                             Element::from(selectable_label_mono(
                                 theme,
                                 &format!(" (iter: {})", node.iteration_count),
+                                scaled,
                             ))
                         } else {
                             Element::from(Space::new().width(Length::Shrink))
                         },
                     ]
                     .spacing(tokens::spacing::XXS),
-                    selectable_label(theme, &node.title),
+                    selectable_label(theme, &node.title, scaled),
                 ]
                 .spacing(tokens::spacing::XXS),
             ]
@@ -175,13 +179,13 @@ pub fn view<'a>(
         if node.expanded && !node.acceptance_criteria.is_empty() {
             let mut criteria_col = column![
                 Space::new().height(Length::Fixed(tokens::spacing::XS)),
-                selectable_label(theme, "Acceptance Criteria:"),
+                selectable_label(theme, "Acceptance Criteria:", scaled),
             ]
             .spacing(tokens::spacing::XXS);
 
             for criterion in &node.acceptance_criteria {
-                criteria_col =
-                    criteria_col.push(selectable_label(theme, &format!("• {}", criterion)));
+                    criteria_col =
+                    criteria_col.push(selectable_label(theme, &format!("• {}", criterion), scaled));
             }
 
             node_content =
@@ -233,7 +237,7 @@ pub fn view<'a>(
             // Wide: side-by-side row
             row![
                 container(tree_scroll).width(Length::FillPortion(2)),
-                container(render_details(details, tier_details_content, theme))
+                container(render_details(details, tier_details_content, theme, scaled))
                     .width(Length::FillPortion(1)),
             ]
             .spacing(tokens::spacing::LG)
@@ -244,7 +248,7 @@ pub fn view<'a>(
                 container(tree_scroll)
                     .width(Length::Fill)
                     .height(Length::Fixed(300.0)),
-                container(render_details(details, tier_details_content, theme)).width(Length::Fill),
+                container(render_details(details, tier_details_content, theme, scaled)).width(Length::Fill),
             ]
             .spacing(tokens::spacing::LG)
             .into()
@@ -257,6 +261,7 @@ pub fn view<'a>(
     content = content.push(themed_panel(
         container(main_layout).padding(tokens::spacing::MD),
         theme,
+        scaled,
     ));
 
     scrollable(content)
@@ -281,22 +286,23 @@ fn render_details<'a>(
     details: &'a TierDetails,
     tier_details_content: &'a text_editor::Content,
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let content = column![
-        selectable_label(theme, "Details"),
+        selectable_label(theme, "Details", scaled),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         column![
-            selectable_label(theme, "ID:"),
-            selectable_label_mono(theme, &details.id),
+            selectable_label(theme, "ID:", scaled),
+            selectable_label_mono(theme, &details.id, scaled),
         ]
         .spacing(tokens::spacing::XXS),
         column![
-            selectable_label(theme, "Title:"),
-            selectable_label(theme, &details.title),
+            selectable_label(theme, "Title:", scaled),
+            selectable_label(theme, &details.title, scaled),
         ]
         .spacing(tokens::spacing::XXS),
         column![
-            selectable_label(theme, "Description:"),
+            selectable_label(theme, "Description:", scaled),
             // Use text_editor for selectable description text
             container(
                 text_editor(tier_details_content)
@@ -310,8 +316,8 @@ fn render_details<'a>(
         ]
         .spacing(tokens::spacing::XXS),
         column![
-            selectable_label(theme, "Status:"),
-            container(selectable_label(theme, &details.status))
+            selectable_label(theme, "Status:", scaled),
+            container(selectable_label(theme, &details.status, scaled))
                 .padding(tokens::spacing::SM)
                 .style(move |_theme: &iced::Theme| {
                     iced::widget::container::Style {
@@ -327,14 +333,14 @@ fn render_details<'a>(
         ]
         .spacing(tokens::spacing::XXS),
         column![
-            selectable_label(theme, "Platform:"),
-            selectable_label(theme, &details.platform),
+            selectable_label(theme, "Platform:", scaled),
+            selectable_label(theme, &details.platform, scaled),
         ]
         .spacing(tokens::spacing::XXS),
     ]
     .spacing(tokens::spacing::MD);
 
-    themed_panel(scrollable(content), theme).into()
+    themed_panel(scrollable(content), theme, scaled).into()
 }
 
 #[allow(dead_code)]

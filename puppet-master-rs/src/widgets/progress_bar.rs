@@ -259,6 +259,7 @@ pub fn animated_progress_bar<'a, Message: 'a>(
     variant: ProgressVariant,
     size: ProgressSize,
     time: f32,
+    _scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let height = size.height();
     let ink = theme.ink();
@@ -311,8 +312,9 @@ pub fn styled_progress_bar<'a, Message: 'a>(
     progress: f32,
     variant: ProgressVariant,
     size: ProgressSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
-    animated_progress_bar(theme, progress, variant, size, 0.0)
+    animated_progress_bar(theme, progress, variant, size, 0.0, scaled)
 }
 
 // DRY:WIDGET:animated_progress_bar_with_label
@@ -341,12 +343,13 @@ pub fn animated_progress_bar_with_label<'a, Message: 'a>(
     variant: ProgressVariant,
     size: ProgressSize,
     time: f32,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let percentage = (progress.clamp(0.0, 1.0) * 100.0) as u32;
     let label_text = format!("{}%", percentage);
 
     row![
-        animated_progress_bar(theme, progress, variant, size, time),
+        animated_progress_bar(theme, progress, variant, size, time, scaled),
         text(label_text)
             .size(tokens::font_size::SM)
             .color(theme.ink())
@@ -406,5 +409,5 @@ pub fn styled_progress_bar_legacy<'a, Message: 'a>(
 ) -> Element<'a, Message> {
     let theme = AppTheme::Light;
     let progress = if max > 0.0 { value / max } else { 0.0 };
-    styled_progress_bar(&theme, progress, variant, size)
+    styled_progress_bar(&theme, progress, variant, size, crate::theme::ScaledTokens::default())
 }

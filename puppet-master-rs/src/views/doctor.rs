@@ -124,23 +124,24 @@ pub fn view<'a>(
     active_context_menu: &'a Option<ContextMenuTarget>,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     // Doctor diagnostics view; size reserved for Phase 3 responsive improvements
     let mut content = column![]
-        .spacing(tokens::spacing::LG)
-        .padding(tokens::spacing::LG);
+        .spacing(scaled.spacing(tokens::spacing::LG))
+        .padding(scaled.spacing(tokens::spacing::LG));
 
     // ═══════════════════════════════════════════════════════════════════
     // Header Section
     // ═══════════════════════════════════════════════════════════════════
-    let header = view_header(results, running, fixing, selected_platforms, theme, size);
+    let header = view_header(results, running, fixing, selected_platforms, theme, size, scaled);
     content = content.push(header);
 
     // ═══════════════════════════════════════════════════════════════════
     // Platform Selection Panel (toggleable)
     // ═══════════════════════════════════════════════════════════════════
     if platform_selector_visible {
-        let platform_panel = view_platform_selector(results, selected_platforms, theme, size);
+        let platform_panel = view_platform_selector(results, selected_platforms, theme, size, scaled);
         content = content.push(platform_panel);
     }
 
@@ -148,7 +149,7 @@ pub fn view<'a>(
     // Summary Panel
     // ═══════════════════════════════════════════════════════════════════
     if !results.is_empty() {
-        let summary = view_summary(results, selected_platforms, theme);
+        let summary = view_summary(results, selected_platforms, theme, scaled);
         content = content.push(summary);
     }
 
@@ -176,6 +177,7 @@ pub fn view<'a>(
                 detail_contents,
                 active_context_menu,
                 theme,
+                scaled,
             );
             content = content.push(category_section);
         }
@@ -194,6 +196,7 @@ pub fn view<'a>(
             )
             .padding(tokens::spacing::XL),
             theme,
+            scaled,
         )
         .into();
         content = content.push(empty_panel);
@@ -238,8 +241,9 @@ pub fn is_platform_cli_installed_from_results(
 pub fn build_launch_button_for_platform<'a>(
     theme: &'a AppTheme,
     platform: Platform,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
-    styled_button_sized(theme, "Launch", ButtonVariant::Info, ButtonSize::Small)
+    styled_button_sized(theme, "Launch", ButtonVariant::Info, ButtonSize::Small, scaled)
         .on_press(Message::LaunchPlatformCli(platform))
         .into()
 }
@@ -273,6 +277,7 @@ fn view_header<'a>(
     selected_platforms: &'a [Platform],
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let failed_fixable_count = results
         .iter()
@@ -293,6 +298,7 @@ fn view_header<'a>(
             theme,
             &doctor_platform_selector_label(selected_platforms),
             ButtonVariant::Ghost,
+            scaled,
         )
         .on_press(Message::ToggleDoctorPlatformSelector),
     );
@@ -301,22 +307,22 @@ fn view_header<'a>(
     if failed_fixable_count > 0 {
         let install_label = doctor_install_button_label(selected_platforms, failed_fixable_count);
         actions = actions.push(
-            styled_button(theme, &install_label, ButtonVariant::Info)
+            styled_button(theme, &install_label, ButtonVariant::Info, scaled)
                 .on_press(Message::InstallAllMissing),
         );
     }
 
     // RUN ALL CHECKS button
     if running {
-        actions = actions.push(styled_button(theme, "Running...", ButtonVariant::Primary));
+        actions = actions.push(styled_button(theme, "Running...", ButtonVariant::Primary, scaled));
     } else {
         actions = actions.push(
-            styled_button(theme, "RUN ALL CHECKS", ButtonVariant::Primary)
+            styled_button(theme, "RUN ALL CHECKS", ButtonVariant::Primary, scaled)
                 .on_press(Message::RunAllChecks),
         );
     }
 
-    page_header("Doctor", theme, actions, size)
+    page_header("Doctor", theme, actions, size, scaled)
 }
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -328,24 +334,26 @@ fn view_platform_selector<'a>(
     selected_platforms: &'a [Platform],
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let all_platforms = Platform::all();
 
     let mut grid = column![].spacing(tokens::spacing::MD);
 
     // Title
-    grid = grid.push(selectable_label(theme, "Select Platforms to Check"));
+    grid = grid.push(selectable_label(theme, "Select Platforms to Check", scaled));
 
     grid = grid.push(
         selectable_label(theme,
             "Only platform-specific checks/install actions follow selection. Global environment checks still run.",
+            scaled,
         ),
     );
 
     // Platform cards in responsive grid
     let platform_cards: Vec<Element<'a, Message>> = all_platforms
         .iter()
-        .map(|platform| view_platform_card(*platform, results, selected_platforms, theme))
+        .map(|platform| view_platform_card(*platform, results, selected_platforms, theme, scaled))
         .collect();
 
     let platform_grid = responsive_grid(size.width, platform_cards, tokens::spacing::MD);
@@ -363,7 +371,7 @@ fn view_platform_selector<'a>(
         );
 
         grid = grid.push(
-            container(selectable_label(theme, &summary_text))
+            container(selectable_label(theme, &summary_text, scaled))
                 .padding(tokens::spacing::SM)
                 .style(move |_theme: &iced::Theme| container::Style {
                     background: Some(Background::Color(Color {
@@ -380,7 +388,7 @@ fn view_platform_selector<'a>(
         );
     }
 
-    themed_panel(container(grid).padding(tokens::spacing::MD), theme).into()
+    themed_panel(container(grid).padding(tokens::spacing::MD), theme, scaled).into()
 }
 
 fn view_platform_card<'a>(
@@ -388,6 +396,7 @@ fn view_platform_card<'a>(
     results: &'a [DoctorCheckResult],
     selected_platforms: &'a [Platform],
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let is_selected = selected_platforms.contains(&platform);
     // DRY: use platform_specs for display name instead of hardcoding
@@ -414,7 +423,7 @@ fn view_platform_card<'a>(
         .spacing(tokens::spacing::SM)
         .align_y(Alignment::Center);
     if is_installed {
-        status_row = status_row.push(build_launch_button_for_platform(theme, platform));
+        status_row = status_row.push(build_launch_button_for_platform(theme, platform, scaled));
     }
 
     container(
@@ -460,6 +469,7 @@ fn view_summary<'a>(
     results: &'a [DoctorCheckResult],
     selected_platforms: &'a [Platform],
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let passed = results.iter().filter(|r| r.passed).count();
     let failed = results
@@ -490,7 +500,7 @@ fn view_summary<'a>(
     let main_row = row![
         view_status_badge_large(overall_status, theme),
         Space::new().width(Length::Fixed(tokens::spacing::MD)),
-        selectable_label(theme, &checks_passed_text),
+        selectable_label(theme, &checks_passed_text, scaled),
     ]
     .align_y(Alignment::Center);
 
@@ -498,13 +508,13 @@ fn view_summary<'a>(
 
     // Stats row with mini badges
     let stats_row = row![
-        view_mini_stat(CheckStatus::Pass, passed, "Passed", theme),
+        view_mini_stat(CheckStatus::Pass, passed, "Passed", theme, scaled),
         Space::new().width(Length::Fixed(tokens::spacing::LG)),
-        view_mini_stat(CheckStatus::Fail, failed, "Failed", theme),
+        view_mini_stat(CheckStatus::Fail, failed, "Failed", theme, scaled),
         Space::new().width(Length::Fixed(tokens::spacing::LG)),
-        view_mini_stat(CheckStatus::Warn, warnings, "Warnings", theme),
+        view_mini_stat(CheckStatus::Warn, warnings, "Warnings", theme, scaled),
         Space::new().width(Length::Fixed(tokens::spacing::LG)),
-        view_mini_stat(CheckStatus::Skip, skipped, "Skipped", theme),
+        view_mini_stat(CheckStatus::Skip, skipped, "Skipped", theme, scaled),
     ]
     .align_y(Alignment::Center);
 
@@ -517,10 +527,10 @@ fn view_summary<'a>(
         } else {
             "Use INSTALL SELECTED MISSING above to install dependencies only for selected platforms."
         };
-        content = content.push(selectable_label(theme, help_text_str));
+        content = content.push(selectable_label(theme, help_text_str, scaled));
     }
 
-    themed_panel(container(content).padding(tokens::spacing::MD), theme).into()
+    themed_panel(container(content).padding(tokens::spacing::MD), theme, scaled).into()
 }
 
 fn view_mini_stat<'a>(
@@ -528,12 +538,13 @@ fn view_mini_stat<'a>(
     count: usize,
     label: &'a str,
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let stat_text = format!("{} {}", count, label);
     row![
         view_status_badge(status, "", theme),
         Space::new().width(Length::Fixed(tokens::spacing::SM)),
-        selectable_label(theme, &stat_text),
+        selectable_label(theme, &stat_text, scaled),
     ]
     .align_y(Alignment::Center)
     .into()
@@ -551,6 +562,7 @@ fn view_category<'a>(
     detail_contents: &'a HashMap<String, text_editor::Content>,
     active_context_menu: &'a Option<ContextMenuTarget>,
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let passed = checks.iter().filter(|c| c.passed).count();
     let total = checks.len();
@@ -565,7 +577,7 @@ fn view_category<'a>(
         passed,
         total
     );
-    let header = row![selectable_label(theme, &header_text),]
+    let header = row![selectable_label(theme, &header_text, scaled),]
         .spacing(tokens::spacing::SM)
         .align_y(Alignment::Center);
 
@@ -580,6 +592,7 @@ fn view_category<'a>(
             detail_contents,
             active_context_menu,
             theme,
+            scaled,
         );
         category_content = category_content.push(check_row);
     }
@@ -587,6 +600,7 @@ fn view_category<'a>(
     themed_panel(
         container(category_content).padding(tokens::spacing::MD),
         theme,
+        scaled,
     )
     .into()
 }
@@ -602,6 +616,7 @@ fn view_check_row<'a>(
     detail_contents: &'a HashMap<String, text_editor::Content>,
     active_context_menu: &'a Option<ContextMenuTarget>,
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let status = check.status();
     let is_expanded = expanded_checks.contains(&check.name);
@@ -622,11 +637,11 @@ fn view_check_row<'a>(
 
     // Check name and message
     let mut name_column =
-        column![selectable_label(theme, &check.name),].spacing(tokens::spacing::XXS);
+        column![selectable_label(theme, &check.name, scaled),].spacing(tokens::spacing::XXS);
 
     if !check.message.is_empty() {
         let message_text = format!("— {}", check.message);
-        name_column = name_column.push(selectable_label(theme, &message_text));
+        name_column = name_column.push(selectable_label(theme, &message_text, scaled));
     }
 
     main_row = main_row.push(container(name_column).width(Length::Fill));
@@ -646,6 +661,7 @@ fn view_check_row<'a>(
                 expand_symbol,
                 ButtonVariant::Ghost,
                 ButtonSize::Small,
+                scaled,
             )
             .on_press(Message::ToggleDoctorCheckExpand(check.name.clone())),
         );
@@ -659,10 +675,11 @@ fn view_check_row<'a>(
                 "Fixing...",
                 ButtonVariant::Info,
                 ButtonSize::Small,
+                scaled,
             ));
         } else {
             actions = actions.push(
-                styled_button_sized(theme, "Fix", ButtonVariant::Info, ButtonSize::Small)
+                styled_button_sized(theme, "Fix", ButtonVariant::Info, ButtonSize::Small, scaled)
                     .on_press(Message::FixCheck(check.name.clone(), false)),
             );
         }
@@ -672,7 +689,7 @@ fn view_check_row<'a>(
     if !check.passed && check.name.ends_with("-cli") {
         if let Some(platform) = platform_from_check_name(&check.name) {
             actions = actions.push(
-                styled_button_sized(theme, "Browse", ButtonVariant::Ghost, ButtonSize::Small)
+                styled_button_sized(theme, "Browse", ButtonVariant::Ghost, ButtonSize::Small, scaled)
                     .on_press(Message::DoctorBrowsePlatformPath(platform)),
             );
         }
@@ -681,7 +698,7 @@ fn view_check_row<'a>(
     // Launch button for installed CLI checks
     if check.passed && check.name.ends_with("-cli") {
         if let Some(platform) = platform_from_check_name(&check.name) {
-            actions = actions.push(build_launch_button_for_platform(theme, platform));
+            actions = actions.push(build_launch_button_for_platform(theme, platform, scaled));
         }
     }
 

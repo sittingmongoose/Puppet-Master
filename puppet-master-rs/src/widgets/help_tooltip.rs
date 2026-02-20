@@ -22,6 +22,7 @@ pub fn help_tooltip<'a, Message: 'a>(
     key: &str,
     variant: TooltipVariant,
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     // Get the tooltip text for this key and variant
     let tooltip_text = get_tooltip(key, variant).unwrap_or("No help available");
@@ -29,7 +30,7 @@ pub fn help_tooltip<'a, Message: 'a>(
     // Create the '?' icon button
     let icon = container(
         text("?")
-            .size(tokens::font_size::SM)
+            .size(scaled.font_size(tokens::font_size::SM))
             .font(crate::theme::fonts::FONT_UI_BOLD),
     )
     .padding(Padding {
@@ -52,7 +53,7 @@ pub fn help_tooltip<'a, Message: 'a>(
     // Wrap with tooltip
     tooltip(icon, tooltip_text, tooltip::Position::Top)
         .gap(4.0)
-        .padding(tokens::spacing::SM)
+        .padding(scaled.spacing(tokens::spacing::SM))
         .style(move |_: &iced::Theme| container::Style {
             text_color: Some(theme.ink()),
             background: Some(iced::Background::Color(theme.paper_light())),

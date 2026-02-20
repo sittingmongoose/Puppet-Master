@@ -15,7 +15,9 @@ pub fn view<'a>(
     snapshot: &'a MetricsSnapshot,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
+
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
@@ -23,24 +25,26 @@ pub fn view<'a>(
     let header_actions = row![refresh_button(
         theme,
         Message::RefreshMetrics,
-        RefreshStyle::Uppercase(ButtonVariant::Info)
+        RefreshStyle::Uppercase(ButtonVariant::Info),
+        scaled
     )]
     .spacing(tokens::spacing::MD)
     .align_y(iced::Alignment::Center);
-    content = content.push(page_header("Metrics", theme, header_actions, size));
+    content = content.push(page_header("Metrics", theme, header_actions, size, scaled));
 
     if snapshot.platforms.is_empty() && snapshot.subtasks.is_empty() {
         content = content.push(themed_panel(
             container(
                 column![
-                    selectable_label(theme, "No metrics available"),
+                    selectable_label(theme, "No metrics available", scaled),
                     Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                    selectable_label(theme, "Metrics will appear after orchestration runs"),
+                    selectable_label(theme, "Metrics will appear after orchestration runs", scaled),
                 ]
                 .spacing(tokens::spacing::SM),
             )
             .padding(tokens::spacing::XL),
             theme,
+            scaled,
         ));
 
         return scrollable(content)
@@ -55,8 +59,8 @@ pub fn view<'a>(
     let stat_card = |value: String, label: &'a str, _color: iced::Color| {
         container(
             column![
-                selectable_label(theme, &value),
-                selectable_label(theme, label),
+                selectable_label(theme, &value, scaled),
+                selectable_label(theme, label, scaled),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center),
@@ -106,7 +110,7 @@ pub fn view<'a>(
     // Overall summary with visual elements
     let summary = column![
         row![
-            selectable_label(theme, "Overall Summary"),
+            selectable_label(theme, "Overall Summary", scaled),
             Space::new().width(Length::Fill),
         ],
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
@@ -118,12 +122,13 @@ pub fn view<'a>(
                 overall.escalation_rate() * 100.0,
                 overall.p95_latency_ms,
                 overall.estimated_cost_usd
-            )
+            ),
+            scaled,
         ),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         row![
             column![
-                selectable_label(theme, "Success Rate"),
+                selectable_label(theme, "Success Rate", scaled),
                 styled_progress_bar(
                     theme,
                     overall.success_rate() as f32,
@@ -134,13 +139,14 @@ pub fn view<'a>(
                     } else {
                         ProgressVariant::Error
                     },
-                    ProgressSize::Medium
+                    ProgressSize::Medium,
+                    scaled,
                 ),
             ]
             .spacing(tokens::spacing::XXS),
             Space::new().width(Length::Fixed(tokens::spacing::LG)),
             column![
-                selectable_label(theme, "Escalation Rate"),
+                selectable_label(theme, "Escalation Rate", scaled),
                 styled_progress_bar(
                     theme,
                     overall.escalation_rate() as f32,
@@ -151,7 +157,8 @@ pub fn view<'a>(
                     } else {
                         ProgressVariant::Error
                     },
-                    ProgressSize::Medium
+                    ProgressSize::Medium,
+                    scaled,
                 ),
             ]
             .spacing(tokens::spacing::XXS),
@@ -163,12 +170,13 @@ pub fn view<'a>(
     content = content.push(themed_panel(
         container(summary).padding(tokens::spacing::MD),
         theme,
+        scaled,
     ));
 
     // Per-platform stats with visual bars
     if !snapshot.platforms.is_empty() {
         let mut platform_stats = column![
-            selectable_label(theme, "Platform Statistics"),
+            selectable_label(theme, "Platform Statistics", scaled),
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
         ]
         .spacing(tokens::spacing::MD);
@@ -176,17 +184,18 @@ pub fn view<'a>(
         for platform_metrics in &snapshot.platforms {
             let platform_card = column![
                 row![
-                    selectable_label(theme, &format!("{:?}", platform_metrics.platform)),
+                    selectable_label(theme, &format!("{:?}", platform_metrics.platform), scaled),
                     Space::new().width(Length::Fill),
-                    selectable_label(theme, &format!("{} calls", platform_metrics.iterations)),
+                    selectable_label(theme, &format!("{} calls", platform_metrics.iterations), scaled),
                 ],
                 Space::new().height(Length::Fixed(tokens::spacing::XS)),
                 row![
                     column![
-                        selectable_label(theme, "Success Rate"),
+                        selectable_label(theme, "Success Rate", scaled),
                         selectable_label(
                             theme,
-                            &format!("{:.1}%", platform_metrics.success_rate() * 100.0)
+                            &format!("{:.1}%", platform_metrics.success_rate() * 100.0),
+                            scaled,
                         ),
                         styled_progress_bar(
                             theme,
@@ -196,25 +205,28 @@ pub fn view<'a>(
                             } else {
                                 ProgressVariant::Warning
                             },
-                            ProgressSize::Small
+                            ProgressSize::Small,
+                            scaled,
                         ),
                     ]
                     .spacing(tokens::spacing::XXS),
                     Space::new().width(Length::Fixed(tokens::spacing::MD)),
                     column![
-                        selectable_label(theme, "Avg Latency"),
+                        selectable_label(theme, "Avg Latency", scaled),
                         selectable_label(
                             theme,
-                            &format!("{:.0} ms", platform_metrics.avg_latency_ms())
+                            &format!("{:.0} ms", platform_metrics.avg_latency_ms()),
+                            scaled,
                         ),
                     ]
                     .spacing(tokens::spacing::XXS),
                     Space::new().width(Length::Fixed(tokens::spacing::MD)),
                     column![
-                        selectable_label(theme, "Estimated Cost"),
+                        selectable_label(theme, "Estimated Cost", scaled),
                         selectable_label(
                             theme,
-                            &format!("${:.4}", platform_metrics.estimated_cost_usd)
+                            &format!("${:.4}", platform_metrics.estimated_cost_usd),
+                            scaled,
                         ),
                     ]
                     .spacing(tokens::spacing::XXS),
@@ -225,6 +237,7 @@ pub fn view<'a>(
             platform_stats = platform_stats.push(themed_panel(
                 container(platform_card).padding(tokens::spacing::MD),
                 theme,
+                scaled,
             ));
         }
 
@@ -236,41 +249,41 @@ pub fn view<'a>(
     if !platform_rows.is_empty() {
         let platform_table = table(
             vec![
-                table_column(selectable_label(theme, "Platform"), |r: PlatformMetrics| {
-                    selectable_label(theme, &format!("{:?}", r.platform))
+                table_column(selectable_label(theme, "Platform", scaled), |r: PlatformMetrics| {
+                    selectable_label(theme, &format!("{:?}", r.platform), scaled)
                 }),
-                table_column(selectable_label(theme, "Model"), |r: PlatformMetrics| {
-                    selectable_label(theme, &r.last_model.unwrap_or_default())
+                table_column(selectable_label(theme, "Model", scaled), |r: PlatformMetrics| {
+                    selectable_label(theme, &r.last_model.unwrap_or_default(), scaled)
                 }),
-                table_column(selectable_label(theme, "Effort"), |r: PlatformMetrics| {
-                    selectable_label(theme, &r.last_reasoning_effort.unwrap_or_default())
+                table_column(selectable_label(theme, "Effort", scaled), |r: PlatformMetrics| {
+                    selectable_label(theme, &r.last_reasoning_effort.unwrap_or_default(), scaled)
                 }),
-                table_column(selectable_label(theme, "Iters"), |r: PlatformMetrics| {
-                    selectable_label(theme, &r.iterations.to_string())
+                table_column(selectable_label(theme, "Iters", scaled), |r: PlatformMetrics| {
+                    selectable_label(theme, &r.iterations.to_string(), scaled)
                 }),
-                table_column(selectable_label(theme, "Success"), |r: PlatformMetrics| {
-                    selectable_label(theme, &format!("{:.1}%", r.success_rate() * 100.0))
+                table_column(selectable_label(theme, "Success", scaled), |r: PlatformMetrics| {
+                    selectable_label(theme, &format!("{:.1}%", r.success_rate() * 100.0), scaled)
                 }),
-                table_column(selectable_label(theme, "Avg ms"), |r: PlatformMetrics| {
-                    selectable_label(theme, &format!("{:.0}", r.avg_latency_ms()))
+                table_column(selectable_label(theme, "Avg ms", scaled), |r: PlatformMetrics| {
+                    selectable_label(theme, &format!("{:.0}", r.avg_latency_ms()), scaled)
                 }),
-                table_column(selectable_label(theme, "P95 ms"), |r: PlatformMetrics| {
-                    selectable_label(theme, &r.p95_latency_ms.to_string())
+                table_column(selectable_label(theme, "P95 ms", scaled), |r: PlatformMetrics| {
+                    selectable_label(theme, &r.p95_latency_ms.to_string(), scaled)
                 }),
-                table_column(selectable_label(theme, "Esc%"), |r: PlatformMetrics| {
-                    selectable_label(theme, &format!("{:.1}%", r.escalation_rate() * 100.0))
+                table_column(selectable_label(theme, "Esc%", scaled), |r: PlatformMetrics| {
+                    selectable_label(theme, &format!("{:.1}%", r.escalation_rate() * 100.0), scaled)
                 }),
-                table_column(selectable_label(theme, "Retries"), |r: PlatformMetrics| {
-                    selectable_label(theme, &r.retries.to_string())
+                table_column(selectable_label(theme, "Retries", scaled), |r: PlatformMetrics| {
+                    selectable_label(theme, &r.retries.to_string(), scaled)
                 }),
-                table_column(selectable_label(theme, "Timeouts"), |r: PlatformMetrics| {
-                    selectable_label(theme, &r.timeouts.to_string())
+                table_column(selectable_label(theme, "Timeouts", scaled), |r: PlatformMetrics| {
+                    selectable_label(theme, &r.timeouts.to_string(), scaled)
                 }),
-                table_column(selectable_label(theme, "Tokens"), |r: PlatformMetrics| {
-                    selectable_label(theme, &r.estimated_tokens.to_string())
+                table_column(selectable_label(theme, "Tokens", scaled), |r: PlatformMetrics| {
+                    selectable_label(theme, &r.estimated_tokens.to_string(), scaled)
                 }),
-                table_column(selectable_label(theme, "Cost"), |r: PlatformMetrics| {
-                    selectable_label(theme, &format!("${:.4}", r.estimated_cost_usd))
+                table_column(selectable_label(theme, "Cost", scaled), |r: PlatformMetrics| {
+                    selectable_label(theme, &format!("${:.4}", r.estimated_cost_usd), scaled)
                 }),
             ],
             platform_rows,
@@ -281,10 +294,11 @@ pub fn view<'a>(
 
         content = content.push(
             column![
-                selectable_label(theme, "Detailed Platform Table"),
+                selectable_label(theme, "Detailed Platform Table", scaled),
                 themed_panel(
                     container(platform_table).padding(tokens::spacing::SM),
-                    theme
+                    theme,
+                    scaled,
                 ),
             ]
             .spacing(tokens::spacing::SM),
@@ -296,55 +310,57 @@ pub fn view<'a>(
     if !subtask_rows.is_empty() {
         let subtask_table = table(
             vec![
-                table_column(selectable_label(theme, "Subtask"), |r: SubtaskMetrics| {
-                    selectable_label(theme, &r.subtask_id)
+                table_column(selectable_label(theme, "Subtask", scaled), |r: SubtaskMetrics| {
+                    selectable_label(theme, &r.subtask_id, scaled)
                 }),
-                table_column(selectable_label(theme, "Platform"), |r: SubtaskMetrics| {
+                table_column(selectable_label(theme, "Platform", scaled), |r: SubtaskMetrics| {
                     selectable_label(
                         theme,
                         &r.last_platform
                             .map(|p| format!("{:?}", p))
                             .unwrap_or_default(),
+                        scaled,
                     )
                 }),
-                table_column(selectable_label(theme, "Model"), |r: SubtaskMetrics| {
-                    selectable_label(theme, &r.last_model.unwrap_or_default())
+                table_column(selectable_label(theme, "Model", scaled), |r: SubtaskMetrics| {
+                    selectable_label(theme, &r.last_model.unwrap_or_default(), scaled)
                 }),
-                table_column(selectable_label(theme, "Effort"), |r: SubtaskMetrics| {
-                    selectable_label(theme, &r.last_reasoning_effort.unwrap_or_default())
+                table_column(selectable_label(theme, "Effort", scaled), |r: SubtaskMetrics| {
+                    selectable_label(theme, &r.last_reasoning_effort.unwrap_or_default(), scaled)
                 }),
-                table_column(selectable_label(theme, "Iters"), |r: SubtaskMetrics| {
-                    selectable_label(theme, &r.iterations.to_string())
+                table_column(selectable_label(theme, "Iters", scaled), |r: SubtaskMetrics| {
+                    selectable_label(theme, &r.iterations.to_string(), scaled)
                 }),
-                table_column(selectable_label(theme, "Success"), |r: SubtaskMetrics| {
-                    selectable_label(theme, &format!("{:.1}%", r.success_rate() * 100.0))
+                table_column(selectable_label(theme, "Success", scaled), |r: SubtaskMetrics| {
+                    selectable_label(theme, &format!("{:.1}%", r.success_rate() * 100.0), scaled)
                 }),
-                table_column(selectable_label(theme, "Avg ms"), |r: SubtaskMetrics| {
-                    selectable_label(theme, &format!("{:.0}", r.avg_latency_ms()))
+                table_column(selectable_label(theme, "Avg ms", scaled), |r: SubtaskMetrics| {
+                    selectable_label(theme, &format!("{:.0}", r.avg_latency_ms()), scaled)
                 }),
-                table_column(selectable_label(theme, "P95 ms"), |r: SubtaskMetrics| {
-                    selectable_label(theme, &r.p95_latency_ms.to_string())
+                table_column(selectable_label(theme, "P95 ms", scaled), |r: SubtaskMetrics| {
+                    selectable_label(theme, &r.p95_latency_ms.to_string(), scaled)
                 }),
-                table_column(selectable_label(theme, "Esc"), |r: SubtaskMetrics| {
-                    selectable_label(theme, &r.escalations.to_string())
+                table_column(selectable_label(theme, "Esc", scaled), |r: SubtaskMetrics| {
+                    selectable_label(theme, &r.escalations.to_string(), scaled)
                 }),
-                table_column(selectable_label(theme, "Retries"), |r: SubtaskMetrics| {
-                    selectable_label(theme, &r.retries.to_string())
+                table_column(selectable_label(theme, "Retries", scaled), |r: SubtaskMetrics| {
+                    selectable_label(theme, &r.retries.to_string(), scaled)
                 }),
-                table_column(selectable_label(theme, "Timeouts"), |r: SubtaskMetrics| {
-                    selectable_label(theme, &r.timeouts.to_string())
+                table_column(selectable_label(theme, "Timeouts", scaled), |r: SubtaskMetrics| {
+                    selectable_label(theme, &r.timeouts.to_string(), scaled)
                 }),
-                table_column(selectable_label(theme, "Gate"), |r: SubtaskMetrics| {
+                table_column(selectable_label(theme, "Gate", scaled), |r: SubtaskMetrics| {
                     selectable_label(
                         theme,
                         &format!("{}PASS/{}FAIL", r.gate_passes, r.gate_failures),
+                        scaled,
                     )
                 }),
-                table_column(selectable_label(theme, "Tokens"), |r: SubtaskMetrics| {
-                    selectable_label(theme, &r.estimated_tokens.to_string())
+                table_column(selectable_label(theme, "Tokens", scaled), |r: SubtaskMetrics| {
+                    selectable_label(theme, &r.estimated_tokens.to_string(), scaled)
                 }),
-                table_column(selectable_label(theme, "Cost"), |r: SubtaskMetrics| {
-                    selectable_label(theme, &format!("${:.4}", r.estimated_cost_usd))
+                table_column(selectable_label(theme, "Cost", scaled), |r: SubtaskMetrics| {
+                    selectable_label(theme, &format!("${:.4}", r.estimated_cost_usd), scaled)
                 }),
             ],
             subtask_rows,
@@ -355,8 +371,8 @@ pub fn view<'a>(
 
         content = content.push(
             column![
-                selectable_label(theme, "Subtask Metrics"),
-                themed_panel(container(subtask_table).padding(tokens::spacing::SM), theme),
+                selectable_label(theme, "Subtask Metrics", scaled),
+                themed_panel(container(subtask_table).padding(tokens::spacing::SM), theme, scaled),
             ]
             .spacing(tokens::spacing::SM),
         );

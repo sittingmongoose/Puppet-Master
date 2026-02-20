@@ -16,6 +16,7 @@ struct StepCircleCanvas {
     bg_color: Color,
     text_color: Color,
     border_color: Color,
+    text_size: f32,
 }
 
 impl<Message> canvas::Program<Message> for StepCircleCanvas {
@@ -40,7 +41,7 @@ impl<Message> canvas::Program<Message> for StepCircleCanvas {
             &circle,
             canvas::Stroke {
                 style: canvas::Style::Solid(self.border_color),
-                width: tokens::borders::THICK,
+                width: 3.0, // THICK equivalent, not scaled per token set
                 ..canvas::Stroke::default()
             },
         );
@@ -49,7 +50,7 @@ impl<Message> canvas::Program<Message> for StepCircleCanvas {
             content: self.label.clone(),
             position: center,
             color: self.text_color,
-            size: tokens::font_size::BASE.into(),
+            size: self.text_size.into(),
             font: fonts::FONT_UI_BOLD,
             align_x: iced::alignment::Horizontal::Center.into(),
             align_y: iced::alignment::Vertical::Center,
@@ -68,6 +69,7 @@ pub fn step_circle_canvas<'a, Message: 'a>(
     step_num: usize,
     current_step: usize,
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let is_complete = step_num < current_step;
     let is_active = step_num == current_step;
@@ -95,6 +97,7 @@ pub fn step_circle_canvas<'a, Message: 'a>(
         bg_color,
         text_color,
         border_color,
+        text_size: scaled.font_size(tokens::font_size::BASE),
     };
 
     Canvas::new(state).width(44.0).height(44.0).into()

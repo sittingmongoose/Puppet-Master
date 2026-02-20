@@ -153,38 +153,26 @@ pub async fn npm_install_to_app_dir(pkg: &NpmPackage) -> InstallOutcome {
         }
     };
 
-    // Verify the shim works by running --version
-    if let Some(ref shim_path) = installed_path {
-        log_lines.push(format!("Verifying shim: {} --version", shim_path.display()));
-        let verify_result = std::process::Command::new(shim_path)
-            .arg("--version")
-            .env(
-                "PATH",
-                crate::platforms::path_utils::build_enhanced_path_for_subprocess(),
-            )
-            .output();
-
-        match verify_result {
-            Ok(output) if output.status.success() => {
-                log_lines.push("Shim verification: OK".to_string());
-            }
-            Ok(output) => {
-                let stderr = String::from_utf8_lossy(&output.stderr);
-                return InstallOutcome::failure_with_log(
-                    format!(
-                        "Shim verification failed (exit {}): {}",
-                        output.status, stderr
-                    ),
-                    log_lines,
-                );
-            }
-            Err(e) => {
-                return InstallOutcome::failure_with_log(
-                    format!("Shim verification failed to run: {}", e),
-                    log_lines,
-                );
-            }
-        }
+    // Verify install by checking that the npm wrapper script exists at lib/bin/{binary_name}.
+    // We do NOT run the binary here — `--version` can hang for interactive CLIs like @github/copilot
+    // whose native binary starts an interactive TUI instead of printing a version and exiting.
+    // npm exits non-zero if install fails (caught above), so a missing lib/bin wrapper means something
+    // went wrong with the package layout.
+    let lib_bin = lib_dir_path.join("bin").join(pkg.binary_name);
+    if lib_bin.exists() {
+        log_lines.push(format!(
+            "Install verified: npm wrapper found at {}",
+            lib_bin.display()
+        ));
+    } else {
+        return InstallOutcome::failure_with_log(
+            format!(
+                "npm install of {} appears incomplete: wrapper not found at {}",
+                pkg.package_name,
+                lib_bin.display()
+            ),
+            log_lines,
+        );
     }
 
     InstallOutcome {

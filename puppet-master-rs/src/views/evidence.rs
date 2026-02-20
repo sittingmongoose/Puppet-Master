@@ -107,14 +107,16 @@ pub fn view<'a>(
     preview_content: &'a text_editor::Content,
     theme: &'a AppTheme,
     size: LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
+
     // Responsive layout:
     // Wide (>= 1024px): 3-column layout (1-2-1): Filters | List | Preview
     // Narrow (< 1024px): Single column stack: Filters → List → Preview
 
     // LEFT COLUMN: Category filters
     let mut category_buttons =
-        column![selectable_label(theme, "Categories"),].spacing(tokens::spacing::SM);
+        column![selectable_label(theme, "Categories", scaled),].spacing(tokens::spacing::SM);
 
     category_buttons = category_buttons.push(
         styled_button(
@@ -125,6 +127,7 @@ pub fn view<'a>(
             } else {
                 ButtonVariant::Ghost
             },
+            scaled,
         )
         .on_press(Message::FilterEvidence(EvidenceFilter {
             evidence_type: None,
@@ -142,6 +145,7 @@ pub fn view<'a>(
                 } else {
                     ButtonVariant::Ghost
                 },
+                scaled,
             )
             .on_press(Message::FilterEvidence(EvidenceFilter {
                 evidence_type: Some(ev_type),
@@ -153,6 +157,7 @@ pub fn view<'a>(
     let left_panel = themed_panel(
         container(category_buttons).padding(tokens::spacing::MD),
         theme,
+        scaled,
     );
 
     // CENTER COLUMN: File list with real file sizes
@@ -175,9 +180,9 @@ pub fn view<'a>(
 
     let center_content = if filtered_items.is_empty() {
         column![
-            selectable_label(theme, "No evidence found"),
+            selectable_label(theme, "No evidence found", scaled),
             Space::new().height(Length::Fixed(tokens::spacing::SM)),
-            selectable_label(theme, "Try adjusting your filters"),
+            selectable_label(theme, "Try adjusting your filters", scaled),
         ]
         .spacing(tokens::spacing::SM)
     } else {
@@ -198,7 +203,7 @@ pub fn view<'a>(
 
             let item_row = row![
                 // Type icon badge with color (square, centered)
-                container(selectable_label(theme, item.evidence_type.icon()))
+                container(selectable_label(theme, item.evidence_type.icon(), scaled))
                     .padding(tokens::spacing::SM)
                     .width(Length::Fixed(48.0))
                     .height(Length::Fixed(48.0))
@@ -217,23 +222,24 @@ pub fn view<'a>(
                     }),
                 // Details
                 column![
-                    selectable_label(theme, item.evidence_type.as_str()),
-                    selectable_label(theme, &item.summary),
+                    selectable_label(theme, item.evidence_type.as_str(), scaled),
+                    selectable_label(theme, &item.summary, scaled),
                     row![
-                        selectable_label(
+                          selectable_label(
                             theme,
-                            &item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string()
+                            &item.timestamp.format("%Y-%m-%d %H:%M:%S").to_string(),
+                            scaled,
                         ),
-                        selectable_label(theme, &format!(" | {}", file_size_str)),
+                        selectable_label(theme, &format!(" | {}", file_size_str), scaled),
                     ],
                 ]
                 .spacing(tokens::spacing::XS),
                 Space::new().width(Length::Fill),
                 // Action buttons
                 row![
-                    styled_button(theme, "View", ButtonVariant::Info)
+                    styled_button(theme, "View", ButtonVariant::Info, scaled)
                         .on_press(Message::EvidenceViewItem(idx)),
-                    styled_button(theme, "Download", ButtonVariant::Secondary)
+                    styled_button(theme, "Download", ButtonVariant::Secondary, scaled)
                         .on_press(Message::EvidenceDownloadItem(idx)),
                 ]
                 .spacing(tokens::spacing::XS)
@@ -278,11 +284,12 @@ pub fn view<'a>(
     let center_panel = themed_panel(
         container(scrollable(center_content).height(Length::Fill)).padding(tokens::spacing::MD),
         theme,
+        scaled,
     );
 
     // RIGHT COLUMN: Preview panel
     let preview_panel_content = column![
-        selectable_label(theme, "Preview"),
+        selectable_label(theme, "Preview", scaled),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         if selected_item.is_some() {
             container(
@@ -307,7 +314,7 @@ pub fn view<'a>(
                 ..Default::default()
             })
         } else {
-            container(selectable_label(theme, "Select an item to preview"))
+            container(selectable_label(theme, "Select an item to preview", scaled))
                 .padding(tokens::spacing::XL)
                 .width(Length::Fill)
                 .height(Length::Fill)
@@ -321,6 +328,7 @@ pub fn view<'a>(
             .padding(tokens::spacing::MD)
             .height(Length::Fill),
         theme,
+        scaled,
     );
 
     // Combine columns based on screen size
@@ -357,13 +365,14 @@ pub fn view<'a>(
     let header_actions = row![refresh_button(
         theme,
         Message::EvidenceRefresh,
-        RefreshStyle::Uppercase(ButtonVariant::Info)
+        RefreshStyle::Uppercase(ButtonVariant::Info),
+        scaled,
     )]
     .spacing(tokens::spacing::MD)
     .align_y(iced::Alignment::Center);
 
     let full_content = column![
-        page_header("Evidence", theme, header_actions, size),
+        page_header("Evidence", theme, header_actions, size, scaled),
         main_content,
     ]
     .spacing(tokens::spacing::LG)

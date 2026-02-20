@@ -16,24 +16,31 @@ pub struct ContextMenuOptions {
 pub fn context_menu_actions<'a>(
     theme: &'a AppTheme,
     options: ContextMenuOptions,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let mut actions = column![
-        styled_button_sized(theme, "Copy", ButtonVariant::Ghost, ButtonSize::Small)
+        styled_button_sized(theme, "Copy", ButtonVariant::Ghost, ButtonSize::Small, scaled)
             .on_press(Message::ContextMenuCopy),
-        styled_button_sized(theme, "Paste", ButtonVariant::Ghost, ButtonSize::Small)
+        styled_button_sized(theme, "Paste", ButtonVariant::Ghost, ButtonSize::Small, scaled)
             .on_press(Message::ContextMenuPaste),
     ]
-    .spacing(tokens::spacing::XS);
+    .spacing(scaled.spacing(tokens::spacing::XS));
 
     if options.show_select_all {
         actions = actions.push(
-            styled_button_sized(theme, "Select all", ButtonVariant::Ghost, ButtonSize::Small)
-                .on_press(Message::ContextMenuSelectAll),
+            styled_button_sized(
+                theme,
+                "Select all",
+                ButtonVariant::Ghost,
+                ButtonSize::Small,
+                scaled,
+            )
+            .on_press(Message::ContextMenuSelectAll),
         );
     }
 
     actions = actions.push(
-        styled_button_sized(theme, "Close", ButtonVariant::Secondary, ButtonSize::Small)
+        styled_button_sized(theme, "Close", ButtonVariant::Secondary, ButtonSize::Small, scaled)
             .on_press(Message::CloseContextMenu),
     );
 

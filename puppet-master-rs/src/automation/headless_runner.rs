@@ -479,6 +479,11 @@ fn selector_to_type_message(
         "input_settings_retention_days" | "settings_retention_days" => {
             Ok(Message::SettingsRetentionDaysChanged(value))
         }
+        "input_settings_ui_scale" | "settings_ui_scale" => value
+            .parse::<f32>()
+            .ok()
+            .map(|s| Message::SettingsUiScaleChanged(s.clamp(0.5, 1.5)))
+            .ok_or_else(|| format!("Invalid ui_scale value: {}", value)),
         "input_ledger_filter_tier" | "ledger_filter_tier" => {
             Ok(Message::LedgerFilterTierChanged(value))
         }

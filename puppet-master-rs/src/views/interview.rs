@@ -36,7 +36,9 @@ pub fn view<'a>(
     active_context_menu: &'a Option<ContextMenuTarget>,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
+
     // Interview uses vertical layout; size used for conditional panel display
     let mut content = column![]
         .spacing(tokens::spacing::LG)
@@ -60,10 +62,10 @@ pub fn view<'a>(
     };
 
     let header = row![
-        selectable_label(theme, "INTERVIEW SESSION"),
+        selectable_label(theme, "INTERVIEW SESSION", scaled),
         Space::new().width(Length::Fill),
-        status_dot_typed(theme, status),
-        selectable_label(theme, status_text),
+        status_dot_typed(theme, status, scaled),
+        selectable_label(theme, status_text, scaled),
     ]
     .spacing(tokens::spacing::SM)
     .align_y(iced::Alignment::Center);
@@ -89,19 +91,21 @@ pub fn view<'a>(
     if !active {
         let prompt_panel = themed_panel(
             column![
-                selectable_label(theme, "No interview session active."),
+                selectable_label(theme, "No interview session active.", scaled),
                 Space::new().height(Length::Fixed(tokens::spacing::MD as f32)),
                 selectable_label(
                     theme,
-                    "Start a new interview from the Wizard to begin gathering requirements."
+                    "Start a new interview from the Wizard to begin gathering requirements.",
+                    scaled,
                 ),
                 Space::new().height(Length::Fixed(tokens::spacing::LG as f32)),
-                styled_button(theme, "GO TO WIZARD", ButtonVariant::Primary)
+                styled_button(theme, "GO TO WIZARD", ButtonVariant::Primary, scaled)
                     .on_press(Message::NavigateTo(crate::widgets::Page::Wizard)),
             ]
             .spacing(tokens::spacing::SM)
             .padding(tokens::spacing::XL),
             theme,
+            scaled,
         );
 
         content = content.push(prompt_panel);
@@ -152,8 +156,8 @@ pub fn view<'a>(
         };
 
         let phase_display = column![
-            status_dot_typed(theme, phase_status),
-            selectable_label_mono(theme, phase_name),
+            status_dot_typed(theme, phase_status, scaled),
+            selectable_label_mono(theme, phase_name, scaled),
         ]
         .spacing(tokens::spacing::XXXS)
         .align_x(iced::Alignment::Center);
@@ -199,15 +203,15 @@ pub fn view<'a>(
     // Current question panel with research indicator
     if !current_question.is_empty() {
         let mut question_col = column![
-            selectable_label(theme, "CURRENT QUESTION"),
+            selectable_label(theme, "CURRENT QUESTION", scaled),
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
         ];
 
         // Research indicator
         if researching {
             let research_indicator = row![
-                status_dot_typed(theme, Status::Running),
-                selectable_label_mono(theme, "AI RESEARCHING..."),
+                status_dot_typed(theme, Status::Running, scaled),
+                selectable_label_mono(theme, "AI RESEARCHING...", scaled),
             ]
             .spacing(tokens::spacing::XS)
             .align_y(iced::Alignment::Center);
@@ -239,6 +243,7 @@ pub fn view<'a>(
             |value| {
                 Message::SelectableFieldChanged(SelectableField::InterviewCurrentQuestion, value)
             },
+            scaled,
         ));
 
         let question_panel = themed_panel(
@@ -246,13 +251,14 @@ pub fn view<'a>(
                 .spacing(tokens::spacing::SM)
                 .padding(tokens::spacing::MD),
             theme,
+            scaled,
         );
         content = content.push(question_panel);
     }
 
     // Answer input area
     let answer_input_widget: Element<'_, Message> = if paused {
-        selectable_label(theme, "Interview paused. Resume to continue.")
+        selectable_label(theme, "Interview paused. Resume to continue.", scaled)
     } else {
         styled_text_input_with_variant(
             theme,
@@ -260,22 +266,24 @@ pub fn view<'a>(
             answer_input,
             crate::widgets::InputVariant::Default,
             InputSize::Large,
+            scaled,
         )
         .on_input(Message::InterviewAnswerInputChanged)
         .into()
     };
 
-    let submit_btn = styled_button(theme, "SUBMIT ANSWER", ButtonVariant::Primary)
+    let submit_btn = styled_button(theme, "SUBMIT ANSWER", ButtonVariant::Primary, scaled)
         .on_press(Message::InterviewSubmitAnswer);
 
     let pause_resume_btn = styled_button(
         theme,
         if paused { "RESUME" } else { "PAUSE" },
         ButtonVariant::Secondary,
+        scaled,
     )
     .on_press(Message::InterviewTogglePause);
 
-    let end_btn = styled_button(theme, "END INTERVIEW", ButtonVariant::Danger)
+    let end_btn = styled_button(theme, "END INTERVIEW", ButtonVariant::Danger, scaled)
         .on_press(Message::InterviewEnd);
 
     let mut action_row = row![].spacing(tokens::spacing::SM);
@@ -286,7 +294,7 @@ pub fn view<'a>(
 
     let input_panel = themed_panel(
         column![
-            selectable_label(theme, "YOUR ANSWER"),
+            selectable_label(theme, "YOUR ANSWER", scaled),
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
             answer_input_widget,
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
@@ -295,15 +303,16 @@ pub fn view<'a>(
         .spacing(tokens::spacing::SM)
         .padding(tokens::spacing::MD),
         theme,
+        scaled,
     );
     content = content.push(input_panel);
 
     // Reference materials - responsive button layout
-    let add_file_btn = styled_button(theme, "ADD FILE", ButtonVariant::Secondary)
+    let add_file_btn = styled_button(theme, "ADD FILE", ButtonVariant::Secondary, scaled)
         .on_press(Message::InterviewAddReferenceFile);
-    let add_image_btn = styled_button(theme, "ADD IMAGE", ButtonVariant::Secondary)
+    let add_image_btn = styled_button(theme, "ADD IMAGE", ButtonVariant::Secondary, scaled)
         .on_press(Message::InterviewAddReferenceImage);
-    let add_dir_btn = styled_button(theme, "ADD DIRECTORY", ButtonVariant::Secondary)
+    let add_dir_btn = styled_button(theme, "ADD DIRECTORY", ButtonVariant::Secondary, scaled)
         .on_press(Message::InterviewAddReferenceDirectory);
 
     let link_input_widget = styled_text_input_with_variant(
@@ -312,11 +321,12 @@ pub fn view<'a>(
         reference_link_input,
         InputVariant::Default,
         InputSize::Medium,
+        scaled,
     )
     .on_input(Message::InterviewReferenceLinkInputChanged)
     .width(Length::Fill);
 
-    let add_link_btn = styled_button(theme, "ADD LINK", ButtonVariant::Primary)
+    let add_link_btn = styled_button(theme, "ADD LINK", ButtonVariant::Primary, scaled)
         .on_press(Message::InterviewAddReferenceLink);
 
     // Responsive layout: stack buttons vertically on mobile
@@ -343,18 +353,19 @@ pub fn view<'a>(
             |value| {
                 Message::SelectableFieldChanged(SelectableField::InterviewEmptyReferences, value)
             },
+            scaled,
         ));
     } else {
         for (index, material) in reference_materials.iter().enumerate() {
             let remove_btn =
-                styled_button_sized(theme, "REMOVE", ButtonVariant::Danger, ButtonSize::Small)
+                styled_button_sized(theme, "REMOVE", ButtonVariant::Danger, ButtonSize::Small, scaled)
                     .on_press(Message::InterviewRemoveReference(index));
 
             refs_list = refs_list.push(
                 row![
                     match &material.ref_type {
                         ReferenceType::Link(url) => row![
-                            selectable_label_mono(theme, "LINK:"),
+                            selectable_label_mono(theme, "LINK:", scaled),
                             selectable_text_field(
                                 theme,
                                 url,
@@ -364,11 +375,12 @@ pub fn view<'a>(
                                     SelectableField::InterviewReferenceLink(index),
                                     value
                                 ),
+                                scaled,
                             ),
                         ]
                         .spacing(tokens::spacing::SM),
                         ReferenceType::File(path) => row![
-                            selectable_label_mono(theme, "FILE:"),
+                            selectable_label_mono(theme, "FILE:", scaled),
                             selectable_text_field(
                                 theme,
                                 path.to_str().unwrap_or("<non-utf8 path>"),
@@ -378,11 +390,12 @@ pub fn view<'a>(
                                     SelectableField::InterviewReferenceFile(index),
                                     value
                                 ),
+                                scaled,
                             )
                         ]
                         .spacing(tokens::spacing::SM),
                         ReferenceType::Image(path) => row![
-                            selectable_label_mono(theme, "IMAGE:"),
+                            selectable_label_mono(theme, "IMAGE:", scaled),
                             selectable_text_field(
                                 theme,
                                 path.to_str().unwrap_or("<non-utf8 path>"),
@@ -392,11 +405,12 @@ pub fn view<'a>(
                                     SelectableField::InterviewReferenceImage(index),
                                     value
                                 ),
+                                scaled,
                             )
                         ]
                         .spacing(tokens::spacing::SM),
                         ReferenceType::Directory(path) => row![
-                            selectable_label_mono(theme, "DIR:"),
+                            selectable_label_mono(theme, "DIR:", scaled),
                             selectable_text_field(
                                 theme,
                                 path.to_str().unwrap_or("<non-utf8 path>"),
@@ -406,6 +420,7 @@ pub fn view<'a>(
                                     SelectableField::InterviewReferenceDirectory(index),
                                     value
                                 ),
+                                scaled,
                             )
                         ]
                         .spacing(tokens::spacing::SM),
@@ -421,7 +436,7 @@ pub fn view<'a>(
 
     let reference_panel = themed_panel(
         column![
-            selectable_label(theme, "REFERENCE MATERIALS"),
+            selectable_label(theme, "REFERENCE MATERIALS", scaled),
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
             button_layout,
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
@@ -434,6 +449,7 @@ pub fn view<'a>(
         .spacing(tokens::spacing::SM)
         .padding(tokens::spacing::MD),
         theme,
+        scaled,
     );
     content = content.push(reference_panel);
 
@@ -447,9 +463,9 @@ pub fn view<'a>(
 
     let progress_panel = themed_panel(
         column![
-            selectable_label(theme, "SESSION PROGRESS"),
+            selectable_label(theme, "SESSION PROGRESS", scaled),
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
-            selectable_label_mono(theme, &progress_text),
+            selectable_label_mono(theme, &progress_text, scaled),
             Space::new().height(Length::Fixed(tokens::spacing::SM as f32)),
             selectable_label_mono(
                 theme,
@@ -460,12 +476,14 @@ pub fn view<'a>(
                     } else {
                         phases_complete.join(", ")
                     }
-                )
+                ),
+                scaled,
             ),
         ]
         .spacing(tokens::spacing::SM)
         .padding(tokens::spacing::MD),
         theme,
+        scaled,
     );
 
     content = content.push(progress_panel);
@@ -476,7 +494,7 @@ pub fn view<'a>(
             .spacing(tokens::spacing::SM)
             .padding(tokens::spacing::MD);
 
-        history_list = history_list.push(selectable_label(theme, "INTERVIEW HISTORY"));
+        history_list = history_list.push(selectable_label(theme, "INTERVIEW HISTORY", scaled));
 
         for (idx, answer) in answers.iter().enumerate() {
             let question = questions
@@ -487,7 +505,7 @@ pub fn view<'a>(
             let mut qa_column = column![].spacing(tokens::spacing::XS);
 
             // Question label
-            qa_column = qa_column.push(selectable_label_mono(theme, &format!("Q{}", idx + 1)));
+            qa_column = qa_column.push(selectable_label_mono(theme, &format!("Q{}", idx + 1), scaled));
 
             // Selectable question text
             qa_column = qa_column.push(selectable_text_field(
@@ -498,10 +516,11 @@ pub fn view<'a>(
                 move |value| {
                     Message::SelectableFieldChanged(SelectableField::InterviewQuestion(idx), value)
                 },
+                scaled,
             ));
 
             // Answer label
-            qa_column = qa_column.push(selectable_label_mono(theme, &format!("A{}", idx + 1)));
+            qa_column = qa_column.push(selectable_label_mono(theme, &format!("A{}", idx + 1), scaled));
 
             // Selectable answer text
             qa_column = qa_column.push(selectable_text_field(
@@ -512,6 +531,7 @@ pub fn view<'a>(
                 move |value| {
                     Message::SelectableFieldChanged(SelectableField::InterviewAnswer(idx), value)
                 },
+                scaled,
             ));
 
             history_list = history_list.push(
@@ -532,7 +552,7 @@ pub fn view<'a>(
         }
 
         let history_panel =
-            themed_panel(scrollable(history_list).height(Length::Fixed(300.0)), theme);
+            themed_panel(scrollable(history_list).height(Length::Fixed(300.0)), theme, scaled);
         content = content.push(history_panel);
     }
 

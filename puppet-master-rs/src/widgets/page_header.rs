@@ -36,18 +36,19 @@ pub fn page_header<'a>(
     theme: &'a AppTheme,
     actions: Row<'a, Message>,
     size: LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     if size.is_mobile() {
-        column![selectable_label(theme, title), actions,]
-            .spacing(tokens::spacing::SM)
+        column![selectable_label(theme, title, scaled), actions,]
+            .spacing(scaled.spacing(tokens::spacing::SM))
             .into()
     } else {
         row![
-            selectable_label(theme, title),
+            selectable_label(theme, title, scaled),
             Space::new().width(Length::Fill),
             actions,
         ]
-        .spacing(tokens::spacing::MD)
+        .spacing(scaled.spacing(tokens::spacing::MD))
         .align_y(Alignment::Center)
         .into()
     }
@@ -58,8 +59,9 @@ pub fn refresh_button<'a>(
     theme: &'a AppTheme,
     msg: Message,
     style: RefreshStyle,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
-    styled_button(theme, style.label(), style.variant())
+    styled_button(theme, style.label(), style.variant(), scaled)
         .on_press(msg)
         .into()
 }

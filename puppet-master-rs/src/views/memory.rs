@@ -60,7 +60,9 @@ pub fn view<'a>(
     current_section: &'a MemorySection,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
+
     // Memory viewer uses vertical layout; size available for future responsive enhancements
     let mut content = column![]
         .spacing(tokens::spacing::LG)
@@ -69,7 +71,8 @@ pub fn view<'a>(
     let header_actions = row![refresh_button(
         theme,
         Message::MemoryRefresh,
-        RefreshStyle::Uppercase(ButtonVariant::Info)
+        RefreshStyle::Uppercase(ButtonVariant::Info),
+        scaled,
     )]
     .spacing(tokens::spacing::MD)
     .align_y(iced::Alignment::Center);
@@ -78,11 +81,12 @@ pub fn view<'a>(
         theme,
         header_actions,
         size,
+        scaled,
     ));
 
     // Section navigation dropdown and filter controls
     let nav_content = column![
-        selectable_label(theme, "Section Filter"),
+        selectable_label(theme, "Section Filter", scaled),
         row![
             pick_list(
                 MemorySection::all(),
@@ -100,6 +104,7 @@ pub fn view<'a>(
     content = content.push(themed_panel(
         container(nav_content).padding(tokens::spacing::MD),
         theme,
+        scaled,
     ));
 
     // Content display - filtered by section
@@ -119,6 +124,7 @@ pub fn view<'a>(
         .width(Length::Fill)
         .height(Length::Fill),
         theme,
+        scaled,
     );
 
     content = content.push(content_panel);

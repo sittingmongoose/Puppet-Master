@@ -134,14 +134,22 @@ impl<Message> canvas::Program<Message> for StatusDotState {
 /// ```ignore
 /// let dot = status_dot(&theme, "running");
 /// ```
-pub fn status_dot<'a, Message: 'a>(theme: &AppTheme, status: &str) -> Element<'a, Message> {
+pub fn status_dot<'a, Message: 'a>(
+    theme: &AppTheme,
+    status: &str,
+    _scaled: crate::theme::ScaledTokens,
+) -> Element<'a, Message> {
     let status_enum = Status::from(status);
-    status_dot_typed(theme, status_enum)
+    status_dot_typed(theme, status_enum, _scaled)
 }
 
 // DRY:WIDGET:status_dot_typed
 /// Create a status dot with typed Status enum
-pub fn status_dot_typed<'a, Message: 'a>(theme: &AppTheme, status: Status) -> Element<'a, Message> {
+pub fn status_dot_typed<'a, Message: 'a>(
+    theme: &AppTheme,
+    status: Status,
+    _scaled: crate::theme::ScaledTokens,
+) -> Element<'a, Message> {
     let color = status.color();
     let border_color = theme.ink();
 
@@ -174,9 +182,10 @@ pub fn status_badge<'a, Message: 'a + Clone>(
     theme: &AppTheme,
     status: &str,
     label: &'a str,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let status_enum = Status::from(status);
-    status_badge_typed(theme, status_enum, label)
+    status_badge_typed(theme, status_enum, label, scaled)
 }
 
 // DRY:WIDGET:status_badge_typed
@@ -185,22 +194,26 @@ pub fn status_badge_typed<'a, Message: 'a + Clone>(
     theme: &AppTheme,
     status: Status,
     label: &'a str,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let color = status.color();
     let themed_ink = theme.ink();
 
     let content = row![
-        status_dot_typed(theme, status),
+        status_dot_typed(theme, status, scaled),
         text(label)
-            .size(tokens::font_size::SM)
+            .size(scaled.font_size(tokens::font_size::SM))
             .font(fonts::FONT_UI_MEDIUM)
             .color(themed_ink)
     ]
-    .spacing(tokens::spacing::XS)
+    .spacing(scaled.spacing(tokens::spacing::XS))
     .align_y(iced::Alignment::Center);
 
     container(content)
-        .padding([tokens::spacing::XS as u16, tokens::spacing::SM as u16])
+        .padding([
+            scaled.spacing(tokens::spacing::XS) as u16,
+            scaled.spacing(tokens::spacing::SM) as u16,
+        ])
         .style(move |_iced_theme: &IcedTheme| container::Style {
             background: Some(iced::Background::Color(Color { a: 0.15, ..color })),
             border: Border {
@@ -229,6 +242,7 @@ pub fn status_badge_with_text<'a, Message: 'a>(
     theme: &AppTheme,
     status: &str,
     text_content: &str,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let status_enum = Status::from(status);
     let color = status_enum.color();
@@ -236,11 +250,14 @@ pub fn status_badge_with_text<'a, Message: 'a>(
 
     container(
         text(text_content.to_uppercase())
-            .size(tokens::font_size::SM)
+            .size(scaled.font_size(tokens::font_size::SM))
             .font(fonts::FONT_UI_BOLD)
             .color(colors::PAPER_CREAM),
     )
-    .padding([tokens::spacing::XS as u16, tokens::spacing::SM as u16])
+    .padding([
+        scaled.spacing(tokens::spacing::XS) as u16,
+        scaled.spacing(tokens::spacing::SM) as u16,
+    ])
     .style(move |_iced_theme: &IcedTheme| container::Style {
         background: Some(iced::Background::Color(color)),
         border: Border {
@@ -266,6 +283,7 @@ pub fn pulsing_status_dot<'a, Message: 'a>(
     theme: &AppTheme,
     status: Status,
     pulse_alpha: f32,
+    _scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let mut color = status.color();
     color.a = pulse_alpha.clamp(0.3, 1.0);

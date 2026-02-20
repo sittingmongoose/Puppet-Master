@@ -359,11 +359,19 @@ impl DoctorCheck for PlaywrightCheck {
             };
         }
 
+        // Success: report the effective path used for subprocess checks (not the process-level env,
+        // which is never set in the GUI process and would misleadingly show "is not set").
+        let effective_note = format!(
+            "PLAYWRIGHT_BROWSERS_PATH={}",
+            crate::install::app_paths::get_playwright_browsers_dir().display()
+        );
         CheckResult {
             passed: true,
             message: "Playwright browsers are available".to_string(),
             details: Some(format!(
-                "{browsers_path_note}. Playwright version: {version_text}. Found: {}",
+                "{}. Playwright version: {}. Found: {}",
+                effective_note,
+                version_text,
                 found.join(", ")
             )),
             can_fix: false,

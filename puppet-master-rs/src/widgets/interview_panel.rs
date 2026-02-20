@@ -113,6 +113,7 @@ pub fn interview_panel<'a, Message>(
     theme: &AppTheme,
     data: &InterviewPanelData,
     on_open: Message,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message>
 where
     Message: Clone + 'a,
@@ -120,26 +121,26 @@ where
     let phase_info = column![
         // Phase label (e.g., "Phase 2 of 8")
         text(data.phase_label())
-            .size(tokens::font_size::SM)
+            .size(scaled.font_size(tokens::font_size::SM))
             .color(theme.palette().text_secondary),
         // Phase name
         text(data.phase_name.clone())
-            .size(tokens::font_size::BASE)
+            .size(scaled.font_size(tokens::font_size::BASE))
             .color(theme.palette().text_primary),
     ]
-    .spacing(tokens::spacing::XS);
+    .spacing(scaled.spacing(tokens::spacing::XS));
 
     let question_section = column![
         // Label
         text("Current Question:")
-            .size(tokens::font_size::SM)
+            .size(scaled.font_size(tokens::font_size::SM))
             .color(theme.palette().text_secondary),
         // Truncated question text
         text(data.truncated_question())
-            .size(tokens::font_size::SM)
+            .size(scaled.font_size(tokens::font_size::SM))
             .color(theme.palette().text_primary),
     ]
-    .spacing(tokens::spacing::XS);
+    .spacing(scaled.spacing(tokens::spacing::XS));
 
     let progress_section = column![
         // Progress bar
@@ -148,21 +149,22 @@ where
             data.progress(),
             ProgressVariant::Default,
             ProgressSize::Small,
+            scaled,
         ),
         // Progress percentage
         text(format!("{}% Complete", (data.progress() * 100.0) as u8))
-            .size(tokens::font_size::SM)
+            .size(scaled.font_size(tokens::font_size::SM))
             .color(theme.palette().text_secondary),
     ]
-    .spacing(tokens::spacing::XS);
+    .spacing(scaled.spacing(tokens::spacing::XS));
 
     let content = column![
         phase_info,
-        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        Space::new().height(Length::Fixed(scaled.spacing(tokens::spacing::MD))),
         question_section,
-        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        Space::new().height(Length::Fixed(scaled.spacing(tokens::spacing::MD))),
         progress_section,
-        Space::new().height(Length::Fixed(tokens::spacing::MD)),
+        Space::new().height(Length::Fixed(scaled.spacing(tokens::spacing::MD))),
         // "Open Full Interview" button
         row![
             styled_button_sized(
@@ -170,6 +172,7 @@ where
                 "Open Full Interview",
                 ButtonVariant::Info,
                 ButtonSize::Medium,
+                scaled,
             )
             .on_press(on_open)
         ]
@@ -206,6 +209,7 @@ pub fn interview_panel_compact<'a, Message>(
     theme: &AppTheme,
     data: &InterviewPanelData,
     on_open: Message,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message>
 where
     Message: Clone + 'a,
@@ -214,27 +218,28 @@ where
         // Phase info
         row![
             text(data.phase_label())
-                .size(tokens::font_size::SM)
+                .size(scaled.font_size(tokens::font_size::SM))
                 .color(theme.palette().text_secondary),
             Space::new().width(Length::Fill),
             text(data.phase_name.clone())
-                .size(tokens::font_size::SM)
+                .size(scaled.font_size(tokens::font_size::SM))
                 .color(theme.palette().text_primary),
         ]
-        .spacing(tokens::spacing::SM)
+        .spacing(scaled.spacing(tokens::spacing::SM))
         .align_y(Alignment::Center),
-        Space::new().height(Length::Fixed(tokens::spacing::SM)),
+        Space::new().height(Length::Fixed(scaled.spacing(tokens::spacing::SM))),
         // Progress bar
         styled_progress_bar(
             theme,
             data.progress(),
             ProgressVariant::Default,
             ProgressSize::Small,
+            scaled,
         ),
-        Space::new().height(Length::Fixed(tokens::spacing::SM)),
+        Space::new().height(Length::Fixed(scaled.spacing(tokens::spacing::SM))),
         // "Open" button
         row![
-            styled_button_sized(theme, "Open", ButtonVariant::Ghost, ButtonSize::Small)
+            styled_button_sized(theme, "Open", ButtonVariant::Ghost, ButtonSize::Small, scaled)
                 .on_press(on_open)
         ]
         .align_y(Alignment::Center),

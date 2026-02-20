@@ -119,7 +119,9 @@ pub fn view<'a>(
     filter_session: &'a str,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
+
     // Ledger uses table layout; size reserved for Phase 3 responsive table enhancements
     let mut content = column![]
         .spacing(tokens::spacing::LG)
@@ -128,11 +130,12 @@ pub fn view<'a>(
     let header_actions = row![refresh_button(
         theme,
         Message::LedgerRefresh,
-        RefreshStyle::Uppercase(ButtonVariant::Info)
+        RefreshStyle::Uppercase(ButtonVariant::Info),
+        scaled
     )]
     .spacing(tokens::spacing::MD)
     .align_y(iced::Alignment::Center);
-    content = content.push(page_header("Event Ledger", theme, header_actions, size));
+    content = content.push(page_header("Event Ledger", theme, header_actions, size, scaled));
 
     // Summary stats panel - count events by type
     let mut type_counts = std::collections::HashMap::new();
@@ -146,8 +149,8 @@ pub fn view<'a>(
     stats_grid = stats_grid.push(
         container(
             column![
-                selectable_label(theme, &entries.len().to_string()),
-                selectable_label(theme, "Total Events"),
+                selectable_label(theme, &entries.len().to_string(), scaled),
+                selectable_label(theme, "Total Events", scaled),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center),
@@ -167,8 +170,8 @@ pub fn view<'a>(
     stats_grid = stats_grid.push(
         container(
             column![
-                selectable_label(theme, &type_counts.len().to_string()),
-                selectable_label(theme, "Event Types"),
+                selectable_label(theme, &type_counts.len().to_string(), scaled),
+                selectable_label(theme, "Event Types", scaled),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center),
@@ -192,8 +195,8 @@ pub fn view<'a>(
     stats_grid = stats_grid.push(
         container(
             column![
-                selectable_label(theme, &unique_tiers.len().to_string()),
-                selectable_label(theme, "Unique Tiers"),
+                selectable_label(theme, &unique_tiers.len().to_string(), scaled),
+                selectable_label(theme, "Unique Tiers", scaled),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center),
@@ -228,8 +231,8 @@ pub fn view<'a>(
     stats_grid = stats_grid.push(
         container(
             column![
-                selectable_label(theme, &date_range_text),
-                selectable_label(theme, "Date Range"),
+                selectable_label(theme, &date_range_text, scaled),
+                selectable_label(theme, "Date Range", scaled),
             ]
             .spacing(tokens::spacing::XXS)
             .align_x(iced::Alignment::Center),
@@ -249,10 +252,11 @@ pub fn view<'a>(
     content = content.push(themed_panel(
         container(stats_grid).padding(tokens::spacing::MD),
         theme,
+        scaled,
     ));
 
     // Filter bar with event type, tier, session, and limit controls
-    let mut filter_row = row![selectable_label(theme, "Filter:"),]
+    let mut filter_row = row![selectable_label(theme, "Filter:", scaled),]
         .spacing(tokens::spacing::SM)
         .align_y(iced::Alignment::Center);
 
@@ -279,14 +283,14 @@ pub fn view<'a>(
 
     // Tier filter input
     filter_row = filter_row.push(
-        styled_text_input(theme, "Tier ID", filter_tier)
+        styled_text_input(theme, "Tier ID", filter_tier, scaled)
             .on_input(Message::LedgerFilterTierChanged)
             .width(Length::Fixed(tokens::layout::DETAIL_LABEL_WIDTH)),
     );
 
     // Session filter input
     filter_row = filter_row.push(
-        styled_text_input(theme, "Session ID", filter_session)
+        styled_text_input(theme, "Session ID", filter_session, scaled)
             .on_input(Message::LedgerFilterSessionChanged)
             .width(Length::Fixed(tokens::layout::DETAIL_LABEL_WIDTH)),
     );
@@ -306,7 +310,7 @@ pub fn view<'a>(
 
     filter_row = filter_row.push(
         row![
-            selectable_label(theme, "Limit:"),
+            selectable_label(theme, "Limit:", scaled),
             pick_list(
                 limit_options,
                 Some(current_limit),
@@ -319,17 +323,18 @@ pub fn view<'a>(
 
     // Clear and Refresh buttons
     filter_row = filter_row.push(
-        styled_button(theme, "Clear", ButtonVariant::Ghost).on_press(Message::LedgerClearFilters),
+        styled_button(theme, "Clear", ButtonVariant::Ghost, scaled).on_press(Message::LedgerClearFilters),
     );
 
     filter_row = filter_row.push(Space::new().width(Length::Fill));
     filter_row = filter_row.push(
-        styled_button(theme, "Refresh", ButtonVariant::Info).on_press(Message::LedgerRefresh),
+        styled_button(theme, "Refresh", ButtonVariant::Info, scaled).on_press(Message::LedgerRefresh),
     );
 
     content = content.push(themed_panel(
         container(filter_row).padding(tokens::spacing::MD),
         theme,
+        scaled,
     ));
 
     // Event list
@@ -355,14 +360,15 @@ pub fn view<'a>(
         content = content.push(themed_panel(
             container(
                 column![
-                    selectable_label(theme, "No events found"),
+                    selectable_label(theme, "No events found", scaled),
                     Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                    selectable_label(theme, "Try adjusting your filters"),
+                    selectable_label(theme, "Try adjusting your filters", scaled),
                 ]
                 .spacing(tokens::spacing::SM),
             )
             .padding(tokens::spacing::XL),
             theme,
+            scaled,
         ));
     } else {
         let mut events_col = column![].spacing(tokens::spacing::XS);
@@ -384,9 +390,9 @@ pub fn view<'a>(
 
             let event_row = row![
                 // Timestamp
-                container(selectable_label_mono(theme, &timestamp_str)).width(Length::Fixed(80.0)),
+                container(selectable_label_mono(theme, &timestamp_str, scaled)).width(Length::Fixed(80.0)),
                 // Event type badge with color
-                container(selectable_label(theme, &event_type_str))
+                container(selectable_label(theme, &event_type_str, scaled))
                     .padding(tokens::spacing::XS)
                     .style(move |_theme: &iced::Theme| {
                         iced::widget::container::Style {
@@ -402,13 +408,13 @@ pub fn view<'a>(
                     })
                     .width(Length::Fixed(190.0)),
                 // Tier ID
-                container(selectable_label_mono(theme, &tier_id_display))
+                container(selectable_label_mono(theme, &tier_id_display, scaled))
                     .width(Length::Fixed(tokens::layout::DETAIL_LABEL_WIDTH)),
                 // Data preview (truncated) or expand icon
                 container(if is_expanded {
-                    selectable_label(theme, "▼ Click to collapse")
+                    selectable_label(theme, "▼ Click to collapse", scaled)
                 } else {
-                    selectable_label(theme, &data_preview)
+                    selectable_label(theme, &data_preview, scaled)
                 })
                 .width(Length::Fill),
             ]
@@ -485,7 +491,7 @@ pub fn view<'a>(
                     } else {
                         // Fallback to text if content not in HashMap
                         container(
-                            scrollable(selectable_label_mono(theme, &data_full))
+                            scrollable(selectable_label_mono(theme, &data_full, scaled))
                                 .height(Length::Fixed(tokens::layout::FORM_LABEL_WIDTH)),
                         )
                         .padding(tokens::spacing::MD)
@@ -513,6 +519,7 @@ pub fn view<'a>(
         content = content.push(themed_panel(
             container(events_col).padding(tokens::spacing::MD),
             theme,
+            scaled,
         ));
     }
 
@@ -520,16 +527,17 @@ pub fn view<'a>(
     content = content.push(themed_panel(
         container(
             row![
-                styled_button(theme, "Export Ledger", ButtonVariant::Info)
+                styled_button(theme, "Export Ledger", ButtonVariant::Info, scaled)
                     .on_press(Message::LedgerExport),
                 Space::new().width(Length::Fill),
-                styled_button(theme, "Clear Ledger", ButtonVariant::Danger)
+                styled_button(theme, "Clear Ledger", ButtonVariant::Danger, scaled)
                     .on_press(Message::LedgerClear),
             ]
             .spacing(tokens::spacing::SM),
         )
         .padding(tokens::spacing::MD),
         theme,
+        scaled,
     ));
 
     scrollable(content)

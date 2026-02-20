@@ -111,6 +111,7 @@ pub fn view<'a>(
     auth_status: &'a HashMap<String, crate::views::login::AuthStatus>,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     // Multi-step wizard with vertical flow; size used for form field responsiveness
     let mut content = column![]
@@ -118,25 +119,25 @@ pub fn view<'a>(
         .padding(tokens::spacing::LG);
 
     let step_indicator = row![
-        step_circle_canvas::step_circle_canvas(0, step, theme),
+        step_circle_canvas::step_circle_canvas(0, step, theme, scaled),
         connecting_line(0, step, theme),
-        step_circle_canvas::step_circle_canvas(1, step, theme),
+        step_circle_canvas::step_circle_canvas(1, step, theme, scaled),
         connecting_line(1, step, theme),
-        step_circle_canvas::step_circle_canvas(2, step, theme),
+        step_circle_canvas::step_circle_canvas(2, step, theme, scaled),
         connecting_line(2, step, theme),
-        step_circle_canvas::step_circle_canvas(3, step, theme),
+        step_circle_canvas::step_circle_canvas(3, step, theme, scaled),
         connecting_line(3, step, theme),
-        step_circle_canvas::step_circle_canvas(4, step, theme),
+        step_circle_canvas::step_circle_canvas(4, step, theme, scaled),
         connecting_line(4, step, theme),
-        step_circle_canvas::step_circle_canvas(5, step, theme),
+        step_circle_canvas::step_circle_canvas(5, step, theme, scaled),
         connecting_line(5, step, theme),
-        step_circle_canvas::step_circle_canvas(6, step, theme),
+        step_circle_canvas::step_circle_canvas(6, step, theme, scaled),
         connecting_line(6, step, theme),
-        step_circle_canvas::step_circle_canvas(7, step, theme),
+        step_circle_canvas::step_circle_canvas(7, step, theme, scaled),
         connecting_line(7, step, theme),
-        step_circle_canvas::step_circle_canvas(8, step, theme),
+        step_circle_canvas::step_circle_canvas(8, step, theme, scaled),
         connecting_line(8, step, theme),
-        step_circle_canvas::step_circle_canvas(9, step, theme),
+        step_circle_canvas::step_circle_canvas(9, step, theme, scaled),
     ]
     .spacing(tokens::spacing::XXXS)
     .align_y(iced::Alignment::Center);
@@ -184,6 +185,7 @@ pub fn view<'a>(
             project_path,
             interaction_mode,
             theme,
+            scaled,
         )
         .into(),
         1 => step1_install_dependencies(
@@ -194,6 +196,7 @@ pub fn view<'a>(
             dep_install_log,
             dep_installing,
             theme,
+            scaled,
         )
         .into(),
         2 => step1_interview_config(
@@ -202,6 +205,7 @@ pub fn view<'a>(
             reasoning_level,
             generate_agents_md,
             theme,
+            scaled,
         )
         .into(),
         3 => step2_upload_requirements(
@@ -210,6 +214,7 @@ pub fn view<'a>(
             requirements_text,
             requirements_preview_content,
             theme,
+            scaled,
         ),
         4 => step3_generate_prd(
             requirements_text,
@@ -220,12 +225,13 @@ pub fn view<'a>(
             platform_statuses,
             auth_status,
             theme,
+            scaled,
         ),
-        5 => step4_review_prd(prd_editor_content, prd_text, theme),
-        6 => step5_configure_tiers(tier_configs, models, platform_statuses, auth_status, theme),
-        7 => step6_generate_plan(plan_text, plan_content, generating, theme),
-        8 => step7_review_plan(plan_text, plan_content, theme).into(),
-        9 => step8_review_start(project_name, project_path, theme).into(),
+        5 => step4_review_prd(prd_editor_content, prd_text, theme, scaled),
+        6 => step5_configure_tiers(tier_configs, models, platform_statuses, auth_status, theme, scaled),
+        7 => step6_generate_plan(plan_text, plan_content, generating, theme, scaled),
+        8 => step7_review_plan(plan_text, plan_content, theme, scaled).into(),
+        9 => step8_review_start(project_name, project_path, theme, scaled).into(),
         _ => container(
             text("Invalid step")
                 .size(tokens::font_size::XL)
@@ -271,20 +277,21 @@ fn step0_project_setup<'a>(
     project_path: &'a str,
     interaction_mode: &'a str,
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> container::Container<'a, Message> {
     let tooltip_variant = interaction_mode_to_variant(interaction_mode);
 
     let can_proceed = !project_name.trim().is_empty() && !project_path.trim().is_empty();
 
     let step_content = column![
-        selectable_label(theme, "Step 0: Project Setup"),
-        selectable_label(theme, "Configure your project structure and repository"),
+        selectable_label(theme, "Step 0: Project Setup", scaled),
+        selectable_label(theme, "Configure your project structure and repository", scaled),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Project Type Selection
         row![
-            selectable_label(theme, "Project Type:"),
+            selectable_label(theme, "Project Type:", scaled),
             Space::new().width(Length::Fixed(tokens::spacing::XS)),
-            help_tooltip("wizard.project_type", tooltip_variant, theme),
+            help_tooltip("wizard.project_type", tooltip_variant, theme, scaled),
         ]
         .align_y(Alignment::Center),
         row![
@@ -297,16 +304,17 @@ fn step0_project_setup<'a>(
                     "New Project"
                 } else {
                     "Existing Project"
-                }
+                },
+                scaled,
             ),
         ]
         .spacing(tokens::spacing::SM),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         // Project Name
         row![
-            selectable_label(theme, "Project Name:"),
+            selectable_label(theme, "Project Name:", scaled),
             Space::new().width(Length::Fixed(tokens::spacing::XS)),
-            help_tooltip("wizard.project_name", tooltip_variant, theme),
+            help_tooltip("wizard.project_name", tooltip_variant, theme, scaled),
         ]
         .align_y(Alignment::Center),
         styled_text_input_with_variant(
@@ -314,15 +322,16 @@ fn step0_project_setup<'a>(
             "my-awesome-project",
             project_name,
             InputVariant::Default,
-            InputSize::Large
+            InputSize::Large,
+            scaled,
         )
         .on_input(Message::WizardProjectNameChanged),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         // Project Path
         row![
-            selectable_label(theme, "Project Path:"),
+            selectable_label(theme, "Project Path:", scaled),
             Space::new().width(Length::Fixed(tokens::spacing::XS)),
-            help_tooltip("wizard.project_path", tooltip_variant, theme),
+            help_tooltip("wizard.project_path", tooltip_variant, theme, scaled),
         ]
         .align_y(Alignment::Center),
         row![
@@ -331,27 +340,28 @@ fn step0_project_setup<'a>(
                 "/home/user/Projects/my-project",
                 project_path,
                 InputVariant::Default,
-                InputSize::Large
+                InputSize::Large,
+                scaled,
             )
             .on_input(Message::WizardProjectPathChanged)
             .width(Length::Fill),
-            styled_button(theme, "BROWSE", ButtonVariant::Secondary)
+            styled_button(theme, "BROWSE", ButtonVariant::Secondary, scaled)
                 .on_press(Message::WizardBrowseProjectPath),
         ]
         .spacing(tokens::spacing::SM),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // GitHub Repository Section
         row![
-            selectable_label(theme, "GitHub Repository:"),
+            selectable_label(theme, "GitHub Repository:", scaled),
             Space::new().width(Length::Fixed(tokens::spacing::XS)),
-            help_tooltip("wizard.github_repo", tooltip_variant, theme),
+            help_tooltip("wizard.github_repo", tooltip_variant, theme, scaled),
         ]
         .align_y(Alignment::Center),
         row![
             toggler(has_github_repo)
                 .on_toggle(Message::WizardHasGithubRepoToggled)
                 .spacing(tokens::spacing::SM),
-            selectable_label(theme, "I already have a GitHub repository"),
+            selectable_label(theme, "I already have a GitHub repository", scaled),
         ]
         .spacing(tokens::spacing::SM),
     ]
@@ -363,9 +373,9 @@ fn step0_project_setup<'a>(
             column![
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
                 row![
-                    selectable_label(theme, "Repository URL:"),
+                    selectable_label(theme, "Repository URL:", scaled),
                     Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                    help_tooltip("wizard.github_url", tooltip_variant, theme),
+                    help_tooltip("wizard.github_url", tooltip_variant, theme, scaled),
                 ]
                 .align_y(Alignment::Center),
                 styled_text_input_with_variant(
@@ -373,7 +383,8 @@ fn step0_project_setup<'a>(
                     "https://github.com/username/repo",
                     github_url,
                     InputVariant::Default,
-                    InputSize::Large
+                    InputSize::Large,
+                    scaled,
                 )
                 .on_input(Message::WizardGithubUrlChanged),
             ]
@@ -388,7 +399,7 @@ fn step0_project_setup<'a>(
                     toggler(create_github_repo)
                         .on_toggle(Message::WizardCreateGithubRepoToggled)
                         .spacing(tokens::spacing::SM),
-                    selectable_label(theme, "Create GitHub repository automatically"),
+                    selectable_label(theme, "Create GitHub repository automatically", scaled),
                 ]
                 .spacing(tokens::spacing::SM),
             ]
@@ -402,9 +413,9 @@ fn step0_project_setup<'a>(
             column![
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
                 row![
-                    selectable_label(theme, "Repository Visibility:"),
+                    selectable_label(theme, "Repository Visibility:", scaled),
                     Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                    help_tooltip("wizard.github_visibility", tooltip_variant, theme),
+                    help_tooltip("wizard.github_visibility", tooltip_variant, theme, scaled),
                 ]
                 .align_y(Alignment::Center),
                 pick_list(
@@ -416,13 +427,14 @@ fn step0_project_setup<'a>(
                 )
                 .width(Length::Fixed(200.0)),
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                selectable_label(theme, "Repository Description:"),
+                selectable_label(theme, "Repository Description:", scaled),
                 styled_text_input_with_variant(
                     theme,
                     "Project description",
                     github_description,
                     InputVariant::Default,
-                    InputSize::Large
+                    InputSize::Large,
+                    scaled,
                 )
                 .on_input(Message::WizardGithubDescriptionChanged),
             ]
@@ -438,10 +450,10 @@ fn step0_project_setup<'a>(
     let nav_buttons = row![
         Space::new().width(Length::Fill),
         if can_proceed {
-            styled_button(theme, "NEXT →", ButtonVariant::Primary)
+            styled_button(theme, "NEXT →", ButtonVariant::Primary, scaled)
                 .on_press(Message::WizardInitializeProject)
         } else {
-            styled_button(theme, "NEXT →", ButtonVariant::Secondary)
+            styled_button(theme, "NEXT →", ButtonVariant::Secondary, scaled)
         },
     ]
     .spacing(tokens::spacing::MD)
@@ -451,7 +463,7 @@ fn step0_project_setup<'a>(
         .spacing(tokens::spacing::LG)
         .width(Length::Fill);
 
-    themed_panel(final_content, theme)
+    themed_panel(final_content, theme, scaled)
 }
 
 // DRY:FN:step1_install_dependencies — Dependency install wizard step
@@ -466,6 +478,7 @@ fn step1_install_dependencies<'a>(
     install_log: &'a [String],
     installing: Option<&'a str>,
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> container::Container<'a, Message> {
     let node_installed = node_ok == Some(true);
 
@@ -476,9 +489,9 @@ fn step1_install_dependencies<'a>(
         Some(false) => "Not found",
     };
     let node_row = row![
-        selectable_label(theme, "Node.js (>= 18):"),
+        selectable_label(theme, "Node.js (>= 18):", scaled),
         Space::new().width(Length::Fixed(tokens::spacing::SM)),
-        selectable_label(theme, node_status_label),
+        selectable_label(theme, node_status_label, scaled),
         Space::new().width(Length::Fill),
         if node_ok != Some(true) {
             styled_button(
@@ -489,6 +502,7 @@ fn step1_install_dependencies<'a>(
                     "INSTALL"
                 },
                 ButtonVariant::Primary,
+                scaled,
             )
             .on_press_maybe(if installing.is_none() {
                 Some(Message::WizardInstallNode)
@@ -496,7 +510,7 @@ fn step1_install_dependencies<'a>(
                 None
             })
         } else {
-            styled_button(theme, "Installed ✓", ButtonVariant::Secondary)
+            styled_button(theme, "Installed ✓", ButtonVariant::Secondary, scaled)
         },
     ]
     .spacing(tokens::spacing::MD)
@@ -509,9 +523,9 @@ fn step1_install_dependencies<'a>(
         Some(false) => "Not found",
     };
     let gh_row = row![
-        selectable_label(theme, "GitHub CLI (gh):"),
+        selectable_label(theme, "GitHub CLI (gh):", scaled),
         Space::new().width(Length::Fixed(tokens::spacing::SM)),
-        selectable_label(theme, gh_status_label),
+        selectable_label(theme, gh_status_label, scaled),
         Space::new().width(Length::Fill),
         if gh_ok != Some(true) {
             styled_button(
@@ -522,6 +536,7 @@ fn step1_install_dependencies<'a>(
                     "INSTALL"
                 },
                 ButtonVariant::Primary,
+                scaled,
             )
             .on_press_maybe(if installing.is_none() {
                 Some(Message::WizardInstallGhCli)
@@ -529,7 +544,7 @@ fn step1_install_dependencies<'a>(
                 None
             })
         } else {
-            styled_button(theme, "Installed ✓", ButtonVariant::Secondary)
+            styled_button(theme, "Installed ✓", ButtonVariant::Secondary, scaled)
         },
     ]
     .spacing(tokens::spacing::MD)
@@ -556,9 +571,9 @@ fn step1_install_dependencies<'a>(
                 toggler(selected)
                     .on_toggle(move |_| Message::WizardToggleDepPlatform(platform))
                     .spacing(tokens::spacing::SM),
-                selectable_label(theme, format!("{platform}").as_str()),
+                selectable_label(theme, format!("{platform}").as_str(), scaled),
                 Space::new().width(Length::Fixed(tokens::spacing::SM)),
-                selectable_label(theme, status_label),
+                selectable_label(theme, status_label, scaled),
                 Space::new().width(Length::Fill),
                 if selected && status != Some(true) {
                     styled_button(
@@ -569,6 +584,7 @@ fn step1_install_dependencies<'a>(
                             "INSTALL"
                         },
                         ButtonVariant::Primary,
+                        scaled,
                     )
                     .on_press_maybe(if installing.is_none() {
                         Some(Message::WizardInstallPlatformCli(platform))
@@ -576,7 +592,7 @@ fn step1_install_dependencies<'a>(
                         None
                     })
                 } else {
-                    styled_button(theme, "", ButtonVariant::Secondary)
+                    styled_button(theme, "", ButtonVariant::Secondary, scaled)
                 },
             ]
             .spacing(tokens::spacing::MD)
@@ -589,21 +605,22 @@ fn step1_install_dependencies<'a>(
     let log_col: Vec<iced::Element<'a, Message>> = install_log
         .iter()
         .take(8) // show last 8 lines
-        .map(|line| selectable_label(theme, line.as_str()).into())
+        .map(|line| selectable_label(theme, line.as_str(), scaled).into())
         .collect();
 
     let mut step_content = column![
-        selectable_label(theme, "Step 1: Install Dependencies"),
+        selectable_label(theme, "Step 1: Install Dependencies", scaled),
         selectable_label(
             theme,
-            "Install required CLI tools into the app data directory."
+            "Install required CLI tools into the app data directory.",
+            scaled,
         ),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
-        selectable_label(theme, "Required:"),
+        selectable_label(theme, "Required:", scaled),
         node_row,
         gh_row,
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
-        selectable_label(theme, "Platform CLIs (optional — select and install):"),
+        selectable_label(theme, "Platform CLIs (optional — select and install):", scaled),
     ]
     .spacing(tokens::spacing::SM)
     .width(Length::Fill);
@@ -615,22 +632,23 @@ fn step1_install_dependencies<'a>(
     if !log_col.is_empty() {
         step_content = step_content
             .push(Space::new().height(Length::Fixed(tokens::spacing::SM)))
-            .push(selectable_label(theme, "Install log:"));
+            .push(selectable_label(theme, "Install log:", scaled));
         for line in log_col {
             step_content = step_content.push(line);
         }
     }
 
     let nav_buttons = row![
-        styled_button(theme, "← BACK", ButtonVariant::Secondary).on_press(Message::WizardPrevStep),
+        styled_button(theme, "← BACK", ButtonVariant::Secondary, scaled).on_press(Message::WizardPrevStep),
         Space::new().width(Length::Fill),
         if node_installed {
-            styled_button(theme, "NEXT →", ButtonVariant::Primary).on_press(Message::WizardNextStep)
+            styled_button(theme, "NEXT →", ButtonVariant::Primary, scaled).on_press(Message::WizardNextStep)
         } else {
             styled_button(
                 theme,
                 "NEXT → (install Node first)",
                 ButtonVariant::Secondary,
+                scaled,
             )
         },
     ]
@@ -640,7 +658,7 @@ fn step1_install_dependencies<'a>(
         .spacing(tokens::spacing::LG)
         .width(Length::Fill);
 
-    themed_panel(final_content, theme)
+    themed_panel(final_content, theme, scaled)
 }
 
 /// Step 2 (was 1): Quick Interview Config
@@ -650,31 +668,33 @@ fn step1_interview_config<'a>(
     reasoning_level: &'a str,
     generate_agents_md: bool,
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> container::Container<'a, Message> {
     // Determine tooltip variant based on interaction mode
     let tooltip_variant = interaction_mode_to_variant(interaction_mode);
 
     let step_content = column![
-        selectable_label(theme, "Step 0.5: Interview Configuration"),
-        selectable_label(theme, "Configure the interactive requirements interview"),
+        selectable_label(theme, "Step 0.5: Interview Configuration", scaled),
+        selectable_label(theme, "Configure the interactive requirements interview", scaled),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Use Interview Toggle
         row![
-            selectable_label(theme, "Requirements Interview:"),
+            selectable_label(theme, "Requirements Interview:", scaled),
             Space::new().width(Length::Fixed(tokens::spacing::XS)),
-            help_tooltip("wizard.use_interview", tooltip_variant, theme),
+            help_tooltip("wizard.use_interview", tooltip_variant, theme, scaled),
         ]
         .align_y(Alignment::Center),
         row![
             toggler(use_interview)
                 .on_toggle(Message::WizardUseInterviewToggled)
                 .spacing(tokens::spacing::SM),
-            selectable_label(theme, "Use interactive interview mode"),
+            selectable_label(theme, "Use interactive interview mode", scaled),
         ]
         .spacing(tokens::spacing::SM),
         selectable_label(
             theme,
-            "Enable this for AI-guided requirements gathering with zero ambiguity"
+            "Enable this for AI-guided requirements gathering with zero ambiguity",
+            scaled,
         ),
     ]
     .spacing(tokens::spacing::SM);
@@ -686,9 +706,9 @@ fn step1_interview_config<'a>(
                 Space::new().height(Length::Fixed(tokens::spacing::MD)),
                 // Reasoning Level
                 row![
-                    selectable_label(theme, "AI Reasoning Level:"),
+                    selectable_label(theme, "AI Reasoning Level:", scaled),
                     Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                    help_tooltip("interview.reasoning_level", tooltip_variant, theme),
+                    help_tooltip("interview.reasoning_level", tooltip_variant, theme, scaled),
                 ]
                 .align_y(Alignment::Center),
                 pick_list(
@@ -699,7 +719,8 @@ fn step1_interview_config<'a>(
                 .width(Length::Fixed(200.0)),
                 selectable_label(
                     theme,
-                    "Higher levels provide deeper analysis but take longer"
+                    "Higher levels provide deeper analysis but take longer",
+                    scaled,
                 ),
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
                 // Generate AGENTS.md
@@ -707,15 +728,16 @@ fn step1_interview_config<'a>(
                     toggler(generate_agents_md)
                         .on_toggle(Message::WizardGenerateAgentsMdToggled)
                         .spacing(tokens::spacing::SM),
-                    selectable_label(theme, "Generate initial AGENTS.md"),
+                    selectable_label(theme, "Generate initial AGENTS.md", scaled),
                     Space::new().width(Length::Fixed(tokens::spacing::XS)),
-                    help_tooltip("interview.generate_agents_md", tooltip_variant, theme),
+                    help_tooltip("interview.generate_agents_md", tooltip_variant, theme, scaled),
                 ]
                 .spacing(tokens::spacing::SM)
                 .align_y(Alignment::Center),
                 selectable_label(
                     theme,
-                    "Create a starter agent configuration file to guide AI agents"
+                    "Create a starter agent configuration file to guide AI agents",
+                    scaled,
                 ),
             ]
             .spacing(tokens::spacing::SM),
@@ -728,9 +750,9 @@ fn step1_interview_config<'a>(
 
     // Navigation buttons
     let nav_buttons = row![
-        styled_button(theme, "← BACK", ButtonVariant::Secondary).on_press(Message::WizardPrevStep),
+        styled_button(theme, "← BACK", ButtonVariant::Secondary, scaled).on_press(Message::WizardPrevStep),
         Space::new().width(Length::Fill),
-        styled_button(theme, "NEXT →", ButtonVariant::Primary).on_press(Message::WizardNextStep),
+        styled_button(theme, "NEXT →", ButtonVariant::Primary, scaled).on_press(Message::WizardNextStep),
     ]
     .spacing(tokens::spacing::MD)
     .width(Length::Fill);
@@ -739,7 +761,7 @@ fn step1_interview_config<'a>(
         .spacing(tokens::spacing::LG)
         .width(Length::Fill);
 
-    themed_panel(final_content, theme)
+    themed_panel(final_content, theme, scaled)
 }
 
 /// Step 2: Upload Requirements (previously Step 1)
@@ -749,6 +771,7 @@ fn step2_upload_requirements<'a>(
     requirements_text: &'a str,
     requirements_preview_content: &'a text_editor::Content,
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let char_count = requirements_text.len();
     let can_proceed = !project_name.trim().is_empty()
@@ -756,36 +779,38 @@ fn step2_upload_requirements<'a>(
         && !requirements_text.trim().is_empty();
 
     let step_content = column![
-        selectable_label(theme, "Step 1: Upload Requirements"),
-        selectable_label(theme, "Enter project details and requirements"),
+        selectable_label(theme, "Step 1: Upload Requirements", scaled),
+        selectable_label(theme, "Enter project details and requirements", scaled),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
 
         // Project Name
-        selectable_label(theme, "Project Name:"),
+        selectable_label(theme, "Project Name:", scaled),
         styled_text_input_with_variant(
             theme,
             "My Awesome Project",
             project_name,
             InputVariant::Default,
-            InputSize::Large
+            InputSize::Large,
+            scaled,
         )
         .on_input(Message::WizardProjectNameChanged),
 
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
 
         // Project Path
-        selectable_label(theme, "Project Path:"),
+        selectable_label(theme, "Project Path:", scaled),
         row![
             styled_text_input_with_variant(
                 theme,
                 "/path/to/project",
                 project_path,
                 InputVariant::Default,
-                InputSize::Large
+                InputSize::Large,
+                scaled,
             )
             .on_input(Message::WizardProjectPathChanged)
             .width(Length::Fill),
-            styled_button(theme, "BROWSE", ButtonVariant::Secondary)
+            styled_button(theme, "BROWSE", ButtonVariant::Secondary, scaled)
                 .on_press(Message::WizardBrowseProjectPath),
         ].spacing(tokens::spacing::SM),
 
@@ -793,9 +818,9 @@ fn step2_upload_requirements<'a>(
 
         // Requirements Input
         row![
-            selectable_label(theme, "Requirements:"),
+            selectable_label(theme, "Requirements:", scaled),
             Space::new().width(Length::Fill),
-            selectable_label(theme, &format!("{} characters", char_count)),
+            selectable_label(theme, &format!("{} characters", char_count), scaled),
         ],
 
         // Requirements preview (read-only, selectable)
@@ -824,11 +849,12 @@ fn step2_upload_requirements<'a>(
             "Type or paste requirements here...",
             requirements_text,
             InputVariant::Default,
-            InputSize::Large
+            InputSize::Large,
+            scaled,
         )
         .on_input(Message::WizardRequirementsChanged),
 
-        styled_button(theme, "CHOOSE FILE", ButtonVariant::Secondary)
+        styled_button(theme, "CHOOSE FILE", ButtonVariant::Secondary, scaled)
             .on_press(Message::WizardBrowseRequirementsFile),
 
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
@@ -844,11 +870,11 @@ fn step2_upload_requirements<'a>(
                         ..Default::default()
                     }),
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                selectable_label(theme, "OR"),
+                selectable_label(theme, "OR", scaled),
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                selectable_label(theme, "Use the interactive interview to generate detailed requirements through guided Q&A"),
+                selectable_label(theme, "Use the interactive interview to generate detailed requirements through guided Q&A", scaled),
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                styled_button(theme, "START INTERACTIVE INTERVIEW", ButtonVariant::Info)
+                styled_button(theme, "START INTERACTIVE INTERVIEW", ButtonVariant::Info, scaled)
                     .on_press(Message::StartInterview),
             ]
             .spacing(tokens::spacing::XXS)
@@ -861,14 +887,14 @@ fn step2_upload_requirements<'a>(
 
         // Navigation buttons
         row![
-            styled_button(theme, "← BACK", ButtonVariant::Secondary)
+            styled_button(theme, "← BACK", ButtonVariant::Secondary, scaled)
                 .on_press(Message::WizardPrevStep),
             Space::new().width(Length::Fill),
             if can_proceed {
-                styled_button(theme, "NEXT →", ButtonVariant::Primary)
+                styled_button(theme, "NEXT →", ButtonVariant::Primary, scaled)
                     .on_press(Message::WizardNextStep)
             } else {
-            styled_button(theme, "NEXT →", ButtonVariant::Secondary)
+            styled_button(theme, "NEXT →", ButtonVariant::Secondary, scaled)
         },
         ].spacing(tokens::spacing::MD),
     ].spacing(tokens::spacing::MD);
@@ -887,6 +913,7 @@ fn step3_generate_prd<'a>(
     platform_statuses: &'a [crate::views::setup::PlatformStatus],
     auth_status: &'a HashMap<String, crate::views::login::AuthStatus>,
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let platform_models = models.get(prd_platform);
 
@@ -897,14 +924,15 @@ fn step3_generate_prd<'a>(
     };
 
     let step_content = column![
-        selectable_label(theme, "Step 2: Generate PRD"),
+        selectable_label(theme, "Step 2: Generate PRD", scaled),
         selectable_label(
             theme,
-            "Select platform and model, then generate the Product Requirements Document"
+            "Select platform and model, then generate the Product Requirements Document",
+            scaled,
         ),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Platform selection
-        row![selectable_label(theme, "Platform:"), {
+        row![selectable_label(theme, "Platform:", scaled), {
             // Build platform options with availability indicators
             let platform_options: Vec<String> = PLATFORMS
                 .iter()
@@ -937,7 +965,7 @@ fn step3_generate_prd<'a>(
         .align_y(iced::Alignment::Center),
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         // Model selection
-        row![selectable_label(theme, "Model:"), {
+        row![selectable_label(theme, "Model:", scaled), {
             let model_picker: Element<'_, Message> = if let Some(models_list) = platform_models {
                 let selected = models_list
                     .iter()
@@ -951,7 +979,7 @@ fn step3_generate_prd<'a>(
                 .width(Length::Fixed(300.0))
                 .into()
             } else {
-                selectable_label(theme, "Loading models...")
+                selectable_label(theme, "Loading models...", scaled)
             };
             model_picker
         },]
@@ -959,9 +987,9 @@ fn step3_generate_prd<'a>(
         .align_y(iced::Alignment::Center),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Requirements preview
-        selectable_label(theme, "Requirements Preview (first 1000 chars):"),
+        selectable_label(theme, "Requirements Preview (first 1000 chars):", scaled),
         scrollable(
-            container(selectable_label(theme, &preview_text))
+            container(selectable_label(theme, &preview_text, scaled))
                 .padding(tokens::spacing::MD)
                 .width(Length::Fill)
                 .style(move |_: &iced::Theme| container::Style {
@@ -978,20 +1006,20 @@ fn step3_generate_prd<'a>(
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Status indicator
         if generating {
-            row![selectable_label(theme, "Generating PRD..."),]
+            row![selectable_label(theme, "Generating PRD...", scaled),]
         } else {
             row![]
         },
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         // Navigation buttons
         row![
-            styled_button(theme, "BACK", ButtonVariant::Secondary)
+            styled_button(theme, "BACK", ButtonVariant::Secondary, scaled)
                 .on_press(Message::WizardPrevStep),
             Space::new().width(Length::Fill),
             if generating {
-                styled_button(theme, "Generating...", ButtonVariant::Secondary)
+                styled_button(theme, "Generating...", ButtonVariant::Secondary, scaled)
             } else {
-                styled_button(theme, "GENERATE PRD", ButtonVariant::Primary)
+                styled_button(theme, "GENERATE PRD", ButtonVariant::Primary, scaled)
                     .on_press(Message::WizardGeneratePrd)
             },
         ]
@@ -1008,14 +1036,16 @@ fn step4_review_prd<'a>(
     prd_editor_content: &'a text_editor::Content,
     prd_text: &'a str,
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let has_prd = !prd_text.is_empty();
 
     let step_content = column![
-        selectable_label(theme, "Step 3: Review PRD"),
+        selectable_label(theme, "Step 3: Review PRD", scaled),
         selectable_label(
             theme,
-            "Review and edit the generated Product Requirements Document"
+            "Review and edit the generated Product Requirements Document",
+            scaled,
         ),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // PRD editor
@@ -1040,14 +1070,14 @@ fn step4_review_prd<'a>(
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Navigation buttons
         row![
-            styled_button(theme, "BACK", ButtonVariant::Secondary)
+            styled_button(theme, "BACK", ButtonVariant::Secondary, scaled)
                 .on_press(Message::WizardPrevStep),
             Space::new().width(Length::Fill),
             if has_prd {
-                styled_button(theme, "NEXT", ButtonVariant::Primary)
+                styled_button(theme, "NEXT", ButtonVariant::Primary, scaled)
                     .on_press(Message::WizardNextStep)
             } else {
-                styled_button(theme, "Generating...", ButtonVariant::Secondary)
+                styled_button(theme, "Generating...", ButtonVariant::Secondary, scaled)
             },
         ]
         .spacing(tokens::spacing::MD),
@@ -1065,6 +1095,7 @@ fn step5_configure_tiers<'a>(
     platform_statuses: &'a [crate::views::setup::PlatformStatus],
     auth_status: &'a HashMap<String, crate::views::login::AuthStatus>,
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let tiers = vec!["phase", "task", "subtask", "iteration"];
 
@@ -1101,10 +1132,10 @@ fn step5_configure_tiers<'a>(
             };
 
             let mut tier_col = column![
-                selectable_label(theme, &format!("{} Configuration", tier.to_uppercase())),
+                selectable_label(theme, &format!("{} Configuration", tier.to_uppercase()), scaled),
                 Space::new().height(Length::Fixed(tokens::spacing::SM)),
                 // Platform
-                row![selectable_label(theme, "Platform:"), {
+                row![selectable_label(theme, "Platform:", scaled), {
                     // Build platform options with availability indicators
                     let platform_options: Vec<String> = PLATFORMS
                         .iter()
@@ -1137,7 +1168,7 @@ fn step5_configure_tiers<'a>(
                 .align_y(iced::Alignment::Center),
                 Space::new().height(Length::Fixed(tokens::spacing::XS)),
                 // Model
-                row![selectable_label(theme, "Model:"), {
+                row![selectable_label(theme, "Model:", scaled), {
                     let tier_model_picker: Element<'_, Message> =
                         if let Some(models_list) = platform_models {
                             let selected = models_list
@@ -1150,7 +1181,7 @@ fn step5_configure_tiers<'a>(
                             .width(Length::Fixed(300.0))
                             .into()
                         } else {
-                            selectable_label(theme, "auto")
+                            selectable_label(theme, "auto", scaled)
                         };
                     tier_model_picker
                 },]
@@ -1168,7 +1199,7 @@ fn step5_configure_tiers<'a>(
                 tier_col = tier_col.push(Space::new().height(Length::Fixed(tokens::spacing::XS)));
                 tier_col = tier_col.push(
                     row![
-                        selectable_label(theme, "Reasoning:"),
+                        selectable_label(theme, "Reasoning:", scaled),
                         pick_list(effort_options, selected_effort, move |e: String| {
                             Message::WizardTierReasoningChanged(tier.to_string(), e)
                         })
@@ -1183,7 +1214,7 @@ fn step5_configure_tiers<'a>(
             tier_col = tier_col.push(Space::new().height(Length::Fixed(tokens::spacing::XS)));
             tier_col = tier_col.push(
                 row![
-                    selectable_label(theme, "Plan Mode:"),
+                    selectable_label(theme, "Plan Mode:", scaled),
                     toggler(config.plan_mode).on_toggle(move |v| {
                         Message::WizardTierPlanModeToggled(tier.to_string(), v)
                     }),
@@ -1196,7 +1227,7 @@ fn step5_configure_tiers<'a>(
             tier_col = tier_col.push(Space::new().height(Length::Fixed(tokens::spacing::XS)));
             tier_col = tier_col.push(
                 row![
-                    selectable_label(theme, "Ask Mode:"),
+                    selectable_label(theme, "Ask Mode:", scaled),
                     toggler(config.ask_mode).on_toggle(move |v| {
                         Message::WizardTierAskModeToggled(tier.to_string(), v)
                     }),
@@ -1209,7 +1240,7 @@ fn step5_configure_tiers<'a>(
             tier_col = tier_col.push(Space::new().height(Length::Fixed(tokens::spacing::XS)));
             tier_col = tier_col.push(
                 row![
-                    selectable_label(theme, "Output Format:"),
+                    selectable_label(theme, "Output Format:", scaled),
                     pick_list(
                         OUTPUT_FORMATS,
                         Some(config.output_format.as_str()),
@@ -1224,22 +1255,23 @@ fn step5_configure_tiers<'a>(
                 .align_y(iced::Alignment::Center),
             );
 
-            let tier_panel = themed_panel(container(tier_col).padding(tokens::spacing::MD), theme);
+            let tier_panel = themed_panel(container(tier_col).padding(tokens::spacing::MD), theme, scaled);
 
             tier_sections = tier_sections.push(tier_panel);
         }
     }
 
     let step_content = column![
-        selectable_label(theme, "Step 4: Configure Tiers"),
+        selectable_label(theme, "Step 4: Configure Tiers", scaled),
         selectable_label(
             theme,
-            "Configure platform, model, and options for each tier"
+            "Configure platform, model, and options for each tier",
+            scaled,
         ),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Refresh Models button
         row![
-            styled_button(theme, "REFRESH MODELS", ButtonVariant::Secondary)
+            styled_button(theme, "REFRESH MODELS", ButtonVariant::Secondary, scaled)
                 .on_press(Message::WizardRefreshModels),
         ],
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
@@ -1247,12 +1279,12 @@ fn step5_configure_tiers<'a>(
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Navigation buttons
         row![
-            styled_button(theme, "BACK", ButtonVariant::Secondary)
+            styled_button(theme, "BACK", ButtonVariant::Secondary, scaled)
                 .on_press(Message::WizardPrevStep),
             Space::new().width(Length::Fill),
-            styled_button(theme, "SKIP", ButtonVariant::Secondary)
+            styled_button(theme, "SKIP", ButtonVariant::Secondary, scaled)
                 .on_press(Message::WizardNextStep),
-            styled_button(theme, "NEXT", ButtonVariant::Primary).on_press(Message::WizardNextStep),
+            styled_button(theme, "NEXT", ButtonVariant::Primary, scaled).on_press(Message::WizardNextStep),
         ]
         .spacing(tokens::spacing::MD),
     ]
@@ -1268,14 +1300,16 @@ fn step6_generate_plan<'a>(
     plan_content: &'a text_editor::Content,
     generating: bool,
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     let has_plan = !plan_text.is_empty();
 
     let step_content = column![
-        selectable_label(theme, "Step 5: Generate Plan"),
+        selectable_label(theme, "Step 5: Generate Plan", scaled),
         selectable_label(
             theme,
-            "Generate execution plan based on PRD and tier configurations"
+            "Generate execution plan based on PRD and tier configurations",
+            scaled,
         ),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Plan preview (read-only, selectable)
@@ -1305,6 +1339,7 @@ fn step6_generate_plan<'a>(
                 container(selectable_label(
                     theme,
                     "Click GENERATE PLAN to create execution plan",
+                    scaled,
                 ))
                 .padding(tokens::spacing::XL)
                 .width(Length::Fill)
@@ -1325,30 +1360,30 @@ fn step6_generate_plan<'a>(
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Status indicator
         if generating {
-            row![selectable_label(theme, "Generating plan..."),]
+            row![selectable_label(theme, "Generating plan...", scaled),]
         } else {
             row![]
         },
         Space::new().height(Length::Fixed(tokens::spacing::SM)),
         // Navigation buttons
         row![
-            styled_button(theme, "BACK", ButtonVariant::Secondary)
+            styled_button(theme, "BACK", ButtonVariant::Secondary, scaled)
                 .on_press(Message::WizardPrevStep),
             Space::new().width(Length::Fill),
             if generating {
-                styled_button(theme, "Generating...", ButtonVariant::Secondary)
+                styled_button(theme, "Generating...", ButtonVariant::Secondary, scaled)
             } else if has_plan {
-                styled_button(theme, "REGENERATE PLAN", ButtonVariant::Secondary)
+                styled_button(theme, "REGENERATE PLAN", ButtonVariant::Secondary, scaled)
                     .on_press(Message::WizardGeneratePlan)
             } else {
-                styled_button(theme, "GENERATE PLAN", ButtonVariant::Primary)
+                styled_button(theme, "GENERATE PLAN", ButtonVariant::Primary, scaled)
                     .on_press(Message::WizardGeneratePlan)
             },
             if has_plan {
-                styled_button(theme, "NEXT", ButtonVariant::Primary)
+                styled_button(theme, "NEXT", ButtonVariant::Primary, scaled)
                     .on_press(Message::WizardNextStep)
             } else {
-                styled_button(theme, "SKIP", ButtonVariant::Secondary)
+                styled_button(theme, "SKIP", ButtonVariant::Secondary, scaled)
                     .on_press(Message::WizardNextStep)
             },
         ]
@@ -1364,12 +1399,13 @@ fn step7_review_plan<'a>(
     plan_text: &'a str,
     plan_content: &'a text_editor::Content,
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> container::Container<'a, Message> {
     let has_plan = !plan_text.trim().is_empty();
 
     let step_content = column![
-        selectable_label(theme, "Step 6: Review Plan"),
-        selectable_label(theme, "Review the generated execution plan"),
+        selectable_label(theme, "Step 6: Review Plan", scaled),
+        selectable_label(theme, "Review the generated execution plan", scaled),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
     ];
 
@@ -1399,6 +1435,7 @@ fn step7_review_plan<'a>(
         step_content.push(selectable_label(
             theme,
             "No plan generated yet. You can skip this step or go back to generate one.",
+            scaled,
         ))
     };
 
@@ -1406,9 +1443,9 @@ fn step7_review_plan<'a>(
 
     // Navigation buttons
     let nav_buttons = row![
-        styled_button(theme, "← BACK", ButtonVariant::Secondary).on_press(Message::WizardPrevStep),
+        styled_button(theme, "← BACK", ButtonVariant::Secondary, scaled).on_press(Message::WizardPrevStep),
         Space::new().width(Length::Fill),
-        styled_button(theme, "NEXT →", ButtonVariant::Primary).on_press(Message::WizardNextStep),
+        styled_button(theme, "NEXT →", ButtonVariant::Primary, scaled).on_press(Message::WizardNextStep),
     ]
     .spacing(tokens::spacing::MD)
     .width(Length::Fill);
@@ -1417,7 +1454,7 @@ fn step7_review_plan<'a>(
         .spacing(tokens::spacing::LG)
         .width(Length::Fill);
 
-    themed_panel(final_content, theme)
+    themed_panel(final_content, theme, scaled)
 }
 
 /// Step 8: Review & Start (previously Step 6)
@@ -1425,64 +1462,68 @@ fn step8_review_start<'a>(
     project_name: &'a str,
     project_path: &'a str,
     theme: &'a AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> container::Container<'a, Message> {
     let step_content = column![
-        selectable_label(theme, "Step 7: Review & Start"),
+        selectable_label(theme, "Step 7: Review & Start", scaled),
         selectable_label(
             theme,
-            "Everything is ready! Review and start the orchestration."
+            "Everything is ready! Review and start the orchestration.",
+            scaled,
         ),
         Space::new().height(Length::Fixed(tokens::spacing::LG)),
         // Project summary
         themed_panel(
             container(
                 column![
-                    selectable_label(theme, "Project Summary"),
+                    selectable_label(theme, "Project Summary", scaled),
                     Space::new().height(Length::Fixed(tokens::spacing::MD)),
                     row![
-                        selectable_label(theme, "Name:"),
-                        selectable_label(theme, project_name),
+                        selectable_label(theme, "Name:", scaled),
+                        selectable_label(theme, project_name, scaled),
                     ]
                     .spacing(tokens::spacing::SM),
                     Space::new().height(Length::Fixed(tokens::spacing::SM)),
                     row![
-                        selectable_label(theme, "Path:"),
-                        selectable_label(theme, project_path),
+                        selectable_label(theme, "Path:", scaled),
+                        selectable_label(theme, project_path, scaled),
                     ]
                     .spacing(tokens::spacing::SM),
                 ]
                 .spacing(tokens::spacing::SM)
             )
             .padding(tokens::spacing::LG),
-            theme
+            theme,
+            scaled,
         ),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Warning/ready indicator
         themed_panel(
             container(
                 column![
-                    selectable_label(theme, "Ready to Start"),
+                    selectable_label(theme, "Ready to Start", scaled),
                     Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                    selectable_label(theme, "The wizard will:"),
-                    selectable_label(theme, "- Create project directory"),
-                    selectable_label(theme, "- Save PRD document"),
-                    selectable_label(theme, "- Save execution plan"),
-                    selectable_label(theme, "- Navigate to dashboard"),
+                    selectable_label(theme, "The wizard will:", scaled),
+                    selectable_label(theme, "- Create project directory", scaled),
+                    selectable_label(theme, "- Save PRD document", scaled),
+                    selectable_label(theme, "- Save execution plan", scaled),
+                    selectable_label(theme, "- Navigate to dashboard", scaled),
                 ]
                 .spacing(tokens::spacing::XS)
             )
             .padding(tokens::spacing::MD),
-            theme
+            theme,
+            scaled,
         ),
         Space::new().height(Length::Fixed(tokens::spacing::LG)),
-        selectable_label(theme, "Note: You can monitor progress from the Dashboard."),
+        selectable_label(theme, "Note: You can monitor progress from the Dashboard.", scaled),
         Space::new().height(Length::Fixed(tokens::spacing::MD)),
         // Navigation buttons
         row![
-            styled_button(theme, "BACK", ButtonVariant::Secondary)
+            styled_button(theme, "BACK", ButtonVariant::Secondary, scaled)
                 .on_press(Message::WizardPrevStep),
             Space::new().width(Length::Fill),
-            styled_button(theme, "START CHAIN", ButtonVariant::Primary)
+            styled_button(theme, "START CHAIN", ButtonVariant::Primary, scaled)
                 .on_press(Message::WizardStartChain),
         ]
         .spacing(tokens::spacing::MD),

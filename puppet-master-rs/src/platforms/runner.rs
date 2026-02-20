@@ -283,8 +283,13 @@ impl BaseRunner {
         }
 
         // Copilot runs via npx; ensure subprocess can find node via enhanced PATH.
+        // Also set NPM_CONFIG_CACHE to app-local dir to avoid EACCES on root-owned ~/.npm.
         if self.platform == Platform::Copilot {
             cmd.env("PATH", path_utils::build_enhanced_path_for_subprocess());
+            cmd.env(
+                "NPM_CONFIG_CACHE",
+                crate::install::app_paths::get_npm_cache_dir(),
+            );
         }
 
         let mut child = cmd

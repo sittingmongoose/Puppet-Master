@@ -45,74 +45,79 @@ pub fn view<'a>(
     active_context_menu: &'a Option<ContextMenuTarget>,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     // Use size for adjusting form layout on mobile
     let mut content = column![]
-        .spacing(tokens::spacing::LG)
-        .padding(tokens::spacing::LG);
+        .spacing(scaled.spacing(tokens::spacing::LG))
+        .padding(scaled.spacing(tokens::spacing::LG));
 
     let header_actions = row![
-        styled_button(theme, "CLEANUP", ButtonVariant::Ghost)
+        styled_button(theme, "CLEANUP", ButtonVariant::Ghost, scaled)
             .on_press(Message::CleanupMissingProjects),
         refresh_button(
             theme,
             Message::ProjectsRefresh,
-            RefreshStyle::Uppercase(ButtonVariant::Secondary)
+            RefreshStyle::Uppercase(ButtonVariant::Secondary),
+            scaled,
         ),
-        styled_button(theme, "START NEW PROJECT", ButtonVariant::Primary)
+        styled_button(theme, "START NEW PROJECT", ButtonVariant::Primary, scaled)
             .on_press(Message::ShowNewProjectForm(true)),
-        styled_button(theme, "OPEN EXISTING", ButtonVariant::Info)
+        styled_button(theme, "OPEN EXISTING", ButtonVariant::Info, scaled)
             .on_press(Message::OpenProjectFolderPicker),
     ]
-    .spacing(tokens::spacing::MD)
+    .spacing(scaled.spacing(tokens::spacing::MD))
     .align_y(iced::Alignment::Center);
-    let header = page_header("Projects", theme, header_actions, size);
+    let header = page_header("Projects", theme, header_actions, size, scaled);
 
     content = content.push(header);
 
     // New Project Form (conditionally shown)
     if show_new_form {
         let form_content = column![
-            selectable_label(theme, "Create New Project"),
-            Space::new().height(Length::Fixed(tokens::spacing::SM)),
+            selectable_label(theme, "Create New Project", scaled),
+            Space::new().height(Length::Fixed(scaled.spacing(tokens::spacing::SM))),
             responsive_form_row(
                 theme,
                 "Project Name:",
-                styled_text_input(theme, "My Project", new_project_name)
+                styled_text_input(theme, "My Project", new_project_name, scaled)
                     .on_input(Message::NewProjectNameChanged),
                 size,
+                scaled,
             ),
-            Space::new().height(Length::Fixed(tokens::spacing::SM)),
+            Space::new().height(Length::Fixed(scaled.spacing(tokens::spacing::SM))),
             responsive_form_row(
                 theme,
                 "Working Directory:",
                 row![
-                    styled_text_input(theme, "/path/to/project", new_project_path)
+                    styled_text_input(theme, "/path/to/project", new_project_path, scaled)
                         .on_input(Message::NewProjectPathChanged),
-                    styled_button(theme, "Browse", ButtonVariant::Ghost)
+                    styled_button(theme, "Browse", ButtonVariant::Ghost, scaled)
                         .on_press(Message::BrowseNewProjectPath),
                 ]
-                .spacing(tokens::spacing::SM)
+                .spacing(scaled.spacing(tokens::spacing::SM))
                 .align_y(iced::Alignment::Center),
                 size,
+                scaled,
             ),
-            Space::new().height(Length::Fixed(tokens::spacing::SM)),
-            selectable_label(theme, "PRD file: prd.json (auto)"),
-            Space::new().height(Length::Fixed(tokens::spacing::MD)),
+            Space::new().height(Length::Fixed(scaled.spacing(tokens::spacing::SM))),
+            selectable_label(theme, "PRD file: prd.json (auto)", scaled),
+            Space::new().height(Length::Fixed(scaled.spacing(tokens::spacing::MD))),
             row![
-                styled_button(theme, "Cancel", ButtonVariant::Secondary)
+                styled_button(theme, "Cancel", ButtonVariant::Secondary, scaled)
                     .on_press(Message::ShowNewProjectForm(false)),
                 Space::new().width(Length::Fill),
-                styled_button(theme, "Create Project", ButtonVariant::Primary)
+                styled_button(theme, "Create Project", ButtonVariant::Primary, scaled)
                     .on_press(Message::CreateNewProject),
             ]
-            .spacing(tokens::spacing::MD),
+            .spacing(scaled.spacing(tokens::spacing::MD)),
         ]
-        .spacing(tokens::spacing::SM);
+        .spacing(scaled.spacing(tokens::spacing::SM));
 
         content = content.push(themed_panel(
-            container(form_content).padding(tokens::spacing::MD),
+            container(form_content).padding(scaled.spacing(tokens::spacing::MD)),
             theme,
+            scaled,
         ));
     }
 
@@ -128,19 +133,19 @@ pub fn view<'a>(
         };
 
         let current_panel = column![
-            selectable_label(theme, "Current Project"),
-            Space::new().height(Length::Fixed(tokens::spacing::SM)),
+            selectable_label(theme, "Current Project", scaled),
+            Space::new().height(Length::Fixed(scaled.spacing(tokens::spacing::SM))),
             row![
                 column![
                     row![
-                        selectable_label(theme, &current_project.name),
-                        Space::new().width(Length::Fixed(tokens::spacing::SM)),
+                        selectable_label(theme, &current_project.name, scaled),
+                        Space::new().width(Length::Fixed(scaled.spacing(tokens::spacing::SM))),
                         container(
                             text(status_text)
-                                .size(tokens::font_size::XS)
+                                .size(scaled.font_size(tokens::font_size::XS))
                                 .color(colors::INK_BLACK)
                         )
-                        .padding(tokens::spacing::XXS)
+                        .padding(scaled.spacing(tokens::spacing::XXS))
                         .style(move |_: &iced::Theme| container::Style {
                             background: Some(iced::Background::Color(status_color)),
                             border: Border {
@@ -151,9 +156,9 @@ pub fn view<'a>(
                             ..Default::default()
                         }),
                     ]
-                    .spacing(tokens::spacing::SM)
+                    .spacing(scaled.spacing(tokens::spacing::SM))
                     .align_y(iced::Alignment::Center),
-                    Space::new().height(Length::Fixed(tokens::spacing::XXS)),
+                    Space::new().height(Length::Fixed(scaled.spacing(tokens::spacing::XXS))),
                     selectable_text_field(
                         theme,
                         current_project.path.to_str().unwrap_or("<non-utf8 path>"),
@@ -165,33 +170,35 @@ pub fn view<'a>(
                                 value,
                             )
                         },
+                        scaled,
                     ),
                     if let Some(summary) = &current_project.status_summary {
-                        selectable_label(theme, summary)
+                        selectable_label(theme, summary, scaled)
                     } else {
-                        selectable_label(theme, "")
+                        selectable_label(theme, "", scaled)
                     },
                 ]
-                .spacing(tokens::spacing::XXS),
+                .spacing(scaled.spacing(tokens::spacing::XXS)),
                 Space::new().width(Length::Fill),
                 row![
-                    styled_button(theme, "View Tiers", ButtonVariant::Info)
+                    styled_button(theme, "View Tiers", ButtonVariant::Info, scaled)
                         .on_press(Message::NavigateTo(Page::Tiers)),
-                    styled_button(theme, "Config", ButtonVariant::Info)
+                    styled_button(theme, "Config", ButtonVariant::Info, scaled)
                         .on_press(Message::NavigateTo(Page::Config)),
-                    styled_button(theme, "Switch", ButtonVariant::Secondary)
+                    styled_button(theme, "Switch", ButtonVariant::Secondary, scaled)
                         .on_press(Message::NavigateTo(Page::Projects)),
                 ]
-                .spacing(tokens::spacing::SM)
+                .spacing(scaled.spacing(tokens::spacing::SM))
             ]
-            .spacing(tokens::spacing::MD)
+            .spacing(scaled.spacing(tokens::spacing::MD))
             .align_y(iced::Alignment::Center),
         ]
-        .spacing(tokens::spacing::MD);
+        .spacing(scaled.spacing(tokens::spacing::MD));
 
         content = content.push(themed_panel(
-            container(current_panel).padding(tokens::spacing::MD),
+            container(current_panel).padding(scaled.spacing(tokens::spacing::MD)),
             theme,
+            scaled,
         ));
     }
 
@@ -201,21 +208,22 @@ pub fn view<'a>(
             container(
                 column![
                     text("No projects found")
-                        .size(tokens::font_size::MD)
+                        .size(scaled.font_size(tokens::font_size::MD))
                         .color(theme.ink()),
-                    Space::new().height(Length::Fixed(tokens::spacing::SM)),
+                    Space::new().height(Length::Fixed(scaled.spacing(tokens::spacing::SM))),
                     text("Create a new project or open an existing one to get started")
-                        .size(tokens::font_size::SM)
+                        .size(scaled.font_size(tokens::font_size::SM))
                         .color(theme.ink_faded()),
                 ]
-                .spacing(tokens::spacing::SM),
+                .spacing(scaled.spacing(tokens::spacing::SM)),
             )
-            .padding(tokens::spacing::XL),
+            .padding(scaled.spacing(tokens::spacing::XL)),
             theme,
+            scaled,
         ));
     } else {
         let mut projects_content =
-            column![selectable_label(theme, "Recent Projects"),].spacing(tokens::spacing::MD);
+            column![selectable_label(theme, "Recent Projects", scaled),].spacing(scaled.spacing(tokens::spacing::MD));
 
         for project in projects {
             let is_current = current
@@ -233,10 +241,10 @@ pub fn view<'a>(
             };
 
             let pin_button = if project.pinned {
-                styled_button(theme, "📌", ButtonVariant::Warning)
+                styled_button(theme, "📌", ButtonVariant::Warning, scaled)
                     .on_press(Message::PinProject(project.path.clone(), false))
             } else {
-                styled_button(theme, "📍", ButtonVariant::Ghost)
+                styled_button(theme, "📍", ButtonVariant::Ghost, scaled)
                     .on_press(Message::PinProject(project.path.clone(), true))
             };
 
@@ -244,10 +252,10 @@ pub fn view<'a>(
                 // Status badge
                 container(
                     text(status_text)
-                        .size(tokens::font_size::XS)
+                        .size(scaled.font_size(tokens::font_size::XS))
                         .color(colors::INK_BLACK)
                 )
-                .padding(tokens::spacing::SM)
+                .padding(scaled.spacing(tokens::spacing::SM))
                 .width(Length::Fixed(90.0))
                 .style(move |_theme: &iced::Theme| {
                     iced::widget::container::Style {
@@ -263,14 +271,14 @@ pub fn view<'a>(
                 // Project info
                 column![
                     row![
-                        selectable_label(theme, &project.name),
+                        selectable_label(theme, &project.name, scaled),
                         if project.pinned {
-                            selectable_label(theme, " 📌")
+                            selectable_label(theme, " 📌", scaled)
                         } else {
-                            selectable_label(theme, "")
+                            selectable_label(theme, "", scaled)
                         }
                     ]
-                    .spacing(tokens::spacing::XXS)
+                    .spacing(scaled.spacing(tokens::spacing::XXS))
                     .align_y(iced::Alignment::Center),
                     selectable_text_field(
                         theme,
@@ -283,34 +291,35 @@ pub fn view<'a>(
                             );
                             move |value| Message::SelectableFieldChanged(field.clone(), value)
                         },
+                        scaled,
                     ),
                     if let Some(summary) = &project.status_summary {
-                        selectable_label(theme, summary)
+                        selectable_label(theme, summary, scaled)
                     } else {
-                        selectable_label_mono(theme, &get_last_active_time(&project.path))
+                        selectable_label_mono(theme, &get_last_active_time(&project.path), scaled)
                     },
                 ]
-                .spacing(tokens::spacing::XXS),
+                .spacing(scaled.spacing(tokens::spacing::XXS)),
                 Space::new().width(Length::Fill),
                 // Action buttons
                 row![
                     pin_button,
-                    styled_button(theme, "🗑", ButtonVariant::Danger)
+                    styled_button(theme, "🗑", ButtonVariant::Danger, scaled)
                         .on_press(Message::ForgetProject(project.path.clone())),
                     if is_current {
-                        styled_button(theme, "Current", ButtonVariant::Secondary)
+                        styled_button(theme, "Current", ButtonVariant::Secondary, scaled)
                     } else {
-                        styled_button(theme, "Open", ButtonVariant::Info)
+                        styled_button(theme, "Open", ButtonVariant::Info, scaled)
                             .on_press(Message::OpenProject(project.name.clone()))
                     },
                 ]
-                .spacing(tokens::spacing::SM),
+                .spacing(scaled.spacing(tokens::spacing::SM)),
             ]
-            .spacing(tokens::spacing::MD)
+            .spacing(scaled.spacing(tokens::spacing::MD))
             .align_y(iced::Alignment::Center);
 
             let project_card = container(project_row)
-                .padding(tokens::spacing::MD)
+                .padding(scaled.spacing(tokens::spacing::MD))
                 .width(Length::Fill)
                 .style(move |_theme: &iced::Theme| {
                     if is_current {
@@ -344,8 +353,9 @@ pub fn view<'a>(
 
         content = content.push(themed_panel(
             container(scrollable(projects_content).height(Length::Fill))
-                .padding(tokens::spacing::MD),
+                .padding(scaled.spacing(tokens::spacing::MD)),
             theme,
+            scaled,
         ));
     }
 

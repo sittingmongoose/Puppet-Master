@@ -36,18 +36,21 @@ pub fn view<'a>(
     doctor_fixing: &'a std::collections::HashSet<String>,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
+
     let mut content = column![]
         .spacing(tokens::spacing::LG)
         .padding(tokens::spacing::LG);
 
     let refresh_action: Element<'a, Message> = if is_checking {
-        styled_button(theme, "Detecting...", ButtonVariant::Secondary).into()
+        styled_button(theme, "Detecting...", ButtonVariant::Secondary, scaled).into()
     } else {
         refresh_button(
             theme,
             Message::RefreshSetup,
             RefreshStyle::TitleCase(ButtonVariant::Secondary),
+            scaled,
         )
     };
     let header_actions = row![refresh_action]
@@ -58,30 +61,32 @@ pub fn view<'a>(
         theme,
         header_actions,
         size,
+        scaled,
     ));
-    content = content.push(selectable_label(theme, "First-time setup wizard"));
+    content = content.push(selectable_label(theme, "First-time setup wizard", scaled));
 
     // Description
     content = content.push(
         themed_panel(
             container(
                 column![
-                    selectable_label(theme, "Platform Detection"),
-                    selectable_label(theme, "This wizard will help you verify that platform CLI tools are installed and configured."),
-                    selectable_label(theme, "Click 'Run Detection' to scan your system for installed platforms."),
+                    selectable_label(theme, "Platform Detection", scaled),
+                    selectable_label(theme, "This wizard will help you verify that platform CLI tools are installed and configured.", scaled),
+                    selectable_label(theme, "Click 'Run Detection' to scan your system for installed platforms.", scaled),
                 ]
                 .spacing(tokens::spacing::SM)
             )
             .padding(tokens::spacing::MD),
-            theme
+            theme,
+            scaled,
         )
     );
 
     // Detection button
     let detect_btn = if is_checking {
-        styled_button(theme, "Detecting...", ButtonVariant::Primary)
+        styled_button(theme, "Detecting...", ButtonVariant::Primary, scaled)
     } else {
-        styled_button(theme, "Run Detection", ButtonVariant::Primary)
+        styled_button(theme, "Run Detection", ButtonVariant::Primary, scaled)
             .on_press(Message::SetupRunDetection)
     };
     content = content.push(container(row![detect_btn].spacing(tokens::spacing::SM)));
@@ -93,7 +98,7 @@ pub fn view<'a>(
     if node_check.is_some() || gh_check.is_some() {
         let mut prereq_col = column![].spacing(tokens::spacing::SM);
 
-        prereq_col = prereq_col.push(selectable_label(theme, "Prerequisites"));
+        prereq_col = prereq_col.push(selectable_label(theme, "Prerequisites", scaled));
 
         // Node.js prerequisite
         if let Some(check) = node_check {
@@ -105,10 +110,11 @@ pub fn view<'a>(
                     theme,
                     "Installing...",
                     ButtonVariant::Primary,
+                    scaled,
                 ))
             } else {
                 Some(
-                    styled_button(theme, "Install", ButtonVariant::Primary)
+                    styled_button(theme, "Install", ButtonVariant::Primary, scaled)
                         .on_press(Message::WizardInstallNode),
                 )
             };
@@ -122,7 +128,8 @@ pub fn view<'a>(
             let mut node_row = row![
                 container(selectable_label(
                     theme,
-                    if check.passed { "✓" } else { "✗" }
+                    if check.passed { "✓" } else { "✗" },
+                    scaled,
                 ))
                 .padding(tokens::spacing::SM)
                 .width(Length::Fixed(tokens::layout::DETAIL_LABEL_WIDTH / 2.0))
@@ -142,9 +149,9 @@ pub fn view<'a>(
                         ..Default::default()
                     }
                 }),
-                selectable_label(theme, "Node.js"),
+                selectable_label(theme, "Node.js", scaled),
                 Space::new().width(Length::Fill),
-                selectable_label(theme, &status_text),
+                selectable_label(theme, &status_text, scaled),
             ]
             .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center);
@@ -166,10 +173,11 @@ pub fn view<'a>(
                     theme,
                     "Installing...",
                     ButtonVariant::Primary,
+                    scaled,
                 ))
             } else {
                 Some(
-                    styled_button(theme, "Install", ButtonVariant::Primary)
+                    styled_button(theme, "Install", ButtonVariant::Primary, scaled)
                         .on_press(Message::WizardInstallGhCli),
                 )
             };
@@ -183,7 +191,8 @@ pub fn view<'a>(
             let mut gh_row = row![
                 container(selectable_label(
                     theme,
-                    if check.passed { "✓" } else { "✗" }
+                    if check.passed { "✓" } else { "✗" },
+                    scaled,
                 ))
                 .padding(tokens::spacing::SM)
                 .width(Length::Fixed(tokens::layout::DETAIL_LABEL_WIDTH / 2.0))
@@ -203,9 +212,9 @@ pub fn view<'a>(
                         ..Default::default()
                     }
                 }),
-                selectable_label(theme, "GitHub CLI"),
+                selectable_label(theme, "GitHub CLI", scaled),
                 Space::new().width(Length::Fill),
-                selectable_label(theme, &status_text),
+                selectable_label(theme, &status_text, scaled),
             ]
             .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center);
@@ -220,6 +229,7 @@ pub fn view<'a>(
         content = content.push(themed_panel(
             container(prereq_col).padding(tokens::spacing::MD),
             theme,
+            scaled,
         ));
     }
 
@@ -265,18 +275,19 @@ pub fn view<'a>(
                     auth_action,
                     theme,
                     Message::RefreshAuthStatus,
+                    scaled,
                 )
             } else if is_installing {
-                styled_button(theme, "Installing...", ButtonVariant::Primary).into()
+                styled_button(theme, "Installing...", ButtonVariant::Primary, scaled).into()
             } else {
-                styled_button(theme, "Install", ButtonVariant::Primary)
+                styled_button(theme, "Install", ButtonVariant::Primary, scaled)
                     .on_press(Message::SetupInstall(platform_status.platform))
                     .into()
             };
 
             // Row 1: badge + platform name (avoids squeezing status text)
             let row_1 = row![
-                container(selectable_label(theme, status_icon))
+                container(selectable_label(theme, status_icon, scaled))
                     .padding(tokens::spacing::SM)
                     .width(Length::Fixed(tokens::layout::DETAIL_LABEL_WIDTH))
                     .style(move |_theme: &iced::Theme| {
@@ -290,14 +301,14 @@ pub fn view<'a>(
                             ..Default::default()
                         }
                     }),
-                selectable_label(theme, &format!("{}", platform_status.platform)),
+                selectable_label(theme, &format!("{}", platform_status.platform), scaled),
             ]
             .spacing(tokens::spacing::MD)
             .align_y(iced::Alignment::Center);
 
             // Row 2: status text on its own row (full width) so "Installed (v...)" is never cut off
             let status_text = format!("{}", platform_status.status);
-            let row_2 = container(selectable_label(theme, &status_text))
+            let row_2 = container(selectable_label(theme, &status_text, scaled))
                 .width(Length::Fill)
                 .align_x(iced::Alignment::Start);
 
@@ -315,12 +326,13 @@ pub fn view<'a>(
             match &platform_status.status {
                 InstallationStatus::Installed(version) => {
                     platform_col = platform_col
-                        .push(selectable_label(theme, &format!("Version: {}", version)));
+                        .push(selectable_label(theme, &format!("Version: {}", version), scaled));
                 }
                 InstallationStatus::Outdated { current, latest } => {
                     platform_col = platform_col.push(selectable_label(
                         theme,
                         &format!("Current: {} (latest: {})", current, latest),
+                        scaled,
                     ));
                 }
                 InstallationStatus::NotInstalled => {}
@@ -328,13 +340,14 @@ pub fn view<'a>(
 
             if let Some(found_path) = &platform_status.detected_path {
                 platform_col =
-                    platform_col.push(selectable_label(theme, &format!("Found: {}", found_path)));
+                    platform_col.push(selectable_label(theme, &format!("Found: {}", found_path), scaled));
             }
 
             if !platform_status.searched_paths.is_empty() {
                 platform_col = platform_col.push(selectable_label(
                     theme,
                     &format!("Searched: {}", platform_status.searched_paths.join(", ")),
+                    scaled,
                 ));
             }
 
@@ -342,7 +355,7 @@ pub fn view<'a>(
                 platform_col =
                     platform_col.push(
                         container(
-                            scrollable(selectable_label(theme, &platform_status.instructions))
+                            scrollable(selectable_label(theme, &platform_status.instructions, scaled))
                                 .height(Length::Shrink),
                         )
                         .height(Length::Shrink)
@@ -370,7 +383,7 @@ pub fn view<'a>(
                     );
             }
 
-            let card = themed_panel(container(platform_col).padding(tokens::spacing::MD), theme);
+            let card = themed_panel(container(platform_col).padding(tokens::spacing::MD), theme, scaled);
 
             current_row = current_row.push(
                 container(card)
@@ -391,6 +404,7 @@ pub fn view<'a>(
             container(selectable_label(
                 theme,
                 "No detection results yet. Click 'Run Detection' to begin.",
+                scaled,
             ))
             .padding(tokens::spacing::LG),
         );
@@ -405,13 +419,13 @@ pub fn view<'a>(
             let is_installing = doctor_fixing.contains("playwright-browsers");
 
             let install_btn = if is_installing {
-                styled_button(theme, "Installing...", ButtonVariant::Primary)
+                styled_button(theme, "Installing...", ButtonVariant::Primary, scaled)
             } else {
-                styled_button(theme, "Install Playwright", ButtonVariant::Primary)
+                styled_button(theme, "Install Playwright", ButtonVariant::Primary, scaled)
                     .on_press(Message::InstallPlaywright)
             };
 
-            let status_icon = selectable_label(theme, "⚠");
+            let status_icon = selectable_label(theme, "⚠", scaled);
 
             content = content.push(themed_panel(
                 container(
@@ -419,8 +433,8 @@ pub fn view<'a>(
                         row![
                             status_icon,
                             column![
-                                selectable_label(theme, "Playwright Browser Dependencies"),
-                                selectable_label(theme, &check.message),
+                                selectable_label(theme, "Playwright Browser Dependencies", scaled),
+                                selectable_label(theme, &check.message, scaled),
                             ]
                             .spacing(tokens::spacing::XS),
                             Space::new().width(Length::Fill),
@@ -433,6 +447,7 @@ pub fn view<'a>(
                 )
                 .padding(tokens::spacing::MD),
                 theme,
+                scaled,
             ));
         }
     }
@@ -441,9 +456,9 @@ pub fn view<'a>(
     content = content.push(themed_panel(
         container(
             row![
-                selectable_label(theme, "Ready to start?"),
+                selectable_label(theme, "Ready to start?", scaled),
                 Space::new().width(Length::Fill),
-                styled_button(theme, "Complete Setup", ButtonVariant::Primary)
+                styled_button(theme, "Complete Setup", ButtonVariant::Primary, scaled)
                     .on_press(Message::SetupComplete),
             ]
             .spacing(tokens::spacing::MD)
@@ -451,6 +466,7 @@ pub fn view<'a>(
         )
         .padding(tokens::spacing::MD),
         theme,
+        scaled,
     ));
 
     container(scrollable(content))

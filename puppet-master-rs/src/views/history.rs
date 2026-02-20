@@ -71,7 +71,9 @@ pub fn view<'a>(
     search_query: &'a str,
     theme: &'a AppTheme,
     size: crate::widgets::responsive::LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
+
     // Use mobile-friendly layouts for filter buttons
     let mut content = column![]
         .spacing(tokens::spacing::LG)
@@ -80,18 +82,19 @@ pub fn view<'a>(
     let header_actions = row![refresh_button(
         theme,
         Message::LoadHistory,
-        RefreshStyle::Uppercase(ButtonVariant::Info)
+        RefreshStyle::Uppercase(ButtonVariant::Info),
+        scaled,
     )]
     .spacing(tokens::spacing::MD)
     .align_y(iced::Alignment::Center);
-    content = content.push(page_header("History", theme, header_actions, size));
+    content = content.push(page_header("History", theme, header_actions, size, scaled));
 
     // Search input
     content = content.push(themed_panel(
         container(
             row![
-                selectable_label(theme, "Search:"),
-                styled_text_input(theme, "Search by ID or project...", search_query)
+                selectable_label(theme, "Search:", scaled),
+                styled_text_input(theme, "Search by ID or project...", search_query, scaled)
                     .on_input(Message::HistorySearchChanged)
                     .width(Length::Fill),
             ]
@@ -100,6 +103,7 @@ pub fn view<'a>(
         )
         .padding(tokens::spacing::MD),
         theme,
+        scaled,
     ));
 
     // Status filter buttons - stack on mobile, horizontal on desktop
@@ -112,6 +116,7 @@ pub fn view<'a>(
             } else {
                 ButtonVariant::Secondary
             },
+            scaled,
         )
         .on_press(Message::HistoryFilterChanged(None))
         .into(),
@@ -127,6 +132,7 @@ pub fn view<'a>(
                 } else {
                     ButtonVariant::Secondary
                 },
+                scaled,
             )
             .on_press(Message::HistoryFilterChanged(Some(status)))
             .into(),
@@ -136,14 +142,14 @@ pub fn view<'a>(
     let filter_layout: Element<Message> = if size.is_mobile() {
         // Mobile: vertical stack
         let mut filter_col =
-            column![selectable_label(theme, "Filter:"),].spacing(tokens::spacing::SM);
+            column![selectable_label(theme, "Filter:", scaled),].spacing(tokens::spacing::SM);
         for btn in filter_buttons {
             filter_col = filter_col.push(btn);
         }
         Element::from(filter_col)
     } else {
         // Desktop: horizontal row
-        let mut filter_row = row![selectable_label(theme, "Filter:"),]
+        let mut filter_row = row![selectable_label(theme, "Filter:", scaled),]
             .spacing(tokens::spacing::SM)
             .align_y(iced::Alignment::Center);
         for btn in filter_buttons {
@@ -155,21 +161,23 @@ pub fn view<'a>(
     content = content.push(themed_panel(
         container(filter_layout).padding(tokens::spacing::MD),
         theme,
+        scaled,
     ));
 
     // Pagination controls
     content = content.push(themed_panel(
         container(
             row![
-                styled_button(theme, "PREVIOUS", ButtonVariant::Secondary)
+                styled_button(theme, "PREVIOUS", ButtonVariant::Secondary, scaled)
                     .on_press(Message::HistoryPrevPage),
                 Space::new().width(Length::Fill),
                 selectable_label(
                     theme,
-                    &format!("Page {} of {}", page + 1, total_pages.max(1))
+                    &format!("Page {} of {}", page + 1, total_pages.max(1)),
+                    scaled,
                 ),
                 Space::new().width(Length::Fill),
-                styled_button(theme, "NEXT", ButtonVariant::Secondary)
+                styled_button(theme, "NEXT", ButtonVariant::Secondary, scaled)
                     .on_press(Message::HistoryNextPage),
             ]
             .spacing(tokens::spacing::SM)
@@ -177,20 +185,22 @@ pub fn view<'a>(
         )
         .padding(tokens::spacing::MD),
         theme,
+        scaled,
     ));
 
     if sessions.is_empty() {
         content = content.push(themed_panel(
             container(
                 column![
-                    selectable_label(theme, "No execution history"),
+                    selectable_label(theme, "No execution history", scaled),
                     Space::new().height(Length::Fixed(tokens::spacing::SM)),
-                    selectable_label(theme, "History will appear after orchestration runs"),
+                    selectable_label(theme, "History will appear after orchestration runs", scaled),
                 ]
                 .spacing(tokens::spacing::SM),
             )
             .padding(tokens::spacing::XL),
             theme,
+            scaled,
         ));
     } else {
         let mut sessions_col = column![].spacing(tokens::spacing::MD);
@@ -213,19 +223,21 @@ pub fn view<'a>(
                     container(status_badge_with_text(
                         theme,
                         session.status.as_str(),
-                        session.status.as_str()
+                        session.status.as_str(),
+                        scaled,
                     ))
                     .padding(tokens::spacing::SM)
                     .width(Length::Fixed(110.0))
                     .center_x(Length::Shrink),
                     column![
-                        selectable_label_mono(theme, &session.id),
+                        selectable_label_mono(theme, &session.id, scaled),
                         selectable_label(
                             theme,
                             &format!(
                                 "Started: {}",
                                 session.start_time.format("%Y-%m-%d %H:%M:%S")
-                            )
+                            ),
+                            scaled,
                         ),
                         selectable_label(
                             theme,
@@ -234,7 +246,8 @@ pub fn view<'a>(
                                 session.platform.as_deref().unwrap_or("—"),
                                 session.model.as_deref().unwrap_or("—"),
                                 session.reasoning_effort.as_deref().unwrap_or("—"),
-                            )
+                            ),
+                            scaled,
                         ),
                     ]
                     .spacing(tokens::spacing::XS),
@@ -242,9 +255,10 @@ pub fn view<'a>(
                     column![
                         selectable_label(
                             theme,
-                            &format!("{}/{} items", session.items_completed, session.items_total)
+                            &format!("{}/{} items", session.items_completed, session.items_total),
+                            scaled,
                         ),
-                        selectable_label(theme, &duration),
+                        selectable_label(theme, &duration, scaled),
                     ]
                     .spacing(tokens::spacing::XS)
                     .align_x(iced::Alignment::End),
@@ -252,7 +266,8 @@ pub fn view<'a>(
                         theme,
                         if session.expanded { "v" } else { ">" },
                         ButtonVariant::Ghost,
-                        ButtonSize::Small
+                        ButtonSize::Small,
+                        scaled,
                     )
                     .on_press(Message::SelectSession(session.id.clone())),
                 ]
@@ -265,16 +280,17 @@ pub fn view<'a>(
             // Show details if expanded
             if session.expanded {
                 let mut details =
-                    column![selectable_label(theme, "Phases:"),].spacing(tokens::spacing::XS);
+                    column![selectable_label(theme, "Phases:", scaled),].spacing(tokens::spacing::XS);
 
                 for phase in &session.phases {
-                    details = details.push(selectable_label(theme, &format!("• {}", phase)));
+                    details = details.push(selectable_label(theme, &format!("• {}", phase), scaled));
                 }
 
                 if let Some(end) = session.end_time {
                     details = details.push(selectable_label(
                         theme,
                         &format!("Ended: {}", end.format("%Y-%m-%d %H:%M:%S")),
+                        scaled,
                     ));
                 }
 
@@ -293,6 +309,7 @@ pub fn view<'a>(
             sessions_col = sessions_col.push(themed_panel(
                 container(session_content).padding(tokens::spacing::MD),
                 theme,
+                scaled,
             ));
         }
 

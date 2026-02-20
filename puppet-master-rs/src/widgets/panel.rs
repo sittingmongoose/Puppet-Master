@@ -19,12 +19,15 @@ use iced::{Alignment, Border, Element, Length, Padding, Shadow, Vector};
 /// let content = text("Panel content");
 /// let styled = panel(content);
 /// ```ignore
-pub fn panel<'a, Message>(content: impl Into<Element<'a, Message>>) -> Container<'a, Message>
+pub fn panel<'a, Message>(
+    content: impl Into<Element<'a, Message>>,
+    scaled: crate::theme::ScaledTokens,
+) -> Container<'a, Message>
 where
     Message: Clone + 'a,
 {
     container(content)
-        .padding(tokens::spacing::MD)
+        .padding(scaled.spacing(tokens::spacing::MD))
         .width(Length::Fill)
         .style(|_theme: &iced::Theme| container::Style {
             background: Some(iced::Background::Color(colors::PAPER_CREAM)),
@@ -58,13 +61,14 @@ where
 pub fn themed_panel<'a, Message>(
     content: impl Into<Element<'a, Message>>,
     theme: &AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> Container<'a, Message>
 where
     Message: Clone + 'a,
 {
     let theme_copy = *theme;
     container(content)
-        .padding(tokens::spacing::MD)
+        .padding(scaled.spacing(tokens::spacing::MD))
         .width(Length::Fill)
         .style(move |_theme: &iced::Theme| {
             let palette = theme_copy.palette();
@@ -97,6 +101,7 @@ pub fn panel_with_title<'a, Message>(
     theme: &AppTheme,
     title: impl Into<String>,
     content: impl Into<Element<'a, Message>>,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message>
 where
     Message: Clone + 'a,
@@ -106,11 +111,11 @@ where
 
     let header_content = column![
         // Header with title
-        container(text(title_str).size(tokens::font_size::LG).font(Font {
+        container(text(title_str).size(scaled.font_size(tokens::font_size::LG)).font(Font {
             weight: Weight::Bold,
             ..Font::DEFAULT
         }))
-        .padding(Padding::ZERO.bottom(tokens::spacing::SM))
+        .padding(Padding::ZERO.bottom(scaled.spacing(tokens::spacing::SM)))
         .width(Length::Fill)
         .style(move |_theme: &iced::Theme| {
             let palette = theme_copy.palette();
@@ -126,13 +131,13 @@ where
         // Spacer
         Space::new()
             .width(Length::Fill)
-            .height(Length::Fixed(tokens::spacing::MD)),
+            .height(Length::Fixed(scaled.spacing(tokens::spacing::MD))),
         // Content
         content.into(),
     ]
     .spacing(0);
 
-    themed_panel(header_content, theme).into()
+    themed_panel(header_content, theme, scaled).into()
 }
 
 // DRY:WIDGET:panel_with_header
@@ -200,7 +205,7 @@ where
     ]
     .spacing(0);
 
-    themed_panel(panel_content, theme).into()
+    themed_panel(panel_content, theme, crate::theme::ScaledTokens::default()).into()
 }
 
 // DRY:WIDGET:panel_with_inner_border
@@ -217,6 +222,7 @@ where
 pub fn panel_with_inner_border<'a, Message>(
     content: impl Into<Element<'a, Message>>,
     theme: &AppTheme,
+    scaled: crate::theme::ScaledTokens,
 ) -> Container<'a, Message>
 where
     Message: Clone + 'a,
@@ -225,7 +231,7 @@ where
 
     // Inner container with dashed border
     let inner = container(content)
-        .padding(tokens::spacing::SM)
+        .padding(scaled.spacing(tokens::spacing::SM))
         .width(Length::Fill)
         .style(move |_theme: &iced::Theme| {
             let palette = theme_copy.palette();
@@ -240,7 +246,7 @@ where
         });
 
     // Wrap in themed panel
-    themed_panel(inner, theme)
+    themed_panel(inner, theme, scaled)
 }
 
 // DRY:WIDGET:panel_with_crosshatch

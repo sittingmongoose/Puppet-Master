@@ -15,48 +15,52 @@ use crate::widgets::{ButtonVariant, header::Page, styled_button, themed_panel};
 pub fn view<'a>(
     theme: &'a AppTheme,
     _size: crate::widgets::responsive::LayoutSize,
+    scaled: crate::theme::ScaledTokens,
 ) -> Element<'a, Message> {
     // Simple error page with centered content; size parameter available for future use
     let mut content = column![]
-        .spacing(tokens::spacing::LG)
-        .padding(tokens::spacing::LG);
+        .spacing(scaled.spacing(tokens::spacing::LG))
+        .padding(scaled.spacing(tokens::spacing::LG));
 
     // Large 404 header
     content = content.push(themed_panel(
         container(
             column![
-                text("404").size(tokens::font_size::DISPLAY),
-                text("Page Not Found").size(tokens::font_size::XL),
+                text("404").size(scaled.font_size(tokens::font_size::DISPLAY)),
+                text("Page Not Found").size(scaled.font_size(tokens::font_size::XL)),
                 text("The page you're looking for doesn't exist or has been moved.")
-                    .size(tokens::font_size::BASE),
+                    .size(scaled.font_size(tokens::font_size::BASE)),
             ]
-            .spacing(tokens::spacing::SM)
+            .spacing(scaled.spacing(tokens::spacing::SM))
             .align_x(Alignment::Center),
         )
-        .padding(tokens::spacing::XL),
+        .padding(scaled.spacing(tokens::spacing::XL)),
         theme,
+        scaled,
     ));
 
     // Navigation buttons
     let nav_buttons = row![
-        styled_button(theme, "Back to Dashboard", ButtonVariant::Primary)
+        styled_button(theme, "Back to Dashboard", ButtonVariant::Primary, scaled)
             .on_press(Message::NavigateTo(Page::Dashboard)),
-        Space::new().width(Length::Fixed(tokens::spacing::MD as f32)),
-        styled_button(theme, "View Projects", ButtonVariant::Secondary)
+        Space::new().width(Length::Fixed(scaled.spacing(tokens::spacing::MD))),
+        styled_button(theme, "View Projects", ButtonVariant::Secondary, scaled)
             .on_press(Message::NavigateTo(Page::Projects)),
     ]
-    .spacing(tokens::spacing::MD)
+    .spacing(scaled.spacing(tokens::spacing::MD))
     .align_y(Alignment::Center);
 
     content = content.push(themed_panel(
-        container(nav_buttons).padding(tokens::spacing::MD),
+        container(nav_buttons).padding(scaled.spacing(tokens::spacing::MD)),
         theme,
+        scaled,
     ));
 
     // ASCII art decoration
     content = content.push(themed_panel(
         container(text(ASCII_ART_404).size(tokens::font_size::XS)).padding(tokens::spacing::MD),
         theme,
+        scaled,
     ));
 
     scrollable_content(content)

@@ -9,7 +9,7 @@
 use iced::widget::{column, container, row, text};
 use iced::{Element, Length};
 use puppet_master::app::Message;
-use puppet_master::theme::{AppTheme, tokens};
+use puppet_master::theme::{AppTheme, ScaledTokens, tokens};
 use puppet_master::widgets::{
     ProgressSize, ProgressVariant, TransitionState, animated_progress_bar, fade_color,
 };
@@ -25,6 +25,8 @@ pub fn example_view<'a>(
     // PART 1: Using Animated Progress Bars
     // ═══════════════════════════════════════════════════════════════════════
 
+    let scaled = ScaledTokens::new(1.0);
+
     let progress_section = column![
         text("Animated Progress Bars")
             .size(tokens::font_size::LG)
@@ -36,6 +38,7 @@ pub fn example_view<'a>(
             ProgressVariant::Default, // Blue
             ProgressSize::Medium,
             animation_time, // Pass app's animation clock
+            scaled,
         ),
         // Example 2: Success progress bar with animation
         animated_progress_bar(
@@ -44,6 +47,7 @@ pub fn example_view<'a>(
             ProgressVariant::Success, // Green/Lime
             ProgressSize::Large,
             animation_time,
+            scaled,
         ),
         // Example 3: Warning progress bar
         animated_progress_bar(
@@ -52,6 +56,7 @@ pub fn example_view<'a>(
             ProgressVariant::Warning, // Orange
             ProgressSize::Small,
             animation_time,
+            scaled,
         ),
     ]
     .spacing(tokens::spacing::MD); // Using design tokens!

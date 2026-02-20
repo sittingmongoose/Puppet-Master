@@ -275,10 +275,18 @@ pub fn build_copilot_launch_command_for_tests(enhanced_path: &str) -> String {
 
 fn build_copilot_launch_command_impl(enhanced_path: &str) -> String {
     let escaped = enhanced_path.replace('"', "\\\"");
+    let npm_cache = crate::install::app_paths::get_npm_cache_dir();
+    let cache_str = npm_cache.to_string_lossy();
     if cfg!(target_os = "windows") {
-        format!("set \"PATH={}\" && npx -y @github/copilot", escaped)
+        format!(
+            "set \"PATH={}\" && set \"NPM_CONFIG_CACHE={}\" && npx -y @github/copilot",
+            escaped, cache_str
+        )
     } else {
-        format!("export PATH=\"{}\"; npx -y @github/copilot", escaped)
+        format!(
+            "export PATH=\"{}\"; export NPM_CONFIG_CACHE=\"{}\"; npx -y @github/copilot",
+            escaped, cache_str
+        )
     }
 }
 
@@ -483,10 +491,18 @@ mod tests {
         let cmd = build_copilot_launch_command_for_tests(path);
         assert!(cmd.contains("npx"), "command should contain npx");
         assert!(cmd.contains("@github/copilot"), "command should contain @github/copilot");
+        assert!(
+            cmd.contains("NPM_CONFIG_CACHE"),
+            "command should set NPM_CONFIG_CACHE to avoid root-owned cache EACCES"
+        );
         if cfg!(target_os = "windows") {
             assert!(cmd.contains("set "), "Windows command should set PATH");
         } else {
             assert!(cmd.contains("export PATH="), "Unix command should export PATH");
+            assert!(
+                cmd.contains("export NPM_CONFIG_CACHE="),
+                "Unix command should export NPM_CONFIG_CACHE"
+            );
         }
         assert!(cmd.contains(path), "command should contain the path");
     }

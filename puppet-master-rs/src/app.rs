@@ -424,6 +424,7 @@ pub struct App {
     pub settings_retention_days: u32,
     pub settings_intensive_logging: bool,
     pub settings_interaction_mode: String, // "expert" or "eli5" — global tooltip verbosity
+    pub ui_scale: f32, // UI scale factor (e.g. 0.75–1.5); 1.0 = 100%
 
     // Backend channels
     pub event_receiver: Option<crossbeam_channel::Receiver<PuppetMasterEvent>>,
@@ -715,6 +716,7 @@ pub enum Message {
     SettingsClearData,
     SettingsResetDefaults,
     SettingsOpenDataDir,
+    SettingsUiScaleChanged(f32),
     SaveSettings,
 
     // Memory
@@ -1276,6 +1278,7 @@ impl App {
             settings_retention_days: 30,
             settings_intensive_logging: false,
             settings_interaction_mode: "eli5".to_string(),
+            ui_scale: 1.0,
 
             // Memory
             memory_content: text_editor::Content::new(),
@@ -1364,6 +1367,9 @@ impl App {
         // Auto-detect platform installations and auth status on startup
         startup_tasks.push(Task::done(Message::SetupRunDetection));
         startup_tasks.push(refresh_auth_status_task());
+
+        // Run Doctor checks in background on boot so Doctor page is populated when opened
+        startup_tasks.push(Task::done(Message::RunAllChecks));
 
         let task = Task::batch(startup_tasks);
 
@@ -1551,6 +1557,7 @@ impl App {
                 self.settings_retention_days = 30;
                 self.settings_intensive_logging = false;
                 self.settings_interaction_mode = "eli5".to_string();
+                self.ui_scale = 1.0;
                 self.minimize_to_tray = true;
                 self.start_on_boot = false;
                 let _ = crate::autostart::apply_start_on_boot(false);
@@ -1562,6 +1569,11 @@ impl App {
                 }
 
                 self.add_toast(ToastType::Success, "Settings reset to defaults".to_string());
+                Task::none()
+            }
+
+            Message::SettingsUiScaleChanged(scale) => {
+                self.ui_scale = scale.clamp(0.5, 1.5);
                 Task::none()
             }
 
@@ -1608,6 +1620,7 @@ impl App {
                     "minimize_to_tray": self.minimize_to_tray,
                     "start_on_boot": self.start_on_boot,
                     "interaction_mode": self.settings_interaction_mode,
+                    "ui_scale": self.ui_scale,
                 });
 
                 if let Ok(json) = serde_json::to_string_pretty(&settings) {
@@ -6409,6 +6422,7 @@ impl App {
                 self.window_height.max(1.0)
             };
             let layout_size = LayoutSize { width, height };
+            let scaled = crate::theme::ScaledTokens::new(self.ui_scale);
 
             // Build interview panel data if interview is active
             let interview_panel_data = self.build_interview_panel_data();
@@ -6432,6 +6446,7 @@ impl App {
                     &interview_panel_data,
                     &self.theme,
                     layout_size,
+                    scaled,
                 ),
                 Page::Projects => views::projects::view(
                     &self.projects,
@@ -6442,6 +6457,7 @@ impl App {
                     &self.active_context_menu,
                     &self.theme,
                     layout_size,
+                    scaled,
                 ),
                 Page::Wizard => {
                     // Clamp wizard step to valid range (0-9)
@@ -6485,6 +6501,7 @@ impl App {
                         &self.platform_auth_status,
                         &self.theme,
                         layout_size,
+                        scaled,
                     )
                 }
                 Page::Config => views::config::view(
@@ -6502,6 +6519,7 @@ impl App {
                     &self.settings_interaction_mode,
                     &self.theme,
                     layout_size,
+                    scaled,
                 ),
                 Page::Doctor => views::doctor::view(
                     &self.doctor_results,
@@ -6514,6 +6532,7 @@ impl App {
                     &self.active_context_menu,
                     &self.theme,
                     layout_size,
+                    scaled,
                 ),
                 Page::Tiers => views::tiers::view(
                     &self.tier_tree,
@@ -6522,6 +6541,7 @@ impl App {
                     &self.tier_details_content,
                     &self.theme,
                     layout_size,
+                    scaled,
                 ),
                 Page::Evidence => views::evidence::view(
                     &self.evidence_items,
@@ -6531,8 +6551,9 @@ impl App {
                     &self.evidence_preview_content,
                     &self.theme,
                     layout_size,
+                    scaled,
                 ),
-                Page::Metrics => views::metrics::view(&self.metrics, &self.theme, layout_size),
+                Page::Metrics => views::metrics::view(&self.metrics, &self.theme, layout_size, scaled),
                 Page::History => views::history::view(
                     &self.history_display_sessions,
                     self.history_page,
@@ -6541,6 +6562,7 @@ impl App {
                     &self.history_search,
                     &self.theme,
                     layout_size,
+                    scaled,
                 ),
                 Page::Coverage => views::coverage::view(
                     self.coverage_overall,
@@ -6549,6 +6571,7 @@ impl App {
                     &self.coverage_phase_filter,
                     &self.theme,
                     layout_size,
+                    scaled,
                 ),
                 Page::Memory => views::memory::view(
                     &self.memory_content,
@@ -6556,6 +6579,7 @@ impl App {
                     &self.memory_section,
                     &self.theme,
                     layout_size,
+                    scaled,
                 ),
                 Page::Ledger => views::ledger::view(
                     &self.ledger_entries,
@@ -6567,6 +6591,7 @@ impl App {
                     &self.ledger_filter_session,
                     &self.theme,
                     layout_size,
+                    scaled,
                 ),
                 Page::Login => views::login::view(
                     &self.platform_auth_status,
@@ -6580,6 +6605,7 @@ impl App {
                     &self.setup_platform_statuses,
                     &self.theme,
                     layout_size,
+                    scaled,
                 ),
                 Page::Settings => {
                     // Convert log level string to enum
@@ -6605,7 +6631,9 @@ impl App {
                         self.settings_retention_days,
                         self.settings_intensive_logging,
                         &self.settings_interaction_mode,
+                        self.ui_scale,
                         layout_size,
+                        scaled,
                     )
                 }
                 Page::Setup => views::setup::view(
@@ -6618,6 +6646,7 @@ impl App {
                     &self.doctor_fixing,
                     &self.theme,
                     layout_size,
+                    scaled,
                 ),
                 Page::Interview => views::interview::view(
                     self.interview_active,
@@ -6636,12 +6665,13 @@ impl App {
                     &self.active_context_menu,
                     &self.theme,
                     layout_size,
+                    scaled,
                 ),
             };
 
             // Build the full layout (header + content) with a small margin on all sides.
-            let main_layout = column![self.render_header(layout_size), content].spacing(0);
-            let margin = tokens::spacing::MD;
+            let main_layout = column![self.render_header(layout_size, scaled), content].spacing(0);
+            let margin = scaled.spacing(tokens::spacing::MD);
             let constrained = container(main_layout)
                 .width(Length::Fill)
                 .height(Length::Fill)
@@ -6665,14 +6695,14 @@ impl App {
             ];
 
             // Add toasts overlay
-            let with_toasts = self.render_toasts_overlay(with_overlay.into());
+            let with_toasts = self.render_toasts_overlay(with_overlay.into(), scaled);
 
-            // Add context menu overlay
-            let with_context_menu = self.render_context_menu_overlay(with_toasts);
+            // Add context menu overlay (pass scaled for widget token scaling)
+            let with_context_menu = self.render_context_menu_overlay(with_toasts, scaled);
 
             // Add modal overlay if present
             if let Some(ref modal) = self.show_modal {
-                self.render_modal_overlay(with_context_menu, modal)
+                self.render_modal_overlay(with_context_menu, modal, scaled)
             } else {
                 with_context_menu
             }
@@ -7726,18 +7756,23 @@ impl App {
     }
 
     /// Render the header bar
-    fn render_header(&self, size: LayoutSize) -> Element<'_, Message> {
+    fn render_header(&self, size: LayoutSize, scaled: crate::theme::ScaledTokens) -> Element<'_, Message> {
         crate::widgets::header::simple_header(
             self.current_page,
             &self.theme,
             Message::NavigateTo,
             Message::ToggleTheme,
             size,
+            scaled,
         )
     }
 
     /// Render toast notifications overlay
-    fn render_toasts_overlay<'a>(&'a self, base: Element<'a, Message>) -> Element<'a, Message> {
+    fn render_toasts_overlay<'a>(
+        &'a self,
+        base: Element<'a, Message>,
+        scaled: crate::theme::ScaledTokens,
+    ) -> Element<'a, Message> {
         // Use the new toast_overlay function from the widgets module
         crate::widgets::toast_overlay(
             base,
@@ -7749,12 +7784,13 @@ impl App {
                 Some(ContextMenuTarget::Toast(id)) => Some(*id),
                 _ => None,
             },
-            || {
+            move || {
                 crate::widgets::context_menu_actions(
                     &self.theme,
                     crate::widgets::ContextMenuOptions {
                         show_select_all: true,
                     },
+                    scaled,
                 )
             },
         )
@@ -7787,6 +7823,7 @@ impl App {
     fn render_context_menu_overlay<'a>(
         &'a self,
         base: Element<'a, Message>,
+        scaled: crate::theme::ScaledTokens,
     ) -> Element<'a, Message> {
         if let Some(ref target) = self.active_context_menu {
             use crate::widgets::context_menu::{ContextMenuOptions, context_menu_actions};
@@ -7802,8 +7839,8 @@ impl App {
                 },
             };
 
-            let menu = container(context_menu_actions(&self.theme, options))
-                .padding(tokens::spacing::XS)
+            let menu = container(context_menu_actions(&self.theme, options, scaled))
+                .padding(scaled.spacing(tokens::spacing::XS))
                 .style(styles::context_menu_container_styled(&self.theme));
 
             let open_pos = self
@@ -7834,6 +7871,7 @@ impl App {
         &self,
         base: Element<'a, Message>,
         modal: &'a ModalContent,
+        scaled: crate::theme::ScaledTokens,
     ) -> Element<'a, Message> {
         use crate::widgets::{ModalData, ModalSize, modal_overlay};
 
@@ -7857,6 +7895,7 @@ impl App {
                     &self.theme,
                     Message::CloseModal,
                     Some((**on_confirm).clone()),
+                    scaled,
                 )
             }
             ModalContent::Error { title, details } => {
@@ -7874,6 +7913,7 @@ impl App {
                     &self.theme,
                     Message::CloseModal,
                     None,
+                    scaled,
                 )
             }
         }
@@ -7964,6 +8004,9 @@ impl App {
                         if im.eq_ignore_ascii_case("expert") || im.eq_ignore_ascii_case("eli5") {
                             self.settings_interaction_mode = im.to_lowercase();
                         }
+                    }
+                    if let Some(scale) = json.get("ui_scale").and_then(|v| v.as_f64()).or_else(|| json.get("ui_scale").and_then(|v| v.as_u64()).map(|u| u as f64)) {
+                        self.ui_scale = (scale as f32).clamp(0.5, 1.5);
                     }
 
                     log::info!("Settings loaded from disk");
