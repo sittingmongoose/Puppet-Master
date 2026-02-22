@@ -9,13 +9,27 @@
 - Configuration options
 - Implementation examples
 
+## Rewrite alignment (2026-02-21)
+
+This plan’s interview-phase semantics remain authoritative. Implementation should target the rewrite described in `Plans/rewrite-tie-in-memo.md`:
+
+- Platform runners should converge on **Providers** that emit a normalized streaming event model
+- Interview research/validation/doc generation outputs should be stored as **artifacts/events** (seglog → projections)
+- Crew/hooks/lifecycle concepts referenced here should be implemented once in the shared core and reused
+
+### Interview persistence and events (storage alignment)
+
+- **Seglog:** Emit to seglog: interview start/end, phase start/end, research/validation/document-generation completion, handoffs, and any event needed for replay or search. Interview artifact events (e.g. doc generated) should be first-class in the event model so projectors can index them (e.g. Tantivy).
+- **redb:** Persist in redb (per storage-plan.md): **interview session** (interview id, project, status, phase plan); **interview run** or phase-level progress for resume; **checkpoints** at phase boundaries. Replace or project file-based state (e.g. active-subagents.json, phase state) from redb where possible so resume and recovery use the same store as the rest of the app.
+- Existing file-based persistence (.puppet-master/memory/, .puppet-master/interview/) should be migrated to or projected from seglog/redb so interview state is part of the canonical storage stack.
+
 ## Executive Summary
 
 This plan integrates Cursor subagent personas into the interview orchestrator to enhance phase-specific expertise, improve research quality, validate answers, and generate better documentation. Each interview phase will leverage specialized subagents aligned with its domain.
 
 ## Relationship to Orchestrator Plan
 
-This document covers the **interview flow** (multi-phase interview: Scope, Architecture, UX, Data, Security, Deployment, Performance, Testing). The **orchestrator plan** (`Plans/orchestrator-subagent-integration.md`) covers the **main run loop** (Phase → Task → Subtask → Iteration execution) and defines shared concerns: config-wiring validation, start/end verification at phase/task/subtask, and quality verification. For interview-specific start/end verification (e.g. at each interview phase boundary), mirror the orchestrator plan’s **"Start and End Verification at Phase, Task, and Subtask"** and define interview-phase quality criteria (e.g. document completeness, requirement clarity). Subagent names and platform invocation should stay consistent across both plans.
+This document covers the **interview flow** (multi-phase interview: Scope, Architecture, UX, Data, Security, Deployment, Performance, Testing). The **orchestrator plan** (`Plans/orchestrator-subagent-integration.md`) covers the **main run loop** (Phase → Task → Subtask → Iteration execution) and defines shared concerns: config-wiring validation, start/end verification at phase/task/subtask, and quality verification. For interview-specific start/end verification (e.g. at each interview phase boundary), mirror the orchestrator plan’s **"Start and End Verification at Phase, Task, and Subtask"** and define interview-phase quality criteria (e.g. document completeness, requirement clarity). Subagent names and platform invocation should stay consistent across both plans. **Subagent personas:** The orchestrator plan defines a place to setup subagent personas/info (preload from `.claude/agents`, user add/delete, optional AI trim; overrides from config only — user edits in Personas UI). Interview uses **multiple** personas **dynamically** by phase and tech stack (phase_subagents, research/validation subagents, etc.). For whichever subagent(s) are selected for a given phase/context, resolve that subagent’s persona content (override from `SubagentGuiConfig.persona_overrides` if present, else preloaded content) and inject into the phase prompt (orchestrator plan §5 and Gap §11). **Application and project rules:** When building any interview prompt that goes to an agent, include the shared rules pipeline output from **Plans/agent-rules-context.md** (application rules always; project rules when the interview has a target project). **Tool permissions:** **Plans/Tools.md** defines the central tool registry and permission model; the same run config and permission snapshot apply to interview runs (see Tools.md §2.5 cross-plan table). **Plans/newfeatures.md:** For interview **recovery** (§4: restore interview phase and in-progress answers after crash), **restore points / rollback** (§8: roll back to a given phase), and **skills** (§6: phase-specific context injection by trigger), see newfeatures; those features extend the interview without replacing phase or subagent structure.
 
 ## Subagent Phase Assignments
 
@@ -112,7 +126,7 @@ This document covers the **interview flow** (multi-phase interview: Scope, Archi
 - `code-reviewer` — Validate technical decisions and architecture choices
 
 **Research Operations:**
-- `ux-researcher` — Web research via Browser MCP (when configured)
+- `ux-researcher` — Web research via Browser MCP (when configured). **Cited web search:** Interview (and Assistant, Orchestrator) use **cited web search** (inline citations + Sources list) from a single shared implementation; see **Plans/newtools.md** §8 (cited web search, [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited)–style) and **Plans/assistant-chat-design.md** §7.
 - `context-manager` — Manage interview state and context across phases
 
 ## Integration Architecture
@@ -837,12 +851,90 @@ AGENTS.md is loaded into agent context; long files consume context budget and en
 
 **Cross-reference:** MiscPlan (Plans/MiscPlan.md) describes target-project DRY as interview-seeded and points here for implementation; MiscPlan also states that generated AGENTS.md should be kept minimal.
 
-### 5.2 DRY method when implementing interview code (Puppet Master codebase)
+### 5.2 Documentation and plans for AI execution (wiring and completeness)
+
+All **documentation and plans** produced by the interview (PRD, AGENTS.md, requirements, phase plans, roadmap, test strategy, etc.) must be written with the understanding that an **AI agent** will execute them, not a human. This reduces unwired features, partially complete components, and “built but not wired” outcomes.
+
+**Requirements for generated content and prompts:**
+
+1. **Audience: AI executor.** Every generated document and plan must assume the reader/executor is an AI agent. Instructions must be **unambiguous**, **actionable**, and **explicit** (e.g. “wire X to Y”, “ensure config key Z is passed to the run config at start”). Avoid prose that only a human would infer.
+
+2. **Wire everything together.** Explicitly call out:
+   - **Config wiring:** Any setting or feature that has a GUI control or config key must state that it must be **wired** into the config shape used at runtime (e.g. Option B: run config built from GUI at run start). Generated AGENTS.md or PRD should remind agents: “Ensure all config and GUI settings are wired so the run sees them; avoid building features that are never passed to the backend.”
+   - **Component integration:** Tasks that add modules, views, or components must include a step or acceptance criterion that the new code is **integrated** (e.g. declared in parent `mod.rs`, registered in routes, or wired in the GUI). No “add a widget” without “ensure the widget is used in view X.”
+
+3. **No partially complete components.** Generated tasks and acceptance criteria must enforce **completeness**:
+   - Components must be **fully implemented** (no stubs or TODOs that are left as final state).
+   - Every public API or UI surface that is added must be **reachable and wired** (e.g. new tab is visible and bound to config; new command is invokable).
+   - Add to DO/DON'T or Critical block in generated AGENTS.md: “Do not leave components partially complete; wire every new piece to the rest of the system and to the GUI/config where applicable.”
+
+4. **Subagent persona recommendations.** Generated plans and documents (PRD, phase plans, roadmap, test strategy, etc.) must include **which subagent personas to use** at the appropriate granularity (e.g. per task, per subtask, or per phase). Use subagent names from **subagent_registry** (e.g. `product-manager`, `architect-reviewer`, `rust-engineer`, `security-auditor`, `test-automator`) so the executor (orchestrator or Assistant) knows which specialist(s) to invoke. The PRD schema already supports recommendations (e.g. `crew_recommendation` with `subagents` on subtasks); phase plans and other generated docs must also carry subagent recommendations where applicable (e.g. primary and optional secondary subagents per phase or per task). This ensures every generated plan is **executable** with the right personas.
+
+5. **Parallelism.** Generated plans must indicate **what can be done in parallel**. Include structure so the executor can run independent work in parallel: e.g. per task or subtask, **dependencies** (`depends_on` / `can_run_after`) or **parallel groups** (items in the same group can run in parallel). The interview output (PRD, roadmap, or plan markdown) should make it explicit which tasks/subtasks are independent and which must run in sequence, so the orchestrator or execution layer can schedule parallel execution where safe. Document the chosen schema (e.g. `depends_on: [task_ids]`, or `parallel_group: "A"` for items that can run together) in the PRD/plan generator and in STATE_FILES or this plan.
+
+6. **Where to inject.** Apply these requirements in:
+   - **Prompt templates** for phase completion and document generation (so the interviewing agent is instructed to produce AI-executor–oriented, wire-explicit, complete output).
+   - **PRD and plan generators** (so generated tasks and acceptance criteria include wiring, completeness, **subagent persona recommendations**, and **parallelism**).
+   - **AGENTS.md generator** (§5.1): add a short “AI executor” or “Wiring & completeness” bullet block in the Critical section (e.g. “Plans and docs are for AI execution; wire everything; no partially complete components”).
+
+
+**Reinforce in all generated plans and AGENTS.md:** (1) **DRY Method** — check existing code and docs before adding new; reuse first; tag reusable items; single source of truth. (2) **Everything wired** — config and **GUI** must be wired (every new screen, control, or action reachable and connected). (3) **No unfinished components or features** unless explicitly scheduled in a later step; the plan must reference that step and the later step must complete the work. (4) **No dead code** — require that unused code is removed and that new code is only added when used and wired. Add these to DO/DON'T or Critical block in generated AGENTS.md. The generator MUST emit these four points in the DO/DON'T or Critical block of generated AGENTS.md and in plan acceptance criteria; there is no exception for partial or minimal output.
+
+**Cross-reference:** Plans/assistant-chat-design.md §14 points here for the full specification. Orchestrator plan “Avoiding Built but Not Wired” and config-wiring (e.g. Option B) are the runtime side; the interview is responsible for generating instructions that lead to wired, complete implementations. The **orchestrator** must **respect** subagent personas and parallelization from the PRD (orchestrator-subagent-integration.md "Respecting PRD/plan: subagent personas and parallelization").
+
+### 5.3 DRY method when implementing interview code (Puppet Master codebase)
 
 When implementing or changing **interview-related code** in Puppet Master (interview tab, phase UI, research engine, document generation, agents_md_generator), follow the same **DRY method** as the rest of the codebase so new UI and helpers stay consistent and discoverable.
 
 - **Widget catalog:** Before adding new UI, check **`docs/gui-widget-catalog.md`** and use existing widgets (e.g. `styled_button`, `page_header`, `toggler`, `selectable_label`, `modal_overlay`). Interview views live in `src/views/` and should reuse widgets from `src/widgets/`.
 - **Platform data:** Use **`platform_specs`** (e.g. `platform_specs::cli_binary_names`, `platform_specs::fallback_model_ids`) for any platform-specific behavior in the interview flow; do not hardcode CLI names, models, or capabilities.
+
+### 5.4 Multi-Pass Review (Interview Documents)
+
+After all interview documents are created (phase documents, AGENTS.md, PRD, etc.), an optional **Multi-Pass Review** runs to check the document set for gaps, contradictions, unwired components, and consistency. A **review agent** spawns a **worker pool** of review subagents; each subagent reviews one document (or one document per round), reports back, then is terminated to free context.
+
+**When it runs:** Once the whole interview process is done and all documents are written. **Zero documents:** If no documents exist when Multi-Pass Review is triggered (e.g. document generation produced none), **skip** Multi-Pass Review and log. Do not run review agent or subagents. Proceed to next step (e.g. "Interview complete") with no revised docs.
+
+**Settings (same conceptual page as Requirements Doc Builder Multi-Pass Review; can be interview-specific):**
+
+- **Multi-Pass Review:** On/off.
+- **Number of reviews:** How many subagents look at **each** document. Default **3**, max **10**. So with 3, each document gets reviewed by 3 subagents (across rounds); with 10, each document gets reviewed by 10 subagents.
+- **Max subagents spawn:** Maximum number of review subagents in flight at once. Default **9**, max **20**. **UI warning:** Display a warning next to this control: e.g. “This will go through token usage quickly.”
+- **Use different models / model-platform list:** Same as Requirements Doc Builder (§5.6 in chain-wizard-flexibility.md): default to different models per subagent; user can configure models (cross-platform allowed). **Model/platform list validation:** Min 1, max 20. When "use different models" and list has fewer entries than needed, cycle round-robin and show UI notice: "Fewer models than review slots; some models will be reused."
+- **Review agent model/platform (interview):** Configurable; default = primary interview platform/model. Can be set from same model list as subagents or a separate "Review agent" control; persist in interview run config.
+
+**Worker-pool semantics:**
+
+- Total review tasks = (number of documents) × (number of reviews). Example: 20 documents, 5 reviews → 100 tasks.
+- We maintain a pool of up to **max subagents** in flight. When a subagent finishes reviewing a document, it hands its report to the review agent, then is **killed** (terminated) so context is freed. A new subagent is spawned for the next task (next document or next review slot for a document) until all tasks are done. **Subagent spawn failure:** If a subagent fails to spawn (model unavailable, auth error, binary not found): **retry** up to 2 times with the same model; if still failing, **fallback** to the next model in the user-configured list (round-robin). If all configured models fail for that task, **skip** that task, log, and continue. If more than 25% of tasks are skipped due to spawn failure, mark run as **failed** and surface "Too many review subagents failed to start; check models and auth."
+- Example: 20 documents, number of reviews = 5, max spawn = 20 → 5 full “rounds”; in each round we assign 20 subagents to 20 documents (one subagent per doc). After 5 rounds, each document has been reviewed by 5 subagents.
+- Example: 5 documents, 3 reviews, max spawn = 10 → 15 tasks. We spawn 10 subagents; whenever one finishes and hands off its report, we kill it and spawn a new one for the next task until all 15 are done.
+
+**Batching and cross-document awareness:**
+
+- Documents are long; one subagent should not hold multiple full documents in context. Each subagent is assigned **one document** per task (and optionally a **short index/summary of the other documents**) so it can say “X might be missing here — check Architecture doc” without loading every doc.
+- For **fork / PR / enhance** (existing code): review subagents may need to see **codebase context** (e.g. from codebase_scanner: key paths, module list, tech stack) so they can check feasibility and unwired components against the code.
+- **Index/summary:** Produced by the **review agent** (or a single dedicated "index" step run once before per-doc reviews). Format: markdown or structured list: document id, path, one-line summary, optional section headings. Max size: e.g. 2K tokens or 500 lines (document in implementation). Attached to each per-doc review prompt so subagents can reference other docs without loading full text.
+- **Token overflow:** Before sending a document (or whole-set synthesis) to a subagent, check size against platform context limit. If over limit: **truncate** with a clear boundary (e.g. first N tokens plus "[… truncated …]" and line count) and attach a note "Document truncated for context; focus on the provided portion." Do not chunk into multiple calls for one review task. If truncation would leave under 20% of context for response, **skip** that task and log; after run, surface in findings report that the doc was too long to review fully.
+
+**Review criteria (what subagents look for):**
+
+- Gaps, potential issues, unscoped items.
+- Components that will not be completed or will not be wired; GUI elements missing or not wired.
+- Contradictions with other documents.
+- Technical feasibility; format per spec (§5.2).
+
+**Whole-document-set pass last:**
+
+- After all per-document reviews are done, run the configured **number of reviews** again as **whole-set** passes: reviewers see the full document set (or a synthesis) and check that everything works together, no contradictions, wiring is consistent. Same number of rounds as “number of reviews”; each round can use up to max subagents. This is done **last**. **Synthesis:** When the full document set exceeds context, the **review agent** produces a **synthesis** (one document: summaries per doc plus cross-doc wiring and dependency list). Max synthesis size: e.g. 50% of platform context limit (document in implementation). Whole-set reviewers receive this synthesis instead of raw docs. **Single document:** When document count is 1, treat as one whole-set round only: that single doc is reviewed N times (N = number of reviews) by the worker pool; then the review agent runs once for the whole set. No separate per-doc vs whole-set phases.
+
+**Review agent behavior (option C):**
+
+- **Both** revised output and user-in-the-loop: the review agent can produce revised documents and/or a consolidated findings report; there is a **setting** to control whether revisions are auto-applied or surfaced for user approval. **Options (implement exactly):** (1) **Apply all:** Review agent produces revised documents; apply all revisions automatically; then show consolidated findings report (read-only). No per-document approval. (2) **Show report only:** Review agent produces only a consolidated findings report; no revised documents. User reads report and may manually edit docs or re-run interview/review. (3) **Apply with approval per document:** Review agent produces revised documents; surface each revised doc with Accept / Reject / Edit for that document; user approves per document; then continue. Default: **Apply with approval per document** for interview (safest). Store selected option in interview run config and persist in recovery state.
+
+**Dependencies:** Same Multi-Pass Review pattern as Requirements Doc Builder (review agent + N subagents; not the Crew feature); platform_specs; codebase_scanner for existing-code intents. Cross-reference **Plans/chain-wizard-flexibility.md §5.6** for shared settings and model selection.
+
+**GUI and visibility:** See “Agent activity and progress visibility” under GUI gaps below. Show the process **in the interviewer chat** (we are already there). User must see review subagents working and progress (documents in progress, remaining). **Pause, cancel, resume** are supported options; recovery state for “in progress” so user can resume or start over. **Cancel:** On cancel, **stop spawning** new subagents immediately. **Do not kill** in-flight subagents; let them complete and discard their reports. Then set state to cancelled and surface "Review cancelled; no changes applied." If the review agent is already producing, cancel after it finishes the current revision; then discard and set cancelled. **Recovery state (interview Multi-Pass):** Persist: run phase (per_doc | whole_set), list of completed task ids (e.g. doc_id + review_index), partial reports received (or path to temp store), max subagents in flight, number of reviews, and (if in producing) review agent input state. On resume, rebuild worker queue excluding completed task ids; resume review agent from last state if applicable. On start over, clear this state and re-run from the beginning.
 
 ## DRY Method Compliance
 
@@ -895,7 +987,7 @@ When implementing or changing **interview-related code** in Puppet Master (inter
 4. Create subagent mapping utilities
    - **DRY REQUIREMENT:** MUST use `subagent_registry::get_subagent_for_language()` and `subagent_registry::get_subagent_for_framework()` — DO NOT create duplicate mapping logic
    - **DRY REQUIREMENT:** Tag reusable functions with `// DRY:FN:<name>`
-5. **DRY (Puppet Master code):** When adding interview UI or helpers, follow DRY per §5.2 (widget catalog, platform_specs, tagging; run catalog scripts after widget changes)
+5. **DRY (Puppet Master code):** When adding interview UI or helpers, follow DRY per §5.3 (widget catalog, platform_specs, tagging; run catalog scripts after widget changes)
 
 ### Phase 2: Prompt Integration
 1. Modify `prompt_templates.rs` to include subagent instructions
@@ -1102,10 +1194,12 @@ if let Some(crew_id) = phase_crew {
 
 ### 2. Crew-Aware Plan Generation
 
-**Concept:** When the interview generates PRD/plans, include crew recommendations for tasks/subtasks that would benefit from multiple subagents working together.
+**Concept:** When the interview generates PRD/plans, include crew recommendations for tasks/subtasks that would benefit from multiple subagents working together. Per §5.2 (Documentation and plans for AI execution), generated plans must also include **which subagent personas to use** (item 4) and **what can be done in parallel** (item 5).
 
 **What to include in generated plans:**
-- **Crew recommendations:** Suggest crews for complex tasks/subtasks
+- **Subagent persona recommendations:** Which subagent(s) to use per task, subtask, or phase (names from subagent_registry). PRD subtasks carry `crew_recommendation` with `subagents`; phase plans and other docs must carry subagent recommendations where applicable.
+- **Parallelism:** Which tasks/subtasks can run in parallel (e.g. `depends_on`, `can_run_after`, or `parallel_group`) so the executor can schedule parallel execution.
+- **Crew recommendations:** Suggest crews for complex tasks/subtasks when multiple subagents work together.
 - **Crew templates:** Reference crew templates (e.g., "Use 'Full Stack Crew' for this phase")
 - **Crew metadata:** Add crew hints to PRD tasks/subtasks
 
@@ -1128,7 +1222,9 @@ if let Some(crew_id) = phase_crew {
                 "crew_template": "Security Implementation Crew",
                 "complexity_score": 7.5,
                 "expertise_areas": ["security", "backend", "testing"]
-              }
+              },
+              "depends_on": [],
+              "parallel_group": "A"
             }
           ]
         }
@@ -1137,6 +1233,15 @@ if let Some(crew_id) = phase_crew {
   ]
 }
 ```
+
+- **Parallelism fields:** `depends_on` lists task/subtask ids that must complete before this one; empty means no dependencies. `parallel_group` (optional) identifies items that can run in parallel with each other (same group = can run together). Document the chosen schema in the PRD generator and STATE_FILES; orchestrator uses it to schedule parallel execution.
+
+**Crew and parallelism field semantics (canonical: STATE_FILES.md §3.3):**
+
+- **crew_recommendation:** Optional. When present, `subagents` is **required** (array of strings; names from subagent_registry). Other fields (rationale, crew_template, complexity_score, expertise_areas) are optional. If `crew_recommendation` is present but `subagents` is missing or empty, the orchestrator **treats it as no recommendation** and falls back to dynamic selection.
+- **depends_on:** Optional. Type: array of strings (item ids). Empty array or missing = no dependencies. This item may run only after every listed item has completed. Use `depends_on` for ordering; do not introduce a separate `can_run_after` in the PRD schema.
+- **parallel_group:** Optional. Type: string or null. Missing or null = no parallel-group constraint. Items with the same non-empty `parallel_group` may run in parallel, **subject to** `depends_on` (dependencies take precedence).
+- **Phase/Task:** Phase and Task may carry the same optional fields with the same types and semantics when the generator specifies at that level.
 
 **Complexity analysis responsibilities:**
 
@@ -2246,6 +2351,38 @@ impl ActiveSubagentTracker {
 
 The Config view has an **Interview** tab (tab index 6) bound to `InterviewGuiConfig`. The following gaps must be closed so interview behavior is controllable from the UI and correctly wired to the run.
 
+### Agent activity and progress visibility (document creation and Multi-Pass Review)
+
+During **interview document creation** (phase documents, AGENTS.md, PRD, etc.) and during **Multi-Pass Review** (§5.4), the user should **see the agents working** (like in Assistant chat), not just a spinner.
+
+**Where to show it — two places (redundant):**
+
+- We are already in the **interviewer chat** window when document creation or Multi-Pass Review runs.
+  1. **In the interviewer chat:** Stream agent output (e.g. “Writing Scope document…”, “Reviewing document 3 of 15…”, subagent activity) into the chat so the user sees it there.
+  2. **Agent activity pane on the same page:** Also show the same (or equivalent) activity in an **agent activity pane** on the Interview page, redundant with the chat. That’s acceptable because the user isn’t using the pane for anything else during that flow. So the Interview view shows the process in **both** the chat and the pane.
+
+**Progress indicator:**
+
+- **Progress bar or status strip** (on the same page) showing **which documents are in progress** and **how many remain**.
+- **Document creation:** E.g. “Writing phase 4 document — 5 of 8 remaining” or “Writing AGENTS.md…”
+- **Multi-Pass Review:** E.g. “Reviewing document 7 of 15 — 9 subagents active” or “Whole-set review pass 2 of 3.”
+
+**Pause, cancel, resume:**
+
+- Provide **pause**, **cancel**, and **resume** as user options during document creation and during Multi-Pass Review. Pause suspends the run; cancel stops and does not apply changes; resume continues from where paused. **Recovery** (newfeatures §4) should persist “in progress” state so after cancel or crash the user sees “run was interrupted” and can resume or start over.
+
+**Agent activity pane — same placement rule everywhere:**
+
+- The agent activity pane sits **on the same page where the action is triggered**. That includes the **Interview** page: show the pane there too (redundant with the chat, as above). For **Requirements Doc Builder** and **Multi-Pass Review** when triggered from the wizard/requirements step, the pane is on that page (chain-wizard §3.5). So the pane appears in **two places** — requirements/wizard page and Interview page — and in Interview we show it in both the chat and the pane. Placement can be revisited later (e.g. drawer, modal) if needed.
+
+**Implementation:** Feed CLI/streaming events from document generation and Multi-Pass Review into (1) the interviewer chat when in Interview, and (2) the agent activity pane on the same page (Interview page or wizard/requirements page where triggered). In Interview, chat and pane are redundant. Progress state (current document, remaining count, subagents active) comes from the orchestrator or review coordinator and drives the progress UI. Align with chain-wizard §3.5 and assistant-chat-design for streaming/events.
+
+**Primary surface on Interview page:** When on the Interview page, the **interviewer chat** is the primary surface for streaming agent output during document creation and Multi-Pass Review. The **agent activity pane** on the same page shows the same stream (synchronized from the same event source). If the pane is collapsed or hidden, chat still shows full stream.
+
+**Progress indicator format:** Use a **status strip** (single line) above or below the pane: left = current step text (e.g. "Writing phase 4 document — 5 of 8 remaining"); right = optional determinate progress bar (e.g. 5/8) when total is known. When total is unknown, show indeterminate progress bar. Stale rule: same as chain-wizard §3.5 (30s then "Progress stalled — last update 30s ago").
+
+**Pause/cancel/resume and feedback:** Same as chain-wizard §3.5: control row (Pause | Resume | Cancel), Cancel confirmation modal, toasts for "Run cancelled…", "Resuming…", "Run resumed." States: idle, generating, reviewing, paused, cancelling, cancelled, interrupted, complete, error.
+
 **Already in GUI (gui_config.rs)**
 
 - `platform`, `model`, `reasoning_level`, `backup_platforms`, `max_questions_per_phase`, `first_principles`, `output_dir`, `require_architecture_confirmation`, `generate_playwright_requirements`, `generate_initial_agents_md`, `vision_provider`.
@@ -2258,6 +2395,14 @@ The Config view has an **Interview** tab (tab index 6) bound to `InterviewGuiCon
 | **max_questions_per_phase** | Present; single number | Add **"Unlimited"** option (e.g. checkbox or special value 0 = unlimited) so users can allow unbounded questions per phase; wire to orchestrator (phase stops when min met and either max reached or unlimited). |
 | **Wiring to InterviewOrchestratorConfig** | Several GUI fields are not passed to the interview orchestrator at runtime | Per orchestrator plan Gaps: add `min_questions_per_phase`, `max_questions_per_phase` (with unlimited), `require_architecture_confirmation`, `vision_provider` to `InterviewOrchestratorConfig`; set from `gui_config.interview` in `app.rs` when starting the interview; use in phase_manager and prompt/research flows. |
 | **generate_initial_agents_md** | In GUI; default in code is `true` | Ensure default and tooltip reflect §5.1: when true, generated AGENTS.md includes DRY and Technology & version constraints. Tooltip: "Generate AGENTS.md at project root with DRY method and technology/version rules from the interview." |
+| **Multi-Pass Review (§5.4)** | Not in GUI | Add: on/off, number of reviews (default 3, max 10), max subagents spawn (default 9, max 20) **with warning** “This will go through token usage quickly,” use different models (y/n), model/platform list. Wire into interview run config. |
+| **Agent activity view and progress** | Not in GUI | **(1) Pane:** Add an **agent activity pane** on the Interview view and on the wizard/requirements page when Builder or Multi-Pass Review is triggered there. Pane: read-only, chat-like, min height 120px, max 500 lines, monospace; same event source as interviewer chat when on Interview page (redundant display). **(2) Progress:** Add a **status strip** with current step text and optional determinate/indeterminate progress bar; canonical states: idle, generating, reviewing, paused, cancelling, cancelled, interrupted, complete, error. **(3) Controls:** Pause | Resume | Cancel in one row; Cancel with confirmation modal; toasts for cancel/resume. **(4) Recovery:** Persist run checkpoint (run_type, run_id, step_index, document_index, etc.) per chain-wizard §3.5; on restore show "Run was interrupted" with "Resume from checkpoint" / "Start over." **(5) Settings (optional):** In Interview tab, add "Show agent activity pane by default" (default true) and persist pane visible/collapsed and split ratio in redb per project. |
+
+**Config and storage for Multi-Pass Review and Agent activity**
+
+- **Multi-Pass Review (Interview, §5.4):** Store under **redb** namespace `settings`, key pattern `project.{project_id}.interview.multi_pass_review` (or app-level if not project-scoped). Fields: `enabled` (bool, default false), `number_of_reviews` (u32, default 3, min 1, max 10), `max_subagents_spawn` (u32, default 9, min 1, max 20), `use_different_models` (bool, default true), `model_platform_list` (array of { model, platform }, default from platform_specs). Validation: on save, clamp to min/max; invalid model/platform entries dropped with a toast. UI: Interview tab, collapsible card "Multi-Pass Review" with toggles and number inputs; warning next to max_subagents_spawn: "This will go through token usage quickly."
+- **Multi-Pass Review (Requirements Doc Builder, chain-wizard §5.6):** Store under `project.{project_id}.wizard.multi_pass_review`. Same semantics; defaults may differ (e.g. number_of_reviews default 2). Use separate config keys so Requirements and Interview Multi-Pass Review can have different defaults.
+- **Agent activity pane preferences:** redb: `project.{project_id}.ui.agent_activity_pane_visible` (bool, default true), `project.{project_id}.ui.agent_activity_pane_height_ratio` (f32, 0.1..0.9, default 0.35). Optional: Show agent activity pane toggle and splitter persistence.
 
 **Placement in Interview tab**
 
@@ -2281,7 +2426,7 @@ When implementing, add the fields to `InterviewOrchestratorConfig` and `Intervie
 ## Subagent File Management
 
 ### Current State
-Subagent files are currently located in `.claude/agents/` directory (40 subagent persona files).
+Subagent files are currently located in `.claude/agents/` directory (41 subagent persona files, including explore).
 
 ### Requirements
 1. **Copy subagents to project:** Subagent files must be available in the Puppet Master project for use during interviews

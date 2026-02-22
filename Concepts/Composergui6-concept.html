@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Composergui6 Concept — Puppet Master Dashboard + File Manager + Chat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Rajdhani', -apple-system, sans-serif;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        /* ========== THEME: LIGHT (Retro) ========== */
+        body.theme-light {
+            --bg: #FAF6F1;
+            --surface: #FAF6F1;
+            --surface-elevated: #ffffff;
+            --text: #1A1A1A;
+            --text-muted: #666666;
+            --border: #1A1A1A;
+            --border-light: #d9d9d9;
+            --shadow: #1A1A1A;
+            --accent: #00FF41;
+            --accent-blue: #0047AB;
+            --panel-bg: #FAF6F1;
+            --terminal-bg: #1A1A1A;
+            --terminal-fg: #E0E0E0;
+        }
+
+        body.theme-light .pixel-grid-overlay {
+            opacity: 0.045;
+        }
+
+        body.theme-light .scanline-overlay {
+            opacity: 0.03;
+        }
+
+        /* ========== THEME: DARK (Retro) ========== */
+        body.theme-dark {
+            --bg: #1A1A1A;
+            --surface: #1A1A1A;
+            --surface-elevated: #262626;
+            --text: #E0E0E0;
+            --text-muted: #888888;
+            --border: #E0E0E0;
+            --border-light: #4d4d4d;
+            --shadow: #E0E0E0;
+            --accent: #00FF41;
+            --accent-blue: #0047AB;
+            --panel-bg: #1A1A1A;
+            --terminal-bg: #0d0d0d;
+            --terminal-fg: #E0E0E0;
+        }
+
+        body.theme-dark .pixel-grid-overlay {
+            opacity: 0.09;
+        }
+
+        body.theme-dark .scanline-overlay {
+            opacity: 0.06;
+        }
+
+        /* ========== THEME: BASIC ========== */
+        body.theme-basic {
+            --bg: #FFFFFF;
+            --surface: #F8F9FA;
+            --surface-elevated: #FFFFFF;
+            --text: #1A1A1A;
+            --text-muted: #6B7280;
+            --border: #D1D5DB;
+            --border-light: #E5E7EB;
+            --shadow: transparent;
+            --accent: #16A34A;
+            --accent-blue: #2563EB;
+            --panel-bg: #F8F9FA;
+            --terminal-bg: #1E1E1E;
+            --terminal-fg: #E5E5E5;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        body.theme-basic .pixel-grid-overlay,
+        body.theme-basic .scanline-overlay {
+            display: none;
+        }
+
+        body.theme-basic .title-bar,
+        body.theme-basic .panel,
+        body.theme-basic .card,
+        body.theme-basic .theme-btn {
+            border-radius: 4px;
+            box-shadow: none;
+        }
+
+        body.theme-basic .panel {
+            border-width: 1px;
+        }
+
+        /* ========== TITLE BAR ========== */
+        .title-bar {
+            height: 28px;
+            min-height: 28px;
+            background: var(--surface);
+            border-bottom: 2px solid var(--border);
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            box-shadow: 2px 2px 0 var(--shadow);
+        }
+
+        .title-bar .app-name {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text);
+        }
+
+        body.theme-basic .title-bar .app-name {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .title-bar .controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-btn {
+            padding: 4px 10px;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text);
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 11px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0 var(--shadow);
+        }
+
+        body.theme-basic .theme-btn {
+            border-width: 1px;
+        }
+
+        .theme-btn:hover {
+            background: var(--surface-elevated);
+        }
+
+        .theme-btn.active {
+            background: var(--accent);
+            color: var(--text);
+        }
+
+        /* ========== MAIN LAYOUT ========== */
+        .main {
+            flex: 1;
+            display: flex;
+            min-height: 0;
+            position: relative;
+        }
+
+        .activity-bar {
+            width: 48px;
+            min-width: 48px;
+            background: var(--surface);
+            border-right: 2px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 0;
+            gap: 4px;
+        }
+
+        .activity-bar .icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        .file-manager-panel {
+            width: 260px;
+            min-width: 180px;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid var(--border);
+            background: var(--panel-bg);
+            box-shadow: 2px 2px 0 var(--shadow);
+        }
+
+        .panel-header {
+            padding: 8px 10px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--text);
+        }
+
+        body.theme-basic .panel-header {
+            font-family: inherit;
+        }
+
+        .panel-header .hint {
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .file-manager-panel .search {
+            padding: 8px 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .file-manager-panel .search input {
+            width: 100%;
+            padding: 6px 8px;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 12px;
+        }
+
+        body.theme-basic .file-manager-panel .search input {
+            border-radius: 4px;
+            border-width: 1px;
+        }
+
+        .file-manager-panel .tree {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px 10px;
+            font-size: 13px;
+            color: var(--text);
+        }
+
+        .file-manager-panel .tree .folder {
+            margin-bottom: 4px;
+        }
+
+        .file-manager-panel .tree .file {
+            padding-left: 16px;
+            margin-bottom: 2px;
+            color: var(--text-muted);
+        }
+
+        .file-editor-strip {
+            width: 200px;
+            min-width: 120px;
+            background: var(--surface);
+            border-right: 2px solid var(--border);
+            padding: 8px;
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .dashboard-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .dashboard-widgets {
+            flex: 0 0 50%;
+            min-height: 120px;
+            padding: 12px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            border-bottom: 2px solid var(--border);
+            overflow-y: auto;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            padding: 10px 12px;
+            box-shadow: 2px 2px 0 var(--shadow);
+        }
+
+        body.theme-basic .card {
+            border-width: 1px;
+        }
+
+        .card .card-title {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        body.theme-basic .card .card-title {
+            font-family: inherit;
+            font-size: 12px;
+        }
+
+        .card .card-body {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .terminal-grid {
+            flex: 1;
+            min-height: 100px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 2px;
+            padding: 8px;
+            background: var(--surface);
+        }
+
+        .terminal-cell {
+            background: var(--terminal-bg);
+            color: var(--terminal-fg);
+            font-family: monospace;
+            font-size: 11px;
+            padding: 8px;
+            overflow: auto;
+            border: 2px solid var(--border);
+        }
+
+        body.theme-basic .terminal-cell {
+            border-radius: 4px;
+            border-width: 1px;
+        }
+
+        .terminal-cell .label {
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .chat-panel {
+            width: 380px;
+            min-width: 280px;
+            display: flex;
+            flex-direction: row;
+            background: var(--panel-bg);
+            border-left: 2px solid var(--border);
+            box-shadow: -2px 2px 0 var(--shadow);
+        }
+
+        .chat-thread-list {
+            width: 120px;
+            min-width: 80px;
+            border-right: 2px solid var(--border);
+            padding: 8px;
+            overflow-y: auto;
+        }
+
+        .chat-thread-list .thread {
+            padding: 8px 10px;
+            margin-bottom: 4px;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            font-size: 12px;
+            color: var(--text);
+            cursor: pointer;
+            box-shadow: 2px 2px 0 var(--shadow);
+        }
+
+        body.theme-basic .chat-thread-list .thread {
+            border-radius: 4px;
+            border-width: 1px;
+            box-shadow: none;
+        }
+
+        .chat-thread-list .thread.active {
+            background: var(--accent);
+            color: var(--text);
+        }
+
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .chat-main .panel-header {
+            border-bottom: 2px solid var(--border);
+        }
+
+        .chat-mode-tabs {
+            display: flex;
+            gap: 4px;
+            padding: 6px 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .chat-mode-tabs .tab {
+            padding: 4px 10px;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text);
+            cursor: pointer;
+            box-shadow: 2px 2px 0 var(--shadow);
+        }
+
+        body.theme-basic .chat-mode-tabs .tab {
+            border-radius: 4px;
+            border-width: 1px;
+            box-shadow: none;
+        }
+
+        .chat-mode-tabs .tab.active {
+            background: var(--accent);
+            color: var(--text);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message {
+            max-width: 90%;
+        }
+
+        .message.user {
+            align-self: flex-end;
+        }
+
+        .message .bubble {
+            padding: 10px 12px;
+            border: 2px solid var(--border);
+            background: var(--surface-elevated);
+            color: var(--text);
+            box-shadow: 2px 2px 0 var(--shadow);
+        }
+
+        body.theme-basic .message .bubble {
+            border-radius: 4px;
+            border-width: 1px;
+            box-shadow: none;
+        }
+
+        .message.user .bubble {
+            background: var(--accent);
+            color: var(--text);
+        }
+
+        .chat-input-row {
+            padding: 10px;
+            border-top: 2px solid var(--border);
+            display: flex;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        .chat-input-row textarea {
+            flex: 1;
+            min-height: 44px;
+            padding: 8px 10px;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 13px;
+            resize: none;
+            box-shadow: 2px 2px 0 var(--shadow);
+        }
+
+        body.theme-basic .chat-input-row textarea {
+            border-radius: 4px;
+            border-width: 1px;
+            box-shadow: none;
+        }
+
+        .chat-input-row .send-btn {
+            padding: 8px 20px;
+            background: var(--accent);
+            border: 2px solid var(--border);
+            color: var(--text);
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            box-shadow: 2px 2px 0 var(--shadow);
+        }
+
+        body.theme-basic .chat-input-row .send-btn {
+            border-radius: 4px;
+            border-width: 1px;
+            box-shadow: none;
+        }
+
+        /* ========== STATUS BAR ========== */
+        .status-bar {
+            height: 24px;
+            min-height: 24px;
+            background: var(--surface);
+            border-top: 2px solid var(--border);
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        /* ========== OVERLAYS (Retro only) ========== */
+        .pixel-grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+            background-size: 3px 3px;
+        }
+
+        .scanline-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0,0,0,0.03) 2px,
+                rgba(0,0,0,0.03) 4px
+            );
+        }
+    </style>
+</head>
+<body class="theme-light">
+    <div class="pixel-grid-overlay"></div>
+    <div class="scanline-overlay"></div>
+
+    <header class="title-bar">
+        <span class="app-name">PUPPET MASTER</span>
+        <div class="controls">
+            <span style="font-size: 11px; color: var(--text-muted); margin-right: 8px;">"my-project" ▼</span>
+            <button class="theme-btn active" data-theme="light">Light</button>
+            <button class="theme-btn" data-theme="dark">Dark</button>
+            <button class="theme-btn" data-theme="basic">Basic</button>
+            <span style="font-size: 14px;">⚙</span>
+        </div>
+    </header>
+
+    <div class="main">
+        <aside class="activity-bar">
+            <div class="icon" title="Home">🏠</div>
+            <div class="icon" title="Run">⚡</div>
+            <div class="icon" title="Config">🔧</div>
+            <div class="icon" title="Health">🩺</div>
+            <div class="icon" title="Data">📊</div>
+            <div class="icon" title="Chat">💬</div>
+            <div class="icon" title="Files">📁</div>
+        </aside>
+
+        <section class="file-manager-panel">
+            <div class="panel-header">
+                FILES
+                <span class="hint">↗ pop out</span>
+            </div>
+            <div class="search">
+                <input type="text" placeholder="🔍 Search files..." readonly>
+            </div>
+            <div class="tree">
+                <div class="folder">▼ src/</div>
+                <div class="file">app.rs</div>
+                <div class="file">main.rs</div>
+                <div class="folder">▼ views/</div>
+                <div class="file">dashboard.rs</div>
+                <div class="file">config.rs</div>
+                <div class="folder">▼ widgets/</div>
+                <div class="file">...</div>
+            </div>
+        </section>
+
+        <div class="file-editor-strip">
+            Editor<br>
+            <small>(file tabs)</small>
+        </div>
+
+        <div class="dashboard-area">
+            <div class="dashboard-widgets">
+                <div class="card">
+                    <div class="card-title">ORCHESTRATOR</div>
+                    <div class="card-body">Status: Idle · Phase 2</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">PROGRESS & BUDGETS</div>
+                    <div class="card-body">Tier budget donuts · Progress bars</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">CURRENT TASK</div>
+                    <div class="card-body">TK-001-002 · Claude</div>
+                </div>
+                <div class="card">
+                    <div class="card-title">CALLS TO ACTION</div>
+                    <div class="card-body">HITL prompts · Continue in Chat</div>
+                </div>
+            </div>
+            <div class="terminal-grid">
+                <div class="terminal-cell">
+                    <div class="label">Terminal 1</div>
+                    $ cargo test
+                </div>
+                <div class="terminal-cell">
+                    <div class="label">Terminal 2</div>
+                    (output)
+                </div>
+                <div class="terminal-cell">
+                    <div class="label">Terminal 3</div>
+                    (output)
+                </div>
+                <div class="terminal-cell">
+                    <div class="label">Terminal 4</div>
+                    (output)
+                </div>
+            </div>
+        </div>
+
+        <aside class="chat-panel">
+            <div class="chat-thread-list">
+                <div class="thread active">Project X Plan</div>
+                <div class="thread">Code review</div>
+                <div class="thread">Ideas</div>
+            </div>
+            <div class="chat-main">
+                <div class="panel-header">
+                    CHAT
+                    <span class="hint">↗ pop out</span>
+                </div>
+                <div class="chat-mode-tabs">
+                    <span class="tab active">Ask</span>
+                    <span class="tab">Plan</span>
+                    <span class="tab">Int</span>
+                    <span class="tab">BS</span>
+                    <span class="tab">Cw</span>
+                </div>
+                <div class="chat-messages">
+                    <div class="message assistant">
+                        <div class="bubble">Hello! I'm ready. This is the Composergui6 concept: Dashboard + File Manager + Chat. Use the theme buttons to switch Light / Dark / Basic.</div>
+                    </div>
+                    <div class="message user">
+                        <div class="bubble">Show me the layout.</div>
+                    </div>
+                </div>
+                <div class="chat-input-row">
+                    <textarea placeholder="Message..." readonly></textarea>
+                    <button class="send-btn">SEND</button>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <footer class="status-bar">
+        Plan ● | Claude ▼ | sonnet-4.5 ▼ | Ctx: 42k/128k
+    </footer>
+
+    <script>
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const theme = this.getAttribute('data-theme');
+                document.body.className = 'theme-' + theme;
+                document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

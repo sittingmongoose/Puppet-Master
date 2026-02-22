@@ -16,17 +16,28 @@
 
 ---
 
+## Rewrite alignment (2026-02-21)
+
+This plan remains authoritative for safety policy and context-compilation behavior. As the rewrite lands (see `Plans/rewrite-tie-in-memo.md`), FileSafe should be implemented primarily through:
+
+- The **central tool registry + policy engine** (permissions/validation/normalized tool results)
+- The **patch/apply/verify/rollback pipeline** (often worktrees/sandboxes) rather than ad-hoc guardrails scattered in UI code
+- Emitting guard decisions, violations, and remediation into the **unified event stream** (seglog ledger) for replayability
+- **Analytics:** Guard blocks and violations in seglog can be consumed by the **analytics scan** (storage-plan.md): e.g. tool-block rate, error rate by guard type or pattern, and latency of blocked vs allowed commands. Rollups stored in redb support dashboard widgets (e.g. 'FileSafe blocks this week' or 'top blocked patterns'). Ensure FileSafe event payloads include enough structure (guard type, pattern id, timestamp) for analytics scan jobs to aggregate.
+
+Any UI/storage examples in this plan are illustrative; the guard behavior and contracts are the stable requirements.
+
 ## Executive Summary
 
 This plan covers **two pillars**: (1) **FileSafe** — guards that block destructive operations before execution — and (2) **context compilation and token efficiency** that reduce coordination overhead by compiling role-specific context and related optimizations.
 
 ### Part A — FileSafe
 
-1. **Database guard** — Blocks destructive database commands (`migrate:fresh`, `db:drop`, `TRUNCATE TABLE`, etc.) before they run.
-2. **File Guard** — Prevents writes to files not declared in the active plan.
-3. **Security Filter** — Blocks access to sensitive files (`.env`, credentials, keys).
-4. **Prompt Content Checking** — Scans prompts for destructive commands before sending to the platform CLI.
-5. **Verification Gate Integration** — Allows legitimate destructive operations when tagged as verification-gate or interview operations.
+1. **FileSafe: Command blocklist** — Blocks destructive CLI commands (e.g. `migrate:fresh`, `db:drop`, `TRUNCATE TABLE`, `git reset --hard`, Docker volume prune) before they run.
+2. **FileSafe: Write scope** — Restricts writes to files declared in the active plan (no writes outside plan scope).
+3. **FileSafe: Security filter** — Blocks access to sensitive files (`.env`, credentials, keys).
+4. **Prompt content checking** — Scans prompts for destructive commands before sending to the platform CLI.
+5. **Verification gate integration** — Allows legitimate destructive operations when tagged as verification-gate or interview operations.
 
 **Why critical:** Agents with shell access can accidentally run destructive commands, touch sensitive files, or write outside scope. FileSafe provides deterministic, platform-level protection regardless of agent behavior.
 
@@ -48,13 +59,13 @@ This plan covers **two pillars**: (1) **FileSafe** — guards that block destruc
 ## Table of Contents
 
 **Part A — FileSafe**  
-1. Architecture Overview · 2. Implementation Details (guards) · 3. Integration with Platform Runner · 4. Pattern File · 5. Configuration · 6. Event Logging · 7. Error Messages · 8. Testing · 9. Implementation Checklist · 10. Relationship to Other Plans · 11. Additional FileSafe Features (File Guard, Security Filter, Prompt Checking, Verification Gates) · 12. Gaps and Potential Issues · 13. Enhancements
+1. Architecture Overview · 2. Implementation Details (guards) · 3. Integration with Platform Runner · 4. Pattern File · 5. Configuration · 6. Event Logging · 7. Error Messages · 8. Testing · 9. Implementation Checklist · 10. Relationship to Other Plans · 10a. FileSafe and Assistant YOLO mode · 11. Additional FileSafe Features (Write scope, Security filter, Prompt checking, Verification gates) · 12. Gaps and Potential Issues · 13. Enhancements
 
 **Part B — Context & Token Efficiency**  
-14. Context Compilation & Token Efficiency (14.1 Role-Specific Context Compiler · 14.2 Delta Context · 14.3 Context Cache · 14.4 Structured Handoff Schemas · 14.5 Compaction-Aware Re-Reads · 14.6 Skill Bundling · 14.7 Token Savings and Config)
+14. Context Compilation & Token Efficiency (14.1–14.7)
 
 **Integration & References**  
-15. System Integration Analysis · 16. References
+15. System Integration Analysis · 16. References · **17. Implementation Order and Dependencies**
 
 ---
 
@@ -101,13 +112,13 @@ if let Err(e) = self.bash_guard.check_command(&full_command_string) {
    - Pass to `BaseRunner::new()` via orchestrator context
 
 3. **When BaseRunner is created:**
-   - Initialize `BashGuard` with pattern file resolution
-   - Initialize `FileGuard` (empty allowed files initially)
+   - Initialize command blocklist (`BashGuard`) with pattern file resolution
+   - Initialize write scope (`FileGuard`) with empty allowed files initially
    - Initialize `SecurityFilter` with sensitive patterns
    - Store as `Arc<>` for thread-safe sharing
 
 4. **Per ExecutionRequest:**
-   - Update `FileGuard` allowed files from request metadata
+   - Update write scope allowed files from request metadata
    - Run FileSafe checks before spawning process
    - Log violations to event log
 
@@ -163,12 +174,13 @@ use regex::Regex;
 use std::path::PathBuf;
 use anyhow::{Result, Context};
 
-// DRY:DATA:BashGuard — FileSafe database guard that blocks destructive commands
-/// FileSafe database guard that blocks destructive commands
+// DRY:DATA:BashGuard — FileSafe command blocklist: blocks destructive CLI commands
+/// FileSafe command blocklist: blocks destructive CLI commands
 pub struct BashGuard {
     patterns: Vec<Regex>,
     allow_destructive: bool,
     enabled: bool,
+    approved_commands: Vec<String>,  // Whitelist from settings (Assistant chat approvals)
 }
 
 #[derive(Debug, Clone)]
@@ -250,6 +262,7 @@ impl BashGuard {
             patterns,
             allow_destructive,
             enabled,
+            approved_commands: Vec::new(),  // Populated from FileSafeConfig
         })
     }
     
@@ -289,6 +302,7 @@ impl BashGuard {
             patterns: Vec::new(),
             allow_destructive: false,
             enabled: false,
+            approved_commands: Vec::new(),
         }
     }
     
@@ -297,8 +311,11 @@ impl BashGuard {
         if !self.enabled || self.allow_destructive {
             return Ok(());
         }
-        
-        // Match against patterns
+        // If command is in approved list (from settings / Assistant chat), allow it
+        if self.approved_commands.iter().any(|c| commands_match(c, command)) {
+            return Ok(());
+        }
+        // Match against blocklist patterns
         for pattern in &self.patterns {
             if pattern.is_match(command) {
                 return Err(GuardError::DestructiveCommand {
@@ -310,6 +327,17 @@ impl BashGuard {
         
         Ok(())
     }
+}
+
+// DRY:HELPER:commands_match — Compare approved (whitelist) entry to actual command
+/// Returns true if the approved pattern matches the command (normalized comparison).
+/// Handles: exact match, prefix match (approved is prefix of command), and normalized
+/// whitespace (collapse multiple spaces, trim).
+fn commands_match(approved: &str, command: &str) -> bool {
+    let norm = |s: &str| s.trim().split_whitespace().collect::<Vec<_>>().join(" ");
+    let a = norm(approved);
+    let c = norm(command);
+    c == a || c.starts_with(a.as_str())
 }
 ```
 
@@ -431,6 +459,8 @@ pub fn load_patterns_with_merge(
 
 **Add to `puppet-master-rs/src/config/gui_config.rs`:**
 
+Config keys remain `bash_guard` / `file_guard` for backward compatibility; GUI labels: "Command blocklist", "Write scope", "Security filter".
+
 ```rust
 // Add to GuiConfig struct:
 pub struct GuiConfig {
@@ -438,13 +468,15 @@ pub struct GuiConfig {
     pub filesafe: FileSafeConfig,
 }
 
-// New FileSafeConfig:
+// New FileSafeConfig (internal keys: bash_guard, file_guard; GUI labels: Command blocklist, Write scope)
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 #[serde(rename_all = "camelCase")]
 pub struct FileSafeConfig {
     pub bash_guard: BashGuardConfig,
     pub file_guard: FileGuardConfig,
     pub security_filter: SecurityFilterConfig,
+    #[serde(default)]
+    pub approved_commands: Vec<String>,  // Whitelist: commands from Assistant chat approved by user
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -514,19 +546,22 @@ The orchestrator reads from `PuppetMasterConfig` (YAML), not `GuiConfig`. Follow
 2. When orchestrator starts, build run config from `GuiConfig::filesafe` → `PuppetMasterConfig::filesafe`
 3. Pass FileSafe config to `BaseRunner::new()` via orchestrator context
 
-**Config File Format (`puppet-master.yaml`):**
+**Config File Format (`puppet-master.yaml`):**  
+Keys: `bashGuard` (Command blocklist), `fileGuard` (Write scope), `securityFilter`, `approvedCommands`.
+
 ```yaml
 filesafe:
-  bashGuard:
+  bashGuard:    # Command blocklist
     enabled: true
     allowDestructive: false
     customPatternsPath: ".puppet-master/destructive-commands.local.txt"  # Optional
-  fileGuard:
+  fileGuard:    # Write scope
     enabled: true
     strictMode: true
   securityFilter:
     enabled: true
     allowDuringInterview: false
+  approvedCommands: []   # Commands approved from Assistant chat; user can add/remove in settings
 ```
 
 ---
@@ -570,7 +605,7 @@ impl BaseRunner {
                 })
         );
         
-        // Initialize file guard (needs plan metadata, will be populated per-request)
+        // Initialize write scope (needs plan metadata, will be populated per-request)
         let file_guard = Arc::new(FileGuard::new(HashSet::new(), true));
         
         // Initialize security filter
@@ -724,7 +759,7 @@ pub async fn execute_command(
         }
     }
     
-    // CHECK FILE PATHS (file guard + security filter)
+    // CHECK FILE PATHS (write scope + security filter)
     for file_path in self.extract_file_paths_from_request(request)? {
         // Resolve and normalize path
         let resolved_path = if file_path.is_absolute() {
@@ -736,7 +771,7 @@ pub async fn execute_command(
         let normalized_path = resolved_path.canonicalize()
             .unwrap_or_else(|_| resolved_path);
         
-        // Check file guard
+        // Check write scope
         if let Err(e) = self.file_guard.check_file_write(&normalized_path, &request.working_directory) {
             return Err(anyhow!("File write blocked: {}", e));
         }
@@ -769,7 +804,7 @@ The guard must work for all 5 platforms:
 1. Check **compiled prompt** (after context compilation) at platform runner level
 2. Check **command string** (final CLI command) at BaseRunner level
 3. Check **context files** (security filter) at platform runner level
-4. Check **file paths** (file guard + security filter) at BaseRunner level
+4. Check **file paths** (write scope + security filter) at BaseRunner level
 
 This provides defense-in-depth: multiple checks at different stages of execution.
 
@@ -867,14 +902,21 @@ let allow_destructive = std::env::var("PUPPET_MASTER_ALLOW_DESTRUCTIVE")
 
 ### 5.2 Config File Toggle
 
-Add to `puppet-master.yaml`:
+Add to `puppet-master.yaml`. All FileSafe toggles (Command blocklist, Write scope, Security filter) must be configurable from the GUI and easy to turn on or off in one place (see §13.4 and §15.5).
 
 ```yaml
 filesafe:
-  bash_guard:
+  bashGuard:   # Command blocklist
     enabled: true  # Default: true
-    allow_destructive: false  # Default: false
-    custom_patterns: ".puppet-master/destructive-commands.local.txt"  # Optional
+    allowDestructive: false  # Default: false
+    customPatternsPath: ".puppet-master/destructive-commands.local.txt"  # Optional
+  fileGuard:   # Write scope
+    enabled: true
+    strictMode: true
+  securityFilter:
+    enabled: true
+    allowDuringInterview: false
+  approvedCommands: []
 ```
 
 ### 5.3 Project-Specific Patterns
@@ -898,27 +940,26 @@ if let Some(local_path) = &config.custom_patterns_path {
 
 ## 6. Event Logging
 
-Log blocked commands to `.puppet-master/logs/filesafe-events.jsonl`:
+**Contract:** FileSafe emits a structured event for every block (command blocklist, write scope, security filter). Two phases:
+
+- **Pre-rewrite / current:** Log to `.puppet-master/logs/filesafe-events.jsonl` (append-only, one JSON object per line). Schema below.
+- **Post-rewrite (storage-plan.md):** Emit FileSafe events into the **unified event stream (seglog)** so analytics scan jobs can aggregate (e.g. tool-block rate, error rate by guard type, latency of blocked vs allowed). Event payload **must** include: `guard_type`, `pattern_id` (or pattern name), `timestamp`, and enough structure for analytics rollups (see rewrite alignment in header). Rollups stored in redb support dashboard widgets (e.g. "FileSafe blocks this week", "top blocked patterns").
+
+**FileSafeEvent schema (minimum):**
 
 ```rust
 pub struct FileSafeEvent {
-    pub event_type: String,  // "bash_guard_block"
-    pub command_preview: String,  // First 40 chars
-    pub pattern_matched: String,
-    pub agent: Option<String>,  // If available
+    pub event_type: String,       // "bash_guard_block" | "file_guard_block" | "security_filter_block"
+    pub guard_type: String,       // "bash_guard" | "file_guard" | "security_filter" (for analytics)
+    pub pattern_matched: String,  // Pattern or rule that triggered (for analytics aggregation)
+    pub command_preview: String,  // First 40 chars (or path for file guards)
+    pub agent: Option<String>,   // If available from ExecutionRequest
     pub timestamp: DateTime<Utc>,
-}
-
-impl BashGuard {
-    async fn log_blocked_command(
-        &self,
-        command: &str,
-        error: &GuardError,
-    ) {
-        // Write to event log
-    }
+    pub allowed: bool,            // True if override/approval was applied (e.g. verification gate, "Approve once")
 }
 ```
+
+**Logging call:** From `BaseRunner` (or platform runner when prompt is blocked): on any guard block, build `FileSafeEvent`, then either (a) append to `filesafe-events.jsonl` or (b) emit to seglog writer, depending on which storage path is active. Do not block execution path on log write (fire-and-forget or bounded queue).
 
 ---
 
@@ -1091,7 +1132,7 @@ async fn test_runner_blocks_destructive() {
     - [ ] Build command string and check for destructive patterns (`check_command()`)
     - [ ] Extract file paths from request (`extract_file_paths_from_request()`)
     - [ ] Resolve and normalize file paths (handle worktree symlinks)
-    - [ ] Check file writes against file guard (`check_file_write()`)
+    - [ ] Check file writes against write scope (`check_file_write()`)
     - [ ] Check file access against security filter (`check_file_access()`)
   - [ ] Implement `is_verification_gate_operation()` helper
   - [ ] Implement `is_interview_operation()` helper
@@ -1112,7 +1153,7 @@ async fn test_runner_blocks_destructive() {
 
 - [ ] **Testing**
   - [ ] Unit tests for pattern matching (bash guard)
-  - [ ] Unit tests for file guard (allowed/blocked files)
+  - [ ] Unit tests for write scope (allowed/blocked files)
   - [ ] Unit tests for security filter (sensitive file patterns)
   - [ ] Unit tests for prompt content extraction
   - [ ] Unit tests for override mechanisms
@@ -1123,9 +1164,9 @@ async fn test_runner_blocks_destructive() {
 
 - [ ] **Documentation**
   - [ ] Add to AGENTS.md FileSafe section:
-    - [ ] FileSafe database guard
-    - [ ] File guard
-    - [ ] Security filter
+    - [ ] FileSafe: Command blocklist
+    - [ ] FileSafe: Write scope
+    - [ ] FileSafe: Security filter
     - [ ] Override mechanisms
     - [ ] Project-specific patterns
   - [ ] Document integration with verification gates
@@ -1171,18 +1212,43 @@ The guard applies to commands executed in worktrees. No worktree-specific change
 
 The guard complements cleanup policies by preventing destructive operations before they occur.
 
+### 10.5 newfeatures (Hooks and FileSafe)
+
+**Plans/newfeatures.md §9** (Hook system) defines a **user/plugin extension point**: events (e.g. PreToolUse), scripts that return continue/block/modify. Dangerous-command blocking is part of **FileSafe**: the Command blocklist and PreToolUse integration use the same blocklist and extension point. FileSafe is the **core pre-execution guard** in the runner; hooks can call into FileSafe (e.g. PreToolUse invokes FileSafe blocklist checks) or provide optional user-defined rules. Use one blocklist and one integration point; see newfeatures §17.4 “FileSafe first.”
+
+### 10.6 Tools.md (tool permissions and OpenCode alignment)
+
+**Plans/Tools.md** defines the central tool registry and permission model (allow/deny/ask) and aligns with [OpenCode Permissions](https://opencode.ai/docs/permissions/). FileSafe and tool permissions are **complementary**: tool permission = "may the agent call this tool?"; FileSafe = "may this specific invocation proceed?" (e.g. bash allowed but command blocked). Tools.md §2.5 maps FileSafe to OpenCode-style granular rules: **command blocklist** ≈ bash deny patterns; **write scope** ≈ edit path allowlist; **security filter** ≈ read path deny (e.g. .env). Implement via a single **central policy engine**; see Tools.md §2.4 and §8.2.
+
+---
+
+## 10a. FileSafe and Assistant YOLO mode
+
+**Context:** In Assistant chat (see **Plans/assistant-chat-design.md** §3), **YOLO mode** means the agent runs with maximum permissions: no permission prompts. The user accepts full automation for that session; the agent can execute, edit, and run tools without asking.
+
+**Implication for FileSafe:** When YOLO is on, there is **no human approval step** before tool execution. FileSafe is therefore the **primary protection layer** for Assistant chat in YOLO mode. If FileSafe is disabled or relaxed while YOLO is on, destructive commands and out-of-scope writes can run with no further gate.
+
+**Requirements:**
+
+1. **Same FileSafe config for Assistant:** Assistant chat (and thus YOLO runs) must use the same FileSafe settings as the rest of the app (Command blocklist, Write scope, Security filter). No separate "Assistant-only" bypass unless explicitly configured.
+2. **Recommend FileSafe on when YOLO is on:** When the user enables YOLO for a chat, the GUI should recommend (or warn) that FileSafe remain enabled. Options: show a one-time hint ("FileSafe protects you when YOLO is on"), or a small indicator that FileSafe is active when YOLO is selected.
+3. **Configurable and visible:** FileSafe toggles must be easy to find and turn on/off (see §13.4 and §15.5). A user who turns on YOLO should be able to confirm FileSafe state without digging through multiple screens.
+4. **Optional: per-context override:** If product requirements later allow "relax FileSafe for this chat only" (e.g. power users), that must be an explicit, clearly labeled setting—not the default when YOLO is on.
+
+**Summary:** YOLO mode and FileSafe are complementary: YOLO removes approval prompts; FileSafe enforces hard limits (destructive commands, write scope, sensitive files). FileSafe settings must be configurable in the GUI and easy to turn on or off, and when Assistant runs in YOLO mode, FileSafe should be the main line of defense.
+
 ---
 
 ## 11. Additional FileSafe Features
 
-### 11.1 File Guard (CRITICAL)
+### 11.1 FileSafe: Write scope (CRITICAL)
 
 **Problem:** Agents may write to files not declared in the active plan, causing scope creep and conflicts.
 
-**Solution:** Implement a file guard that blocks writes to files not explicitly listed in the current task/subtask plan.
+**Solution:** Implement write-scope enforcement that blocks writes to files not explicitly listed in the current task/subtask plan. (Internal module name remains `FileGuard`; product and GUI use **Write scope** only.)
 
 ```rust
-// DRY:DATA:FileGuard — Blocks writes to files not in active plan
+// DRY:DATA:FileGuard — FileSafe write scope: blocks writes outside active plan
 pub struct FileGuard {
     allowed_files: HashSet<PathBuf>,
     enabled: bool,
@@ -1276,7 +1342,9 @@ impl FileGuard {
 }
 ```
 
-**Integration:** Load allowed files from task/subtask plan metadata. Guard checks happen in `BaseRunner::execute_command()` before spawn, similar to bash guard.
+**Per-request update:** The allowed set is **not** static. Before each `execute_command()`, the runner must set the current request's allowed files on the guard so write-scope reflects the active plan. Options: (A) `FileGuard` holds `Arc<RwLock<HashSet<PathBuf>>>` and exposes `set_allowed_files(&self, files: HashSet<PathBuf>)`, called from `BaseRunner::execute_command()` using `FileGuard::load_allowed_files_from_request(request)`; or (B) `check_file_write` takes an optional `allowed: &HashSet<PathBuf>` override and the runner passes the result of `load_allowed_files_from_request(request)` each time. Option A keeps the guard self-contained; Option B avoids interior mutability. Document the chosen contract in the implementation.
+
+**Integration:** Load allowed files from task/subtask plan metadata (or from `ExecutionRequest` env_vars/context_files as in `load_allowed_files_from_request`). Write-scope checks happen in `BaseRunner::execute_command()` before spawn, alongside the command blocklist.
 
 ### 11.2 Security Filter (CRITICAL)
 
@@ -1313,12 +1381,15 @@ impl SecurityFilter {
 }
 ```
 
-**Sensitive patterns:**
-- `.env*` (all env files)
-- `*secret*`, `*key*`, `*credential*`
-- `*.pem`, `*.key`, `*.p12`, `*.pfx`
-- `id_rsa`, `id_ed25519`, `*.pub` (SSH keys)
-- `config/secrets.*`, `secrets/`
+**Sensitive patterns (default set):** Implement as a fixed list of regex patterns, compiled once in `SecurityFilter::new()`. Use case-insensitive path matching. Suggested default patterns (one per line, converted to regex; escape literal dots):
+
+- `\.env` (and common variants: `.env.local`, `.env.*`) — pattern: `\.env(\..*)?$` or `\.env`
+- `.*secret.*`, `.*key.*`, `.*credential.*` (path contains segment)
+- `\.(pem|key|p12|pfx)$` (key/cert files)
+- `id_rsa`, `id_ed25519`, `\.pub$` (SSH keys)
+- `config/secrets\.`, `secrets/` (secrets dir or config secrets files)
+
+**Implementation:** In `security_filter.rs`, define `fn default_sensitive_patterns() -> Vec<Regex>` that returns the compiled list; allow optional project override file (e.g. `.puppet-master/security-filter.local.txt`) for additive patterns only. Document in AGENTS.md.
 
 ### 11.3 Prompt Content Checking & Context Compilation
 
@@ -1614,15 +1685,31 @@ impl BashGuard {
 - Document platform-specific behavior
 - Test with all 5 platforms
 
-### 12.5 File Guard Plan Integration
+### 12.5 Write-scope plan integration
 
-**Issue:** Plans may not always specify exact file paths, making file guard too restrictive.
+**Issue:** Plans may not always specify exact file paths, making write-scope enforcement too restrictive.
 
 **Mitigation:**
 - Support wildcard patterns in plan file lists
 - Allow directory-level permissions
-- Provide clear error messages when files are blocked
+- Provide clear error messages when writes are blocked
 - Allow override for exploratory phases
+
+### 12.6 Implementation-Ready Clarifications
+
+Resolve these before or during implementation; cross-reference from §15.12 Integration Checklist.
+
+**ExecutionRequest — tags vs env_vars:** Use one convention and document it. Recommended: keep **env_vars** as canonical. Document exact keys: `PUPPET_MASTER_OPERATION_TYPE` (values e.g. `verification_gate`, `interview_planning`), `PUPPET_MASTER_ALLOWED_FILES` (JSON array of path strings). If `tags: Vec<String>` is added later, define field name and when orchestrator sets tags vs env vars.
+
+**get_allowed_files_for_current_subtask:** Define owner module (e.g. `core/orchestrator.rs` or `state/`), signature (e.g. `fn get_allowed_files_for_current_subtask(tier_state: &TierState, plan_path: Option<&Path>) -> Option<Vec<PathBuf>>`), and data source (prd.json subtask payload, plan file section, or both). Orchestrator calls it when building each `ExecutionRequest` and passes result via `PUPPET_MASTER_ALLOWED_FILES` or `request.allowed_files`.
+
+**BaseRunner::new() and BashGuard approved_commands:** Specify that `BaseRunner::new(..., filesafe_config: &FileSafeConfig)` (or equivalent run config) receives FileSafe config from orchestrator; pass `filesafe_config.approved_commands` into `BashGuard::new(pattern_path, approved_commands)` (or builder). Document full `BashGuard::new(...)` signature including approved list and enabled/allow_destructive from config.
+
+**SecurityFilter allow_during_interview:** `SecurityFilter` struct must hold `allow_during_interview: bool` set at construction from `SecurityFilterConfig`. Expose via `SecurityFilter::from_config(config)` or builder so runner can read it without holding config separately.
+
+**FileGuard strict_mode:** When `strict_mode == true`: on violation return `Err(...)` and block. When `strict_mode == false` (warn-only): on violation log warning and emit FileSafeEvent, then return `Ok(())` and do not block. Warn-only is “log and allow,” not in-chat approval (that is a separate Assistant flow).
+
+**Edge cases:** (1) **Empty allowed_files:** Document policy: e.g. “allow nothing” (block all writes) or “allow working_directory only”; prefer one explicit choice. (2) **Pattern file missing:** Guard disables (empty patterns), log warning, do not fail startup; optional Doctor check. (3) **Approved command substring:** `commands_match` uses prefix; document that approved entries should avoid short substrings (e.g. prefer `php artisan migrate` over `migrate`); optional GUI validation. (4) **Multi-line/piped in prompt:** Document whether each line is checked independently or continued/piped lines are concatenated; add tests for multi-line and piped destructive commands.
 
 ---
 
@@ -1666,16 +1753,25 @@ pub struct GuardRateLimiter {
 }
 ```
 
-### 13.4 GUI Integration
+### 13.4 GUI Integration (configurable, easy on/off)
 
-Add FileSafe settings to Config view:
+FileSafe settings must be **configurable in the GUI** and **easy to turn on or off**. All FileSafe controls live in one place (dedicated FileSafe tab or clearly grouped section).
 
-- Toggle: "Enable FileSafe database guard"
-- Toggle: "Enable file guard"
-- Toggle: "Enable security filter"
-- Override: "Allow destructive commands" (with warning)
-- Pattern management: View/edit patterns
-- Event log viewer: Browse blocked commands
+**Required:**
+- **Single entry point:** One FileSafe section or tab in Config. User can open it and see all FileSafe toggles at a glance.
+- **Granular controls:** Separate on/off per feature so the user can enable only what they need:
+  - **Command blocklist** — "Block destructive commands" (on/off). When off, destructive CLI commands are not blocked.
+  - **Write scope** — "Restrict writes to plan" (on/off). When off, writes are not restricted to plan-declared files.
+  - **Security filter** — "Block sensitive files" (on/off). When off, access to `.env`/credentials is not blocked.
+  Each feature can be toggled independently; optional sub-options (e.g. strict mode for Write scope, allow-during-interview for Security filter) stay under that feature’s subsection.
+- **Override:** "Allow destructive commands" (with prominent warning) for Command blocklist.
+- **Optional:** Pattern path override, "Allow sensitive files during interview" for Security filter.
+- **Optional:** Pattern management (view/edit), event log viewer (browse blocked commands).
+
+**Approved-commands list (Assistant chat):**
+- When a command is blocked by the Command blocklist in Assistant chat, the user can **approve this run** and optionally **add to approved list**. Approved commands are stored in settings and are then allowed by the command blocklist (whitelist overrides blocklist for matching commands).
+- In Config (FileSafe section), the user can **view** the list of approved commands, **remove** entries, and (optionally) **add** entries manually. List is persisted (e.g. in `puppet-master.yaml` under `filesafe.approvedCommands` or a dedicated file).
+- Implementation: Command blocklist checks the approved list before blocking; exact match or normalized match (e.g. strip extra whitespace) counts as approved. UX: In chat, show "Blocked: &lt;command&gt;" with actions "Approve once" and "Approve and add to list"; in settings, show scrollable list with remove button per row.
 
 **Widget reuse:** Use existing widgets from `src/widgets/` per DRY Method.
 
@@ -1923,15 +2019,11 @@ pub async fn execute_command(...) -> Result<ExecutionResult> {
     self.rate_limiter.acquire(...).await?;
     
     // 4. NEW: FileSafe (add here)
-    // Check prompt content first (may contain destructive commands)
-    if let Err(e) = self.bash_guard.check_prompt(&request.prompt) {
-        return Err(anyhow!("Destructive command in prompt: {}", e));
-    }
-    
+    // Note: Prompt content is checked at platform runner level (after context compilation). Here we check only the final command string and file paths.
     // Build command string
     let full_command = format!("{} {}", self.command, args.join(" "));
     
-    // Check command string
+    // Check command string (blocklist + approved whitelist)
     if let Err(e) = self.bash_guard.check_command(&full_command) {
         // Check if verification gate operation (allow destructive during QA)
         if self.is_verification_gate_operation(&request) {
@@ -1941,7 +2033,7 @@ pub async fn execute_command(...) -> Result<ExecutionResult> {
         }
     }
     
-    // Check file writes (if file guard enabled)
+    // Check file writes (if write scope enabled)
     // Extract file paths from prompt or context files
     for file_path in self.extract_file_paths_from_request(&request)? {
         // Resolve path relative to working directory
@@ -2088,8 +2180,8 @@ impl BaseRunner {
 }
 ```
 
-3. **File Guard Plan Integration:**
-   - File guard needs access to current task/subtask plan to know allowed files
+3. **Write-scope plan integration:**
+   - Write scope needs access to current task/subtask plan to know allowed files
    - Orchestrator should pass plan metadata to `ExecutionRequest`
    - Add `allowed_files: Option<Vec<PathBuf>>` to `ExecutionRequest`
 
@@ -2097,7 +2189,7 @@ impl BaseRunner {
 // In orchestrator.rs, when building ExecutionRequest:
 let mut request = ExecutionRequest::new(...);
 if let Some(allowed_files) = get_allowed_files_for_current_subtask(&tier_state) {
-    // Pass to file guard via request metadata
+    // Pass to write scope via request metadata
     request = request.with_env("PUPPET_MASTER_ALLOWED_FILES", 
         serde_json::to_string(&allowed_files).unwrap_or_default());
 }
@@ -2150,10 +2242,10 @@ impl BaseRunner {
 
 **Integration Points:**
 
-1. **Worktree-Aware File Guard:**
+1. **Worktree-aware write scope:**
    - File paths in plans are relative to project root
    - Guards must resolve paths relative to `working_directory` (which may be a worktree)
-   - File guard checks must account for worktree structure
+   - Write-scope checks must account for worktree structure
 
 ```rust
 impl FileGuard {
@@ -2176,136 +2268,59 @@ impl FileGuard {
 ```
 
 2. **Worktree Cleanup Coordination:**
-   - File guard violations should not prevent worktree cleanup
-   - MiscPlan cleanup should respect file guard (don't delete allowed files)
+   - Write-scope violations should not prevent worktree cleanup
+   - MiscPlan cleanup should respect write-scope allowed files (don't delete allowed files)
    - Coordinate with `cleanup_after_execution` in runner contract
 
 ### 15.5 GUI Integration
+
+**Authority:** **Plans/FinalGUISpec.md §7.4 (Advanced tab)** and **§7.16 (Assistant Chat)** are the canonical GUI spec. This section aligns FileSafe.md with that spec.
 
 **Current Architecture:**
 - Config view has 8 tabs: Tiers, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML
 - Settings are stored in `GuiConfig` and saved to YAML
 - Config is loaded by orchestrator via `ConfigManager`
 
-**Required GUI Updates:**
+**Required GUI Placement (FinalGUISpec §7.4):**
+- FileSafe is **not** a separate tab. It lives under **Settings > Advanced** as a **collapsible card** titled **"FileSafe Guards"**.
+- Same Advanced tab contains MCP Configuration, Tool permissions, and Other (experimental, cleanup, etc.). FileSafe is one collapsible card among these.
 
-1. **New FileSafe tab (Tab 9) or add to Advanced tab:**
+**1. FileSafe collapsible card (Advanced tab)**
 
-**Option A: New FileSafe tab (recommended)**
-```rust
-// Add to GuiConfig:
-pub struct GuiConfig {
-    // ... existing fields ...
-    pub filesafe: FileSafeConfig,
-}
+- **Three independent toggles** (product labels; internal keys remain `bash_guard` / `file_guard` / `security_filter`):
+  - **"Block destructive commands"** (on/off) — Command blocklist; when off, destructive CLI commands are not blocked.
+  - **"Restrict writes to plan"** (on/off) — Write scope; when off, writes are not restricted to plan-declared files.
+  - **"Block sensitive files"** (on/off) — Security filter; when off, access to `.env`/credentials is not blocked.
+- **Override:** "Allow destructive commands" toggle with **prominent warning styling** (e.g. danger/warning variant per widget catalog).
+- **Approved commands:** Scrollable list; per-row **Remove** button; optional **"Add command manually"**; persisted in `filesafe.approvedCommands` (e.g. `puppet-master.yaml`).
+- **Optional:** Custom pattern path, "Allow sensitive files during interview" (Security filter), pattern management (view/edit), **Event log viewer** (browse recent blocked commands; link to FileSafe event log).
+- **Widget reuse:** Use existing widgets from `src/widgets/` per DRY Method (e.g. `toggler`, `help_tooltip(tooltip_key, tooltip_variant, theme, scaled)`, `styled_button`). See `docs/gui-widget-catalog.md`. **Tooltip keys** (for localization and help system): `filesafe.bash_guard`, `filesafe.file_guard`, `filesafe.security_filter` (three toggles); optionally `filesafe.override`, `filesafe.approved_commands` for override toggle and approved list. Document in widget catalog or central tooltip doc.
 
-// New FileSafeConfig:
-#[derive(Debug, Clone, Serialize, Deserialize, Default)]
-#[serde(rename_all = "camelCase")]
-pub struct FileSafeConfig {
-    pub bash_guard: BashGuardConfig,
-    pub file_guard: FileGuardConfig,
-    pub security_filter: SecurityFilterConfig,
-}
+**Config struct (unchanged):** `GuiConfig.filesafe: FileSafeConfig` with `BashGuardConfig`, `FileGuardConfig`, `SecurityFilterConfig`, `approved_commands: Vec<String>` as in §2.4 and §5.2.
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct BashGuardConfig {
-    #[serde(default = "default_true")]
-    pub enabled: bool,
-    #[serde(default)]
-    pub allow_destructive: bool,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub custom_patterns_path: Option<String>,
-}
+**2. Assistant Chat and YOLO (FinalGUISpec §7.16)**
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct FileGuardConfig {
-    #[serde(default = "default_true")]
-    pub enabled: bool,
-    #[serde(default)]
-    pub strict_mode: bool,  // Block all files not in plan vs warn-only
-}
+- **YOLO + FileSafe:** When YOLO is enabled and FileSafe guards are active, show a **persistent warning chip** in the input toolbar: **"[!] YOLO active — FileSafe guards still apply."**
+- **In-chat approval when blocked:** When FileSafe blocks a command during YOLO (or when a blocked command is shown in chat), display an **inline card** in the chat stream:
+  - **Style:** Orange left border; command text in monospace; guard name that triggered (e.g. "Command blocklist").
+  - **Actions:** **"Approve once"** (runs the command this time only) and **"Approve & add to list"** (adds to `filesafe.approvedCommands` in Settings > Advanced).
+  - **Timeout:** Card auto-dismisses after **60 seconds** with message "Timed out — command skipped."
+  - **Logging:** Blocked commands are logged to the FileSafe event log; accessible from Settings > Advanced (event log viewer or link).
+- **Terminal (FinalGUISpec §7.16):** When a command is blocked by FileSafe, terminal output uses **RED** with prefix **"[BLOCKED] Blocked by FileSafe"**.
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct SecurityFilterConfig {
-    #[serde(default = "default_true")]
-    pub enabled: bool,
-    #[serde(default)]
-    pub allow_during_interview: bool,  // Allow sensitive file reads during interview
-}
-```
+**3. Dashboard / status (FinalGUISpec §7.2)**
 
-**Option B: Add to Advanced Tab**
-- Add FileSafe section to existing `AdvancedConfig`
-- Less discoverable but avoids adding another tab
-- Use collapsible sections within Advanced tab
+- **FileSafe status (optional):** Compact card showing guard count (e.g. "FileSafe: 3/3 guards active") with link to **Settings > Advanced > FileSafe**.
 
-2. **GUI Widgets Needed:**
+**4. Message enum and update flow**
 
-```rust
-// In src/views/config.rs, add FileSafe tab view:
-fn render_filesafe_tab(config: &GuiConfig, ...) -> Element<Message> {
-    column![
-        // Bash Guard Section
-        text("FileSafe — Database Guard").size(18),
-        toggler("Enable FileSafe database guard".to_string(), 
-            config.filesafe.bash_guard.enabled, 
-            Message::FileSafeBashGuardToggled),
-        toggler("Allow destructive commands (override)".to_string(),
-            config.filesafe.bash_guard.allow_destructive,
-            Message::FileSafeAllowDestructiveToggled),
-        help_tooltip("Blocks destructive database commands like migrate:fresh, db:drop, etc."),
-        
-        // File Guard Section
-        text("File Guard").size(18),
-        toggler("Enable file guard".to_string(),
-            config.filesafe.file_guard.enabled,
-            Message::FileSafeFileGuardToggled),
-        toggler("Strict mode (block vs warn)".to_string(),
-            config.filesafe.file_guard.strict_mode,
-            Message::FileSafeFileGuardStrictToggled),
-        help_tooltip("Prevents writes to files not declared in the active plan"),
-        
-        // Security Filter Section
-        text("Security Filter").size(18),
-        toggler("Enable security filter".to_string(),
-            config.filesafe.security_filter.enabled,
-            Message::FileSafeSecurityFilterToggled),
-        toggler("Allow sensitive files during interview".to_string(),
-            config.filesafe.security_filter.allow_during_interview,
-            Message::FileSafeAllowSensitiveDuringInterviewToggled),
-        help_tooltip("Blocks access to sensitive files (.env, credentials, keys)"),
-        
-        // Event Log Viewer (optional)
-        text("Recent FileSafe Events").size(18),
-        // List of recent blocked commands from filesafe-events.jsonl
-    ]
-    .spacing(10)
-    .into()
-}
-```
+- Add FileSafe-related messages (e.g. `FileSafeBashGuardToggled(bool)`, `FileSafeAllowDestructiveToggled(bool)`, `FileSafeFileGuardToggled(bool)`, `FileSafeFileGuardStrictToggled(bool)`, `FileSafeSecurityFilterToggled(bool)`, `FileSafeAllowSensitiveDuringInterviewToggled(bool)`, `FileSafeRemoveApprovedCommand(usize)`, `FileSafeAddApprovedCommandClicked`, `FileSafeAddApprovedCommand(String)`, `FileSafeViewEventLog`).
+- Config save: FileSafe changes persist with the rest of Advanced tab (Save Changes per tab or global).
 
-3. **Message Enum Updates:**
-
-```rust
-// In src/app.rs, add FileSafe-related messages:
-pub enum Message {
-    // ... existing messages ...
-    FileSafeBashGuardToggled(bool),
-    FileSafeAllowDestructiveToggled(bool),
-    FileSafeFileGuardToggled(bool),
-    FileSafeFileGuardStrictToggled(bool),
-    FileSafeSecurityFilterToggled(bool),
-    FileSafeAllowSensitiveDuringInterviewToggled(bool),
-    FileSafeViewEventLog,
-}
-```
-
-4. **Config Wiring (Critical):**
-   - FileSafe config must be wired to `PuppetMasterConfig` (orchestrator config)
-   - Follow Option B pattern from WorktreeGitImprovement plan
-   - Build run config from GUI config at orchestrator start
-   - Ensure FileSafe settings are available to `BaseRunner` initialization
+**5. Config Wiring (Critical):**
+- FileSafe config must be wired to `PuppetMasterConfig` (orchestrator config).
+- Follow Option B pattern from WorktreeGitImprovement plan: build run config from GUI config at orchestrator start.
+- Ensure FileSafe settings (and `approved_commands`) are available to `BaseRunner` initialization so the command blocklist whitelist is applied at runtime.
 
 ### 15.6 Integration with Verification Gates
 
@@ -2362,8 +2377,8 @@ pub struct GateOverrideConfig {
    - Must persist across sessions
    - Default values should be safe (guards enabled by default)
 
-3. **Plan Metadata for File Guard:**
-   - File guard needs current plan's allowed files list
+3. **Plan metadata for write scope:**
+   - Write scope needs current plan's allowed files list
    - Plan metadata should be accessible to `BaseRunner`
    - Consider adding to `ExecutionRequest` or passing via context
 
@@ -2372,17 +2387,17 @@ pub struct GateOverrideConfig {
 **Current Architecture:**
 - Cleanup runs `prepare_working_directory` and `cleanup_after_execution`
 - Uses git clean with allowlist
-- File guard should coordinate with cleanup
+- Write scope should coordinate with cleanup
 
 **Integration Points:**
 
-1. **Cleanup vs File Guard:**
+1. **Cleanup vs write scope:**
    - Cleanup removes untracked files (except allowlist)
-   - File guard blocks writes to files not in plan
+   - Write scope blocks writes to files not in plan
    - These are complementary but need coordination:
-     - File guard blocks DURING execution
+     - Write scope blocks DURING execution
      - Cleanup removes files AFTER execution
-     - File guard's allowed files should be in cleanup allowlist
+     - Write-scope allowed files should be in cleanup allowlist
 
 2. **Security Filter vs Cleanup:**
    - Cleanup should NEVER delete sensitive files (even if untracked)
@@ -2397,8 +2412,8 @@ pub struct GateOverrideConfig {
 **Fix:** Add `tags: Vec<String>` or use `env_vars` for operation metadata
 
 #### Gap 2: Plan Metadata Access
-**Issue:** File guard needs current plan's allowed files list, but plans aren't accessible to `BaseRunner`
-**Impact:** File guard can't enforce plan boundaries
+**Issue:** Write scope needs current plan's allowed files list, but plans aren't accessible to `BaseRunner`
+**Impact:** Write scope can't enforce plan boundaries
 **Fix:** Pass plan metadata via `ExecutionRequest` or context files
 
 #### Gap 3: Config Wiring
@@ -2407,8 +2422,8 @@ pub struct GateOverrideConfig {
 **Fix:** Implement Option B config wiring (build run config from GUI at orchestrator start)
 
 #### Gap 4: Worktree Path Resolution
-**Issue:** File guard needs to resolve relative paths correctly in worktree context
-**Impact:** File guard may block legitimate operations or allow blocked operations
+**Issue:** Write scope needs to resolve relative paths correctly in worktree context
+**Impact:** Write scope may block legitimate operations or allow blocked operations
 **Fix:** Normalize paths relative to `working_directory`, handle worktree symlinks
 
 #### Gap 5: Interview Phase Detection
@@ -2442,7 +2457,7 @@ pub struct GateOverrideConfig {
 
 #### Issue 3: Plan File List Completeness
 **Problem:** Plans may not list all files that need to be written
-**Risk:** File guard too restrictive, blocks legitimate operations
+**Risk:** Write scope too restrictive, blocks legitimate operations
 **Mitigation:**
 - Support wildcard patterns in plan file lists
 - Allow directory-level permissions
@@ -2506,7 +2521,7 @@ pub struct FileSafeViolation {
 
 #### Enhancement 4: Plan File List Validation
 **Enhance plan generation to include file lists:**
-- Interview/planning phases should generate file lists for file guard
+- Interview/planning phases should generate file lists for write scope
 - Validate file lists are complete before execution
 - Doctor check validates plan file lists
 
@@ -2525,9 +2540,11 @@ pub struct TierFileSafeConfig {
 
 ### 15.12 Integration Checklist
 
+Resolve **§12.6 Implementation-Ready Clarifications** before or during implementation (ExecutionRequest convention, get_allowed_files_for_current_subtask, BaseRunner/BashGuard config, SecurityFilter/FileGuard fields, edge cases).
+
 - [ ] **ExecutionRequest Updates**
   - [ ] Add `tags: Vec<String>` field OR use `env_vars` for operation metadata
-  - [ ] Add `allowed_files: Option<Vec<PathBuf>>` for file guard
+  - [ ] Add `allowed_files: Option<Vec<PathBuf>>` for write scope
   - [ ] Update all `ExecutionRequest::new()` call sites
 
 - [ ] **BaseRunner Integration**
@@ -2550,7 +2567,7 @@ pub struct TierFileSafeConfig {
   - [ ] Relax security filter during interview phases (if configured)
 
 - [ ] **Worktree Integration**
-  - [ ] Update file guard to handle worktree paths correctly
+  - [ ] Update write scope to handle worktree paths correctly
   - [ ] Normalize paths relative to `working_directory`
   - [ ] Handle worktree symlinks in path resolution
 
@@ -2568,7 +2585,7 @@ pub struct TierFileSafeConfig {
 
 - [ ] **Cleanup Integration**
   - [ ] Add security filter patterns to cleanup allowlist
-  - [ ] Coordinate file guard allowed files with cleanup allowlist
+  - [ ] Coordinate write-scope allowed files with cleanup allowlist
   - [ ] Ensure cleanup never deletes sensitive files
 
 - [ ] **State Management**
@@ -2588,15 +2605,62 @@ pub struct TierFileSafeConfig {
 ## 16. References
 
 - **AGENTS.md:** DRY Method, platform_specs, Pre-Completion Verification Checklist
+- **Plans/FinalGUISpec.md:** §7.4 (Settings > Advanced, FileSafe Guards card), §7.16 (Assistant Chat, YOLO + FileSafe, in-chat approval)
 - **Plans/orchestrator-subagent-integration.md:** BaseRunner execution flow, verification gates, tier execution
 - **Plans/interview-subagent-integration.md:** Interview execution flow, research operations
-- **Plans/WorktreeGitImprovement.md:** Worktree execution context, path resolution
+- **Plans/WorktreeGitImprovement.md:** Worktree execution context, path resolution, Option B config wiring
 - **Plans/MiscPlan.md:** Cleanup policies, runner contract, file management
+- **Plans/storage-plan.md:** Seglog, redb, analytics scan (for FileSafe event emission post-rewrite)
+- **Plans/rewrite-tie-in-memo.md:** Central tool registry, patch pipeline, event stream alignment
 - **puppet-master-rs/src/platforms/runner.rs:** BaseRunner implementation
 - **puppet-master-rs/src/platforms/context_files.rs:** Context file handling, append_prompt_attachments
 - **puppet-master-rs/src/config/gui_config.rs:** GUI config structure
 - **puppet-master-rs/src/types/execution.rs:** ExecutionRequest structure
 - **puppet-master-rs/src/core/orchestrator.rs:** Orchestrator execution flow
+- **docs/gui-widget-catalog.md:** Widget reuse for FileSafe UI
+
+---
+
+## 17. Implementation Order and Dependencies
+
+Use this section to derive a phased implementation plan. Dependencies are stated so an agent can order tasks and avoid gaps.
+
+**Phase 1 — Core guards (no GUI, no Assistant)**  
+1. Create `src/filesafe/` module (mod, bash_guard, destructive_patterns, file_guard, security_filter).  
+2. Implement pattern loading (§2.3), bundled + project-local resolution (§2.2).  
+3. Implement `BashGuard` (new, disabled, check_command, **commands_match** §2.2, approved_commands from config).  
+4. Implement **check_prompt** and **extract_commands_from_prompt** (§11.3).  
+5. Implement `FileGuard` (allowed set, **per-request update** §11.1, check_file_write).  
+6. Implement `SecurityFilter` (**default_sensitive_patterns** §11.2, check_file_access).  
+7. Add `FileSafeConfig` to `GuiConfig` and YAML (§2.4, §5.2); config load/save only (no UI yet).  
+8. Integrate into **BaseRunner**: add guard fields, init in `new()` (with config from orchestrator when wired), in **execute_command()** call check_command (after building full command string), then **update file_guard allowed set** from request (§11.1), then check_file_write and check_file_access for extracted file paths.  
+9. **ExecutionRequest:** ensure allowed files and operation tags can be passed (env_vars `PUPPET_MASTER_ALLOWED_FILES`, `PUPPET_MASTER_OPERATION_TYPE` or future `tags`).  
+10. Implement **extract_file_paths_from_request** (§15.2), **is_verification_gate_operation**, **is_interview_operation** (§15.2).  
+11. In **platform runners** (e.g. Cursor): after **append_prompt_attachments**, call **check_prompt** on compiled prompt and **security_filter** on context files; respect verification gate and interview tags.  
+12. Event logging: **FileSafeEvent** struct (§6), write to `filesafe-events.jsonl` (or seglog when available).  
+13. Pattern file: create `config/destructive-commands.txt` (§4); verify regexes.  
+14. Unit tests: pattern match, commands_match, check_prompt extraction, FileGuard allowed/blocked, SecurityFilter, disabled/override behavior.
+
+**Phase 2 — Config wiring and GUI**  
+15. Wire **GuiConfig::filesafe** → **PuppetMasterConfig::filesafe** at orchestrator start (Option B, WorktreeGitImprovement).  
+16. Pass FileSafe config (and approved_commands) into BaseRunner construction.  
+17. **Advanced tab:** Add **FileSafe Guards** collapsible card (§15.5, FinalGUISpec §7.4): three toggles, override with warning, approved commands list (scrollable, remove, optional add), optional event log link. Use existing widgets and help_tooltip keys.  
+18. Message enum and update handlers for all FileSafe toggles and list actions.  
+19. Persist approved_commands; ensure runtime blocklist checks whitelist from config.
+
+**Phase 3 — Assistant Chat and YOLO**  
+20. When YOLO is on and FileSafe enabled: show **warning chip** "YOLO active — FileSafe guards still apply" (§15.5, FinalGUISpec §7.16).  
+21. **In-chat approval UI:** On block, show inline card (orange border, command in mono, guard name, "Approve once" / "Approve & add to list"), 60s timeout, log to event log.  
+22. Terminal: on block, output RED with "[BLOCKED] Blocked by FileSafe".  
+23. Optional: Dashboard FileSafe status card with link to Settings > Advanced.
+
+**Phase 4 — Context compilation (Part B)**  
+24. Implement context compiler (§14), delta context, cache, handoff schemas, compaction marker, skill bundling; wire to platform runner and config. (Can be a separate implementation plan from Part A.)
+
+**Risks and mitigations:**  
+- **Gap — plan metadata:** Orchestrator must set allowed files on each ExecutionRequest for write scope; implement **get_allowed_files_for_current_subtask** and pass via env or request field (§15.9 Gap 2).  
+- **Gap — worktree paths:** Normalize paths relative to `working_directory` and handle symlinks (§15.9 Gap 4).  
+- **False positives:** Log all blocks; allow override and approved list; tune patterns from feedback (§12.2).
 
 ---
 

@@ -412,6 +412,16 @@ interface Task {
   notes: string;
 }
 
+/** Optional. When present, orchestrator uses these subagents for this item; else fallback to dynamic selection. See Plans/interview-subagent-integration.md and Plans/orchestrator-subagent-integration.md. */
+interface CrewRecommendation {
+  /** Required. Names from subagent_registry (e.g. "rust-engineer", "security-auditor"). */
+  subagents: string[];
+  rationale?: string;
+  crew_template?: string;
+  complexity_score?: number;
+  expertise_areas?: string[];
+}
+
 interface Subtask {
   id: string;                    // "ST-001-001-001"
   taskId: string;
@@ -433,6 +443,13 @@ interface Subtask {
   completedAt?: string;
   
   notes: string;
+  
+  /** Optional. Orchestrator uses these subagents when present; else dynamic selection. */
+  crew_recommendation?: CrewRecommendation;
+  /** Optional. Item ids that must complete before this one. Empty or missing = no dependencies. */
+  depends_on?: string[];
+  /** Optional. Items with same non-empty value may run in parallel (subject to depends_on). */
+  parallel_group?: string | null;
 }
 
 interface Iteration {
@@ -518,6 +535,8 @@ interface GateReport {
   agentsUpdated: boolean;  // ADDENDUM v2.0
 }
 ```
+
+**Crew and parallelism:** The canonical schema for `crew_recommendation`, `depends_on`, and `parallel_group` is defined above on Subtask. Phase and Task may carry the same optional fields with the same types and semantics when the generator specifies recommendations/dependencies at that level. Generator: Plans/interview-subagent-integration.md §5.2 and Crew-Aware Plan Generation. Consumer: Plans/orchestrator-subagent-integration.md "Respecting PRD/plan: subagent personas and parallelization."
 
 #### Example
 

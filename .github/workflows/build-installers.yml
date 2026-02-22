@@ -1,5 +1,6 @@
 name: Build installers
 # Build and test Rust/Iced installers for all platforms
+# Action refs use full version tags (e.g. @v4.2.2) for reproducibility; do not strip to @v4.
 
 on:
   workflow_dispatch:
@@ -26,7 +27,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: GUI widget reuse check (warn-only)
         if: runner.os == 'Linux'
@@ -40,7 +41,7 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: Rust cache
-        uses: swatinem/rust-cache@v2
+        uses: swatinem/rust-cache@v2.8.2
         with:
           workspaces: './puppet-master-rs -> target'
 
@@ -201,7 +202,7 @@ jobs:
           echo "Linux smoke test passed."
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2
         with:
-          name: installers-${{ matrix.os }}
+          name: installers-${{ matrix.os }}.zip
           path: dist/installers/**/*

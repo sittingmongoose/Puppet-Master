@@ -10,6 +10,16 @@
 
 Implementation must follow the **DRY Method** (AGENTS.md): reuse-first, single source of truth for tool/framework data, tagging of reusable items. **Rollout:** All items in this plan (including Doctor platform versions, MCP Doctor check, and catalog version) are in scope for a single implementation; no phased rollout.
 
+## Rewrite alignment (2026-02-21)
+
+This plan remains authoritative for *what* tool discovery/testing support must exist, but implementation should align with `Plans/rewrite-tie-in-memo.md`:
+
+- Tool discovery, permissions, and validation should live in the **central tool registry + policy engine** (not per-provider special cases)
+- Tool execution results should be normalized into the **unified event model** and stored in seglog → projections (redb/Tantivy)
+- **Tool latency and errors** from the unified event model are consumed by **analytics scan jobs** (scan seglog for tool latency distributions and error rates); rollups are stored in redb and exposed on the dashboard (e.g. tool performance and error-rate summaries).
+- UI wiring details should be re-expressed in Slint (not Iced) without changing feature semantics
+- Auth policy reminder: subscription-first; **Gemini API key is the explicit allowed exception** (subscription-backed)
+
 ## DRY Method Compliance
 
 **CRITICAL:** All code in this plan MUST follow DRY principles.
@@ -234,6 +244,79 @@ Ensure MCP configuration and the Context7 API key (when enabled) are applied in 
 | Copilot     | `.copilot/mcp-config.json`, `.vscode/mcp.json` (workspace, v0.0.410+) | `~/.copilot/mcp-config.json` | JSON   |
 
 **Context7:** API key is sent as `Authorization: Bearer <key>`; store in config (e.g. `mcp.context7.api_key`), do not commit; inject into MCP client headers when generating platform config. Platforms ship frequent CLI updates; prefer discovering config at runtime or documenting and verifying in Doctor.
+
+**Cited web search (shared by Assistant, Interview, Orchestrator):** See **§8.2.1** for full detail; summary here:
+
+- Web search used by the **Assistant** (chat), **Interview**, and **Orchestrator** must be **cited**: inline citations and a **Sources:** list (URLs and titles). Single shared implementation; run config and MCP/tool wiring (this section) expose it to the platform CLI for the active tier.
+- When the agent performs a web search, the thread or run output must **show what was searched** (query and, where appropriate, a short summary) per Plans/assistant-chat-design.md §13 (activity transparency).
+
+#### 8.2.1 Cited web search — detailed specification
+
+**Scope and requirements**
+
+- **Surfaces:** Assistant (chat), Interview (research/validation), Orchestrator (iteration research). Same capability and config for all three; no separate “interview-only” or “assistant-only” web search.
+- **Output format (mandatory):**
+  - **Inline citations:** Answer text references sources by marker (e.g. `[1]`, `[2]`) so the user can match claims to sources.
+  - **Sources list:** A dedicated **Sources:** block (or equivalent) with each marker, human-readable title, and URL. Example:
+    ```
+    Sources:
+    [1] Example Source (https://example.com/page1)
+    [2] Another Source (https://example.com/page2)
+    ```
+  - Define a **convention or schema** (e.g. markdown subsection, or structured fields in tool result) so the GUI can reliably detect and render links (e.g. clickable URLs in chat, copyable list in run log).
+- **Activity transparency:** For every web search call, the UI must show at least the **search query** (and, where appropriate, provider used or result count). See Plans/assistant-chat-design.md §13.
+
+**Architecture options**
+
+- **Option A — MCP server:** Run or wrap a cited-web-search service as an MCP server; register it in each platform’s MCP config (see table in §8.2) alongside Context7. The agent invokes a tool (e.g. `websearch_cited`) provided by that server. **Pro:** Same mechanism as Context7; works with any platform that supports MCP. **Con:** Another server to start, configure, and keep in sync with platform config; per-platform MCP config format differs (JSON vs TOML).
+- **Option B — Bundled / custom tool:** Implement cited web search inside Puppet Master (or as a Rust/TS module the runner invokes) and expose it to the platform via whatever “custom tool” mechanism each CLI supports (if any). **Pro:** Single codebase; no extra process. **Con:** Not all platforms expose a generic “add custom tool” API; may require MCP anyway for Cursor/Claude/Codex/Gemini/Copilot.
+- **Option C — Platform-native only:** Rely on each platform’s built-in web search (e.g. Claude’s web_search tool, OpenAI Responses API) where available, and document “no cited search” or “fallback to uncited” for platforms without it. **Pro:** No new infra. **Con:** Inconsistent UX and capability across platforms; some platforms may not support cited output format; contradicts “single implementation” and “cited” requirement.
+- **Recommendation:** Prefer **Option A (MCP)** so one cited-web-search MCP server is the single implementation; Puppet Master’s run config injects it into each platform’s MCP list (same as Context7). If a platform does not support MCP or tool discovery, document the gap and provide a clear user message (e.g. “Cited web search not available for this platform in this run”).
+
+**Provider, auth, and model selection**
+
+- **Providers:** Support at least one of: Google (e.g. Gemini API), OpenAI (Responses API / web search), OpenRouter (routing to a model that supports web search). opencode-websearch-cited uses a **dedicated model per provider** for the “grounding” step (e.g. `gemini-2.5-flash`, `gpt-5.2`, `x-ai/grok-4.1-fast`). That model is **separate** from the chat/orchestrator model: the main agent sends a tool call, the web-search implementation calls the provider’s search API with the chosen model, then returns cited text to the agent.
+- **Auth:** Each provider needs its own auth (API key or OAuth). Store in config (e.g. `websearch_cited.google_api_key`, `websearch_cited.openai_api_key`, or reuse existing provider auth if the CLI already has it). **Do not** hardcode keys; do not commit keys to the project. Prefer user-level or secure store for shared machines. Document which env vars or config keys each provider expects.
+- **Model selection and fallback:** Define a **provider + model** preference order (e.g. try Google → OpenAI → OpenRouter). If the user has configured a preferred provider/model for web search (e.g. in Config → MCP / Tools), use that first. On failure (rate limit, auth error, timeout), fall back to the next provider if configured, or surface a clear error and suggest “Switch web search provider/model in Config” or “Check API key for &lt;provider&gt;”. Avoid burning the user’s chat/orchestrator model quota for search if a dedicated search model is available.
+- **Config surface:** Add GUI controls (e.g. under Config → MCP / Tools) to enable/disable cited web search, choose provider (and optionally model), and set API keys. Persist in the same GuiConfig/run-config pipeline as other MCP settings so Assistant, Interview, and Orchestrator all see the same config.
+
+**Errors, rate limits, and timeouts**
+
+- **Rate limits:** Provider-specific. When the search API returns 429 or “quota exceeded”, do not retry indefinitely. Surface a user-visible message (e.g. in chat or run log): “Web search rate limit reached. Try again later or switch provider/model in Config.” Optionally suggest switching platform or model per Plans/assistant-chat-design.md §12 (rate limit handling).
+- **Auth failures:** If the configured API key is missing or rejected, fail the tool call with a clear message (e.g. “Web search unavailable: invalid or missing API key for &lt;provider&gt;. Check Config → MCP / Tools.”). Do not fall back to another provider’s key without user consent (privacy/cost).
+- **Timeouts:** Set a reasonable timeout for the search call (e.g. 30–60 s). On timeout, return a structured error to the agent and show the user “Web search timed out. You can retry or try a different query.”
+- **No results / empty:** Define behavior when the provider returns zero results (e.g. return “No results found for this query” with no Sources list, or a short message so the agent can respond appropriately). Avoid leaving the user with no feedback.
+
+**Security and privacy**
+
+- **Query content:** Search queries may contain sensitive or PII. Do not log full query text in plaintext in shared or persistent logs (e.g. progress.txt, evidence logs) unless the user has opted in. Prefer logging only “Web search performed” and length or hash, or redact. Same for search results: avoid dumping full response bodies into public artifacts.
+- **API keys:** Never expose keys in UI labels, tool results, or error messages. Store and pass via config/env only; Doctor or pre-run checks can verify “key is set” without echoing the value.
+- **Outbound requests:** The search implementation issues outbound HTTP requests to third-party APIs. Document which domains are contacted (e.g. Google, OpenAI, OpenRouter) so security reviews and firewalls can allowlist. Consider a setting to disable web search entirely (e.g. in air-gapped or high-compliance environments).
+
+**Per-platform considerations**
+
+- **Cursor, Claude Code, Codex, Gemini, Copilot:** Each discovers MCP servers from its own config (see §8.2 table). The cited-web-search MCP server must be **injected** into that config when the user has enabled it, using the same injection path as Context7. Verify that each CLI actually **calls** the tool (some may filter tools by name or capability). If a platform does not support MCP or does not surface the tool to the model, document it and show “Cited web search not available” in Doctor or run setup.
+- **Headless / CI:** In non-interactive runs (e.g. orchestrator in CI), ensure the MCP server can run without a display and that auth uses env vars or config, not interactive login. Timeouts and rate limits are especially important in automated runs.
+
+**Related references (adapt or wire as needed)**
+
+- [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited) — LLM-grounded web search with **inline citations** and **Sources:** list; `websearch_cited` tool; Google, OpenAI, OpenRouter. Primary reference for cited output format and provider config.
+- [opencode-websearch](https://www.npmjs.com/package/opencode-websearch) (npm) — Anthropic web_search tool and OpenAI Responses API; model selection (`auto`/`always`). Useful for provider wiring and fallback behavior.
+- [Opencode-Google-AI-Search-Plugin](https://github.com/IgorWarzocha/Opencode-Google-AI-Search-Plugin) — `google_ai_search_plus`; Google AI Mode (SGE) via Playwright; markdown + sources. Alternative when API-based search is not desired or for Google-specific UX.
+
+**Gaps and potential problems**
+
+| Gap / risk | Description | Mitigation |
+|------------|-------------|------------|
+| **Platform MCP support varies** | Not all five platforms may expose MCP tools to the model in the same way; some may strip or rename tools. | Test each platform with a minimal “echo” MCP tool; document which platforms actually invoke `websearch_cited` (or chosen name). Doctor check: “Cited web search available” per platform. |
+| **Dual-model cost and latency** | Cited search often uses a second model (grounding) in addition to the chat model; adds latency and cost. | Document in Config that web search may use a separate model and quota; allow user to disable or choose a cheaper/faster search model. Show usage in usage/analytics if available. |
+| **Provider order and fallback** | If Google is first and fails, falling back to OpenAI may surprise the user (different cost, different index). | Make provider order explicit in config; on fallback, optionally show “Used &lt;provider&gt; (fallback after &lt;first&gt; failed).” |
+| **Stale or wrong citations** | LLM grounding can hallucinate or misattach citations. | Treat citations as best-effort; consider adding “Verify sources” in UI (open URL). Do not promise “all citations are accurate.” |
+| **Query injection / prompt leakage** | User or agent content in the query could be sent to a third-party API. | Sanitize or truncate query length; avoid sending full conversation context to the search provider unless intended. Document what is sent. |
+| **No results / low-quality results** | Some queries return nothing or irrelevant results; agent might still “answer” from prior context. | Require that when the tool returns no results, the agent is instructed (via tool result or system prompt) to say so and not invent sources. |
+| **Format fragmentation** | opencode-websearch-cited, opencode-websearch, and Google-AI-Search-Plugin output formats differ. | Define a **single** canonical format (inline [N] + Sources list) and normalize adapter output to it before returning to the agent so UI and prompts are consistent. |
+| **Orchestrator / Interview context** | In orchestrator or interview, the “user” is the system; search may be triggered by internal prompts. | Ensure activity transparency still shows “what was searched” in the run log or thread so audits and debugging are possible. |
+| **Key sprawl** | User must set API key(s) for search in addition to platform auth. | Reuse platform provider auth where possible (e.g. same OpenAI key for chat and search if supported); document clearly which keys are required for cited web search. |
 
 ### 8.3 CLI vs SDK and MCP
 

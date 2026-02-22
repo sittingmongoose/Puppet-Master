@@ -1,0 +1,5262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Puppet Master -- Mission Control Layout Concept (V3)</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* ==========================================================================
+   RESET
+   ========================================================================== */
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   CUSTOM PROPERTIES -- DARK THEME (DEFAULT)
+   ========================================================================== */
+
+:root {
+  --bg-deep: #0a0a1a;
+  --bg-surface: #1a1a2e;
+  --bg-elevated: #252540;
+  --bg-hover: #2a2a4a;
+
+  --text-primary: #e8e0d0;
+  --text-secondary: rgba(232, 224, 208, 0.6);
+  --text-muted: rgba(232, 224, 208, 0.35);
+
+  --border: rgba(232, 224, 208, 0.12);
+  --border-focus: rgba(232, 224, 208, 0.3);
+
+  --accent-blue: #00d4ff;
+  --accent-magenta: #ff2d9b;
+  --accent-lime: #b4ff39;
+  --accent-orange: #ff8c00;
+
+  --shadow: rgba(0, 0, 0, 0.6);
+
+  --font-display: 'Orbitron', sans-serif;
+  --font-body: 'Rajdhani', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', 'Courier New', monospace;
+
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+}
+
+/* ==========================================================================
+   LIGHT THEME
+   ========================================================================== */
+
+.theme-light {
+  --bg-deep: #FAF6F1;
+  --bg-surface: #f0ece5;
+  --bg-elevated: #e8e4dd;
+  --bg-hover: #ddd8d0;
+
+  --text-primary: #1a1a2e;
+  --text-secondary: rgba(26, 26, 46, 0.6);
+  --text-muted: rgba(26, 26, 46, 0.35);
+
+  --border: rgba(26, 26, 46, 0.15);
+  --border-focus: rgba(26, 26, 46, 0.3);
+
+  --accent-blue: #0088aa;
+  --accent-magenta: #cc2277;
+  --accent-lime: #4a8800;
+  --accent-orange: #cc7000;
+
+  --shadow: rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   BASIC THEME
+   ========================================================================== */
+
+.theme-basic {
+  --bg-deep: #ffffff;
+  --bg-surface: #f5f5f5;
+  --bg-elevated: #eeeeee;
+  --bg-hover: #e0e0e0;
+
+  --text-primary: #222222;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+
+  --border: #cccccc;
+  --border-focus: #888888;
+
+  --accent-blue: #0066cc;
+  --accent-magenta: #cc0066;
+  --accent-lime: #339900;
+  --accent-orange: #cc6600;
+
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   BODY AND HTML
+   ========================================================================== */
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--text-primary);
+  background: var(--bg-deep);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   SCROLLBARS
+   ========================================================================== */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-focus);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--bg-deep);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-focus) var(--bg-deep);
+}
+
+/* ==========================================================================
+   APP SHELL -- MAIN GRID
+   ========================================================================== */
+
+.app-shell {
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  grid-template-rows: 36px 1fr 56px;
+  grid-template-areas:
+    "command-strip"
+    "main-content"
+    "dock-bar";
+  overflow: hidden;
+  position: relative;
+  background: var(--bg-deep);
+}
+
+/* ==========================================================================
+   1. TOP COMMAND STRIP
+   ========================================================================== */
+
+.command-strip {
+  grid-area: command-strip;
+  height: 36px;
+  min-height: 36px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+  padding: 0 12px;
+  z-index: 100;
+  flex-shrink: 0;
+  gap: 8px;
+  transition: background-color 200ms, border-color 200ms, color 200ms;
+}
+
+.command-strip-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.command-strip-center {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  justify-content: center;
+}
+
+.command-strip-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.orchestrator-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+}
+
+.current-task-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.command-select {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 0px;
+  padding: 2px 6px;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.command-select:focus {
+  border-color: var(--accent-blue);
+}
+
+.command-select:hover {
+  border-color: var(--border-focus);
+}
+
+.context-gauge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.context-gauge-bar {
+  width: 48px;
+  height: 4px;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 0px;
+  overflow: hidden;
+}
+
+.context-gauge-fill {
+  height: 100%;
+  background: var(--accent-blue);
+  transition: width 300ms ease;
+}
+
+.lsp-status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.git-branch {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+
+.notifications-bell {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  position: relative;
+  transition: color 150ms ease;
+}
+
+.notifications-bell:hover {
+  color: var(--text-primary);
+}
+
+.notifications-bell .notif-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  background: var(--accent-magenta);
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 7px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0px;
+}
+
+/* ==========================================================================
+   2. MAIN CONTENT AREA
+   ========================================================================== */
+
+.main-content {
+  grid-area: main-content;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-deep);
+}
+
+.view {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease;
+  overflow: hidden;
+}
+
+.view.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   3. BOTTOM DOCK BAR
+   ========================================================================== */
+
+.dock-bar {
+  grid-area: dock-bar;
+  height: 56px;
+  min-height: 56px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -2px 8px var(--shadow);
+  padding: 0 16px;
+  z-index: 100;
+  flex-shrink: 0;
+  gap: 4px;
+  transition: background-color 200ms, border-color 200ms, color 200ms;
+}
+
+.dock-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dock-divider {
+  width: 1px;
+  height: 32px;
+  background: var(--border-focus);
+  margin: 0 12px;
+  flex-shrink: 0;
+}
+
+.dock-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  border-radius: 0px;
+  border: none;
+  background: transparent;
+  position: relative;
+  transition: background 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.dock-icon svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.dock-icon:hover {
+  background: var(--bg-hover);
+  transform: translateY(-2px);
+}
+
+.dock-icon.active {
+  background: var(--bg-elevated);
+  color: var(--accent-lime);
+  border-top: 2px solid var(--accent-lime);
+}
+
+.dock-icon .dock-label {
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease;
+}
+
+.dock-icon:hover .dock-label {
+  opacity: 1;
+}
+
+.dock-icon.drawer-open::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background: var(--accent-blue);
+  border-radius: 0px;
+}
+
+/* ==========================================================================
+   4. DRAWERS -- COMMON STYLES
+   ========================================================================== */
+
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+}
+
+.drawer-backdrop.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer-left,
+.drawer-right,
+.drawer-bottom {
+  position: fixed;
+  z-index: 1000;
+  background: var(--bg-surface);
+  box-shadow: 4px 4px 0 var(--shadow);
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), background-color 200ms, border-color 200ms, color 200ms;
+}
+
+/* -- LEFT DRAWER (File Manager) -- */
+
+.drawer-left {
+  left: 0;
+  top: 36px;
+  bottom: 56px;
+  width: 320px;
+  border-right: 1px solid var(--border);
+  transform: translateX(-100%);
+}
+
+.drawer-left.open {
+  transform: translateX(0);
+}
+
+.drawer-left .drag-handle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  cursor: col-resize;
+  background: transparent;
+  transition: background 150ms ease;
+}
+
+.drawer-left .drag-handle:hover {
+  background: var(--border-focus);
+}
+
+/* -- RIGHT DRAWER (Chat) -- */
+
+.drawer-right {
+  right: 0;
+  top: 36px;
+  bottom: 56px;
+  width: 400px;
+  border-left: 1px solid var(--border);
+  transform: translateX(100%);
+  box-shadow: -4px 4px 0 var(--shadow);
+}
+
+.drawer-right.open {
+  transform: translateX(0);
+}
+
+.drawer-right .drag-handle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  cursor: col-resize;
+  background: transparent;
+  transition: background 150ms ease;
+}
+
+.drawer-right .drag-handle:hover {
+  background: var(--border-focus);
+}
+
+/* -- BOTTOM DRAWER (Terminal) -- */
+
+.drawer-bottom {
+  left: 0;
+  right: 0;
+  bottom: 56px;
+  height: 260px;
+  border-top: 1px solid var(--border);
+  transform: translateY(100%);
+  box-shadow: 0 -4px 0 var(--shadow);
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1), background-color 200ms, border-color 200ms, color 200ms;
+}
+
+.drawer-bottom.open {
+  transform: translateY(0);
+}
+
+.drawer-bottom .drag-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  cursor: row-resize;
+  background: transparent;
+  transition: background 150ms ease;
+}
+
+.drawer-bottom .drag-handle:hover {
+  background: var(--border-focus);
+}
+
+/* ==========================================================================
+   5. DASHBOARD VIEW
+   ========================================================================== */
+
+.view-dashboard {
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 12px;
+}
+
+.dashboard-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  box-shadow: 2px 2px 0 var(--shadow);
+  padding: 0;
+  animation: fadeSlideUp 250ms ease-out both;
+}
+
+.dashboard-card:nth-child(1) { animation-delay: 0ms; }
+.dashboard-card:nth-child(2) { animation-delay: 50ms; }
+.dashboard-card:nth-child(3) { animation-delay: 100ms; }
+.dashboard-card:nth-child(4) { animation-delay: 150ms; }
+.dashboard-card:nth-child(5) { animation-delay: 200ms; }
+.dashboard-card:nth-child(6) { animation-delay: 250ms; }
+.dashboard-card:nth-child(7) { animation-delay: 300ms; }
+.dashboard-card:nth-child(8) { animation-delay: 350ms; }
+
+.card-header {
+  background: var(--bg-surface);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-display);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+}
+
+.card-body {
+  padding: 14px;
+}
+
+/* ==========================================================================
+   6. WORKSPACE VIEW
+   ========================================================================== */
+
+.view-workspace {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.editor-tab-bar {
+  height: 32px;
+  min-height: 32px;
+  display: flex;
+  flex-direction: row;
+  background: var(--bg-deep);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-shrink: 0;
+}
+
+.editor-tab-bar::-webkit-scrollbar {
+  height: 0;
+}
+
+.editor-tab {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-right: 1px solid var(--border);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 150ms ease, color 150ms ease;
+  border-top: 2px solid transparent;
+  background: transparent;
+  border-bottom: none;
+  border-left: none;
+}
+
+.editor-tab:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.editor-tab.active {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border-top: 2px solid var(--accent-blue);
+}
+
+.editor-tab .tab-close {
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: opacity 150ms ease, color 150ms ease;
+}
+
+.editor-tab:hover .tab-close,
+.editor-tab.active .tab-close {
+  opacity: 1;
+}
+
+.editor-tab .tab-close:hover {
+  color: var(--accent-magenta);
+}
+
+.editor-content {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  overflow: hidden;
+}
+
+.line-gutter {
+  width: 48px;
+  min-width: 48px;
+  background: var(--bg-deep);
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  line-height: 20px;
+  color: var(--text-muted);
+  padding: 0 8px 0 0;
+  overflow: hidden;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.line-gutter .line-number {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.line-gutter .line-number.active {
+  color: var(--text-primary);
+}
+
+.code-area {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  line-height: 20px;
+  color: var(--text-primary);
+  padding: 0 16px;
+  white-space: pre;
+  overflow: auto;
+  tab-size: 4;
+}
+
+.minimap {
+  width: 60px;
+  min-width: 60px;
+  background: var(--bg-deep);
+  border-left: 1px solid var(--border);
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.minimap-viewport {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: rgba(232, 224, 208, 0.06);
+  border: 1px solid var(--border-focus);
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   7. CODE SYNTAX HIGHLIGHTING
+   ========================================================================== */
+
+.syn-keyword {
+  color: var(--accent-magenta);
+  font-weight: 500;
+}
+
+.syn-string {
+  color: var(--accent-orange);
+}
+
+.syn-comment {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.syn-type {
+  color: var(--accent-blue);
+}
+
+.syn-fn {
+  color: var(--accent-lime);
+}
+
+.syn-macro {
+  color: var(--accent-lime);
+  font-weight: 700;
+}
+
+.syn-path {
+  color: var(--accent-blue);
+  opacity: 0.8;
+}
+
+.syn-punct {
+  color: var(--text-secondary);
+}
+
+.syn-number {
+  color: var(--accent-orange);
+}
+
+.syn-attr {
+  color: var(--accent-blue);
+  font-style: italic;
+}
+
+/* ==========================================================================
+   8. FILE MANAGER DRAWER CONTENTS
+   ========================================================================== */
+
+.fm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-display);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.fm-header .fm-close {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: color 150ms ease;
+  background: none;
+  border: none;
+}
+
+.fm-header .fm-close:hover {
+  color: var(--accent-magenta);
+}
+
+.fm-search {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.fm-search input {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 0px;
+  padding: 4px 8px;
+  outline: none;
+  transition: border-color 150ms ease;
+}
+
+.fm-search input:focus {
+  border-color: var(--accent-blue);
+}
+
+.fm-search input::placeholder {
+  color: var(--text-muted);
+}
+
+.fm-tree {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.fm-tree-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 26px;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  gap: 6px;
+  transition: background 150ms ease;
+  border-left: 2px solid transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fm-tree-item[data-depth="0"] { padding-left: 10px; }
+.fm-tree-item[data-depth="1"] { padding-left: 26px; }
+.fm-tree-item[data-depth="2"] { padding-left: 42px; }
+.fm-tree-item[data-depth="3"] { padding-left: 58px; }
+.fm-tree-item[data-depth="4"] { padding-left: 74px; }
+.fm-tree-item[data-depth="5"] { padding-left: 90px; }
+
+.fm-tree-item:hover {
+  background: var(--bg-hover);
+}
+
+.fm-tree-item.selected {
+  background: var(--bg-elevated);
+  border-left: 2px solid var(--accent-blue);
+}
+
+.fm-tree-item .fm-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.fm-tree-item .fm-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fm-tree-item.directory .fm-name {
+  font-weight: 600;
+}
+
+.fm-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 0 4px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.fm-git-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 0 4px;
+  flex-shrink: 0;
+}
+
+.fm-git-badge.modified {
+  color: var(--accent-orange);
+}
+
+.fm-git-badge.added {
+  color: var(--accent-lime);
+}
+
+.fm-git-badge.deleted {
+  color: var(--accent-magenta);
+}
+
+.fm-git-badge.untracked {
+  color: var(--text-muted);
+}
+
+.fm-status-bar {
+  padding: 4px 10px;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   9. CHAT DRAWER CONTENTS
+   ========================================================================== */
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-display);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  gap: 8px;
+}
+
+.chat-header .chat-close {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: color 150ms ease;
+  background: none;
+  border: none;
+}
+
+.chat-header .chat-close:hover {
+  color: var(--accent-magenta);
+}
+
+.chat-header .thread-toggle {
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: color 150ms ease;
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.chat-header .thread-toggle:hover {
+  color: var(--text-primary);
+}
+
+.chat-body {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  overflow: hidden;
+}
+
+.chat-threads {
+  width: 180px;
+  min-width: 180px;
+  background: var(--bg-deep);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.chat-threads.hidden {
+  display: none;
+}
+
+.chat-thread {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  transition: background 150ms ease, color 150ms ease;
+  border-left: 2px solid transparent;
+}
+
+.chat-thread:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.chat-thread.active {
+  background: var(--bg-elevated);
+  border-left: 2px solid var(--accent-blue);
+  color: var(--text-primary);
+}
+
+.chat-thread .thread-title {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-thread .thread-time {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.chat-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.chat-msg {
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.chat-avatar {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.chat-msg.from-user .chat-avatar {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.chat-msg.from-ai .chat-avatar {
+  background: var(--accent-blue);
+  color: var(--bg-deep);
+}
+
+.msg-bubble {
+  padding: 10px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.chat-msg.from-user .msg-bubble {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.chat-msg.from-ai .msg-bubble {
+  background: transparent;
+  border: 1px solid var(--accent-blue);
+  color: var(--text-primary);
+}
+
+.msg-bubble code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--bg-deep);
+  padding: 1px 4px;
+  border: 1px solid var(--border);
+}
+
+.msg-bubble pre {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  padding: 8px;
+  margin: 6px 0;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.msg-time {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.chat-composer {
+  border-top: 1px solid var(--border);
+  padding: 10px;
+  background: var(--bg-elevated);
+}
+
+.chat-composer textarea {
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 0px;
+  padding: 8px;
+  resize: vertical;
+  min-height: 48px;
+  outline: none;
+  transition: border-color 150ms ease;
+}
+
+.chat-composer textarea:focus {
+  border-color: var(--accent-blue);
+}
+
+.chat-composer textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.chat-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+/* ==========================================================================
+   10. TERMINAL DRAWER CONTENTS
+   ========================================================================== */
+
+.term-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 28px;
+  min-height: 28px;
+  background: var(--bg-deep);
+  border-bottom: 1px solid var(--border);
+  padding: 0 8px;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.term-header .term-tab {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 2px 10px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: color 150ms ease, background 150ms ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.term-header .term-tab:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+.term-header .term-tab.active {
+  color: var(--text-primary);
+  background: var(--bg-surface);
+}
+
+.term-header .term-close {
+  margin-left: auto;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  transition: color 150ms ease;
+}
+
+.term-header .term-close:hover {
+  color: var(--accent-magenta);
+}
+
+.term-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.term-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.term-pane {
+  background: var(--bg-deep);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.5;
+  padding: 6px 8px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.term-pane-1 {
+  color: #66ff66;
+}
+
+.term-pane-2 {
+  color: var(--accent-magenta);
+}
+
+.term-pane-3 {
+  color: var(--accent-orange);
+}
+
+.term-pane-4 {
+  color: var(--text-secondary);
+}
+
+.term-single {
+  flex: 1;
+  background: var(--bg-deep);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.5;
+  padding: 6px 8px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: #66ff66;
+}
+
+.term-prompt {
+  color: var(--accent-lime);
+}
+
+.term-cursor {
+  animation: blink 1s step-end infinite;
+}
+
+/* ==========================================================================
+   11. BUTTONS
+   ========================================================================== */
+
+.btn {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 6px 16px;
+  border: 2px solid transparent;
+  border-radius: 0px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  line-height: 1;
+}
+
+.btn:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-primary {
+  background: var(--accent-lime);
+  color: var(--bg-deep);
+  border-color: var(--accent-lime);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+  box-shadow: 2px 2px 0 var(--shadow);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-focus);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-hover);
+  border-color: var(--text-secondary);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--accent-magenta);
+  border-color: var(--accent-magenta);
+}
+
+.btn-danger:hover {
+  background: var(--accent-magenta);
+  color: #ffffff;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: transparent;
+}
+
+.btn-ghost:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+.btn-sm {
+  font-size: var(--font-size-xs);
+  padding: 3px 10px;
+}
+
+.btn-lg {
+  font-size: var(--font-size-base);
+  padding: 10px 24px;
+}
+
+.btn-icon {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid transparent;
+}
+
+/* ==========================================================================
+   12. PROGRESS BARS
+   ========================================================================== */
+
+.progress-track {
+  height: 8px;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 0px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  transition: width 300ms ease;
+  background: var(--accent-blue);
+}
+
+.progress-fill.success {
+  background: var(--accent-lime);
+}
+
+.progress-fill.warning {
+  background: var(--accent-orange);
+}
+
+.progress-fill.error {
+  background: var(--accent-magenta);
+}
+
+.progress-label {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.progress-sm .progress-track {
+  height: 4px;
+}
+
+.progress-lg .progress-track {
+  height: 12px;
+}
+
+/* ==========================================================================
+   13. DONUT CHARTS
+   ========================================================================== */
+
+.donut {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.donut-center {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-primary);
+  position: absolute;
+}
+
+.donut-sm {
+  width: 48px;
+  height: 48px;
+}
+
+.donut-sm .donut-center {
+  width: 30px;
+  height: 30px;
+  font-size: 9px;
+}
+
+.donut-lg {
+  width: 96px;
+  height: 96px;
+}
+
+.donut-lg .donut-center {
+  width: 60px;
+  height: 60px;
+  font-size: 14px;
+}
+
+/* ==========================================================================
+   14. OVERLAYS
+   ========================================================================== */
+
+.pixel-grid-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  background-image: radial-gradient(circle, var(--text-primary) 0.5px, transparent 0.5px);
+  background-size: 3px 3px;
+  opacity: 0.04;
+}
+
+.scanline-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.15) 2px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+  opacity: 0.03;
+}
+
+.theme-basic .pixel-grid-overlay,
+.theme-basic .scanline-overlay {
+  display: none;
+}
+
+/* ==========================================================================
+   15. ANIMATIONS
+   ========================================================================== */
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-16px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   16. THEME TRANSITIONS
+   ========================================================================== */
+
+body,
+.command-strip,
+.dock-bar,
+.drawer-left,
+.drawer-right,
+.drawer-bottom {
+  transition: background-color 200ms, border-color 200ms, color 200ms;
+}
+
+/* ==========================================================================
+   17. BADGES AND STATUS INDICATORS
+   ========================================================================== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 0px;
+  line-height: 1.4;
+}
+
+.badge-running {
+  background: var(--accent-lime);
+  color: var(--bg-deep);
+}
+
+.badge-idle {
+  background: var(--text-muted);
+  color: var(--bg-deep);
+}
+
+.badge-error {
+  background: var(--accent-magenta);
+  color: #ffffff;
+}
+
+.badge-warning {
+  background: var(--accent-orange);
+  color: var(--bg-deep);
+}
+
+.badge-info {
+  background: var(--accent-blue);
+  color: var(--bg-deep);
+}
+
+.badge-paused {
+  background: var(--accent-orange);
+  color: var(--bg-deep);
+}
+
+.badge-complete {
+  background: var(--accent-lime);
+  color: var(--bg-deep);
+}
+
+.status-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+
+.status-dot.green {
+  background: var(--accent-lime);
+}
+
+.status-dot.amber {
+  background: var(--accent-orange);
+}
+
+.status-dot.red {
+  background: var(--accent-magenta);
+}
+
+.status-dot.blue {
+  background: var(--accent-blue);
+}
+
+.status-dot.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   18. INPUTS AND SELECTS
+   ========================================================================== */
+
+select,
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="url"] {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 0px;
+  padding: 4px 8px;
+  outline: none;
+  transition: border-color 150ms ease;
+}
+
+select:focus,
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+input[type="url"]:focus {
+  border-color: var(--accent-blue);
+}
+
+select:hover,
+input[type="text"]:hover,
+input[type="number"]:hover,
+input[type="email"]:hover,
+input[type="password"]:hover,
+input[type="search"]:hover,
+input[type="url"]:hover {
+  border-color: var(--border-focus);
+}
+
+input::placeholder {
+  color: var(--text-muted);
+}
+
+textarea {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 0px;
+  padding: 6px 8px;
+  outline: none;
+  resize: vertical;
+  transition: border-color 150ms ease;
+}
+
+textarea:focus {
+  border-color: var(--accent-blue);
+}
+
+/* Toggle switch */
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-deep);
+  border: 1px solid var(--border-focus);
+  border-radius: 0px;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  height: 12px;
+  width: 12px;
+  left: 2px;
+  bottom: 2px;
+  background: var(--text-muted);
+  border-radius: 0px;
+  transition: transform 150ms ease, background 150ms ease;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(18px);
+  background: var(--bg-deep);
+}
+
+.toggle-switch input:focus + .toggle-slider {
+  border-color: var(--accent-blue);
+}
+
+/* ==========================================================================
+   19. SETTINGS VIEW
+   ========================================================================== */
+
+.view-settings {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.settings-layout {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+.settings-nav {
+  width: 200px;
+  min-width: 200px;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.settings-nav-item {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 8px 14px;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+  display: block;
+  text-decoration: none;
+}
+
+.settings-nav-item:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.settings-nav-item.active {
+  border-left-color: var(--accent-blue);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.settings-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.settings-group {
+  margin-bottom: 20px;
+}
+
+.settings-group h3 {
+  font-family: var(--font-display);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.settings-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--border);
+  gap: 16px;
+}
+
+.settings-row:last-child {
+  border-bottom: none;
+}
+
+.settings-label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.settings-label .settings-desc {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.settings-value {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ==========================================================================
+   20. USAGE / ANALYTICS VIEW
+   ========================================================================== */
+
+.view-usage {
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.usage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.usage-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  box-shadow: 2px 2px 0 var(--shadow);
+  padding: 0;
+}
+
+.usage-card .card-header {
+  background: var(--bg-surface);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-display);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+}
+
+.usage-card .card-body {
+  padding: 14px;
+}
+
+.usage-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.usage-stat-value {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.usage-stat-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.usage-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.usage-bar-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  min-width: 80px;
+}
+
+.usage-bar-track {
+  flex: 1;
+  height: 6px;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 0px;
+  overflow: hidden;
+}
+
+.usage-bar-fill {
+  height: 100%;
+  transition: width 300ms ease;
+}
+
+.usage-bar-value {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  min-width: 32px;
+  text-align: right;
+}
+
+/* ==========================================================================
+   21. INTERVIEW VIEW
+   ========================================================================== */
+
+.view-interview {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.interview-header {
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.interview-step {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  box-shadow: 2px 2px 0 var(--shadow);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.interview-step.completed {
+  border-left: 2px solid var(--accent-lime);
+}
+
+.interview-step.current {
+  border-left: 2px solid var(--accent-blue);
+}
+
+.interview-question {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.interview-answer {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.interview-input {
+  margin-top: 10px;
+}
+
+.interview-input textarea {
+  width: 100%;
+  min-height: 64px;
+}
+
+/* ==========================================================================
+   22. TOOLTIPS
+   ========================================================================== */
+
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 0px;
+  padding: 3px 8px;
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 2000;
+  box-shadow: 2px 2px 0 var(--shadow);
+  pointer-events: none;
+  animation: fadeIn 100ms ease-out;
+}
+
+/* Tooltip below variant */
+[data-tooltip-below]:hover::after {
+  content: attr(data-tooltip-below);
+  position: absolute;
+  top: calc(100% + 6px);
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 0px;
+  padding: 3px 8px;
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 2000;
+  box-shadow: 2px 2px 0 var(--shadow);
+  pointer-events: none;
+  animation: fadeIn 100ms ease-out;
+}
+
+/* ==========================================================================
+   UTILITY CLASSES
+   ========================================================================== */
+
+/* -- Display -- */
+
+.display-heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.text-mono {
+  font-family: var(--font-mono);
+}
+
+.text-body {
+  font-family: var(--font-body);
+}
+
+/* -- Text colors -- */
+
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: var(--text-muted); }
+.text-blue { color: var(--accent-blue); }
+.text-magenta { color: var(--accent-magenta); }
+.text-lime { color: var(--accent-lime); }
+.text-orange { color: var(--accent-orange); }
+
+/* -- Backgrounds -- */
+
+.bg-deep { background: var(--bg-deep); }
+.bg-surface { background: var(--bg-surface); }
+.bg-elevated { background: var(--bg-elevated); }
+
+/* -- Flex utilities -- */
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-row { flex-direction: row; }
+.flex-1 { flex: 1; }
+.flex-shrink-0 { flex-shrink: 0; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-end { justify-content: flex-end; }
+
+/* -- Gap -- */
+
+.gap-2 { gap: 2px; }
+.gap-4 { gap: 4px; }
+.gap-6 { gap: 6px; }
+.gap-8 { gap: 8px; }
+.gap-12 { gap: 12px; }
+.gap-16 { gap: 16px; }
+
+/* -- Padding -- */
+
+.p-0 { padding: 0; }
+.p-4 { padding: 4px; }
+.p-8 { padding: 8px; }
+.p-12 { padding: 12px; }
+.p-16 { padding: 16px; }
+.px-8 { padding-left: 8px; padding-right: 8px; }
+.px-16 { padding-left: 16px; padding-right: 16px; }
+.py-4 { padding-top: 4px; padding-bottom: 4px; }
+.py-8 { padding-top: 8px; padding-bottom: 8px; }
+
+/* -- Margin -- */
+
+.m-0 { margin: 0; }
+.mb-4 { margin-bottom: 4px; }
+.mb-8 { margin-bottom: 8px; }
+.mb-12 { margin-bottom: 12px; }
+.mb-16 { margin-bottom: 16px; }
+.mt-4 { margin-top: 4px; }
+.mt-8 { margin-top: 8px; }
+.mt-auto { margin-top: auto; }
+.ml-auto { margin-left: auto; }
+
+/* -- Overflow -- */
+
+.overflow-hidden { overflow: hidden; }
+.overflow-auto { overflow: auto; }
+.overflow-y-auto { overflow-y: auto; }
+.overflow-x-auto { overflow-x: auto; }
+
+/* -- Position -- */
+
+.relative { position: relative; }
+.absolute { position: absolute; }
+.inset-0 { inset: 0; }
+
+/* -- Text -- */
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
+.uppercase { text-transform: uppercase; }
+.font-bold { font-weight: 700; }
+.font-medium { font-weight: 500; }
+.italic { font-style: italic; }
+
+/* -- Width / Height -- */
+
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+
+/* -- Borders -- */
+
+.border { border: 1px solid var(--border); }
+.border-t { border-top: 1px solid var(--border); }
+.border-b { border-bottom: 1px solid var(--border); }
+.border-l { border-left: 1px solid var(--border); }
+.border-r { border-right: 1px solid var(--border); }
+
+/* -- Cursor -- */
+
+.cursor-pointer { cursor: pointer; }
+.cursor-default { cursor: default; }
+
+/* -- Visibility -- */
+
+.hidden { display: none; }
+.invisible { visibility: hidden; }
+.opacity-0 { opacity: 0; }
+
+/* -- Selection -- */
+
+.select-none { user-select: none; }
+
+/* ==========================================================================
+   LAYOUT HELPERS FOR DRAWER CONTENTS
+   ========================================================================== */
+
+.drawer-left,
+.drawer-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-bottom {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   PANEL / CARD GENERIC
+   ========================================================================== */
+
+.panel {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  box-shadow: 2px 2px 0 var(--shadow);
+}
+
+.panel-header {
+  background: var(--bg-surface);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-display);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel-body {
+  padding: 14px;
+}
+
+/* ==========================================================================
+   SEPARATOR / DIVIDER
+   ========================================================================== */
+
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 8px 0;
+}
+
+.divider-dashed {
+  height: 1px;
+  border-top: 1px dashed var(--border);
+  margin: 8px 0;
+}
+
+/* ==========================================================================
+   TABLE STYLES
+   ========================================================================== */
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+}
+
+.data-table th {
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-surface);
+}
+
+.data-table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.data-table tr:hover td {
+  background: var(--bg-hover);
+}
+
+.data-table .cell-mono {
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+/* ==========================================================================
+   LOADING STATES
+   ========================================================================== */
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-elevated) 25%,
+    var(--bg-hover) 50%,
+    var(--bg-elevated) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 0px;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-text {
+  height: 12px;
+  margin-bottom: 6px;
+}
+
+.skeleton-text.short {
+  width: 60%;
+}
+
+.skeleton-heading {
+  height: 16px;
+  width: 40%;
+  margin-bottom: 10px;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent-blue);
+  border-radius: 50%;
+  animation: spin 600ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner-sm {
+  width: 12px;
+  height: 12px;
+  border-width: 1.5px;
+}
+
+.spinner-lg {
+  width: 24px;
+  height: 24px;
+  border-width: 3px;
+}
+
+/* ==========================================================================
+   CONTEXT MENU (right-click / dropdown)
+   ========================================================================== */
+
+.context-menu {
+  position: fixed;
+  z-index: 3000;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  box-shadow: 4px 4px 0 var(--shadow);
+  padding: 4px 0;
+  min-width: 180px;
+  animation: fadeIn 100ms ease-out;
+}
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px;
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 100ms ease;
+}
+
+.context-menu-item:hover {
+  background: var(--bg-hover);
+}
+
+.context-menu-item.disabled {
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.context-menu-item .shortcut {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.context-menu-separator {
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0;
+}
+
+/* ==========================================================================
+   TOAST NOTIFICATIONS
+   ========================================================================== */
+
+.toast-container {
+  position: fixed;
+  top: 44px;
+  right: 12px;
+  z-index: 5000;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  box-shadow: 4px 4px 0 var(--shadow);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+  pointer-events: auto;
+  animation: slideInLeft 200ms ease-out;
+  max-width: 360px;
+}
+
+.toast-success {
+  border-left: 3px solid var(--accent-lime);
+}
+
+.toast-error {
+  border-left: 3px solid var(--accent-magenta);
+}
+
+.toast-warning {
+  border-left: 3px solid var(--accent-orange);
+}
+
+.toast-info {
+  border-left: 3px solid var(--accent-blue);
+}
+
+.toast .toast-dismiss {
+  margin-left: auto;
+  cursor: pointer;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  font-size: 14px;
+  transition: color 150ms ease;
+}
+
+.toast .toast-dismiss:hover {
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   MODAL / DIALOG
+   ========================================================================== */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease;
+}
+
+.modal-backdrop.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  box-shadow: 4px 4px 0 var(--shadow);
+  width: 90%;
+  max-width: 480px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  animation: fadeSlideUp 200ms ease-out;
+}
+
+.modal-sm {
+  max-width: 360px;
+}
+
+.modal-lg {
+  max-width: 640px;
+}
+
+.modal-full {
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+}
+
+.modal-header .modal-close {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  transition: color 150ms ease;
+}
+
+.modal-header .modal-close:hover {
+  color: var(--accent-magenta);
+}
+
+.modal-body {
+  padding: 16px;
+  overflow-y: auto;
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+}
+
+/* ==========================================================================
+   COMMAND PALETTE
+   ========================================================================== */
+
+.command-palette {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6000;
+  width: 90%;
+  max-width: 520px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  box-shadow: 4px 4px 0 var(--shadow);
+  animation: fadeSlideUp 150ms ease-out;
+}
+
+.command-palette-input {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  border: none;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  outline: none;
+}
+
+.command-palette-input::placeholder {
+  color: var(--text-muted);
+}
+
+.command-palette-results {
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.command-palette-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 100ms ease;
+}
+
+.command-palette-item:hover,
+.command-palette-item.selected {
+  background: var(--bg-hover);
+}
+
+.command-palette-item .cp-shortcut {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.command-palette-item .cp-category {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .usage-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .drawer-left {
+    width: 280px;
+  }
+
+  .drawer-right {
+    width: 320px;
+  }
+
+  .drawer-bottom {
+    height: 200px;
+  }
+
+  .command-strip-center {
+    display: none;
+  }
+
+  .settings-nav {
+    width: 160px;
+    min-width: 160px;
+  }
+
+  .chat-threads {
+    width: 140px;
+    min-width: 140px;
+  }
+}
+
+@media (max-width: 480px) {
+  .drawer-left {
+    width: 100%;
+  }
+
+  .drawer-right {
+    width: 100%;
+  }
+
+  .settings-layout {
+    flex-direction: column;
+  }
+
+  .settings-nav {
+    width: 100%;
+    min-width: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    max-height: 120px;
+  }
+
+  .chat-threads {
+    display: none;
+  }
+
+  .dock-icon .dock-label {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   PRINT -- hide overlays and non-content
+   ========================================================================== */
+
+@media print {
+  .pixel-grid-overlay,
+  .scanline-overlay,
+  .command-strip,
+  .dock-bar,
+  .drawer-left,
+  .drawer-right,
+  .drawer-bottom,
+  .drawer-backdrop,
+  .toast-container {
+    display: none;
+  }
+
+  .main-content {
+    position: static;
+    overflow: visible;
+  }
+
+  .view {
+    position: static;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+}
+
+
+
+/* ==========================================================================
+   COMPATIBILITY CSS -- Bridging HTML class names to CSS rules
+   Generated during assembly to fix cross-agent naming differences
+   ========================================================================== */
+
+/* -- Command Strip sub-elements -- */
+.cmd-left { display: flex; align-items: center; gap: 10px; }
+.cmd-center { display: flex; align-items: center; gap: 8px; }
+.cmd-right { display: flex; align-items: center; gap: 10px; font-size: 12px; }
+.cmd-task { font-family: 'Rajdhani', sans-serif; font-size: 12px; color: var(--text-secondary); }
+.cmd-timer { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent-lime); }
+.cmd-context { display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+.cmd-lsp { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--text-secondary); }
+.cmd-git { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--text-secondary); }
+.cmd-sep { color: var(--border-default); margin: 0 2px; }
+.cmd-bell { position: relative; cursor: pointer; color: var(--text-secondary); }
+.cmd-bell:hover { color: var(--text-primary); }
+.bell-count {
+  position: absolute; top: -6px; right: -8px;
+  background: var(--accent-magenta); color: #fff;
+  font-size: 9px; font-weight: 700; font-family: 'Rajdhani', sans-serif;
+  min-width: 14px; height: 14px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 3px;
+}
+
+/* -- Dock bar sub-groups -- */
+.dock-views { display: flex; align-items: center; gap: 4px; }
+.dock-drawers { display: flex; align-items: center; gap: 4px; }
+.drawer-indicator {
+  display: block; width: 4px; height: 4px; border-radius: 50%;
+  background: transparent; margin-top: 2px; transition: background 200ms;
+}
+.dock-icon.drawer-open .drawer-indicator { background: var(--accent-lime); }
+
+/* -- Drawer chrome -- */
+.drawer-header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px; border-bottom: 1px solid var(--border-default);
+  font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 700;
+  letter-spacing: 1.5px; color: var(--text-primary);
+}
+.drawer-title { text-transform: uppercase; }
+.drawer-spacer { flex: 1; }
+.drawer-close {
+  background: none; border: none; color: var(--text-secondary);
+  cursor: pointer; font-size: 14px; padding: 2px 6px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.drawer-close:hover { color: var(--accent-magenta); }
+.drawer-maximize {
+  background: none; border: none; color: var(--text-secondary);
+  cursor: pointer; font-size: 14px; padding: 2px 6px;
+}
+.drawer-maximize:hover { color: var(--text-primary); }
+
+/* -- Drawer tabs (terminal bottom panel) -- */
+.drawer-tabs { display: flex; gap: 0; }
+.drawer-tab {
+  padding: 6px 12px; font-family: 'Rajdhani', sans-serif; font-size: 12px;
+  font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--text-secondary); background: none; border: none;
+  border-bottom: 2px solid transparent; cursor: pointer;
+  transition: color 200ms, border-color 200ms;
+}
+.drawer-tab:hover { color: var(--text-primary); }
+.drawer-tab.active { color: var(--accent-blue); border-bottom-color: var(--accent-blue); }
+.drawer-thread-count { font-size: 11px; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
+.drawer-toggle-threads {
+  background: none; border: none; color: var(--text-secondary);
+  cursor: pointer; font-size: 16px; padding: 2px 4px;
+}
+.drawer-toggle-threads:hover { color: var(--text-primary); }
+
+/* -- Dashboard detail rows -- */
+.detail-row { display: flex; justify-content: space-between; align-items: center; padding: 3px 0; font-size: 12px; }
+.detail-label { color: var(--text-secondary); font-family: 'Rajdhani', sans-serif; }
+.detail-value { color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+
+/* -- Platform & subagent badges -- */
+.badge-blue { background: rgba(0,212,255,0.15); color: var(--accent-blue); border: 1px solid rgba(0,212,255,0.3); }
+.badge-lime { background: rgba(180,255,57,0.15); color: var(--accent-lime); border: 1px solid rgba(180,255,57,0.3); }
+.platform-badge, .subagent-badge {
+  display: inline-block; padding: 1px 6px; font-size: 10px; font-weight: 700;
+  font-family: 'Rajdhani', sans-serif; text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.subagent-strip { display: flex; align-items: center; gap: 6px; padding: 4px 12px; font-size: 11px; }
+.subagent-label { color: var(--text-secondary); font-family: 'Rajdhani', sans-serif; font-size: 11px; }
+
+/* -- Dashboard cards -- */
+.card-controls { display: flex; gap: 6px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-default); }
+.tier-path { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-secondary); margin-bottom: 4px; }
+.task-name { font-family: 'Orbitron', monospace; font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+
+/* -- Stream events -- */
+.stream-events { display: flex; gap: 4px; margin-bottom: 6px; }
+.stream-box {
+  width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+  border: 1px solid var(--border-default); color: var(--text-secondary);
+}
+.stream-box.highlight { border-color: var(--accent-blue); color: var(--accent-blue); background: rgba(0,212,255,0.08); }
+.duration-strip {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--text-secondary); padding: 4px 8px;
+  background: var(--bg-deep); border: 1px solid var(--border-default);
+}
+
+/* -- Progress rows -- */
+.progress-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.progress-row .progress-label { min-width: 50px; font-size: 11px; }
+.progress-pct { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-secondary); min-width: 32px; text-align: right; }
+
+/* -- Step indicator -- */
+.step-indicator { display: flex; align-items: center; gap: 0; margin-top: 8px; }
+.step-indicator .step {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 2px solid var(--border-default); display: flex;
+  align-items: center; justify-content: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  color: var(--text-secondary);
+}
+.step-indicator .step.filled { background: var(--accent-blue); border-color: var(--accent-blue); color: #fff; }
+.step-indicator .step.current { border-color: var(--accent-lime); color: var(--accent-lime); animation: pulse 2s ease-in-out infinite; }
+.step-line { width: 16px; height: 2px; background: var(--border-default); }
+.step-line.filled { background: var(--accent-blue); }
+
+/* -- Budget/donut items -- */
+.budget-item { text-align: center; }
+.budget-row { display: flex; justify-content: space-around; gap: 12px; }
+
+/* -- CTA card -- */
+.cta-card { border-left: 3px solid var(--accent-orange) !important; }
+.cta-alert {
+  font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 700;
+  color: var(--accent-orange); text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.cta-evidence {
+  background: var(--bg-deep); border: 1px solid var(--border-default);
+  padding: 8px 10px; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--text-secondary); margin-bottom: 10px;
+}
+.cta-actions { display: flex; gap: 8px; }
+
+/* -- Guard rows (FileSafe card) -- */
+.guard-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 4px 0; font-size: 12px;
+}
+.guard-row span:first-child { color: var(--text-secondary); }
+
+/* -- Activity entries -- */
+.activity-entry { display: flex; align-items: flex-start; gap: 8px; padding: 4px 0; font-size: 12px; }
+.activity-icon { width: 6px; height: 6px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+.activity-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-secondary); white-space: nowrap; margin-left: auto; }
+
+/* -- Quick actions grid -- */
+.quick-actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+/* -- Workspace / Editor -- */
+.workspace-tabs {
+  display: flex; align-items: center; gap: 0;
+  background: var(--bg-deep); border-bottom: 1px solid var(--border-default);
+  padding: 0; overflow-x: auto;
+}
+.workspace-breadcrumb {
+  padding: 4px 12px; font-size: 11px; color: var(--text-secondary);
+  font-family: 'JetBrains Mono', monospace; border-bottom: 1px solid var(--border-default);
+}
+.workspace-content { display: flex; flex: 1; overflow: hidden; }
+.unsaved-dot { color: var(--accent-orange); margin-left: 4px; }
+.tab-label { font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 600; }
+.tab-badge {
+  font-size: 9px; padding: 0 4px; font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(0,212,255,0.15); color: var(--accent-blue);
+  margin-left: 4px;
+}
+.config-link { color: var(--accent-blue); text-decoration: underline; cursor: pointer; }
+
+/* -- Code syntax highlighting -- */
+.code-line { display: flex; line-height: 1.6; }
+.line-num {
+  color: var(--text-secondary); opacity: 0.4; min-width: 32px;
+  text-align: right; padding-right: 12px; user-select: none;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+}
+.code-keyword { color: var(--accent-magenta); }
+.code-type { color: var(--accent-blue); }
+.code-fn { color: var(--accent-lime); }
+.code-comment { color: var(--text-secondary); opacity: 0.5; font-style: italic; }
+.code-path { color: var(--accent-orange); }
+.code-block {
+  background: var(--bg-deep); border: 1px solid var(--border-default);
+  padding: 0; margin: 8px 0; overflow-x: auto;
+}
+.code-block-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 4px 10px; border-bottom: 1px solid var(--border-default);
+  font-size: 11px;
+}
+.code-lang { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-secondary); }
+.code-copy-btn {
+  background: none; border: 1px solid var(--border-default);
+  color: var(--text-secondary); font-family: 'Rajdhani', sans-serif;
+  font-size: 10px; padding: 2px 8px; cursor: pointer; text-transform: uppercase;
+}
+.code-copy-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+
+/* -- Chat enhancements -- */
+.chat-thread-name { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+.chat-thread-time { font-size: 10px; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
+.chat-dropzone-hint { font-size: 10px; color: var(--text-secondary); padding: 4px 12px; }
+.chat-footer-selects { display: flex; gap: 6px; padding: 6px 12px; flex-wrap: wrap; }
+.chat-footer-actions { display: flex; gap: 6px; padding: 6px 12px; align-items: center; }
+.chat-select {
+  background: var(--bg-deep); border: 1px solid var(--border-default);
+  color: var(--text-primary); font-family: 'Rajdhani', sans-serif;
+  font-size: 11px; padding: 3px 6px;
+}
+.msg-files-strip {
+  display: flex; gap: 6px; margin-top: 6px; padding-top: 6px;
+  border-top: 1px solid var(--border-default); flex-wrap: wrap;
+}
+.thinking .chat-body { color: var(--text-secondary); font-style: italic; }
+.thinking-dots { display: inline-flex; gap: 3px; margin-left: 4px; }
+.thinking-dots .dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--text-secondary);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+.thinking-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+.thinking-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+.btn-hint { font-size: 10px; color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; }
+
+/* -- File manager extras -- */
+.fm-arrow { font-size: 10px; margin-right: 4px; color: var(--text-secondary); }
+.fm-folder-icon { margin-right: 4px; color: var(--accent-orange); }
+.fm-git { font-size: 10px; font-weight: 700; font-family: 'JetBrains Mono', monospace; margin-left: auto; padding: 0 4px; }
+.fm-git.modified { color: var(--accent-orange); }
+.fm-git.added { color: var(--accent-lime); }
+.fm-status { 
+  display: flex; align-items: center; gap: 6px; padding: 6px 12px;
+  border-top: 1px solid var(--border-default); font-size: 11px;
+  color: var(--text-secondary); font-family: 'JetBrains Mono', monospace;
+}
+.fm-status-sep { color: var(--border-default); }
+.fm-status-spacer { flex: 1; }
+.fm-branch { display: flex; align-items: center; gap: 4px; }
+.fm-push-count { font-size: 10px; color: var(--accent-lime); }
+.folder { cursor: pointer; }
+
+/* -- Terminal syntax -- */
+.t-prompt { color: var(--accent-lime); }
+.t-compile { color: var(--accent-blue); }
+.t-info { color: var(--text-secondary); }
+.t-ok { color: var(--accent-lime); }
+.t-warn { color: var(--accent-orange); }
+.t-error { color: var(--accent-magenta); }
+.t-agent { color: var(--accent-blue); }
+.cursor-blink { animation: blink 1s step-end infinite; }
+
+/* -- File extension badges -- */
+.fm-badge.rs { background: rgba(255,141,0,0.15); color: var(--accent-orange); }
+.fm-badge.toml { background: rgba(0,212,255,0.15); color: var(--accent-blue); }
+.fm-badge.md { background: rgba(180,255,57,0.15); color: var(--accent-lime); }
+
+/* -- Misc -- */
+.sep { color: var(--accent-orange); }
+.highlight { border-color: var(--accent-blue) !important; }
+.dot { display: inline-block; }
+
+/* -- Light theme overrides for compatibility classes -- */
+.theme-light .cmd-task { color: var(--text-secondary); }
+.theme-light .detail-label { color: var(--text-secondary); }
+.theme-light .detail-value { color: var(--text-primary); }
+.theme-light .duration-strip { background: var(--bg-deep); }
+.theme-light .cta-evidence { background: var(--bg-deep); }
+.theme-light .line-num { color: var(--text-secondary); }
+.theme-light .code-block { background: var(--bg-deep); }
+.theme-light .chat-select { background: var(--bg-deep); }
+.theme-light .stream-box { border-color: var(--border-default); }
+
+/* -- Basic theme overrides for compatibility classes -- */
+.theme-basic .cmd-task { color: var(--text-secondary); }
+.theme-basic .stream-box.highlight { border-color: var(--accent-blue); background: transparent; }
+.theme-basic .badge-blue { background: rgba(0,100,200,0.1); }
+.theme-basic .badge-lime { background: rgba(0,128,0,0.1); }
+
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     PUPPET MASTER -- Mission Control IDE Mockup
+     Visual reference only. Production app uses Rust + Slint.
+     Layout: Top command strip, bottom dock bar, slide-in drawers.
+     NO emojis. Text labels, Unicode symbols, inline SVGs only.
+     ============================================================ -->
+
+<!-- ============================================================ -->
+<!-- SECTION 1: TOP COMMAND STRIP                                  -->
+<!-- ============================================================ -->
+
+<div class="command-strip">
+
+  <div class="cmd-left">
+    <span class="badge badge-running">RUNNING</span>
+    <span class="cmd-task" style="font-family: 'Rajdhani', sans-serif; font-size: 12px; color: var(--text-secondary, rgba(232,224,208,0.6));">
+      Phase 2 <span class="sep" style="color: var(--accent-orange, #ff8c00);">&gt;</span> Task 3<span class="sep" style="color: var(--accent-orange, #ff8c00);">:</span> Auth module
+    </span>
+    <span class="cmd-timer" style="font-family: 'JetBrains Mono', monospace; font-size: 12px;">2:34</span>
+  </div>
+
+  <div class="cmd-center">
+    <select class="command-select" title="Platform">
+      <option value="cursor">Cursor</option>
+      <option value="claude-code" selected>Claude Code</option>
+      <option value="codex">Codex</option>
+      <option value="gemini">Gemini</option>
+      <option value="copilot">Copilot</option>
+    </select>
+    <select class="command-select" title="Model">
+      <option value="claude-sonnet-4" selected>claude-sonnet-4</option>
+      <option value="claude-opus-4">claude-opus-4</option>
+      <option value="gpt-5.2-codex">gpt-5.2-codex</option>
+      <option value="gemini-3-pro">gemini-3-pro</option>
+    </select>
+    <select class="command-select" title="Effort">
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="high" selected>High</option>
+    </select>
+  </div>
+
+  <div class="cmd-right">
+    <!-- Context gauge: SVG ring ~33% filled -->
+    <span class="cmd-context" style="display: inline-flex; align-items: center; gap: 4px;">
+      <svg width="16" height="16" viewBox="0 0 16 16" style="transform: rotate(-90deg);">
+        <circle cx="8" cy="8" r="6" fill="none" stroke="rgba(232,224,208,0.15)" stroke-width="2.5"/>
+        <circle cx="8" cy="8" r="6" fill="none" stroke="#00d4ff" stroke-width="2.5"
+                stroke-dasharray="37.7" stroke-dashoffset="25.2" stroke-linecap="butt"/>
+      </svg>
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-secondary, rgba(232,224,208,0.6));">42k / 128k</span>
+    </span>
+
+    <!-- LSP status -->
+    <span class="cmd-lsp" style="display: inline-flex; align-items: center; gap: 4px;">
+      <span class="status-dot green" style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #00FF41;"></span>
+      <span style="font-size: 11px;">rust-analyzer</span>
+    </span>
+
+    <!-- Git branch -->
+    <span class="cmd-git" style="display: inline-flex; align-items: center; gap: 3px;">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="8" cy="3" r="2"/>
+        <circle cx="8" cy="13" r="2"/>
+        <path d="M8 5v6"/>
+      </svg>
+      <span style="font-size: 11px;">main</span>
+      <span style="font-size: 10px;">&#8593;2</span>
+    </span>
+
+    <span class="cmd-sep" style="color: var(--text-muted, rgba(232,224,208,0.35)); margin: 0 4px;">|</span>
+
+    <!-- Notification bell -->
+    <span class="cmd-bell" style="position: relative; display: inline-flex; align-items: center;">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 1.5C5.5 1.5 4 3.5 4 6v3l-1.5 2h11L12 9V6c0-2.5-1.5-4.5-4-4.5z"/>
+        <path d="M6.5 13.5c0 .8.7 1.5 1.5 1.5s1.5-.7 1.5-1.5"/>
+      </svg>
+      <span class="bell-count" style="position: absolute; top: -4px; right: -6px; background: #ff2d9b; color: #fff; font-size: 8px; font-weight: 700; min-width: 12px; height: 12px; display: flex; align-items: center; justify-content: center; line-height: 1; padding: 0 2px;">3</span>
+    </span>
+  </div>
+
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SECTION 2: MAIN CONTENT AREA                                  -->
+<!-- ============================================================ -->
+
+
+<!-- ============================== -->
+<!-- Dashboard View (active/default) -->
+<!-- ============================== -->
+
+<div class="view view-dashboard active">
+  <div class="dashboard-grid">
+
+    <!-- Card 1: Orchestrator Status -->
+    <div class="dashboard-card">
+      <div class="card-header">ORCHESTRATOR STATUS</div>
+      <div class="card-body">
+        <span class="badge badge-running">RUNNING</span>
+
+        <div class="detail-row">
+          <span class="detail-label">Platform</span>
+          <span class="detail-value">
+            Claude Code
+            <span class="platform-badge" style="display: inline-block; background: #0047AB; color: #fff; font-size: 9px; font-weight: 700; padding: 0 4px; margin-left: 4px; line-height: 16px;">CC</span>
+          </span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Model</span>
+          <span class="detail-value">claude-sonnet-4</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Elapsed</span>
+          <span class="detail-value" style="font-family: 'JetBrains Mono', monospace;">2:34</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Iteration</span>
+          <span class="detail-value">3 of 5</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Subagents</span>
+          <span class="detail-value">
+            &gt; 2 active
+            <span class="platform-badge" style="display: inline-block; background: #0047AB; color: #fff; font-size: 9px; font-weight: 700; padding: 0 4px; margin-left: 4px; line-height: 16px;">CC</span>
+            <span class="platform-badge" style="display: inline-block; background: #ff8c00; color: #fff; font-size: 9px; font-weight: 700; padding: 0 4px; margin-left: 2px; line-height: 16px;">CX</span>
+          </span>
+        </div>
+
+        <div class="card-controls">
+          <button class="btn btn-secondary">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" stroke="none">
+              <rect x="3" y="2" width="3.5" height="12" rx="0"/>
+              <rect x="9.5" y="2" width="3.5" height="12" rx="0"/>
+            </svg>
+            PAUSE
+          </button>
+          <button class="btn btn-danger">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" stroke="none">
+              <rect x="3" y="3" width="10" height="10" rx="0"/>
+            </svg>
+            STOP
+          </button>
+          <button class="btn btn-ghost">RESET</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: Current Task -->
+    <div class="dashboard-card">
+      <div class="card-header">CURRENT TASK</div>
+      <div class="card-body">
+        <div class="tier-path" style="font-size: 11px; color: var(--text-secondary, rgba(232,224,208,0.6));">
+          Phase 2 <span style="color: #ff8c00;">&gt;</span> Task 3 <span style="color: #ff8c00;">&gt;</span> Subtask 1
+        </div>
+        <div class="task-name" style="font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 700; margin: 6px 0;">
+          Implement authentication module
+        </div>
+        <div class="stream-events" style="display: flex; gap: 4px; margin: 8px 0;">
+          <span class="stream-box" title="Read file" style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 24px; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; background: rgba(0,212,255,0.15); border: 1px solid rgba(0,212,255,0.3); color: #00d4ff;">R</span>
+          <span class="stream-box" title="Bash command" style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 24px; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; background: rgba(255,140,0,0.15); border: 1px solid rgba(255,140,0,0.3); color: #ff8c00;">B</span>
+          <span class="stream-box" title="Search" style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 24px; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; background: rgba(0,255,255,0.15); border: 1px solid rgba(0,255,255,0.3); color: #00ffff;">S</span>
+          <span class="stream-box" title="Edit file" style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 24px; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; background: rgba(180,255,57,0.15); border: 1px solid rgba(180,255,57,0.3); color: #b4ff39;">E</span>
+          <span class="stream-box" title="Read file" style="display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 24px; font-size: 11px; font-weight: 700; font-family: 'JetBrains Mono', monospace; background: rgba(0,212,255,0.15); border: 1px solid rgba(0,212,255,0.3); color: #00d4ff;">R</span>
+        </div>
+        <div class="duration-strip" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-secondary, rgba(232,224,208,0.6));">
+          Thinking: 0:12 | Bash: 0:45 | Total: 1:23
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: Progress -->
+    <div class="dashboard-card">
+      <div class="card-header">PROGRESS</div>
+      <div class="card-body">
+
+        <div class="progress-row">
+          <span class="progress-label">Phase</span>
+          <div class="progress-track">
+            <div class="progress-fill" style="width: 50%; background: #00d4ff;"></div>
+          </div>
+          <span class="progress-pct">2/4</span>
+        </div>
+
+        <div class="progress-row">
+          <span class="progress-label">Task</span>
+          <div class="progress-track">
+            <div class="progress-fill" style="width: 37.5%; background: #00ffff;"></div>
+          </div>
+          <span class="progress-pct">3/8</span>
+        </div>
+
+        <div class="progress-row">
+          <span class="progress-label">Subtask</span>
+          <div class="progress-track">
+            <div class="progress-fill" style="width: 33%; background: #b4ff39;"></div>
+          </div>
+          <span class="progress-pct">1/3</span>
+        </div>
+
+        <!-- Stepped indicator: 4 circles, 2 filled, 1 active/half, 1 empty -->
+        <div class="step-indicator" style="display: flex; align-items: center; gap: 0; margin-top: 12px;">
+          <!-- Step 1: filled -->
+          <svg width="20" height="20" viewBox="0 0 20 20">
+            <circle cx="10" cy="10" r="7" fill="#00d4ff" stroke="#00d4ff" stroke-width="2"/>
+          </svg>
+          <div class="step-line" style="width: 24px; height: 2px; background: #00d4ff;"></div>
+          <!-- Step 2: filled -->
+          <svg width="20" height="20" viewBox="0 0 20 20">
+            <circle cx="10" cy="10" r="7" fill="#00d4ff" stroke="#00d4ff" stroke-width="2"/>
+          </svg>
+          <div class="step-line" style="width: 24px; height: 2px; background: rgba(232,224,208,0.2);"></div>
+          <!-- Step 3: active/half -->
+          <svg width="20" height="20" viewBox="0 0 20 20">
+            <circle cx="10" cy="10" r="7" fill="none" stroke="#00d4ff" stroke-width="2"/>
+            <circle cx="10" cy="10" r="4" fill="#00d4ff"/>
+          </svg>
+          <div class="step-line" style="width: 24px; height: 2px; background: rgba(232,224,208,0.2);"></div>
+          <!-- Step 4: empty -->
+          <svg width="20" height="20" viewBox="0 0 20 20">
+            <circle cx="10" cy="10" r="7" fill="none" stroke="rgba(232,224,208,0.25)" stroke-width="2"/>
+          </svg>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Card 4: Platform Budgets -->
+    <div class="dashboard-card">
+      <div class="card-header">PLATFORM BUDGETS</div>
+      <div class="card-body">
+        <div class="budget-row" style="display: flex; gap: 20px; justify-content: center;">
+
+          <!-- Claude: 45% donut (blue) -->
+          <div class="budget-item" style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+            <div class="donut" style="width: 64px; height: 64px; border-radius: 50%; background: conic-gradient(#00d4ff 0% 45%, rgba(232,224,208,0.12) 45% 100%); display: flex; align-items: center; justify-content: center;">
+              <div class="donut-center" style="width: 44px; height: 44px; border-radius: 50%; background: var(--bg-surface, #1a1a2e); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;">45%</div>
+            </div>
+            <span style="font-size: 11px; font-weight: 600;">Claude</span>
+            <span style="font-size: 10px; color: var(--text-secondary, rgba(232,224,208,0.6)); font-family: 'JetBrains Mono', monospace;">45k / 100k</span>
+          </div>
+
+          <!-- Codex: 72% donut (amber/orange) -->
+          <div class="budget-item" style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+            <div class="donut" style="width: 64px; height: 64px; border-radius: 50%; background: conic-gradient(#ff8c00 0% 72%, rgba(232,224,208,0.12) 72% 100%); display: flex; align-items: center; justify-content: center;">
+              <div class="donut-center" style="width: 44px; height: 44px; border-radius: 50%; background: var(--bg-surface, #1a1a2e); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;">72%</div>
+            </div>
+            <span style="font-size: 11px; font-weight: 600;">Codex</span>
+            <span style="font-size: 10px; color: var(--text-secondary, rgba(232,224,208,0.6)); font-family: 'JetBrains Mono', monospace;">72k / 100k</span>
+          </div>
+
+          <!-- Cursor: 15% donut (lime) -->
+          <div class="budget-item" style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+            <div class="donut" style="width: 64px; height: 64px; border-radius: 50%; background: conic-gradient(#b4ff39 0% 15%, rgba(232,224,208,0.12) 15% 100%); display: flex; align-items: center; justify-content: center;">
+              <div class="donut-center" style="width: 44px; height: 44px; border-radius: 50%; background: var(--bg-surface, #1a1a2e); display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;">15%</div>
+            </div>
+            <span style="font-size: 11px; font-weight: 600;">Cursor</span>
+            <span style="font-size: 10px; color: var(--text-secondary, rgba(232,224,208,0.6)); font-family: 'JetBrains Mono', monospace;">15k / 100k</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5: Calls to Action -->
+    <div class="dashboard-card cta-card" style="border-left: 4px solid #ff8c00;">
+      <div class="card-header">ACTION REQUIRED</div>
+      <div class="card-body">
+        <div class="cta-alert" style="color: #ff8c00; font-weight: 700; font-size: 13px; margin-bottom: 6px;">[!] HITL APPROVAL REQUIRED</div>
+        <p style="font-size: 13px; margin-bottom: 6px;">Phase 2 complete -- review evidence before proceeding to Phase 3</p>
+        <div class="cta-evidence" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; background: rgba(232,224,208,0.06); padding: 6px 8px; margin-bottom: 10px;">
+          12 files changed, 4 tests added, all passing
+        </div>
+        <div class="cta-actions" style="display: flex; gap: 8px; margin-bottom: 12px;">
+          <button class="btn btn-primary">APPROVE &amp; CONTINUE</button>
+          <button class="btn btn-danger">REJECT</button>
+        </div>
+
+        <hr class="divider" style="border: none; border-top: 1px solid var(--border, rgba(232,224,208,0.12)); margin: 12px 0;">
+
+        <p style="font-size: 12px; font-style: italic; color: var(--text-muted, rgba(232,224,208,0.35)); margin-bottom: 8px;">Previous run was interrupted</p>
+        <div class="cta-actions" style="display: flex; gap: 8px;">
+          <button class="btn btn-secondary">RESUME FROM CHECKPOINT</button>
+          <button class="btn btn-ghost">START FRESH</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6: FileSafe -->
+    <div class="dashboard-card">
+      <div class="card-header">FILESAFE</div>
+      <div class="card-body">
+        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+          <span class="status-dot green" style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #00FF41;"></span>
+          <span style="font-size: 13px; font-weight: 600;">3/3 guards active</span>
+        </div>
+        <div class="guard-row" style="font-size: 12px; padding: 4px 0; display: flex; justify-content: space-between;">
+          <span>Block destructive commands</span>
+          <span style="font-weight: 700; color: #00FF41;">[ON]</span>
+        </div>
+        <div class="guard-row" style="font-size: 12px; padding: 4px 0; display: flex; justify-content: space-between;">
+          <span>Restrict writes to plan</span>
+          <span style="font-weight: 700; color: #00FF41;">[ON]</span>
+        </div>
+        <div class="guard-row" style="font-size: 12px; padding: 4px 0; display: flex; justify-content: space-between;">
+          <span>Block sensitive files</span>
+          <span style="font-weight: 700; color: #00FF41;">[ON]</span>
+        </div>
+        <div style="margin-top: 8px;">
+          <a class="config-link" style="font-size: 11px; color: var(--accent-blue, #00d4ff); cursor: pointer; text-decoration: none;">Configure in Settings &gt; Advanced</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 7: Recent Activity -->
+    <div class="dashboard-card">
+      <div class="card-header">RECENT ACTIVITY</div>
+      <div class="card-body">
+
+        <div class="activity-entry" style="display: flex; align-items: flex-start; gap: 8px; padding: 4px 0;">
+          <span class="activity-time" style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted, rgba(232,224,208,0.35)); white-space: nowrap; min-width: 52px;">2:33 PM</span>
+          <span class="activity-icon" style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #00d4ff; margin-top: 4px; flex-shrink: 0;"></span>
+          <span style="font-size: 12px;">Started auth module implementation</span>
+        </div>
+
+        <div class="activity-entry" style="display: flex; align-items: flex-start; gap: 8px; padding: 4px 0;">
+          <span class="activity-time" style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted, rgba(232,224,208,0.35)); white-space: nowrap; min-width: 52px;">2:31 PM</span>
+          <span class="activity-icon" style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #00FF41; margin-top: 4px; flex-shrink: 0;"></span>
+          <span style="font-size: 12px;">Task 2 gate: PASS (4/4 tests)</span>
+        </div>
+
+        <div class="activity-entry" style="display: flex; align-items: flex-start; gap: 8px; padding: 4px 0;">
+          <span class="activity-time" style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted, rgba(232,224,208,0.35)); white-space: nowrap; min-width: 52px;">2:28 PM</span>
+          <span class="activity-icon" style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #ff8c00; margin-top: 4px; flex-shrink: 0;"></span>
+          <span style="font-size: 12px;">Budget warning: Codex at 72%</span>
+        </div>
+
+        <div class="activity-entry" style="display: flex; align-items: flex-start; gap: 8px; padding: 4px 0;">
+          <span class="activity-time" style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted, rgba(232,224,208,0.35)); white-space: nowrap; min-width: 52px;">2:15 PM</span>
+          <span class="activity-icon" style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #00d4ff; margin-top: 4px; flex-shrink: 0;"></span>
+          <span style="font-size: 12px;">Checkpoint saved: Phase 2, Task 2</span>
+        </div>
+
+        <div class="activity-entry" style="display: flex; align-items: flex-start; gap: 8px; padding: 4px 0;">
+          <span class="activity-time" style="font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted, rgba(232,224,208,0.35)); white-space: nowrap; min-width: 52px;">2:01 PM</span>
+          <span class="activity-icon" style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #00FF41; margin-top: 4px; flex-shrink: 0;"></span>
+          <span style="font-size: 12px;">FileSafe: 0 violations detected</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Card 8: Quick Actions -->
+    <div class="dashboard-card">
+      <div class="card-header">QUICK ACTIONS</div>
+      <div class="card-body">
+        <div class="quick-actions-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <button class="btn btn-primary">NEW SESSION</button>
+          <button class="btn btn-secondary">LOAD PRD</button>
+          <button class="btn btn-secondary">RUN DOCTOR</button>
+          <button class="btn btn-secondary">EXPORT REPORT</button>
+          <button class="btn btn-secondary">OPEN INTERVIEW</button>
+          <button class="btn btn-secondary">VIEW EVIDENCE</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- Workspace View (hidden)         -->
+<!-- ============================== -->
+
+<div class="view view-workspace" style="display: none;">
+
+  <!-- Tab Bar -->
+  <div class="workspace-tabs">
+    <div class="editor-tab active">
+      <span class="tab-label">app.rs</span>
+      <span class="unsaved-dot" style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #ff8c00; margin-left: 6px;"></span>
+    </div>
+    <div class="editor-tab">
+      <span class="tab-label">dashboard.rs</span>
+    </div>
+    <div class="editor-tab">
+      <span class="tab-label">config.rs</span>
+      <span style="font-size: 9px; margin-left: 4px; color: #00FF41; font-weight: 700;">[A]</span>
+    </div>
+  </div>
+
+  <!-- Breadcrumb -->
+  <div class="workspace-breadcrumb" style="font-size: 11px; color: var(--text-secondary, rgba(232,224,208,0.6)); padding: 4px 12px; border-bottom: 1px solid var(--border, rgba(232,224,208,0.12));">
+    src <span class="sep" style="margin: 0 4px; color: var(--text-muted, rgba(232,224,208,0.35));">&gt;</span> views <span class="sep" style="margin: 0 4px; color: var(--text-muted, rgba(232,224,208,0.35));">&gt;</span> dashboard.rs
+  </div>
+
+  <!-- Editor Content -->
+  <div class="workspace-content" style="display: flex; flex: 1; overflow: hidden;">
+
+    <!-- Line Gutter -->
+    <div class="line-gutter" style="width: 48px; flex-shrink: 0; text-align: right; padding-right: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 20px; color: var(--text-muted, rgba(232,224,208,0.35)); user-select: none;">
+      <div class="line-num">1</div>
+      <div class="line-num">2</div>
+      <div class="line-num">3</div>
+      <div class="line-num">4</div>
+      <div class="line-num">5</div>
+      <div class="line-num">6</div>
+      <div class="line-num active" style="color: var(--text-primary, #e8e0d0);">7</div>
+      <div class="line-num">8</div>
+      <div class="line-num">9</div>
+      <div class="line-num">10</div>
+      <div class="line-num">11</div>
+      <div class="line-num">12</div>
+      <div class="line-num">13</div>
+      <div class="line-num">14</div>
+      <div class="line-num">15</div>
+      <div class="line-num">16</div>
+      <div class="line-num">17</div>
+      <div class="line-num">18</div>
+      <div class="line-num">19</div>
+      <div class="line-num">20</div>
+      <div class="line-num">21</div>
+      <div class="line-num">22</div>
+      <div class="line-num">23</div>
+      <div class="line-num">24</div>
+      <div class="line-num">25</div>
+    </div>
+
+    <!-- Code Area (syntax-highlighted Rust -- DashboardView struct) -->
+    <div class="code-area" style="flex: 1; overflow: auto; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 20px; padding: 0 16px; white-space: pre; tab-size: 4;">
+<div class="code-line"><span class="code-keyword" style="color: #ff2d9b;">use</span> <span class="code-path" style="color: #00d4ff; opacity: 0.8;">iced</span>::{<span class="code-type" style="color: #00d4ff;">Element</span>, <span class="code-type" style="color: #00d4ff;">Length</span>, <span class="code-type" style="color: #00d4ff;">Alignment</span>};</div>
+<div class="code-line"><span class="code-keyword" style="color: #ff2d9b;">use</span> <span class="code-path" style="color: #00d4ff; opacity: 0.8;">iced</span>::widget::{<span class="code-type" style="color: #00d4ff;">Column</span>, <span class="code-type" style="color: #00d4ff;">Row</span>, <span class="code-type" style="color: #00d4ff;">Container</span>, <span class="code-type" style="color: #00d4ff;">Text</span>};</div>
+<div class="code-line"></div>
+<div class="code-line"><span class="code-comment" style="color: rgba(232,224,208,0.35); font-style: italic;">/// Main dashboard view for the Mission Control interface.</span></div>
+<div class="code-line"><span class="code-comment" style="color: rgba(232,224,208,0.35); font-style: italic;">/// Displays orchestrator status, task progress, and platform budgets.</span></div>
+<div class="code-line"><span class="code-keyword" style="color: #ff2d9b;">pub struct</span> <span class="code-type" style="color: #00d4ff;">DashboardView</span> {</div>
+<div class="code-line highlight" style="background: var(--bg-hover, #2a2a4a);">    <span class="code-keyword" style="color: #ff2d9b;">pub</span> orchestrator_status: <span class="code-type" style="color: #00d4ff;">OrchestratorState</span>,</div>
+<div class="code-line">    <span class="code-keyword" style="color: #ff2d9b;">pub</span> current_task: <span class="code-type" style="color: #00d4ff;">Option</span>&lt;<span class="code-type" style="color: #00d4ff;">TaskInfo</span>&gt;,</div>
+<div class="code-line">    <span class="code-keyword" style="color: #ff2d9b;">pub</span> progress: <span class="code-type" style="color: #00d4ff;">ProgressData</span>,</div>
+<div class="code-line">    <span class="code-keyword" style="color: #ff2d9b;">pub</span> budgets: <span class="code-type" style="color: #00d4ff;">Vec</span>&lt;<span class="code-type" style="color: #00d4ff;">PlatformBudget</span>&gt;,</div>
+<div class="code-line">    <span class="code-keyword" style="color: #ff2d9b;">pub</span> activity_log: <span class="code-type" style="color: #00d4ff;">Vec</span>&lt;<span class="code-type" style="color: #00d4ff;">ActivityEntry</span>&gt;,</div>
+<div class="code-line">    <span class="code-keyword" style="color: #ff2d9b;">pub</span> filesafe_guards: <span class="code-type" style="color: #00d4ff;">FileSafeConfig</span>,</div>
+<div class="code-line">    <span class="code-keyword" style="color: #ff2d9b;">pub</span> pending_action: <span class="code-type" style="color: #00d4ff;">Option</span>&lt;<span class="code-type" style="color: #00d4ff;">HitlAction</span>&gt;,</div>
+<div class="code-line">}</div>
+<div class="code-line"></div>
+<div class="code-line"><span class="code-keyword" style="color: #ff2d9b;">impl</span> <span class="code-type" style="color: #00d4ff;">DashboardView</span> {</div>
+<div class="code-line">    <span class="code-keyword" style="color: #ff2d9b;">pub fn</span> <span class="code-fn" style="color: #b4ff39;">view</span>(&amp;<span class="code-keyword" style="color: #ff2d9b;">self</span>) -&gt; <span class="code-type" style="color: #00d4ff;">Element</span>&lt;<span class="code-type" style="color: #00d4ff;">Message</span>&gt; {</div>
+<div class="code-line">        <span class="code-keyword" style="color: #ff2d9b;">let</span> header = <span class="code-fn" style="color: #b4ff39;">self</span>.<span class="code-fn" style="color: #b4ff39;">render_header</span>();</div>
+<div class="code-line">        <span class="code-keyword" style="color: #ff2d9b;">let</span> grid = <span class="code-fn" style="color: #b4ff39;">self</span>.<span class="code-fn" style="color: #b4ff39;">render_card_grid</span>();</div>
+<div class="code-line">        <span class="code-keyword" style="color: #ff2d9b;">let</span> cta = <span class="code-fn" style="color: #b4ff39;">self</span>.<span class="code-fn" style="color: #b4ff39;">render_cta_panel</span>();</div>
+<div class="code-line"></div>
+<div class="code-line">        <span class="code-type" style="color: #00d4ff;">Container</span>::<span class="code-fn" style="color: #b4ff39;">new</span>(</div>
+<div class="code-line">            <span class="code-type" style="color: #00d4ff;">Column</span>::<span class="code-fn" style="color: #b4ff39;">new</span>()</div>
+<div class="code-line">                .<span class="code-fn" style="color: #b4ff39;">push</span>(header)</div>
+<div class="code-line">                .<span class="code-fn" style="color: #b4ff39;">push</span>(grid)</div>
+<div class="code-line">                .<span class="code-fn" style="color: #b4ff39;">push</span>(cta)</div>
+<div class="code-line">        ).<span class="code-fn" style="color: #b4ff39;">into</span>()</div>
+    </div>
+
+    <!-- Minimap -->
+    <div class="minimap" style="width: 60px; flex-shrink: 0; border-left: 1px solid var(--border, rgba(232,224,208,0.12)); position: relative; overflow: hidden;">
+      <!-- Viewport indicator -->
+      <div class="minimap-viewport" style="position: absolute; top: 0; width: 100%; height: 80px; background: rgba(232,224,208,0.06); border: 1px solid rgba(232,224,208,0.15);"></div>
+      <!-- Color blocks representing code density -->
+      <div style="padding: 4px 6px;">
+        <div style="height: 2px; width: 70%; background: #ff2d9b; margin-bottom: 2px; opacity: 0.5;"></div>
+        <div style="height: 2px; width: 85%; background: #00d4ff; margin-bottom: 2px; opacity: 0.5;"></div>
+        <div style="height: 2px; width: 0%; margin-bottom: 2px;"></div>
+        <div style="height: 2px; width: 60%; background: rgba(232,224,208,0.2); margin-bottom: 2px;"></div>
+        <div style="height: 2px; width: 60%; background: rgba(232,224,208,0.2); margin-bottom: 2px;"></div>
+        <div style="height: 2px; width: 50%; background: #ff2d9b; margin-bottom: 2px; opacity: 0.5;"></div>
+        <div style="height: 2px; width: 90%; background: var(--text-primary, #e8e0d0); margin-bottom: 2px; opacity: 0.3;"></div>
+        <div style="height: 2px; width: 80%; background: var(--text-primary, #e8e0d0); margin-bottom: 2px; opacity: 0.3;"></div>
+        <div style="height: 2px; width: 75%; background: var(--text-primary, #e8e0d0); margin-bottom: 2px; opacity: 0.3;"></div>
+        <div style="height: 2px; width: 80%; background: #00d4ff; margin-bottom: 2px; opacity: 0.5;"></div>
+        <div style="height: 2px; width: 80%; background: var(--text-primary, #e8e0d0); margin-bottom: 2px; opacity: 0.3;"></div>
+        <div style="height: 2px; width: 75%; background: var(--text-primary, #e8e0d0); margin-bottom: 2px; opacity: 0.3;"></div>
+        <div style="height: 2px; width: 65%; background: var(--text-primary, #e8e0d0); margin-bottom: 2px; opacity: 0.3;"></div>
+        <div style="height: 2px; width: 0%; margin-bottom: 2px;"></div>
+        <div style="height: 2px; width: 50%; background: #ff2d9b; margin-bottom: 2px; opacity: 0.5;"></div>
+        <div style="height: 2px; width: 75%; background: var(--text-primary, #e8e0d0); margin-bottom: 2px; opacity: 0.3;"></div>
+        <div style="height: 2px; width: 70%; background: var(--text-primary, #e8e0d0); margin-bottom: 2px; opacity: 0.3;"></div>
+        <div style="height: 2px; width: 70%; background: var(--text-primary, #e8e0d0); margin-bottom: 2px; opacity: 0.3;"></div>
+        <div style="height: 2px; width: 0%; margin-bottom: 2px;"></div>
+        <div style="height: 2px; width: 65%; background: #00d4ff; margin-bottom: 2px; opacity: 0.5;"></div>
+        <div style="height: 2px; width: 60%; background: #b4ff39; margin-bottom: 2px; opacity: 0.5;"></div>
+        <div style="height: 2px; width: 60%; background: #b4ff39; margin-bottom: 2px; opacity: 0.5;"></div>
+        <div style="height: 2px; width: 60%; background: #b4ff39; margin-bottom: 2px; opacity: 0.5;"></div>
+        <div style="height: 2px; width: 55%; background: var(--text-primary, #e8e0d0); margin-bottom: 2px; opacity: 0.3;"></div>
+        <div style="height: 2px; width: 40%; background: var(--text-primary, #e8e0d0); margin-bottom: 2px; opacity: 0.3;"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ============================== -->
+<!-- Settings View (placeholder)     -->
+<!-- ============================== -->
+
+<div class="view view-settings" style="display: none;">
+  <div style="padding: 24px; font-size: 14px; color: var(--text-secondary, rgba(232,224,208,0.6));">Settings view content</div>
+</div>
+
+
+<!-- ============================== -->
+<!-- Usage View (placeholder)        -->
+<!-- ============================== -->
+
+<div class="view view-usage" style="display: none;">
+  <div style="padding: 24px; font-size: 14px; color: var(--text-secondary, rgba(232,224,208,0.6));">Usage analytics content</div>
+</div>
+
+
+<!-- ============================== -->
+<!-- Interview View (placeholder)    -->
+<!-- ============================== -->
+
+<div class="view view-interview" style="display: none;">
+  <div style="padding: 24px; font-size: 14px; color: var(--text-secondary, rgba(232,224,208,0.6));">Interview wizard content</div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SECTION 3: BOTTOM DOCK BAR                                    -->
+<!-- ============================================================ -->
+
+<div class="dock-bar">
+
+  <!-- Left group: View navigation -->
+  <div class="dock-views">
+
+    <!-- Home (active) -->
+    <button class="dock-icon active" title="Home">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 10.5L10 3.5L17 10.5"/>
+        <path d="M5 9.5V16.5H8V12.5H12V16.5H15V9.5"/>
+      </svg>
+      <span class="dock-label">HOME</span>
+    </button>
+
+    <!-- Workspace -->
+    <button class="dock-icon" title="Workspace">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 4L2 10L6 16"/>
+        <path d="M14 4L18 10L14 16"/>
+        <path d="M12 3L8 17"/>
+      </svg>
+      <span class="dock-label">WORKSPACE</span>
+    </button>
+
+    <!-- Settings -->
+    <button class="dock-icon" title="Settings">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 5h12M4 10h12M4 15h12"/>
+        <circle cx="8" cy="5" r="1.5" fill="currentColor"/>
+        <circle cx="13" cy="10" r="1.5" fill="currentColor"/>
+        <circle cx="6" cy="15" r="1.5" fill="currentColor"/>
+      </svg>
+      <span class="dock-label">SETTINGS</span>
+    </button>
+
+    <!-- Usage -->
+    <button class="dock-icon" title="Usage">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 17V10"/>
+        <path d="M7 17V6"/>
+        <path d="M11 17V12"/>
+        <path d="M15 17V3"/>
+      </svg>
+      <span class="dock-label">USAGE</span>
+    </button>
+
+    <!-- Interview -->
+    <button class="dock-icon" title="Interview">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 3h10v7H5L2 13V3z"/>
+        <path d="M8 10h8v7l-3-3H8V10z"/>
+      </svg>
+      <span class="dock-label">INTERVIEW</span>
+    </button>
+
+  </div>
+
+  <!-- Divider -->
+  <div class="dock-divider"></div>
+
+  <!-- Right group: Drawer toggles -->
+  <div class="dock-drawers">
+
+    <!-- Files drawer -->
+    <button class="dock-icon" title="Files" data-drawer="left">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 5h5l2 2h9v10H2V5z"/>
+      </svg>
+      <span class="dock-label">FILES</span>
+      <span class="drawer-indicator"></span>
+    </button>
+
+    <!-- Chat drawer -->
+    <button class="dock-icon" title="Chat" data-drawer="right">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 3h14v10H7L3 17V3z"/>
+        <path d="M7 7h6M7 10h4"/>
+      </svg>
+      <span class="dock-label">CHAT</span>
+      <span class="drawer-indicator"></span>
+    </button>
+
+    <!-- Terminal drawer -->
+    <button class="dock-icon" title="Terminal" data-drawer="bottom">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="3" width="16" height="14"/>
+        <path d="M5 8l3 3l-3 3"/>
+        <path d="M11 14h4"/>
+      </svg>
+      <span class="dock-label">TERMINAL</span>
+      <span class="drawer-indicator"></span>
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- ============================================================================
+     PUPPET MASTER -- DRAWER PANELS & WORKSPACE EDITOR
+     Visual reference only. Production app uses Rust + Slint.
+     Raw HTML elements only. No doctype, head, style, or script tags.
+     ============================================================================ -->
+
+
+<!-- ============================================================================
+     SECTION 1: FILE MANAGER DRAWER (slides in from LEFT, 320px wide)
+     ============================================================================ -->
+
+<div class="drawer-left">
+
+  <!-- Drawer Header -->
+  <div class="drawer-header">
+    <span class="drawer-title">EXPLORER</span>
+    <span class="drawer-spacer"></span>
+    <button class="drawer-close">X</button>
+  </div>
+
+  <!-- File Search -->
+  <div class="fm-search">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="5.5" cy="5.5" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="9" y1="9" x2="13" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+    </svg>
+    <input type="text" placeholder="Search files..." readonly>
+  </div>
+
+  <!-- File Tree -->
+  <div class="fm-tree">
+
+    <!-- src/ (expanded) -->
+    <div class="fm-tree-item folder" data-depth="0">
+      <span class="fm-arrow">&#9660;</span>
+      <svg class="fm-folder-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 3V10H11V4H6L5 3H1Z" stroke="currentColor" stroke-width="1" fill="none"/>
+      </svg>
+      <span class="fm-name">src/</span>
+    </div>
+
+      <!-- app.rs (modified) -->
+      <div class="fm-tree-item" data-depth="1">
+        <span class="fm-name">app.rs</span>
+        <span class="fm-git modified">M</span>
+        <span class="fm-badge rs">rs</span>
+      </div>
+
+      <!-- main.rs -->
+      <div class="fm-tree-item" data-depth="1">
+        <span class="fm-name">main.rs</span>
+        <span class="fm-badge rs">rs</span>
+      </div>
+
+      <!-- views/ (expanded) -->
+      <div class="fm-tree-item folder" data-depth="1">
+        <span class="fm-arrow">&#9660;</span>
+        <svg class="fm-folder-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 3V10H11V4H6L5 3H1Z" stroke="currentColor" stroke-width="1" fill="none"/>
+        </svg>
+        <span class="fm-name">views/</span>
+      </div>
+
+        <!-- dashboard.rs (selected) -->
+        <div class="fm-tree-item selected" data-depth="2">
+          <span class="fm-name">dashboard.rs</span>
+          <span class="fm-badge rs">rs</span>
+        </div>
+
+        <!-- config.rs (added) -->
+        <div class="fm-tree-item" data-depth="2">
+          <span class="fm-name">config.rs</span>
+          <span class="fm-git added">A</span>
+          <span class="fm-badge rs">rs</span>
+        </div>
+
+        <!-- settings.rs -->
+        <div class="fm-tree-item" data-depth="2">
+          <span class="fm-name">settings.rs</span>
+          <span class="fm-badge rs">rs</span>
+        </div>
+
+      <!-- widgets/ (collapsed) -->
+      <div class="fm-tree-item folder" data-depth="1">
+        <span class="fm-arrow">&#9654;</span>
+        <svg class="fm-folder-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 3V10H11V4H6L5 3H1Z" stroke="currentColor" stroke-width="1" fill="none"/>
+        </svg>
+        <span class="fm-name">widgets/</span>
+      </div>
+
+      <!-- platforms/ (collapsed) -->
+      <div class="fm-tree-item folder" data-depth="1">
+        <span class="fm-arrow">&#9654;</span>
+        <svg class="fm-folder-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 3V10H11V4H6L5 3H1Z" stroke="currentColor" stroke-width="1" fill="none"/>
+        </svg>
+        <span class="fm-name">platforms/</span>
+      </div>
+
+      <!-- core/ (expanded) -->
+      <div class="fm-tree-item folder" data-depth="1">
+        <span class="fm-arrow">&#9660;</span>
+        <svg class="fm-folder-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 3V10H11V4H6L5 3H1Z" stroke="currentColor" stroke-width="1" fill="none"/>
+        </svg>
+        <span class="fm-name">core/</span>
+      </div>
+
+        <!-- orchestrator.rs -->
+        <div class="fm-tree-item" data-depth="2">
+          <span class="fm-name">orchestrator.rs</span>
+          <span class="fm-badge rs">rs</span>
+        </div>
+
+        <!-- engine.rs -->
+        <div class="fm-tree-item" data-depth="2">
+          <span class="fm-name">engine.rs</span>
+          <span class="fm-badge rs">rs</span>
+        </div>
+
+    <!-- tests/ (collapsed) -->
+    <div class="fm-tree-item folder" data-depth="0">
+      <span class="fm-arrow">&#9654;</span>
+      <svg class="fm-folder-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 3V10H11V4H6L5 3H1Z" stroke="currentColor" stroke-width="1" fill="none"/>
+      </svg>
+      <span class="fm-name">tests/</span>
+    </div>
+
+    <!-- Cargo.toml -->
+    <div class="fm-tree-item" data-depth="0">
+      <span class="fm-name">Cargo.toml</span>
+      <span class="fm-badge toml">toml</span>
+    </div>
+
+    <!-- README.md -->
+    <div class="fm-tree-item" data-depth="0">
+      <span class="fm-name">README.md</span>
+      <span class="fm-badge md">md</span>
+    </div>
+
+    <!-- AGENTS.md -->
+    <div class="fm-tree-item" data-depth="0">
+      <span class="fm-name">AGENTS.md</span>
+      <span class="fm-badge md">md</span>
+    </div>
+
+  </div>
+
+  <!-- File Manager Status Bar -->
+  <div class="fm-status">
+    <span>42 files</span>
+    <span class="fm-status-sep">|</span>
+    <span>3 modified</span>
+    <span class="fm-status-sep">|</span>
+    <span class="fm-branch">main</span>
+    <span class="fm-status-spacer"></span>
+    <span class="fm-push-count">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 1L5 9M2 4L5 1L8 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+      </svg>
+      2
+    </span>
+  </div>
+
+</div>
+
+
+<!-- ============================================================================
+     SECTION 2: CHAT DRAWER (slides in from RIGHT, 400px wide)
+     ============================================================================ -->
+
+<div class="drawer-right">
+
+  <!-- Drawer Header -->
+  <div class="drawer-header">
+    <span class="drawer-title">CHAT</span>
+    <span class="drawer-thread-count">5 threads</span>
+    <span class="drawer-spacer"></span>
+    <button class="drawer-toggle-threads">&#9776;</button>
+    <button class="drawer-close">X</button>
+  </div>
+
+  <!-- Chat Body: flex row containing thread sidebar + messages area -->
+  <div class="chat-body">
+
+    <!-- Thread Sidebar -->
+    <div class="chat-threads">
+
+      <div class="chat-thread active">
+        <span class="chat-thread-name">Auth Module Design</span>
+        <span class="chat-thread-time">2m ago</span>
+      </div>
+
+      <div class="chat-thread">
+        <span class="chat-thread-name">Bug Fix: Login Flow</span>
+        <span class="chat-thread-time">15m ago</span>
+      </div>
+
+      <div class="chat-thread">
+        <span class="chat-thread-name">Phase 2 Planning</span>
+        <span class="chat-thread-time">1h ago</span>
+      </div>
+
+      <div class="chat-thread">
+        <span class="chat-thread-name">Code Review Notes</span>
+        <span class="chat-thread-time">3h ago</span>
+      </div>
+
+      <div class="chat-thread">
+        <span class="chat-thread-name">Project Setup</span>
+        <span class="chat-thread-time">Yesterday</span>
+      </div>
+
+    </div>
+
+    <!-- Messages Area -->
+    <div class="chat-messages">
+
+      <!-- Message 1: User -->
+      <div class="chat-msg from-user">
+        <div class="chat-avatar">U</div>
+        <div class="msg-bubble">
+          Can you implement the authentication module for the dashboard? It needs JWT token validation and role-based access control.
+        </div>
+        <div class="msg-time">2:31 PM</div>
+      </div>
+
+      <!-- Message 2: Assistant -->
+      <div class="chat-msg from-ai">
+        <div class="chat-avatar">PM</div>
+        <div class="msg-bubble">
+          <p>I'll implement the authentication module with JWT validation and RBAC. Here's the approach:</p>
+          <ul>
+            <li>Token validation middleware using <code>jsonwebtoken</code> crate</li>
+            <li>Role enum: Admin, Editor, Viewer</li>
+            <li>Guard trait for route protection</li>
+          </ul>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-lang">rust</span>
+              <button class="code-copy-btn">COPY</button>
+            </div>
+<pre>#[derive(Debug, Clone, PartialEq)]
+pub enum Role {
+    Admin,
+    Editor,
+    Viewer,
+}
+
+pub struct AuthGuard {
+    required_role: Role,
+}
+
+impl AuthGuard {
+    pub fn new(role: Role) -&gt; Self {
+        Self { required_role: role }
+    }
+
+    pub fn validate(&amp;self, token: &amp;str) -&gt; Result&lt;Claims, AuthError&gt; {
+        let claims = decode_token(token)?;
+        if claims.role &gt;= self.required_role {
+            Ok(claims)
+        } else {
+            Err(AuthError::InsufficientPermissions)
+        }
+    }
+}</pre>
+          </div>
+          <div class="msg-files-strip">src/auth/mod.rs +45/-0 | src/auth/guard.rs +32/-0</div>
+        </div>
+        <div class="msg-time">2:32 PM</div>
+      </div>
+
+      <!-- Message 3: User -->
+      <div class="chat-msg from-user">
+        <div class="chat-avatar">U</div>
+        <div class="msg-bubble">
+          Looks good. Can you add session expiry handling too?
+        </div>
+        <div class="msg-time">2:33 PM</div>
+      </div>
+
+      <!-- Message 4: Thinking -->
+      <div class="chat-msg from-ai thinking">
+        <div class="chat-avatar">PM</div>
+        <div class="msg-bubble">
+          Thinking<span class="thinking-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Subagent Strip -->
+  <div class="subagent-strip">
+    <span class="subagent-label">&gt; 2 subagents active</span>
+    <span class="subagent-badge badge-blue">Claude</span>
+    <span class="subagent-badge badge-lime">Codex</span>
+  </div>
+
+  <!-- Composer -->
+  <div class="chat-composer">
+    <textarea placeholder="Ask anything... (Ctrl+Enter to send)" rows="3"></textarea>
+    <div class="chat-dropzone-hint">Drop files or @ to mention</div>
+    <div class="chat-footer">
+      <div class="chat-footer-selects">
+        <select class="chat-select">
+          <option>Agent</option>
+          <option>Ask</option>
+          <option>Plan</option>
+          <option>Debug</option>
+        </select>
+        <select class="chat-select">
+          <option>Cursor</option>
+        </select>
+        <select class="chat-select">
+          <option>claude-sonnet-4</option>
+        </select>
+        <select class="chat-select">
+          <option>Low</option>
+          <option selected>Medium</option>
+          <option>High</option>
+        </select>
+      </div>
+      <div class="chat-footer-actions">
+        <button class="btn-primary">SEND <span class="btn-hint">Ctrl+Enter</span></button>
+        <button class="btn-secondary">QUEUE</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ============================================================================
+     SECTION 3: TERMINAL DRAWER (pulls UP from bottom, 260px tall)
+     ============================================================================ -->
+
+<div class="drawer-bottom">
+
+  <!-- Drawer Header with Tabs -->
+  <div class="drawer-header">
+    <div class="drawer-tabs">
+      <span class="drawer-tab active">Terminal</span>
+      <span class="drawer-tab">Problems <span class="tab-badge">3</span></span>
+      <span class="drawer-tab">Output</span>
+      <span class="drawer-tab">Ports</span>
+      <span class="drawer-tab">Browser</span>
+      <span class="drawer-tab">Debug</span>
+    </div>
+    <span class="drawer-spacer"></span>
+    <button class="drawer-maximize">&#9633;</button>
+    <button class="drawer-close">X</button>
+  </div>
+
+  <!-- Terminal Grid (2x2) -->
+  <div class="term-grid">
+
+    <!-- Pane 1: Build output (green text) -->
+    <div class="term-pane term-pane-1">
+<span class="t-prompt">$</span> cargo build --release
+<span class="t-compile">   Compiling</span> puppet-master v2.0.0
+<span class="t-compile">   Compiling</span> slint-build v1.15.1
+     Running `target/release/puppet-master`
+<span class="t-info">[INFO]</span> Puppet Master v2.0.0 starting...
+<span class="t-info">[INFO]</span> Backend: winit + Skia
+<span class="t-ok">[OK]</span> All systems ready.
+    </div>
+
+    <!-- Pane 2: Warnings/errors (magenta text) -->
+    <div class="term-pane term-pane-2">
+<span class="t-warn">[WARN]</span> Platform Gemini: auth token expires in 2h
+<span class="t-error">[ERROR]</span> Failed to connect to LSP: rust-analyzer
+  --&gt; Connection refused (port 27015)
+<span class="t-warn">[WARN]</span> Retrying in 5s...
+<span class="t-info">[INFO]</span> LSP connected successfully
+    </div>
+
+    <!-- Pane 3: Agent activity (orange text) -->
+    <div class="term-pane term-pane-3">
+<span class="t-agent">[AGENT]</span> Claude Code: Starting Phase 2, Task 3
+<span class="t-agent">[AGENT]</span> Reading src/auth/mod.rs...
+<span class="t-agent">[AGENT]</span> Executing: cargo test auth::tests
+<span class="t-agent">[AGENT]</span> 4/4 tests passed
+<span class="t-agent">[AGENT]</span> Writing src/auth/guard.rs (+32 lines)
+<span class="t-agent">[AGENT]</span> Task complete: auth module
+    </div>
+
+    <!-- Pane 4: Empty shell -->
+    <div class="term-pane term-pane-4">
+<span class="t-prompt">$</span> <span class="cursor-blink">_</span>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ============================================================================
+     SECTION 4: DRAWER BACKDROP
+     ============================================================================ -->
+
+<div class="drawer-backdrop"></div>
+
+
+<!-- ============================================================================
+     SECTION 5: OVERLAY ELEMENTS
+     ============================================================================ -->
+
+<div class="pixel-grid-overlay"></div>
+<div class="scanline-overlay"></div>
+
+
+  <script>
+/* ===========================================================================
+   PUPPET MASTER -- Mission Control IDE Mockup
+   Complete JavaScript: themes, dock-bar nav, drawers, file tree, chat,
+   editor tabs, keyboard shortcuts, command strip.
+   ===========================================================================
+   NO EMOJIS ANYWHERE. Plain ASCII only.
+   =========================================================================== */
+
+(function () {
+  'use strict';
+
+  /* -----------------------------------------------------------------------
+     CONSTANTS
+     ----------------------------------------------------------------------- */
+
+  var THEMES = ['dark', 'light', 'basic'];
+
+  var VIEW_ORDER = ['dashboard', 'workspace', 'settings', 'usage', 'interview'];
+
+  var DRAWER_DIRECTIONS = ['left', 'right', 'bottom'];
+
+  var STORAGE_KEY_THEME = 'puppet-master-theme';
+
+  /* -----------------------------------------------------------------------
+     UTILITY HELPERS
+     ----------------------------------------------------------------------- */
+
+  /**
+   * Shorthand for querySelectorAll, returned as a real array.
+   */
+  function qsa(selector, root) {
+    return Array.prototype.slice.call((root || document).querySelectorAll(selector));
+  }
+
+  /**
+   * Shorthand for querySelector.
+   */
+  function qs(selector, root) {
+    return (root || document).querySelector(selector);
+  }
+
+  /**
+   * Safely read an integer data attribute. Returns 0 when missing.
+   */
+  function getDepth(element) {
+    var raw = element ? element.getAttribute('data-depth') : null;
+    return raw !== null ? parseInt(raw, 10) : 0;
+  }
+
+  /* -----------------------------------------------------------------------
+     THEME SYSTEM
+     ----------------------------------------------------------------------- */
+
+  /**
+   * Read the stored theme from localStorage. Falls back to 'dark'.
+   */
+  function getStoredTheme() {
+    try {
+      var stored = localStorage.getItem(STORAGE_KEY_THEME);
+      if (stored && THEMES.indexOf(stored) !== -1) {
+        return stored;
+      }
+    } catch (e) {
+      /* localStorage may be unavailable in some contexts */
+    }
+    return 'dark';
+  }
+
+  /**
+   * Apply a theme by name. Updates body classes, overlay visibility,
+   * theme button active states, and persists to localStorage.
+   */
+  function setTheme(theme) {
+    if (THEMES.indexOf(theme) === -1) {
+      theme = 'dark';
+    }
+
+    /* Remove all theme classes from body */
+    var body = document.body;
+    THEMES.forEach(function (t) {
+      body.classList.remove('theme-' + t);
+    });
+
+    /* Dark theme is the default (no class), but we still add it for
+       selector consistency -- the CSS :root already covers it. */
+    if (theme !== 'dark') {
+      body.classList.add('theme-' + theme);
+    }
+
+    /* Pixel-grid and scanline overlays should be hidden in basic mode */
+    var pixelGrid = qs('.pixel-grid-overlay');
+    var scanline = qs('.scanline-overlay');
+    if (pixelGrid) {
+      pixelGrid.style.display = theme === 'basic' ? 'none' : '';
+    }
+    if (scanline) {
+      scanline.style.display = theme === 'basic' ? 'none' : '';
+    }
+
+    /* Update active state on individual theme buttons (data-theme) */
+    qsa('.theme-btn').forEach(function (btn) {
+      var btnTheme = btn.getAttribute('data-theme');
+      if (btnTheme === theme) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    /* Update a single cycle-toggle button label if it exists */
+    var cycleBtn = qs('#theme-toggle-btn');
+    if (cycleBtn) {
+      cycleBtn.textContent = theme.charAt(0).toUpperCase() + theme.slice(1);
+    }
+
+    /* Persist */
+    try {
+      localStorage.setItem(STORAGE_KEY_THEME, theme);
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  /**
+   * Cycle through dark -> light -> basic -> dark.
+   */
+  function cycleTheme() {
+    var current = getStoredTheme();
+    var idx = THEMES.indexOf(current);
+    var next = THEMES[(idx + 1) % THEMES.length];
+    setTheme(next);
+  }
+
+  /* -----------------------------------------------------------------------
+     DOCK-BAR NAVIGATION (views)
+     ----------------------------------------------------------------------- */
+
+  /**
+   * Setup click handlers on .dock-views .dock-icon elements.
+   * Each icon carries a data-view attribute matching a .view-{name} element.
+   */
+  function setupDockNavigation() {
+    var viewIcons = qsa('.dock-views .dock-icon');
+    if (viewIcons.length === 0) return;
+
+    viewIcons.forEach(function (icon) {
+      icon.addEventListener('click', function () {
+        var viewName = icon.getAttribute('data-view');
+        if (!viewName) return;
+
+        /* Deactivate all view icons */
+        viewIcons.forEach(function (i) {
+          i.classList.remove('active');
+        });
+
+        /* Activate the clicked icon */
+        icon.classList.add('active');
+
+        /* Hide all views */
+        qsa('.view').forEach(function (v) {
+          v.classList.remove('active');
+          v.style.display = 'none';
+        });
+
+        /* Show matching view */
+        var target = qs('.view-' + viewName);
+        if (target) {
+          /* Use flex for views that need it, block as fallback */
+          var displayValue = 'flex';
+          var computedBefore = window.getComputedStyle(target).flexDirection;
+          if (computedBefore) {
+            displayValue = 'flex';
+          } else {
+            displayValue = 'block';
+          }
+          target.style.display = displayValue;
+          /* Force reflow so the opacity transition fires */
+          void target.offsetWidth;
+          target.classList.add('active');
+        }
+      });
+    });
+  }
+
+  /* -----------------------------------------------------------------------
+     DRAWER SYSTEM
+     ----------------------------------------------------------------------- */
+
+  /**
+   * Determine whether ANY drawer is currently open.
+   */
+  function anyDrawerOpen() {
+    return DRAWER_DIRECTIONS.some(function (dir) {
+      var drawer = qs('.drawer-' + dir);
+      return drawer && drawer.classList.contains('open');
+    });
+  }
+
+  /**
+   * Synchronise the backdrop visibility with current drawer state.
+   */
+  function syncBackdrop() {
+    var backdrop = qs('.drawer-backdrop');
+    if (!backdrop) return;
+
+    if (anyDrawerOpen()) {
+      backdrop.classList.add('visible');
+    } else {
+      backdrop.classList.remove('visible');
+    }
+  }
+
+  /**
+   * Close a specific drawer by direction string ('left', 'right', 'bottom').
+   */
+  function closeDrawer(direction) {
+    var drawer = qs('.drawer-' + direction);
+    if (drawer) {
+      drawer.classList.remove('open');
+    }
+
+    /* Remove the indicator on the corresponding dock icon */
+    var icon = qs('.dock-drawers .dock-icon[data-drawer="' + direction + '"]');
+    if (icon) {
+      icon.classList.remove('drawer-open');
+    }
+
+    syncBackdrop();
+  }
+
+  /**
+   * Close every drawer and hide the backdrop.
+   */
+  function closeAllDrawers() {
+    DRAWER_DIRECTIONS.forEach(function (dir) {
+      closeDrawer(dir);
+    });
+  }
+
+  /**
+   * Toggle a specific drawer open/closed.
+   */
+  function toggleDrawer(direction) {
+    var drawer = qs('.drawer-' + direction);
+    var icon = qs('.dock-drawers .dock-icon[data-drawer="' + direction + '"]');
+    if (!drawer) return;
+
+    var isOpen = drawer.classList.contains('open');
+
+    if (isOpen) {
+      drawer.classList.remove('open');
+      if (icon) icon.classList.remove('drawer-open');
+    } else {
+      drawer.classList.add('open');
+      if (icon) icon.classList.add('drawer-open');
+    }
+
+    syncBackdrop();
+  }
+
+  /**
+   * Wire up click handlers on .dock-drawers .dock-icon elements.
+   * Each icon carries a data-drawer attribute: 'left', 'right', or 'bottom'.
+   */
+  function setupDrawerToggles() {
+    var drawerIcons = qsa('.dock-drawers .dock-icon');
+    if (drawerIcons.length === 0) return;
+
+    drawerIcons.forEach(function (icon) {
+      icon.addEventListener('click', function () {
+        var direction = icon.getAttribute('data-drawer');
+        if (!direction) return;
+        toggleDrawer(direction);
+      });
+    });
+  }
+
+  /* -----------------------------------------------------------------------
+     FILE TREE INTERACTION
+     ----------------------------------------------------------------------- */
+
+  /**
+   * Walk next-siblings of a folder element and collect all items whose
+   * data-depth is strictly greater than the folder's own depth.
+   * Stops as soon as it encounters an element with depth <= folder depth.
+   */
+  function getTreeChildren(folder) {
+    var children = [];
+    var parentDepth = getDepth(folder);
+    var sibling = folder.nextElementSibling;
+
+    while (sibling) {
+      if (!sibling.classList.contains('fm-tree-item')) {
+        sibling = sibling.nextElementSibling;
+        continue;
+      }
+
+      var sibDepth = getDepth(sibling);
+      if (sibDepth <= parentDepth) {
+        break;
+      }
+
+      children.push(sibling);
+      sibling = sibling.nextElementSibling;
+    }
+
+    return children;
+  }
+
+  /**
+   * Set up collapsing/expanding for folders and selection for file items
+   * inside the .fm-tree container.
+   */
+  function setupFileTree() {
+    /* Folder click: toggle collapse */
+    qsa('.fm-tree-item.folder').forEach(function (folder) {
+      folder.addEventListener('click', function (e) {
+        e.stopPropagation();
+
+        var arrow = qs('.fm-arrow', folder);
+        var children = getTreeChildren(folder);
+        var isExpanded = arrow && arrow.textContent.charCodeAt(0) === 9660; /* down triangle */
+
+        if (isExpanded) {
+          /* Collapse: hide children, swap arrow to right-pointing */
+          if (arrow) arrow.innerHTML = '&#9654;'; /* right-pointing triangle */
+          children.forEach(function (child) {
+            child.style.display = 'none';
+
+            /* If a child is itself a folder that is expanded, recursively
+               hide its descendants too, so re-expanding the parent later
+               preserves collapsed children. */
+          });
+        } else {
+          /* Expand: show immediate children (not recursively deeper) */
+          if (arrow) arrow.innerHTML = '&#9660;'; /* down-pointing triangle */
+          var folderDepth = getDepth(folder);
+          children.forEach(function (child) {
+            var childDepth = getDepth(child);
+            /* Only show direct children (depth == parentDepth + 1).
+               Deeper items remain hidden if their parent folder is collapsed. */
+            if (childDepth === folderDepth + 1) {
+              child.style.display = '';
+            } else if (child.classList.contains('fm-tree-item')) {
+              /* For deeper items, only show if their immediate parent folder
+                 is expanded. Walk backwards to determine. */
+              var parentFolder = findParentFolder(child, folderDepth + 1);
+              if (parentFolder && isFolderExpanded(parentFolder)) {
+                child.style.display = '';
+              }
+            }
+          });
+        }
+      });
+    });
+
+    /* Non-folder item click: select */
+    qsa('.fm-tree-item').forEach(function (item) {
+      if (item.classList.contains('folder')) return;
+
+      item.addEventListener('click', function (e) {
+        e.stopPropagation();
+
+        /* Deselect all */
+        qsa('.fm-tree-item').forEach(function (i) {
+          i.classList.remove('selected');
+        });
+
+        /* Select clicked */
+        item.classList.add('selected');
+      });
+    });
+  }
+
+  /**
+   * Walk backwards from an item to find its nearest parent folder at a given depth.
+   */
+  function findParentFolder(item, atDepth) {
+    var prev = item.previousElementSibling;
+    while (prev) {
+      if (
+        prev.classList.contains('fm-tree-item') &&
+        prev.classList.contains('folder') &&
+        getDepth(prev) === atDepth
+      ) {
+        return prev;
+      }
+      if (prev.classList.contains('fm-tree-item') && getDepth(prev) < atDepth) {
+        break;
+      }
+      prev = prev.previousElementSibling;
+    }
+    return null;
+  }
+
+  /**
+   * Check if a folder element is currently expanded (arrow is down-pointing).
+   */
+  function isFolderExpanded(folder) {
+    var arrow = qs('.fm-arrow', folder);
+    if (!arrow) return false;
+    return arrow.textContent.charCodeAt(0) === 9660;
+  }
+
+  /* -----------------------------------------------------------------------
+     EDITOR TAB SWITCHING
+     ----------------------------------------------------------------------- */
+
+  function setupEditorTabs() {
+    /* Support both class names used in the HTML mockups */
+    var tabContainers = qsa('.workspace-tabs, .editor-tab-bar, .editor-tabs');
+
+    tabContainers.forEach(function (container) {
+      container.addEventListener('click', function (e) {
+        var tab = e.target.closest('.editor-tab, .tab');
+        if (!tab) return;
+
+        /* Deactivate siblings */
+        qsa('.editor-tab, .tab', container).forEach(function (t) {
+          t.classList.remove('active');
+        });
+
+        /* Activate clicked */
+        tab.classList.add('active');
+      });
+    });
+  }
+
+  /* -----------------------------------------------------------------------
+     CHAT INTERACTIONS
+     ----------------------------------------------------------------------- */
+
+  /**
+   * Thread selection: clicking a thread marks it active and deactivates others.
+   */
+  function setupChatThreads() {
+    var container = qs('.chat-threads');
+    if (!container) return;
+
+    container.addEventListener('click', function (e) {
+      var thread = e.target.closest('.chat-thread');
+      if (!thread) return;
+
+      qsa('.chat-thread', container).forEach(function (t) {
+        t.classList.remove('active');
+      });
+
+      thread.classList.add('active');
+    });
+  }
+
+  /**
+   * Thread sidebar toggle: a button in the drawer-right header toggles
+   * the thread sidebar visibility.
+   */
+  function setupChatThreadToggle() {
+    var toggleBtn = qs('.drawer-toggle-threads');
+    if (!toggleBtn) return;
+
+    toggleBtn.addEventListener('click', function () {
+      var threads = qs('.chat-threads');
+      if (!threads) return;
+
+      var isHidden =
+        threads.style.display === 'none' ||
+        window.getComputedStyle(threads).display === 'none';
+
+      threads.style.display = isHidden ? '' : 'none';
+    });
+  }
+
+  /**
+   * Chat mode tabs (Ask, Plan, Int, BS, Cw, etc.)
+   */
+  function setupChatModeTabs() {
+    qsa('.chat-mode-tabs').forEach(function (tabBar) {
+      tabBar.addEventListener('click', function (e) {
+        var tab = e.target.closest('.tab');
+        if (!tab) return;
+
+        qsa('.tab', tabBar).forEach(function (t) {
+          t.classList.remove('active');
+        });
+
+        tab.classList.add('active');
+      });
+    });
+  }
+
+  /* -----------------------------------------------------------------------
+     KEYBOARD SHORTCUTS
+     ----------------------------------------------------------------------- */
+
+  function setupKeyboardShortcuts() {
+    document.addEventListener('keydown', function (e) {
+      var mod = e.ctrlKey || e.metaKey;
+
+      /* Escape: close all drawers */
+      if (e.key === 'Escape') {
+        closeAllDrawers();
+        return;
+      }
+
+      if (!mod) return;
+
+      var handled = false;
+
+      switch (e.key.toLowerCase()) {
+        /* Ctrl+B: toggle file manager drawer (left) */
+        case 'b':
+          toggleDrawer('left');
+          handled = true;
+          break;
+
+        /* Ctrl+J: toggle terminal drawer (bottom) */
+        case 'j':
+          toggleDrawer('bottom');
+          handled = true;
+          break;
+
+        /* Ctrl+L: toggle chat drawer (right) */
+        case 'l':
+          toggleDrawer('right');
+          handled = true;
+          break;
+
+        /* Ctrl+1 through Ctrl+5: switch to view 1-5 */
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+          var viewIndex = parseInt(e.key, 10) - 1;
+          if (viewIndex >= 0 && viewIndex < VIEW_ORDER.length) {
+            activateViewByName(VIEW_ORDER[viewIndex]);
+            handled = true;
+          }
+          break;
+      }
+
+      if (handled) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    });
+  }
+
+  /**
+   * Programmatically activate a view by name, updating both the dock icon
+   * and the view panel.
+   */
+  function activateViewByName(viewName) {
+    /* Find the dock icon with matching data-view */
+    var icon = qs('.dock-views .dock-icon[data-view="' + viewName + '"]');
+    if (icon) {
+      icon.click();
+    } else {
+      /* Fallback: directly show the view even without a dock icon */
+      qsa('.view').forEach(function (v) {
+        v.classList.remove('active');
+        v.style.display = 'none';
+      });
+
+      var target = qs('.view-' + viewName);
+      if (target) {
+        target.style.display = 'flex';
+        void target.offsetWidth;
+        target.classList.add('active');
+      }
+    }
+  }
+
+  /* -----------------------------------------------------------------------
+     THEME BUTTONS
+     ----------------------------------------------------------------------- */
+
+  function setupThemeButtons() {
+    /* Individual theme buttons with data-theme */
+    qsa('.theme-btn[data-theme]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var theme = btn.getAttribute('data-theme');
+        if (theme) {
+          setTheme(theme);
+        }
+      });
+    });
+
+    /* Single cycle button */
+    var cycleBtn = qs('#theme-toggle-btn');
+    if (cycleBtn) {
+      cycleBtn.addEventListener('click', function () {
+        cycleTheme();
+      });
+    }
+  }
+
+  /* -----------------------------------------------------------------------
+     COMMAND STRIP INTERACTIVITY
+     ----------------------------------------------------------------------- */
+
+  function setupCommandStrip() {
+    var strip = qs('.command-strip');
+    if (!strip) return;
+
+    /* Wire up select elements within the command strip */
+    qsa('select', strip).forEach(function (sel) {
+      sel.addEventListener('change', function () {
+        var name = sel.getAttribute('name') || sel.className || 'unknown';
+        /* For the mockup, just log the change. In production this would
+           dispatch events or update state accordingly. */
+        if (typeof console !== 'undefined' && console.log) {
+          console.log('[Command Strip] ' + name + ' changed to: ' + sel.value);
+        }
+
+        /* If there is a status display element keyed by name, update it */
+        var statusEl = qs('.cs-status-' + name, strip);
+        if (statusEl) {
+          statusEl.textContent = sel.value;
+        }
+      });
+    });
+
+    /* Wire up any command-strip buttons */
+    qsa('.cs-btn', strip).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var action = btn.getAttribute('data-action');
+        if (action && typeof console !== 'undefined' && console.log) {
+          console.log('[Command Strip] Action: ' + action);
+        }
+      });
+    });
+  }
+
+  /* -----------------------------------------------------------------------
+     BOTTOM PANEL TABS (Terminal, Problems, Output, etc.)
+     ----------------------------------------------------------------------- */
+
+  function setupBottomPanelTabs() {
+    var containers = qsa('.drawer-tabs, .bottom-tabs');
+    containers.forEach(function (tabBar) {
+      tabBar.addEventListener('click', function (e) {
+        var tab = e.target.closest('.drawer-tab, .tab');
+        if (!tab) return;
+
+        qsa('.drawer-tab, .tab', tabBar).forEach(function (t) {
+          t.classList.remove('active');
+        });
+
+        tab.classList.add('active');
+      });
+    });
+  }
+
+  /* -----------------------------------------------------------------------
+     ACTIVITY BAR (legacy layout support)
+     ----------------------------------------------------------------------- */
+
+  function setupActivityBar() {
+    var bar = qs('.activity-bar');
+    if (!bar) return;
+
+    qsa('.icon', bar).forEach(function (icon) {
+      icon.addEventListener('click', function () {
+        qsa('.icon', bar).forEach(function (i) {
+          i.classList.remove('active');
+        });
+        icon.classList.add('active');
+      });
+    });
+  }
+
+  /* -----------------------------------------------------------------------
+     THREAD LIST (legacy chat panel in grid layout)
+     ----------------------------------------------------------------------- */
+
+  function setupThreadList() {
+    var list = qs('.thread-list');
+    if (!list) return;
+
+    list.addEventListener('click', function (e) {
+      var item = e.target.closest('.thread-item');
+      if (!item) return;
+
+      qsa('.thread-item', list).forEach(function (t) {
+        t.classList.remove('active');
+      });
+
+      item.classList.add('active');
+    });
+  }
+
+  /* -----------------------------------------------------------------------
+     DRAWER CLOSE BUTTONS
+     ----------------------------------------------------------------------- */
+
+  function setupDrawerCloseButtons() {
+    qsa('.drawer-close').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var drawer = btn.closest(
+          '.drawer-left, .drawer-right, .drawer-bottom'
+        );
+        if (!drawer) return;
+
+        if (drawer.classList.contains('drawer-left')) {
+          closeDrawer('left');
+        } else if (drawer.classList.contains('drawer-right')) {
+          closeDrawer('right');
+        } else if (drawer.classList.contains('drawer-bottom')) {
+          closeDrawer('bottom');
+        }
+      });
+    });
+  }
+
+  /* -----------------------------------------------------------------------
+     BACKDROP CLICK
+     ----------------------------------------------------------------------- */
+
+  function setupBackdropClick() {
+    var backdrop = qs('.drawer-backdrop');
+    if (!backdrop) return;
+
+    backdrop.addEventListener('click', function () {
+      closeAllDrawers();
+    });
+  }
+
+  /* -----------------------------------------------------------------------
+     RESIZE HANDLE (optional: drag-to-resize drawers)
+     ----------------------------------------------------------------------- */
+
+  function setupResizeHandles() {
+    qsa('.drawer-resize-handle').forEach(function (handle) {
+      var drawer = handle.closest(
+        '.drawer-left, .drawer-right, .drawer-bottom'
+      );
+      if (!drawer) return;
+
+      var isHorizontal =
+        drawer.classList.contains('drawer-left') ||
+        drawer.classList.contains('drawer-right');
+      var isLeft = drawer.classList.contains('drawer-left');
+      var startPos = 0;
+      var startSize = 0;
+
+      function onMouseMove(e) {
+        var delta;
+        if (isHorizontal) {
+          delta = isLeft ? e.clientX - startPos : startPos - e.clientX;
+          var newWidth = Math.max(200, Math.min(600, startSize + delta));
+          drawer.style.width = newWidth + 'px';
+        } else {
+          delta = startPos - e.clientY;
+          var newHeight = Math.max(120, Math.min(500, startSize + delta));
+          drawer.style.height = newHeight + 'px';
+        }
+      }
+
+      function onMouseUp() {
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+        document.body.style.userSelect = '';
+        document.body.style.cursor = '';
+      }
+
+      handle.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        startPos = isHorizontal ? e.clientX : e.clientY;
+        startSize = isHorizontal
+          ? drawer.offsetWidth
+          : drawer.offsetHeight;
+        document.body.style.userSelect = 'none';
+        document.body.style.cursor = isHorizontal ? 'ew-resize' : 'ns-resize';
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+      });
+    });
+  }
+
+  /* -----------------------------------------------------------------------
+     COPY CODE BUTTON (code blocks in chat)
+     ----------------------------------------------------------------------- */
+
+  function setupCopyButtons() {
+    document.addEventListener('click', function (e) {
+      var copyBtn = e.target.closest('.code-copy-btn, .copy-btn');
+      if (!copyBtn) return;
+
+      var block = copyBtn.closest('.code-block');
+      if (!block) return;
+
+      var pre = qs('pre', block);
+      if (!pre) return;
+
+      var text = pre.textContent || pre.innerText;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          var original = copyBtn.textContent;
+          copyBtn.textContent = 'COPIED';
+          setTimeout(function () {
+            copyBtn.textContent = original;
+          }, 1500);
+        });
+      } else {
+        /* Fallback for contexts without clipboard API */
+        var textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+          var orig = copyBtn.textContent;
+          copyBtn.textContent = 'COPIED';
+          setTimeout(function () {
+            copyBtn.textContent = orig;
+          }, 1500);
+        } catch (err) {
+          /* silent fail */
+        }
+        document.body.removeChild(textarea);
+      }
+    });
+  }
+
+  /* -----------------------------------------------------------------------
+     SEND BUTTON (chat mockup -- echoes user input)
+     ----------------------------------------------------------------------- */
+
+  function setupChatSend() {
+    qsa('.send-btn, .btn-primary').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var composer =
+          qs('.chat-composer textarea') ||
+          qs('.chat-input-row textarea');
+        if (!composer) return;
+
+        var text = composer.value.trim();
+        if (!text) return;
+
+        var messagesArea =
+          qs('.chat-messages') || qs('.message-area');
+        if (!messagesArea) return;
+
+        /* Build a user message element */
+        var msgDiv = document.createElement('div');
+        msgDiv.className = 'chat-msg from-user';
+
+        var avatar = document.createElement('div');
+        avatar.className = 'chat-avatar';
+        avatar.textContent = 'U';
+
+        var bubble = document.createElement('div');
+        bubble.className = 'msg-bubble';
+        bubble.textContent = text;
+
+        var time = document.createElement('div');
+        time.className = 'msg-time';
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12 || 12;
+        time.textContent =
+          hours + ':' + (minutes < 10 ? '0' : '') + minutes + ' ' + ampm;
+
+        msgDiv.appendChild(avatar);
+        msgDiv.appendChild(bubble);
+        msgDiv.appendChild(time);
+
+        messagesArea.appendChild(msgDiv);
+        composer.value = '';
+
+        /* Scroll to bottom */
+        messagesArea.scrollTop = messagesArea.scrollHeight;
+      });
+    });
+
+    /* Also support Ctrl+Enter to send */
+    qsa('.chat-composer textarea, .chat-input-row textarea').forEach(
+      function (textarea) {
+        textarea.addEventListener('keydown', function (e) {
+          if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            e.preventDefault();
+            var sendBtn =
+              qs('.send-btn') || qs('.btn-primary');
+            if (sendBtn) sendBtn.click();
+          }
+        });
+      }
+    );
+  }
+
+  /* -----------------------------------------------------------------------
+     TOOLTIP SUPPORT (title attribute hover display)
+     ----------------------------------------------------------------------- */
+
+  function setupTooltips() {
+    var tooltip = null;
+
+    document.addEventListener('mouseover', function (e) {
+      var target = e.target.closest('[data-tooltip]');
+      if (!target) return;
+
+      var text = target.getAttribute('data-tooltip');
+      if (!text) return;
+
+      if (tooltip) {
+        tooltip.remove();
+      }
+
+      tooltip = document.createElement('div');
+      tooltip.className = 'pm-tooltip';
+      tooltip.textContent = text;
+      tooltip.style.cssText =
+        'position:fixed;z-index:99999;' +
+        'padding:4px 8px;font-size:11px;' +
+        'background:var(--surface-elevated,#333);' +
+        'color:var(--text-primary,#eee);' +
+        'border:1px solid var(--border,#555);' +
+        'border-radius:2px;pointer-events:none;' +
+        'white-space:nowrap;font-family:inherit;';
+
+      document.body.appendChild(tooltip);
+
+      var rect = target.getBoundingClientRect();
+      tooltip.style.left = rect.left + rect.width / 2 - tooltip.offsetWidth / 2 + 'px';
+      tooltip.style.top = rect.top - tooltip.offsetHeight - 6 + 'px';
+    });
+
+    document.addEventListener('mouseout', function (e) {
+      var target = e.target.closest('[data-tooltip]');
+      if (target && tooltip) {
+        tooltip.remove();
+        tooltip = null;
+      }
+    });
+  }
+
+  /* -----------------------------------------------------------------------
+     MAXIMIZE / MINIMIZE DRAWER BUTTONS
+     ----------------------------------------------------------------------- */
+
+  function setupDrawerMaximize() {
+    qsa('.drawer-maximize').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var drawer = btn.closest(
+          '.drawer-left, .drawer-right, .drawer-bottom'
+        );
+        if (!drawer) return;
+
+        drawer.classList.toggle('maximized');
+
+        /* Swap the button character */
+        if (drawer.classList.contains('maximized')) {
+          btn.innerHTML = '&#9635;'; /* smaller square (restore) */
+        } else {
+          btn.innerHTML = '&#9633;'; /* outlined square (maximize) */
+        }
+      });
+    });
+  }
+
+  /* -----------------------------------------------------------------------
+     INITIALIZATION
+     ----------------------------------------------------------------------- */
+
+  document.addEventListener('DOMContentLoaded', function () {
+    /* 1. Restore theme from localStorage */
+    var savedTheme = getStoredTheme();
+    setTheme(savedTheme);
+
+    /* 2. Setup dock-bar view navigation */
+    setupDockNavigation();
+
+    /* 3. Setup drawer toggles from dock-bar */
+    setupDrawerToggles();
+
+    /* 4. Setup file tree (collapse/expand/select) */
+    setupFileTree();
+
+    /* 5. Setup editor tabs */
+    setupEditorTabs();
+
+    /* 6. Setup chat threads and thread toggle */
+    setupChatThreads();
+    setupChatThreadToggle();
+    setupChatModeTabs();
+
+    /* 7. Setup keyboard shortcuts */
+    setupKeyboardShortcuts();
+
+    /* 8. Setup theme buttons */
+    setupThemeButtons();
+
+    /* 9. Setup command strip selects/buttons */
+    setupCommandStrip();
+
+    /* 10. Wire drawer close buttons */
+    setupDrawerCloseButtons();
+
+    /* 11. Wire backdrop click */
+    setupBackdropClick();
+
+    /* 12. Bottom panel tabs */
+    setupBottomPanelTabs();
+
+    /* 13. Activity bar (legacy grid layout) */
+    setupActivityBar();
+
+    /* 14. Thread list (legacy grid layout chat) */
+    setupThreadList();
+
+    /* 15. Resize handles for drawers */
+    setupResizeHandles();
+
+    /* 16. Copy code buttons in chat messages */
+    setupCopyButtons();
+
+    /* 17. Chat send button and Ctrl+Enter */
+    setupChatSend();
+
+    /* 18. Tooltip support */
+    setupTooltips();
+
+    /* 19. Maximize/minimize drawer buttons */
+    setupDrawerMaximize();
+
+    /* 20. Ensure the initial view is visible */
+    var activeView = qs('.view.active');
+    if (!activeView) {
+      /* Default to dashboard if no view is marked active */
+      var dashboard = qs('.view-dashboard');
+      if (dashboard) {
+        dashboard.style.display = 'flex';
+        dashboard.classList.add('active');
+      }
+    }
+
+    /* 21. Mark the first dock view icon as active if none are */
+    var activeDockIcon = qs('.dock-views .dock-icon.active');
+    if (!activeDockIcon) {
+      var firstIcon = qs('.dock-views .dock-icon');
+      if (firstIcon) {
+        firstIcon.classList.add('active');
+      }
+    }
+
+    /* Log ready state */
+    if (typeof console !== 'undefined' && console.log) {
+      console.log('[Puppet Master] Mission Control initialized. Theme: ' + savedTheme);
+    }
+  });
+
+  /* -----------------------------------------------------------------------
+     EXPOSE PUBLIC API (optional, for console debugging or external use)
+     ----------------------------------------------------------------------- */
+
+  window.PuppetMaster = {
+    setTheme: setTheme,
+    cycleTheme: cycleTheme,
+    getStoredTheme: getStoredTheme,
+    toggleDrawer: toggleDrawer,
+    closeDrawer: closeDrawer,
+    closeAllDrawers: closeAllDrawers,
+    activateView: activateViewByName
+  };
+})();
+
+  </script>
+</body>
+</html>

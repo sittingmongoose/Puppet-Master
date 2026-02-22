@@ -1,0 +1,43 @@
+# Plans Index (authoritative map)
+
+This index is a navigation + canonicalization aid for the `Plans/` folder.
+It does **not** remove or override detail in any plan; it exists so implementation stays consistent and rewrite-aware.
+
+## Rewrite tie-in (2026-02-21)
+
+The project is intentionally adapting an OpenCode-style architecture and is mid-transition to a deterministic agent-loop core with:
+- **Providers** behind one unified **event model**
+- **Event-sourced storage**: `seglog` (canonical ledger) → projections into `redb` (KV state/settings) + Tantivy (search)
+- **Central tool registry + policy engine** and a patch/apply/verify/rollback pipeline
+- **UI rewrite**: Rust + Slint (winit; Skia default)
+- **Auth**: subscription-first; **Gemini API key is an explicit allowed exception** (subscription-backed)
+
+See: `Plans/rewrite-tie-in-memo.md`.
+
+## Plan map
+
+| Plan | Primary scope | Notes / canonical intent |
+|------|--------------|--------------------------|
+| `rewrite-tie-in-memo.md` | Locked rewrite decisions | Canonical for rewrite constraints + deltas to apply elsewhere |
+| `agent-rules-context.md` | Application/project rules pipeline | Canonical for rules sourcing + injection into every agent/provider run |
+| `orchestrator-subagent-integration.md` | Main run loop policy: tiers, subagents, wiring validation | **41 subagents** (canonical list §4: Phase, Task lang/domain/framework, Subtask, Iteration, Cross-phase including explore). DRY:DATA:subagent_registry; task tool (Tools.md §3.6) validates against this list. Treat platform specifics as Provider concerns. |
+| `interview-subagent-integration.md` | Interview phases + subagent use | Phase assignments use the same **41 subagents**; cross-phase (ux-researcher, knowledge-synthesizer, context-manager, explore, etc.). Mirrors orchestrator patterns at interview-phase boundaries. |
+| `assistant-chat-design.md` | Assistant/Chat UX and modes | Keep UX; anchor persistence/search to event stream projections |
+| `FileManager.md` | File Manager panel, IDE-style editor, @ mention, click-to-open | Canonical for file tree, editor (tabs, split panes, save, line numbers, syntax), image viewer, HTML preview + hot reload, same browser as §15.18, terminal/browser tabs (§9), editor enhancements MVP (§10), language/framework presets (§11). **LSP is MVP** (§10.10): diagnostics, hover, completion, navigation, inlay hints, code actions, code lens; implement with desktop editor from start. |
+| `LSPSupport.md` | LSP client support for rewrite | **LSP is MVP** — in scope for desktop release. Canonical for LSP: diagnostics, hover, completion, navigation, inlay hints, code actions, code lens, Chat Window LSP (§5.1); OpenCode-style server registry/root discovery; Rust client crates (lsp-types, lsp-client/async_lsp_client). Implement with desktop editor and Chat from start. |
+| `storage-plan.md` | seglog, redb, Tantivy, projectors, analytics scan | Implementation checklist; chat persistence/search map to this stack; analytics scan rollups in redb feed dashboard/usage (usage-feature.md, feature-list). |
+| `chain-wizard-flexibility.md` | Wizard intents + requirements canonicalization + GitHub flows | Canonical for intent-based flows and requirements merge/canonical artifact |
+| `human-in-the-loop.md` | HITL semantics at tier boundaries | Canonical for pause-for-approval toggles + tier boundary meaning |
+| `FileSafe.md` | Safe-edit guards + context compilation | Should map to central tool policy + patch pipeline |
+| `WorktreeGitImprovement.md` | Worktree/git correctness + GUI wiring | Should map to patch/apply/verify/rollback + Provider run dirs |
+| `MiscPlan.md` | Cleanup + runner contract + artifact retention | Should map to patch pipeline + event artifacts retention |
+| `newtools.md` | GUI testing/tools discovery + MCP tooling | Should map to central tool registry/policy engine |
+| `Tools.md` | Built-in tools, custom tools, permissions (allow/deny/ask) | Canonical for tool semantics and permission model; OpenCode-style. **task** tool launches subagents; `subagent_type` must be one of the **41 subagents** (orchestrator §4, §3.6). MCP config covered in newtools.md and AGENTS.md. |
+| `usage-feature.md` | Usage UX + dashboards | Treat usage as projections/rollups over event ledger; **per-thread usage in chat** (context circle, hover tooltip, thread Usage tab) per §5 (OpenCode-style). |
+| `newfeatures.md` | Feature ideas + patterns | Treat Iced references as legacy examples; no SQLite (storage is seglog/redb/Tantivy); rewrite anchors are Provider/event-store/tool-policy |
+
+## Known cross-cutting duplication hotspots
+
+Several plans re-describe the same cross-cutting patterns (crews, hooks/lifecycle, cross-session memory, validation). As the rewrite lands, prefer making one canonical spec for these patterns (agent-loop core) and referencing it, rather than copy/pasting blocks into each plan.
+
+- **Analytics scan / rollups:** seglog → counters/rollups → redb; canonical spec in storage-plan.md; rollups feed dashboard and usage (usage-feature.md, feature-list).

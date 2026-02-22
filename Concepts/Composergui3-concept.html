@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Composergui3 — Puppet Master Dashboard Concept</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* ═══ THEME: Retro Light ═══ */
+        [data-theme="retro-light"] {
+            --bg: #FAF6F1;
+            --bg-panel: #F5F0E8;
+            --ink: #1A1A1A;
+            --ink-muted: #666;
+            --border: #1A1A1A;
+            --accent: #0047AB;
+            --accent-lime: #00FF41;
+            --shadow: 2px 2px 0 #1A1A1A;
+            --radius: 0;
+            --font-display: 'Orbitron', sans-serif;
+        }
+        [data-theme="retro-light"] body { background: var(--bg); color: var(--ink); }
+        [data-theme="retro-light"] .pixel-grid {
+            background-image: url("data:image/svg+xml,%3Csvg width='4' height='4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h1v1H0z' fill='%23000' fill-opacity='0.03'/%3E%3C/svg%3E");
+        }
+
+        /* ═══ THEME: Retro Dark ═══ */
+        [data-theme="retro-dark"] {
+            --bg: #1A1A1A;
+            --bg-panel: #252525;
+            --ink: #E0E0E0;
+            --ink-muted: #888;
+            --border: #E0E0E0;
+            --accent: #00F0FF;
+            --accent-lime: #00FF41;
+            --shadow: 2px 2px 0 #000;
+            --radius: 0;
+            --font-display: 'Orbitron', sans-serif;
+        }
+        [data-theme="retro-dark"] body { background: var(--bg); color: var(--ink); }
+        [data-theme="retro-dark"] .pixel-grid {
+            background-image: url("data:image/svg+xml,%3Csvg width='4' height='4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h1v1H0z' fill='%23fff' fill-opacity='0.03'/%3E%3C/svg%3E");
+        }
+
+        /* ═══ THEME: Basic ═══ */
+        [data-theme="basic"] {
+            --bg: #FFFFFF;
+            --bg-panel: #F8F9FA;
+            --ink: #1A1A1A;
+            --ink-muted: #6B7280;
+            --border: #D1D5DB;
+            --accent: #2563EB;
+            --accent-lime: #16A34A;
+            --shadow: none;
+            --radius: 4px;
+            --font-display: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        }
+        [data-theme="basic"] body { background: var(--bg); color: var(--ink); }
+        [data-theme="basic"] .pixel-grid { background-image: none; }
+
+        .shell {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background: var(--bg);
+        }
+        .pixel-grid { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+
+        /* Title bar */
+        .title-bar {
+            height: 28px;
+            min-height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 12px;
+            border-bottom: 2px solid var(--border);
+            background: var(--bg-panel);
+            box-shadow: var(--shadow);
+            font-family: var(--font-display);
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 1;
+        }
+        .title-bar .theme-switcher { display: flex; gap: 4px; }
+        .title-bar .theme-btn {
+            padding: 2px 8px;
+            font-size: 11px;
+            cursor: pointer;
+            border: 2px solid var(--border);
+            background: var(--bg);
+            color: var(--ink);
+            border-radius: var(--radius);
+        }
+        .title-bar .theme-btn:hover { background: var(--bg-panel); }
+        .title-bar .theme-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        /* Main area: activity bar + content */
+        .main-row {
+            display: flex;
+            flex: 1;
+            min-height: 0;
+            z-index: 1;
+        }
+
+        /* Activity bar */
+        .activity-bar {
+            width: 48px;
+            min-width: 48px;
+            background: var(--bg-panel);
+            border-right: 2px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 0;
+            gap: 4px;
+        }
+        .activity-bar .icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            border-radius: var(--radius);
+        }
+        .activity-bar .icon:hover { background: var(--bg); border-color: var(--border); }
+        .activity-bar .icon.active { border-left: 3px solid var(--accent); }
+
+        /* Content: file manager | file editor | center | chat */
+        .content-row {
+            display: flex;
+            flex: 1;
+            min-width: 0;
+            min-height: 0;
+        }
+
+        /* File Manager */
+        .file-manager {
+            width: 260px;
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid var(--border);
+            background: var(--bg-panel);
+            box-shadow: var(--shadow);
+        }
+        .panel-header {
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 8px;
+            border-bottom: 2px solid var(--border);
+            font-family: var(--font-display);
+            font-weight: bold;
+            font-size: 12px;
+        }
+        .panel-header .popout { font-size: 10px; cursor: pointer; }
+        .file-manager .search {
+            padding: 6px 8px;
+            border-bottom: 1px solid var(--border);
+        }
+        .file-manager .search input {
+            width: 100%;
+            padding: 4px 8px;
+            border: 2px solid var(--border);
+            background: var(--bg);
+            color: var(--ink);
+            font-size: 12px;
+            border-radius: var(--radius);
+        }
+        .file-manager .tree {
+            flex: 1;
+            overflow: auto;
+            padding: 8px;
+            font-size: 12px;
+        }
+        .file-manager .tree .folder { margin-bottom: 4px; }
+        .file-manager .tree .file { margin-left: 12px; color: var(--ink-muted); }
+
+        /* File Editor strip */
+        .file-editor {
+            width: 180px;
+            min-width: 120px;
+            border-right: 2px solid var(--border);
+            background: var(--bg-panel);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            font-size: 12px;
+            color: var(--ink-muted);
+        }
+
+        /* Center: widgets + terminals */
+        .center-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            min-height: 0;
+        }
+        .dashboard-widgets {
+            flex: 1;
+            min-height: 120px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            padding: 8px;
+            border-bottom: 2px solid var(--border);
+            background: var(--bg);
+        }
+        .widget-card {
+            border: 2px solid var(--border);
+            padding: 8px;
+            background: var(--bg-panel);
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            font-size: 12px;
+        }
+        .widget-card .label { font-weight: bold; margin-bottom: 4px; }
+        .terminal-grid {
+            height: 200px;
+            min-height: 120px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 2px;
+            padding: 4px;
+            background: var(--bg-panel);
+        }
+        .term-cell {
+            background: #0d1117;
+            color: #c9d1d9;
+            padding: 8px;
+            font-family: ui-monospace, monospace;
+            font-size: 11px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        /* Chat panel */
+        .chat-panel {
+            width: 320px;
+            min-width: 240px;
+            display: flex;
+            flex-direction: column;
+            border-left: 2px solid var(--border);
+            background: var(--bg-panel);
+            box-shadow: var(--shadow);
+        }
+        .chat-panel .chat-inner {
+            display: flex;
+            flex: 1;
+            min-height: 0;
+        }
+        .thread-list {
+            width: 100px;
+            min-width: 80px;
+            border-right: 1px solid var(--border);
+            padding: 8px;
+            font-size: 11px;
+        }
+        .thread-list .thread { padding: 4px; cursor: pointer; border-radius: var(--radius); }
+        .thread-list .thread:hover { background: var(--bg); }
+        .thread-list .thread.active { background: var(--accent); color: #fff; }
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+        .chat-modes {
+            display: flex;
+            gap: 2px;
+            padding: 4px 8px;
+            border-bottom: 1px solid var(--border);
+            font-size: 11px;
+        }
+        .chat-modes span {
+            padding: 2px 6px;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+        .chat-modes span.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .chat-messages {
+            flex: 1;
+            overflow: auto;
+            padding: 8px;
+            font-size: 12px;
+        }
+        .chat-input-row {
+            padding: 8px;
+            border-top: 2px solid var(--border);
+        }
+        .chat-input-row input {
+            width: 100%;
+            padding: 6px 8px;
+            border: 2px solid var(--border);
+            background: var(--bg);
+            color: var(--ink);
+            font-size: 12px;
+            border-radius: var(--radius);
+        }
+        .chat-footer {
+            height: 20px;
+            padding: 0 8px;
+            font-size: 10px;
+            color: var(--ink-muted);
+            border-top: 1px solid var(--border);
+        }
+
+        /* Bottom panel */
+        .bottom-panel {
+            height: 28px;
+            min-height: 28px;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            gap: 8px;
+            border-top: 2px solid var(--border);
+            background: var(--bg-panel);
+            font-size: 11px;
+            z-index: 1;
+        }
+        .bottom-panel .tab { cursor: pointer; padding: 2px 6px; }
+        .bottom-panel .tab.active { font-weight: bold; }
+
+        /* Status bar */
+        .status-bar {
+            height: 24px;
+            min-height: 24px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            gap: 12px;
+            border-top: 2px solid var(--border);
+            background: var(--bg-panel);
+            font-size: 11px;
+            z-index: 1;
+        }
+        .status-bar .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent-lime);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="shell" id="shell">
+        <div class="pixel-grid" aria-hidden="true"></div>
+
+        <header class="title-bar">
+            <span>PUPPET MASTER</span>
+            <span>"my-project" ▼</span>
+            <div class="theme-switcher">
+                <button class="theme-btn active" data-theme="retro-light" aria-pressed="true">Light</button>
+                <button class="theme-btn" data-theme="retro-dark">Dark</button>
+                <button class="theme-btn" data-theme="basic">Basic</button>
+            </div>
+            <span>⚙</span>
+        </header>
+
+        <div class="main-row">
+            <nav class="activity-bar">
+                <div class="icon active" title="Home">🏠</div>
+                <div class="icon" title="Run">⚡</div>
+                <div class="icon" title="Config">🔧</div>
+                <div class="icon" title="Health">🩺</div>
+                <div class="icon" title="Data">📊</div>
+                <div class="icon" title="Chat">💬</div>
+                <div class="icon" title="Files">📁</div>
+            </nav>
+
+            <div class="content-row">
+                <aside class="file-manager">
+                    <div class="panel-header">
+                        FILES <span class="popout">⟳ ↗ Pop out</span>
+                    </div>
+                    <div class="search">
+                        <input type="text" placeholder="🔍 Search files..." />
+                    </div>
+                    <div class="tree">
+                        <div class="folder">▼ src/</div>
+                        <div class="file">app.rs</div>
+                        <div class="file">main.rs</div>
+                        <div class="folder">▼ views/</div>
+                        <div class="file">dashboard.rs</div>
+                        <div class="file">config.rs</div>
+                    </div>
+                </aside>
+
+                <div class="file-editor">Select a file</div>
+
+                <section class="center-area">
+                    <div class="dashboard-widgets">
+                        <div class="widget-card"><div class="label">Orchestrator Status</div>● Running — Phase 1</div>
+                        <div class="widget-card"><div class="label">Progress & Budgets</div>Task 2/5 · 42%</div>
+                        <div class="widget-card"><div class="label">Current Item</div>ST-001-002 · platform: Claude</div>
+                        <div class="widget-card"><div class="label">CtAs</div>—</div>
+                    </div>
+                    <div class="terminal-grid">
+                        <div class="term-cell">Term 1<br>$ cargo check</div>
+                        <div class="term-cell">Term 2<br>Problems</div>
+                        <div class="term-cell">Term 3<br>Output</div>
+                        <div class="term-cell">Term 4<br>Debug</div>
+                    </div>
+                </section>
+
+                <aside class="chat-panel">
+                    <div class="panel-header">
+                        CHAT <span class="popout">↗ Pop out</span>
+                    </div>
+                    <div class="chat-inner">
+                        <div class="thread-list">
+                            <div class="thread active">Design...</div>
+                            <div class="thread">Code review</div>
+                            <div class="thread">Plan</div>
+                        </div>
+                        <div class="chat-main">
+                            <div class="chat-modes">
+                                <span class="active">Ask</span><span>Plan</span><span>Int</span><span>BS</span><span>Cw</span>
+                            </div>
+                            <div class="chat-messages">
+                                <p>Message stream placeholder. Thread: Design...</p>
+                            </div>
+                            <div class="chat-input-row">
+                                <input type="text" placeholder="Message… @ 📎" />
+                            </div>
+                            <div class="chat-footer">claude ▼ sonnet-4.5 ▼ 42k</div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <div class="bottom-panel">
+            <span class="tab active">Terminal</span>
+            <span class="tab">Problems</span>
+            <span class="tab">Output</span>
+            <span>———</span>
+            <span>▼ collapse</span>
+            <span>↗</span>
+        </div>
+
+        <footer class="status-bar">
+            <span class="dot"></span>
+            <span>Plan</span>
+            <span>Claude ▼</span>
+            <span>sonnet-4.5 ▼</span>
+            <span>Ctx: 42k/128k</span>
+            <span>⚡ Running</span>
+        </footer>
+    </div>
+
+    <script>
+        (function() {
+            const shell = document.getElementById('shell');
+            const buttons = document.querySelectorAll('.theme-btn');
+            function setTheme(theme) {
+                shell.setAttribute('data-theme', theme);
+                buttons.forEach(function(btn) {
+                    btn.classList.toggle('active', btn.getAttribute('data-theme') === theme);
+                    btn.setAttribute('aria-pressed', btn.getAttribute('data-theme') === theme);
+                });
+            }
+            buttons.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    setTheme(this.getAttribute('data-theme'));
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+# Puppet Master — Heads-up: Major rewrite is coming (tie-in memo)
+
+> This document exists to keep the rest of `Plans/` consistent while the rewrite lands.
+> It records locked architectural decisions and the deltas they imply for existing plans.
+> For navigation across all plan docs, see `Plans/00-plans-index.md`.
+
+---
+
+## Provided memo (verbatim)
+
+This project is moving to a single, deterministic “agent loop” architecture where every backend is just a **Provider** behind one unified session/event store, tool registry, and patch/edit pipeline (so CLI-bridged providers don’t become special-case chaos). This is intentionally adapting much of **OpenCode’s architecture** (provider abstraction, centralized config, session orchestration, tool registry) to address current pain points and make the main engine deterministic and reliable. [web:7][web:11][web:69][web:71]
+
+### What’s changing (high level)
+- **GUI rewrite:** Desktop UI is switching to Rust + Slint, with Slint’s cross-platform **winit backend** for Windows/macOS/Linux. [web:149]
+- **Renderer decision (locked):** default is **winit + Skia**, fallback GPU is **winit + FemtoVG-wgpu**, and we keep an emergency software fallback for compatibility; selection can be controlled via Slint’s backend selection mechanisms (e.g., `BackendSelector` and/or `SLINT_BACKEND`). [web:48][web:149]
+- **Theme behavior (locked):** theme switching will be supported, but it’s acceptable to require an app **restart**; we will offer both a “Puppet Master default” look and a “Basic theme.”
+- **Storage rewrite (no SQLite):** storage becomes a multi-store design: `seglog` as the canonical append-only event ledger, `redb` for durable KV state/projections/settings, and Tantivy for full-text search over chats/docs/log summaries. [web:88][web:90][web:82]
+- **Search & dashboards:** “fast search for humans + AI” is implemented via Tantivy indexes built from projected events/messages, while heavy analytics scans run off the append-only seglog stream and store rollups into redb. [web:82][web:88][web:90]
+
+### The core reliability plan (what other features must align with)
+- The system must be reproducible: sessions/runs are replayable from a canonical event stream (seglog), with deterministic projections into redb/Tantivy and checkpointing for resumability after crashes. [web:88][web:90][web:82]
+- Tools are governed by a central policy engine (permissions + validation + normalized tool results), and edits go through an explicit patch/apply/verify/rollback pipeline (often using worktrees/branches/sandboxes) to prevent “silent corruption.” (This mirrors the discipline implied by OpenCode-style tool/session separation.) [web:71][web:69]
+- The “Plans/” documentation set is intended to be treated as the authoritative requirements source for orchestration states, safe-edit rules, subagents, worktree/git edge cases, and tooling behavior (so implementation doesn’t drift via ad-hoc UI wiring). (This is a project governance rule, not a library detail.)
+
+### Provider + CLI integrations (what’s being hardened)
+- **Claude Code CLI** is integrated as a Provider using the official CLI’s machine-readable streaming mode (`--output-format stream-json`, print mode `-p`, optional partials via `--include-partial-messages`) and uses **Claude Code Hooks** (e.g., `PreToolUse`, `PostToolUse`) to gate tools and enrich telemetry. [page:3]
+- **Cursor Agent CLI** is integrated as a Provider using `--print --output-format stream-json` (NDJSON stream) and internal parsing into the unified event model. [web:157]
+- **ACP note (important):** Cursor CLI is not ACP-native as of a Cursor staff reply (2026‑01‑04); Cursor CLI supports MCPs and may add ACP later, so if ACP is needed it’s via an adapter layer on our side (not because Cursor suddenly “speaks ACP”). [web:167]
+
+### Gemini auth decision (locked)
+- Gemini provider defaults to **API key** auth in the UI. This is an explicit allowed exception to the broader “subscription auth only / avoid API keys” guidance because Gemini’s API key path can be used to access the user’s Gemini subscription. OAuth remains optional as a stricter-access fallback. [page:4]
+
+### Future mobile/web clients (impacts architecture now)
+- Mobile/web clients will be “thin” and connect back to the desktop app (desktop acts like a local server), so the stable boundary is the unified event model + streaming API (runs/events/artifacts) and command API (start run, approve tool, cancel run), rather than direct access to providers/tools on mobile/web.
+
+### What feature agents should do right now
+- Avoid coupling new features to the current UI/storage codepaths; target the upcoming stable interfaces: **unified event model**, **provider trait**, **tool registry**, and **event-sourced session store** (seglog → projections). [web:69][web:88][web:90]
+- Assume big refactors will land: UI widgets/layout systems, session persistence, search, analytics dashboards, and provider wiring are all being reworked around the decisions above. [web:149][web:82][web:88][web:90]
+
+---
+
+## Impacts on existing Plans (deltas to keep consistency)
+
+### Immediate contradictions to resolve in Plans (so requirements don’t fight each other)
+- **UI tech:** any plan text that assumes **Iced** UI implementation should be treated as *UX requirements only*, not a widget/library implementation commitment
+- **Storage:** any plan that proposes **SQLite** for run/session/history storage needs to be reframed as **event-sourced** storage with seglog/redb/Tantivy projections
+- **Provider abstraction:** platform-specific “runner” terminology should converge on **Provider** + unified event model, especially for streaming output and tool gating
+- **Gemini auth:** existing “subscription-only / no API keys” guidance must explicitly allow a Gemini exception: “no API keys **except Gemini** (Gemini API key can represent subscription access)”
+
+
+### Storage consistency
+- All run/session/artifact/checkpoint persistence and event emission must align with **Plans/storage-plan.md** (seglog writer, redb schema, projector pipeline, analytics scan).
+- When adding or editing plans that touch runs, sessions, settings, or artifacts, add a cross-reference to storage-plan.md and specify whether the plan assumes seglog events, redb tables, or both.
+- **Plans/storage-plan.md** — Canonical storage checklist (seglog, redb schema, projectors, analytics); other plans that persist state or emit events should reference it and call out seglog vs redb.
+
+### Plans likely needing the most rewrite-aware edits
+- `Plans/newfeatures.md`
+  - Already calls out “single Rust/Iced process” and rejects a three-process architecture; should be updated to “single core agent loop + Slint UI” and ensure streaming parsing is in-provider and normalized into the unified event model
+- `Plans/assistant-chat-design.md`
+  - Keep UX modes/permissions, but re-anchor persistence/search assumptions to seglog/redb/Tantivy and to the unified event stream
+- `Plans/orchestrator-subagent-integration.md`
+  - Treat tier/subagent strategy as “orchestrator policy” sitting above Providers; streaming output parsing and tool gating should be defined once at provider/tool-registry level, not per-platform
+- `Plans/usage-feature.md`
+  - Recast “usage ledger” as projections/rollups over the seglog stream, with indexes in Tantivy (search) and aggregates in redb
+- `Plans/newtools.md`
+  - Align MCP/tool discovery and Doctor checks with the central tool registry/policy engine (no per-provider special casing)
+
+### Plans that are still conceptually valid (but should be reworded)
+- `Plans/FileSafe.md`
+  - Safety/policy intent remains valid; implementation should target patch/apply/verify/rollback and centralized tool governance rather than UI-level/file-manager specifics
+- `Plans/WorktreeGitImprovement.md`, `Plans/MiscPlan.md`
+  - Worktree/cleanup correctness stays valid; hook/crew sections should point to a single shared lifecycle framework in the new agent-loop core
+
+---
+
+## Suggested “single source of truth” rule for the rewrite
+
+- Provider contracts, unified event model, tool registry, and patch pipeline should be specified in one canonical plan (or one canonical spec section), and other plans should reference it instead of re-describing it

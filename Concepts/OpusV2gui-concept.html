@@ -1,0 +1,4889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Puppet Master -- GUI Concept (Visual Reference Only)</title>
+  <!-- NOTE: This HTML/CSS mockup is for VISUAL REFERENCE ONLY.
+       The actual Puppet Master application is built entirely in Rust + Slint.
+       No HTML, CSS, or JavaScript is used in the production app.
+       Slint .slint files are compiled to native code via slint_build. -->
+  <style>
+/* Puppet Master -- Retro-Futuristic IDE Mockup Stylesheet */
+/* Visual reference only. Production app uses Rust + Slint. */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* ============================================================
+   1. CSS Reset and Variables
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-deep: #0a0a1a;
+  --bg-surface: #1a1a2e;
+  --bg-elevated: #252540;
+  --bg-hover: #2a2a4a;
+  --text-primary: #e8e0d0;
+  --text-secondary: rgba(232, 224, 208, 0.6);
+  --text-muted: rgba(232, 224, 208, 0.35);
+  --border: rgba(232, 224, 208, 0.12);
+  --border-focus: rgba(232, 224, 208, 0.3);
+  --accent-blue: #00d4ff;
+  --accent-magenta: #ff2d9b;
+  --accent-lime: #b4ff39;
+  --accent-orange: #ff8c00;
+  --accent-amber: #ffc107;
+  --shadow: rgba(0, 0, 0, 0.6);
+
+  --font-display: 'Orbitron', sans-serif;
+  --font-body: 'Rajdhani', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-lg: 16px;
+
+}
+
+/* ============================================================
+   Light Theme
+   ============================================================ */
+
+.theme-light {
+  --bg-deep: #FAF6F1;
+  --bg-surface: #f0ece5;
+  --bg-elevated: #e8e4dd;
+  --bg-hover: #ddd8d0;
+  --text-primary: #1a1a2e;
+  --text-secondary: rgba(26, 26, 46, 0.6);
+  --text-muted: rgba(26, 26, 46, 0.35);
+  --border: rgba(26, 26, 46, 0.15);
+  --border-focus: rgba(26, 26, 46, 0.3);
+  --accent-blue: #0088aa;
+  --accent-magenta: #cc2277;
+  --accent-lime: #4a8800;
+  --accent-orange: #cc7000;
+  --shadow: rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================================
+   Basic Theme
+   ============================================================ */
+
+.theme-basic {
+  --bg-deep: #ffffff;
+  --bg-surface: #f5f5f5;
+  --bg-elevated: #eeeeee;
+  --bg-hover: #e0e0e0;
+  --text-primary: #222222;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+  --border: #cccccc;
+  --border-focus: #888888;
+  --accent-blue: #0066cc;
+  --accent-magenta: #cc0066;
+  --accent-lime: #339900;
+  --accent-orange: #cc6600;
+  --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================================
+   Base Elements
+   ============================================================ */
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-primary);
+  background: var(--bg-deep);
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+/* ============================================================
+   2. Layout Grid
+   ============================================================ */
+
+.app-shell {
+  display: grid;
+  width: 100%;
+  height: 100vh;
+  grid-template-columns: 48px 280px 1fr 380px;
+  grid-template-rows: 28px 1fr 160px 24px;
+  grid-template-areas:
+    "titlebar  titlebar  titlebar  titlebar"
+    "activity  filemgr   editor    chat"
+    "activity  filemgr   bottom    chat"
+    "statusbar statusbar statusbar statusbar";
+}
+
+/* ============================================================
+   3. Title Bar
+   ============================================================ */
+
+.title-bar {
+  grid-area: titlebar;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 12px;
+  gap: 12px;
+  user-select: none;
+  -webkit-app-region: drag;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.app-title {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.project-dropdown {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 0px;
+  padding: 1px 8px;
+  cursor: pointer;
+  -webkit-app-region: no-drag;
+  transition: all 150ms ease;
+}
+
+.project-dropdown:hover {
+  border-color: var(--border-focus);
+  color: var(--text-primary);
+}
+
+.project-dropdown:focus {
+  border-color: var(--accent-blue);
+  outline: none;
+}
+
+.title-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  -webkit-app-region: no-drag;
+}
+
+.title-actions button {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 14px;
+  transition: all 150ms ease;
+}
+
+.title-actions button:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.title-actions button.close:hover {
+  background: var(--accent-magenta);
+  color: #ffffff;
+}
+
+/* ============================================================
+   4. Activity Bar
+   ============================================================ */
+
+.activity-bar {
+  grid-area: activity;
+  width: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding-top: 8px;
+  background: var(--bg-deep);
+  border-right: 1px solid var(--border);
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.activity-bar .icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-left: 2px solid transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.activity-bar .icon:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.activity-bar .icon.active {
+  color: var(--accent-lime);
+  border-left: 2px solid var(--accent-lime);
+}
+
+.activity-bar .icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.activity-bar .spacer {
+  flex: 1;
+}
+
+/* ============================================================
+   5. File Manager
+   ============================================================ */
+
+.file-manager {
+  grid-area: filemgr;
+  width: 280px;
+  min-width: 180px;
+  max-width: 500px;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.panel-header {
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.panel-header .collapse-btn {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 10px;
+  transition: all 150ms ease;
+}
+
+.panel-header .collapse-btn:hover {
+  color: var(--text-primary);
+}
+
+.file-tree {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.file-tree-item {
+  padding: 2px 8px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-primary);
+  border-left: 2px solid transparent;
+  transition: all 150ms ease;
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-tree-item:hover {
+  background: var(--bg-hover);
+}
+
+.file-tree-item.selected {
+  background: var(--bg-elevated);
+  border-left: 2px solid var(--accent-blue);
+}
+
+/* Depth-based indentation */
+.file-tree-item[data-depth="0"] { padding-left: 8px; }
+.file-tree-item[data-depth="1"] { padding-left: 24px; }
+.file-tree-item[data-depth="2"] { padding-left: 40px; }
+.file-tree-item[data-depth="3"] { padding-left: 56px; }
+.file-tree-item[data-depth="4"] { padding-left: 72px; }
+.file-tree-item[data-depth="5"] { padding-left: 88px; }
+.file-tree-item[data-depth="6"] { padding-left: 104px; }
+
+.file-arrow {
+  width: 10px;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  font-size: 8px;
+  text-align: center;
+  margin-right: 4px;
+  transition: transform 150ms ease;
+}
+
+.file-arrow.expanded {
+  transform: rotate(90deg);
+}
+
+.file-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-badge {
+  width: 16px;
+  height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 600;
+  border-radius: 0px;
+  margin-right: 4px;
+  flex-shrink: 0;
+  text-transform: lowercase;
+}
+
+.file-badge.rs {
+  background: var(--accent-orange);
+  color: var(--bg-deep);
+}
+
+.file-badge.toml {
+  background: var(--accent-blue);
+  color: var(--bg-deep);
+}
+
+.file-badge.md {
+  background: var(--accent-lime);
+  color: var(--bg-deep);
+}
+
+.file-badge.yaml,
+.file-badge.yml {
+  background: var(--accent-magenta);
+  color: #ffffff;
+}
+
+.file-badge.lock {
+  background: var(--text-muted);
+  color: var(--bg-deep);
+}
+
+.git-badge {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 600;
+  padding: 0 4px;
+  margin-left: 4px;
+  flex-shrink: 0;
+}
+
+.git-badge.modified {
+  color: var(--accent-orange);
+}
+
+.git-badge.added {
+  color: var(--accent-lime);
+}
+
+.git-badge.deleted {
+  color: var(--accent-magenta);
+}
+
+.git-badge.untracked {
+  color: var(--text-muted);
+}
+
+.git-status {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border);
+  padding: 4px 12px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================================
+   6. Editor Area
+   ============================================================ */
+
+.editor-area {
+  grid-area: editor;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-surface);
+  transition: background-color 200ms ease;
+}
+
+/* -- Editor Tabs -- */
+
+.editor-tabs {
+  height: 32px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  background: var(--bg-deep);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  flex-shrink: 0;
+  scrollbar-width: none;
+}
+
+.editor-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.editor-tab {
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-right: 1px solid var(--border);
+  border-top: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  transition: all 150ms ease;
+}
+
+.editor-tab:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.editor-tab.active {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border-top: 2px solid var(--accent-blue);
+}
+
+.editor-tab .close-btn {
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.editor-tab .close-btn:hover {
+  color: var(--text-primary);
+}
+
+.unsaved-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-orange);
+  margin-left: 6px;
+  flex-shrink: 0;
+}
+
+/* -- Breadcrumb -- */
+
+.breadcrumb {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  padding: 4px 12px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.breadcrumb .sep {
+  margin: 0 4px;
+  color: var(--text-muted);
+}
+
+/* -- Editor Content -- */
+
+.editor-content {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  overflow: hidden;
+}
+
+.line-gutter {
+  width: 48px;
+  flex-shrink: 0;
+  background: var(--bg-deep);
+  text-align: right;
+  padding: 0 12px 0 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--text-muted);
+  user-select: none;
+  overflow: hidden;
+  transition: background-color 200ms ease;
+}
+
+.line-gutter .line-num {
+  height: 20px;
+}
+
+.line-gutter .line-num.active {
+  color: var(--text-primary);
+}
+
+.code-area {
+  flex: 1;
+  overflow: auto;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 20px;
+  padding: 0 16px;
+  white-space: pre;
+  tab-size: 4;
+  -moz-tab-size: 4;
+  color: var(--text-primary);
+}
+
+.code-line {
+  height: 20px;
+}
+
+.code-line.highlight {
+  background: var(--bg-hover);
+}
+
+.minimap {
+  width: 60px;
+  flex-shrink: 0;
+  background: var(--bg-deep);
+  border-left: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.minimap-viewport {
+  position: absolute;
+  width: 100%;
+  background: rgba(232, 224, 208, 0.06);
+  border: 1px solid var(--border-focus);
+  pointer-events: none;
+}
+
+/* -- Syntax Highlighting -- */
+
+.code-keyword {
+  color: var(--accent-magenta);
+  font-weight: 500;
+}
+
+.code-string {
+  color: var(--accent-orange);
+}
+
+.code-comment {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.code-type {
+  color: var(--accent-blue);
+}
+
+.code-fn {
+  color: var(--accent-lime);
+}
+
+.code-macro {
+  color: var(--accent-lime);
+  font-weight: 700;
+}
+
+.code-path {
+  color: var(--accent-blue);
+  opacity: 0.8;
+}
+
+.code-punct {
+  color: var(--text-secondary);
+}
+
+.code-number {
+  color: var(--accent-amber);
+}
+
+.code-attr {
+  color: var(--accent-orange);
+  font-style: italic;
+}
+
+/* ============================================================
+   7. Chat Panel
+   ============================================================ */
+
+.chat-panel {
+  grid-area: chat;
+  width: 380px;
+  min-width: 280px;
+  max-width: 600px;
+  background: var(--bg-surface);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+/* -- Thread List -- */
+
+.chat-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.thread-list {
+  width: 200px;
+  flex-shrink: 0;
+  background: var(--bg-deep);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.thread-item {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: all 150ms ease;
+}
+
+.thread-item:hover {
+  background: var(--bg-hover);
+}
+
+.thread-item.active {
+  background: var(--bg-elevated);
+  border-left: 2px solid var(--accent-blue);
+}
+
+.thread-name {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.thread-time {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* -- Message Area -- */
+
+.message-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  margin-bottom: 16px;
+}
+
+.msg-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.msg-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.message.user .msg-avatar {
+  background: var(--accent-blue);
+  color: var(--bg-deep);
+}
+
+.message.assistant .msg-avatar {
+  background: var(--accent-lime);
+  color: var(--bg-deep);
+}
+
+.msg-sender {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.msg-content {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.message.user .msg-content {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+}
+
+.message.assistant .msg-content {
+  background: transparent;
+  border: 1px solid var(--border-focus);
+  padding: 10px 14px;
+}
+
+.code-block {
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.5;
+  position: relative;
+  margin: 8px 0;
+  overflow-x: auto;
+  white-space: pre;
+  color: var(--text-primary);
+}
+
+.code-block .copy-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.code-block .copy-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--border-focus);
+}
+
+.code-block .lang-label {
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.files-touched {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  border-top: 1px dashed var(--border);
+  padding-top: 6px;
+  margin-top: 8px;
+}
+
+.files-touched .file-link {
+  color: var(--accent-blue);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.files-touched .file-link:hover {
+  text-decoration: underline;
+}
+
+.msg-timestamp {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* -- Thinking Indicator -- */
+
+.thinking-dots {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.thinking-dots .dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-secondary);
+  animation: pulse 1.4s infinite;
+}
+
+.thinking-dots .dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.thinking-dots .dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* -- Sub-agent Strip -- */
+
+.subagent-strip {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  padding: 4px 12px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.subagent-strip .agent-tag {
+  font-weight: 600;
+  color: var(--accent-blue);
+  margin-right: 8px;
+}
+
+/* -- Chat Composer -- */
+
+.chat-composer {
+  padding: 12px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-elevated);
+  flex-shrink: 0;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.chat-composer textarea {
+  width: 100%;
+  min-height: 60px;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 0px;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 8px;
+  resize: vertical;
+  transition: border-color 150ms ease;
+}
+
+.chat-composer textarea:focus {
+  border-color: var(--accent-blue);
+  outline: none;
+}
+
+.chat-composer textarea::placeholder {
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-style: italic;
+}
+
+.composer-footer {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin-top: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.composer-footer select {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 0px;
+  color: var(--text-primary);
+  padding: 2px 6px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.composer-footer select:focus {
+  border-color: var(--accent-blue);
+  outline: none;
+}
+
+.composer-footer .send-btn {
+  margin-left: auto;
+}
+
+/* ============================================================
+   8. Bottom Panel
+   ============================================================ */
+
+.bottom-panel {
+  grid-area: bottom;
+  height: 160px;
+  min-height: 80px;
+  max-height: 400px;
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.bottom-tabs {
+  height: 28px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  background: var(--bg-deep);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.bottom-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.bottom-tab {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-secondary);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  background: transparent;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  transition: all 150ms ease;
+}
+
+.bottom-tab:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+.bottom-tab.active {
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--accent-blue);
+}
+
+.tab-badge {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 700;
+  background: var(--accent-magenta);
+  color: #ffffff;
+  padding: 0 5px;
+  margin-left: 4px;
+  line-height: 1.4;
+}
+
+/* -- Terminal Grid -- */
+
+.terminal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  height: calc(100% - 28px);
+  gap: 1px;
+  background: var(--border);
+}
+
+.terminal-pane {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.5;
+  padding: 6px 10px;
+  overflow: auto;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.terminal-pane:nth-child(1) {
+  color: #66ff66;
+}
+
+.terminal-pane:nth-child(2) {
+  color: var(--accent-magenta);
+}
+
+.terminal-pane:nth-child(3) {
+  color: var(--accent-orange);
+}
+
+.terminal-pane:nth-child(4) {
+  color: var(--text-secondary);
+}
+
+.terminal-pane .prompt {
+  color: var(--accent-lime);
+  font-weight: 700;
+}
+
+.terminal-pane .output {
+  color: inherit;
+}
+
+.terminal-pane .error-output {
+  color: var(--accent-magenta);
+}
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Single terminal (no grid) variant */
+.terminal-single {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.5;
+  padding: 6px 10px;
+  overflow: auto;
+  background: var(--bg-deep);
+  color: #66ff66;
+  height: calc(100% - 28px);
+}
+
+/* ============================================================
+   9. Status Bar
+   ============================================================ */
+
+.status-bar {
+  grid-area: statusbar;
+  height: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border);
+  padding: 0 12px;
+  gap: 12px;
+  color: var(--text-secondary);
+  user-select: none;
+  overflow: hidden;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.status-bar .section {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.status-bar .spacer {
+  flex: 1;
+}
+
+.badge {
+  padding: 1px 8px;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+}
+
+.badge.mode {
+  background: var(--accent-lime);
+  color: var(--bg-deep);
+}
+
+.badge.info {
+  background: var(--accent-blue);
+  color: var(--bg-deep);
+}
+
+.badge.warn {
+  background: var(--accent-orange);
+  color: var(--bg-deep);
+}
+
+.badge.error {
+  background: var(--accent-magenta);
+  color: #ffffff;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+
+.status-dot.ok {
+  background: var(--accent-lime);
+}
+
+.status-dot.warn {
+  background: var(--accent-orange);
+}
+
+.status-dot.error {
+  background: var(--accent-magenta);
+}
+
+/* ============================================================
+   10. Dashboard View
+   ============================================================ */
+
+.dashboard-view {
+  display: none;
+  grid-column: 3;
+  grid-row: 2 / 4;
+  overflow-y: auto;
+  background: var(--bg-surface);
+  transition: background-color 200ms ease;
+}
+
+.dashboard-view.active {
+  display: block;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 12px;
+  padding: 12px;
+}
+
+.dashboard-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  padding: 16px;
+  box-shadow: 2px 2px 0 var(--shadow);
+  animation: fadeIn 200ms ease-out;
+  transition: background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.theme-basic .dashboard-card {
+  box-shadow: 0 1px 3px var(--shadow);
+}
+
+.dashboard-card h3 {
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 12px;
+  color: var(--text-secondary);
+}
+
+.dashboard-card .card-value {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+}
+
+.dashboard-card .card-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.cta-card {
+  border-left: 4px solid var(--accent-orange);
+}
+
+/* -- Progress Bars -- */
+
+.progress-bar {
+  height: 8px;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin: 4px 0;
+}
+
+.progress-bar .fill {
+  height: 100%;
+  transition: width 300ms ease;
+}
+
+.progress-bar .fill.lime {
+  background: var(--accent-lime);
+}
+
+.progress-bar .fill.blue {
+  background: var(--accent-blue);
+}
+
+.progress-bar .fill.magenta {
+  background: var(--accent-magenta);
+}
+
+.progress-bar .fill.orange {
+  background: var(--accent-orange);
+}
+
+.progress-bar .fill.animated {
+  animation: progressPulse 2s infinite;
+}
+
+/* -- Donut Charts -- */
+
+.donut-chart {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+
+.donut-chart.success {
+  background: conic-gradient(
+    var(--accent-lime) 0% 75%,
+    var(--bg-deep) 75% 100%
+  );
+}
+
+.donut-chart.warning {
+  background: conic-gradient(
+    var(--accent-orange) 0% 50%,
+    var(--bg-deep) 50% 100%
+  );
+}
+
+.donut-chart.danger {
+  background: conic-gradient(
+    var(--accent-magenta) 0% 25%,
+    var(--bg-deep) 25% 100%
+  );
+}
+
+.donut-chart::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+}
+
+.donut-chart .donut-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* -- Dashboard Stat Row -- */
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--text-primary);
+}
+
+.stat-row .stat-label {
+  color: var(--text-secondary);
+}
+
+.stat-row .stat-value {
+  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+/* ============================================================
+   11. Buttons
+   ============================================================ */
+
+button,
+.btn {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 6px 16px;
+  border: 2px solid;
+  border-radius: 0px;
+  cursor: pointer;
+  transition: all 150ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  line-height: 1.2;
+}
+
+.btn-primary {
+  background: var(--accent-lime);
+  color: var(--bg-deep);
+  border-color: var(--accent-lime);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+  box-shadow: 2px 2px 0 var(--shadow);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: none;
+  filter: brightness(1);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-focus);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-hover);
+  border-color: var(--text-primary);
+}
+
+.btn-secondary:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--accent-magenta);
+  border-color: var(--accent-magenta);
+}
+
+.btn-danger:hover {
+  background: var(--accent-magenta);
+  color: #ffffff;
+}
+
+.btn-danger:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: transparent;
+}
+
+.btn-ghost:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+.btn-ghost:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+.btn-sm {
+  font-size: 10px;
+  padding: 3px 10px;
+}
+
+.btn-xs {
+  font-size: 9px;
+  padding: 2px 6px;
+  border-width: 1px;
+}
+
+.btn-icon {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-width: 1px;
+}
+
+/* ============================================================
+   12. Dropdowns and Inputs
+   ============================================================ */
+
+select,
+input[type="text"],
+input[type="search"],
+input[type="number"],
+input[type="url"],
+input[type="email"],
+input[type="password"] {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 0px;
+  color: var(--text-primary);
+  padding: 4px 8px;
+  transition: border-color 150ms ease;
+}
+
+select:focus,
+input[type="text"]:focus,
+input[type="search"]:focus,
+input[type="number"]:focus,
+input[type="url"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: var(--accent-blue);
+  outline: none;
+}
+
+input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Checkbox / Toggle (custom) */
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--text-primary);
+  user-select: none;
+}
+
+.toggle input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--border-focus);
+  background: var(--bg-deep);
+  cursor: pointer;
+  position: relative;
+  transition: all 150ms ease;
+}
+
+.toggle input[type="checkbox"]:checked {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+}
+
+.toggle input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 4px;
+  width: 4px;
+  height: 7px;
+  border: solid var(--bg-deep);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* ============================================================
+   13. Scrollbars
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-focus);
+  transition: background 150ms ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--bg-deep);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-focus) var(--bg-deep);
+}
+
+/* ============================================================
+   14. Overlays
+   ============================================================ */
+
+.pixel-grid-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: repeating-radial-gradient(
+    circle at 1px 1px,
+    var(--text-primary) 0.5px,
+    transparent 0.5px
+  );
+  background-size: 3px 3px;
+  opacity: 0.04;
+}
+
+.scanline-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+}
+
+.theme-basic .pixel-grid-overlay,
+.theme-basic .scanline-overlay {
+  display: none;
+}
+
+/* ============================================================
+   15. Animations
+   ============================================================ */
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes progressPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* ============================================================
+   16. Resize Handles
+   ============================================================ */
+
+.resize-handle-h {
+  width: 4px;
+  cursor: col-resize;
+  background: transparent;
+  transition: background 150ms ease;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.resize-handle-h:hover {
+  background: var(--border-focus);
+}
+
+.resize-handle-v {
+  height: 4px;
+  cursor: row-resize;
+  background: transparent;
+  transition: background 150ms ease;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.resize-handle-v:hover {
+  background: var(--border-focus);
+}
+
+/* ============================================================
+   17. Theme Transition Smoothing
+   ============================================================ */
+
+.title-bar,
+.activity-bar,
+.file-manager,
+.editor-area,
+.editor-tabs,
+.editor-tab,
+.line-gutter,
+.minimap,
+.chat-panel,
+.thread-list,
+.bottom-panel,
+.bottom-tabs,
+.terminal-pane,
+.status-bar,
+.dashboard-view,
+.dashboard-card,
+.chat-composer,
+.panel-header,
+.code-area,
+.code-block {
+  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
+}
+
+/* ============================================================
+   Utility Classes
+   ============================================================ */
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-row { flex-direction: row; }
+.flex-1 { flex: 1; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-4 { gap: 4px; }
+.gap-8 { gap: 8px; }
+.gap-12 { gap: 12px; }
+.gap-16 { gap: 16px; }
+.text-muted { color: var(--text-muted); }
+.text-secondary { color: var(--text-secondary); }
+.text-primary { color: var(--text-primary); }
+.text-accent-blue { color: var(--accent-blue); }
+.text-accent-lime { color: var(--accent-lime); }
+.text-accent-magenta { color: var(--accent-magenta); }
+.text-accent-orange { color: var(--accent-orange); }
+.font-display { font-family: var(--font-display); }
+.font-mono { font-family: var(--font-mono); }
+.uppercase { text-transform: uppercase; }
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hidden { display: none; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ============================================================
+   Panel-specific shadow styles per theme
+   ============================================================ */
+
+.panel-shadow {
+  box-shadow: 2px 2px 0 var(--shadow);
+}
+
+.panel-shadow-floating {
+  box-shadow: 4px 4px 0 var(--shadow);
+}
+
+.theme-basic .panel-shadow {
+  box-shadow: 0 1px 3px var(--shadow);
+}
+
+.theme-basic .panel-shadow-floating {
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+/* ============================================================
+   Context Menu (overlay)
+   ============================================================ */
+
+.context-menu {
+  position: fixed;
+  z-index: 9000;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-focus);
+  box-shadow: 4px 4px 0 var(--shadow);
+  min-width: 180px;
+  padding: 4px 0;
+  animation: fadeIn 100ms ease-out;
+}
+
+.theme-basic .context-menu {
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.context-menu-item:hover {
+  background: var(--bg-hover);
+  color: var(--accent-blue);
+}
+
+.context-menu-item.danger:hover {
+  background: var(--accent-magenta);
+  color: #ffffff;
+}
+
+.context-menu-item .shortcut {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.context-menu-separator {
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0;
+}
+
+/* ============================================================
+   Command Palette (overlay)
+   ============================================================ */
+
+.command-palette {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9500;
+  width: 560px;
+  max-width: 90vw;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-focus);
+  box-shadow: 4px 4px 0 var(--shadow);
+  animation: fadeIn 100ms ease-out;
+}
+
+.theme-basic .command-palette {
+  box-shadow: 0 4px 24px var(--shadow);
+}
+
+.command-palette-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  background: var(--bg-deep);
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.command-palette-input:focus {
+  outline: none;
+}
+
+.command-palette-input::placeholder {
+  color: var(--text-muted);
+  font-family: var(--font-body);
+}
+
+.command-palette-results {
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.command-palette-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.command-palette-item:hover,
+.command-palette-item.selected {
+  background: var(--bg-hover);
+}
+
+.command-palette-item .category {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-right: auto;
+}
+
+.command-palette-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9499;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================================
+   Notification Toast
+   ============================================================ */
+
+.toast-container {
+  position: fixed;
+  bottom: 32px;
+  right: 16px;
+  z-index: 9800;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 8px;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  box-shadow: 4px 4px 0 var(--shadow);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  min-width: 280px;
+  max-width: 420px;
+  animation: slideIn 200ms ease-out;
+}
+
+.theme-basic .toast {
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.toast.success {
+  border-left: 4px solid var(--accent-lime);
+}
+
+.toast.error {
+  border-left: 4px solid var(--accent-magenta);
+}
+
+.toast.warning {
+  border-left: 4px solid var(--accent-orange);
+}
+
+.toast.info {
+  border-left: 4px solid var(--accent-blue);
+}
+
+.toast .toast-close {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0 2px;
+  transition: color 150ms ease;
+}
+
+.toast .toast-close:hover {
+  color: var(--text-primary);
+}
+
+/* ============================================================
+   Tooltip
+   ============================================================ */
+
+.tooltip {
+  position: absolute;
+  z-index: 9700;
+  padding: 4px 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-focus);
+  box-shadow: 2px 2px 0 var(--shadow);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  pointer-events: none;
+  animation: fadeIn 100ms ease-out;
+}
+
+.theme-basic .tooltip {
+  box-shadow: 0 1px 4px var(--shadow);
+}
+
+.tooltip .tooltip-shortcut {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-left: 8px;
+}
+
+/* ============================================================
+   Modal / Dialog
+   ============================================================ */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9899;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9900;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-focus);
+  box-shadow: 4px 4px 0 var(--shadow);
+  min-width: 400px;
+  max-width: 90vw;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 150ms ease-out;
+}
+
+.theme-basic .modal {
+  box-shadow: 0 4px 24px var(--shadow);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h2 {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: 16px;
+  overflow-y: auto;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+}
+
+/* ============================================================
+   Settings Panel Styles
+   ============================================================ */
+
+.settings-group {
+  margin-bottom: 20px;
+}
+
+.settings-group-title {
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--text-primary);
+}
+
+.settings-row .label {
+  font-weight: 500;
+}
+
+.settings-row .description {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ============================================================
+   Diff View Styles
+   ============================================================ */
+
+.diff-line {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 20px;
+  padding: 0 16px;
+}
+
+.diff-line.added {
+  background: rgba(180, 255, 57, 0.1);
+  border-left: 3px solid var(--accent-lime);
+}
+
+.diff-line.removed {
+  background: rgba(255, 45, 155, 0.1);
+  border-left: 3px solid var(--accent-magenta);
+}
+
+.diff-line.context {
+  color: var(--text-muted);
+}
+
+.diff-line .diff-gutter {
+  display: inline-block;
+  width: 40px;
+  text-align: right;
+  padding-right: 8px;
+  color: var(--text-muted);
+  user-select: none;
+}
+
+/* ============================================================
+   Search Results Panel
+   ============================================================ */
+
+.search-results {
+  font-family: var(--font-body);
+  font-size: 12px;
+}
+
+.search-result-file {
+  padding: 4px 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.search-result-file:hover {
+  background: var(--bg-hover);
+}
+
+.search-result-line {
+  padding: 2px 12px 2px 28px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.search-result-line:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.search-result-line .match {
+  background: rgba(0, 212, 255, 0.2);
+  color: var(--accent-blue);
+  font-weight: 700;
+}
+
+.search-result-line .line-num {
+  color: var(--text-muted);
+  margin-right: 8px;
+  min-width: 32px;
+  display: inline-block;
+  text-align: right;
+}
+
+/* ============================================================
+   Loading / Skeleton States
+   ============================================================ */
+
+.skeleton {
+  background: var(--bg-elevated);
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(232, 224, 208, 0.05),
+    transparent
+  );
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton-line {
+  height: 12px;
+  margin-bottom: 8px;
+  background: var(--bg-elevated);
+}
+
+.skeleton-line.short {
+  width: 60%;
+}
+
+.skeleton-line.medium {
+  width: 80%;
+}
+
+/* ============================================================
+   Print Styles
+   ============================================================ */
+
+@media print {
+  .pixel-grid-overlay,
+  .scanline-overlay,
+  .activity-bar,
+  .title-bar,
+  .status-bar,
+  .chat-panel,
+  .bottom-panel,
+  .minimap {
+    display: none;
+  }
+
+  .app-shell {
+    display: block;
+    height: auto;
+  }
+
+  .editor-area {
+    display: block;
+  }
+
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+}
+
+
+/* ============================================================
+   Dashboard View Styles
+   ============================================================ */
+
+/* ── DASHBOARD VIEW ── */
+.dashboard-view {
+  display: none;
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+  flex-direction: column;
+  background: var(--bg-deep);
+}
+.dashboard-view.active {
+  display: flex;
+}
+
+/* ── DASHBOARD GRID ── */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 10px;
+  padding: 12px;
+  align-content: start;
+}
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── DASHBOARD CARD ── */
+.dashboard-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 0px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.dashboard-card .dc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-display);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.dashboard-card .dc-body {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+/* ── STATUS BADGE ── */
+.status-badge-running {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 2px 10px;
+  border-radius: 0px;
+  background: var(--accent-lime);
+  color: #0a0a1a;
+}
+
+/* ── DETAIL ROWS ── */
+.dc-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+.dc-detail-row .dc-label {
+  min-width: 72px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.4px;
+  color: var(--text-secondary);
+}
+.dc-detail-row .dc-value {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+}
+.platform-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 0px;
+  background: rgba(0,212,255,0.15);
+  color: var(--accent-blue);
+  vertical-align: middle;
+}
+
+/* ── CONTROLS ROW ── */
+.dc-controls {
+  display: flex;
+  gap: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+}
+.dc-btn {
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border: 1px solid var(--border-focus);
+  border-radius: 0px;
+  cursor: pointer;
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  box-shadow: var(--shadow);
+  transition: all 0.15s;
+}
+.dc-btn:hover { background: var(--border); }
+.dc-btn.btn-secondary {
+  background: var(--bg-elevated);
+  color: var(--accent-orange);
+  border-color: var(--accent-orange);
+}
+.dc-btn.btn-danger {
+  color: var(--accent-magenta);
+  border-color: var(--accent-magenta);
+  background: transparent;
+}
+.dc-btn.btn-danger:hover {
+  background: rgba(255,45,155,0.1);
+}
+.dc-btn.btn-ghost {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text-secondary);
+}
+.dc-btn.btn-ghost:hover {
+  color: var(--text-primary);
+  border-color: var(--border-focus);
+}
+.dc-btn.btn-primary {
+  background: var(--accent-lime);
+  color: #0a0a1a;
+  border-color: var(--accent-lime);
+}
+.dc-btn.btn-primary:hover { filter: brightness(1.1); }
+
+/* ── TIER PATH ── */
+.tier-path {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  letter-spacing: 0.3px;
+}
+.tier-path .sep { color: var(--accent-orange); margin: 0 4px; }
+.task-name {
+  font-family: var(--font-display);
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* ── STREAM EVENTS STRIP ── */
+.stream-events {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.stream-event-box {
+  width: 28px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 0px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: default;
+  transition: border-color 0.15s;
+}
+.stream-event-box:hover {
+  border-color: var(--border-focus);
+}
+.stream-event-box.ev-read {
+  color: var(--accent-blue);
+  background: rgba(0,212,255,0.08);
+  border-color: rgba(0,212,255,0.3);
+}
+.stream-event-box.ev-bash {
+  color: var(--accent-orange);
+  background: rgba(255,140,0,0.08);
+  border-color: rgba(255,140,0,0.3);
+}
+.stream-event-box.ev-search {
+  color: #00e5ff;
+  background: rgba(0,229,255,0.08);
+  border-color: rgba(0,229,255,0.3);
+}
+.stream-event-box.ev-edit {
+  color: var(--accent-lime);
+  background: rgba(180,255,57,0.08);
+  border-color: rgba(180,255,57,0.3);
+}
+.duration-strip {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+}
+.duration-strip .dur-sep {
+  color: var(--border-focus);
+  margin: 0 4px;
+}
+
+/* ── PROGRESS BARS ── */
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.progress-row .pr-label {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--text-secondary);
+  min-width: 72px;
+  font-family: var(--font-body);
+}
+.progress-row .pr-track {
+  flex: 1;
+  height: 8px;
+  background: var(--border);
+  border-radius: 0px;
+  overflow: hidden;
+}
+.progress-row .pr-fill {
+  height: 100%;
+  border-radius: 0px;
+  transition: width 0.4s ease;
+}
+.progress-row .pr-pct {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  min-width: 32px;
+  text-align: right;
+}
+
+/* ── STEPPED INDICATOR ── */
+.stepped-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding-top: 8px;
+}
+.step-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--border-focus);
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.step-circle.filled {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+}
+.step-circle.active {
+  border-color: var(--accent-blue);
+  background: linear-gradient(90deg, var(--accent-blue) 50%, transparent 50%);
+}
+.step-circle.empty {
+  border-color: var(--border-focus);
+  background: transparent;
+}
+.step-line {
+  flex: 1;
+  height: 2px;
+  min-width: 20px;
+}
+.step-line.filled {
+  background: var(--accent-blue);
+}
+.step-line.empty {
+  background: var(--border-focus);
+}
+
+/* ── DONUT CHARTS (CSS conic-gradient) ── */
+.budget-items {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.budget-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.donut {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.donut-inner {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.budget-platform {
+  font-family: var(--font-body);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.budget-usage {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-secondary);
+}
+
+/* ── CTA CARD ── */
+.dashboard-card.cta-card {
+  border-left: 4px solid var(--accent-orange);
+  background: var(--bg-elevated);
+}
+.cta-header {
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--accent-orange);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cta-header .cta-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--accent-orange);
+  border-radius: 0px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent-orange);
+}
+.cta-body {
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+.cta-evidence {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  padding: 4px 8px;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 0px;
+}
+.cta-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.cta-divider {
+  border: none;
+  border-top: 1px dashed var(--border);
+  margin: 6px 0;
+}
+.cta-secondary-text {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* ── FILESAFE CARD ── */
+.filesafe-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.filesafe-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-lime);
+  display: inline-block;
+}
+.guard-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  padding: 3px 0;
+}
+.guard-row .guard-label {
+  flex: 1;
+}
+.guard-row .guard-state {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  color: var(--accent-lime);
+}
+.filesafe-link {
+  font-size: var(--font-size-xs);
+  color: var(--accent-blue);
+  cursor: pointer;
+  text-decoration: none;
+}
+.filesafe-link:hover {
+  text-decoration: underline;
+}
+
+/* ── DASHBOARD TERMINAL GRID ── */
+.dashboard-terminal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+  padding: 0 12px 12px 12px;
+  min-height: 200px;
+}
+.dash-term-pane {
+  background: #0d0d0d;
+  border: 1px solid var(--border);
+  border-radius: 0px;
+  padding: 6px 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #c8c8c8;
+  position: relative;
+  overflow: hidden;
+  min-height: 80px;
+}
+.theme-light .dash-term-pane {
+  background: #1a1a1a;
+  color: #d0d0d0;
+}
+.theme-basic .dash-term-pane {
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
+.dash-term-pane .term-label {
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #666;
+  user-select: none;
+}
+.dash-term-pane .term-content {
+  margin-top: 16px;
+  line-height: 1.6;
+  white-space: pre;
+}
+.term-prompt { color: var(--accent-lime); }
+.term-info { color: var(--accent-blue); }
+.term-warn { color: var(--accent-orange); }
+.term-ok { color: var(--accent-lime); }
+.term-dim { color: #555; }
+
+
+/* ============================================================
+   Compatibility / Missing Styles
+   ============================================================ */
+
+/* Title bar sub-elements */
+.title-bar-left, .title-bar-center, .title-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.title-bar-left { flex: 0 0 auto; }
+.title-bar-center { flex: 1; justify-content: center; }
+.title-bar-right { flex: 0 0 auto; margin-left: auto; -webkit-app-region: no-drag; }
+.app-name {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+.project-dropdown-btn {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  padding: 1px 8px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.project-dropdown-btn:hover {
+  border-color: var(--border-focus);
+  color: var(--text-primary);
+}
+.project-name { margin-right: 4px; }
+.dropdown-arrow { font-size: 10px; color: var(--text-muted); }
+
+/* Theme toggle */
+.theme-toggle {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+}
+.theme-btn {
+  font-family: var(--font-display);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.theme-btn:hover { color: var(--text-secondary); }
+.theme-btn.active {
+  background: var(--bg-elevated);
+  color: var(--accent-lime);
+}
+.settings-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 150ms ease;
+}
+.settings-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* File tree elements */
+.tree-arrow {
+  display: inline-block;
+  width: 14px;
+  font-size: 10px;
+  color: var(--text-muted);
+  text-align: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.tree-icon {
+  flex-shrink: 0;
+  margin-right: 4px;
+  color: var(--text-muted);
+}
+.tree-label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--font-body);
+  font-size: 13px;
+}
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border);
+}
+.search-icon { flex-shrink: 0; color: var(--text-muted); }
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 12px;
+  outline: none;
+}
+.search-input::placeholder { color: var(--text-muted); }
+.panel-title {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* Editor elements */
+.line-number {
+  height: 20px;
+  line-height: 20px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-align: right;
+  padding-right: 12px;
+  user-select: none;
+}
+.tab-label { white-space: nowrap; }
+.tab-close {
+  font-size: 10px;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 6px;
+  padding: 0 2px;
+  line-height: 1;
+}
+.tab-close:hover { color: var(--text-primary); }
+.tab-git-badge {
+  font-size: 10px;
+  color: var(--accent-lime);
+  margin-left: 4px;
+  font-family: var(--font-mono);
+}
+.breadcrumb-item {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+.breadcrumb-item.current { color: var(--text-primary); }
+.breadcrumb-sep {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin: 0 4px;
+}
+.minimap-block {
+  background: var(--text-muted);
+  opacity: 0.3;
+  margin: 0 8px;
+}
+.minimap-spacer { }
+
+/* Chat panel elements */
+.thread-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.thread-list-title {
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.thread-new-btn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 14px;
+  font-family: var(--font-body);
+  transition: all 150ms ease;
+}
+.thread-new-btn:hover {
+  border-color: var(--accent-lime);
+  color: var(--accent-lime);
+}
+
+.message {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.message-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.message.user .message-avatar {
+  background: var(--accent-blue);
+  color: var(--bg-deep);
+}
+.message.assistant .message-avatar {
+  background: var(--accent-lime);
+  color: var(--bg-deep);
+}
+.message-body { flex: 1; min-width: 0; }
+.message-content {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+.message.user .message-content {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+}
+.message.assistant .message-content {
+  border: 1px solid var(--border-focus);
+  padding: 10px 14px;
+}
+.message-content p { margin-bottom: 8px; }
+.message-content ul { margin: 6px 0; padding-left: 20px; }
+.message-content li { margin-bottom: 4px; }
+.message-content code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  background: var(--bg-deep);
+  padding: 1px 4px;
+  color: var(--accent-orange);
+}
+.message-timestamp {
+  font-family: var(--font-body);
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.code-block {
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  margin: 8px 0;
+  overflow-x: auto;
+}
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 10px;
+}
+.code-block-lang {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.code-copy-btn {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 1px 8px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.code-copy-btn:hover {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+.code-block pre {
+  padding: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.files-touched {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--text-secondary);
+  border-top: 1px dashed var(--border);
+  padding-top: 6px;
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+}
+.files-touched-label {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.05em;
+}
+.files-touched-entry { font-family: var(--font-mono); font-size: 11px; }
+.files-touched-sep { color: var(--text-muted); }
+.diff-add { color: var(--accent-lime); }
+.diff-del { color: var(--accent-magenta); }
+
+.thinking-label {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.subagent-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  margin-left: 6px;
+}
+.badge-blue {
+  background: rgba(0,212,255,0.15);
+  color: var(--accent-blue);
+}
+.badge-lime {
+  background: rgba(180,255,57,0.15);
+  color: var(--accent-lime);
+}
+.subagent-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* Composer elements */
+.composer-input {
+  width: 100%;
+  min-height: 60px;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 8px;
+  resize: vertical;
+}
+.composer-input:focus {
+  border-color: var(--accent-blue);
+  outline: none;
+}
+.composer-input::placeholder { color: var(--text-muted); }
+.composer-dropzone {
+  font-family: var(--font-body);
+  font-size: 10px;
+  color: var(--text-muted);
+  padding: 2px 0;
+}
+.composer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.composer-selectors {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.composer-select {
+  font-family: var(--font-body);
+  font-size: 11px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 2px 6px;
+  cursor: pointer;
+}
+.composer-select:focus { border-color: var(--accent-blue); outline: none; }
+.composer-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.composer-btn {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 6px 16px;
+  border: 2px solid;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.composer-btn.btn-primary {
+  background: var(--accent-lime);
+  color: var(--bg-deep);
+  border-color: var(--accent-lime);
+}
+.composer-btn.btn-primary:hover { filter: brightness(1.15); }
+.composer-btn.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-focus);
+}
+.composer-btn.btn-secondary:hover {
+  background: var(--bg-hover);
+  border-color: var(--text-primary);
+}
+.btn-hint {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 400;
+  opacity: 0.5;
+  margin-left: 4px;
+}
+
+/* Bottom panel elements */
+.bottom-tabs-left {
+  display: flex;
+  flex: 1;
+}
+.bottom-tabs-right {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+.bottom-tab-action {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.bottom-tab-action:hover { color: var(--text-primary); }
+.terminal-output {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.6;
+  white-space: pre;
+  margin: 0;
+}
+
+/* Terminal color spans */
+.term-prompt { color: var(--accent-lime); }
+.term-compile { color: var(--accent-blue); }
+.term-running { color: var(--accent-lime); }
+.term-info { color: var(--accent-blue); }
+.term-warn { color: var(--accent-orange); }
+.term-error { color: var(--accent-magenta); }
+.term-ok { color: var(--accent-lime); font-weight: 700; }
+.term-agent { color: var(--accent-orange); }
+.pane-stdout { color: #66ff66; }
+.pane-stderr { color: var(--accent-magenta); }
+.pane-agent { color: var(--accent-orange); }
+.pane-empty { color: var(--text-secondary); }
+
+/* Status bar elements */
+.status-left, .status-center, .status-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.status-left { flex: 1; }
+.status-center {
+  flex: 0 0 auto;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.status-right {
+  flex: 1;
+  justify-content: flex-end;
+}
+.status-sep { color: var(--text-muted); }
+.status-dropdown {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.status-dropdown:hover { color: var(--text-primary); }
+.context-gauge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.context-ring { color: var(--accent-blue); }
+.context-text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-secondary);
+}
+.lsp-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+.dot-green { background: var(--accent-lime); }
+.ssh-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+.ssh-icon { color: var(--text-muted); }
+.line-col {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* File tree depth indentation */
+.file-tree-item { display: flex; align-items: center; gap: 4px; padding: 2px 8px; height: 24px; cursor: pointer; transition: background 100ms ease; }
+.file-tree-item:hover { background: var(--bg-hover); }
+.file-tree-item.selected { background: var(--bg-elevated); border-left: 2px solid var(--accent-blue); }
+.file-tree-item[data-depth="0"] { padding-left: 8px; }
+.file-tree-item[data-depth="1"] { padding-left: 24px; }
+.file-tree-item[data-depth="2"] { padding-left: 40px; }
+.file-tree-item.folder { font-weight: 500; }
+
+/* File badges */
+.file-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 0 4px;
+  text-transform: uppercase;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.file-badge:contains("rs") { color: var(--accent-orange); }
+.git-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 0 3px;
+  margin-left: 4px;
+  flex-shrink: 0;
+}
+.git-badge.modified { color: var(--accent-orange); }
+.git-badge.added { color: var(--accent-lime); }
+
+/* Collapse button */
+.collapse-btn {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 10px;
+  transition: all 150ms ease;
+}
+.collapse-btn:hover { color: var(--text-primary); }
+
+/* Code line styling */
+.code-line {
+  height: 20px;
+  line-height: 20px;
+  white-space: pre;
+}
+
+  </style>
+</head>
+<body>
+
+<div class="app-shell">
+
+<!-- ============================================================ -->
+<!-- SECTION 1: TITLE BAR                                         -->
+<!-- ============================================================ -->
+
+<div class="title-bar">
+
+  <div class="title-bar-left">
+    <span class="app-name" style="font-family: 'Orbitron', sans-serif;">PUPPET MASTER</span>
+  </div>
+
+  <div class="title-bar-center">
+    <div class="project-dropdown">
+      <button class="project-dropdown-btn">
+        <span class="project-name">my-rust-project</span>
+        <span class="dropdown-arrow">&#9662;</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="title-bar-right">
+    <div class="theme-toggle">
+      <button class="theme-btn active" data-theme="dark">DARK</button>
+      <button class="theme-btn" data-theme="light">LIGHT</button>
+      <button class="theme-btn" data-theme="basic">BASIC</button>
+    </div>
+    <button class="settings-btn" title="Settings">&#9881;</button>
+  </div>
+
+</div>
+
+
+<!-- ============================================================ -->
+<!-- MAIN CONTENT AREA (activity bar + file manager + editor)      -->
+<!-- ============================================================ -->
+
+
+
+  <!-- ========================================================== -->
+  <!-- SECTION 2: ACTIVITY BAR                                     -->
+  <!-- ========================================================== -->
+
+  <nav class="activity-bar">
+
+    <div class="icon active" data-tooltip="Home">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 8.5L8 2.5L14 8.5"/>
+        <path d="M4 7.5V13.5H6.5V10H9.5V13.5H12V7.5"/>
+      </svg>
+    </div>
+
+    <div class="icon" data-tooltip="Run">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 2L13 8L4 14Z"/>
+      </svg>
+    </div>
+
+    <div class="icon" data-tooltip="Settings">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="8" cy="8" r="2.5"/>
+        <path d="M8 1v2.5M8 12.5V15M1 8h2.5M12.5 8H15M3.1 3.1l1.8 1.8M11.1 11.1l1.8 1.8M12.9 3.1l-1.8 1.8M4.9 11.1l-1.8 1.8"/>
+      </svg>
+    </div>
+
+    <div class="icon" data-tooltip="Analytics">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 14V8"/>
+        <path d="M6 14V4"/>
+        <path d="M10 14V10"/>
+        <path d="M14 14V2"/>
+      </svg>
+    </div>
+
+    <div class="icon" data-tooltip="Chat">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 2h12v8H6L2 14V2z"/>
+      </svg>
+    </div>
+
+    <div class="icon" data-tooltip="Files">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1.5 3.5h4l2 2h7v8h-13V3.5z"/>
+      </svg>
+    </div>
+
+  </nav>
+
+
+  <!-- ========================================================== -->
+  <!-- SECTION 3: FILE MANAGER                                     -->
+  <!-- ========================================================== -->
+
+  <aside class="file-manager">
+
+    <!-- Panel Header -->
+    <div class="panel-header">
+      <span class="panel-title" style="font-family: 'Orbitron', sans-serif;">EXPLORER</span>
+      <button class="collapse-btn" title="Collapse panel">&#9650;</button>
+    </div>
+
+    <!-- Search -->
+    <div class="search-bar">
+      <svg class="search-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="6.5" cy="6.5" r="4.5"/>
+        <path d="M10 10l4 4"/>
+      </svg>
+      <input type="text" class="search-input" placeholder="Search files..."/>
+    </div>
+
+    <!-- File Tree -->
+    <div class="file-tree">
+
+      <!-- src/ (expanded) -->
+      <div class="file-tree-item folder" data-depth="0">
+        <span class="tree-arrow">&#9660;</span>
+        <svg class="tree-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 3.5h4l2 2h7v8h-13V3.5z"/></svg>
+        <span class="tree-label">src/</span>
+      </div>
+
+        <!-- app.rs (modified) -->
+        <div class="file-tree-item" data-depth="1">
+          <span class="tree-label">app.rs</span>
+          <span class="git-badge modified">M</span>
+          <span class="file-badge">rs</span>
+        </div>
+
+        <!-- main.rs -->
+        <div class="file-tree-item" data-depth="1">
+          <span class="tree-label">main.rs</span>
+          <span class="file-badge">rs</span>
+        </div>
+
+        <!-- views/ (expanded) -->
+        <div class="file-tree-item folder" data-depth="1">
+          <span class="tree-arrow">&#9660;</span>
+          <svg class="tree-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 3.5h4l2 2h7v8h-13V3.5z"/></svg>
+          <span class="tree-label">views/</span>
+        </div>
+
+          <!-- dashboard.rs (selected) -->
+          <div class="file-tree-item selected" data-depth="2">
+            <span class="tree-label">dashboard.rs</span>
+            <span class="file-badge">rs</span>
+          </div>
+
+          <!-- config.rs (added) -->
+          <div class="file-tree-item" data-depth="2">
+            <span class="tree-label">config.rs</span>
+            <span class="git-badge added">A</span>
+            <span class="file-badge">rs</span>
+          </div>
+
+          <!-- settings.rs -->
+          <div class="file-tree-item" data-depth="2">
+            <span class="tree-label">settings.rs</span>
+            <span class="file-badge">rs</span>
+          </div>
+
+        <!-- widgets/ (collapsed) -->
+        <div class="file-tree-item folder" data-depth="1">
+          <span class="tree-arrow">&#9654;</span>
+          <svg class="tree-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 3.5h4l2 2h7v8h-13V3.5z"/></svg>
+          <span class="tree-label">widgets/</span>
+        </div>
+
+        <!-- platforms/ (collapsed) -->
+        <div class="file-tree-item folder" data-depth="1">
+          <span class="tree-arrow">&#9654;</span>
+          <svg class="tree-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 3.5h4l2 2h7v8h-13V3.5z"/></svg>
+          <span class="tree-label">platforms/</span>
+        </div>
+
+        <!-- core/ (expanded) -->
+        <div class="file-tree-item folder" data-depth="1">
+          <span class="tree-arrow">&#9660;</span>
+          <svg class="tree-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 3.5h4l2 2h7v8h-13V3.5z"/></svg>
+          <span class="tree-label">core/</span>
+        </div>
+
+          <!-- orchestrator.rs -->
+          <div class="file-tree-item" data-depth="2">
+            <span class="tree-label">orchestrator.rs</span>
+            <span class="file-badge">rs</span>
+          </div>
+
+          <!-- engine.rs -->
+          <div class="file-tree-item" data-depth="2">
+            <span class="tree-label">engine.rs</span>
+            <span class="file-badge">rs</span>
+          </div>
+
+      <!-- tests/ (collapsed) -->
+      <div class="file-tree-item folder" data-depth="0">
+        <span class="tree-arrow">&#9654;</span>
+        <svg class="tree-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1.5 3.5h4l2 2h7v8h-13V3.5z"/></svg>
+        <span class="tree-label">tests/</span>
+      </div>
+
+      <!-- Cargo.toml -->
+      <div class="file-tree-item" data-depth="0">
+        <span class="tree-label">Cargo.toml</span>
+        <span class="file-badge">toml</span>
+      </div>
+
+      <!-- README.md -->
+      <div class="file-tree-item" data-depth="0">
+        <span class="tree-label">README.md</span>
+        <span class="file-badge">md</span>
+      </div>
+
+      <!-- AGENTS.md -->
+      <div class="file-tree-item" data-depth="0">
+        <span class="tree-label">AGENTS.md</span>
+        <span class="file-badge">md</span>
+      </div>
+
+    </div>
+
+    <!-- Git Status Strip -->
+    <div class="git-status">42 files | 3 modified | main &#8593;2</div>
+
+  </aside>
+
+
+  <!-- ========================================================== -->
+  <!-- SECTION 4: FILE EDITOR                                      -->
+  <!-- ========================================================== -->
+
+  <main class="editor-area">
+
+    <!-- Tab Bar -->
+    <div class="editor-tabs">
+      <div class="editor-tab active">
+        <span class="tab-label">app.rs</span>
+        <span class="unsaved-dot"></span>
+        <button class="tab-close">&#10005;</button>
+      </div>
+      <div class="editor-tab">
+        <span class="tab-label">dashboard.rs</span>
+        <button class="tab-close">&#10005;</button>
+      </div>
+      <div class="editor-tab">
+        <span class="tab-label">config.rs</span>
+        <span class="tab-git-badge">[A]</span>
+        <button class="tab-close">&#10005;</button>
+      </div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <span class="breadcrumb-item">src</span>
+      <span class="breadcrumb-sep">&#8250;</span>
+      <span class="breadcrumb-item">views</span>
+      <span class="breadcrumb-sep">&#8250;</span>
+      <span class="breadcrumb-item current">dashboard.rs</span>
+    </div>
+
+    <!-- Editor Content -->
+    <div class="editor-content">
+
+      <!-- Line Number Gutter -->
+      <div class="line-gutter">
+        <div class="line-number">1</div>
+        <div class="line-number">2</div>
+        <div class="line-number">3</div>
+        <div class="line-number">4</div>
+        <div class="line-number">5</div>
+        <div class="line-number">6</div>
+        <div class="line-number">7</div>
+        <div class="line-number">8</div>
+        <div class="line-number">9</div>
+        <div class="line-number">10</div>
+        <div class="line-number">11</div>
+        <div class="line-number">12</div>
+        <div class="line-number">13</div>
+        <div class="line-number">14</div>
+        <div class="line-number">15</div>
+        <div class="line-number">16</div>
+        <div class="line-number">17</div>
+        <div class="line-number">18</div>
+        <div class="line-number">19</div>
+        <div class="line-number">20</div>
+        <div class="line-number">21</div>
+        <div class="line-number">22</div>
+        <div class="line-number">23</div>
+        <div class="line-number">24</div>
+        <div class="line-number">25</div>
+        <div class="line-number">26</div>
+        <div class="line-number">27</div>
+        <div class="line-number">28</div>
+        <div class="line-number">29</div>
+        <div class="line-number">30</div>
+        <div class="line-number">31</div>
+        <div class="line-number">32</div>
+        <div class="line-number">33</div>
+        <div class="line-number">34</div>
+        <div class="line-number">35</div>
+      </div>
+
+      <!-- Code Area -->
+      <div class="code-area">
+        <pre><code><!-- Line 1 --><div class="code-line"><span class="code-keyword">use</span> <span class="code-path">crate::widgets</span><span class="code-punct">::{</span>styled_button<span class="code-punct">,</span> page_header<span class="code-punct">,</span> status_badge<span class="code-punct">};</span></div>
+<!-- Line 2 --><div class="code-line"><span class="code-keyword">use</span> <span class="code-path">crate::platforms</span><span class="code-punct">::</span>platform_specs<span class="code-punct">;</span></div>
+<!-- Line 3 --><div class="code-line"><span class="code-keyword">use</span> <span class="code-path">crate::types</span><span class="code-punct">::</span><span class="code-type">Platform</span><span class="code-punct">;</span></div>
+<!-- Line 4 --><div class="code-line"></div>
+<!-- Line 5 --><div class="code-line"><span class="code-comment">/// Dashboard view - operational hub with rearrangeable cards</span></div>
+<!-- Line 6 --><div class="code-line"><span class="code-keyword">pub</span> <span class="code-keyword">struct</span> <span class="code-type">DashboardView</span> <span class="code-punct">{</span></div>
+<!-- Line 7 --><div class="code-line">    cards<span class="code-punct">:</span> <span class="code-type">Vec</span><span class="code-punct">&lt;</span><span class="code-type">DashboardCard</span><span class="code-punct">&gt;,</span></div>
+<!-- Line 8 --><div class="code-line">    orchestrator_state<span class="code-punct">:</span> <span class="code-type">OrchestratorState</span><span class="code-punct">,</span></div>
+<!-- Line 9 --><div class="code-line">    platform<span class="code-punct">:</span> <span class="code-type">Platform</span><span class="code-punct">,</span></div>
+<!-- Line 10 --><div class="code-line">    model<span class="code-punct">:</span> <span class="code-type">String</span><span class="code-punct">,</span></div>
+<!-- Line 11 --><div class="code-line">    progress<span class="code-punct">:</span> <span class="code-type">TierProgress</span><span class="code-punct">,</span></div>
+<!-- Line 12 --><div class="code-line"><span class="code-punct">}</span></div>
+<!-- Line 13 --><div class="code-line"></div>
+<!-- Line 14 --><div class="code-line"><span class="code-keyword">impl</span> <span class="code-type">DashboardView</span> <span class="code-punct">{</span></div>
+<!-- Line 15 --><div class="code-line">    <span class="code-keyword">pub</span> <span class="code-keyword">fn</span> <span class="code-fn">new</span><span class="code-punct">(</span>config<span class="code-punct">:</span> <span class="code-punct">&amp;</span><span class="code-type">AppConfig</span><span class="code-punct">)</span> <span class="code-punct">-&gt;</span> <span class="code-type">Self</span> <span class="code-punct">{</span></div>
+<!-- Line 16 --><div class="code-line">        <span class="code-keyword">let</span> platform <span class="code-punct">=</span> config<span class="code-punct">.</span>tier_config<span class="code-punct">.</span>phase<span class="code-punct">.</span>platform<span class="code-punct">;</span></div>
+<!-- Line 17 --><div class="code-line">        <span class="code-keyword">let</span> model <span class="code-punct">=</span> platform_specs<span class="code-punct">::</span><span class="code-fn">fallback_model_ids</span><span class="code-punct">(</span>platform<span class="code-punct">)</span></div>
+<!-- Line 18 --><div class="code-line">            <span class="code-punct">.</span><span class="code-fn">first</span><span class="code-punct">()</span></div>
+<!-- Line 19 --><div class="code-line">            <span class="code-punct">.</span><span class="code-fn">unwrap_or</span><span class="code-punct">(&amp;</span><span class="code-string">"auto"</span><span class="code-punct">)</span></div>
+<!-- Line 20 --><div class="code-line">            <span class="code-punct">.</span><span class="code-fn">to_string</span><span class="code-punct">();</span></div>
+<!-- Line 21 --><div class="code-line"></div>
+<!-- Line 22 --><div class="code-line">        <span class="code-type">Self</span> <span class="code-punct">{</span></div>
+<!-- Line 23 --><div class="code-line">            cards<span class="code-punct">:</span> <span class="code-type">Self</span><span class="code-punct">::</span><span class="code-fn">default_cards</span><span class="code-punct">(),</span></div>
+<!-- Line 24 --><div class="code-line">            orchestrator_state<span class="code-punct">:</span> <span class="code-type">OrchestratorState</span><span class="code-punct">::</span>Idle<span class="code-punct">,</span></div>
+<!-- Line 25 --><div class="code-line">            platform<span class="code-punct">,</span></div>
+<!-- Line 26 --><div class="code-line">            model<span class="code-punct">,</span></div>
+<!-- Line 27 --><div class="code-line">            progress<span class="code-punct">:</span> <span class="code-type">TierProgress</span><span class="code-punct">::</span><span class="code-fn">default</span><span class="code-punct">(),</span></div>
+<!-- Line 28 --><div class="code-line">        <span class="code-punct">}</span></div>
+<!-- Line 29 --><div class="code-line">    <span class="code-punct">}</span></div>
+<!-- Line 30 --><div class="code-line"></div>
+<!-- Line 31 --><div class="code-line">    <span class="code-keyword">fn</span> <span class="code-fn">default_cards</span><span class="code-punct">()</span> <span class="code-punct">-&gt;</span> <span class="code-type">Vec</span><span class="code-punct">&lt;</span><span class="code-type">DashboardCard</span><span class="code-punct">&gt;</span> <span class="code-punct">{</span></div>
+<!-- Line 32 --><div class="code-line">        <span class="code-macro">vec!</span><span class="code-punct">[</span></div>
+<!-- Line 33 --><div class="code-line">            <span class="code-type">DashboardCard</span><span class="code-punct">::</span>OrchestratorStatus<span class="code-punct">,</span></div>
+<!-- Line 34 --><div class="code-line">            <span class="code-type">DashboardCard</span><span class="code-punct">::</span>CurrentTask<span class="code-punct">,</span></div>
+<!-- Line 35 --><div class="code-line">            <span class="code-type">DashboardCard</span><span class="code-punct">::</span>Progress<span class="code-punct">,</span></div>
+</code></pre>
+      </div>
+
+      <!-- Minimap -->
+      <div class="minimap">
+        <div class="minimap-block" data-lines="1-3" style="height: 6px;"></div>
+        <div class="minimap-spacer" style="height: 2px;"></div>
+        <div class="minimap-block" data-lines="5-5" style="height: 2px;"></div>
+        <div class="minimap-block" data-lines="6-12" style="height: 14px;"></div>
+        <div class="minimap-spacer" style="height: 2px;"></div>
+        <div class="minimap-block" data-lines="14-29" style="height: 32px;"></div>
+        <div class="minimap-spacer" style="height: 2px;"></div>
+        <div class="minimap-block" data-lines="31-35" style="height: 10px;"></div>
+        <div class="minimap-viewport"></div>
+      </div>
+
+    </div>
+
+  </main>
+
+
+
+  <!-- Dashboard View (hidden by default, shown when Home icon clicked) -->
+<!-- ============================================================
+     DASHBOARD VIEW MARKUP
+     ============================================================
+     Insert this block inside .main-content, after or alongside
+     the .editor-area (which should also be wrapped for toggling).
+     ============================================================ -->
+
+<div class="dashboard-view" id="dashboard-view">
+
+  <div class="dashboard-grid">
+
+    <!-- ═══ CARD 1: ORCHESTRATOR STATUS ═══ -->
+    <div class="dashboard-card" id="card-orchestrator">
+      <div class="dc-header">
+        <span>ORCHESTRATOR STATUS</span>
+        <span class="status-badge-running">RUNNING</span>
+      </div>
+      <div class="dc-body">
+        <div class="dc-detail-row">
+          <span class="dc-label">Platform</span>
+          <span class="dc-value">Claude Code <span class="platform-badge">CC</span></span>
+        </div>
+        <div class="dc-detail-row">
+          <span class="dc-label">Model</span>
+          <span class="dc-value">claude-sonnet-4</span>
+        </div>
+        <div class="dc-detail-row">
+          <span class="dc-label">Elapsed</span>
+          <span class="dc-value">2:34</span>
+        </div>
+        <div class="dc-detail-row">
+          <span class="dc-label">Subagents</span>
+          <span class="dc-value">&gt; 2 active
+            <span class="platform-badge" style="margin-left:4px;">CC</span>
+            <span class="platform-badge" style="background:rgba(255,140,0,0.15);color:var(--accent-orange);">CX</span>
+          </span>
+        </div>
+        <div class="dc-controls">
+          <button class="dc-btn btn-secondary" title="Pause orchestrator">
+            <svg width="10" height="10" viewBox="0 0 10 10" style="vertical-align:-1px;margin-right:3px;"><rect x="1" y="1" width="3" height="8" fill="currentColor"/><rect x="6" y="1" width="3" height="8" fill="currentColor"/></svg>
+            PAUSE
+          </button>
+          <button class="dc-btn btn-danger" title="Stop orchestrator">
+            <svg width="10" height="10" viewBox="0 0 10 10" style="vertical-align:-1px;margin-right:3px;"><rect x="1" y="1" width="8" height="8" fill="currentColor"/></svg>
+            STOP
+          </button>
+          <button class="dc-btn btn-ghost" title="Reset orchestrator">
+            &#8635; RESET
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CARD 2: CURRENT TASK ═══ -->
+    <div class="dashboard-card" id="card-current-task">
+      <div class="dc-header">
+        <span>CURRENT TASK</span>
+      </div>
+      <div class="dc-body">
+        <div class="tier-path">
+          Phase 2<span class="sep">&gt;</span>Task 3<span class="sep">&gt;</span>Subtask 1
+        </div>
+        <div class="task-name">Implement authentication module</div>
+        <div class="stream-events">
+          <div class="stream-event-box ev-read" title="Read: src/auth/mod.rs">R</div>
+          <div class="stream-event-box ev-bash" title="Bash: cargo test auth">B</div>
+          <div class="stream-event-box ev-search" title="Search: AuthProvider trait">S</div>
+          <div class="stream-event-box ev-edit" title="Edit: src/auth/handler.rs">E</div>
+          <div class="stream-event-box ev-read" title="Read: src/auth/handler.rs">R</div>
+        </div>
+        <div class="duration-strip">
+          Thinking: 0:12<span class="dur-sep">|</span>Bash: 0:45<span class="dur-sep">|</span>Total: 1:23
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CARD 3: PROGRESS ═══ -->
+    <div class="dashboard-card" id="card-progress">
+      <div class="dc-header">
+        <span>PROGRESS</span>
+      </div>
+      <div class="dc-body">
+        <div class="progress-row">
+          <span class="pr-label">Phase 2/4</span>
+          <div class="pr-track"><div class="pr-fill" style="width:50%;background:var(--accent-blue);"></div></div>
+          <span class="pr-pct">50%</span>
+        </div>
+        <div class="progress-row">
+          <span class="pr-label">Task 3/8</span>
+          <div class="pr-track"><div class="pr-fill" style="width:37.5%;background:#00e5ff;"></div></div>
+          <span class="pr-pct">38%</span>
+        </div>
+        <div class="progress-row">
+          <span class="pr-label">Subtask 1/3</span>
+          <div class="pr-track"><div class="pr-fill" style="width:33%;background:var(--accent-lime);"></div></div>
+          <span class="pr-pct">33%</span>
+        </div>
+        <!-- Stepped phase indicator -->
+        <div class="stepped-indicator">
+          <div class="step-circle filled"></div>
+          <div class="step-line filled"></div>
+          <div class="step-circle filled"></div>
+          <div class="step-line empty"></div>
+          <div class="step-circle active"></div>
+          <div class="step-line empty"></div>
+          <div class="step-circle empty"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CARD 4: PLATFORM BUDGETS ═══ -->
+    <div class="dashboard-card" id="card-budgets">
+      <div class="dc-header">
+        <span>PLATFORM BUDGETS</span>
+      </div>
+      <div class="dc-body">
+        <div class="budget-items">
+          <!-- Claude: 45% -->
+          <div class="budget-item">
+            <div class="donut" style="background: conic-gradient(var(--accent-blue) 0deg 162deg, var(--border) 162deg 360deg);">
+              <div class="donut-inner">45%</div>
+            </div>
+            <span class="budget-platform">Claude</span>
+            <span class="budget-usage">45k / 100k tokens</span>
+          </div>
+          <!-- Codex: 72% -->
+          <div class="budget-item">
+            <div class="donut" style="background: conic-gradient(var(--accent-orange) 0deg 259deg, var(--border) 259deg 360deg);">
+              <div class="donut-inner">72%</div>
+            </div>
+            <span class="budget-platform">Codex</span>
+            <span class="budget-usage">72k / 100k tokens</span>
+          </div>
+          <!-- Cursor: 15% -->
+          <div class="budget-item">
+            <div class="donut" style="background: conic-gradient(var(--accent-lime) 0deg 54deg, var(--border) 54deg 360deg);">
+              <div class="donut-inner">15%</div>
+            </div>
+            <span class="budget-platform">Cursor</span>
+            <span class="budget-usage">15k / 100k tokens</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CARD 5: CALLS TO ACTION ═══ -->
+    <div class="dashboard-card cta-card" id="card-cta">
+      <div class="dc-header">
+        <span>ACTION REQUIRED</span>
+      </div>
+      <div class="dc-body">
+        <!-- Primary CTA: HITL approval -->
+        <div class="cta-header">
+          <span class="cta-icon">[!]</span>
+          <span>HITL APPROVAL REQUIRED</span>
+        </div>
+        <div class="cta-body">
+          Phase 2 complete -- review evidence before proceeding to Phase 3
+        </div>
+        <div class="cta-evidence">
+          12 files changed, 4 tests added, all passing
+        </div>
+        <div class="cta-buttons">
+          <button class="dc-btn btn-primary">APPROVE &amp; CONTINUE</button>
+          <button class="dc-btn btn-danger">REJECT</button>
+        </div>
+
+        <hr class="cta-divider">
+
+        <!-- Secondary CTA: resume interrupted run -->
+        <div class="cta-secondary-text">Previous run was interrupted</div>
+        <div class="cta-buttons" style="margin-top:4px;">
+          <button class="dc-btn btn-secondary">RESUME FROM CHECKPOINT</button>
+          <button class="dc-btn btn-ghost">START FRESH</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CARD 6: FILESAFE STATUS ═══ -->
+    <div class="dashboard-card" id="card-filesafe">
+      <div class="dc-header">
+        <span>FILESAFE</span>
+      </div>
+      <div class="dc-body">
+        <div class="filesafe-status">
+          <span class="filesafe-dot"></span>
+          3/3 guards active
+        </div>
+        <div class="guard-row">
+          <span class="guard-label">Block destructive commands</span>
+          <span class="guard-state">[ON]</span>
+        </div>
+        <div class="guard-row">
+          <span class="guard-label">Restrict writes to plan</span>
+          <span class="guard-state">[ON]</span>
+        </div>
+        <div class="guard-row">
+          <span class="guard-label">Block sensitive files</span>
+          <span class="guard-state">[ON]</span>
+        </div>
+        <a class="filesafe-link" href="#" onclick="return false;">Configure in Settings &gt; Advanced</a>
+      </div>
+    </div>
+
+  </div><!-- /.dashboard-grid -->
+
+  <!-- ═══ 4-SPLIT TERMINAL GRID ═══ -->
+  <div class="dashboard-terminal-grid">
+
+    <!-- Pane 1: Agent 1 -->
+    <div class="dash-term-pane">
+      <div class="term-label">Agent 1</div>
+      <div class="term-content"><span class="term-prompt">$</span> claude --model sonnet-4 --resume
+<span class="term-info">[INFO]</span> Resuming session s-4f2a...
+<span class="term-ok">[OK]</span>   Reading src/auth/mod.rs
+<span class="term-dim">       48 lines analyzed</span></div>
+    </div>
+
+    <!-- Pane 2: Agent 2 -->
+    <div class="dash-term-pane">
+      <div class="term-label">Agent 2</div>
+      <div class="term-content"><span class="term-prompt">$</span> codex --task "review auth tests"
+<span class="term-info">[INFO]</span> Scanning test suite...
+<span class="term-ok">[OK]</span>   4 test files found
+<span class="term-ok">[OK]</span>   All 17 assertions pass</div>
+    </div>
+
+    <!-- Pane 3: Build -->
+    <div class="dash-term-pane">
+      <div class="term-label">Build</div>
+      <div class="term-content"><span class="term-prompt">$</span> cargo build --release
+<span class="term-info">   Compiling</span> puppet-master v0.4.0
+<span class="term-info">   Compiling</span> auth-module v0.1.0
+<span class="term-ok">    Finished</span> release [optimized] in 12.4s</div>
+    </div>
+
+    <!-- Pane 4: Shell -->
+    <div class="dash-term-pane">
+      <div class="term-label">Shell</div>
+      <div class="term-content"><span class="term-prompt">$</span> git --no-pager log --oneline -3
+<span class="term-dim">a3f2c1d</span> feat: add auth handler
+<span class="term-dim">b7e4a09</span> refactor: provider trait
+<span class="term-dim">c91f3b2</span> fix: token budget calc</div>
+    </div>
+
+  </div><!-- /.dashboard-terminal-grid -->
+
+</div><!-- /.dashboard-view -->
+
+<!-- ============================================================ -->
+<!-- SECTION 1: CHAT PANEL                                        -->
+<!-- ============================================================ -->
+
+<aside class="chat-panel">
+
+  <!-- Thread Sidebar -->
+  <div class="thread-list">
+    <div class="thread-list-header">
+      <span class="thread-list-title">THREADS</span>
+      <button class="thread-new-btn" title="New thread">+</button>
+    </div>
+    <div class="thread-item active">
+      <div class="thread-name">Auth Module Design</div>
+      <div class="thread-time">2m ago</div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-name">Bug Fix: Login Flow</div>
+      <div class="thread-time">15m ago</div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-name">Phase 2 Planning</div>
+      <div class="thread-time">1h ago</div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-name">Code Review Notes</div>
+      <div class="thread-time">3h ago</div>
+    </div>
+    <div class="thread-item">
+      <div class="thread-name">Project Setup</div>
+      <div class="thread-time">Yesterday</div>
+    </div>
+  </div>
+
+  <!-- Message Area -->
+  <div class="message-area">
+
+    <!-- Message 1: User -->
+    <div class="message user">
+      <div class="message-avatar">U</div>
+      <div class="message-body">
+        <div class="message-content">
+          Can you implement the authentication module for the dashboard? It needs JWT token validation and role-based access control.
+        </div>
+        <div class="message-timestamp">2:31 PM</div>
+      </div>
+    </div>
+
+    <!-- Message 2: Assistant -->
+    <div class="message assistant">
+      <div class="message-avatar">PM</div>
+      <div class="message-body">
+        <div class="message-content">
+          <p>I'll implement the authentication module with JWT validation and RBAC. Here's the approach:</p>
+          <ul>
+            <li>Token validation middleware using <code>jsonwebtoken</code> crate</li>
+            <li>Role enum: Admin, Editor, Viewer</li>
+            <li>Guard trait for route protection</li>
+          </ul>
+          <div class="code-block">
+            <div class="code-block-header">
+              <span class="code-block-lang">rust</span>
+              <button class="code-copy-btn">Copy</button>
+            </div>
+            <pre><code>#[derive(Debug, Clone, PartialEq)]
+pub enum Role {
+    Admin,
+    Editor,
+    Viewer,
+}
+
+pub struct AuthGuard {
+    required_role: Role,
+}
+
+impl AuthGuard {
+    pub fn new(role: Role) -&gt; Self {
+        Self { required_role: role }
+    }
+
+    pub fn validate(&amp;self, token: &amp;str) -&gt; Result&lt;Claims, AuthError&gt; {
+        let claims = decode_token(token)?;
+        if claims.role &gt;= self.required_role {
+            Ok(claims)
+        } else {
+            Err(AuthError::InsufficientPermissions)
+        }
+    }
+}</code></pre>
+          </div>
+          <div class="files-touched">
+            <span class="files-touched-label">Files:</span>
+            <span class="files-touched-entry">src/auth/mod.rs <span class="diff-add">+45</span>/<span class="diff-del">-0</span></span>
+            <span class="files-touched-sep">|</span>
+            <span class="files-touched-entry">src/auth/guard.rs <span class="diff-add">+32</span>/<span class="diff-del">-0</span></span>
+            <span class="files-touched-sep">|</span>
+            <span class="files-touched-entry">src/auth/claims.rs <span class="diff-add">+18</span>/<span class="diff-del">-0</span></span>
+          </div>
+        </div>
+        <div class="message-timestamp">2:32 PM</div>
+      </div>
+    </div>
+
+    <!-- Message 3: User -->
+    <div class="message user">
+      <div class="message-avatar">U</div>
+      <div class="message-body">
+        <div class="message-content">
+          Looks good. Can you add session expiry handling too?
+        </div>
+        <div class="message-timestamp">2:33 PM</div>
+      </div>
+    </div>
+
+    <!-- Message 4: Assistant (thinking) -->
+    <div class="message assistant thinking">
+      <div class="message-avatar">PM</div>
+      <div class="message-body">
+        <div class="message-content">
+          <span class="thinking-label">Thinking</span><span class="thinking-dots"><span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Subagent Indicator Strip -->
+  <div class="subagent-strip">
+    <span class="subagent-label">&gt; 2 subagents active</span>
+    <span class="subagent-badge badge-blue">Claude</span>
+    <span class="subagent-badge badge-lime">Codex</span>
+  </div>
+
+  <!-- Composer Area -->
+  <div class="chat-composer">
+    <textarea class="composer-input" placeholder="Ask anything... (Ctrl+Enter to send)"></textarea>
+    <div class="composer-dropzone">Drop files or @ to mention</div>
+    <div class="composer-footer">
+      <div class="composer-selectors">
+        <select class="composer-select mode-select" title="Mode">
+          <option selected>Agent</option>
+          <option>Ask</option>
+          <option>Plan</option>
+          <option>Debug</option>
+        </select>
+        <select class="composer-select platform-select" title="Platform">
+          <option selected>Cursor</option>
+        </select>
+        <select class="composer-select model-select" title="Model">
+          <option selected>claude-sonnet-4</option>
+        </select>
+        <select class="composer-select effort-select" title="Effort">
+          <option>Low</option>
+          <option>Medium</option>
+          <option selected>High</option>
+        </select>
+      </div>
+      <div class="composer-actions">
+        <button class="composer-btn btn-primary" title="Ctrl+Enter">SEND <span class="btn-hint">Ctrl+Enter</span></button>
+        <button class="composer-btn btn-secondary">QUEUE</button>
+      </div>
+    </div>
+  </div>
+
+</aside>
+
+
+<!-- ============================================================ -->
+<!-- SECTION 2: BOTTOM PANEL                                      -->
+<!-- ============================================================ -->
+
+<div class="bottom-panel">
+
+  <!-- Tab Bar -->
+  <div class="bottom-tabs">
+    <div class="bottom-tabs-left">
+      <button class="bottom-tab active">Terminal</button>
+      <button class="bottom-tab">Problems <span class="tab-badge">(3)</span></button>
+      <button class="bottom-tab">Output</button>
+      <button class="bottom-tab">Ports</button>
+      <button class="bottom-tab">Browser</button>
+      <button class="bottom-tab">Debug</button>
+    </div>
+    <div class="bottom-tabs-right">
+      <button class="bottom-tab-action" title="Collapse panel">&#9660;</button>
+      <button class="bottom-tab-action" title="Pop out">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="1" y="3" width="10" height="10" rx="1"/>
+          <path d="M4 3V1h9v9h-2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Terminal Grid (2x2) -->
+  <div class="terminal-grid">
+
+    <!-- Pane 1: stdout (green) -->
+    <div class="terminal-pane pane-stdout">
+      <pre class="terminal-output"><span class="term-prompt">$</span> cargo build --release
+   <span class="term-compile">Compiling</span> puppet-master v2.0.0
+   <span class="term-compile">Compiling</span> slint-build v1.15.1
+   <span class="term-compile">Compiling</span> iced_runtime v0.15.0
+     <span class="term-running">Running</span> `target/release/puppet-master`
+<span class="term-info">[INFO]</span> Puppet Master v2.0.0 starting...
+<span class="term-info">[INFO]</span> Loading config from ~/.puppet-master/config.toml
+<span class="term-info">[INFO]</span> Theme: Retro Dark
+<span class="term-info">[INFO]</span> Backend: winit + Skia
+<span class="term-ok">[OK]</span> All systems ready.</pre>
+    </div>
+
+    <!-- Pane 2: stderr (magenta) -->
+    <div class="terminal-pane pane-stderr">
+      <pre class="terminal-output"><span class="term-warn">[WARN]</span> Platform Gemini: auth token expires in 2h
+<span class="term-error">[ERROR]</span> Failed to connect to LSP server: rust-analyzer
+  <span class="term-error">--&gt;</span> Connection refused (port 27015)
+<span class="term-warn">[WARN]</span> Retrying in 5s...
+<span class="term-info">[INFO]</span> LSP server connected successfully</pre>
+    </div>
+
+    <!-- Pane 3: agent output (orange) -->
+    <div class="terminal-pane pane-agent">
+      <pre class="terminal-output"><span class="term-agent">[AGENT]</span> Claude Code: Starting Phase 2, Task 3
+<span class="term-agent">[AGENT]</span> Reading src/auth/mod.rs...
+<span class="term-agent">[AGENT]</span> Executing: cargo test auth::tests
+<span class="term-agent">[AGENT]</span> 4/4 tests passed
+<span class="term-agent">[AGENT]</span> Writing src/auth/guard.rs (+32 lines)
+<span class="term-agent">[AGENT]</span> Task complete: Implement auth module</pre>
+    </div>
+
+    <!-- Pane 4: empty with blinking cursor -->
+    <div class="terminal-pane pane-empty">
+      <pre class="terminal-output"><span class="term-prompt">$</span> <span class="cursor-blink">_</span></pre>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SECTION 3: STATUS BAR                                        -->
+<!-- ============================================================ -->
+
+<footer class="status-bar">
+
+  <div class="status-left">
+    <span class="badge mode">AGENT</span>
+    <span class="status-dropdown">Cursor <span class="dropdown-arrow">&#9662;</span></span>
+    <span class="status-dropdown">claude-sonnet-4 <span class="dropdown-arrow">&#9662;</span></span>
+    <span class="status-sep">|</span>
+  </div>
+
+  <div class="status-center">
+    Puppet Master v2.0.0
+  </div>
+
+  <div class="status-right">
+    <span class="context-gauge">
+      <svg class="context-ring" width="16" height="16" viewBox="0 0 16 16">
+        <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2" opacity="0.25"/>
+        <circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-dasharray="12.2 37.7"
+                stroke-dashoffset="0"
+                transform="rotate(-90 8 8)"/>
+      </svg>
+      <span class="context-text">42k / 128k</span>
+    </span>
+    <span class="lsp-status">
+      <span class="status-dot dot-green"></span>
+      rust-analyzer: Ready
+    </span>
+    <span class="ssh-indicator">
+      <svg class="ssh-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M1 6h10"/>
+        <circle cx="3" cy="6" r="2"/>
+        <circle cx="9" cy="6" r="2"/>
+      </svg>
+      dev-server 45ms
+    </span>
+    <span class="status-sep">|</span>
+    <span class="line-col">Ln 24, Col 38</span>
+  </div>
+
+</footer>
+
+
+<!-- ============================================================ -->
+<!-- SECTION 4: OVERLAY ELEMENTS                                  -->
+<!-- ============================================================ -->
+
+<div class="pixel-grid-overlay"></div>
+<div class="scanline-overlay"></div>
+
+
+</div><!-- /.app-shell -->
+
+<script>
+// ============================================================
+// PART 2: JAVASCRIPT
+// Puppet Master GUI -- Theme switching and basic interactivity
+//
+// No emojis anywhere. Text symbols and Unicode only.
+// ============================================================
+
+// ── THEME SWITCHING ──────────────────────────────────────────
+
+var THEMES = ['dark', 'light', 'basic'];
+
+function setTheme(theme) {
+  var body = document.body;
+
+  // Remove all theme classes
+  body.classList.remove('theme-light', 'theme-basic', 'theme-basic-dark');
+
+  // Apply the selected theme class (dark = no class, just base)
+  if (theme === 'light') {
+    body.classList.add('theme-light');
+  } else if (theme === 'basic') {
+    body.classList.add('theme-basic');
+  }
+  // 'dark' uses the base :root vars, no extra class needed
+
+  // Update the theme toggle button text
+  var themeBtn = document.getElementById('theme-toggle-btn');
+  if (themeBtn) {
+    var labels = { dark: 'DARK', light: 'LIGHT', basic: 'BASIC' };
+    themeBtn.textContent = labels[theme] || theme.toUpperCase();
+    themeBtn.setAttribute('data-current-theme', theme);
+  }
+
+  // Update theme switcher button active states (if using a button group)
+  var switchers = document.querySelectorAll('.theme-switcher button');
+  switchers.forEach(function(btn) {
+    btn.classList.remove('active');
+    var btnTheme = btn.getAttribute('data-theme') ||
+      btn.textContent.trim().toLowerCase();
+    if (btnTheme === theme) {
+      btn.classList.add('active');
+    }
+  });
+
+  // Show/hide pixel-grid-overlay and scanline-overlay
+  // In basic mode these should be hidden; in dark/light they are visible
+  var pixelGrid = document.querySelector('.pixel-grid') ||
+    document.querySelector('.pixel-grid-overlay');
+  var scanlines = document.querySelector('.scanlines') ||
+    document.querySelector('.scanline-overlay');
+
+  if (pixelGrid) {
+    pixelGrid.style.display = (theme === 'basic') ? 'none' : '';
+  }
+  if (scanlines) {
+    scanlines.style.display = (theme === 'basic') ? 'none' : '';
+  }
+
+  // Persist to localStorage
+  try {
+    localStorage.setItem('puppet-master-theme', theme);
+  } catch (e) {
+    // localStorage not available -- silent fail
+  }
+}
+
+function getStoredTheme() {
+  try {
+    return localStorage.getItem('puppet-master-theme') || 'dark';
+  } catch (e) {
+    return 'dark';
+  }
+}
+
+// ── THEME TOGGLE (cycle: dark -> light -> basic -> dark) ────
+
+function cycleTheme() {
+  var btn = document.getElementById('theme-toggle-btn');
+  var current = (btn && btn.getAttribute('data-current-theme')) || getStoredTheme();
+  var idx = THEMES.indexOf(current);
+  var next = THEMES[(idx + 1) % THEMES.length];
+  setTheme(next);
+}
+
+
+// ── ACTIVITY BAR NAVIGATION ─────────────────────────────────
+
+function setupActivityBar() {
+  var icons = document.querySelectorAll('.activity-bar .ab-icon, .activity-bar .icon');
+  var dashboardView = document.getElementById('dashboard-view');
+  var editorArea = document.querySelector('.editor-area') ||
+    document.querySelector('.dashboard'); // fallback for older concept
+
+  icons.forEach(function(icon) {
+    icon.addEventListener('click', function() {
+      // Update active state on all icons
+      icons.forEach(function(ic) { ic.classList.remove('active'); });
+      icon.classList.add('active');
+
+      var title = (icon.getAttribute('title') || '').toLowerCase();
+      var isHome = (title === 'home' || title === 'dashboard');
+
+      if (dashboardView && editorArea) {
+        if (isHome) {
+          dashboardView.classList.add('active');
+          dashboardView.style.display = 'flex';
+          editorArea.style.display = 'none';
+        } else {
+          dashboardView.classList.remove('active');
+          dashboardView.style.display = 'none';
+          editorArea.style.display = '';
+        }
+      }
+    });
+  });
+}
+
+
+// ── BOTTOM PANEL TAB SWITCHING ──────────────────────────────
+
+function setupBottomPanelTabs() {
+  var tabs = document.querySelectorAll('.bottom-panel .bottom-tab, .bottom-tabs .tab');
+  var panels = document.querySelectorAll('.bottom-panel .bottom-panel-content');
+
+  // Placeholder content for non-terminal tabs
+  var placeholders = {
+    'problems': 'No problems detected.',
+    'output': 'No output.',
+    'debug': 'No active debug session.',
+    'terminal': null // terminal has real content
+  };
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      // Update active tab
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+
+      var target = tab.getAttribute('data-panel') ||
+        tab.textContent.trim().toLowerCase();
+
+      // Show/hide panel contents
+      panels.forEach(function(panel) {
+        var panelId = panel.getAttribute('data-panel-id') ||
+          panel.getAttribute('id') || '';
+        if (panelId.toLowerCase().indexOf(target) !== -1) {
+          panel.style.display = '';
+          panel.classList.remove('hidden');
+        } else {
+          panel.style.display = 'none';
+          panel.classList.add('hidden');
+        }
+      });
+    });
+  });
+}
+
+
+// ── FILE TREE EXPAND/COLLAPSE ───────────────────────────────
+
+function setupFileTree() {
+  var folders = document.querySelectorAll(
+    '.file-tree .file-item[data-folder], ' +
+    '.file-tree .folder-item, ' +
+    '.tree .folder'
+  );
+
+  folders.forEach(function(folder) {
+    folder.addEventListener('click', function(e) {
+      e.stopPropagation();
+
+      // Toggle the collapsed state
+      var isCollapsed = folder.classList.toggle('collapsed');
+
+      // Toggle arrow icon text
+      var arrowEl = folder.querySelector('.file-icon, .folder-arrow');
+      if (arrowEl) {
+        var currentText = arrowEl.textContent.trim();
+        // Right-pointing triangle -> Down-pointing triangle and vice versa
+        if (currentText === '\u25B6' || currentText === '\u25BA' || currentText === '\u25B8') {
+          arrowEl.textContent = '\u25BC'; // down-pointing
+        } else if (currentText === '\u25BC' || currentText === '\u25BE') {
+          arrowEl.textContent = '\u25B6'; // right-pointing
+        }
+      }
+
+      // Also check for text-based arrows in the folder text itself
+      // Pattern: "V src/" or "> src/"
+      var nameEl = folder.querySelector('.file-name') || folder;
+      var nameText = nameEl.textContent;
+      if (nameText.indexOf('\u25BC') === 0) {
+        nameEl.textContent = nameText.replace('\u25BC', '\u25B6');
+      } else if (nameText.indexOf('\u25B6') === 0) {
+        nameEl.textContent = nameText.replace('\u25B6', '\u25BC');
+      }
+
+      // Find children to toggle visibility
+      // Children are siblings that come after this folder and have deeper indent
+      var children = getTreeChildren(folder);
+      children.forEach(function(child) {
+        if (isCollapsed) {
+          child.style.display = 'none';
+        } else {
+          child.style.display = '';
+        }
+      });
+    });
+  });
+}
+
+function getTreeChildren(folderElement) {
+  var children = [];
+  var sibling = folderElement.nextElementSibling;
+  var folderIndent = getIndentLevel(folderElement);
+
+  while (sibling) {
+    var siblingIndent = getIndentLevel(sibling);
+    if (siblingIndent <= folderIndent) {
+      break; // same or higher level -- stop
+    }
+    children.push(sibling);
+    sibling = sibling.nextElementSibling;
+  }
+  return children;
+}
+
+function getIndentLevel(element) {
+  // Check for indent elements with explicit width
+  var indent = element.querySelector('.file-indent');
+  if (indent) {
+    var w = parseInt(indent.style.width, 10);
+    return isNaN(w) ? 0 : w;
+  }
+  // Check for padding-left as indent measure
+  var pl = parseInt(window.getComputedStyle(element).paddingLeft, 10);
+  return isNaN(pl) ? 0 : pl;
+}
+
+
+// ── EDITOR TAB SWITCHING ────────────────────────────────────
+
+function setupEditorTabs() {
+  var tabContainer = document.querySelector('.editor-tabs, .tab-bar');
+  if (!tabContainer) return;
+
+  tabContainer.addEventListener('click', function(e) {
+    var tab = e.target.closest('.editor-tab, .tab');
+    if (!tab) return;
+
+    // Update active state
+    var allTabs = tabContainer.querySelectorAll('.editor-tab, .tab');
+    allTabs.forEach(function(t) { t.classList.remove('active'); });
+    tab.classList.add('active');
+
+    // If tabs have associated content panels, switch them
+    var targetId = tab.getAttribute('data-target');
+    if (targetId) {
+      var editorPanels = document.querySelectorAll('.editor-panel');
+      editorPanels.forEach(function(p) {
+        p.style.display = (p.id === targetId) ? '' : 'none';
+      });
+    }
+  });
+}
+
+
+// ── CHAT THREAD SWITCHING ───────────────────────────────────
+
+function setupThreadSwitching() {
+  var threadContainers = document.querySelectorAll(
+    '.chat-thread-list, .thread-list'
+  );
+
+  threadContainers.forEach(function(container) {
+    container.addEventListener('click', function(e) {
+      var thread = e.target.closest('.thread, .thread-item');
+      if (!thread) return;
+
+      // Update active state within this container
+      var allThreads = container.querySelectorAll('.thread, .thread-item');
+      allThreads.forEach(function(t) { t.classList.remove('active'); });
+      thread.classList.add('active');
+    });
+  });
+}
+
+
+// ── SIDE PANEL TAB SWITCHING (Chat / Files) ─────────────────
+
+function setupSidePanelTabs() {
+  var chatTab = document.getElementById('tab-chat');
+  var filesTab = document.getElementById('tab-files');
+  var chatPanel = document.getElementById('panel-chat');
+  var filesPanel = document.getElementById('panel-files');
+
+  function showSideTab(tabName) {
+    if (chatPanel) {
+      chatPanel.classList.toggle('hidden', tabName !== 'chat');
+      chatPanel.style.display = (tabName === 'chat') ? '' : 'none';
+    }
+    if (filesPanel) {
+      filesPanel.classList.toggle('hidden', tabName !== 'files');
+      filesPanel.style.display = (tabName === 'files') ? '' : 'none';
+    }
+    if (chatTab) chatTab.classList.toggle('active', tabName === 'chat');
+    if (filesTab) filesTab.classList.toggle('active', tabName === 'files');
+  }
+
+  if (chatTab) {
+    chatTab.addEventListener('click', function() { showSideTab('chat'); });
+  }
+  if (filesTab) {
+    filesTab.addEventListener('click', function() { showSideTab('files'); });
+  }
+
+  // Also handle .side-tab generic clicks
+  var sideTabs = document.querySelectorAll('.side-tab');
+  sideTabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var id = tab.id || '';
+      if (id.indexOf('chat') !== -1) showSideTab('chat');
+      else if (id.indexOf('files') !== -1) showSideTab('files');
+    });
+  });
+}
+
+
+// ── RESIZE HANDLES ──────────────────────────────────────────
+
+function setupResizeHandles() {
+  // Find all elements that act as dividers between panels
+  // These are the borders between major layout sections
+  var resizeTargets = [
+    {
+      handle: '.file-manager-panel',
+      edge: 'right',
+      prop: 'width',
+      min: 140,
+      max: 500
+    },
+    {
+      handle: '.side-panel, .chat-panel',
+      edge: 'left',
+      prop: 'width',
+      min: 240,
+      max: 600
+    }
+  ];
+
+  resizeTargets.forEach(function(cfg) {
+    var panel = document.querySelector(cfg.handle);
+    if (!panel) return;
+
+    // Create a visual resize handle along the specified edge
+    var handle = document.createElement('div');
+    handle.style.cssText =
+      'position:absolute;' +
+      (cfg.edge === 'right' ? 'right:-3px;top:0;bottom:0;width:6px;' : '') +
+      (cfg.edge === 'left' ? 'left:-3px;top:0;bottom:0;width:6px;' : '') +
+      (cfg.edge === 'bottom' ? 'bottom:-3px;left:0;right:0;height:6px;' : '') +
+      'cursor:' + (cfg.edge === 'bottom' ? 'ns-resize' : 'ew-resize') + ';' +
+      'z-index:100;' +
+      'background:transparent;';
+
+    // Ensure panel is positioned for absolute children
+    var pos = window.getComputedStyle(panel).position;
+    if (pos === 'static') {
+      panel.style.position = 'relative';
+    }
+    panel.appendChild(handle);
+
+    var isResizing = false;
+    var startX = 0;
+    var startY = 0;
+    var startSize = 0;
+
+    handle.addEventListener('mousedown', function(e) {
+      e.preventDefault();
+      isResizing = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      startSize = cfg.edge === 'bottom'
+        ? panel.offsetHeight
+        : panel.offsetWidth;
+
+      document.body.style.cursor = (cfg.edge === 'bottom') ? 'ns-resize' : 'ew-resize';
+      document.body.style.userSelect = 'none';
+
+      function onMouseMove(ev) {
+        if (!isResizing) return;
+
+        var delta;
+        if (cfg.edge === 'right') {
+          delta = ev.clientX - startX;
+        } else if (cfg.edge === 'left') {
+          delta = startX - ev.clientX;
+        } else {
+          delta = startY - ev.clientY;
+        }
+
+        var newSize = startSize + delta;
+        newSize = Math.max(cfg.min, Math.min(cfg.max, newSize));
+        panel.style[cfg.prop] = newSize + 'px';
+
+        // If the layout is CSS grid, update the grid-template-columns
+        var shell = panel.closest('.app-shell, .main');
+        if (shell && shell.style.gridTemplateColumns !== undefined) {
+          // Let the natural sizing handle it via explicit width
+        }
+      }
+
+      function onMouseUp() {
+        isResizing = false;
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+      }
+
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    });
+  });
+
+  // Also make the bottom panel (terminal area) vertically resizable
+  var bottomDivider = document.querySelector('.bottom-panel-divider, .panel-resize-handle');
+  if (bottomDivider) {
+    var bottomPanel = bottomDivider.nextElementSibling ||
+      document.querySelector('.bottom-panel, .terminal-grid');
+    if (bottomPanel) {
+      bottomDivider.style.cursor = 'ns-resize';
+
+      var isResizingBottom = false;
+      var bStartY = 0;
+      var bStartH = 0;
+
+      bottomDivider.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        isResizingBottom = true;
+        bStartY = e.clientY;
+        bStartH = bottomPanel.offsetHeight;
+        document.body.style.cursor = 'ns-resize';
+        document.body.style.userSelect = 'none';
+
+        function onMove(ev) {
+          if (!isResizingBottom) return;
+          var delta = bStartY - ev.clientY;
+          var newH = Math.max(80, Math.min(600, bStartH + delta));
+          bottomPanel.style.height = newH + 'px';
+          bottomPanel.style.flex = 'none';
+        }
+
+        function onUp() {
+          isResizingBottom = false;
+          document.body.style.cursor = '';
+          document.body.style.userSelect = '';
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+        }
+
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      });
+    }
+  }
+}
+
+
+// ── INITIALIZATION ──────────────────────────────────────────
+
+document.addEventListener('DOMContentLoaded', function() {
+  // 1. Restore theme from localStorage
+  var savedTheme = getStoredTheme();
+  setTheme(savedTheme);
+
+  // 2. Set up activity bar navigation
+  setupActivityBar();
+
+  // 3. Set up bottom panel tabs
+  setupBottomPanelTabs();
+
+  // 4. Set up file tree expand/collapse
+  setupFileTree();
+
+  // 5. Set up editor tabs
+  setupEditorTabs();
+
+  // 6. Set up chat thread switching
+  setupThreadSwitching();
+
+  // 7. Set up side panel tabs (Chat / Files)
+  setupSidePanelTabs();
+
+  // 8. Set up resize handles
+  setupResizeHandles();
+
+  // 9. Theme toggle button (single button that cycles)
+  var themeToggle = document.getElementById('theme-toggle-btn');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', cycleTheme);
+  }
+
+  // 10. Also wire up any theme-switcher button group
+  var switcherBtns = document.querySelectorAll('.theme-switcher button[data-theme]');
+  switcherBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      setTheme(btn.getAttribute('data-theme'));
+    });
+  });
+
+  // 11. Also wire up inline onclick="setTheme(...)" buttons
+  //     (these work automatically via the global setTheme function)
+});
+
+</script>
+
+</body>
+</html>

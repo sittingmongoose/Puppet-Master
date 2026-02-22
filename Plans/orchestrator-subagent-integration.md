@@ -13,6 +13,21 @@
 
 This plan integrates Cursor subagent personas into the orchestrator at each tier level (Phase → Task → Subtask → Iteration) to provide specialized expertise dynamically based on project context. Subagent selection adapts to project language, domain, task type, and current needs.
 
+## Rewrite alignment (2026-02-21)
+
+This plan remains authoritative for tier policy (Phase/Task/Subtask/Iteration), subagent selection policy, and wiring/verification requirements. As the rewrite lands (see `Plans/rewrite-tie-in-memo.md`):
+
+- Platform-specific runner details should converge on **Providers** that emit a normalized streaming **event model**
+- Tool gating/permissions should be centralized in the tool policy engine; orchestrator policy should *consume* normalized events/tools, not re-implement per-platform parsing
+- Start/end verification, “built but not wired” checks, and tier boundary semantics should be represented as explicit events for replayability
+
+
+### Persistence and event emission (rewrite)
+
+- **Seglog:** Emit to the canonical seglog stream: tier start/end, iteration start/end, verification results, subagent invocation boundaries, and any event that must be replayable. Use the unified event model; do not add one-off log files for run history.
+- **redb:** Persist in redb (per storage-plan.md schema): orchestrator **run** metadata (run id, PRD ref, status, timestamps); **session** identity and linkage to run; **checkpoints** at phase/task/subtask boundaries for resume and recovery. Config used by the run (tier config, plan mode, etc.) may be projected from redb settings or built at run start per Option B; document which.
+- Implementation: run/session/checkpoint writes and seglog appends should be called from the same orchestrator boundaries (e.g. after verification, on tier advance) so state and event stream stay consistent.
+
 ## Relationship Between the Two Plans
 
 The project uses **two plan documents** that divide scope by execution context:
@@ -23,6 +38,26 @@ The project uses **two plan documents** that divide scope by execution context:
 | **interview-subagent-integration.md** | Interview flow: multi-phase interview (Scope & Goals, Architecture, UX, Data, Security, Deployment, Performance, Testing). Subagent persona assignments **per interview phase**, prompt integration, research/validation, document generation. | Interview phases (1–8 and cross-phase) |
 
 **Overlap and consistency:** Both plans reference subagent names, platform invocation, and config (e.g. tier config, plan mode). The **orchestrator** plan is the single source of truth for: tier-level subagent strategy, config-wiring validation at Phase/Task/Subtask/Iteration, and start/end verification (wiring + quality). The **interview** plan is the source of truth for: interview-phase subagent assignments, interview-specific config (e.g. `InterviewOrchestratorConfig`), and interview testing. When implementing, resolve any conflict by tier/context: orchestrator run vs interview run.
+
+**Application and project rules:** **Plans/agent-rules-context.md** defines **application-level rules** (Puppet Master; e.g. “Always use Context7 MCP”) and **project-level rules** (target project; e.g. “Always use DRY Method”) that are fed into **every** agent. The orchestrator must include the shared rules pipeline output when building iteration prompts (see that plan for the single pipeline and injection point).
+
+**Cited web search:** **Web search with citations** (inline citations + Sources list) is shared by the **Assistant**, **Interview**, and **Orchestrator**; the same run config and MCP/tool wiring apply. See **Plans/newtools.md** §8 (cited web search, [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited)–style) and **Plans/assistant-chat-design.md** §7.
+
+**Tool permissions:** **Plans/Tools.md** defines the central tool registry and permission model (allow/deny/ask, granular rules, [OpenCode Permissions](https://opencode.ai/docs/permissions/)). Run config snapshot includes tool permissions; in headless orchestrator runs, “ask” maps to deny or HITL. Tier/subagent config may override permissions per agent. See Tools.md §2.5 and §8.2–§8.3.
+
+### Respecting PRD/plan: subagent personas and parallelization
+
+The **orchestrator must respect** two kinds of information that the interview (or other plan author) writes into the PRD/plans: **subagent persona recommendations** and **parallelization**.
+
+1. **Subagent persona recommendations.** When the PRD (or loaded plan) contains **subagent recommendations** for a task or subtask (e.g. `crew_recommendation.subagents` or equivalent per interview-subagent-integration §5.2 and Crew-Aware Plan Generation), the orchestrator **must use those personas** when executing that tier. Use the recommended subagent set as the source for which subagents to invoke; only fall back to dynamic selection (e.g. `select_for_tier`) when the PRD/plan does not specify recommendations for that item. Config overrides (disabled/required/override lists) can still apply on top of PRD recommendations. This ensures that interview-generated plans are executed with the intended specialists.
+
+2. **Parallelization.** When the PRD/plan contains **parallelism** information (e.g. `depends_on` and `parallel_group` per STATE_FILES.md §3.3 and interview-subagent-integration §5.2), the orchestrator **must respect it** when building the execution schedule. Build a dependency graph from `depends_on`; run tasks/subtasks that have no unsatisfied dependencies, and run items in the same `parallel_group` **in parallel** where the execution engine supports it. Do not run items in parallel when the plan says they depend on another; do run independent items in parallel when the plan allows it. See **Schedule building: order of operations** below.
+
+**Subagent selection: order of operations.** (1) Load the PRD and the current tier item (phase/task/subtask). (2) Read `crew_recommendation` for that item; if absent, go to step 5. (3) Read `crew_recommendation.subagents`; if missing or empty array, treat as **no recommendation** and go to step 5. (4) Use the list in `subagents` as the source set for which subagents to invoke; apply config overrides (disabled/required/override) on top; then exit. (5) Fall back to dynamic selection (e.g. `select_for_tier`) for this item; apply config overrides on top.
+
+**Schedule building: order of operations.** (1) Build a dependency graph from `depends_on` at the tier level(s) the orchestrator schedules (e.g. subtasks). Use item ids; support phase, task, and subtask ids as in STATE_FILES. Missing `depends_on` or empty array = no incoming edges. (2) Topological sort the graph; items with no unsatisfied dependencies form the next runnable set. (3) Within the runnable set, group items that share the same non-empty `parallel_group`; items in the same group may run in parallel. (4) Execute batches in topological order: run each batch (possibly multiple items in parallel) before advancing to items that depend on them.
+
+**Cross-reference:** STATE_FILES.md §3.3 (canonical PRD schema); **Plans/interview-subagent-integration.md** §5.2 and Crew-Aware Plan Generation.
 
 ## Tier-Level Subagent Strategy
 
@@ -140,6 +175,18 @@ The project uses **two plan documents** that divide scope by execution context:
 - Primary: Language/domain expert from parent tiers
 - Secondary: Specialized role based on iteration needs
 - Tertiary: `debugger` if errors present
+
+### Subagent selection from LSP (diagnostics-based bias)
+
+When LSP is available, the orchestrator can **bias subagent selection** using current LSP diagnostics for files in scope. This is an **optional enhancement** (see **Plans/LSPSupport.md §17.3**).
+
+- **When:** When selecting a subagent for the **next subtask** (or task), optionally query LSP diagnostics for **files in scope** (see "Files in scope" below). If any file has diagnostics (e.g. errors) from a language server X, **prefer** the subagent that matches that language (e.g. rust-analyzer → `rust-engineer`, pyright → `python-pro`, eslint/typescript → `typescript-pro` or `javascript-pro`).
+- **Files in scope:** One of (configurable; align with LSP gate scope in LSPSupport §17.1):
+  - **Changed in last iteration** — Files modified in the most recent iteration (recommended default for consistency with LSP gate).
+  - **Open in editor** — Files currently open in the run/context.
+  - **Task's file list** — If the task/subtask has an explicit list of files (e.g. from PRD or plan), use that list.
+- **Integration point:** In the same place that performs `select_for_tier` (e.g. `SubagentSelector::select_for_subtask` / `select_for_task`): after building tier context, optionally call LSP client `get_diagnostics_for_paths(scope_paths)`. From the returned diagnostics, derive language(s) from `source` (e.g. rust-analyzer → Rust) or from file extension → server id mapping (see LSPSupport §3.2). Add to `TierContext` or `ProjectContext` a bias: e.g. `prefer_subagents: ["rust-engineer"]` when Rust errors are present, and use it when ranking/selecting subagents.
+- **Fallback:** When LSP is disabled or diagnostics unavailable, use existing selection logic only (language detection from file presence, domain, error patterns). No change to behavior when LSP is off.
 
 ## Dynamic Subagent Selection Architecture
 
@@ -1149,6 +1196,7 @@ The following summarizes recent CLI releases (Dec 2025 – Feb 2026) that affect
 - **Config:** Plan mode and subagent UI live in Config (Tiers tab, optional global toggle, Subagents section). **MiscPlan** adds cleanup/evidence under Config → Advanced (§7.5); **Worktree** adds Branching tab controls. Ensure a single Save persists the whole GuiConfig (including plan mode, subagents, cleanup, branching) and that Option B run-config build includes all of these so the run sees current UI state.
 - **Unwired / implementation status:** For a consolidated list of unwired features, missing GUI controls, and implementation status (interview config, run config Option B, cleanup, Doctor), see **MiscPlan §9.1.18**.
 - **Platform CLI capabilities (hooks, skills, plugins, extensions):** This plan documents them in **"Platform-Specific Capabilities & Extensions"** below. We pass subagent names and plan mode via **prompt/CLI args**; we do not require Cursor plugins or Claude hooks for core orchestration. **MiscPlan §7.6** summarizes how cleanup/prepare are implemented in Puppet Master and how we might optionally leverage or document platform hooks/skills. When changing subagent invocation, keep platform_specs and AGENTS.md aligned with CLI release notes.
+- **Plans/newfeatures.md:** For **orchestration prompt** injection (§1: session-level “assess → decompose → act → verify” via `--append-system-prompt`), **background/async agents** (§2: queue, git branch per run, output dir, GUI panel), and **hook system** (§9: event hooks as extension point at tier/iteration boundaries), see newfeatures; those features extend this plan without replacing tier or subagent structure.
 
 ### Implementation checklist
 
@@ -1170,15 +1218,17 @@ The following summarizes recent CLI releases (Dec 2025 – Feb 2026) that affect
 
 **Subagent — frontend (Config)**
 - [ ] Add “Subagents” section on Config: enable toggle, tier overrides (per-tier list or multi-select), disabled/required lists; messages and handlers; persist to same config as backend.
+- [ ] Add **Subagent personas / info setup:** preload list from project `.claude/agents`; user can add their own and delete any (including preloaded); optional AI/batch trim for smaller footprint; list with name + description; "Edit" per subagent to set custom description/instruction (persist to `SubagentGuiConfig.persona_overrides` — overrides come only from this UI); prompt builder / runner injects persona (override if present, else preloaded content) when invoking that subagent (see Gap §11).
 
 **Doctor**
 - [ ] Add Gemini + plan mode check in Doctor: read `~/.gemini/settings.json`, warn if `experimental.plan` missing when any tier has Gemini and plan_mode true.
+- [ ] **Plans/newtools.md:** Add Doctor checks for (1) headless tool exists/runs when project planned custom headless tool, (2) platform CLI versions (e.g. `agent --version`, `codex --version`), (3) MCP/Context7 reachable per platform. Use newtools §8.2 for per-platform MCP config reference; §11 and §12.6 for headless-tool and MCP check details.
 
 **Other**
 - [ ] When Copilot (or Codex) gains a native plan flag, add it to `platform_specs` and the runner and update AGENTS.md.
 - [ ] **Fully test plan mode in the CLIs:** Add plan mode CLI verification tests (run each platform CLI with plan mode enabled; assert exit success and correct flags); env-gated like `platform_cli_smoke` (e.g. `RUN_PLAN_MODE_CLI_TESTS=1`). See "3. Plan Mode CLI Verification" in this plan.
 - [ ] Unit tests for global plan-mode toggle and one-click; subagent config load/apply tests.
-- [ ] **Resolve gaps:** Before or during implementation, resolve each item in **"Gaps and Clarifications"** (persistence location for plan-mode global, subagent in GuiConfig, Doctor config source, canonical subagent list, tier-overrides shape, orchestrator/subagent code path, Message/handlers, TierId type, **interview config wiring — Gap §9**, **platform-specific parsers — Gap §10**).
+- [ ] **Resolve gaps:** Before or during implementation, resolve each item in **"Gaps and Clarifications"** (persistence location for plan-mode global, subagent in GuiConfig, Doctor config source, canonical subagent list, tier-overrides shape, orchestrator/subagent code path, Message/handlers, TierId type, **interview config wiring — Gap §9**, **platform-specific parsers — Gap §10**, **subagent persona registry and injection — Gap §11**).
 - [ ] **Mitigate potential issues:** Review **"Potential Issues"** and address defaults, validation, platform adapters, caching, and persistence so the feature is robust in production.
 - [ ] **DRY method and widget catalog:** Check `docs/gui-widget-catalog.md` before adding UI; use existing widgets; tag new reusable items with `DRY:WIDGET:`, `DRY:FN:`, or `DRY:DATA:`; run `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` after widget changes.
 - [ ] **Interview config wiring:** Wire interview settings per **"Interviewer Enhancements and Config Wiring"**: add `min_questions_per_phase` and `max_questions_per_phase` (Option for unlimited) to `InterviewOrchestratorConfig`, set from `gui_config.interview` in `app.rs`, use in PhaseManager and phase-complete logic and prompts; add GUI controls (Min / Max with Unlimited). Wire `require_architecture_confirmation` and `vision_provider` into `InterviewOrchestratorConfig` and use in interview flow (architecture gate; vision platform when image flows exist).
@@ -1231,6 +1281,7 @@ All previously "optional" or "later" plan-mode and subagent GUI/backend items ar
 
 - **DRY:** Check `docs/gui-widget-catalog.md` before adding controls; use existing toggler, styled_button, layout helpers; tag new reusable widgets/helpers with `DRY:WIDGET:` or `DRY:FN:`; run `scripts/generate-widget-catalog.sh` after changes.
 - **Section:** Add a “Subagents” section on the Config page (below tier cards or in a collapsible block). Controls: (1) **Enable tier subagents:** one toggle bound to `subagentConfig.enableTierSubagents`. Message e.g. `Message::ConfigSubagentEnableTierSubagentsToggled(bool)`. (2) **Tier overrides:** For each tier (phase/task/subtask/iteration), a text field or list editor for override subagent names (comma-separated or multi-select from a fixed list of known subagent names). (3) **Disabled subagents:** one list (comma-separated or tag input) for `disabledSubagents`. (4) **Required subagents:** same for `requiredSubagents`. Messages: e.g. `ConfigSubagentTierOverrideChanged(tier, list)`, `ConfigSubagentDisabledListChanged(Vec<String>)`, `ConfigSubagentRequiredListChanged(Vec<String>)`. Handler: update in-memory config and persist; backend reads from same persisted config.
+- **Subagent personas / info setup:** Provide a **place to setup and view subagent personas/info**. (1) **Preload:** Load initial persona list from the project’s `.claude/agents` directory (e.g. `puppet-master-rs` or repo root `.claude/agents`); each agent file (e.g. `rust-engineer.md`) supplies name and description/purpose. (2) **User control:** Users can **add their own** personas and **delete any** (including preloaded ones). (3) **Smaller footprint:** Support an optional pass (e.g. AI or batch job) to **trim** persona content to a smaller token footprint while preserving intent. (4) **Persona overrides — single source:** The only place “overrides” come from is **user edits in the Personas UI**, saved to the same app config as the rest of Config: `SubagentGuiConfig.persona_overrides` (key = subagent name, value = optional custom description and/or instruction snippet). At runtime, for a given subagent name: if the user has saved an override for that name, use it; otherwise use the content from the preloaded/trimmed agent file. No second “source” of personas — the list is preloaded + user-added (user can delete any); the *content* for a name is either from the agent file or from the user’s saved override in config. UI: dedicated “Subagent personas” tab or subsection (Config or Setup); list showing name + description; “Edit” to set custom description/instruction (persisted to `persona_overrides`); “Add” / “Delete” for list management.
 - **Discovery:** Subagent names in the override UI come from a constant list (e.g. from this plan’s persona list: project-manager, architect-reviewer, product-manager, rust-engineer, python-pro, code-reviewer, test-automator, …) or from a future subagent registry; document so UI and backend share the same names.
 
 ### 6. Doctor — Gemini Plan Mode Check
@@ -1255,7 +1306,7 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 ### 2. Subagent config in GuiConfig
 
 - **Gap:** Plan says load subagent config from `.puppet-master/config.yaml` under `subagentConfig`, and “single save path that includes subagent config,” but **GuiConfig** (in `config/gui_config.rs`) has no `subagentConfig` field.
-- **Clarify:** Add a top-level field to **GuiConfig**, e.g. `subagent: SubagentGuiConfig`, with `enable_tier_subagents`, `tier_overrides`, `disabled_subagents`, `required_subagents`. Serialize as `subagentConfig` in YAML (or `subagent` with serde rename) so load/save use the same file as the rest of Config. Ensure default in GuiConfig matches plan defaults (enable_tier_subagents: true, empty overrides/lists).
+- **Clarify:** Add a top-level field to **GuiConfig**, e.g. `subagent: SubagentGuiConfig`, with `enable_tier_subagents`, `tier_overrides`, `disabled_subagents`, `required_subagents`. Serialize as `subagentConfig` in YAML (or `subagent` with serde rename) so load/save use the same file as the rest of Config. Ensure default in GuiConfig matches plan defaults (enable_tier_subagents: true, empty overrides/lists). **Persona overrides:** For the "Subagent personas / info setup" feature, add `persona_overrides: HashMap<String, PersonaOverride>` to `SubagentGuiConfig`. **Persona overrides come from exactly one place:** the user’s edits in the Subagent Personas UI; when the user clicks Save, those edits are written to the same config file as the rest of Config (e.g. `subagentConfig.personaOverrides` in YAML). Key = subagent name, value = optional custom description and/or instruction snippet. At runtime: if an override exists for that name, use it; else use content from the preloaded agent (e.g. from `.claude/agents` or trimmed copy). Orchestrator and interview both read the same config.
 
 ### 3. Doctor Gemini plan-mode check: source of tier config
 
@@ -1274,6 +1325,9 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 - Validation of override/disabled/required lists
 - Language/framework → subagent mapping
 - Platform availability checks
+- **Task tool** (`Plans/Tools.md`): `subagent_type` must be one of these names; validate with `subagent_registry::is_valid_subagent_name()`
+
+**Full set: 41 subagents.** Persona definitions (SKILL.md) live in `.github/agents/` and `.claude/agents/` (41 files). The orchestrator and interview use subsets by tier/phase; the **task** tool accepts any valid name from this list.
 
 | Category | Names |
 |----------|--------|
@@ -1283,6 +1337,7 @@ These items are underspecified or inconsistent in the plan. Resolve them during 
 | Task (framework) | `react-specialist`, `vue-expert`, `nextjs-developer`, `laravel-specialist` |
 | Subtask | `code-reviewer`, `test-automator`, `technical-writer`, `api-designer`, `ui-designer`, `security-engineer`, `accessibility-tester`, `compliance-auditor` |
 | Iteration | `debugger`, `qa-expert` |
+| Cross-phase / Interview | `ux-researcher`, `sql-pro`, `prompt-engineer`, `knowledge-synthesizer`, `deployment-engineer`, `context-manager`, `explore` |
 
 **Implementation:** Create `src/core/subagent_registry.rs` with:
 
@@ -1347,7 +1402,18 @@ pub mod subagent_registry {
         "qa-expert",
     ];
     
-    // DRY:DATA:all_subagent_names — Union of all subagent names
+    // Cross-phase / Interview (used by interview-subagent-integration.md and task tool)
+    pub const CROSS_PHASE_SUBAGENTS: &[&str] = &[
+        "ux-researcher",
+        "sql-pro",
+        "prompt-engineer",
+        "knowledge-synthesizer",
+        "deployment-engineer",
+        "context-manager",
+        "explore",
+    ];
+    
+    // DRY:DATA:all_subagent_names — Union of all subagent names (41 total)
     pub fn all_subagent_names() -> Vec<String> {
         let mut all = Vec::new();
         all.extend(PHASE_SUBAGENTS.iter().map(|s| s.to_string()));
@@ -1356,6 +1422,7 @@ pub mod subagent_registry {
         all.extend(TASK_FRAMEWORK_SUBAGENTS.iter().map(|s| s.to_string()));
         all.extend(SUBTASK_SUBAGENTS.iter().map(|s| s.to_string()));
         all.extend(ITERATION_SUBAGENTS.iter().map(|s| s.to_string()));
+        all.extend(CROSS_PHASE_SUBAGENTS.iter().map(|s| s.to_string()));
         all
     }
     
@@ -1445,6 +1512,11 @@ Use the union of all names for override/disabled/required lists; optionally rest
 
 - **Gap:** Structured handoff validation (`validate_subagent_output`) needs platform-specific parsers: JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot. The plan does not yet specify parser implementation details or fallback behavior when parsing fails.
 - **Clarify:** (1) **JSON parsers:** For Cursor/Claude/Gemini, use `serde_json` to parse `--output-format json` output into `SubagentOutput`. Handle missing fields gracefully (e.g., `downstream_context: None` if field absent). (2) **JSONL parser:** For Codex, parse `--json` or `--experimental-json` JSONL stream; aggregate events into single `SubagentOutput` (last event wins for fields, accumulate findings). (3) **Text parser:** For Copilot, use regex or pattern matching to extract "Task Report:", "Downstream Context:", "Findings:" sections from text output. If sections missing, treat as malformed and retry. (4) **Fallback:** If parsing fails after retry, create partial `SubagentOutput { task_report: raw_output, downstream_context: None, findings: vec![] }` and mark tier as "complete with warnings" rather than failing the run.
+
+### 11. Subagent persona info: preload, overrides (config only), and injection
+
+- **Gap:** The "Subagent personas / info setup" (Section 5) requires (a) initial persona list and content, (b) user overrides persisted somewhere, and (c) persona text injected when a subagent is invoked. The plan now specifies preloading from `.claude/agents`, user add/delete, and optional AI trim; `SubagentGuiConfig` (Gap §2) holds `persona_overrides`; the injection point must be explicit.
+- **Clarify:** (1) **Preload and list:** Load personas from the project’s `.claude/agents` (e.g. repo root or `puppet-master-rs`); each `.md` file gives name and content. User can add custom personas and delete any (including preloaded). Optionally run an AI/batch trim step to produce smaller-footprint descriptions. (2) **Persona overrides — single source:** Overrides come **only** from the user’s edits in the Personas UI; we persist them to `SubagentGuiConfig.persona_overrides` in the same config file as the rest of Config. No other “source” of overrides. At runtime: for a given subagent name, if `persona_overrides.get(name)` is present, use it; else use the content from the preloaded/trimmed agent. (3) **Injection:** When building the prompt or CLI args for a subagent run, resolve persona text (override if present, else preloaded content) and prepend or append to the system prompt or first user message. Document the injection point so orchestrator and interview use the same logic. (4) **Interview:** Interview uses **multiple** personas **dynamically** by phase and tech stack (phase_subagents, research/validation subagents, etc.). For whichever subagent(s) are selected for that phase/context, resolve that subagent’s persona content (override from config if present, else preloaded); inject into the phase prompt. Persona_overrides do not change *which* subagents the interview uses — they only supply the custom description/instruction for those selected subagents.
 
 ---
 
@@ -1585,8 +1657,10 @@ Risks, edge cases, and failure modes to watch during implementation and testing.
 - **Issue:** Lifecycle hooks and structured handoff validation require platform-specific implementations (native hooks vs orchestrator middleware, JSON vs JSONL vs text parsing). Parsers may fail on edge cases (malformed JSON, missing sections in text, JSONL aggregation errors).
 - **Mitigation:** (1) **Hooks:** For platforms with native hooks (Cursor, Claude, Gemini), register Puppet Master hooks that delegate to platform hooks where possible; for others (Codex, Copilot), use orchestrator-level middleware. Document which platforms use which approach. (2) **Parsers:** Implement robust parsers with fallback behavior: JSON parsers handle missing fields gracefully; JSONL parser aggregates events safely (last event wins, accumulate findings); text parser uses multiple patterns and validates extracted sections. (3) **Fail-safe:** If parsing fails after retry, create partial `SubagentOutput` and mark tier as "complete with warnings" rather than crashing. (4) **Testing:** Add integration tests for each platform's parser with malformed input, missing fields, and edge cases to ensure reliability.
 
-- **Issue:** Start and end verification at every Phase/Task/Subtask (wiring, readiness, acceptance, quality) adds latency and requires a clear definition of "quality" and who addresses unrelated failures.
-- **Mitigation:** (1) Quality over performance: run full checks; do not skip or weaken for speed. Scope quality checks to changed files or this tier’s artifacts. (2) Define a small canonical quality checklist per tier (e.g. in this plan or verification config): reviewer subagent (required) plus gate criteria (clippy, tests, etc.). (3) Reviewer subagent runs in all three cases: always at end-of-tier, on retry, and when quality gate fails. (4) Unrelated failures (e.g. pre-existing tech debt) are addressed by the parent-tier orchestrator (retry, different subagent, escalate). Reuse existing gates where possible; end verification should call into current gate logic rather than duplicate it.
+### 14. Subagent persona overrides (token budget and scope)
+
+- **Issue:** Custom instruction snippets in persona overrides could be long; injecting them into every subagent prompt may consume token budget or conflict with platform limits.
+- **Mitigation:** (1) Persona overrides apply to any subagent name that exists in the current list (preloaded from `.claude/agents` or user-added). Keys in `persona_overrides` are names the user has edited in the Personas UI; no separate “second source” — overrides come only from config (user’s saved edits). (2) Optionally cap length of `custom_instruction` / `custom_description` in UI and config (e.g. 500–1000 chars) and document that persona text is prepended to the prompt so users are aware of token impact. (3) Use the same resolution (override if present, else preloaded content) in both orchestrator and interview.
 
 ---
 
@@ -1722,7 +1796,7 @@ To prevent users from hitting settings that exist in the UI and requirements but
 
 ## Start and End Verification at Phase, Task, and Subtask
 
-Beyond config-wiring validation (which runs at **start** of each tier), this section defines a **broader start verification** (wiring + readiness) and an **end verification** (wiring again + **quality review**) at Phase, Task, and Subtask boundaries. The goal is to catch things that need to be wired, confirm GUI/backend are in sync, validate that steps make sense, and at the end not only pass acceptance criteria but ensure the work was done well via actual code review.
+Beyond config-wiring validation (which runs at **start** of each tier), this section defines a **broader start verification** (wiring + readiness) and an **end verification** (wiring again + **quality review**) at Phase, Task, and Subtask boundaries. The goal is to catch things that need to be wired, confirm GUI/backend are in sync, validate that steps make sense, and at the end not only pass acceptance criteria but ensure the work was done well via actual code review. **Human-in-the-Loop (HITL):** Optional pause for human approval at these same boundaries is specified in **Plans/human-in-the-loop.md** (runs after end verification, before advancing to the next tier).
 
 ### Start-of-phase / start-of-task / start-of-subtask verification
 

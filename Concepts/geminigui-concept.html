@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puppet Master IDE Mockup</title>
+    <style>
+        /* Theme Variables */
+        :root {
+            /* Light Theme (Retro Win95 style) */
+            --bg-color: #d4d0c8;
+            --panel-bg: #d4d0c8;
+            --content-bg: #ffffff;
+            --text-color: #000000;
+            --text-muted: #666666;
+            --border-color: #000000;
+            --border-width: 2px;
+            --accent-color: #00ff00;
+            --accent-text: #000000;
+            --btn-bg: #d4d0c8;
+            --btn-hover: #e8e4dc;
+            --grid-color: rgba(0,0,0,0.08);
+            --handle-color: #888888;
+            --shadow: 2px 2px 0px #000000;
+            --border-radius: 0px;
+        }
+
+        [data-theme="dark"] {
+            /* Dark Theme (Hacker/Terminal style) */
+            --bg-color: #0a0a0a;
+            --panel-bg: #141414;
+            --content-bg: #000000;
+            --text-color: #00ff00;
+            --text-muted: #008800;
+            --border-color: #00ff00;
+            --border-width: 2px;
+            --accent-color: #00cc00;
+            --accent-text: #000000;
+            --btn-bg: #0a0a0a;
+            --btn-hover: #1a1a1a;
+            --grid-color: rgba(0, 255, 0, 0.08);
+            --handle-color: #00ff00;
+            --shadow: 2px 2px 0px #005500;
+            --border-radius: 0px;
+        }
+
+        [data-theme="basic"] {
+            /* Basic Theme (Modern, flat, readable) */
+            --bg-color: #f3f4f6;
+            --panel-bg: #f9fafb;
+            --content-bg: #ffffff;
+            --text-color: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: #d1d5db;
+            --border-width: 1px;
+            --accent-color: #3b82f6;
+            --accent-text: #ffffff;
+            --btn-bg: #ffffff;
+            --btn-hover: #f3f4f6;
+            --grid-color: transparent; /* No grid */
+            --handle-color: #9ca3af;
+            --shadow: none;
+            --border-radius: 4px;
+        }
+
+        /* Global Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 12px;
+            background-color: var(--bg-color);
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 4px 4px;
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        /* Layout */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 6px;
+            gap: 6px;
+        }
+
+        /* Top Control Bar */
+        .control-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            background-color: var(--panel-bg);
+            border: var(--border-width) solid var(--border-color);
+            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+            padding: 6px 12px;
+            min-height: 40px;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .control-label {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 11px;
+        }
+
+        /* Forms & Buttons */
+        button, select, input, textarea {
+            font-family: inherit;
+            font-size: 11px;
+            color: var(--text-color);
+            background-color: var(--btn-bg);
+            border: var(--border-width) solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 4px 8px;
+            outline: none;
+        }
+
+        button {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: var(--btn-hover);
+        }
+
+        button.active {
+            background-color: var(--accent-color);
+            color: var(--accent-text);
+        }
+
+        [data-theme="light"] button, [data-theme="dark"] button,
+        [data-theme="light"] select, [data-theme="dark"] select,
+        [data-theme="light"] textarea, [data-theme="dark"] textarea {
+            box-shadow: 1px 1px 0px var(--border-color);
+        }
+
+        select:focus, textarea:focus, input:focus {
+            border-color: var(--accent-color);
+        }
+
+        /* Main Workspace (3 Panels) */
+        .workspace {
+            display: grid;
+            grid-template-columns: 220px 1fr 320px;
+            gap: 6px;
+            flex: 1;
+            min-height: 0; /* Important for scroll areas */
+        }
+
+        /* Panels */
+        .panel {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--panel-bg);
+            border: var(--border-width) solid var(--border-color);
+            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            padding: 4px 8px;
+            border-bottom: var(--border-width) solid var(--border-color);
+            background-color: var(--panel-bg);
+            font-weight: bold;
+            font-size: 11px;
+            text-transform: uppercase;
+            user-select: none;
+        }
+
+        .drag-handle {
+            cursor: grab;
+            color: var(--handle-color);
+            margin-right: 6px;
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        .panel-actions {
+            margin-left: auto;
+            display: flex;
+            gap: 4px;
+        }
+
+        .panel-icon {
+            cursor: pointer;
+            color: var(--handle-color);
+        }
+        
+        .panel-icon:hover {
+            color: var(--text-color);
+        }
+
+        .panel-content {
+            flex: 1;
+            overflow-y: auto;
+            background-color: var(--content-bg);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* File Explorer (Left Panel) */
+        .file-tree {
+            list-style: none;
+            padding: 4px;
+        }
+        .file-tree li {
+            padding: 3px 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .file-tree li:hover {
+            background-color: var(--btn-hover);
+        }
+        .file-tree li.active {
+            background-color: var(--accent-color);
+            color: var(--accent-text);
+        }
+        .folder::before { content: "📁"; font-size: 10px; }
+        .file::before { content: "📄"; font-size: 10px; }
+        .file.rust::before { content: "🦀"; font-size: 10px; }
+
+        /* Editor (Center Panel) */
+        .editor-tabs {
+            display: flex;
+            border-bottom: var(--border-width) solid var(--border-color);
+            background-color: var(--panel-bg);
+        }
+        .editor-tab {
+            padding: 4px 12px;
+            border-right: var(--border-width) solid var(--border-color);
+            cursor: pointer;
+            font-size: 11px;
+        }
+        .editor-tab.active {
+            background-color: var(--content-bg);
+            font-weight: bold;
+        }
+        .code-area {
+            padding: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            white-space: pre;
+            overflow: auto;
+            flex: 1;
+            line-height: 1.4;
+        }
+
+        /* Chat (Right Panel) */
+        .chat-history {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .message {
+            border: var(--border-width) solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 6px 8px;
+            background-color: var(--btn-bg);
+            max-width: 90%;
+        }
+        .message.assistant {
+            align-self: flex-start;
+            border-color: var(--text-muted);
+        }
+        .message.user {
+            align-self: flex-end;
+            background-color: var(--bg-color);
+            border-color: var(--accent-color);
+        }
+        .message-header {
+            font-size: 9px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        .chat-input-area {
+            border-top: var(--border-width) solid var(--border-color);
+            padding: 6px;
+            background-color: var(--panel-bg);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .chat-textarea {
+            resize: none;
+            height: 60px;
+            width: 100%;
+        }
+        .chat-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Scrollbars */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+            border-left: var(--border-width) solid var(--border-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--handle-color);
+            border: var(--border-width) solid var(--border-color);
+        }
+        [data-theme="basic"] ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        [data-theme="basic"] ::-webkit-scrollbar-track {
+            border: none;
+            background: transparent;
+        }
+        [data-theme="basic"] ::-webkit-scrollbar-thumb {
+            border: none;
+            border-radius: 4px;
+            background: #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Top Control Bar -->
+        <header class="control-bar">
+            <div class="control-group" style="margin-right: auto;">
+                <span class="control-label">Puppet Master</span>
+            </div>
+
+            <div class="control-group">
+                <span class="control-label">Mode:</span>
+                <button class="active">Plan</button>
+                <button>Execute</button>
+            </div>
+
+            <div class="control-group" style="margin-left: 12px;">
+                <span class="control-label">Platform:</span>
+                <select>
+                    <option>Cursor</option>
+                    <option>Claude</option>
+                    <option>Codex</option>
+                    <option>Gemini</option>
+                </select>
+            </div>
+
+            <div class="control-group" style="margin-left: 12px;">
+                <span class="control-label">Theme:</span>
+                <select id="themeSelector" onchange="switchTheme(this.value)">
+                    <option value="light">Retro Light</option>
+                    <option value="dark">Retro Dark</option>
+                    <option value="basic">Basic Modern</option>
+                </select>
+            </div>
+        </header>
+
+        <!-- Main Workspace Grid -->
+        <div class="workspace">
+            
+            <!-- Left Panel: File Manager -->
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="drag-handle" title="Drag to undock">⠿</span>
+                    <span>Explorer</span>
+                    <div class="panel-actions">
+                        <span class="panel-icon" title="Undock panel">◳</span>
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <ul class="file-tree">
+                        <li class="folder">src</li>
+                        <li class="file rust" style="padding-left: 20px;">main.rs</li>
+                        <li class="file rust active" style="padding-left: 20px;">app.rs</li>
+                        <li class="file rust" style="padding-left: 20px;">state.rs</li>
+                        <li class="folder">widgets</li>
+                        <li class="file rust" style="padding-left: 20px;">button.rs</li>
+                        <li class="file rust" style="padding-left: 20px;">layout.rs</li>
+                        <li class="folder">assets</li>
+                        <li class="file">Cargo.toml</li>
+                        <li class="file">README.md</li>
+                        <li class="file">AGENTS.md</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Center Panel: Editor/Dashboard -->
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="drag-handle" title="Drag to undock">⠿</span>
+                    <span>Editor</span>
+                    <div class="panel-actions">
+                        <span class="panel-icon" title="Maximize">🗖</span>
+                        <span class="panel-icon" title="Undock panel">◳</span>
+                    </div>
+                </div>
+                <div class="editor-tabs">
+                    <div class="editor-tab">main.rs</div>
+                    <div class="editor-tab active">app.rs</div>
+                    <div class="editor-tab">AGENTS.md</div>
+                </div>
+                <div class="panel-content code-area">
+// src/app.rs
+use iced::{Element, Sandbox, Settings};
+
+pub struct PuppetMasterApp {
+    theme: Theme,
+    state: AppState,
+}
+
+impl Sandbox for PuppetMasterApp {
+    type Message = Message;
+
+    fn new() -> Self {
+        Self {
+            theme: Theme::Light,
+            state: AppState::default(),
+        }
+    }
+
+    fn title(&self) -> String {
+        String::from("Puppet Master Orchestrator")
+    }
+
+    fn update(&mut self, message: Message) {
+        match message {
+            Message::SwitchTheme(theme) => {
+                self.theme = theme;
+            }
+            // Handle other orchestrator events
+            _ => {}
+        }
+    }
+
+    fn view(&self) -> Element<Message> {
+        // High density rendering layout
+        render_main_workspace(&self.state)
+    }
+}
+                </div>
+            </div>
+
+            <!-- Right Panel: Chat -->
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="drag-handle" title="Drag to undock">⠿</span>
+                    <span>Chat / Tasks</span>
+                    <div class="panel-actions">
+                        <span class="panel-icon" title="Undock panel">◳</span>
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <div class="chat-history" id="chatHistory">
+                        <div class="message assistant">
+                            <div class="message-header">System • 10:41 AM</div>
+                            <div>Puppet Master initialized. Ready for commands.</div>
+                        </div>
+                        <div class="message user">
+                            <div class="message-header">You • 10:42 AM</div>
+                            <div>Implement the new headless rendering engine for Iced screenshots.</div>
+                        </div>
+                        <div class="message assistant">
+                            <div class="message-header">Cursor Agent • 10:43 AM</div>
+                            <div>I'll update `headless_runner.rs` to use `tiny-skia` software renderer as specified in the architecture docs. Let me check the Iced `Headless` trait implementation.</div>
+                        </div>
+                    </div>
+                    <div class="chat-input-area">
+                        <textarea class="chat-textarea" placeholder="Type a command or prompt..."></textarea>
+                        <div class="chat-controls">
+                            <button title="Attach File">📎 Attach</button>
+                            <button class="active">Send ↵</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Simple Theme Switcher Logic
+        function switchTheme(themeName) {
+            document.documentElement.setAttribute('data-theme', themeName);
+        }
+
+        // Initialize mode buttons toggling (visual only for mockup)
+        document.querySelectorAll('.control-bar button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.parentElement.classList.contains('control-group')) {
+                    const siblings = this.parentElement.querySelectorAll('button');
+                    siblings.forEach(s => s.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

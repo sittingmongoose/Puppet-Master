@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComposerGUI Concept — Dashboard + File Manager + Chat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            /* Light (retro) */
+            --theme-light-bg: #FAF6F1;
+            --theme-light-surface: #FAF6F1;
+            --theme-light-text: #1A1A1A;
+            --theme-light-text-muted: #666666;
+            --theme-light-border: #1A1A1A;
+            --theme-light-accent: #00FF41;
+            --theme-light-accent-blue: #0047AB;
+            --theme-light-shadow: 2px 2px 0 #1A1A1A;
+            --theme-light-border-width: 3px;
+            --theme-light-radius: 0px;
+            --theme-light-font-heading: 'Orbitron', sans-serif;
+            --theme-light-font-ui: 'Rajdhani', sans-serif;
+
+            /* Dark (retro) */
+            --theme-dark-bg: #1A1A1A;
+            --theme-dark-surface: #1A1A1A;
+            --theme-dark-text: #E0E0E0;
+            --theme-dark-text-muted: #888888;
+            --theme-dark-border: #E0E0E0;
+            --theme-dark-accent: #00FF41;
+            --theme-dark-accent-blue: #0047AB;
+            --theme-dark-shadow: 2px 2px 0 #E0E0E0;
+            --theme-dark-border-width: 3px;
+            --theme-dark-radius: 0px;
+            --theme-dark-font-heading: 'Orbitron', sans-serif;
+            --theme-dark-font-ui: 'Rajdhani', sans-serif;
+
+            /* Basic (plain) */
+            --theme-basic-bg: #F5F5F5;
+            --theme-basic-surface: #FFFFFF;
+            --theme-basic-text: #212121;
+            --theme-basic-text-muted: #757575;
+            --theme-basic-border: #E0E0E0;
+            --theme-basic-accent: #2E7D32;
+            --theme-basic-accent-blue: #1565C0;
+            --theme-basic-shadow: 0 1px 2px rgba(0,0,0,0.08);
+            --theme-basic-border-width: 1px;
+            --theme-basic-radius: 4px;
+            --theme-basic-font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --theme-basic-font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            /* Default (light) - used on load */
+            --bg: var(--theme-light-bg);
+            --surface: var(--theme-light-surface);
+            --text: var(--theme-light-text);
+            --text-muted: var(--theme-light-text-muted);
+            --border: var(--theme-light-border);
+            --accent: var(--theme-light-accent);
+            --accent-blue: var(--theme-light-accent-blue);
+            --shadow: var(--theme-light-shadow);
+            --border-width: var(--theme-light-border-width);
+            --radius: var(--theme-light-radius);
+            --font-heading: var(--theme-light-font-heading);
+            --font-ui: var(--theme-light-font-ui);
+        }
+
+        body {
+            font-family: var(--font-ui);
+            background: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+            height: 100vh;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        /* Pixel grid overlay (Light/Dark only) */
+        .pixel-grid {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.06;
+            background-image:
+                linear-gradient(to right, var(--border) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+            background-size: 3px 3px;
+        }
+
+        body.theme-basic .pixel-grid { display: none; }
+
+        .app {
+            display: grid;
+            grid-template-columns: 240px 1fr 320px;
+            grid-template-rows: 48px 1fr;
+            gap: 0;
+            height: 100vh;
+        }
+
+        .header {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            gap: 24px;
+            background: var(--surface);
+            border-bottom: var(--border-width) solid var(--border);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .header-nav { display: flex; gap: 8px; }
+        .header-nav span {
+            padding: 8px 12px;
+            cursor: pointer;
+            border: var(--border-width) solid transparent;
+        }
+        .header-nav span.active {
+            background: var(--text);
+            color: var(--bg);
+        }
+        .header-spacer { flex: 1; }
+        .theme-switcher { display: flex; gap: 4px; }
+        .theme-btn {
+            padding: 6px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            border: var(--border-width) solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            font-family: var(--font-ui);
+            font-weight: 600;
+        }
+        .theme-btn:hover { background: var(--accent); color: #1A1A1A; }
+        .theme-btn.active { background: var(--accent); color: #1A1A1A; }
+
+        .panel {
+            display: flex;
+            flex-direction: column;
+            background: var(--surface);
+            border-right: var(--border-width) solid var(--border);
+            overflow: hidden;
+        }
+
+        .panel:last-of-type { border-right: none; border-left: var(--border-width) solid var(--border); }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            border-bottom: var(--border-width) solid var(--border);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 12px;
+            gap: 8px;
+        }
+
+        .panel-grip {
+            width: 8px;
+            height: 16px;
+            background: var(--accent);
+            cursor: ew-resize;
+            border-radius: 2px;
+        }
+
+        body.theme-basic .panel-grip { width: 6px; background: var(--border); }
+
+        .panel-actions { margin-left: auto; display: flex; gap: 4px; }
+        .panel-btn {
+            width: 24px; height: 24px;
+            border: var(--border-width) solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        body.theme-basic .panel-btn { border-width: 1px; width: 20px; height: 20px; }
+
+        .panel-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px;
+        }
+
+        /* File Manager */
+        .file-tree { font-size: 13px; }
+        .file-item {
+            padding: 4px 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: var(--border-width) solid transparent;
+        }
+        .file-item:hover { background: rgba(0,255,65,0.1); }
+        body.theme-basic .file-item:hover { background: rgba(0,0,0,0.05); }
+        .file-item.folder { font-weight: 600; }
+        .file-indent { margin-left: 16px; }
+
+        /* Chat */
+        .chat-main {
+            display: flex;
+            flex-direction: column;
+            background: var(--surface);
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border: var(--border-width) solid var(--border);
+            font-size: 14px;
+            line-height: 1.5;
+            box-shadow: var(--shadow);
+        }
+
+        body.theme-basic .message { box-shadow: var(--shadow); }
+
+        .message.user {
+            align-self: flex-end;
+            background: var(--accent);
+            color: #1A1A1A;
+        }
+        body.theme-basic .message.user { background: var(--accent); }
+
+        .message.assistant {
+            align-self: flex-start;
+            background: var(--surface);
+        }
+
+        .chat-input-area {
+            padding: 16px;
+            border-top: var(--border-width) solid var(--border);
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: var(--border-width) solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            font-family: var(--font-ui);
+            font-size: 14px;
+            resize: none;
+        }
+        .chat-input:focus { outline: none; border-color: var(--accent); }
+
+        .send-btn {
+            padding: 0 24px;
+            border: var(--border-width) solid var(--border);
+            background: var(--accent);
+            color: #1A1A1A;
+            font-family: var(--font-ui);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+        body.theme-basic .send-btn { font-weight: 600; text-transform: none; }
+
+        /* History sidebar */
+        .history-item {
+            padding: 10px 12px;
+            border: var(--border-width) solid var(--border);
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            box-shadow: var(--shadow);
+        }
+        body.theme-basic .history-item { box-shadow: var(--shadow); }
+        .history-item:hover { background: rgba(0,255,65,0.1); }
+        body.theme-basic .history-item:hover { background: rgba(0,0,0,0.05); }
+        .history-item.active { background: var(--accent); color: #1A1A1A; }
+
+        .usage-strip {
+            padding: 6px 12px;
+            font-size: 11px;
+            color: var(--text-muted);
+            border-top: var(--border-width) solid var(--border);
+        }
+    </style>
+</head>
+<body class="theme-light">
+    <div class="pixel-grid"></div>
+
+    <div class="app">
+        <header class="header">
+            <div class="header-nav">
+                <span class="active">DASHBOARD</span>
+                <span>CONFIG</span>
+                <span>DOCTOR</span>
+                <span>WIZARD</span>
+            </div>
+            <span style="color: var(--text-muted);">RWM Puppet Master</span>
+            <div class="header-spacer"></div>
+            <div class="theme-switcher">
+                <button class="theme-btn active" data-theme="light">Light</button>
+                <button class="theme-btn" data-theme="dark">Dark</button>
+                <button class="theme-btn" data-theme="basic">Basic</button>
+            </div>
+        </header>
+
+        <!-- File Manager Panel -->
+        <aside class="panel">
+            <div class="panel-header">
+                <div class="panel-grip" title="Drag to resize"></div>
+                FILES
+                <div class="panel-actions">
+                    <button class="panel-btn" title="Detach">⧉</button>
+                    <button class="panel-btn" title="Collapse">−</button>
+                </div>
+            </div>
+            <div class="panel-content file-tree">
+                <div class="file-item folder">▼ src/</div>
+                <div class="file-item file-indent">app.rs</div>
+                <div class="file-item file-indent">main.rs</div>
+                <div class="file-item folder">▼ Plans/</div>
+                <div class="file-item file-indent">composergui-gui-redesign-spec.md</div>
+                <div class="file-item file-indent">composergui-concept.html</div>
+                <div class="file-item folder">▶ .puppet-master/</div>
+                <div class="file-item folder">▶ docs/</div>
+            </div>
+        </aside>
+
+        <!-- Chat (Main) -->
+        <main class="chat-main">
+            <div class="chat-messages">
+                <div class="message assistant">
+                    Hello! I'm ready to assist. This is the ComposerGUI concept showing Dashboard + File Manager + Chat. Use the theme buttons above to switch between Light, Dark, and Basic modes.
+                </div>
+                <div class="message user">
+                    Show me the Basic theme — plain and easier to read.
+                </div>
+                <div class="message assistant">
+                    Click "Basic" in the header. The Basic theme removes the pixel grid, uses 1px borders, rounded corners, and muted accent colors for a cleaner, more readable look.
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <textarea class="chat-input" rows="1" placeholder="Message..."></textarea>
+                <button class="send-btn">SEND</button>
+            </div>
+        </main>
+
+        <!-- History Panel -->
+        <aside class="panel">
+            <div class="panel-header">
+                <div class="panel-grip"></div>
+                HISTORY
+                <div class="panel-actions">
+                    <button class="panel-btn">⧉</button>
+                    <button class="panel-btn">−</button>
+                </div>
+            </div>
+            <div class="panel-content">
+                <div class="history-item active">Project X Plan</div>
+                <div class="history-item">Ideas</div>
+                <div class="history-item">Code Review</div>
+                <div class="history-item">Meeting Notes</div>
+                <div class="history-item">New Feature</div>
+            </div>
+            <div class="usage-strip">5h: 2.1 / 5.0 · 7d: 12 / 50</div>
+        </aside>
+    </div>
+
+    <script>
+        const themes = {
+            light: {
+                '--bg': 'var(--theme-light-bg)',
+                '--surface': 'var(--theme-light-surface)',
+                '--text': 'var(--theme-light-text)',
+                '--text-muted': 'var(--theme-light-text-muted)',
+                '--border': 'var(--theme-light-border)',
+                '--accent': 'var(--theme-light-accent)',
+                '--accent-blue': 'var(--theme-light-accent-blue)',
+                '--shadow': 'var(--theme-light-shadow)',
+                '--border-width': 'var(--theme-light-border-width)',
+                '--radius': 'var(--theme-light-radius)',
+                '--font-heading': 'var(--theme-light-font-heading)',
+                '--font-ui': 'var(--theme-light-font-ui)'
+            },
+            dark: {
+                '--bg': 'var(--theme-dark-bg)',
+                '--surface': 'var(--theme-dark-surface)',
+                '--text': 'var(--theme-dark-text)',
+                '--text-muted': 'var(--theme-dark-text-muted)',
+                '--border': 'var(--theme-dark-border)',
+                '--accent': 'var(--theme-dark-accent)',
+                '--accent-blue': 'var(--theme-dark-accent-blue)',
+                '--shadow': 'var(--theme-dark-shadow)',
+                '--border-width': 'var(--theme-dark-border-width)',
+                '--radius': 'var(--theme-dark-radius)',
+                '--font-heading': 'var(--theme-dark-font-heading)',
+                '--font-ui': 'var(--theme-dark-font-ui)'
+            },
+            basic: {
+                '--bg': 'var(--theme-basic-bg)',
+                '--surface': 'var(--theme-basic-surface)',
+                '--text': 'var(--theme-basic-text)',
+                '--text-muted': 'var(--theme-basic-text-muted)',
+                '--border': 'var(--theme-basic-border)',
+                '--accent': 'var(--theme-basic-accent)',
+                '--accent-blue': 'var(--theme-basic-accent-blue)',
+                '--shadow': 'var(--theme-basic-shadow)',
+                '--border-width': 'var(--theme-basic-border-width)',
+                '--radius': 'var(--theme-basic-radius)',
+                '--font-heading': 'var(--theme-basic-font-heading)',
+                '--font-ui': 'var(--theme-basic-font-ui)'
+            }
+        };
+
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const theme = btn.dataset.theme;
+                document.body.className = 'theme-' + theme;
+                document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const vars = themes[theme];
+                for (const [key, value] of Object.entries(vars)) {
+                    document.documentElement.style.setProperty(key, value);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

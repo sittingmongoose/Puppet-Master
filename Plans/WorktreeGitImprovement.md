@@ -2,14 +2,22 @@
 
 ## Plan Document Status
 
-**This is a PLAN DOCUMENT ONLY** — No code changes have been made. This document consolidates:
+**This is a PLAN DOCUMENT ONLY** — No code changes have been made. The document is **implementation-ready**: gaps closed (Section 7.14), dependency order and acceptance criteria in Section 6, GUI aligned with FinalGUISpec and MiscPlan. This document consolidates:
 
 - Worktree implementation gaps and fixes
 - Git integration gaps and fixes
 - GUI wiring and UX for Git/worktrees
 - Dependencies on config wiring (enable_parallel, etc.)
 
-Resolve each section during implementation so worktrees and Git work correctly end-to-end.
+The plan is **implementation-ready**: gaps closed (Section 7.14), dependency order and acceptance criteria in Section 6, GUI aligned with FinalGUISpec and MiscPlan. Resolve each section during implementation so worktrees and Git work correctly end-to-end.
+
+## Rewrite alignment (2026-02-21)
+
+This plan’s correctness requirements remain authoritative. As the rewrite lands (see `Plans/rewrite-tie-in-memo.md`):
+
+- Worktrees/branches/sandboxes are part of the **patch/apply/verify/rollback pipeline** (core reliability), not just a Git feature
+- Provider working directories (and MCP injection) must respect worktree execution contexts deterministically
+- Config references to YAML files should be treated as *current representations*; the rewrite may project settings via redb while retaining import/export
 
 ---
 
@@ -21,7 +29,7 @@ Resolve each section during implementation so worktrees and Git work correctly e
 4. [GUI for Git & Worktrees](#4-gui-for-git--worktrees)
 5. [Config Wiring (Prerequisite)](#5-config-wiring-prerequisite)
 6. [Implementation Checklist](#6-implementation-checklist)
-7. [Gaps, Risks, and Implementation Notes](#7-gaps-risks-and-implementation-notes) (includes [7.11 DRY and AGENTS.md](#711-dry-and-agentsmd-conventions))
+7. [Gaps, Risks, and Implementation Notes](#7-gaps-risks-and-implementation-notes) (includes [7.11 DRY and AGENTS.md](#711-dry-and-agentsmd-conventions), [7.14 Resolved decisions](#714-resolved-decisions-implementation-ready))
 8. [References](#8-references)
 
 ---
@@ -37,6 +45,10 @@ Resolve each section during implementation so worktrees and Git work correctly e
 ### Critical Blocker
 
 The orchestrator reads **PuppetMasterConfig** from `ConfigManager::discover()` (YAML). The Config page edits **GuiConfig** and saves it to the same path (e.g. `puppet-master.yaml`). The two shapes differ; **enable_parallel** and other advanced/orchestrator fields in the GUI are never seen by the run. **Until config wiring is fixed**, worktrees and Git behavior cannot be fully controlled from the UI. For a consolidated list of unwired features and GUI gaps across plans, see **MiscPlan §9.1.18**.
+
+### GUI updates needed
+
+**Yes.** All Git/worktree-relevant settings must be visible and wired. Required: Branching tab (Enable Git, Auto PR, Branch strategy, optional Use worktrees/Parallel note); optional worktree list and "Recover orphaned worktrees" (placement: **Health** tab per FinalGUISpec); Git info for **active project**; tooltip cleanup. See [Section 4](#4-gui-for-git--worktrees) and Phase 4 checklist. Align with FinalGUISpec §7.4 (Branching and Health) and MiscPlan §7.5 (project path, Option B, cleanup ownership).
 
 ### Readiness for implementation
 
@@ -195,6 +207,8 @@ The plan is **ready to implement** with the following in mind:
 - **Shown:** "Enable parallel execution" toggle (bound to `gui_config.advanced.execution.enable_parallel`).
 - **Not wired:** This value is never written to the config the orchestrator loads; the run uses `PuppetMasterConfig.orchestrator.enable_parallel_execution` from YAML (or default false).
 
+**Cross-plan (MiscPlan):** Project path for Doctor and "Clean workspace now" must be resolved from the same source as the run (see Section 7.2 and MiscPlan §7.5). Option B run config built from GuiConfig at run start must include both Worktree/Git fields and (when implemented) MiscPlan cleanup/evidence fields so one Save persists all. "Clean workspace now" and "Clean all worktrees" placement and behavior are defined in MiscPlan §7.5; Worktree plan exposes worktree list for "Clean all worktrees."
+
 **Login / Setup:**
 
 - Git config section (user, email, remote, current branch); GitHub auth; GitHub CLI in Setup.
@@ -215,26 +229,27 @@ The plan is **ready to implement** with the following in mind:
 
 - **Enable Git:** Toggle bound to `orchestrator.enable_git` (or equivalent in the canonical config). **Use existing `toggler` widget** — DO NOT create a new toggle. Tooltip: e.g. "Enable git branch creation, commits, and PR creation during runs." **Use existing `help_tooltip` widget**.
 - **Auto PR:** Toggle bound to `branching.auto_pr`. **Use existing `toggler` widget**. Tooltip: "Create a pull request automatically when a tier completes; if off, worktree is merged to base branch without PR." **Use existing `help_tooltip` widget**.
-- **Branch strategy:** Dropdown or radio: Main only / Feature (or Tier) / Release. Bound to config `branching.strategy` (or equivalent). **Use existing dropdown/radio widgets** — DO NOT create new selection widgets. Use existing tooltip `branching.strategy`.
-- **Use worktrees (parallel):** Can stay in Advanced as "Enable parallel execution" but must be wired (see 5). Optionally add a short note in the Branching tab: "Parallel subtasks use separate git worktrees." **Use existing `selectable_label` widget** for the note.
+- **Branch strategy:** **Use Iced `pick_list`** (same pattern as in `views/config.rs` for platform/model). Values: Main only / Feature (or Tier) / Release. Bound to config `branching.strategy` (or equivalent). Use existing tooltip `branching.strategy`.
+- **Use worktrees (parallel):** Per FinalGUISpec §7.4, Branching tab can show both **Use worktrees** toggle and **Parallel execution** toggle; both must be wired (see Section 5). Add note: "Parallel subtasks use separate git worktrees." **Use existing `selectable_label`** for the note.
 - **Auto merge on success / Delete on merge:** Add toggles if the product wants them; wire to config and implement behavior in orchestrator/worktree cleanup. **Use existing `toggler` widgets**. Use existing tooltips.
 
 #### 4.2.3 Branching tab: fix or remove unused fields
 
 - **Naming pattern:** Either wire to branch name generation (document format) or mark as "Reserved for future use" and hide/disable until implemented.
-- **Granularity:** Clarify semantics vs actual behavior. Today the orchestrator creates branches per tier based on BranchStrategy, not per phase/task granularity. Either: (1) map granularity to strategy/branch creation policy and document, or (2) align UI label with actual behavior (e.g. "Branch per tier (phase/task/subtask)").
+- **Granularity:** Use existing **`radio`** (as in config.rs tab_branching) or **`pick_list`** if switching to dropdown; see gui-widget-catalog and config.rs. Clarify semantics vs actual behavior: today the orchestrator creates branches per tier based on BranchStrategy, not per phase/task granularity. Either map granularity to strategy/branch creation policy and document, or align UI label with actual behavior (e.g. "Branch per tier (phase/task/subtask)"). FinalGUISpec §7.4 allows "per_phase / per_task / per_subtask"; include per_subtask if exposing granularity.
 
 #### 4.2.4 Worktree visibility (optional)
 
-- **Location:** Config (Branching or Advanced) or Doctor.
+- **Location:** **Health tab** (Settings → Health) per FinalGUISpec §7.4. Worktree list and "Recover orphaned worktrees" are implemented in Health; Worktree plan owns behavior and data (`list_worktrees`, `recover_orphaned_worktrees`).
 - **Features:**
-  - "List worktrees" or status line: e.g. "N worktrees under .puppet-master/worktrees (tiers: A, B)."
-  - "Recover orphaned worktrees" button: calls `worktree_manager.recover_orphaned_worktrees()` and shows result (e.g. toast).
-- **Scope:** Best-effort; only when project path is known and is a git repo.
+  - **Worktree list:** Columns **path, branch, status, age** (per FinalGUISpec). Use a **scrollable column of rows**; each row: **`selectable_label`** or **`selectable_label_mono`** for path/branch/age, **`status_badge`** or **`status_dot`** for status (active/stale/orphaned). No new table widget; reuse scrollable + rows + selectable_label + status_badge (see ledger/doctor list patterns).
+  - **Worktree status indicators:** active / stale / orphaned (per FinalGUISpec).
+  - **"Recover orphaned worktrees" button:** **`styled_button`**; calls `worktree_manager.recover_orphaned_worktrees()`; show result via **`toast_overlay`**.
+- **Scope:** Best-effort; only when project path is known and is a git repo. Expose worktree list for use by MiscPlan "Clean all worktrees" (button/placement and copy are in MiscPlan §7.5).
 
 #### 4.2.5 Git info context
 
-- **Gap:** Git info (branch, remote, user) is loaded for the Config page; ensure it is resolved for the **active project** (current project or config path), not only CWD, so it matches what the run will use.
+- **Gap:** Git info (**user, email, remote, branch** — per FinalGUISpec §7.4) is loaded for the Config page; ensure it is resolved for the **active project** (current project or config path), not only CWD, so it matches what the run will use.
 
 ### 4.3 Tooltip cleanup
 
@@ -252,8 +267,9 @@ The plan is **ready to implement** with the following in mind:
 
 ### 5.2 Chosen approach: Option B — Build run config from GUI
 
-- **Option B (selected):** When starting a run, build `PuppetMasterConfig` (or the part the orchestrator needs) from the current **in-memory** `gui_config` and optionally merge with file-based config (e.g. for fields the GUI does not edit). The run sees the latest GUI values without requiring "Save" first (e.g. `enable_parallel_execution` from `gui_config.advanced.execution.enable_parallel`).
+- **Option B (selected):** When starting a run, build `PuppetMasterConfig` (or the part the orchestrator needs) from the current **in-memory** `gui_config`. **Option B v1:** Run config is built from `gui_config` only for the fields in 5.3; no file merge in initial release. The run sees the latest GUI values without requiring "Save" first (e.g. `enable_parallel_execution` from `gui_config.advanced.execution.enable_parallel`). If building run config from `gui_config` fails (e.g. missing required field), fall back to `ConfigManager::discover_with_hint(hint)`; if that also fails, fail the run with a clear error (do not start with default-only config silently).
 - **Implications:** Save on the Config page continues to persist GuiConfig to disk for next app launch. The orchestrator backend receives a config derived from `gui_config` at run start, so "Run" always uses the current UI state. Document this behavior in the UI (e.g. tooltip: "Run uses current settings; Save stores them for next time.").
+- **Settings projection (rewrite):** Option B and Phase 1 are required for initial release and must work with **YAML-only** config. Redb/seglog is out of scope for this plan; when storage-plan lands, run config can be read from redb instead of gui_config. In the seglog/redb architecture (storage-plan.md), config/settings may be **projected in redb**; branching/worktree/Git settings would then live in the same redb projection.
 
 *(Other options for reference: Option A = single canonical YAML schema; Option C = two files. Not chosen.)*
 
@@ -266,6 +282,14 @@ The plan is **ready to implement** with the following in mind:
 ---
 
 ## 6. Implementation Checklist
+
+### Dependency order (implement in this order within phases)
+
+- **Phase 1** must complete before Phase 2 and Phase 3 (config and project path are prerequisites).
+- **Phase 2:** 2.4 (sanitize) → 2.1, 2.5, 2.9; 2.7 (worktree_exists validity) before create/cleanup that rely on it; 2.8 (recovery uses project path) → 2.2, 2.11; 2.6 (detached HEAD) → 2.10.
+- **Phase 3:** 3.1 (git binary) → 3.3, 3.4, 3.10; 3.2 (gh) independent; 3.5 → 3.6 → 3.7.
+- **Cross-phase:** Phase 3.1 before Phase 2.11 (Doctor worktrees check uses shared git resolution).
+- **Phase 2 and Phase 3** can proceed in parallel after Phase 1; **Phase 5** integration tests assume both Phase 2 and Phase 3 are done.
 
 ### Phase 1: Config wiring (blocker)
 
@@ -317,6 +341,35 @@ The plan is **ready to implement** with the following in mind:
 - [ ] Update AGENTS.md / STATE_FILES.md / REQUIREMENTS.md as needed.
 - [ ] Run widget catalog and check-widget-reuse scripts if new UI was added (Section 7.11); complete AGENTS.md Pre-Completion Verification Checklist before closing out tasks.
 
+### Acceptance criteria (per phase)
+
+| Phase | Acceptance criteria |
+|-------|----------------------|
+| **Phase 1** | (1) With "Enable parallel execution" on and no Save, start run → worktrees are created when applicable. (2) Run started from Dashboard uses `current_project.path` as config hint (e.g. `discover_with_hint` called with it). (3) Branching/base_branch and auto_pr from GUI are present in the config passed to the orchestrator at run start. |
+| **Phase 2** | (1) After restart, `get_tier_worktree(tier_id)` returns the path for tiers that still have worktrees under worktree_base (repopulation or fallback). (2) New worktrees are created from `config.branching.base_branch` (checkout or ref). (3) Doctor "worktrees" check runs when project is a git repo and reports worktree count and/or orphaned suggestion. |
+| **Phase 3** | (1) GitManager and Doctor git checks use the same resolved `git` binary (e.g. shared `path_utils::resolve_git_executable()`). (2) Iteration commits use CommitFormatter and produce "ralph:"-style messages. (3) git-actions.log path matches REQUIREMENTS (`.puppet-master/logs/git-actions.log`) and is documented in .gitignore if runtime-only. |
+| **Phase 4** | (1) Branching tab has Enable Git, Auto PR, Branch strategy wired to run config (run uses current GUI values). (2) Naming pattern is either wired to branch names or hidden and documented. (3) After GUI changes, `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` run and pass. |
+| **Phase 5** | (1) Integration test: parallel run in temp git repo creates worktree dirs and uses them as cwd for subtasks. (2) Integration test: run with Git disabled does not create branches/commits/PRs. (3) AGENTS.md Pre-Completion Verification Checklist completed and Task Status Log updated for any closed tasks. |
+
+### File/source hints (Phase 2 and Phase 3)
+
+**Phase 2 (Worktrees):** `puppet-master-rs/src/git/worktree_manager.rs` (base branch, repopulation, conflict handling, sanitization, branch exists, detached HEAD, worktree_exists validity, recovery, merge_worktree target_branch); `puppet-master-rs/src/core/orchestrator.rs` (create/cleanup worktree calls, PR head branch resolution, project path for recovery); `puppet-master-rs/src/doctor/checks/git_checks.rs` (new worktrees check); `puppet-master-rs/src/config/config_discovery.rs` (project path discovery); `STATE_FILES.md` (worktrees subsection).
+
+**Phase 3 (Git):** `puppet-master-rs/src/platforms/path_utils.rs` (shared `resolve_git_executable()`, reuse `resolve_app_local_executable("gh")`; tag DRY:FN); `puppet-master-rs/src/git/git_manager.rs` (use resolved git binary, git-actions.log path); `puppet-master-rs/src/git/pr_manager.rs` (use resolved gh binary); `puppet-master-rs/src/git/branch_strategy.rs` (single branch naming); `puppet-master-rs/src/git/commit_formatter.rs` (iteration commits); `puppet-master-rs/src/core/orchestrator.rs` (branch strategy from config, create_tier_branch, commit_tier_progress); `puppet-master-rs/src/doctor/checks/git_checks.rs` (shared git binary, configured/repo checks); `REQUIREMENTS.md` / `.gitignore` (git-actions.log path and ignore rule).
+
+### Required vs optional (checklist items)
+
+| Phase | Item | Required / Optional |
+|-------|------|---------------------|
+| Phase 1 | Option B config wiring, pass config hint on run start, verify parallel → worktrees | Required |
+| Phase 2 | All items in checklist except re-validate worktree path (Section 2.12) | Required |
+| Phase 2 | Re-validate worktree path before use (Section 2.12) | Optional (Phase 6) |
+| Phase 3 | All items except Doctor "git usable in project" and "nothing to commit" | Required |
+| Phase 3 | Doctor "git usable in project" check; "nothing to commit" handling | Optional |
+| Phase 4 | Branching tab controls, naming/granularity, tooltip cleanup, MiscPlan coordination, widget scripts | Required |
+| Phase 4 | Worktree list/recover UI and Git info for active project | Optional |
+| Phase 5 | All items | Required |
+
 ---
 
 ## 7. Gaps, Risks, and Implementation Notes
@@ -339,7 +392,7 @@ This section captures underspecified items, risks, and concrete details so the p
 ### 7.3 Backend run does not use current project
 
 - **Current behavior:** `spawn_orchestrator_backend` calls `ConfigManager::discover()` with **no hint**. The wizard and start-chain use `ConfigManager::discover_with_hint(config_hint)` with `current_project.path`. So the **orchestrator run** (Dashboard “Run”) never receives the current project path; it uses whatever `discover_config_path(None)` finds.
-- **Implication:** For “recovery when project is known” and “Doctor use project path,” if the user selects a project in the UI but the run is started from the same app, the run still uses discover-with-no-hint. To make “current project” meaningful for the run, the run command would need to pass a hint (e.g. `AppCommand::Start { config_hint: Option<PathBuf> }`) and the backend would call `ConfigManager::discover_with_hint(config_hint)`. The plan should explicitly call out: “When starting a run from the Dashboard, pass `current_project.path` as config hint so the run and recovery use the selected project.”
+- **Implication:** For “recovery when project is known” and “Doctor use project path,” if the user selects a project in the UI but the run is started from the same app, the run still uses discover-with-no-hint. To make “current project” meaningful for the run, the run command must pass a hint (e.g. extend start message with `config_hint: Option<PathBuf>`). **Call site to change:** In `spawn_orchestrator_backend` (or equivalent in app.rs), replace `ConfigManager::discover()` with `ConfigManager::discover_with_hint(config_hint)`; pass `current_project.path` from Dashboard when starting a run. The plan should explicitly call out: “When starting a run from the Dashboard, pass `current_project.path` as config hint so the run and recovery use the selected project.”
 
 ### 7.4 Merge conflicts: persisting “conflict worktrees”
 
@@ -371,6 +424,18 @@ This section captures underspecified items, risks, and concrete details so the p
 
 - **Config migration:** If we move to a single canonical format (Option A), existing users may have only GuiConfig-shaped YAML. Loading it as PuppetMasterConfig can fail (missing `paths`, etc.). Plan: on load, try PuppetMasterConfig first; if it fails, try GuiConfig and convert to PuppetMasterConfig (with defaults for missing fields), then save in canonical format on next save.
 - **Save timing:** Option B is chosen: on Run, build the config used for the run from in-memory `gui_config`, so Save is not required for the next run. Document this in the UI (e.g. tooltip or short note: “Run uses current settings; Save stores them for next time.”).
+
+### 7.14 Resolved decisions (implementation-ready)
+
+All gaps from audit are closed with the following decisions. Implementers should follow these so the plan has no ambiguity.
+
+**Worktree (Section 2):** (1) **Base branch:** Use checkout base_branch then add for initial release; create from ref (e.g. `git worktree add -b <branch> <path> <base_branch>`) is optional later. (2) **active_worktrees repopulation:** On first resolve with no entry, if path exists and is in `list_worktrees()`, use it and re-register in `active_worktrees` for that session. (3) **Conflict persistence:** In-memory only for initial release — `HashSet<tier_id>` of conflict worktrees; optional Phase 6: `.puppet-master/worktree-conflicts.json`. (4) **Detached HEAD merge:** In `merge_worktree`, if source_branch is empty: read HEAD commit from that worktree (`git rev-parse HEAD` in worktree path), then in main repo `git merge --no-ff <commit>`; document in STATE_FILES.md. (5) **Recovery:** If no project path at startup, skip worktree recovery; run recovery when user first selects/opens a project or when a run starts with config hint. (6) **Repopulation failure:** If `list_worktrees()` fails during repopulation, log error and start with empty `active_worktrees`. (7) **Doctor worktrees:** Must run `list_worktrees` and report state; optionally call `detect_orphaned_worktrees()` and include count; Recover remains a separate UI action. (8) **Platform:** Sanitization and path handling must be safe on Windows (use `PathBuf`/`join`; no assumption that `/` is the only separator). (9) **Section 2.12:** Re-validate worktree path before use is Phase 6 / optional.
+
+**Git (Section 3):** (1) **Git binary:** Add `path_utils::resolve_git_executable() -> Option<PathBuf>` (same logic as `find_tool_executable("git")`); GitManager and GitInstalledCheck both use it; tag `// DRY:FN:resolve_git_executable`. If resolver returns None, GitManager fails the operation; Doctor fails the check. (2) **gh:** PrManager resolves at each use (or first use and cache) via `path_utils::resolve_app_local_executable("gh")`. (3) **naming_pattern:** Hide in GUI and document Reserved for future use in initial release; do not wire to branch naming. (4) **git-actions.log:** Move to `.puppet-master/logs/git-actions.log`; add to .gitignore as runtime-only per STATE_FILES.
+
+**Config (Section 5):** (1) **Backend call site:** In `spawn_orchestrator_backend` (or equivalent in app.rs), replace `ConfigManager::discover()` with `ConfigManager::discover_with_hint(config_hint)`; pass `current_project.path` from Dashboard/start-run flow (e.g. extend start message with optional hint). (2) **Minimum wired fields:** enable_parallel_execution, enable_git, base_branch, auto_pr; strategy required for Phase 4 GUI; granularity/naming_pattern optional/hidden per 7.7 and 3.7.
+
+**Doctor API:** Extend Doctor so the app can pass an optional project hint (e.g. `run_all(hint: Option<&Path>)`); GitRepoCheck, GitConfiguredCheck, and worktrees check use hint when present.
 
 ## DRY Method Compliance
 
@@ -414,6 +479,8 @@ This plan must be implemented in line with **AGENTS.md** (reuse-first DRY method
 ---
 
 ## 7.12 Crews and Subagent Communication Enhancements for Git/Worktree Operations
+
+**Status: Optional / Phase 6 (or later).** Not required for initial Worktree/Git release. Depends on Plans/orchestrator-subagent-integration.md Crews (CrewManager, AgentMessage, message board, etc.) being implemented and exposed to the git layer. When implementing, align code samples with actual APIs: e.g. `PrManager::create_pr(title, body, base, head)` and `Result<PrResult>`; `WorktreeManager::create_worktree(tier_id, branch)` takes two args; call `get_worktree_path` only after `create_worktree`.
 
 The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines **Crews** (multi-agent communication system) and enhanced subagent communication. These features can enhance **git and worktree operations** to enable better coordination between git operations and subagents.
 
@@ -735,6 +802,8 @@ impl WorktreeManager {
 - **Merge coordination failure:** If merge coordination fails, log warning and proceed with direct merge (may cause conflicts)
 
 ## 7.13 Lifecycle and Quality Enhancements for Git/Worktree Operations
+
+**Status: Optional / Phase 6 (or later).** Not required for initial release. Depends on orchestrator lifecycle hooks and remediation patterns (and, if used, core memory module) being defined and implemented; then the git layer can adopt the same patterns. Align `GitOperationResult` with existing `GitResult`/`MergeResult`/`PrResult` types; do not assume `src/core/memory.rs` or `src/core/remediation.rs` exist until the orchestrator plan implements them.
 
 The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines lifecycle hooks, structured handoff validation, remediation loops, and cross-session memory. These features can enhance **git and worktree operations** to improve reliability, quality, and continuity.
 
