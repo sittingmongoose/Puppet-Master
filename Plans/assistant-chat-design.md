@@ -207,7 +207,8 @@ There are **two separate ELI5 toggles**; they are independent and must not be co
 
 - **Concept:** Users can ask the Assistant how to use Puppet Master (platform, modes, queues, etc.). No separate "Teach" sidebar or inline tips component is required.
 - **Implementation:** Give the chat bot access to information on how Puppet Master works (e.g. inject or retrieve from docs: REQUIREMENTS.md, ARCHITECTURE.md, AGENTS.md, GUI_SPEC.md, platform CLI sections, mode descriptions). The same chat surface is used; the user just asks ("How does Plan mode work?", "How do I add to the queue?"). **Build requirement:** The documentation that Teach uses (REQUIREMENTS.md, ARCHITECTURE.md, AGENTS.md, GUI_SPEC.md, and any other canonical docs referenced above) must be built or validated when the rest of the project is built so it is always available to the Assistant.
-- **Optional enhancements (in chat):** Structured tips tied to current mode/platform, short copy-pasteable "how to" snippets, and "How does [platform] work?" or "How does Plan mode work?" flows that inject a small doc into the conversation. All of this is delivered **through the chat**, not a separate UI.
+- **Document rendering rule (required):** Chat must not render full document bodies for requirements, PRD, phase docs, contract seeds, or other long artifacts. Teach responses use concise summaries plus pointers to review surfaces.
+- **Optional enhancements (in chat):** Structured tips tied to current mode/platform, short copy-pasteable "how to" snippets, and "How does [platform] work?" or "How does Plan mode work?" flows that inject a short summary/snippet with pointers, not full documents. All of this is delivered **through the chat**, not a separate UI.
 - **Export conversation:** The user can **export the current thread** (messages and optionally agent tool summary) to **Markdown or JSON** for backup, sharing, or compliance. Available via slash command (e.g. `/export`) or a menu action.
 
 ---
@@ -251,6 +252,24 @@ There are **two separate ELI5 toggles**; they are independent and must not be co
 
 - **@ mention in chat:** In the chat input, the user can type **@** to open a small search box over the file list. User picks a file (search/filter by name or path); the selected file is added to the agent's context for that message. Same file list as File Manager (single source of truth). When **LSP is available** (MVP), **@ symbol** also offers **symbols** (functions, classes, etc.) via LSP workspace/symbol so the user can add a symbol by name to context; see §9.1.
 - **Click-to-open:** Clicking a file path (files-touched strip, "Read:" / "Edited:", or code block filename) in the thread **opens that file in the in-app IDE-style editor** (FileManager.md); when line/range is known, the editor scrolls to it. See §4.1 (files-touched strip) and §13 (activity transparency, code blocks).
+- **Document review messaging contract (required):** After document generation or revision, chat must post:
+  1. `Opened in editor` indicator,
+  2. Clickable canonical file path,
+  3. Document-pane pointer (`See <Document name> in document pane` or equivalent).
+- **No full-doc-in-chat rule (required):** Chat message bodies for document workflows contain summaries, findings, gaps, and next actions only.
+- **Findings summary in chat (required):** Requirements and Interview Multi-Pass runs must post a findings summary block before final approval.
+
+### Findings summary block (requirements and interview)
+
+Chat renders a compact findings block for review flows:
+- `Scope` (`requirements` or `interview`)
+- `Gaps`
+- `Consistency issues`
+- `Missing information`
+- `Applied changes summary`
+- `Unresolved items`
+
+The findings block is shown before final approval and links to the same artifact surfaced in the page preview section.
 
 ### 9.1 LSP support in Chat (MVP)
 
@@ -337,6 +356,7 @@ There are **two separate ELI5 toggles**; they are independent and must not be co
 - **Bash and commands -- audit trail:** The Assistant must be able to **use bash** (run shell commands and scripts) when not in read-only mode (e.g. in Plan execution or Agent mode). Every **command entered** and **script run** must appear in the thread as part of the audit trail: the command/script text and the outcome (stdout/stderr, or a summary with expandable full output). Execution is subject to permissions (YOLO vs regular approval) and to FileSafe/guards where applicable. Bash blocks in the thread should be **collapsible** (e.g. show "Ran: `cargo test`" or "3 commands" when collapsed; expand to show full command(s) and output). Persist commands and output with the thread so the audit trail is complete.
 - **Files explored in the thread:** For each agent turn (or run), the thread should show **which files the agent explored** (read or opened for context). Display a concise list or summary in the thread -- e.g. "Read: `src/main.rs`, `docs/ARCHITECTURE.md`" -- so the user knows what the agent had access to.
 - **What it changed in the thread:** The thread should show **what the agent changed** -- files edited, created, or deleted, with enough detail to understand the impact (e.g. "Edited: `src/lib.rs` (lines 12-45)", "Created: `tests/foo.rs`"). This can be a summary line per file or an expandable diff/list. Together with "files explored", this gives a clear **audit trail** in the thread: what was read, what was run (bash), and what was changed. All of this (search, bash, files explored, files changed, code block diffs) is part of the thread and **must persist** with the thread per §11.
+- **Document review content policy:** For requirements/interview document workflows, chat audit entries summarize document updates and findings but do not inline full document bodies. Long artifacts are reviewed in File Editor or embedded document pane.
 - **Code block and diff presentation in chat (Cursor-style):** When the agent proposes or applies file changes, present them in the thread as **code block diffs** in a **Cursor-style** layout: (1) **Filename** and **diff count** (e.g. `path/to/file.rs` **+12 −3** for 12 lines added, 3 removed). (2) **Line-by-line diff**: removed lines shown with a **minus** prefix (e.g. red or distinct styling), added lines with a **plus** prefix (e.g. green or distinct styling). (3) Optional summary lines (e.g. "Explored 2 files, 2 searches") for file/search activity. Blocks can be **collapsible** when long (collapse to filename + count; expand to show full diff). Persist full diff content with the thread (§11). Reference: Cursor in-chat diff UI (filename + +N −M, then −/+ lines).
 - **Click to open in editor:** Clicking a **file path** anywhere in the thread (files-touched strip, "Read:" / "Edited:" lines, or a **code block** filename/header) **opens that file in the in-app IDE-style editor** (Plans/FileManager.md). When the target is a code block or diff that has **line or range information**, the editor opens that file and **scrolls to the relevant line or range**. This applies to: filename in the files-touched strip, "Read: path" and "Edited: path" in activity transparency, and the filename/header of inline code blocks and diffs. Single behavior: all such clicks open in the same editor; no separate "preview" vs "edit" for this action.
 - **Thinking/reasoning toggle:** When the normalized stream (Plans/newfeatures.md) provides **thinking** (or reasoning) events, the Assistant chat UI must show them in a **collapsible** area with a **toggle to show/hide**. **Thought streams default to collapsed** because they are typically long; the user can expand when they want to read the reasoning. Same behavior for Interview when thought stream is present. **Thought streams must persist** with the thread (see §11) so they remain visible when scrolling back or re-opening the thread; collapsed/expanded state can be per-entry or a global preference. Align with Plans/newfeatures.md §12, §15.6.

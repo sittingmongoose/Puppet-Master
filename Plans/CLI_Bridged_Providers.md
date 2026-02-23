@@ -27,7 +27,15 @@ This document references only sources that exist in this repo checkout.
 - **Persistent event log (seglog) + event envelope:** `Plans/storage-plan.md` (§2.2)
 - **Tool permissions + tool events (`tool.invoked`, `tool.denied`):** `Plans/Tools.md` (§8.0, §8.2, §10.7)
 - **FileSafe guards and blocking semantics:** `Plans/FileSafe.md`
-- **HITL tier-boundary approvals (when applicable):** `Plans/human-in-the-loop.md`
+- **HITL tier-boundary approvals (optional feature; default OFF for autonomous runs):** `Plans/human-in-the-loop.md`
+- **Determinism + ambiguity resolution:** `Plans/Decision_Policy.md`
+- **Locked provider decisions (anti-drift):** `Plans/Spec_Lock.json`
+- **ContractRef coverage + drift gates:** `Plans/Progression_Gates.md` (`GATE-009`, `GATE-004`)
+- **Evidence bundle schema (machine-checkable verification):** `Plans/evidence.schema.json`
+- **Cross-cutting invariants:** `Plans/Architecture_Invariants.md`
+- **Canonical terms:** `Plans/Glossary.md`
+- **DRY + ContractRef rules:** `Plans/DRY_Rules.md`
+- **Canonical contracts (events/tools/auth/UICommand):** `Plans/Contracts_V0.md`
 
 Code anchors (current behavior / implementation baselines):
 - Platform CLI data SSOT: `puppet-master-rs/src/platforms/platform_specs.rs`
@@ -42,7 +50,8 @@ Code anchors (current behavior / implementation baselines):
 ---
 
 ## Canonical terminology (local index)
-This repo checkout does not include a canonical glossary file; this section is a minimal index used only by this document.
+Canonical terminology is defined in `Plans/Glossary.md`. This section adds only provider-facade terms not currently defined there.
+ContractRef: ContractName:Plans/Glossary.md, PolicyRule:Decision_Policy.md§1
 
 - **Provider facade:** A single logical interface that accepts a request envelope and produces a normalized stream plus a terminal outcome.
 - **Transport:** The concrete mechanism used to communicate with a Provider implementation (e.g., spawn a CLI and parse `stream-json`; or speak ACP). Transport must be invisible to consumers.
@@ -55,24 +64,28 @@ This repo checkout does not include a canonical glossary file; this section is a
 
 ### Contract shape (facade)
 The Provider facade MUST be expressible as a single logical interface, regardless of Transport.
+ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, ContractName:Plans/Architecture_Invariants.md#INV-009, Gate:GATE-009
 
 **Interface requirements (conceptual):**
 - **Input:** `ProviderRequestEnvelope` (defined below).
 - **Output:**
-  - A **stream** of normalized provider events (defined below).
-  - A **terminal outcome** represented by exactly one terminal `done` event.
+   - A **stream** of normalized provider events (defined below).
+   - A **terminal outcome** represented by exactly one terminal `done` event.
 
 **Integration requirement:**
 - Callers MUST NOT branch on transport type (stream-json vs ACP). They only consume the normalized provider stream.
+ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-009, SchemaID:Spec_Lock.json#locked_decisions.providers, Gate:GATE-009
 
 ### Deterministic defaults (autonomous)
 To keep the system autonomous and avoid "ask humans later" drift, Puppet Master MUST adopt the following defaults whenever a caller does not specify a stricter option:
+ContractRef: SchemaID:Spec_Lock.json#locked_decisions.testing_and_verification, PolicyRule:Decision_Policy.md§4, Gate:GATE-009
 
-1. **Cursor supports two transports under one facade:** `stream_json` and `acp`.
-2. **Claude Code transport:** `stream_json`.
-3. **Headless approval fallback:** If tool policy resolution is `ask` but HITL is not active, treat it as `deny` and emit a `tool.denied` event (SSOT: `Plans/Tools.md` §8.2; HITL boundaries: `Plans/human-in-the-loop.md`).
-4. **Cursor incremental output:** If the caller requests incremental text (streaming UI/consumer), enable Cursor partial streaming as implemented in the Cursor runner baseline.
-5. **Large prompt handling:** Preserve "stdin for large prompt" behavior as implemented in the Cursor runner baseline.
+1. **Cursor transports under one facade:** `stream-json` and `acp`.
+2. **Claude Code transport:** `stream-json`.
+3. **Headless approval fallback:** If tool policy resolution is `ask` and HITL is disabled (default for autonomous runs), treat it as `deny` and emit `tool.denied` (persisted) plus a normalized `tool_result(ok=false, error="permission_denied")` before `done`.
+4. **Cursor incremental output:** If the caller requests incremental text, the adapter MUST emit `text_delta` events during the run (not only at the end).
+5. **Large prompt handling (Cursor):** If the fully rendered prompt exceeds 32 KiB (32768) bytes, pass the prompt via stdin (not as a CLI argument) to avoid OS argument-length and quoting drift.
+ContractRef: PolicyRule:Decision_Policy.md§4, SchemaID:Spec_Lock.json#locked_decisions.testing_and_verification, ContractName:Plans/Tools.md§8.2, ContractName:Plans/Contracts_V0.md#EventRecord, CodePath:puppet-master-rs/src/platforms/cursor.rs#LARGE_PROMPT_THRESHOLD
 
 ---
 
@@ -88,13 +101,14 @@ The existing execution request in code is the baseline (`puppet-master-rs/src/ty
 
 ### ProviderRequestEnvelope (V0)
 This envelope is transport-agnostic: a stream-json CLI transport and an ACP transport MUST accept the same envelope.
+ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, PolicyRule:Decision_Policy.md§2, Gate:GATE-009
 
 | Field | Required | Description |
 |---|---:|---|
 | `run_id` | ✅ | Stable run correlation ID (caller-provided). |
 | `thread_id` | ✅ | Stable thread correlation ID for persistence/seglog linkage (see `Plans/storage-plan.md`). |
 | `platform` | ✅ | Platform selector (Cursor or Claude Code). |
-| `transport` | ✅ | `stream_json` or `acp`. |
+| `transport` | ✅ | `stream-json` or `acp`. |
 | `model_id` | ✅ | Model identifier passed through to the underlying CLI (SSOT for model/fallback rules: `platform_specs.rs`). |
 | `mode` | ✅ | `plan` or `execute` (high-level). |
 | `working_directory` | ✅ | CWD/primary workspace directory. |
@@ -104,14 +118,17 @@ This envelope is transport-agnostic: a stream-json CLI transport and an ACP tran
 | `tool_policy` | ✅ | Snapshot of tool permissions keyed by Tool ID (allow/deny/ask semantics SSOT: `Plans/Tools.md`). |
 | `env` | ✅ | Environment variables to set for the provider process. |
 | `timeout` | ✅ | `{ soft_ms, hard_ms }`. |
-| `client_hints` | ⛔️ | Optional opaque map for transport-specific hints that MUST NOT change normalized semantics. |
-| `origin` | ✅ | Identifies request source (e.g., orchestrator vs ACP client). Used for auditing only; behavior MUST NOT branch on origin. |
+| `client_hints` | ⛔️ | Optional opaque map for transport-specific hints; see constraints below. |
+| `origin` | ✅ | Identifies request source (e.g., orchestrator vs ACP client); see constraints below. |
 | `provider_native_ids` | ⛔️ | Optional correlation bundle for provider-native IDs (e.g., conversation id). |
 
 **Normative constraints:**
 - The envelope MUST be sufficient to replay the provider run (modulo model nondeterminism) without referring to UI state.
 - The envelope MUST be stable across transports: ACP requests MUST be convertible into the same envelope.
 - The envelope MUST NOT embed tool schemas; only tool IDs and policy decisions.
+- `client_hints` MUST NOT change normalized semantics (it may only affect transport mechanics).
+- Behavior MUST NOT branch on `origin` (audit-only).
+ContractRef: ContractName:Plans/DRY_Rules.md#2, ContractName:Plans/Tools.md, PolicyRule:Decision_Policy.md§4, Gate:GATE-009
 
 ---
 
@@ -122,19 +139,21 @@ The normalized stream schema in this document is the minimal contract needed for
 
 ### Event envelope
 Each normalized event MUST use this minimal envelope:
+ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-001, ContractName:Plans/DRY_Rules.md#7, Gate:GATE-009
 
 ```json
 {
-  "run_id": "PM-...",
+  "run_id": "PM-2026-02-23-00-00-00-001",
   "seq": 1,
   "type": "text_delta",
-  "payload": { "text": "..." }
+  "payload": { "text": "hello" }
 }
 ```
 
 Rules:
 - `seq` MUST be monotonically increasing per `run_id` starting at 1.
 - Exactly one `done` event MUST be emitted, and it MUST be the final event.
+ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-001, ContractName:Plans/Progression_Gates.md#GATE-009, Gate:GATE-009
 
 ### Event types
 | type | Purpose | Required payload fields |
@@ -154,6 +173,7 @@ Rules:
 - **Monotonic correlation:** every emitted event MUST include `run_id` and, where applicable, a stable `tool_use_id`.
 - **Lossless where possible:** if a transport provides richer information (e.g., token usage), the adapter SHOULD emit it via `usage` events rather than dropping it.
 - **Tolerant parsing:** malformed/partial lines MUST NOT crash the run; they MUST be handled by the Reconciler and surfaced as diagnostics.
+ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-009, ContractName:Plans/Architecture_Invariants.md#INV-001, ContractName:Plans/newfeatures.md, Gate:GATE-009
 
 ---
 
@@ -166,9 +186,11 @@ Rules:
   - Cap max line length.
   - Cap total buffered bytes for "unparsed remainder".
   - Use a ring buffer for stderr diagnostics.
+ContractRef: ContractName:Plans/newfeatures.md, PolicyRule:Decision_Policy.md§2, Gate:GATE-009
 
 ### stream-json ingestion (Cursor + Claude Code)
 When `stream-json` is enabled, stdout MUST be treated as JSONL (one JSON object per line).
+ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, Gate:GATE-009
 
 **Normative ingestion rules:**
 - Parse each JSON object as an untrusted structure.
@@ -184,6 +206,7 @@ ACP transport is an alternate frontend for the same Provider semantics.
 - ACP session lifecycle MUST map into a single `run_id`.
 - ACP notifications MUST map into the same normalized stream event types.
 - Consumers MUST NOT branch on whether the run used ACP or stream-json.
+ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, ContractName:Plans/Architecture_Invariants.md#INV-009, Gate:GATE-009
 
 ---
 
@@ -193,19 +216,26 @@ ACP transport is an alternate frontend for the same Provider semantics.
 Cursor MUST support both transports:
 1. **stream-json transport**: spawn Cursor CLI and parse JSONL stdout.
 2. **ACP transport**: expose an ACP agent endpoint whose internal execution engine is the same Cursor stream-json path.
+ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, ContractName:Plans/Architecture_Invariants.md#INV-009, Gate:GATE-009
 
 Consumers MUST NOT branch on transport type.
+ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-009, Gate:GATE-009
 
 ### stream-json transport requirements
 **CLI resolution**
-- Use the Cursor runner's CLI resolution behavior (SSOT: `platform_specs.rs`).
+- CLI resolution MUST use `platform_specs.rs` as the single source of truth for binary names and invocation flags.
+ContractRef: ContractName:Plans/DRY_Rules.md#2, SchemaID:Spec_Lock.json#locked_decisions.providers, Gate:GATE-009
 
 **Invocation shape (normative)**
 - Output format MUST be `stream-json` for event-stream consumers.
-- When incremental text is required, enable Cursor partial streaming as implemented in the Cursor runner baseline.
+ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, Gate:GATE-009
+
+- When incremental text is required, the adapter MUST emit `text_delta` events during the run (not only at the end).
+ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-009, Gate:GATE-009
 
 **Large prompt handling**
-- Preserve the existing "stdin for large prompt" behavior signaled in the Cursor runner baseline.
+- If the fully rendered prompt exceeds 32 KiB (32768) bytes, the adapter MUST pass the prompt via stdin (not as a CLI argument).
+ContractRef: CodePath:puppet-master-rs/src/platforms/cursor.rs#LARGE_PROMPT_THRESHOLD, Gate:GATE-009
 
 **Correlation**
 - If Cursor-native correlation IDs are available, attach them to `provider_native_ids` and copy into emitted diagnostics (do not invent new normalized fields).
@@ -219,6 +249,7 @@ ACP transport is an alternate frontend for the same Provider.
   - convert each prompt into a `ProviderRequestEnvelope` (same contract),
   - execute via the Cursor stream-json transport internally,
   - forward normalized events back to the ACP client as ACP session updates.
+ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, ContractName:Plans/Architecture_Invariants.md#INV-009, Gate:GATE-009
 
 ---
 
@@ -229,36 +260,41 @@ Claude Code MUST support:
 - **stream-json transport** (CLI spawn)
 - **hooks ingestion** (optional out-of-band observations)
 - **transcript parsing** (optional JSONL reconciliation for usage/tool events)
+ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, PolicyRule:Decision_Policy.md§2, Gate:GATE-009
 
 ### stream-json transport requirements
 **CLI resolution**
-- Use the Claude Code runner's CLI resolution behavior (SSOT: `platform_specs.rs`).
+- CLI resolution MUST use `platform_specs.rs` as the single source of truth for binary names and invocation flags.
+ContractRef: ContractName:Plans/DRY_Rules.md#2, Gate:GATE-009
 
 **Invocation shape (normative)**
-- Baseline flags MUST preserve the semantics in the Claude Code runner baseline:
-  - `--no-session-persistence`
-  - `--permission-mode` derived from `mode` (plan vs execute)
-  - `--output-format stream-json`
-  - working directory + allowed directories aligned with `platform_specs.rs`.
+- The invocation MUST include `--no-session-persistence` and `--output-format stream-json`.
+- If `mode=plan`, `--permission-mode` MUST be `plan` (no tool execution side effects).
+- If `mode=execute`, `--permission-mode` MUST NOT require a human approval mid-run; host-side tool policy remains authoritative (SSOT: `Plans/Tools.md`).
+- Working directory and allowed directories MUST be set from `working_directory`/`workspace_roots` without implicit expansion.
+ContractRef: PolicyRule:Decision_Policy.md§4, ContractName:Plans/Tools.md, ContractName:Plans/DRY_Rules.md#7, Gate:GATE-009
 
 ### Hooks ingestion requirements
 **Normative requirements**
 - Puppet Master MUST provide a stable hook receiver command (a CLI entrypoint) that can accept hook payload JSON via stdin.
 - Hook payloads MUST be ingested as observation sources for the Reconciler, not as a separate UI-only channel.
-- The Provider MUST tolerate missing hooks (hooks are optional). If hooks are absent, transcript parsing MUST be used when possible.
+- The Provider MUST tolerate missing hooks (hooks are optional).
+- If hook payloads are absent but a transcript path is available, transcript parsing MUST be used.
+ContractRef: PolicyRule:Decision_Policy.md§2, Gate:GATE-009
 
 ### Transcript parsing requirements
 The transcript is a JSONL file when available.
 
 **Normative parsing behavior (strategy)**
 - Parse transcript JSONL lines and extract when present:
-  - model id
-  - token usage
-  - tool calls (`tool_use`-like objects)
+   - model id
+   - token usage
+   - tool calls (`tool_use`-like objects)
 - Transcript-derived tool calls and token usage MUST be reconciled against stream-json and hook-derived data:
-  - If stream-json omitted usage, transcript is authoritative.
-  - If stream-json omitted tool calls, transcript is authoritative.
-  - If stream-json provided tool calls but lacks arguments/results, hooks/transcript MAY enrich.
+   - If stream-json omitted usage, transcript is authoritative.
+   - If stream-json omitted tool calls, transcript is authoritative.
+   - If stream-json provided tool calls but lacks arguments/results, hooks/transcript MAY enrich.
+ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-001, Gate:GATE-009
 
 ---
 
@@ -270,6 +306,7 @@ The transcript is a JSONL file when available.
   - a Tool ID or stable tool name,
   - timestamps for start/end when available,
   - a status lifecycle mapped into `tool_use`/`tool_result`.
+ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-001, ContractName:Plans/Tools.md, Gate:GATE-009
 
 ### Reconciler responsibilities (normative)
 The Reconciler is a logical component that merges multi-source observations into a single normalized stream.
@@ -288,13 +325,14 @@ The Reconciler is a logical component that merges multi-source observations into
    - Strategy: if a tool result appears without a captured start event, synthesize a `tool_use` immediately before the `tool_result` (arguments = null).
 
 3. **Missing tool result**
-   - Strategy: on run completion, any open tool call MUST be closed by synthesizing `tool_result(ok=false, error="missing_tool_result")` before `done`.
+    - Strategy: on run completion, any open tool call MUST be closed by synthesizing `tool_result(ok=false, error="missing_tool_result")` before `done`.
 
 4. **Duplicate emissions (retries / replays)**
    - Strategy: idempotency by `(run_id, tool_use_id, phase)`; duplicate identical events are dropped; conflicting duplicates are emitted as `diagnostic(category="conflicting_duplicate")`.
 
 5. **Mixed-mode output**
-   - Strategy: non-JSON lines under stream-json are treated as stderr-equivalent observations and mapped into `diagnostic(category="mixed_mode_output")`.
+    - Strategy: non-JSON lines under stream-json are treated as stderr-equivalent observations and mapped into `diagnostic(category="mixed_mode_output")`.
+ContractRef: ContractName:Plans/newfeatures.md, ContractName:Plans/Architecture_Invariants.md#INV-001, Gate:GATE-009
 
 ---
 
@@ -302,6 +340,7 @@ The Reconciler is a logical component that merges multi-source observations into
 
 ### State model (normative)
 Providers MUST expose an auth/availability state machine for local CLIs. This is not UI logic; it is a normalized signal for consumers.
+ContractRef: ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/Architecture_Invariants.md#INV-002, Gate:GATE-009
 
 **States (minimum set):**
 - `unknown` (initial)
@@ -313,17 +352,17 @@ Providers MUST expose an auth/availability state machine for local CLIs. This is
 
 ### Detection signals (normative)
 Providers MUST use a layered approach:
+ContractRef: PolicyRule:Decision_Policy.md§2, Gate:GATE-009
 
 1. **Preflight auth check (authoritative when available)**
-   - Cursor: use the existing auth status checker baseline.
-   - Claude Code: use the existing auth status checker baseline.
+   - Cursor and Claude Code: the adapter MUST run a preflight auth check before spawning the CLI when the provider supports it (SSOT implementation anchor: `puppet-master-rs/src/platforms/auth_status.rs`).
 
 2. **In-run error classification**
-   - Use the existing error categorization baseline over stderr + emitted error payloads to classify rate limit vs auth vs outage.
+    - Use the existing error categorization baseline over stderr + emitted error payloads to classify rate limit vs auth vs outage.
 
 3. **Exit-code + known CLI UX strings**
-   - If the CLI exits non-zero and output contains known "login required" signals, treat as `logged_out`.
-   - If output indicates token expired / refresh needed, treat as `expired_or_invalid`.
+    - If the CLI exits non-zero and output contains known "login required" signals, treat as `logged_out`.
+    - If output indicates token expired / refresh needed, treat as `expired_or_invalid`.
 
 ### Transition rules (minimum)
 - `unknown` → `authenticated` if preflight says authenticated.
@@ -335,6 +374,7 @@ Providers MUST use a layered approach:
 **Output requirement**
 - Auth state changes MUST be emitted as `auth_state` events.
 - If the run must abort due to auth/rate limit, the terminal `done` event MUST include `stop_reason` set to `auth_required`, `rate_limited`, or `provider_outage_or_network`.
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Architecture_Invariants.md#INV-002, Gate:GATE-009
 
 ---
 
@@ -415,6 +455,14 @@ Acceptance criteria are written to be testable by an agent/verifier that can run
 - `Plans/Tools.md`
 - `Plans/FileSafe.md`
 - `Plans/human-in-the-loop.md`
+- `Plans/Decision_Policy.md`
+- `Plans/Spec_Lock.json`
+- `Plans/Progression_Gates.md`
+- `Plans/evidence.schema.json`
+- `Plans/Architecture_Invariants.md`
+- `Plans/Glossary.md`
+- `Plans/DRY_Rules.md`
+- `Plans/Contracts_V0.md`
 - `puppet-master-rs/src/platforms/platform_specs.rs`
 - `puppet-master-rs/src/platforms/cursor.rs`
 - `puppet-master-rs/src/platforms/claude.rs`

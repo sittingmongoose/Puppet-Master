@@ -72,7 +72,7 @@ This document exists to avoid losing features when writing rewrite implementatio
 
 ---
 
-### 3. GUI layout and shell (Composergui6 / gui-layout-architecture)
+### 3. GUI layout and shell (Composergui6 / Plans/FinalGUISpec.md)
 
 **Master layout.** IDE shell: title bar (28px), activity bar (48px), primary content (flex), side panels (left and right, 240-480px resizable), bottom panel (120-300px collapsible), status bar (24px). Retro-futuristic: paper texture, pixel grid, hard shadows, Orbitron/Rajdhani, neon accents.
 

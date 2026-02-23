@@ -40,6 +40,11 @@ This file uses primitive names as **routing labels** only; detailed schemas belo
 - `Primitive:UICommand` -- stable UI command IDs (see `Plans/Contracts_V0.md#UICommand` and `Plans/UI_Command_Catalog.md`).
 - `Primitive:SessionStore` -- persistent store boundaries (see `Plans/storage-plan.md`).
 - `Primitive:PatchPipeline` -- Git + PR workflows (see `Plans/WorktreeGitImprovement.md` and `Plans/GitHub_API_Auth_and_Flows.md`).
+- `Primitive:DocumentPane` -- embedded document navigation and editing surface contract (see `Plans/FinalGUISpec.md` and `Plans/FileManager.md`).
+- `Primitive:DocumentReviewSurface` -- workflow-level document review routing and tri-location pointers (see `Plans/chain-wizard-flexibility.md`, `Plans/interview-subagent-integration.md`, and `Plans/assistant-chat-design.md`).
+- `Primitive:ReviewFindingsSummary` -- structured Multi-Pass findings summary and rendering contract (see `Plans/chain-wizard-flexibility.md`, `Plans/interview-subagent-integration.md`, and `Plans/FinalGUISpec.md`).
+- `Primitive:ReviewApprovalGate` -- final approval gate contract for revised document bundles (see `Plans/chain-wizard-flexibility.md`, `Plans/interview-subagent-integration.md`, and `Plans/Project_Output_Artifacts.md`).
+- `Primitive:DocumentCheckpoint` -- checkpoint and restore contracts for document revisions (see `Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/FileManager.md`, and `Plans/RECOVERY_FIX_QUEUE.md`).
 - `ContractName:Contracts_V0.md#AuthState` -- auth state + events.
 
 ContractRef: ContractName:Contracts_V0.md, SchemaID:Spec_Lock.json
@@ -75,7 +80,7 @@ ContractRef: Primitive:UICommand, ContractName:Contracts_V0.md#UICommand
 ---
 
 ### 3.3 Provider
-**Owner:** Provider domain (CLI runners, capability probing, normalized stream).
+**Owner:** Provider domain (Provider executors, capability probing, normalized stream).
 
 Rules:
 - Provider-specific discovery/auth/model logic MUST live in Provider-owned modules and contracts.
@@ -116,6 +121,66 @@ Rules:
 - Tokens MUST NOT be persisted in `AuthState`; tokens live only in the OS credential store.
 
 ContractRef: ContractName:Contracts_V0.md#AuthState, Plans/Architecture_Invariants.md#INV-002
+
+---
+
+### 3.7 DocumentPane
+**Owner:** GUI interaction contract in `Plans/FinalGUISpec.md`, editor/buffer contract in `Plans/FileManager.md`.
+
+Rules:
+- The embedded document pane is a dedicated GUI primitive, separate from chat and separate from the agent activity pane.
+- Document-pane edits MUST target the same file buffer/history contract as the File Editor.
+- Plan graph appears in the pane as a read-only rendered view, not raw JSON editing.
+
+ContractRef: Primitive:DocumentPane, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md
+
+---
+
+### 3.8 DocumentReviewSurface
+**Owner:** Workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; message contract in `Plans/assistant-chat-design.md`.
+
+Rules:
+- Full document bodies MUST NOT be rendered in chat.
+- Review guidance MUST use the same tri-location pattern: editor open, clickable file path, and embedded document pane entry.
+- Wizard and Interview pages MUST expose preview-surface review summaries before final approval.
+
+ContractRef: Primitive:DocumentReviewSurface, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/assistant-chat-design.md
+
+---
+
+### 3.9 ReviewFindingsSummary
+**Owner:** Workflow-level findings semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; rendering placement in `Plans/FinalGUISpec.md`.
+
+Rules:
+- Multi-Pass outputs MUST include findings (gaps, consistency issues, missing information), not only revised content.
+- Findings summary MUST be shown in chat and in the page preview section before approval.
+- Findings summary schema and persistence MUST align with storage contracts.
+
+ContractRef: Primitive:ReviewFindingsSummary, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+---
+
+### 3.10 ReviewApprovalGate
+**Owner:** Workflow approval semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; canonical artifact expression in `Plans/Project_Output_Artifacts.md`.
+
+Rules:
+- Revised document handoff MUST pass through one final approval gate per review run.
+- Preconditions MUST include findings-summary visibility before decision capture.
+- Approval decision artifacts MUST be restorable in recovery flows.
+
+ContractRef: Primitive:ReviewApprovalGate, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Project_Output_Artifacts.md
+
+---
+
+### 3.11 DocumentCheckpoint
+**Owner:** Storage contract in `Plans/storage-plan.md` and artifact taxonomy in `Plans/Project_Output_Artifacts.md`; UI entry points in `Plans/FileManager.md` and `Plans/FinalGUISpec.md`.
+
+Rules:
+- Document checkpoints are coarse restore points (for example before Multi-Pass, after user edit), not per-keystroke undo history.
+- Checkpoints MUST be persisted so recovery can restore document state and approval stage.
+- Restore actions from the document pane MUST use the same open-file/buffer refresh pipeline as File Editor.
+
+ContractRef: Primitive:DocumentCheckpoint, ContractName:Plans/storage-plan.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
 
 ---
 

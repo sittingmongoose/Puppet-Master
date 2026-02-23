@@ -1,7 +1,7 @@
-# Puppet Master -- Heads-up: Major rewrite is coming (tie-in memo)
+# Puppet Master Rewrite Tie-In Contract (Active)
 
-> This document exists to keep the rest of `Plans/` consistent while the rewrite lands.
-> It records locked architectural decisions and the deltas they imply for existing plans.
+> This document exists to keep the rest of `Plans/` consistent as the rewrite is implemented.
+> It records locked architectural decisions and the required implementation contracts for existing plans.
 > For navigation across all plan docs, see `Plans/00-plans-index.md`.
 
 ---
@@ -25,7 +25,7 @@ This project is moving to a single, deterministic "agent loop" architecture wher
 ### Provider + CLI integrations (what's being hardened)
 - **Claude Code CLI** is integrated as a Provider using the official CLI's machine-readable streaming mode (`--output-format stream-json`, print mode `-p`, optional partials via `--include-partial-messages`) and uses **Claude Code Hooks** (e.g., `PreToolUse`, `PostToolUse`) to gate tools and enrich telemetry. [page:3]
 - **Cursor Agent CLI** is integrated as a Provider using `--print --output-format stream-json` (NDJSON stream) and internal parsing into the unified event model. [web:157]
-- **ACP note (important):** Cursor CLI is not ACP-native as of a Cursor staff reply (2026‑01‑04); Cursor CLI supports MCPs and may add ACP later, so if ACP is needed it's via an adapter layer on our side (not because Cursor suddenly "speaks ACP"). [web:167]
+- **ACP note (important):** Cursor CLI is not ACP-native as of a Cursor staff reply (2026-01-04); Cursor CLI supports MCPs and may add ACP later, so if ACP is needed it's via an adapter layer on our side (not because Cursor suddenly "speaks ACP"). [web:167]
 
 ### Gemini auth decision (locked)
 - Gemini provider defaults to **API key** auth in the UI. This is an explicit allowed exception to the broader "subscription auth only / avoid API keys" guidance because Gemini's API key path can be used to access the user's Gemini subscription. OAuth remains optional as a stricter-access fallback. [page:4]
@@ -33,18 +33,20 @@ This project is moving to a single, deterministic "agent loop" architecture wher
 ### Future mobile/web clients (impacts architecture now)
 - Mobile/web clients will be "thin" and connect back to the desktop app (desktop acts like a local server), so the stable boundary is the unified event model + streaming API (runs/events/artifacts) and command API (start run, approve tool, cancel run), rather than direct access to providers/tools on mobile/web.
 
-### What feature agents should do right now
-- Avoid coupling new features to the current UI/storage codepaths; target the upcoming stable interfaces: **unified event model**, **provider trait**, **tool registry**, and **event-sourced session store** (seglog → projections). [web:69][web:88][web:90]
-- Assume big refactors will land: UI widgets/layout systems, session persistence, search, analytics dashboards, and provider wiring are all being reworked around the decisions above. [web:149][web:82][web:88][web:90]
+### Implementation directives (required now)
+- Implement features against the locked interfaces: **unified event model**, **Provider trait**, **tool registry**, and **event-sourced session store** (seglog -> projections). [web:69][web:88][web:90]
+- UI updates must flow through the Slint event loop boundary and must not rely on delayed or ad-hoc polling paths.
+- New plan text and implementation notes must use **Provider** terminology for execution integration; do not introduce new platform-runner phrasing in updated sections.
+- Persistence and search paths must use seglog/redb/Tantivy contracts directly; do not add SQLite-based alternatives in edited sections.
 
 ---
 
 ## Impacts on existing Plans (deltas to keep consistency)
 
-### Immediate contradictions to resolve in Plans (so requirements don't fight each other)
+### Immediate contradictions to resolve in Plans (so requirements do not fight each other)
 - **UI tech:** any plan text that assumes **Iced** UI implementation should be treated as *UX requirements only*, not a widget/library implementation commitment
 - **Storage:** any plan that proposes **SQLite** for run/session/history storage needs to be reframed as **event-sourced** storage with seglog/redb/Tantivy projections
-- **Provider abstraction:** platform-specific "runner" terminology should converge on **Provider** + unified event model, especially for streaming output and tool gating
+- **Provider abstraction:** platform-specific execution terminology in touched sections must use **Provider** + unified event model, especially for streaming output and tool gating
 - **Gemini auth:** existing "subscription-only / no API keys" guidance must explicitly allow a Gemini exception: "no API keys **except Gemini** (Gemini API key can represent subscription access)"
 
 

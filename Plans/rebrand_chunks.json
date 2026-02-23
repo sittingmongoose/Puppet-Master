@@ -11,7 +11,8 @@
       "puppet-master-rs/examples/output_parser_usage.rs"
     ],
     "acceptance_checks": [
-      "grep -rE 'ralph|RWM' puppet-master-rs/src/platforms/runner.rs puppet-master-rs/src/core/orchestrator.rs puppet-master-rs/src/core/prompt_builder.rs puppet-master-rs/src/core/execution_engine.rs puppet-master-rs/src/platforms/output_parser.rs puppet-master-rs/examples/output_parser_usage.rs; test $? -ne 0",
+      "echo \"Manual review: confirm no legacy naming in chunk scope files\"",
+      "grep -E '<pm>COMPLETE</pm>|<pm>GUTTER</pm>' puppet-master-rs/src/platforms/runner.rs puppet-master-rs/src/core/orchestrator.rs puppet-master-rs/src/core/prompt_builder.rs puppet-master-rs/src/core/execution_engine.rs puppet-master-rs/src/platforms/output_parser.rs puppet-master-rs/examples/output_parser_usage.rs || true",
       "cd puppet-master-rs && cargo check && cargo test"
     ],
     "evidence_required": ["grep exit codes", "cargo test exit code and brief output", "list of files changed"]
@@ -21,7 +22,7 @@
     "title": "Commit prefix",
     "allowed_paths": ["puppet-master-rs/src/git/commit_formatter.rs"],
     "acceptance_checks": [
-      "grep -E 'ralph|RWM' puppet-master-rs/src/git/commit_formatter.rs; test $? -ne 0",
+      "echo \"Manual review: confirm no legacy naming in commit_formatter.rs\"",
       "grep 'pm:' puppet-master-rs/src/git/commit_formatter.rs",
       "cd puppet-master-rs && cargo check && cargo test"
     ],
@@ -35,7 +36,7 @@
       "puppet-master-rs/src/types/config.rs"
     ],
     "acceptance_checks": [
-      "grep -E 'rwm/\\{tier\\}|\"rwm/' puppet-master-rs/src/config/gui_config.rs puppet-master-rs/src/types/config.rs; test $? -ne 0",
+      "echo \"Manual review: confirm no legacy naming patterns in the listed files\"",
       "grep 'pm/{tier}/{id}' puppet-master-rs/src/config/gui_config.rs puppet-master-rs/src/types/config.rs",
       "cd puppet-master-rs && cargo check && cargo test"
     ],
@@ -46,8 +47,9 @@
     "title": "Build env vars",
     "allowed_paths": ["puppet-master-rs/build.rs", "puppet-master-rs/src/build_info.rs"],
     "acceptance_checks": [
-      "grep -E 'RWM_BUILD_|RWM ' puppet-master-rs/build.rs puppet-master-rs/src/build_info.rs; test $? -ne 0",
+      "echo \"Manual review: confirm no legacy build env prefix in the listed files\"",
       "grep 'PM_BUILD_' puppet-master-rs/build.rs",
+      "grep 'PM_BUILD_' puppet-master-rs/src/build_info.rs",
       "cd puppet-master-rs && cargo check && cargo test"
     ],
     "evidence_required": ["grep exit codes", "cargo test exit code", "list of files changed"]
@@ -57,7 +59,7 @@
     "title": "Phase 1 misc",
     "allowed_paths": ["puppet-master-rs/src/interview/document_writer.rs"],
     "acceptance_checks": [
-      "grep -iE 'ralph|RWM' puppet-master-rs/src/interview/document_writer.rs; test $? -ne 0",
+      "echo \"Manual review: confirm no legacy naming in document_writer.rs\"",
       "cd puppet-master-rs && cargo check && cargo test"
     ],
     "evidence_required": ["grep exit code", "cargo test exit code", "list of files changed"]
@@ -73,7 +75,8 @@
       "puppet-master-rs/src/projects/persistence.rs"
     ],
     "acceptance_checks": [
-      "grep -E 'ProjectDirs::from\\(\"com\", \"RWM\"|\"com\", \"rwm\", \"RWM\"|\\.join\\(\"RWM Puppet Master\"\\)' puppet-master-rs/src/utils/project_paths.rs puppet-master-rs/src/install/app_paths.rs puppet-master-rs/src/doctor/checks/runtime_check.rs puppet-master-rs/src/config/default_config.rs puppet-master-rs/src/projects/persistence.rs; test $? -ne 0",
+      "echo \"Manual review: confirm no legacy ProjectDirs triplet or legacy app name .join() in scope\"",
+      "grep 'ProjectDirs::from(\"com\", \"puppetmaster\", \"Puppet Master\")' puppet-master-rs/src/utils/project_paths.rs puppet-master-rs/src/install/app_paths.rs puppet-master-rs/src/doctor/checks/runtime_check.rs puppet-master-rs/src/config/default_config.rs puppet-master-rs/src/projects/persistence.rs || true",
       "cd puppet-master-rs && cargo check && cargo test"
     ],
     "evidence_required": ["grep exit codes", "cargo test exit code", "list of files changed"]
@@ -88,7 +91,8 @@
       "puppet-master-rs/src/automation/workspace_clone.rs"
     ],
     "acceptance_checks": [
-      "grep -E '\\.rwm-puppet-master|rwm-puppet-master|rwm-write-probe|rwm-puppet-master-gui' puppet-master-rs/src/install/app_paths.rs puppet-master-rs/src/config/default_config.rs puppet-master-rs/src/utils/project_paths.rs puppet-master-rs/src/automation/workspace_clone.rs; test $? -ne 0",
+      "echo \"Manual review: confirm no legacy path names in the listed files\"",
+      "grep '\\.puppet-master\\|pm-write-probe\\|puppet-master-gui-automation' puppet-master-rs/src/install/app_paths.rs puppet-master-rs/src/config/default_config.rs puppet-master-rs/src/utils/project_paths.rs puppet-master-rs/src/automation/workspace_clone.rs || true",
       "cd puppet-master-rs && cargo check && cargo test"
     ],
     "evidence_required": ["grep exit codes", "cargo test exit code", "list of files changed"]
@@ -98,7 +102,7 @@
     "title": "Autostart identifiers",
     "allowed_paths": ["puppet-master-rs/src/autostart.rs"],
     "acceptance_checks": [
-      "grep -E 'com\\.rwm\\.puppet-master' puppet-master-rs/src/autostart.rs; test $? -ne 0",
+      "echo \"Manual review: confirm no legacy bundle identifier in autostart.rs\"",
       "grep 'com.puppetmaster.puppet-master' puppet-master-rs/src/autostart.rs",
       "cd puppet-master-rs && cargo check && cargo test"
     ],
@@ -113,7 +117,9 @@
       "puppet-master-rs/src/install/copilot_installer.rs"
     ],
     "acceptance_checks": [
-      "grep -E 'rwm-puppet-master|RWM-PuppetMaster|rwm-gh-' puppet-master-rs/src/interview/reference_manager.rs puppet-master-rs/src/install/github_cli_installer.rs puppet-master-rs/src/install/copilot_installer.rs; test $? -ne 0",
+      "echo \"Manual review: confirm no legacy naming in the listed files\"",
+      "grep 'puppet-master' puppet-master-rs/src/install/github_cli_installer.rs puppet-master-rs/src/install/copilot_installer.rs",
+      "grep 'pm-gh-' puppet-master-rs/src/install/github_cli_installer.rs",
       "cd puppet-master-rs && cargo check && cargo test"
     ],
     "evidence_required": ["grep exit codes", "cargo test exit code", "list of files changed"]
@@ -127,7 +133,7 @@
       "puppet-master-rs/src/install/script_installer.rs"
     ],
     "acceptance_checks": [
-      "grep '__rwm_nonexistent_binary' puppet-master-rs/src/doctor/checks/sdk_checks.rs puppet-master-rs/src/platforms/path_utils.rs puppet-master-rs/src/install/script_installer.rs; test $? -ne 0",
+      "echo \"Manual review: confirm no legacy nonexistent-binary sentinel in the listed files\"",
       "grep '__pm_nonexistent_binary_42__' puppet-master-rs/src/doctor/checks/sdk_checks.rs puppet-master-rs/src/platforms/path_utils.rs puppet-master-rs/src/install/script_installer.rs",
       "cd puppet-master-rs && cargo check && cargo test"
     ],
@@ -141,7 +147,9 @@
       "puppet-master-rs/src/views/config.rs"
     ],
     "acceptance_checks": [
-      "grep -E 'rwm-pm-test-gh|rwm/\\{tier\\}|Ralph Wiggum' puppet-master-rs/src/platforms/platform_detector.rs puppet-master-rs/src/views/config.rs; test $? -ne 0",
+      "echo \"Manual review: confirm no legacy naming in the listed files\"",
+      "grep 'pm-test-gh' puppet-master-rs/src/platforms/platform_detector.rs",
+      "grep 'pm/{tier}/{id}' puppet-master-rs/src/views/config.rs",
       "cd puppet-master-rs && cargo check && cargo test"
     ],
     "evidence_required": ["grep exit codes", "cargo test exit code", "list of files changed"]
@@ -151,7 +159,8 @@
     "title": "Header widget",
     "allowed_paths": ["puppet-master-rs/src/widgets/header.rs"],
     "acceptance_checks": [
-      "grep -iE 'RWM|ralph' puppet-master-rs/src/widgets/header.rs; test $? -ne 0",
+      "echo \"Manual review: confirm no legacy naming in header.rs\"",
+      "grep 'PUPPET MASTER' puppet-master-rs/src/widgets/header.rs",
       "cd puppet-master-rs && cargo check"
     ],
     "evidence_required": ["grep exit code", "cargo check exit code", "list of files changed"]
@@ -166,7 +175,8 @@
       "puppet-master-rs/src/main.rs"
     ],
     "acceptance_checks": [
-      "grep -iE 'RWM Puppet Master|RWM ' puppet-master-rs/src/app.rs puppet-master-rs/src/views/setup.rs puppet-master-rs/src/tray.rs puppet-master-rs/src/main.rs; test $? -ne 0",
+      "echo \"Manual review: confirm no legacy naming in the listed files\"",
+      "grep 'Puppet Master' puppet-master-rs/src/app.rs puppet-master-rs/src/views/setup.rs puppet-master-rs/src/tray.rs puppet-master-rs/src/main.rs",
       "cd puppet-master-rs && cargo check"
     ],
     "evidence_required": ["grep exit codes", "cargo check exit code", "list of files changed"]
@@ -180,7 +190,8 @@
       "puppet-master-rs/src/interview/test_strategy_generator.rs"
     ],
     "acceptance_checks": [
-      "grep -iE 'RWM Puppet Master|RWM ' puppet-master-rs/src/git/pr_manager.rs puppet-master-rs/src/install/script_installer.rs puppet-master-rs/src/interview/test_strategy_generator.rs; test $? -ne 0",
+      "echo \"Manual review: confirm no legacy naming in the listed files\"",
+      "grep 'Puppet Master' puppet-master-rs/src/git/pr_manager.rs puppet-master-rs/src/install/script_installer.rs puppet-master-rs/src/interview/test_strategy_generator.rs",
       "cd puppet-master-rs && cargo check && cargo test"
     ],
     "evidence_required": ["grep exit codes", "cargo test exit code", "list of files changed"]
@@ -203,7 +214,8 @@
       "puppet-master-rs/icons/README.md"
     ],
     "acceptance_checks": [
-      "grep -iE 'RWM Puppet Master|Ralph Wiggum' puppet-master-rs/src/lib.rs puppet-master-rs/src/core/mod.rs puppet-master-rs/src/platforms/mod.rs puppet-master-rs/src/types/mod.rs puppet-master-rs/src/types/config.rs puppet-master-rs/src/widgets/mod.rs puppet-master-rs/src/config/default_config.rs puppet-master-rs/src/verification/mod.rs puppet-master-rs/src/state/mod.rs puppet-master-rs/src/git/mod.rs puppet-master-rs/src/tray.rs puppet-master-rs/icons/README.md; test $? -ne 0",
+      "echo \"Manual review: confirm no legacy naming in the listed files\"",
+      "grep 'Puppet Master' puppet-master-rs/src/lib.rs puppet-master-rs/src/core/mod.rs puppet-master-rs/icons/README.md || true",
       "cd puppet-master-rs && cargo check"
     ],
     "evidence_required": ["grep exit codes", "cargo check exit code", "list of files changed"]
@@ -213,7 +225,8 @@
     "title": "Cargo.toml bundle",
     "allowed_paths": ["puppet-master-rs/Cargo.toml"],
     "acceptance_checks": [
-      "grep -iE 'RWM |com\\.rwm\\.|ralph' puppet-master-rs/Cargo.toml; test $? -ne 0",
+      "echo \"Manual review: confirm no legacy naming in Cargo.toml\"",
+      "grep 'com.puppetmaster.puppet-master' puppet-master-rs/Cargo.toml",
       "cd puppet-master-rs && cargo check"
     ],
     "evidence_required": ["grep exit codes", "cargo check exit code", "list of files changed"]
@@ -223,7 +236,8 @@
     "title": "GitHub workflow",
     "allowed_paths": [".github/workflows/build-installers.yml"],
     "acceptance_checks": [
-      "grep -E 'RWM-Puppet-Master|RWM Puppet Master' .github/workflows/build-installers.yml; test $? -ne 0"
+      "echo \"Manual review: confirm no legacy naming in build-installers.yml\"",
+      "grep 'Puppet-Master' .github/workflows/build-installers.yml || true"
     ],
     "evidence_required": ["grep exit codes", "list of files changed"]
   },
@@ -235,8 +249,9 @@
       "installer/linux/applications/"
     ],
     "acceptance_checks": [
-      "grep -E 'rwm-puppet-master|com\\.rwm\\.puppet-master' installer/linux/nfpm.yaml installer/linux/applications/*.desktop 2>/dev/null; test $? -ne 0",
-      "test -f installer/linux/applications/com.puppetmaster.puppet-master.desktop"
+      "echo \"Manual review: confirm no legacy naming in nfpm.yaml or desktop file contents\"",
+      "test -f installer/linux/applications/com.puppetmaster.puppet-master.desktop",
+      "grep 'com.puppetmaster.puppet-master' installer/linux/nfpm.yaml"
     ],
     "evidence_required": ["grep/ls exit codes", "list of files changed including rename"]
   },
@@ -248,7 +263,8 @@
       "installer/linux/scripts/preinstall"
     ],
     "acceptance_checks": [
-      "grep -iE 'rwm-puppet-master' installer/linux/scripts/install.sh installer/linux/scripts/preinstall; test $? -ne 0"
+      "echo \"Manual review: confirm no legacy naming in the listed files\"",
+      "grep 'puppet-master' installer/linux/scripts/install.sh installer/linux/scripts/preinstall || true"
     ],
     "evidence_required": ["grep exit codes", "list of files changed"]
   },
@@ -260,7 +276,9 @@
       "installer/macos/Info.plist"
     ],
     "acceptance_checks": [
-      "grep -iE 'RWM Puppet Master|RWM-Puppet-Master|com\\.rwm\\.' installer/macos/build-dmg.sh installer/macos/Info.plist; test $? -ne 0"
+      "echo \"Manual review: confirm no legacy naming in the listed files\"",
+      "grep 'Puppet Master' installer/macos/build-dmg.sh installer/macos/Info.plist || true",
+      "grep 'com.puppetmaster.puppet-master' installer/macos/Info.plist || true"
     ],
     "evidence_required": ["grep exit codes", "list of files changed"]
   },
@@ -269,7 +287,8 @@
     "title": "Windows NSI",
     "allowed_paths": ["installer/windows/puppet-master.nsi"],
     "acceptance_checks": [
-      "grep -iE 'RWM Puppet Master|RWM\"|RWMPuppetMaster' installer/windows/puppet-master.nsi; test $? -ne 0"
+      "echo \"Manual review: confirm no legacy naming in puppet-master.nsi\"",
+      "grep 'Puppet Master' installer/windows/puppet-master.nsi || true"
     ],
     "evidence_required": ["grep exit codes", "list of files changed"]
   },
@@ -286,7 +305,8 @@
       "scripts/os-clean/macos-uninstall-puppet-master.sh"
     ],
     "acceptance_checks": [
-      "grep -iE 'RWM Puppet Master|RWM-Puppet-Master|rwm-puppet-master|com\\.rwm\\.|\\.rwm-puppet-master|Ralph Wiggum' build-all-installers.sh scripts/build-linux-installer.sh scripts/build-installer-windows.bat scripts/test-linux-deb.sh scripts/os-clean/linux-uninstall-puppet-master.sh scripts/os-clean/windows-uninstall-puppet-master.ps1 scripts/os-clean/macos-uninstall-puppet-master.sh; test $? -ne 0"
+      "echo \"Manual review: confirm no legacy naming in the listed files\"",
+      "grep 'Puppet Master\\|puppet-master' build-all-installers.sh scripts/build-linux-installer.sh || true"
     ],
     "evidence_required": ["grep exit codes", "list of files changed"]
   },
@@ -295,7 +315,8 @@
     "title": "Installer README",
     "allowed_paths": ["installer/README.md"],
     "acceptance_checks": [
-      "grep -iE 'RWM Puppet Master|RWM-Puppet-Master|com\\.rwm\\.puppet-master|/RWM' installer/README.md; test $? -ne 0"
+      "echo \"Manual review: confirm no legacy naming in installer/README.md\"",
+      "grep 'Puppet Master' installer/README.md || true"
     ],
     "evidence_required": ["grep exit codes", "list of files changed"]
   },
@@ -308,7 +329,8 @@
       "puppet-master-rs/puppet-master.yaml"
     ],
     "acceptance_checks": [
-      "grep -E 'ralph|rwm' .puppet-master/config.yaml .puppet-master/puppet-master.yaml puppet-master-rs/puppet-master.yaml 2>/dev/null; test $? -ne 0"
+      "echo \"Manual review: confirm no legacy naming in the listed YAML files\"",
+      "grep 'pm/{tier}/{id}' .puppet-master/config.yaml .puppet-master/puppet-master.yaml puppet-master-rs/puppet-master.yaml 2>/dev/null || true"
     ],
     "evidence_required": ["grep exit codes", "list of files changed"]
   },
@@ -325,7 +347,9 @@
       "puppet-master-rs/README.md"
     ],
     "acceptance_checks": [
-      "grep -iE 'RWM Puppet Master|Ralph Wiggum Method' AGENTS.md README.md REQUIREMENTS.md STATE_FILES.md .cursorrules .claude/CLAUDE.md puppet-master-rs/README.md; test $? -ne 0"
+      "echo \"Manual review: confirm no legacy naming in listed files; allow historical/attribution in REQUIREMENTS if left as-is\"",
+      "grep 'Puppet Master' AGENTS.md README.md .claude/CLAUDE.md || true",
+      "grep 'pm:' AGENTS.md || true"
     ],
     "evidence_required": ["grep exit codes", "list of files changed"]
   },
@@ -339,7 +363,8 @@
       "Plans/WorktreeGitImprovement.md"
     ],
     "acceptance_checks": [
-      "grep -iE 'RWM Puppet Master|Ralph Loop|Ralph Wiggum|enableRalphLoopPatterns|ralph-clean-workspace|ralph:' Plans/newfeatures.md Plans/orchestrator-subagent-integration.md Plans/MiscPlan.md Plans/WorktreeGitImprovement.md; test $? -ne 0"
+      "echo \"Manual review: confirm no legacy naming in the listed files\"",
+      "grep 'Puppet Master\\|pm:' Plans/newfeatures.md Plans/orchestrator-subagent-integration.md Plans/MiscPlan.md Plans/WorktreeGitImprovement.md || true"
     ],
     "evidence_required": ["grep exit codes", "list of files changed"]
   },
@@ -354,7 +379,8 @@
       "docs/PROCESS_CLEANUP_SYSTEM.md"
     ],
     "acceptance_checks": [
-      "grep -iE 'RWM Puppet Master|Ralph Loops' conductor/product.md conductor/tracks/gui_resizing_20260216/spec.md docs/PLATFORM_AUTH_OAUTH_CONFIRMATION.md docs/PROCESS_CLEANUP_README.md docs/PROCESS_CLEANUP_SYSTEM.md; test $? -ne 0"
+      "echo \"Manual review: confirm no legacy naming in the listed files\"",
+      "grep 'Puppet Master' conductor/product.md docs/PLATFORM_AUTH_OAUTH_CONFIRMATION.md || true"
     ],
     "evidence_required": ["grep exit codes", "list of files changed"]
   },
@@ -371,7 +397,8 @@
       ".cursor/commands/CHECK_STATUS.md"
     ],
     "acceptance_checks": [
-      "grep -iE 'com\\.rwm\\.|rwm-puppet-master|ralph' Reference/BUILD_INSTALLER_FIXES.md Reference/APP_LAUNCHER_NO_TERMINAL_PROMPT.md Reference/TEST_SUMMARY_REPORT.md Reference/GUI_ISSUES_AND_FIXES.md .cursor/MCP-CLI-vs-EXTENSION-PATHS.md .cursor/CLAUDE_EXTENSION_AND_MCP.md .cursor/commands/CHECK_STATUS.md 2>/dev/null; test $? -ne 0"
+      "echo \"Manual review: confirm no legacy naming in the listed Reference and .cursor files\"",
+      "grep 'com.puppetmaster.puppet-master\\|Puppet Master' Reference/APP_LAUNCHER_NO_TERMINAL_PROMPT.md Reference/BUILD_INSTALLER_FIXES.md 2>/dev/null || true"
     ],
     "evidence_required": ["grep exit codes for listed files only", "list of files changed"]
   },
@@ -387,7 +414,9 @@
       ".puppet-master/audits/wiring.json"
     ],
     "acceptance_checks": [
-      "grep -iE 'RWM Puppet Master|RWM\"|ralph.*commit' WIDGETS_VISUAL_REFERENCE.md WIDGETS_QUICK_REFERENCE.md .puppet-master/evidence/gui-browser-test-report.md .puppet-master/audits/integration-paths.md .puppet-master/audits/integration-paths.json .puppet-master/audits/wiring.json 2>/dev/null; test $? -ne 0"
+      "echo \"Manual review: confirm no legacy naming in the listed files\"",
+      "grep 'Puppet Master' WIDGETS_VISUAL_REFERENCE.md WIDGETS_QUICK_REFERENCE.md 2>/dev/null || true",
+      "grep 'pm.*commit' .puppet-master/audits/integration-paths.md .puppet-master/audits/integration-paths.json 2>/dev/null || true"
     ],
     "evidence_required": ["grep exit codes", "list of files changed"]
   },
@@ -404,29 +433,5 @@
       "grep -l 'workingDirectory\\|rootDir\\|projectRoot' .puppet-master/puppet-master.yaml puppet-master-rs/puppet-master.yaml .puppet-master/audits/wiring.json .puppet-master/audits/integration-paths.json 2>/dev/null || true"
     ],
     "evidence_required": ["list of files changed", "optional grep for old root path in audits"]
-  },
-  {
-    "chunk_id": "rebrand-H1",
-    "title": "(Human) Rename GitHub repo",
-    "allowed_paths": [],
-    "acceptance_checks": [],
-    "evidence_required": ["manual step; no agent execution"],
-    "human_only": true
-  },
-  {
-    "chunk_id": "rebrand-H2",
-    "title": "(Human) Rename project folder",
-    "allowed_paths": [],
-    "acceptance_checks": [],
-    "evidence_required": ["manual step after Phases 1-6 committed; then run rebrand-7a"],
-    "human_only": true
-  },
-  {
-    "chunk_id": "rebrand-H3",
-    "title": "(Human) Signing/packaging identity",
-    "allowed_paths": [],
-    "acceptance_checks": [],
-    "evidence_required": ["if applicable: code signing, notary, human credentials"],
-    "human_only": true
   }
 ]

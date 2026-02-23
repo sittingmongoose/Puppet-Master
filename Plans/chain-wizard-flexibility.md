@@ -269,7 +269,7 @@ pub struct ChainWizardState {
 - **Single prompt:** "Provide your Requirements Document(s)."
 - **Options (at least two):**
   1. **Upload your own** -- Single or **multiple** files (see §4). Supported formats per REQUIREMENTS.md (md, pdf, txt, docx); store under `.puppet-master/requirements/`.
-  2. **Requirements Doc Builder** -- Button that opens the **Assistant chat** (§5). User describes the project (or delta, or feature); Assistant generates a requirements document and **hands it off** to the flow so the Interview continues with that doc as input. No re-upload required.
+  2. **Requirements Doc Builder** -- Button that opens Builder chat (section 5). The first Assistant message is `What are you trying to do?`. User describes the project (or delta, or feature); Assistant generates a requirements document after explicit user confirmation and hands it off to the flow. No re-upload required.
 - **Framing by intent:** The exact label or helper text can vary by intent (e.g. "Describe the product" vs "Describe what you're adding or changing" vs "Describe the feature and acceptance criteria").
 - **After requirements:** Proceed to Interview (or skip to PRD if we add "Skip interview" for advanced users later). Interview receives the canonical requirements (merged multi-doc or Builder output).
 
@@ -297,9 +297,10 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 - **Concept:** A **chat-like window** embedded in the page (wizard step or Interview view) that shows **streaming agent output** -- prompts, model responses, subagent reports -- so the user can see progress in real time.
 - **Non-interactive:** This view is **read-only** during the run: no user input, no slash commands. Minimal chrome (no full Assistant toolbar/settings); it is an embedded "agent log" or "agent activity" pane.
 - **Where used:**
-  - **Requirements Doc Builder:** When the Assistant is generating the requirements doc, show the Builder conversation/stream in this pane (or reuse the Assistant chat surface with a "generating..." state if the Builder is the Assistant).
+  - **Requirements Doc Builder:** When the Assistant is generating the requirements doc, show the Builder conversation/stream in this pane.
   - **Multi-Pass Review (requirements doc):** When the review agent and subagents are running, stream their activity (e.g. "Review agent spawning subagents...", "Subagent 1 reviewing...", "Subagent 1 reported back.") into this pane.
-- **Implementation:** Reuse the same streaming/event pipeline as Assistant chat where possible (assistant-chat-design.md); for Multi-Pass Review, feed review-agent and subagent stdout/events into a similar stream and render in the embedded pane. DRY: one "agent activity view" widget or component, used by Builder, Interview document creation, and Multi-Pass Review.
+- **Implementation:** Reuse the same Provider event-stream pipeline as Assistant chat (assistant-chat-design.md); for Multi-Pass Review, feed review-agent and subagent events into the same stream and render in the embedded pane. DRY: one "agent activity view" widget or component, used by Builder, Interview document creation, and Multi-Pass Review.
+- **Pane separation:** Agent activity pane is streaming/progress only. Document review/editing is handled by a separate embedded document pane (see section 5 and `Plans/FinalGUISpec.md`).
 
 **Progress indicator:**
 
@@ -308,9 +309,9 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 - **Multi-Pass Review (requirements):** E.g. "Review pass 1 of 2 -- 2 subagents active" or "Review complete; producing revised doc."
 - **Interview document creation and Multi-Pass Review (interview):** See interview-subagent-integration.md "Agent activity and progress visibility": show which document is being written or reviewed, and how many documents remain (e.g. "Writing phase 4 document -- 5 of 8 remaining"; "Reviewing document 7 of 15 -- 9 subagents active").
 
-**Placement:** The agent activity pane sits **on the same page where the action is triggered**. That means: (1) **requirements/wizard page** when Builder or Multi-Pass Review (requirements) is triggered there; (2) **Interview page** when document creation or Multi-Pass Review (interview) runs -- on the Interview page the pane is shown **in addition to** the interviewer chat (redundant; see interview-subagent-integration.md "Agent activity and progress visibility"). So the pane appears in both places. We can revisit placement (e.g. drawer, modal) later if needed.
+**Placement:** The agent activity pane sits **on the same page where the action is triggered**. That means: (1) **requirements/wizard page** when Builder or Multi-Pass Review (requirements) is triggered there; (2) **Interview page** when document creation or Multi-Pass Review (interview) runs. On the Interview page the pane is shown **in addition to** interviewer chat (same event stream, redundant display).
 
-**Pause, cancel, resume:** Provide **pause**, **cancel**, and **resume** as user options during Multi-Pass Review and during document generation (Builder, Interview). **Pause:** Takes effect at **next handoff boundary** (no new subagents spawned; in-flight subagents complete and report; review agent is not started or is paused before consuming the next report). Do not kill in-flight subagents on pause. Persist state so resume can continue from that boundary. **Resume state:** Persist at least: run phase (spawning / reviewing / producing), number of completed review tasks (and which doc/pass if applicable), any partial reports already received, and review agent input state if in producing. Resume = continue spawning or producing from that point without re-running completed tasks. **Cancel:** On cancel, **stop spawning** new subagents immediately. **Do not kill** in-flight subagents; let them complete and discard their reports. Then set state to cancelled and surface Review cancelled; no changes applied. If the review agent is already producing, cancel after it finishes the current revision (do not truncate mid-write); then discard and set `cancelled`. **Recovery after crash:** Support **resume after crash** for Multi-Pass Review when recovery state is available: on restore, if state is "in progress," show "Run was interrupted" with options **Resume** (continue from persisted state) or **Start over** (clear state and re-run from step 1). If state is missing or corrupted, show only "Start over." **Recovery** (newfeatures §4) should persist "in progress" state so that after cancel or crash, the user can see "run was interrupted" and optionally start over or (if we support it) resume.
+**Pause, cancel, resume:** Provide **pause**, **cancel**, and **resume** as user options during Multi-Pass Review and during document generation (Builder, Interview). **Pause:** Takes effect at **next handoff boundary** (no new subagents spawned; in-flight subagents complete and report; review agent is not started or is paused before consuming the next report). Do not kill in-flight subagents on pause. Persist state so resume can continue from that boundary. **Resume state:** Persist at least: run phase (spawning / reviewing / producing), number of completed review tasks (and which doc/pass if applicable), any partial reports already received, and review agent input state if in producing. Resume = continue spawning or producing from that point without re-running completed tasks. **Cancel:** On cancel, **stop spawning** new subagents immediately. **Do not kill** in-flight subagents; let them complete and discard their reports. Then set state to cancelled and surface "Review cancelled; no changes applied." If the review agent is already producing, cancel after it finishes the current revision (do not truncate mid-write); then discard and set `cancelled`. **Recovery after crash:** Support **resume after crash** for Multi-Pass Review when recovery state is available: on restore, if state is "in progress," show "Run was interrupted" with options **Resume** (continue from persisted state) or **Start over** (clear state and re-run from step 1). If state is missing or corrupted, show only "Start over." Recovery persistence must support this restoration path.
 
 ---
 
@@ -318,7 +319,7 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 
 **Pause/cancel/resume UI:** Place **Pause**, **Cancel**, and **Resume** in a single control row (toolbar or footer of the agent activity pane). Order: Pause | Resume | Cancel. When running: show Pause and Cancel (Resume disabled). When paused: show Resume and Cancel (Pause disabled). **Cancel** must open a confirmation modal: "Stop this run? No changes will be applied." with "Stop run" and "Keep running." On confirm, transition to `cancelling` then `cancelled`; show toast: "Run cancelled -- no changes applied." **Resume** continues from the exact checkpoint; show toast "Resuming..." then "Run resumed."
 
-**Builder surface (decision):** Use the **embedded agent activity pane** for the Requirements Doc Builder (same as Multi-Pass Review). Do not reuse the full Assistant chat surface for Builder progress; when the doc is "generating" or Multi-Pass Review is running, show that progress in the embedded pane on the requirements/wizard page.
+**Builder surface (decision):** Use the **embedded agent activity pane** for the Requirements Doc Builder (same as Multi-Pass Review). Builder progress is shown in the embedded pane on the requirements/wizard page.
 
 **Stale progress:** If no progress event is received for **30 seconds** during an active run, show a warning in the progress indicator: "Progress stalled -- last update 30s ago" (amber). Do not auto-cancel; user may still pause or cancel.
 
@@ -377,27 +378,37 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 
 ### 5.1 Concept
 
-- **Requirements Doc Builder** is a **button** in the requirements step that opens the **Assistant chat** (same surface as in assistant-chat-design.md).
-- User **talks** to the Assistant about the project (or delta, or feature). The Assistant **generates a requirements document** (format and template to be defined) and then **hands it off** to the flow: it becomes the "Requirements Document" for the next step, and the **Interview** starts the normal process with that doc as input.
+- **Requirements Doc Builder** is a button in the requirements step that opens Builder chat on the requirements/wizard page.
+- The first Assistant message is exactly: `What are you trying to do?`
+- The Builder is a conversation-first flow. No questionnaire appears before the first user response.
+- The Builder output remains a staged artifact until the flow reaches final approval and handoff.
 
 ### 5.2 Flow
 
-1. User clicks "Requirements Doc Builder" in the requirements step.
-2. App opens (or focuses) the **Assistant** chat, with **context** set: current project path (if any), selected **intent**, and optional system hint: "User is building a requirements document for the Interview; when complete, produce the document and hand off."
-3. User converses; Assistant may ask clarifying questions, suggest structure, or draft sections.
-4. When the user (or Assistant) considers the doc ready, user triggers **"Done -- hand off to Interview"** (or equivalent: e.g. "Generate requirements doc" button or slash command).
-5. Assistant **produces** the requirements document (e.g. markdown) **and** a staged **Contract Layer Seed Pack** (assumptions, constraints, glossary, non-functional budgets) used by the interview’s contract unification step (§6.6). App **writes**:
-   - requirements doc to `.puppet-master/requirements/requirements-builder.md`
-   - contract seeds to `.puppet-master/requirements/contract-seeds.md`
-   - then promotes canonical requirements to `.puppet-master/project/requirements.md` for the flow
-6. App **returns** the user to the wizard at the **requirements step** (or the next step) with the doc **pre-loaded** (no re-upload). Optionally show a short confirmation: "Requirements doc generated; continue to Interview?"
-7. User continues; **Interview** runs with that doc (and any other merged uploads, if we allow Builder + uploads in the same run).
+**Turn definition (required):**
+- One completed turn = one Assistant message plus one user response.
+- `completed_turns` increments only after the user response arrives.
+
+**Conversation phase (required):**
+1. User clicks `Requirements Doc Builder` in the requirements step.
+2. Builder chat opens and sends: `What are you trying to do?`
+3. User and Assistant converse. Assistant may ask clarifying questions, suggest structure, and draft sections.
+4. Assistant may suggest generation when either condition is true:
+   - It determines there is enough information, or
+   - `completed_turns >= 6`
+5. Suggestion text is confirmatory (for example: `Would you like me to create the requirements doc?`) and does not auto-generate.
+6. If the user keeps talking or ignores the suggestion, conversation continues with no forced handoff.
+7. User can continue this phase indefinitely until they explicitly confirm generation.
+
+**Generation trigger (required):**
+- Generation starts only after an explicit user confirmation (for example: `yes, make the doc`).
+- Once confirmed, Builder runs qualifying questions driven by checklist state (see section 5.3), then generates staged artifacts.
 
 ### 5.3 Handoff Contract
 
 - **Output format:** Markdown recommended; structure (sections) must follow the **Builder output template** below so Interview and PRD generator get consistent input.
-- **Single vs. multiple:** For MVP, Builder produces **one** doc per handoff. If we later allow "Builder + uploads," merge order and precedence (Builder last vs. first) to be defined.
-- **Persistence:** Handoff state (path to generated doc, "source = Builder") stored in app state and in `.puppet-master/` if we need recovery.
+- **Single vs. multiple:** Builder produces one requirements document per generation run.
+- **Persistence:** Handoff state (paths, source, checklist/conversation state, approval stage) is persisted for recovery.
 - **Contract Layer seed pack:** Builder also emits `.puppet-master/requirements/contract-seeds.md` as a structured seed input for the Contract Layer (§5.7, §6.6). This file is **not** the canonical project contract pack; canonical contracts live under `.puppet-master/project/contracts/` and are referenced by stable `ProjectContract:*` IDs (SSOT: `Plans/Project_Output_Artifacts.md`).
 
 **Builder output template (required):** The Assistant/Builder must emit a single Markdown document with the following **required top-level sections** (headings). Implementations may validate and warn if sections are missing.
@@ -408,9 +419,9 @@ When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the u
 | **Goals** | High-level goals and success criteria. |
 | **Out of scope** | Explicitly excluded items. |
 | **Acceptance criteria** | Testable conditions of done (can be a list). |
-| **Non-goals** | What we are not trying to achieve (optional but recommended). |
+| **Non-goals** | What we are not trying to achieve. |
 
-Additional sections (e.g. **Risks**, **Dependencies**, **Constraints**) are allowed. The PRD generator and Interview assume at least the five above; add a validation step that warns when any required section is missing.
+Additional sections (for example **Risks**, **Dependencies**, **Constraints**) are allowed. The PRD generator and Interview assume at least the five above.
 
 **Contract seed pack template (required when Builder is used):**
 
@@ -423,25 +434,85 @@ The Assistant/Builder must also emit a **single** Markdown document at `.puppet-
 | **Glossary** | Canonical terms and naming decisions for the target project (feeds optional `.puppet-master/project/glossary.md`). |
 | **Non-functional budgets** | Explicit budgets (latency, memory, cost, availability) that will become executable acceptance checks. |
 
+**Checklist dual-state contract (required):**
+- Conversation state contract: `builder_conversation_state.v1`
+  - `session_id` (format `PM-YYYY-MM-DD-HH-MM-SS-NNN`)
+  - `completed_turns`
+  - `last_suggestion_turn`
+  - `awaiting_generation_confirmation`
+  - `awaiting_final_approval`
+- Side structure contract: `builder_checklist_state.v1`
+  - `section_id`
+  - `status` (`empty | thin | filled`)
+  - `source` (`requirements_doc | contract_seed_pack`)
+  - `last_updated_event_id`
+  - `coverage_note`
+
+**Qualifying-question rule (required):**
+- Before generation, ask qualifying questions only for checklist entries with `status=empty` or `status=thin`.
+- Do not ask follow-up questions for sections already marked `filled`.
+
 ### 5.4 Dependencies
 
 - **Assistant chat** must be implemented (assistant-chat-design.md).
 - **Project/context:** Assistant must know current project path and intent so it can tailor questions and the generated doc (e.g. "delta" vs "full product" vs "feature scope").
 - **No duplicate rules:** Use the same rules pipeline (agent-rules-context.md) for Assistant; do not duplicate interview-specific rules in the Builder prompt beyond "produce a requirements doc for handoff."
 
-### 5.5 Gaps and Risks
+### 5.5 Document review surfaces and generation order
 
-- **Token usage:** Long conversations before handoff may use significant context; consider "Summarize and produce doc" step to bound length.
-- **Quality:** Builder output is best-effort; Interview may still need to clarify. We don't guarantee the doc is complete; we only guarantee it's passed to Interview.
-- **Abandonment:** If user opens Builder but never hands off, flow is stuck on requirements step until they upload or hand off. Consider "Cancel Builder" that returns to requirements step without saving.
+**Strict order for requirements Builder flow:**
+1. Conversation phase.
+2. User confirms generation.
+3. Qualifying questions for `empty` and `thin` checklist sections only.
+4. Builder generates staged requirements doc and staged contract seeds.
+5. Builder asks: `Do you want to make any more changes or talk about it more?`
+6. If user requests edits, return to conversation and repeat generation path as needed.
+7. If user confirms no more changes, run optional Multi-Pass Review (if enabled).
+8. Show Multi-Pass findings summary (chat + preview section).
+9. Capture one final approval decision for the review run.
+10. Promote canonical artifacts and hand off to Interview.
+
+**Three-location review rule (required):**
+- Full document bodies are not rendered in chat.
+- After generation or revision, chat must always point to all three review locations:
+  1. Opened in File Editor (auto-open action),
+  2. Clickable canonical file path,
+  3. Embedded document pane entry on the current page.
+
+**Preview section contract (requirements/wizard page):**
+- The preview section must show the findings summary and the current approval state before handoff.
+- The same preview area hosts or links to the embedded document pane for requirements artifacts.
+
+**Document pane + recovery state contracts:**
+- `document_pane_state.v1`
+  - `project_id`
+  - `page_context` (`wizard | interview`)
+  - `selected_document_id`
+  - `selected_view` (`document | plan_graph`)
+  - `cursor_scroll_state`
+  - `history_selection`
+  - `approval_stage`
+- `document_checkpoint.v1`
+  - `checkpoint_id`
+  - `document_id`
+  - `label`
+  - `artifact_ref`
+  - `created_at`
+  - `restorable=true`
+
+### 5.5.1 Gaps and Risks
+
+- **Token usage:** Long conversations before handoff may use significant context; support `Summarize and produce doc` as an explicit Builder action.
+- **Quality:** Builder output is best-effort and Interview can still clarify; validation is enforced through checklist status and review gates.
+- **Abandonment:** Builder includes `Cancel and return to requirements` with no save.
 
 ### 5.6 Multi-Pass Review (Requirements Doc)
 
-When the Requirements Doc Builder produces a document, an optional **Multi-Pass Review** runs before handoff to the Interview. A **review agent** spawns N **review subagents** (each can use a different model/platform) to check the document for gaps, problems, missing information, and consistency. The review agent then decides what to do with the feedback.
+When the Requirements Doc Builder reaches post-generation confirmation, an optional **Multi-Pass Review** runs before handoff to Interview. A **review agent** spawns N **review subagents** (each can use a different model/provider) to evaluate gaps, problems, missing information, and consistency.
 
 This review covers the requirements document **and** the staged Contract Layer seed pack (`.puppet-master/requirements/contract-seeds.md`) as a single bundle, so the Interview’s Contract Layer does not start from inconsistent assumptions/constraints/glossary.
 
-**When it runs:** After the Assistant produces the requirements document and before it is set as canonical input for the Interview.
+**When it runs:** After post-generation user confirmation and before canonical promotion/handoff.
 
 **Settings (early in the flow -- same page as requirements step or wizard):**
 
@@ -450,7 +521,7 @@ This review covers the requirements document **and** the staged Contract Layer s
 - **Use different models:** Default **true**. When true, each subagent can use a different model (and optionally platform) from a user-configured list.
 - **Model/platform list:** User can configure which models (and platforms) to use for review subagents; **cross-platform** is allowed (e.g. one subagent on Claude, one on Codex).
 - **Model/platform list validation:** Minimum 1 entry; maximum 20. When "Use different models" is true and list has fewer than N entries (N = number of reviews), **cycle** through the list (assign models round-robin to subagents) and show a short UI notice: "Fewer models than reviews; some models will be reused."
-- **Review agent model/platform:** The review agent (the process that consumes subagent reports and produces the revised doc) uses a **configurable** model/platform. Default: same as the primary platform used for the Builder (or Interview if unified). GUI: same model/platform list or a dedicated "Review agent" dropdown; may be the same as one of the subagent models or different.
+- **Review agent model/provider:** The review agent (the process that consumes subagent reports and produces the revised doc) uses a **configurable** model/provider. Default: same as the primary provider used for the Builder. GUI: same model/provider list or a dedicated "Review agent" dropdown; may be the same as one of the subagent models or different.
 
 **Flow:**
 
@@ -461,8 +532,11 @@ This review covers the requirements document **and** the staged Contract Layer s
    - (for delta/feature intents) optional codebase context from codebase_scanner
 3. Subagents look for: gaps, problems, missing information, unscoped items. Depth is lighter than the Interview -- the Interview will flesh details out.
 4. Each subagent reports findings back to the review agent, then is terminated (no long-lived context).
-5. Review agent **produces a revised requirements document** (and, when present, a revised `contract-seeds.md`) incorporating or responding to the feedback.
-6. **User approves** the revised output bundle (option **b**). **Approval UI:** Surface the revised requirements doc + revised contract seeds and a short summary of changes. Offer three actions: **Accept** (set revised artifacts as canonical inputs and continue to Interview), **Reject** (discard revisions; keep original Builder outputs as canonical; user can continue to Interview or re-run Builder), **Edit** (open editor for revised artifacts; on save, re-show Accept/Reject/Edit). No per-section approval; single decision per run.
+5. Review agent **produces a revised requirements document** (and, when present, a revised `contract-seeds.md`) plus a findings summary.
+6. Findings summary is shown in chat and in the wizard preview section before approval.
+7. **One final approval gate:** user chooses **Accept**, **Reject**, or **Edit** for the revised output bundle. No per-section approval and no per-document approval.
+8. If **Edit** is chosen, open the revised artifacts in editor/document pane, then return to the same final approval gate.
+9. On **Accept**, revised artifacts become canonical and handoff proceeds. On **Reject**, original Builder artifacts remain canonical and handoff proceeds.
 
 **Run state:** Persist and expose for UI/recovery: `pending` → `spawning` → `reviewing` (with progress: pass/round and subagents active) → `producing` (review agent writing revised doc) → `awaiting_approval` → `complete` | `cancelled` | `failed`. On failure, set `failed` and store error reason; on cancel, set `cancelled`. Recovery snapshot (newfeatures §4) must include this state and progress so "run was interrupted" and optional resume are accurate.
 
@@ -474,9 +548,25 @@ This review covers the requirements document **and** the staged Contract Layer s
 
 - **Subagent crash or timeout:** Treat as one failed review; collect partial report if available. If fewer than half of the requested reviews complete, mark run as `failed` and surface "Multi-Pass Review failed (too few reviews completed)." Otherwise, continue with completed reports and log the failure.
 - **Review agent fails to produce revised doc:** Mark run as `failed`. Surface error message and option to "Use original document" (set Builder output as canonical and continue) or "Retry" (re-run review agent once with same reports).
-- **All subagent spawns fail:** Mark run as `failed`; surface "Could not start review subagents (check model/platform and auth)." Option "Use original document" as above.
+- **All subagent spawns fail:** Mark run as `failed`; surface "Could not start review subagents (check model/provider and auth)." Option "Use original document" as above.
 
-**GUI and visibility:** See §3.5 (agent activity view and progress indicator) so the user sees the review agent and subagents working during Multi-Pass Review. **Pause, cancel, resume** are supported options (§3.5).
+**Findings and approval contracts (required):**
+- `review_findings_summary.v1`
+  - `run_id`
+  - `scope` (`requirements | interview`)
+  - `gaps`
+  - `consistency_issues`
+  - `missing_information`
+  - `applied_changes_summary`
+  - `unresolved_items`
+- `review_approval_gate.v1`
+  - `run_id`
+  - `decision` (`accept | reject | edit`)
+  - `decision_timestamp`
+  - `decision_actor`
+  - `preconditions` (`findings_summary_shown=true`)
+
+**GUI and visibility:** See section 3.5 (agent activity view and progress indicator) so the user sees the review agent and subagents working during Multi-Pass Review. **Pause, cancel, resume** are supported options (section 3.5). Findings summary and final approval UI must be shown in both chat and preview section before handoff.
 
 ### 5.7 Contract Layer (Requirements → Contracts → Plan → Execution)
 
@@ -870,6 +960,15 @@ Before implementation, an implementation agent must complete or have clear specs
 37. **Contract seed pack (Builder):** When Requirements Doc Builder is used, write `.puppet-master/requirements/contract-seeds.md` and include it in Multi-Pass Review (§5.6). Treat it as staging input and reconcile it during the Contract Unification Pass (§6.6); do not treat it as the canonical Project Contract Pack.
 38. **Contract Unification Pass:** Implement the deterministic unification step (§6.6) that materializes `.puppet-master/project/contracts/` + `contracts/index.json`, generates the sharded plan graph and acceptance manifest, and ensures every node shard references at least one resolvable `ProjectContract:*`.
 39. **Dry-run validator:** Run the dry-run validator defined by `Plans/Project_Output_Artifacts.md` Validation Rules before execution begins; surface failures as gating errors (no manual verification).
+40. **Builder opener:** Ensure first Builder Assistant message is exactly `What are you trying to do?`.
+41. **Turn counter + 6-turn suggestion:** Implement completed-turn semantics (Assistant message + user response) and suggest generation when `completed_turns >= 6` or earlier if enough info exists; suggestion does not auto-generate.
+42. **Checklist dual state:** Implement `builder_checklist_state.v1` and `builder_conversation_state.v1` and keep them synchronized.
+43. **Qualifying questions:** Ask only for checklist sections marked `empty` or `thin` before generation.
+44. **Post-generation confirmation:** Ask `Do you want to make any more changes or talk about it more?` before Multi-Pass/handoff.
+45. **Three-location review:** After generation/revision, open in File Editor, show clickable canonical path, and show document pane entry; chat must not render full document bodies.
+46. **Findings summary surfaces:** Show Multi-Pass findings summary in chat and in the wizard preview section before final approval.
+47. **Single final approval gate:** Capture one final decision (`accept | reject | edit`) per Multi-Pass run with `findings_summary_shown=true` precondition.
+48. **Document pane recovery:** Persist `document_pane_state.v1` and restorable `document_checkpoint.v1` so recovery restores selected document/view and approval stage.
 
 ---
 

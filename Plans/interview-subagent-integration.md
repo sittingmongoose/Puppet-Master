@@ -926,50 +926,84 @@ When implementing or changing **interview-related code** in Puppet Master (inter
 
 ### 5.4 Multi-Pass Review (Interview Documents)
 
-After all interview documents are created (phase documents, AGENTS.md, PRD, etc.), an optional **Multi-Pass Review** runs to check the document set for gaps, contradictions, unwired components, and consistency. A **review agent** spawns a **worker pool** of review subagents; each subagent reviews one document (or one document per round), reports back, then is terminated to free context.
+After interview documents are generated (phase docs, AGENTS.md, PRD, and related artifacts), an optional **Multi-Pass Review** checks the document set for gaps, contradictions, unwired components, missing information, and consistency issues. A **review agent** spawns a worker pool of review subagents, each tasking one document review at a time, then aggregates findings into a revised bundle and findings summary.
 
-**When it runs:** Once the whole interview process is done and all documents are written. **Zero documents:** If no documents exist when Multi-Pass Review is triggered (e.g. document generation produced none), **skip** Multi-Pass Review and log. Do not run review agent or subagents. Proceed to next step (e.g. "Interview complete") with no revised docs.
+**When it runs:** After interview document generation and before interview handoff completion. **Zero documents:** If no documents exist, skip Multi-Pass Review, log the skip, and complete interview with no revised bundle.
 
-**Settings (same conceptual page as Requirements Doc Builder Multi-Pass Review; can be interview-specific):**
+**Order of operations (required):**
+1. Interview document generation completes.
+2. User confirms they are done with direct edits/conversation for this review cycle.
+3. Optional Multi-Pass Review runs (if enabled).
+4. Findings summary is shown in chat and in the Interview preview section.
+5. One final approval gate is shown: **Accept | Reject | Edit**.
+6. Handoff completion occurs only after this final approval gate resolves.
 
+**Settings (same conceptual model as requirements Multi-Pass):**
 - **Multi-Pass Review:** On/off.
-- **Number of reviews:** How many subagents look at **each** document. Default **3**, max **10**. So with 3, each document gets reviewed by 3 subagents (across rounds); with 10, each document gets reviewed by 10 subagents.
-- **Max subagents spawn:** Maximum number of review subagents in flight at once. Default **9**, max **20**. **UI warning:** Display a warning next to this control: e.g. "This will go through token usage quickly."
-- **Use different models / model-platform list:** Same as Requirements Doc Builder (§5.6 in chain-wizard-flexibility.md): default to different models per subagent; user can configure models (cross-platform allowed). **Model/platform list validation:** Min 1, max 20. When "use different models" and list has fewer entries than needed, cycle round-robin and show UI notice: "Fewer models than review slots; some models will be reused."
-- **Review agent model/platform (interview):** Configurable; default = primary interview platform/model. Can be set from same model list as subagents or a separate "Review agent" control; persist in interview run config.
+- **Number of reviews:** Number of review tasks per document (default 3, max 10).
+- **Max subagents spawn:** Maximum in-flight review subagents (default 9, max 20) with warning text: "This will go through token usage quickly."
+- **Use different models / model-provider list:** Default true. User-configurable cross-provider list. Validation: min 1 entry, max 20. If list length is less than required tasks, assign round-robin and show UI notice.
+- **Review agent model/provider:** Configurable; default is the primary interview provider/model.
 
 **Worker-pool semantics:**
+- Total review tasks = (document count) x (number of reviews).
+- Pool runs up to max subagents in flight.
+- Each subagent handles one task and terminates after reporting.
+- Spawn failures retry twice with the same model/provider, then fallback to the next configured model/provider.
+- If all configured model/provider entries fail for a task, skip the task and log it.
+- If more than 25% of review tasks are skipped due to spawn failure, mark run `failed`.
 
-- Total review tasks = (number of documents) × (number of reviews). Example: 20 documents, 5 reviews → 100 tasks.
-- We maintain a pool of up to **max subagents** in flight. When a subagent finishes reviewing a document, it hands its report to the review agent, then is **killed** (terminated) so context is freed. A new subagent is spawned for the next task (next document or next review slot for a document) until all tasks are done. **Subagent spawn failure:** If a subagent fails to spawn (model unavailable, auth error, binary not found): **retry** up to 2 times with the same model; if still failing, **fallback** to the next model in the user-configured list (round-robin). If all configured models fail for that task, **skip** that task, log, and continue. If more than 25% of tasks are skipped due to spawn failure, mark run as **failed** and surface "Too many review subagents failed to start; check models and auth."
-- Example: 20 documents, number of reviews = 5, max spawn = 20 → 5 full "rounds"; in each round we assign 20 subagents to 20 documents (one subagent per doc). After 5 rounds, each document has been reviewed by 5 subagents.
-- Example: 5 documents, 3 reviews, max spawn = 10 → 15 tasks. We spawn 10 subagents; whenever one finishes and hands off its report, we kill it and spawn a new one for the next task until all 15 are done.
+**Review criteria:**
+- Gaps, missing scope, missing information, and contradictions.
+- Wiring completeness (components and GUI flow connections).
+- Cross-document consistency and feasibility against available codebase context.
 
-**Batching and cross-document awareness:**
+**Whole-set synthesis step:**
+- After per-document tasks, run a whole-set synthesis/review pass to detect cross-document conflicts.
+- If raw document set is too large, review agent produces a bounded synthesis artifact and reviewers consume that synthesis.
 
-- Documents are long; one subagent should not hold multiple full documents in context. Each subagent is assigned **one document** per task (and optionally a **short index/summary of the other documents**) so it can say "X might be missing here -- check Architecture doc" without loading every doc.
-- For **fork / PR / enhance** (existing code): review subagents may need to see **codebase context** (e.g. from codebase_scanner: key paths, module list, tech stack) so they can check feasibility and unwired components against the code.
-- **Index/summary:** Produced by the **review agent** (or a single dedicated "index" step run once before per-doc reviews). Format: markdown or structured list: document id, path, one-line summary, optional section headings. Max size: e.g. 2K tokens or 500 lines (document in implementation). Attached to each per-doc review prompt so subagents can reference other docs without loading full text.
-- **Token overflow:** Before sending a document (or whole-set synthesis) to a subagent, check size against platform context limit. If over limit: **truncate** with a clear boundary (e.g. first N tokens plus "[... truncated ...]" and line count) and attach a note "Document truncated for context; focus on the provided portion." Do not chunk into multiple calls for one review task. If truncation would leave under 20% of context for response, **skip** that task and log; after run, surface in findings report that the doc was too long to review fully.
+**Findings summary and approval contracts (required):**
+- `review_findings_summary.v1`
+  - `run_id`
+  - `scope` (`requirements | interview`)
+  - `gaps`
+  - `consistency_issues`
+  - `missing_information`
+  - `applied_changes_summary`
+  - `unresolved_items`
+- `review_approval_gate.v1`
+  - `run_id`
+  - `decision` (`accept | reject | edit`)
+  - `decision_timestamp`
+  - `decision_actor`
+  - `preconditions` (`findings_summary_shown=true`)
 
-**Review criteria (what subagents look for):**
+**Approval model (required):**
+- Exactly one final approval gate per Multi-Pass run.
+- No auto-apply mode and no per-document approval mode.
+- **Accept:** revised bundle is promoted and handoff completes.
+- **Reject:** revised bundle is discarded, original generated bundle remains active, and handoff completes.
+- **Edit:** open revised docs in editor/document pane, then return to the same final gate.
 
-- Gaps, potential issues, unscoped items.
-- Components that will not be completed or will not be wired; GUI elements missing or not wired.
-- Contradictions with other documents.
-- Technical feasibility; format per spec (§5.2).
+**Document review surfaces (required):**
+- Chat shows summaries/findings only, not full document bodies.
+- Chat must point to all three review locations after generation/revision:
+  1. Opened in File Editor,
+  2. Clickable canonical file path,
+  3. Embedded document pane entry.
+- Interview preview section must display findings summary and final approval UI.
 
-**Whole-document-set pass last:**
+**Interview page document pane requirements:**
+- Interview page includes the embedded document pane for interview artifacts (phase docs, PRD, and related human-readable docs).
+- Document pane includes a `Plan graph` entry as a read-only rendered view.
+- Near plan graph view show notice: `Talk to Assistant to edit plan graph.`
 
-- After all per-document reviews are done, run the configured **number of reviews** again as **whole-set** passes: reviewers see the full document set (or a synthesis) and check that everything works together, no contradictions, wiring is consistent. Same number of rounds as "number of reviews"; each round can use up to max subagents. This is done **last**. **Synthesis:** When the full document set exceeds context, the **review agent** produces a **synthesis** (one document: summaries per doc plus cross-doc wiring and dependency list). Max synthesis size: e.g. 50% of platform context limit (document in implementation). Whole-set reviewers receive this synthesis instead of raw docs. **Single document:** When document count is 1, treat as one whole-set round only: that single doc is reviewed N times (N = number of reviews) by the worker pool; then the review agent runs once for the whole set. No separate per-doc vs whole-set phases.
+**Dependencies:** Same Multi-Pass pattern as requirements Builder (review agent + N subagents; not Crew). Use provider capabilities from `platform_specs`; use `codebase_scanner` context for existing-code intents. Cross-reference `Plans/chain-wizard-flexibility.md` section 5.6 for shared settings and model selection.
 
-**Review agent behavior (option C):**
-
-- **Both** revised output and user-in-the-loop: the review agent can produce revised documents and/or a consolidated findings report; there is a **setting** to control whether revisions are auto-applied or surfaced for user approval. **Options (implement exactly):** (1) **Apply all:** Review agent produces revised documents; apply all revisions automatically; then show consolidated findings report (read-only). No per-document approval. (2) **Show report only:** Review agent produces only a consolidated findings report; no revised documents. User reads report and may manually edit docs or re-run interview/review. (3) **Apply with approval per document:** Review agent produces revised documents; surface each revised doc with Accept / Reject / Edit for that document; user approves per document; then continue. Default: **Apply with approval per document** for interview (safest). Store selected option in interview run config and persist in recovery state.
-
-**Dependencies:** Same Multi-Pass Review pattern as Requirements Doc Builder (review agent + N subagents; not the Crew feature); platform_specs; codebase_scanner for existing-code intents. Cross-reference **Plans/chain-wizard-flexibility.md §5.6** for shared settings and model selection.
-
-**GUI and visibility:** See "Agent activity and progress visibility" under GUI gaps below. Show the process **in the interviewer chat** (we are already there). User must see review subagents working and progress (documents in progress, remaining). **Pause, cancel, resume** are supported options; recovery state for "in progress" so user can resume or start over. **Cancel:** On cancel, **stop spawning** new subagents immediately. **Do not kill** in-flight subagents; let them complete and discard their reports. Then set state to cancelled and surface "Review cancelled; no changes applied." If the review agent is already producing, cancel after it finishes the current revision; then discard and set cancelled. **Recovery state (interview Multi-Pass):** Persist: run phase (per_doc | whole_set), list of completed task ids (e.g. doc_id + review_index), partial reports received (or path to temp store), max subagents in flight, number of reviews, and (if in producing) review agent input state. On resume, rebuild worker queue excluding completed task ids; resume review agent from last state if applicable. On start over, clear this state and re-run from the beginning.
+**Recovery requirements (required):**
+- Persist in-progress review state for resume/start-over behavior.
+- Persist `awaiting_final_approval` state and restore directly to findings + final approval UI after restart.
+- Restore document pane selection and preview context for the same review run when possible.
 
 ## DRY Method Compliance
 
@@ -2408,11 +2442,21 @@ During **interview document creation** (phase documents, AGENTS.md, PRD, etc.) a
 
 **Agent activity pane -- same placement rule everywhere:**
 
-- The agent activity pane sits **on the same page where the action is triggered**. That includes the **Interview** page: show the pane there too (redundant with the chat, as above). For **Requirements Doc Builder** and **Multi-Pass Review** when triggered from the wizard/requirements step, the pane is on that page (chain-wizard §3.5). So the pane appears in **two places** -- requirements/wizard page and Interview page -- and in Interview we show it in both the chat and the pane. Placement can be revisited later (e.g. drawer, modal) if needed.
+- The agent activity pane sits **on the same page where the action is triggered**. That includes the **Interview** page: show the pane there too (redundant with the chat, as above). For **Requirements Doc Builder** and **Multi-Pass Review** when triggered from the wizard/requirements step, the pane is on that page (chain-wizard section 3.5). So the pane appears in **two places** -- requirements/wizard page and Interview page -- and in Interview we show it in both the chat and the pane.
 
-**Implementation:** Feed CLI/streaming events from document generation and Multi-Pass Review into (1) the interviewer chat when in Interview, and (2) the agent activity pane on the same page (Interview page or wizard/requirements page where triggered). In Interview, chat and pane are redundant. Progress state (current document, remaining count, subagents active) comes from the orchestrator or review coordinator and drives the progress UI. Align with chain-wizard §3.5 and assistant-chat-design for streaming/events.
+**Implementation:** Feed normalized Provider events from document generation and Multi-Pass Review into (1) interviewer chat when in Interview, and (2) the agent activity pane on the same page (Interview page or wizard/requirements page where triggered). In Interview, chat and pane are redundant. Progress state (current document, remaining count, subagents active) comes from the orchestrator or review coordinator and drives the progress UI. Align with chain-wizard section 3.5 and assistant-chat-design for streaming/events.
 
 **Primary surface on Interview page:** When on the Interview page, the **interviewer chat** is the primary surface for streaming agent output during document creation and Multi-Pass Review. The **agent activity pane** on the same page shows the same stream (synchronized from the same event source). If the pane is collapsed or hidden, chat still shows full stream.
+
+**Preview section and document pane (required):**
+- Interview page preview section must show the Multi-Pass findings summary and the final approval gate (`Accept | Reject | Edit`).
+- Interview page also includes a separate embedded document pane (not the agent activity pane) for reviewing/editing human-readable interview artifacts.
+- Document pane includes `Plan graph` as a read-only rendered view and shows notice: `Talk to Assistant to edit plan graph.`
+
+**Final approval recovery state (required):**
+- Recovery persistence must include whether the run is `awaiting_final_approval`.
+- On restore, show the same findings summary and final approval UI for the interrupted run.
+- Restore selected document/document-pane view where possible so the user returns to the same approval context.
 
 **Progress indicator format:** Use a **status strip** (single line) above or below the pane: left = current step text (e.g. "Writing phase 4 document -- 5 of 8 remaining"); right = optional determinate progress bar (e.g. 5/8) when total is known. When total is unknown, show indeterminate progress bar. Stale rule: same as chain-wizard §3.5 (30s then "Progress stalled -- last update 30s ago").
 
@@ -2430,13 +2474,13 @@ During **interview document creation** (phase documents, AGENTS.md, PRD, etc.) a
 | **max_questions_per_phase** | Present; single number | Add **"Unlimited"** option (e.g. checkbox or special value 0 = unlimited) so users can allow unbounded questions per phase; wire to orchestrator (phase stops when min met and either max reached or unlimited). |
 | **Wiring to InterviewOrchestratorConfig** | Several GUI fields are not passed to the interview orchestrator at runtime | Per orchestrator plan Gaps: add `min_questions_per_phase`, `max_questions_per_phase` (with unlimited), `require_architecture_confirmation`, `vision_provider` to `InterviewOrchestratorConfig`; set from `gui_config.interview` in `app.rs` when starting the interview; use in phase_manager and prompt/research flows. |
 | **generate_initial_agents_md** | In GUI; default in code is `true` | Ensure default and tooltip reflect §5.1: when true, generated AGENTS.md includes DRY and Technology & version constraints. Tooltip: "Generate AGENTS.md at project root with DRY method and technology/version rules from the interview." |
-| **Multi-Pass Review (§5.4)** | Not in GUI | Add: on/off, number of reviews (default 3, max 10), max subagents spawn (default 9, max 20) **with warning** "This will go through token usage quickly," use different models (y/n), model/platform list. Wire into interview run config. |
+| **Multi-Pass Review (section 5.4)** | Not in GUI | Add: on/off, number of reviews (default 3, max 10), max subagents spawn (default 9, max 20) **with warning** "This will go through token usage quickly," use different models (y/n), model/provider list, findings summary preview, and one final approval gate (`Accept | Reject | Edit`). Wire into interview run config. |
 | **Agent activity view and progress** | Not in GUI | **(1) Pane:** Add an **agent activity pane** on the Interview view and on the wizard/requirements page when Builder or Multi-Pass Review is triggered there. Pane: read-only, chat-like, min height 120px, max 500 lines, monospace; same event source as interviewer chat when on Interview page (redundant display). **(2) Progress:** Add a **status strip** with current step text and optional determinate/indeterminate progress bar; canonical states: idle, generating, reviewing, paused, cancelling, cancelled, interrupted, complete, error. **(3) Controls:** Pause | Resume | Cancel in one row; Cancel with confirmation modal; toasts for cancel/resume. **(4) Recovery:** Persist run checkpoint (run_type, run_id, step_index, document_index, etc.) per chain-wizard §3.5; on restore show "Run was interrupted" with "Resume from checkpoint" / "Start over." **(5) Settings (optional):** In Interview tab, add "Show agent activity pane by default" (default true) and persist pane visible/collapsed and split ratio in redb per project. |
 
 **Config and storage for Multi-Pass Review and Agent activity**
 
-- **Multi-Pass Review (Interview, §5.4):** Store under **redb** namespace `settings`, key pattern `project.{project_id}.interview.multi_pass_review` (or app-level if not project-scoped). Fields: `enabled` (bool, default false), `number_of_reviews` (u32, default 3, min 1, max 10), `max_subagents_spawn` (u32, default 9, min 1, max 20), `use_different_models` (bool, default true), `model_platform_list` (array of { model, platform }, default from platform_specs). Validation: on save, clamp to min/max; invalid model/platform entries dropped with a toast. UI: Interview tab, collapsible card "Multi-Pass Review" with toggles and number inputs; warning next to max_subagents_spawn: "This will go through token usage quickly."
-- **Multi-Pass Review (Requirements Doc Builder, chain-wizard §5.6):** Store under `project.{project_id}.wizard.multi_pass_review`. Same semantics; defaults may differ (e.g. number_of_reviews default 2). Use separate config keys so Requirements and Interview Multi-Pass Review can have different defaults.
+- **Multi-Pass Review (Interview, section 5.4):** Store under **redb** namespace `settings`, key pattern `project.{project_id}.interview.multi_pass_review` (or app-level if not project-scoped). Fields: `enabled` (bool, default false), `number_of_reviews` (u32, default 3, min 1, max 10), `max_subagents_spawn` (u32, default 9, min 1, max 20), `use_different_models` (bool, default true), `model_provider_list` (array of { model, provider }, default from platform_specs). Validation: on save, clamp to min/max; invalid model/provider entries dropped with a toast. UI: Interview tab, collapsible card "Multi-Pass Review" with toggles and number inputs; warning next to max_subagents_spawn: "This will go through token usage quickly." Final approval state is persisted so interrupted runs restore to findings + approval.
+- **Multi-Pass Review (Requirements Doc Builder, chain-wizard section 5.6):** Store under `project.{project_id}.wizard.multi_pass_review`. Same semantics and field shape (`model_provider_list`), with separate keys so Requirements and Interview Multi-Pass Review can have different defaults.
 - **Agent activity pane preferences:** redb: `project.{project_id}.ui.agent_activity_pane_visible` (bool, default true), `project.{project_id}.ui.agent_activity_pane_height_ratio` (f32, 0.1..0.9, default 0.35). Optional: Show agent activity pane toggle and splitter persistence.
 
 **Placement in Interview tab**

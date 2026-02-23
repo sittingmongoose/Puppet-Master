@@ -1,17 +1,19 @@
 # Recovery Audit Report (Docs)
 
+**Audit target:** current repo state at commit `91dca72`.
+
 ## Summary counts
 
-**Scanned scope:** `Plans/` (47 files) + `README.md` + `AGENTS.md` = **49 files**.
+**Scanned scope:** `Plans/` (55 files) + `README.md` + `AGENTS.md` = **57 files**.
 
 | Status | Count |
 |---|---:|
-| OK | 13 |
-| Needs Fix | 36 |
+| OK | 28 |
+| Needs Fix | 29 |
 | Missing | 0 |
 | Corrupted | 0 |
 
-**Plans inventory (by type):** json=3, json-schema=3, jsonl=1, markdown=40
+**Plans inventory (by type):** json=3, json-schema=8, jsonl=1, markdown=43
 
 ## Onboarding docs status
 
@@ -28,145 +30,143 @@
 | `Plans/CLI_Bridged_Providers.md` | markdown | OK | OK | — |
 | `Plans/Contracts_V0.md` | markdown | Needs Fix | D | Missing acceptance/verification section |
 | `Plans/Crosswalk.md` | markdown | Needs Fix | D | Missing acceptance/verification section |
-| `Plans/DRY_Rules.md` | markdown | Needs Fix | CD | Unresolved placeholder markers at lines [52, 96] / Missing acceptance/verification section |
+| `Plans/DRY_Rules.md` | markdown | Needs Fix | CD | Unresolved placeholder markers at lines [52, 98] / Missing acceptance/verification section |
 | `Plans/Decision_Log.md` | markdown | Needs Fix | D | Missing acceptance/verification section |
-| `Plans/Decision_Policy.md` | markdown | Needs Fix | D | Missing acceptance/verification section |
+| `Plans/Decision_Policy.md` | markdown | Needs Fix | CDS | SSOT coverage gap: Decision Policy missing required definitions referenced by other plans. / Unresolved placeholder markers at lines [98] / Missing acceptance/verification section |
 | `Plans/FileManager.md` | markdown | OK | OK | — |
-| `Plans/FileSafe.md` | markdown | Needs Fix | C | Unresolved placeholder markers at lines [1306, 1432, 1433] |
+| `Plans/FileSafe.md` | markdown | Needs Fix | C | Unresolved placeholder markers at lines [1306] |
 | `Plans/FinalGUISpec.md` | markdown | OK | OK | — |
-| `Plans/GitHub_API_Auth_and_Flows.md` | markdown | Needs Fix | S | SSOT coverage gap: references ConfigKey `github.api_version` and PolicyRule `no_secrets_in_storage`, but Decision Policy does not currently define them. |
-| `Plans/Glossary.md` | markdown | Needs Fix | S | SSOT coverage gap: missing primitive definitions referenced by ContractRef (`DRYRules`, `PatchPipeline`, `SessionStore`). |
-| `Plans/LSPSupport.md` | markdown | Needs Fix | E | Open-questions heading present at lines [297] |
+| `Plans/GitHub_API_Auth_and_Flows.md` | markdown | OK | OK | — |
+| `Plans/Glossary.md` | markdown | Needs Fix | S | SSOT coverage gap: missing primitive definitions referenced by ContractRef. |
+| `Plans/LSPSupport.md` | markdown | Needs Fix | E | Open-questions heading present at lines [298] |
 | `Plans/MiscPlan.md` | markdown | Needs Fix | F | No SSOT references detected (DRY risk) |
 | `Plans/Multi-Account.md` | markdown | Needs Fix | DF | Missing acceptance/verification section / No SSOT references detected (DRY risk) |
 | `Plans/OpenCode_Deep_Extraction.md` | markdown | Needs Fix | F | No SSOT references detected (DRY risk) |
-| `Plans/PlanPathAudit_Report.md` | markdown | Needs Fix | D | Missing acceptance/verification section |
-| `Plans/Progression_Gates.md` | markdown | OK | OK | — |
+| `Plans/Progression_Gates.md` | markdown | Needs Fix | C | Unresolved placeholder markers at lines [85] |
+| `Plans/Project_Output_Artifacts.md` | markdown | OK | OK | — |
+| `Plans/RECOVERY_AUDIT_REPORT.md` | markdown | OK | OK | — |
+| `Plans/RECOVERY_FIX_QUEUE.md` | markdown | OK | OK | — |
 | `Plans/Rebrand_Chunked_Playbook.md` | markdown | Needs Fix | AF | Naming noncompliance (legacy naming) at lines [128, 134, 247, 264, 281, 315, 320, 364, 380, 396]... / Naming drift (no-space variant) at lines [179, 180, 185, 381, 385] / No SSOT references detected (DRY risk) |
 | `Plans/Spec_Lock.json` | json | OK | OK | — |
-| `Plans/Tools.md` | markdown | Needs Fix | S | SSOT coverage gap: missing ToolID `GitHubApiTool` definition referenced by `Plans/Crosswalk.md`. |
+| `Plans/Tools.md` | markdown | Needs Fix | S | SSOT coverage gap: missing ToolID definition referenced by other plans. |
 | `Plans/UI_Command_Catalog.md` | markdown | Needs Fix | D | Missing acceptance/verification section |
 | `Plans/WorktreeGitImprovement.md` | markdown | Needs Fix | F | No SSOT references detected (DRY risk) |
+| `Plans/acceptance_manifest.schema.json` | json-schema | OK | OK | — |
 | `Plans/agent-rules-context.md` | markdown | Needs Fix | DF | Missing acceptance/verification section / No SSOT references detected (DRY risk) |
 | `Plans/assistant-chat-design.md` | markdown | OK | OK | — |
-| `Plans/auto_decisions.jsonl` | jsonl | OK | OK | File contains 0 JSONL records (empty) |
-| `Plans/chain-wizard-flexibility.md` | markdown | Needs Fix | AF | Naming noncompliance (legacy naming) at lines [723] / No SSOT references detected (DRY risk) |
+| `Plans/auto_decisions.jsonl` | jsonl | OK | OK | — |
+| `Plans/auto_decisions.schema.json` | json-schema | OK | OK | — |
+| `Plans/chain-wizard-flexibility.md` | markdown | OK | OK | — |
 | `Plans/change_budget.schema.json` | json-schema | OK | OK | — |
+| `Plans/contracts_index.schema.json` | json-schema | OK | OK | — |
 | `Plans/evidence.schema.json` | json-schema | OK | OK | — |
 | `Plans/feature-list.md` | markdown | OK | OK | — |
-| `Plans/geminigui-spec.md` | markdown | Needs Fix | D | Missing acceptance/verification section |
-| `Plans/gui-layout-architecture.md` | markdown | Needs Fix | D | Missing acceptance/verification section |
-| `Plans/human-in-the-loop.md` | markdown | Needs Fix | F | No SSOT references detected (DRY risk) |
-| `Plans/interview-subagent-integration.md` | markdown | Needs Fix | S | Special-topic gap: missing user-project plan graph shard paths under `.puppet-master/project/plan_graph/...`. |
+| `Plans/human-in-the-loop.md` | markdown | OK | OK | — |
+| `Plans/interview-subagent-integration.md` | markdown | OK | OK | — |
 | `Plans/newfeatures.md` | markdown | Needs Fix | AF | Naming noncompliance (legacy naming) at lines [7] / No SSOT references detected (DRY risk) |
 | `Plans/newtools.md` | markdown | Needs Fix | F | No SSOT references detected (DRY risk) |
-| `Plans/opusgui-redesign-spec.md` | markdown | Needs Fix | D | Missing acceptance/verification section |
-| `Plans/orchestrator-subagent-integration.md` | markdown | Needs Fix | C | Unresolved placeholder markers at lines [4873, 5273] |
-| `Plans/plan_graph.json` | json | Needs Fix | S | Special-topic gap: plan-graph doc describes repo `Plans/` graph only; missing user-project sharded plan graph paths and schema expectations. |
-| `Plans/plan_graph.schema.json` | json-schema | Needs Fix | S | Special-topic gap: schema does not cover user-project sharded plan graph (`index.json`, `nodes/<id>.json`, optional `edges.json`). |
+| `Plans/orchestrator-subagent-integration.md` | markdown | OK | OK | — |
+| `Plans/plan_graph.json` | json | OK | OK | — |
+| `Plans/plan_graph.schema.json` | json-schema | OK | OK | — |
+| `Plans/project_plan_graph_index.schema.json` | json-schema | OK | OK | — |
+| `Plans/project_plan_node.schema.json` | json-schema | OK | OK | — |
 | `Plans/rebrand.md` | markdown | Needs Fix | AF | Naming noncompliance (legacy naming) at lines [21, 24, 62, 65, 85, 103, 116, 179, 180, 184]... / Naming drift (no-space variant) at lines [140, 257] / No SSOT references detected (DRY risk) |
 | `Plans/rebrand_chunks.json` | json | OK | OK | — |
 | `Plans/rewrite-tie-in-memo.md` | markdown | Needs Fix | DF | Missing acceptance/verification section / No SSOT references detected (DRY risk) |
-| `Plans/storage-plan.md` | markdown | Needs Fix | S | Special-topic gap: lacks explicit artifact-content canonicalization semantics (chunking/hashes/logical paths) and does not mention user-project plan graph shard paths. |
-| `Plans/usage-feature.md` | markdown | Needs Fix | CDF | Unresolved placeholder markers at lines [156, 187, 191, 478] / Missing acceptance/verification section / No SSOT references detected (DRY risk) |
+| `Plans/storage-plan.md` | markdown | OK | OK | — |
+| `Plans/usage-feature.md` | markdown | Needs Fix | DF | Missing acceptance/verification section / No SSOT references detected (DRY risk) |
 
 **Checks legend:**
 - **A** Naming compliance (must be “Puppet Master” only; legacy naming must not appear)
 - **B** Path hygiene (filesystem path/link issues)
-- **C** Placeholder elimination (TODO/TBD/FIXME/placeholder ContractRef)
+- **C** Placeholder elimination (unresolved placeholder markers and placeholder ContractRef targets)
 - **D** Executability (missing acceptance/verification section)
 - **E** Autonomy (open-questions heading/section)
 - **F** DRY enforcement risk (SSOT references not detected)
-- **S** Special-topic / SSOT coverage gap (content missing vs required baseline)
+- **S** SSOT coverage gap (missing/invalid canonical definitions referenced elsewhere)
 
 ## Top 20 Priority Fixes
 
-1. `Plans/Decision_Policy.md` — Missing acceptance/verification section
-2. `Plans/DRY_Rules.md` — Unresolved placeholder markers at lines [52, 96] / Missing acceptance/verification section
+1. `Plans/Decision_Policy.md` — SSOT coverage gap: Decision Policy missing required definitions referenced by other plans. / Unresolved placeholder markers at lines [98] / Missing acceptance/verification section
+2. `Plans/DRY_Rules.md` — Unresolved placeholder markers at lines [52, 98] / Missing acceptance/verification section
 3. `Plans/Contracts_V0.md` — Missing acceptance/verification section
 4. `Plans/Architecture_Invariants.md` — Missing acceptance/verification section
 5. `Plans/UI_Command_Catalog.md` — Missing acceptance/verification section
-6. `Plans/Glossary.md` — SSOT coverage gap: missing primitive definitions referenced by ContractRef (`DRYRules`, `PatchPipeline`, `SessionStore`).
-7. `Plans/Tools.md` — SSOT coverage gap: missing ToolID `GitHubApiTool` definition referenced by `Plans/Crosswalk.md`.
-8. `Plans/plan_graph.schema.json` — Special-topic gap: schema does not cover user-project sharded plan graph (`index.json`, `nodes/<id>.json`, optional `edges.json`).
-9. `Plans/plan_graph.json` — Special-topic gap: plan-graph doc describes repo `Plans/` graph only; missing user-project sharded plan graph paths and schema expectations.
-10. `Plans/interview-subagent-integration.md` — Special-topic gap: missing user-project plan graph shard paths under `.puppet-master/project/plan_graph/...`.
-11. `Plans/storage-plan.md` — Special-topic gap: lacks explicit artifact-content canonicalization semantics (chunking/hashes/logical paths) and does not mention user-project plan graph shard paths.
-12. `Plans/GitHub_API_Auth_and_Flows.md` — SSOT coverage gap: references ConfigKey `github.api_version` and PolicyRule `no_secrets_in_storage`, but Decision Policy does not currently define them.
-13. `Plans/Rebrand_Chunked_Playbook.md` — Naming noncompliance (legacy naming) at lines [128, 134, 247, 264, 281, 315, 320, 364, 380, 396]... / Naming drift (no-space variant) at lines [179, 180, 185, 381, 385] / No SSOT references detected (DRY risk)
-14. `Plans/rebrand.md` — Naming noncompliance (legacy naming) at lines [21, 24, 62, 65, 85, 103, 116, 179, 180, 184]... / Naming drift (no-space variant) at lines [140, 257] / No SSOT references detected (DRY risk)
-15. `Plans/newfeatures.md` — Naming noncompliance (legacy naming) at lines [7] / No SSOT references detected (DRY risk)
-16. `Plans/chain-wizard-flexibility.md` — Naming noncompliance (legacy naming) at lines [723] / No SSOT references detected (DRY risk)
-17. `AGENTS.md` — Naming noncompliance (legacy naming) at lines [40]
-18. `Plans/orchestrator-subagent-integration.md` — Unresolved placeholder markers at lines [4873, 5273]
-19. `Plans/usage-feature.md` — Unresolved placeholder markers at lines [156, 187, 191, 478] / Missing acceptance/verification section / No SSOT references detected (DRY risk)
-20. `Plans/FileSafe.md` — Unresolved placeholder markers at lines [1306, 1432, 1433]
-
-### Action grouping (what to re-run vs rebuild)
-
-**Re-run Prompt 1 (Fill-In + Drift Hardening):**
-- `Plans/Decision_Policy.md`
-- `Plans/DRY_Rules.md`
-- `Plans/Glossary.md`
-- `Plans/Tools.md`
-- `Plans/GitHub_API_Auth_and_Flows.md`
-- `Plans/orchestrator-subagent-integration.md`
-- `Plans/usage-feature.md`
-- `Plans/FileSafe.md`
-- `Plans/newfeatures.md`
-- `Plans/chain-wizard-flexibility.md`
-- `AGENTS.md`
-
-**Deeper rewrite / recovery (not a trivial fix):**
-- `Plans/Rebrand_Chunked_Playbook.md`
-- `Plans/rebrand.md`
-
-**Run Review Prompt 2 / targeted repair (high priority but not Prompt 1):**
-- `Plans/Contracts_V0.md`
-- `Plans/Architecture_Invariants.md`
-- `Plans/UI_Command_Catalog.md`
-- `Plans/plan_graph.schema.json`
-- `Plans/plan_graph.json`
-- `Plans/interview-subagent-integration.md`
-- `Plans/storage-plan.md`
+6. `Plans/Glossary.md` — SSOT coverage gap: missing primitive definitions referenced by ContractRef.
+7. `Plans/Tools.md` — SSOT coverage gap: missing ToolID definition referenced by other plans.
+8. `Plans/Progression_Gates.md` — Unresolved placeholder markers at lines [85]
+9. `Plans/FileSafe.md` — Unresolved placeholder markers at lines [1306]
+10. `Plans/LSPSupport.md` — Open-questions heading present at lines [298]
+11. `Plans/Rebrand_Chunked_Playbook.md` — Naming noncompliance (legacy naming) at lines [128, 134, 247, 264, 281, 315, 320, 364, 380, 396]... / Naming drift (no-space variant) at lines [179, 180, 185, 381, 385] / No SSOT references detected (DRY risk)
+12. `Plans/rebrand.md` — Naming noncompliance (legacy naming) at lines [21, 24, 62, 65, 85, 103, 116, 179, 180, 184]... / Naming drift (no-space variant) at lines [140, 257] / No SSOT references detected (DRY risk)
+13. `Plans/newfeatures.md` — Naming noncompliance (legacy naming) at lines [7] / No SSOT references detected (DRY risk)
+14. `AGENTS.md` — Naming noncompliance (legacy naming) at lines [40]
+15. `Plans/usage-feature.md` — Missing acceptance/verification section / No SSOT references detected (DRY risk)
+16. `Plans/newtools.md` — No SSOT references detected (DRY risk)
+17. `Plans/00-plans-index.md` — Missing acceptance/verification section
+18. `Plans/Crosswalk.md` — Missing acceptance/verification section
+19. `Plans/Decision_Log.md` — Missing acceptance/verification section
+20. `Plans/MiscPlan.md` — No SSOT references detected (DRY risk)
 
 ## SSOT Coverage
 
-### Missing definitions (from ContractRef coverage)
-- ConfigKey missing from SSOT: `github.api_version` (referenced in `Plans/GitHub_API_Auth_and_Flows.md`).
-- PolicyRule referenced but not defined in Decision Policy: `no_secrets_in_storage` (referenced in `Plans/Architecture_Invariants.md` and `Plans/GitHub_API_Auth_and_Flows.md`).
-- ToolID referenced but not defined in `Plans/Tools.md`: `GitHubApiTool` (referenced in `Plans/Crosswalk.md`).
+### Missing definitions / invalid references (from ContractRef coverage)
+- ConfigKey missing from SSOT docs: `github.api_version`.
+- PolicyRule referenced but not defined in Decision Policy: `no_secrets_in_storage`.
+- ToolID referenced but not defined in Tools SSOT: `GitHubApiTool`.
 - Primitive identifiers referenced but not defined in Contracts or Glossary: `DRYRules`, `PatchPipeline`, `SessionStore`.
-- ContractRef placeholder values present (must be replaced with real targets): `<ref1>`, `<ref2>` (in `Plans/DRY_Rules.md`).
+- SchemaID references invalid file anchors/paths: `Spec_Lock.json#auth_model`, `Spec_Lock.json#github_operations`.
+- Placeholder ContractRef values detected (angle-bracket placeholders) — must be replaced with real targets (see `Plans/DRY_Rules.md`).
 
 ### Contradictions / drift-by-synonym (high-signal)
-- **Namespace collision risk:** `cmd.*` appears in non-UI-command contexts (e.g., helper/variable names). Keep UI command IDs exclusively for `cmd.<domain>.<action>` and avoid `cmd.*` for other meanings.
-- **Namespace collision risk:** `event.*` appears as DOM/event-object fields (e.g., `event.target`). Avoid using `event.*` as a namespace for persisted event schemas/IDs; prefer `pm.event.*` (schema IDs) and explicit `EventType:*` strings.
-- **Special-topic gap:** No plan doc references the required sharded user-project plan graph paths under `.puppet-master/project/plan_graph/` (index + nodes + optional edges).
+- **Namespace collision risk:** `cmd.*` can appear in non-UI-command contexts; keep UI command IDs exclusively for `cmd.<domain>.<action>`.
+- **Namespace collision risk:** `event.*` often appears as UI/DOM event fields (e.g., `event.target`); avoid using `event.*` as a persisted event namespace — prefer `pm.event.*` for schemas and explicit `EventType:*` strings.
+
+## Special Topics Coverage
+
+### Project output paths (user projects)
+- Sharded plan graph paths are defined/referenced in: `Plans/Project_Output_Artifacts.md`, `Plans/chain-wizard-flexibility.md`, `Plans/interview-subagent-integration.md`, `Plans/orchestrator-subagent-integration.md`.
+
+### Seglog canonical artifact semantics
+- Seglog artifact canonicalization semantics (full content, chunking, hashes, logical paths, filesystem export/cache) appear in: `Plans/Project_Output_Artifacts.md`, `Plans/chain-wizard-flexibility.md`, `Plans/interview-subagent-integration.md`, `Plans/newfeatures.md`, `Plans/orchestrator-subagent-integration.md`.
 
 ## Path Hygiene
 
-- **Filesystem path/link hygiene:** No `Plan/...` folder references were found in markdown link/path contexts (checked for link-targets and file-extension paths).
-- **Remaining `Plan/` string occurrences (non-filesystem usage):**
-  - `Plans/assistant-chat-design.md` (lines 23, 477) — conceptual “Plan/Crew” terminology (not a folder path)
-  - `Plans/orchestrator-subagent-integration.md` (line 1125) — subagent category label (not a folder path)
-  - `Plans/newtools.md` (lines 199, 207) — “Plan/build ...” phrase (not a folder path)
-  - `Plans/feature-list.md` (line 201) — “Plan/build ...” phrase (not a folder path)
+### Legacy plan folder prefix
+- No legacy plan folder prefix occurrences were found in filesystem path/link contexts (good).
+- Remaining non-filesystem occurrences exist (conceptual labels); locations: `Plans/assistant-chat-design.md:28`, `Plans/assistant-chat-design.md:483`, `Plans/feature-list.md:201`, `Plans/newtools.md:199`, `Plans/newtools.md:207`, `Plans/orchestrator-subagent-integration.md:1168`.
 
-## Verification (AI-executable)
+## Verification
 
-Run these commands from repo root to re-check key invariants after recovery work:
+The following checks are safe to run from repo root (they do not require any legacy naming strings):
 
 ```bash
-# 1) Ensure no legacy folder-path references exist in Plans docs (link/path contexts)
-rg -n "\]\(Plan/" Plans || true
-rg -n "`Plan/" Plans || true
-rg -n "\bPlan/[^\s\)\]]+\.(md|json|yaml|yml|toml)\b" Plans || true
+# Legacy naming drift (acronym-prefixed variant)
+rg -n "\b[A-Z]{2,}[-\s]+Puppet Master\b" Plans AGENTS.md README.md || true
 
-# 2) Placeholder marker scan (focus on obvious unresolved markers)
-rg -n "ContractRef:\s*<" Plans
-rg -n "\b(TBD|FIXME|TODO)\b" Plans
+# No-space naming variant (constructed at runtime; does not embed the variant string)
+python3 - <<'PY'
+from pathlib import Path
 
-# 3) User-project plan graph shard paths should exist in relevant docs (after fixes)
-rg -n "\.puppet-master/project/plan_graph" Plans
+needle = ''.join(map(chr, [80, 117, 112, 112, 101, 116, 77, 97, 115, 116, 101, 114]))
+roots = [Path('AGENTS.md'), Path('README.md'), Path('Plans')]
+
+hits = []
+for r in roots:
+    if r.is_dir():
+        for f in sorted(r.rglob('*.md')):
+            if needle in f.read_text(encoding='utf-8', errors='replace'):
+                hits.append(str(f))
+    elif r.exists():
+        if needle in r.read_text(encoding='utf-8', errors='replace'):
+            hits.append(str(r))
+
+print('\n'.join(hits))
+PY
+
+# Open-questions headings (autonomy)
+rg -n "^\s{0,3}#+\s+.*open questions\b" Plans -i || true
+
+# ContractRef placeholder anchors
+rg -n "ContractRef:\s*<" Plans || true
 ```

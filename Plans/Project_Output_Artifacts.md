@@ -37,6 +37,14 @@ All artifacts below are required unless explicitly marked optional:
   auto_decisions.jsonl
   evidence/
     <node_id>.json        # produced during execution (one per completed node)
+  review/
+    findings/
+      <run_id>.json
+    approvals/
+      <run_id>.json
+    checkpoints/
+      <document_id>/
+        <checkpoint_id>.json
 ```
 
 ### Artifact Roles
@@ -51,6 +59,9 @@ All artifacts below are required unless explicitly marked optional:
 - `.puppet-master/project/acceptance_manifest.json`: project-level acceptance index.
 - `.puppet-master/project/auto_decisions.jsonl`: deterministic machine-consumable decision log.
 - `.puppet-master/project/evidence/<node_id>.json`: evidence bundle produced when a node completes (schema `pm.evidence.schema.v1`).
+- `.puppet-master/project/review/findings/<run_id>.json`: persisted Multi-Pass findings summary for requirements/interview review runs.
+- `.puppet-master/project/review/approvals/<run_id>.json`: persisted final approval-gate decision state for review runs.
+- `.puppet-master/project/review/checkpoints/<document_id>/<checkpoint_id>.json`: restorable document checkpoint records used by review/edit recovery flows.
 
 Staging inputs may exist under `.puppet-master/requirements/*`, but canonical user-project outputs must be under `.puppet-master/project/*`.
 
@@ -114,6 +125,53 @@ Evidence bundles are produced during orchestrator execution (not during Intervie
 - Schema: `Plans/evidence.schema.json` (`pm.evidence.schema.v1`)
 - The node shard’s `evidence_required.path` MUST point to this evidence bundle (relative to the node shard).
 - Change budget enforcement applies to user-workspace code paths; Puppet Master-controlled artifacts under `.puppet-master/project/**` (including evidence + auto decisions) are excluded from budget counting.
+
+## Review lifecycle artifacts (requirements and interview)
+
+Review flows add canonical artifacts under `.puppet-master/project/review/`:
+
+- `review/findings/<run_id>.json` (`review_findings_summary.v1`)
+- `review/approvals/<run_id>.json` (`review_approval_gate.v1`)
+- `review/checkpoints/<document_id>/<checkpoint_id>.json` (`document_checkpoint.v1`)
+
+### Findings summary contract (`review_findings_summary.v1`)
+
+Required fields:
+- `run_id`
+- `scope` (`requirements` | `interview`)
+- `gaps`
+- `consistency_issues`
+- `missing_information`
+- `applied_changes_summary`
+- `unresolved_items`
+
+### Final approval gate contract (`review_approval_gate.v1`)
+
+Required fields:
+- `run_id`
+- `decision` (`accept` | `reject` | `edit`)
+- `decision_timestamp`
+- `decision_actor`
+- `preconditions` (`findings_summary_shown=true`)
+
+### Document checkpoint contract (`document_checkpoint.v1`)
+
+Required fields:
+- `checkpoint_id`
+- `document_id`
+- `label` (for example `before_multi_pass`, `after_user_edit_1`)
+- `artifact_ref`
+- `created_at`
+- `restorable` (must be `true` for restorable checkpoints)
+
+### Tri-location pointer contract (review surfaces)
+
+For each review run, findings and approval artifacts must include pointers that support the three review surfaces:
+1. File Editor open target (canonical path),
+2. Chat pointer (same canonical path),
+3. Embedded document pane reference (`document_id` and optional `selected_view`).
+
+When evidence is available, include the evidence artifact pointer used for that run context.
 
 ## Human-Readable Plan Requirement
 
@@ -300,6 +358,10 @@ Requirements:
 
 - Persist full artifact content in seglog artifact events.
 - Include logical path and `sha256` for each artifact.
+- Include artifact type labels for review lifecycle artifacts:
+  - `review_findings_summary`
+  - `review_approval_gate`
+  - `document_checkpoint`
 - Large artifacts use deterministic chunking with:
   - `chunk_index`
   - `chunk_count`
@@ -325,6 +387,10 @@ Validation must enforce:
 - shard hash integrity (`index.nodes[].sha256` matches actual node file)
 - node `tool_policy_mode` is present and valid (`auto` | `ask` | `deny`)
 - node `evidence_required` pointer is well-formed and points under `.puppet-master/project/evidence/` (runtime gate checks evidence file existence after execution)
+- when a review run exists, `review/findings/<run_id>.json` and `review/approvals/<run_id>.json` both exist and validate against required field sets above
+- every approval artifact must include `preconditions.findings_summary_shown=true`
+- checkpoint artifacts under `review/checkpoints/**` must be restorable (`restorable=true`) and reference a valid artifact path
+- review findings/approval artifacts must include tri-location pointers (editor path, chat path, document-pane reference)
 
 ## Change Summary
 
@@ -333,3 +399,4 @@ Validation must enforce:
 - 2026-02-23: Added deterministic node ID requirements and node/index schema contracts.
 - 2026-02-23: Added canonical seglog full-content persistence contract with deterministic chunking and integrity events.
 - 2026-02-23: Added SSOT schemas for user-project plan graph index/node shards, contract-pack index, and acceptance manifest; added stable `ProjectContract:*` refs + `tool_policy_mode`, and documented evidence output location under `.puppet-master/project/evidence/`.
+- 2026-02-23: Added review lifecycle artifact taxonomy under `.puppet-master/project/review/` for findings summaries, approval gates, and document checkpoints; added tri-location pointer and validation requirements.

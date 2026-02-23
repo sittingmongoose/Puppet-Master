@@ -816,7 +816,20 @@ Multi-step requirements wizard (10 steps: 0-9):
 - **Fork & evolve / Contribute PR:** Upstream repo input (URL or owner/repo); "Create fork for me" or "I'll create the fork myself" radio; fork URL/path input when manual.
 - **Contribute PR:** Feature branch name input (text input with auto-suggest from requirements slug; sanitized per git ref rules).
 
-**Requirements step:** Upload files (max 10 files, max 5 MiB per file; drag-and-drop or file picker; list display with remove and reorder; reject oversized files with inline error). Requirements Doc Builder button opens Assistant chat in builder mode; on completion, returns to wizard with pre-loaded doc and confirmation: "Requirements doc generated; continue to Interview?" Multiple uploads are concatenated in display order with separators. Builder output appended after uploads.
+**Requirements step:** Upload files (max 10 files, max 5 MiB per file; drag-and-drop or file picker; list display with remove and reorder; reject oversized files with inline error). Requirements Doc Builder button opens Builder chat mode. First Builder Assistant message is exactly `What are you trying to do?`. Multiple uploads are concatenated in display order with separators. Builder output is appended after uploads.
+
+**Builder conversation flow (required):**
+- Turn definition: one Assistant message plus one user response.
+- Suggest generation when enough context exists or after 6 completed turns. Suggestion does not auto-generate.
+- User can continue conversation indefinitely until explicit generation confirmation.
+- On generation confirmation, ask qualifying questions only for missing or thin checklist sections, then generate requirements doc + contract seed pack.
+- Before Multi-Pass or handoff, ask: `Do you want to make any more changes or talk about it more?`
+
+**Builder checklist status UI (derived from side structure):**
+- Optional compact status row in requirements step or preview section:
+  - `Scope`, `Goals`, `Out of scope`, `Acceptance criteria`, `Non-goals`
+  - contract-seed sections when present: `Assumptions`, `Constraints`, `Glossary`, `Non-functional budgets`
+- Status values: `filled`, `thin`, `empty`.
 
 **Agent activity view:** Embedded read-only pane (monospace font, min 120px height, max ~500 visible lines virtualized) showing streaming agent output during doc generation and Multi-Pass Review. Shows prompts, model responses, subagent reports in real-time.
 
@@ -829,10 +842,25 @@ Multi-step requirements wizard (10 steps: 0-9):
 - **Cancel:** Confirmation modal: "Stop this run? No changes will be applied." [Stop run] [Keep running]. Transitions to cancelling then cancelled. Toast: "Run cancelled -- no changes applied."
 - **Resume:** Continues from persisted checkpoint. Toast: "Resuming..." then "Run resumed."
 
-**Multi-Pass Review approval UI:** When review completes, show the revised document alongside a summary of changes. Three actions:
-- **Accept:** Set as canonical, continue to next step.
-- **Reject:** Discard revised version, keep original, offer "Re-run Builder" or continue.
-- **Edit:** Open document in File Editor; on save, re-show Accept/Reject/Edit.
+**Multi-Pass Review approval UI:** When review completes, show findings summary first (gaps, consistency issues, missing information, applied changes, unresolved items) in the preview section and in chat. Then show one final approval gate:
+- **Accept:** Set revised bundle as canonical and continue.
+- **Reject:** Discard revised bundle and keep original bundle as canonical.
+- **Edit:** Open revised bundle in File Editor or embedded document pane; on save, return to same final gate.
+No per-document approval and no extra approval modes.
+
+**Document review locations (required):**
+- Chat summary includes three pointers after generation/revision:
+  1. `Opened in editor`
+  2. Clickable canonical file path
+  3. Embedded document pane entry
+- Full document bodies are not rendered in chat.
+
+**Wizard layout with separate regions (required):**
+- Primary content split includes:
+  - workflow/step content,
+  - embedded document pane (review/edit human-readable docs),
+  - embedded agent activity pane (streaming progress only).
+- Side-panel chat remains independent from both embedded panes.
 
 **Step transitions:** Animated slide-left/slide-right (200ms ease-in-out) between steps. Back button returns to previous step without data loss.
 
@@ -852,12 +880,23 @@ Interactive requirements gathering with phase tracking, Q&A flow, reference mate
 
 **Question UI:** Each interview question shows: question text, suggested answer options as clickable chips/buttons, and a "Something else" text input bar for freeform answers. Thought stream toggle (show/hide the model's reasoning). Message strip showing conversation flow.
 
-**Subagent activity:** When interview subagents are enabled (see Settings > Interview), show an "Agent Activity" card beneath the Q&A area listing active subagents (name, platform, model, current action, elapsed time). Progress spinner per active subagent. When Multi-Pass Review is active, show review round counter ("Review 2/3") and per-reviewer status.
+**Subagent activity:** When interview subagents are enabled (see Settings > Interview), show an "Agent Activity" card beneath the Q&A area listing active subagents (name, provider, model, current action, elapsed time). Progress spinner per active subagent. When Multi-Pass Review is active, show review round counter and per-reviewer status.
 
-**Multi-Pass Review approval (Interview):** Three approval modes (selectable in Settings > Interview):
-- **Apply all:** Auto-apply revisions; show consolidated findings report (read-only).
-- **Show report only:** Findings displayed; user manually edits documents if desired.
-- **Apply with approval per document** (default): Each revised document shows Accept / Reject / Edit buttons.
+**Interview preview section (required):**
+- Preview section shows Multi-Pass findings summary and one final approval gate.
+- Final gate actions: `Accept | Reject | Edit`.
+- Findings summary appears before final gate and is also posted in chat.
+
+**Multi-Pass Review approval (Interview):**
+- Single approval model only:
+  - **Accept:** apply revised bundle and complete handoff.
+  - **Reject:** discard revised bundle and complete handoff with original bundle.
+  - **Edit:** open revised docs in File Editor or embedded document pane, then return to same final gate.
+
+**Interview embedded document pane (required):**
+- Interview page includes embedded document pane for interview artifacts (phase docs, PRD, AGENTS.md, and other human-readable project docs).
+- Pane includes `Plan graph` as a read-only rendered view.
+- Plan graph view shows notice: `Talk to Assistant to edit plan graph.`
 
 **Remediation flow:** If validation fails, show a remediation panel: list of failed checks with severity, remediation suggestions, and "Fix & Re-validate" button. User can also skip individual checks with "Accept risk" (logged).
 
@@ -1020,6 +1059,19 @@ Platform installation status checks. Shows detected platforms and versions. Auto
 **Revert action:** Each assistant message with file changes shows a small "Revert" link; click undoes the last agent edit via Git restore point. Confirmation modal before reverting.
 
 **Files-touched strip:** Below each assistant message that modified files, a compact horizontal strip shows affected files with diff counts (e.g., `app.rs +42 -8 | main.rs +3 -1`). File names are clickable (opens in File Editor at first changed line). Strip collapses to `"3 files changed"` when >5 files; click expands.
+
+**Document rendering policy (required):**
+- Chat does not render full document bodies for requirements, phase docs, PRD, contract seeds, or similar long artifacts.
+- Chat shows concise summaries, findings, gaps, and change notes.
+
+**Post-generation/revision message contract (required):**
+- For document workflows, chat posts:
+  1. `Opened in editor` indicator,
+  2. Clickable canonical file path,
+  3. Pointer to embedded document pane entry.
+
+**Multi-Pass findings placement (required):**
+- Requirements and Interview Multi-Pass runs post findings summary in chat and indicate that the same summary is shown in the page preview section.
 
 **Plan panel:** When in Plan mode, a persistent sticky card at top shows plan outline and todo checkboxes. Collapsible.
 
@@ -1194,6 +1246,11 @@ IDE-style editor with:
 
 **Open-file contract:** All file-open actions across the app (File Manager click, chat file path click, Ctrl+P, @ mention, code action navigation) use a single unified contract: `OpenFile { path, line?, range?, target_group? }`. `target_group` defaults to the active (focused) editor group; optionally "Open in other group" or "Open in new group" via context menu. When line/range is specified, editor scrolls to that location with a brief highlight fade (configurable duration, default 5 seconds).
 
+**Embedded document pane integration (required):**
+- Embedded document pane is another view on the same file artifacts used by File Editor.
+- File Editor and document pane share one buffer model, one dirty state, and one save source per file path.
+- Restore/checkpoint actions triggered in document pane use the same open-file and buffer-refresh pipeline as File Editor.
+
 **Split panes and editor groups:** Multiple editor groups (side-by-side or top/bottom). Each group has its own tab list and active tab. **Shared buffer model:** One buffer per file path across all groups; any edit in one group updates all views immediately. Only cursor position and scroll offset are per-view. Tab drag between groups to move files. Drop zone indicators show split direction targets.
 
 **Additional editor features:**
@@ -1239,11 +1296,41 @@ IDE-style editor with:
 
 Read-only, chat-like pane showing streaming agent output during document generation and Multi-Pass Review. Shows which persona/subagent is working on which task. Non-interactive. Progress indicators for documents in progress. Monospace font. Min height 120px, max ~500 visible lines (virtualized via `ListView`).
 
-**Multi-Pass Review display:** When enabled, shows review round counter ("Review 2/3 -- Architect Reviewer"), per-reviewer results (findings list with severity badges), and aggregate score. On completion, shows "All reviews complete" with summary of findings and "Accept" / "Request changes" buttons.
+**Responsibility boundary (required):**
+- Agent Activity Pane is for streaming/progress only.
+- It must not host document navigation, document editing, or approval controls.
+- Findings summary and approval controls are shown in chat + preview section; document editing happens in File Editor or embedded document pane.
 
-**Crew coordination display:** When Crew mode is active, shows a panel per crew member (name, platform, model, current action). Status dots: green (active), amber (waiting for dependency), red (error). Inter-agent message log for debugging (collapsible "Agent comms" section).
+**Event wiring (required):**
+- Pane consumes normalized Provider event stream used by chat.
+- UI updates are dispatched through the Slint event loop (`invoke_from_event_loop`) for immediate state refresh.
 
 **Accessibility:** The pane uses `accessible-role: text` (or equivalent for read-only log output). Screen readers should announce new output as it arrives via a live region equivalent (Slint: set `accessible-label` to include latest line summary). Focus can be placed on the pane for keyboard scrolling (Up/Down/Page Up/Page Down). Keyboard shortcut to toggle auto-scroll.
+
+### 7.19.1 Embedded Document Pane (NEW)
+
+**Location:** Embedded in Wizard and Interview primary content, separate from Agent Activity Pane and separate from side-panel Chat.
+
+**Purpose:** Newbie-friendly surface to review and lightly edit human-readable project artifacts without leaving the flow.
+
+**Content scope:**
+- Include: requirements docs, plan docs, interview-generated docs (phase docs, PRD, AGENTS.md), and related human-readable artifacts.
+- Exclude: raw JSON/non-human-readable files from editable list.
+- Special entry: `Plan graph` rendered view (read-only tree/graph). Do not expose raw plan graph JSON for editing in this pane.
+
+**Navigation and editing:**
+- Left tree/hierarchical sidebar with button-like document entries.
+- Selecting an entry shows document content in main editor area.
+- Editing is basic text edit + save. Advanced IDE features remain in File Editor.
+- Saves write to the same artifact and shared buffer/history contract as File Editor.
+
+**Plan graph entry requirements:**
+- Rendered read-only plan graph view.
+- Notice near graph view: `Talk to Assistant to edit plan graph.`
+
+**Checkpoint history UI:**
+- Show checkpoint restore options (for example `before_multi_pass`, `after_user_edit_1`).
+- Restore actions route through shared file open/refresh pipeline and maintain single source of truth history.
 
 ### 7.20 Bottom Panel (NEW)
 
@@ -1898,6 +1985,10 @@ Chat messages, file trees, log outputs, evidence lists, and other long lists use
 | `settings:v1` | All app settings and config (replaces YAML file eventually) | On save |
 | `chat_state:v1` | Unsent input text, queued messages, active thread selection | On change (debounced 200ms) |
 | `wizard_state:v1:{project_id}` | Current wizard step, form data | On change (debounced 300ms) |
+| `document_pane_state:v1:{project_id}:{page_context}` | Embedded document pane state: selected document, selected view (`document | plan_graph`), scroll/cursor state, history selection, approval stage | On change (debounced 200ms) |
+| `document_checkpoints:v1:{project_id}` | Checkpoint metadata for restorable document states (`before_multi_pass`, `after_user_edit_1`, etc.) | On checkpoint create/restore |
+| `review_findings_summary:v1:{project_id}:{run_id}` | Findings summary payload for requirements/interview review runs | On review completion/update |
+| `review_approval_gate:v1:{project_id}:{run_id}` | Final approval decision state and precondition flags | On approval state change |
 | `slash_commands:v1` | Custom slash commands (application-wide) | On save |
 | `slash_commands:v1:{project_id}` | Custom slash commands (project-wide) | On save |
 | `filetree_state:v1:{project_id}` | Expanded folder paths set, scroll position | On change (debounced 300ms) |
@@ -1942,6 +2033,9 @@ On startup:
 On crash or unexpected shutdown, restore as much state as possible:
 - **Chat state:** Unsent input text, queued messages, and active thread selection are persisted in redb (`chat_state:v1`) on every change (debounced 200ms). On restart, restore the composer content and queue.
 - **Wizard state:** Current wizard step and form data persisted in redb (`wizard_state:v1:{project_id}`). On restart, resume from the last completed step.
+- **Document pane state:** Restore embedded document pane selection and view (`document` or `plan_graph`) from `document_pane_state:v1:{project_id}:{page_context}`.
+- **Document checkpoints:** Restore checkpoint list and selected checkpoint context so user can continue restore/approval workflow.
+- **Review findings + approval state:** Restore findings summary and `awaiting_final_approval` state so interrupted review runs return to findings + final approval UI.
 - **Active project:** Last active project is restored automatically.
 - **Orchestrator state:** If an orchestration was running, show a "Previous run was interrupted" CtA on Dashboard with options: "Resume from last checkpoint" or "Discard and start fresh."
 
@@ -2055,17 +2149,16 @@ No features are deferred. All items in this specification are MVP scope.
 
 | Plan Document | Sections Incorporated |
 |--------------|----------------------|
-| `Plans/gui-layout-architecture.md` | Master layout (§3), navigation (§4), panel system (§5), chat (§7.16), file manager (§7.17), bottom panel (§7.20), themes (§6), spacing (§3.4). **NOTE: This document is superseded by FinalGUISpec.md and should be considered deprecated.** |
 | `Plans/assistant-chat-design.md` | Chat panel (§7.16), modes, threads, steer/queue submission, subagent inline blocks, commands, activity transparency, plan panel, context usage, HITL-to-chat handoff |
-| `Plans/FileManager.md` | File Manager (§7.17), File Editor (§7.18), click-to-open, @ mention, preview, external drag-and-drop, HTML preview/hot reload, click-to-context, open-file contract, shared buffer model, editor diff view, **SSH remote editing (§7.4.5, §7.18)**, **run/debug configurations (§7.4.6, §7.20 Debug)**, **terminal/browser tab management (§7.20)** |
+| `Plans/FileManager.md` | File Manager (section 7.17), File Editor (section 7.18), embedded document pane shared-buffer contract (section 7.19.1), click-to-open, @ mention, preview, external drag-and-drop, HTML preview/hot reload, click-to-context, open-file contract, shared buffer model, editor diff view, **SSH remote editing (section 7.4.5 and section 7.18)**, **run/debug configurations (section 7.4.6 and section 7.20 Debug)**, **terminal/browser tab management (section 7.20)** |
 | `Plans/usage-feature.md` | Usage page (§7.8), per-thread usage, ledger, analytics, 5h/7d visibility, alerts |
 | `Plans/human-in-the-loop.md` | HITL settings (§7.4 Settings/HITL tab), HITL approval UI (§10.8) |
-| `Plans/chain-wizard-flexibility.md` | Wizard redesign (§7.5), intent selection, intent-specific fields, file upload limits, agent activity viewer, Multi-Pass Review approval UI, pause/cancel/resume controls, recovery state, adaptive interview phases |
+| `Plans/chain-wizard-flexibility.md` | Wizard redesign (section 7.5), intent selection, intent-specific fields, file upload limits, Builder opener + turn semantics, checklist status UI, findings preview, single final approval gate, tri-location chat pointers, embedded document pane + agent activity separation, pause/cancel/resume controls, recovery state, adaptive interview phases |
 | `Plans/storage-plan.md` | Persistence (§15), seglog projections, redb schema, Tantivy |
 | `Plans/agent-rules-context.md` | Settings/Rules tab (§7.4), application + project rules |
 | `Plans/rebrand.md` | Product name "Puppet Master" throughout |
 | `Plans/newfeatures.md` | Bottom panel/terminal (§7.20), thinking display, streaming, keyboard shortcuts, stream event visualization, duration timers, background runs, restore points, config migration dialog, rate-limit banner, version update banner, **project bar (§3.4)**, **sound effects (§10.13)**, **hot reload controls (§7.20 Ports)**, **instructions editor (§7.18)**, **language auto-detection (§7.3)** |
-| `Plans/interview-subagent-integration.md` | Interview config tab (§7.4), agent activity (§7.19), multi-pass review |
+| `Plans/interview-subagent-integration.md` | Interview config tab (section 7.4), agent activity (section 7.19), embedded document pane (section 7.19.1), findings summary preview, single final approval gate, multi-pass review |
 | `Plans/orchestrator-subagent-integration.md` | Dashboard (§7.2), orchestrator controls, tier display |
 | `Plans/WorktreeGitImprovement.md` | Branching tab in Settings (§7.4), worktree recovery in Health tab |
 | `Plans/FileSafe.md` | Advanced tab in Settings (§7.4), command blocklist, write scope, security filter |
@@ -2075,8 +2168,6 @@ No features are deferred. All items in this specification are MVP scope.
 | `Plans/Tools.md` | Tool permissions in Advanced tab (§7.4.1), permission model (allow/deny/ask), presets, central tool registry; tool usage widget on Usage page (§7.8); tool approval dialog in Chat (§7.16) |
 | `Plans/LSPSupport.md` | LSP tab in Settings (§7.4.2), editor LSP features (§7.18: diagnostics, hover, completion, signature help, inlay hints, code actions, code lens, semantic highlighting, go-to-definition), **Chat Window LSP (§7.16: diagnostics in context, @ symbol with LSP, code-block hover/go-to-definition, Problems link)**, Problems tab (§7.20), status bar LSP indicator |
 | `Plans/rewrite-tie-in-memo.md` | Rewrite scope alignment; ensures GUI migration ties into broader rewrite plan |
-| `Plans/opusgui-redesign-spec.md` | Comprehensive baseline: navigation, themes, panels, chat, onboarding, accessibility, Slint file organization |
-| `Plans/geminigui-spec.md` | Initial Slint migration goals, 3-panel architecture concept |
 
 ## Appendix B: Locked Decisions Summary
 

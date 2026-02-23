@@ -1,19 +1,19 @@
 # Recovery Fix Queue
 
-This queue is ordered for recovery execution (highest impact first).
+Audit basis commit: `91dca72`
 
 ## `Plans/Decision_Policy.md`
 
 - Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
-- Estimated scope: **Small**
-- Why: Missing acceptance/verification section (not gateable / not AI-executable).
-- Why: Missing PolicyRule `no_secrets_in_storage` and ConfigKey `github.api_version` definitions referenced by other plans.
+- Estimated scope: **Medium**
+- Why: SSOT coverage gap: canonical definitions missing/invalid for references used by other plans.
+- Why: Contains unresolved placeholder markers (must be resolved).
 
 ## `Plans/DRY_Rules.md`
 
 - Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
 - Estimated scope: **Medium**
-- Why: Contains unresolved placeholder markers that block execution-ready plans.
+- Why: Contains unresolved placeholder markers (must be resolved).
 - Why: Missing acceptance/verification section (not gateable / not AI-executable).
 
 ## `Plans/Contracts_V0.md`
@@ -38,43 +38,31 @@ This queue is ordered for recovery execution (highest impact first).
 
 - Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
 - Estimated scope: **Medium**
-- Why: Missing primitive definitions referenced by ContractRef: `DRYRules`, `PatchPipeline`, `SessionStore`.
+- Why: SSOT coverage gap: canonical definitions missing/invalid for references used by other plans.
 
 ## `Plans/Tools.md`
 
 - Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
 - Estimated scope: **Medium**
-- Why: Missing ToolID `GitHubApiTool` definition referenced by `Plans/Crosswalk.md`.
+- Why: SSOT coverage gap: canonical definitions missing/invalid for references used by other plans.
 
-## `Plans/plan_graph.schema.json`
-
-- Recommended action: **Run Review Prompt 2**
-- Estimated scope: **Medium**
-- Why: Missing user-project sharded plan graph schema: `.puppet-master/project/plan_graph/index.json` + `nodes/<node_id>.json` (+ optional `edges.json`).
-
-## `Plans/plan_graph.json`
-
-- Recommended action: **Run Review Prompt 2**
-- Estimated scope: **Medium**
-- Why: Missing user-project sharded plan graph coverage (should reference `.puppet-master/project/plan_graph/index.json` + `nodes/<node_id>.json`).
-
-## `Plans/interview-subagent-integration.md`
-
-- Recommended action: **Run Review Prompt 2**
-- Estimated scope: **Medium**
-- Why: Must explicitly specify user-project outputs under `.puppet-master/project/plan_graph/` (sharded index + nodes).
-
-## `Plans/storage-plan.md`
-
-- Recommended action: **Run Review Prompt 2**
-- Estimated scope: **Medium**
-- Why: Must define canonical artifact persistence semantics in seglog (full content, chunking for large payloads, hashes, logical paths; filesystem as export/cache).
-
-## `Plans/GitHub_API_Auth_and_Flows.md`
+## `Plans/Progression_Gates.md`
 
 - Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
 - Estimated scope: **Medium**
-- Why: References ConfigKey `github.api_version` and PolicyRule `no_secrets_in_storage` which are not currently defined in SSOT docs.
+- Why: Contains unresolved placeholder markers (must be resolved).
+
+## `Plans/FileSafe.md`
+
+- Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
+- Estimated scope: **Medium**
+- Why: Contains unresolved placeholder markers (must be resolved).
+
+## `Plans/LSPSupport.md`
+
+- Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
+- Estimated scope: **Medium**
+- Why: Contains an open-questions heading/section (must be resolved or removed).
 
 ## `Plans/Rebrand_Chunked_Playbook.md`
 
@@ -97,43 +85,24 @@ This queue is ordered for recovery execution (highest impact first).
 - Why: Contains legacy naming (must be replaced with "Puppet Master" only).
 - Why: Lacks explicit SSOT references (risk of duplicated/contradictory definitions).
 
-## `Plans/chain-wizard-flexibility.md`
-
-- Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
-- Estimated scope: **Small**
-- Why: Contains legacy naming (must be replaced with "Puppet Master" only).
-- Why: Lacks explicit SSOT references (risk of duplicated/contradictory definitions).
-
 ## `AGENTS.md`
 
-- Recommended action: **Run Review Prompt 2**
+- Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
 - Estimated scope: **Small**
 - Why: Contains legacy naming (must be replaced with "Puppet Master" only).
-
-## `Plans/orchestrator-subagent-integration.md`
-
-- Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
-- Estimated scope: **Medium**
-- Why: Contains unresolved placeholder markers that block execution-ready plans.
 
 ## `Plans/usage-feature.md`
 
 - Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
 - Estimated scope: **Medium**
-- Why: Contains unresolved placeholder markers that block execution-ready plans.
 - Why: Missing acceptance/verification section (not gateable / not AI-executable).
+- Why: Lacks explicit SSOT references (risk of duplicated/contradictory definitions).
 
-## `Plans/FileSafe.md`
-
-- Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
-- Estimated scope: **Medium**
-- Why: Contains unresolved placeholder markers that block execution-ready plans.
-
-## `Plans/LSPSupport.md`
+## `Plans/newtools.md`
 
 - Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
 - Estimated scope: **Medium**
-- Why: Contains an open-questions heading/section (must be resolved or removed).
+- Why: Lacks explicit SSOT references (risk of duplicated/contradictory definitions).
 
 ## `Plans/00-plans-index.md`
 
@@ -172,12 +141,6 @@ This queue is ordered for recovery execution (highest impact first).
 - Estimated scope: **Medium**
 - Why: Lacks explicit SSOT references (risk of duplicated/contradictory definitions).
 
-## `Plans/PlanPathAudit_Report.md`
-
-- Recommended action: **Run Review Prompt 2**
-- Estimated scope: **Small**
-- Why: Missing acceptance/verification section (not gateable / not AI-executable).
-
 ## `Plans/WorktreeGitImprovement.md`
 
 - Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
@@ -191,39 +154,37 @@ This queue is ordered for recovery execution (highest impact first).
 - Why: Missing acceptance/verification section (not gateable / not AI-executable).
 - Why: Lacks explicit SSOT references (risk of duplicated/contradictory definitions).
 
-## `Plans/geminigui-spec.md`
-
-- Recommended action: **Run Review Prompt 2**
-- Estimated scope: **Small**
-- Why: Missing acceptance/verification section (not gateable / not AI-executable).
-
-## `Plans/gui-layout-architecture.md`
-
-- Recommended action: **Run Review Prompt 2**
-- Estimated scope: **Small**
-- Why: Missing acceptance/verification section (not gateable / not AI-executable).
-
-## `Plans/human-in-the-loop.md`
-
-- Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
-- Estimated scope: **Medium**
-- Why: Lacks explicit SSOT references (risk of duplicated/contradictory definitions).
-
-## `Plans/newtools.md`
-
-- Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
-- Estimated scope: **Medium**
-- Why: Lacks explicit SSOT references (risk of duplicated/contradictory definitions).
-
-## `Plans/opusgui-redesign-spec.md`
-
-- Recommended action: **Run Review Prompt 2**
-- Estimated scope: **Small**
-- Why: Missing acceptance/verification section (not gateable / not AI-executable).
-
 ## `Plans/rewrite-tie-in-memo.md`
 
 - Recommended action: **Re-run Prompt 1 Fill-In + Drift Hardening**
 - Estimated scope: **Medium**
 - Why: Missing acceptance/verification section (not gateable / not AI-executable).
 - Why: Lacks explicit SSOT references (risk of duplicated/contradictory definitions).
+
+## `Plans/chain-wizard-flexibility.md` (Builder/Review recovery contracts)
+
+- Recommended action: **Resolved by spec update**
+- Estimated scope: **Closed**
+- Why: Added pane-selection persistence contract (`document_pane_state.v1`), checkpoint contract (`document_checkpoint.v1`), findings summary contract (`review_findings_summary.v1`), and final approval gate contract (`review_approval_gate.v1`).
+- Why: Added explicit restoration requirements for interrupted runs and `awaiting_final_approval` workflows.
+
+## `Plans/interview-subagent-integration.md` (Interview recovery contracts)
+
+- Recommended action: **Resolved by spec update**
+- Estimated scope: **Closed**
+- Why: Added findings-summary-before-approval flow and single final approval gate for interview Multi-Pass.
+- Why: Added recovery requirements to restore findings preview + final approval state and document-pane context.
+
+## `Plans/FinalGUISpec.md` (GUI recovery wiring)
+
+- Recommended action: **Resolved by spec update**
+- Estimated scope: **Closed**
+- Why: Added redb keys for document pane state, review findings, approval gates, and checkpoints.
+- Why: Added session recovery behavior for restoring pane selection and final approval stage after interruption.
+
+## `Plans/FileManager.md` (shared restore pipeline)
+
+- Recommended action: **Resolved by spec update**
+- Estimated scope: **Closed**
+- Why: Added embedded document-pane shared buffer/history contract with File Editor.
+- Why: Added required unsaved-buffer recovery and restore-through-open-file pipeline semantics.

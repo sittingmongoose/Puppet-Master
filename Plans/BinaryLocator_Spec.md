@@ -66,14 +66,15 @@ Optional fields:
 - `validation`: `Valid | Invalid(BinaryErrorCode)`. (ContractRef: Primitive:Provider)
 - `trace`: ordered list of probe attempts:
   - `layer`: one of the `source_layer` values
-  - `candidate`: string
-  - `probe_kind`: `DirectPath | PATHLookup | DirectoryJoin | LauncherResolution`
+  - `candidate`: string (ContractRef: Primitive:Provider)
+  - `probe_kind`: `DirectPath | PATHLookup | DirectoryJoin | LauncherResolution` (ContractRef: Primitive:Provider)
   - `result`: `Hit | Miss | HitButInvalid(BinaryErrorCode)` (ContractRef: Primitive:Provider)
 
 #### Trace emission (storage contract note)
 BinaryLocator's `trace` is diagnostic data that SHOULD be emitted as events when the event model is available; until then, it is returned as structured data to the caller. (ContractRef: SchemaID:EventEnvelopeV1)
+AutoDecision: Until callers have a persisted event writer available, return `trace` only in `BinaryLocateResult`; once available, emit both persisted `EventRecord` diagnostics and return `trace` for deterministic UX/debuggability. (ContractRef: PolicyRule:Decision_Policy.md§4, ContractName:Plans/Contracts_V0.md#EventRecord)
 
-> Compatibility note: storage-plan defines `EventEnvelopeV1` as a minimal envelope; Contracts V0 defines `EventRecord` as the canonical persisted envelope with additional required fields; implementations must emit full `EventRecord` envelopes, while readers may accept both during transition. (ContractRef: SchemaID:EventEnvelopeV1, ContractRef: ContractName:Contracts_V0.md#1.1)
+> Compatibility note: storage-plan defines `EventEnvelopeV1` as a minimal envelope; Contracts V0 defines `EventRecord` as the canonical persisted envelope with additional required fields; implementations must emit full `EventRecord` envelopes, while readers may accept both during transition. (ContractRef: SchemaID:EventEnvelopeV1, ContractName:Plans/Contracts_V0.md#EventRecord)
 
 ---
 
@@ -196,15 +197,16 @@ Legacy anchors (behavior compatibility):
 
 ### Functional validation outcome
 A candidate is `Valid` if the version command completes within timeout and yields either:
-- success exit code, OR
+- success exit code, OR (ContractRef: Primitive:Provider)
 - a non-empty parsed `version`. (ContractRef: Primitive:Provider)
 
 A candidate is `Invalid` if:
-- spawn fails (ENOENT/permission/security block), OR
-- timeout occurs, OR
+- spawn fails (ENOENT/permission/security block), OR (ContractRef: Primitive:Provider)
+- timeout occurs, OR (ContractRef: Primitive:Provider)
 - exit is non-zero AND no version can be parsed. (ContractRef: Primitive:Provider)
 
-Optional collision guard (recommended): if output strongly identifies as a different Provider CLI, return `WrongBinary`. (ContractRef: Primitive:Provider)
+Optional collision guard: if output strongly identifies as a different Provider CLI, return `WrongBinary`. (ContractRef: Primitive:Provider)
+AutoDecision: Collision guard is **disabled by default** until Provider SSOT defines deterministic `WrongBinary` signatures; implementations MUST NOT introduce heuristic string matching beyond that SSOT. (ContractRef: PolicyRule:Decision_Policy.md§4, ContractName:Plans/DRY_Rules.md#4)
 
 ---
 
@@ -254,14 +256,16 @@ BinaryLocator MUST return stable error codes suitable for UI rendering, logs, an
 ### Discovery matrix (OS × install method)
 Expected result includes probe layer and a representative resolved path pattern.
 
-| OS | Provider CLI | Official install method (SSOT) | Expected probe layer | Expected resolved path pattern |
+| OS | Provider CLI | Supported footprint (SSOT) | Test PATH setup | Expected first-hit probe layer | Expected resolved path pattern |
 |---|---|---|---|---|
-| macOS | Cursor Agent | Provider CLI spec SSOT | PATH **or** CommonLocations | `~/.local/bin/agent` OR `/opt/homebrew/bin/agent` |
-| Linux | Cursor Agent | Provider CLI spec SSOT | PATH **or** CommonLocations | `~/.local/bin/agent` OR `/usr/local/bin/agent` |
-| Windows | Cursor Agent | Provider CLI spec SSOT | PATH **or** CommonLocations | `%LOCALAPPDATA%\cursor-agent\agent.cmd` OR WinGet/npm shim locations |
-| macOS | Claude Code | Provider CLI spec SSOT | PATH **or** CommonLocations | `~/.local/bin/claude` OR `/opt/homebrew/bin/claude` |
-| Linux | Claude Code | Provider CLI spec SSOT | PATH **or** CommonLocations | `~/.local/bin/claude` OR `/usr/local/bin/claude` |
-| Windows | Claude Code | Provider CLI spec SSOT | PATH **or** CommonLocations | `%LOCALAPPDATA%\Microsoft\WinGet\Links\claude.exe` OR `%APPDATA%\npm\claude.cmd` |
+| macOS | Cursor Agent | User-local shim (`~/.local/bin/agent`) (SSOT: `Plans/BinaryLocator_Spec.md` Probe layer: CommonLocations) | Exclude `~/.local/bin` from PATH | CommonLocations | `~/.local/bin/agent` |
+| macOS | Cursor Agent | Homebrew shim (`/opt/homebrew/bin/agent`) (SSOT: `Plans/BinaryLocator_Spec.md` Probe layer: PATH) | Include `/opt/homebrew/bin` in PATH | PATH | `/opt/homebrew/bin/agent` |
+| Linux | Cursor Agent | System shim (`/usr/local/bin/agent`) (SSOT: `Plans/BinaryLocator_Spec.md` Probe layer: PATH) | Include `/usr/local/bin` in PATH | PATH | `/usr/local/bin/agent` |
+| Windows | Cursor Agent | Local app shim (`%LOCALAPPDATA%\cursor-agent\agent.cmd`) (SSOT: `Plans/BinaryLocator_Spec.md` Probe layer: CommonLocations) | Exclude `%LOCALAPPDATA%\cursor-agent` from PATH | CommonLocations | `%LOCALAPPDATA%\cursor-agent\agent.cmd` |
+| macOS | Claude Code | Homebrew shim (`/opt/homebrew/bin/claude`) (SSOT: `Plans/BinaryLocator_Spec.md` Probe layer: PATH) | Include `/opt/homebrew/bin` in PATH | PATH | `/opt/homebrew/bin/claude` |
+| Linux | Claude Code | User-local shim (`~/.local/bin/claude`) (SSOT: `Plans/BinaryLocator_Spec.md` Probe layer: CommonLocations) | Exclude `~/.local/bin` from PATH | CommonLocations | `~/.local/bin/claude` |
+| Windows | Claude Code | npm shim (`%APPDATA%\\npm\\claude.cmd`) (SSOT: `Plans/BinaryLocator_Spec.md` Probe layer: PATH) | Include `%APPDATA%\\npm` in PATH | PATH | `%APPDATA%\\npm\\claude.cmd` |
+| Windows | Claude Code | WinGet link (`%LOCALAPPDATA%\\Microsoft\\WinGet\\Links\\claude.exe`) (SSOT: `Plans/BinaryLocator_Spec.md` Probe layer: CommonLocations) | Exclude `%LOCALAPPDATA%\\Microsoft\\WinGet\\Links` from PATH | CommonLocations | `%LOCALAPPDATA%\\Microsoft\\WinGet\\Links\\claude.exe` |
 
 ### Functional acceptance checks
 1. Determinism: repeated runs on a fixed filesystem snapshot return identical `source_layer`, `resolved_path`, and `resolved_name`. (ContractRef: Primitive:Provider)
