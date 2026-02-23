@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.plan_graph.schema.v0",
+  "title": "Puppet Master Plan Graph",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id", "nodes"],
+  "properties": {
+    "schema_id": {"type": "string", "const": "pm.plan_graph.schema.v0"},
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "path"],
+        "properties": {
+          "id": {"type": "string"},
+          "path": {"type": "string"},
+          "depends_on": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.change_budget.schema.v0",
+  "title": "Puppet Master Change Budget",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_id"],
+  "properties": {
+    "schema_id": {"type": "string", "const": "pm.change_budget.schema.v0"},
+    "max_files_changed": {"type": "integer", "minimum": 0},
+    "max_lines_added": {"type": "integer", "minimum": 0},
+    "max_lines_deleted": {"type": "integer", "minimum": 0},
+    "notes": {"type": "string"}
+  }
+}

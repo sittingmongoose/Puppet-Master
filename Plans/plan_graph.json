@@ -1,0 +1,9 @@
+{
+  "schema_id": "pm.plan_graph.schema.v0",
+  "nodes": [
+    {"id": "contracts", "path": "Plans/Contracts_V0.md"},
+    {"id": "spec-lock", "path": "Plans/Spec_Lock.json"},
+    {"id": "crosswalk", "path": "Plans/Crosswalk.md", "depends_on": ["spec-lock"]},
+    {"id": "dry", "path": "Plans/DRY_Rules.md", "depends_on": ["spec-lock", "crosswalk"]}
+  ]
+}
