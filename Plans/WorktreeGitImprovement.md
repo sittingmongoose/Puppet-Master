@@ -19,6 +19,8 @@ This plan's correctness requirements remain authoritative. As the rewrite lands 
 - Provider working directories (and MCP injection) must respect worktree execution contexts deterministically
 - Config references to YAML files should be treated as *current representations*; the rewrite may project settings via redb while retaining import/export
 
+**ELI5/Expert copy alignment:** Authored Git/worktree tooltip/help copy in this plan must provide both Expert and ELI5 variants and follow `Plans/FinalGUISpec.md` §7.4.0. Use app-level **Interaction Mode (Expert/ELI5)** for variant selection; do not couple this to chat-level **Chat ELI5**.
+
 ---
 
 ## Table of Contents

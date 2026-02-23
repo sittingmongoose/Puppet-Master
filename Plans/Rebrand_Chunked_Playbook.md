@@ -7,6 +7,7 @@ Convert the canonical rebrand plan into small, agent-executable chunks with clea
 ## Rebrand Goals and Invariants
 
 - **ABSOLUTE NAMING RULE:** The platform name is **Puppet Master** only. Do not mention any prior or legacy product name in user-facing content. Where older naming exists, refer to it only as "legacy naming" (do not quote it).
+- **Tooltip/copy variant rule:** If any chunk touches authored tooltip/help copy, keep both Expert and ELI5 variants and align with `Plans/FinalGUISpec.md` §7.4.0 (app-level Interaction Mode default ELI5 ON; chat-level Chat ELI5 default OFF and independent).
 - **Canonical token table** -- use these values everywhere:
 
 | Token | Value |

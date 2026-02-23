@@ -184,6 +184,45 @@ ContractRef: Primitive:DocumentCheckpoint, ContractName:Plans/storage-plan.md, C
 
 ---
 
+### 3.12 WidgetCatalog
+**Owner:** Widget domain (`Plans/Widget_System.md`).
+
+Rules:
+- The widget catalog is the single source of truth for all portable page widgets (dashboard, usage, orchestrator tab widgets).
+- Widget IDs are stable strings (format: `widget.{name}`).
+- Atomic UI components (buttons, inputs, badges) remain owned by `Plans/FinalGUISpec.md` section 8; page widgets are composed from those components.
+- All widget-composed pages (Dashboard, Usage, Orchestrator widget tabs) MUST reference `Plans/Widget_System.md` for layout, add-widget flow, and persistence.
+
+ContractRef: Primitive:WidgetCatalog, ContractName:Plans/Widget_System.md
+
+---
+
+### 3.13 RunGraphView
+**Owner:** Run Graph domain (`Plans/Run_Graph_View.md`).
+
+Rules:
+- The Node Graph Display is a full-page tab on the Orchestrator page; it is NOT a widget and is NOT in the widget catalog.
+- Data model contract (Rust structs: `RunGraphMeta`, `GraphNode`, `GraphEdge`, etc.) is owned by this document.
+- State-to-color mapping uses theme tokens (`Theme.graph-*`); these tokens are additions to the theme system owned by `Plans/FinalGUISpec.md` section 6.
+
+ContractRef: Primitive:RunGraphView, ContractName:Plans/Run_Graph_View.md
+
+---
+
+### 3.14 OrchestratorPage
+**Owner:** Orchestrator page domain (`Plans/Orchestrator_Page.md`).
+
+Rules:
+- The Orchestrator is a single top-level page with 6 tabs (Progress, Tiers, Node Graph Display, Evidence, History, Ledger).
+- Widget-based tabs reference `Plans/Widget_System.md` for layout mechanics.
+- The Node Graph Display tab references `Plans/Run_Graph_View.md`.
+- This page replaces former separate views (Tiers, Evidence, History) and adds Ledger as a tab.
+- Data source documentation for live status is owned by this document (section 12).
+
+ContractRef: Primitive:OrchestratorPage, ContractName:Plans/Orchestrator_Page.md
+
+---
+
 ## References
 - `Plans/Spec_Lock.json`
 - `Plans/DRY_Rules.md`
@@ -192,3 +231,6 @@ ContractRef: Primitive:DocumentCheckpoint, ContractName:Plans/storage-plan.md, C
 - `Plans/Tools.md`
 - `Plans/Contracts_V0.md`
 - `Plans/storage-plan.md`
+- `Plans/Widget_System.md`
+- `Plans/Run_Graph_View.md`
+- `Plans/Orchestrator_Page.md`

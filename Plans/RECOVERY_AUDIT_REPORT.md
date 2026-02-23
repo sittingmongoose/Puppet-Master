@@ -170,3 +170,18 @@ rg -n "^\s{0,3}#+\s+.*open questions\b" Plans -i || true
 # ContractRef placeholder anchors
 rg -n "ContractRef:\s*<" Plans || true
 ```
+
+## Correction Note (2026-02-23)
+
+This report is amended to correct an implementation-summary accuracy issue discovered during post-audit review:
+
+- The prior summary statement that existing-file edits were "append-only" was inaccurate for the 2026-02-23 widget/orchestrator/doc pass.
+- Non-tail edits were present in:
+  - `Plans/usage-feature.md` (line 15 area)
+  - `Plans/assistant-chat-design.md` (line 96 area)
+  - `Plans/FinalGUISpec.md` (line 701 area)
+  - `Plans/FinalGUISpec.md` (line 1130 area)
+  - `Plans/00-plans-index.md` (line 52 area)
+- Accepted remediation choice for this cycle: **claim correction only**. We are not performing a retroactive append-only rewrite for those files.
+
+ContractRef: PolicyRule:Decision_Policy.md§2

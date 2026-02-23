@@ -27,6 +27,8 @@ This plan remains authoritative for safety policy and context-compilation behavi
 
 Any UI/storage examples in this plan are illustrative; the guard behavior and contracts are the stable requirements.
 
+**ELI5/Expert copy alignment:** FileSafe-authored tooltip/help copy (including `help_tooltip` keys referenced by this plan) must define both Expert and ELI5 variants and follow `Plans/FinalGUISpec.md` §7.4.0. App-level **Interaction Mode (Expert/ELI5)** selects the shown variant; chat-level **Chat ELI5** does not override FileSafe tooltip copy.
+
 ## Executive Summary
 
 This plan covers **two pillars**: (1) **FileSafe** -- guards that block destructive operations before execution -- and (2) **context compilation and token efficiency** that reduce coordination overhead by compiling role-specific context and related optimizations.

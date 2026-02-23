@@ -93,20 +93,23 @@ The **chat window** must allow the user to change **platform**, **model**, and *
 
 ## 2. ELI5 Mode
 
-There are **two separate ELI5 toggles**; they are independent and must not be conflated.
+There are **two separate ELI5 toggles**; they are independent and must not be conflated. The authoritative dual-copy checklist for in-scope strings is `Plans/FinalGUISpec.md` §7.4.0.
 
 ### 2.1 Chat-level ELI5 (in chat only)
 
 - **What:** A toggle **in the chat UI** that, when **on**, instructs the Assistant to explain technical terms and steps in simpler terms and with more detail (ELI5 = "Explain Like I'm 5") in **that chat**.
+- **Default:** **OFF** (Expert/default LLM behavior). By default, no extra "explain simply" instruction is added.
 - **Scope:** Affects **Assistant chat behavior only** (explanations, follow-ups, teaching in the conversation).
 - **Does NOT affect:** Interviewer **documentation writing style**. When the interview generates PRD, AGENTS.md, requirements, or other docs, chat ELI5 is **ignored**; generated docs remain technical and precise for agent consumption.
 - **Implementation:** Chat ELI5 is a per-chat or per-session flag. When building the system prompt or instruction block for the Assistant, append an ELI5 instruction only for that session; do not pass it into interview document-generation prompts.
 
 ### 2.2 Application-level ELI5 (app-wide)
 
-- **What:** A **separate** toggle at **application/settings level** that, when **on**, makes **tooltips** and **interviewer responses** (in the Interview flow) longer and simpler -- explain like the user is five.
+- **What:** A **separate** toggle at **application/settings level** labeled **Interaction Mode (Expert/ELI5)**. When ELI5 is active, **tooltips** and **interviewer responses** (in the Interview flow) are longer and simpler.
+- **Default:** **ON** (ELI5). New users see simpler copy by default.
 - **Scope:** Affects **tooltips** across the app (e.g. Config, Dashboard, Chat) and **interviewer Q&A responses** (the text the interview agent shows when asking questions or giving feedback). Does **not** change generated documentation (PRD, AGENTS.md, etc.).
 - **Independent of chat ELI5:** A user can have app ELI5 on (simpler tooltips and interviewer text) and chat ELI5 off (technical Assistant answers in chat), or the reverse. The two toggles are stored and applied separately.
+- **Dual-copy rule:** Every in-scope authored copy item in this plan (tooltips/help, interviewer Q&A copy, and chat style instruction copy) must define both **Expert** and **ELI5** variants. Track and audit against `Plans/FinalGUISpec.md` §7.4.0.
 
 ---
 
@@ -340,7 +343,7 @@ The findings block is shown before final approval and links to the same artifact
 - **Visible context and usage info:** The chat UI should show **context usage and related information** in a way similar to **OpenCode's desktop application** -- e.g. token or context-window usage, current model, rate limits, or other usage/limits that help the user understand how much context is in use and when limits might be hit.
 - **Context circle (OpenCode-style):** At the **top of the chat** (e.g. in the chat header next to platform/model), show a **small context indicator** -- a circular progress or gauge showing **context usage %** for the current thread. **Hover:** Tooltip shows **token count**, **usage %**, and **cost** (USD or equivalent) for that thread. **Click:** Opens a **Usage tab (or panel) for that chat thread** with detailed breakdown: tokens (input/output/reasoning/cache if available), cost, usage over time or per turn, and link to the app-wide Usage view. Reference: OpenCode -- `packages/app/src/components/session-context-usage.tsx` (ProgressCircle + Tooltip, click opens "context" tab), `session-context-metrics.ts` (metrics from messages). Full spec: Plans/usage-feature.md "Per-thread usage in Chat (OpenCode-style)".
 - **Empty state:** When the thread has **no usage data yet** (new thread or no token/cost reported): show the indicator at **0%** (or neutral "--"); tooltip "No usage yet." Click still opens the thread Usage tab (showing 0 tokens, $0.00, and link to app-wide Usage).
-- **Keyboard and accessibility:** The context indicator is **focusable** (in tab order). **Enter** or **Space** opens the thread Usage tab (same as click). Use an **aria-label** (e.g. "Context usage for this thread") so screen readers announce its purpose. See Plans/usage-feature.md §5.
+- **Keyboard and accessibility:** The context indicator is **focusable** (in tab order). **Enter** or **Space** opens the thread Usage tab (same as click). Use an **accessible-label** (e.g. "Context usage for this thread") so screen readers announce its purpose. See Plans/usage-feature.md §5.
 - **Interview:** The same context circle and thread Usage tab behavior applies to **Interview** chat threads (context circle in Interview header, hover, click → Usage tab for that Interview thread).
 - **Placement:** The context circle lives in the chat header (or next to thread selector); the thread Usage tab can be a tab in the chat side panel (e.g. "Context" or "Usage") or a slide-out panel. Display should be visible without cluttering the main conversation; optional expand/detail for power users.
 - **Purpose:** Helps users manage long sessions, avoid truncation surprises, and understand cost/limits when running multiple threads or heavy plans. Data for this display is supplied by analytics scan rollups (seglog → counters/rollups → redb) per Plans/storage-plan.md and by **per-thread usage** derived from the thread's messages (tokens, cost per assistant turn); the same rollups feed dashboard and usage widgets (Plans/usage-feature.md, Plans/feature-list.md).
@@ -697,3 +700,114 @@ These enhancements are **MVP** requirements. They must integrate with virtualiza
 | **Scroll position restore** | When user switches threads and back, or reopens app, restore scroll position. | Persist scroll position (e.g. last visible message id or offset) with the thread or session; on load, scroll virtual list to that position after first paint. |
 | **Streaming at bottom** | While streaming, user expects to see the tail. If virtual list only has a fixed window, the "tail" might be off-screen. | Keep the **currently streaming** message in the visible window (e.g. scroll to bottom when streaming starts, or ensure the last item is always in the overscan). When user has scrolled up during stream, do not auto-scroll; only auto-scroll when already at bottom. |
 | **Max thread length (display)** | Is there an upper bound on thread length for display? Persistence stores full thread (§11). | No hard limit for persistence. For display, virtualization and optional "load older" keep the UI bounded. Document that threads with 10k+ messages may need pagination or load-older in addition to virtualization. |
+
+---
+
+<a id="25-context-enhancements"></a>
+## 25. Context Circle Enhancements (Addendum -- 2026-02-23)
+
+This section extends the context usage ring (section 12) with a "Compact Now" action in the tooltip and a pop-out detailed usage window on click.
+
+### 25.1 "Compact Now" Action in Tooltip
+
+The hover tooltip for the context circle (section 12) is extended with a clickable action line:
+
+**Updated tooltip contents:**
+
+| Line | Content | Behavior |
+|------|---------|----------|
+| 1 | Tokens Used: {count} | Static text |
+| 2 | Context Used: {percent}% | Static text |
+| 3 | Cost: ${amount} | Static text (dollars and cents, e.g., $1.23) |
+| 4 | **Compact Now** | Clickable link/button text |
+
+**"Compact Now" behavior:**
+- Triggers context compaction for the current thread -- same effect as the user-triggered "Compact session" (e.g., /compact or the compaction pipeline from section 17).
+- On click: tooltip closes, context circle shows a brief "Compacting..." spinner overlay (200ms minimum display to prevent flash).
+- On completion: context circle animates to reflect the new usage percentage. A brief toast notification confirms: "Context compacted: {old_percent}% -> {new_percent}%".
+- If compaction is not possible (e.g., already at minimum context, or no messages to compact): show toast "Context already at minimum."
+- If compaction fails (error): show toast "Compaction failed: {reason}".
+
+**UICommand:** `cmd.chat.compact_context` with args `{ thread_id }`.
+
+ContractRef: Primitive:UICommand (Plans/Contracts_V0.md#UICommand)
+
+### 25.2 Pop-Out Detailed Usage View
+
+Clicking the context circle opens a **pop-out window** (not just a tab) with detailed thread usage information.
+
+**Pop-out window specification:**
+
+| Property | Value |
+|----------|-------|
+| Window type | Floating / detachable (per Plans/FinalGUISpec.md section 5 panel detaching semantics) |
+| Default size | 400 x 500 px |
+| Title | "Usage -- {thread_name}" |
+| Behavior | Only one pop-out per thread at a time; clicking the circle again focuses the existing pop-out |
+| Close | Window close button (X), or Escape key |
+| Position persistence | redb key `context_popout_state:v1:{thread_id}` stores `{ x, y, width, height }` |
+
+**Pop-out content** (same data as the thread Usage tab described in section 12, plus enhancements):
+
+1. **Header**: "Compact Now" button (prominent, top-right). Thread name. Context ring (larger, 48px).
+
+2. **Summary row**: Total tokens, context percentage, total cost -- same as tooltip but larger and more readable.
+
+3. **Token breakdown table**:
+   | Category | Tokens | % |
+   |----------|--------|---|
+   | Input | {count} | {pct} |
+   | Output | {count} | {pct} |
+   | Reasoning | {count} | {pct} |
+   | Cache (read) | {count} | {pct} |
+
+4. **Per-turn table** (scrollable, virtualized):
+   | Turn | Role | Platform | Model | Tokens In | Tokens Out | Cost |
+   |------|------|----------|-------|-----------|------------|------|
+   | 1 | user | -- | -- | {n} | -- | -- |
+   | 2 | assistant | Claude | opus | {n} | {n} | $X.XX |
+   | ... | ... | ... | ... | ... | ... | ... |
+
+5. **Cost-over-time chart**: small line chart showing cumulative cost over turns.
+
+6. **Link to app-wide Usage**: "View all usage" link at bottom -- navigates to the dedicated Usage page (Plans/usage-feature.md).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#5, ContractName:Plans/usage-feature.md
+
+### 25.3 Accessibility
+
+**Context circle:**
+- The context circle MUST be focusable (Tab key reaches it).
+- `accessible-role: "button"`.
+- `accessible-label: "Context usage for this thread, {percent}% used"`.
+- Enter or Space opens the pop-out detailed view (same as click).
+- Tooltip MUST be available to keyboard users: on focus, tooltip appears; "Compact Now" is focusable within the tooltip (Tab key).
+
+**Pop-out window:**
+- All elements inside the pop-out MUST be keyboard-navigable.
+- The per-turn table MUST support arrow-key navigation.
+- The "Compact Now" button and "View all usage" link MUST be focusable.
+- The pop-out root container uses an explicit `accessible-role` for a floating dialog/window surface.
+- `accessible-label` on pop-out window: "Detailed usage for {thread_name}".
+- On open: focus moves to the pop-out window. On close (Escape): focus returns to the context circle.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md#13
+
+### 25.4 UICommand IDs (Context Circle)
+
+| Command ID | Args | Behavior | Events |
+|-----------|------|----------|--------|
+| `cmd.chat.compact_context` | `{ thread_id: string }` | Trigger context compaction | `context.compaction.started`, `context.compaction.completed` |
+| `cmd.chat.open_usage_popout` | `{ thread_id: string }` | Open/focus the usage pop-out window | UI-only (no persisted event) |
+| `cmd.chat.close_usage_popout` | `{ thread_id: string }` | Close the usage pop-out window | UI-only (no persisted event) |
+
+ContractRef: Primitive:UICommand (Plans/Contracts_V0.md#UICommand), ContractName:Plans/UI_Command_Catalog.md
+
+### 25.5 References (Section 25)
+
+- Section 12 of this document (original context circle specification)
+- Section 17 of this document (compaction pipeline)
+- Plans/usage-feature.md section 5 (per-thread usage data)
+- Plans/FinalGUISpec.md section 5 (panel detaching / floating windows)
+- Plans/FinalGUISpec.md section 13 (accessibility)
+- Plans/Contracts_V0.md (UICommand contract)

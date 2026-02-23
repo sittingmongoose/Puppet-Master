@@ -698,7 +698,7 @@ This is a **heavily redesigned** unified settings page that merges four previous
 
 | Tab | Content | Source |
 |-----|---------|--------|
-| **General** | Log level, auto-scroll, show timestamps, minimize to tray, start on boot, retention days, intensive logging, interaction mode (expert/eli5), UI scale (0.75-1.5), app-level ELI5 toggle (longer/simpler tooltips), max editor tabs (LRU cap, default 20), run-complete notification toggle, max concurrent runs per thread (default 10), **sound effects** toggle (default off; see §10.13), max terminal instances (default 12, range 4-20), max browser tabs (default 8, range 2-12), hot-reload debounce (default 500ms, range 100-5000ms), **theme management** section (theme selector dropdown, "Open themes folder", "Create new theme", "Import theme", "Export theme" -- see §6.6) | Old "Settings" view + newfeatures.md |
+| **General** | Log level, auto-scroll, show timestamps, minimize to tray, start on boot, retention days, intensive logging, **Interaction Mode (Expert/ELI5)** (app-level copy selector; default ELI5/ON), UI scale (0.75-1.5), max editor tabs (LRU cap, default 20), run-complete notification toggle, max concurrent runs per thread (default 10), **sound effects** toggle (default off; see §10.13), max terminal instances (default 12, range 4-20), max browser tabs (default 8, range 2-12), hot-reload debounce (default 500ms, range 100-5000ms), **theme management** section (theme selector dropdown, "Open themes folder", "Create new theme", "Import theme", "Export theme" -- see §6.6) | Old "Settings" view + newfeatures.md |
 | **Tiers** | Phase/task/subtask tier configuration; per-tier: platform (**dropdown**), model (**dropdown**), reasoning_effort, plan_mode, ask_mode, output_format | Old "Config" Tiers tab |
 | **Branching** | **Enable Git** toggle (bound to `orchestrator.enable_git`; tooltip: "Enable git branch creation, commits, and PR creation during runs"); **Auto PR** toggle (bound to `branching.auto_pr`); **Branch strategy** dropdown: MainOnly / Feature / Release (bound to `branching.strategy`); **Use worktrees** toggle; **Parallel execution** toggle (note: "Parallel subtasks use separate git worktrees"); **Granularity** dropdown or label mapped to BranchStrategy (per_phase / per_task / per_subtask); Git info display (user, email, remote, branch -- resolved for active project, not CWD) | Old "Config" Branching tab |
 | **Verification** | Verification checks, screenshot toggles | Old "Config" Verification tab |
@@ -718,6 +718,47 @@ This is a **heavily redesigned** unified settings page that merges four previous
 | **Debug** | Debug adapter configuration and run/debug profiles. See §7.4.6. | FileManager.md |
 | **HITL** | Three independent toggles: pause at phase/task/subtask completion; explanation of each level; all off by default | From human-in-the-loop.md |
 | **YAML** | Raw YAML editor for full config | Old "Config" YAML tab |
+
+**§7.4.0 Interaction Mode and Dual-Copy Contract (SSOT):**
+
+Puppet Master uses two independent Expert/ELI5 controls:
+
+- **App-level control (Settings > General):** Label is **Interaction Mode (Expert/ELI5)**. Canonical setting: `app_eli5_enabled` (or equivalent), default **ON** (ELI5). This controls authored tooltip/help strings and interviewer Q&A display copy.
+- **Chat-level control (Chat input toolbar):** Label is **Chat ELI5**. Canonical setting: `chat_eli5_enabled` (or equivalent), default **OFF** (Expert/default LLM behavior). This control only modifies assistant instruction style for that chat thread/session.
+- **Independence rule:** The controls must remain independent. Example supported combination: app ELI5 ON (simple tooltips/interviewer copy) while chat ELI5 OFF (technical chat responses).
+- **Storage rule:** Persist app-level and chat-level toggles separately; never derive one from the other.
+- **Migration alias:** Legacy `interaction_mode` values map to app-level behavior only (`eli5` => app ELI5 ON, `expert` => app ELI5 OFF).
+
+**Dual-copy requirement (in-scope authored copy):**
+
+- Every in-scope authored copy item must have both variants: `expert` and `eli5`.
+- In-scope for this contract: tooltip/help copy, interviewer Q&A copy shown to users, and chat response-style prompt instructions.
+- Out of scope: externally generated dynamic content (for example LSP hover payloads, web snippets, model-produced message bodies beyond style instruction).
+
+**Single auditable checklist (authoritative table):**
+
+| copy_id | Surface | Inventory source | Expert variant | ELI5 variant | Status |
+|---|---|---|---|---|---|
+| `tooltip.interview.*` | Settings/Interview tooltips | `src/widgets/tooltips.rs` keys with `interview.` prefix | Required | Required | Complete in current Iced code; preserve in Slint rewrite |
+| `tooltip.wizard.*` | Wizard tooltips | `src/widgets/tooltips.rs` keys with `wizard.` prefix | Required | Required | Complete in current Iced code; preserve in Slint rewrite |
+| `tooltip.tier.*` | Tier/config tooltips | `src/widgets/tooltips.rs` keys with `tier.` prefix | Required | Required | Complete in current Iced code; preserve in Slint rewrite |
+| `tooltip.branching.*` | Branching/worktree tooltips | `src/widgets/tooltips.rs` keys with `branching.` prefix | Required | Required | Complete in current Iced code; preserve in Slint rewrite |
+| `tooltip.memory.*` | Memory tooltips | `src/widgets/tooltips.rs` keys with `memory.` prefix | Required | Required | Complete in current Iced code; preserve in Slint rewrite |
+| `tooltip.orchestrator.*` | Orchestrator tooltips | `src/widgets/tooltips.rs` keys with `orchestrator.` prefix | Required | Required | Complete in current Iced code; preserve in Slint rewrite |
+| `tooltip.verification.*` | Verification tooltips | `src/widgets/tooltips.rs` keys with `verification.` prefix | Required | Required | Complete in current Iced code; preserve in Slint rewrite |
+| `tooltip.budget.*` | Budget tooltips | `src/widgets/tooltips.rs` keys with `budget.` prefix | Required | Required | Complete in current Iced code; preserve in Slint rewrite |
+| `tooltip.cli_paths.*` | CLI path tooltips | `src/widgets/tooltips.rs` keys with `cli_paths.` prefix | Required | Required | Complete in current Iced code; preserve in Slint rewrite |
+| `tooltip.network.*` | Network/API tooltips | `src/widgets/tooltips.rs` keys with `network.` prefix | Required | Required | Complete in current Iced code; preserve in Slint rewrite |
+| `tooltip.loop_guard.*` | Loop guard tooltips | `src/widgets/tooltips.rs` keys with `loop_guard.` prefix | Required | Required | Complete in current Iced code; preserve in Slint rewrite |
+| `tooltip.checkpointing.*` | Checkpointing tooltips | `src/widgets/tooltips.rs` keys with `checkpointing.` prefix | Required | Required | Complete in current Iced code; preserve in Slint rewrite |
+| `tooltip.subagent_*` | Subagent platform tooltips | `src/widgets/tooltips.rs` keys with `subagent_` prefix | Required | Required | Complete in current Iced code; preserve in Slint rewrite |
+| `tooltip.experimental_*` | Experimental feature tooltips | `src/widgets/tooltips.rs` keys with `experimental_` prefix | Required | Required | Complete in current Iced code; preserve in Slint rewrite |
+| `chat.style.prompt_instruction` | Chat assistant system instruction | `Plans/assistant-chat-design.md` §2.1 | Required | Required | Required |
+| `interview.copy.question` | Interview question text shown to user | Interview prompt/copy pipeline | Required | Required | Required in rewrite |
+| `interview.copy.explanation` | Interview "what this means/why it matters" text | Interview prompt/copy pipeline | Required | Required | Required in rewrite |
+| `interview.copy.feedback` | Interview feedback/correction text shown to user | Interview prompt/copy pipeline | Required | Required | Required in rewrite |
+
+**Audit rule:** Any row above marked "Required" must not ship with a missing variant. No in-scope row may remain single-variant.
 
 **Tab sub-grouping:** With 20 tabs, use a two-level navigation: left sidebar within Settings for groups, right area for the selected tab's content. Group labels act as collapsible section headers in the sidebar. Groups: **Core** (General, Tiers, Branching) | **Features** (Verification, Memory, Budgets, Advanced, Interview, LSP) | **System** (Authentication, Health, Rules & Commands, Shortcuts, Skills, HITL) | **Extensions** (Catalog, Sync, SSH, Debug) | **Raw** (YAML). Each group header shows item count badge. Clicking a group header expands/collapses that group in the sidebar. Active tab highlighted with accent-left-border (3px).
 
@@ -1086,7 +1127,7 @@ The active mode shows as a subtle label next to the SEND button ("Steer" or "Que
 
 **Active subagent indicator:** When subagents are running, a small line below the composer shows "> 3 subagents working" with a subtle pulse animation. Updates in real-time via `invoke_from_event_loop`.
 
-**Input area:** Multi-line, auto-grows from 1 line (48px) to max 5 lines (120px). SEND button (accent background). Below-input row: `@` mention (opens file picker overlay with fuzzy search, showing files, symbols, and headings as you type), attach button (opens file dialog for files and images; paste and drag-drop also supported). Slash command detection: `/` shows autocomplete popup (see §7.16.2). **ELI5 toggle:** Small toggle in input toolbar; when on, assistant uses simpler explanations in this thread only (does not affect generated documents). **YOLO/Regular toggle:** Permission mode selector; YOLO auto-approves all tool calls, Regular prompts for approval once or per-session. Per-session; does not persist across restarts. **YOLO + FileSafe interaction:** When YOLO is enabled and FileSafe guards are active, show a persistent warning chip in the input toolbar: "[!] YOLO active -- FileSafe guards still apply." When FileSafe blocks a command during YOLO mode, show inline approval card in the chat stream (see below).
+**Input area:** Multi-line, auto-grows from 1 line (48px) to max 5 lines (120px). SEND button (accent background). Below-input row: `@` mention (opens file picker overlay with fuzzy search, showing files, symbols, and headings as you type), attach button (opens file dialog for files and images; paste and drag-drop also supported). Slash command detection: `/` shows autocomplete popup (see §7.16.2). **Chat ELI5 toggle:** Small toggle in input toolbar; default **OFF** (Expert/default LLM behavior). When on, assistant uses simpler explanations in this thread only (does not affect generated documents, tooltips, or interviewer text). This toggle is independent from app-level **Interaction Mode (Expert/ELI5)** in Settings. **YOLO/Regular toggle:** Permission mode selector; YOLO auto-approves all tool calls, Regular prompts for approval once or per-session. Per-session; does not persist across restarts. **YOLO + FileSafe interaction:** When YOLO is enabled and FileSafe guards are active, show a persistent warning chip in the input toolbar: "[!] YOLO active -- FileSafe guards still apply." When FileSafe blocks a command during YOLO mode, show inline approval card in the chat stream (see below).
 
 **FileSafe in-chat approval UI:** When a command is blocked by FileSafe, display an inline card in the chat stream: orange left border, command text in monospace, guard name that triggered, and two buttons: "Approve once" (runs the command this time only) and "Approve & add to list" (adds to approved commands in Settings > Advanced). The card auto-dismisses after 60 seconds with a "Timed out -- command skipped" message. Blocked commands are also logged to the FileSafe event log accessible from Settings > Advanced.
 
@@ -2188,3 +2229,90 @@ These decisions are final and must not be revisited during implementation:
 13. **Webview via `wry`** -- used for Browser tab and HTML preview
 14. **Debug via DAP** -- Debug Adapter Protocol for integrated debugging
 15. **SSH via system keychain** -- credentials stored in OS keychain, never in config files
+
+---
+
+<a id="appendix-c-widget-grid"></a>
+## Appendix C: Dashboard Widget Grid and Widget Catalog Integration (Addendum -- 2026-02-23)
+
+This appendix extends the Dashboard (section 7.2) from a rearrangeable card grid to a full widget grid with grid-based resizing, and introduces the add-widget flow for the Dashboard.
+
+### C.1 Dashboard Upgrade: Card Grid to Widget Grid
+
+The Dashboard (section 7.2) is upgraded from a simple rearrangeable card grid (drag-to-swap, fixed card sizes) to a full **widget grid** with grid-based resizing:
+
+**What changes from section 7.2:**
+- Cards become **widgets** from the widget catalog (Plans/Widget_System.md section 2). Each widget has configurable `col_span` and `row_span`.
+- Drag-to-swap is upgraded to **drag-to-reorder** within the grid. Widgets can also be **resized** by dragging their edges (grid-snapping, per Plans/Widget_System.md section 3).
+- Grid system follows Plans/Widget_System.md section 3: responsive column counts (2 at <1200px, 3 at 1200-1600px, 4 at >1600px per section 12.3).
+- Widget gutters: 8px (MD spacing token) between widgets.
+
+**What stays the same from section 7.2:**
+- All existing Dashboard card types remain as default widgets.
+- The card visual style is preserved: paper texture on retro themes, drag handle (4px crosshatch pattern in top-left corner), elevated surface for CtA cards with accent-left-border.
+- CtA (Calls to Action) behavior: HITL approval, run interrupted, rate limit, and warning cards function identically.
+- Persistence location changes from `dashboard_layout:v1` to `widget_layout:v1:dashboard` (see section C.5 for migration).
+
+ContractRef: ContractName:Plans/Widget_System.md#3
+
+### C.2 Default Dashboard Widget Layout
+
+The default layout preserves the current section 7.2 card set, mapped to Widget Catalog IDs:
+
+| Col | Row | Old Card Name (section 7.2) | Widget Catalog ID | Default Size |
+|-----|-----|---------------------------|-------------------|-------------|
+| 0 | 0 | Orchestrator Status | `widget.orchestrator_status` | 2x1 |
+| 2 | 0 | Current Task | `widget.current_task` | 2x1 |
+| 0 | 1 | Progress | `widget.progress_bars` | 4x1 |
+| 0 | 2 | Calls to Action | `widget.cta_stack` | 2x2 |
+| 2 | 2 | Terminal Output | `widget.terminal_output` | 2x2 |
+| 0 | 4 | Interview Panel | `widget.interview_panel` | 1x2 |
+| 1 | 4 | Error Display | `widget.error_display` | 1x2 |
+| 2 | 4 | Platform Quota | `widget.budget_donuts` | 2x2 |
+
+This matches the current Iced Dashboard layout. On first load, this default is applied. Users can then customize.
+
+ContractRef: ContractName:Plans/Widget_System.md#6.3
+
+### C.3 Add-Widget Flow on Dashboard
+
+The Dashboard has an explicit **"Add Widget"** control:
+- **Location**: floating action button in the bottom-right corner of the Dashboard grid area, or in a Dashboard toolbar.
+- **Behavior**: opens the Widget Catalog overlay (Plans/Widget_System.md section 4.2) filtered to Dashboard-compatible widgets.
+- **Available widgets**: all widgets from the catalog whose "Hostable Pages" includes "Dashboard" -- this includes Usage widgets (`widget.quota_summary`, `widget.budget_donuts`, `widget.analytics_chart`, `widget.tool_usage`, `widget.multi_account`, etc.), Orchestrator Progress widgets (`widget.orchestrator_status`, `widget.current_task`, `widget.progress_bars`, etc.), and others.
+- **On add**: widget placed at next available grid position with its default size. Layout persisted immediately.
+
+This enables users to build a customized Dashboard that includes usage information, orchestrator progress, and other data -- all from a single surface.
+
+ContractRef: ContractName:Plans/Widget_System.md#4
+
+### C.4 Widget Catalog vs. Core Widget Catalog
+
+Two distinct catalogs now exist. To avoid confusion:
+
+- **Section 8 of this document** (FinalGUISpec Widget Catalog) = **atomic UI components**: StyledButton, StyledInput, StyledBadge, TreeView, CodeBlock, and other building-block primitives. These are reusable across all views and are NOT page widgets.
+- **Plans/Widget_System.md section 2** = **composed page widgets**: OrchestratorStatus, BudgetDonuts, TierTree, LedgerTable, and other content panels built FROM atomic components. These are the widgets users can add/remove/move/resize on the Dashboard, Usage page, and Orchestrator tabs.
+
+The relationship: page widgets (Widget_System.md) are composed of atomic components (FinalGUISpec section 8).
+
+### C.5 redb Key Migration
+
+The existing `dashboard_layout:v1` redb key (section 15.1) stores a simple card-order list. The new widget layout system uses a richer schema. Migration strategy:
+
+1. **On first load** after the widget system upgrade:
+   - Check if `dashboard_layout:v1` exists and `widget_layout:v1:dashboard` does NOT exist.
+   - If so: read the card ID list from `dashboard_layout:v1`, map each card ID to its corresponding Widget Catalog ID (per the table in C.2), assign default grid positions and sizes, and write the result as `widget_layout:v1:dashboard`.
+   - Keep `dashboard_layout:v1` as backup (do NOT delete it).
+2. **Future reads** use `widget_layout:v1:dashboard` only.
+3. If both keys exist, `widget_layout:v1:dashboard` takes precedence.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Widget_System.md#7
+
+### C.6 References (Appendix C)
+
+- Plans/Widget_System.md -- widget catalog, grid system, add-widget flow, layout persistence
+- Section 7.2 of this document -- Dashboard (original card grid specification)
+- Section 8 of this document -- Core Widget Catalog (atomic UI components)
+- Section 12.3 of this document -- Dashboard grid responsive breakpoints
+- Section 15.1 of this document -- redb persistence for dashboard layout
+- Plans/storage-plan.md -- redb namespaces

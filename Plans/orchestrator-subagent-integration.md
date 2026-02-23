@@ -45,6 +45,8 @@ The project uses **two plan documents** that divide scope by execution context:
 
 **Tool permissions:** **Plans/Tools.md** defines the central tool registry and permission model (allow/deny/ask, granular rules, [OpenCode Permissions](https://opencode.ai/docs/permissions/)). Run config snapshot includes tool permissions; in headless orchestrator runs, "ask" maps to deny or HITL. Tier/subagent config may override permissions per agent. See Tools.md §2.5 and §8.2-§8.3.
 
+**ELI5/Expert copy alignment:** Any authored tooltip/help/interviewer copy referenced by orchestrator-facing UI in this plan (for example plan-mode hints, tier explanations, interview controls) must follow `Plans/FinalGUISpec.md` §7.4.0. Defaults are fixed: app-level **Interaction Mode (Expert/ELI5)** ON (ELI5), chat-level **Chat ELI5** OFF (Expert). The chat toggle only affects assistant chat style prompts and must not alter tooltip/interviewer variant selection.
+
 ### Respecting PRD/plan: subagent personas and parallelization
 
 The **orchestrator must respect** two kinds of information that the interview (or other plan author) writes into the PRD/plans: **subagent persona recommendations** and **parallelization**.

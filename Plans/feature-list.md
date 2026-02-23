@@ -32,7 +32,7 @@ This document exists to avoid losing features when writing rewrite implementatio
 
 **Plan mode depth and rules.** Depth: Shallow, Regular, or Deep (controls clarifying questions and research length). Clarifying questions always required before plan creation. "Add to queue" only in Interview, not default Plan. Plan panel shows written plan and todo list. Execution after approval via same engine (fresh process per step). Parallelization when possible; user can disable in settings.
 
-**ELI5 (two toggles).** Chat-level ELI5: simpler explanations in chat only; does not change generated docs. App-level ELI5: longer/simpler tooltips and interviewer responses; does not change generated docs. Independent; chat ELI5 per session in prompt only.
+**ELI5 (two toggles, independent).** App-level control is **Interaction Mode (Expert/ELI5)** (default: ELI5 **ON**) and selects tooltip/interviewer copy variants. Chat-level control is **Chat ELI5** (default: **OFF**, Expert/default LLM behavior) and only changes assistant style instructions for that chat thread/session. Both toggles are stored and applied separately. In-scope authored copy must be dual-variant (Expert + ELI5) per `Plans/FinalGUISpec.md` §7.4.0 checklist.
 
 **Permissions: YOLO vs Regular.** YOLO: max permissions, no prompts. Regular: approve once or approve for session. Per session/chat. Do not persist "approve for session" across restarts.
 
