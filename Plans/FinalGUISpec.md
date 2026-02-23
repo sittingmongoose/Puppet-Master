@@ -2074,14 +2074,7 @@ No features are deferred. All items in this specification are MVP scope.
 | `Plans/newtools.md` | MCP configuration in Advanced tab (§7.4), tool discovery during interview |
 | `Plans/Tools.md` | Tool permissions in Advanced tab (§7.4.1), permission model (allow/deny/ask), presets, central tool registry; tool usage widget on Usage page (§7.8); tool approval dialog in Chat (§7.16) |
 | `Plans/LSPSupport.md` | LSP tab in Settings (§7.4.2), editor LSP features (§7.18: diagnostics, hover, completion, signature help, inlay hints, code actions, code lens, semantic highlighting, go-to-definition), **Chat Window LSP (§7.16: diagnostics in context, @ symbol with LSP, code-block hover/go-to-definition, Problems link)**, Problems tab (§7.20), status bar LSP indicator |
-| `Plans/claude-nonstop-multi-account-research.md` | Multi-account switching research; informs per-platform auth in Authentication tab (§7.4) |
 | `Plans/rewrite-tie-in-memo.md` | Rewrite scope alignment; ensures GUI migration ties into broader rewrite plan |
-| `Plans/composergui-gui-redesign-spec.md` | IDE shell layout, panel detach, density settings, retro overlay rendering |
-| `Plans/Composergui2-spec.md` | Activity bar sub-menus, drop zones, 4-split terminal, OpenCode Desktop patterns |
-| `Plans/Composergui3.md` | Rust-owned layout engine, DockSide enum, reset layout action, activity transparency |
-| `Plans/composergui4-spec.md` | File preview, hover-to-peek, activity bar reordering |
-| `Plans/Composergui5.md` | Command palette, breadcrumb, comprehensive keyboard shortcuts, performance (PTY, ring buffers) |
-| `Plans/Composergui6-spec.md` | State machine notation, thread list adjacent, font switching restart, Basic theme overrides |
 | `Plans/opusgui-redesign-spec.md` | Comprehensive baseline: navigation, themes, panels, chat, onboarding, accessibility, Slint file organization |
 | `Plans/geminigui-spec.md` | Initial Slint migration goals, 3-panel architecture concept |
 
